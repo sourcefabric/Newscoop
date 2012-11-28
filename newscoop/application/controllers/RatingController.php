@@ -44,30 +44,29 @@ class RatingController extends Zend_Controller_Action
                 $errors[] = $this->view->translate('Your rating has been updated');
             }
 
-		} else {
-			$errors[] = $this->view->translate('You are not logged in.');
-		}
+        } else {
+            $errors[] = $this->view->translate('You are not logged in.');
+        }
 
-		if (empty($errors)) {
-			$rating = new Rating();
+        if (empty($errors)) {
+            $rating = new Rating();
 
-			$values = array(
-				'userId' => $user->getId(),
-				'articleId' => $params['f_article_number'],
-				'ratingScore' => $params['f_rating_score'],
-				'timeCreated' => new DateTime()
-			);
+            $values = array(
+                'userId' => $user->getId(),
+                'articleId' => $params['f_article_number'],
+                'ratingScore' => $params['f_rating_score'],
+                'timeCreated' => new DateTime()
+            );
 
             $ratingRepository->save($rating, $values);
             $ratingRepository->flush();
 
             $this->view->response = $this->getArticleRating($params['f_article_number']);
 
-		}
-		else {
-			$errors = implode('<br>', $errors);
-			$this->view->response = array_merge($this->getArticleRating($params['f_article_number']), array('error' => $errors));
-		}
+        } else {
+            $errors = implode('<br>', $errors);
+            $this->view->response = array_merge($this->getArticleRating($params['f_article_number']), array('error' => $errors));
+        }
 
         $this->_helper->json($this->view->response);
     }
