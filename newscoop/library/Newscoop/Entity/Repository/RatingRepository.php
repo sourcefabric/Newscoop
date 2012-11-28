@@ -32,9 +32,9 @@ class RatingRepository extends DatatableSource
     /**
      * Method for saving a rating
      *
-     * @param Rating $p_enitity
-     * @param array $params
-     * @return Rating $p_enitity
+     * @param Rating $entity
+     * @param array $values
+     * @return Rating $entity
      */
     public function save(Rating $entity, $values)
     {
@@ -54,9 +54,9 @@ class RatingRepository extends DatatableSource
     /**
      * Method for updating a rating
      *
-     * @param Rating $p_enitity
-     * @param array $p_values
-     * @return Rating $p_enitity
+     * @param Rating $entity
+     * @param array $values
+     * @return Rating $entity
      */
     public function update(Rating $entity, $values)
     {

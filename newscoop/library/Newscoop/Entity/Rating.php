@@ -11,46 +11,46 @@ use Newscoop\Entity\Article;
 
 /**
  * Rating entity
- * @Entity( repositoryClass="Newscoop\Entity\Repository\RatingRepository" )
- * @Table( name="rating")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\RatingRepository")
+ * @Table(name="rating")
  */
 class Rating extends Entity
 {
 	/**
-	 * @id
-	 * @generatedValue
-	 * @column( type="integer", name="id" )
-     * @var int
+	 * @Id
+	 * @GeneratedValue
+	 * @Column(type="integer", name="id")
+     * @Var int
      */
     protected $id;
 
     /**
-     * @column( type="integer", name="article_number" )
-     * @var int
+     * @Column(type="integer", name="article_number")
+     * @Var int
      */
     private $articleId;
 
     /**
-     * @column( type="integer", name="user_id" )
-     * @var int
+     * @Column(type="integer", name="user_id")
+     * @Var int
      */
     private $userId;
 
     /**
-     * @column( type="integer", name="rating_score" )
-     * @var int
+     * @Column(type="integer", name="rating_score")
+     * @Var int
      */
     private $ratingScore;
 
     /**
-     * @column(type="datetime", name="time_created" )
-     * @var DateTime
+     * @Column(type="datetime", name="time_created")
+     * @Var DateTime
      */
     private $timeCreated;
 
     /**
-     * @column(type="datetime", name="time_updated" )
-     * @var DateTime
+     * @Column(type="datetime", name="time_updated")
+     * @Var DateTime
      */
     private $timeUpdated;
 
@@ -118,17 +118,38 @@ class Rating extends Entity
         return $this;
     }
 
-    public function setArticleId($articleId) {
+    /**
+     * Set articleId
+     *
+     * @param int $articleId
+     * @return Newscoop\Entity\Rating
+     */
+    public function setArticleId($articleId)
+    {
         $this->articleId = $articleId;
         return $this;
     }
 
-    public function setUserId($userId) {
+    /**
+     * Set userId
+     *
+     * @param int $userId
+     * @return Newscoop\Entity\Rating
+     */
+    public function setUserId($userId)
+    {
         $this->userId = $userId;
         return $this;
     }
 
-    public function setRatingScore($ratingScore) {
+    /**
+     * Set ratingScore
+     *
+     * @param int $ratingScore
+     * @return Newscoop\Entity\Rating
+     */
+    public function setRatingScore($ratingScore)
+    {
         $this->ratingScore = $ratingScore;
         return $this;
     }
