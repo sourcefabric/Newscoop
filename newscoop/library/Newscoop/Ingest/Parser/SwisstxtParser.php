@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -27,7 +27,6 @@ class SwisstxtParser implements Parser
     public function __construct($content)
     {
         $this->story = simplexml_load_file($content);
-        $this->dir = dirname($content);
 
         try {
             $date_string = $this->getString($this->story->xpath('MetaData/createdDate'));
