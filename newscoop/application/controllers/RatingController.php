@@ -58,9 +58,9 @@ class RatingController extends Zend_Controller_Action
 				'timeCreated' => new DateTime()
 			);
 
-			$ratingRepository->save($rating, $values);
+            $ratingRepository->save($rating, $values);
             $ratingRepository->flush();
-            
+
             $this->view->response = $this->getArticleRating($params['f_article_number']);
 
 		}
