@@ -15,3 +15,4 @@ newscoop/themes/unassigned/empty/
 newscoop/themes/unassigned/system_templates/
 newscoop/install/cron_jobs/all_at_once
 newscoop/.htaccess*
+.vagrant
