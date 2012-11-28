@@ -13,14 +13,16 @@ use Newscoop\Entity\Rating;
 
 class RatingController extends Zend_Controller_Action
 {
+    private $em;
+
     public function init()
     {
-        $this->getHelper('contextSwitch')->addActionContext('save', 'json')->initContext();
+        $this->em = \Zend_Registry::get('container')->getService('em');
     }
-
+    
     public function saveAction()
     {
-		$this->_helper->layout->disableLayout();
+        $this->_helper->layout->disableLayout();
 		$params = $this->getRequest()->getParams();
         
         $errors = array();
@@ -28,13 +30,18 @@ class RatingController extends Zend_Controller_Action
 		$auth = Zend_Auth::getInstance();
 
 		if ($auth->getIdentity()) {
-            $userRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\User');
-			$ratingRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Rating');
+            $userRepository = $this->em->getRepository('Newscoop\Entity\User');
+			$ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
             
             $user = $userRepository->find($auth->getIdentity());
 
             if ($ratingRepository->countBy(array('articleId' => $params['f_article_number'], 'userId' => $user->getId())) > 0) {
-                $errors[] = $this->view->translate('You have already rated this article');   
+                // update the existing rating
+                $rating = $ratingRepository->findOneBy(array('articleId' => $params['f_article_number'], 'userId' => $user->getId()));
+                $ratingRepository->update($rating, array('ratingScore' => $params['f_rating_score']));
+                $ratingRepository->flush();
+
+                $errors[] = $this->view->translate('Your rating has been updated');
             }
 
 		} else {
@@ -45,10 +52,10 @@ class RatingController extends Zend_Controller_Action
 			$rating = new Rating();
 
 			$values = array(
-				'user_id' => $user->getId(),
-				'article_id' => $params['f_article_number'],
-				'rating_score' => $params['f_rating_score'],
-				'time_created' => new DateTime()
+				'userId' => $user->getId(),
+				'articleId' => $params['f_article_number'],
+				'ratingScore' => $params['f_rating_score'],
+				'timeCreated' => new DateTime()
 			);
 
 			$ratingRepository->save($rating, $values);
@@ -86,7 +93,7 @@ class RatingController extends Zend_Controller_Action
      */
     protected function getArticleRating($articleId)
     {
-	    $ratingRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Rating');
+	    $ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
         $ratingScores = $ratingRepository->getArticleRating($articleId);
 
          

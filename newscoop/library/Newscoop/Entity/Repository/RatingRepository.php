@@ -36,19 +36,38 @@ class RatingRepository extends DatatableSource
      * @param array $params
      * @return Rating $p_enitity
      */
-    public function save(Rating $p_entity, $p_values)
+    public function save(Rating $entity, $values)
     {
-	    // get the enitity manager
         $em = $this->getEntityManager();
 
-        $p_entity->setUserId($p_values['user_id'])
-				 ->setArticleId($p_values['article_id'])
-				 ->setRatingScore($p_values['rating_score'])
-				 ->setTimeCreated($p_values['time_created']);
+        $entity->setUserId($values['userId'])
+		    ->setArticleId($values['articleId'])
+			->setRatingScore($values['ratingScore'])
+			->setTimeCreated($values['timeCreated'])
+            ->setTimeUpdated(new \DateTime);
 
-        $em->persist($p_entity);
+        $em->persist($entity);
 
-        return $p_entity;
+        return $entity;
+    }
+
+    /**
+     * Method for updating a rating
+     *
+     * @param Rating $p_enitity
+     * @param array $p_values
+     * @return Rating $p_enitity
+     */
+    public function update(Rating $entity, $values)
+    {
+        $em = $this->getEntityManager();
+
+        $entity->setRatingScore($values['ratingScore'])
+            ->setTimeUpdated(new \DateTime);
+
+        $em->persist($entity);
+
+        return $entity;
     }
 
     /**

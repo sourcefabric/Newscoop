@@ -47,6 +47,12 @@ class Rating extends Entity
     private $timeCreated;
 
     /**
+     * @column(type="datetime", name="time_updated" )
+     * @var DateTime
+     */
+    private $timeUpdated;
+
+    /**
      * @return int
      */
     public function getArticleId()
@@ -79,6 +85,14 @@ class Rating extends Entity
     }
 
     /**
+     * @return DateTime
+     */
+    public function getTimeUpdated()
+    {
+        return $this->timeUpdated;
+    }
+
+    /**
      * Set timecreated
      *
      * @param DateTime $p_datetime
@@ -87,25 +101,33 @@ class Rating extends Entity
     public function setTimeCreated(\DateTime $p_datetime)
     {
         $this->timeCreated = $p_datetime;
-        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Set timeupdated
+     *
+     * @param DateTime $p_datetime
+     * @return Newscoop\Entity\Rating
+     */
+    public function setTimeUpdated(\DateTime $p_datetime)
+    {
+        $this->timeUpdated = $p_datetime;
         return $this;
     }
 
     public function setArticleId($articleId) {
         $this->articleId = $articleId;
-        // return this for chaining mechanism
         return $this;
     }
 
     public function setUserId($userId) {
         $this->userId = $userId;
-        // return this for chaining mechanism
         return $this;
     }
 
     public function setRatingScore($ratingScore) {
         $this->ratingScore = $ratingScore;
-        // return this for chaining mechanism
         return $this;
     }
 }
