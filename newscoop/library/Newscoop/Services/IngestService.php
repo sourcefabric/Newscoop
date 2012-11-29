@@ -1,20 +1,21 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\Ingest\Feed,
-    Newscoop\Entity\Ingest\Feed\Entry,
-    Newscoop\Ingest\Parser,
-    Newscoop\Ingest\Parser\NewsMlParser,
-    Newscoop\Ingest\Parser\SwissinfoParser,
-    Newscoop\Ingest\Publisher,
-    Newscoop\Services\Ingest\PublisherService;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed\Entry;
+use Newscoop\Ingest\Parser;
+use Newscoop\Ingest\Parser\NewsMlParser;
+use Newscoop\Ingest\Parser\SwissinfoParser;
+use Newscoop\Ingest\Parser\SwisstxtParser;
+use Newscoop\Ingest\Publisher;
+use Newscoop\Services\Ingest\PublisherService;
 
 /**
  * Ingest service
@@ -37,6 +38,7 @@ class IngestService
     /**
      * @param array $config
      * @param Doctrine\ORM\EntityManager $em
+     * @param Newscoop\Services\Ingest\PublisherService $publisher
      */
     public function __construct($config, EntityManager $em, PublisherService $publisher)
     {
@@ -60,7 +62,7 @@ class IngestService
     public function getFeeds()
     {
         return $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-                    ->findAll();
+            ->findAll();
     }
 
     /**
@@ -71,28 +73,43 @@ class IngestService
     public function updateSDA()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-                    ->findBy(array(
-                        'title' => 'SDA',
-                    ));
+            ->findOneBy(array(
+                'title' => 'SDA',
+            ));
 
-        if (count($feed) > 0) {
-            $this->updateSDAFeed($feed[0]);
+        if ($feed) {
+            $this->updateSDAFeed($feed);
         }
     }
 
     public function updateSwissinfo()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-                    ->findBy(array(
-                        'title' => 'swissinfo',
-                    ));
+            ->findOneBy(array(
+                'title' => 'swissinfo',
+            ));
 
-        if (count($feed) > 0) {
-            $this->updateSwissinfoFeed($feed[0]);
+        if ($feed) {
+            $this->updateSwissinfoFeed($feed);
         }
     }
 
-    //private function
+    /**
+     * Update swisstxt
+     *
+     * @return void
+     */
+    public function updateSTX()
+    {
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+            ->findOneBy(array(
+                'title' => 'STX',
+            ));
+
+        if ($feed) {
+            $this->updateSTXFeed($feed);
+        }
+    }
 
     private function updateSwissinfoFeed(Feed $feed)
     {
@@ -102,16 +119,13 @@ class IngestService
             if ($response->isSuccessful()) {
                 $available_sections = $response->getBody();
                 $available_sections = json_decode($available_sections, true);
-            }
-            else {
+            } else {
                 return;
             }
-        }
-        catch (\Zend_Http_Client_Exception $e) {
+        } catch (\Zend_Http_Client_Exception $e) {
+            throw new \Exception("Swiss info http error {$e->getMessage()}");
             return;
-            //throw new \Exception("Swiss info http error {$e->getMessage()}");
-        }
-        catch(\Exception $e) {
+        } catch(\Exception $e) {
             return;
         }
 
@@ -119,7 +133,6 @@ class IngestService
         $url = $this->config['swissinfo_latest'];
 
         foreach ($available_sections as $section) {
-
             try {
                 $request_url = str_replace('{{section_id}}', $section['id'], $url);
 
@@ -128,7 +141,7 @@ class IngestService
                 if ($response->isSuccessful()) {
 
                     $section_xml = $response->getBody();
-                    $stories = Parser\SwissinfoParser::getStories($section_xml);
+                    $stories = SwissinfoParser::getStories($section_xml);
 
                     foreach ($stories as $story) {
 
@@ -140,9 +153,7 @@ class IngestService
                         }
                     }
                 }
-            }
-            catch (\Exception $e) {
-                //throw new \Exception("Swiss info feed error {$e->getMessage()}");
+            } catch (\Exception $e) {
                 return;
             }
         }
@@ -211,7 +222,65 @@ class IngestService
         $feed->setUpdated(new \DateTime());
         $this->em->persist($feed);
 
-        $this->getEntryRepository()->liftEmbargo();
+        $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
+        $this->em->flush();
+    }
+
+     /**
+     * Update feed
+     *
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return void
+     */
+    private function updateSTXFeed(Feed $feed)
+    {
+        foreach (glob($this->config['path'] . '/*.xml') as $file) {
+
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            if (time() < filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            $handle = fopen($file, 'r');
+            if (flock($handle, LOCK_EX | LOCK_NB)) {
+                $parser = new SwisstxtParser($file);
+                $entry = $this->getPrevious($parser, $feed);
+
+                switch ($parser->getStatus()) {
+                    case 'updated':
+                        $entry->update($parser);
+
+                    case 'created':
+                        if ($entry->isPublished()) {
+                            $this->updatePublished($entry);
+                        } else if ($feed->isAutoMode()) {
+                            $this->publish($entry);
+                        }
+                        $this->em->persist($entry);
+                        break;
+
+                    case 'deleted':
+                        $this->deletePublished($entry);
+                        $feed->removeEntry($entry);
+                        $this->em->remove($entry);
+                        break;
+                }
+
+                flock($handle, LOCK_UN);
+                fclose($handle);
+                $this->em->flush();
+            } else {
+                continue;
+            }
+        }
+
+        $feed->setUpdated(new \DateTime());
+        $this->em->persist($feed);
+
+        $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
         $this->em->flush();
     }
 
@@ -224,7 +293,7 @@ class IngestService
      */
     public function getPrevious(Parser $parser, Feed $feed)
     {
-        $previous = array_shift($this->getEntryRepository()->findBy(array(
+        $previous = array_shift($this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->findBy(array(
             'date_id' => $parser->getDateId(),
             'news_item_id' => $parser->getNewsItemId(),
         )));
@@ -245,7 +314,7 @@ class IngestService
      */
     public function find($id)
     {
-        return $this->getEntryRepository()
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')
             ->find($id);
     }
 
@@ -260,7 +329,7 @@ class IngestService
      */
     public function findBy(array $criteria, array $orderBy = array(), $limit = 25, $offset = 0)
     {
-        return $this->getEntryRepository()
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
@@ -275,8 +344,7 @@ class IngestService
 
         if ($feed->getMode() === "auto") {
             $feed = $feed->setMode("manual");
-        }
-        else {
+        } else {
             $feed = $feed->setMode("auto");
         }
 
@@ -297,6 +365,7 @@ class IngestService
         $entry->setPublished(new \DateTime());
         $this->em->persist($entry);
         $this->em->flush();
+
         return $article;
     }
 
@@ -339,15 +408,5 @@ class IngestService
         if ($entry->isPublished()) {
             $this->publisher->delete($entry);
         }
-    }
-
-    /**
-     * Get feed entry repository
-     *
-     * @return Doctrine\ORM\EntityRepository
-     */
-    private function getEntryRepository()
-    {
-        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry');
     }
 }
