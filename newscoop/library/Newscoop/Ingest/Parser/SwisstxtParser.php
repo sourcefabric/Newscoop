@@ -152,6 +152,29 @@ class SwisstxtParser implements Parser
 
     public function getSubject()
     {
+        $sectionsMapping = array(
+            'News/People'       =>  'gesellschaft',
+            'News/Economy'      =>  'wirtschaft',
+            'News/Foreign'      =>  'politik',
+            'News/National'     =>  'politik',
+            'News/Culture'      =>  'kultur',
+            'Sport/Basketball'  =>  'sport',
+        );
+
+        $categoriesSimpleObject = $this->story->xpath('/ContentObject/MetaData/categories/category');
+
+        $categories = array();
+        foreach ($categoriesSimpleObject as $category) {
+            $categories[] = $this->getString($category->xpath('./@name'));
+        }
+
+        $categoryPath = implode('/', $categories);
+        if (array_key_exists($categoryPath, $sectionsMapping)) {
+            return 'section_' . $sectionsMapping[$categoryPath];
+        } else if ($categories[0] === 'Sport') {
+            return 'section_sport';
+        }
+
         return '';
     }
 

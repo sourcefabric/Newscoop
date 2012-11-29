@@ -259,6 +259,7 @@ class IngestService
                         } else if ($feed->isAutoMode()) {
                             $this->publish($entry);
                         }
+                        $this->em->persist($entry);
                         break;
 
                     case 'deleted':
@@ -267,7 +268,6 @@ class IngestService
                         $this->em->remove($entry);
                         break;
                 }
-                $this->em->persist($entry);
 
                 flock($handle, LOCK_UN);
                 fclose($handle);

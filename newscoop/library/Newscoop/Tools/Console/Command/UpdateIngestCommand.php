@@ -37,6 +37,5 @@ EOT
     {
         $ingest = $this->getHelper('container')->getService('ingest');
         $ingest->updateSTX();
-        $output->writeln('Ingest Feeds updated.');
     }
 }
