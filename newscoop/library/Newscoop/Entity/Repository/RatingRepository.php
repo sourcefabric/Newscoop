@@ -11,12 +11,11 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Rating;
-use Newscoop\Datatable\Source as DatatableSource;
 
 /**
  * Rating repository
  */
-class RatingRepository extends DatatableSource
+class RatingRepository extends EntityRepository
 {
 
     /**
