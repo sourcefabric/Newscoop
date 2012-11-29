@@ -3,6 +3,7 @@
  */
 
 return array(
+    'You have already rated this article' => 'You have already rated this article',
     'Please login' => 'Please login',
     'You have to be registered in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account.' => 'You have to be registered in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account.',
     'login_link_text' => '',
