@@ -88,6 +88,9 @@ class ContextBoxArticle extends DatabaseObject
         $sql = 'SELECT fk_article_no FROM context_articles
                 WHERE fk_context_id = ' . $p_context_id . '
                 ORDER BY id desc';
+        if ($p_limit > 0) {
+            $sql .= ' LIMIT ' . $p_limit;
+        }
         $rows = $g_ado_db->GetAll($sql);
         if (is_array($rows)) {
             foreach($rows as $row) {
