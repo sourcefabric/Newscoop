@@ -14,7 +14,6 @@ use Newscoop\Ingest\Parser;
  */
 class SwisstxtParser implements Parser
 {
-
     /** @var SimpleXMLElement */
     private $story;
 
