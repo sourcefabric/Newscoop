@@ -53,8 +53,7 @@
             "vendor/Smarty3/libs", 
             "newscoop/classes",
             "newscoop/template_engine",
-            "newscoop/plugins",
-            "plugins"
+            "newscoop/plugins"
         ]
     },
     "include-path": [
