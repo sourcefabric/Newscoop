@@ -1,6 +1,6 @@
 <?php 
-regGS("Blog management", "");
-regGS("Add article to a list", "");
+regGS("Blog management", "Blog Managment");
+regGS("Add article to a list", "Artikel dieser Liste hinzufügen");
 regGS("View article", "Artikel ansehen");
 regGS("Select a list", "Liste auswählen");
 regGS("Remove list", "Liste entfernen");
@@ -186,4 +186,7 @@ regGS("This article cannot be previewed. Please make sure the article has an iss
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>

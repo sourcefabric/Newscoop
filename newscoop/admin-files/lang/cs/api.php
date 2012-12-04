@@ -1,4 +1,7 @@
 <?php 
+regGS("No such article type", "");
+regGS("Filter saved", "");
+regGS("Filter not saved", "");
 regGS("Not a color", "To není barva");
 regGS("No such field", "Žádné takové pole");
 regGS("Color saved", "Barva uložena");

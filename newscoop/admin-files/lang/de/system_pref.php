@@ -1,12 +1,12 @@
 <?php 
-regGS("to load geo-names data", "");
-regGS("MySQL client command path", "");
+regGS("Automatic collection of statistics:", "");
+regGS("to load geo-names data", "um Geo-Namen Daten zu laden");
+regGS("MySQL client command path", "MySQL Client Befehlspfad");
 regGS("according to php.ini settings", "gemäß den Einstellungen in php.ini");
 regGS("Maximal zoom for auto-focusing:", "Maximaler Zoom für Auto-Schärfe");
 regGS("Map border for auto-focusing:", "Kartengrenze für Auto-Schärfe:");
 regGS("Map auto-focusing as the default behavior:", "Karten Auto-Schärfe als Standard-Verhalten. ");
 regGS("Include CSS file for map view", "CSS-Datei bei Kartenansicht einschließen. ");
-regGS("Collect statistics:", "Statistiken sammeln:");
 regGS("Please enter password recovery from email.", "Bitte geben Sie die Passwort-Wiederherstellung aus der Email ein. ");
 regGS("From email address:", "Aus der Email-Adresse");
 regGS("Run scheduled tasks externally?", "Geplante Aufgaben extern ausführen?");

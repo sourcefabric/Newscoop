@@ -1,4 +1,9 @@
 <?php 
+regGS("list", "");
+regGS("filter", "");
+regGS("In Lists?", "");
+regGS("Are you sure you want to $1 articles of article type $2?", "");
+regGS("$1 articles of article type $2", "");
 regGS("Hide human-readable field names", "Esconder nomes de campos legíveis por pessoas.");
 regGS("Edit and translate human-readable field names", "Editar e traduzir nomes de campos legíveis por pessoas");
 regGS("The template name may only contain letters and the underscore (_) character.", "");

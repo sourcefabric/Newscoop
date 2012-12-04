@@ -1,4 +1,13 @@
 <?php 
+regGS("send confirmation email", "");
+regGS("edit user", "");
+regGS("delete user", "");
+regGS("Verified profile", "");
+regGS("Send email to user:", "");
+regGS("Search for username/email", "");
+regGS("No users found.", "");
+regGS("Are you sure you want to {action}?", "");
+regGS("Active Logins", "");
 regGS("Username is used already", "Такое имя пользователя уже используется");
 regGS("User with id '$1' not found", "Пользователь с id '$1' не найден");
 regGS("User was deleted.", "Пользователь был удален.");
@@ -8,19 +17,15 @@ regGS("User '$1' created", "Аккаунт пользователя '$1' соз�
 regGS("Send confirm email", "Отправить сообщение с подтверждением");
 regGS("Profile saved.", "Профиль сохранен.");
 regGS("Picture", "Аватар");
-regGS("Pending", "В процессе ожидания");
 regGS("Password updated", "Пароль обновлен");
 regGS("None", "Пусто");
 regGS("New confirmation email was sent to user.", "Новое email -подтверждение по отправлено пользователю");
-regGS("Inactive", "Неактивный");
 regGS("Email is used already", "Этот уже email используется ");
 regGS("Edit your password", "Изменить пароль");
 regGS("Edit user '$1'", "Изменить данные пользователя '$1'");
 regGS("Edit subscriptions", "Редактировать подписки");
 regGS("Edit profile", "Редактировать профиль");
 regGS("Edit permissions", "Редактировать права доступа");
-regGS("Do you really want to send confirmation email?", "Вы действительно хотите отправить подтверждение по email?");
-regGS("Do you really want to delete user?", "Вы действительно хотите удалить пользователя?");
 regGS("Create new account", "Создать новый аккаунт");
 regGS("Comment ban settings", "Настройки запрета на комментарии");
 regGS("Ban for user \"$1\" saved.", "Запрет комментирования для пользователя \"$1\"");
