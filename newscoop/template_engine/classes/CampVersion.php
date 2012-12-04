@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.0.2';
+    private $m_release = '4.1.0';
 
     /**
      * @var string
@@ -57,13 +57,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_website = 'http://www.sourcefabric.org';
-
-
-    /**
-     * Class constructor
-     */
-    final public function __construct() { } // fn __construct
+    private $m_website = 'http://www.sourcefabric.org'
 
 
     public function getVersion() {
@@ -77,62 +71,52 @@ final class CampVersion
         return $version;
     }
 
-
     public function getOrganization()
     {
         return $this->m_organization;
-    } // fn getOrganization
-
+    }
 
     public function getPackage()
     {
         return $this->m_package;
-    } // fn getPackage
-
+    }
 
     public function getRelease()
     {
         return $this->m_release;
-    } // fn getRelease
-
+    }
 
     public function getDevelopmentStatus()
     {
         return $this->m_devStatus;
-    } // fn getDevelopmentStatus
-
+    }
 
     public function getCodeName()
     {
         return $this->m_codeName;
-    } // fn getCodeName
-
+    }
 
     public function getReleaseDate()
     {
         return $this->m_releaseDate;
-    } // fn getReleaseDate
-
+    }
 
     public function getCopyright()
     {
         $c = '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;<a href="' . $this->m_website
             . '" target="_blank">' . $this->m_organization . '</a>';
         return $c;
-    } // fn getCopyright
-
+    }
 
     public function getLicense()
     {
         return $this->m_license;
-    } // fn getLicense
-
+    }
 
     public function getWebURL()
     {
         return $this->m_website;
-    } // fn getWebURL
-
+    }
 
     function getFullInfo()
     {
@@ -140,8 +124,5 @@ final class CampVersion
         $text .= ' '.$this->m_releaseDate;
         $text .= ' '.$this->m_organization;
         return $text;
-    } // fn getFullInfo
-
-} // fn class CampVersion
-
-?>
+    }
+}
