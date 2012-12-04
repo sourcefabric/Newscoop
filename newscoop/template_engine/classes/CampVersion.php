@@ -57,8 +57,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_website = 'http://www.sourcefabric.org'
-
+    private $m_website = 'http://www.sourcefabric.org';
 
     public function getVersion() {
         $version = $this->m_release;
