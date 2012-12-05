@@ -1,1 +1,1 @@
-0 */4 * * * {{ $CAMPSITE_BIN_DIR }}/newscoop-indexer --silent
+0 */4 * * * {{ $CAMPSITE_BIN_DIR }}/console newscoop:indexer:run
