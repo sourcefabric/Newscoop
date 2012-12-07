@@ -3,6 +3,7 @@
 
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Newscoop\Services\FilesystemService;
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 

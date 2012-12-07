@@ -15,7 +15,7 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
 /**
- * Send stats command
+ * Index newscoop articles command
  */
 class IndexerCommand extends Console\Command\Command
 {

@@ -16,7 +16,8 @@ use Doctrine\ORM\Mapping AS ORM;
 class Log
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
@@ -29,14 +30,16 @@ class Log
     private $created;
 
     /**
-     * @ORM\Column(type="integer", name="fk_event_id")
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Event")
+     * @ORM\JoinColumn(name="fk_event_id", referencedColumnName="id")
+     * @var Newscoop\Entity\Event
      */
     private $eventId;
 
     /**
-     * @ORM\Column(type="integer", name="fk_user_id")
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", fetch="EAGER")
+     * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
      */
     private $userId;
 
@@ -51,4 +54,20 @@ class Log
      * @var string
      */
     private $userIp;
+
+    public function getCreated() {
+        return $this->created;
+    }
+
+    public function getUser() {
+        return $this->userId;
+    }
+
+    public function getEvent() {
+        return $this->eventId;
+    }
+
+    public function getMessage() {
+        return $this->message;
+    }
 }

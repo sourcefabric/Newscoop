@@ -66,7 +66,7 @@ EOT
             $client = new \Zend_Http_Client();
             $client->setUri($statsUrl);
             $client->setParameterPost($parameters);
-            $response = $client->request('POST');
+            $client->request('POST');
         }
     }
 }

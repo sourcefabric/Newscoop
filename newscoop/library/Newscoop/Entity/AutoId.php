@@ -21,4 +21,60 @@ class AutoId
      * @var int
      */
     private $articleId;
+
+    /**
+     * @ORM\Column(type="datetime", name="LogTStamp")
+     * @var datetime
+     */
+    private $logTimestamp;
+
+    /**
+     * @ORM\Column(type="integer", name="TopicId")
+     * @var int
+     */
+    private $topicId;
+
+    /**
+     * @ORM\Column(type="integer", name="translation_phrase_id")
+     * @var int
+     */
+    private $translationPhraseId;
+
+    /**
+     * Get articleid
+     * @return integer
+     */
+    public function getArticleId() {
+        return $this->articleId;
+    }
+
+    /**
+     * Get logTimestamp
+     * @return datetime
+     */
+    public function getLogTimestamp() {
+        return $this->logTimestamp;
+    }
+
+    public function setLogTimestamp(\DateTime $logTimestamp) {
+        $this->logTimestamp = $logTimestamp;
+
+        return $this;
+    }
+
+    /**
+     * Get topicId
+     * @return integer
+     */
+    public function getTopicId() {
+        return $this->topicId;
+    }
+
+    /**
+     * Get translationPhraseId
+     * @return integer
+     */
+    public function getTranslationPhraseId() {
+        return $this->translationPhraseId;
+    }
 }
