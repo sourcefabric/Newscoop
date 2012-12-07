@@ -114,7 +114,7 @@ class MailChimpFacade
         $groups = array();
         foreach ($info['data'] as $userinfo) {
             foreach ($userinfo['merges']['GROUPINGS'] as $grouping) {
-                $groups[$grouping['id']] = explode(',', $grouping['groups']);
+                $groups[$grouping['id']] = array_map('trim', explode(',', $grouping['groups']));
             }
         }
 

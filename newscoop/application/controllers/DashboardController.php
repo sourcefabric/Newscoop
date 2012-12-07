@@ -126,6 +126,18 @@ class DashboardController extends Zend_Controller_Action
         $this->_helper->json(array());
     }
 
+    public function saveNewsletterAction()
+    {
+        $form = $this->getMailChimpForm();
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $form->getValues());
+        }
+
+        $url = $this->view->url(array('action' => 'index')) . '#meine-newsletter';
+
+        $this->_helper->redirector->goToUrl($url);
+    }
+
     /**
      * Get mailchimp list id
      *
