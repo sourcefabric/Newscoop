@@ -3,7 +3,9 @@ camp_load_translation_strings("plugins");
 camp_load_translation_strings("api");
 
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
-
+ // update autoload 
+                    exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update');
+                    echo 'php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update';die;
 if (!$g_user->hasPermission('plugin_manager')) {
     camp_html_display_error(getGS("You do not have the right to manage plugins."));
     exit;
@@ -40,6 +42,9 @@ if (Input::Get('save')) {
                     $CampPlugin->update();
                     $CampPlugin->enable();
 
+                    // update autoload 
+                    exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update');
+
                 } else {
                     // just enable plugin
                     $CampPlugin->enable();
@@ -49,6 +54,9 @@ if (Input::Get('save')) {
                 $CampPlugin->create($plugin, $currentVersion);
                 $CampPlugin->install();
                 $CampPlugin->enable();
+
+                // update autoload 
+                exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update');
             }
         } else {
             $CampPlugin->disable();
