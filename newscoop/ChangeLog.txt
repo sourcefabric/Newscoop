@@ -1,20 +1,33 @@
-4.0.3 (November 12, 2012)
+4.0.3 (December 12, 2012)
+  Security fixes
+  --------------
+  CS-4524: Vulnerability report on password recovery
+
   Improvements
   ------------
   CS-4419: New storage schema for Images
   CS-4460: Add Remind me Never button to Newscoop nag screen
+  CS-4484: List of related articles in opposite direction (with role="child")
 
   Bug fixes
   ---------
   CS-4426: Hardcoded file size limit of 2mb in plupload configuration
+  CS-4487: Can not create section when translating article
+  CS-4517: Article type field is not considered empty due to 'is content' stats
   CS-4442: get_img returns wrong headers for expiration affecting caching
+  CS-4525: Plugin classes must register to auto-loading classes map
   CS-4466: Some jquery resources do not load on https setups
+  CS-4485: length argument is ignored in list_related_articles
+  CS-4482: Strict error reporting in MAMP
+  CS-4516: Plupload examples allows to upload files w/o any authentication
+  CS-4498: liveuser table UName can't be null after upgrade from 3.5 which makes it impossible to register
   CS-4420: Empty topic created on adding a new topic with a used name
   CS-4421: Wrong link after renaming a topic to a used name
   CS-4447: User schema contains not null columns after upgrade from 3.5
 
   Tasks
   -----
+  CS-4504: Proxy generation does not work for entities out of library/Newscoop/Entity
   Use of composer to handle dependencies.
   Remove Doctrine from library directory as it is now handled via composer.
 
