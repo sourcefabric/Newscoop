@@ -190,60 +190,70 @@ class User extends DatabaseObject {
      * Fetch the user by given username
      *
      * @param string
-     *    $p_username The user name
+     *    $username The user name
      * @param bool
-     *    $p_adminOnly Whether we want to be sure to get only an admin user
+     *    $adminOnly Whether we want to be sure to get only an admin user
      *
      * @return mixed
      *    null No one user found
      *    object User object
      */
-    public static function FetchUserByName($p_username, $p_adminOnly = false)
+    public static function FetchUserByName($username, $adminOnly = false)
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT * FROM liveuser_users WHERE UName='$p_username'";
+        $queryStr = 'SELECT * FROM liveuser_users WHERE UName = ?';
+        $inputArray[] = $username;
         if ($p_adminOnly) {
-            $queryStr .= " AND Reader='N'";
+            $queryStr .= ' AND Reader = ?';
+            $inputArray[] = 'N';
         }
-        $row = $g_ado_db->GetRow($queryStr);
+
+        $row = $g_ado_db->GetRow($queryStr, $inputArray);
         if ($row) {
             $user = new User();
             $user->fetch($row);
+
             return $user;
         }
+
         return null;
-    } // fn FetchUserByName
+    }
 
 
     /**
      * Fetch the user by given email
      *
      * @param string
-     *    $p_email The email
+     *    $email The email
      * @param bool
-     *    $p_adminOnly Whether we want to be sure to get only an admin user
+     *    $adminOnly Whether we want to be sure to get only an admin user
      *
      * @return mixed
      *    null No one user found
      *    object User object
      */
-    public static function FetchUserByEmail($p_email, $p_adminOnly = false)
+    public static function FetchUserByEmail($email, $adminOnly = false)
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT * FROM liveuser_users WHERE EMail='$p_email'";
+        $queryStr = 'SELECT * FROM liveuser_users WHERE EMail = ?';
+        $inputArray[] = $email;
         if ($p_adminOnly) {
-            $queryStr .= " AND Reader='N'";
+            $queryStr .= ' AND Reader = ?';
+            $inputArray[] = 'N';
         }
-        $row = $g_ado_db->GetRow($queryStr);
+
+        $row = $g_ado_db->GetRow($queryStr, $inputArray);
         if ($row) {
             $user = new User();
             $user->fetch($row);
+
             return $user;
         }
+
         return null;
-    } // fn FetchUserByEmail
+    }
 
 
     /**
