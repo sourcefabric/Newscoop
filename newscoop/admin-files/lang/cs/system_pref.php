@@ -1,4 +1,5 @@
 <?php 
+regGS("Automatic collection of statistics:", "");
 regGS("to load geo-names data", "");
 regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "podle php.ini nastavení");
@@ -6,7 +7,6 @@ regGS("Maximal zoom for auto-focusing:", "Maximální zoom pro automatické zaos
 regGS("Map border for auto-focusing:", "Hranice mapy pro automatické zaostření:");
 regGS("Map auto-focusing as the default behavior:", "Automaticke zaostření pro mapu jako defaultní chování:");
 regGS("Include CSS file for map view", "Zahrnout CSS soubor pro zobrazeni mapy");
-regGS("Collect statistics:", "Sbírání statistik:");
 regGS("Please enter password recovery from email.", "Vložte prosím obnovovací heslo, které Vám došlo v e-mailu");
 regGS("From email address:", "Z e-mailové adresy:");
 regGS("Run scheduled tasks externally?", "Spouštět naplánované úlohy navenek?");

@@ -1,12 +1,12 @@
 <?php 
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "Web kod");
 regGS("View article", "Pogledaj tekst");
 regGS("Source", "Izvor");
 regGS("Select type", "Izaberi tip");
 regGS("On", "Na");
 regGS("Off", "Isključeno");
-regGS("Display newswires articles", "Prikaži tekstove iz distributivnog kanala");
-regGS("Display Newswires", "Prikaži distributivne kanale");
 regGS("Title", "Naziv");
 regGS("No video playback capabilities, please download the video below", "Bez mogućnosti reprodukcije videa, molim daunloudujte video");
 regGS("Article status set to '$1' for $2 articles", "Status teksta postavljen na '$1' za $2 tekstova");

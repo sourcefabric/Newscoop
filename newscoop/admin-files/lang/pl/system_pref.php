@@ -1,4 +1,5 @@
 <?php 
+regGS("Automatic collection of statistics:", "");
 regGS("to load geo-names data", "");
 regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "");
@@ -6,7 +7,6 @@ regGS("Maximal zoom for auto-focusing:", "");
 regGS("Map border for auto-focusing:", "");
 regGS("Map auto-focusing as the default behavior:", "");
 regGS("Include CSS file for map view", "");
-regGS("Collect statistics:", "");
 regGS("Please enter password recovery from email.", "");
 regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "Uruchamiaj zaprogramowane zadania zewnętrznie?");

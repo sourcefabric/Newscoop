@@ -1,4 +1,5 @@
 <?php 
+regGS("Display newsfeed images", "");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Η εικόνα είναι πολύ μικρή. Πρέπει να είναι τουλάχιστον %dx%d.");
 regGS("Slideshow rendition", "");
 regGS("Renditions reloaded", "");

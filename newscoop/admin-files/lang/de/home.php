@@ -1,6 +1,6 @@
 <?php 
-regGS("Campsite", "");
-regGS("Image Rendering", "");
+regGS("Campsite", "Campsite ");
+regGS("Image Rendering", "Bildwiedergabe");
 regGS("Featured Article Lists", "Listen ausgewählter Artikel ");
 regGS("You have tried to upload an invalid backup file.", "Sie haben versucht eine ungültige Backup-Datei hochzuladen. ");
 regGS("You do not have the right to manage backups.", "Sie haben keine Berechtigung um Backups zu bearbeiten. ");
@@ -153,4 +153,5 @@ regGS("Please make sure that you typed the correct user name and password.", "Bi
 regGS("If your problem persists please contact the site administrator $1", "Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.");
 regGS("Backup/Restore", "Backup/Wiederherstellung");
 regGS("Printdesk", "Printdesk");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hallo, \\n\\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1");
 ?>
