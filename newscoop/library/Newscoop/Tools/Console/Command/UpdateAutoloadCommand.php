@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
 /**
- * Log maintenance command
+ * Autoload map update command
  */
 class UpdateAutoloadCommand extends Console\Command\Command
 {
@@ -22,8 +22,8 @@ class UpdateAutoloadCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('newscoop:autoload:update')
-        ->setDescription('Update autoload managed by composer.');
+        ->setName('autoload:update')
+        ->setDescription('Update composer autoload map.');
     }
 
     /**
@@ -31,11 +31,12 @@ class UpdateAutoloadCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        exec('cd newscoop && php composer.phar dump-autoload && echo "Found" || echo "Not Found"', $output);
+        exec('php composer.phar dump-autoload && echo "Found" || echo "Not Found"', $output);
         if ( $output[0] == "Not Found" ) {
-            exec('cd newscoop && curl -s https://getcomposer.org/installer | php');
-            exec('cd newscoop && php composer.phar dump-autoload');
-            $output->writeln('Autload dumped.');
+            exec('curl -s https://getcomposer.org/installer | php');
+            exec('php composer.phar dump-autoload');
         }
+
+        $output->writeln('Autoload dumped.');
     }
 }
