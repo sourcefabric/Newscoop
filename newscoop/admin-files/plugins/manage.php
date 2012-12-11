@@ -40,6 +40,9 @@ if (Input::Get('save')) {
                     $CampPlugin->update();
                     $CampPlugin->enable();
 
+                    // update autoload 
+                    exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update');
+
                 } else {
                     // just enable plugin
                     $CampPlugin->enable();
@@ -49,6 +52,9 @@ if (Input::Get('save')) {
                 $CampPlugin->create($plugin, $currentVersion);
                 $CampPlugin->install();
                 $CampPlugin->enable();
+
+                // update autoload 
+                exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php newscoop:autoload:update');
             }
         } else {
             $CampPlugin->disable();
