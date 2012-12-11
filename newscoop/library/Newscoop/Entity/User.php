@@ -52,6 +52,12 @@ class User implements \Zend_Acl_Role_Interface
     private $username;
 
     /**
+     * @ORM\Column(type="string", nullable=TRUE, name="Title")
+     * @var string
+     */
+    private $title;
+
+    /**
      * @ORM\Column(type="string", length=60, nullable=TRUE, name="Password")
      * @var string
      */
@@ -310,6 +316,11 @@ class User implements \Zend_Acl_Role_Interface
     {
         $name = $this->getFirstName().' '.$this->getLastName();
         return $name;
+    }
+
+    public function getTitle()
+    {
+        return $this->title;
     }
 
     /**

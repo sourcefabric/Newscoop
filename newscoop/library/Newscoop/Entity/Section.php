@@ -44,6 +44,13 @@ class Section
     private $issue;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="sections")
+     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="id")
+     * @var Newscoop\Entity\Issue
+     */
+    private $nrIssue;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
@@ -81,6 +88,12 @@ class Section
      * @var string
      */
     private $articlesLink;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SubscriptionsSection", mappedBy="subscription")
+     * @var Doctrine\Common\Collections\Collection;
+     */
+    private $subscriptionSection;
     
     /**
      * Set link to topic articles resource
@@ -212,5 +225,10 @@ class Section
     public function getId()
     {
         return (int) $this->id;
+    }
+
+    public function getSubscriptionSection()
+    {
+        return $this->subscriptionSection;
     }
 }
