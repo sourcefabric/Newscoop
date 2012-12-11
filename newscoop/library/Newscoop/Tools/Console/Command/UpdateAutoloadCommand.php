@@ -31,8 +31,8 @@ class UpdateAutoloadCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        exec('php composer.phar dump-autoload && echo "Found" || echo "Not Found"', $output);
-        if ( $output[0] == "Not Found" ) {
+        exec('php composer.phar dump-autoload && echo "Found" || echo "Not Found"', $out);
+        if ( $out[0] == "Not Found" ) {
             exec('curl -s https://getcomposer.org/installer | php');
             exec('php composer.phar dump-autoload');
         }
