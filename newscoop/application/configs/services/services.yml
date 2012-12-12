@@ -85,15 +85,12 @@ services:
     email:
         class:      Newscoop\Services\EmailService
         arguments:  ["%email%", "@view", "@user.token"]
-    ingest.settings:
-        class:      Newscoop\News\SettingsService
-        arguments:  ["@?odm"]
-    ingest.item:
-        class:      Newscoop\News\ItemService
-        arguments:  ["@?odm", "@ingest.settings"]
-    ingest.feed:
-        class:      Newscoop\News\FeedService
-        arguments:  ["@?odm", "@ingest.item"]
+    ingest.publisher:
+        class:      Newscoop\Services\Ingest\PublisherService
+        arguments:  ["%ingest_publisher%"]
+    ingest:
+        class:      Newscoop\Services\IngestService
+        arguments:  ["%ingest%", "@em", "@ingest.publisher"]
     blog:
         class:      Newscoop\Services\BlogService
         arguments:  ["%blog%"]

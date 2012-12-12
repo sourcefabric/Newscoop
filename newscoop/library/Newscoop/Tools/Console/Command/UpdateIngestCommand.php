@@ -1,15 +1,15 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console;
 
 /**
  * Ingest update command
@@ -35,8 +35,10 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $this->getHelper('container')->getService('ingest.feed')
-            ->updateAll();
+        $ingest = $this->getHelper('container')->getService('ingest');
+
+        // run feeds update here.
+
         $output->writeln('Ingest updated.');
     }
 }
