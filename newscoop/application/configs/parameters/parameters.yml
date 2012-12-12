@@ -115,12 +115,7 @@ parameters:
         path: ""
     ingest_publisher:
         article_type: "newswire"
-        section_sport: "40"
-        section_culture: "50"
-        section_basel: "10"
-        section_international: "30"
         section_other: "20"
-        section_swiss_info: "90"
         field:
             NewsItemIdentifier: "getNewsItemId"
             NewsProduct: "getProduct"
