@@ -1,0 +1,6 @@
+newscoop-easy-setup (4.0.2-1) unstable; urgency=low
+
+  * Fork of airtime-easy-setup metapackage
+
+ -- Daniel James <daniel@64studio.com>  Wed, 18 Jul 2012 12:47:30 +0000
+
