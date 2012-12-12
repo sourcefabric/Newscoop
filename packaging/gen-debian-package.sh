@@ -77,14 +77,19 @@ rm newscoop/js/geocoding/openlayers/license.txt
 rm newscoop/js/plupload/license.txt
 rm newscoop/js/tinymce/license.txt
 rm newscoop/library/Nette/license.txt
-rm newscoop/library/Symfony/Component/Console/LICENSE
-rm newscoop/library/Symfony/Component/Yaml/LICENSE
 rm newscoop/library/fabpot-dependency-injection-07ff9ba/LICENSE
 rm newscoop/library/fabpot-event-dispatcher-782a5ef/LICENSE
 rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/dejavu-fonts-ttf-2.30/LICENSE
 rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/freefont-20090104/COPYING
 rm newscoop/js/tapmodo-Jcrop-5e58bc9/MIT-LICENSE.txt
 rm newscoop/js/tapmodo-Jcrop-5e58bc9/build/LICENSE
+
+rm newscoop/vendor/doctrine/common/LICENSE
+rm newscoop/vendor/doctrine/dbal/LICENSE
+rm newscoop/vendor/doctrine/orm/LICENSE
+rm newscoop/vendor/symfony/console/Symfony/Component/Console/LICENSE
+rm newscoop/vendor/symfony/yaml/Symfony/Component/Yaml/LICENSE
+rm newscoop/vendor/zendframework/zendframework1/LICENSE.txt
 
 # remove documentation under Creative Commons licenses
 rm -r newscoop/library/fabpot-dependency-injection-07ff9ba/doc/
@@ -125,8 +130,8 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
-### fixes for 4.0.2 ###
-if test "${UPSTREAMVERSION}" == "4.0.2"; then
+### fixes for 4.0.3 ###
+if test "${UPSTREAMVERSION}" == "4.0.3"; then
 
 	rm newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/.DS_Store
 	rm newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/.DS_Store
@@ -138,6 +143,156 @@ if test "${UPSTREAMVERSION}" == "4.0.2"; then
 	rm newscoop/themes/unassigned/set_rockstar/assets/fonts/.DS_Store
 	rm newscoop/themes/unassigned/set_rockstar/assets/js/libs/.DS_Store
 	rm newscoop/themes/unassigned/set_rockstar/pictures/.DS_Store
+
+	chmod +x newscoop/vendor/doctrine/dbal/bin/doctrine-dbal
+	chmod +x newscoop/vendor/doctrine/dbal/run-all.sh
+	chmod +x newscoop/vendor/doctrine/orm/bin/doctrine
+	chmod +x newscoop/vendor/doctrine/orm/run-all.sh
+	chmod +x newscoop/vendor/doctrine/orm/tools/sandbox/doctrine
+
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/PhotoQuery.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Entry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Tags.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/AlbumEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/DublinCore.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/CommentEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Weight.php
+	chmod -x newscoop/library/Newscoop/Services/Ingest/PublisherService.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/QueueService/Adapter/ZendQueue.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/User.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Client.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/CommentingEnabled.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Config/Yaml.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Docs/DocumentListEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure/Query.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/ProfileFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Amazon/S3.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Position.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaDescription.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/NumPhotosRemaining.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Access.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/QueueService/Message.php
+	chmod -x newscoop/scripts/newscoop.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Checksum.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/ProfileListFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Exposure.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Books.php
+	chmod -x newscoop/library/Newscoop/Tools/Console/Command/UpdateIngestCommand.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/Control.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/UserQuery.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaGroup.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Docs.php
+	chmod -x newscoop/library/Newscoop/Ingest/Parser/SwisstxtParser.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Parse/Resource/MysqlResult.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/NumPhotos.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/UserFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/FStop.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Distance.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Flash.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaPlayer.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cache/Backend/ZendServer/ShMem.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Timestamp.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Feed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/Private.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Amazon/Exception.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/AbstractFactory.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo/Extension/GmlPos.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Entry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/CountHint.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Model.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Docs/DocumentListFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/BytesUsed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Adobe/DbInspector.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Books/VolumeQuery.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Docs/Query.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/AlbumFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/Token.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/Query.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaText.php
+	chmod -x newscoop/library/Newscoop/Services/IngestService.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaTitle.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Auth/Abstract.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/UserEntry.php
+	chmod -x newscoop/application/configs/application.ini-dist
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Config/Json.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/MediaRating.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/PhotoId.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cache/Backend/ZendServer/Disk.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Width.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/MediaContent.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Twitter.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Adobe/Auth.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Size.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Iso.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Amazon/S3/Exception.php
+	chmod -x newscoop/composer.json
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/AlbumId.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Feed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/App/Feed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo/Extension/GmlPoint.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaCategory.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/bin/zf.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/ProfileListEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Id.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaCopyright.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/MediaGroup.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/App/FeedEntryParent.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/MediaEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cloud/QueueService/Adapter/WindowsAzure.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/MaxPhotosPerAlbum.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Name.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/TagEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaThumbnail.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Rotation.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaRestriction.php
+	chmod -x newscoop/application.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Captcha/Exception.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Nickname.php
+	chmod -x newscoop/application/Bootstrap.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Config/Writer/Json.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaKeywords.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Http/Response/Stream.php
+	chmod -x newscoop/admin-files/plugins/manage.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo/Entry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/Extension/Ccr.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Value/Messaging/ArrayCollection.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Health/ProfileEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/QuotaLimit.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Version.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Make.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/AlbumQuery.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Http/Client/Adapter/Stream.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaContent.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/CommentCount.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Parse/Resource/Stream.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/PhotoFeed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaRating.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaHash.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/PhotoEntry.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Config/Writer/Yaml.php
+	chmod -x newscoop/library/Newscoop/Tools/Console/Command/UpdateAutoloadCommand.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Amf/Adobe/Introspector.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/bin/zf.bat
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Location.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/QuotaCurrent.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Twitter/Exception.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/Time.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/ImageUniqueId.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo/Extension/GeoRssWhere.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Thumbnail.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Cache/Backend/ZendServer.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Geo/Feed.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/YouTube/Extension/Link.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Media/Extension/MediaCredit.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Photos/Extension/Height.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Service/Amazon/S3/Stream.php
+	chmod -x newscoop/vendor/zendframework/zendframework1/library/Zend/Gdata/Exif/Extension/FocalLength.php
 
 fi
 

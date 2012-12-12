@@ -21,7 +21,7 @@ Depends: apache2 | httpd,
  ${misc:Depends}
 Recommends: php5-xcache
 Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite
-Description: The open content management system for professional journalists
+Description: Open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 
  management. The enterprise-standard journalist’s dashboard and a templating
