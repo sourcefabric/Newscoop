@@ -1,32 +1,31 @@
 Template: newscoop/dbsetup
 Type: boolean
 Default: false
-Description: Create mysql database-account?
- Automatically generate a local mysql-account for newscoop.
+_Description: Create mySQL database account?
+ Automatically generate a local mySQL account for Newscoop.
  .
- This option allows to create a database-user and password
- for use by newscoop on localhost.
+ This option creates a database user and password for use
+ by Newscoop on the localhost.
  .
- If skipped, you will need database-admin access to create
- and account for newscoop.
+ If skipped, you will need database admin access to create
+ an account for Newscoop.
 
 Template: newscoop/apache-setup
 Type: select
-Choices: dedicated v-host, system-wide (all vhosts), no thanks
+__Choices: dedicated v-host, system-wide (all vhosts), no thanks
 Choices-de.UTF-8: v-host einrichten, system-weit (alle v-hosts), nein danke
-Default: system-wide (all vhosts)
-Description: Create apache2 config:
- This setup script can perform apache web-server configuration
- so that you can connect to newscoop directly after this installation.
+Default: dedicated v-host
+_Description: Create apache2 config:
+ This script can perform Apache web-server configuration so that you
+ can connect to Newscoop directly after this installation.
  .
  Production systems should choose "dedicated v-host". This option
- will ask for a Server host-name (FQDN) and will create a minimal apache
- vhost configuration that you can adapt.
+ will ask for a fully qualified domain name (FQDN) and will create a
+ minimal Apache virtual host configuration that you can adapt.
  .
- "system-wide (all vhosts)" apache-config configures
+ "system-wide (all v-hosts)" configures the server to respond to
  http://all-apache-virtual-hosts/newscoop/ using /etc/apache/conf.d/
- This is the recommended option if newscoop is the sole 
- web-service on this server and also for test-installations.
+ This option may be useful for for test installations.
  .
  "no, thanks": no problem. You're welcome to set it up however you like.
  Note that the files in /etc/newscoop/ may come in handy doing so.
@@ -36,31 +35,29 @@ Description-de.UTF-8: Erzeugen einer apache2 konfiuration:
 Template: newscoop/apache-servername
 Type: string
 Default: localhost
-Description: FQDN - apache-vhost ServerName:
- Enter the main hostname of the web server. 
- The DNS of this name must resolve to the apache server running on this
+_Description: FQDN - apache-vhost ServerName:
+ Enter the main hostname of the web server.
+ The DNS of this name must resolve to the Apache server running on this
  machine.
  .
  e.g. "example.com" or "www.example.com" (without the quotes)
  .
  You can customize /etc/apache2/sites-enabled/newscoop.vhost afterwards
- and add ServerAliases and further custom configuration.
+ to add ServerAliases and further custom configuration.
  .
- more info soon..
 
 Template: newscoop/apache-serveradmin
 Type: string
 Default: root@localhost
-Description: Email of the vhost-admin - ServerAdmin:
- required for dedicated vhost-setup.
+_Description: Email address of the ServerAdmin:
+ required for virtual host setup.
  .
- more info soon..
 
 Template: newscoop/cronjob
 Type: boolean
 Default: true
-Description: install cron-job for newscoop?
- Run periodic events for newscoop.
+_Description: Install cron-job for Newscoop?
+ Run periodic events for Newscoop.
  .
  This includes Newscoop's autopublish, indexer, statistics and
  notification features..
