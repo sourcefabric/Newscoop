@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Filesystem\Filesystem;
+use Newscoop\Services\FilesystemService;
+
 if (php_sapi_name() == 'cli') {
     require_once __DIR__ . '/../application.php';
     $application->bootstrap();
@@ -132,7 +135,7 @@ if ((empty($archive_file) && !in_array('l', array_keys($options))) || ($destDbSp
 require_once("cli_script_lib.php");
 
 // include the install configuration script
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
     camp_exit_with_error("Unable to read the install configuration file!");
 }
 // include install configuration file
@@ -255,7 +258,9 @@ if ($isNewBackupFormat) {
     $cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file) . $tarDirOption;
     camp_exec_command($cmd, $adviceOnError);
 } else {
-    camp_create_dir($tempDirName);
+    $filesystem = new Filesystem();
+    $filesystem->mkdir($tempDirName);
+
     $currentDir = getcwd();
     chdir($tempDirName);
     $cmd = "tar xf$tarGzOption " . escapeshellarg("../".$archive_file) . " &> /dev/null";
@@ -329,7 +334,7 @@ if (!file_exists($includeFile)) {
 
 
 // Check if configuration file is readable.
-if (!camp_is_readable($includeFile)) {
+if (!FilesystemService::isReadable($includeFile)) {
     echo " * Cleaning up...";
     camp_remove_dir($tempDirName);
     echo "done.\n\n";

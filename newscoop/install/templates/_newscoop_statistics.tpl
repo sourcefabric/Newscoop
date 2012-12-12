@@ -1,1 +1,1 @@
-0 */4 * * * {{ $CAMPSITE_BIN_DIR }}/newscoop-statistics
+0 */4 * * * {{ $CAMPSITE_BIN_DIR }}/console newscoop:statistics:clean-old

@@ -117,10 +117,22 @@ class Issue extends \Newscoop\Entity\Issue implements \Doctrine\ORM\Proxy\Proxy
         return parent::getShortName();
     }
 
+    public function setWorkflowStatus($workflowStatus)
+    {
+        $this->__load();
+        return parent::setWorkflowStatus($workflowStatus);
+    }
+
+    public function getWorkflowStatus($readable = false)
+    {
+        $this->__load();
+        return parent::getWorkflowStatus($readable);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'number', 'name', 'shortName', 'publication', 'language', 'sections', 'template', 'sectionTemplate', 'articleTemplate', 'outputSettingsIssues');
+        return array('__isInitialized__', 'id', 'number', 'name', 'workflowStatus', 'shortName', 'publication', 'language', 'sections', 'template', 'sectionTemplate', 'articleTemplate', 'outputSettingsIssues');
     }
 
     public function __clone()

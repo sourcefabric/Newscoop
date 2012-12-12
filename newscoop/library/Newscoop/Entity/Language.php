@@ -23,7 +23,8 @@ class Language
     const NAME = __CLASS__;
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */

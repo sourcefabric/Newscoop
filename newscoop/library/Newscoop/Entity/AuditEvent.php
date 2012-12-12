@@ -16,7 +16,8 @@ use Doctrine\ORM\Mapping AS ORM;
 class AuditEvent
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */

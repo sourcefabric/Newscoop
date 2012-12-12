@@ -42,6 +42,18 @@ class Section extends \Newscoop\Entity\Section implements \Doctrine\ORM\Proxy\Pr
     }
 
     
+    public function setArticlesLink($articlesLink)
+    {
+        $this->__load();
+        return parent::setArticlesLink($articlesLink);
+    }
+
+    public function getArticlesLink()
+    {
+        $this->__load();
+        return parent::getArticlesLink();
+    }
+
     public function getLanguage()
     {
         $this->__load();
@@ -96,10 +108,16 @@ class Section extends \Newscoop\Entity\Section implements \Doctrine\ORM\Proxy\Pr
         return parent::getId();
     }
 
+    public function getSubscriptionSection()
+    {
+        $this->__load();
+        return parent::getSubscriptionSection();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'number', 'name', 'publication', 'issue', 'language', 'template', 'articleTemplate');
+        return array('__isInitialized__', 'id', 'number', 'name', 'publication', 'issue', 'language', 'template', 'articleTemplate', 'subscriptionSection');
     }
 
     public function __clone()

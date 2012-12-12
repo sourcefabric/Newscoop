@@ -102,6 +102,12 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getName();
     }
 
+    public function getTitle()
+    {
+        $this->__load();
+        return parent::getTitle();
+    }
+
     public function getRealName()
     {
         $this->__load();
@@ -240,6 +246,12 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getAttribute($name);
     }
 
+    public function setAttributes($attributes)
+    {
+        $this->__load();
+        return parent::setAttributes($attributes);
+    }
+
     public function getAttributes()
     {
         $this->__load();
@@ -330,10 +342,34 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::preUpdate();
     }
 
+    public function setIndexed(\DateTime $indexed = NULL)
+    {
+        $this->__load();
+        return parent::setIndexed($indexed);
+    }
+
+    public function getIndexed()
+    {
+        $this->__load();
+        return parent::getIndexed();
+    }
+
+    public function updateProfile($username, $password, $firstName, $lastName, $image, array $attributes)
+    {
+        $this->__load();
+        return parent::updateProfile($username, $password, $firstName, $lastName, $image, $attributes);
+    }
+
+    public function getEditView(\Zend_View_Abstract $view)
+    {
+        $this->__load();
+        return parent::getEditView($view);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'updated', 'status', 'is_admin', 'is_public', 'points', 'image', 'subscriber', 'role', 'groups', 'attributes', 'commenters', 'author');
+        return array('__isInitialized__', 'id', 'email', 'username', 'title', 'password', 'first_name', 'last_name', 'created', 'updated', 'status', 'is_admin', 'is_public', 'points', 'image', 'subscriber', 'role', 'groups', 'attributes', 'commenters', 'author');
     }
 
     public function __clone()

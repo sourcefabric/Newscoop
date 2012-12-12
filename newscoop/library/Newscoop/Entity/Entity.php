@@ -23,8 +23,6 @@ class Entity {
 	 */
 	protected $id;
 
-	/* --------------------------------------------------------------- */
-
 	/**
 	 * Provides the id of the output, this will uniquielly identify this output.
 	 *
@@ -50,6 +48,4 @@ class Entity {
 		$this->id = $id;
 		return $this;
 	}
-
-	/* --------------------------------------------------------------- */
 }
