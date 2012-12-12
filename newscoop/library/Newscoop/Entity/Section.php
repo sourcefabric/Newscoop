@@ -90,7 +90,7 @@ class Section
     private $articlesLink;
 
     /**
-     * @ORM\OneToMany(targetEntity="SubscriptionsSection", mappedBy="subscription")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\SubscriptionsSection", mappedBy="subscription")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $subscriptionSection;
@@ -227,6 +227,10 @@ class Section
         return (int) $this->id;
     }
 
+    /**
+     * Get subscriptionSection
+     * @return Newscoop\Entity\SubscriptionsSection
+     */
     public function getSubscriptionSection()
     {
         return $this->subscriptionSection;

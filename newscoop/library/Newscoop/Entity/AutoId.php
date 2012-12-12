@@ -56,6 +56,10 @@ class AutoId
         return $this->logTimestamp;
     }
 
+    /**
+     * Set logTimestamp
+     * @param \DateTime $logTimestamp
+     */
     public function setLogTimestamp(\DateTime $logTimestamp) {
         $this->logTimestamp = $logTimestamp;
 

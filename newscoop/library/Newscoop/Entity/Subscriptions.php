@@ -60,26 +60,37 @@ class Subscriptions
      */
     private $type;
 
+    /**
+     * Get id
+     * @return integer
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Get publication
+     * @return Newscoop\Entity\Publication
+     */
     public function getPublication()
     {
         return $this->publication;
     }
 
-    public function getLanguage()
-    {
-        return $this->publication;
-    }
-
+    /**
+     * Get type
+     * @return string
+     */
     public function getType()
     {
         return $this->type;
     }
 
+    /**
+     * Get user
+     * @return Newscoop\Entity\User
+     */
     public function getUser()
     {
         return $this->user;

@@ -69,16 +69,28 @@ class SubscriptionsSection
      */
     private $noticeSent;
 
+    /**
+     * Get startDate
+     * @return \DateTime
+     */
     public function getStartDate()
     {
         return $this->startDate;
     }
 
+    /**
+     * Get paidDays
+     * @return integer
+     */
     public function getPaidDays()
     {
         return $this->paidDays;
     }
 
+    /**
+     * Set noticeSent
+     * @param string $noticeSent
+     */
     public function setNoticeSent($noticeSent)
     {
         $this->noticeSent = $noticeSent;

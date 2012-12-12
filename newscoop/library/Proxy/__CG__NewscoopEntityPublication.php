@@ -135,10 +135,16 @@ class Publication extends \Newscoop\Entity\Publication implements \Doctrine\ORM\
         return parent::getModeratorFrom();
     }
 
+    public function getDefaultAlias()
+    {
+        $this->__load();
+        return parent::getDefaultAlias();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'public_enabled', 'moderator_to', 'moderator_from', 'timeUnit', 'unitCost', 'unitCostAll', 'currency', 'trialTime', 'paidTime', 'defaultAliasId', 'urlTypeId', 'forumId', 'commentsEnabled', 'commentsArticleDefaultEnabled', 'commentsSubscribersModerated', 'commentsPublicModerated', 'commentsCaptchaEnabled', 'commentsSpamBlockingEnabled', 'urlErrorTemplateId', 'seo', 'language', 'issues');
+        return array('__isInitialized__', 'id', 'name', 'public_enabled', 'moderator_to', 'moderator_from', 'timeUnit', 'unitCost', 'unitCostAll', 'currency', 'trialTime', 'paidTime', 'defaultAliasId', 'urlTypeId', 'forumId', 'commentsEnabled', 'commentsArticleDefaultEnabled', 'commentsSubscribersModerated', 'commentsPublicModerated', 'commentsCaptchaEnabled', 'commentsSpamBlockingEnabled', 'urlErrorTemplateId', 'seo', 'language', 'issues', 'defaultAlias');
     }
 
     public function __clone()

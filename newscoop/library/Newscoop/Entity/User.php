@@ -318,6 +318,10 @@ class User implements \Zend_Acl_Role_Interface
         return $name;
     }
 
+    /**
+     * Get title
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;

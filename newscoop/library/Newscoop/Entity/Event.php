@@ -43,6 +43,10 @@ class Event
      */
     private $language;
 
+    /**
+     * Get name
+     * @return string
+     */
     public function getName() {
         return $this->name;
     }

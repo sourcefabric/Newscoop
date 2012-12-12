@@ -55,18 +55,34 @@ class Log
      */
     private $userIp;
 
+    /**
+     * Get created
+     * @return \DateTime
+     */
     public function getCreated() {
         return $this->created;
     }
 
+    /**
+     * Get userId
+     * @return Newscoop\Entity\User
+     */
     public function getUser() {
         return $this->userId;
     }
 
+    /**
+     * Get eventId
+     * @return Newscoop\Entity\Event
+     */
     public function getEvent() {
         return $this->eventId;
     }
 
+    /**
+     * Get message
+     * @return string
+     */
     public function getMessage() {
         return $this->message;
     }

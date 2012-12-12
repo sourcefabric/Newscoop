@@ -87,6 +87,12 @@ class Author extends \Newscoop\Entity\Author implements \Doctrine\ORM\Proxy\Prox
         return parent::getImage();
     }
 
+    public function setImage($image)
+    {
+        $this->__load();
+        return parent::setImage($image);
+    }
+
 
     public function __sleep()
     {

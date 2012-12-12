@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Newscoop\Services\FilesystemService;
+
 if (!is_array($GLOBALS['argv'])) {
     echo "\n";
     echo "Can't read command line arguments\n";

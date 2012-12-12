@@ -12,6 +12,12 @@ namespace Newscoop\Services;
  */
 class FilesystemService
 {
+    /**
+     * Check if file is isReadable
+     * @param  string  $fileName
+     * @param  boolean $message  Show message
+     * @return boolean
+     */
     public static function isReadable($fileName, $message = true)
     {
         if (!is_readable($fileName)) {
@@ -20,8 +26,10 @@ class FilesystemService
                 echo "Please run this script as a user with appropriate privileges.\n";
                 echo "Most often this user is 'root'.\n\n";
             }
+            
             return false;
         }
+
         return true;
     }
 }
