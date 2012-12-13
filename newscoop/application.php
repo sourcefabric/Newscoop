@@ -24,15 +24,10 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
 //require Composer autoloader
 $autoload = require_once __DIR__ . '/vendor/autoload.php';
 
-if (is_dir(__DIR__ . '/library/Zend')) {
-    // remove vendor zend lib from include path which would cause conflicts
-    $includePaths = explode(PATH_SEPARATOR, get_include_path());
-    array_shift($includePaths);
-    set_include_path(implode(PATH_SEPARATOR, $includePaths));
-}
-
-if (!class_exists('Zend_Application')) {
-    die('Missing dependency! Please install Zend Framework library!');
+if (!file_exists(__DIR__ . '/vendor')) {
+    echo "Missing dependency! Please install all dependencies with composer.";
+    echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install</pre>";
+    die;
 }
 
 // Create application, bootstrap, and run
