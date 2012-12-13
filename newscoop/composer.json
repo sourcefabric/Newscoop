@@ -9,8 +9,7 @@
         "psr-0": {
             "Newscoop": "library",
             "Resource": "library",
-            "Nette": "library",
-            "Zend": "library"
+            "Nette": "library"
         },
         "classmap": [
             "classes",
