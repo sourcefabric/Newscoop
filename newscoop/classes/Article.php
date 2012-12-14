@@ -349,15 +349,15 @@ class Article extends DatabaseObject {
     public function __generateArticleNumber()
     {
         global $g_ado_db;
+
         $queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
-        $g_ado_db->Execute($queryStr);
-        if ($g_ado_db->Affected_Rows() <= 0) {
-            // If we were not able to get an ID.
+        $g_ado_db->executeUpdate($queryStr);
+        if ($g_ado_db->affected_rows() <= 0) {
             return 0;
         }
-        return (int)$g_ado_db->Insert_ID();
-    } // fn __generateArticleNumber
-
+        
+        return (int)$g_ado_db->insert_id();
+    }
 
     /**
      * Create a copy of this article.
