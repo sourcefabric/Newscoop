@@ -25,7 +25,7 @@ try {
     $cli->renderException($e, new \Symfony\Component\Console\Output\ConsoleOutput());
 }
 
-$cli->setCatchExceptions(true);
+$cli->setCatchExceptions(false);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
 $cli->addCommands(array(
@@ -34,6 +34,8 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\SendStatsCommand(),
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
     new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
+    new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
 ));
 
 $cli->run();

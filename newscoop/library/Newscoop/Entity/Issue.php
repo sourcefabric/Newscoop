@@ -220,5 +220,14 @@ class Issue extends Entity
     {
         return $this->shortName;
     }
-}
 
+    /**
+     * Get issue number
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+}

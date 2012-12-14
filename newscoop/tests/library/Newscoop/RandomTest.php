@@ -27,6 +27,6 @@ class RandomTest extends \TestCase
             }
         }
 
-        $this->assertGreaterThan(999, count($randoms));
+        $this->assertGreaterThan(990, count($randoms));
     }
 }

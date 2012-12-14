@@ -7,9 +7,10 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Ingest\Feed,
-    Newscoop\Entity\Ingest\Feed\Entry,
-    Newscoop\Services\Ingest\PublisherService;
+use DateTime;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed\Entry;
+use Newscoop\Services\Ingest\PublisherService;
 
 class IngestServiceTest extends \RepositoryTestCase
 {
@@ -27,7 +28,7 @@ class IngestServiceTest extends \RepositoryTestCase
         parent::setUp('Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
         $this->cleanFiles();
 
-        $this->config = \Zend_Registry::get('container')->getParameter('ingest');
+        $this->config = array('path' => APPLICATION_PATH . '/../tests/ingest');
         $this->publisher = new PublisherService(\Zend_Registry::get('container')->getParameter('ingest_publisher'));
         $this->service = new IngestService($this->config, $this->em, $this->publisher);
     }

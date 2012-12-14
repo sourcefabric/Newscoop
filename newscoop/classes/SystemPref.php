@@ -3,7 +3,6 @@
  * @package Campsite
  */
 
-require_once dirname(__FILE__) . '/../db_connect.php';
 require_once dirname(__FILE__) . '/DatabaseObject.php';
 require_once dirname(__FILE__) . '/Log.php';
 require_once dirname(__FILE__) . '/../template_engine/classes/CampSession.php';
@@ -127,7 +126,7 @@ class SystemPref {
     		return true;
     	}
 
-    	if (file_exists($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME)) {
+    	if (is_readable($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME)) {
     		require_once($GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME);
     		return isset($GLOBALS['Campsite']) && is_array($GLOBALS['Campsite'])
     		&& isset($GLOBALS['Campsite']['system_preferences'])

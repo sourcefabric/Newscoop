@@ -22,13 +22,9 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->odm = $this->getMock('Doctrine\Common\Persistence\ObjectManager');
 
-        $this->repository = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->repository = $this->getMock('Doctrine\Common\Persistence\ObjectRepository');
 
         $this->odm->expects($this->once())
             ->method('getRepository')

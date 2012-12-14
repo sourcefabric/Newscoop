@@ -356,11 +356,9 @@ class NewsMlParser implements Parser
     public function getLiftEmbargo()
     {
         $datetime = array_shift($this->xml->xpath('//StatusWillChange/DateAndTime'));
-        if (!empty($datetime)) {
+        if ((string) $datetime !== '') {
             return new \DateTime((string) $datetime);
         }
-
-        return null;
     }
 
     /**

@@ -97,7 +97,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->setConfigurator(function($service) use ($container) {
                 foreach ($container->getParameter('listener') as $listener) {
                     $listenerService = $container->getService($listener);
-                    $listenerParams = $container->getParameter($listener);
+                    $listenerParams = $container->getParameter(str_replace('.', '_', $listener));
                     foreach ((array) $listenerParams['events'] as $event) {
                         $service->connect($event, array($listenerService, 'update'));
                     }
@@ -198,6 +198,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('webcode', 'Newscoop\WebcodeFacade')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('random'));
+
+        $container->register('http.client.factory', 'Newscoop\Http\ClientFactory');
+
+        $container->register('search.index', 'Newscoop\Search\SolrIndex')
+            ->addArgument(new sfServiceReference('http.client.factory'))
+            ->addArgument('%config%');
+
+        $container->register('search.indexer.article', 'Newscoop\Search\ArticleIndexer')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('search.index'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -380,5 +390,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
         Zend_Auth::getInstance()->setStorage($storage);
+    }
+
+    protected function _initAdoDb()
+    {
+        require_once __DIR__ . '/../db_connect.php';
     }
 }

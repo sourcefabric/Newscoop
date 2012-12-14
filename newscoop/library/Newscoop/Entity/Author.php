@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Newscoop\View\AuthorView;
+
 /**
  * @Entity
  * @Table(name="Authors")
@@ -60,5 +62,17 @@ class Author
     public function getFullName()
     {
         return trim("$this->first_name $this->last_name");
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\AuthorView
+     */
+    public function getView()
+    {
+        return new AuthorView(array(
+            'name' => $this->getFullName(),
+        ));
     }
 }

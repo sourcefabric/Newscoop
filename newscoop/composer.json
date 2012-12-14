@@ -3,7 +3,8 @@
         "doctrine/orm": "2.1.*",
         "symfony/console": "2.1.*",
         "symfony/yaml": "2.1.*",
-        "zendframework/zendframework1": "1.11.*"
+        "bombayworks/zendframework1": "1.11.*",
+        "guzzle/guzzle": "*"
     },
     "autoload": {
         "psr-0": {
