@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: newscoop@packages.debian.org\n"
+"POT-Creation-Date: 2012-04-26 16:28+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Create mySQL database account?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid "Automatically generate a local mySQL account for Newscoop."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"This option creates a database user and password for use by Newscoop on the "
+"localhost."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:1001
+msgid ""
+"If skipped, you will need database admin access to create an account for "
+"Newscoop."
+msgstr ""
+
+#. Type: select
+#. Choices
+#: ../templates:2001
+msgid "dedicated v-host"
+msgstr ""
+
+#. Type: select
+#. Choices
+#: ../templates:2001
+msgid "system-wide (all vhosts)"
+msgstr ""
+
+#. Type: select
+#. Choices
+#: ../templates:2001
+msgid "no thanks"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:2002
+msgid "Create apache2 config:"
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:2002
+msgid ""
+"This script can perform Apache web-server configuration so that you can "
+"connect to Newscoop directly after this installation."
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:2002
+msgid ""
+"Production systems should choose \"dedicated v-host\". This option will ask "
+"for a fully qualified domain name (FQDN) and will create a minimal Apache "
+"virtual host configuration that you can adapt."
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:2002
+msgid ""
+"\"system-wide (all v-hosts)\" configures the server to respond to http://all-"
+"apache-virtual-hosts/newscoop/ using /etc/apache/conf.d/ This option may be "
+"useful for for test installations."
+msgstr ""
+
+#. Type: select
+#. Description
+#: ../templates:2002
+msgid ""
+"\"no, thanks\": no problem. You're welcome to set it up however you like. "
+"Note that the files in /etc/newscoop/ may come in handy doing so."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid "FQDN - apache-vhost ServerName:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid ""
+"Enter the main hostname of the web server. The DNS of this name must resolve "
+"to the Apache server running on this machine."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid "e.g. \"example.com\" or \"www.example.com\" (without the quotes)"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:3001
+msgid ""
+"You can customize /etc/apache2/sites-enabled/newscoop.vhost afterwards to "
+"add ServerAliases and further custom configuration."
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "Email address of the ServerAdmin:"
+msgstr ""
+
+#. Type: string
+#. Description
+#: ../templates:4001
+msgid "required for virtual host setup."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Install cron-job for Newscoop?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid "Run periodic events for Newscoop."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../templates:5001
+msgid ""
+"This includes Newscoop's autopublish, indexer, statistics and notification "
+"features.."
+msgstr ""
