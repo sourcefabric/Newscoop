@@ -65,8 +65,7 @@ class ArticleIndexer
      */
     public function reset()
     {
-        $query = $this->em->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
-        $query->execute();
+        $this->getArticleRepository()->resetIndex();
     }
 
     /**

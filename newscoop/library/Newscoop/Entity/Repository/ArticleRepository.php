@@ -31,4 +31,16 @@ class ArticleRepository extends DatatableSource
 
         return $query->getResult();
     }
+
+    /**
+     * Reset articles index
+     *
+     * @return void
+     */
+    public function resetIndex()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
+        $query->execute();
+    }
 }
