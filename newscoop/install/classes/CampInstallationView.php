@@ -294,9 +294,9 @@ final class CampInstallationView
             'exists' => $hasCLI
         );
 
-        $hasAPC = CampInstallationViewHelper::CheckPHPAPC();
+        $hasAPC = CampInstallationViewHelper::CheckPHPAPCXCACHE();
         $phpOptions[] = array(
-            'tag' => '<span class="optional">APC (PHP Cache) Support</span>',
+            'tag' => '<span class="optional">APC or xCache (PHP Cache) Support</span>',
             'exists' => $hasAPC
         );
 
@@ -438,9 +438,9 @@ final class CampInstallationViewHelper
         return ($r == 0) ? 'Yes' : 'No';
     }
 
-    public static function CheckPHPAPC()
+    public static function CheckPHPAPCXCACHE()
     {
-        return (ini_get('apc.enabled') && function_exists('apc_store')) ? 'Yes' : 'No';
+        return ((ini_get('apc.enabled') && function_exists('apc_store')) || function_exists('xcache_set')) ? 'Yes' : 'No';
     }
 
     public static function CheckPHPGD()
