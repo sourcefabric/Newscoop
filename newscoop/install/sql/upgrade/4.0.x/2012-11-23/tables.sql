@@ -8,4 +8,3 @@ CREATE TABLE IF NOT EXISTS `rating` (
       PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---system php ./populate_webcodes.php
