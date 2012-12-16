@@ -20,7 +20,13 @@ require_once __DIR__ . '/application.php';
 
 // removes library/Zend in favor of vendor
 $libZend = __DIR__ . '/library/Zend';
-exec("rm -rf $libZend", $output = array());
+if (file_exists($libZend)) {
+    exec("rm -rf $libZend", $output = array(), $code);
+    if ($code) {
+        echo 'Upgrade script could not remove ' . $libZend . '.
+            Please do it manually and run this script again.';
+    }
+}
 
 $application->bootstrap('autoloader');
 $application->bootstrap('doctrine');
