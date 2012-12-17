@@ -96,6 +96,7 @@ foreach ($hiddens as $name) {
 </fieldset>
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
+
 <script type="text/javascript">
 function toggleCommentStatus(commentId) {
     var commentSetting = $('input:radio[name^="f_comment"]:checked').val();
@@ -120,17 +121,27 @@ function toggleCommentStatus(commentId) {
         });
     });
 }
+
 function loadComments() {
+    var lastCommentId = null;
+    var commentsNumber = 20;
+    if ($('#comment-moderate .comments-block').length > 0) {
+        lastCommentId = $('#comment-moderate .comments-block').length;
+    }
 
 	var call_data = {
 		"article": "<?php echo $articleObj->getArticleNumber(); ?>",
-		"language": "<?php echo $f_language_selected; ?>"
+		"language": "<?php echo $f_language_selected; ?>",
+        "iDisplayStart": lastCommentId,
+        "iDisplayLength": commentsNumber
 	};
+    
 
     var call_url = '../comment/list/format/json';
 
 	var res_handle = function(data) {
-		$('#comment-moderate').empty();
+		//$('#comment-moderate').empty();
+        $('fieldset.get-more-comments').remove();
 		var hasComment = false;
 		for(var i in data.result) {
 			hasComment = true;
@@ -147,9 +158,22 @@ function loadComments() {
 				}
 				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
 			}
-			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
+			$('#comment-moderate').append('<fieldset data-comment-id="'+comment['id']+'" class="plain comments-block">'+template+'</fieldset>');
             toggleCommentStatus(comment['id']);
 		}
+
+        var getMoreLink = $('<fieldset class="get-more-comments"><a href="#" style="pull-right" class="ui-state-default text-button paginate paginate-next"><?php putGS('Get more'); ?></a></fieldset>');    
+        getMoreLink.find('a')
+            .click(function(e){
+                loadComments();
+                e.preventDefault();
+            });
+
+        $('#comment-moderate').append(getMoreLink);
+
+        if (data.result.length == 0) {
+            $('fieldset.get-more-comments').html('<p><?php putGS('You have all comments loaded'); ?></p>');
+        }
 
         var referencedComment = $(document.location.hash);
         if (referencedComment.size() == 1) {
@@ -240,9 +264,6 @@ $('.comment-update').live('click',function(){
 
     callServer(call_url, call_data, res_handle, true);
 });
-</script>
-<script type="text/javascript">
-$(function() {
-	loadComments();
-});
+
+loadComments();
 </script>
