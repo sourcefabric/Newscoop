@@ -124,7 +124,7 @@ function toggleCommentStatus(commentId) {
 
 function loadComments() {
     var lastCommentId = null;
-    var commentsNumber = 20;
+    var commentsNumber = 10;
     if ($('#comment-moderate .comments-block').length > 0) {
         lastCommentId = $('#comment-moderate .comments-block').length;
     }
@@ -162,7 +162,7 @@ function loadComments() {
             toggleCommentStatus(comment['id']);
         }
 
-        var getMoreLink = $('<fieldset class="get-more-comments"><a href="#" style="pull-right" class="ui-state-default text-button paginate paginate-next"><?php putGS('Get more'); ?></a></fieldset>');    
+        var getMoreLink = $('<fieldset class="get-more-comments"><a href="#" style="pull-right" class="ui-state-default text-button paginate paginate-next"><?php putGS('Show more'); ?></a></fieldset>');    
         getMoreLink.find('a')
             .click(function(e){
                 loadComments();
