@@ -8,6 +8,7 @@
 namespace Newscoop\Search;
 
 use DateTime;
+use SimpleXmlElement;
 use Newscoop\View\ArticleView;
 
 /**
@@ -15,19 +16,15 @@ use Newscoop\View\ArticleView;
 class SolrIndexTest extends \TestCase
 {
     const SERVER = 'localhost:1234/solr';
-    const UPDATE_URI = '{core}/update';
+    const UPDATE_URI = '{core}/update/json';
     const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     const DELETE_XML = <<<EOT
-<?xml version="1.0"?>
-<update><delete><id>123</id></delete></update>
-
+{"delete":{"id":123}}
 EOT;
 
     const ADD_XML = <<<EOT
-<?xml version="1.0"?>
-<update><add><doc><field name="language">en</field></doc><doc><field name="language">en</field></doc></add></update>
-
+{"add":{"doc":{"language":"en"}},"add":{"doc":{"language":"en"}}}
 EOT;
 
     /** @var Newscoop\Search\SolrIndex */
@@ -84,7 +81,7 @@ EOT;
             ->method('post')
             ->with(
                 $this->equalTo(array(self::UPDATE_URI, array('core' => 'en'))),
-                $this->equalTo(array('Content-Type' => 'text/xml')),
+                $this->equalTo(array('Content-Type' => 'application/json')),
                 $this->equalTo(self::ADD_XML)
             )->will($this->returnValue($this->request));
 
@@ -109,7 +106,7 @@ EOT;
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->stringContains(sprintf('<field name="updated">%s</field>', gmdate('Y-m-d\TH:i:s\Z', $now->getTimestamp())))
+                $this->stringContains(sprintf('"updated":"%s"', gmdate('Y-m-d\TH:i:s\Z', $now->getTimestamp())))
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())

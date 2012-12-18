@@ -20,35 +20,29 @@ class AddCommand extends AbstractCommand
     /**
      * @inheritdoc
      */
-    public function update(SimpleXmlElement $xml)
+    public function __toString()
     {
-        $add = $xml->xpath('add');
-        $add = !empty($add) ? $add[0] : $xml->addChild('add');
-        $doc = $add->addChild('doc');
-        $this->addFields($doc);
+        return sprintf('"add":%s', json_encode(array('doc' => $this->formatDoc())));
     }
 
     /**
-     * Add article fields
+     * Format document
      *
-     * @param SimpleXmlElement $doc
-     * @return void
+     * @return array
      */
-    private function addFields(SimpleXmlElement $doc)
+    private function formatDoc()
     {
+        $doc = array();
         foreach ($this->article as $key => $val) {
-            if ($val === null) {
+            if ($val === null || (is_array($val) && empty($val))) {
                 continue;
-            }
-
-            if ($val instanceof DateTime) {
+            } elseif ($val instanceof DateTime) {
                 $val = gmdate(self::DATE_FORMAT, $val->getTimestamp());
             }
 
-            foreach ((array) $val as $value) {
-                $field = $doc->addChild('field', $value);
-                $field->addAttribute('name', $key);
-            }
+            $doc[$key] = $val;
         }
+
+        return $doc;
     }
 }
