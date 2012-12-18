@@ -111,7 +111,11 @@ class PublisherService
      * @return int
      */
     public function getPublication()
-    {
+    {   
+        if (array_key_exists('default_publication_id', $this->config)) {
+            return (int) $this->config['default_publication_id'];
+        }
+
         $publications = $GLOBALS['Campsite']['publications'];
         if (empty($publications)) {
             throw new \RuntimeException("No publications defined.");

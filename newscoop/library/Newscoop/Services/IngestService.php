@@ -259,6 +259,7 @@ class IngestService
                         } else if ($feed->isAutoMode()) {
                             $this->publish($entry);
                         }
+
                         $this->em->persist($entry);
                         break;
 
@@ -278,7 +279,6 @@ class IngestService
         }
 
         $feed->setUpdated(new \DateTime());
-        $this->em->persist($feed);
 
         $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
         $this->em->flush();
@@ -293,10 +293,10 @@ class IngestService
      */
     public function getPrevious(Parser $parser, Feed $feed)
     {
-        $previous = array_shift($this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->findBy(array(
+        $previous = $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->findOneBy(array(
             'date_id' => $parser->getDateId(),
             'news_item_id' => $parser->getNewsItemId(),
-        )));
+        ));
 
         if (empty($previous)) {
             $previous = Entry::create($parser);
