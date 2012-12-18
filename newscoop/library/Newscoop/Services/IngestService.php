@@ -247,14 +247,7 @@ class IngestService
             $handle = fopen($file, 'r');
             if (flock($handle, LOCK_EX | LOCK_NB)) {
                 $parser = new SwisstxtParser($file);
-                $previous = $this->getPrevious($parser, $feed);
-
-                if (empty($previous)) {
-                    $entry = Entry::create($parser);
-                    $feed->addEntry($entry);
-                } else {
-                    $entry = $previous;
-                }
+                $entry = $this->getPrevious($parser, $feed);
 
                 switch ($parser->getStatus()) {
                     case 'updated':
@@ -263,14 +256,11 @@ class IngestService
                     case 'created':
                         if ($entry->isPublished()) {
                             $this->updatePublished($entry);
-                        } else if ($feed->isAutoMode() && !$previous) {
+                        } else if ($feed->isAutoMode()) {
                             $this->publish($entry);
                         }
 
-                        if (!$previous) {
-                            $this->em->persist($entry);
-                        }
-
+                        $this->em->persist($entry);
                         break;
 
                     case 'deleted':
@@ -307,6 +297,11 @@ class IngestService
             'date_id' => $parser->getDateId(),
             'news_item_id' => $parser->getNewsItemId(),
         ));
+
+        if (empty($previous)) {
+            $previous = Entry::create($parser);
+            $feed->addEntry($previous);
+        }
 
         return $previous;
     }
