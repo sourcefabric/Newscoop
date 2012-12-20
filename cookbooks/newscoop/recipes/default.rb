@@ -36,10 +36,6 @@ template "/etc/apache2/sites-available/default" do
     notifies :restart, "service[apache2]"
 end
 
-execute "copy-dependencies" do
-    command "cp -r /vagrant/dependencies/include/* /vagrant/newscoop/include/"
-end
-
 execute "curl -s https://getcomposer.org/installer | php" do
     cwd "/vagrant/"
 end

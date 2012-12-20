@@ -30,7 +30,8 @@
             "Newscoop": ["gimme/src", "newscoop/library"],
             "Resource": "newscoop/library",
             "Nette": "newscoop/library",
-            "Zend": "newscoop/library"
+            "Zend": "newscoop/library",
+            "Proxy": "newscoop/library"
         },
         "classmap": [
             "newscoop/classes",
