@@ -17,10 +17,8 @@ class DeleteCommand extends AbstractCommand
     /**
      * @inheritdoc
      */
-    public function update(SimpleXmlElement $xml)
+    public function __toString()
     {
-        $delete = $xml->xpath('delete');
-        $delete = !empty($delete) ? $delete[0] : $xml->addChild('delete');
-        $delete->addChild('id', $this->article->number);
+        return sprintf('"delete":%s', json_encode(array('id' => $this->article->number)));
     }
 }

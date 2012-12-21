@@ -16,7 +16,7 @@ use Newscoop\Http\ClientFactory;
  */
 class SolrIndex implements Index
 {
-    const UPDATE_URI = '{core}/update';
+    const UPDATE_URI = '{core}/update/json';
     const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     /**
@@ -86,7 +86,7 @@ class SolrIndex implements Index
         foreach (array_keys($this->commands) as $core) {
             $response = $client->post(
                 array(self::UPDATE_URI, array('core' => $core)),
-                array('Content-Type' => 'text/xml'),
+                array('Content-Type' => 'application/json'),
                 $this->getUpdateBody($core)
             )->send();
 
@@ -132,11 +132,7 @@ class SolrIndex implements Index
      */
     private function getUpdateBody($core)
     {
-        $body = new SimpleXmlElement('<update />');
-        foreach ($this->commands[$core] as $command) {
-            $command->update($body);
-        }
-
-        return $body->asXML();
+        $commands = array_map('strval', $this->commands[$core]);
+        return sprintf('{%s}', implode(',', $commands));
     }
 }

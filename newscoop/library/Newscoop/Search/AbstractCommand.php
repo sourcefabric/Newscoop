@@ -29,10 +29,7 @@ abstract class AbstractCommand
     }
 
     /**
-     * Update xml
-     *
-     * @param SimpleXmlElement $xml
-     * @return void
+     * @return string
      */
-    abstract public function update(SimpleXmlElement $xml);
+    abstract public function __toString();
 }
