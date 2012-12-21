@@ -3060,7 +3060,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `feed_id` int(11) unsigned NOT NULL,
   `date_id` varchar(20) DEFAULT NULL,
-  `news_item_id` varchar(20) DEFAULT NULL,
+  `news_item_id` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `updated` datetime NOT NULL,
   `author` varchar(255) DEFAULT NULL,
