@@ -635,6 +635,8 @@ function camp_save_database_version($p_db, $version, $roll)
  */
 function camp_detect_database_version($p_dbName, &$version, &$roll = '')
 {
+    global $Campsite;
+
     $version = '';
 
     if (!mysql_select_db($p_dbName)) {
@@ -644,6 +646,29 @@ function camp_detect_database_version($p_dbName, &$version, &$roll = '')
     if (!$res_ver1 = mysql_query("SHOW TABLES LIKE 'Versions'")) {
         return "Unable to query the database $p_dbName";
     }
+
+    $v402 = mysql_query("SHOW COLUMNS FROM Images LIKE 'is_updated_storage'");
+    $v403 = mysql_query("SHOW TABLES LIKE 'rating'");
+    if (is_resource($v402) && mysql_num_rows($v402) > 0) {
+        if (is_resource($v403) && mysql_num_rows($v403) == 0) {
+            $err = array();
+            $missingRoll = $Campsite['CAMPSITE_DIR'] . '/install/sql/upgrade/4.0.x/2012-11-23/tables.sql';
+            camp_import_dbfile(
+                $Campsite['DATABASE_SERVER_ADDRESS'] . ":" . $Campsite['DATABASE_SERVER_PORT'],
+                $Campsite['DATABASE_USER'],
+                $Campsite['DATABASE_PASSWORD'],
+                $p_dbName,
+                $missingRoll,
+                $err
+            );
+
+            $sql = "UPDATE Versions SET ver_value = '4.0.x', last_modified = '2012-11-23 12:00:00' WHERE ver_name = 'last_db_version'";
+            mysql_query($sql);
+            $sql = "UPDATE Versions SET ver_value = '2012-11-23', last_modified = '2012-11-23 12:00:00' WHERE ver_name = 'last_db_roll'";
+            mysql_query($sql);
+        }
+    }
+
     if (mysql_num_rows($res_ver1) > 0) {
         $got_versions = 0;
 
@@ -832,7 +857,8 @@ function camp_detect_database_version($p_dbName, &$version, &$roll = '')
  */
 function camp_migrate_config_file($p_configFile)
 {
-    global $Campsite;
+    
+global $Campsite;
 
     $config_options = array('DATABASE_NAME',
                             'DATABASE_SERVER_ADDRESS',
@@ -1271,7 +1297,7 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
         if (!empty($query) && ($query{0} != '#') && (0 !== strpos($query, "--"))) {
 
             if (0 !== strpos(strtolower($query), "system")) {
-                if ($db_conn->Execute($query) == false) {
+                if ($db_conn->Execute($query) === false) {
                     $errors++;
                     $errorQueries[] = $query;
                     $errorQueries[] = $db_conn->ErrorMsg();

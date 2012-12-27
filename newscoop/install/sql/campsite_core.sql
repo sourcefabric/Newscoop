@@ -267,7 +267,6 @@ CREATE TABLE `Articles` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `object_id` int(11) DEFAULT NULL,
   `webcode` varchar(10) DEFAULT NULL,
-  `indexed` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -2467,7 +2466,8 @@ CREATE TABLE `liveuser_users` (
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
+  UNIQUE KEY `UName` (`UName`),
+  KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
