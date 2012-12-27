@@ -496,7 +496,8 @@ CREATE TABLE `Cache` (
   `content` mediumtext,
   `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
-  KEY `expired` (`expired`)
+  KEY `expired` (`expired`),
+  KEY `template` (`template`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -3052,8 +3053,6 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-
-INSERT INTO `ingest_feed` (`title`) VALUES ('SDA'),('swissinfo');
 
 DROP TABLE IF EXISTS `ingest_feed_entry`;
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (

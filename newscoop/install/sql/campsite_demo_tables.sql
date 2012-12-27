@@ -368,7 +368,8 @@ CREATE TABLE `Cache` (
   `expired` int(11) NOT NULL,
   `content` mediumtext,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
-  KEY `expired` (`expired`)
+  KEY `expired` (`expired`),
+  KEY `template` (`template`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
