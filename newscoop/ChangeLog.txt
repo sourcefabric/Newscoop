@@ -1,3 +1,8 @@
+4.1.0 ()
+ New Features
+ ------------
+ CS-4492: Front-end search powered by Apache/Solr
+
 4.0.4 ()
   Improvements
   ------------
