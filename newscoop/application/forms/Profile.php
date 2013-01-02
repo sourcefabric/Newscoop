@@ -111,21 +111,4 @@ class Application_Form_Profile extends Zend_Form
             'ignore' => true,
         ));
     }
-
-    public function setDefaultsFromEntity(User $user)
-    {
-        $defaults = array(
-            'first_name' => $user->getFirstName(),
-            'last_name' => $user->getLastName(),
-            'username' => $user->getUsername(),
-            'attributes' => array(),
-        );
-
-        $profile = $this->getSubForm('attributes');
-        foreach ($profile as $field) {
-            $defaults['attributes'][$field->getName()] = (string) $user->getAttribute($field->getName());
-        }
-
-        $this->setDefaults($defaults);
-    }
 }

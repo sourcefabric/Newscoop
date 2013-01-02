@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Entity\Acl\Role,
     Newscoop\Entity\User\Group,
     Newscoop\Entity\Author;
+use Newscoop\View\UserView;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -773,5 +774,30 @@ class User implements \Zend_Acl_Role_Interface
     public function preUpdate()
     {
         $this->updated = new \DateTime();
+    }
+
+    /**
+     * Get view
+     *
+     * @return UserView
+     */
+    public function getView()
+    {
+        $view = new UserView();
+        $view->username = $this->username;
+        $view->email = $this->email;
+        $view->first_name = $this->first_name;
+        $view->last_name = $this->last_name;
+        $view->identifier = $this->id;
+        $view->uname = $view->username;
+
+        $view->attributes = $this->getAttributes();
+        foreach ($view->attributes as $key => $attribute) {
+            if (!property_exists($view, $key)) {
+                $view->$key = $attribute;
+            }
+        }
+
+        return $view;
     }
 }
