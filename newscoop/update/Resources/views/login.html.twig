@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<form action="check" method="post" class="form-horizontal newscoop-login-form">
+    {{ error }}
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Login</label>
+        <div class="controls">
+            <input type="text" name="_username" value="{{ last_username }}" />
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Password</label>
+        <div class="controls">
+            <input type="password" name="_password" value="" />
+        </div>
+    </div>
+    
+    <button type="submit" class="btn btn-success pull-right" style="margin-right: 100px;">Login</button>
+</form>
+{% endblock %}

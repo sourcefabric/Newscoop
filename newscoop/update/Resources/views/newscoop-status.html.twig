@@ -1,0 +1,29 @@
+<table class="table table-striped table-bordered newscoop-status js-newscoop-status">
+  <caption><h4>Your Newscoop current status:</h4></caption>
+  <tbody>
+    <tr>
+      <td>Current code version</td>
+      <td >{{ migrationsStatus.codeVersion }}</td>
+    </tr>
+    <tr class="{% if migrationsStatus.currentVersion != migrationsStatus.latestVersion %}error{% else %}success{% endif %}">
+      <td>Current update version</td>
+      <td >{{ migrationsStatus.currentVersion }}</td>
+    </tr>
+    <tr>
+      <td>Latest avaiable version</td>
+      <td>{{ migrationsStatus.latestVersion }}</td>
+    </tr>
+    <tr>
+      <td>Executed updates number</td>
+      <td>{{ migrationsStatus.executedMigrations|length }}</td>
+    </tr>
+    <tr>
+      <td>All available updates</td>
+      <td>{{ migrationsStatus.availableMigrations|length }}</td>
+    </tr>
+    <tr class="{% if migrationsStatus.availableMigrations != migrationsStatus.newMigrations %}warning{% else %}success{% endif %}">
+      <td>New available updates</td>
+      <td>{{ migrationsStatus.newMigrations }}</td>
+    </tr>        
+  </tbody>
+</table>

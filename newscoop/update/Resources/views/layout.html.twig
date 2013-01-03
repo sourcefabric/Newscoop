@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Newscoop Update</title>
+  <meta name="description" content="Newscoop update process">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="./Resources/css/normalize.min.css" rel="stylesheet" media="all" />
+  <link href="./Resources/css/bootstrap.css" rel="stylesheet" media="all" />
+  <link href="./Resources/css/styles.css" rel="stylesheet" media="all" />
+  <script src="./Resources/js/jquery-1.8.3.min.js"></script>
+  
+  <!-- Include the HTML5 shiv and shiv print polyfills for Internet Explorer browsers 8 and below -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>  
+  <div class="container">
+    <ul class="nav nav-pills pull-right">
+      {% if is_granted('ROLE_ADMIN') %}
+        <li><a class="btn" href="logout">Logout</a></li>
+      {% endif %}
+    </ul>
+    <div class="clearfix"></div>
+    <div class="logobox">
+      <img src="http://newscoop.dev/admin-style/images/sign_big.gif" border="0" alt="">
+    </div>
+    <section role="main">
+      {% block body %}{% endblock %}
+    </section>
+  </div>
+  
+  <footer class="footer_plain" role="contentinfo">
+      <a href="http://newscoop.sourcefabric.org/" target="_blank">Newscoop</a>, the open content management system for professional journalists. 
+        <br>©&nbsp;2012&nbsp;
+        <a href="http://www.sourcefabric.org" target="_blank">Sourcefabric o.p.s.</a>
+        &nbsp;Newscoop is distributed under GNU GPL v.3
+  </footer>
+  {% block javascripts %}{% endblock %}
+</body>
+</html>

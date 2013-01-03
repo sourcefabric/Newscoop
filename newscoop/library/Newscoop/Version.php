@@ -8,6 +8,7 @@
 namespace Newscoop;
 
 /**
+ * Newscoop code version
  */
 class Version
 {

@@ -1,0 +1,56 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+    {% include 'newscoop-status.html.twig' with {migrationsStatus : migrationsStatus} %}
+
+    <div class="row">
+      <div class="span6 offset3">
+        <a href="#" class="btn btn-primary pull-left">Check for new version</a>
+        {% if migrationsStatus.newMigrations > 0 %}
+        <a href="#" class="btn btn-success pull-right js-newscoop-run-migrations">Apply new avaiable updates</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span8 offset2">
+        <pre class="pre-scrollable newscoop-console-output js-newscoop-console-output">Loading.... Please wait...</pre>
+      </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  $('.js-newscoop-run-migrations').click(function(e){
+    e.preventDefault();
+    var checkForUpdates = false;
+    var loadResult = function(){
+      var date = new Date();
+      $.ajax({
+        url: "{{ app.url_generator.generate('loadResult') }}?v=" + date.getMinutes()+date.getSeconds(),
+        type: "GET",
+        dataType: 'json'
+      }).done(function(msg) {
+        $('pre.js-newscoop-console-output').html(msg.content);
+        var height = $('pre.js-newscoop-console-output')[0].scrollHeight;
+        $('pre.js-newscoop-console-output').scrollTop(height);
+
+        if (msg.status === 'finished') {
+          clearInterval(checkForUpdates);
+          $('table.js-newscoop-status').replaceWith(msg.newscoopStatusHtml);
+          return;
+        }
+      });
+    }
+
+    $('pre.js-newscoop-console-output').show();
+    $.ajax({
+      url: "{{ app.url_generator.generate('runUpdate') }}",
+      type: "POST",
+      dataType: "json"
+    }).done(function(msg) {
+      checkForUpdates = setInterval(loadResult, 700);
+    });  
+  })
+</script>
+{% endblock %}
