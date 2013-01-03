@@ -1,4 +1,4 @@
-4.0.4 ()
+4.0.4 (January 08, 2013)
   Improvements
   ------------
   New "Show more" comments button to article edit screen
@@ -8,6 +8,11 @@
   Fixes conflicts with library/Zend by removing it in favour of vendor
   Removes handling of include_path from application.php
   Removes unnecessary use of spl autoloading from create_themes.php upgrade script
+
+  Tasks
+  -----
+  Missing strings in user management added to localizer
+  Database upgrade process should update latest db/roll version on each successfully applied roll
 
 4.0.3 (December 12, 2012)
   Security fixes

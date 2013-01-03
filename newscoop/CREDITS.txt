@@ -1,4 +1,4 @@
-Copyright (C) 2010-2012 Sourcefabric o.p.s
+Copyright (C) 2010-2013 Sourcefabric o.p.s
 Copyright (C) 2002-2009 Media Development Loan Fund
 
 Newscoop Credits (by Version Number)
