@@ -497,7 +497,8 @@ CREATE TABLE `Cache` (
   `content` mediumtext,
   `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
-  KEY `expired` (`expired`)
+  KEY `expired` (`expired`),
+  KEY `template` (`template`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2467,7 +2468,8 @@ CREATE TABLE `liveuser_users` (
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
+  UNIQUE KEY `UName` (`UName`),
+  KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -3053,14 +3055,12 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-INSERT INTO `ingest_feed` (`title`) VALUES ('SDA'),('swissinfo');
-
 DROP TABLE IF EXISTS `ingest_feed_entry`;
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `feed_id` int(11) unsigned NOT NULL,
   `date_id` varchar(20) DEFAULT NULL,
-  `news_item_id` varchar(20) DEFAULT NULL,
+  `news_item_id` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `updated` datetime NOT NULL,
   `author` varchar(255) DEFAULT NULL,

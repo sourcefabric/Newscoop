@@ -1,3 +1,19 @@
+4.1.0 ()
+ New Features
+ ------------
+ CS-4492: Front-end search powered by Apache/Solr
+
+4.0.4 ()
+  Improvements
+  ------------
+  New "Show more" comments button to article edit screen
+
+  Bug fixes
+  ---------
+  Fixes conflicts with library/Zend by removing it in favour of vendor
+  Removes handling of include_path from application.php
+  Removes unnecessary use of spl autoloading from create_themes.php upgrade script
+
 4.0.3 (December 12, 2012)
   Security fixes
   --------------
