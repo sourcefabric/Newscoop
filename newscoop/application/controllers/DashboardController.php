@@ -39,10 +39,10 @@ class DashboardController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $form = new Application_Form_Profile();
+        $form = $this->_helper->form('profile');
         $form->setMethod('POST');
 
-        $form->setDefaultsFromEntity($this->user);
+        $form->setDefaults((array) $this->user->getView());
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -67,14 +67,9 @@ class DashboardController extends Zend_Controller_Action
                 }
             }
         }
-        
-        $this->view->user_first_name = $this->user->getFirstName();
-        $this->view->user_last_name = $this->user->getLastName();
-        $this->view->user_email = $this->user->getEmail();
-                
-        $this->view->form = $form;
+
         $this->view->user = new MetaUser($this->user);
-        $this->view->first_time = $this->_getParam('first', false);
+        $this->view->form = $form;
     }
 
     public function updateTopicsAction()

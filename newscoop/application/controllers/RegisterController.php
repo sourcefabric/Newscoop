@@ -108,41 +108,23 @@ class RegisterController extends Zend_Controller_Action
             $this->_helper->redirector('index', 'index', 'default');
         }
 
-        $form = new Application_Form_Confirm();
+        $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
-        
-        $values = array();
-        if ($user->getFirstName()) {
-            $values['first_name'] = $user->getFirstName();
-        }
-        if ($user->getLastName()) {
-            $values['last_name'] = $user->getLastName();
-        }
-        $form->populate($values);
-        
-        $this->view->terms = false;
-        if ($user->getFirstName() || $user->getLastName()) {
-            $form->addElement('checkbox', 'terms_of_use', array(
-                'label' => 'Accepting terms of use',
-                'required' => true,
-                'validators' => array(
-                    array('greaterThan', true, array('min' => 0)),
-                ),
-                 'errorMessages' => array("Sie können sich nur registrieren, wenn Sie unseren Nutzungsbedingungen zustimmen. Dies geschieht zu Ihrer und unserer Sicherheit. Bitten setzen Sie im entsprechenden Feld ein Häkchen."),
-            ));
-            
-            $this->view->terms = true;
-        }
+        $form->setDefaults(array(
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
+        ));
 
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
             try {
-                $values = $form->getValues();
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->notifyDispatcher($user);
 
                 $auth = \Zend_Auth::getInstance();
-                if ($auth->hasIdentity()) { // show index
+                if ($auth->hasIdentity()) {
                     $this->_helper->flashMessenger('User registered successfully.');
                     $this->_helper->redirector('index', 'index', 'default');
                 } else {
@@ -151,16 +133,9 @@ class RegisterController extends Zend_Controller_Action
                     $result = $auth->authenticate($adapter);
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
-            } catch (\Exception $e) {
-                switch ($e->getMessage()) {
-                    case 'username_conflict':
-                        $form->username->addError('Username is used. Please use another one.');
-                        break;
-
-                    default:
-                        var_dump($e);
-                        exit;
-                }
+            } catch (InvalidArgumentException $e) {
+                $form->username->addError('Username is used. Please use another one.');
+                break;
             }
         }
 
