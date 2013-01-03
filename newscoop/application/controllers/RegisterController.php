@@ -11,15 +11,6 @@ use Newscoop\Entity\User;
  */
 class RegisterController extends Zend_Controller_Action
 {
-    /** @var Newscoop\Services\UserService */
-    private $service;
-
-    /** @var Zend_Session_Namespace */
-    private $session;
-
-    /** @var Newscoop\Services\UserTokenService */
-    private $tokenService;
-
     public function init()
     {
         $this->_helper->contextSwitch
@@ -115,6 +106,8 @@ class RegisterController extends Zend_Controller_Action
             'last_name' => $user->getLastName(),
         ));
 
+        $this->_helper->newsletter->initForm($form, $this->_helper->service('mailchimp.list')->getListView());
+
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
@@ -122,6 +115,7 @@ class RegisterController extends Zend_Controller_Action
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->notifyDispatcher($user);
+                $this->_helper->service('mailchimp.list')->subscribe($user->getEmail(), $values['newsletter']);
 
                 $auth = \Zend_Auth::getInstance();
                 if ($auth->hasIdentity()) {
@@ -215,7 +209,7 @@ class RegisterController extends Zend_Controller_Action
         $this->view->name = $userData->profile->displayName;
         $this->view->form = $form;
     }
-    
+
     public function pendingAction()
     {
         if ($this->_getParam('email')) {
@@ -230,6 +224,7 @@ class RegisterController extends Zend_Controller_Action
                 $this->view->result = '1';
             }
         }
+
         $this->view->result = '0';
     }
 

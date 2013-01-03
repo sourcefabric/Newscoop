@@ -1,5 +1,5 @@
 {
-    "hash": "accd58ae6dd796a4fae6e20bb9915211",
+    "hash": "5726a8d2996cde30467f62b24e5642ce",
     "packages": [
         {
             "name": "bombayworks/zendframework1",
@@ -40,6 +40,7 @@
                     "ZendX_": "extras/library/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "include-path": [
                 "library/"
             ],
@@ -235,22 +236,22 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.0.5",
+            "version": "v3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle",
-                "reference": "v3.0.5"
+                "reference": "v3.0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/guzzle/guzzle/archive/v3.0.5.zip",
-                "reference": "v3.0.5",
+                "url": "https://github.com/guzzle/guzzle/archive/v3.0.7.zip",
+                "reference": "v3.0.7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "ext-curl": "*",
-                "symfony/event-dispatcher": "2.1.*"
+                "symfony/event-dispatcher": ">=2.1"
             },
             "replace": {
                 "guzzle/batch": "self.version",
@@ -285,8 +286,13 @@
                 "zend/zend-cache1": "1.12",
                 "phpunit/phpunit": "3.7.*"
             },
-            "time": "2012-11-19 00:15:33",
+            "time": "2012-12-19 23:06:35",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
@@ -294,6 +300,7 @@
                     "Guzzle": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -321,36 +328,76 @@
             ]
         },
         {
+            "name": "rezzza/mailchimp",
+            "version": "dev-master",
+            "target-dir": "Rezzza/MailChimp",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rezzza/mailchimp.git",
+                "reference": "1.3.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/rezzza/mailchimp/archive/1.3.1.zip",
+                "reference": "1.3.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "time": "2012-12-03 18:00:04",
+            "type": "mailchimp-api",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Rezzza\\MailChimp\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sébastien HOUZÉ",
+                    "email": "s@verylastroom.com"
+                }
+            ],
+            "description": "MailChimp PHP API Wrapper 1.3.*",
+            "homepage": "http://apidocs.mailchimp.com/api/downloads/#php",
+            "keywords": [
+                "mailchimp",
+                "api",
+                "newsletter"
+            ]
+        },
+        {
             "name": "symfony/console",
-            "version": "v2.1.3",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Console",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Console",
-                "reference": "v2.1.3"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Console/zipball/v2.1.3",
-                "reference": "v2.1.3",
+                "url": "https://github.com/symfony/Console/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-10-22 07:37:12",
+            "time": "2012-12-13 17:42:00",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Console": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -369,17 +416,17 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.1.3",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher",
-                "reference": "v2.1.3"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/EventDispatcher/zipball/v2.1.3",
-                "reference": "v2.1.3",
+                "url": "https://github.com/symfony/EventDispatcher/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
@@ -392,19 +439,15 @@
                 "symfony/dependency-injection": "2.1.*",
                 "symfony/http-kernel": "2.1.*"
             },
-            "time": "2012-10-04 08:17:57",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\EventDispatcher": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -423,35 +466,31 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.1.3",
+            "version": "v2.1.6",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml",
-                "reference": "v2.1.3"
+                "reference": "v2.1.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/Yaml/zipball/v2.1.3",
-                "reference": "v2.1.3",
+                "url": "https://github.com/symfony/Yaml/archive/v2.1.6.zip",
+                "reference": "v2.1.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
-            "time": "2012-10-29 04:15:41",
+            "time": "2012-12-06 10:00:55",
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.1-dev"
-                }
-            },
             "installation-source": "dist",
             "autoload": {
                 "psr-0": {
                     "Symfony\\Component\\Yaml": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -474,7 +513,7 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "rezzza/mailchimp": 20
+    }
 }

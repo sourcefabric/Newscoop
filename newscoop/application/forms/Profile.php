@@ -143,40 +143,4 @@ class Application_Form_Profile extends Zend_Form
 
         return camp_convert_bytes($maxFileSize);
     }
-
-    /**
-     * Set mailchimp groups
-     *
-     * @param array $listGroups
-     * @param array $userGroups
-     * @return void
-     */
-    public function setMailchimpGroups($listGroups, $userGroups)
-    {
-        $mailchimp = new Zend_Form_SubForm();
-        foreach ($listGroups as $group) {
-            $mailchimp->addElement('multiCheckbox', (string) $group['id'], array(
-                'label' => (string) $group['name'],
-                'multioptions' => $this->getGroupOptions($group),
-            ));
-        }
-
-        $mailchimp->setDefaults($userGroups);
-
-        $this->addSubform($mailchimp, 'mailchimp');
-    }
-
-    /**
-     * Get group options
-     *
-     * @param array $group
-     * @return array
-     */
-    private function getGroupOptions($group)
-    {
-        $groups = array_map(function($group) {
-            return $group['name'];
-        }, $group['groups']);
-        return array_combine($groups, $groups);
-    }
 }

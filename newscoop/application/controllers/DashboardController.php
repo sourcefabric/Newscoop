@@ -43,6 +43,10 @@ class DashboardController extends Zend_Controller_Action
         $form->setMethod('POST');
         $form->setDefaults((array) $this->user->getView());
 
+        $listView = $this->_helper->service('mailchimp.list')->getListView();
+        $memberView = $this->_helper->service('mailchimp.list')->getMemberView($this->user->getEmail());
+        $this->_helper->newsletter->initForm($form, $listView, $memberView);
+
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
@@ -53,6 +57,7 @@ class DashboardController extends Zend_Controller_Action
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
                 $this->service->save($values, $this->user);
+                $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
@@ -69,16 +74,7 @@ class DashboardController extends Zend_Controller_Action
 
         $this->view->user = new MetaUser($this->user);
         $this->view->form = $form;
-    }
-
-    public function newsletterAction()
-    {
-        $this->mailchimpGroups = $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId());
-        $this->userGroups = $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId());
-        $form->setMailChimpGroups($this->mailchimpGroups, $this->userGroups);
-
-        $request = $this->getRequest();
-        $this->saveMailchimp($values);
+        $this->view->newsletter = $listView;
     }
 
     public function updateTopicsAction()
@@ -124,39 +120,5 @@ class DashboardController extends Zend_Controller_Action
         }
 
         $this->_helper->json(array());
-    }
-
-    public function saveNewsletterAction()
-    {
-        $form = $this->getMailChimpForm();
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $form->getValues());
-        }
-
-        $url = $this->view->url(array('action' => 'index')) . '#meine-newsletter';
-
-        $this->_helper->redirector->goToUrl($url);
-    }
-
-    /**
-     * Get mailchimp list id
-     *
-     * @return string
-     */
-    private function getMailChimpListId()
-    {
-        $mailchimpOptions = $this->getInvokeArg('bootstrap')->getOption('mailchimp');
-        return $mailchimpOptions['list_id'];
-    }
-
-    /**
-     * Save mailchimp info
-     *
-     * @param array $values
-     * @return void
-     */
-    private function saveMailchimp(array $values)
-    {
-        $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
     }
 }

@@ -4,7 +4,8 @@
         "symfony/console": "2.1.*",
         "symfony/yaml": "2.1.*",
         "bombayworks/zendframework1": "1.11.*",
-        "guzzle/guzzle": "*"
+        "guzzle/guzzle": "*",
+        "rezzza/mailchimp": "dev-master"
     },
     "autoload": {
         "psr-0": {
