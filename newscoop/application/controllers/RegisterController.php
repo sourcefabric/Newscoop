@@ -106,7 +106,8 @@ class RegisterController extends Zend_Controller_Action
             'last_name' => $user->getLastName(),
         ));
 
-        $this->_helper->newsletter->initForm($form, $this->_helper->service('mailchimp.list')->getListView());
+        $listView = $this->_helper->service('mailchimp.list')->getListView();
+        $this->_helper->newsletter->initForm($form, $listView);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -134,6 +135,7 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
+        $this->view->newsletter = $listView;
     }
 
     public function generateUsernameAction()
