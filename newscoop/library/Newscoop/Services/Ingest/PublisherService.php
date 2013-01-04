@@ -138,27 +138,8 @@ class PublisherService
      */
     public function getSection(Entry $entry)
     {
-        switch ($entry->getSubject()) {
-            case '15000000':
-                return $this->config['section_sport'];
-                break;
-
-            case '1000000':
-                return $this->config['section_culture'];
-                break;
-        }
-
-        //has to be before country checking.
-        if ($entry->getProduct() == "swissinfo") {
-            return $this->config['section_swiss_info'];
-        }
-
-        if ($entry->getCountry() != 'CH')  {
-            return $this->config['section_international'];
-        }
-
-        if ($entry->getProduct() == "Regionaldienst Nord") {
-            return $this->config['section_basel'];
+        if (array_key_exists($entry->getSubject(), $this->config)) {    
+            return $this->config[$entry->getSubject()];   
         }
 
         return $this->config['section_other'];
