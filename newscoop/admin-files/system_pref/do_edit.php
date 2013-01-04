@@ -254,7 +254,12 @@ foreach ($f_geo as $key => $value) {
     SystemPref::Set($name, $value);
 }
 
-foreach (array('mailchimp_apikey', 'mailchimp_listid') as $key) {
+$keys = array(
+    'mailchimp_apikey', 'mailchimp_listid',
+    'facebook_appid', 'facebook_appsecret',
+);
+
+foreach ($keys as $key) {
     if (array_key_exists($key, $_POST)) {
         SystemPref::Set($key, $_POST[$key]);
     }

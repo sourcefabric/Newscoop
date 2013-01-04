@@ -59,32 +59,56 @@ class AuthController extends Zend_Controller_Action
 
     public function socialAction()
     {
-        require_once 'Hybrid/Auth.php';
-
-        if ($this->auth->hasIdentity()) {
-            $this->_helper->redirector('index', 'index');
-            return;
-        }
+        $config = array(
+		    'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))), 
+		    'debug_mode' => false,
+		    'providers' => array(
+			    'Facebook' => array(
+				    'enabled' => true,
+                    'keys'    => array(
+                        'id' => SystemPref::Get('facebook_appid'),
+                        'secret' => SystemPref::Get('facebook_appsecret'),
+                    ), 
+                ),
+            ),
+        );
 
         try {
-            $hauth = new Hybrid_Auth(APPLICATION_PATH . '/../hybridauth/config.php');
+            $hauth = new Hybrid_Auth($config);
             $adapter = $hauth->authenticate($this->_getParam('provider'));
             $userData = $adapter->getUserProfile();
 
             $socialAdapter = $this->_helper->service('auth.adapter.social');
             $socialAdapter->setProvider($adapter->id)->setProviderUserId($userData->identifier);
             $result = $this->auth->authenticate($socialAdapter);
-            if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                $this->_helper->redirector('index', 'dashboard');
+
+            if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
+                $user = $this->_helper->service('user')->findBy(array('email' => $userData->email));
+                if (!$user)  {
+                    $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
+                }
+
+                $this->_helper->service('auth.adapter.social')->addIdentity($user, $adapter->id, $userData->identifier);
+                $this->auth->authenticate($socialAdapter);
+            } else {
+                $user = $this->_helper->service('user')->getCurrentUser();
             }
 
-            $this->_forward('social', 'register', 'default', array(
-                'userData' => $userData,
-            ));
+            if ($user->isPending()) {
+                $this->_forward('confirm', 'register', 'default');
+            } else {
+                $this->_helper->redirector('index', 'dashboard');
+            }
         } catch (\Exception $e) {
             var_dump($e->getMessage(), $e->getTraceAsString());
             exit;
         }
+    }
+
+    public function socialendpointAction()
+    {
+        Hybrid_Endpoint::process();
+        exit;
     }
 
     public function passwordRestoreAction()
