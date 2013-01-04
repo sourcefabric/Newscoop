@@ -7,6 +7,8 @@
 
 namespace Newscoop\MailChimp;
 
+use ArrayIterator;
+
 /**
  */
 class ListApiTest extends \TestCase
@@ -46,7 +48,15 @@ class ListApiTest extends \TestCase
     public function setUp()
     {
         $this->api = $this->getMock('Rezzza\MailChimp\MCAPI', array(), array(self::API_KEY));
-        $this->list = new ListApi($this->api, array('mailchimp' => array('id' => self::LIST_ID)));
+        $this->apiFactory = $this->getMock(
+            'Newscoop\MailChimp\ApiFactory',
+            array(),
+            array(new ArrayIterator(array('mailchimp_apikey' => self::API_KEY)))
+        );
+        $this->apiFactory->expects($this->any())
+            ->method('createApi')
+            ->will($this->returnValue($this->api));
+        $this->list = new ListApi($this->apiFactory, new ArrayIterator(array('mailchimp_listid' => self::LIST_ID)));
     }
 
     public function testInstance()

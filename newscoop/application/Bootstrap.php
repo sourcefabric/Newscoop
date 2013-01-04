@@ -53,6 +53,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $container->setService('view', $this->getResource('view'));
 
+        $container->register('config', 'Newscoop\Config')
+            ->addArgument('%config%');
+
         $container->register('image', 'Newscoop\Image\ImageService')
             ->addArgument('%image%')
             ->addArgument(new sfServiceReference('em'));
@@ -107,7 +110,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user.topic', 'Newscoop\Services\UserTopicService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('dispatcher'));
-
 
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
@@ -209,13 +211,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('search.index'));
 
-        $mailchimpOptions = $this->getOption('mailchimp');
-        $container->register('mailchimp.api', 'Rezzza\MailChimp\MCAPI')
-            ->addArgument($mailchimpOptions['apikey']);
+        $container->register('preferences', 'SystemPref')
+            ->addArgument('%config%');
+
+        $container->register('mailchimp.api.factory', 'Newscoop\MailChimp\ApiFactory')
+            ->addArgument(new sfServiceReference('preferences'));
 
         $container->register('mailchimp.list', 'Newscoop\MailChimp\ListApi')
-            ->addArgument(new sfServiceReference('mailchimp.api'))
-            ->addArgument('%config%');
+            ->addArgument(new sfServiceReference('mailchimp.api.factory'))
+            ->addArgument(new sfServiceReference('preferences'));
 
         Zend_Registry::set('container', $container);
         return $container;

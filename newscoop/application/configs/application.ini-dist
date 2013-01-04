@@ -237,9 +237,6 @@ blog.article_type = "blog"
 image.cache_url = "images/cache"
 image.cache_path = APPLICATION_PATH "/../images/cache"
 
-mailchimp.apikey = ""
-mailchimp.id = ""
-
 [staging : production]
 
 [testing : production]

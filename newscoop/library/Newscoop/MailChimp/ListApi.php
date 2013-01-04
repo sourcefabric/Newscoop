@@ -7,8 +7,7 @@
 
 namespace Newscoop\MailChimp;
 
-use Newscoop\Entity\User;
-use Rezzza\MailChimp\MCAPI;
+use ArrayAccess;
 
 /**
  */
@@ -28,10 +27,10 @@ class ListApi
      * @param MCAPI $api
      * @param array $config
      */
-    public function __construct(MCAPI $api, array $config)
+    public function __construct(ApiFactory $apiFactory, ArrayAccess $config)
     {
-        $this->api = $api;
-        $this->listId = $config['mailchimp']['id'];
+        $this->api = $apiFactory->createApi();
+        $this->listId = $config['mailchimp_listid'];
     }
 
     /**
@@ -42,6 +41,10 @@ class ListApi
     public function getListView()
     {
         $view = new ListView();
+        if (empty($this->listId)) {
+            return $view;
+        }
+
         $view->groups = $this->api->listInterestGroupings($this->listId);
         if ($view->groups) {
             $view->id = $this->listId;
@@ -66,9 +69,12 @@ class ListApi
      */
     public function getMemberView($email)
     {
-        $info = $this->api->listMemberInfo($this->listId, (array) $email);
-
         $view = new MemberView();
+        if (empty($this->listId)) {
+            return $view;
+        }
+
+        $info = $this->api->listMemberInfo($this->listId, (array) $email);
         if ($info['success']) {
             $data = $info['data'][0];
             $view->email = $data['email'];
@@ -92,6 +98,10 @@ class ListApi
      */
     public function subscribe($email, array $values)
     {
+        if (empty($this->listId)) {
+            return;
+        }
+
         if (empty($values['subscriber'])) {
             return $this->api->listUnsubscribe($this->listId, $email);
         } else {
