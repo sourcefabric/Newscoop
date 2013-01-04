@@ -747,7 +747,7 @@ class Localizer {
         $untranslated = 0;
 
         foreach ($sourceStrings as $k => $v) {
-            if (strlen($targetStrings[$k])) {
+            if (array_key_exists($k, $targetStrings) && strlen($targetStrings[$k])) {
                 $translated++;
             } else {
                 $untranslated++;
