@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "Дублювання призначення");
 regGS("Templates", "Шаблони");
 regGS("Import theme", "Імпортувати тему");
 regGS("Import succeded!", "Імпортовано!");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "Скасування теми не вдало
 regGS("Export", "Експорт");
 regGS("Error page template", "Шаблон сторінки помилки");
 regGS("Edit '$1'", "Редагувати  '$1'");
-regGS("Duplicate assignation", "Дублювати призначення");
 regGS("Done uploading", "Завантаження завершено");
 regGS("Do you want to override '$1'?", "Бажаєте змінити  '$1'?");
 regGS("Directory is empty", "Тека пуста");
@@ -86,4 +86,5 @@ regGS("Add to publication", "Додати до публікації");
 regGS("'$1' is not writable", "'$1'. не може бути перезаписаний");
 regGS("'$1' $2", "'$1' $2");
 regGS("$1 files $2", "$1 файли $2");
+regGS("Duplicate assignation", "Дублювати призначення");
 ?>

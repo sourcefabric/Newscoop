@@ -1,10 +1,12 @@
 <?php 
+regGS("Automatic collection of statistics:", "Автоматичний збір статистики:");
+regGS("to load geo-names data", "для завантаження даних гео-назв ");
+regGS("MySQL client command path", "командна строка MySQL клієнту");
 regGS("according to php.ini settings", "відповідно до налаштувань у php.ini");
 regGS("Maximal zoom for auto-focusing:", "Максимальне збільшення для автофокусу:");
 regGS("Map border for auto-focusing:", "Межі карти для автофокусу:");
 regGS("Map auto-focusing as the default behavior:", "Автофокусировка карти як типова поведінка:");
 regGS("Include CSS file for map view", "Включити CSS файл для перегляду карти");
-regGS("Collect statistics:", "Збирати статистику:");
 regGS("Please enter password recovery from email.", "Будь ласка введіть пароль з електроної пошти для відновлення.");
 regGS("From email address:", "З адресу е-пошти:");
 regGS("Run scheduled tasks externally?", "Запуск запланованих завдань зовні?");
@@ -84,4 +86,5 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Кількі�
 regGS("Keyword separator:", "Розділювач ключових слів:");
 regGS("Time Zone:", "Часовий Пояс:");
 regGS("disabled", "віключено");
+regGS("Collect statistics:", "Збирати статистику:");
 ?>

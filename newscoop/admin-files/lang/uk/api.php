@@ -1,6 +1,9 @@
 <?php 
-regGS("Not a color", "Не колір");
-regGS("No such field", "Таких полів немає");
+regGS("No such article type", "Немає статті такого типу");
+regGS("Filter saved", "Фільтр збережено");
+regGS("Filter not saved", "Фільтр не збережено");
+regGS("Not a color", "Не кольорове");
+regGS("No such field", "Немає полів");
 regGS("Color saved", "Колір збережено");
 regGS("Color not saved", "Колір не збережено");
 regGS("Topic created", "Тема створена");

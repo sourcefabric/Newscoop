@@ -1,4 +1,13 @@
 <?php 
+regGS("send confirmation email", "Відправити листа з підтвердженням");
+regGS("edit user", "Редагувати користувача");
+regGS("delete user", "Видалити користувача");
+regGS("Verified profile", "Перевірений профіль");
+regGS("Send email to user:", "Відправити листа користувачу:");
+regGS("Search for username/email", "Пошук за ім’ям / ел.адресою");
+regGS("No users found.", "Корисувачів не знайдено");
+regGS("Are you sure you want to {action}?", "Ви впевнені що хочете {action}?");
+regGS("Active Logins", "Активні Логіни");
 regGS("Username is used already", "І’мя користувача вже використовується");
 regGS("User with id '$1' not found", "Користувача з ID '$1' не знайдено.");
 regGS("User was deleted.", "Користувач видалений.");
@@ -8,19 +17,15 @@ regGS("User '$1' created", "Користувач '$1' створений");
 regGS("Send confirm email", "Відправити листа з підтвердженням");
 regGS("Profile saved.", "Профіль збережений.");
 regGS("Picture", "Зображення");
-regGS("Pending", "В очікуванні");
 regGS("Password updated", "Пароль оновлений");
 regGS("None", "Жоден");
 regGS("New confirmation email was sent to user.", "Новий лист для підтвердження відісланий користувачу.");
-regGS("Inactive", "Неактивний");
 regGS("Email is used already", "електрона адреса вже використовується");
 regGS("Edit your password", "Редагувати свій пароль");
 regGS("Edit user '$1'", "Редагувати користувача  '$1'");
 regGS("Edit subscriptions", "Редагувати підписки");
 regGS("Edit profile", "Редагувати профіль");
 regGS("Edit permissions", "Редагувати права");
-regGS("Do you really want to send confirmation email?", "Ви дійсно хочете відправити листа з підтвердженням?");
-regGS("Do you really want to delete user?", "Ви дійсно хочете видалити користувача?");
 regGS("Create new account", "Створити новий акаунт");
 regGS("Comment ban settings", "Налаштування коментаря заборони");
 regGS("Ban for user \"$1\" saved.", "Заборона для користувача \"$1\" збережена");
@@ -153,4 +158,8 @@ regGS("Administrative tasks", "Адміністративні завдання")
 regGS("User will be notified on several events", "Користувача буде повідомлено про декілька подій");
 regGS("Editor Miscellaneous Settings", "Редагувати різні налаштування");
 regGS("No such user account.", "Немає такої акаунту користувача.");
+regGS("Pending", "В очікуванні");
+regGS("Inactive", "Неактивний");
+regGS("Do you really want to send confirmation email?", "Ви дійсно хочете відправити листа з підтвердженням?");
+regGS("Do you really want to delete user?", "Ви дійсно хочете видалити користувача?");
 ?>

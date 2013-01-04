@@ -1,12 +1,12 @@
 <?php 
+regGS("Display articles of filtered types", "Відображення статей фільтрованих типів");
+regGS("Display Articles of Filtered Types", "Відображення статей фільтрованих типів");
 regGS("Webcode", "Вебкод");
 regGS("View article", "Перегляд статті");
 regGS("Source", "Джерело");
 regGS("Select type", "Виберіть тип");
 regGS("On", "Вкл.");
 regGS("Off", "Викл.");
-regGS("Display newswires articles", "Показати стрічки статей");
-regGS("Display Newswires", "Показати стрічки");
 regGS("Title", "Заголовок");
 regGS("No video playback capabilities, please download the video below", "Немає можливості відтворення відео, будь ласка, завантажити відео нижче");
 regGS("Article status set to '$1' for $2 articles", "Статус статті встановлений в з  '$1' на $2");
@@ -72,4 +72,6 @@ regGS("Access denied.", "Доступ заборонено");
 regGS("$1 toggled.", " $1 перемкнуто?");
 regGS("$1 articles have been removed", " $1 стаття була видалена.");
 regGS(" - filtering from _MAX_ records", "фільтрація від _MAX_ записів");
+regGS("Display newswires articles", "Показати стрічки статей");
+regGS("Display Newswires", "Показати стрічки");
 ?>
