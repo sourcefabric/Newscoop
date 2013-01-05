@@ -338,7 +338,6 @@ class Article extends DatabaseObject {
         Log::ArticleMessage($this, getGS('Article created.'), null, 31, TRUE);
     } // fn create
 
-
     /**
      * Create a unique identifier for an article.
      * @access private
@@ -348,13 +347,8 @@ class Article extends DatabaseObject {
         global $g_ado_db;
         $queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
         $g_ado_db->Execute($queryStr);
-        if ($g_ado_db->Affected_Rows() <= 0) {
-            // If we were not able to get an ID.
-            return 0;
-        }
-        return (int)$g_ado_db->Insert_ID();
+        return $g_ado_db->insert_id() ?: 1;
     } // fn __generateArticleNumber
-
 
     /**
      * Create a copy of this article.
