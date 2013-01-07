@@ -177,6 +177,7 @@ class DebateIssue extends DatabaseObject {
         $records = array();
 
         $DebateIssue = new DebateIssue();
+        $where = '';
 
         if (!empty($p_debate_nr)) {
             $where .= "AND fk_debate_nr = $p_debate_nr ";
