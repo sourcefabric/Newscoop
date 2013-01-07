@@ -301,6 +301,12 @@ class Article
     private $webcode;
 
     /**
+     * Article reads number used by Newscoop API
+     * @var int
+     */
+    private $reads;
+
+    /**
      * @param int $number
      * @param Newscoop\Entity\Language $language
      */
@@ -824,5 +830,27 @@ class Article
         }
 
         return $this->renditions;
+    }
+
+    /**
+     * Get reads
+     * @param int $reads
+     */
+    public function setReads($reads)
+    {
+        $this->reads = $reads;
+
+        return $this;
+    }
+
+    /**
+     * Set reads
+     * @return int
+     */
+    public function getReads()
+    {
+        $requestObject = new \RequestObject($this->objectId);
+
+        return $requestObject->getRequestCount();
     }
 }

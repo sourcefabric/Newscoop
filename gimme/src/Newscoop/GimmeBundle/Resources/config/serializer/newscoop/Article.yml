@@ -98,3 +98,9 @@ Newscoop\Entity\Article:
             type: article_renditions
             access_type: public_method
             serialized_name: renditions
+        reads:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: reads
