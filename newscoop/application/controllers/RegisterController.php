@@ -20,6 +20,8 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('pending', 'json')
             ->addActionContext('create-user', 'json')
             ->initContext();
+
+        $this->auth = Zend_Auth::getInstance();
     }
 
     public function indexAction()
@@ -77,34 +79,20 @@ class RegisterController extends Zend_Controller_Action
 
     public function confirmAction()
     {
-        $user = $this->_helper->service('user')->find($this->_getParam('user'));
-        if (empty($user)) {
-            $this->_helper->flashMessenger(array('error', "User not found"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        if (!$user->isPending()) {
-            $this->_helper->flashMessenger(array('error', "User has been activated"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        $token = $this->_getParam('token', false);
-        if (!$token) {
-            $this->_helper->flashMessenger(array('error', "No token provided"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
-            $this->_helper->flashMessenger(array('error', "Invalid token"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
+        $user = $this->getAuthUser();
 
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
         $form->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
+            'username' => $user->getFirstName() . ' ' . $user->getLastName(),
         ));
+
+        if ($this->auth->hasIdentity()) {
+            $form->removeElement('password');
+            $form->removeElement('password_confirm');
+        }
 
         $listView = $this->_helper->service('mailchimp.list')->getListView();
         $this->_helper->newsletter->initForm($form, $listView);
@@ -114,8 +102,8 @@ class RegisterController extends Zend_Controller_Action
             $values = $form->getValues();
             try {
                 $this->_helper->service('user')->savePending($values, $user);
-                $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->notifyDispatcher($user);
+                $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->_helper->service('mailchimp.list')->subscribe($user->getEmail(), $values['newsletter']);
 
                 $auth = \Zend_Auth::getInstance();
@@ -173,45 +161,6 @@ class RegisterController extends Zend_Controller_Action
         $this->view->status = true;
     }
 
-    public function socialAction()
-    {
-        $form = new Application_Form_Social();
-        $form->setMethod('POST');
-
-        $userData = $this->_getParam('userData');
-        $form->setDefaults(array(
-            'first_name' => $userData->profile->firstName,
-            'last_name' => $userData->profile->lastName,
-            'email' => $userData->profile->email,
-        ));
-
-        if (!empty($userData->profile->email)) { // try to find user by email
-            $user = $this->_helper->service('user')->findBy(array('email' => $userData->profile->email));
-            if (!empty($user)) { // we have user for given email, add him login
-                $user = array_pop($user);
-                $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-                $adapter = $this->_helper->service('auth.adapter.social');
-                $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-                Zend_Auth::getInstance()->authenticate($adapter);
-                $this->_helper->redirector('index', 'dashboard');
-            }
-        }
-
-        $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
-            $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
-            $this->_helper->service('user')->setActive($user);
-            $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-            $adapter = $this->_helper->service('auth.adapter.social');
-            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-            Zend_Auth::getInstance()->authenticate($adapter);
-            $this->_helper->redirector('index', 'dashboard');
-        }
-
-        $this->view->name = $userData->profile->displayName;
-        $this->view->form = $form;
-    }
-
     public function pendingAction()
     {
         if ($this->_getParam('email')) {
@@ -242,5 +191,46 @@ class RegisterController extends Zend_Controller_Action
             ->notify(new sfEvent($this, 'user.register', array(
             'user' => $user,
         )));
+    }
+
+    /**
+     * Get user by token or auth
+     *
+     * @return Newscoop\Entity\User
+     */
+    private function getAuthUser()
+    {
+        if ($this->auth->hasIdentity()) {
+            $user = $this->_helper->service('user')->find($this->auth->getIdentity());
+        } else {
+            $user = $this->_helper->service('user')->find($this->_getParam('user'));
+        }
+
+        if (empty($user)) {
+            $this->_helper->flashMessenger(array('error', "User not found"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$user->isPending()) {
+            $this->_helper->flashMessenger(array('error', "User has been activated"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if ($this->auth->hasIdentity()) {
+            return $user;
+        }
+
+        $token = $this->_getParam('token', false);
+        if (!$token && !$auth->hasIdentity()) {
+            $this->_helper->flashMessenger(array('error', "No token provided"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
+            $this->_helper->flashMessenger(array('error', "Invalid token"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        return $user;
     }
 }

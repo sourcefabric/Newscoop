@@ -35,6 +35,10 @@ class DashboardController extends Zend_Controller_Action
         if (empty($this->user)) {
             $this->_helper->redirector('index', 'auth');
         }
+
+        if ($this->user->isPending()) {
+            $this->_helper->redirector('confirm', 'register');
+        }
     }
 
     public function indexAction()

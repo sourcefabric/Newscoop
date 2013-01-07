@@ -715,10 +715,8 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_flash_directory" value="<?php p(SystemPref::Get('FlashDirectory')); ?>" maxlength="80" size="40" class="input_text" />
     </td>
 </tr>
-<tr>
-    <td colspan="2"><hr /></td>
-</tr>
 
+<tr><td colspan="2"><hr /></td></tr>
 <tr>
     <td colspan="2">
         <strong><?php putGS("MailChimp Settings"); ?></strong>
@@ -731,6 +729,21 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td><?php putGS('List Unique Id:'); ?></td>
     <td><input type="text" name="mailchimp_listid" value="<?php echo $this->view->escape(SystemPref::Get('mailchimp_listid')); ?>" size="40" class="input_text" /></td>
+</tr>
+
+<tr><td colspan="2"><hr /></td></tr>
+<tr>
+    <td colspan="2">
+        <strong><?php putGS("Facebook Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td><?php putGS('App ID:'); ?></td>
+    <td><input type="text" name="facebook_appid" value="<?php echo $this->view->escape(SystemPref::Get('facebook_appid')); ?>" size="40" class="input_text" /></td>
+</tr>
+<tr>
+    <td><?php putGS('App Secret:'); ?></td>
+    <td><input type="text" name="facebook_appsecret" value="<?php echo $this->view->escape(SystemPref::Get('facebook_appsecret')); ?>" size="40" class="input_text" /></td>
 </tr>
 
 <tr>

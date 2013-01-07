@@ -5,7 +5,8 @@
         "symfony/yaml": "2.1.*",
         "bombayworks/zendframework1": "1.11.*",
         "guzzle/guzzle": "*",
-        "rezzza/mailchimp": "dev-master"
+        "rezzza/mailchimp": "dev-master",
+        "hybridauth/hybridauth": "dev-master"
     },
     "autoload": {
         "psr-0": {

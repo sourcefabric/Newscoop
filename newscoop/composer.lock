@@ -1,5 +1,5 @@
 {
-    "hash": "5726a8d2996cde30467f62b24e5642ce",
+    "hash": "5bfb47394525909a287e9b8c1511befa",
     "packages": [
         {
             "name": "bombayworks/zendframework1",
@@ -328,6 +328,56 @@
             ]
         },
         {
+            "name": "hybridauth/hybridauth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hybridauth/hybridauth",
+                "reference": "bea75d4ac4c5f325bf2bc9e96236daf792a40002"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/hybridauth/hybridauth/archive/bea75d4ac4c5f325bf2bc9e96236daf792a40002.zip",
+                "reference": "bea75d4ac4c5f325bf2bc9e96236daf792a40002",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "2013-01-01 09:32:37",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Hybrid": "hybridauth/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(MIT or GPL-3.0+)"
+            ],
+            "authors": [
+                {
+                    "name": "Miled",
+                    "email": "hybridauth@gmail.com"
+                }
+            ],
+            "description": "Open source social sign on PHP library.",
+            "homepage": "http://hybridauth.sourceforge.net",
+            "keywords": [
+                "OpenId",
+                "oauth",
+                "twitter",
+                "login",
+                "google",
+                "facebook",
+                "social",
+                "hybridauth",
+                "yahoo"
+            ]
+        },
+        {
             "name": "rezzza/mailchimp",
             "version": "dev-master",
             "target-dir": "Rezzza/MailChimp",
@@ -514,6 +564,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "rezzza/mailchimp": 20
+        "rezzza/mailchimp": 20,
+        "hybridauth/hybridauth": 20
     }
 }
