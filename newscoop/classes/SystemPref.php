@@ -8,13 +8,10 @@ require_once dirname(__FILE__) . '/Log.php';
 require_once dirname(__FILE__) . '/../template_engine/classes/CampSession.php';
 
 /**
- * @package Campsite
- */
-
-/**
  * The global system preferences.
  */
-class SystemPref {
+class SystemPref implements ArrayAccess
+{
     const SESSION_KEY_CACHE_ENGINE = 'campsite_cache_engine';
     const SESSION_KEY_CACHE_ENABLED = 'campsite_cache_enabled';
 
@@ -185,6 +182,40 @@ class SystemPref {
         return (self::Get("CollectStatistics") == 'Y');
     } // fn CollectStatisticsAuto
 
-} // class SystemPref
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return self::Get($offset) !== null;
+    }
 
-?>
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return self::Get($offset);
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     * @return void
+     */
+    public function offsetSet($offset, $value)
+    {
+        self::Set($offset, $value);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return void
+     */
+    public function offsetUnset($offset)
+    {
+        self::Set($offset, null);
+    }
+}

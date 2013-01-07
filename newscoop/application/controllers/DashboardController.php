@@ -39,10 +39,13 @@ class DashboardController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $form = new Application_Form_Profile();
+        $form = $this->_helper->form('profile');
         $form->setMethod('POST');
+        $form->setDefaults((array) $this->user->getView());
 
-        $form->setDefaultsFromEntity($this->user);
+        $listView = $this->_helper->service('mailchimp.list')->getListView();
+        $memberView = $this->_helper->service('mailchimp.list')->getMemberView($this->user->getEmail());
+        $this->_helper->newsletter->initForm($form, $listView, $memberView);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -54,6 +57,7 @@ class DashboardController extends Zend_Controller_Action
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
                 $this->service->save($values, $this->user);
+                $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
@@ -67,14 +71,10 @@ class DashboardController extends Zend_Controller_Action
                 }
             }
         }
-        
-        $this->view->user_first_name = $this->user->getFirstName();
-        $this->view->user_last_name = $this->user->getLastName();
-        $this->view->user_email = $this->user->getEmail();
-                
-        $this->view->form = $form;
+
         $this->view->user = new MetaUser($this->user);
-        $this->view->first_time = $this->_getParam('first', false);
+        $this->view->form = $form;
+        $this->view->newsletter = $listView;
     }
 
     public function updateTopicsAction()
@@ -102,5 +102,23 @@ class DashboardController extends Zend_Controller_Action
 
         $this->_helper->flashMessenger("Topic added to followed");
         $this->_helper->redirector->gotoUrl($_SERVER['HTTP_REFERER']);
+    }
+
+    public function addTopicByNameAction()
+    {
+        if (!$this->_getParam('topic')) {
+            $this->_helper->json(array());
+            return;
+        }
+
+        $topic = $this->_helper->service('em')->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
+            'name' => $this->_getParam('topic'),
+        ));
+
+        if ($topic !== null) {
+            $this->_helper->service('user.topic')->followTopic($this->user, $topic);
+        }
+
+        $this->_helper->json(array());
     }
 }

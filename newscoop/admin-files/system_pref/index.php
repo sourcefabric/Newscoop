@@ -715,13 +715,28 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_flash_directory" value="<?php p(SystemPref::Get('FlashDirectory')); ?>" maxlength="80" size="40" class="input_text" />
     </td>
 </tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+
+<tr>
+    <td colspan="2">
+        <strong><?php putGS("MailChimp Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td><?php putGS('API Key:'); ?></td>
+    <td><input type="text" name="mailchimp_apikey" value="<?php echo $this->view->escape(SystemPref::Get('mailchimp_apikey')); ?>" size="40" class="input_text" /></td>
+</tr>
+<tr>
+    <td><?php putGS('List Unique Id:'); ?></td>
+    <td><input type="text" name="mailchimp_listid" value="<?php echo $this->view->escape(SystemPref::Get('mailchimp_listid')); ?>" size="40" class="input_text" /></td>
+</tr>
 
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
+<?php } ?>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <tr>
     <td colspan="2" align="center" style="padding-top: 10px;">
