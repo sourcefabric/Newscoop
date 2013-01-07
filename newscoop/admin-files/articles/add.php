@@ -119,14 +119,14 @@ if (sizeof($allArticleTypes) == 0) {
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
                     <?php
                         $tmpAT = new ArticleType($allArticleTypes[0]);
-                        echo $tmpAT->getDisplayName();
+                        echo $tmpAT->getDisplayName($f_language_id);
 			    } else { ?>
     				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must fill in the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {
 	       			    $tmpAT = new ArticleType($tmpType);
-			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName($f_language_id));
 				    }
 					?>
 				    </SELECT>

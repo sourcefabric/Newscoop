@@ -35,6 +35,7 @@ if ($f_article_language <= 0) {
 if (count($Campsite['publications']) == 1) {
     $singlePublication = camp_array_peek($Campsite['publications']);
     $f_destination_publication_id = $singlePublication->getPublicationId();
+    $f_article_language = $singlePublication->getDefaultLanguageId();
 }
 
 
@@ -46,6 +47,7 @@ if ($f_destination_publication_id > 0) {
     if (count($allIssues) == 1) {
         $singleIssue = camp_array_peek($allIssues);
         $f_destination_issue_number = $singleIssue->getIssueNumber();
+        $f_article_language = $singleIssue->getLanguageId();
     }
 }
 
@@ -115,14 +117,14 @@ if (sizeof($allArticleTypes) == 0) {
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
                     <?php
                         $tmpAT = new ArticleType($allArticleTypes[0]);
-                        echo $tmpAT->getDisplayName();
+                        echo $tmpAT->getDisplayName($f_article_language);
 			    } else { ?>
     				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must fill in the $1 field.', getGS('Article Type')); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {
 	       			    $tmpAT = new ArticleType($tmpType);
-			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName());
+			     	    camp_html_select_option($tmpType, $f_article_type, $tmpAT->getDisplayName($f_article_language));
 				    }
 					?>
 				    </SELECT>
