@@ -5,7 +5,7 @@
 
 Summary:        The open content management system for professional journalists
 Name:           newscoop
-Version:        4.0.3
+Version:        4.0.4
 Release:        1
 License:        GPLv3
 Packager:       Daniel James <daniel@64studio.com>
