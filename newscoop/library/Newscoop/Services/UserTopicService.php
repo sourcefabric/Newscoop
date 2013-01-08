@@ -53,13 +53,14 @@ class UserTopicService
     /**
      * Get user topics
      *
-     * @param Newscoop\Entity\User $user
+     * @param mixed $user
      * @return array
      */
-    public function getTopics(User $user)
+    public function getTopics($user)
     {
+        $userId = $user instanceof User ? $user->getId() : $user->identifier;
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findByUser($user);
+            ->findByUser($userId);
 
         $topics = array();
         foreach ($userTopics as $userTopic) {

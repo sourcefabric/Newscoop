@@ -94,8 +94,11 @@ class Topic
      */
     public function getView()
     {
-        return new TopicView(array(
-            'name' => $this->name,
-        ));
+        $view = new TopicView();
+        $view->identifier = $this->id;
+        $view->defined = true;
+        $view->name = $this->name;
+        $view->value = sprintf('%s:%s', $this->name, $this->language);
+        return $view;
     }
 }
