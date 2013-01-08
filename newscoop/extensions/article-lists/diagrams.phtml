@@ -1,0 +1,30 @@
+<script type="text/javascript" src="/js/newscoop_rest_api.js"></script>
+<script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/300aa589f5a0ba7fce667cd62c7cdda0bd5ad904/raphael-min.js"></script>
+<script type="text/javascript" src="https://raw.github.com/oesmith/morris.js/master/morris.min.js"></script>
+<script type="text/javascript">
+  var api = new NewscoopRestApi('http://<?php echo $_SERVER['HTTP_HOST'] ?>/api');
+
+  api.getResource('/articles', {'type': 'news'})
+    .setItemsPerPage(20)
+    .setOrder({'published': 'desc'})
+    .makeRequest(function(res){
+      var data = [];
+      var maxReads = 0;
+      for (var i = res.items.length - 1; i >= 0; i--) {
+        maxReads += parseInt(res.items[i].reads);
+      };
+      for (var i = res.items.length - 1; i >= 0; i--) {
+        data.push({value: Math.round((parseInt(res.items[i].reads)/maxReads)*100), label: res.items[i].title});
+      };
+      Morris.Donut({
+        element: 'graph',
+        data: data,
+        formatter: function (x) { return x + "%"}
+      });
+    });
+</script>
+
+<div class="ui-widget-content" style="width: 360px; padding-left: 8px; padding-top: 8px; border: none">
+  <h3>Last 20 articles</h3>
+  <div id="graph">Loading...</div>
+</div>
