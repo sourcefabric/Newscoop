@@ -73,11 +73,10 @@ class ListUserService
      *
      * @return array
      */
-    public function getActiveUsers($countOnly=false, $page=1, $limit=8)
-    {
+    public function getActiveUsers($countOnly=false, $page=1, $limit=8, $editors = null)
+    {   
         $offset = ($page-1) * $limit;
-
-        $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit);
+        $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit, $editors);
 
         if($countOnly) {
             return $result[1];
@@ -105,7 +104,6 @@ class ListUserService
     public function findUsersLastNameInRange($letters, $countOnly=false, $page=1, $limit=25)
     {
         $offset = ($page-1) * $limit;
-
         $result = $this->getRepository()->findUsersLastNameInRange($letters, $countOnly, $offset, $limit);
 
         if($countOnly) {

@@ -42,14 +42,38 @@ class UsersList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
         $service = $GLOBALS['controller']->getHelper('service')->getService('user.list');
-
+        print_r($p_parameters);
         if (in_array('random', array_keys($this->m_order))) { // random ordering
             $users = $service->getRandomList($p_limit);
-            $count = count($users);
+        } else if (array_key_exists('search', $p_parameters)) {
+            $users = $service->findUsersBySearch($p_parameters['search']);
+        } else if (array_key_exists('filter', $p_parameters)) {
+            $filter = $p_parameters['filter'];
+
+            switch ($filter) {
+              case 'active':
+                  // example: filter="active"
+                  $users = $service->getActiveUsers(false, 1, $p_limit);
+                  break;
+              case 'editors':
+                  // example: filter="editors" editor_groups="1,2,3,4"
+                  if (array_key_exists('editor_groups', $p_parameters)) {
+                    $editors = explode(',', $p_parameters['editor_groups']);
+                    $users = $service->getActiveUsers(false, 1, $p_limit, $editors);
+                  }
+                  break;
+              default:
+                  if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
+                      $users = $service->findUsersLastNameInRange(range($matches[1], $matches[2]), false, 1, $p_limit, true);
+                  } else {
+                      CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                  }
+          }
         } else {
             $users = $service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start);
-            $count = $service->countBy($this->m_constraints);
         }
+
+
 
         $metaUsers = array();
         foreach ($users as $user) {
@@ -119,6 +143,9 @@ class UsersList extends ListObject
 	            case 'length':
 	            case 'columns':
 	            case 'name':
+              case 'search':
+              case 'filter':
+              case 'editor_groups':
 	            case 'order':
 	                if ($parameter == 'length' || $parameter == 'columns') {
 	                    $intValue = (int)$value;
