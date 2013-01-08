@@ -254,6 +254,17 @@ foreach ($f_geo as $key => $value) {
     SystemPref::Set($name, $value);
 }
 
+$keys = array(
+    'mailchimp_apikey', 'mailchimp_listid',
+    'facebook_appid', 'facebook_appsecret',
+);
+
+foreach ($keys as $key) {
+    if (array_key_exists($key, $_POST)) {
+        SystemPref::Set($key, $_POST[$key]);
+    }
+}
+
 // Success message if everything was ok
 if ($msg_ok == 1) {
     camp_html_add_msg(getGS("System preferences updated."), "ok");
@@ -262,4 +273,3 @@ if ($msg_ok == 1) {
 CampPlugin::PluginAdminHooks(__FILE__);
 
 camp_html_goto_page("/$ADMIN/system_pref/");
-?>

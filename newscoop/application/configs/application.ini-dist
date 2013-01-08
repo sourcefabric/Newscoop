@@ -285,4 +285,3 @@ session.cookie_domain = ""
 [cli : production]
 resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 admin.resources.acl.cache = "Doctrine\Common\Cache\ArrayCache"
-

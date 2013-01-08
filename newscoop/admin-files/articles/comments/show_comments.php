@@ -162,8 +162,8 @@ function loadComments() {
             toggleCommentStatus(comment['id']);
         }
 
-        var getMoreLink = $('<fieldset class="get-more-comments"><a href="#" style="pull-right" class="ui-state-default text-button paginate paginate-next"><?php putGS('Show more'); ?></a></fieldset>');    
-        getMoreLink.find('a')
+        var getMoreLink = $('<div style="text-align:center;"><fieldset class="get-more-comments"><input type="button" style="pull-right" class="ui-state-default default-button paginate paginate-next" value="<?php putGS('Show more comments'); ?>" /></fieldset></div>');
+        getMoreLink.find('input')
             .click(function(e){
                 loadComments();
                 e.preventDefault();
@@ -172,7 +172,7 @@ function loadComments() {
         $('#comment-moderate').append(getMoreLink);
 
         if (data.result.length == 0) {
-            $('fieldset.get-more-comments').html('<p><?php putGS('You have all comments loaded'); ?></p>');
+            $('fieldset.get-more-comments').html('<p><?php putGS('There are no more comments'); ?></p>');
         }
 
         var referencedComment = $(document.location.hash);

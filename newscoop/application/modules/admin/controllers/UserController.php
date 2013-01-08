@@ -203,10 +203,7 @@ class Admin_UserController extends Zend_Controller_Action
 
         $form = new Admin_Form_Profile();
         $user = $this->getUser();
-
-        $formProfile = new Application_Form_Profile();
-        $formProfile->setDefaultsFromEntity($user);
-        $form->addSubform($formProfile->getSubform('attributes'), 'attributes');
+        $this->addUserAttributesSubForm($form, $user);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -340,5 +337,27 @@ class Admin_UserController extends Zend_Controller_Action
             }
             $this->_helper->redirector->gotoSimple('index', 'feedback');
         }
+    }
+
+    /**
+     * Add user attributes subform to form
+     *
+     * @param Zend_Form $form
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    private function addUserAttributesSubForm(Zend_Form $form, User $user)
+    {
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setLegend(getGS('User attributes'));
+
+        foreach ($user->getRawAttributes() as $key => $val) {
+            $subForm->addElement('text', $key, array(
+                'label' => $key,
+            ));
+        }
+
+        $subForm->setDefaults($user->getAttributes());
+        $form->addSubForm($subForm, 'attributes');
     }
 }

@@ -6,6 +6,7 @@ newscoop/install/cron_jobs/all_at_once
 newscoop/conf/database_conf.php
 newscoop/conf/configuration.php
 newscoop/system_preferences.php
+newscoop/application/configs/application.ini
 newscoop/vendor
 vendor
 .htaccess
