@@ -52,30 +52,29 @@ class UsersList extends ListObject
             $filter = $p_parameters['filter'];
 
             switch ($filter) {
-              case 'active':
-                  // example: filter="active"
-                  $users = $service->getActiveUsers(false, $page, $p_limit);
+                case 'active':
+                    // example: filter="active"
+                    $users = $service->getActiveUsers(false, $page, $p_limit);
 
-                  break;
-              case 'editors':
-                  // example: filter="editors" editor_groups="1,2,3,4"
-                  if (array_key_exists('editor_groups', $p_parameters)) {
-                    $users = $service->getActiveUsers(false, $page, $p_limit, explode(',', $p_parameters['editor_groups']));
-                  }
+                    break;
+                case 'editors':
+                    // example: filter="editors" editor_groups="1,2,3,4"
+                    if (array_key_exists('editor_groups', $p_parameters)) {
+                        $users = $service->getActiveUsers(false, $page, $p_limit, explode(',', $p_parameters['editor_groups']));
+                    }
 
-                  break;
-              default:
-                  if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
-                      $users = $service->findUsersLastNameInRange(range($matches[1], $matches[2]), false, $page, $p_limit, true);
-                  } else {
-                      CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
-                  }
-          }
+                    break;
+                default:
+                    // example: filter="a-c"
+                    if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
+                        $users = $service->findUsersLastNameInRange(range($matches[1], $matches[2]), false, $page, $p_limit, true);
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                    }
+            }
         } else {
             $users = $service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start);
         }
-
-
 
         $metaUsers = array();
         foreach ($users as $user) {
@@ -145,10 +144,10 @@ class UsersList extends ListObject
 	            case 'length':
 	            case 'columns':
 	            case 'name':
-              case 'search':
-              case 'filter':
-              case 'editor_groups':
-              case 'page':
+                case 'search':
+                case 'filter':
+                case 'editor_groups':
+                case 'page':
 	            case 'order':
 	                if ($parameter == 'length' || $parameter == 'columns') {
 	                    $intValue = (int)$value;
