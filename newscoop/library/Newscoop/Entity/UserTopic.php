@@ -15,52 +15,34 @@ class UserTopic
 {
     /**
      * @Id
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ManyToOne(targetEntity="User")
      * @JoinColumn(referencedColumnName="Id")
-     * @var Newscoop\Entity\User
+     * @var User
      */
     private $user;
 
     /**
      * @Id
-     * @Column(type="integer", name="topic_id")
-     * @var int
-     */
-    private $topic_id;
-
-    /**
-     * @Id
-     * @Column(type="integer", name="topic_language")
-     * @var int
-     */
-    private $topic_language;
-
-    /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Topic")
-     * @JoinColumns({
-     *      @JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
-     *      @JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
-     *  })
-     * @var Newscoop\Entity\Topic
+     * @ManyToOne(targetEntity="Topic")
+     * @JoinColumn(name="topic_id", referencedColumnName="fk_topic_id")
+     * @var Topic
      */
     private $topic;
 
     /**
-     * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param User $user
+     * @param Topic $topic
      */
     public function __construct(User $user, Topic $topic)
     {
         $this->user = $user;
         $this->topic = $topic;
-        $this->topic_id = $topic->getTopicId();
-        $this->topic_language = $topic->getLanguageId();
     }
 
     /**
      * Get topic
      *
-     * @return Newscoop\Entity\Topic
+     * @return Topic
      */
     public function getTopic()
     {

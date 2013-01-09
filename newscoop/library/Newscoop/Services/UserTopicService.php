@@ -7,10 +7,11 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User,
-    Newscoop\Entity\Topic,
-    Newscoop\Entity\UserTopic;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
+use Newscoop\Entity\Topic;
+use Newscoop\Entity\UserTopic;
+use Newscoop\Topic\SaveUserTopicsCommand;
 
 /**
  * User service
@@ -58,7 +59,7 @@ class UserTopicService
      */
     public function getTopics($user)
     {
-        $userId = $user instanceof User ? $user->getId() : $user->identifier;
+        $userId = is_int($user) ? $user : $user->getId();
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
             ->findByUser($userId);
 
@@ -111,7 +112,7 @@ class UserTopicService
         foreach ($topics as $topicId => $status) {
             $matches = $repository->findBy(array(
                 'user' => $user->getId(),
-                'topic_id' => $topicId,
+                'topic' => $topicId,
             ));
 
             if ($status === 'false' && !empty($matches)) {
@@ -124,6 +125,34 @@ class UserTopicService
                     $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
                 }
             }
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * Save user topics command
+     *
+     * @param Newscoop\Topic\SaveUserTopicsCommand $command
+     * @return void
+     */
+    public function saveUserTopics(SaveUserTopicsCommand $command)
+    {
+        if (empty($command->topics)) {
+            $query = $this->em->createQuery('DELETE Newscoop\Entity\UserTopic ut WHERE ut.user = :user');
+            $query->execute(array('user' => $command->userId));
+        } else {
+            $query = $this->em->createQuery('DELETE Newscoop\Entity\UserTopic ut WHERE ut.user = :user AND ut.topic IN (:topics)');
+            $query->execute(array('user' => $command->userId, 'topics' => $command->topics));
+        }
+
+        $user = $this->em->getReference('Newscoop\Entity\User', $command->userId);
+        foreach ($command->selected as $topicId) {
+            $topic = $this->em->getReference('Newscoop\Entity\Topic', array(
+                'id' => $topicId,
+                'language' => $command->languageId,
+            ));
+            $this->em->persist(new UserTopic($user, $topic));
         }
 
         $this->em->flush();
@@ -143,7 +172,7 @@ class UserTopicService
 
         $this->dispatcher->notify(new \sfEvent($this, 'topic.follow', array(
             'topic_name' => $topic->getName(),
-            'topic_id' => $topic->getTopicId(),
+            'topic_id' => $topic->getTopic()->getId(),
             'user' => $user,
         )));
     }

@@ -10,7 +10,7 @@ namespace Newscoop\Entity;
 use Newscoop\View\TopicView;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\TopicRepository")
  * @Table(name="TopicNames")
  */
 class Topic
@@ -25,9 +25,9 @@ class Topic
 
     /**
      * @Id
-     * @Column(type="integer", name="fk_language_id")
-     * @var int
-     * @todo add reference to language
+     * @ManyToOne(targetEntity="Language")
+     * @JoinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @var Language
      */
     private $language;
 
@@ -45,8 +45,8 @@ class Topic
     public function __construct($id, $language, $name)
     {
         $this->id = (int) $id;
-        $this->language = (int) $language;
         $this->name = (string) $name;
+        $this->language = $language;
     }
 
     /**
@@ -66,7 +66,7 @@ class Topic
      */
     public function getLanguageId()
     {
-        return $this->language;
+        return $this->language->getId();
     }
 
     /**
@@ -95,10 +95,10 @@ class Topic
     public function getView()
     {
         $view = new TopicView();
-        $view->identifier = $this->id;
         $view->defined = true;
+        $view->identifier = $this->id;
         $view->name = $this->name;
-        $view->value = sprintf('%s:%s', $this->name, $this->language);
+        $view->value = sprintf('%s:%s', $this->name, $this->language->getCode());
         return $view;
     }
 }
