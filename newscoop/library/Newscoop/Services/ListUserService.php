@@ -73,13 +73,13 @@ class ListUserService
      *
      * @return array
      */
-    public function getActiveUsers($countOnly=false, $page=1, $limit=8, $editors = null)
+    public function getActiveUsers($countOnly=false, $page=1, $limit=8, $editors = array())
     {   
         $offset = ($page-1) * $limit;
         $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit, $editors);
 
-        if($countOnly) {
-            return $result[1];
+        if ($countOnly) {
+            return $result;
         }
 
         return $result;
