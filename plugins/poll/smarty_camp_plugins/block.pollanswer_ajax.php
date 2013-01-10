@@ -27,7 +27,7 @@ function smarty_block_pollanswer_ajax($p_params, $p_content, &$p_smarty, &$p_rep
     $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
     
     // the value for this rating

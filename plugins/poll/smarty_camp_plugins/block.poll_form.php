@@ -29,7 +29,7 @@ function smarty_block_poll_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     	$p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 
 	    // gets the context variable
-	    $campsite = $p_smarty->get_template_vars('gimme');
+	    $campsite = $p_smarty->getTemplateVars('gimme');
 	    $html = '';
 	
 	    if (isset($p_params['template'])) {
