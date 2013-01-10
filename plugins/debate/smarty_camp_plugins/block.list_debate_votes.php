@@ -27,7 +27,7 @@
 function smarty_block_list_debate_votes($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('gimme');
+    $campContext = $p_smarty->getTemplateVars('gimme');
     /* @var $campContext CampContext */
     $html = '';
 

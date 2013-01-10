@@ -29,7 +29,7 @@ function smarty_block_list_pollanswer_attachments($p_params, $p_content, &$p_sma
     $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
     
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('gimme');
+    $campContext = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     if (!isset($p_content)) {
