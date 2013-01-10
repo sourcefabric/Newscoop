@@ -1,5 +1,7 @@
 <?php
 
+use Newscoop\Tools\Console\Command;
+
 define('APPLICATION_ENV', 'cli');
 
 require_once __DIR__ . '/../application.php';
@@ -36,6 +38,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
     new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
     new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateWeatherCommand(),
 ));
 
 $cli->run();
