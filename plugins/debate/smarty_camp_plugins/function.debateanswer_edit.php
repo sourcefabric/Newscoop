@@ -26,7 +26,7 @@ function smarty_function_debateanswer_edit($p_params, &$p_smarty)
     global $g_ado_db;
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {

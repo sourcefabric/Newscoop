@@ -28,7 +28,7 @@ function smarty_block_debate_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (isset($p_content)) {
 
 	    // gets the context variable
-	    $campsite = $p_smarty->get_template_vars('gimme');
+	    $campsite = $p_smarty->getTemplateVars('gimme');
 	    $html = '';
 
 	    if (isset($p_params['template'])) {

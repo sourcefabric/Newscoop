@@ -143,7 +143,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
         $countryCode = $this->m_dbObject->getAttribute('country_code');
         $smartyObj = CampTemplate::singleton();
-        $contextObj = $smartyObj->get_template_vars('gimme');
+        $contextObj = $smartyObj->getTemplateVars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
         return !$country->exists() ? '' : $country->getName();
     }
