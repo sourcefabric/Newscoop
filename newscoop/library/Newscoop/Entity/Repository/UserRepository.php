@@ -515,9 +515,9 @@ class UserRepository extends EntityRepository
             ->setParameter('is_public', $criteria->is_public);
 
         if (!empty($criteria->groups)) {
-            $qb->leftJoin('u.groups', 'g', Expr\Join::WITH, 'g.id IN (:groups)');
+            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
+            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
             $qb->setParameter('groups', $criteria->groups);
-            $qb->andWhere($criteria->excludeGroups ? 'g.id IS NULL' : 'g.id IS NOT NULL');
         }
 
         if (!empty($criteria->query)) {
