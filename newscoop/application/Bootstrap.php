@@ -107,6 +107,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 }
             });
 
+        $container->register('topic', 'Newscoop\Topic\TopicService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('user.topic', 'Newscoop\Services\UserTopicService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('dispatcher'));

@@ -13,7 +13,22 @@ namespace Newscoop\View;
 class TopicView extends View
 {
     /**
+     * @var int
+     */
+    public $identifier;
+
+    /**
+     * @var bool
+     */
+    public $defined = false;
+
+    /**
      * @var string
      */
     public $name;
+
+    /**
+     * @var string
+     */
+    public $value;
 }

@@ -84,8 +84,10 @@ class AuthController extends Zend_Controller_Action
 
             if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
                 $user = $this->_helper->service('user')->findBy(array('email' => $userData->email));
-                if (!$user)  {
+                if (empty($user))  {
                     $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
+                } else {
+                    $user = array_pop($user);
                 }
 
                 $this->_helper->service('auth.adapter.social')->addIdentity($user, $adapter->id, $userData->identifier);

@@ -28,8 +28,13 @@ class RegisterController extends Zend_Controller_Action
     {
         $form = new Application_Form_Register();
         $form->setMethod('POST');
-
         $request = $this->getRequest();
+        $query = $request->getQuery();
+
+        if (array_key_exists('proposed_email', $query)) {
+            $form->setDefaults(array('email' => $query['proposed_email']));
+        }
+
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
             $users = $this->_helper->service('user')->findBy(array(
