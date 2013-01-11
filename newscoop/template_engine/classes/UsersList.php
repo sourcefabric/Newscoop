@@ -57,7 +57,7 @@ class UsersList extends ListObject
             $criteria->groups = !empty($p_parameters['editor_groups']) ? array_map('intval', explode(',', $p_parameters['editor_groups'])) : array();
             switch ($filter) {
                 case 'active':
-                    $criteria->orderBy = array('points' => 'desc');
+                    $criteria->orderBy = array('comments' => 'desc');
                     $criteria->excludeGroups = true;
                     break;
 
