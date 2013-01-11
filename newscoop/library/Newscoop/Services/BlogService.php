@@ -126,7 +126,7 @@ class BlogService
      */
     public function isAllowed(\Zend_Controller_Request_Abstract $request, User $user = null)
     {
-        if (in_array($request->getControllerName(), array('blog', 'auth'))) {
+        if (in_array($request->getControllerName(), array('blog', 'auth', 'image', 'slideshow', 'media'))) {
             return TRUE;
         }
 
