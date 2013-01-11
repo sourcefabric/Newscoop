@@ -1,7 +1,7 @@
 <?php 
-regGS("Support", "");
-regGS("Themes", "");
-regGS("Area to localize", "");
+regGS("Support", "Pomoc");
+regGS("Themes", "Szablony");
+regGS("Area to localize", "Obszar do przetłumaczenia");
 regGS("Dashboard", "Dashboard");
 regGS("Authors", "Autorzy");
 regGS("Libraries", "Biblioteki");

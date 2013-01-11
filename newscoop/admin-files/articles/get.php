@@ -38,12 +38,12 @@ $dbColumns = $articleData->getUserDefinedColumns(false, true);
 foreach ($dbColumns as $dbColumn) {
     if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
         $value = $articleData->getProperty($dbColumn->getName()) ? getGS('On') : getGS('Off');
-        $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $value;
+        $articleInfo[htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId()))] = $value;
     } else {
-        $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $articleData->getProperty($dbColumn->getName());
+        $articleInfo[htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId()))] = $articleData->getProperty($dbColumn->getName());
     }
 }
-$articleInfo['title'] = $articleObj->getTitle();
-$articleInfo['date'] = $articleObj->getCreationDate();
+$articleInfo[getGs('Title')] = $articleObj->getTitle();
+$articleInfo[getGs('Date')] = $articleObj->getCreationDate();
 
 echo $this->view->json($articleInfo);

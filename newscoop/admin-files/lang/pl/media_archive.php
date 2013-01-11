@@ -1,9 +1,9 @@
 <?php 
-regGS("Slideshows", "");
+regGS("Slideshows", "Galerie");
 regGS("You can't update used files.", "");
-regGS("Source", "");
+regGS("Source", "Źródło");
 regGS("Local", "");
-regGS("Items updated.", "");
+regGS("Items updated.", "Element zaktualizowany.");
 regGS("Feedback", "");
 regGS("Do you want to update unused only?", "");
 regGS("Disapprove selected", "");
@@ -18,7 +18,7 @@ regGS("Only this translation", "");
 regGS("No files for multi editing.", "");
 regGS("Edit files", "");
 regGS("Change file information", "");
-regGS("All translations", "");
+regGS("All translations", "Wszystkie tłumaczenia");
 regGS("Save All", "Zapisz wszystko");
 regGS("Files", "Pliki");
 regGS("You can't delete used files.", "Nie możesz usuwać używanych plików.");
