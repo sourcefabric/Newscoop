@@ -536,8 +536,13 @@ class UserRepository extends EntityRepository
         $qb->setFirstResult($criteria->firstResult);
         $qb->setMaxResults($criteria->maxResults);
 
+        $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {
-            $qb->orderBy("u.$key", $order);
+            if (array_key_exists($key, $metadata->columnNames)) {
+                $key = 'u.' . $key;
+            }
+
+            $qb->orderBy($key, $order);
         }
 
         $list->items = array_map(function ($row) {
