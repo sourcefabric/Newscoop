@@ -38,7 +38,11 @@ class MeteonewsController extends Zend_Controller_Action
             'lifetime' => 14400,
         );
 
-        $cache = Zend_Cache::factory('Core', 'Apc', $fOpts, array());
+        $bOpts = array(
+            'cache_dir' => APPLICATION_PATH . '/../cache/'
+        );
+
+        $cache = Zend_Cache::factory('Core', 'File', $fOpts, $bOpts);
         $cache_key = md5("__meteonews_cache_$url");
         if (!$json = $cache->load($cache_key)) {
  

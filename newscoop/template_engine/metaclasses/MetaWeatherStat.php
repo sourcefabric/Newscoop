@@ -36,6 +36,7 @@ final class MetaWeatherStat extends MetaDbObject
         'slope_condition' => 'getSlopeCondition',
         'total_slopes' => 'getTotalSlopes',
         'open_slopes' => 'getOpenSlopes',
+        'elevation' => 'getElevation',
     );
 
     public function __construct($id = null)
@@ -136,5 +137,10 @@ final class MetaWeatherStat extends MetaDbObject
     protected function getOpenSlopes()
     {
         return $this->m_dbObject->getOpenSlopes();
+    }
+
+    protected function getElevation()
+    {
+        return $this->m_dbObject->getElevation();
     }
 }
