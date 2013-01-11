@@ -18,14 +18,18 @@ use Newscoop\View\ViewCollection;
  */
 function smarty_block_list_user_topics($params, $content, $smarty, &$repeat)
 {
-    static $lists;
+    $gimme = $smarty->getTemplateVars('gimme');
+    if (!$gimme->user->defined) {
+        $repeat = false;
+        return;
+    }
 
+    static $lists;
     if (!isset($lists)) {
         $lists = new SplStack();
     }
 
     if (!isset($content)) {
-        $gimme = $smarty->getTemplateVars('gimme');
         $service = Zend_Registry::get('container')->getService('user.topic');
         $lists->push(new ViewCollection($service->getTopics($gimme->user->identifier)));
     }
