@@ -7,6 +7,7 @@
 
 namespace Newscoop\Search;
 
+use Exception;
 use Doctrine\ORM\EntityManager;
 use Language;
 use Newscoop\View\ArticleView;
@@ -78,11 +79,21 @@ class ArticleIndexer
     {
         $article = $event->getSubject();
         $language = new Language($article->getLanguageId());
-        $this->index->delete(new ArticleView(array(
-            'number' => $article->getArticleNumber(),
-            'language' => $language->getCode(),
-        )));
-        $this->index->commit();
+
+        $this->index->delete(
+            new ArticleView(
+                array(
+                    'number' => $article->getArticleNumber(),
+                    'language' => $language->getCode(),
+                )
+            )
+        );
+
+        try {
+            $this->index->commit();
+        } catch (Exception $e) {
+            // ignore
+        }
     }
 
     /**
