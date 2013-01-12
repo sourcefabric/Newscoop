@@ -1,4 +1,5 @@
 <?php 
+regGS("Anonymous", "Anonim");
 regGS("You are about to permanently delete multiple messages.", "Chcesz bezpowrotnie usunąć wiele wiadomości.");
 regGS("You are about to permanently delete a message.", "Chcesz bezpowrotnie usunąć tą wiadomość.");
 regGS("With no attachment", "Brak załączników.");

@@ -1,18 +1,18 @@
 <?php 
 regGS("No languages.", "Brak języków");
 regGS("Native Name", "Nazwa lokalna");
-regGS("Name taken.", "");
+regGS("Name taken.", "Wybrana nazwa jest już zajęta");
 regGS("Language saved.", "Język został zapisany.");
 regGS("Language removed.", "Język został usunięty.");
 regGS("Language not found.", "Nie ma takiego języka.");
-regGS("Language is in use and cannot be removed.", "");
+regGS("Language is in use and cannot be removed.", "Język jest używany i nie może być usunięty.");
 regGS("Language added.", "Język został dodany.");
-regGS("English language cannot be removed.", "");
-regGS("Edit short month names", "");
-regGS("Edit short day names", "");
-regGS("Edit month names", "");
-regGS("Edit language: $1", "");
-regGS("Edit day names", "");
+regGS("English language cannot be removed.", "Język angielski nie może być usunięty.");
+regGS("Edit short month names", "Edytuj krótkie nazwy miesięcy");
+regGS("Edit short day names", "Edytuj krótkie nazwy dni");
+regGS("Edit month names", "Edytuj nazwy miesięcy");
+regGS("Edit language: $1", "Edytuj jezyk: $1");
+regGS("Edit day names", "Edytuj nazwy dni tygodnia");
 regGS("Code Page", "Strona kodowa");
 regGS("Add new Language", "Dodaj nowy język");
 regGS("Add Language", "Dodaj nowy język");

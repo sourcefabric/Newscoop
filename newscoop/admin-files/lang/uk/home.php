@@ -1,5 +1,4 @@
 <?php 
-regGS("Campsite", "Campsite");
 regGS("Image Rendering", "Відтворення зобрадже");
 regGS("Featured Article Lists", "Список запланованих статей");
 regGS("You have tried to upload an invalid backup file.", "Ви намагалися завантажити невірний файл архівної копії.");
@@ -152,5 +151,4 @@ regGS("Login failed", "Помилка авторизації");
 regGS("Please make sure that you typed the correct user name and password.", "Будь ласка переконайтесь що ви ввели правильне ім'я користувача та пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Якщо проблема не зникне, зверніться до адміністратора сайту $1");
 regGS("Backup/Restore", "Резерв / Відновлення");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Привіт, \\n\\nдля відновлення паролю, будь ласка перейдіть за посиланням link: $1");
 ?>
