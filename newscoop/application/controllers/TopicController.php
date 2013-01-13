@@ -1,6 +1,7 @@
 <?php
 /**
  * @package Newscoop
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -18,7 +19,9 @@ class TopicController extends Zend_Controller_Action
      */
     private $container;
 
-    /** @var int */
+    /** 
+     * @var int 
+     */
     private $page;
 
     public function init()
