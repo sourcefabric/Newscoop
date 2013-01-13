@@ -46,6 +46,10 @@ class TopicController extends Zend_Controller_Action
                 'id' => $topicId, 
                 'language' => $language->getId()
             ));
+
+        if (!$topic) {
+            throw new \Exception(getGS('We can\'t find that topic'));
+        }
     
         $articles = $em->getRepository('Newscoop\Entity\Article')
             ->getArticlesForTopic(null, $topicId, $topic->getLanguageId(), true);
