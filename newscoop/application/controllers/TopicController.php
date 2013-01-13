@@ -13,6 +13,9 @@ class TopicController extends Zend_Controller_Action
 {
     const LIMIT = 10;
 
+    /**
+     * Dependency container
+     */
     private $container;
 
     /** @var int */
@@ -33,7 +36,8 @@ class TopicController extends Zend_Controller_Action
         $em = $this->container->get('em');
         $topicId = $this->_getParam('id');
 
-        $language = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($this->_getParam('language'));
+        $language = $em->getRepository('Newscoop\Entity\Language')
+            ->findOneByCode($this->_getParam('language'));
         $topic = $em->getRepository('Newscoop\Entity\Topic')
             ->findOneBy(array(
                 'id' => $topicId, 

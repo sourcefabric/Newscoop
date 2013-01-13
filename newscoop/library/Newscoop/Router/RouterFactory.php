@@ -67,7 +67,7 @@ class RouterFactory
                 'module' => 'default',
                 'controller' => 'topic',
                 'action' => 'articles',
-                'articleUrl' => null,
+                'topicName' => null,
                 'page' => 1,
             ), array(
                 'language' => '[a-z]{2}',
@@ -94,7 +94,7 @@ class RouterFactory
             ), $image['cache_url'] . '/%s')
         );
 
-         $router->addRoute('rest',
+        $router->addRoute('rest',
             new \Zend_Rest_Route($front, array(), array(
                 'admin' => array(
                     'slideshow-rest',
