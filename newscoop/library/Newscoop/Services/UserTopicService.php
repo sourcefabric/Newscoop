@@ -142,15 +142,21 @@ class UserTopicService
             $query = $this->em->createQuery('DELETE Newscoop\Entity\UserTopic ut WHERE ut.user = :user');
             $query->execute(array('user' => $command->userId));
         } else {
-            $query = $this->em->createQuery('DELETE Newscoop\Entity\UserTopic ut WHERE ut.user = :user AND ut.topic IN (:topics)');
-            $query->execute(array('user' => $command->userId, 'topics' => $command->topics));
+            $topics = $this->em->getRepository('Newscoop\Entity\UserTopic')->findByUser($command->userId);
+            foreach ($topics as $topic) {
+                if (in_array($topic->getTopicId(), $command->topics)) {
+                    $this->em->remove($topic);
+                }
+            }
+
+            $this->em->flush();
         }
 
         $user = $this->em->getReference('Newscoop\Entity\User', $command->userId);
         foreach ($command->selected as $topicId) {
             $topic = $this->em->getReference('Newscoop\Entity\Topic', array(
                 'id' => $topicId,
-                'language' => $command->languageId,
+                'language' => (int) $command->languageId,
             ));
             $this->em->persist(new UserTopic($user, $topic));
         }

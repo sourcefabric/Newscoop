@@ -45,8 +45,8 @@ class Topic
     public function __construct($id, $language, $name)
     {
         $this->id = (int) $id;
-        $this->name = (string) $name;
         $this->language = $language;
+        $this->name = (string) $name;
     }
 
     /**

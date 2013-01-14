@@ -14,7 +14,13 @@ namespace Newscoop\Entity;
 class UserTopic
 {
     /**
-     * @Id
+     * @Id @GeneratedValue
+     * @Column(type="integer")
+     * @var int
+     */
+    private $id;
+
+    /**
      * @ManyToOne(targetEntity="User")
      * @JoinColumn(referencedColumnName="Id")
      * @var User
@@ -22,9 +28,11 @@ class UserTopic
     private $user;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Topic")
-     * @JoinColumn(name="topic_id", referencedColumnName="fk_topic_id")
+     * @JoinColumns({
+     *  @JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
+     *  @JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
+     *  })
      * @var Topic
      */
     private $topic;
@@ -47,5 +55,15 @@ class UserTopic
     public function getTopic()
     {
         return $this->topic;
+    }
+
+    /**
+     * Get topic id
+     *
+     * @return int
+     */
+    public function getTopicId()
+    {
+        return $this->topic->getTopicId();
     }
 }
