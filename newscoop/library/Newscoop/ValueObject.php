@@ -19,7 +19,7 @@ abstract class ValueObject
     {
         if (is_array($values)) {
             foreach ($values as $key => $val) {
-                if (property_exists($this, $key)) {
+                if (property_exists($this, $key) && $val !== null) {
                     $this->$key = $val;
                 }
             }
