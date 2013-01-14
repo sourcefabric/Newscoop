@@ -12,6 +12,7 @@ use IteratorAggregate;
 use ArrayIterator;
 
 /**
+ * Result for paginated listing, holds total count of items and items for given page.
  */
 class ListResult implements Countable, IteratorAggregate
 {

@@ -10,6 +10,7 @@ namespace Newscoop\User;
 use Newscoop\Entity\User;
 
 /**
+ * Available criteria for users listing.
  */
 class UserCriteria
 {
