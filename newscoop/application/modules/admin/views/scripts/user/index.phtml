@@ -21,12 +21,15 @@
 <script type="text/javascript">
 $(function() {
     var initActive = function() {
+        var initFilter = <?php echo json_encode($this->filter); ?>;
         if (window.location.hash && $('a[href="' + window.location.hash + '"]').size()) {
             $('a[href="' + window.location.hash + '"]').click();
         } else if (window.location.hash && window.location.hash.search('search/')) {
             var q = window.location.hash.replace('#search/', '');
             $('.inline-search input:text').val(q);
             $('#user-search').click();
+        } else if (initFilter != "") {
+            $('.filters a[href="#' + initFilter + '"]').click();
         } else {
             $('.filters a').first().click();
         }
@@ -38,6 +41,7 @@ $(function() {
         var filter = this.hash.slice(1);
         $('.canvas').load("<?php echo $this->url(array(
             'action' => 'list',
+            'filter' => null,
         )); ?>" + "/filter/" + filter);
 
         $('.filters a').not(this).removeClass('active');

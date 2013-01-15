@@ -7,9 +7,10 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\Common\Persistence\ObjectManager,
-    Newscoop\Entity\User,
-    Newscoop\Persistence\ObjectRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Newscoop\Entity\User;
+use Newscoop\Persistence\ObjectRepository;
+use InvalidArgumentException;
 
 /**
  * User service
@@ -145,6 +146,28 @@ class UserService implements ObjectRepository
         }
 
         $this->getRepository()->delete($user);
+    }
+
+    /**
+     * Rename user
+     *
+     * @param object $command
+     * @return void
+     */
+    public function renameUser($command)
+    {
+        $user = $this->getRepository()->findOneById($command->userId);
+        if ($user->render()->username === $command->username) {
+            return;
+        }
+
+        $conflict = $this->getRepository()->findByUsername($command->username);
+        if (!empty($conflict)) {
+            throw new InvalidArgumentException($command->username);
+        }
+
+        $user->rename($command->username);
+        $this->em->flush();
     }
 
     /**
