@@ -62,6 +62,7 @@ class DashboardController extends Zend_Controller_Action
                 }
                 $this->service->save($values, $this->user);
                 $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
+                $this->_helper->flashMessenger->addMessage('Profile saved.');
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
