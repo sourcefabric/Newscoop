@@ -784,11 +784,22 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get view
+     * Rename user
+     *
+     * @param string $username
+     * @return void
+     */
+    public function rename($username)
+    {
+        $this->setUsername($username);
+    }
+
+    /**
+     * Render user
      *
      * @return UserView
      */
-    public function getView()
+    public function render()
     {
         $view = new UserView();
         $view->username = $this->username;
@@ -797,6 +808,7 @@ class User implements \Zend_Acl_Role_Interface
         $view->last_name = $this->last_name;
         $view->identifier = $this->id;
         $view->uname = $view->username;
+        $view->id = $this->id;
 
         $view->attributes = $this->getAttributes();
         foreach ($view->attributes as $key => $attribute) {
@@ -806,5 +818,16 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         return $view;
+    }
+
+    /**
+     * Get view
+     * @alias render
+     *
+     * @return UserView
+     */
+    public function getView()
+    {
+        return $this->render();
     }
 }
