@@ -91,7 +91,8 @@ class RegisterController extends Zend_Controller_Action
         $form->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
-            'username' => $user->getFirstName() . ' ' . $user->getLastName(),
+            'username' => $this->_helper->service('user')
+                ->generateUsername($user->getFirstName(), $user->getLastName()),
         ));
 
         if ($this->auth->hasIdentity()) {
@@ -123,7 +124,6 @@ class RegisterController extends Zend_Controller_Action
                 }
             } catch (InvalidArgumentException $e) {
                 $form->username->addError('Username is used. Please use another one.');
-                break;
             }
         }
 
