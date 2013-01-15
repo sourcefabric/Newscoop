@@ -130,7 +130,7 @@ class EmailService
      * @param mixed $tos
      * @return void
      */
-    private function send($subject, $message, $tos, $from = null)
+    public function send($subject, $message, $tos, $from = null)
     {
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($subject);
