@@ -3,7 +3,7 @@
  */
 
 return array(
-    'You have already rated this article' => 'You have already rated this article',
+    'Your rating has been updated' => 'Ihre Bewertung wurde aktualisiert',
     'Please login' => 'Please login',
     'You have to be registered in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account.' => 'You have to be registered in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account.',
     'login_link_text' => '',
@@ -31,7 +31,7 @@ return array(
     'Login successful. Please wait...' => 'Login successful. Please wait...',
     'Logout successful. Please wait...' => 'Logout successful. Please wait...',
     'You have been banned from writing feedbacks.' => 'You have been banned from writing feedbacks.',
-    'You are not logged in.' => 'You are not logged in.',
+    'You are not logged in.' => 'Sie sind nicht eingeloggt.',
     'File is uploaded and your message is sent.' => 'File is uploaded and your message is sent.',
     'Your message is sent.' => 'Your message is sent.',
     'Following errors have been found:' => 'Following errors have been found:',
