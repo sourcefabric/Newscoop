@@ -153,7 +153,13 @@ switch ($f_debate_item) {
 
     $debates = Debate::getDebates($constraints, $f_debate_assigned, $f_debate_offset, $f_debate_limit, $f_debate_order);
 
-    $param_string = "f_debate_item=$f_debate_item&amp;f_issue_nr=$f_issue_nr&amp;f_language_id=$f_language_id&amp;f_publication_id=$f_publication_id";
+    $param_string = http_build_query(array(
+        'f_debate_item' => $f_debate_item,
+        'f_issue_nr' => $f_issue_nr,
+        'f_language_id' => $f_language_id,
+        'f_publication_id' => $f_publication_id,
+        'f_article_nr' => $f_article_nr,
+    ), '', '&amp;');
     $pager_params = "?$param_string&amp;f_debate_order=$f_debate_order&amp;";
     $pager = new SimplePager(Debate::countDebates($f_language_id), $f_debate_limit, "f_debate_offset", $pager_params, false);
 
