@@ -60,6 +60,12 @@ class NewscoopEntityTopicProxy extends \Newscoop\Entity\Topic implements \Doctri
         return parent::__toString();
     }
 
+    public function getView()
+    {
+        $this->__load();
+        return parent::getView();
+    }
+
 
     public function __sleep()
     {

@@ -240,6 +240,12 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getAttributes();
     }
 
+    public function getRawAttributes()
+    {
+        $this->__load();
+        return parent::getRawAttributes();
+    }
+
     public function setImage($image)
     {
         $this->__load();
@@ -322,6 +328,12 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
     {
         $this->__load();
         return parent::preUpdate();
+    }
+
+    public function getView()
+    {
+        $this->__load();
+        return parent::getView();
     }
 
 
