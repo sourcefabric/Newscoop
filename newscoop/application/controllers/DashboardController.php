@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Entity\User;
+use Newscoop\Topic\SaveUserTopicsCommand;
 
 /**
  */
@@ -90,6 +91,25 @@ class DashboardController extends Zend_Controller_Action
             $this->view->status = -1;
             $this->view->message = $e->getMessage();
         }
+    }
+
+    public function saveTopicsAction()
+    {
+        $form = new Application_Form_Topics();
+
+        $topics = $this->_helper->service('topic')->getMultiOptions();
+        $form->topics->setMultiOptions($topics);
+        $form->selected->setMultiOptions($topics);
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $command = new SaveUserTopicsCommand($form->getValues());
+            $command->userId = $this->user->getId();
+            $this->_helper->service('user.topic')->saveUserTopics($command);
+            $this->_helper->json($command->selected);
+        }
+
+        $this->getResponse()->setHttpResponseCode(400);
+        $this->_helper->json($form->getMessages());
     }
 
     public function followTopicAction()
