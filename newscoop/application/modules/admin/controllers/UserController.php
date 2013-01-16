@@ -51,6 +51,7 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->activeCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_ACTIVE));
         $this->view->pendingCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_INACTIVE));
         $this->view->inactiveCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
+        $this->view->filter = $this->_getParam('filter', '');
     }
 
     public function listAction()
@@ -184,6 +185,33 @@ class Admin_UserController extends Zend_Controller_Action
                 ),
             ),
         );
+    }
+
+    public function renameAction()
+    {
+        $user = $this->getUser()->render();
+        $form = new Admin_Form_RenameUser();
+        $form->setDefaults(array('username', $user->username));
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = (object) $form->getValues();
+            $values->userId = $user->id;
+
+            try {
+                $this->_helper->service('user')->renameUser($values);
+                $this->_helper->flashMessenger->addMessage(getGS("User renamed."));
+                $this->_helper->redirector('rename', 'user', 'admin', array(
+                    'user' => $user->id,
+                    'filter' => $this->_getParam('filter'),
+                ));
+            } catch (InvalidArgumentException $e) {
+                $form->username->addError(getGS("Username is used already"));
+            }
+        }
+
+        $this->view->form = $form;
+        $this->view->user = $user;
     }
 
     public function deleteAction()

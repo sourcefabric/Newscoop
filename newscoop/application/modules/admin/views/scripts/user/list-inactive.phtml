@@ -5,7 +5,10 @@
 <ul class="users">
     <?php foreach ($this->users as $user) { ?>
     <li>
-        <a class="edit"><?php echo $user->getUsername(); ?></a>
+        <a href="<?php echo $this->url(array(
+            'action' => 'rename',
+            'user' => $user->getId(),
+        )); ?>" class="edit"><?php echo $user->getUsername(); ?></a>
         <a class="mailto">&nbsp;</a>
         <span class="created"><?php echo $user->getCreated()->format('d.m.Y H:i'); ?> - <?php echo $user->getUpdated()->format('d.m.Y H:i'); ?></span>
     </li>
