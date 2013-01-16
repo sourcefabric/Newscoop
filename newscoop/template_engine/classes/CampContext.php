@@ -341,8 +341,9 @@ final class CampContext
             }
 
             $this->form_contact = $form;
-            $this->flash_messages = $controller->getHelper('flashMessenger')->getMessages();
         }
+
+        $this->flash_messages = $controller->getHelper('flashMessenger')->getMessages();
     } // fn __construct
 
 
