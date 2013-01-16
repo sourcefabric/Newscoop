@@ -74,7 +74,7 @@ class ContextBoxArticle extends DatabaseObject
 
         if (!$p_skipCache && CampCache::IsEnabled()) {
             $paramsArray['parameters'] = serialize($params);
-            $paramsArray['order'] = (is_null($p_order)) ? 'id desc' : $p_order;
+            $paramsArray['order'] = (is_null($p_order)) ? 'id' : $p_order;
             $paramsArray['start'] = $p_start;
             $paramsArray['limit'] = $p_limit;
             $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
@@ -89,11 +89,11 @@ class ContextBoxArticle extends DatabaseObject
                 . ' WHERE b.id = (SELECT c.fk_context_id '
                 . '     FROM Articles a, context_articles c '
                 . '     WHERE c.fk_article_no = ' . $params['article']
-                . '     AND a.Number = c.fk_article_no ORDER BY id desc LIMIT 1)';
+                . '     AND a.Number = c.fk_article_no ORDER BY id LIMIT 1)';
         } else {
             $sql = 'SELECT fk_article_no FROM context_articles'
                 . ' WHERE fk_context_id = ' . $params['context_box']
-                . ' ORDER BY id desc';
+                . ' ORDER BY id';
             if ($p_limit > 0) {
                 $sql .= ' LIMIT ' . $p_limit;
             }
@@ -108,7 +108,8 @@ class ContextBoxArticle extends DatabaseObject
         }
 
         $p_count = count($returnArray);
-        return array_reverse($returnArray);
+
+        return $returnArray;
     }
 
     public static function OnArticleCopy($origArticle, $destArticle)
