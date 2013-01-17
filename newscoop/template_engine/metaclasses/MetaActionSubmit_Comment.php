@@ -227,6 +227,11 @@ class MetaActionSubmit_Comment extends MetaAction
         $this->m_properties['rejected'] = false;
 
         $this->m_error = ACTION_OK;
+
+        if (SystemPref::Get('CommentRedirect')) {
+            header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+            exit(0);
+        }
         return true;
     }
 

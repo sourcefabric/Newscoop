@@ -16,6 +16,7 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 }
 
 if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+	$f_comment_redirect = Input::Get('f_comment_redirect');
 	$f_collect_statistics = Input::Get('f_collect_statistics');
 	$f_cache_engine = Input::Get('f_cache_engine');
 	$f_template_cache_handler = Input::Get('f_template_cache_handler');
@@ -34,6 +35,7 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 	$f_external_cron_management = Input::Get('f_external_cron_management');
 } else {
+	$f_comment_redirect = SystemPref::Get('CommentRedirect');
 	$f_cache_engine = SystemPref::Get('DBCacheEngine');
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
 	$f_smtp_host = SystemPref::Get("SMTPHost");
@@ -205,6 +207,9 @@ SystemPref::Set('SMTPPort', $f_smtp_port);
 
 // Statistics collecting
 SystemPref::Set('CollectStatistics', $f_collect_statistics);
+
+// Redirections on (successful) comment submitions
+SystemPref::Set('CommentRedirect', $f_comment_redirect);
 
 // Image resizing for WYSIWYG editor
 if ($f_editor_image_ratio < 1 || $f_editor_image_ratio > 100) {
