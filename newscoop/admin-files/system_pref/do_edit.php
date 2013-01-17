@@ -34,6 +34,7 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 	$f_external_cron_management = Input::Get('f_external_cron_management');
 } else {
+	$f_collect_statistics = SystemPref::Get('CollectStatistics');
 	$f_cache_engine = SystemPref::Get('DBCacheEngine');
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
 	$f_smtp_host = SystemPref::Get("SMTPHost");
