@@ -95,8 +95,7 @@ class FeedbackController extends Zend_Controller_Action
                 $this->_helper->service->notifyDispatcher("document.delivered", array('user' => $current_user));
 
 				$this->view->response = $this->view->translate('File is uploaded and your message is sent.');
-			}
-			else {
+			} else {
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
 
