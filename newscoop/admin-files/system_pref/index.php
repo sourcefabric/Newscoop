@@ -307,6 +307,15 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
 </tr>
 <tr>
+    <td align="left" width="400px">
+        <?php putGS("Redirect on comment submission:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_comment_redirect" value="Y" <?php if (SystemPref::Get("CommentRedirect") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_comment_redirect" value="N" <?php if (SystemPref::Get("CommentRedirect") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
     <td colspan="2"><hr /></td>
 </tr>
 <?php
