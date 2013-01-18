@@ -17,7 +17,4 @@
             </exclude>
         </whitelist>
     </filter>
-    <logging>
-        <log type="coverage-html" target="/tmp/report" charset="UTF-8" you="true" hightlight="true" lowUpperBound="50" highLowerBound="80" />
-    </logging>
 </phpunit>
