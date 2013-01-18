@@ -73,9 +73,7 @@ class IngestService
     public function updateSDA()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-            ->findOneBy(array(
-                'title' => 'SDA',
-            ));
+            ->findOneBy(array('title' => 'SDA'));
 
         if ($feed) {
             $this->updateSDAFeed($feed);
@@ -85,9 +83,7 @@ class IngestService
     public function updateSwissinfo()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-            ->findOneBy(array(
-                'title' => 'swissinfo',
-            ));
+            ->findOneBy(array('title' => 'swissinfo'));
 
         if ($feed) {
             $this->updateSwissinfoFeed($feed);
@@ -102,9 +98,7 @@ class IngestService
     public function updateSTX()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-            ->findOneBy(array(
-                'title' => 'STX',
-            ));
+            ->findOneBy(array('title' => 'STX'));
 
         if ($feed) {
             $this->updateSTXFeed($feed);
@@ -159,7 +153,7 @@ class IngestService
         }
 
         $feed->setUpdated(new \DateTime());
-        $this->em->persist($feed);
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
@@ -185,6 +179,7 @@ class IngestService
                 $parser = new NewsMlParser($file);
                 if (!$parser->isImage()) {
                     $entry = $this->getPrevious($parser, $feed);
+
                     switch ($parser->getInstruction()) {
                         case 'Rectify':
                         case 'Update':
@@ -196,12 +191,10 @@ class IngestService
                             } else if ($feed->isAutoMode()) {
                                 $this->publish($entry);
                             }
-                            $this->em->persist($entry);
                             break;
 
                         case 'Delete':
                             $this->deletePublished($entry);
-                            $feed->removeEntry($entry);
                             $this->em->remove($entry);
                             break;
 
@@ -213,16 +206,13 @@ class IngestService
 
                 flock($handle, LOCK_UN);
                 fclose($handle);
-                $this->em->flush();
             } else {
                 continue;
             }
         }
 
         $feed->setUpdated(new \DateTime());
-        $this->em->persist($feed);
-
-        $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
@@ -280,7 +270,7 @@ class IngestService
 
         $feed->setUpdated(new \DateTime());
 
-        $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
@@ -300,7 +290,9 @@ class IngestService
 
         if (empty($previous)) {
             $previous = Entry::create($parser);
-            $feed->addEntry($previous);
+            $previous->setFeed($feed);
+            $this->em->persist($previous);
+            $this->em->flush();
         }
 
         return $previous;
@@ -408,5 +400,15 @@ class IngestService
         if ($entry->isPublished()) {
             $this->publisher->delete($entry);
         }
+    }
+
+    /**
+     * Get entry repository
+     *
+     * @return Newscoop\Entity\Repository\Ingest\Feed\EntryRepository
+     */
+    private function getEntryRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry');
     }
 }

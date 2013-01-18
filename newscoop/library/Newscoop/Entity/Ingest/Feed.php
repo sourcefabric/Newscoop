@@ -7,9 +7,6 @@
 
 namespace Newscoop\Entity\Ingest;
 
-use Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Entity\Ingest\Feed\Entry;
-
 /**
  * @Entity
  * @Table(name="ingest_feed")
@@ -42,18 +39,11 @@ class Feed
     private $mode;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Entity\Ingest\Feed\Entry", mappedBy="feed", cascade={"persist"})
-     * @var array
-     */
-    private $entries;
-
-    /**
      * @param string $title
      */
     public function __construct($title)
     {
         $this->title = $title;
-        $this->entries = new ArrayCollection();
         $this->mode = "manual";
     }
 
@@ -124,38 +114,5 @@ class Feed
     public function getUpdated()
     {
         return $this->updated;
-    }
-
-    /**
-     * Add entry
-     *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @return void
-     */
-    public function addEntry(Entry $entry)
-    {
-        $this->entries->add($entry);
-        $entry->setFeed($this);
-    }
-
-    /**
-     * Remove entry
-     *
-     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @return void
-     */
-    public function removeEntry(Entry $entry)
-    {
-        $this->entries->removeElement($entry);
-    }
-
-    /**
-     * Get entries
-     *
-     * @return array
-     */
-    public function getEntries()
-    {
-        return $this->entries;
     }
 }
