@@ -175,7 +175,7 @@ class PollAnswerAttachment extends DatabaseObject {
                   FROM      {$PollAnswerAttachment->m_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_pollanswer_nr";
-        $res = $g_ado_db->query($query);
+        $res = $g_ado_db->execute($query);
 
         while ($row = $res->fetchRow()) {
             $PollAnswerAttachments[] = new PollAnswerAttachment($row['fk_poll_nr'], $row['fk_pollanswer_nr'], $row['fk_attachment_id']);
