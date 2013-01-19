@@ -175,7 +175,7 @@ class DebateAnswerAttachment extends DatabaseObject {
                   FROM      {$DebateAnswerAttachment->m_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_debateanswer_nr";
-        $res = $g_ado_db->query($query);
+        $res = $g_ado_db->execute($query);
 
         if ($res) while ($row = $res->fetchRow()) {
             $DebateAnswerAttachments[] = new DebateAnswerAttachment($row['fk_debate_nr'], $row['fk_debateanswer_nr'], $row['fk_attachment_id']);
