@@ -105,7 +105,7 @@ class ArticleIndex extends DatabaseObject {
 
             $tableIndex = 1;
             foreach ($keywords as $keyword) {
-                $keywordConstraint = "KI$tableIndex.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                $keywordConstraint = 'KI$tableIndex.Keyword = "' . $g_ado_db->escape($keyword) . '"';
                 $selectKeywordClauseObj->addWhere($keywordConstraint);
                 $tableIndex++;
             }
@@ -118,9 +118,9 @@ class ArticleIndex extends DatabaseObject {
 
             foreach ($keywords as $keyword) {
                 if (strtolower($p_symbol) == 'like') {
-                    $keywordConstraint = "KI1.Keyword LIKE " . $g_ado_db->escape('%' . $keyword . '%');
+                    $keywordConstraint = 'KI1.Keyword LIKE ' . $g_ado_db->escape('%' . $keyword . '%');
                 } else {
-                    $keywordConstraint = "KI1.Keyword = " . $g_ado_db->escape($keyword);
+                    $keywordConstraint = 'KI1.Keyword = ' . $g_ado_db->escape($keyword);
                 }
                 $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
             }
@@ -247,7 +247,7 @@ class ArticleIndex extends DatabaseObject {
 	                    $word_cache_hits++;
 	                } else {
 	                    $sql_query = 'SELECT Id FROM KeywordIndex '
-	                    . "WHERE Keyword = '" . $g_ado_db->escape($keyword) ."'";
+	                    . 'WHERE Keyword = "' . $g_ado_db->escape($keyword) .'"';
 	                    $kwd_id = 0 + $g_ado_db->GetOne($sql_query);
 	                    $existing_words[$keyword] = $kwd_id;
 	                }
@@ -258,7 +258,7 @@ class ArticleIndex extends DatabaseObject {
 
 	                    // inserts in keyword list
 	                    $sql_query = 'INSERT IGNORE INTO KeywordIndex '
-	                    . "SET Keyword = '" . $g_ado_db->escape($keyword) . "', "
+	                    . 'SET Keyword = "' . $g_ado_db->escape($keyword) . '", '
 	                    . "Id = $kwd_id";
 	                    if (!$g_ado_db->Execute($sql_query)) {
 	                        throw new Exception('Error adding keyword');
