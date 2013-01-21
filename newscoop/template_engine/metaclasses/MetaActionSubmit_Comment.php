@@ -125,7 +125,7 @@ class MetaActionSubmit_Comment extends MetaAction
 				$userRealName = $this->m_properties['nickname'];
 			}
 			if ($this->m_properties['is_anonymous']) {
-				$userRealName = 'anonymous';
+				$userRealName = getGS('Anonymous');
 			}
         }
         else

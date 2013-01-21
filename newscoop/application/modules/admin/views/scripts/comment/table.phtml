@@ -39,7 +39,8 @@
         'Unable to reach Newscoop. Please check your internet connection.',
         'You are about to permanently delete a comment.',
         'You are about to permanently delete multiple comments.',
-        'Are you sure you want to do it?'
+        'Are you sure you want to do it?',
+        'Close'
     ];
 
     serverObj.translateObj = [
@@ -59,7 +60,8 @@
         '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
         <?php echo json_encode(getGS("You are about to permanently delete a comment.")); ?>,
         <?php echo json_encode(getGS("You are about to permanently delete multiple comments.")); ?>,
-        <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>
+        <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>,
+        '<?php putGS('Close'); ?>',
     ];
 </script>
 <table>
@@ -83,7 +85,7 @@
                             <p>
                                 <p class="{% if (commenter.is.banned.name) %}user-blocked-avatar{% endif %}">
                                     {% if (commenter.username) %}<a href="<?php echo($this->baseUrl('/profile/')); ?>{{commenter.usernameEncoded}}">{{commenter.username}}</a>{% endif %}
-                                    {% if (!commenter.username) %}{{commenter.name}} (Anonymous){% endif %}
+                                    {% if (!commenter.username) %}{{commenter.name}} (<?php echo getGS('Anonymous') ?>){% endif %}
                                 </p>
                                 <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
                                 <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
