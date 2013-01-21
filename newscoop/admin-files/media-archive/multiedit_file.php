@@ -36,6 +36,12 @@ camp_html_display_msgs();
 
 ?>
 <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");?>
+<script type="text/javascript">
+    if (window.top.location.href != window.location.href) {
+        window.top.location.href = window.location.href;
+    }
+</script>
+
 <div class="ui-widget-content padded-strong block-shadow">
 
 <form name="image_multiedit" method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_multiedit_file.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
