@@ -70,11 +70,15 @@ class DoctrineAuthServiceTest extends \RepositoryTestCase
 
     public function testAuthenticateWithUsernameOnFrontend()
     {
+        $this->user->setActive();
+        $this->em->persist($this->user);
+        $this->em->flush();
+
         $this->service->setUsername(self::USERNAME)->setPassword(self::PASSWORD);
 
         $result = $this->service->authenticate();
 
-        $this->assertEquals(\Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
+        $this->assertEquals(\Zend_Auth_Result::SUCCESS, $result->getCode());
     }
 
     public function testAuthenticateInvalid()
@@ -95,7 +99,7 @@ class DoctrineAuthServiceTest extends \RepositoryTestCase
         $this->em->persist($this->user);
         $this->em->flush();
 
-        $this->service->setUsername(sha1(self::USERNAME))->setEmail(self::EMAIL)->setPassword(self::PASSWORD);
+        $this->service->setEmail(self::EMAIL)->setPassword(self::PASSWORD);
 
         $result = $this->service->authenticate();
         $this->assertEquals(\Zend_Auth_Result::SUCCESS, $result->getCode());
