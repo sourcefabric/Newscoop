@@ -44,7 +44,12 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-        $params = $this->is_admin ? array('username' => $this->username) : array('email' => $this->email);
+        if ($this->is_admin || !empty($this->username)) {
+            $params = array('username' => $this->username);
+        } else {
+            $params = array('email' => $this->email);
+        }
+
         $user = $this->em->getRepository('Newscoop\Entity\User')->findOneBy($params);
 
         if (empty($user)) {
