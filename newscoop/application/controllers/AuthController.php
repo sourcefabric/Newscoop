@@ -49,7 +49,7 @@ class AuthController extends Zend_Controller_Action
             $this->auth->clearIdentity();
         }
 
-        $url = $this->_request->getParam('url');
+        $url = $this->_getParam('url');
         if (!is_null($url)) {
             $this->_redirect($url);
         }
