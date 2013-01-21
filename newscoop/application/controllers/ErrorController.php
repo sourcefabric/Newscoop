@@ -74,13 +74,15 @@ class ErrorController extends Zend_Controller_Action
             $log->log(sprintf("%s (Params: %s)", $this->view->message, json_encode($request->getParams())), $priority, $errors->exception);
         }
 
-        // conditionally display exceptions
-        if ($this->getInvokeArg('displayExceptions') == true) {
-            $this->view->exception = $errors->exception;
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+            // conditionally display exceptions
+            if ($this->getInvokeArg('displayExceptions') == true) {
+                $this->view->exception = $errors->exception;
+            }
+        
+            $this->view->request = $errors->request;
+            $this->view->errors = $errors;
         }
-
-        $this->view->request = $errors->request;
-        $this->view->errors = $errors;
     }
 
     public function getLog()
