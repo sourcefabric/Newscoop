@@ -16,13 +16,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 if (!$g_user->hasPermission('AddFile')) {
     camp_html_goto_page("/$ADMIN/logout.php");
 }
-$q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
-$crumbs = array();
-$crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Media Archive'), "/$ADMIN/media-archive/index.php");
-$crumbs[] = array(getGS('Add new file'), "");
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
+$q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
 camp_html_display_msgs();
 ?>
@@ -36,7 +31,6 @@ camp_html_display_msgs();
     <link rel="stylesheet" type="text/css" media="screen" href="../../js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
   </head>
   <body>
-  <?php echo $breadcrumbs; ?>
 
   <br />
       <form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload_file.php" enctype="multipart/form-data">
