@@ -257,5 +257,6 @@ regGS("Reads", "Przeczytano");
 regGS("Publish with issue", "Opublikuj z wydaniem");
 regGS("Universal List", "Uniwersalna Lista");
 regGS("Invalid security token!", "Niepoprawny token bezpieczeństwa!");
-regGS("Authors", "");
+regGS("Authors", "Autorzy");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Czy na pewno chcesz usunąć zdjęcie \\'$1\\'?");
 ?>

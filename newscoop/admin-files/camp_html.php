@@ -200,7 +200,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	$articleObj = camp_array_get_value($p_objArray, 'Article', null);
 
 	$breadcrumbs = array();
-	$breadcrumbs[] = array("Content", "");
+	$breadcrumbs[] = array(getGS("Content"), "");
 	if (!is_null($publicationObj)) {
 	    $prompt =  getGS("Publication").":";
 	    $name = $publicationObj->getName();

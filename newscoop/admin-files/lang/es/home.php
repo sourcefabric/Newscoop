@@ -1,5 +1,4 @@
 <?php 
-regGS("Campsite", "Campsite");
 regGS("Image Rendering", "Generación de imagen");
 regGS("Featured Article Lists", "Lista de articulos seleccionados");
 regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Anonymous", "");
 regGS("You are about to permanently delete multiple messages.", "Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.");
 regGS("You are about to permanently delete a message.", "Вы пришли на страницу, чтобы удалить сообщение.");
 regGS("With no attachment", "Без вложения");

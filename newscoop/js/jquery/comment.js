@@ -329,16 +329,17 @@ $(function () {
     });
 
     // Dialog
+    var buttons = {};
+    buttons[putGS('Close')] = function () {
+        $(this).dialog("close");
+    };
+
     $('.dialogPopup').dialog({
         autoOpen: false,
         width: 600,
         height: 560,
         position: 'right',
-        buttons: {
-            "Cancel": function () {
-                $(this).dialog("close");
-            }
-        }
+        buttons: buttons
     });
     // Dialog Link
     $('.articleLink').live('click', function () {

@@ -1,5 +1,4 @@
 <?php 
-regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "Pokusil jste se nahrát neplatný zálohovaný soubor.");
@@ -152,5 +151,4 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>
