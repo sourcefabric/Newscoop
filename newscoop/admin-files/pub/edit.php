@@ -22,8 +22,9 @@ if (!Input::IsValid()) {
 
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $urlTypes = UrlType::GetUrlTypes();
-$timeUnits = TimeUnit::GetTimeUnits($TOL_Language);
 $publicationObj = new Publication($f_publication_id);
+$publicationLanguage = new Language($publicationObj->getLanguageId());
+$timeUnits = TimeUnit::GetTimeUnits($publicationLanguage->getCode());
 $aliases = Alias::GetAliases(null, $f_publication_id);
 
 $pubTimeUnit = new TimeUnit($publicationObj->getTimeUnit(), $publicationObj->getLanguageId());
