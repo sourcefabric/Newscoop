@@ -15,6 +15,7 @@ What plugins should can:
 * be installed/uninstalled (events)
 * works with our ACL
 * provide new ui elements
+* create new pages (with controllers) for frontend
 
 ### How it will works?
 
@@ -40,6 +41,10 @@ Example:
 #### Widgets
 
 Every PluginBundle will can provide widgets for dashboard (TO DO).
+
+#### New pages (with controllers) for frontend
+
+Bundle will can introduce new controllers for frontend (custom pages) with support for smarty theme templates.
 
 
 
