@@ -63,12 +63,11 @@ class RouterFactory
 
         $router->addRoute(
             'topic',
-            new \Zend_Controller_Router_Route(':language/topic/:id/:topicName/:page', array(
+            new \Zend_Controller_Router_Route(':language/topic/:id/:topicName', array(
                 'module' => 'default',
                 'controller' => 'topic',
                 'action' => 'articles',
                 'topicName' => null,
-                'page' => 1,
             ), array(
                 'language' => '[a-z]{2}',
             ))

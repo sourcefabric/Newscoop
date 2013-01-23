@@ -25,6 +25,4 @@
         <p>{{ include file="_tpl/_edit-article.tpl" }}{{ $gimme->article->deck }}</p>
     </section>
   {{ /foreach }}
-         
-  {{include file='paginator_control.tpl'}}
 {{/block}}
