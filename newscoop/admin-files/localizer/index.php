@@ -14,8 +14,8 @@ if (!$g_user->hasPermission('ManageLocalizer')) {
 }
 
 $crumbs = array();
-$crumbs[] = array("Configure", "");
-$crumbs[] = array("Localizer", "");
+$crumbs[] = array(getGS("Configure"), "");
+$crumbs[] = array(getGS("Localizer"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 require_once("translate.php");

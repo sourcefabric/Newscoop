@@ -33,7 +33,7 @@ class MetaActionPreview_Comment extends MetaAction
             return;
         }
         $this->m_properties['nickname'] = isset($p_input['f_comment_nickname']) ?
-                                          $p_input['f_comment_nickname'] : 'anonymous';
+                                          $p_input['f_comment_nickname'] : getGS('Anonymous');
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
         if (isset($p_input['f_comment_reader_email'])) {

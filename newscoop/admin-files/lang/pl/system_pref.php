@@ -1,14 +1,14 @@
 <?php 
-regGS("Automatic collection of statistics:", "");
-regGS("to load geo-names data", "");
-regGS("MySQL client command path", "");
-regGS("according to php.ini settings", "");
-regGS("Maximal zoom for auto-focusing:", "");
-regGS("Map border for auto-focusing:", "");
-regGS("Map auto-focusing as the default behavior:", "");
-regGS("Include CSS file for map view", "");
-regGS("Please enter password recovery from email.", "");
-regGS("From email address:", "");
+regGS("Automatic collection of statistics:", "Zbieraj statystyki automatycznie");
+regGS("to load geo-names data", "by załadować dane geo-nazw");
+regGS("MySQL client command path", "Ścieżka do klienta MySQL");
+regGS("according to php.ini settings", "zgodnie z ustawieniami php.ini");
+regGS("Maximal zoom for auto-focusing:", "Największe powiększenie dla auto-zbliżenia");
+regGS("Map border for auto-focusing:", "Granice mapy dla auto-zbliżenia");
+regGS("Map auto-focusing as the default behavior:", "Domyślne zachowanie auto-zbliżenia");
+regGS("Include CSS file for map view", "Dołącz plik CSS do widoku mapy");
+regGS("Please enter password recovery from email.", "Podaj odzyskane hasło z wiadomości email");
+regGS("From email address:", "Adres email \"OD\":");
 regGS("Run scheduled tasks externally?", "Uruchamiaj zaprogramowane zadania zewnętrznie?");
 regGS("Setting up a Newscoop Replication Server?", "Ustawić Serwer Replikacji Newscoop?");
 regGS("Newscoop Online Server Database", "Baza danych serwera Newscoop");
