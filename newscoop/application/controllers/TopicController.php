@@ -16,6 +16,7 @@ class TopicController extends Zend_Controller_Action
     {
         $em = \Zend_Registry::get('container')->get('em');
         $topicId = $this->_getParam('id');
+        $gimme = CampTemplate::singleton()->context();
 
         $language = $em->getRepository('Newscoop\Entity\Language')
             ->findOneByCode($this->_getParam('language'));
@@ -28,12 +29,8 @@ class TopicController extends Zend_Controller_Action
         if (!$topic) {
             throw new \Exception(getGS('We can\'t find that topic'));
         }
-    
-        $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesForTopic(null, $topicId, $topic->getLanguageId())
-            ->getResult();
 
-        $this->view->topic = $topic;
-        $this->view->articles = $articles;
+        $gimme->topic = new \MetaTopic($topic->getTopicId());
+        $this->view->topic = $gimme->topic;
     }
 }
