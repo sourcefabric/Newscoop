@@ -91,7 +91,7 @@ listener[] = community_feed
 listener[] = user_points
 listener[] = user_attributes
 listener[] = comment_notification
-listener[] = search.indexer.article
+;listener[] = search.indexer.article
 
 ; audit events
 audit.events[] = comment.update
