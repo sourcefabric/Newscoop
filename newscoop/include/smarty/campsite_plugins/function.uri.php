@@ -44,6 +44,11 @@ function smarty_function_uri($p_params, &$p_smarty)
         return $view->url(array('author' => $context->author->name), 'author');
     }
 
+    if ($p_params['options'] === 'topic') {
+        $view = $p_smarty->getTemplateVars('view');
+        return $view->url(array('id' => $context->topic->identifier, 'language' => $context->language->code, 'topicName' => $context->topic->name), 'topic');
+    }
+
     // sets the URL parameter option
     $context->$url->uri_parameter = $p_params['options'];
 

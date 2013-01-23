@@ -697,6 +697,7 @@ final class CampContext
      * @return int - the current list identifier
      */
     public function current_list_id() {
+        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
         $listName = $this->m_listObjects[$objectName]['list'];
         if (!isset($this->m_readonlyProperties['current_list'])) {
             return null;

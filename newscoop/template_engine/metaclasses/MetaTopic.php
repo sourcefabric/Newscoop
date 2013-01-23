@@ -16,9 +16,9 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.ph
  */
 final class MetaTopic extends MetaDbObject {
 
-    public function __construct($p_topicIdOrName = null)
+    public function __construct($topicIdOrName = null)
     {
-        $this->m_dbObject = new Topic($p_topicIdOrName);
+        $this->m_dbObject = new Topic($topicIdOrName);
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Topic();
         }

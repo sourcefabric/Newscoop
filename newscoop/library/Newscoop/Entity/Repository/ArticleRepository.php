@@ -97,7 +97,7 @@ class ArticleRepository extends DatatableSource
         return $query;
     }
 
-    public function getArticlesForTopic($publication, $topicId)
+    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false)
     {
         $em = $this->getEntityManager();
 
@@ -115,10 +115,22 @@ class ArticleRepository extends DatatableSource
             ->join('a.topics', 'att')
             ->setParameter('topicId', $topicId);
 
+        if ($language) {
+            $queryBuilder->andWhere('att.language = :language')->setParameter('language', $language);
+            $countQueryBuilder->andWhere('att.language = :language')->setParameter('language', $language);
+        }
+
         $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
+
+        if ($getResultAndCount) {
+            return array(
+                'result' => $query->getResult(),
+                'count' => $articlesCount
+            );
+        }
         
         return $query;
     }
