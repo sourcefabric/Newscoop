@@ -17,6 +17,11 @@ class LocalImage implements ImageInterface
     const LOCATION_LOCAL = 'local';
     const LOCATION_REMOTE = 'remote';
 
+    const BROKEN_FILE = 'image_broken.png';
+    const BROKEN_THUMB = 'image_broken_thumbnail.png';
+    const BROKEN_WIDTH = 800;
+    const BROKEN_HEIGHT = 600;
+
     /**
      * @Id @Column(type="integer", name="Id") @GeneratedValue
      * @var int
@@ -179,22 +184,55 @@ class LocalImage implements ImageInterface
      */
     private function getInfo()
     {
-        $error_reporting = error_reporting();
-        error_reporting(0);
+        $filename = $this->isLocal() ? APPLICATION_PATH . '/../' . $this->getPath() : $this->url;
+        if ($this->isLocal() && !file_exists($filename)) {
+            $this->setBroken();
+            return;
+        }
 
-        $info = $this->isLocal() ?
-            getimagesize(APPLICATION_PATH . '/../' . $this->getPath()) : getimagesize($this->url);
-
-        error_reporting($error_reporting);
+        try {
+            $info = getimagesize($filename);
+        } catch (\Exception $e) {
+            $this->setBroken();
+            return;
+        }
 
         if (!is_array($info) || empty($info[0]) || empty($info[1])) {
-            throw new \RuntimeException(sprintf("Can't read size of image %s (#%d)", $this->getPath(), $this->getId()));
+            $this->setBroken();
+            return;
         }
 
         $this->width = (int) $info[0];
         $this->height = (int) $info[1];
 
-        // @todo remove once on image upload is refactored
+        $this->saveEntity();
+    }
+
+    /**
+     * Set image as broken
+     *
+     * @return void
+     */
+    private function setBroken()
+    {
+        $this->location = self::LOCATION_LOCAL;
+        $this->basename = self::BROKEN_FILE;
+        $this->thumbnailPath = self::BROKEN_THUMB;
+        $this->width = self::BROKEN_WIDTH;
+        $this->height = self::BROKEN_HEIGHT;
+        $this->isUpdatedStorage = true;
+        $this->saveEntity();
+    }
+
+    /**
+     * Store updated info if persisted
+     *
+     * @return void
+     *
+     * @todo remove once on image upload is refactored
+     */
+    private function saveEntity()
+    {
         $em = \Zend_Registry::get('container')->getService('em');
         if ($em->contains($this)) {
             $em->flush($this);
@@ -229,7 +267,7 @@ class LocalImage implements ImageInterface
      */
     public function isLocal()
     {
-        return $this->location === 'local';
+        return $this->location === self::LOCATION_LOCAL;
     }
 
     /**
