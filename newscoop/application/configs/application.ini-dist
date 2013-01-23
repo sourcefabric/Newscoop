@@ -237,6 +237,8 @@ blog.article_type = "blog"
 image.cache_url = "images/cache"
 image.cache_path = APPLICATION_PATH "/../images/cache"
 
+search.solr_server = 'http://localhost:8983/solr'
+
 [staging : production]
 
 [testing : production]
