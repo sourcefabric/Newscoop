@@ -83,27 +83,22 @@ class PlaylistRepository extends EntityRepository
     }
 
     /**
-     * Gets which playlist the article belongs to if any
+     * Gets the list of playlist the given article belongs to.
+     *
      * @param int $articleId
+     * @return array
      */
     public function getArticlePlaylists($articleId)
     {
-        $em = $this->getEntityManager();
-        $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
-        $query = $em->createQuery("SELECT pa FROM Newscoop\Entity\PlaylistArticle pa JOIN pa.playlist p WHERE pa.article = ?1");
-        $query->setParameter(1, $article);
-        try
-        {
-            $query->execute();
+        $playlistArticles = $this->getEntityManager()->getRepository('Newscoop\Entity\PlaylistArticle')
+            ->findBy(array('article' => $articleId));
+
+        $playlists = array();
+        foreach ((array) $playlistArticles as $playlistArticle) {
+            $playlists[] = $playlistArticle->getPlaylist();
         }
-        catch (\Exception $e)
-        {
-            echo $e->getMessage();
-            // TODO log here
-            return array();
-        }
-        $rows = $query->getResult();
-        return $rows;
+
+        return $playlists;
     }
 
     /**
