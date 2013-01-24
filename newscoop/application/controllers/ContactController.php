@@ -25,7 +25,7 @@ class ContactController extends Zend_Controller_Action
         $errors = array();
 
         if (empty($errors)) {
-            $mailer->send($parameters['topic'], $parameters['subject'] .'<br />'. $parameters['message'], array('kontakt@zentralplus.ch'));
+            $mailer->send($parameters['topic'], $parameters['subject'] .'<br />'. $parameters['email'] .'<br />'. $parameters['message'], array('kontakt@zentralplus.ch'));
             $this->view->response = json_encode(array('status' => true));
         } else {
             $this->view->response = json_encode(array('errors' => $errors));
