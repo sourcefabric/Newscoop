@@ -268,6 +268,7 @@ CREATE TABLE `Articles` (
   `object_id` int(11) DEFAULT NULL,
   `webcode` varchar(10) DEFAULT NULL,
   `indexed` timestamp NULL DEFAULT NULL,
+  `rating_enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -2065,10 +2066,12 @@ DROP TABLE IF EXISTS `user_topic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_topic` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
   `topic_language` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_topic` (`user_id`,`topic_id`,`topic_language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

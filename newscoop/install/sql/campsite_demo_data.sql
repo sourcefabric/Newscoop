@@ -735,7 +735,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Versions` WRITE;
 /*!40000 ALTER TABLE `Versions` DISABLE KEYS */;
-INSERT INTO `Versions` (`id`, `ver_name`, `ver_value`, `last_modified`) VALUES (1,'last_db_version','4.0.x','2012-12-28 14:11:43'),(2,'last_db_roll','2012-12-28','2012-12-28 14:11:43');
+INSERT INTO `Versions` (`id`, `ver_name`, `ver_value`, `last_modified`) VALUES (1,'last_db_version','4.1.x','2013-01-24 17:34:35'),(2,'last_db_roll','2013-01-23','2013-01-24 17:34:35');
 /*!40000 ALTER TABLE `Versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
