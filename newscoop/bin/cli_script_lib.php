@@ -1430,4 +1430,73 @@ function camp_readable_size($p_bytes)
 	return number_format($show_size, 2) . ' ' . $size_units;
 }
 
+function camp_geodata_loaded($g_conn)
+{
+    $queryStr_loc = 'SELECT count(*) AS cnt FROM CityLocations';
+    $queryStr_nam = 'SELECT count(*) AS cnt FROM CityNames';
+
+    $got_data = true;
+    foreach (array($queryStr_loc, $queryStr_nam) as $one_query) {
+        $rows = $g_conn->GetAll($one_query);
+        foreach ((array) $rows as $row) {
+            if (0 == $row['cnt']) {
+                $got_data = false;
+                break;
+            }
+        }
+    }
+
+    return $got_data;
+}
+
+function camp_load_geodata($p_mysqlCmd, $p_dbConf)
+{
+    if (!file_exists($p_mysqlCmd)) {
+        return false;
+    }
+
+    if ((!is_file($p_mysqlCmd)) && (!is_link($p_mysqlCmd))) {
+        return false;
+    }
+
+    if (!is_executable($p_mysqlCmd)) {
+        return false;
+    }
+
+    $last_wd = getcwd();
+    $work_wd = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'install'.DIRECTORY_SEPARATOR.'sql';
+    chdir($work_wd);
+
+    $dbAccess = $p_dbConf;
+
+    $db_host = $dbAccess['host'];
+    $db_port = $dbAccess['port'];
+    $db_user = $dbAccess['user'];
+    $db_pass = $dbAccess['pass'];
+    $db_name = $dbAccess['name'];
+
+    $access_params = '';
+    $access_params .= ' -h ' . escapeshellarg($db_host);
+    if (!empty($db_port)) {
+        $access_params .= ' -P ' . escapeshellarg('' . $db_port);
+    }
+    $access_params .= ' -u ' . escapeshellarg($db_user);
+    if (!empty($db_pass)) {
+        $access_params .= ' -p' . escapeshellarg($db_pass);
+    }
+    $access_params .= ' -D ' . escapeshellarg($db_name);
+    $cmd_string = escapeshellcmd($p_mysqlCmd) . $access_params . ' --local-infile=1 < ' . 'geonames.sql';
+    $cmd_output = array();
+    $cmd_retval = 0;
+    exec($cmd_string, $cmd_output, $cmd_retval);
+
+    chdir($last_wd);
+
+    if (!empty($cmd_retval)) {
+        return false;
+    }
+
+    return true;
+}
+
 ?>

@@ -271,6 +271,27 @@ class CampInstallationBase
             $g_db->Execute("ALTER TABLE `$table` ENABLE KEYS");
         }
 
+        require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+        if (!camp_geodata_loaded($g_db)) {
+            $which_output = '';
+            $which_ret = '';
+            @exec('which mysql', $which_output, $which_ret);
+
+            if (is_array($which_output) && (isset($which_output[0]))) {
+                $mysql_client_command = $which_output[0];
+                if (0 < strlen($mysql_client_command)) {
+                    $db_conf = array(
+                        'host' => $db_hostname,
+                        'port' => $db_hostport,
+                        'user' => $db_username,
+                        'pass' => $db_userpass,
+                        'name' => $db_database,
+                    );
+                    camp_load_geodata($mysql_client_command, $db_conf);
+                }
+            }
+        }
+
         { // installing the stored function for 'point in polygon' checking
             $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
             importSqlStoredProgram($g_db, $sqlFile);

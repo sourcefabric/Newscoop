@@ -256,9 +256,12 @@ foreach ($f_geo as $key => $value) {
     SystemPref::Set($name, $value);
 }
 $f_mysql_client_command_path = Input::Get('f_mysql_client_command_path', 'string');
-SystemPref::Set('MysqlClientCommandPath', $f_mysql_command_path);
-if ((!Geo_Names::GeodataLoaded()) || (!empty($f_mysql_command_path))) {
-    Geo_Names::LoadGeodata($f_mysql_client_command_path);
+SystemPref::Set('MysqlClientCommandPath', $f_mysql_client_command_path);
+require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+global $Campsite;
+global $g_ado_db;
+if ((!camp_geodata_loaded($g_ado_db)) && (!empty($f_mysql_client_command_path))) {
+    camp_load_geodata($f_mysql_client_command_path, $Campsite['db']);
 }
 
 $keys = array(
