@@ -1,30 +1,46 @@
-<script type="text/javascript" src="/js/newscoop_rest_api.js"></script>
-<script type="text/javascript" src="https://raw.github.com/DmitryBaranovskiy/raphael/300aa589f5a0ba7fce667cd62c7cdda0bd5ad904/raphael-min.js"></script>
-<script type="text/javascript" src="https://raw.github.com/oesmith/morris.js/master/morris.min.js"></script>
+<script type="text/javascript" src="<?php echo $GLOBALS['controller']->view->baseUrl('/js/newscoop_rest_api.js'); ?>"></script>
+<script type="text/javascript" src="/js/raphael-min.js"></script>
+<script type="text/javascript" src="/js/morris.min.js"></script>
 <script type="text/javascript">
-  var api = new NewscoopRestApi('http://<?php echo $_SERVER['HTTP_HOST'] ?>/api');
+  var api = new NewscoopRestApi('http://<?php echo $_SERVER['HTTP_HOST'] . $GLOBALS['controller']->view->baseUrl('/api'); ?>');
 
-  api.getResource('/articles', {'type': 'news'})
+  api.getResource('<?php echo $GLOBALS['controller']->view->baseUrl('/articles'); ?>', {'type': 'news'})
     .setItemsPerPage(20)
     .setOrder({'published': 'desc'})
     .makeRequest(function(res){
       var data = [];
+      var articles = [];
       var maxReads = 0;
+
+      $('.diagrams .data').html('<ul></ul>');
+
       for (var i = res.items.length - 1; i >= 0; i--) {
         maxReads += parseInt(res.items[i].reads);
       };
+
       for (var i = res.items.length - 1; i >= 0; i--) {
-        data.push({value: Math.round((parseInt(res.items[i].reads)/maxReads)*100), label: res.items[i].title});
+        articles.push(res.items[i]);
       };
+      articles.sort(function(a, b) {return a['reads'] - b['reads']});
+
+      for (var i = articles.length - 1; i >= 0; i--) {
+        var reads = Math.round((parseInt(articles[i].reads)/maxReads)*100);
+        data.push({value: reads, label: articles[i].title});
+        $('.diagrams .data ul').append('<li class="singleArticle">'+reads +'% - '+ articles[i].title+'</li>');
+      };
+
       Morris.Donut({
-        element: 'graph',
+        element: 'article_reads_graph',
         data: data,
         formatter: function (x) { return x + "%"}
       });
     });
 </script>
 
-<div class="ui-widget-content" style="width: 360px; padding-left: 8px; padding-top: 8px; border: none">
-  <h3>Last 20 articles</h3>
-  <div id="graph">Loading...</div>
-</div>
+<div class="ui-widget-content" style="padding-left: 8px; padding-top: 8px; border: none">
+  <h3><?php echo getGs('Latest 20 articles by popularity'); ?></h3>
+  <div class="diagrams">
+    <div id="article_reads_graph" style="float:left; margin-right: 10px; width: 55%; height: 320px;"></div>
+    <div class="data" style="float:left; width: 43%; font-size: 13px;"><?php echo getGs('Loading...'); ?></div>
+  <div>
+</div> 
