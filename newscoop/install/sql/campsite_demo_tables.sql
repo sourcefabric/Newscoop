@@ -2601,6 +2601,21 @@ CREATE TABLE `user_attribute` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `user_identity`
+--
+
+DROP TABLE IF EXISTS `user_identity`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `user_identity` (
+  `provider` varchar(80) NOT NULL,
+  `provider_user_id` varchar(255) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`provider`, `provider_user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user_points_index`
 --
 
