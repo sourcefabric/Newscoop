@@ -300,6 +300,8 @@ class Article
      */
     private $webcode;
 
+    private $data;
+
     /**
      * @param int $number
      * @param Newscoop\Entity\Language $language

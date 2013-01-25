@@ -96,10 +96,16 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getIssueId();
     }
 
-    public function getWorkflowStatus()
+    public function setWorkflowStatus($workflowStatus)
     {
         $this->__load();
-        return parent::getWorkflowStatus();
+        return parent::setWorkflowStatus($workflowStatus);
+    }
+
+    public function getWorkflowStatus($readable = false)
+    {
+        $this->__load();
+        return parent::getWorkflowStatus($readable);
     }
 
     public function setLanguage(\Newscoop\Entity\Language $p_language)
@@ -118,6 +124,12 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
     {
         $this->__load();
         return parent::getLanguageId();
+    }
+
+    public function getLanguageCode()
+    {
+        $this->__load();
+        return parent::getLanguageCode();
     }
 
     public function getNumber()
@@ -219,6 +231,18 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::hasWebcode();
     }
 
+    public function getKeywords()
+    {
+        $this->__load();
+        return parent::getKeywords();
+    }
+
+    public function setKeywords($keywords)
+    {
+        $this->__load();
+        return parent::setKeywords($keywords);
+    }
+
     public function setArticleAuthors($articleAuthors)
     {
         $this->__load();
@@ -231,10 +255,70 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getArticleAuthors();
     }
 
+    public function setPackages($packages)
+    {
+        $this->__load();
+        return parent::setPackages($packages);
+    }
+
+    public function getPackages()
+    {
+        $this->__load();
+        return parent::getPackages();
+    }
+
+    public function setTopics($topics)
+    {
+        $this->__load();
+        return parent::setTopics($topics);
+    }
+
+    public function getTopics()
+    {
+        $this->__load();
+        return parent::getTopics();
+    }
+
+    public function setFields($fields)
+    {
+        $this->__load();
+        return parent::setFields($fields);
+    }
+
+    public function getFields()
+    {
+        $this->__load();
+        return parent::getFields();
+    }
+
+    public function setTranslations($translations)
+    {
+        $this->__load();
+        return parent::setTranslations($translations);
+    }
+
+    public function getTranslations()
+    {
+        $this->__load();
+        return parent::getTranslations();
+    }
+
+    public function setRenditions($renditions)
+    {
+        $this->__load();
+        return parent::setRenditions($renditions);
+    }
+
+    public function getRenditions()
+    {
+        $this->__load();
+        return parent::getRenditions();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'articleAuthorTypes', 'comments', 'lockUser', 'webcode');
+        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'articleAuthorTypes', 'comments', 'lockUser', 'topics', 'playlists', 'packages', 'webcode');
     }
 
     public function __clone()

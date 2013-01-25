@@ -30,7 +30,8 @@ class RouterFactory
                 'language' => null,
             ), array(
                 'language' => '[a-z]{2}',
-            )));
+            ))
+        );
 
          $router->addRoute(
             'webcode',
@@ -38,7 +39,8 @@ class RouterFactory
                 'module' => 'default'
             ), array(
                 'webcode' => '[\+\s@][0-9a-z]{5,6}',
-            )));
+            ))
+        );
 
          $router->addRoute(
             'language/webcode',
@@ -47,7 +49,8 @@ class RouterFactory
                 'module' => 'default',
                 'language' => '[a-z]{2}',
                 'webcode' => '^[\+\s@][0-9a-z]{5,6}',
-            )));
+            ))
+        );
 
         $router->addRoute(
             'confirm-email',
@@ -55,7 +58,20 @@ class RouterFactory
                 'module' => 'default',
                 'controller' => 'register',
                 'action' => 'confirm',
-            )));
+            ))
+        );
+
+        $router->addRoute(
+            'topic',
+            new \Zend_Controller_Router_Route(':language/topic/:id/:topicName', array(
+                'module' => 'default',
+                'controller' => 'topic',
+                'action' => 'articles',
+                'topicName' => null,
+            ), array(
+                'language' => '[a-z]{2}',
+            ))
+        );
 
         $router->addRoute(
             'user',
@@ -63,7 +79,8 @@ class RouterFactory
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',
-            )));
+            ))
+        );
 
         $image = $container->getParameter('image');
         $router->addRoute('image',
@@ -73,9 +90,10 @@ class RouterFactory
                 'action' => 'cache',
             ), array(
                 1 => 'src',
-            ), $image['cache_url'] . '/%s'));
+            ), $image['cache_url'] . '/%s')
+        );
 
-         $router->addRoute('rest',
+        $router->addRoute('rest',
             new \Zend_Rest_Route($front, array(), array(
                 'admin' => array(
                     'slideshow-rest',
