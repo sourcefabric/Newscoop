@@ -109,7 +109,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Articles` WRITE;
 /*!40000 ALTER TABLE `Articles` DISABLE KEYS */;
-INSERT INTO `Articles` (`IdPublication`, `NrIssue`, `NrSection`, `Number`, `IdLanguage`, `Name`, `Type`, `IdUser`, `fk_default_author_id`, `OnFrontPage`, `OnSection`, `Published`, `PublishDate`, `UploadDate`, `Keywords`, `Public`, `IsIndexed`, `LockUser`, `LockTime`, `ShortName`, `ArticleOrder`, `comments_enabled`, `comments_locked`, `time_updated`, `object_id`) VALUES (2,13,10,64,1,'European Council candidates set to be named','news',15,12,'Y','N','Y','2012-01-29 02:14:36','2010-12-23 15:48:13','','Y','Y',1,'2012-03-15 10:44:25','64',1,1,0,'2012-03-15 09:44:25',78),(2,12,10,65,1,'The truth behind the European housing market','news',15,12,'N','N','Y','2010-12-24 12:14:36','2010-12-24 12:10:11','','Y','Y',0,'0000-00-00 00:00:00','65',2,1,0,'2012-03-01 16:08:33',99),(2,12,10,66,1,'Mayoral race looks to the future','news',15,12,'N','N','Y','2010-12-24 12:18:16','2010-12-24 12:15:07','','Y','Y',0,'0000-00-00 00:00:00','66',1,1,0,'2012-03-01 16:08:23',106),(2,13,20,67,1,'Private aviation companies take flight','news',15,12,'N','N','Y','2010-12-24 12:36:15','2010-12-24 12:19:37','','Y','Y',0,'0000-00-00 00:00:00','67',1,1,0,'2012-03-07 15:32:46',97),(2,12,20,68,1,'Advertisers target online demographic','news',15,12,'N','N','Y','2010-12-27 10:40:02','2010-12-24 17:30:07','','Y','Y',0,'0000-00-00 00:00:00','68',2,1,0,'2012-03-01 16:08:58',85),(2,12,20,69,1,'Car industry resurgence boosts economy','news',15,12,'N','N','Y','2010-12-24 17:38:36','2010-12-24 17:36:30','','Y','Y',0,'0000-00-00 00:00:00','69',1,1,0,'2012-03-01 16:08:49',107),(2,12,30,70,1,' 5 alternatives to Delicious','news',15,12,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:14:32','','Y','Y',0,'0000-00-00 00:00:00','70',72,1,0,'2011-07-12 06:46:34',104),(2,13,30,71,1,'Commercial space flight becomes a reality','news',15,12,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:21:56','','N','Y',0,'0000-00-00 00:00:00','71',1,1,0,'2012-03-07 14:55:32',103),(2,12,30,72,1,'10 amazing geolocation apps','news',15,12,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:27:57','','Y','Y',0,'0000-00-00 00:00:00','72',1,1,0,'2012-03-01 16:09:13',82),(2,12,40,73,1,'Hayfever remedy a breath of fresh air','news',15,12,'N','N','Y','2010-12-24 18:48:23','2010-12-24 18:37:02','','Y','Y',0,'0000-00-00 00:00:00','73',75,1,0,'2011-07-12 06:46:53',105),(2,13,40,74,1,'Sightseeing is good for the heart','news',15,12,'N','N','Y','2010-12-24 18:48:23','2010-12-24 18:42:51','','N','Y',33,'2012-03-05 19:16:01','74',1,1,0,'2012-03-05 19:16:01',102),(2,12,40,75,1,'Healthy options for your sweet tooth ','news',15,12,'N','N','Y','2010-12-25 20:55:38','2010-12-25 20:54:04','','Y','Y',0,'0000-00-00 00:00:00','75',1,1,0,'2011-07-12 06:46:45',98),(2,12,50,76,1,'Berlin Film Festival unveils 2011 line-up','news',15,12,'N','N','Y','2010-12-25 21:02:14','2010-12-25 20:56:00','','Y','Y',0,'0000-00-00 00:00:00','76',78,1,0,'2011-07-12 06:47:17',89),(2,13,50,77,1,'New Cannes winner a taste of paradise','news',15,12,'N','Y','Y','2010-12-25 21:02:14','2010-12-25 20:57:57','','Y','Y',0,'0000-00-00 00:00:00','77',90,1,0,'2012-03-01 16:06:21',95),(2,12,50,78,1,'Hidden cultural delights of the Adriatic','news',15,12,'N','N','Y','2010-12-25 21:02:14','2010-12-25 21:00:30','','Y','Y',0,'0000-00-00 00:00:00','78',1,1,0,'2011-07-12 06:47:06',101),(2,12,60,79,1,'Grand Slam winner sets new record','news',15,12,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:02:34','','Y','Y',0,'0000-00-00 00:00:00','79',81,1,0,'2011-07-12 06:47:29',100),(2,13,60,80,1,'Lionel Messi: the Argentinean who makes children dream all over the world','news',15,12,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:04:20','','Y','Y',0,'0000-00-00 00:00:00','80',91,1,0,'2012-03-01 16:07:49',87),(2,13,60,81,1,'Italian football reaches new world audience','news',15,12,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:06:16','','Y','Y',48,'2012-03-09 08:02:23','81',92,1,0,'2012-03-09 08:03:58',88),(2,13,10,82,1,'Food export duties set to rise','news',15,12,'N','N','Y','2010-12-27 08:34:58','2010-12-25 21:08:43','','Y','Y',32,'2012-03-05 08:27:08','82',4,1,0,'2012-03-05 08:27:08',80),(2,13,10,83,1,'Wintry conditions sweep across China','news',15,12,'N','Y','Y','2010-12-27 08:34:58','2010-12-25 21:10:26','','Y','Y',1,'2012-03-15 10:32:11','83',3,1,0,'2012-03-15 09:32:11',79),(2,13,20,84,1,'Where to locate your internet start-up','news',15,12,'N','N','Y','2010-12-27 09:47:21','2010-12-27 08:35:57','','Y','Y',0,'0000-00-00 00:00:00','84',86,1,0,'2012-03-01 16:01:53',81),(2,13,20,85,1,'Tax and trade bureau considers alcohol labeling','news',15,12,'N','Y','Y','2010-12-27 10:16:21','2010-12-27 09:45:32','','Y','Y',0,'0000-00-00 00:00:00','85',2,1,0,'2012-03-01 16:27:41',96),(2,13,30,86,1,'Online security risks exposed','news',15,12,'N','N','Y','2010-12-27 10:53:10','2010-12-27 09:47:42','','Y','Y',0,'0000-00-00 00:00:00','86',88,1,0,'2012-03-01 16:04:11',84),(2,13,30,87,1,'New horizons for the browser','news',15,12,'N','N','Y','2010-12-27 09:53:10','2010-12-27 09:50:55','','Y','Y',0,'0000-00-00 00:00:00','87',2,1,0,'2012-03-01 16:02:19',86),(2,13,40,88,1,'Luxury health breaks on offer','news',15,12,'N','N','Y','2010-12-27 10:59:43','2010-12-27 09:53:34','','Y','Y',0,'0000-00-00 00:00:00','88',90,1,0,'2012-03-01 16:05:54',83),(2,13,40,89,1,'City life may be beneficial say doctors','news',15,12,'N','N','Y','2010-12-27 09:59:43','2010-12-27 09:56:53','','Y','Y',0,'0000-00-00 00:00:00','89',2,1,0,'2012-03-01 16:04:38',90),(2,1,15,90,1,'Sourcefabric','link',15,12,'N','N','Y','2010-12-28 10:20:07','2010-12-28 10:19:04','','Y','Y',0,'0000-00-00 00:00:00','90',1,1,0,'2011-01-24 07:53:04',0),(2,1,15,91,1,'Newscoop','link',15,12,'N','N','Y','2010-12-28 10:21:42','2010-12-28 10:20:35','','Y','Y',0,'0000-00-00 00:00:00','91',2,1,0,'2011-01-24 07:53:04',0),(2,1,15,92,1,'Airtime','link',15,12,'N','N','Y','2010-12-28 10:21:42','2010-12-28 10:21:14','','Y','Y',0,'0000-00-00 00:00:00','92',3,1,0,'2011-01-24 07:49:44',0),(2,1,15,93,1,'Sourcefabric Services','link',15,12,'N','N','Y','2010-12-28 10:28:34','2010-12-28 10:22:58','','Y','Y',0,'0000-00-00 00:00:00','93',4,1,0,'2011-01-27 14:19:55',0),(2,1,15,94,1,'Join Sourcefabric','link',15,12,'N','N','Y','2010-12-28 10:28:34','2010-12-28 10:27:48','','Y','Y',0,'0000-00-00 00:00:00','94',5,1,0,'2011-01-24 07:53:04',0),(2,1,5,95,1,'About us','page',15,12,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:29:51','','Y','Y',0,'0000-00-00 00:00:00','95',98,1,0,'2011-07-07 08:40:35',91),(2,1,5,96,1,'Contact','page',15,12,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:31:36','','Y','Y',0,'0000-00-00 00:00:00','96',3,1,0,'2011-07-07 08:40:11',93),(2,1,5,97,1,'Marketing','page',15,12,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:32:37','','Y','Y',0,'0000-00-00 00:00:00','97',2,1,0,'2011-07-07 08:40:07',94),(2,1,5,98,1,'Credits','page',15,12,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:33:38','','Y','Y',0,'0000-00-00 00:00:00','98',1,1,0,'2011-07-07 08:39:44',92),(2,13,10,101,1,'News on general theory of relativity','news',31,NULL,'N','N','Y','2012-01-09 19:01:21','2012-02-09 18:55:21','','Y','Y',0,'0000-00-00 00:00:00','101',2,1,0,'2012-03-01 15:41:50',0);
+INSERT INTO `Articles` (`IdPublication`, `NrIssue`, `NrSection`, `Number`, `IdLanguage`, `Name`, `Type`, `IdUser`, `OnFrontPage`, `OnSection`, `Published`, `PublishDate`, `UploadDate`, `Keywords`, `Public`, `IsIndexed`, `LockUser`, `LockTime`, `ShortName`, `ArticleOrder`, `comments_enabled`, `comments_locked`, `time_updated`, `object_id`) VALUES (2,13,10,64,1,'European Council candidates set to be named','news',15,'Y','N','Y','2012-01-29 02:14:36','2010-12-23 15:48:13','','Y','Y',1,'2012-03-15 10:44:25','64',1,1,0,'2012-03-15 09:44:25',78),(2,12,10,65,1,'The truth behind the European housing market','news',15,'N','N','Y','2010-12-24 12:14:36','2010-12-24 12:10:11','','Y','Y',0,'0000-00-00 00:00:00','65',2,1,0,'2012-03-01 16:08:33',99),(2,12,10,66,1,'Mayoral race looks to the future','news',15,'N','N','Y','2010-12-24 12:18:16','2010-12-24 12:15:07','','Y','Y',0,'0000-00-00 00:00:00','66',1,1,0,'2012-03-01 16:08:23',106),(2,13,20,67,1,'Private aviation companies take flight','news',15,'N','N','Y','2010-12-24 12:36:15','2010-12-24 12:19:37','','Y','Y',0,'0000-00-00 00:00:00','67',1,1,0,'2012-03-07 15:32:46',97),(2,12,20,68,1,'Advertisers target online demographic','news',15,'N','N','Y','2010-12-27 10:40:02','2010-12-24 17:30:07','','Y','Y',0,'0000-00-00 00:00:00','68',2,1,0,'2012-03-01 16:08:58',85),(2,12,20,69,1,'Car industry resurgence boosts economy','news',15,'N','N','Y','2010-12-24 17:38:36','2010-12-24 17:36:30','','Y','Y',0,'0000-00-00 00:00:00','69',1,1,0,'2012-03-01 16:08:49',107),(2,12,30,70,1,' 5 alternatives to Delicious','news',15,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:14:32','','Y','Y',0,'0000-00-00 00:00:00','70',72,1,0,'2011-07-12 06:46:34',104),(2,13,30,71,1,'Commercial space flight becomes a reality','news',15,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:21:56','','N','Y',0,'0000-00-00 00:00:00','71',1,1,0,'2012-03-07 14:55:32',103),(2,12,30,72,1,'10 amazing geolocation apps','news',15,'N','N','Y','2010-12-24 18:35:37','2010-12-24 18:27:57','','Y','Y',0,'0000-00-00 00:00:00','72',1,1,0,'2012-03-01 16:09:13',82),(2,12,40,73,1,'Hayfever remedy a breath of fresh air','news',15,'N','N','Y','2010-12-24 18:48:23','2010-12-24 18:37:02','','Y','Y',0,'0000-00-00 00:00:00','73',75,1,0,'2011-07-12 06:46:53',105),(2,13,40,74,1,'Sightseeing is good for the heart','news',15,'N','N','Y','2010-12-24 18:48:23','2010-12-24 18:42:51','','N','Y',33,'2012-03-05 19:16:01','74',1,1,0,'2012-03-05 19:16:01',102),(2,12,40,75,1,'Healthy options for your sweet tooth ','news',15,'N','N','Y','2010-12-25 20:55:38','2010-12-25 20:54:04','','Y','Y',0,'0000-00-00 00:00:00','75',1,1,0,'2011-07-12 06:46:45',98),(2,12,50,76,1,'Berlin Film Festival unveils 2011 line-up','news',15,'N','N','Y','2010-12-25 21:02:14','2010-12-25 20:56:00','','Y','Y',0,'0000-00-00 00:00:00','76',78,1,0,'2011-07-12 06:47:17',89),(2,13,50,77,1,'New Cannes winner a taste of paradise','news',15,'N','Y','Y','2010-12-25 21:02:14','2010-12-25 20:57:57','','Y','Y',0,'0000-00-00 00:00:00','77',90,1,0,'2012-03-01 16:06:21',95),(2,12,50,78,1,'Hidden cultural delights of the Adriatic','news',15,'N','N','Y','2010-12-25 21:02:14','2010-12-25 21:00:30','','Y','Y',0,'0000-00-00 00:00:00','78',1,1,0,'2011-07-12 06:47:06',101),(2,12,60,79,1,'Grand Slam winner sets new record','news',15,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:02:34','','Y','Y',0,'0000-00-00 00:00:00','79',81,1,0,'2011-07-12 06:47:29',100),(2,13,60,80,1,'Lionel Messi: the Argentinean who makes children dream all over the world','news',15,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:04:20','','Y','Y',0,'0000-00-00 00:00:00','80',91,1,0,'2012-03-01 16:07:49',87),(2,13,60,81,1,'Italian football reaches new world audience','news',15,'N','N','Y','2010-12-25 21:07:37','2010-12-25 21:06:16','','Y','Y',48,'2012-03-09 08:02:23','81',92,1,0,'2012-03-09 08:03:58',88),(2,13,10,82,1,'Food export duties set to rise','news',15,'N','N','Y','2010-12-27 08:34:58','2010-12-25 21:08:43','','Y','Y',32,'2012-03-05 08:27:08','82',4,1,0,'2012-03-05 08:27:08',80),(2,13,10,83,1,'Wintry conditions sweep across China','news',15,'N','Y','Y','2010-12-27 08:34:58','2010-12-25 21:10:26','','Y','Y',1,'2012-03-15 10:32:11','83',3,1,0,'2012-03-15 09:32:11',79),(2,13,20,84,1,'Where to locate your internet start-up','news',15,'N','N','Y','2010-12-27 09:47:21','2010-12-27 08:35:57','','Y','Y',0,'0000-00-00 00:00:00','84',86,1,0,'2012-03-01 16:01:53',81),(2,13,20,85,1,'Tax and trade bureau considers alcohol labeling','news',15,'N','Y','Y','2010-12-27 10:16:21','2010-12-27 09:45:32','','Y','Y',0,'0000-00-00 00:00:00','85',2,1,0,'2012-03-01 16:27:41',96),(2,13,30,86,1,'Online security risks exposed','news',15,'N','N','Y','2010-12-27 10:53:10','2010-12-27 09:47:42','','Y','Y',0,'0000-00-00 00:00:00','86',88,1,0,'2012-03-01 16:04:11',84),(2,13,30,87,1,'New horizons for the browser','news',15,'N','N','Y','2010-12-27 09:53:10','2010-12-27 09:50:55','','Y','Y',0,'0000-00-00 00:00:00','87',2,1,0,'2012-03-01 16:02:19',86),(2,13,40,88,1,'Luxury health breaks on offer','news',15,'N','N','Y','2010-12-27 10:59:43','2010-12-27 09:53:34','','Y','Y',0,'0000-00-00 00:00:00','88',90,1,0,'2012-03-01 16:05:54',83),(2,13,40,89,1,'City life may be beneficial say doctors','news',15,'N','N','Y','2010-12-27 09:59:43','2010-12-27 09:56:53','','Y','Y',0,'0000-00-00 00:00:00','89',2,1,0,'2012-03-01 16:04:38',90),(2,1,15,90,1,'Sourcefabric','link',15,'N','N','Y','2010-12-28 10:20:07','2010-12-28 10:19:04','','Y','Y',0,'0000-00-00 00:00:00','90',1,1,0,'2011-01-24 07:53:04',0),(2,1,15,91,1,'Newscoop','link',15,'N','N','Y','2010-12-28 10:21:42','2010-12-28 10:20:35','','Y','Y',0,'0000-00-00 00:00:00','91',2,1,0,'2011-01-24 07:53:04',0),(2,1,15,92,1,'Airtime','link',15,'N','N','Y','2010-12-28 10:21:42','2010-12-28 10:21:14','','Y','Y',0,'0000-00-00 00:00:00','92',3,1,0,'2011-01-24 07:49:44',0),(2,1,15,93,1,'Sourcefabric Services','link',15,'N','N','Y','2010-12-28 10:28:34','2010-12-28 10:22:58','','Y','Y',0,'0000-00-00 00:00:00','93',4,1,0,'2011-01-27 14:19:55',0),(2,1,15,94,1,'Join Sourcefabric','link',15,'N','N','Y','2010-12-28 10:28:34','2010-12-28 10:27:48','','Y','Y',0,'0000-00-00 00:00:00','94',5,1,0,'2011-01-24 07:53:04',0),(2,1,5,95,1,'About us','page',15,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:29:51','','Y','Y',0,'0000-00-00 00:00:00','95',98,1,0,'2011-07-07 08:40:35',91),(2,1,5,96,1,'Contact','page',15,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:31:36','','Y','Y',0,'0000-00-00 00:00:00','96',3,1,0,'2011-07-07 08:40:11',93),(2,1,5,97,1,'Marketing','page',15,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:32:37','','Y','Y',0,'0000-00-00 00:00:00','97',2,1,0,'2011-07-07 08:40:07',94),(2,1,5,98,1,'Credits','page',15,'N','N','Y','2010-12-28 10:34:13','2010-12-28 10:33:38','','Y','Y',0,'0000-00-00 00:00:00','98',1,1,0,'2011-07-07 08:39:44',92),(2,13,10,101,1,'News on general theory of relativity','news',31,'N','N','Y','2012-01-09 19:01:21','2012-02-09 18:55:21','','Y','Y',0,'0000-00-00 00:00:00','101',2,1,0,'2012-03-01 15:41:50',0);
 /*!40000 ALTER TABLE `Articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -897,72 +897,6 @@ LOCK TABLES `feedback` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `liveuser_applications`
---
-
-LOCK TABLES `liveuser_applications` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications` DISABLE KEYS */;
-INSERT INTO `liveuser_applications` (`application_id`, `application_define_name`) VALUES (1,'Campsite'),(2,'Campcaster');
-/*!40000 ALTER TABLE `liveuser_applications` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_applications_application_id_seq`
---
-
-LOCK TABLES `liveuser_applications_application_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_applications_application_id_seq` (`id`) VALUES (2);
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_applications_seq`
---
-
-LOCK TABLES `liveuser_applications_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_applications_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_area_admin_areas`
---
-
-LOCK TABLES `liveuser_area_admin_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_areas`
---
-
-LOCK TABLES `liveuser_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas` DISABLE KEYS */;
-INSERT INTO `liveuser_areas` (`area_id`, `application_id`, `area_define_name`) VALUES (1,1,'Articles');
-/*!40000 ALTER TABLE `liveuser_areas` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_areas_seq`
---
-
-LOCK TABLES `liveuser_areas_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_areas_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_group_subgroups`
---
-
-LOCK TABLES `liveuser_group_subgroups` WRITE;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `liveuser_grouprights`
 --
 
@@ -983,25 +917,6 @@ INSERT INTO `liveuser_groups` (`group_id`, `group_type`, `group_define_name`, `r
 UNLOCK TABLES;
 
 --
--- Dumping data for table `liveuser_groups_group_id_seq`
---
-
-LOCK TABLES `liveuser_groups_group_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_groups_group_id_seq` (`id`) VALUES (5);
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_groups_seq`
---
-
-LOCK TABLES `liveuser_groups_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_groups_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `liveuser_groupusers`
 --
 
@@ -1009,44 +924,6 @@ LOCK TABLES `liveuser_groupusers` WRITE;
 /*!40000 ALTER TABLE `liveuser_groupusers` DISABLE KEYS */;
 INSERT INTO `liveuser_groupusers` (`perm_user_id`, `group_id`) VALUES (1,1),(30,1),(31,1),(32,1),(33,1),(34,3),(35,3),(36,3),(37,3),(38,3),(39,3),(44,1),(45,1),(46,1),(47,1),(48,1),(49,1),(53,1);
 /*!40000 ALTER TABLE `liveuser_groupusers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_perm_users`
---
-
-LOCK TABLES `liveuser_perm_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users` (`perm_user_id`, `auth_user_id`, `auth_container_name`, `perm_type`) VALUES (1,'1','DB',1),(26,'26','DB',1);
-/*!40000 ALTER TABLE `liveuser_perm_users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_perm_users_perm_user_id_seq`
---
-
-LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users_perm_user_id_seq` (`id`) VALUES (29);
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_perm_users_seq`
---
-
-LOCK TABLES `liveuser_perm_users_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_right_implied`
---
-
-LOCK TABLES `liveuser_right_implied` WRITE;
-/*!40000 ALTER TABLE `liveuser_right_implied` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_right_implied` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1060,52 +937,6 @@ INSERT INTO `liveuser_rights` (`right_id`, `area_id`, `right_define_name`, `has_
 UNLOCK TABLES;
 
 --
--- Dumping data for table `liveuser_rights_right_id_seq`
---
-
-LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` (`id`) VALUES (255);
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_rights_seq`
---
-
-LOCK TABLES `liveuser_rights_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_rights_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_translations`
---
-
-LOCK TABLES `liveuser_translations` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_translations_seq`
---
-
-LOCK TABLES `liveuser_translations_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_userrights`
---
-
-LOCK TABLES `liveuser_userrights` WRITE;
-/*!40000 ALTER TABLE `liveuser_userrights` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_userrights` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `liveuser_users`
 --
 
@@ -1113,16 +944,6 @@ LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
 INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`, `password_reset_token`, `role_id`, `author_id`, `last_name`, `status`, `is_admin`, `is_public`, `points`, `image`, `subscriber`) VALUES (1,777070817,'Administrator','admin','sha1$8hovh8vFOat9$4f2d2086111e3c19825bd016937c556a2bf05bb4','localhost@localhost.com','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-02-09 11:27:02','2011-02-10 16:00:31','2011-07-12 14:29:44',1,NULL,6,NULL,NULL,1,1,0,0,NULL,NULL),(39,NULL,'Jane','janestock','sha1$2uvxzh8yDqVR$96406073308bd0a7985f3a59c74f52ea0ccb6393','jane.s@thecanonical.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:33:08','2012-02-28 16:54:36','1970-01-01 00:00:00',1,NULL,17,7,'Stockwriter',1,1,1,0,'e7b816f7d39bb6cbd151089baeeb542d9856bf21.jpg',NULL),(34,NULL,'Amerigo','amerigo','sha1$UHP3Tte3PNfs$c23649b29221879e25ef4cf23f8f36bc1c602876','amerigo.vespucci@thejournal.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:06','2012-02-28 16:18:39','1970-01-01 00:00:00',1,NULL,12,11,'Vespucci',1,1,1,0,'dc1989572b1a6a68f1981597d0a79eadd2df98df.jpg',NULL),(35,NULL,'Frank','frankenstein','sha1$Q5t8yrcj4OX0$c2a550dc9462d5393187061ea6efcd80fc3df16e','frank.n.stein@free.fr','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:24','2012-02-28 16:22:24','1970-01-01 00:00:00',1,NULL,13,13,'N. Stein',1,1,1,0,'9ec91c423809989ed9e5a3fb298042cbf938ec21.jpg',NULL),(36,NULL,'Test','testpersona','sha1$2AdGaEFNVKV5$e6c4544bb06c05f2f45d3674ce7770b120b3f71e','test.persona@test.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-02-28 16:27:16','2012-02-28 16:25:39','1970-01-01 00:00:00',1,NULL,14,9,'Persona',1,1,1,0,'4dbcd74c2292cfd3ee10fb58b716578cf0671513.jpg',NULL),(37,NULL,'James Q.','jamesq','sha1$YsV9MBGoylH4$4f4bf246b9f9858b8a89b4d1a902c85a2e69d440','jamezdin@gmail.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:49','2012-02-28 16:40:41','1970-01-01 00:00:00',1,NULL,15,2,'Reporter',1,1,1,0,'3f9dc7e8277147719964f7bcd41a586f203b2a1e.jpg',NULL),(38,NULL,'Sarah','ssarah','sha1$h0sWyZtOwA2f$976c00a10b32761cba6e2b535c40bebb1974c869','sarah@thecanonical.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-02-28 16:49:48','2012-02-28 16:48:11','1970-01-01 00:00:00',1,NULL,16,3,'Staffwriter',1,1,1,0,'7a5a53fbf907cb078151a890a2ad20e9d4011bd0.jpg',NULL),(42,NULL,'John','johnsmith','sha1$one1ViLLWTPE$0d6fc3797caecfebb5de36a056a72b5a5ca4a6d4','labudovo.jezero@gmail.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 17:53:02','2012-03-01 17:48:53','1970-01-01 00:00:00',1,NULL,29,NULL,'Smith',1,0,1,0,'0a925766b335ce7cf5b631f867761771bab0a15e.jpeg',NULL);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `liveuser_users_auth_user_id_seq`
---
-
-LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_users_auth_user_id_seq` (`id`) VALUES (29);
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
