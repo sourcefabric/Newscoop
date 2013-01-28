@@ -1,7 +1,7 @@
 <?php 
-regGS("No such article type", "");
-regGS("Filter saved", "");
-regGS("Filter not saved", "");
+regGS("No such article type", "Такого типа статьи не существует");
+regGS("Filter saved", "Фильтр сохранен");
+regGS("Filter not saved", "Фильтр не сохранен");
 regGS("Not a color", "Не является цветом");
 regGS("No such field", "Нет такого поля");
 regGS("Color saved", "Цвет сохранен");

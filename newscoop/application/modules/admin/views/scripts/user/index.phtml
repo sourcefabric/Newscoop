@@ -43,7 +43,7 @@
     <a href="#delete" class="delete" title="<?php putGS('delete user'); ?> <%= user.escape('username') %>"><?php putGS('Delete'); ?></a>
 </div>
 <a class="edit"><%= user.escape('username') %></a>
-<span class="agent"><abbr title="<%= user.escape('http_user_agent') %>"><%= user.get('http_user_agent').split(' ').shift() %></abbr></span>
+<span class="agent"><abbr title="<%= user.escape('http_user_agent') %>"><%= user.get('http_user_agent') %></abbr></span>
 <a href="mailto:<%= user.get('email') %>" class="mailto"><%= user.get('email') %></a>
 <span class="created"><%= user.get('created') %></span>
 </script>

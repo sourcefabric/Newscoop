@@ -129,7 +129,7 @@ class FeedbackController extends Zend_Controller_Action
         if ($type[0] == 'image') {
             $file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
             $image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved', 'Date' => date('Y-m-d')));
-            $this->view->response = $image->getImageId();
+            $this->view->response = 'image_'.$image->getImageId();
         }
         else if ($type[1] == 'pdf') {
             $attachment = new Attachment();
@@ -137,7 +137,7 @@ class FeedbackController extends Zend_Controller_Action
             
             $file = Plupload::OnMultiFileUploadCustom($attachment->getStorageLocation());
             $document = Attachment::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
-            $this->view->response = $document->getAttachmentId();
+            $this->view->response = 'pdf_'.$document->getAttachmentId();
         }
     }
 
