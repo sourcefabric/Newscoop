@@ -1,7 +1,40 @@
-4.1.0 ()
+4.1.0 (January 29, 2013)
  New Features
  ------------
- CS-4492: Front-end search powered by Apache/Solr
+ - Front-end search powered by Apache/Solr.
+ - Rating of articles.
+ - Facebook Login.
+
+ Improvements
+ ------------
+ - New template engine list_users tag.
+ - New template engine list_user_topics tag.
+ - Renaming of inactive users as a method to free-up usernames.
+ - Enforcing error logging in server error log.
+
+ Security fixes
+ --------------
+ - Unnecessary error reporting exposed on front-end templates.
+
+ Bug fixes
+ ---------
+ - login_form in templates generates error when authenticating.
+ - Order of related articles not available in front-end templates.
+ - Featured Article Lists are not shown for articles.
+ - If server is behind proxy. Newscoop saves local IP address for comments.
+ - Broken image reference breaks the admin interface.
+ - Upgrade from 3.5 fails to populate webcodes.
+ - Featured Article List is not working in Article Editor.
+ - Multi-dates inconsistency between time in server vs time in desktop.
+ - Server error when trying to access an attached file.
+ - Map search does not work.
+ - user_identity table is missing in upgrades and demo installations.
+ - Replace obsolete get_template_vars() calls by smarty3 getTemplateVars().
+ - Not possible to add assets to articles for blogger users.
+ - MetaUser metaclass is missing image property.
+ - Deleting blog posts generates error.
+ - Registration error on username conflict.
+ - Attaching polls from second page of polls list is not possible.
 
 4.0.4 (January 08, 2013)
   Improvements
