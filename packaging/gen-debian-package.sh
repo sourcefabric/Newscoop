@@ -89,7 +89,9 @@ rm newscoop/vendor/doctrine/dbal/LICENSE
 rm newscoop/vendor/doctrine/orm/LICENSE
 rm newscoop/vendor/symfony/console/Symfony/Component/Console/LICENSE
 rm newscoop/vendor/symfony/yaml/Symfony/Component/Yaml/LICENSE
-rm newscoop/vendor/zendframework/zendframework1/LICENSE.txt
+rm newscoop/vendor/bombayworks/zendframework1/LICENSE.txt
+rm newscoop/vendor/guzzle/guzzle/LICENSE
+rm newscoop/vendor/symfony/event-dispatcher/Symfony/Component/EventDispatcher/LICENSE
 
 # remove documentation under Creative Commons licenses
 rm -r newscoop/library/fabpot-dependency-injection-07ff9ba/doc/
@@ -107,35 +109,49 @@ for file in ChangeLog CREDITS README UPGRADE; do
 done
 cp -vi newscoop/htaccess newscoop/.htaccess
 
-### fixes for 3.5.0-rc2 ###
-if test "${UPSTREAMVERSION}" == "3.5.0-rc2"; then
-  echo " +++ applying fixes for 3.5.0-rc2"
-  rm newscoop/admin-style/fg-menu/theme/.DS_Store
-  chmod +x newscoop/include/pear/DB/tests/driver/run.cvs
-  chmod +x newscoop/include/pear/DB/tests/run.cvs
-  chmod -x newscoop/admin-style/ColVis.css
-  chmod -x newscoop/include/pear/Event/Notification.php
-  chmod -x newscoop/javascript/syntaxhighlighter/styles/shThemeMDUltra.css
-  chmod -x newscoop/templates/system_templates/img/newscoop_logo_big.png
-  chmod -x newscoop/admin-style/images/newscoop_logo_big.png
-  chmod -x newscoop/include/pear/Event/Dispatcher.php
-  chmod -x newscoop/javascript/geocoding/openlayers/img/cloud-popup-relative.png
-  rm "newscoop/install/sample_templates/classic/templates/classic/tpl/banner/bannerleftcol.tpl .tpl"
-fi
+### fixes for 4.1.0 ###
+if test "${UPSTREAMVERSION}" == "4.1.0"; then
 
-### fixes for 3.5.1 ###
-if test "${UPSTREAMVERSION}" == "3.5.1"; then
-	chmod -x newscoop/install/sample_templates/the_journal/templates/system_templates/img/newscoop_logo_big.png
-	rm newscoop/javascript/editarea/edit_area/plugins/test/images/Thumbs.db
-	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
-fi
+chmod +x newscoop/vendor/bombayworks/zendframework1/bin/zf.sh
+chmod +x newscoop/vendor/doctrine/dbal/bin/doctrine-dbal
+chmod +x newscoop/vendor/doctrine/dbal/run-all.sh
+chmod +x newscoop/vendor/doctrine/orm/bin/doctrine
+chmod +x newscoop/vendor/doctrine/orm/run-all.sh
+chmod +x newscoop/vendor/doctrine/orm/tools/sandbox/doctrine
 
-### fixes for 4.0.4 ###
-if test "${UPSTREAMVERSION}" == "4.0.4"; then
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debateanswer_attachments.php
+chmod -x newscoop/plugins/soundcloud/smarty_camp_plugins/block.list_soundcloud_tracks.php
+chmod -x newscoop/install/sql/upgrade/4.0.x/2012-12-18/tables.sql
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/function.pollanswer_edit.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.debate_form.php
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_pollanswer_attachments.php
+chmod -x newscoop/template_engine/metaclasses/MetaDbObject.php
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.poll_form.php
+chmod -x newscoop/template_engine/metaclasses/MetaAttachment.php
+chmod -x newscoop/library/Newscoop/Services/ListUserService.php
+chmod -x newscoop/library/Newscoop/Entity/Repository/CommentRepository.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/function.debateanswer_edit.php
+chmod -x newscoop/template_engine/classes/UsersList.php
+chmod -x newscoop/plugins/debate/template_engine/classes/DebateIssue.php
+chmod -x newscoop/library/Newscoop/ListResult.php
+chmod -x newscoop/library/Newscoop/ValueObject.php
+chmod -x newscoop/library/Newscoop/User/UserCriteria.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/function.debatevotes.php
+chmod -x newscoop/template_engine/metaclasses/MetaUser.php
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_poll_answers.php
+chmod -x newscoop/admin-files/articles/comments/show_comments.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debate_days.php
+chmod -x newscoop/library/Newscoop/Entity/Comment.php
+chmod -x newscoop/application/modules/admin/controllers/CommentController.php
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.pollanswer_ajax.php
+chmod -x newscoop/plugins/poll/classes/PollIssue.php
+chmod -x newscoop/plugins/debate/classes/DebateAnswer.php
+chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_polls.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debate_votes.php
+chmod -x newscoop/plugins/soundcloud/smarty_camp_plugins/function.assign_soundcloud_tracks.php
+chmod -x newscoop/library/Newscoop/Entity/Repository/UserRepository.php
+chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debates.php
 
-	chmod -x newscoop/install/sql/upgrade/4.0.x/2012-12-18/tables.sql
-        chmod -x newscoop/application/modules/admin/controllers/CommentController.php
-        chmod -x newscoop/library/Newscoop/Entity/Repository/CommentRepository.php
 fi
 
 ############################
