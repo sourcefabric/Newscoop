@@ -16,7 +16,7 @@
         "doctrine/orm": "2.3.*",
         "doctrine/doctrine-bundle": "1.0.*",
         "bombayworks/zendframework1": "1.11.*",
-        "smarty/smarty": "3.*",
+        "smarty/smarty": "3.1.13",
         "friendsofsymfony/rest-bundle": "dev-master",
         "behat/behat": ">=2.4.0",
         "behat/common-contexts": "*",
@@ -38,7 +38,6 @@
             "newscoop/template_engine",
             "newscoop/plugins",
             "newscoop/include",
-            "vendor/smarty/smarty/distribution/libs",
             "plugins"
         ]
     },
