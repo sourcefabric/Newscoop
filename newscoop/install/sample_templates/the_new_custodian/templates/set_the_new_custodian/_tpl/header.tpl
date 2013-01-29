@@ -17,7 +17,12 @@
                 <div id="search-box">
                     {{ search_form template="search.tpl" submit_button="search" }} 
                     {{ camp_edit object="search" attribute="keywords" html_code="placeholder=\"keywords\"" }}
-                    {{ /search_form }}        
+                    {{ /search_form }}
+
+                    {{* form_search_solr id="search" class="hidden-phone" }}
+                        {{ form_text name="q" value=$smarty.get.q }}
+                        {{ form_submit name="" value=" " }}
+                    {{ /form_search_solr *}}
                 </div><!-- /#search-box -->            
             </div> 
         </div>   
