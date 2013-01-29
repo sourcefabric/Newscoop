@@ -1,1 +1,1 @@
-system php ./populate_webcodes.php
+system php ./migrate.php
