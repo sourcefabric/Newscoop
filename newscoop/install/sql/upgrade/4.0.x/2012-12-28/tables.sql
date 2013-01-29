@@ -1,1 +1,1 @@
-ALTER TABLE  `Articles` ADD  `indexed` TIMESTAMP NULL DEFAULT NULL;
+system php ./populate_webcodes.php
