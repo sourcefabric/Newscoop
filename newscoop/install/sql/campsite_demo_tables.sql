@@ -2530,11 +2530,18 @@ CREATE TABLE `user_topic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE IF NOT EXISTS `webcode` (
+--
+-- Table structure for table `webcode`
+--
+DROP TABLE IF EXISTS `webcode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,
   `language_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`webcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 -- Dump completed on 2012-03-15 11:02:44
