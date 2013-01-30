@@ -19,7 +19,7 @@ class ListUserService
     protected $em;
 
     /** @var array */
-    private $config = array();
+    private $config = array('role' => 0);
 
     /**
      * @param array $config
@@ -27,7 +27,7 @@ class ListUserService
      */
     public function __construct(array $config, EntityManager $em)
     {
-        $this->config = $config;
+        $this->config = array_merge($this->config, $config);
         $this->em = $em;
     }
 

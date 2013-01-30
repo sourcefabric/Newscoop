@@ -10,7 +10,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
-require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 
 /**
  * @package Campsite

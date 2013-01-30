@@ -27,7 +27,8 @@ parameters:
         cookie_path: "/"
     translation:
         path: "%application_path%/languages"
-    theme_path: "%application_path%/../themes"
+    rendition:
+        theme_path: "/../themes"
     doctrine:
         cache: "Doctrine\Common\Cache\ArrayCache"
         entity:

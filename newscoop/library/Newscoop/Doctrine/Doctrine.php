@@ -86,7 +86,7 @@ class Doctrine
         $config->setQueryCacheImpl($cache);
 
         $config_file = __DIR__ . '/../../../conf/database_conf.php';
-        if (empty($Campsite) && file_exists($config_file)) {
+        if (empty($Campsite) && is_readable($config_file)) {
             require_once $config_file;
         }
 

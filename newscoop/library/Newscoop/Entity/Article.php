@@ -58,21 +58,6 @@ class Article
     private $creator;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Author")
-     * @ORM\JoinTable(name="ArticleAuthors",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
-     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
-     *      }
-     *  )
-     * @var Newscoop\Entity\Authors
-     */
-    private $authors;
-
-    /**
      * @ORM\ManyToMany(targetEntity="AuthorType")
      * @ORM\JoinTable(name="ArticleAuthors",
      *      joinColumns={

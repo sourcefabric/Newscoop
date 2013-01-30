@@ -210,7 +210,7 @@ class ResourceRepository {
 		$propertiesFolder = substr($propertiesFolder, 0, -9);
 
 		$simpleClassName = $this->extractSimpleClassName($className);
-		return $propertiesFolder.DIR_SEP.'configs'.DIR_SEP.$simpleClassName.'.properties';
+		return $propertiesFolder . '/configs/' . $simpleClassName . '.properties';
 	}
 
 	/**

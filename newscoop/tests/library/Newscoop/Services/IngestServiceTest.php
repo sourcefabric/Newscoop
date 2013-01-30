@@ -7,9 +7,10 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Ingest\Feed,
-    Newscoop\Entity\Ingest\Feed\Entry,
-    Newscoop\Services\Ingest\PublisherService;
+use DateTime;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed\Entry;
+use Newscoop\Services\Ingest\PublisherService;
 
 class IngestServiceTest extends \RepositoryTestCase
 {
@@ -87,6 +88,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateSDA()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
         $this->assertEquals(0, count($feed->getEntries()));
 
@@ -105,6 +107,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateAllUnique()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
 
         $this->service->updateSDA();
@@ -116,6 +119,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateAllTimeout()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);

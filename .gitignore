@@ -1,6 +1,9 @@
-newscoop/cache/*
-vendor/*
 composer.phar
+newscoop/images/*
+newscoop/cache/*
+newscoop/files/*
+newscoop/vendor/*
+vendor/*
 newscoop/newscoop-indexer.lock
 newscoop/.htaccess
 newscoop/conf/configuration.php
@@ -10,4 +13,6 @@ newscoop/system_preferences.php
 newscoop/themes/publication_*
 newscoop/themes/unassigned/empty/
 newscoop/themes/unassigned/system_templates/
-
+newscoop/install/cron_jobs/all_at_once
+newscoop/.htaccess*
+.vagrant

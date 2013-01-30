@@ -10,12 +10,10 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once('smarty/libs/Smarty.class.php');
-
 /**
  * Class CampTemplate
  */
-final class CampTemplate extends Smarty
+final class CampTemplate extends SmartyBC
 {
     /**
      * Holds instance of the class.
@@ -24,30 +22,29 @@ final class CampTemplate extends Smarty
      */
 	private static $m_instance = null;
 
-    private function __construct()
+    public function __construct()
     {
-        parent::Smarty();
+        parent::__construct();
 
         $this->caching = false;
         $this->debugging = false;
         $this->force_compile = true;
         $this->compile_check = false;
         $this->use_sub_dirs = false;
+        $this->auto_literal = false;
 
         $this->left_delimiter = '{{';
         $this->right_delimiter = '}}';
 
-        $this->cache_dir = CS_PATH_SITE.DIR_SEP.'cache';
-        $this->config_dir = CS_PATH_SMARTY.DIR_SEP.'configs';
-        $this->plugins_dir = array_merge($this->plugins_dir, array(
-            CS_PATH_SMARTY.DIR_SEP.'campsite_plugins',
-        ));
-        $this->template_dir = array(
+        $this->addTemplateDir(array(
             CS_INSTALL_DIR . DIR_SEP . 'templates',
             CS_PATH_SITE . '/themes/',
             CS_PATH_SITE . '/themes/unassigned/system_templates/',
-        );
-        $this->compile_dir = dirname(__FILE__) . '/../../cache';
+        ));
+        $this->setCompileDir(__DIR__ . '/../../cache');
+        $this->addPluginsDir(CS_PATH_SMARTY.DIR_SEP.'campsite_plugins');
+        $this->setCacheDir(CS_PATH_SITE.DIR_SEP.'cache');
+        $this->setConfigDir(CS_PATH_SMARTY.DIR_SEP.'configs');
     }
 
     /**
@@ -65,14 +62,10 @@ final class CampTemplate extends Smarty
         return self::$m_instance;
     }
 
-    public function setTemplateDir($p_dir)
-    {
-        $this->template_dir = $p_dir;
-    }
-
     public function clearCache()
     {
-    	$this->clear_compiled_tpl();
+        $this->clearCompiledTemplate();
+        return $this;
     }
 
     /**
