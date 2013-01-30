@@ -14,8 +14,8 @@ parameters:
         database:
             driver: "pdo_sqlite"
             path: ":memory:"
-            functions:
-                rand: "Newscoop\Query\SqliteRandom"
+        functions:
+            rand: "Newscoop\Query\SqliteRandom"
     ingest:
         path: %application_path%/../tests/ingest
     ingest_publisher:

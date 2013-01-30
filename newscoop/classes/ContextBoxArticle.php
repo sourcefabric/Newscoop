@@ -84,6 +84,10 @@ class ContextBoxArticle extends DatabaseObject
             }
         }
 
+        if (empty($p_context_id)) {
+            return array();
+        }
+
         $returnArray = array();
         $sql = 'SELECT fk_article_no FROM context_articles
                 WHERE fk_context_id = ' . $p_context_id . '

@@ -5,9 +5,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Doctrine\ORM\Mapping\ClassMetadataFactory,
-    Doctrine\ORM\Tools\SchemaTool,
-    Doctrine\Common\Cache\ArrayCache as Cache;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\ORM\Tools\SchemaTool;
+use Doctrine\Common\Cache\ArrayCache;
 
 /**
  */
@@ -15,6 +16,11 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
     const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
+
+    /**
+     * @var Doctrine\ORM\Mapping\ClassMetadataFactory;
+     */
+    private $metadataFactory;
 
     /**
      * Set up document manager
@@ -67,10 +73,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
         $classes = func_get_args();
         if (!empty($classes)) {
-            $metadataFactory = new ClassMetadataFactory();
-            $metadataFactory->setEntityManager($orm);
-            $metadataFactory->setCacheDriver(new Cache());
-
+            $metadataFactory = $this->getMetadataFactory($orm);
             $metadata = array();
             foreach ((array) $classes as $class) {
                 $metadata[] = $metadataFactory->getMetadataFor($class);
@@ -80,6 +83,23 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         }
 
         return $orm;
+    }
+
+    /**
+     * Get metadata factory
+     *
+     * @param Doctrine\ORM\EntityManager $em
+     * @return Doctrine\ORM\Mapping\ClassMetadataFactory
+     */
+    private function getMetadataFactory(EntityManager $em)
+    {
+        if (!isset($this->metadataFactory)) {
+            $this->metadataFactory = new ClassMetadataFactory();
+            $this->metadataFactory->setEntityManager($em);
+            $this->metadataFactory->setCacheDriver(new ArrayCache());
+        }
+
+        return $this->metadataFactory;
     }
 
     /**

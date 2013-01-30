@@ -21,7 +21,7 @@ use Newscoop\Services\Ingest\PublisherService;
  */
 class IngestService
 {
-    const IMPORT_DELAY = 180;
+    const IMPORT_DELAY = 60;
     const MODE_SETTING = 'IngestAutoMode';
 
     /** @var array */
