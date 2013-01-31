@@ -61,7 +61,17 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->criteria = (object) array_filter($criteria, function ($value) { return $value !== null; });
         $this->view->users = array();
         foreach ($users as $user) {
-            $this->view->users[] = $user->getEditView($this->view);
+            $userView = $user->getEditView($this->view);
+            $userView->links[] = array(
+                'rel' => 'rename',
+                'href' => $this->view->url(array(
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'rename',
+                    'user' => $userView->id,
+                ), 'default', true),
+            );
+            $this->view->users[] = $userView;
         }
 
         if ($this->_helper->contextSwitch->getCurrentContext() === 'json') {
