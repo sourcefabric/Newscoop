@@ -5,6 +5,7 @@ parameters:
                 cache: "Doctrine\Common\Cache\ArrayCache"
     doctrine:
         proxy:
+            dir: "%application_path%/../library/Proxy"
             autogenerate: "1"
         cache: "Doctrine\Common\Cache\ArrayCache"
     phpSettings:

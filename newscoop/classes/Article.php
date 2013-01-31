@@ -75,7 +75,8 @@ class Article extends DatabaseObject {
         'comments_enabled',
         'comments_locked',
         'time_updated',
-        'object_id');
+        'object_id',
+        'rating_enabled');
 
     var $m_languageName = null;
 
@@ -581,6 +582,21 @@ class Article extends DatabaseObject {
         return $newName;
     } // fn getUniqueName
 
+    /**
+     * Return the avg article rating
+     * @return float
+     */
+    public function getRating()
+    {
+        global $g_ado_db;
+        $rating = $g_ado_db->GetOne('SELECT AVG(rating_score) FROM rating WHERE article_number = ' . $this->m_data['Number']);
+
+        if ($rating > 0) {
+            return number_format($rating, 1);
+        } else {
+            return 0;
+        }
+    }
 
     /**
      * Create a copy of the article, but make it a translation
@@ -610,6 +626,7 @@ class Article extends DatabaseObject {
         $values['ArticleOrder'] = $this->m_data['ArticleOrder'];
         $values['comments_enabled'] = $this->m_data['comments_enabled'];
         $values['comments_locked'] = $this->m_data['comments_locked'];
+        $values['rating_enabled'] = $this->m_data['rating_enabled'];
         // Change some attributes
         $values['Name'] = $p_name;
         $values['Published'] = 'N';
@@ -1730,7 +1747,6 @@ class Article extends DatabaseObject {
         return $this->m_data['comments_enabled'];
     } // fn commentsEnabled
 
-
     /**
      * Set whether comments are enabled for this article.
      *
@@ -1743,6 +1759,27 @@ class Article extends DatabaseObject {
         return $this->setProperty('comments_enabled', $p_value);
     } // fn setCommentsEnabled
 
+    /**
+     * Return TRUE if rating has been activated.
+     *
+     * @return boolean
+     */
+    public function ratingEnabled()
+    {
+        return $this->m_data['rating_enabled'];
+    } // fn ratingEnabled
+
+    /**
+     * Set whether rating is enabled for this article.
+     *
+     * @param boolean $p_value
+     * @return boolean
+     */
+    public function setRatingEnabled($p_value)
+    {
+        $p_value = $p_value ? '1' : '0';
+        return $this->setProperty('rating_enabled', $p_value);
+    } // fn setRatingEnabled
 
     /**
      * Return TRUE if comments are locked for this article.

@@ -19,7 +19,7 @@ use Newscoop\Utils\Validation;
 class ArticleAuthor
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Article")
+     * @ORM\ManyToOne(targetEntity="Article", inversedBy="articleAuthorTypes")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),
      *      @ORM\JoinColumn(name="language_id", referencedColumnName="IdLanguage")

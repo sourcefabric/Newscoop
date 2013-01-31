@@ -1,3 +1,90 @@
+4.1.0 (January 29, 2013)
+ New Features
+ ------------
+ - Front-end search powered by Apache/Solr.
+ - Rating of articles.
+ - Facebook Login.
+
+ Improvements
+ ------------
+ - New template engine list_users tag.
+ - New template engine list_user_topics tag.
+ - Renaming of inactive users as a method to free-up usernames.
+ - Enforcing error logging in server error log.
+
+ Security fixes
+ --------------
+ - Unnecessary error reporting exposed on front-end templates.
+
+ Bug fixes
+ ---------
+ - login_form in templates generates error when authenticating.
+ - Order of related articles not available in front-end templates.
+ - Featured Article Lists are not shown for articles.
+ - If server is behind proxy. Newscoop saves local IP address for comments.
+ - Broken image reference breaks the admin interface.
+ - Upgrade from 3.5 fails to populate webcodes.
+ - Featured Article List is not working in Article Editor.
+ - Multi-dates inconsistency between time in server vs time in desktop.
+ - Server error when trying to access an attached file.
+ - Map search does not work.
+ - user_identity table is missing in upgrades and demo installations.
+ - Replace obsolete get_template_vars() calls by smarty3 getTemplateVars().
+ - Not possible to add assets to articles for blogger users.
+ - MetaUser metaclass is missing image property.
+ - Deleting blog posts generates error.
+ - Registration error on username conflict.
+ - Attaching polls from second page of polls list is not possible.
+
+4.0.4 (January 08, 2013)
+  Improvements
+  ------------
+  New "Show more" comments button to article edit screen
+
+  Bug fixes
+  ---------
+  Fixes conflicts with library/Zend by removing it in favour of vendor
+  Removes handling of include_path from application.php
+  Removes unnecessary use of spl autoloading from create_themes.php upgrade script
+
+  Tasks
+  -----
+  Missing strings in user management added to localizer
+  Database upgrade process should update latest db/roll version on each successfully applied roll
+
+4.0.3 (December 12, 2012)
+  Security fixes
+  --------------
+  CS-4524: Vulnerability report on password recovery
+
+  Improvements
+  ------------
+  CS-4419: New storage schema for Images
+  CS-4460: Add Remind me Never button to Newscoop nag screen
+  CS-4484: List of related articles in opposite direction (with role="child")
+
+  Bug fixes
+  ---------
+  CS-4426: Hardcoded file size limit of 2mb in plupload configuration
+  CS-4487: Can not create section when translating article
+  CS-4517: Article type field is not considered empty due to 'is content' stats
+  CS-4442: get_img returns wrong headers for expiration affecting caching
+  CS-4525: Plugin classes must register to auto-loading classes map
+  CS-4466: Some jquery resources do not load on https setups
+  CS-4485: length argument is ignored in list_related_articles
+  CS-4482: Strict error reporting in MAMP
+  CS-4516: Plupload examples allows to upload files w/o any authentication
+  CS-4498: liveuser table UName can't be null after upgrade from 3.5 which makes it impossible to register
+  CS-4420: Empty topic created on adding a new topic with a used name
+  CS-4421: Wrong link after renaming a topic to a used name
+  CS-4447: User schema contains not null columns after upgrade from 3.5
+
+  Tasks
+  -----
+  CS-4504: Proxy generation does not work for entities out of library/Newscoop/Entity
+  Use of composer to handle dependencies.
+  Remove Doctrine from library directory as it is now handled via composer.
+
 4.0.2 (July 12, 2012)
   Improvements
   ------------

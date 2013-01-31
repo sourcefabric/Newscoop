@@ -8,7 +8,7 @@
 
 function smarty_function_assign_soundcloud_tracks($p_params, &$p_smarty)
 {
-    $gimme = $p_smarty->get_template_vars('gimme');
+    $gimme = $p_smarty->getTemplateVars('gimme');
     $article = empty($p_params['article']) ? $gimme->article->number : $p_params['article'];
     $length = empty($p_params['length']) ? 0 : (int) $p_params['length'];
     $order = empty($p_params['order']) ? 'asc' : $p_params['order'];

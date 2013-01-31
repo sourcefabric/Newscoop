@@ -1,0 +1,19 @@
+<phpunit bootstrap="newscoop/tests/application/bootstrap.php" colors="true" backupGlobals="false">
+    <testsuites>
+        <testsuite name="Newscoop">
+            <directory>newscoop/tests/library</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">newscoop/library/Newscoop</directory>
+            <directory suffix=".php">newscoop/classes</directory>
+            <directory suffix=".php">newscoop/template_engine</directory>
+            <exclude>
+                <directory suffix=".php">newscoop/library/Newscoop/Controller</directory>
+                <directory suffix=".php">newscoop/library/Newscoop/Entity/Proxy</directory>
+                <directory suffix=".php">newscoop/library/Newscoop/Entity/Output</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

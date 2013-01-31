@@ -13,6 +13,7 @@ use Newscoop\Entity\Ingest\Feed\Entry;
 use Newscoop\Ingest\Parser;
 use Newscoop\Ingest\Parser\NewsMlParser;
 use Newscoop\Ingest\Parser\SwissinfoParser;
+use Newscoop\Ingest\Parser\SwisstxtParser;
 use Newscoop\Ingest\Publisher;
 use Newscoop\Services\Ingest\PublisherService;
 
@@ -72,24 +73,35 @@ class IngestService
     public function updateSDA()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-            ->findBy(array(
-                'title' => 'SDA',
-            ));
+            ->findOneBy(array('title' => 'SDA'));
 
-        if (count($feed) > 0) {
-            $this->updateSDAFeed($feed[0]);
+        if ($feed) {
+            $this->updateSDAFeed($feed);
         }
     }
 
     public function updateSwissinfo()
     {
         $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-            ->findOneBy(array(
-                'title' => 'swissinfo',
-            ));
+            ->findOneBy(array('title' => 'swissinfo'));
 
         if ($feed) {
-            $this->updateSwissinfoFeed($feed[0]);
+            $this->updateSwissinfoFeed($feed);
+        }
+    }
+
+    /**
+     * Update swisstxt
+     *
+     * @return void
+     */
+    public function updateSTX()
+    {
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+            ->findOneBy(array('title' => 'STX'));
+
+        if ($feed) {
+            $this->updateSTXFeed($feed);
         }
     }
 
@@ -101,16 +113,13 @@ class IngestService
             if ($response->isSuccessful()) {
                 $available_sections = $response->getBody();
                 $available_sections = json_decode($available_sections, true);
-            }
-            else {
+            } else {
                 return;
             }
-        }
-        catch (\Zend_Http_Client_Exception $e) {
+        } catch (\Zend_Http_Client_Exception $e) {
+            throw new \Exception("Swiss info http error {$e->getMessage()}");
             return;
-            //throw new \Exception("Swiss info http error {$e->getMessage()}");
-        }
-        catch(\Exception $e) {
+        } catch(\Exception $e) {
             return;
         }
 
@@ -118,7 +127,6 @@ class IngestService
         $url = $this->config['swissinfo_latest'];
 
         foreach ($available_sections as $section) {
-
             try {
                 $request_url = str_replace('{{section_id}}', $section['id'], $url);
 
@@ -127,7 +135,7 @@ class IngestService
                 if ($response->isSuccessful()) {
 
                     $section_xml = $response->getBody();
-                    $stories = Parser\SwissinfoParser::getStories($section_xml);
+                    $stories = SwissinfoParser::getStories($section_xml);
 
                     foreach ($stories as $story) {
 
@@ -139,15 +147,13 @@ class IngestService
                         }
                     }
                 }
-            }
-            catch (\Exception $e) {
-                //throw new \Exception("Swiss info feed error {$e->getMessage()}");
+            } catch (\Exception $e) {
                 return;
             }
         }
 
         $feed->setUpdated(new \DateTime());
-        $this->em->persist($feed);
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
@@ -164,7 +170,7 @@ class IngestService
                 continue;
             }
 
-            if (time() < filectime($file) + self::IMPORT_DELAY) {
+            if ($feed->getUpdated() && time() < filectime($file) + self::IMPORT_DELAY) {
                 continue;
             }
 
@@ -173,6 +179,7 @@ class IngestService
                 $parser = new NewsMlParser($file);
                 if (!$parser->isImage()) {
                     $entry = $this->getPrevious($parser, $feed);
+
                     switch ($parser->getInstruction()) {
                         case 'Rectify':
                         case 'Update':
@@ -184,12 +191,10 @@ class IngestService
                             } else if ($feed->isAutoMode()) {
                                 $this->publish($entry);
                             }
-                            $this->em->persist($entry);
                             break;
 
                         case 'Delete':
                             $this->deletePublished($entry);
-                            $feed->removeEntry($entry);
                             $this->em->remove($entry);
                             break;
 
@@ -201,6 +206,62 @@ class IngestService
 
                 flock($handle, LOCK_UN);
                 fclose($handle);
+            } else {
+                continue;
+            }
+        }
+
+        $feed->setUpdated(new \DateTime());
+        $this->getEntryRepository()->liftEmbargo();
+        $this->em->flush();
+    }
+
+     /**
+     * Update feed
+     *
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return void
+     */
+    private function updateSTXFeed(Feed $feed)
+    {
+        foreach (glob($this->config['path'] . '/*.xml') as $file) {
+
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            if (time() < filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            $handle = fopen($file, 'r');
+            if (flock($handle, LOCK_EX | LOCK_NB)) {
+                $parser = new SwisstxtParser($file);
+                $entry = $this->getPrevious($parser, $feed);
+
+                switch ($parser->getStatus()) {
+                    case 'updated':
+                        $entry->update($parser);
+
+                    case 'created':
+                        if ($entry->isPublished()) {
+                            $this->updatePublished($entry);
+                        } else if ($feed->isAutoMode()) {
+                            $this->publish($entry);
+                        }
+
+                        $this->em->persist($entry);
+                        break;
+
+                    case 'deleted':
+                        $this->deletePublished($entry);
+                        $feed->removeEntry($entry);
+                        $this->em->remove($entry);
+                        break;
+                }
+
+                flock($handle, LOCK_UN);
+                fclose($handle);
                 $this->em->flush();
             } else {
                 continue;
@@ -208,7 +269,6 @@ class IngestService
         }
 
         $feed->setUpdated(new \DateTime());
-        $this->em->persist($feed);
 
         $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
         $this->em->flush();
@@ -223,14 +283,16 @@ class IngestService
      */
     public function getPrevious(Parser $parser, Feed $feed)
     {
-        $previous = array_shift($this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->findBy(array(
+        $previous = $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->findOneBy(array(
             'date_id' => $parser->getDateId(),
             'news_item_id' => $parser->getNewsItemId(),
-        )));
+        ));
 
         if (empty($previous)) {
             $previous = Entry::create($parser);
-            $feed->addEntry($previous);
+            $previous->setFeed($feed);
+            $this->em->persist($previous);
+            $this->em->flush();
         }
 
         return $previous;
@@ -338,5 +400,15 @@ class IngestService
         if ($entry->isPublished()) {
             $this->publisher->delete($entry);
         }
+    }
+
+    /**
+     * Get entry repository
+     *
+     * @return Newscoop\Entity\Repository\Ingest\Feed\EntryRepository
+     */
+    private function getEntryRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry');
     }
 }

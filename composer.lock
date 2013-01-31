@@ -1,5 +1,5 @@
 {
-    "hash": "20bb940fe7cb486ab35ef44f15d10860",
+    "hash": "6086542eae572d301ab90a9c29d49c05",
     "packages": [
         {
             "name": "behat/behat",
@@ -631,6 +631,153 @@
             ]
         },
         {
+            "name": "guzzle/guzzle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle",
+                "reference": "a0578a270aef80ef4386d1f5c8783372fc877d5e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a0578a270aef80ef4386d1f5c8783372fc877d5e",
+                "reference": "a0578a270aef80ef4386d1f5c8783372fc877d5e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "ext-curl": "*",
+                "symfony/event-dispatcher": ">=2.1"
+            },
+            "replace": {
+                "guzzle/common": "self.version",
+                "guzzle/http": "self.version",
+                "guzzle/parser": "self.version",
+                "guzzle/batch": "self.version",
+                "guzzle/cache": "self.version",
+                "guzzle/inflection": "self.version",
+                "guzzle/iterator": "self.version",
+                "guzzle/log": "self.version",
+                "guzzle/plugin": "self.version",
+                "guzzle/plugin-async": "self.version",
+                "guzzle/plugin-backoff": "self.version",
+                "guzzle/plugin-cache": "self.version",
+                "guzzle/plugin-cookie": "self.version",
+                "guzzle/plugin-curlauth": "self.version",
+                "guzzle/plugin-history": "self.version",
+                "guzzle/plugin-log": "self.version",
+                "guzzle/plugin-mock": "self.version",
+                "guzzle/plugin-oauth": "self.version",
+                "guzzle/service": "self.version",
+                "guzzle/stream": "self.version",
+                "guzzle/plugin-md5": "self.version"
+            },
+            "require-dev": {
+                "doctrine/common": "*",
+                "symfony/class-loader": "*",
+                "monolog/monolog": "1.*",
+                "zend/zend-log1": "1.12",
+                "zend/zend-cache1": "1.12",
+                "zendframework/zend-cache": "2.0.*",
+                "zendframework/zend-log": "2.0.*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "symfony/class-loader": "*",
+                "monolog/monolog": "*",
+                "zend/zend-cache": "2.0.0beta3",
+                "zend/zend-log": "2.0.0beta3"
+            },
+            "time": "2013-01-30 04:52:26",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Guzzle\\Tests": "tests/",
+                    "Guzzle": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                },
+                {
+                    "name": "Guzzle Community",
+                    "homepage": "https://github.com/guzzle/guzzle/contributors"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "framework",
+                "curl",
+                "http",
+                "rest",
+                "http client",
+                "client",
+                "web service"
+            ]
+        },
+        {
+            "name": "hybridauth/hybridauth",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hybridauth/hybridauth",
+                "reference": "a2696a5e0ba37015e23d971e8413b00e28fe1be6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/a2696a5e0ba37015e23d971e8413b00e28fe1be6",
+                "reference": "a2696a5e0ba37015e23d971e8413b00e28fe1be6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0",
+                "ext-curl": "*"
+            },
+            "time": "2013-01-24 16:13:24",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Hybrid": "hybridauth/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(MIT or GPL-3.0+)"
+            ],
+            "authors": [
+                {
+                    "name": "Miled",
+                    "email": "hybridauth@gmail.com"
+                }
+            ],
+            "description": "Open source social sign on PHP library.",
+            "homepage": "http://hybridauth.sourceforge.net",
+            "keywords": [
+                "OpenId",
+                "oauth",
+                "twitter",
+                "login",
+                "google",
+                "facebook",
+                "social",
+                "hybridauth",
+                "yahoo"
+            ]
+        },
+        {
             "name": "jms/metadata",
             "version": "1.2.0-RC",
             "source": {
@@ -957,24 +1104,67 @@
             ]
         },
         {
+            "name": "rezzza/mailchimp",
+            "version": "dev-master",
+            "target-dir": "Rezzza/MailChimp",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rezzza/mailchimp.git",
+                "reference": "1.3.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rezzza/mailchimp/zipball/1.3.1",
+                "reference": "1.3.1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "time": "2012-12-03 18:00:04",
+            "type": "mailchimp-api",
+            "autoload": {
+                "psr-0": {
+                    "Rezzza\\MailChimp\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sébastien HOUZÉ",
+                    "email": "s@verylastroom.com"
+                }
+            ],
+            "description": "MailChimp PHP API Wrapper 1.3.*",
+            "homepage": "http://apidocs.mailchimp.com/api/downloads/#php",
+            "keywords": [
+                "mailchimp",
+                "api",
+                "newsletter"
+            ]
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioDistributionBundle",
-                "reference": "v2.1.7"
+                "reference": "66545ed7d60342dd1ffdcebd72fe43b11941fef9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioDistributionBundle/archive/v2.1.7.zip",
-                "reference": "v2.1.7",
+                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/66545ed7d60342dd1ffdcebd72fe43b11941fef9",
+                "reference": "66545ed7d60342dd1ffdcebd72fe43b11941fef9",
                 "shasum": ""
             },
             "require": {
                 "symfony/framework-bundle": "2.1.*"
             },
-            "time": "2013-01-04 17:11:22",
+            "time": "2013-01-31 08:08:03",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1205,12 +1395,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "6f7194802359559a6b37e1d2fe940ac902cf26cf"
+                "reference": "8c804c79aaaeaba4f0570ee56608a2577c08656c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/6f7194802359559a6b37e1d2fe940ac902cf26cf.zip",
-                "reference": "6f7194802359559a6b37e1d2fe940ac902cf26cf",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/8c804c79aaaeaba4f0570ee56608a2577c08656c",
+                "reference": "8c804c79aaaeaba4f0570ee56608a2577c08656c",
                 "shasum": ""
             },
             "require": {
@@ -1259,7 +1449,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": ">=1.0,<1.3-dev"
             },
-            "time": "2013-01-27 16:12:43",
+            "time": "2013-01-31 07:57:23",
             "type": "library",
             "autoload": {
                 "psr-0": {
@@ -1293,18 +1483,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "eaadcca54b888db779a355e449a16dd8c7760e11"
+                "reference": "f2c95b34dae7c70a20281fbb823ad39f07fefe6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/eaadcca54b888db779a355e449a16dd8c7760e11.zip",
-                "reference": "eaadcca54b888db779a355e449a16dd8c7760e11",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/f2c95b34dae7c70a20281fbb823ad39f07fefe6e",
+                "reference": "f2c95b34dae7c70a20281fbb823ad39f07fefe6e",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2013-01-27 16:32:04",
+            "time": "2013-01-31 08:44:01",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1343,6 +1533,8 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "knplabs/knp-paginator-bundle": 20
+        "knplabs/knp-paginator-bundle": 20,
+        "rezzza/mailchimp": 20,
+        "hybridauth/hybridauth": 20
     }
 }

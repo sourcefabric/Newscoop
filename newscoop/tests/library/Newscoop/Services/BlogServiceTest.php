@@ -84,6 +84,7 @@ class BlogServiceTest extends \TestCase
 
     public function testGetSection()
     {
+        $this->markTestSkipped('Requires adodb mock.');
         $user = new User('uname');
         $this->assertNull($this->service->getSection($user));
     }

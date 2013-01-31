@@ -10,6 +10,7 @@ parameters:
     doctrine:
         cache: "Doctrine\Common\Cache\ArrayCache"
         proxy:
+            dir: /tmp/
             autogenerate: true
         database:
             driver: "pdo_sqlite"

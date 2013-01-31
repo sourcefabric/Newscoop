@@ -23,14 +23,16 @@
         "kriswallsmith/buzz": ">=0.7",
         "knplabs/knp-paginator-bundle": "dev-master",
         "friendsofsymfony/rest-bundle": "0.9.0",
-        "jms/serializer-bundle": "0.9.0"
+        "jms/serializer-bundle": "0.9.0",
+        "guzzle/guzzle": "*",
+        "rezzza/mailchimp": "dev-master",
+        "hybridauth/hybridauth": "dev-master"
     },
     "autoload": {
         "psr-0": {
             "Newscoop": ["gimme/src", "newscoop/library"],
             "Resource": "newscoop/library",
             "Nette": "newscoop/library",
-            "Zend": "newscoop/library",
             "Proxy": "newscoop/library"
         },
         "classmap": [
@@ -42,7 +44,6 @@
         ]
     },
     "include-path": [
-        "newscoop/library",
         "newscoop/include",
         "dependencies/include"
     ],
