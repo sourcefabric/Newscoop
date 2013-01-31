@@ -281,7 +281,7 @@ class Admin_UserController extends Zend_Controller_Action
      */
     protected function getUser()
     {
-        $id = $this->_getParam('user', false);
+        $id = (int) $this->_getParam('user', false);
         if (!$id) {
             $this->_helper->flashMessenger(array('error', getGS('User id not specified')));
             $this->_helper->redirector('index');

@@ -120,11 +120,16 @@ class Admin_LanguagesController extends Zend_Controller_Action
      */
     private function getLanguage()
     {
-        $id = $this->getRequest()->getParam('language');
-        $language = $this->repository->find($id);
+        $id = (int) $this->getRequest()->getParam('language');
+        if (!$id) {
+            $this->_helper->flashMessenger(array('error', getGS('Language id not specified')));
+            $this->_helper->redirector('index');
+        }
+
+        $language = $this->repository->findOneBy(array('id' => $id));
         if (empty($language)) {
             $this->_helper->flashMessenger->addMessage(getGS('Language not found.'));
-            $this->_forward('index');
+            $this->_helper->redirector('index');
         }
 
         return $language;
