@@ -97,7 +97,13 @@ class Doctrine
                 'dbname' => $Campsite['DATABASE_NAME'],
                 'user' => $Campsite['DATABASE_USER'],
                 'password' => $Campsite['DATABASE_PASSWORD'],
-                'charset' => 'UTF8',
+                'charset' => 'utf8',
+            );
+        } else {
+            // defaults
+            $database = array(
+                'driver' => 'pdo_mysql',
+                'charset' => 'utf8',
             );
         }
 

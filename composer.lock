@@ -1,5 +1,5 @@
 {
-    "hash": "6086542eae572d301ab90a9c29d49c05",
+    "hash": "43a0245219ba8a01e92f31cc995ae782",
     "packages": [
         {
             "name": "behat/behat",
@@ -1483,18 +1483,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "f2c95b34dae7c70a20281fbb823ad39f07fefe6e"
+                "reference": "81af6a1fd175f99a229de902380e506d9ac9968d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/f2c95b34dae7c70a20281fbb823ad39f07fefe6e",
-                "reference": "f2c95b34dae7c70a20281fbb823ad39f07fefe6e",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/81af6a1fd175f99a229de902380e506d9ac9968d",
+                "reference": "81af6a1fd175f99a229de902380e506d9ac9968d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2013-01-31 08:44:01",
+            "time": "2013-01-31 10:19:12",
             "type": "library",
             "extra": {
                 "branch-alias": {

@@ -36,7 +36,7 @@ parameters:
         proxy:
             dir: "%application_path%/../library/Proxy"
             namespace: "Proxy"
-            autogenerate: "0"
+            autogenerate: false
         functions:
             rand: "Newscoop\Query\MysqlRandom"
             dayofweek: "Newscoop\Query\MysqlDayOfWeek"

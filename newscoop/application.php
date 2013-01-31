@@ -12,10 +12,12 @@ require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // goes to install process if configuration files does not exist yet
-if (!defined('IN_PHPUNIT') && !defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
-    || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))) {
+if (php_sapi_name() !== 'cli'
+    && !defined('INSTALL')
+    && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
+        || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))
+) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
-    
     if (strpos($subdir, 'install') === false) {
         header("Location: $subdir/install/");
         exit;
