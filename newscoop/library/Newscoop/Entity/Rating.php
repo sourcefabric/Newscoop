@@ -7,50 +7,51 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Article;
 
 /**
  * Rating entity
- * @Entity(repositoryClass="Newscoop\Entity\Repository\RatingRepository")
- * @Table(name="rating")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\RatingRepository")
+ * @ORM\Table(name="rating")
  */
-class Rating extends Entity
+class Rating extends AbstractEntity
 {
     /**
-     * @Id
-     * @GeneratedValue
-     * @Column(type="integer", name="id")
-     * @Var int
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="id")
+     * @var int
      */
     protected $id;
 
     /**
-     * @Column(type="integer", name="article_number")
-     * @Var int
+     * @ORM\Column(type="integer", name="article_number")
+     * @var int
      */
     private $articleId;
 
     /**
-     * @Column(type="integer", name="user_id")
-     * @Var int
+     * @ORM\Column(type="integer", name="user_id")
+     * @var int
      */
     private $userId;
 
     /**
-     * @Column(type="integer", name="rating_score")
-     * @Var int
+     * @ORM\Column(type="integer", name="rating_score")
+     * @var int
      */
     private $ratingScore;
 
     /**
-     * @Column(type="datetime", name="time_created")
-     * @Var DateTime
+     * @ORM\Column(type="datetime", name="time_created")
+     * @var DateTime
      */
     private $timeCreated;
 
     /**
-     * @Column(type="datetime", name="time_updated")
-     * @Var DateTime
+     * @ORM\Column(type="datetime", name="time_updated")
+     * @var DateTime
      */
     private $timeUpdated;
 

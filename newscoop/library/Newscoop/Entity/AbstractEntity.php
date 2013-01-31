@@ -1,12 +1,13 @@
 <?php
-
 /**
  * @package Newscoop
+ * @copyright 2013 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\Validation;
 
 /**
@@ -14,7 +15,7 @@ use Newscoop\Utils\Validation;
  *
  * @ORM\MappedSuperclass
  */
-class Entity {
+abstract class AbstractEntity {
 
 	/**
 	 * @ORM\Id @ORM\GeneratedValue
@@ -50,6 +51,4 @@ class Entity {
 		$this->id = $id;
 		return $this;
 	}
-
-	/* --------------------------------------------------------------- */
 }
