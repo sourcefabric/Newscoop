@@ -1,4 +1,4 @@
-<phpunit bootstrap="newscoop/tests/application/bootstrap.php" colors="true" backupGlobals="false">
+<phpunit bootstrap="newscoop/tests/bootstrap.php" colors="true" backupGlobals="false">
     <testsuites>
         <testsuite name="Newscoop">
             <directory>newscoop/tests/library</directory>
