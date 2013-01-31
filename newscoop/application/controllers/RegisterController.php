@@ -12,15 +12,6 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
  */
 class RegisterController extends Zend_Controller_Action
 {
-    /** @var Newscoop\Services\UserService */
-    private $service;
-
-    /** @var Zend_Session_Namespace */
-    private $session;
-
-    /** @var Newscoop\Services\UserTokenService */
-    private $tokenService;
-
     public function init()
     {
         $this->_helper->contextSwitch
@@ -30,6 +21,8 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('pending', 'json')
             ->addActionContext('create-user', 'json')
             ->initContext();
+
+        $this->auth = Zend_Auth::getInstance();
     }
 
     public function indexAction()
@@ -87,67 +80,36 @@ class RegisterController extends Zend_Controller_Action
 
     public function confirmAction()
     {
-        $user = $this->_helper->service('user')->find($this->_getParam('user'));
-        if (empty($user)) {
-            $this->_helper->flashMessenger(array('error', "User not found"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
+        $user = $this->getAuthUser();
 
-        if (!$user->isPending()) {
-            $this->_helper->flashMessenger(array('error', "User has been activated"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        $token = $this->_getParam('token', false);
-        if (!$token) {
-            $this->_helper->flashMessenger(array('error', "No token provided"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
-            $this->_helper->flashMessenger(array('error', "Invalid token"));
-            $this->_helper->redirector('index', 'index', 'default');
-        }
-
-        $form = new Application_Form_Confirm();
+        $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
-        
-        $values = array();
-        if ($user->getFirstName()) {
-            $values['first_name'] = $user->getFirstName();
-        }
-        if ($user->getLastName()) {
-            $values['last_name'] = $user->getLastName();
-        }
-        $form->populate($values);
-        
-        $this->view->terms = false;
-        if ($user->getFirstName() || $user->getLastName()) {
-            $form->addElement('checkbox', 'terms_of_use', array(
-                'label' => 'Accepting terms of use',
-                'required' => true,
-                'validators' => array(
-                    array('greaterThan', true, array('min' => 0)),
-                ),
-                 'errorMessages' => array("Sie können sich nur registrieren, wenn Sie unseren Nutzungsbedingungen zustimmen. Dies geschieht zu Ihrer und unserer Sicherheit. Bitten setzen Sie im entsprechenden Feld ein Häkchen."),
-            ));
-            
-            $this->view->terms = true;
+        $form->setDefaults(array(
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
+            'username' => $this->_helper->service('user')
+                ->generateUsername($user->getFirstName(), $user->getLastName()),
+        ));
+
+        if ($this->auth->hasIdentity()) {
+            $form->removeElement('password');
+            $form->removeElement('password_confirm');
         }
 
-        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+        $listView = $this->_helper->service('mailchimp.list')->getListView();
+        $this->_helper->newsletter->initForm($form, $listView);
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
             try {
-                $values = $form->getValues();
                 $this->_helper->service('user')->savePending($values, $user);
+                $this->notifyDispatcher($user);
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
-
-                $this->_helper->service('dispatcher')
-                    ->notify('user.register', new GenericEvent($this, array(
-                        'user' => $user,
-                    )));
+                $this->_helper->service('mailchimp.list')->subscribe($user->getEmail(), $values['newsletter']);
 
                 $auth = \Zend_Auth::getInstance();
-                if ($auth->hasIdentity()) { // show index
+                if ($auth->hasIdentity()) {
                     $this->_helper->flashMessenger('User registered successfully.');
                     $this->_helper->redirector('index', 'index', 'default');
                 } else {
@@ -156,20 +118,13 @@ class RegisterController extends Zend_Controller_Action
                     $result = $auth->authenticate($adapter);
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
-            } catch (\Exception $e) {
-                switch ($e->getMessage()) {
-                    case 'username_conflict':
-                        $form->username->addError('Username is used. Please use another one.');
-                        break;
-
-                    default:
-                        var_dump($e);
-                        exit;
-                }
+            } catch (InvalidArgumentException $e) {
+                $form->username->addError('Username is used. Please use another one.');
             }
         }
 
         $this->view->form = $form;
+        $this->view->newsletter = $listView;
     }
 
     public function generateUsernameAction()
@@ -207,45 +162,6 @@ class RegisterController extends Zend_Controller_Action
         $this->view->status = true;
     }
 
-    public function socialAction()
-    {
-        $form = new Application_Form_Social();
-        $form->setMethod('POST');
-
-        $userData = $this->_getParam('userData');
-        $form->setDefaults(array(
-            'first_name' => $userData->profile->firstName,
-            'last_name' => $userData->profile->lastName,
-            'email' => $userData->profile->email,
-        ));
-
-        if (!empty($userData->profile->email)) { // try to find user by email
-            $user = $this->_helper->service('user')->findBy(array('email' => $userData->profile->email));
-            if (!empty($user)) { // we have user for given email, add him login
-                $user = array_pop($user);
-                $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-                $adapter = $this->_helper->service('auth.adapter.social');
-                $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-                Zend_Auth::getInstance()->authenticate($adapter);
-                $this->_helper->redirector('index', 'dashboard');
-            }
-        }
-
-        $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
-            $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
-            $this->_helper->service('user')->setActive($user);
-            $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-            $adapter = $this->_helper->service('auth.adapter.social');
-            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-            Zend_Auth::getInstance()->authenticate($adapter);
-            $this->_helper->redirector('index', 'dashboard');
-        }
-
-        $this->view->name = $userData->profile->displayName;
-        $this->view->form = $form;
-    }
-    
     public function pendingAction()
     {
         if ($this->_getParam('email')) {
@@ -260,6 +176,62 @@ class RegisterController extends Zend_Controller_Action
                 $this->view->result = '1';
             }
         }
+
         $this->view->result = '0';
+    }
+
+    /**
+     * Notify event dispatcher about new user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    private function notifyDispatcher(User $user)
+    {
+        $this->_helper->service('dispatcher')
+            ->notify(new sfEvent($this, 'user.register', array(
+            'user' => $user,
+        )));
+    }
+
+    /**
+     * Get user by token or auth
+     *
+     * @return Newscoop\Entity\User
+     */
+    private function getAuthUser()
+    {
+        if ($this->auth->hasIdentity()) {
+            $user = $this->_helper->service('user')->find($this->auth->getIdentity());
+        } else {
+            $user = $this->_helper->service('user')->find($this->_getParam('user'));
+        }
+
+        if (empty($user)) {
+            $this->_helper->flashMessenger(array('error', "User not found"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$user->isPending()) {
+            $this->_helper->flashMessenger(array('error', "User has been activated"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if ($this->auth->hasIdentity()) {
+            return $user;
+        }
+
+        $token = $this->_getParam('token', false);
+        if (!$token && !$auth->hasIdentity()) {
+            $this->_helper->flashMessenger(array('error', "No token provided"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
+            $this->_helper->flashMessenger(array('error', "Invalid token"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        return $user;
     }
 }

@@ -36,9 +36,6 @@ EOT
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $ingest = $this->getHelper('container')->getService('ingest');
-
-        // run feeds update here.
-
-        $output->writeln('Ingest updated.');
+        $ingest->updateSTX();
     }
 }

@@ -540,20 +540,20 @@ function loadMultiDateEvents() {
                 }
                 var item = data[i];
                 
-                var start = new Date(item.start * 1000);                
-                var end = new Date(item.end * 1000);
+                var start = new Date(item.start_utc * 1000);                
+                var end = new Date(item.end_utc * 1000);
 
                 var start_values = {
-                    'month': start.getMonth() + 1,
-                    'day': start.getDate(),
-                    'hour': start.getHours(),
-                    'minute': start.getMinutes()
+                    'month': start.getUTCMonth() + 1,
+                    'day': start.getUTCDate(),
+                    'hour': start.getUTCHours(),
+                    'minute': start.getUTCMinutes()
                 };
                 var end_values = {
-                    'month': end.getMonth() + 1,
-                    'day': end.getDate(),
-                    'hour': end.getHours(),
-                    'minute': end.getMinutes()
+                    'month': end.getUTCMonth() + 1,
+                    'day': end.getUTCDate(),
+                    'hour': end.getUTCHours(),
+                    'minute': end.getUTCMinutes()
                 };
                 for (var start_key in start_values) {
                     if (start_values[start_key] < 10) {
@@ -575,8 +575,8 @@ function loadMultiDateEvents() {
                     end_values['minute'] = '00';
                 }
 
-                var startString = '<span style="float:left">' + (start.getFullYear() + '-' + start_values['month'] + '-' + start_values['day'] + ' ' + start_values['hour'] + ':' + start_values['minute'] ) + '</span>';
-                var endString = '<span style="float:left">' + (end.getFullYear() + '-' + end_values['month'] + '-' + end_values['day'] + ' ' + end_values['hour'] + ':' + end_values['minute'] ) + '</span>';
+                var startString = '<span style="float:left">' + (start.getUTCFullYear() + '-' + start_values['month'] + '-' + start_values['day'] + ' ' + start_values['hour'] + ':' + start_values['minute'] ) + '</span>';
+                var endString = '<span style="float:left">' + (end.getUTCFullYear() + '-' + end_values['month'] + '-' + end_values['day'] + ' ' + end_values['hour'] + ':' + end_values['minute'] ) + '</span>';
 
                 var eventString = startString + '<span style="float:left" class="ui-icon ui-icon-arrowthick-1-e"></span>' + endString;
 

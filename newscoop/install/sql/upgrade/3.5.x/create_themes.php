@@ -22,11 +22,6 @@ if (!defined('APPLICATION_PATH')) {
 
 global $g_ado_db;
 
-
-require 'Doctrine/Common/ClassLoader.php';
-$classLoader = new \Doctrine\Common\ClassLoader('Newscoop', realpath(APPLICATION_PATH . '/../library'));
-$classLoader->register(); // register on SPL autoload stack
-
 $templatesPath = realpath(APPLICATION_PATH . '/../templates');
 $themesPath = CS_PATH_SITE . '/themes/unassigned';
 if (!is_dir($themesPath)) {

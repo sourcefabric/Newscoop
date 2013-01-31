@@ -14,6 +14,7 @@ use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\User\Group;
 use Newscoop\Entity\Author;
+use Newscoop\View\UserView;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -603,15 +604,22 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function getAttributes()
     {
+        return array_filter($this->getRawAttributes());
+    }
+
+    /**
+     * Get raw user attributes
+     *
+     * @return array
+     */
+    public function getRawAttributes()
+    {
         $attributes = array();
-
-        $keys = $this->attributes->getKeys();
-
-        foreach ($keys as $key) {
+        foreach ($this->attributes->getKeys() as $key) {
             $attributes[$key] = $this->attributes[$key]->getValue();
         }
 
-        return array_filter($attributes);
+        return $attributes;
     }
 
     /**
@@ -895,5 +903,52 @@ class User implements \Zend_Acl_Role_Interface
             'action' => $action,
             'user' => $this->id,
         ), 'default', true);
+    }
+
+    /**
+     * Rename user
+     *
+     * @param string $username
+     * @return void
+     */
+    public function rename($username)
+    {
+        $this->setUsername($username);
+    }
+
+    /**
+     * Render user
+     *
+     * @return UserView
+     */
+    public function render()
+    {
+        $view = new UserView();
+        $view->username = $this->username;
+        $view->email = $this->email;
+        $view->first_name = $this->first_name;
+        $view->last_name = $this->last_name;
+        $view->identifier = $this->id;
+        $view->uname = $view->username;
+        $view->id = $this->id;
+
+        $view->attributes = $this->getAttributes();
+        foreach ($view->attributes as $key => $attribute) {
+            if (!property_exists($view, $key)) {
+                $view->$key = $attribute;
+            }
+        }
+
+        return $view;
+    }
+
+    /**
+     * Get view
+     *
+     * @return UserView
+     */
+    public function getView()
+    {
+        return $this->render();
     }
 }

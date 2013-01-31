@@ -86,19 +86,26 @@ class Doctrine
         $config->setQueryCacheImpl($cache);
 
         $config_file = __DIR__ . '/../../../conf/database_conf.php';
-        if (empty($Campsite) && is_readable($config_file)) {
+        if (is_readable($config_file)) {
             require_once $config_file;
         }
 
-        // set database
-        $database = array(
-            'driver' => 'pdo_mysql',
-            'host' => $Campsite['DATABASE_SERVER_ADDRESS'],
-            'dbname' => $Campsite['DATABASE_NAME'],
-            'user' => $Campsite['DATABASE_USER'],
-            'password' => $Campsite['DATABASE_PASSWORD'],
-            'charset' => 'UTF8',
-        );
+        if (!empty($Campsite) && array_key_exists('DATABASE_NAME', $Campsite)) {
+            $database = array(
+                'driver' => 'pdo_mysql',
+                'host' => $Campsite['DATABASE_SERVER_ADDRESS'],
+                'dbname' => $Campsite['DATABASE_NAME'],
+                'user' => $Campsite['DATABASE_USER'],
+                'password' => $Campsite['DATABASE_PASSWORD'],
+                'charset' => 'utf8',
+            );
+        } else {
+            // defaults
+            $database = array(
+                'driver' => 'pdo_mysql',
+                'charset' => 'utf8',
+            );
+        }
 
         if (isset($this->options['database'])) {
             $database = $this->options['database'];

@@ -10,6 +10,8 @@ namespace Newscoop\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Newscoop\Entity\User;
+use Newscoop\User\UserCriteria;
+use Newscoop\ListResult;
 
 /**
  * User repository
@@ -190,34 +192,100 @@ class UserRepository extends EntityRepository
         return $query;
     }
 
-    public function findActiveUsers($countOnly, $offset, $limit)
+    /**
+     * Find active members of community
+     *
+     * @param bool $countOnly
+     * @param int $offset
+     * @param int $limit
+     * @param array $editorRoles
+     * @return array|int
+     */
+    public function findActiveUsers($countOnly, $offset, $limit, array $editorRoles)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $expr = $this->getEntityManager()->getExpressionBuilder();
+        $qb = $this->createPublicUserQueryBuilder();
+
+        $editorIds = $this->getEditorIds($editorRoles);
+        if (!empty($editorIds)) {
+            $qb->andWhere($qb->expr()->in('u.id', $editorIds));
+        }
 
         if ($countOnly) {
             $qb->select('COUNT(u.id)');
+
+            return $qb->getQuery()->getSingleScalarResult();
         }
-        else {
-            $qb->select('u');
+
+        $qb->select('u, ' . $this->getUserPointsSelect());
+        $qb->orderBy('comments', 'DESC');
+        $qb->addOrderBy('u.id', 'ASC');
+        $qb->groupBy('u.id');
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        $users = array();
+        $results = $qb->getQuery()->getResult();
+
+        foreach ($results as $result) {
+            $user = $result[0];
+            $user->setPoints((int) $result['comments']);
+            $users[] = $user;
+        }
+        
+        return $users;
+    }
+
+    /**
+     * Create query builder for public users
+     *
+     * @return Doctrine\ORM\QueryBuilder
+     */
+    private function createPublicUserQueryBuilder()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.status = :status')
+            ->andWhere('u.is_public = :public')
+            ->setParameter('status', User::STATUS_ACTIVE)
+            ->setParameter('public', true);
+    }
+
+    /**
+     * Get editor ids
+     *
+     * @param array $editorRoles
+     * @return array
+     */
+    private function getEditorIds(array $editorRoles)
+    {
+        if (empty($editorRoles)) {
+            return array();
         }
 
-        $qb->from('Newscoop\Entity\User', 'u');
+        $expr = $this->getEntityManager()->getExpressionBuilder();
+        $query = $this->createQueryBuilder('u')
+            ->select('DISTINCT(u.id)')
+            ->innerJoin('u.groups', 'g', Expr\Join::WITH, $expr->in('g.id', $editorRoles))
+            ->getQuery();
 
-        $qb->where($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
-        $qb->andWhere($qb->expr()->eq("u.is_public", true));
+        $ids = array_map(function($row) {
+            return (int) $row['id'];
+        }, $query->getResult());
+        return $ids;
+    }
 
-        if ($countOnly === false) {
-            $qb->orderBy('u.points', 'DESC');
-            $qb->addOrderBy('u.id', 'ASC');
+    /**
+     * Get user points select statement
+     *
+     * @return string
+     */
+    private function getUserPointsSelect()
+    {
+        $commentsCount = "(SELECT COUNT(c)";
+        $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
 
-            $qb->setFirstResult($offset);
-            $qb->setMaxResults($limit);
-
-            return $qb->getQuery()->getResult();
-        }
-        else {
-            return $qb->getQuery()->getOneOrNullResult();
-        }
+        return "{$commentsCount}";
     }
 
     /**
@@ -227,7 +295,7 @@ class UserRepository extends EntityRepository
      *
      * @return array Newscoop\Entity\User
      */
-    public function findUsersLastNameInRange($letters, $countOnly, $offset, $limit)
+    public function findUsersLastNameInRange($letters, $countOnly, $offset, $limit, $firstName = false)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
 
@@ -245,7 +313,10 @@ class UserRepository extends EntityRepository
 
         $letterIndex = $qb->expr()->orx();
         for ($i=0; $i < count($letters); $i++) {
-            $letterIndex->add($qb->expr()->like("LOWER(u.username)", "'$letters[$i]%'"));
+            $letterIndex->add($qb->expr()->like("LOWER(u.last_name)", "'$letters[$i]%'"));
+            if ($firstName) {
+                $letterIndex->add($qb->expr()->like("LOWER(u.first_name)", "'$letters[$i]%'"));
+            }
         }
         $qb->andWhere($letterIndex);
 
@@ -257,8 +328,7 @@ class UserRepository extends EntityRepository
             $qb->setMaxResults($limit);
 
             return $qb->getQuery()->getResult();
-        }
-        else {
+        } else {
             return $qb->getQuery()->getOneOrNullResult();
         }
     }
@@ -563,28 +633,78 @@ class UserRepository extends EntityRepository
     }
 
     /**
-     * Get user points select statement
+     * Get list for given criteria
      *
-     * @return string
+     * @param Newscoop\User\UserCriteria $criteria
+     * @return Newscoop\ListResult
      */
-    private function getUserPointsSelect()
+    public function getListByCriteria(UserCriteria $criteria)
     {
-        $commentsCount = "(SELECT COUNT(c)";
-        $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
-        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+        $qb = $this->createQueryBuilder('u');
 
-        $articlesCount = "(SELECT COUNT(a)";
-        $articlesCount .= " FROM Newscoop\Entity\Article a, Newscoop\Entity\ArticleAuthor aa";
-        $articlesCount .= " WHERE ";
-        $articlesCount .= implode(' AND ', array(
-            'a.number = aa.articleNumber',
-            'a.language = aa.languageId',
-            'aa.authorId = u.author',
-            "a.type IN ('news', 'blog')",
-            sprintf("a.workflowStatus = '%s'", Article::STATUS_PUBLISHED),
-        ));
-        $articlesCount .= ") as articles";
+        $qb->andWhere('u.status = :status')
+            ->setParameter('status', $criteria->status);
 
-        return "{$commentsCount}, {$articlesCount}";
+        $qb->andWhere('u.is_public = :is_public')
+            ->setParameter('is_public', $criteria->is_public);
+
+        if (!empty($criteria->groups)) {
+            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
+            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
+            $qb->setParameter('groups', $criteria->groups);
+        }
+
+        if (!empty($criteria->query)) {
+            $qb->andWhere("(u.username LIKE :query)");
+            $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
+        }
+
+        if (!empty($criteria->nameRange)) {
+            $this->addNameRangeWhere($qb, $criteria->nameRange);
+        }
+
+        $list = new ListResult();
+        $list->count = (int) $qb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+
+        $qb->select('u, ' . $this->getUserPointsSelect());
+        $qb->setFirstResult($criteria->firstResult);
+        $qb->setMaxResults($criteria->maxResults);
+
+        $metadata = $this->getClassMetadata();
+        foreach ($criteria->orderBy as $key => $order) {
+            if (array_key_exists($key, $metadata->columnNames)) {
+                $key = 'u.' . $key;
+            }
+
+            $qb->orderBy($key, $order);
+        }
+
+        $list->items = array_map(function ($row) {
+            $user = $row[0];
+            $user->setPoints((int) $row['comments']);
+            return $user;
+        }, $qb->getQuery()->getResult());
+
+        return $list;
+    }
+
+    /**
+     * Add name first letter where condition to query builder
+     *
+     * @param Doctrine\ORM\QueryBuilder $qb
+     * @param array $letters
+     * @return void
+     */
+    private function addNameRangeWhere($qb, array $letters)
+    {
+        $orx = $qb->expr()->orx();
+        foreach ($letters as $letter) {
+            $orx->add($qb->expr()->like(
+                'u.username',
+                $qb->expr()->literal(substr($letter, 0, 1) . '%')
+            ));
+        }
+
+        $qb->andWhere($orx);
     }
 }

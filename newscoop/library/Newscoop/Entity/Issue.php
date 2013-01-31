@@ -278,4 +278,14 @@ class Issue
         
         return $this->workflowStatus;
     }
+
+    /**
+     * Get issue number
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
 }

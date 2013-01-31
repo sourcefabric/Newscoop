@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
+use Newscoop\User\UserCriteria;
 
 /**
  * List User service
@@ -29,6 +30,17 @@ class ListUserService
     {
         $this->config = array_merge($this->config, $config);
         $this->em = $em;
+    }
+
+    /**
+     * Find by criteria
+     *
+     * @param Newscoop\User\UserCriteria $criteria
+     * @return Newscoop\ListResult;
+     */
+    public function findByCriteria(UserCriteria $criteria)
+    {
+        return $this->getRepository()->getListByCriteria($criteria);
     }
 
     /**
@@ -73,14 +85,13 @@ class ListUserService
      *
      * @return array
      */
-    public function getActiveUsers($countOnly=false, $page=1, $limit=8)
-    {
+    public function getActiveUsers($countOnly=false, $page=1, $limit=8, $editors = array())
+    {   
         $offset = ($page-1) * $limit;
+        $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit, $editors);
 
-        $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit);
-
-        if($countOnly) {
-            return $result[1];
+        if ($countOnly) {
+            return $result;
         }
 
         return $result;
@@ -105,7 +116,6 @@ class ListUserService
     public function findUsersLastNameInRange($letters, $countOnly=false, $page=1, $limit=25)
     {
         $offset = ($page-1) * $limit;
-
         $result = $this->getRepository()->findUsersLastNameInRange($letters, $countOnly, $offset, $limit);
 
         if($countOnly) {

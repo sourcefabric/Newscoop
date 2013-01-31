@@ -20,7 +20,7 @@ use Newscoop\Entity\Theme;
  * @ORM\Entity
  * @ORM\Table(name="resource")
  */
-class Resource extends Entity
+class Resource extends AbstractEntity
 {
     /**
      * Provides the class name as a constant.

@@ -50,16 +50,14 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         include_once 'HTML/QuickForm/RuleRegistry.php';
         include_once 'HTML/QuickForm/group.php';
 
-        if (!defined('IN_PHPUNIT') && !getenv('PLZSTOPTHISERRORHANDLERBIZNIS') ) {
+        if (php_sapi_name() !== 'cli')) {
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
-                if (($p_number & error_reporting()) === 0) {
-                    return; // respect php settings
-                }
+                error_log(sprintf('Newscoop error: %s in %s:%d', $p_string, $p_file, $p_line));
 
                 global $ADMIN_DIR, $Campsite;
                 require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
                 camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
-            }, E_ALL);
+            }, error_reporting());
         }
 
         camp_load_translation_strings("api");

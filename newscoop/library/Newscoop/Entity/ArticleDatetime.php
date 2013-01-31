@@ -19,7 +19,7 @@ use Newscoop\Entity\Article;
  * 		columns={"end_date", "start_date", "end_time", "start_time", "article_id", "article_type", "field_name"}
  *  )})
  */
-class ArticleDatetime extends Entity
+class ArticleDatetime extends AbstractEntity
 {
 	/**
 	 * @ORM\Id

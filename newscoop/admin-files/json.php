@@ -66,6 +66,7 @@ try {
     $serverRequest->allow('Article::setOnFrontPage','Publish');
     $serverRequest->allow('Article::setOnSectionPage','Publish');
     $serverRequest->allow('Article::setIsPublic','Publish');
+    $serverRequest->allow('Article::setRatingEnabled');
     $serverRequest->allow('Article::setKeywords');
     $serverRequest->allow('Article::setIsLocked');
     $serverRequest->allow('ArticleData::setProperty');

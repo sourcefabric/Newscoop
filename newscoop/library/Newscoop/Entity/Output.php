@@ -18,7 +18,7 @@ use Newscoop\Entity\Theme;
  * @ORM\Entity
  * @ORM\Table(name="output")
  */
-class Output extends Entity
+class Output extends AbstractEntity
 {
 
 	/**

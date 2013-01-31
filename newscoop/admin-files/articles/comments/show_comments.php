@@ -118,11 +118,12 @@ foreach ($hiddens as $name) {
 </fieldset>
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
+
 <script type="text/javascript">
 function toggleCommentStatus(commentId) {
     var commentSetting = $('input:radio[name^="f_comment"]:checked').val();
     $('#comment-moderate .comments-block').each(function() {
-    	if (commentId && commentId == $(this).find('input:hidden').val()) {
+        if (commentId && commentId == $(this).find('input:hidden').val()) {
             var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
             var block = $(this);
             var status = $('input:radio:checked', block).val();
@@ -144,44 +145,67 @@ function toggleCommentStatus(commentId) {
         });
     });
 }
-function loadComments() {
 
-	var call_data = {
-		"article": "<?php echo $articleObj->getArticleNumber(); ?>",
-		"language": "<?php echo $f_language_selected; ?>"
-	};
+function loadComments() {
+    var lastCommentId = null;
+    var commentsNumber = 10;
+    if ($('#comment-moderate .comments-block').length > 0) {
+        lastCommentId = $('#comment-moderate .comments-block').length;
+    }
+
+    var call_data = {
+        "article": "<?php echo $articleObj->getArticleNumber(); ?>",
+        "language": "<?php echo $f_language_selected; ?>",
+        "iDisplayStart": lastCommentId,
+        "iDisplayLength": commentsNumber
+    };
+    
 
     var call_url = '../comment/list/format/json';
 
-	var res_handle = function(data) {
-		$('#comment-moderate').empty();
-		var hasComment = false;
-		for(var i in data.result) {
-			hasComment = true;
-			var comment = data.result[i];
-			if(typeof(comment) == "function") {
-				continue;
-			}
+    var res_handle = function(data) {
+        //$('#comment-moderate').empty();
+        $('fieldset.get-more-comments').remove();
+        var hasComment = false;
+        for(var i in data.result) {
+            hasComment = true;
+            var comment = data.result[i];
+            if(typeof(comment) == "function") {
+                continue;
+            }
 
-			var template = $('#comment-prototype').html();
-			for(var key in comment) {
-				if(key == 'status') {
+            var template = $('#comment-prototype').html();
+            for(var key in comment) {
+                if(key == 'status') {
                     template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
-					template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
-				}
-				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
-			}
-			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
+                    template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
+                }
+                template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
+            }
+            $('#comment-moderate').append('<fieldset data-comment-id="'+comment['id']+'" class="plain comments-block">'+template+'</fieldset>');
             toggleCommentStatus(comment['id']);
-		}
+        }
+
+        var getMoreLink = $('<div style="text-align:center;"><fieldset class="get-more-comments"><input type="button" style="pull-right" class="ui-state-default default-button paginate paginate-next" value="<?php putGS('Show more comments'); ?>" /></fieldset></div>');
+        getMoreLink.find('input')
+            .click(function(e){
+                loadComments();
+                e.preventDefault();
+            });
+
+        $('#comment-moderate').append(getMoreLink);
+
+        if (data.result.length == 0) {
+            $('fieldset.get-more-comments').html('<p><?php putGS('There are no more comments'); ?></p>');
+        }
 
         var referencedComment = $(document.location.hash);
         if (referencedComment.size() == 1) {
             $(window).scrollTop(referencedComment.position().top);
         }
 
-		if(!hasComment)
-			$('#no-comments').show();
+        if(!hasComment)
+            $('#no-comments').show();
 
         $('.comment-state-status').each(function() {
             $(this).html("&nbsp;");
@@ -229,38 +253,38 @@ function loadComments() {
 
             return false;
         });
-	};
+    };
 
-	callServer(call_url, call_data, res_handle, true);
+    callServer(call_url, call_data, res_handle, true);
 };
 
 var updateStatus = function(button) {
-	var el = $(button).parents('dl').find('input:radio:checked').first();
+    var el = $(button).parents('dl').find('input:radio:checked').first();
     var wanted_status = el.val();
 
-	var call_data = {
-	   "comment": el.attr('id').match(/\d+/)[0],
-	   "status": wanted_status
-	};
+    var call_data = {
+       "comment": el.attr('id').match(/\d+/)[0],
+       "status": wanted_status
+    };
 
     var call_url = '../comment/set-status/format/json';
 
-	var res_handle = function(data) {
-		//flashMessage('<?php putGS('Comments updated.'); ?>');
-		toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
+    var res_handle = function(data) {
+        //flashMessage('<?php putGS('Comments updated.'); ?>');
+        toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
         if ('deleted' == wanted_status) {
             loadComments();
         }
 
-	};
+    };
 
-	callServer(call_url, call_data, res_handle, true);
+    callServer(call_url, call_data, res_handle, true);
 
     return wanted_status;
 };
 
 $('.comment-update').live('click',function(){
-	var comment, subject, body;
+    var comment, subject, body;
 
     <?php if ($g_user->hasPermission('CommentModerate')) { ?>
     var wanted_status = updateStatus(this);
@@ -291,9 +315,6 @@ $('.comment-update').live('click',function(){
 
     callServer(call_url, call_data, res_handle, true);
 });
-</script>
-<script type="text/javascript">
-$(function() {
-	loadComments();
-});
+
+loadComments();
 </script>

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.61, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: newscoop
+-- Host: localhost    Database: next
 -- ------------------------------------------------------
--- Server version	5.1.54-1ubuntu4
+-- Server version	5.1.61-0ubuntu0.11.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -213,6 +213,8 @@ CREATE TABLE `Articles` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `object_id` int(11) DEFAULT NULL,
   `webcode` varchar(10) DEFAULT NULL,
+  `indexed` timestamp NULL DEFAULT NULL,
+  `rating_enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -366,8 +368,10 @@ CREATE TABLE `Cache` (
   `template` varchar(128) NOT NULL,
   `expired` int(11) NOT NULL,
   `content` mediumtext,
+  `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
-  KEY `expired` (`expired`)
+  KEY `expired` (`expired`),
+  KEY `template` (`template`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -902,6 +906,24 @@ CREATE TABLE `Publications` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rating` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `article_number` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `rating_score` int(10) NOT NULL DEFAULT 0,
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `RequestObjects`
 --
 
@@ -1355,7 +1377,7 @@ CREATE TABLE `acl_rule` (
   `action` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_id` (`role_id`,`resource`,`action`)
-) ENGINE=MyISAM AUTO_INCREMENT=336 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1368,9 +1390,9 @@ DROP TABLE IF EXISTS `article_datetimes`;
 CREATE TABLE `article_datetimes` (
   `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
-  `end_time` time DEFAULT NULL COMMENT 'NULL = 24:00',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
   `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL COMMENT 'NULL = no end',
+  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
   `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
   `article_id` int(10) unsigned NOT NULL,
   `article_type` varchar(166) NOT NULL,
@@ -1506,11 +1528,11 @@ DROP TABLE IF EXISTS `context_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `context_articles` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
   `fk_context_id` int(10) NOT NULL,
   `fk_article_no` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1555,50 +1577,46 @@ CREATE TABLE `feedback` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `ingest_feed`
+-- Table structure for table `liveuser_applications`
 --
 
-DROP TABLE IF EXISTS `ingest_feed`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ingest_feed` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `mode` varchar(25) DEFAULT 'manual',
-  `updated` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `liveuser_applications`;
 
 --
--- Table structure for table `ingest_feed_entry`
+-- Table structure for table `liveuser_applications_application_id_seq`
 --
 
-DROP TABLE IF EXISTS `ingest_feed_entry`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ingest_feed_entry` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `feed_id` int(11) unsigned NOT NULL,
-  `date_id` varchar(20) DEFAULT NULL,
-  `news_item_id` varchar(20) DEFAULT NULL,
-  `title` varchar(255) NOT NULL,
-  `updated` datetime NOT NULL,
-  `author` varchar(255) DEFAULT NULL,
-  `content` text NOT NULL,
-  `summary` text,
-  `category` varchar(255) DEFAULT NULL,
-  `created` datetime DEFAULT NULL,
-  `published` datetime DEFAULT NULL,
-  `embargoed` datetime DEFAULT NULL,
-  `priority` tinyint(4) DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL,
-  `attributes` text,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `date_id` (`date_id`,`news_item_id`),
-  KEY `status` (`status`,`updated`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `liveuser_applications_application_id_seq`;
+
+--
+-- Table structure for table `liveuser_applications_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_applications_seq`;
+
+--
+-- Table structure for table `liveuser_area_admin_areas`
+--
+
+DROP TABLE IF EXISTS `liveuser_area_admin_areas`;
+
+--
+-- Table structure for table `liveuser_areas`
+--
+
+DROP TABLE IF EXISTS `liveuser_areas`;
+
+--
+-- Table structure for table `liveuser_areas_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_areas_seq`;
+
+--
+-- Table structure for table `liveuser_group_subgroups`
+--
+
+DROP TABLE IF EXISTS `liveuser_group_subgroups`;
 
 --
 -- Table structure for table `liveuser_grouprights`
@@ -1633,6 +1651,18 @@ CREATE TABLE `liveuser_groups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `liveuser_groups_group_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_groups_group_id_seq`;
+
+--
+-- Table structure for table `liveuser_groups_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_groups_seq`;
+
+--
 -- Table structure for table `liveuser_groupusers`
 --
 
@@ -1645,6 +1675,30 @@ CREATE TABLE `liveuser_groupusers` (
   UNIQUE KEY `groupusers_id_i_idx` (`perm_user_id`,`group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `liveuser_perm_users`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users`;
+
+--
+-- Table structure for table `liveuser_perm_users_perm_user_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
+
+--
+-- Table structure for table `liveuser_perm_users_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_perm_users_seq`;
+
+--
+-- Table structure for table `liveuser_right_implied`
+--
+
+DROP TABLE IF EXISTS `liveuser_right_implied`;
 
 --
 -- Table structure for table `liveuser_rights`
@@ -1662,6 +1716,36 @@ CREATE TABLE `liveuser_rights` (
   UNIQUE KEY `rights_define_name_i_idx` (`area_id`,`right_define_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `liveuser_rights_right_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
+
+--
+-- Table structure for table `liveuser_rights_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_rights_seq`;
+
+--
+-- Table structure for table `liveuser_translations`
+--
+
+DROP TABLE IF EXISTS `liveuser_translations`;
+
+--
+-- Table structure for table `liveuser_translations_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_translations_seq`;
+
+--
+-- Table structure for table `liveuser_userrights`
+--
+
+DROP TABLE IF EXISTS `liveuser_userrights`;
 
 --
 -- Table structure for table `liveuser_users`
@@ -1716,18 +1800,25 @@ CREATE TABLE `liveuser_users` (
   `isActive` tinyint(1) DEFAULT '1',
   `password_reset_token` varchar(85) DEFAULT NULL,
   `role_id` int(10) DEFAULT NULL,
-  `author_id` int(10) unsigned DEFAULT NULL,
   `last_name` varchar(80) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
-  `is_public` tinyint(1) NOT NULL DEFAULT '0',
+  `is_admin` boolean NOT NULL DEFAULT '0',
+  `is_public` boolean NOT NULL DEFAULT '0',
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
+  `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
+  UNIQUE KEY `UName` (`UName`),
+  KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `liveuser_users_auth_user_id_seq`
+--
+
+DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
 
 --
 -- Table structure for table `output`
@@ -1851,8 +1942,8 @@ CREATE TABLE `package_article_package` (
   PRIMARY KEY (`article_id`,`package_id`),
   KEY `IDX_BB5F0F827294869C` (`article_id`),
   KEY `IDX_BB5F0F82F44CABFF` (`package_id`),
-  CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE
+  CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2364,12 +2455,12 @@ CREATE TABLE `user_attribute` (
 DROP TABLE IF EXISTS `user_identity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_identity` (
+CREATE TABLE IF NOT EXISTS `user_identity` (
   `provider` varchar(80) NOT NULL,
   `provider_user_id` varchar(255) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`provider`,`provider_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`provider`, `provider_user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2426,22 +2517,22 @@ CREATE TABLE `user_token` (
 --
 -- Table structure for table `user_topic`
 --
-
 DROP TABLE IF EXISTS `user_topic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_topic` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
   `topic_language` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_topic` (`user_id`,`topic_id`,`topic_language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `webcode`
 --
-
 DROP TABLE IF EXISTS `webcode`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -2452,14 +2543,5 @@ CREATE TABLE `webcode` (
   PRIMARY KEY (`webcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2012-07-12 12:49:04
+-- Dump completed on 2012-03-15 11:02:44

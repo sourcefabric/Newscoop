@@ -15,7 +15,7 @@ use Newscoop\Entity\Entity;
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
  * @ORM\Table(name="Theme")
  */
-class Theme extends Entity
+class Theme extends AbstractEntity
 {
 
 	/** @var string  */

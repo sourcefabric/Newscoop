@@ -359,8 +359,6 @@ class NewsMlParser implements Parser
         if ((string) $datetime !== '') {
             return new \DateTime((string) $datetime);
         }
-
-        return null;
     }
 
     /**

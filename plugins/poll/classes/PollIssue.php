@@ -177,6 +177,7 @@ class PollIssue extends DatabaseObject {
         $records = array();
         
         $PollIssue = new PollIssue();
+        $where = '';
         
         if (!empty($p_poll_nr)) {
             $where .= "AND fk_poll_nr = $p_poll_nr ";   

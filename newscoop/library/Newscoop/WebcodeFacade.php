@@ -51,6 +51,7 @@ class WebcodeFacade
         }
 
         $webcode = new Entity\Webcode($webcode, $article);
+        $article->setWebcode($webcode);
         $this->em->persist($webcode);
         $this->em->flush();
     }

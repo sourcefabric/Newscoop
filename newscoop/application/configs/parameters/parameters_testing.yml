@@ -9,8 +9,6 @@ parameters:
         events: false
     doctrine:
         cache: "Doctrine\Common\Cache\ArrayCache"
-        proxy:
-            autogenerate: true
         database:
             driver: "pdo_sqlite"
             path: ":memory:"

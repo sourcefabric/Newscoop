@@ -48,6 +48,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['is_active'] = 'isActive';
         $this->m_customProperties['is_blogger'] = 'isBlogger';
         $this->m_customProperties['author'] = 'getAuthor';
+        $this->m_customProperties['image'] = 'image';
 
         $this->m_skipFilter[] = "name";
     }
@@ -143,7 +144,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
         $countryCode = $this->m_dbObject->getAttribute('country_code');
         $smartyObj = CampTemplate::singleton();
-        $contextObj = $smartyObj->get_template_vars('gimme');
+        $contextObj = $smartyObj->getTemplateVars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
         return !$country->exists() ? '' : $country->getName();
     }

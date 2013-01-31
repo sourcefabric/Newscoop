@@ -352,10 +352,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
 
         $this->storage->storeItem('item.tpl', 'key.tpl');
         $this->assertTrue($this->storage->isUsed('key.tpl'));
-
-        chmod("$this->root/item.tpl", 0204);
-        $this->assertEquals(CAMP_ERROR_READ_FILE, $this->storage->isUsed('key.tpl'));
-        chmod("$this->root/item.tpl", 0644);
     }
 
     public function testGetRealpath()

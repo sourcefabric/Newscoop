@@ -17,7 +17,7 @@ use Newscoop\Entity\Theme;
  *
  * @ORM\MappedSuperclass
  */
-class OutputSettings extends Entity
+class OutputSettings extends AbstractEntity
 {
 
     /**

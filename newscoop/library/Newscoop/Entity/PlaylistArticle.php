@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Table(name="playlist_article",
  * 	uniqueConstraints={@ORM\UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
  */
-class PlaylistArticle extends Entity
+class PlaylistArticle extends AbstractEntity
 {
 	/**
      * @ORM\Id @ORM\Column(name="id_playlist_article", type="integer")

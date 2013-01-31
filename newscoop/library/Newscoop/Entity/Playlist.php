@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistRepository")
  * @ORM\Table(name="playlist")
  */
-class Playlist extends Entity
+class Playlist extends AbstractEntity
 {
 	/**
      * @ORM\Id 

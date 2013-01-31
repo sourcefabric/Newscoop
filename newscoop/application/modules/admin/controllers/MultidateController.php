@@ -297,10 +297,10 @@ class Admin_MultidateController extends Zend_Controller_Action
 
         	if (strlen($recurring) > 1) {
         		//daterange
-        		$start = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp()) );
-        		$end = strtotime( $this->getDate(is_null($date->getEndDate()) ? ($this->distant) : $date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
+        		$start = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp()) . ' UTC');
+        		$end = strtotime( $this->getDate(is_null($date->getEndDate()) ? ($this->distant) : $date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) . ' UTC');
         		$itemStart = $start;
-        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
+        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) . ' UTC');
         		
                 $step = "+1 day";
         		switch($recurring) {
@@ -316,9 +316,11 @@ class Admin_MultidateController extends Zend_Controller_Action
                     $calDate = array();
                     $calDate['id'] = $date->id;
                     $calDate['title'] = $itemField;
-                    $calDate['start'] = $itemStart;
-                    $calDate['start_day'] = date('m-d', $calDate['start']);
-                    $calDate['end'] = $itemEnd;
+                    $calDate['start_utc'] = $itemStart;
+                    $calDate['start'] = gmdate('Y-m-d\TH:i:s\Z', $itemStart);
+                    $calDate['start_day'] = gmdate('m-d', $itemStart);
+                    $calDate['end_utc'] = $itemEnd;
+                    $calDate['end'] = gmdate('Y-m-d\TH:i:s\Z', $itemEnd);
                     $calDate['allDay'] = $this->isAllDay($date);
                     $calDate['field_name'] = $itemField;
                     $calDate['backgroundColor'] = $itemColor;
@@ -355,16 +357,21 @@ class Admin_MultidateController extends Zend_Controller_Action
         		$calDate = array();
 	        	$calDate['id'] = $date->id;
                 $calDate['title'] = $itemField;
-	        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ));
-	        	$calDate['start_day'] = date('m-d', $calDate['start']);
+                $itemStart = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) . ' UTC');
+	        	$calDate['start_utc'] = $itemStart;
+                $calDate['start'] = gmdate('Y-m-d\TH:i:s\Z', $itemStart);
+                $calDate['start_day'] = gmdate('m-d', $itemStart);
 
 	        	$endDate = $date->getEndDate();
                 // TODO: at this moment, specific dates without end dates are taken as single-date dates, even though they should be taken as never-ending continuous events
+                $itemEnd = 0;
 	        	if ( empty($endDate)) {
-	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
+	        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) . ' UTC');
 	        	} else {
-	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );	
+	        		$itemEnd = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) . ' UTC');	
 	        	}
+                $calDate['end_utc'] = $itemEnd;
+                $calDate['end'] = gmdate('Y-m-d\TH:i:s\Z', $itemEnd);
                 $calDate['allDay'] = $this->isAllDay($date);
                 $calDate['restOfDay'] = false;
                 if (!$calDate['allDay']) {

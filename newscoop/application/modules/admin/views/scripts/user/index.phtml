@@ -49,7 +49,7 @@
 </script>
 
 <script type="text/html" id="user-deleted-template">
-<a class="edit"><%= user.escape('username') %></a>
+<a class="edit" href="<%= user.getLink('rename') %>"><%= user.escape('username') %></a>
 <a class="mailto">&nbsp;</a>
 <span class="created"><%= user.get('created') %> - <%= user.get('updated') %></span>
 </script>

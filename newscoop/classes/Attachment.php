@@ -6,6 +6,7 @@
 /**
  * Includes
  */
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');

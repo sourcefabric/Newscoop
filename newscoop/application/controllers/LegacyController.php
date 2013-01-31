@@ -15,6 +15,15 @@ class LegacyController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
     }
 
+    public function preDispatch()
+    {
+        if ($this->getRequest()->getParam('logout') === 'true') {
+            $this->_forward('logout', 'auth', 'default', array(
+                'url' => $this->getRequest()->getPathInfo(),
+            ));
+        }
+    }
+
     public function indexAction()
     {
         global $controller;
@@ -65,10 +74,6 @@ class LegacyController extends Zend_Controller_Action
             camp_load_translation_strings('preview', $previewLang);
         } else {
 	        set_error_handler(create_function('', 'return true;'));
-        }
-
-        if ($this->_request->getParam('logout') == 'true') {
-            $this->_redirect('/auth/logout/?url=' . urlencode($this->getRequest()->getPathInfo()));
         }
 
         // renders the site

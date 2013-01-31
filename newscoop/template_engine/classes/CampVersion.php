@@ -37,17 +37,17 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_codeName = 'Majda';
+    private $m_codeName = 'Sakartvelo';
 
     /**
      * @var string
      */
-    private $m_releaseDate = '2012-07-12';
+    private $m_releaseDate = '2013-01-29';
 
     /**
      * @var string
      */
-    private $m_copyrightYear = 2012;
+    private $m_copyrightYear = 2013;
 
     /**
      * @var string

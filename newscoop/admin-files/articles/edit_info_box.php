@@ -31,6 +31,8 @@
       <dd><?php p(htmlspecialchars($articleCreator->getRealName())); ?></dd>
       <dt><?php putGS('Webcode'); ?></dt>
       <dd><?php echo '+', $articleObj->getWebcode(); ?></dd>
+      <dt><?php putGS('Rating'); ?></dt>
+      <dd><?php echo $articleObj->getRating(); ?></dd>
     </dl>
   </div>
 </div>

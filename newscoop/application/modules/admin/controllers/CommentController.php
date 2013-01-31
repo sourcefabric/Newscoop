@@ -340,17 +340,25 @@ class Admin_CommentController extends Zend_Controller_Action
     public function listAction()
     {
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
-
         $cols = array('thread_order' => 'default');
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
         $comment = $this->getRequest()->getParam('comment');
+
         if ($article) {
             $filter = array('thread' => $article, 'language' => $language,);
         } elseif ($comment) {
             $filter = array('id' => $comment,);
         }
-        $params = array('sFilter' => $filter);
+
+        $params = array(
+            'sFilter' => $filter,
+            'iDisplayStart' => $this->getRequest()->getParam('iDisplayStart') != null ? $this->getRequest()->getParam('iDisplayStart') : 0,
+            'iDisplayLength' => $this->getRequest()->getParam('iDisplayLength'),
+            'iSortCol_0' => 0,
+            'sSortDir_0' => 'desc'
+        );
+
         /* var Comment[] */
         $comments = $this->commentRepository->getData($params, $cols);
         $result = array();

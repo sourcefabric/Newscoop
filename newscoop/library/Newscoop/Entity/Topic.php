@@ -8,6 +8,7 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\View\TopicView;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\TopicRepository")
@@ -25,9 +26,9 @@ class Topic
 
     /**
      * @ORM\Id
-     * @ORM\Column(type="integer", name="fk_language_id")
-     * @var int
-     * @todo add reference to language
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @var Language
      */
     private $language;
 
@@ -51,7 +52,7 @@ class Topic
     public function __construct($id, $language, $name)
     {
         $this->id = (int) $id;
-        $this->language = (int) $language;
+        $this->language = $language;
         $this->name = (string) $name;
     }
 
@@ -72,7 +73,7 @@ class Topic
      */
     public function getLanguageId()
     {
-        return $this->language;
+        return $this->language->getId();
     }
 
     /**
@@ -111,5 +112,20 @@ class Topic
     public function __toString()
     {
         return (string) $this->name;
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\TopicView
+     */
+    public function getView()
+    {
+        $view = new TopicView();
+        $view->defined = true;
+        $view->identifier = $this->id;
+        $view->name = $this->name;
+        $view->value = sprintf('%s:%s', $this->name, $this->language->getCode());
+        return $view;
     }
 }

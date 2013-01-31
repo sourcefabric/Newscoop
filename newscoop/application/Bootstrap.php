@@ -113,4 +113,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
         Zend_Auth::getInstance()->setStorage($storage);
     }
+
+    protected function _initAdoDb()
+    {
+        require_once __DIR__ . '/../db_connect.php';
+    }
 }

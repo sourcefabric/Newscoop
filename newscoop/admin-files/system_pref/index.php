@@ -739,12 +739,40 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
 </tr>
 
+<tr><td colspan="2"><hr /></td></tr>
+<tr>
+    <td colspan="2">
+        <strong><?php putGS("MailChimp Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td><?php putGS('API Key:'); ?></td>
+    <td><input type="text" name="mailchimp_apikey" value="<?php echo $this->view->escape(SystemPref::Get('mailchimp_apikey')); ?>" size="40" class="input_text" /></td>
+</tr>
+<tr>
+    <td><?php putGS('List Unique Id:'); ?></td>
+    <td><input type="text" name="mailchimp_listid" value="<?php echo $this->view->escape(SystemPref::Get('mailchimp_listid')); ?>" size="40" class="input_text" /></td>
+</tr>
+
+<tr><td colspan="2"><hr /></td></tr>
+<tr>
+    <td colspan="2">
+        <strong><?php putGS("Facebook Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td><?php putGS('App ID:'); ?></td>
+    <td><input type="text" name="facebook_appid" value="<?php echo $this->view->escape(SystemPref::Get('facebook_appid')); ?>" size="40" class="input_text" /></td>
+</tr>
+<tr>
+    <td><?php putGS('App Secret:'); ?></td>
+    <td><input type="text" name="facebook_appsecret" value="<?php echo $this->view->escape(SystemPref::Get('facebook_appsecret')); ?>" size="40" class="input_text" /></td>
+</tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
+<?php } ?>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <tr>
     <td colspan="2" align="center" style="padding-top: 10px;">

@@ -25,7 +25,7 @@
 function smarty_function_debatevotes($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('gimme');
+    $campContext = $p_smarty->getTemplateVars('gimme');
     /* @var $campContext \CampContext */
     $html = '';
 

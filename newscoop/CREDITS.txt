@@ -1,7 +1,33 @@
-Copyright (C) 2010-2012 Sourcefabric o.p.s
+Copyright (C) 2010-2013 Sourcefabric o.p.s
 Copyright (C) 2002-2009 Media Development Loan Fund
 
 Newscoop Credits (by Version Number)
+
+-----------------------------------------
+Newscoop 4.1.0 Credits
+-----------------------------------------
+
+- Newscoop Team https://wiki.sourcefabric.org/display/CS/Developers+Team
+
+-----------------------------------------
+Newscoop 4.0.4 Credits
+-----------------------------------------
+
+- Newscoop Team https://wiki.sourcefabric.org/display/CS/Developers+Team
+
+-----------------------------------------
+Newscoop 4.0.3 Credits
+-----------------------------------------
+Developers:
+- Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
+- Holman Romero <holman.romero@sourcefabric.org>
+- Mark Lewis <mark.lewis@sourcefabric.org>
+- Martin Saturka <martin.saturka@sourcefabric.org>
+- Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+
+QA / Testing:
+- Sebastian Šimon <sebastian.simon@sourcefabric.org>
 
 -----------------------------------------
 Newscoop 4.0.2 Credits

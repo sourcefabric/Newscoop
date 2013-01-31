@@ -2,8 +2,9 @@ composer.phar
 newscoop/images/*
 newscoop/cache/*
 newscoop/files/*
-newscoop/vendor/*
-vendor/*
+newscoop/vendor/
+vendor/
+newscoop/vendor
 newscoop/newscoop-indexer.lock
 newscoop/.htaccess
 newscoop/conf/configuration.php
@@ -15,4 +16,7 @@ newscoop/themes/unassigned/empty/
 newscoop/themes/unassigned/system_templates/
 newscoop/install/cron_jobs/all_at_once
 newscoop/.htaccess*
+newscoop/application/configs/application.ini
 .vagrant
+.htaccess
+.htaccess-default

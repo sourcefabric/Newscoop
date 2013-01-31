@@ -7,12 +7,17 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\User,
-    Newscoop\Entity\Topic,
-    Newscoop\Entity\UserTopic;
+use Newscoop\Entity\User;
+use Newscoop\Entity\Topic;
+use Newscoop\Entity\UserTopic;
+use Newscoop\Entity\Language;
+use Newscoop\Topic\SaveUserTopicsCommand;
 
 class UserTopicServiceTest extends \RepositoryTestCase
 {
+    const USER_ID = 1;
+    const LANGUAGE_ID = 1;
+
     /** @var Newscoop\Services\UserTopicService */
     protected $service;
 
@@ -21,12 +26,16 @@ class UserTopicServiceTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Topic', 'Newscoop\Entity\UserTopic', 'Newscoop\Entity\Acl\Role');
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Topic', 'Newscoop\Entity\UserTopic', 'Newscoop\Entity\Acl\Role', 'Newscoop\Entity\Language');
 
         $this->service = new UserTopicService($this->em);
 
+        $this->language = new Language();
+        $this->em->persist($this->language);
+
         $this->user = new User('name');
         $this->em->persist($this->user);
+
         $this->em->flush();
     }
 
@@ -40,71 +49,95 @@ class UserTopicServiceTest extends \RepositoryTestCase
         $this->assertEmpty($this->service->getTopics($this->user));
     }
 
-    public function testFollow()
+    public function testSaveUserTopicsCommand()
     {
-        $topic = new Topic(1, 1, 'name');
+        $topic = new Topic(1, $this->language, 'test');
         $this->em->persist($topic);
-
-        $this->service->followTopic($this->user, $topic);
-
-        $topics = $this->service->getTopics($this->user);
-        $this->assertEquals(1, sizeof($topics));
-        $this->assertEquals($topic, $topics[0]);
-    }
-
-    public function testUpdateTopics()
-    {
-        $this->em->persist($topic = new Topic(1, 1, '1'));
-        $this->em->persist(new Topic(2, 1, '2'));
-        $this->em->persist(new Topic(3, 1, '3'));
         $this->em->flush();
 
-        $this->service->followTopic($this->user, $topic);
-
-        $this->service->updateTopics($this->user, array(
-            '1' => 'false',
-            '2' => 'false',
-            '3' => 'true',
+        $command = new SaveUserTopicsCommand(array(
+            'selected' => array(1),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
         ));
 
-        $topics = $this->service->getTopics($this->user);
+        $this->service->saveUserTopics($command);
+
+        $topics = $this->service->getTopics(self::USER_ID);
         $this->assertEquals(1, count($topics));
-        $this->assertEquals('3', current($topics)->getName());
+        $this->assertEquals('test', $topics[0]->getView()->name);
     }
 
-    public function testUpdateTopicsIfDeleted()
+    public function testSaveUserTopicsCommandReplace()
     {
-        $topic = new Topic(1, 1, 'deleted');
-        $this->em->persist($topic);
+        $this->em->persist(new Topic(1, $this->language, 'topic1'));
+        $this->em->persist(new Topic(2, $this->language, 'topic2'));
         $this->em->flush();
 
-        $this->service->followTopic($this->user, $topic);
-
-        $this->em->remove($topic);
-        $this->em->persist(new Topic(2, 2, 'next'));
-        $this->em->flush();
-        $this->em->clear();
-
-        $this->service->updateTopics($this->user, array(
-            2 => "false",
+        $command = new SaveUserTopicsCommand(array(
+            'selected' => array(1),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
         ));
 
-        $topics = $this->service->getTopics($this->user);
-        $this->assertEquals(0, count($topics));
+        $this->service->saveUserTopics($command);
+
+        $command = new SaveUserTopicsCommand(array(
+            'selected' => array(2),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
+        ));
+
+        $this->service->saveUserTopics($command);
+
+        $topics = $this->service->getTopics(self::USER_ID);
+        $this->assertEquals(1, count($topics));
+        $this->assertEquals('topic2', $topics[0]->getView()->name);
     }
 
-    public function testGetTopicsDeleted()
+    public function testSaveUserTopicsCommandUpdate()
     {
-        $topic = new Topic(1, 1, 'test');
-        $this->em->persist($topic);
+        $this->em->persist(new Topic(1, $this->language, 'topic1'));
+        $this->em->persist(new Topic(2, $this->language, 'topic2'));
         $this->em->flush();
 
-        $this->service->followTopic($this->user, $topic);
+        $command = new SaveUserTopicsCommand(array(
+            'selected' => array(1),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
+        ));
 
-        $this->em->remove($topic);
-        $this->em->flush();
-        $this->em->clear();
+        $this->service->saveUserTopics($command);
 
-        $this->assertEquals(0, count($this->service->getTopics($this->user)));
+        $this->assertEquals(1, count($this->service->getTopics(self::USER_ID)));
+
+        $command = new SaveUserTopicsCommand(array(
+            'topics' => array(2),
+            'selected' => array(2),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
+        ));
+
+        $this->service->saveUserTopics($command);
+
+        $this->assertEquals(2, count($this->service->getTopics(self::USER_ID)));
+    }
+
+    public function testSaveUserTopicsCommandUpdateTwice()
+    {
+        $this->em->persist(new Topic(1, $this->language, 'topic'));
+
+        $command = new SaveUserTopicsCommand(array(
+            'topics' => array(1),
+            'selected' => array(1),
+            'userId' => self::USER_ID,
+            'languageId' => self::LANGUAGE_ID,
+        ));
+
+        $this->service->saveUserTopics($command);
+        $this->service->saveUserTopics($command);
+
+        $topics = $this->service->getTopics(self::USER_ID);
+        $this->assertEquals(1, count($topics));
     }
 }

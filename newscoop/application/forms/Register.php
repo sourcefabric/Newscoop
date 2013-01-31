@@ -18,7 +18,7 @@ class Application_Form_Register extends Zend_Form
                 'stringTrim',
             ),
             'validators' => array(
-                'emailAddress',
+                array('emailAddress', true, array('domain' => APPLICATION_ENV !== 'development')),
             ),
         ));
 
