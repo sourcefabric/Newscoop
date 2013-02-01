@@ -16,7 +16,7 @@ if (!file_exists($upgrade_trigger_path)) {
     exit(0);
 }
 
-require_once(__DIR__ . '/constants.php');
+require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/application.php';
 
 // removes library/Zend in favor of vendor
@@ -30,7 +30,7 @@ if (file_exists($libZend)) {
 }
 
 $application->bootstrap('autoloader');
-$application->bootstrap('doctrine');
+$application->bootstrap('container');
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
