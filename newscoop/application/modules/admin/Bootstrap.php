@@ -50,7 +50,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         include_once 'HTML/QuickForm/RuleRegistry.php';
         include_once 'HTML/QuickForm/group.php';
 
-        if (php_sapi_name() !== 'cli')) {
+        if (php_sapi_name() !== 'cli') {
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
                 error_log(sprintf('Newscoop error: %s in %s:%d', $p_string, $p_file, $p_line));
 
