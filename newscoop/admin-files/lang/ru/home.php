@@ -1,4 +1,5 @@
 <?php 
+regGS("Rename user", "");
 regGS("Campsite", "");
 regGS("Image Rendering", "Обработка изображения");
 regGS("Featured Article Lists", "Cписки Избранных статей");
@@ -34,12 +35,12 @@ regGS("Download was not successful. Check please that the server is not out of d
 regGS("try again later", "повторите попытку позже");
 regGS("at", "в");
 regGS("You must at least upload one file.", "Вы обязаны загрузить не менее одного файла.");
-regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и шаблоны будут удалены!");
+regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и темы (шаблоны) будут удалены!");
 regGS("Value is required and can't be empty", "Требуется значение, поле не может быть пустым.");
 regGS("Upload", "Загрузить");
 regGS("Update comment", "Обновить комментарий");
 regGS("Time created", "Время создания");
-regGS("Themes", "Шаблоны");
+regGS("Themes", "Темы (Шаблоны)");
 regGS("Stop current upload", "Отсановить текущую загрузку");
 regGS("Start uploading queue", "Начать загрузку списка");
 regGS("Start upload", "Начать загрузку");

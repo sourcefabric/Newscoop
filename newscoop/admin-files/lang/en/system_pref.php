@@ -1,10 +1,18 @@
 <?php 
+regGS("MailChimp Settings", "MailChimp Settings");
+regGS("List Unique Id:", "List Unique Id:");
+regGS("Facebook Settings", "Facebook Settings");
+regGS("App Secret:", "App Secret:");
+regGS("App ID:", "App ID:");
+regGS("API Key:", "API Key:");
+regGS("Automatic collection of statistics:", "Automatic collection of statistics:");
+regGS("to load geo-names data", "to load geo-names data");
+regGS("MySQL client command path", "MySQL client command path");
 regGS("according to php.ini settings", "according to php.ini settings");
 regGS("Maximal zoom for auto-focusing:", "Maximal zoom for auto-focusing:");
 regGS("Map border for auto-focusing:", "Map border for auto-focusing:");
 regGS("Map auto-focusing as the default behavior:", "Map auto-focusing as the default behavior:");
 regGS("Include CSS file for map view", "Include CSS file for map view");
-regGS("Collect statistics:", "Collect statistics:");
 regGS("Please enter password recovery from email.", "Please enter password recovery from email.");
 regGS("From email address:", "From email address:");
 regGS("Run scheduled tasks externally?", "Run scheduled tasks externally?");

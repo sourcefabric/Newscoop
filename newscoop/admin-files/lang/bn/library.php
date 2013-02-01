@@ -1,12 +1,12 @@
 <?php 
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Webcode", "");
 regGS("View article", "");
 regGS("Source", "");
 regGS("Select type", "");
 regGS("On", "");
 regGS("Off", "");
-regGS("Display newswires articles", "");
-regGS("Display Newswires", "");
 regGS("Article status set to '$1' for $2 articles", "");
 regGS("Article status not set to '$1' for $2 articles", "");
 regGS("$1 toggled for $2 articles.", "");

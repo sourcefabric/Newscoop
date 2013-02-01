@@ -1,12 +1,12 @@
 <?php 
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Webcode", "");
 regGS("View article", "");
 regGS("Source", "");
 regGS("Select type", "");
 regGS("On", "");
 regGS("Off", "");
-regGS("Display newswires articles", "");
-regGS("Display Newswires", "");
 regGS("Title", "სათაური");
 regGS("No video playback capabilities, please download the video below", "ვიდეოს დაკვრა შეუძლებელია, გთხოვთ გადმოქაჩოთ");
 regGS("Article status set to '$1' for $2 articles", "სტატიის სტატუსი არის \"$1\" $2 სტატიებისთვის");

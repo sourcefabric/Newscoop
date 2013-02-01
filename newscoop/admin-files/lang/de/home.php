@@ -1,6 +1,7 @@
 <?php 
+regGS("Rename user", "");
 regGS("Campsite", "");
-regGS("Image Rendering", "");
+regGS("Image Rendering", "Bildwiedergabe");
 regGS("Featured Article Lists", "Listen ausgewählter Artikel ");
 regGS("You have tried to upload an invalid backup file.", "Sie haben versucht eine ungültige Backup-Datei hochzuladen. ");
 regGS("You do not have the right to manage backups.", "Sie haben keine Berechtigung um Backups zu bearbeiten. ");

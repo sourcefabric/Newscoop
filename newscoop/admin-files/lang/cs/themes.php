@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "");
 regGS("Templates", "Šablony");
 regGS("Import theme", "Importovat téma");
 regGS("Import succeded!", "Import úspěšný!");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "");
 regGS("Export", "Export");
 regGS("Error page template", "Šablona stránky chyb");
 regGS("Edit '$1'", "Upravit '$1'");
-regGS("Duplicate assignation", "");
 regGS("Done uploading", "Nahráváni hotovo");
 regGS("Do you want to override '$1'?", "Přejete si přepsat '$1'?");
 regGS("Directory is empty", "Adresář je prázdný");

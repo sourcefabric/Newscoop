@@ -1,12 +1,12 @@
 <?php 
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Webcode", "Webcode");
 regGS("View article", "Ukázat článek");
 regGS("Source", "Zdroj");
 regGS("Select type", "Vyber typ");
 regGS("On", "Zapnout");
 regGS("Off", "Vypnout");
-regGS("Display newswires articles", "Zobrazit newswires články");
-regGS("Display Newswires", "Zobrazit Newswires");
 regGS("Title", "Název");
 regGS("No video playback capabilities, please download the video below", "Žádné možnosti přehrání videa, prosím stáhněte si video níže");
 regGS("Article status set to '$1' for $2 articles", "Stav článku je nastaven '$1' na $2 článků");

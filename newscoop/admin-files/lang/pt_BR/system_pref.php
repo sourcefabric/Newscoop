@@ -1,10 +1,18 @@
 <?php 
+regGS("MailChimp Settings", "");
+regGS("List Unique Id:", "");
+regGS("Facebook Settings", "");
+regGS("App Secret:", "");
+regGS("App ID:", "");
+regGS("API Key:", "");
+regGS("Automatic collection of statistics:", "");
+regGS("to load geo-names data", "");
+regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "");
 regGS("Maximal zoom for auto-focusing:", "Zoom máximo para foco automático:");
 regGS("Map border for auto-focusing:", "Limite de mapa para foco automático:");
 regGS("Map auto-focusing as the default behavior:", "Foco automático do mapa como comportamento padrão:");
 regGS("Include CSS file for map view", "Incluir arquivo CSS para a visualização do mapa");
-regGS("Collect statistics:", "Coletar estatísticas:");
 regGS("Please enter password recovery from email.", "");
 regGS("From email address:", "Do endereço de email:");
 regGS("Run scheduled tasks externally?", "Executar tarefas agendadas externamente?");

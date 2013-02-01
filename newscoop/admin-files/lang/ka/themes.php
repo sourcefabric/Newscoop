@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "");
 regGS("Templates", "");
 regGS("Import theme", "");
 regGS("Import succeded!", "");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "თემის მოხსნა ვერ 
 regGS("Export", "ექსპორტი");
 regGS("Error page template", "გვერდის შაბლონის შეცდომა");
 regGS("Edit '$1'", "'$1'-ის რედაქტირება");
-regGS("Duplicate assignation", "დანიშვნის დუბლირება");
 regGS("Done uploading", "აიტვირთა");
 regGS("Do you want to override '$1'?", "გსურთ '$1'-ზე გადაწერა?");
 regGS("Directory is empty", "დირექტორია ცარიელია");

@@ -1,10 +1,18 @@
 <?php 
+regGS("MailChimp Settings", "");
+regGS("List Unique Id:", "");
+regGS("Facebook Settings", "");
+regGS("App Secret:", "");
+regGS("App ID:", "");
+regGS("API Key:", "");
+regGS("Automatic collection of statistics:", "");
+regGS("to load geo-names data", "");
+regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "σύμφωνα με τις ρυθμίσεις  php.ini");
 regGS("Maximal zoom for auto-focusing:", "Μέγιστο ζούμ για αυτόματη εστίαση:");
 regGS("Map border for auto-focusing:", "Χάρτης συνόρων για αυτόματη εστίαση:");
 regGS("Map auto-focusing as the default behavior:", "Χάρτης αυτόματης εστίασης ως προεπιλογή:");
 regGS("Include CSS file for map view", "Συμπεριλάβετε το αρχείο CSS για προβολή χάρτη");
-regGS("Collect statistics:", "Συλλογή στατιστικών:");
 regGS("Please enter password recovery from email.", "Παρακαλούμε εισάγετε τον κωδικό ανάκτησης από το email σας.");
 regGS("From email address:", "Από διεύθυνση ηλεκτρονικού ταχυδρομίου:");
 regGS("Run scheduled tasks externally?", "Εκτέλεση προγραμματισμένων εργασιών εξωτερικά;");

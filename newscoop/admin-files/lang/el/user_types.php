@@ -1,4 +1,5 @@
 <?php 
+regGS("get", "");
 regGS("Soundcloud", "Soundcloud");
 regGS("Templates", "Πρότυπα");
 regGS("Feedback Messages", "Μηνύματα Feedback");

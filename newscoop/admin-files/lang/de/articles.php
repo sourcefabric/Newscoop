@@ -1,6 +1,7 @@
 <?php 
-regGS("Blog management", "");
-regGS("Add article to a list", "");
+regGS("Rating", "");
+regGS("Enable Rating", "");
+regGS("Blog management", "Blog Managment");
 regGS("View article", "Artikel ansehen");
 regGS("Select a list", "Liste auswählen");
 regGS("Remove list", "Liste entfernen");

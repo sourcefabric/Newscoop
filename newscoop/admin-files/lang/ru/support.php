@@ -1,4 +1,5 @@
 <?php 
+regGS("Don't remind me", "");
 regGS("You are sending daily statistics.", "Вы отправляете ежеденевную статистику.");
 regGS("You are NOT sending daily statistics.", "Вы НЕ отправляете ежеденевную статистику.");
 regGS("Yes, help Newscoop", "Да, помогите Newscoop");

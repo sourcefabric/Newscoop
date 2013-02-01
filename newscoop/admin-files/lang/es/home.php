@@ -1,4 +1,5 @@
 <?php 
+regGS("Rename user", "");
 regGS("Campsite", "");
 regGS("Image Rendering", "Generación de imagen");
 regGS("Featured Article Lists", "Lista de articulos seleccionados");

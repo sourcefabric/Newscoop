@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "");
 regGS("Templates", "Templates");
 regGS("Import theme", "Importar o tema");
 regGS("Import succeded!", "Importação completada!");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "");
 regGS("Export", "Exportar");
 regGS("Error page template", "Erro no template da página");
 regGS("Edit '$1'", "Editar '$1'");
-regGS("Duplicate assignation", "");
 regGS("Done uploading", "Upload terminado");
 regGS("Do you want to override '$1'?", "Quer substituir '$1'?");
 regGS("Directory is empty", "O diretório está vazio");

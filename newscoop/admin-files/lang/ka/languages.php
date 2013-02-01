@@ -1,4 +1,5 @@
 <?php 
+regGS("Language id not specified", "");
 regGS("No languages.", "ენები არ არის.");
 regGS("Native Name", "მშობლიური ენა");
 regGS("Name taken.", "სახელი გამოყენებულია.");

@@ -1,6 +1,6 @@
 <?php 
-regGS("so that default templates can be assigned to the issue.", "");
-regGS("Once this is done, the issue can be published", "");
+regGS("so that default templates can be assigned to the issue.", "so dass das Standardtemplate dieser Ausgabe zugewiesen werden kann.");
+regGS("Once this is done, the issue can be published", "Wenn dies erledigt ist, kann die Ausgabe veröffentlicht werden. ");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure the publication has a theme assigned.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure it has the front template selected.");
 regGS("Publish all articles:", "Alle Artikel veröffentlichen: ");

@@ -1,4 +1,6 @@
 <?php 
+regGS("There are no more comments", "");
+regGS("Show more comments", "");
 regGS("Unrecommend", "Nedoporučeno");
 regGS("Save comment", "Uložit komentář");
 regGS("Recommend", "Doporučeno");

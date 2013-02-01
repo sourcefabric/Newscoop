@@ -1,4 +1,5 @@
 <?php 
+regGS("Usage at automatic statistics", "");
 regGS("Event Color", "Цвет события");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "В поле $3 нужно ввести число большее, чем $1 и меньшее, чем $2.");
 regGS("You do not have the right to translate article types.", "У вас нет прав на перевод типов статей. ");

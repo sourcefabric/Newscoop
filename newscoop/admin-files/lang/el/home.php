@@ -1,4 +1,5 @@
 <?php 
+regGS("Rename user", "");
 regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");

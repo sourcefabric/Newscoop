@@ -1,7 +1,7 @@
 <?php 
 regGS("default", "по умолчанию");
 regGS("before you can configure the section templates.", "перед тем, как вы сможете настроить шаблоны рубрик.");
-regGS("You have to assign a theme to the issue", "Вы должны назначить тему для выпуска");
+regGS("You have to assign a theme to the issue", "Вы должны назначить тему (шаблон) для выпуска");
 regGS("The section number $1 was already in use.", "Рубрика № $1 уже используется.");
 regGS("Delete all articles written in $1 language from this section", "Удалить все статьи, написанные на языке $1, из этой рубрики");
 regGS("Delete all articles and all of their translations", "Удалить все статьи и все переводы для этой статьи");

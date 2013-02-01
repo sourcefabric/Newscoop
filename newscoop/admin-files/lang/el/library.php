@@ -1,12 +1,12 @@
 <?php 
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Webcode", "Webcode");
 regGS("View article", "Προβολή άρθρου");
 regGS("Source", "Πηγή");
 regGS("Select type", "Επιλέξτε τύπο");
 regGS("On", "On");
 regGS("Off", "Off");
-regGS("Display newswires articles", "Εμφάνιση  newswires άρθρων");
-regGS("Display Newswires", "Εμφάνιση Newswires");
 regGS("Title", "Τίτλος");
 regGS("No video playback capabilities, please download the video below", "Δεν υπάρχουν δυνατότητες αναπαραγωγής βίντεο, παρακαλούμε κατεβάστε το ακόλουθο βίντεο ");
 regGS("Article status set to '$1' for $2 articles", "Η κατάσταση του άρθρου ρυθμίστηκε σε '$1' για $2 άρθρα");

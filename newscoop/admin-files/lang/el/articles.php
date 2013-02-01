@@ -1,6 +1,7 @@
 <?php 
+regGS("Rating", "");
+regGS("Enable Rating", "");
 regGS("Blog management", "");
-regGS("Add article to a list", "Προσθήκη άρθρου σε λίστα");
 regGS("View article", "Προβολή άρθρου");
 regGS("Select a list", "Επιλέξτε μια λίστα");
 regGS("Remove list", "Αφαίρεση λίστας");

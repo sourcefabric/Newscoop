@@ -1,12 +1,12 @@
 <?php 
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Webcode", "Веб код");
 regGS("View article", "Погледај текст");
 regGS("Source", "Извор");
 regGS("Select type", "Изабери тип");
 regGS("On", "На");
 regGS("Off", "Искључено");
-regGS("Display newswires articles", "Прикажи текстове из дистрибутивног канала");
-regGS("Display Newswires", "Прикажи дистрибутивне канале");
 regGS("Title", "Назив");
 regGS("No video playback capabilities, please download the video below", "Без могућности репродукције видеа, молим преузмите видео");
 regGS("Article status set to '$1' for $2 articles", "Статус текста постављен на '$1'за $2 текстова");
