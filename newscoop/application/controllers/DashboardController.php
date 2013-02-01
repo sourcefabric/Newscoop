@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Entity\User;
+use Newscoop\Topic\SaveUserTopicsCommand;
 
 /**
  */
@@ -35,14 +36,21 @@ class DashboardController extends Zend_Controller_Action
         if (empty($this->user)) {
             $this->_helper->redirector('index', 'auth');
         }
+
+        if ($this->user->isPending()) {
+            $this->_helper->redirector('confirm', 'register');
+        }
     }
 
     public function indexAction()
     {
-        $form = new Application_Form_Profile();
+        $form = $this->_helper->form('profile');
         $form->setMethod('POST');
+        $form->setDefaults((array) $this->user->getView());
 
-        $form->setDefaultsFromEntity($this->user);
+        $listView = $this->_helper->service('mailchimp.list')->getListView();
+        $memberView = $this->_helper->service('mailchimp.list')->getMemberView($this->user->getEmail());
+        $this->_helper->newsletter->initForm($form, $listView, $memberView);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -54,6 +62,8 @@ class DashboardController extends Zend_Controller_Action
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
                 $this->service->save($values, $this->user);
+                $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
+                $this->_helper->flashMessenger->addMessage(getGS('Profile saved.'));
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
@@ -67,40 +77,28 @@ class DashboardController extends Zend_Controller_Action
                 }
             }
         }
-        
-        $this->view->user_first_name = $this->user->getFirstName();
-        $this->view->user_last_name = $this->user->getLastName();
-        $this->view->user_email = $this->user->getEmail();
-                
-        $this->view->form = $form;
+
         $this->view->user = new MetaUser($this->user);
-        $this->view->first_time = $this->_getParam('first', false);
+        $this->view->form = $form;
+        $this->view->newsletter = $listView;
     }
 
-    public function updateTopicsAction()
+    public function saveTopicsAction()
     {
-        try {
-            $this->_helper->service('user.topic')->updateTopics($this->user, $this->_getParam('topics', array()));
-            $this->view->status = '0';
-        } catch (Exception $e) {
-            $this->view->status = -1;
-            $this->view->message = $e->getMessage();
-        }
-    }
+        $form = new Application_Form_Topics();
 
-    public function followTopicAction()
-    {
-        $service = $this->_helper->service('user.topic');
-        $topic = $service->findTopic($this->_getParam('topic'));
-        if (!$topic) {
-            $this->_helper->flashMessenger(array('error', "No topic to follow"));
-            $this->_helper->redirector('index', 'index', 'default');
+        $topics = $this->_helper->service('topic')->getMultiOptions();
+        $form->topics->setMultiOptions($topics);
+        $form->selected->setMultiOptions($topics);
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $command = new SaveUserTopicsCommand($form->getValues());
+            $command->userId = $this->user->getId();
+            $this->_helper->service('user.topic')->saveUserTopics($command);
+            $this->_helper->json($command->selected);
         }
 
-        $service = $this->_helper->service('user.topic');
-        $service->followTopic($this->user, $topic);
-
-        $this->_helper->flashMessenger("Topic added to followed");
-        $this->_helper->redirector->gotoUrl($_SERVER['HTTP_REFERER']);
+        $this->getResponse()->setHttpResponseCode(400);
+        $this->_helper->json($form->getMessages());
     }
 }

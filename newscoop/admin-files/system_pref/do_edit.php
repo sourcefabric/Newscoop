@@ -35,6 +35,7 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 	$f_external_cron_management = Input::Get('f_external_cron_management');
 } else {
+	$f_collect_statistics = SystemPref::Get('CollectStatistics');
 	$f_cache_engine = SystemPref::Get('DBCacheEngine');
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
 	$f_smtp_host = SystemPref::Get("SMTPHost");
@@ -263,6 +264,17 @@ if ((!camp_geodata_loaded($g_ado_db)) && (!empty($f_mysql_client_command_path)))
     camp_load_geodata($f_mysql_client_command_path, $Campsite['db']);
 }
 
+$keys = array(
+    'mailchimp_apikey', 'mailchimp_listid',
+    'facebook_appid', 'facebook_appsecret',
+);
+
+foreach ($keys as $key) {
+    if (array_key_exists($key, $_POST)) {
+        SystemPref::Set($key, $_POST[$key]);
+    }
+}
+
 // Success message if everything was ok
 if ($msg_ok == 1) {
     camp_html_add_msg(getGS("System preferences updated."), "ok");
@@ -271,4 +283,3 @@ if ($msg_ok == 1) {
 CampPlugin::PluginAdminHooks(__FILE__);
 
 camp_html_goto_page("/$ADMIN/system_pref/");
-?>

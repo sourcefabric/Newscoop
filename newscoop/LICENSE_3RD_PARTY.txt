@@ -8,15 +8,19 @@ Below are the licenses for the projects we use, with Debian package names where 
 
 NOTE: This list is a work in progress, we apologize to any project no mentioned here at this point.
 
--------------
-PHP Libraries
--------------
+--------------------------------
+PHP Frameworks, Tools, Libraries
+--------------------------------
 
 * Smarty v3 - (http://www.smarty.net) - GNU LESSER GENERAL PUBLIC LICENSE, Version 3 (Debian: smarty)
 
 * Doctrine - (http://www.doctrine-project.org/) - GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1 "sudo pear channel-discover pear.doctrine-project.org" "sudo pear install pear.doctrine-project.org/Doctrine-1.2.4"
 
 * Zend Framework - (http://framework.zend.com/license) - New BSD License
+
+* Symfony - (http://symfony.com) - MIT License
+
+* Composer - (http://getcomposer.org) - MIT License
 
 * GETID3 - GNU GENERAL PUBLIC LICENSE, Version 2 (Debian: php-getid3)
 

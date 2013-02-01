@@ -1,11 +1,12 @@
 <?php
-require_once(__DIR__ . '/../constants.php');
 
 // Define application environment, (I am only running this in development)
 define('APPLICATION_ENV', 'development');
 
+require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application.php';
-$application->bootstrap();
+
+$application->bootstrap('container');
 
 // Retrieve Doctrine Container resource
 $em = Zend_Registry::get('container')->getService('em');

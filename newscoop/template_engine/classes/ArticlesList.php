@@ -398,7 +398,7 @@ class ArticlesList extends ListObject
                         }
     		        }
     		        if (!$foundField) {
-    		            CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
+    		            CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles");
     		            break;
     		        }
     		        switch ($foundField)
@@ -408,7 +408,7 @@ class ArticlesList extends ListObject
     		            break;
     		            default: break;
     		        }
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_articles");
     		}
     	}
 

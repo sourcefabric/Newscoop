@@ -814,7 +814,8 @@ function camp_detect_database_version($p_dbName, &$version, &$roll = '')
  */
 function camp_migrate_config_file($p_configFile)
 {
-    global $Campsite;
+    
+global $Campsite;
 
     $config_options = array('DATABASE_NAME',
                             'DATABASE_SERVER_ADDRESS',
@@ -1253,7 +1254,7 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
         if (!empty($query) && ($query{0} != '#') && (0 !== strpos($query, "--"))) {
 
             if (0 !== strpos(strtolower($query), "system")) {
-                if ($db_conn->Execute($query) == false) {
+                if ($db_conn->Execute($query) === false) {
                     $errors++;
                     $errorQueries[] = $query;
                     $errorQueries[] = $db_conn->ErrorMsg();

@@ -64,7 +64,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         global $application;
 
-        $doctrine = $application->getBootstrap()->getResource('container')->getService('doctrine');
+        $doctrine = Zend_Registry::get('container')->getService('newscoop_doctrine');
         $orm = $doctrine->getEntityManager();
         $orm->clear();
 

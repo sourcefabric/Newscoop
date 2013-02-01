@@ -162,3 +162,22 @@ services:
     notification:
         class:      Newscoop\Services\NotificationService
         arguments:  ["@em"]
+    topic:
+        class: Newscoop\Topic\TopicService
+        arguments: ["@em"]
+    http.client.factory:
+        class: Newscoop\Http\ClientFactory
+    search.index:
+        class: Newscoop\Search\SolrIndex
+        arguments: ["@http.client.factory", "%search%"]
+    search.indexer.article:
+        class: Newscoop\Search\ArticleIndexer
+        arguments: ["@em", "@search.index"]
+    preferences:
+        class: SystemPref
+    mailchimp.api.factory:
+        class: Newscoop\MailChimp\ApiFactory
+        arguments: ["@preferences"]
+    mailchimp.list:
+        class: Newscoop\MailChimp\ListApi
+        arguments: ["@mailchimp.api.factory", "@preferences"]

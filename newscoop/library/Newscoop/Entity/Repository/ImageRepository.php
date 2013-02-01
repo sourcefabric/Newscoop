@@ -48,6 +48,7 @@ class ImageRepository extends EntityRepository
             ->getQuery();
 
         $query->setParameter('file', $file);
+
         return $query->getSingleScalarResult();
     }
 }

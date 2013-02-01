@@ -36,7 +36,7 @@ parameters:
         proxy:
             dir: "%application_path%/../library/Proxy"
             namespace: "Proxy"
-            autogenerate: "0"
+            autogenerate: false
         functions:
             rand: "Newscoop\Query\MysqlRandom"
             dayofweek: "Newscoop\Query\MysqlDayOfWeek"
@@ -137,3 +137,5 @@ parameters:
     image:
         cache_url: "images/cache"
         cache_path: "%application_path%/../images/cache"
+    search:
+        solr_server: "http://localhost:8983/solr"

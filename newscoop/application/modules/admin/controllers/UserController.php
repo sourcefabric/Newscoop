@@ -61,7 +61,17 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->criteria = (object) array_filter($criteria, function ($value) { return $value !== null; });
         $this->view->users = array();
         foreach ($users as $user) {
-            $this->view->users[] = $user->getEditView($this->view);
+            $userView = $user->getEditView($this->view);
+            $userView->links[] = array(
+                'rel' => 'rename',
+                'href' => $this->view->url(array(
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'rename',
+                    'user' => $userView->id,
+                ), 'default', true),
+            );
+            $this->view->users[] = $userView;
         }
 
         if ($this->_helper->contextSwitch->getCurrentContext() === 'json') {
@@ -83,6 +93,53 @@ class Admin_UserController extends Zend_Controller_Action
                 'class' => 'add',
             ),
         );
+
+        $this->view->activeCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_ACTIVE));
+        $this->view->pendingCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_INACTIVE));
+        $this->view->inactiveCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
+        $this->view->filter = $this->_getParam('filter', '');
+    }
+
+    public function listAction()
+    {
+        $this->_helper->layout->disableLayout();
+
+        $filters = array(
+            'active' => User::STATUS_ACTIVE,
+            'pending' => User::STATUS_INACTIVE,
+            'inactive' => User::STATUS_DELETED,
+        );
+
+        $filter = $this->_getParam('filter', 'active');
+        if (!array_key_exists($filter, $filters)) {
+            $filter = 'active';
+        }
+
+        $page = $this->_getParam('page', 1);
+        $count = $this->_helper->service('user')->countBy(array('status' => $filters[$filter]));
+        $paginator = Zend_Paginator::factory($count);
+        $paginator->setItemCountPerPage(self::LIMIT);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setView($this->view);
+        $paginator->setDefaultScrollingStyle('Sliding');
+        $this->view->paginator = $paginator;
+
+        $this->view->users = $this->_helper->service('user')->findBy(array(
+            'status' => $filters[$filter],
+        ), array(
+            'username' => 'asc',
+            'email' => 'asc',
+        ), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+
+        $this->render("list-$filter");
+    }
+
+    public function searchAction()
+    {
+        $this->_helper->layout->disableLayout();
+
+        $q = $this->_getParam('q', null);
+        $this->view->users = $this->_helper->service('user.search')->find($q);
     }
 
     public function createAction()
@@ -176,6 +233,33 @@ class Admin_UserController extends Zend_Controller_Action
         );
     }
 
+    public function renameAction()
+    {
+        $user = $this->getUser()->render();
+        $form = new Admin_Form_RenameUser();
+        $form->setDefaults(array('username', $user->username));
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = (object) $form->getValues();
+            $values->userId = $user->id;
+
+            try {
+                $this->_helper->service('user')->renameUser($values);
+                $this->_helper->flashMessenger->addMessage(getGS("User renamed."));
+                $this->_helper->redirector('rename', 'user', 'admin', array(
+                    'user' => $user->id,
+                    'filter' => $this->_getParam('filter'),
+                ));
+            } catch (InvalidArgumentException $e) {
+                $form->username->addError(getGS("Username is used already"));
+            }
+        }
+
+        $this->view->form = $form;
+        $this->view->user = $user;
+    }
+
     public function deleteAction()
     {
         $this->_helper->contextSwitch->addActionContext($this->_getParam('action'), 'json')->initContext();
@@ -193,10 +277,7 @@ class Admin_UserController extends Zend_Controller_Action
 
         $form = new Admin_Form_Profile();
         $user = $this->getUser();
-
-        $formProfile = new Application_Form_Profile();
-        $formProfile->setDefaultsFromEntity($user);
-        $form->addSubform($formProfile->getSubform('attributes'), 'attributes');
+        $this->addUserAttributesSubForm($form, $user);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -330,5 +411,27 @@ class Admin_UserController extends Zend_Controller_Action
             }
             $this->_helper->redirector->gotoSimple('index', 'feedback');
         }
+    }
+
+    /**
+     * Add user attributes subform to form
+     *
+     * @param Zend_Form $form
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    private function addUserAttributesSubForm(Zend_Form $form, User $user)
+    {
+        $subForm = new Zend_Form_SubForm();
+        $subForm->setLegend(getGS('User attributes'));
+
+        foreach ($user->getRawAttributes() as $key => $val) {
+            $subForm->addElement('text', $key, array(
+                'label' => $key,
+            ));
+        }
+
+        $subForm->setDefaults($user->getAttributes());
+        $form->addSubForm($subForm, 'attributes');
     }
 }

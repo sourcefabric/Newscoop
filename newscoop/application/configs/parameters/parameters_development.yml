@@ -4,8 +4,6 @@ parameters:
             acl:
                 cache: "Doctrine\Common\Cache\ArrayCache"
     doctrine:
-        proxy:
-            autogenerate: "1"
         cache: "Doctrine\Common\Cache\ArrayCache"
     phpSettings:
         display_startup_errors: "1"
