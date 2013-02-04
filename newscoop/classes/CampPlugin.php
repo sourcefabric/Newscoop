@@ -580,7 +580,6 @@ class CampPlugin extends DatabaseObject
      */
     public static function OnAfterUpgrade()
     {
-
         foreach (self::GetPluginsInfo() as $info) {
             if (isset($info['upgrade'])) {
                 if (!isset($info['name'])) {
@@ -595,6 +594,9 @@ class CampPlugin extends DatabaseObject
                 }
             }
         }
+
+        // update autoload 
+        exec('php '.$GLOBALS['g_campsiteDir'].'/scripts/newscoop.php autoload:update');
     }
 }
 

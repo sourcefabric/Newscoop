@@ -498,6 +498,8 @@ if ($showUserMenu) {
             'module' => 'admin',
             'controller' => 'user',
             'action' => 'index',
+            'reset_params' => false,
+            'params' => array('user' => null),
             'pages' => array(
                 array(
                     'label' => getGS('Edit user'),
@@ -515,6 +517,14 @@ if ($showUserMenu) {
                             'visible' => false,
                         ),
                     ),
+                ),
+                array(
+                    'label' => getGS('Rename user'),
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'rename',
+                    'visible' => false,
+                    'reset_params' => false,
                 ),
                 array(
                     'label' => getGS('Create new user'),

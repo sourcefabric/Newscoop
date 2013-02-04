@@ -42,7 +42,7 @@ class PlaylistRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date, a.workflowStatus, l.id language" )
+            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.published date, a.workflowStatus, l.id language" )
         .   " FROM Newscoop\Entity\PlaylistArticle pa
             JOIN pa.article a
             JOIN a.language l
@@ -104,8 +104,10 @@ class PlaylistRepository extends EntityRepository
     }
 
     /**
-     * Gets which playlist the article belongs to if any
+     * Gets the list of playlist the given article belongs to.
+     *
      * @param int $articleId
+     * @return array
      */
     public function getArticlePlaylists($articleId)
     {
@@ -120,6 +122,13 @@ class PlaylistRepository extends EntityRepository
             // TODO log here
             return array();
         }
+
+        $playlists = array();
+        foreach ((array) $playlistArticles as $playlistArticle) {
+            $playlists[] = $playlistArticle->getPlaylist();
+        }
+
+        return $playlists;
     }
 
     /**

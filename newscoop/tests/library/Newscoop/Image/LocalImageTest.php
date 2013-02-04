@@ -91,7 +91,7 @@ class LocalImageTest extends \TestCase
 
     /**
      * @ticket WOBS-1189
-     * @expectedException RuntimeException
+     * @ticket CS-4546
      */
     public function testGetImageSizeWrongImage()
     {
@@ -99,6 +99,6 @@ class LocalImageTest extends \TestCase
         file_put_contents($tmp, '');
 
         $image = new LocalImage(basename($tmp));
-        $image->getWidth();
+        $this->assertEquals(LocalImage::BROKEN_WIDTH, $image->getWidth());
     }
 }

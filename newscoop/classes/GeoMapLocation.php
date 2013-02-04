@@ -1082,7 +1082,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             foreach ($rows as $row) {
                 $tmp_loc = trim(strtolower($row['loc']));
                 $loc_matches = array();
-                if (!preg_match('/^point\((?P<latitude>[\d.-]+)\s(?P<longitude>[\d.-]+)\)$/', $tmp_loc, $loc_matches)) {continue;}
+                if (!preg_match('/^point\((?P<latitude>[\d.-]+[eE]?[\d.-]*)\s(?P<longitude>[\d.-]+[eE]?[\d.-]*)\)$/', $tmp_loc, $loc_matches)) {continue;}
                 $tmp_latitude = $loc_matches['latitude'];
                 $tmp_longitude = $loc_matches['longitude'];
 

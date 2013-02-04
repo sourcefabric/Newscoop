@@ -41,7 +41,6 @@ class Webcode
     {
         $this->webcode = (string) $webcode;
         $this->article = $article;
-        $article->setWebcode($this);
     }
 
     /**

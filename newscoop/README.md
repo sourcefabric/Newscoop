@@ -1,18 +1,19 @@
-    Newscoop
-    version     : 4.0.2
-    release date: July 12, 2012
-    contact     : contact@sourcefabric.org
-    url         : http://www.sourcefabric.org
-    copyright   : (C) 2010-2012 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
-    support     : mailto: newscoop-support@lists.sourcefabric.org
-    manual      : http://sourcefabric.org/en/products/newscoop_manuals/
+Newscoop
+version     : 4.1.0
+release date: January 29, 2013 
+contact     : contact@sourcefabric.org
+url         : http://www.sourcefabric.org
+copyright   : (C) 2010-2013 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
+support     : mailto: newscoop-support@lists.sourcefabric.org
+manual      : http://sourcefabric.org/en/products/newscoop_manuals/
 
-### INTRODUCTION
+INTRODUCTION
 
-Newscoop is a robust, stable, and journalist-friendly solution for online magazines and newspapers that speaks your language.
+Newscoop is a robust, stable, and journalist-friendly solution for
+online magazines and newspapers that speaks your language.
 
-Newscoop follows the print-newspaper publishing paradigm, so it structures sites by default as Publications > Issues > Sections >
-Articles.
+Newscoop follows the print-newspaper publishing paradigm, so it
+structures sites by default as Publications > Issues > Sections > Articles.
 
 Newscoop is available in: Arabic, Belarusian, Chinese, Croatian, Czech, Dutch, English, German, Korean, Portuguese, Polish, Romanian, Russian, Serbian (Cyrillic), Serbo-Croatian (Latin), Spanish, and Swedish.
 However, the interface can easily be localized to new languages using its built-in 'Localizer'.

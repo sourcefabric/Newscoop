@@ -7,7 +7,12 @@
 
 namespace Newscoop\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityNotFoundException;
+use ArticleData;
+use Newscoop\View\ArticleView;
 
 /**
  * Article entity
@@ -58,37 +63,6 @@ class Article
     private $creator;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Author")
-     * @ORM\JoinTable(name="ArticleAuthors",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
-     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
-     *      }
-     *  )
-     * @var Newscoop\Entity\Authors
-     */
-    private $authors;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AuthorType")
-     * @ORM\JoinTable(name="ArticleAuthors",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
-     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage"),
-     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="IdLanguage"),
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
-     *      }
-     *  )
-     * @var Newscoop\Entity\Authors
-     */
-    private $articleAuthorTypes;
-
-    /**
      * Article fields used by Newscoop API
      * @var array
      */
@@ -132,10 +106,16 @@ class Article
     private $shortName;
 
     /**
-     * @ORM\Column(name="time_updated", nullable=True)
-     * @var string
+     * @ORM\Column(type="datetime", name="time_updated", nullable=true)
+     * @var DateTime
      */
-    private $date;
+    private $updated;
+
+    /**
+     * @ORM\Column(type="datetime", name="indexed", nullable=true)
+     * @var DateTime
+     */
+    private $indexed;
 
     /**
      * @ORM\Column(name="comments_enabled", nullable=True)
@@ -161,13 +141,13 @@ class Article
     private $type;
     
     /**
-     * @ORM\Column(name="PublishDate", nullable=True)
-     * @var string
+     * @ORM\Column(type="datetime", name="PublishDate", nullable=true)
+     * @var DateTime
      */
     private $published;
     
     /**
-     * @ORM\Column(name="Published", nullable=True)
+     * @ORM\Column(name="Published", nullable=true)
      * @var string
      */
     private $workflowStatus;
@@ -301,6 +281,26 @@ class Article
     private $webcode;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $authors;
+
+    /**
+     * @var ArticleData
+     */
+    private $data;
+
+    /**
      * @param int $number
      * @param Newscoop\Entity\Language $language
      */
@@ -308,6 +308,9 @@ class Article
     {
         $this->number = (int) $number;
         $this->language = $language;
+        $this->updated = new DateTime();
+        $this->authors = new ArrayCollection();
+        $this->topics = new ArrayCollection();
     }
 
     /**
@@ -508,7 +511,7 @@ class Article
      */
     public function getDate()
     {
-        return $this->date;
+        return $this->updated;
     }
 
     /**
@@ -824,5 +827,122 @@ class Article
         }
 
         return $this->renditions;
+    }
+
+    /**
+     * Publish article
+     *
+     * @return void
+     */
+    public function publish()
+    {
+        $this->workflowStatus = self::STATUS_PUBLISHED;
+        $this->published = new DateTime();
+    }
+
+    /**
+     * Set indexed
+     *
+     * @return void
+     */
+    public function setIndexed()
+    {
+        $this->indexed = new DateTime();
+        $this->updated = clone $this->updated;
+    }
+
+    /**
+     * Author article
+     *
+     * @param string $title
+     * @param array $fields
+     * @return void
+     */
+    public function author($title, array $fields)
+    {
+        $this->name = (string) $title;
+
+        foreach ($fields as $key => $val) {
+            $this->setFieldValue($key, $val);
+        }
+    }
+
+    /**
+     * Get view
+     *
+     * @return object
+     */
+    public function getView()
+    {
+        try {
+            $view = new ArticleView(array(
+                'number' => $this->number,
+                'language' => $this->language->getCode(),
+                'title' => $this->name,
+                'updated' => $this->updated,
+                'published' => $this->published,
+                'indexed' => $this->indexed,
+                'type' => $this->type,
+                'webcode' => $this->webcode ? (string) $this->webcode : null,
+                'publication_number' => $this->publication ? $this->publication->getId() : null,
+                'issue_number' => $this->issue ? $this->issue->getNumber() : null,
+                'section_number' => $this->section ? $this->section->getNumber() : null,
+                'keywords' => array_filter(explode(',', $this->keywords)),
+            ));
+        } catch (EntityNotFoundException $e) {
+            return new ArticleView();
+        }
+
+        $view->authors = $this->authors->map(function ($author) { return $author->getView()->name; })
+            ->toArray();
+
+        $view->topics = $this->topics->map(function ($topic) { return $topic->getView()->name; })
+            ->toArray();
+
+        $this->addFields($view);
+        return $view;
+    }
+
+    /**
+     * Set article type field value
+     *
+     * @param string $field
+     * @param string $value
+     * @return void
+     */
+    private function setFieldValue($field, $value)
+    {
+        $this->initArticleData();
+        $this->data->setProperty('F' . $field, $value);
+    }
+
+    /**
+     * Add field properties to view
+     *
+     * @return array
+     */
+    private function addFields(ArticleView $view)
+    {
+        $this->initArticleData();
+        foreach ($this->data->getUserDefinedColumns(true) as $column) {
+            $columnName = $column->getPrintName();
+            if (!property_exists($view, $columnName)) {
+                $view->$columnName = $this->data->getFieldValue($columnName);
+            }
+        }
+    }
+
+    /**
+     * Init ArticleData
+     *
+     * @return ArticleData
+     */
+    private function initArticleData()
+    {
+        if ($this->data === null) {
+            $this->data = new ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+
+        return $this->data;
     }
 }

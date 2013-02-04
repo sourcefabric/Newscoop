@@ -1,10 +1,26 @@
 <?php if (empty($userIsBlogger)) : ?>
 <div class="articlebox" title="<?php putGS('Featured Article Lists'); ?>">
-	<div>
-		<div id="playlist" style="margin-left:8px">
-    		<div id="playlistArticles" style="display:block; padding-bottom:8px;">
+  <div>
+    <div id="playlist">
+      <div id="playlistArticles" style="display:block; padding-bottom:8px;">
+      <?php
+          try {
+              $playlists = Zend_Registry::get('doctrine')
+                  ->getEntityManager()
+                  ->getRepository('Newscoop\Entity\Playlist')
+                  ->getArticlePlaylists(Input::Get('f_article_number', 'int', 1));
 
-    		</div>
+              $playlistsData = array();
+              foreach ($playlists as $playlist) {
+                  $playlistsData[] = (object) array (
+                      'name' => $playlist->getName(),
+                      'id' => $playlist->getId(),
+                  );
+              }
+          } catch(\Exception $e) {
+              $playlistsData = array();
+          }
+      ?>
 
     		<label>
 			<?php
@@ -33,19 +49,14 @@
 			</ul>
 			</label>
 
-			<?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
-			<label>
-            <span id="playlist-default-message" <?php if (count($playlistsData)) : ?>style="display:none"<?php endif; ?>>
-			    <?php putGS('Add article to a list'); ?>
-			</span>
-			</label>
-
-    		<a class="iframe ui-state-default icon-button right-floated"
-    			popup-width="600"
-        		href="<?php echo camp_html_article_url($articleObj, $f_language_id, "playlist/popup.php"); ?>">
-       		<span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
-       		<?php endif; ?>
-		</div>
-	</div>
+      <?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
+      <a class="iframe ui-state-default icon-button right-floated"
+        popup-width="600"
+        href="<?php echo camp_html_article_url($articleObj, $f_language_id, "playlist/popup.php"); ?>">
+        <span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
+      <?php endif; ?>
+    </div>
+  </div>
 </div>
 <?php endif; ?>
+

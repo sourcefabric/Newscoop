@@ -11,7 +11,7 @@ use Newscoop\Entity\User;
 
 /**
  */
-class BlogServiceTest extends \PHPUnit_Framework_TestCase
+class BlogServiceTest extends \TestCase
 {
     const GROUP_BLOGGER = 1;
     const GROUP_OTHER = 2;
@@ -30,6 +30,9 @@ class BlogServiceTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->service = new BlogService($this->config);
+        $this->setUpOrm(
+            'Newscoop\Entity\Article'
+        );
     }
 
     public function testBlogService()
@@ -81,6 +84,7 @@ class BlogServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSection()
     {
+        $this->markTestSkipped('Requires adodb mock.');
         $user = new User('uname');
         $this->assertNull($this->service->getSection($user));
     }

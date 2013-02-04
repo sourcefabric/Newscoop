@@ -7,9 +7,10 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Ingest\Feed,
-    Newscoop\Entity\Ingest\Feed\Entry,
-    Newscoop\Services\Ingest\PublisherService;
+use DateTime;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed\Entry;
+use Newscoop\Services\Ingest\PublisherService;
 
 class IngestServiceTest extends \RepositoryTestCase
 {
@@ -27,7 +28,7 @@ class IngestServiceTest extends \RepositoryTestCase
         parent::setUp('Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
         $this->cleanFiles();
 
-        $this->config = \Zend_Registry::get('container')->getParameter('ingest');
+        $this->config = array('path' => APPLICATION_PATH . '/../tests/ingest');
         $this->publisher = new PublisherService(\Zend_Registry::get('container')->getParameter('ingest_publisher'));
         $this->service = new IngestService($this->config, $this->em, $this->publisher);
     }
@@ -58,12 +59,17 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testFindBy()
     {
         $feed = new Feed('title');
-        $feed->addEntry(new Entry('title', 'content'));
-        $feed->addEntry(new Entry('title2', 'content'));
+        $this->service->addFeed($feed);
 
-        $this->em->persist($feed);
+        $entry = new Entry('title', 'content');
+        $entry->setFeed($feed);
+        $this->em->persist($entry);
+
+        $entry = new Entry('title2', 'content');
+        $entry->setFeed($feed);
+        $this->em->persist($entry);
+
         $this->em->flush();
-        $this->em->clear();
 
         $entries = $this->service->findBy(array('feed' => $feed->getId()), array('updated' => 'desc'), 10, 0);
         $this->assertEquals(2, count($entries));
@@ -87,12 +93,14 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateSDA()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
-        $this->assertEquals(0, count($feed->getEntries()));
+
+        $this->assertEquals(0, count($this->service->findBy(array('feed' => $feed->getId()))));
 
         $this->service->updateSDA();
 
-        $this->assertEquals(7, count($feed->getEntries()));
+        $this->assertEquals(7, count($this->service->findBy(array('feed' => $feed->getId()))));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
     }
 
@@ -105,23 +113,25 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateAllUnique()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
 
         $this->service->updateSDA();
         $this->service->updateSDA();
 
-        $this->assertEquals(7, count($feed->getEntries()));
+        $this->assertEquals(7, count($this->service->findBy(array('feed' => $feed->getId()))));
     }
 
     public function testUpdateAllTimeout()
     {
         $feed = new Feed('SDA');
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
 
         $this->service->updateSDA();
-        $this->assertEquals(7, count($feed->getEntries()));
+        $this->assertEquals(7, count($this->service->findBy(array('feed' => $feed->getId()))));
     }
 
     public function testLiftEmbargoNew()

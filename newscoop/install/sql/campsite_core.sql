@@ -267,6 +267,8 @@ CREATE TABLE `Articles` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `object_id` int(11) DEFAULT NULL,
   `webcode` varchar(10) DEFAULT NULL,
+  `indexed` timestamp NULL DEFAULT NULL,
+  `rating_enabled` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -496,7 +498,8 @@ CREATE TABLE `Cache` (
   `content` mediumtext,
   `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
-  KEY `expired` (`expired`)
+  KEY `expired` (`expired`),
+  KEY `template` (`template`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1325,6 +1328,33 @@ LOCK TABLES `Publications` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `rating`
+--
+
+DROP TABLE IF EXISTS `rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rating` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `article_number` int(10) unsigned NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `rating_score` int(10) NOT NULL DEFAULT 0,
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rating`
+--
+
+LOCK TABLES `rating` WRITE;
+/*!40000 ALTER TABLE `rating` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `RequestObjects`
 --
 
@@ -2016,10 +2046,12 @@ DROP TABLE IF EXISTS `user_topic`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_topic` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
   `topic_id` int(11) unsigned NOT NULL,
   `topic_language` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_topic` (`user_id`,`topic_id`,`topic_language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2419,7 +2451,8 @@ CREATE TABLE `liveuser_users` (
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
+  UNIQUE KEY `UName` (`UName`),
+  KEY `author_id` (`author_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
@@ -3005,14 +3038,12 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-INSERT INTO `ingest_feed` (`title`) VALUES ('SDA'),('swissinfo');
-
 DROP TABLE IF EXISTS `ingest_feed_entry`;
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `feed_id` int(11) unsigned NOT NULL,
   `date_id` varchar(20) DEFAULT NULL,
-  `news_item_id` varchar(20) DEFAULT NULL,
+  `news_item_id` varchar(255) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `updated` datetime NOT NULL,
   `author` varchar(255) DEFAULT NULL,

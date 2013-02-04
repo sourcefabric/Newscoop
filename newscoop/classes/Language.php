@@ -8,8 +8,6 @@
  */
 global $ADMIN_DIR;
 
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
