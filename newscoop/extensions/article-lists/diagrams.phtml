@@ -1,10 +1,11 @@
-<script type="text/javascript" src="<?php echo $GLOBALS['controller']->view->baseUrl('/js/newscoop_rest_api.js'); ?>"></script>
-<script type="text/javascript" src="/js/raphael-min.js"></script>
-<script type="text/javascript" src="/js/morris.min.js"></script>
+<?php $view = $GLOBALS['controller']->view; ?>
+<script type="text/javascript" src="<?php echo $view->baseUrl('/js/newscoop_rest_api.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $view->baseUrl('/js/raphael-min.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $view->baseUrl('/js/morris.min.js'); ?>"></script>
 <script type="text/javascript">
-  var api = new NewscoopRestApi('http://<?php echo $_SERVER['HTTP_HOST'] . $GLOBALS['controller']->view->baseUrl('/api'); ?>');
+  var api = new NewscoopRestApi(<?php echo json_encode($view->serverUrl($view->baseUrl('/api'))); ?>);
 
-  api.getResource('<?php echo $GLOBALS['controller']->view->baseUrl('/articles'); ?>', {'type': 'news'})
+  api.getResource('<?php echo $view->baseUrl('/articles'); ?>', {'type': 'news'})
     .setItemsPerPage(20)
     .setOrder({'published': 'desc'})
     .makeRequest(function(res){
