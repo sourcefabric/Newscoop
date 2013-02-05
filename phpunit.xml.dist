@@ -2,6 +2,7 @@
     <testsuites>
         <testsuite name="Newscoop">
             <directory>newscoop/tests/library</directory>
+            <directory>newscoop/tests/templates</directory>
         </testsuite>
     </testsuites>
     <filter>

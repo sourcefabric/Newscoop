@@ -26,7 +26,8 @@
         "jms/serializer-bundle": "0.9.0",
         "guzzle/guzzle": "*",
         "rezzza/mailchimp": "dev-master",
-        "hybridauth/hybridauth": "dev-master"
+        "hybridauth/hybridauth": "dev-master",
+        "kriswallsmith/assetic": "1.1.*"
     },
     "autoload": {
         "psr-0": {
