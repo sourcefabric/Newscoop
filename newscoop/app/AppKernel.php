@@ -48,4 +48,16 @@ class AppKernel extends Kernel
     {
         return $this->rootDir . '/../log';
     }
+
+    /**
+     * Gets the container's base class.
+     *
+     * All names except Container must be fully qualified.
+     *
+     * @return string
+     */
+    protected function getContainerBaseClass()
+    {
+        return 'Newscoop\DependencyInjection\ContainerBuilder';
+    }
 }
