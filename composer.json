@@ -30,7 +30,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Newscoop": ["gimme/src", "newscoop/library"],
+            "Newscoop": ["newscoop/src", "newscoop/library"],
             "Resource": "newscoop/library",
             "Nette": "newscoop/library",
             "Proxy": "newscoop/library"
@@ -62,7 +62,7 @@
         "bin-dir": "vendor/bin"
     },
     "extra": {
-        "symfony-app-dir": "gimme/app",
-        "symfony-web-dir": "gimme/web"
+        "symfony-app-dir": "newscoop/app",
+        "symfony-web-dir": "newscoop/public"
     }
 }
