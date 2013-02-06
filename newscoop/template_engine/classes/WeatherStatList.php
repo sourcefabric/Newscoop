@@ -56,7 +56,7 @@ class WeatherStatList extends ListObject
             $criteria = array_merge($criteria, array( "hour" => $hour ));
         }
 
-        $weatherStats = $repo->findBy($criteria);
+        $weatherStats = $repo->findBy($criteria, array( "locationName" => "asc"));
 
         $length = null;
         if (isset($p_parameters['length']) && trim($p_parameters['length'])!="") {
