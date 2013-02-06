@@ -600,6 +600,45 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("town names with wildcards, and lat/lon coordinates"); ?>&#10;Data © GeoNames.org, CC-BY. http://www.geonames.org/">
+        <?php putGS("Use Local GeoNames Search:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_geo_search_local_geonames" value="1" <?php echo SystemPref::Get('GeoSearchLocalGeonames') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("addresses: street (number), town"); ?>&#10;Data © OpenStreetMap contributors, ODbL&nbsp;1.0. http://www.openstreetmap.org/">
+        <?php putGS("Use MapQuest Nominatim Search:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_geo_search_mapquest_nominatim" value="1" <?php echo SystemPref::Get('GeoSearchMapquestNominatim') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("For the Nominatim address search") ?>">
+        <?php putGS("Preferred address language:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_geo_search_preferred_language" class="input_select">
+            <?php
+            $geo_preferred_lang = SystemPref::Get('GeoSearchPreferredLanguage');
+            if (empty($geo_preferred_lang)) {
+                $geo_preferred_lang = 'en';
+            }
+            $language_codes_639_1 = Language::Get6391List();
+            asort($language_codes_639_1);
+            foreach($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
+                camp_html_select_option($geo_lang_code, $geo_preferred_lang, $geo_lang_name);
+            }
+            ?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
 <?php
 	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 ?>
