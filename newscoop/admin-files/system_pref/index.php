@@ -8,6 +8,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoNames.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
@@ -627,7 +628,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
             if (empty($geo_preferred_lang)) {
                 $geo_preferred_lang = 'en';
             }
-            $language_codes_639_1 = Language::Get6391List();
+            $language_codes_639_1 = \Language::Get6391List();
             asort($language_codes_639_1);
             foreach($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
                 camp_html_select_option($geo_lang_code, $geo_preferred_lang, $geo_lang_name);

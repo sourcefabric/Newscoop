@@ -285,7 +285,7 @@ class Geo_Names extends DatabaseObject
             if (isset($one_loc['type']) && (!empty($one_loc['type'])) && ('administrative' != $one_loc['type'])) {
                 $cur_type = $one_loc['type'];
                 if (isset($one_loc['address']) && isset($one_loc['address'][$cur_type]) && (!empty($one_loc['address'][$cur_type]))) {
-                    $cur_name = $one_loc['type'] . ' ' . $one_loc['address'][$cur_type] . ', ' . $cur_name;
+                    $cur_name = str_replace('_', ' ', $one_loc['type']) . ' ' . $one_loc['address'][$cur_type] . ', ' . $cur_name;
                 }
             }
 
