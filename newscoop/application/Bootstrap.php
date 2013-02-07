@@ -18,7 +18,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAutoloader()
     {
-        $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
         return;
     }
 

@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if (!file_exists(__DIR__ . '/../vendor')) {
+if (!file_exists(__DIR__ . '/../../vendor')) {
     echo "Missing dependency! Please install all dependencies with composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install</pre>";
     die;
@@ -42,11 +42,11 @@ if (php_sapi_name() !== 'cli'
  * Create Symfony kernel
  */
 if (APPLICATION_ENV === 'production') {
-	$kernel = new AppKernel('prod', false);
+    $kernel = new AppKernel('prod', false);
 } else if (APPLICATION_ENV === 'development') {
-	$kernel = new AppKernel('dev', true);
+    $kernel = new AppKernel('dev', true);
 } else {
-	$kernel = new AppKernel('APPLICATION_ENV', true);
+    $kernel = new AppKernel(APPLICATION_ENV, true);
 }
 
 $kernel->loadClassCache();
@@ -55,19 +55,23 @@ $kernel->loadClassCache();
  * Create request object from global variables
  */
 $request = Request::createFromGlobals();
+// boot kernel manuly
+$kernel->boot();
+
+$containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
+$containerFactory->buildContainer();
+if ($kernel->getContainer()) {
+    $containerFactory->setContainer($kernel->getContainer());
+}
+$container = $containerFactory->getContainer();
+\Zend_Registry::set('container', $container);
 
 try {
-	$response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
-	$response->send();
-	$kernel->terminate($request, $response);
-} catch (NotFoundHttpException $e) {
-	$containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
-	$containerFactory->setContainer($kernel->getContainer());
-	$container = $containerFactory->getContainer();
-	\Zend_Registry::set('container', $container);
-	
-	require_once __DIR__ . '/../application.php';
-
-	$application->bootstrap();
-	$application->run();
+    $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+    $response->send();
+    $kernel->terminate($request, $response);
+} catch (NotFoundHttpException $e) {    
+    require_once __DIR__ . '/../application.php';
+    $application->bootstrap();
+    $application->run();
 }

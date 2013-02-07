@@ -95,7 +95,7 @@ final class CampTemplate extends SmartyBC
      *
      * @return array
      */
-    private static function getPluginsPluginsDir()
+    public static function getPluginsPluginsDir()
     {
         $dirs = array();
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {

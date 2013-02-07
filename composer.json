@@ -26,7 +26,8 @@
         "jms/serializer-bundle": "0.9.0",
         "guzzle/guzzle": "*",
         "rezzza/mailchimp": "dev-master",
-        "hybridauth/hybridauth": "dev-master"
+        "hybridauth/hybridauth": "dev-master",
+        "noiselabs/smarty-bundle": "v1.1.0"
     },
     "autoload": {
         "psr-0": {
@@ -40,7 +41,8 @@
             "newscoop/template_engine",
             "newscoop/plugins",
             "newscoop/include",
-            "plugins"
+            "plugins",
+            "newscoop/application"
         ]
     },
     "include-path": [

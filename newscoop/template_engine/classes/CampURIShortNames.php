@@ -57,7 +57,12 @@ class CampURIShortNames extends CampURI
 
         try {
             $this->setURLType(URLTYPE_SHORT_NAMES);
-            $this->setURL($GLOBALS['controller']->getRequest());
+            if (array_key_exists('controller', $GLOBALS)) {
+                $this->setURL($GLOBALS['controller']->getRequest());
+            } else {
+                $this->setURL(new Zend_Controller_Request_Http());
+            }
+            
             $this->m_validURI = true;
             $this->validateCache(false);
         } catch (Exception $e) {

@@ -1,0 +1,5 @@
+services:
+    newscoop.zendbridge.zendapplication_listener:
+        class: Newscoop\ZendBridgeBundle\EventListener\ZendApplicationListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 31 }

@@ -14,5 +14,5 @@ switch (true) {
         break;
         
     default:
-        require_once __DIR__ . '/public/app.php';
+        require_once __DIR__ . '/public/index.php';
 }

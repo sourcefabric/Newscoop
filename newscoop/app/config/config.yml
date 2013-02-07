@@ -5,7 +5,7 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
     trust_proxy_headers:  false
-    templating:      { engines: ['twig'] }
+    templating:      { engines: ['twig', 'smarty'] }
     profiler: { only_exceptions: false }
     session : ~
 
@@ -80,3 +80,13 @@ knp_paginator:
 newscoop_gimme:
     allow_origin:
         - "*"
+
+smarty:
+    options:
+        left_delimiter: "{{"
+        right_delimiter: "}}"
+        caching: false
+
+parameters:
+    smarty.class: "CampTemplate"
+    templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
