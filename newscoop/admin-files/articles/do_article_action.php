@@ -43,6 +43,11 @@ switch ($f_action) {
 		} else {
 			camp_html_add_msg(getGS("Article unlocked."), "ok");
 			$articleObj->setIsLocked(false);
+
+			\Zend_Registry::get('container')->getService('dispatcher')
+		        ->notify('article.unlock', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+		            'article' => $articleObj
+		        )));
 		}
 		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&f_unlock=true"));
 		exit;
@@ -52,6 +57,12 @@ switch ($f_action) {
 			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		} else {
 			$articleObj->delete();
+
+			\Zend_Registry::get('container')->getService('dispatcher')
+		        ->notify('article.delete', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+		            'article' => $articleObj
+		        )));
+
 			if ($f_publication_id > 0) {
 				$url = "/$ADMIN/articles/index.php"
 						."?f_publication_id=$f_publication_id"

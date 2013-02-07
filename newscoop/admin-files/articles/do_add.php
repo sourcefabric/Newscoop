@@ -131,6 +131,11 @@ if ($articleObj->exists()) {
         $articleObj->setCommentsEnabled($commentDefault);
     }
 
+    \Zend_Registry::get('container')->getService('dispatcher')
+        ->notify('article.add', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+            'article' => $articleObj
+        )));
+
     camp_html_add_msg(getGS("Article created."), "ok");
     camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"), false);
     ArticleIndex::RunIndexer(3, 10, true);

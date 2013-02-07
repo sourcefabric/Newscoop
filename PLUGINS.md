@@ -66,3 +66,58 @@ TODO:
 ** create new pages (with controllers) for frontend (1 day)
 
 Summary: 12 working days for plugins system. + 5 days for paywal plugin.
+
+## Newscoop avaiable events:
+
+##### image.delivered
+##### document.delivered
+##### comment.recommended
+##### image.approved
+##### document.approved
+##### playlist.delete
+##### playlist.save
+##### user.register
+
+##### article_type.add - after article type creation
+    article_type ArticleType - article type object
+
+##### article_type.delete - before article type removing
+    article_type ArticleType - article type object
+
+##### article_type.hide - after article type hidding
+    article_type ArticleType - article type object
+
+##### article_type.rename - after article type hidding
+    article_type ArticleType - article type object
+    old_name string - old article type name
+
+##### article_type.translate - after article type translation
+    article_type ArticleType - article type object
+
+##### article_type.comments_management - after article type comments activation/deactivation
+    article_type ArticleType - article type object
+    new_status boolean - new article type comments activation status
+
+##### article.add - after article creation
+    article Article - article object
+
+##### article.delete - after article creation
+    article Article - article object
+
+##### article.translate - after article translation
+    article Article - article object
+
+##### article.duplicate - after article duplication
+    article Article - article object
+    orginal_article_number int - article number
+
+##### article.move - after article moving
+    article Article - article object
+
+##### article.publish - after article publishing
+    article Article - article object
+
+##### article.submit - after article submiting
+    article Article - article object
+    
+
