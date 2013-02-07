@@ -30,6 +30,7 @@ class BlogService
         'comments',
         'autopublish.php',
         'do_unlock.php',
+        'autopublish_del.php',
     );
 
     /** @var array */
