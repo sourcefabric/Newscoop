@@ -107,8 +107,18 @@ class ListApi
         } else {
             unset($values['subscriber']);
         }
-
+        
         $groupings = array();
+
+        /**
+         * Zentral+ custom code to allow
+         * unsubscribe to all Themen list topics
+         */
+        $groupings[] = array(
+            'name' => 'Themen',
+            'groups' => '',
+        );
+
         foreach ($values as $name => $groups) {
             if (empty($groups)) {
                 continue;
