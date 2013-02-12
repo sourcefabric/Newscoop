@@ -101,7 +101,10 @@ Summary: 12 working days for plugins system. + 5 days for paywal plugin.
 ##### article.add - after article creation
     article Article - article object
 
-##### article.delete - after article creation
+##### article.delete - after article deletion
+    article Article - article object
+
+##### article.update - after article editing
     article Article - article object
 
 ##### article.translate - after article translation

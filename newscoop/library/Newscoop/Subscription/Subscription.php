@@ -10,6 +10,7 @@ namespace Newscoop\Subscription;
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\User;
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Subscription\Article;
 
 /**
  * Subscription entity
@@ -23,7 +24,8 @@ class Subscription
     const TYPE_TRIAL = 'T';
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
@@ -72,6 +74,12 @@ class Subscription
      * @var array
      */
     private $sections;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Article", mappedBy="subscription", cascade={"persist", "remove"})
+     * @var array
+     */
+    private $articles;
 
     public function __construct()
     {
@@ -302,6 +310,19 @@ class Subscription
     {
         if (!$this->sections->contains($section)) {
             $this->sections->add($section);
+        }
+    }
+
+    /**
+     * Add article
+     * 
+     * @param Newscoop\Subscription\Article $section
+     * @return void
+     */
+    public function addArticle(Article $article)
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
         }
     }
 
