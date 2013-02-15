@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new NoiseLabs\Bundle\SmartyBundle\SmartyBundle(),
             new Newscoop\ExamplePluginBundle\NewscoopExamplePluginBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
+            new Newscoop\PaywallBundle\NewscoopPaywallBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

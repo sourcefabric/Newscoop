@@ -267,4 +267,14 @@ class Article
     {
         return $this->subscription;
     }
+    
+    /**
+     * Get expiration date
+     * @return DateTime
+     */
+    public function getExpirationDate() {
+        $startDate = new \DateTime(isset($this->startDate) ? $this->startDate : 'now');
+        $timeSpan = new \DateInterval('P' . $this->days . 'D');
+        return $startDate->add($timeSpan);
+    }
 }

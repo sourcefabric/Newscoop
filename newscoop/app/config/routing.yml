@@ -1,3 +1,8 @@
+newscoop_paywall:
+    resource: "@NewscoopPaywallBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 newscoop_example_plugin:
     resource: "@NewscoopExamplePluginBundle/Controller/"
     type:     annotation
