@@ -4,4 +4,4 @@ parameters:
 services:
     newscoop.paywall.adapter:
         class: %newscoop.paywall.adapter.class%
-        arguments:  ["@request=", "@subscription.service"]
+        arguments:  ["@subscription.service"]

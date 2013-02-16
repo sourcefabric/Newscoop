@@ -146,7 +146,7 @@ services:
         class:      Newscoop\Subscription\IpFacade
         arguments:  ["@em"]
     subscription.service:
-        class:      Newscoop\Services\SubscriptionsService
+        class:      Newscoop\Services\SubscriptionService
         arguments:  ["@em"]
     random:
         class:      Newscoop\Random

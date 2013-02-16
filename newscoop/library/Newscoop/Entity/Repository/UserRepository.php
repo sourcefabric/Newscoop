@@ -172,20 +172,23 @@ class UserRepository extends EntityRepository
         return $query;
     }
 
-    public function getOneActiveUser($id)
+    public function getOneActiveUser($id, $public = true)
     {
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\User')
             ->createQueryBuilder('u')
             ->where('u.status = :status')
-            ->andWhere('u.is_public = :public')
             ->andWhere('u.id = :id')
             ->setParameters(array(
                 'status' => User::STATUS_ACTIVE,
-                'public' => true,
                 'id' => $id
             ));
+
+        if ($public) {
+            $queryBuilder->andWhere('u.is_public = :public')
+                ->setParameter('public', $public);
+        }
 
         $query = $queryBuilder->getQuery();
 

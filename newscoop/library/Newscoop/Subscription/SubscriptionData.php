@@ -16,37 +16,37 @@ class SubscriptionData
      * Array of SubscriptionSections 
      * @var array
      */
-    private $sections = array();
+    public $sections = array();
 
     /**
      * Array of SubscriptionArticles
      * @var array
      */
-    private $articles = array();
+    public $articles = array();
 
     /**
      * User id
      * @var int
      */
-    private $userId;
+    public $userId;
 
     /**
      * Publication Id
      * @var int
      */
-    private $publicationId;
+    public $publicationId;
 
     /**
      * To pay value
      * @var decimal
      */
-    private $toPay;
+    public $toPay;
 
     /**
      * Currency
      * @var string
      */
-    private $currency;
+    public $currency;
 
     /**
      * Subscription type.
@@ -54,6 +54,15 @@ class SubscriptionData
      * 
      * @var string
      */
-    private $type = 'P';
+    public $type = 'P';
 
+    public function __construct(array $data) {
+        foreach ($data as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+
+        return $this;
+    }
 }

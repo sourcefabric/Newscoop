@@ -314,6 +314,25 @@ class Subscription
     }
 
     /**
+     * Set articles
+     *
+     * @param array $values
+     * @return void
+     */
+    public function setArticles(array $values)
+    {
+        $ids = array_map(function($article) {
+            return !empty($article['id']) ? $article['id'] : null;
+        }, $values);
+
+        foreach ($this->articles as $key => $article) {
+            if (!in_array($article->getId(), $ids)) {
+                $this->sections->remove($key);
+            }
+        }
+    }
+
+    /**
      * Add article
      * 
      * @param Newscoop\Subscription\Article $section
@@ -359,5 +378,33 @@ class Subscription
     public function getSections()
     {
         return $this->sections;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return array
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Get currency
+     * @return string
+     */
+    public function getCurrency() {
+        return $this->currency;
+    }
+
+    /**
+     * Set currency
+     * @return string
+     */
+    public function setCurrency($currency) {
+        $this->currency = $currency;
+
+        return $this;
     }
 }

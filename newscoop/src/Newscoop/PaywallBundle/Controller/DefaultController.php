@@ -5,6 +5,7 @@ namespace Newscoop\PaywallBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
@@ -43,9 +44,10 @@ class DefaultController extends Controller
      * 
      * @Route("/paywall/return/callback")
      */
-    public function callbackAction()
+    public function callbackAction(Request $request)
     {
         $adapter = $this->container->get('newscoop.paywall.adapter');
+        $adapterResult = $adapter->setRequest($request);
         $adapterResult = $adapter->proccess();
 
         if (!($adapterResult instanceof Response)) {
