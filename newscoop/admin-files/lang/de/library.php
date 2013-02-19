@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "");
-regGS("Display Newswires", "");
+regGS("Display newswires articles", "Agenturmeldungen anzeigen");
+regGS("Display Newswires", "Agenturen anzeigen");
 regGS("Webcode", "Webcode");
 regGS("View article", "Artikel ansehen. ");
 regGS("Source", "Quelle");
@@ -8,7 +8,7 @@ regGS("Select type", "Typ auswählen");
 regGS("On", "An");
 regGS("Off", "Aus");
 regGS("Title", "Titel");
-regGS("No video playback capabilities, please download the video below", "Keine Kapazitäten um das Video abzuspielen, bitte laden Sie das Video herunter. ");
+regGS("No video playback capabilities, please download the video below", "Keine Kapazitäten, um das Video abzuspielen. Bitte laden Sie das Video herunter. ");
 regGS("Article status set to '$1' for $2 articles", "Artikel Status gesetzt auf '$1' für $2 Artikel.");
 regGS("Article status not set to '$1' for $2 articles", "Artikel Status nicht gesetzt auf '$1' für $2 Artikel");
 regGS("$1 toggled for $2 articles.", "$1 umgeschaltet für $2 Artikel. ");
@@ -40,7 +40,7 @@ regGS("Reset all filters", "Alle Filter zurücksetzen");
 regGS("Published before", "Veröffentlicht vor");
 regGS("Published after", "Veröffentlicht nach");
 regGS("Publish date", "Veröffentlichungsdatum");
-regGS("Publish Schedule", "Automatisierung veröffentlichen");
+regGS("Publish Schedule", "Automatisierte Veröffentlichung");
 regGS("Publish Date", "Veröffentlichungsdatum");
 regGS("Order updated.", "Reihenfolge aktualisiert");
 regGS("Open in browser", "Im Browser öffnen");

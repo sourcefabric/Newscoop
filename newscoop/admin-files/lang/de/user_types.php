@@ -1,9 +1,9 @@
 <?php 
-regGS("get", "");
+regGS("get", "bekommen");
 regGS("Soundcloud", "SoundCloud");
 regGS("Templates", "Templates");
 regGS("Feedback Messages", "Feedback Nachrichten");
-regGS("Article Playlists", "Artikelplaylist");
+regGS("Article Playlists", "Liste ausgewählter Artikel");
 regGS("Check all", "Alle prüfen");
 regGS("view", "ansehen");
 regGS("undo/redo", "rückgängig machen/wiederholen");
@@ -54,7 +54,7 @@ regGS("User type saved.", "Benutzertyp gespeichert. ");
 regGS("User type deleted.", "Benutzertyp gelöscht.");
 regGS("User type added.", "Benutzertyp hinzugefügt.");
 regGS("User Groups", "Benutzergruppen");
-regGS("Themes", "Themes");
+regGS("Themes", "Designvorlage");
 regGS("That type name already exists, please choose a different name.", "Der Typenname existiert bereits, bitte wählen Sie einen anderen Namen. ");
 regGS("System", "System");
 regGS("Structure", "Struktur");

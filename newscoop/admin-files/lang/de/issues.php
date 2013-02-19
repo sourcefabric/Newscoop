@@ -1,8 +1,8 @@
 <?php 
 regGS("so that default templates can be assigned to the issue.", "so dass das Standardtemplate dieser Ausgabe zugewiesen werden kann.");
 regGS("Once this is done, the issue can be published", "Wenn dies erledigt ist, kann die Ausgabe veröffentlicht werden. ");
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure the publication has a theme assigned.");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure it has the front template selected.");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Überprüfen Sie bitte, ob für die Publikation eine Designvorlage ausgewählt worden ist. ");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Überprüfen Sie bitte, dass ein Front-Template ausgewählt worden ist.");
 regGS("Publish all articles:", "Alle Artikel veröffentlichen: ");
 regGS("Publish all articles", "Alle Artikel veröffentlichen");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Veröffentlichung aller Artikel erzwingen. Wenn auf 'Nein' werden nur die Artikel mit dem Status 'Mit der Ausgabe veröffentlichen' mit der Ausgabe veröffentlicht. ");
@@ -36,13 +36,13 @@ regGS("You do not have the right to add issues.", "Keine Berechtigung Ausgaben h
 regGS("The issue $1 has been successfuly added.", "Ausgabe $1 wurde hinzugefügt");
 regGS("The issue could not be added.", "Die Ausgabe konnte nicht verändert werden");
 regGS("Change issue details", "Details der Ausgabe ändern");
-regGS("You do not have the right to change issue details.", "Keine Rechte Details der Ausgabe zu ändern");
+regGS("You do not have the right to change issue details.", "Sie sind nicht berechtigt, Details der Ausgabe zu ändern.");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Publikationsdatum<br><small>(yyyy-mm-tt)</small>");
 regGS("Front Page Template", "Template der Startseite");
-regGS("You do not have the right to delete issues.", "Keine Berechtigung Ausgaben zu löschen");
+regGS("You do not have the right to delete issues.", "Sie sind nicht berechtigt, Ausgaben zu löschen.");
 regGS("Are you sure you want to delete the issue $1?", "Ausgabe $1 wirklich löschen?");
 regGS("Use the structure of the previous issue", "Die Struktur der vorherigen Ausgabe verwenden");
-regGS("Copy the entire structure in all languages from the previous issue except for content.", "Die Struktur der letzten Ausgabe in allen Sprachen kopieren - ohne Inhalte.");
+regGS("Copy the entire structure in all languages from the previous issue except for content.", "Kopieren Sie mit Ausnahme des Inhalts die gesamte Struktur der letzten Ausgabe in allen Sprachen.");
 regGS("You may modify it later if you wish.", "Veränderungen können später vorgenommen werden.");
 regGS("Create a new structure", "Neue Struktur anlegen");
 regGS("Create a complete new structure.", "Komplett neue Struktur anlegen");
@@ -55,11 +55,11 @@ regGS("Issue Publishing Schedule", "Veröffentlichung der Ausgabe automatisieren
 regGS("Invalid Input: $1", "Ungültige Eingabe: $1");
 regGS("Issue Number", "Ausgabennummer");
 regGS("Go To Sections", "Gehe zu den Rubriken");
-regGS("There was an error reading the language parameter.", "Fehler beim Lesen der Spracheinstellung");
-regGS("There was an error reading the publication parameter.", "Fehler beim Lesen der Publikationseinstellung");
-regGS("There was an error reading the issue parameter.", "Fehler beim Lesen der Ausgabeneinstellung");
+regGS("There was an error reading the language parameter.", "Fehler beim Lesen der Spracheinstellung.");
+regGS("There was an error reading the publication parameter.", "Fehler beim Lesen der Publikationseinstellung.");
+regGS("There was an error reading the issue parameter.", "Fehler beim Lesen der Ausgabeneinstellung.");
 regGS("There was an error scheduling the $1 action on $2", "Fehler bei der Automatisierung von $1 am $2");
-regGS("The action scheduled on $1 could not be deleted.", "Die automatisierte Aktion für $1 konnte nicht gelöscht werden");
+regGS("The action scheduled on $1 could not be deleted.", "Die automatisierte Aktion für $1 konnte nicht gelöscht werden.");
 regGS("Front Page Template<BR><SMALL>(click to change)</SMALL>", "Template der Startseite");
 regGS("Single Article Template<BR><SMALL>(click to change)</SMALL>", "Template für Artikel");
 regGS("Changing issue status", "Status der Ausgabe wird geändert");

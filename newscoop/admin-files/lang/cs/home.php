@@ -1,8 +1,8 @@
 <?php 
-regGS("Rename user", "");
-regGS("Campsite", "");
-regGS("Image Rendering", "");
-regGS("Featured Article Lists", "");
+regGS("Rename user", "Přejmenovat uživatele");
+regGS("Campsite", "Campsite");
+regGS("Image Rendering", "Vykreslování obrázku");
+regGS("Featured Article Lists", "Zobrazit seznam článků");
 regGS("You have tried to upload an invalid backup file.", "Pokusil jste se nahrát neplatný zálohovaný soubor.");
 regGS("You do not have the right to manage backups.", "Nemáte opravnění pracovat se zálohováním dat.");
 regGS("Make a new backup", "Vytvořit novou zálohu dat");
@@ -33,7 +33,7 @@ regGS("The file $1 could not be moved. Check you have enough of disk space.", "S
 regGS("MiB", "MiB");
 regGS("Download was not successful. Check please that the server is not out of disk space.", "Stažení nebylo úspěšné. Prosím zkontrolujte zda nemá server nedostatek místa na disku.");
 regGS("try again later", "zkuste znovu později");
-regGS("at", "");
+regGS("at", "na ");
 regGS("You must at least upload one file.", "Musíte nahrát alespoň jeden soubor.");
 regGS("Warning: the existing data and themes will be deleted!", "Upozornění: existující data a náměty budou smazány!");
 regGS("Value is required and can't be empty", "Hodnota je požadována a nemůže zůstat nevyplněna");
@@ -153,4 +153,5 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>

@@ -1,6 +1,6 @@
 <?php 
-regGS("Rating", "");
-regGS("Enable Rating", "");
+regGS("Rating", "Hodnocení");
+regGS("Enable Rating", "Povolit hodnocení");
 regGS("Blog management", "Blog management");
 regGS("View article", "Ukázat článek");
 regGS("Select a list", "Vybrat seznam");
@@ -16,7 +16,7 @@ regGS("Featured Articles", "");
 regGS("Featured Article Lists", "");
 regGS("Featured Article List", "");
 regGS("Duplicate list", "Kopírovat seznam");
-regGS("Duplicate article entry found", "");
+regGS("Duplicate article entry found", "Vstup k duplicitnímu článku nalezen");
 regGS("Drag here to add to list", "Chytněte zde a přetáhněte do seznamu.");
 regGS("Could not save the list", "Seznam se nepodařilo uložit.");
 regGS("Available Articles", "Dostupné články");
@@ -184,4 +184,7 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

@@ -1,19 +1,19 @@
 <?php 
-regGS("Sourcefabric.org blog reader", "");
-regGS("Sourcefabric.org News reader", "");
-regGS("Feed reader", "");
+regGS("Sourcefabric.org blog reader", " Sourcefabric.org Blog lesen");
+regGS("Sourcefabric.org News reader", "Sourcefabric.org News lesen");
+regGS("Feed reader", "Feedreader");
 regGS("Go", "Starten");
 regGS("Wikipedia Search", "Wikipedia Suche");
 regGS("Files", "Dateien");
-regGS("Sourcefabric.org newsletter subscription", "Sourcefabric.org Newsletter");
+regGS("Sourcefabric.org newsletter subscription", "Sourcefabric.org Newsletter Abonnement");
 regGS("Maps search", "Karten-Suche");
 regGS("Default location", "Standard-Ort");
 regGS("Title", "Titel");
-regGS("Sourcefabric.org feed reader", "Sourcefabric.org Feeds");
-regGS("Sourcefabric.org dev feed reader", "Sourcefabric.org dev Feeds");
+regGS("Sourcefabric.org feed reader", "Sourcefabric.org Feedreader");
+regGS("Sourcefabric.org dev feed reader", "Sourcefabric.org Dev Feedreader");
 regGS("Recently Published Articles", "Kürzlich veröffentlichte Artikel");
 regGS("Recently Modified Articles", "Kürzlich veränderte Artikel");
-regGS("Pending Articles", "Wartende Artikel");
+regGS("Pending Articles", "Eingereichte Artikel");
 regGS("Paste google generated code", "Google Code einfügen");
 regGS("Most Popular Articles", "Beliebteste Artkel");
 regGS("Media files", "Mediendateien");

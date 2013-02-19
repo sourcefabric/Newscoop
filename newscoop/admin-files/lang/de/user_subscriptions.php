@@ -1,14 +1,14 @@
 <?php 
-regGS("third", "");
-regGS("second", "");
-regGS("forth", "");
-regGS("first", "");
-regGS("You must input a number greater than 0 into the Number of addresses field.", "");
-regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "");
-regGS("User IP access list management", "");
-regGS("The IP address group conflicts with another existing group.", "");
-regGS("Subscription sections", "");
-regGS("No records.", "");
+regGS("third", "dritte");
+regGS("second", "zweite ");
+regGS("forth", "vierte");
+regGS("first", "erste");
+regGS("You must input a number greater than 0 into the Number of addresses field.", "Bitte eine Zahl größer als 0 eintragen");
+regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Bitte eine Zahl zwischen 0 und 255 in das Start IP Adressfeld  $1 eintragen");
+regGS("User IP access list management", "User IP Listenmanagement ");
+regGS("The IP address group conflicts with another existing group.", "Die IP-Adresse konfligiert mit einer anderen Gruppe. ");
+regGS("Subscription sections", "Abonnement Einstellungen");
+regGS("No records.", "Keine Daten. ");
 regGS("You have subscription for all available publications", "Sie haben ein Abonnement für alle verfügbaren Publikationen. ");
 regGS("Subscription type:", "Abonnementtyp");
 regGS("Start:", "Beginn");

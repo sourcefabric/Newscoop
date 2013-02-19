@@ -14,7 +14,7 @@ regGS("Are you sure you want to reset counters on the selected debatess?", "Jste
 regGS("Are you sure you want to delete the selected debatess?", "Jste si jisti, že chcete vymazat vybrané debaty?");
 regGS("Answer %s", "Odpověď %s");
 regGS("Answer", "Odpověď");
-regGS("Allow not logged in users", "");
+regGS("Allow not logged in users", "Povolit nezalogované uživatele");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Jste si jisti, že chcete odstranit anketu \"$1\" ?");
 regGS("click to edit", "klikněte, aby jste mohli upravit");
 regGS("Debates", "Hlasování");
