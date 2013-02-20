@@ -64,7 +64,7 @@ function fnLoadContextList(data)
 	    var items = data.items;
 	    for(i = 0; i < items.length; i++) {
 	        var item = items[i];
-	        appendItemToContextList(item.articleId, item.date, item.title);
+	        appendItemToContextList(item.articleId, item.date.date, item.title);
 	    }
 	}
 	toggleDragZonePlaceHolder();
@@ -220,7 +220,7 @@ function popup_add()
 		return false;
 	}
 	if( !$('#context_list').find('input:hidden[value={$this->article->getId()}]').length )
-		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()->format('d.m.Y')}', '{$articleName}', true );
+		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()->format('d.m.Y H:i:s')}', '{$articleName}', true );
 	else
 		flashMessage('{$t['item-exists']}', 'error', false);
 }
