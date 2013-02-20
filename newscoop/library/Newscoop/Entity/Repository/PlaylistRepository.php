@@ -17,39 +17,27 @@ use Newscoop\Entity\PlaylistArticle,
 
 class PlaylistRepository extends EntityRepository
 {
-    public function getPlaylists()
-    {
-        $em = $this->getEntityManager();
-        $queryBuilder = $em->getRepository('Newscoop\Entity\Playlist')
-            ->createQueryBuilder('p');
-
-        $query = $queryBuilder->getQuery();
-        
-        return $query;
-    }
-
     /**
      * Returns articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist
      * @param Language $lang
-	 * @param bool $fullArticle
+     * @param bool $fullArticle
      * @param int $limit
      * @param int $offset
-	 * @param bool $publishedOnly
+     * @param bool $publishedOnly
      */
     public function articles(Playlist $playlist, Language $lang = null,
-    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $humanWorkflowStatus = false)
+    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.published date, a.workflowStatus, l.id language" )
+            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.updated date" )
         .   " FROM Newscoop\Entity\PlaylistArticle pa
             JOIN pa.article a
-            JOIN a.language l
-        	WHERE pa.playlist = ?1 "
+            WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
-        .          " ORDER BY pa.id "
+        .       " ORDER BY pa.id "
         );
 
         if (!is_null($limit)) {
@@ -64,15 +52,6 @@ class PlaylistRepository extends EntityRepository
             $query->setParameter(2, $lang->getId());
         }
         $rows = $query->getResult();
-
-        if ($humanWorkflowStatus) {
-            foreach($rows as $key => $article) {
-                $articleObj = new \Article($article['language'], $article['articleId']);
-                $article['workflowStatus'] = $articleObj->getWorkflowDisplayString();
-                $rows[$key] = $article;
-            }
-        }
-
         return $rows;
     }
 
@@ -80,18 +59,18 @@ class PlaylistRepository extends EntityRepository
      * Returns the total count of articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist
      * @param Language $lang
-	 * @param bool $publishedOnly
+     * @param bool $publishedOnly
      */
     public function articlesCount(Playlist $playlist, Language $lang = null, $publishedOnly = true)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-        	SELECT COUNT(DISTINCT pa.article) FROM Newscoop\Entity\PlaylistArticle pa
-        	JOIN pa.article a
-        	WHERE pa.playlist = ?1 "
+            SELECT COUNT(DISTINCT pa.article) FROM Newscoop\Entity\PlaylistArticle pa
+            JOIN pa.article a
+            WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? "" : " AND a.language = ?2")
-        .		" ORDER BY pa.id"
+        .       " ORDER BY pa.id"
         );
 
         $query->setParameter(1, $playlist);
@@ -111,17 +90,8 @@ class PlaylistRepository extends EntityRepository
      */
     public function getArticlePlaylists($articleId)
     {
-        $em = $this->getEntityManager();
-        $query = $em->createQuery("SELECT pa FROM Newscoop\Entity\PlaylistArticle pa JOIN pa.playlist p WHERE pa.article = ?1");
-        $query->setParameter(1, $articleId);
-
-        try {
-            return $query->getResult();
-        } catch (\Exception $e) {
-            echo $e->getMessage();
-            // TODO log here
-            return array();
-        }
+        $playlistArticles = $this->getEntityManager()->getRepository('Newscoop\Entity\PlaylistArticle')
+            ->findBy(array('article' => $articleId));
 
         $playlists = array();
         foreach ((array) $playlistArticles as $playlistArticle) {

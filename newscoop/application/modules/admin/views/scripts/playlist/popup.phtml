@@ -59,7 +59,8 @@ function fnLoadContextList(data)
 	    var items = data.items;
 	    for(i = 0; i < items.length; i++) {
 	        var item = items[i];
-	        appendItemToContextList(item.articleId, item.date, item.title, item.workflowStatus);
+            console.log(item);
+	        appendItemToContextList(item.articleId, item.date.date, item.title, item.workflowStatus);
 	    }
 	}
 	toggleDragZonePlaceHolder();
