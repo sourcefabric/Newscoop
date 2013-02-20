@@ -65,8 +65,5 @@ class SmartyEngine extends BaseEngine
             array(APPLICATION_PATH . \CampTemplate::PLUGINS),
             \CampTemplate::getPluginsPluginsDir()
         ));
-
-        // fix for "filemtime(): stat failed"
-        $this->smarty->unmuteExpectedErrors();
     }
 }

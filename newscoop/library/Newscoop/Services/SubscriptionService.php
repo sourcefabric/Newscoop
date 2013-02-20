@@ -26,30 +26,57 @@ class SubscriptionService
         $this->em = $em;
     }
 
-    public function create(SubscriptionData $data)
+    public function create()
     {
         $subscription = new Subscription();
-        //apply data to subscription
+
+        return $subscription;
+    }
+
+    public function save(Subscription $subscription) {
+        $this->em->persist($subscription);
+        $this->em->flush();
+    }
+
+    public function remove($id)
+    {
+
+    }
+
+    public function getOneById($id)
+    {
+        $subscription = $this->em->getRepository('Newscoop\Entity\Subscription')->findOneBy(array(
+            'id' => $id
+        ));
+
+        return $subscription;
+    }
+
+    public function getOneByUserAndPublication($userId, $publicationId)
+    {
+        $subscription = $this->em->getRepository('Newscoop\Entity\Subscription')->findOneBy(array(
+            'user' => $userId,
+            'publication' => $publicationId
+        ));
+
+        return $subscription;
+    }
+
+    /**
+     * Update Subscription according to SubscritionData class
+     * @param  Subscription     $subscription
+     * @param  SubscriptionData $data
+     * @return Subscription
+     */
+    public function update(Subscription $subscription, SubscriptionData $data)
+    {
         $subscription = $this->apply($subscription, $data);
 
         return $subscription;
     }
 
-    public function remove($id) {
-
-    }
-
-    public function get($id)
+    private function apply(Subscription $subscription, SubscriptionData $data) 
     {
-        
-    }
-
-    public function update($id, SubscriptionData $data)
-    {
-
-    }
-
-    private function apply(Subscription $subscription, SubscriptionData $data) {
         if ($data->userId) {
             $user = $this->em->getRepository('Newscoop\Entity\User')->getOneActiveUser($data->userId, false)->getOneOrNullResult();
             if ($user) {
@@ -72,6 +99,48 @@ class SubscriptionService
             $subscription->setCurrency($data->currency);
         }
 
+        if ($data->active) {
+            $subscription->setActive($data->active);
+        }
+
+        if ($data->type) {
+            $subscription->setType($data->type);
+        }
+
+        if ($data->sections) {
+            $sectionsIds = array();
+            foreach ($data->sections as $key => $section) {
+                $subscription->addSection($section);
+                $sectionsIds[] = $section->getId();
+            }
+
+            //Clean conncted sections list
+            $subscription->setSections($sectionsIds);
+        }
+
+        if ($data->articles) {
+            $articlesIds = array();
+            foreach ($data->articles as $key => $article) {
+                $subscription->addArticle($article);
+                $articlesIds[] = $article->getId();
+            }
+
+            //Clean conncted sections list
+            $subscription->setArticles($articlesIds);
+        }
+        
         return $subscription;
+    }
+
+    public function getArticleRepository(){
+        return $this->em->getRepository('Newscoop\Entity\Article');
+    }
+
+    public function getSectionRepository(){
+        return $this->em->getRepository('Newscoop\Entity\Section');
+    }
+
+    public function getLanguageRepository(){
+        return $this->em->getRepository('Newscoop\Entity\Language');
     }
 }

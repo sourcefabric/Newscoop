@@ -28,13 +28,25 @@ class PayGeAdapter implements PaywallAdapterInterface
     }
 
     public function proccess() {
-        // do all what you need with request and subscription service
+        $subscription = $this->subscriptionService->create();
+
         $subscriptionData = new \Newscoop\Subscription\SubscriptionData(array(
             'userId' => 1,
-            'publicationId' => 2
-        ));
+            'publicationId' => 2,
+            'toPay' => 30,
+            'days' => 30,
+            'currency' => 'PLN'
+        ), $subscription);
 
-        $this->subscriptionService->create($subscriptionData);
+        $article = $this->subscriptionService->getArticleRepository()->findOneByNumber(64);
+        $section = $this->subscriptionService->getSectionRepository()->findOneByNumber(10);
+        $language = $this->subscriptionService->getLanguageRepository()->findOneById(1);
+        
+        $subscriptionData->addArticle($article, $language);
+        $subscriptionData->addSection($section, $language);
+
+        $subscription = $this->subscriptionService->update($subscription, $subscriptionData);
+        $this->subscriptionService->save($subscription);
 
         return new Response('OK');
     }

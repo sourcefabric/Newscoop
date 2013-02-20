@@ -88,6 +88,9 @@ final class CampTemplate extends SmartyBC
         if (isset($GLOBALS['controller'])) {
             $this->assign('view', $GLOBALS['controller']->view);
         }
+
+        // fix for "filemtime(): stat failed"
+        $this->unmuteExpectedErrors();
     }
 
     /**

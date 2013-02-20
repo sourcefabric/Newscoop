@@ -84,6 +84,7 @@ class Subscription
     public function __construct()
     {
         $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
         $this->currency = '';
         $this->active = false;
         $this->type = self::TYPE_PAID;
@@ -327,7 +328,7 @@ class Subscription
 
         foreach ($this->articles as $key => $article) {
             if (!in_array($article->getId(), $ids)) {
-                $this->sections->remove($key);
+                $this->articles->remove($key);
             }
         }
     }

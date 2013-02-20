@@ -46,7 +46,7 @@ class DefaultController extends Controller
      */
     public function callbackAction(Request $request)
     {
-        $adapter = $this->container->get('newscoop.paywall.adapter');
+        $adapter = $this->container->getService('newscoop.paywall.adapter');
         $adapterResult = $adapter->setRequest($request);
         $adapterResult = $adapter->proccess();
 

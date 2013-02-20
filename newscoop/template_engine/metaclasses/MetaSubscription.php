@@ -107,13 +107,13 @@ final class MetaSubscription extends MetaDbObject {
         $subscriptionId = $this->m_dbObject->getSubscriptionId();
 
         $subscriptionArticle = $container->getService('em')
-            ->getRepository('Newscoop\Entity\Repository\SubscriptionArticleRepository')
+            ->getRepository('Newscoop\Subscription\Article')
             ->findOneBy(array(
                 'subscription' => $subscriptionId,
                 'articleNumber' => $articleNumber,
                 'language' => $currentLanguageNumber
             ));
-
+        
         if ($subscriptionArticle) {
             if ($subscriptionArticle->getExpirationDate() >= $today->getDate()) {
                 return (int) true;

@@ -8,6 +8,7 @@
 namespace Newscoop\Subscription;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Entity\Article as ArticleEntity;
 
 /**
  * Subscription Article relation entity
@@ -81,12 +82,13 @@ class Article
      * @param Newscoop\Subscription\Subscription $subscription
      * @param int $article
      */
-    public function __construct(Subscription $subscription, $articleNumber)
+    public function __construct(Subscription $subscription, ArticleEntity $article)
     {
         $this->subscription = $subscription;
         $this->subscription->addArticle($this);
 
-        $this->articleNumber = (int) $articleNumber;
+        $this->article =  $article;
+        $this->articleNumber = $article->getNumber();
         $this->noticeSent = 'N';
         $this->paidDays = 0;
     }
@@ -273,7 +275,7 @@ class Article
      * @return DateTime
      */
     public function getExpirationDate() {
-        $startDate = new \DateTime(isset($this->startDate) ? $this->startDate : 'now');
+        $startDate = isset($this->startDate) ? $this->startDate : new \DateTime('now');
         $timeSpan = new \DateInterval('P' . $this->days . 'D');
         return $startDate->add($timeSpan);
     }
