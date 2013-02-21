@@ -39,8 +39,7 @@
             "newscoop/classes",
             "newscoop/template_engine",
             "newscoop/plugins",
-            "newscoop/include",
-            "plugins"
+            "newscoop/include"
         ]
     },
     "include-path": [
