@@ -327,10 +327,34 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getReads();
     }
 
+    public function publish()
+    {
+        $this->__load();
+        return parent::publish();
+    }
+
+    public function setIndexed()
+    {
+        $this->__load();
+        return parent::setIndexed();
+    }
+
+    public function author($title, array $fields)
+    {
+        $this->__load();
+        return parent::author($title, $fields);
+    }
+
+    public function getView()
+    {
+        $this->__load();
+        return parent::getView();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'articleAuthorTypes', 'comments', 'lockUser', 'topics', 'playlists', 'packages', 'webcode');
+        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'updated', 'indexed', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'comments', 'lockUser', 'topics', 'playlists', 'packages', 'webcode', 'authors');
     }
 
     public function __clone()

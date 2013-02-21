@@ -836,7 +836,6 @@ class Article
     }
 
     /**
-<<<<<<< HEAD
      * Get reads
      * @param int $reads
      */
@@ -856,7 +855,9 @@ class Article
         $requestObject = new \RequestObject($this->objectId);
 
         return $requestObject->getRequestCount();
-=======
+    }
+
+    /*
      * Publish article
      *
      * @return void
@@ -971,6 +972,5 @@ class Article
         }
 
         return $this->data;
->>>>>>> 89461bdefc202d266761fe087302b35807360eeb
     }
 }

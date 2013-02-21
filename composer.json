@@ -40,7 +40,7 @@
             "newscoop/template_engine",
             "newscoop/plugins",
             "newscoop/include",
-            "plugins"
+            "newscoop/application"
         ]
     },
     "include-path": [
