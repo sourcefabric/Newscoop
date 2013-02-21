@@ -3,7 +3,7 @@ imports:
 
 framework:
     router:
-        resource: "%kernel.root_dir%/config/routing_dev.yml"
+        resource: "%kernel.root_dir%/configs/symfony/routing_dev.yml"
 
 monolog:
     handlers:

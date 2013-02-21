@@ -40,10 +40,12 @@ class PayGeAdapter implements PaywallAdapterInterface
 
         $article = $this->subscriptionService->getArticleRepository()->findOneByNumber(64);
         $section = $this->subscriptionService->getSectionRepository()->findOneByNumber(10);
+        $issue = $this->subscriptionService->getIssueRepository()->findOneByNumber(13);
         $language = $this->subscriptionService->getLanguageRepository()->findOneById(1);
         
         $subscriptionData->addArticle($article, $language);
         $subscriptionData->addSection($section, $language);
+        $subscriptionData->addIssue($issue, $language);
 
         $subscription = $this->subscriptionService->update($subscription, $subscriptionData);
         $this->subscriptionService->save($subscription);

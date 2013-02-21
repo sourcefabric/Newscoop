@@ -8,8 +8,9 @@
 namespace Newscoop\Subscription;
 
 use Newscoop\Subscription\Subscription;
-use Newscoop\Entity\Article;
-use Newscoop\Entity\Section;
+use Newscoop\Entity\Article as ArticleEntity;
+use Newscoop\Entity\Section as SectionEntity;
+use Newscoop\Entity\Issue as IssueEntity;
 
 /**
  * Subscription Data holder
@@ -29,10 +30,16 @@ class SubscriptionData
     public $sections = array();
 
     /**
-     * Array of SubscriptionArticles
+     * Array of Subscription Articles
      * @var array
      */
     public $articles = array();
+
+    /**
+     * Array of Subscription Issues
+     * @var array
+     */
+    public $issues = array();
 
     /**
      * User id
@@ -113,7 +120,7 @@ class SubscriptionData
         return $this;
     }
 
-    public function addSection(Section $section, $language) {
+    public function addSection(SectionEntity $section, $language) {
         $section = new \Newscoop\Subscription\Section($this->subscription, $section->getNumber());
         $section->setStartDate($this->startDate);
         $section->setDays($this->days);
@@ -123,7 +130,7 @@ class SubscriptionData
         $this->sections[$section->getId()] = $section;
     }
 
-    public function addArticle(Article $article, $language) {
+    public function addArticle(ArticleEntity $article, $language) {
         $article = new \Newscoop\Subscription\Article($this->subscription, $article);
         $article->setStartDate($this->startDate);
         $article->setDays($this->days);
@@ -131,5 +138,14 @@ class SubscriptionData
         $article->setLanguage($language);
 
         $this->articles[$article->getArticleNumber()] = $article;
+    }
+
+    public function addIssue(IssueEntity $issue, $language) {
+        $issue = new \Newscoop\Subscription\Issue($this->subscription, $issue);
+        $issue->setStartDate($this->startDate);
+        $issue->setDays($this->days);
+        $issue->setPaidDays($this->paidDays);
+        $issue->setLanguage($language);
+        $this->issues[$issue->getIssueNumber()] = $issue;
     }
 }

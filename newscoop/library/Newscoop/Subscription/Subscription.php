@@ -11,6 +11,7 @@ use Newscoop\Entity\Publication;
 use Newscoop\Entity\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Subscription\Article;
+use Newscoop\Subscription\Issue;
 
 /**
  * Subscription entity
@@ -81,10 +82,17 @@ class Subscription
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Issue", mappedBy="subscription", cascade={"persist", "remove"})
+     * @var array
+     */
+    public $issues;
+
     public function __construct()
     {
         $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
         $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
         $this->currency = '';
         $this->active = false;
         $this->type = self::TYPE_PAID;
@@ -336,13 +344,45 @@ class Subscription
     /**
      * Add article
      * 
-     * @param Newscoop\Subscription\Article $section
+     * @param Newscoop\Subscription\Article $article
      * @return void
      */
     public function addArticle(Article $article)
     {
         if (!$this->articles->contains($article)) {
             $this->articles->add($article);
+        }
+    }
+
+    /**
+     * Set issues
+     *
+     * @param array $values
+     * @return void
+     */
+    public function setIssues(array $values)
+    {
+        $ids = array_map(function($issue) {
+            return !empty($issue['id']) ? $issue['id'] : null;
+        }, $values);
+
+        foreach ($this->issues as $key => $issue) {
+            if (!in_array($issue->getId(), $ids)) {
+                $this->issues->remove($key);
+            }
+        }
+    }
+
+    /**
+     * Add issue
+     * 
+     * @param Newscoop\Subscription\Issue $issue
+     * @return void
+     */
+    public function addIssue(Issue $issue)
+    {
+        if (!$this->issues->contains($issue)) {
+            $this->issues->add($issue);
         }
     }
 
@@ -389,6 +429,16 @@ class Subscription
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Get issues
+     *
+     * @return array
+     */
+    public function getIssues()
+    {
+        return $this->issues;
     }
 
     /**

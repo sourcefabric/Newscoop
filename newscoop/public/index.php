@@ -13,8 +13,8 @@ if (!file_exists(__DIR__ . '/../../vendor')) {
 }
 
 require_once __DIR__ . '/../constants.php';
-require_once __DIR__ . '/../app/bootstrap.php.cache';
-require_once __DIR__ . '/../app/AppKernel.php';
+require_once __DIR__ . '/../application/bootstrap.php.cache';
+require_once __DIR__ . '/../application/AppKernel.php';
 require_once __DIR__ . '/../db_connect.php';
 
 use Symfony\Component\HttpFoundation\Request;

@@ -12,7 +12,7 @@ namespace Newscoop\GimmeBundle\Tests;
 // src/Application/AcmeBundle/Tests/ContainerAwareUnitTestCase.php
 // with Symfony 2.0 Standard Edition layout. You may need to change it
 // to fit your own file system mapping.
-require_once __DIR__.'/../../../../app/AppKernel.php';
+require_once __DIR__.'/../../../../application/AppKernel.php';
 require_once __DIR__.'/../../../../../newscoop/constants.php';
 
 class ContainerAwareUnitTestCase extends \PHPUnit_Framework_TestCase

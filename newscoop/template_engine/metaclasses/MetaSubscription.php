@@ -123,6 +123,29 @@ final class MetaSubscription extends MetaDbObject {
         return (int) false;
     }
 
+    public function has_issue($issueNumber) {
+        $container = \Zend_Registry::get('container');
+        $today = new Date(time());
+        $currentLanguageNumber = CampTemplate::singleton()->context()->language->number;
+        $subscriptionId = $this->m_dbObject->getSubscriptionId();
+
+        $subscriptionIssue = $container->getService('em')
+            ->getRepository('Newscoop\Subscription\Issue')
+            ->findOneBy(array(
+                'subscription' => $subscriptionId,
+                'issueNumber' => $issueNumber,
+                'language' => $currentLanguageNumber
+            ));
+        
+        if ($subscriptionIssue) {
+            if ($subscriptionIssue->getExpirationDate() >= $today->getDate()) {
+                return (int) true;
+            }
+        }
+
+        return (int) false;
+    }
+
 } // class MetaSubscription
 
 ?>

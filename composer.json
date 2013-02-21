@@ -63,7 +63,7 @@
         "bin-dir": "vendor/bin"
     },
     "extra": {
-        "symfony-app-dir": "newscoop/app",
+        "symfony-app-dir": "newscoop/application",
         "symfony-web-dir": "newscoop/public"
     }
 }

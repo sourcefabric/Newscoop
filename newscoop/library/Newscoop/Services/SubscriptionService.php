@@ -128,6 +128,17 @@ class SubscriptionService
             //Clean conncted sections list
             $subscription->setArticles($articlesIds);
         }
+
+        if ($data->issues) {
+            $issuesIds = array();
+            foreach ($data->issues as $key => $issue) {
+                $subscription->addIssue($issue);
+                $issuesIds[] = $issue->getId();
+            }
+
+            //Clean conncted sections list
+            $subscription->setIssues($issuesIds);
+        }
         
         return $subscription;
     }
@@ -142,5 +153,9 @@ class SubscriptionService
 
     public function getLanguageRepository(){
         return $this->em->getRepository('Newscoop\Entity\Language');
+    }
+
+    public function getIssueRepository(){
+        return $this->em->getRepository('Newscoop\Entity\Issue');
     }
 }

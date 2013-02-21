@@ -9,7 +9,7 @@ Documentation: https://wiki.sourcefabric.org/display/CS/Newscoop+REST+API+Refere
 You can check all defined routes by console:
 
 ```bash
-php gimme/app/console router:debug
+php gimme/application/console router:debug
 ```
 You can override method by providing "method" as a query parameter with option for example as a value.
 

@@ -2,7 +2,7 @@
 framework:
     secret:          pleaseChangeMe!pleaseChangeMe!
     router:
-        resource: "%kernel.root_dir%/config/routing.yml"
+        resource: "%kernel.root_dir%/configs/symfony/routing.yml"
         strict_requirements: %kernel.debug%
     trust_proxy_headers:  false
     templating:      { engines: ['twig', 'smarty'] }

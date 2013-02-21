@@ -11,7 +11,7 @@ namespace Newscoop\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Subscription Article repository
+ * Subscription Issue repository
  */
-class SubscriptionArticleRepository extends EntityRepository
+class SubscriptionIssueRepository extends EntityRepository
 {}
