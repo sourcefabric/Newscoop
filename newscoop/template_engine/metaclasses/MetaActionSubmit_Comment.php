@@ -125,7 +125,7 @@ class MetaActionSubmit_Comment extends MetaAction
 				$userRealName = $this->m_properties['nickname'];
 			}
 			if ($this->m_properties['is_anonymous']) {
-				$userRealName = 'anonymous';
+				$userRealName = getGS('Anonymous');
 			}
         }
         else
@@ -227,7 +227,9 @@ class MetaActionSubmit_Comment extends MetaAction
         $this->m_properties['rejected'] = false;
 
         $this->m_error = ACTION_OK;
-        return true;
+
+        header('Location: ' . $_SERVER['REQUEST_URI'], true, 303);
+        exit(0);
     }
 
 }

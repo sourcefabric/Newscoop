@@ -16,56 +16,56 @@ use Doctrine\ORM\Mapping AS ORM;
 class UserTopic
 {
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="topic_id")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(referencedColumnName="Id")
-     * @var Newscoop\Entity\User
+     * @var User
      */
     private $user;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="topic_id")
-     * @var int
-     */
-    private $topic_id;
-
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="topic_language")
-     * @var int
-     */
-    private $topic_language;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\ManyToOne(targetEntity="Topic")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
      *      @ORM\JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
      *  })
-     * @var Newscoop\Entity\Topic
+     * @var Topic
      */
     private $topic;
 
     /**
-     * @param Newscoop\Entity\User $user
-     * @param Newscoop\Entity\Topic $topic
+     * @param User $user
+     * @param Topic $topic
      */
     public function __construct(User $user, Topic $topic)
     {
         $this->user = $user;
         $this->topic = $topic;
-        $this->topic_id = $topic->getTopicId();
-        $this->topic_language = $topic->getLanguageId();
     }
 
     /**
      * Get topic
      *
-     * @return Newscoop\Entity\Topic
+     * @return Topic
      */
     public function getTopic()
     {
         return $this->topic;
+    }
+
+    /**
+     * Get topic id
+     *
+     * @return int
+     */
+    public function getTopicId()
+    {
+        return $this->topic->getTopicId();
     }
 }

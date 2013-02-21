@@ -57,23 +57,22 @@ class Translation extends DatabaseObject {
 		$g_ado_db->Execute($sql);
 	} // fn deletePhrase
 
-
 	/**
 	 * Create a unique identifier for a phrase.
 	 * @access private
 	 */
 	private function __GeneratePhraseId()
 	{
-	    global $g_ado_db;
+	  global $g_ado_db;
+
 		$queryStr = 'UPDATE AutoId SET translation_phrase_id=LAST_INSERT_ID(translation_phrase_id + 1)';
-		$g_ado_db->Execute($queryStr);
-		if ($g_ado_db->Affected_Rows() <= 0) {
-			// If we were not able to get an ID.
+		$g_ado_db->executeUpdate($queryStr);
+		if ($g_ado_db->affected_rows() <= 0) {
 			return 0;
 		}
-		return $g_ado_db->Insert_ID();
-	} // fn __generatePhraseId
 
+		return (int)$g_ado_db->insert_id();
+	}
 
 	/**
 	 * Get the phrase ID.

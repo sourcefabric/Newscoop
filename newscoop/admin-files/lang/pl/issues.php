@@ -1,16 +1,16 @@
 <?php 
-regGS("so that default templates can be assigned to the issue.", "");
-regGS("Once this is done, the issue can be published", "");
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
-regGS("Publish all articles:", "");
-regGS("Publish all articles", "");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
-regGS("default", "");
-regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
-regGS("Please assign at least one theme to the publication", "");
-regGS("Issue Theme", "");
+regGS("so that default templates can be assigned to the issue.", "więc ten domyślny szablon może być przydzielony do tego wydania.");
+regGS("Once this is done, the issue can be published", "Wydanie będzie można opublikować dopiero gdy to będzie skończone");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Nie można podejrzeć tego wydania. Upewnij się że publikacja ma przydzielony szablon.");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Nie można podejrzeć tego wydania. Upewnij się że szablon dla strony głównej został wybrany.");
+regGS("Publish all articles:", "Opublikuj wszystkie artykuły:");
+regGS("Publish all articles", "Opublikuj wszystkie artykuły");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Wymuś publikację wszystkich artykułów. Jeśli wybierzesz nie, wtedy tylko artykuły ze statusem \"Opublikuj wraz z wydaniem\"  zostaną opublikowane.");
+regGS("default", "domyslny");
+regGS("The publishing/unpublishing can not be set the same time", "Publikacja/Wycofywanie publikacji nie może być ustawione na ten sam czas");
+regGS("The publishing schedule can not be set in the past", "Plan publikacji nie może być ustawiony na datę w przeszłości");
+regGS("Please assign at least one theme to the publication", "Przydziel przynajmniej jeden szablon do publikacji");
+regGS("Issue Theme", "Szablon wydania");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Wartości, które próbujesz są w konflikcie z wydaniem  \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Numer mui być unikalny dla każdego wydanie w tej publikacji w tym samym języku.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Język i nazwa URL muszą być unikalne dla każdego wydania w tej publikacji.");

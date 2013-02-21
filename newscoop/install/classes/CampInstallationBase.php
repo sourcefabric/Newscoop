@@ -316,6 +316,27 @@ class CampInstallationBase
             }
         }
 
+        require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+        if (!camp_geodata_loaded($g_db)) {
+            $which_output = '';
+            $which_ret = '';
+            @exec('which mysql', $which_output, $which_ret);
+
+            if (is_array($which_output) && (isset($which_output[0]))) {
+                $mysql_client_command = $which_output[0];
+                if (0 < strlen($mysql_client_command)) {
+                    $db_conf = array(
+                        'host' => $db_hostname,
+                        'port' => $db_hostport,
+                        'user' => $db_username,
+                        'pass' => $db_userpass,
+                        'name' => $db_database,
+                    );
+                    camp_load_geodata($mysql_client_command, $db_conf);
+                }
+            }
+        }
+
         { // installing the stored function for 'point in polygon' checking
             $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
             importSqlStoredProgram($g_db, $sqlFile);
@@ -581,7 +602,7 @@ XML;
 
             return false;
         }
-
+        
         // add session db settings into global Campsite
         $keyMap = array(
             'DATABASE_SERVER_ADDRESS' => 'hostname',
@@ -614,6 +635,11 @@ XML;
 			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
 			camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
 		}
+
+        // set publication alias
+        global $g_db;
+        $sql = 'UPDATE `Aliases` SET ' . $g_db->escapeKeyVal('Name', $_SERVER['HTTP_HOST']);
+        $g_db->executeUpdate($sql);
 
         return true;
     }

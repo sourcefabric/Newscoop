@@ -13,7 +13,7 @@
 /**
  * Class CampTemplate
  */
-final class CampTemplate extends Smarty
+final class CampTemplate extends SmartyBC
 {
     const PLUGINS = '/../include/smarty/campsite_plugins';
     const SCRIPTS = '/views/scripts';
@@ -42,7 +42,6 @@ final class CampTemplate extends Smarty
         $this->force_compile = $config->getSetting('smarty.force_compile');
         $this->compile_check = $config->getSetting('smarty.compile_check');
         $this->use_sub_dirs = $config->getSetting('smarty.use_subdirs');
-        $this->allow_php_tag = true;
 
         // cache settings
         $cacheHandler = SystemPref::Get('TemplateCacheHandler');
@@ -71,21 +70,20 @@ final class CampTemplate extends Smarty
         $this->right_delimiter = '}}';
         $this->auto_literal = false;
 
-        $this->cache_dir = APPLICATION_PATH . '/../cache';
-        $this->config_dir = APPLICATION_PATH . '/../configs';
-        $this->compile_dir = APPLICATION_PATH . '/../cache';
+        $this->setCacheDir(APPLICATION_PATH . '/../cache');
+        $this->setConfigDir(APPLICATION_PATH . '/../configs');
+        $this->setCompileDir(APPLICATION_PATH . '/../cache');
 
-        $this->plugins_dir = array_merge(
-            (array) $this->plugins_dir,
+        $this->addPluginsDir(array_merge(
             array(APPLICATION_PATH . self::PLUGINS),
             self::getPluginsPluginsDir()
-        );
+        ));
 
-        $this->template_dir = array(
+        $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',
             APPLICATION_PATH . '/../themes/unassigned/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
-        );
+        ));
 
         if (isset($GLOBALS['controller'])) {
             $this->assign('view', $GLOBALS['controller']->view);

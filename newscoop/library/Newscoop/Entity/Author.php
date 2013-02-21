@@ -8,6 +8,7 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\View\AuthorView;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuthorRepository")
@@ -46,20 +47,6 @@ class Author
      * @var string
      */
     private $image;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AuthorType")
-     * @ORM\JoinTable(name="ArticleAuthors",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
-     *      }
-     *  )
-     * @var Newscoop\Entity\Authors
-     */
-    private $types;
 
     /**
      * @param string $firstName
@@ -160,5 +147,17 @@ class Author
         $this->image = $image;
 
         return $this;
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\AuthorView
+     */
+    public function getView()
+    {
+        return new AuthorView(array(
+            'name' => $this->getFullName(),
+        ));
     }
 }

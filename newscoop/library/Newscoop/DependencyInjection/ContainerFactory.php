@@ -146,7 +146,7 @@ class ContainerFactory {
         if (is_array($array2)){
             foreach ($array2 as $key => $val) {
                 if (is_array($array2[$key])) {
-                    $mergedKey = $merged[$key];
+                    $mergedKey = !empty($merged[$key]) ? $merged[$key] : null;
                     $arrayKey = $array2[$key];
                     $merged[$key] = is_array($mergedKey) ? $this->array_merge_recursive_distinct($mergedKey, $arrayKey) : $arrayKey;
                 } else {

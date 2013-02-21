@@ -48,7 +48,7 @@ final class MetaAttachment extends MetaDbObject {
     {
     	if (is_null($p_languageId)) {
     		$smartyObj = CampTemplate::singleton();
-    		$contextObj = $smartyObj->get_template_vars('gimme');
+    		$contextObj = $smartyObj->getTemplateVars('gimme');
     		$p_languageId = $contextObj->language->number;
     	}
     	return $this->m_dbObject->getDescription($p_languageId);

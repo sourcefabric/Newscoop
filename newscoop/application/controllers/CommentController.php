@@ -69,7 +69,7 @@ class CommentController extends Zend_Controller_Action
 				'message' => $parameters['f_comment_content'],
 				'language' => $parameters['f_language'],
 				'thread' => $parameters['f_article_number'],
-				'ip' => $_SERVER['REMOTE_ADDR'],
+				'ip' => $this->getRequest()->getClientIp(),
 				'status' => 'approved',
 				'time_created' => new DateTime(),
                 'recommended' => '0'

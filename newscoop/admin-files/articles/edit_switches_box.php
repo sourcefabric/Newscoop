@@ -11,6 +11,10 @@
         class="input_checkbox" <?php if ($articleObj->onSectionPage()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
         <label for="f_on_section_page"><?php putGS('Show article on section page'); ?></label>
       </li>
+      <li><input type="checkbox" name="f_rating_enabled" id="f_rating_enabled"
+        class="input_checkbox" <?php if ($articleObj->ratingEnabled()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
+        <label for="f_rating_enabled"><?php putGS('Enable Rating'); ?></label>
+      </li>
       <li><input type="checkbox" name="f_is_public" id="f_is_public"
         class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php putGS('Visible to non-subscribers'); ?></label> </li>
     <?php
@@ -43,7 +47,8 @@
             var vals = {
                 'setOnFrontPage': $('input[name=f_on_front_page]', form),
                 'setOnSectionPage': $('input[name=f_on_section_page]', form),
-                'setIsPublic': $('input[name=f_is_public]', form)
+                'setIsPublic': $('input[name=f_is_public]', form),
+                'setRatingEnabled': $('input[name=f_rating_enabled]', form)
             };
 
             // check if saved

@@ -97,7 +97,7 @@ class ArticleRepository extends DatatableSource
         return $query;
     }
 
-    public function getArticlesForTopic($publication, $topicId)
+    public function getArticlesForTopic($publication, $topicId, $language = false, $getResultAndCount = false)
     {
         $em = $this->getEntityManager();
 
@@ -115,10 +115,22 @@ class ArticleRepository extends DatatableSource
             ->join('a.topics', 'att')
             ->setParameter('topicId', $topicId);
 
+        if ($language) {
+            $queryBuilder->andWhere('att.language = :language')->setParameter('language', $language);
+            $countQueryBuilder->andWhere('att.language = :language')->setParameter('language', $language);
+        }
+
         $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
+
+        if ($getResultAndCount) {
+            return array(
+                'result' => $query->getResult(),
+                'count' => $articlesCount
+            );
+        }
         
         return $query;
     }
@@ -190,5 +202,35 @@ class ArticleRepository extends DatatableSource
         $query = $queryBuilder->getQuery();
  
         return $query;
+    }
+
+    /**
+     * Get articles for indexing
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getIndexBatch($limit = 50)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.indexed IS NULL')
+            ->orWhere('a.indexed < a.updated')
+            ->orderBy('a.indexed', 'asc')
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    /**
+     * Reset articles index
+     *
+     * @return void
+     */
+    public function resetIndex()
+    {
+        $query = $this->getEntityManager()
+            ->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
+        $query->execute();
     }
 }

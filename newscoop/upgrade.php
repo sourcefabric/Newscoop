@@ -16,10 +16,21 @@ if (!file_exists($upgrade_trigger_path)) {
     exit(0);
 }
 
-require_once(__DIR__ . '/constants.php');
+require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/application.php';
 
-$application->bootstrap();
+// removes library/Zend in favor of vendor
+$libZend = __DIR__ . '/library/Zend';
+if (file_exists($libZend)) {
+    exec("rm -rf $libZend", $output = array(), $code);
+    if ($code) {
+        echo 'Upgrade script could not remove ' . $libZend . '.
+            Please do it manually and run this script again.';
+    }
+}
+
+$application->bootstrap('autoloader');
+$application->bootstrap('container');
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -78,18 +89,6 @@ CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
 
-// replace $campsite by $gimme
-require_once($g_documentRoot.'/classes/TemplateConverterNewscoop.php');
-$template_files = camp_read_files($g_documentRoot.'/templates');
-$converter = new TemplateConverterNewscoop();
-if (!empty($template_files)) {
-    foreach($template_files as $template_file) {
-        $converter->read($template_file);
-        $converter->parse();
-        $converter->write();
-    }
-}
-
 // update plugins
 CampPlugin::OnUpgrade();
 
@@ -103,21 +102,14 @@ CampPlugin::OnAfterUpgrade();
 
 CampTemplate::singleton()->clearCache();
 
-// replace javascript by js in .htaccess file
-$htaccesspath = $g_documentRoot . '/.htaccess';
-if (upgrade_htaccess($htaccesspath) == false) {
-    display_upgrade_error('Could not write .htaccess file.<br />Please read the '
-        . 'UPGRADE.txt file in this same directory to see what changes need to '
-        . 'be apply for this specific version of Newscoop.', FALSE);
-}
-
 if (file_exists($upgrade_trigger_path)) {
     @unlink($upgrade_trigger_path);
 }
 
-function display_upgrade_error($p_errorMessage, $exit = TRUE) {
+function display_upgrade_error($errorMessage, $exit = TRUE)
+{
     if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
-        var_dump($p_errorMessage);
+        var_dump($errorMessage);
         if ($exit) {
             exit(1);
         }
@@ -128,27 +120,11 @@ function display_upgrade_error($p_errorMessage, $exit = TRUE) {
     $params = array('context' => null,
                     'template' => $template,
                     'templates_dir' => $templates_dir,
-                    'error_message' => $p_errorMessage
+                    'error_message' => $errorMessage
     );
     $document = CampSite::GetHTMLDocumentInstance();
     $document->render($params);
     if ($exit) exit(0);
 }
-
-function upgrade_htaccess($htaccesspath)
-{
-    if (!file_exists($htaccesspath)) {
-        return false;
-    }
-    if (!($htaccess = @file_get_contents($htaccesspath))) {
-        return false;
-    }
-    $htaccess = str_replace('+javascript', '+js', $htaccess);
-    if (@file_put_contents($htaccesspath, $htaccess) === false) {
-        return false;
-    }
-    return true;
-}
-
 ?>
 <p>finished<br/><a href="<?php echo "/$ADMIN";?>">Administration</a></p>

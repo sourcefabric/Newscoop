@@ -11,12 +11,12 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
-use Newscoop\Persistence\ObjectRepository;
+use InvalidArgumentException;
 
 /**
  * User service
  */
-class UserService implements ObjectRepository
+class UserService
 {
     const USER_ENTITY = 'Newscoop\Entity\User';
 
@@ -190,6 +190,28 @@ class UserService implements ObjectRepository
     }
 
     /**
+     * Rename user
+     *
+     * @param object $command
+     * @return void
+     */
+    public function renameUser($command)
+    {
+        $user = $this->getRepository()->findOneById($command->userId);
+        if ($user->render()->username === $command->username) {
+            return;
+        }
+
+        $conflict = $this->getRepository()->findByUsername($command->username);
+        if (!empty($conflict)) {
+            throw new InvalidArgumentException($command->username);
+        }
+
+        $user->rename($command->username);
+        $this->em->flush();
+    }
+
+    /**
      * Generate username
      *
      * @param string $firstName
@@ -353,7 +375,7 @@ class UserService implements ObjectRepository
     }
 
     /**
-     * Get user class name
+     * Get user entity class name
      *
      * @return string
      */
