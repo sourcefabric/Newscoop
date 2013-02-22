@@ -5,13 +5,13 @@
 <script type="text/javascript">
   var api = new NewscoopRestApi(<?php echo json_encode($view->serverUrl($view->baseUrl('/api'))); ?>);
 
-  api.getResource('<?php echo $view->baseUrl('/articles'); ?>', {'type': 'news'})
+  api.getResource('/articles', {'type': 'news'})
     .setItemsPerPage(20)
     .setOrder({'published': 'desc'})
     .makeRequest(function(res){
       var data = [];
       var articles = [];
-      var maxReads = 0;
+      var maxReads = 1; // fix for division by 0
 
       $('.diagrams .data').html('<ul></ul>');
 
