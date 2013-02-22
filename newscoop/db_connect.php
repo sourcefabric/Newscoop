@@ -21,9 +21,8 @@ if (empty($g_ado_db)) {
     if (Zend_Registry::isRegistered('container')) {
         $container = Zend_Registry::get('container');
     } else {
-        require_once __DIR__ . '/application.php';
-        $application->bootstrap('container');
-        $container = $application->getBootstrap()->getResource('container');
+        $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
+        $container = $containerFactory->buildContainer();
     }
 
     $g_ado_db = $container->getService('doctrine.adodb');
