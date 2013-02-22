@@ -281,6 +281,12 @@ class Article
     private $webcode;
 
     /**
+     * Article reads number used by Newscoop API
+     * @var int
+     */
+    private $reads;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
      * @ORM\JoinTable(name="ArticleAuthors",
      *      joinColumns={
@@ -830,6 +836,28 @@ class Article
     }
 
     /**
+     * Get reads
+     * @param int $reads
+     */
+    public function setReads($reads)
+    {
+        $this->reads = $reads;
+
+        return $this;
+    }
+
+    /**
+     * Set reads
+     * @return int
+     */
+    public function getReads()
+    {
+        $requestObject = new \RequestObject($this->objectId);
+
+        return $requestObject->getRequestCount();
+    }
+
+    /*
      * Publish article
      *
      * @return void

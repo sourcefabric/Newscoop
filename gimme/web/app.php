@@ -12,10 +12,9 @@
 require_once(__DIR__ . '/../../newscoop/constants.php');
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppKernel.php';
+require_once __DIR__.'/../../newscoop/db_connect.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing;
-use Newscoop\Gimme\Framework;
 
 /**
  * Create Symfony kernel

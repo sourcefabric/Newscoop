@@ -6,7 +6,7 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once(dirname(__FILE__) . '/DatabaseObject.php');
 
 /**
  * @package Campsite
