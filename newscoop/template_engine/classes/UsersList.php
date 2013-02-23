@@ -49,6 +49,7 @@ class UsersList extends ListObject
         $criteria->is_public = true;
         $criteria->firstResult = $p_start;
         $criteria->maxResults = $p_limit;
+        $criteria->orderBy = $this->m_order;
 
         if (array_key_exists('search', $p_parameters)) {
             $criteria->query = $p_parameters['search'];
