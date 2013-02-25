@@ -27,26 +27,28 @@
         "guzzle/guzzle": "*",
         "rezzza/mailchimp": "dev-master",
         "hybridauth/hybridauth": "dev-master",
-        "noiselabs/smarty-bundle": "v1.1.0"
+        "noiselabs/smarty-bundle": "dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+        "ahs/facebook-newscoop-bundle": "*",
+        "newscoop/plugins-installer": "dev-master"
     },
     "autoload": {
         "psr-0": {
-            "Newscoop": ["newscoop/src", "newscoop/library"],
-            "Resource": "newscoop/library",
-            "Nette": "newscoop/library",
-            "Proxy": "newscoop/library"
+            "Newscoop": ["src", "library"],
+            "Resource": "library",
+            "Nette": "library",
+            "Proxy": "library"
         },
         "classmap": [
-            "newscoop/classes",
-            "newscoop/template_engine",
-            "newscoop/plugins",
-            "newscoop/include",
-            "newscoop/application"
+            "classes",
+            "template_engine",
+            "plugins",
+            "include",
+            "application"
         ]
     },
     "include-path": [
-        "newscoop/include",
-        "dependencies/include"
+        "include",
+        "./../dependencies/include"
     ],
     "scripts": {
         "post-install-cmd": [
@@ -63,7 +65,7 @@
         "bin-dir": "vendor/bin"
     },
     "extra": {
-        "symfony-app-dir": "newscoop/application",
-        "symfony-web-dir": "newscoop/public"
+        "symfony-app-dir": "application",
+        "symfony-web-dir": "public"
     }
 }

@@ -29,7 +29,6 @@ class ScriptHandler
 
         $php = escapeshellarg($phpPath);
         $doctrine = escapeshellarg(__DIR__ . '/../../../scripts/doctrine.php');
-
         $process = new Process("$php $doctrine orm:generate-proxies", null, null, null, self::TIMEOUT);
         $process->run();
         if (!$process->isSuccessful()) {

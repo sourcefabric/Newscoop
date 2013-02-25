@@ -1,6 +1,51 @@
 {
-    "hash": "27494daff4bbf7d8608f346f79103207",
+    "hash": "f574a358a82c6766be436a35c0fb61a6",
     "packages": [
+        {
+            "name": "ahs/facebook-newscoop-bundle",
+            "version": "dev-master",
+            "target-dir": "AHS/FacebookNewscoopBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/FacebookNewscoopBundle.git",
+                "reference": "81fbfd5467cbfdde5250bb5391fea978f35151ed"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/FacebookNewscoopBundle/zipball/81fbfd5467cbfdde5250bb5391fea978f35151ed",
+                "reference": "81fbfd5467cbfdde5250bb5391fea978f35151ed",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "time": "2013-02-22 14:36:57",
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "AHS\\FacebookNewscoopBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "mikolajczuk.private@gmail.com"
+                }
+            ],
+            "description": "Usefull sevices for integration Newscoop and Facebook",
+            "keywords": [
+                "ahs",
+                "cms",
+                "facebook",
+                "integration",
+                "newscoop"
+            ]
+        },
         {
             "name": "behat/behat",
             "version": "dev-master",
@@ -1104,18 +1149,54 @@
             ]
         },
         {
-            "name": "noiselabs/smarty-bundle",
-            "version": "v1.1.0",
-            "target-dir": "NoiseLabs/Bundle/SmartyBundle",
+            "name": "newscoop/plugins-installer",
+            "version": "dev-master",
+            "target-dir": "Newscoop/Composer",
             "source": {
                 "type": "git",
-                "url": "https://github.com/noiselabs/SmartyBundle",
-                "reference": "v1.1.0"
+                "url": "https://github.com/ahilles107/newscoop-plugins-installer.git",
+                "reference": "7a3854e9ce66e85d6ae2ac94cffa75726fc7f5a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/noiselabs/SmartyBundle/zipball/v1.1.0",
-                "reference": "v1.1.0",
+                "url": "https://api.github.com/repos/ahilles107/newscoop-plugins-installer/zipball/7a3854e9ce66e85d6ae2ac94cffa75726fc7f5a2",
+                "reference": "7a3854e9ce66e85d6ae2ac94cffa75726fc7f5a2",
+                "shasum": ""
+            },
+            "time": "2013-02-22 14:22:49",
+            "type": "composer-installer",
+            "extra": {
+                "class": "Newscoop\\Composer\\PluginsInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\Composer": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ]
+        },
+        {
+            "name": "noiselabs/smarty-bundle",
+            "version": "dev-master",
+            "target-dir": "NoiseLabs/Bundle/SmartyBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/noiselabs/SmartyBundle.git",
+                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/noiselabs/SmartyBundle/zipball/c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
                 "shasum": ""
             },
             "require": {
@@ -1135,7 +1216,7 @@
                 "mopa/bootstrap-sandbox-bundle": "Integration of Twitter Bootstrap into Symfony2 (extra)",
                 "symfony/assetic-bundle": "Assetic support in Smarty templates"
             },
-            "time": "2012-09-17 12:29:19",
+            "time": "2013-02-20 01:13:38",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1603,6 +1684,8 @@
     "stability-flags": {
         "knplabs/knp-paginator-bundle": 20,
         "rezzza/mailchimp": 20,
-        "hybridauth/hybridauth": 20
+        "hybridauth/hybridauth": 20,
+        "noiselabs/smarty-bundle": 20,
+        "newscoop/plugins-installer": 20
     }
 }

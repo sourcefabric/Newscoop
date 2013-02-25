@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if (!file_exists(__DIR__ . '/../../vendor')) {
+if (!file_exists(__DIR__ . '/../vendor')) {
     echo "Missing dependency! Please install all dependencies with composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install</pre>";
     die;
