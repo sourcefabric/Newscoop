@@ -143,4 +143,26 @@ class EmailService
 
         $mail->send();
     }
+    
+    /**
+     * Send email in html
+     *
+     * @param string $subject
+     * @param string $message
+     * @param mixed $tos
+     * @return void
+     */
+    public function sendHtml($subject, $message, $tos, $from = null)
+    {
+        $mail = new \Zend_Mail(self::CHARSET);
+        $mail->setSubject($subject);
+        $mail->setBodyHtml($message);
+        $mail->setFrom(isset($from) ? $from : $this->config['from']);
+
+        foreach ((array) $tos as $to) {
+            $mail->addTo($to);
+        }
+
+        $mail->send();
+    }
 }
