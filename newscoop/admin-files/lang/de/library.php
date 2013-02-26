@@ -1,6 +1,6 @@
 <?php 
 regGS("Display newswires articles", "Agenturmeldungen anzeigen");
-regGS("Display Newswires", "Agenturen anzeigen");
+regGS("Display Newswires", "Agenturmeldungen anzeigen");
 regGS("Webcode", "Webcode");
 regGS("View article", "Artikel ansehen. ");
 regGS("Source", "Quelle");
@@ -19,8 +19,8 @@ regGS("$1 Article(s) unlocked", "$1 Artikel entsperrt");
 regGS("$1 Article(s) not unlocked", "$1 Artikel nicht entsperrt");
 regGS("$1 Article(s) duplicated", "$1 Artikel dupliziert");
 regGS("Download file", "Datei herunterladen");
-regGS("You do not have the right to delete articles.", "Sie haben kein Zugangsrecht zum Löschen von Artikeln.");
-regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Sie haben kein Zugangsrecht zum Ändern des Artikelstatus. Ein eingepflegter Artikel kann nur von autorisierten Usern geändert werden.");
+regGS("You do not have the right to delete articles.", "Sie haben keine Berechtigung zum Löschen von Artikeln.");
+regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Sie haben  keine Berechtigung zum Ändern des Artikelstatus. Ein eingepflegter Artikel kann nur von autorisierten Benutzern geändert werden.");
 regGS("Use Map", "Karte benutzen");
 regGS("Toggle: 'On Section Page'", "Auswählen: 'Auf der Rubrikseite'");
 regGS("Toggle: 'On Front Page'", "Auswählen: 'Auf der Startseite'");

@@ -2,7 +2,7 @@
 regGS("Based on GeoNames.org data", "Basierend auf Daten von GeoNames.org");
 regGS("selected marker icon", "ausgewähltes Markierungssymbol");
 regGS("add location to map", "Ort der Karte hinzufügen");
-regGS("Video source", "Video-Quelle");
+regGS("Video source", "Videoquelle");
 regGS("The point will be removed from all translations of the article.", "Der Standort wird aus allen Übersetzungen des Artikels entfernt. ");
 regGS("Specify country (optional)", "Land festlegen (optional)");
 regGS("Sorry, that place was not found. Check your spelling or search again.", "Der Ort wurde nicht gefunden. Überprüfen Sie die Schreibweise oder suchen Sie erneut. ");
@@ -58,7 +58,7 @@ regGS("Point no.", "Standpunktnummer");
 regGS("Point markers", "Standpunktmarkierungen");
 regGS("None", "Keine");
 regGS("Map Search Example", "Kartensuche Beispiel");
-regGS("Map Preview", "Vorschau Karte");
+regGS("Map Preview", "Kartenvorschau");
 regGS("Image URL", "Bild URL");
 regGS("video", "Video ");
 regGS("text", "Text");

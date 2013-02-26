@@ -1,6 +1,6 @@
 <?php 
 regGS("MailChimp Settings", "MailChimp Einstellungen");
-regGS("List Unique Id:", "Eindeutige ID Liste:");
+regGS("List Unique Id:", "Eindeutige Listen ID:");
 regGS("Facebook Settings", "Facebook Einstellungen");
 regGS("App Secret:", "App Secret: ");
 regGS("App ID:", "App ID:");
@@ -87,7 +87,7 @@ regGS("System preferences updated.", "Systemeinstellungen aktualisiert.");
 regGS("Please enter a positive number for the '$1' field.", "Bitte eine positive Zahl für das Feld '$1' eingeben.");
 regGS("Login Attempts", "Login Versuche");
 regGS("Keyword separator must be at least one character.", "Schlagwort Separator muss aus mindestens einem Zeichen bestehen.");
-regGS("You do not have the right to change system preferences.", "Keine Berechtigung um Systemeinstellungen zu verändern.");
+regGS("You do not have the right to change system preferences.", "Keine Berechtigung Systemeinstellungen zu verändern.");
 regGS("Number of failed login attempts before showing CAPTCHA :", "Anzahl fehlgeschlagener Loginversuche bevor CAPTCHA angezeigt wird:");
 regGS("Keyword separator:", "Trennzeichen für Schlagwörter:");
 regGS("Time Zone:", "Zeitzone:");

@@ -24,7 +24,7 @@ regGS("Are you sure you want to delete this list?", "Wollen Sie diese Liste wirk
 regGS("Add to list", "Zur Liste hinzufügen");
 regGS("Add list", "Liste hinzufügen");
 regGS("Multi date events", "Mehrtägige Ereignisse");
-regGS("Slideshows", "Diashow");
+regGS("Slideshows", "Bildstrecken");
 regGS("Place images", "Bilder platzieren");
 regGS("You're not allowed to edit article.", "Sie haben keine Berechtigung um einen Artikel zu bearbeiten. ");
 regGS("Webcode", "Webcode");
@@ -34,7 +34,7 @@ regGS("The article could not be submitted.", "Der Artikel konnte nicht eingepfle
 regGS("Submit articles", "Artikel einpflegen");
 regGS("Submit article", "Artikel einpflegen");
 regGS("Related Articles", "Verwandte Artikel");
-regGS("Pending articles", "Artikel einreichen");
+regGS("Pending articles", "Eingereichte Artikel");
 regGS("Pending Articles", "Eingereichte Artikel");
 regGS("Context Box updated", "Content Box aktualisiert");
 regGS("On", "An");
@@ -177,7 +177,7 @@ regGS("Edit article types", "Artikeltypen bearbeiten");
 regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "Fehler beim Speichern des Artikels. Er wurde von $1 vor $2 Stunden und $3 Minuten gesperrt.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Keine Zugriffsrechte auf die Änderung des Artikelstatus. Eingepflegte Artikel können nur mit den dazugehörigen Rechten geändert werden.");
 regGS("You do not have the right to delete articles.", "Fehlende Zugriffsrechte für das Löschen von Artikeln.");
-regGS("You must select an article type.", "Ein Artikeltyp muss ausgewählt werden.");
+regGS("You must select an article type.", "Der Artikeltyp muss ausgewählt werden.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Soll das Bild \'$1\' vom Artikel entkoppelt werden?");
 regGS("There was an error reading request parameters.", "Fehler beim Lesen der Anfrageparameter.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Dieser Artikel kann nicht in der Vorschau angezeigt werden. Bitte prüfen, ob die Artikel Template ausgewählt wurde.");

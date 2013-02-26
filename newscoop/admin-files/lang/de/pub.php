@@ -45,7 +45,7 @@ regGS("You do not have the right to edit publication information.", "Keine Berec
 regGS("General attributes", "Allgemeine Eigenschaften");
 regGS("You do not have the right to change publication information.", "Keine Berechtigung Publikationsinformation zu ändern.");
 regGS("The publication information could not be updated.", "Die Publikationsinformation konnte nicht aktualisiert werden.");
-regGS("You do not have the right to delete publications.", "Keine Berechtigung, Publikationen zu löschen.");
+regGS("You do not have the right to delete publications.", "Keine Berechtigung Publikationen zu löschen.");
 regGS("Are you sure you want to delete the publication $1?", "Sicher, dass Publikation $1 gelöscht werden soll?");
 regGS("Deleting publication", "Publikation wird gelöscht");
 regGS("There are $1 subscription(s) left.", "$1 Abonnement(s) noch vorhanden");
@@ -68,7 +68,7 @@ regGS("Deleting alias", "Alias löschen");
 regGS("The alias $1 could not be deleted.", "Alias $1 konnte nicht gelöscht werden.");
 regGS("$1 is the default publication alias, it can not be deleted.", "$1 ist der voreingestellte Alias der Publikation und kann nicht gelöscht werden.");
 regGS("You do not have the right to add publications.", "Keine Zugriffsrechte, um eine neue Publikation zu erstellen.");
-regGS("There are $1 issue(s) left.", "$1 Ausgaben sind übrig.");
+regGS("There are $1 issue(s) left.", "$1 Ausgaben sind vorhanden. ");
 regGS("Time Unit", "Zeiteinheit");
 regGS("Currency", "Währung");
 regGS("Edit languages", "Sprachen bearbeiten");

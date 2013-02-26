@@ -36,7 +36,7 @@ regGS("Last Name", "Nachname");
 regGS("First Name", "Vorname");
 regGS("Email", "Email-Adresse");
 regGS("You were logged out.", "Sie wurden ausgeloggt. ");
-regGS("Newscoop Subhead", "Newscoop Untertitel");
+regGS("Newscoop Subhead", "Newscoop Zwischentitel");
 regGS("Filters", "Filter");
 regGS("Add new Author", "Neue(n) Autor/in hinzufügen");
 regGS("Loading Data", "Daten laden");

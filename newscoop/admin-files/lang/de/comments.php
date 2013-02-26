@@ -4,7 +4,7 @@ regGS("You are about to permanently delete a message.", "Sie sind im Begriff ein
 regGS("With no attachment", "Ohne Anhang");
 regGS("With image attachment", "Mit angehängtem Bild ");
 regGS("With document attachment", "Mit angehängtem Dokument");
-regGS("User", "User");
+regGS("User", "Benutzer");
 regGS("Starred", "Mit Stern versehen");
 regGS("Star", "Stern");
 regGS("Reply to message", "Auf Nachricht antworten");

@@ -1,5 +1,5 @@
 <?php 
-regGS("so that default templates can be assigned to the issue.", "so dass das Standardtemplate dieser Ausgabe zugewiesen werden kann.");
+regGS("so that default templates can be assigned to the issue.", "so dass die Standarddesignvorlage dieser Ausgabe zugewiesen werden kann.");
 regGS("Once this is done, the issue can be published", "Wenn dies erledigt ist, kann die Ausgabe veröffentlicht werden. ");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Überprüfen Sie bitte, ob für die Publikation eine Designvorlage ausgewählt worden ist. ");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Überprüfen Sie bitte, dass ein Front-Template ausgewählt worden ist.");
@@ -9,8 +9,8 @@ regGS("Force publishing of all articles. If set to 'No', only articles with 'Pub
 regGS("default", "Standard");
 regGS("The publishing/unpublishing can not be set the same time", "Der Zeitpunkt der Veröffentlichung / Unveröffentlichung kann nicht identisch sein. ");
 regGS("The publishing schedule can not be set in the past", "Der Veröffentlichungszeitraum kann nicht in der Vergangenheit liegen. ");
-regGS("Please assign at least one theme to the publication", "Bitte weisen Sie der Publikation mindestens ein Thema zu. ");
-regGS("Issue Theme", "Thema der Ausgabe");
+regGS("Please assign at least one theme to the publication", "Bitte weisen Sie der Publikation mindestens eine Designvorlage zu. ");
+regGS("Issue Theme", "Designvorlage der Ausgabe");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Die gewählten Werte stehen im Widerspruch zur Ausgabe \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Nummern für jede Ausgabe in dieser Publikation und Sprache müssen unterschiedlich sein.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Sprache und URL-Name für jede Ausgabe in dieser Publikation müssen unterschiedlich sein.");

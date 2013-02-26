@@ -40,7 +40,7 @@ regGS("A total of $1 articles were deleted.", "Insgesamt wurden $1 Artikel gelö
 regGS("Duplicate Section:", "Rubrik duplizieren:");
 regGS("Existing Section", "Bestehende Rubrik");
 regGS("Go to new section", "Zu neuer Rubrik wechseln");
-regGS("Go to source section", "Zu Ausgangsrubrik wechseln");
+regGS("Go to source section", "Zur Ausgangsrubrik wechseln");
 regGS("New Section", "Neue Rubrik");
 regGS("Please select either '$1' or '$2'.", "Bitte entweder '$1' oder '$2' auswählen.");
 regGS("Select destination section:", "Zielrubrik auswählen:");
@@ -49,7 +49,7 @@ regGS("URL Name", "URL Name");
 regGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", "Die gewählte Nummer der Rubrik existiert bereits, bitte einen anderen Wert angeben oder aus dem Dropdown Menü auswählen.");
 regGS("Warning", "Warnung");
 regGS("You must select a section.", "Sie müssen eine Rubrik wählen.");
-regGS("You must specify a name for the section.", "Sie müssen für die Rubrik einen Name angeben.");
+regGS("You must specify a name for the section.", "Sie müssen für die Rubrik einen Namen angeben.");
 regGS("The section could not be added.", "Die Rubrik konnte nicht hinzugefügt werden.");
 regGS("Add new section", "Neue Rubrik hinzufügen");
 regGS("No sections.", "Keine Rubriken");

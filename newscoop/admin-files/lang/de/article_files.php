@@ -31,7 +31,7 @@ regGS("Open in the browser", "Im Browser öffnen");
 regGS("Only this translation", "Nur diese Übersetzung");
 regGS("File information", "Dateiinformation");
 regGS("Do you want this file to open in the user's browser, or to automatically download?", "Soll diese Datei im Browser geöffnet oder automatisch zum Herunterladen angeboten werden?");
-regGS("Change file information", "Datei-Information ändern");
+regGS("Change file information", "Dateiinformation ändern");
 regGS("Automatically download", "Automatisch herunterladen");
 regGS("Attachments", "Anlagen");
 regGS("Attachment does not exist.", "Die Anlage existiert nicht.");
