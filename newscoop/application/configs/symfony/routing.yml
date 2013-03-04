@@ -1,14 +1,6 @@
-newscoop_paywall:
-    resource: "@NewscoopPaywallBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-newscoop_example_plugin:
-    resource: "@NewscoopExamplePluginBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 gimme:
     type: rest
     prefix: /api
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
+acme_hello:
+    resource: "@NewscoopPaywallBundle/Resources/config/routing.yml"

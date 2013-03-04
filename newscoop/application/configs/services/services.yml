@@ -184,4 +184,7 @@ services:
     mailchimp.list:
         class: Newscoop\MailChimp\ListApi
         arguments: ["@mailchimp.api.factory", "@preferences"]
+    plugins.manager:
+        class: Newscoop\Services\PluginsManagerService
+        arguments: ["@em"]
 

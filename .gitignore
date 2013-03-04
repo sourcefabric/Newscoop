@@ -2,6 +2,7 @@ composer.phar
 newscoop/images/*
 newscoop/cache/*
 newscoop/files/*
+newscoop/plugins/*
 newscoop/vendor/
 newscoop/newscoop-indexer.lock
 newscoop/.htaccess

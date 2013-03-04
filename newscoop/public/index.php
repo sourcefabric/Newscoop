@@ -18,9 +18,6 @@ require_once __DIR__ . '/../application/AppKernel.php';
 require_once __DIR__ . '/../db_connect.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing;
-use Newscoop\Gimme\Framework;
-use Symfony\Component\Routing\Exception;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
@@ -70,7 +67,8 @@ try {
     $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
     $response->send();
     $kernel->terminate($request, $response);
-} catch (NotFoundHttpException $e) {    
+} catch (NotFoundHttpException $e) {
+    //print_r($e);die;
     require_once __DIR__ . '/../application.php';
     $application->bootstrap();
     $application->run();

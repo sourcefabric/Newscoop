@@ -78,6 +78,7 @@ final class CampTemplate extends SmartyBC
             array(APPLICATION_PATH . self::PLUGINS),
             self::getPluginsPluginsDir()
         ));
+   
 
         $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',
@@ -100,7 +101,18 @@ final class CampTemplate extends SmartyBC
      */
     public static function getPluginsPluginsDir()
     {
+        $pluginsManager = \Zend_Registry::get('container')->getService('plugins.manager');
+        $availablePlugins = $pluginsManager->getInstalledPlugins();
         $dirs = array();
+        foreach ($availablePlugins as $plugin) {
+            $pluginPath = explode('\\', $plugin);
+            $directoryPath = realpath(__DIR__ . '/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/Resources/smartyPlugins');
+            if ($directoryPath) {
+                $dirs[] = $directoryPath;
+            }
+        }
+        
+        //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
         }

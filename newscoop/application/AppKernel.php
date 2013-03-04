@@ -26,13 +26,20 @@ class AppKernel extends Kernel
             new NoiseLabs\Bundle\SmartyBundle\SmartyBundle(),
             new Newscoop\ExamplePluginBundle\NewscoopExamplePluginBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
-            new Newscoop\PaywallBundle\NewscoopPaywallBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+        }
+
+        $cachedPlugins = __DIR__ . '/../plugins/avaiable_plugins.json';
+        if (file_exists($cachedPlugins)) {
+            $plugins = json_decode(file_get_contents($cachedPlugins));
+            foreach ($plugins as $plugin) {
+                $bundles[] = new $plugin();
+            }
         }
 
         return $bundles;
