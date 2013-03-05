@@ -242,6 +242,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->getService('em')
             ->getEventManager()
             ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
+
+        $container->getService('em')
+            ->getEventManager()->addEventSubscriber(new \Gedmo\Tree\TreeListener());
     }
 
     protected function _initPlugins()
