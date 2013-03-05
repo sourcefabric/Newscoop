@@ -3,6 +3,8 @@
 // Define application environment, (I am only running this in development)
 define('APPLICATION_ENV', 'development');
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 require_once __DIR__ . '/../application.php';
 $application->bootstrap();
 
@@ -52,6 +54,7 @@ $cli->addCommands(array(
     new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
     new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
+    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand()
 
 ));
 

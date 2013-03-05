@@ -25,11 +25,10 @@ class ArticleTypeField
     private $name;
 
     /**
-	 * @Transient
-	 * @var Newscoop\Entity\ArticleType
-	 * (at) ManyToOne( targetEntity="Newscoop\Entity\ArticleType" )
-	 * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
-	 * @todo hack
+     * @var Newscoop\Entity\ArticleType
+     * (at) ManyToOne( targetEntity="Newscoop\Entity\ArticleType" )
+     * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
+     * @todo hack
      */
     private $articleType;
 
@@ -94,36 +93,36 @@ class ArticleTypeField
         return $this->articleType;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setArticleType( ArticleType $type )
+    public function setArticleType(ArticleType $type)
     {
         $this->articleType =
-        //$this->typeHack =
+            //$this->typeHack =
             $type;
         return $this;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setArticleTypeHack( ArticleType $type )
+    public function setArticleTypeHack(ArticleType $type)
     {
         $this->typeHack = $type;
         return $this;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setName( $name )
+    public function setName($name)
     {
         $this->name = $name;
         return $this;
     }
 
-	/**
+    /**
      * @return string
      */
     public function getName()
@@ -131,7 +130,7 @@ class ArticleTypeField
         return $this->name;
     }
 
-	/**
+    /**
      * @return int
      */
     public function getLength()
@@ -139,16 +138,16 @@ class ArticleTypeField
         return $this->length;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setLength( $val )
+    public function setLength($val)
     {
         $this->length = $val;
         return $this;
     }
 
-	/**
+    /**
      * @return string
      */
     public function getType()
@@ -156,10 +155,10 @@ class ArticleTypeField
         return $this->type;
     }
 
-	/**
+    /**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setType( $val )
+    public function setType($val)
     {
         $this->type = $val;
         return $this;
