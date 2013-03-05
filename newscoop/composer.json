@@ -32,7 +32,9 @@
         "guzzle\/guzzle":"*",
         "rezzza\/mailchimp":"dev-master",
         "hybridauth\/hybridauth":"dev-master",
-        "noiselabs\/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+        "noiselabs\/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+        "newscoop\/newscoop-paywall-bundle":"*",
+        "ahs/facebook-newscoop-bundle": "*"
     },
     "autoload":{
         "psr-0":{

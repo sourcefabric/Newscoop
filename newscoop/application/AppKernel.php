@@ -24,8 +24,8 @@ class AppKernel extends Kernel
             new Newscoop\GimmeBundle\NewscoopGimmeBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new NoiseLabs\Bundle\SmartyBundle\SmartyBundle(),
-            new Newscoop\ExamplePluginBundle\NewscoopExamplePluginBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
+            new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

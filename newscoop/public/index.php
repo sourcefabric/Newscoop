@@ -15,7 +15,6 @@ if (!file_exists(__DIR__ . '/../vendor')) {
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application/bootstrap.php.cache';
 require_once __DIR__ . '/../application/AppKernel.php';
-require_once __DIR__ . '/../db_connect.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -47,21 +46,12 @@ if (APPLICATION_ENV === 'production') {
 }
 
 $kernel->loadClassCache();
-
-/**
- * Create request object from global variables
- */
 $request = Request::createFromGlobals();
-// boot kernel manuly
-$kernel->boot();
 
-$containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
-$containerFactory->buildContainer();
-if ($kernel->getContainer()) {
-    $containerFactory->setContainer($kernel->getContainer());
-}
-$container = $containerFactory->getContainer();
-\Zend_Registry::set('container', $container);
+$kernel->boot();
+\Zend_Registry::set('container', $kernel->getContainer());
+// init adodb
+require_once __DIR__ . '/../db_connect.php';
 
 try {
     $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);

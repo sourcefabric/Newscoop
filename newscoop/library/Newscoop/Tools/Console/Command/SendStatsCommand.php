@@ -37,7 +37,7 @@ EOT
     {
         $supportSend = \SystemPref::get('support_send');
         if ($supportSend) {
-            $stats = $this->getHelper('container')->getService('stat')->getAll();
+            $stats = $this->getApplication()->getKernel()->getContainer()->getService('stat')->getAll();
             
             $statsUrl = 'http://stat.sourcefabric.org';
             $parameters = array('p' => 'newscoop');

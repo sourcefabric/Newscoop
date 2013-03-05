@@ -1,13 +1,15 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
+use Newscoop\EventDispatcher\EventDispatcher;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Plugin;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
@@ -16,16 +18,23 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PluginsManagerService
 {
-    /** @var Doctrine\ORM\EntityManager */
+    /** 
+     * @var Doctrine\ORM\EntityManager 
+     */
     private $em;
+
+    /**
+     * @var Newscoop\EventDispatcher\EventDispatcher
+     */
+    private $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $dispatcher)
     {
         $this->em = $em;
-    }
+        $this->dispatcher = $dispatcher;    }
 
     public function installPlugin($pluginName, $version, $output = null) {
         $this->installComposer();
@@ -34,6 +43,11 @@ class PluginsManagerService
         if(count($pluginMeta) !== 2) {
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
+
+        var_dump($this->dispatcher->hasListeners('plugin.install'));
+        $this->dispatcher->notify('plugin.install', new GenericEvent($this, array(
+            'plugin_name' => $pluginName
+        )));
 
         $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar require ' . $pluginName .':' . $version);
         $process->setTimeout(3600);
@@ -61,6 +75,11 @@ class PluginsManagerService
                 $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
                 unset($composerDefinitions['require'][$package]);
 
+                $this->dispatcher->notify('plugin.remove', new GenericEvent($this, array(
+                    'plugin_name' => $pluginName
+                )));
+
+
                 file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
 
                 $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar update ' . $pluginName);
@@ -78,23 +97,26 @@ class PluginsManagerService
                 }
             }
         }
-        // fetch composer.json file
-        // search plugin name in require section
-        // unset that key
-        // save new version of file
-        // run composer install
     }
 
     public function updatePlugin($pluginName) {
-
+        $this->dispatcher->notify('plugin.update', new GenericEvent($this, array(
+            'plugin_name' => $pluginName
+        ))); 
     }
 
     public function enablePlugin(Plugin $plugin) {
-
+        $this->dispatcher->notify('plugin.enable', new GenericEvent($this, array(
+            'plugin_name' => $plugin->getName(),
+            'plugin' => $plugin
+        )));
     }
 
     public function disablePlugin(Plugin $plugin) {
-
+        $this->dispatcher->notify('plugin.disable', new GenericEvent($this, array(
+            'plugin_name' => $plugin->getName(),
+            'plugin' => $plugin
+        )));
     }
 
     public function upgrade() {

@@ -33,7 +33,7 @@ class RemovePluginCommand extends Console\Command\Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $pluginsManager = $this->getHelper('container')->getService('plugins.manager');
+        $pluginsManager = $this->getApplication()->getKernel()->getContainer()->getService('plugins.manager');
         $name = $input->getArgument('name');
 
         $pluginsManager->removePlugin($name, $output);

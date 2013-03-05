@@ -1,6 +1,6 @@
 <?php
 
-namespace Newscoop\ExamplePluginBundle\Tests\Controller;
+namespace Newscoop\NewscoopBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

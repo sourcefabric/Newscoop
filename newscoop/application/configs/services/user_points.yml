@@ -3,4 +3,4 @@ services:
         class:      Newscoop\Services\UserPointsService
         arguments:  ["@em"]
         tags:
-            -  { name: event_listener, event: image.published, method: update }
+            -  { name: kernel.event_listener, event: image.published, method: update }

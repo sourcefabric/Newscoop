@@ -1,0 +1,6 @@
+services:
+    newscoop_newscoop.routing.loader.plugins:
+        class: Newscoop\NewscoopBundle\Routing\PluginsLoader
+        arguments: ["@plugins.manager"]
+        tags:
+            - { name: routing.loader }

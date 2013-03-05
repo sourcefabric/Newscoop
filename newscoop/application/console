@@ -6,6 +6,7 @@
 //umask(0000);
 
 set_time_limit(0);
+define('APPLICATION_ENV', 'cli');
 
 require_once __DIR__ . '/../../newscoop/constants.php';
 require_once __DIR__ . '/bootstrap.php.cache';
@@ -19,5 +20,23 @@ $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?:
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
 
 $kernel = new AppKernel($env, $debug);
-$application = new Application($kernel);
-$application->run($input);
+$cli = new Application($kernel);
+
+$kernel->boot();
+\Zend_Registry::set('container', $kernel->getContainer());
+
+$cli->setCatchExceptions(false);
+
+$cli->addCommands(array(
+    new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
+    new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
+    new \Newscoop\Tools\Console\Command\SendStatsCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
+    new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
+    new \Newscoop\Tools\Console\Command\InstallPluginCommand(),
+    new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
+));
+
+$cli->run($input);

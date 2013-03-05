@@ -35,7 +35,7 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $audit = $this->getHelper('container')->getService('audit.maintenance');
+        $audit = $this->getApplication()->getKernel()->getContainer()->getService('audit.maintenance');
         $audit->flush();
 
         $output->writeln('Log data processed.');

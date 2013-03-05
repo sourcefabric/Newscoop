@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 namespace Newscoop\Entity;

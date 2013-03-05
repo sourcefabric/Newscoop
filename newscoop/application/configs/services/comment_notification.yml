@@ -3,4 +3,4 @@ services:
         class:      Newscoop\Services\CommentNotificationService
         arguments:  ["@email", "@comment", "@user"]
         tags:
-            -  { name: event_listener, event: comment.create, method: update }
+            -  { name: kernel.event_listener, event: comment.create, method: update }

@@ -25,8 +25,6 @@ class NewscoopGimmeExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
-        $this->loadNewscoop($configs, $container);
-
         $config = array();
         foreach ($configs as $subConfig) {
             $config = array_merge($config, $subConfig);
@@ -38,17 +36,5 @@ class NewscoopGimmeExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-    }
-
-    /**
-     * Load parameters form newscop.
-     * @param  array            $configs   existing configs
-     * @param  ContainerBuilder $container Container for Newscoop Container Factory.
-     */
-    private function loadNewscoop(array $configs, ContainerBuilder $container)
-    {   
-        $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
-        $containerFactory->setContainer($container);
-        $containerFactory->mergeParameters();
     }
 }
