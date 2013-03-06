@@ -21,15 +21,15 @@
           }
       ?>
 
+      <ul class="block-list" id="added-to-playlists">
       <?php if ($playlistsData) : ?>
-        <ul class="block-list" id="added-to-playlists">
         <?php foreach ($playlistsData as $playlist) : ?>
           <li playlist-id="<?php echo $playlist->id ?>">
             <?php echo $this->view->escape($playlist->name); ?>
           </li>
         <?php endforeach; ?>
-        </ul>
       <?php endif; ?>
+      </ul>
       </div>
 
       <?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
