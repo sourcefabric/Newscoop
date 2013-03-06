@@ -79,7 +79,6 @@ class PluginsManagerService
                     'plugin_name' => $pluginName
                 )));
 
-
                 file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
 
                 $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar update ' . $pluginName);

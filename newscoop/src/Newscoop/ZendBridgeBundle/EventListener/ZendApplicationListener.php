@@ -15,11 +15,24 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class ZendApplicationListener
 {   
+    private $container;
     
+    public function __construct($container) {
+        $this->container = $container;
+    }
+
     public function onRequest(GetResponseEvent $event)
     {
-        // boot zend app
-        require_once __DIR__ . '/../../../../application.php';
+        // Fill zend application options
+        $config = $this->container->getParameterBag()->all();
+        $application = new \Zend_Application(APPLICATION_ENV);
+        $iniConfig = APPLICATION_PATH . '/configs/application.ini';
+        if (file_exists($iniConfig)) {
+            $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
+            $config = $application->mergeOptions($config, $userConfig->toArray());
+        }
+
+        $application->setOptions($config);
         $application->bootstrap();
     }
 }

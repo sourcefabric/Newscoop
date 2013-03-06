@@ -3,6 +3,7 @@ newscoop/images/*
 newscoop/cache/*
 newscoop/files/*
 newscoop/plugins/*
+newscoop/backup/*
 newscoop/vendor/
 newscoop/newscoop-indexer.lock
 newscoop/.htaccess

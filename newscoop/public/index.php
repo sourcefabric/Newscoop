@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Newscoop\Gimme
+ * @package Newscoop
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
@@ -49,7 +49,8 @@ $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
 $kernel->boot();
-\Zend_Registry::set('container', $kernel->getContainer());
+$container = $kernel->getContainer();
+\Zend_Registry::set('container', $container);
 // init adodb
 require_once __DIR__ . '/../db_connect.php';
 
@@ -58,8 +59,16 @@ try {
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
-    //print_r($e);die;
-    require_once __DIR__ . '/../application.php';
+    // Fill zend application options
+    $config = $container->getParameterBag()->all();
+    $application = new \Zend_Application(APPLICATION_ENV);
+    $iniConfig = APPLICATION_PATH . '/configs/application.ini';
+    if (file_exists($iniConfig)) {
+        $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
+        $config = $application->mergeOptions($config, $userConfig->toArray());
+    }
+
+    $application->setOptions($config);
     $application->bootstrap();
     $application->run();
 }

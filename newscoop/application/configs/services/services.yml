@@ -55,6 +55,8 @@ services:
     event_dispatcher:
         class:      Newscoop\EventDispatcher\EventDispatcher
         arguments:  ["@service_container"]
+    dispatcher:
+        alias: event_dispatcher
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth"]

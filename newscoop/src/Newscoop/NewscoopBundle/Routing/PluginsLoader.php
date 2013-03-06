@@ -25,8 +25,11 @@ class PluginsLoader implements LoaderInterface
      */
     private $pluginsManager;
 
-    public function __construct($pluginsManager) {
+    private $container;
+
+    public function __construct($pluginsManager, $container) {
         $this->pluginsManager = $pluginsManager;
+        $this->container = $container;
     }
  
     public function load($resource, $type = null)
@@ -47,13 +50,14 @@ class PluginsLoader implements LoaderInterface
             }
         }
 
-        if (count($dirs) > 0) {
-            $locator = new FileLocator($dirs);
-            $loader = new YamlFileLoader($locator);
-            $routes = $loader->load('routing.yml');
+        $routesCollection = new \Symfony\Component\Routing\RouteCollection();
+        $routesCollection->addPrefix('plugin');
+        foreach ($dirs as $directory) {
+            $routeLoader = $this->container->get('routing.loader');
+            $routesCollection->addCollection($routeLoader->load($directory.'/routing.yml'));
         }
  
-        return $routes;
+        return $routesCollection;
     }
  
     public function supports($resource, $type = null)
