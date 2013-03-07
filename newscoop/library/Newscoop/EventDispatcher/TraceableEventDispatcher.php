@@ -9,16 +9,21 @@
 namespace Newscoop\EventDispatcher;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
+use Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * EventDispatcher class.
+ * TraceableEventDispatcher class.
  *
  * Provides wrapper methods for symfony's EventDispatcher.
  */
-class EventDispatcher extends ContainerAwareEventDispatcher
+class TraceableEventDispatcher extends ContainerAwareTraceableEventDispatcher
 {
+
+    public function __construct($container)
+    {
+        parent::__construct($container, $container->getService('debug.stopwatch'));
+    }
     
     /**
      * Adds an event listener that listens on the specified events.
