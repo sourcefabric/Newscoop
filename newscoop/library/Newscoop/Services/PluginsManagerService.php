@@ -34,7 +34,8 @@ class PluginsManagerService
     public function __construct(EntityManager $em, $dispatcher)
     {
         $this->em = $em;
-        $this->dispatcher = $dispatcher;    }
+        $this->dispatcher = $dispatcher;    
+    }
 
     public function installPlugin($pluginName, $version, $output = null) {
         $this->installComposer();
@@ -44,7 +45,6 @@ class PluginsManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        var_dump($this->dispatcher->hasListeners('plugin.install'));
         $this->dispatcher->notify('plugin.install', new GenericEvent($this, array(
             'plugin_name' => $pluginName
         )));

@@ -1,8 +1,5 @@
 <?php
 
-// Define application environment, (I am only running this in development)
-define('APPLICATION_ENV', 'development');
-
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application.php';
 

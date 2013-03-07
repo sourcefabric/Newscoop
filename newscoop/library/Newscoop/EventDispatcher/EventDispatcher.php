@@ -17,8 +17,14 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * Provides wrapper methods for symfony's EventDispatcher.
  */
-class EventDispatcher extends ContainerAwareEventDispatcher
+class EventDispatcher extends ContainerAwareTraceableEventDispatcher
 {
+
+    public function __construct($container)
+    {
+        parent::__construct($container, $container->getService('debug.stopwatch'));
+    }
+    
     /**
      * Adds an event listener that listens on the specified events.
      *
