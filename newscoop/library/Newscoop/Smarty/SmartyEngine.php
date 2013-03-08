@@ -51,15 +51,17 @@ class SmartyEngine extends BaseEngine
         $view = new \Newscoop\SmartyView();
         $view
             ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
-            ->addScriptPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
+            ->addScriptPath(realpath(APPLICATION_PATH . '/../themes/' . $themePath));
 
-        $view->addPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
+        $view->addPath(realpath(APPLICATION_PATH . '/../themes/' . $themePath));
 
         $this->smarty->assign('view', $view);
        	$this->smarty->assign('gimme', new \CampContext());
         $this->smarty->addTemplateDir(APPLICATION_PATH . '/../themes/');
         $this->smarty->addTemplateDir(APPLICATION_PATH . \CampTemplate::SCRIPTS);
         $this->smarty->addTemplateDir(APPLICATION_PATH . '/../themes/unassigned/system_templates/');
+        $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $themePath));
+        $this->smarty->addTemplateDir(APPLICATION_PATH . '/views/scripts/');
 
         $this->smarty->addPluginsDir(array_merge(
             array(APPLICATION_PATH . \CampTemplate::PLUGINS),
