@@ -54,7 +54,7 @@
       <li class="commentar">{{ $date=date_create($gimme->user_comment->submit_date) }}
             <time>{{ $date->format('d.m.Y \u\m H:i') }}</time>
               <h6{{* class="{{ cycle values="green-txt," }}"*}}>{{ $gimme->user_comment->subject|escape }}</6>
-              «{{ $gimme->user_comment->content|escape|truncate:255:"...":true }}»  Zum Artikel: <a href="{{ $gimme->user_comment->article->url }}">{{ $gimme->user_comment->article->name }}</a>
+              "{{ $gimme->user_comment->content|escape|truncate:255:"...":true }}"  In Article: <a href="{{ $gimme->user_comment->article->url }}">{{ $gimme->user_comment->article->name }}</a>
       </li>
       {{ /list_user_comments }}
     </ul></li>
