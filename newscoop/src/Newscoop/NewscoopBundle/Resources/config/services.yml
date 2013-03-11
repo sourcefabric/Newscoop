@@ -4,3 +4,6 @@ services:
         arguments: ["@plugins.manager", "@service_container"]
         tags:
             - { name: routing.loader }
+
+parameters:
+    smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
