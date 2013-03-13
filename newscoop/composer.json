@@ -32,7 +32,8 @@
         "psr-0": {
             "Newscoop": "library",
             "Resource": "library",
-            "Nette": "library"
+            "Nette": "library",
+            "Gedmo": "vendor/gedmo/doctrine-extensions/lib/"
         },
         "classmap": [
             "classes",
