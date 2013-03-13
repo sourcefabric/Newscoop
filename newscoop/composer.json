@@ -6,8 +6,28 @@
         "bombayworks/zendframework1": "1.11.*",
         "guzzle/guzzle": "*",
         "rezzza/mailchimp": "dev-master",
-        "hybridauth/hybridauth": "dev-master"
+        "hybridauth/hybridauth": "dev-master",
+        "gedmo/doctrine-extensions":"=v2.1.0"
     },
+    "repositories":[
+        {
+            "type":"package",
+            "package":{
+                "name":"gedmo/doctrine-extensions",
+                "version":"2.1",
+                "dist":{
+                    "url":"https://github.com/l3pp4rd/DoctrineExtensions/zipball/v2.1.0",
+                    "type":"zip"
+                },
+                "source":{
+                    "url":"https://github.com/l3pp4rd/DoctrineExtensions.git",
+                    "type":"git",
+                    "reference":"tags/v2.1.0"
+                }
+            }
+        }
+
+    ],
     "autoload": {
         "psr-0": {
             "Newscoop": "library",
