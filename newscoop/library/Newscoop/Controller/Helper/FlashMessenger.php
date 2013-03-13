@@ -1,9 +1,6 @@
 <?php
 /**
- * 
- * Enter description here ...
  * @author mihaibalaceanu
- *
  */
 namespace Newscoop\Controller\Helper;
 

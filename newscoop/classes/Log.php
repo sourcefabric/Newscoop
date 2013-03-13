@@ -3,7 +3,7 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
+require_once('DatabaseObject.php');
 
 /**
  * @package Campsite

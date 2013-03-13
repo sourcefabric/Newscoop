@@ -3,9 +3,9 @@ services:
         class:      Newscoop\Services\CommunityFeedService
         arguments:  ["@em"]
         tags:
-            -  { name: event_listener, event: print.subscribe, method: update }
-            -  { name: event_listener, event: comment.recommended, method: update }
-            -  { name: event_listener, event: topic.follow, method: update }
-            -  { name: event_listener, event: image.approved, method: update }
-            -  { name: event_listener, event: document.approved, method: update }
-            -  { name: event_listener, event: blog.published, method: update }
+            -  { name: kernel.event_listener, event: print.subscribe, method: update }
+            -  { name: kernel.event_listener, event: comment.recommended, method: update }
+            -  { name: kernel.event_listener, event: topic.follow, method: update }
+            -  { name: kernel.event_listener, event: image.approved, method: update }
+            -  { name: kernel.event_listener, event: document.approved, method: update }
+            -  { name: kernel.event_listener, event: blog.published, method: update }

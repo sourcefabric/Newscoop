@@ -29,11 +29,10 @@ class ScriptHandler
 
         $php = escapeshellarg($phpPath);
         $doctrine = escapeshellarg(__DIR__ . '/../../../scripts/doctrine.php');
-
         $process = new Process("$php $doctrine orm:generate-proxies", null, null, null, self::TIMEOUT);
         $process->run();
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException(sprintf('An error occurred when executing the "%s" command.', escapeshellarg($cmd)));
+            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
         }
     }
 }

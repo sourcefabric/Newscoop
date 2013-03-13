@@ -20,9 +20,6 @@ EOT;
 if (empty($g_ado_db)) {
     if (Zend_Registry::isRegistered('container')) {
         $container = Zend_Registry::get('container');
-    } else {
-        $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
-        $container = $containerFactory->buildContainer();
     }
 
     $g_ado_db = $container->getService('doctrine.adodb');

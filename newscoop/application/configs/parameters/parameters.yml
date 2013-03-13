@@ -139,3 +139,4 @@ parameters:
         cache_path: "%application_path%/../images/cache"
     search:
         solr_server: "http://localhost:8983/solr"
+    newscoop.eventDispatcher.class: "Newscoop\\EventDispatcher\\EventDispatcher"

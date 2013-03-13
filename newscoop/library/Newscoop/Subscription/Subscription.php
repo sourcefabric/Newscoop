@@ -10,6 +10,8 @@ namespace Newscoop\Subscription;
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\User;
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Subscription\Article;
+use Newscoop\Subscription\Issue;
 
 /**
  * Subscription entity
@@ -23,7 +25,8 @@ class Subscription
     const TYPE_TRIAL = 'T';
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
@@ -73,9 +76,23 @@ class Subscription
      */
     private $sections;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Article", mappedBy="subscription", cascade={"persist", "remove"})
+     * @var array
+     */
+    private $articles;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Issue", mappedBy="subscription", cascade={"persist", "remove"})
+     * @var array
+     */
+    public $issues;
+
     public function __construct()
     {
         $this->sections = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
         $this->currency = '';
         $this->active = false;
         $this->type = self::TYPE_PAID;
@@ -306,6 +323,70 @@ class Subscription
     }
 
     /**
+     * Set articles
+     *
+     * @param array $values
+     * @return void
+     */
+    public function setArticles(array $values)
+    {
+        $ids = array_map(function($article) {
+            return !empty($article['id']) ? $article['id'] : null;
+        }, $values);
+
+        foreach ($this->articles as $key => $article) {
+            if (!in_array($article->getId(), $ids)) {
+                $this->articles->remove($key);
+            }
+        }
+    }
+
+    /**
+     * Add article
+     * 
+     * @param Newscoop\Subscription\Article $article
+     * @return void
+     */
+    public function addArticle(Article $article)
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+        }
+    }
+
+    /**
+     * Set issues
+     *
+     * @param array $values
+     * @return void
+     */
+    public function setIssues(array $values)
+    {
+        $ids = array_map(function($issue) {
+            return !empty($issue['id']) ? $issue['id'] : null;
+        }, $values);
+
+        foreach ($this->issues as $key => $issue) {
+            if (!in_array($issue->getId(), $ids)) {
+                $this->issues->remove($key);
+            }
+        }
+    }
+
+    /**
+     * Add issue
+     * 
+     * @param Newscoop\Subscription\Issue $issue
+     * @return void
+     */
+    public function addIssue(Issue $issue)
+    {
+        if (!$this->issues->contains($issue)) {
+            $this->issues->add($issue);
+        }
+    }
+
+    /**
      * Test if has given section
      *
      * @param Newscoop\Subscription\Section $section
@@ -338,5 +419,43 @@ class Subscription
     public function getSections()
     {
         return $this->sections;
+    }
+
+    /**
+     * Get articles
+     *
+     * @return array
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Get issues
+     *
+     * @return array
+     */
+    public function getIssues()
+    {
+        return $this->issues;
+    }
+
+    /**
+     * Get currency
+     * @return string
+     */
+    public function getCurrency() {
+        return $this->currency;
+    }
+
+    /**
+     * Set currency
+     * @return string
+     */
+    public function setCurrency($currency) {
+        $this->currency = $currency;
+
+        return $this;
     }
 }

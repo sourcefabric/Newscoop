@@ -122,7 +122,7 @@ class Section
     {
 		try {
 			return $this->language ? $this->language->getId() : 0;
-		} catch (\Doctrine\ORM\EntityNotFoundException $exc) {
+		} catch (\Doctrine\ORM\EntityNotFoundException $e) {
 			return 0;
 		}
     }
@@ -136,7 +136,7 @@ class Section
     {
 		try {
 			return $this->language ? $this->language->getName() : '';
-		} catch (\Doctrine\ORM\EntityNotFoundException $exc) {
+		} catch (\Doctrine\ORM\EntityNotFoundException $e) {
 			return '';
 		}
     }
@@ -259,5 +259,15 @@ class Section
     public function getSubscription()
     {
         return $this->subscription;
+    }
+
+    /**
+     * Get expiration date
+     * @return DateTime
+     */
+    public function getExpirationDate() {
+        $startDate = new \DateTime(isset($this->startDate) ? $this->startDate : 'now');
+        $timeSpan = new \DateInterval('P' . $this->days . 'D');
+        return $startDate->add($timeSpan);
     }
 }

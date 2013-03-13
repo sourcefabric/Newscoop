@@ -26,7 +26,14 @@ if ($doDelete) {
 	foreach ($articles as $a) {
 		$a->delete();
 	}
+	
+	\Zend_Registry::get('container')->getService('dispatcher')
+    ->notify('article_type.delete', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        'article_type' => $articleType
+    )));
+
 	$articleType->delete();
+
 	camp_html_goto_page("/$ADMIN/article_types/");
 } else {
 	$errorMsgs[] = getGS('The article type $1 could not be deleted.', '<B>'.htmlspecialchars($articleTypeName).'</B>');

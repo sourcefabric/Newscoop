@@ -230,17 +230,13 @@ if (isset($_REQUEST["action_button"])) {
 			$events = $ArticleDatetimeRepository->findBy(array('articleId' => $articleNumber));
             
             $languageArray = array_keys($languageArray);
-			//echo "<pre>"; print_r($languageArray); echo "</pre>";
-
 			$tmpLanguageId = camp_array_peek($languageArray);
 
 			// Error checking
 			if (!isset($articles[$articleNumber][$tmpLanguageId])) {
-				//echo "error $articleNumber:$tmpLanguageId<br>";
 				continue;
 			}
 
-			//echo "copying $articleNumber:$tmpLanguageId<br>";
 			// Grab the first article - it doesnt matter which one.
 			$tmpArticle = $articles[$articleNumber][$tmpLanguageId];
 
@@ -277,6 +273,12 @@ if (isset($_REQUEST["action_button"])) {
                     $em->persist($newEvent);
                     $em->flush();
                 }
+
+                \Zend_Registry::get('container')->getService('dispatcher')
+                  ->notify('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                        'article' => $newArticle,
+                        'orginal_article_number' => $articleNumber
+                    )));
 			}
 		}
 		if ($f_mode == "single") {
@@ -286,6 +288,7 @@ if (isset($_REQUEST["action_button"])) {
 			$url = $destArticleIndexUrl;
 		}
 		ArticleIndex::RunIndexer(3, 10, true);
+
 		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
 		camp_html_goto_page($url);
 
@@ -304,6 +307,11 @@ if (isset($_REQUEST["action_button"])) {
 							   	   $f_destination_section_number);
 				$tmpArticle2->setTitle($articleNames[$articleNumber][$articleLanguage]);
 				$tmpArticles[] = $tmpArticle2;
+
+                \Zend_Registry::get('container')->getService('dispatcher')
+                    ->notify('article.move', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                        'article' => $tmpArticle,
+                    )));
 			}
 		}
 		$tmpArticle = camp_array_peek($tmpArticles);
@@ -351,6 +359,12 @@ if (isset($_REQUEST["action_button"])) {
 					 	              $f_destination_issue_number,
 								      $f_destination_section_number);
 					$tmpArticle->setWorkflowStatus('Y');
+
+                    \Zend_Registry::get('container')->getService('dispatcher')
+                        ->notify('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                            'article' => $tmpArticle,
+                        )));
+
 					$tmpArticles[] = $tmpArticle;
 				}
 			}
@@ -398,6 +412,12 @@ if (isset($_REQUEST["action_button"])) {
 					 	              $f_destination_issue_number,
 								      $f_destination_section_number);
 					$tmpArticle->setWorkflowStatus('S');
+
+                    \Zend_Registry::get('container')->getService('dispatcher')
+                        ->notify('article.submit', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                            'article' => $tmpArticle,
+                        )));
+                        
 					$tmpArticles[] = $tmpArticle;
 				}
 			}

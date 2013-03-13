@@ -3,9 +3,9 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/cache/CacheEngine.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once(__DIR__ . '/../conf/install_conf.php');
+require_once('cache/CacheEngine.php');
+require_once('SystemPref.php');
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");

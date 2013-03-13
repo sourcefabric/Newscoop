@@ -32,7 +32,7 @@ services:
         factory_method:   getEventManager
     newscoop.doctrine.event_dispatcher_proxy:
         class: Newscoop\Doctrine\EventDispatcherProxy
-        arguments:  ["@dispatcher"]
+        arguments:  ["@event_dispatcher"]
     doctrine.event_subscriber:
         class:      Doctrine\Common\EventSubscriber
         factory_service:  doctrine.event_manager
@@ -52,9 +52,11 @@ services:
         class:      Zend_Auth
         factory_class: Zend_Auth
         factory_method: getInstance
-    dispatcher:
-        class:      Newscoop\EventDispatcher\EventDispatcher
+    event_dispatcher:
+        class:      %newscoop.eventDispatcher.class%
         arguments:  ["@service_container"]
+    dispatcher:
+        alias: event_dispatcher
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth"]
@@ -75,7 +77,7 @@ services:
         arguments:  ["@em"]
     user.topic:
         class:      Newscoop\Services\UserTopicService
-        arguments:  ["@em", "@dispatcher"]
+        arguments:  ["@em", "@event_dispatcher"]
     auth.adapter:
         class:      Newscoop\Services\Auth\DoctrineAuthService
         arguments:  ["@em"]
@@ -145,6 +147,9 @@ services:
     subscription.ip:
         class:      Newscoop\Subscription\IpFacade
         arguments:  ["@em"]
+    subscription.service:
+        class:      Newscoop\Services\SubscriptionService
+        arguments:  ["@em"]
     random:
         class:      Newscoop\Random
     webcode:
@@ -181,3 +186,7 @@ services:
     mailchimp.list:
         class: Newscoop\MailChimp\ListApi
         arguments: ["@mailchimp.api.factory", "@preferences"]
+    plugins.manager:
+        class: Newscoop\Services\PluginsManagerService
+        arguments: ["@em", "@event_dispatcher"]
+

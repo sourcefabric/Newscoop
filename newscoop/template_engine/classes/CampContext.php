@@ -323,27 +323,29 @@ final class CampContext
         $this->m_properties['map_common_header_set'] = false;
 
         if (defined('APPLICATION_PATH')) {
-            $options = $controller->getInvokeArg('bootstrap')->getOptions();
+            $container = \Zend_Registry::get('container');
+            $emailParams = $container->getParameter('email');
+
             $form = new \Application_Form_Contact();
             $form->setMethod('POST');
-            $request = \Zend_Controller_Front::getInstance()->getRequest();
-            if ($request->isPost() && $form->isValid($request->getPost())) {
+            if (CampRequest::GetMethod() === "POST" && $form->isValid(CampRequest::GetInput('POST'))) {
                 $email = new \Zend_Mail('utf-8');
                 $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
                     ->setSubject($form->subject->getValue())
                     ->setBodyText($form->message->getValue())
-                    ->addTo($options['email']['contact'])
+                    ->addTo($emailParams['contact'])
                     ->send();
 
                 $controller->getHelper('flashMessenger')->addMessage("form_contact_done");
-                $controller->getHelper('redirector')->gotoUrl($request->getPathInfo());
+                $controller->getHelper('redirector')->gotoUrl(CampRequest::GetVar('path_info'));
                 exit;
             }
 
             $this->form_contact = $form;
         }
 
-        $this->flash_messages = $controller->getHelper('flashMessenger')->getMessages();
+        $flashMessenger = new \Newscoop\Controller\Helper\FlashMessenger();
+        $this->flash_messages = $flashMessenger->getMessages();
     } // fn __construct
 
 

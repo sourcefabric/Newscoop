@@ -1,0 +1,95 @@
+# SymfonyFrameworkBundle Configuration
+framework:
+    secret:          pleaseChangeMe!pleaseChangeMe!
+    router:
+        resource: "%kernel.root_dir%/configs/symfony/routing.yml"
+        strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation: { enable_annotations: true }
+    trust_proxy_headers:  false
+    templating:      { engines: ['twig', 'smarty'] }
+    profiler: { only_exceptions: false }
+    session : ~
+
+# FOSRestBundle Configuration
+fos_rest:
+    allowed_methods_listener: true
+    routing_loader:
+        default_format: ~
+    view:
+        default_engine: twig
+        view_response_listener: force
+        failed_validation: HTTP_BAD_REQUEST
+        formats:
+            json: true
+            xml: true
+        mime_types:
+            json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+    body_listener:
+        decoders:
+            json: fos_rest.decoder.json
+    format_listener:
+        default_priorities:
+            - json
+            - html
+        fallback_format: json
+        prefer_extension: true
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+            'Symfony\Component\HttpKernel\Exception\FlattenException': 404
+            'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
+            'Symfony\Component\HttpKernel\Exception\FlattenException': true
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        directories:
+            Newscoop:
+                namespace_prefix: Newscoop\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Package:
+                namespace_prefix: Newscoop\Package
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+
+
+# SensioExtraBundle Configuration
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: true }
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    exception_controller: 'Newscoop\GimmeBundle\Controller\ExceptionController::showAction'
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: knp_page                # page query parameter name
+        sort_field_name: knp_sort          # sort field query parameter name
+        sort_direction_name: knp_direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+newscoop_gimme:
+    allow_origin:
+        - "*"
+
+smarty:
+    options:
+        left_delimiter: "{{"
+        right_delimiter: "}}"
+        caching: false
+
+parameters:
+    smarty.class: "CampTemplate"
+    templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"

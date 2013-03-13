@@ -5,15 +5,15 @@
     <title>{{block title}}Newcoop{{/block}}</title>
 
     {{block style}}
-        {{ if isset($view) }}
+        {{if isset($view) }}
             {{ $view->headLink() }}
-        {{ /if }}
+        {{/if }}
     {{/block}}
 
     {{block script}}
-        {{ if isset($view) }}
+        {{if isset($view) }}
             {{ $view->headScript() }}
-        {{ /if }}
+        {{/if }}
     {{/block}}
 </head>
 <body>

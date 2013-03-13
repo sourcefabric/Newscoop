@@ -32,7 +32,7 @@ function smarty_function_article_pdf($params, &$smarty)
     }
     $publish = new DateTime($gimme->article->publish_date);
     $pdf_filename .= 'p' . $publish->format('Ymd') . '-n' . $gimme->article->number . '.pdf';
-    $pdf_file = 'pdf/' . $pdf_filename;
+    $pdf_file = 'public/pdf/' . $pdf_filename;
 
     if (!file_exists($pdf_file) || $gimme->article->last_update > date('Y-m-d h:i:s', filemtime($pdf_file)))  {
         require('include/html2pdf/html2pdf.class.php');

@@ -23,8 +23,8 @@ final class MetaComment extends MetaDbObject
 
     public function __construct($p_messageId = null)
     {
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $container = \Zend_Registry::get('container');
+        $repository = $container->getService('em')->getRepository('Newscoop\Entity\Comment');
         if(is_null($p_messageId))
             $this->m_dbObject = $repository->getPrototype();
         else

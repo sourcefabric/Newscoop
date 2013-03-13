@@ -5,3 +5,5 @@ defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/applicatio
 
 // Define application environment
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+
+$GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');

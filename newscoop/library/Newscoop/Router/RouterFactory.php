@@ -16,6 +16,7 @@ class RouterFactory
     public static function initRouter($container) {
         $front = \Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
+        $router->addDefaultRoutes();
 
         $router->addRoute(
             'content',

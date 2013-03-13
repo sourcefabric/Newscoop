@@ -1218,10 +1218,10 @@ abstract class CampURI
 
     private function readUser()
     {
-        global $controller;
 
         $this->m_preview = false;
-        $userService = $controller->getHelper('service')->getService('user');
+        $container = \Zend_Registry::get('container');
+        $userService = $container->getService('user');
 
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
@@ -1229,10 +1229,10 @@ abstract class CampURI
             if (!empty($user)) {
                 $this->m_user = new MetaUser($user);
                 $this->m_preview = CampRequest::GetVar('preview') === 'on' && $this->m_user->isAdmin();
-                if (!$this->m_preview && CampRequest::GetVar('preview') === 'on' && $controller->getHelper('service')->getService('blog')->isBlogger($user)) {
-                    $lang = \Language::GetLanguageIdByCode($controller->getRequest()->getParam('language'));
-                    $article = new \Article($lang, $controller->getRequest()->getParam('articleNo'));
-                    $this->m_preview = $controller->getHelper('service')->getService('blog')->isUsersArticle($article, $user);
+                if (!$this->m_preview && CampRequest::GetVar('preview') === 'on' && $container->getService('blog')->isBlogger($user)) {
+                    $lang = \Language::GetLanguageIdByCode(CampRequest::GetVar('language'));
+                    $article = new \Article($lang, CampRequest::GetVar('articleNo'));
+                    $this->m_preview = $container->getService('blog')->isUsersArticle($article, $user);
                 }
             }
         } else if (!empty($_SERVER['REMOTE_ADDR'])) { // empty in cli

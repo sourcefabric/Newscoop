@@ -96,6 +96,11 @@ case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->setWorkflowStatus('Y');
+
+        \Zend_Registry::get('container')->getService('dispatcher')
+            ->notify('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                'article' => $articleObj
+            )));
 	}
 	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Published")), "ok");
 	break;
@@ -103,6 +108,11 @@ case "delete":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->delete();
+
+        \Zend_Registry::get('container')->getService('dispatcher')
+            ->notify('article.delete', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                'article' => $articleObj
+            )));
 	}
 	if ($f_article_offset > 15
 	    && (count($articleCodes) + $f_article_offset) == $f_total_articles) {
@@ -146,6 +156,13 @@ case "copy":
 						  $articleObj->getSectionNumber(),
 						  $g_user->getUserId(),
 						  $languageArray);
+
+        \Zend_Registry::get('container')->getService('dispatcher')
+            ->notify('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                'article' => $articleObj,
+                'orginal_article_number' => $articleNumber
+            )));
+
 		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
 	}
 	camp_session_set($offsetVarName, 0);

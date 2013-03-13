@@ -3,7 +3,7 @@ services:
         class:      Newscoop\Services\CommentService
         arguments:  ["@em"]
         tags:
-            -  { name: event_listener, event: comment.create, method: update }
-            -  { name: event_listener, event: comment.update, method: update }
-            -  { name: event_listener, event: comment.recommended, method: update }
-            -  { name: event_listener, event: comment.delete, method: update }
+            -  { name: kernel.event_listener, event: comment.create, method: update }
+            -  { name: kernel.event_listener, event: comment.update, method: update }
+            -  { name: kernel.event_listener, event: comment.recommended, method: update }
+            -  { name: kernel.event_listener, event: comment.delete, method: update }

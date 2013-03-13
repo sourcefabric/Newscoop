@@ -1,0 +1,22 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/configs/symfony/routing_dev.yml"
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
+        firephp:
+            type:  firephp
+            level: info
+
+# enable the web profiler
+web_profiler:
+    toolbar: false
+    intercept_redirects: true
+    verbose: true
