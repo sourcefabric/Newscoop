@@ -17,7 +17,7 @@ regGS("Edit and translate human-readable field names", "ადამიანი
 regGS("Custom", "");
 regGS("Characters limit", "სიმბოლოების ლიმიტი");
 regGS("The template name may only contain letters and the underscore (_) character.", "შაბლონის სახელი უნდა შეიცავდე მხოლოს ასოებს და \"_\" სიმბოლოს.");
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "ველის სახელი უკვე გამოყენებული იქნა, როგორც სტატიის საბაზისო პარამეტრი.  ველის შემადგენლობა არ იქნება ნაჩვენები შაბლონებში.    ");
 regGS("The property '$1' is already in use.", "'$1' უკვე გამოყენებულია");
 regGS("Precision", "სიზუსტე");
 regGS("Can not convert the field $1 from $2 to type $3.", "$1 ველის $2-დან $3 ტიპზე კონვერტირება შეუძლებელია");

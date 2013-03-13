@@ -1,12 +1,12 @@
 <?php 
 regGS("Display newswires articles", "");
 regGS("Display Newswires", "");
-regGS("Webcode", "");
-regGS("View article", "");
-regGS("Source", "");
-regGS("Select type", "");
-regGS("On", "");
-regGS("Off", "");
+regGS("Webcode", "ქსელური კოდი");
+regGS("View article", "სტატიის ნახვა");
+regGS("Source", "წყარო");
+regGS("Select type", "შერჩეული ტიპი");
+regGS("On", "ჩართვა");
+regGS("Off", "გამორთვა");
 regGS("Title", "სათაური");
 regGS("No video playback capabilities, please download the video below", "ვიდეოს დაკვრა შეუძლებელია, გთხოვთ გადმოქაჩოთ");
 regGS("Article status set to '$1' for $2 articles", "სტატიის სტატუსი არის \"$1\" $2 სტატიებისთვის");
@@ -48,7 +48,7 @@ regGS("No sections found", "სექციები ვერ მოინა�
 regGS("No records found.", "ჩანაწერები ვერ მოინახა");
 regGS("No publications found", "პუბლიკაცია არ მოიძებნა");
 regGS("No issues found", "გამოცემები ვერ მოინახა");
-regGS("No entries to show", "");
+regGS("No entries to show", "ჩანაწერები არ არის");
 regGS("Locations", "ლოკაციები");
 regGS("Loading data", "მონაცემები იტვირთება");
 regGS("Last modified", "ბოლო მოდიფიკაცია");

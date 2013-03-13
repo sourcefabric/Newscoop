@@ -1,10 +1,10 @@
 <?php 
-regGS("Duplicate assignment", "");
-regGS("Templates", "");
-regGS("Import theme", "");
-regGS("Import succeded!", "");
-regGS("Import failed!", "");
-regGS("Edit template: $1", "");
+regGS("Duplicate assignment", "დუპლიკატი დავალება");
+regGS("Templates", "შაბლონები");
+regGS("Import theme", "თემის იმპორტირება");
+regGS("Import succeded!", "იმპორტი წარმატებით შესრულდა!");
+regGS("Import failed!", "იმპორტი წარუმატებელია!");
+regGS("Edit template: $1", "შაბლონის რედაქტირება: $1");
 regGS("Set new name to", "ახალი სახელის მინიჭება");
 regGS("Rename file", "ფაილის სახელის შეცვლა");
 regGS("Caching templates in:", "შაბლონების კეშირება");
@@ -75,7 +75,7 @@ regGS("Compatibility", "შეთავსებადობა");
 regGS("Click to enlarge", "დააჭირეთ გასადიდებლად");
 regGS("Choose destination", "აირჩიეთ დირექტორია");
 regGS("Can't override directory '$1'.", "");
-regGS("Cache Lifetime", "");
+regGS("Cache Lifetime", "კეში-მეხსიერების სიცოცხლის ხანგრძლივობა");
 regGS("Browse for the theme", "თემის ძიება");
 regGS("Assigned successfully", "მიება");
 regGS("Article page template", "სტატიის გვერდის შაბლონი");
