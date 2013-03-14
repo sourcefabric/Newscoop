@@ -1,7 +1,7 @@
 <?php 
 regGS("third", "third");
 regGS("second", "second");
-regGS("forth", "forth");
+regGS("forth", "fourth");
 regGS("first", "first");
 regGS("You must input a number greater than 0 into the Number of addresses field.", "You must input a number greater than 0 into the Number of addresses field.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "You must input a number between 0 and 255 into the Start IP address' $1 field.");
@@ -9,7 +9,7 @@ regGS("User IP access list management", "User IP access list management");
 regGS("The IP address group conflicts with another existing group.", "The IP address group conflicts with another existing group.");
 regGS("Subscription sections", "Subscription sections");
 regGS("No records.", "No records.");
-regGS("You have subscription for all available publications", "You have subscription for all available publications");
+regGS("You have subscription for all available publications", "You have a subscription for all available publications");
 regGS("Subscription type:", "Subscription type:");
 regGS("Start:", "Start:");
 regGS("Start Date", "Start Date");
