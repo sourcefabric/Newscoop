@@ -38,6 +38,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
     new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
     new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
+    new \Newscoop\Tools\Console\Command\InstallCommand(),
 ));
 
 $cli->run();

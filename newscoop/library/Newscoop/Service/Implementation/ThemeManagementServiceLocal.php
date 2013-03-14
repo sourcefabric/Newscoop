@@ -427,7 +427,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             /* @var $th Theme */
             if (trim($th->getName()) === trim($theme->getName())){
                 if ($this->getThemePublication($th) != NULL) {
-                    throw new DuplicateNameException();
+                    throw new DuplicateNameException($theme->getName());
                 } else {
                     $thPath = $th->getPath();
                     $this->rrmdir($this->toFullPath($thPath));

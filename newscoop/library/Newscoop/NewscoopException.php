@@ -8,9 +8,10 @@
 namespace Newscoop;
 
 use Exception;
+use Newscoop\Exception as ExceptionInterface;
 
 /**
  */
-class NewscoopException extends Exception
+class NewscoopException extends Exception implements ExceptionInterface
 {
 }

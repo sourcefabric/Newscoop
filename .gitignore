@@ -7,7 +7,6 @@ vendor/
 newscoop/vendor
 newscoop/newscoop-indexer.lock
 newscoop/.htaccess
-newscoop/conf/configuration.php
 newscoop/conf/database_conf.php
 newscoop/templates_cache/*
 newscoop/system_preferences.php

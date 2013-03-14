@@ -29,6 +29,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             Zend_Session::setOptions($options['session']);
         }
 
+        if (php_sapi_name() === 'cli-server') {
+            Zend_Session::setOptions(array('save_path' => sys_get_temp_dir()));
+        }
+
         Zend_Session::start();
 
         foreach ($_COOKIE as $name => $value) { // remove unused cookies

@@ -55,7 +55,6 @@ $ADMIN = empty($Campsite['SUBDIR']) ? 'admin' : substr($Campsite['SUBDIR'], 1) .
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'].$Campsite['SUBDIR'];
 unset($scheme);
 
-
 $Campsite['IMAGE_DIRECTORY'] = $Campsite['HTML_DIR'].'/images/';
 $Campsite['IMAGE_BASE_URL'] = $Campsite['WEBSITE_URL'].'/images/';
 $Campsite['ADMIN_STYLE_URL'] = $Campsite['WEBSITE_URL'].'/admin-style';

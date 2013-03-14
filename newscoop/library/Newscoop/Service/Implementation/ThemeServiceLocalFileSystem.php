@@ -32,6 +32,7 @@ function var_hook()
     error_log($out);
     //fb($out, FirePHP::LOG);
 }
+
 /**
  * Provides the services implementation for the themes.
  */
@@ -81,6 +82,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	{
 		Validation::notEmpty($id, 'id');
 		$this->id = $id;
+        defined('DIR_SEP') || define('DIR_SEP', DIRECTORY_SEPARATOR);
 	}
 
 	/* --------------------------------------------------------------- */
