@@ -50,8 +50,8 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "تحذير");
 regGS("You must select a section.", "عليك تحديد قسم.");
 regGS("You must specify a name for the section.", "عليك تحديد أسم للقسم.");
-regGS("Please check if another section with the same number does not already exist.", "الرجاء التأكد من عدم وجود باب يحمل الرقم نفسه");
-regGS("Destination section number", "رقم القسم الهدف");
 regGS("The section could not be added.", "لم يكن من الممكن إضافة القسم");
 regGS("Add new section", "أضف قسم جديد");
+regGS("Please check if another section with the same number does not already exist.", "الرجاء التأكد من عدم وجود باب يحمل الرقم نفسه");
+regGS("Destination section number", "رقم القسم الهدف");
 ?>
