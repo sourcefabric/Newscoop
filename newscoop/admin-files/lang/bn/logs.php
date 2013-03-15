@@ -8,4 +8,6 @@ regGS("Resource", "");
 regGS("Diff", "");
 regGS("Broken data", "");
 regGS("Action Type:", "");
+regGS("No logs.", "");
+regGS("User", "");
 ?>
