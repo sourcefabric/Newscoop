@@ -14,6 +14,8 @@ use Newscoop\Entity\Resource;
 use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\IPublicationService;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 global $g_db;
 
@@ -821,6 +823,23 @@ XML;
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
         file_put_contents($path3, 'installation');
+
+        @chmod($path2, 0777);
+
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $doctrine = escapeshellarg($GLOBALS['g_campsiteDir'].DIR_SEP.'scripts'.DIR_SEP.'doctrine.php');
+        $process = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
+        }
+
         @chmod($path2, 0600);
 
         require_once $path2; // load saved db config for next steps
@@ -828,7 +847,7 @@ XML;
         // create images and files directories
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images');
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
-        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'public/files');
+        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'public'.DIR_SEP.'files');
 
         return true;
     }
