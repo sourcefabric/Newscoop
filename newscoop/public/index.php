@@ -24,8 +24,7 @@ error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
 // goes to install process if configuration files does not exist yet
 if (php_sapi_name() !== 'cli'
     && !defined('INSTALL')
-    && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
-        || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))
+    && (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
 ) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     if (strpos($subdir, 'install') === false) {
@@ -51,6 +50,7 @@ $request = Request::createFromGlobals();
 $kernel->boot();
 $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
+
 // init adodb
 require_once __DIR__ . '/../db_connect.php';
 
