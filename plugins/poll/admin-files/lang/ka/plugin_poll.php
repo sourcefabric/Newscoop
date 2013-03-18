@@ -81,5 +81,4 @@ regGS("Answer $1", "");
 regGS("Add new Poll", "ახალი გამოკითხვის დამატება");
 regGS("---Select---", "---აირჩიეთ---");
 regGS("$1/$2 polls assigned/unassigned.", "");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "დარწმუნებული ხართ რომ გსურთ \\'$1\\' ფაილის გამოკითხვის პასუხიდან მოხსნა?");
 ?>

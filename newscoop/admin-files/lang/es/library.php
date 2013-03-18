@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "");
-regGS("Display Newswires", "");
+regGS("Display newswires articles", "Desplegar artículos de los cables de noticias");
+regGS("Display Newswires", "Desplegar cables de noticias");
 regGS("Webcode", "Webcode");
 regGS("View article", "Ver artículo");
 regGS("Source", "Fuente");

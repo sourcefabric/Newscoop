@@ -1,6 +1,6 @@
 <?php 
-regGS("Rating", "");
-regGS("Enable Rating", "");
+regGS("Rating", "Calificación");
+regGS("Enable Rating", "Activar calificación");
 regGS("Blog management", "Administración del blog");
 regGS("View article", "Ver artículo");
 regGS("Select a list", "Seleccionar una lista");
@@ -186,4 +186,7 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

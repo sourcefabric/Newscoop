@@ -1,6 +1,6 @@
 <?php 
-regGS("Rename user", "");
-regGS("Campsite", "");
+regGS("Rename user", "Renombrar al usuario");
+regGS("Campsite", "Campsite");
 regGS("Image Rendering", "Generación de imagen");
 regGS("Featured Article Lists", "Lista de articulos seleccionados");
 regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");
@@ -153,4 +153,5 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegúrese de que escribió correctamente su nombre de usuario y contraseña.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hola, \\n\\n para recuperar su contraseña, siga el siguiente enlace $1");
 ?>

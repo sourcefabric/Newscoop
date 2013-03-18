@@ -25,7 +25,7 @@ regGS("Add to list", "სიაში დამატება");
 regGS("Add list", "სიის დამატება");
 regGS("Multi date events", "მრავალთარიღიანი ღონისძიებები");
 regGS("Slideshows", "სლაიდშოუები");
-regGS("Place images", "");
+regGS("Place images", "გამოსახულების მოთავსება");
 regGS("You're not allowed to edit article.", "თქვენ არ გაქვთ უფლება შეცვალოთ სტატია. ");
 regGS("Webcode", "ქსელური კოდი");
 regGS("Unapproved", "დაუმტკიცებელი");

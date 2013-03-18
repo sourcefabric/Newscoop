@@ -1,6 +1,6 @@
 <?php 
 regGS("Rename user", "მომხმარებლის სახელის შეცვლა");
-regGS("Campsite", "");
+regGS("Campsite", "კემპსაიტი");
 regGS("Image Rendering", "გამოსახულების დარენდერება");
 regGS("Featured Article Lists", "წარმოდგენილ სტატიათა ჩამონათვალი");
 regGS("You have tried to upload an invalid backup file.", "თქვენ სცადეთ აგეტვირთათ არამართებული ფაილი. ");
@@ -17,7 +17,7 @@ regGS("Support", "მხარდაჭერა");
 regGS("Pending articles", "მიმდინარე სტატიები");
 regGS("Manage Users", "მომხმარებლების მართვა");
 regGS("Manage User Types", "მომხმარებელთა ტიპების მართვა");
-regGS("Manage User Points System", "");
+regGS("Manage User Points System", "მომხმარებელთა ქულების სისტემის მართვა");
 regGS("Last", "ბოლო");
 regGS("First", "პირველი");
 regGS("Feedback", "შეფასება");

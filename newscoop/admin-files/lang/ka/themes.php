@@ -37,7 +37,7 @@ regGS("Template object '$1' was renamed to '$2'.", "შაბლონის ო
 regGS("Template object '$1' was deleted.", "შაბლონის ობიქტი '$1' წაიშალა.");
 regGS("Template '$1' was duplicated into '$2'.", "'$1' შაბლონი დუბლირებულია '$2'-ში");
 regGS("Template '$1' $2.", "შაბლონი '$1' $2");
-regGS("Something broke", "");
+regGS("Something broke", "რაღაც არ მუშაობს");
 regGS("Section page template", "სექციის გვერდის შაბლონი");
 regGS("Saving..", "მიმდინარეობს დამახსოვრება..");
 regGS("Saving settings failed.", "პარამეტრების დამახსოვრება ვერ მოხერხდა.");
@@ -74,7 +74,7 @@ regGS("Copied successfully", "კოპირებულია");
 regGS("Compatibility", "შეთავსებადობა");
 regGS("Click to enlarge", "დააჭირეთ გასადიდებლად");
 regGS("Choose destination", "აირჩიეთ დირექტორია");
-regGS("Can't override directory '$1'.", "");
+regGS("Can't override directory '$1'.", "შეუძლებელია '$1' ინსტრუქციის უკუგდება.");
 regGS("Cache Lifetime", "კეში-მეხსიერების სიცოცხლის ხანგრძლივობა");
 regGS("Browse for the theme", "თემის ძიება");
 regGS("Assigned successfully", "მიება");

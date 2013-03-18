@@ -95,5 +95,4 @@ regGS("Answer $1", "Απάντηση $1");
 regGS("Add new Debate", "Προσθήκη νέας Δημοσκόπησης");
 regGS("---Select---", "---Επιλογή---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 δημοσκοπήσεις εκχωρήθηκαν/δεν εκχωρήθηκαν.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από την απάντηση της δημοσκόπησης;");
 ?>
