@@ -250,6 +250,7 @@ class ArticleTopic extends DatabaseObject {
         $countClauseObj = new SQLSelectClause();
         $rootTopicIds = array();
         // processes the parameters
+        $hasArticleNr = false;
         foreach ($p_parameters as $parameter) {
             $comparisonOperation = self::ProcessListParameters($parameter);
             if (sizeof($comparisonOperation) < 1) {

@@ -12,13 +12,11 @@ use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Newscoop\Doctrine\EventDispatcherProxy;
-use Newscoop\DependencyInjection\ContainerFactory;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAutoloader()
     {
-        $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
         return;
     }
 
@@ -51,7 +49,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initDatabaseObject() 
     {
         $container = $this->getResource('container');
-        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
+        DatabaseObject::setEventDispatcher($container->getService('event_dispatcher'));
         DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
     }
 

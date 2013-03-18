@@ -30,7 +30,7 @@ class PropertyMatcher
 
         // TODO: cache for this.
         // http://php-and-symfony.matthiasnoback.nl/2012/05/symfony2-config-component-using-filelocator-loaders-and-loaderresolver/
-        $entityDescription = $yaml->parse(file_get_contents(__DIR__.'/../../../../gimme/src/Newscoop/GimmeBundle/Resources/config/serializer/newscoop/'.$class.'.yml'));
+        $entityDescription = $yaml->parse(file_get_contents(__DIR__.'/../../../../newscoop/src/Newscoop/GimmeBundle/Resources/config/serializer/newscoop/'.$class.'.yml'));
 
         foreach ($entityDescription as $class => $classDescription) {
             foreach ($classDescription['properties'] as $field => $description) {

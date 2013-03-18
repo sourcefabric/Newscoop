@@ -13,6 +13,7 @@
 set_time_limit(0);
 
 define('INSTALL', TRUE);
+define('DONT_BOOTSTRAP_ZEND', TRUE);
 
 // Define path to application directory
 defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/../application');
@@ -60,6 +61,6 @@ $install->dispatch($step);
 $install->render();
 
 if ($step == 'finish') {
-	$template = CampTemplate::singleton();
-	$template->clearCache();
+    $template = CampTemplate::singleton();
+    $template->clearCache();
 }

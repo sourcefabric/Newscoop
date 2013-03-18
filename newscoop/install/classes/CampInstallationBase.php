@@ -93,6 +93,7 @@ class CampInstallationBase
                 if ($prevStep != 'loaddemo'
                         && $this->databaseConfiguration($input)) {
                     $session->setData('config.db', $this->m_config['database'], 'installation', true);
+                    $this->saveConfiguration();
                 }
                 break;
 
@@ -127,7 +128,6 @@ class CampInstallationBase
                 $this->installEmptyTheme();
                 $this->saveCronJobsScripts();
                 if ($this->finish()) {
-                    $this->saveConfiguration();
                     self::InstallPlugins();
                     $this->initRenditions();
 

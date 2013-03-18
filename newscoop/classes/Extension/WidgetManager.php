@@ -44,7 +44,19 @@ class WidgetManager
     );
 
     public static function ExtPath() {
-        return DIR_SEP . 'extensions' . DIR_SEP;
+        $dirs = array();
+        $dirs[] = DIR_SEP . 'extensions' . DIR_SEP;
+        $pluginsManager = \Zend_Registry::get('container')->getService('plugins.manager');
+        $availablePlugins = $pluginsManager->getInstalledPlugins();
+        foreach ($availablePlugins as $plugin) {
+            $pluginPath = explode('\\', $plugin);
+            $directoryPath = __DIR__ . '/../../plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/newscoopWidgets/';
+            if (file_exists($directoryPath)) {
+                $dirs[] = '/plugins/'.$pluginPath[0].'/'.$pluginPath[1].'/newscoopWidgets/';
+            }
+        }
+
+        return $dirs;
     }
 
     /**
@@ -62,8 +74,11 @@ class WidgetManager
 
         // get all widget extensions
         $index = new Extension_Index();
-        $extensions = $index->addDirectory(WWW_DIR . self::ExtPath())
-            ->find('IWidget');
+        foreach (self::ExtPath() as $path) {
+            $index->addDirectory(WWW_DIR . $path);
+        }
+
+        $extensions = $index->find('IWidget');
 
         // filter not-available (used)
         $widgets = array();

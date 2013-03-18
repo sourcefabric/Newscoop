@@ -64,7 +64,7 @@ class Doctrine
         
         $config = new Configuration();
         
-        AnnotationRegistry::registerFile(__DIR__ . '/../../../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+        AnnotationRegistry::registerFile(__DIR__ . '/../../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
 
         // set annotations reader
         $reader = new CachedReader(

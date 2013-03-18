@@ -8,6 +8,7 @@
 use Newscoop\Entity\User;
 
 require_once __DIR__ . '/MetaDbObject.php';
+require_once __DIR__ . '/MetaSubscriptions.php';
 
 /**
  * Template user
@@ -37,7 +38,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['name'] = 'getDisplayName';
         $this->m_customProperties['created'] = 'getCreated';
         $this->m_customProperties['country'] = 'getCountry';
-        $this->m_customProperties['subscription'] = 'getSubscription';
+        $this->m_customProperties['subscriptions'] = 'getSubscriptions';
         $this->m_customProperties['logged_in'] = 'isLoggedIn';
         $this->m_customProperties['topics'] = 'getTopics';
         $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
@@ -121,15 +122,9 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      *
      * @return MetaSubscription
      */
-    protected function getSubscription()
+    protected function getSubscriptions()
     {
-        if (empty($this->m_dbObject)) {
-            return new MetaSubscription();
-        }
-
-        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
-        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getId());
-        return empty($subscriptions) ? new MetaSubscription() : new MetaSubscription($subscriptions[0]->getSubscriptionId());
+        return new MetaSubscriptions($publicationId, $this->m_dbObject->getId());
     }
 
     /**

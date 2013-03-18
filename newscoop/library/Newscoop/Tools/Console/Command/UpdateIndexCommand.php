@@ -31,7 +31,7 @@ class UpdateIndexCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $indexer = $this->getHelper('container')->getService('search.indexer.article');
+        $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
         $indexer->updateIndex($input->getArgument('limit'));
     }
 }
