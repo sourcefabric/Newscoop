@@ -1,13 +1,13 @@
 <?php 
+regGS("to load geo-names data", "");
+regGS("MySQL client command path", "");
 regGS("MailChimp Settings", "");
 regGS("List Unique Id:", "");
 regGS("Facebook Settings", "");
+regGS("Automatic collection of statistics:", "");
 regGS("App Secret:", "");
 regGS("App ID:", "");
 regGS("API Key:", "");
-regGS("Automatic collection of statistics:", "");
-regGS("to load geo-names data", "");
-regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "");
 regGS("Maximal zoom for auto-focusing:", "");
 regGS("Map border for auto-focusing:", "");
@@ -90,4 +90,6 @@ regGS("Keyword separator must be at least one character.", "");
 regGS("You do not have the right to change system preferences.", "");
 regGS("Number of failed login attempts before showing CAPTCHA :", "");
 regGS("Keyword separator:", "");
+regGS("Time Zone:", "");
+regGS("disabled", "");
 ?>

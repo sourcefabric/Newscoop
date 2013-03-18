@@ -5,7 +5,7 @@
 # Set the temporary directory to use for converting the files
 BUILDPATH=/tmp
 
-# Set the locales you want to convert 
+# Set the locales you want to convert
 LOCALES="ar at be bn cs de el es fr he hr it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
 
 # Begin function that converts the files
@@ -24,7 +24,7 @@ sed -i 's/ msgstr "/, "/g' ${localization}/*.po
 sed -i '/<?php/!s/[ ]*$/);/g' ${localization}/*.po
 sed -i '$ a\?>' ${localization}/*.po
 
-# Strip the final newline from the file 
+# Strip the final newline from the file
 
 for i in ${localization}/*.po; do
  awk '{q=p;p=$0}NR>1{print q}END{ORS = ""; print p}' $i > $i.tmp
