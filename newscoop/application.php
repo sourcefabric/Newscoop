@@ -49,5 +49,7 @@ try {
     }
 
     $application->setOptions($config);
-    $application->bootstrap();
+    if (!defined('DONT_BOOTSTRAP_ZEND')) {
+        $application->bootstrap();
+    }
 }
