@@ -164,10 +164,17 @@ class ImageSearch {
 			foreach ($rows as $row) {
 				$imageIds[$row['Id']] = '(IdImage='.$row['Id'].')';
 			}
+			
+			if (count($imageIds) > 0) {
+				$imagesIdsQuery = " AND (".implode(' OR ', $imageIds).")";
+			} else {
+				$imagesIdsQuery = "";
+			}
+
 			$inUseQuery = "SELECT ArticleImages.IdImage, COUNT(Articles.Number) as in_use "
 							." FROM Articles, ArticleImages "
 							." WHERE (Articles.Number=ArticleImages.NrArticle) "
-							." AND (".implode(' OR ', $imageIds).")"
+							. $imagesIdsQuery
 							." GROUP By ArticleImages.IdImage";
 			$tmpInUseArray = $g_ado_db->GetAll($inUseQuery);
 			$inUseArray = array();
