@@ -61,7 +61,7 @@ regGS("Add files", "إضافة ملفات");
 regGS("'%value%' is more than %max% characters long", "%value% هو أكثر من %max% حروف");
 regGS("'%value%' is less than %min% characters long", "%value% هو أقل من %min% حروف");
 regGS("User name", "اسم المسخدم");
-regGS("Newscoop", "نيوزكوب");
+regGS("Newscoop", "Newscoop");
 regGS("Your password has been reset.", "أعيد تعيين كلمة السر الخاصة بك.");
 regGS("Proceed to login.", "قدّم إلى الدخول");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "مرحبا، \n\n استعادة كلمة السر، يرجى اتباع هذا الرابط: $1");
