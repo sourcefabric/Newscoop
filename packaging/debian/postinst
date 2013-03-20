@@ -21,7 +21,7 @@ WEB_GROUP=www-data
 
 package_name="newscoop"
 datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/3.5"
+configdir="/etc/newscoop/4.1"
 includefile="${configdir}/apache.conf"
 a2tplfile="${configdir}/apache.vhost.tpl"
 crontplfile="${configdir}/newscoop.cron.tpl"
@@ -67,7 +67,7 @@ case "$1" in
       SN=$RET
       db_get newscoop/apache-serveradmin
       SA=$RET
-      
+
       if [ ! -d /etc/$webserver/sites-available/ ]; then
         install -d -m755 /etc/$webserver/sites-available/
       fi
@@ -122,14 +122,18 @@ case "$1" in
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
     dpkg-statoverride --list $datadir/images &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/images
-    dpkg-statoverride --list $datadir/templates &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
-    dpkg-statoverride --list $datadir/templates_cache &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
+    dpkg-statoverride --list $datadir/themes &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
     dpkg-statoverride --list $datadir/plugins &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
     dpkg-statoverride --list $datadir/backup &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/backup
+
+    chown -R $WEB_USER.$WEB_GROUP $datadir/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/debate/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/poll/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/recaptcha/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/soundcloud/admin-files/lang
 
 # newscoop-3.5 does not yet support that
 #   # database setup
