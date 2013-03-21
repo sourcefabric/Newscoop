@@ -607,6 +607,7 @@ class Admin_ThemesController extends Zend_Controller_Action
             	}
 
                 $this->getThemeService()->removeTheme($themeId);
+                $this->_helper->service('image.rendition')->reloadRenditions();
                 $this->view->status = true;
                 $this->view->response = getGS( "Unassign successful" );
             }
@@ -695,6 +696,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 		    $pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
 
 		    if( $this->getThemeService()->assignTheme( $theme, $pub ) ) {
+                $this->_helper->service('image.rendition')->reloadRenditions();
 		        $this->view->response =  getGS( 'Assigned successfully' );
 		    } else {
     		    throw new Exception();
