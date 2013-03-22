@@ -1,5 +1,6 @@
 <?php 
 regGS("Rename user", "");
+regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
@@ -152,5 +153,4 @@ regGS("Login failed", "فشلت عملية الدخول");
 regGS("Please make sure that you typed the correct user name and password.", "الرجاء التأكد من إدخال أسم المستخدم وكلمة السر الصحيحين");
 regGS("If your problem persists please contact the site administrator $1", "إذا استمريت بمواجه المشاكل, أتصل مع مدير الموقع ");
 regGS("Backup/Restore", "");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "");
 ?>

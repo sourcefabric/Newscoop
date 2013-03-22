@@ -1,5 +1,5 @@
 <?php 
-regGS("Support", "");
+regGS("Support", "მხარდაჭერა");
 regGS("Themes", "თემები");
 regGS("Area to localize", "ლოკალიზების დამატება");
 regGS("Dashboard", "დეშბორდი");
@@ -22,10 +22,10 @@ regGS("User Subscriptions", "გამოწერის დამატებ�
 regGS("Translate to:", "ითარგმნოს ენაზე: ");
 regGS("Translate from:", "ითარგმნოს ენიდან:");
 regGS("The following strings are not used:", "ეს ველები არ გამოიყენება:");
-regGS("The following strings are missing from the translation files:", "");
+regGS("The following strings are missing from the translation files:", "შემდეგი ტექსტი გამოტოვებულია ნათარგმნ ფაილებში: ");
 regGS("No source strings found.", "წყარო ველი ვერ მოიძებნა");
 regGS("No matches found.", "დამთხვევა არ მოიძებნა.");
-regGS("Globals", "");
+regGS("Globals", "გლობალური ");
 regGS("Are you sure you want to delete this entry?", "დარწმუნებული ხართ რომ გსურთ ამის წაშლა?");
 regGS("All strings have been translated.", "ყველა ვერლი ითარგმნა");
 regGS("Bug Reporting", "შეცდომის რეპორტინგი");
