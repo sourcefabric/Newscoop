@@ -56,7 +56,7 @@ regGS("Edit language", "تعديل اللغة");
 regGS("Drag files here.", "اسحب الملفات هنا.");
 regGS("Connection interrupted", "توقّف الاتصال");
 regGS("Ban", "تحريم");
-regGS("Are you sure you want to", "");
+regGS("Are you sure you want to", "هل انت متأكد انك تريد المواصلة");
 regGS("Add files to the upload queue and click the start button.", "أضف ملفات إلى قائمة انتظار التحميل وانقر على زر البدء.");
 regGS("Add files", "إضافة ملفات");
 regGS("'%value%' is more than %max% characters long", "%value% هو أكثر من %max% حروف");
@@ -69,7 +69,7 @@ regGS("Hi, \n\nfor password recovery, please follow this link: $1", "مرحبا�
 regGS("Go to login", "الانتقال إلى الدخول");
 regGS("Back to login.", "العودة إلى الدخول");
 regGS("Back to login", "العودة إلى الدخول");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "تم إرسال رسالة بريد إلكتروني تحتوي على تعليمات حول كيفية استعادة كلمة السر الخاصة بك إلى صندوقك البريد الوارد.");
 regGS("Session expired.", "انتهت الدورة.");
 regGS("Processing...", "تحت المعالجة...");
 regGS("Please", "من فضلك");
