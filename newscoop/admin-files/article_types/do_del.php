@@ -26,11 +26,6 @@ if ($doDelete) {
 	foreach ($articles as $a) {
 		$a->delete();
 	}
-	
-	\Zend_Registry::get('container')->getService('dispatcher')
-    ->notify('article_type.delete', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
-        'article_type' => $articleType
-    )));
 
 	$articleType->delete();
 
