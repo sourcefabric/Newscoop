@@ -49,5 +49,8 @@ return array(
     'September' => 'September',
     'October' => 'Oktober',
     'November' => 'November',
-    'December' => 'Dezember'
+    'December' => 'Dezember',
+    'The code you entered is not the same as the one shown.' => 'Der eingegebene Code entspricht nicht der Abbildung.',
+    'Please enter the code shown in the image.' => 'Bitte geben Sie den Code aus der Abbildung ein.',
+    'The code you entered is not the same with the one shown in the image.' => 'Der eingegebene Code entspricht nicht dem Code aus der Abbildung.',
 );
