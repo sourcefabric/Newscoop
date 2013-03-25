@@ -1,7 +1,7 @@
 <?php 
-regGS("default", "");
-regGS("before you can configure the section templates.", "");
-regGS("You have to assign a theme to the issue", "");
+regGS("default", "προεπιλογή");
+regGS("before you can configure the section templates.", "προτού μπορέσετε να διαμορφώσετε τα πρότυπα ενοτήτων.");
+regGS("You have to assign a theme to the issue", "Πρέπει να ορίσετε ένα θέμα στο τεύχος");
 regGS("The section number $1 was already in use.", "Ο αριθμός ενότητας $1 βρισκόταν ήδη σε χρήση.");
 regGS("Delete all articles written in $1 language from this section", "Διαγραφή όλων των άρθρων, γραμμένων στη $1 γλώσσα, από αυτή την ενότητα");
 regGS("Delete all articles and all of their translations", "Διαγραφή όλων των άρθρων και των μεταφράσεων τους");

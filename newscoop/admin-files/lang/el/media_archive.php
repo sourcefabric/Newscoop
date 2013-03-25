@@ -2,10 +2,10 @@
 regGS("Slideshows", "Slideshows");
 regGS("You can't update used files.", "Δεν μπορείτε να ενημερώσετε χρησιμοποιημένα αρχεία.");
 regGS("Source", "Πηγή");
-regGS("Local", "");
-regGS("Items updated.", "");
+regGS("Local", "Τοπικό");
+regGS("Items updated.", "Τα αντικείμενα ενημερώθηκαν.");
 regGS("Feedback", "Feedback");
-regGS("Do you want to update unused only?", "");
+regGS("Do you want to update unused only?", "Θέλετε να ενημερώσετε μόνο τα αχρησιμοποίητα;");
 regGS("Disapprove selected", "Απόρριψη επιλεγμένων");
 regGS("Are you sure you want to update selected items?", "Είστε σίγουρος/η ότι θέλετε να ενημερώσετε επιλεγμένα αντικείμενα;");
 regGS("Approve selected", "Έγκριση επιλεγμένων");
