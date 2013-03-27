@@ -11,11 +11,10 @@ error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
 require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// goes to install process if configuration files does not exist yet
+// goes to install process if installation.php file exist.
 if (php_sapi_name() !== 'cli'
     && !defined('INSTALL')
-    && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
-        || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))
+    && (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
 ) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     if (strpos($subdir, 'install') === false) {
@@ -23,6 +22,7 @@ if (php_sapi_name() !== 'cli'
         exit;
     }
 }
+
 
 // Build container
 $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();

@@ -18,6 +18,10 @@ class ScriptHandler
 
     public static function generateOrmProxies($event)
     {
+        if (file_exists(__DIR__ . '/../../../conf/installation.php')) {
+            return;
+        }
+
         $io = $event->getIO();
         $io->write('Generating ORM proxies');
 

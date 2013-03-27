@@ -93,6 +93,7 @@ class CampInstallationBase
                 if ($prevStep != 'loaddemo'
                         && $this->databaseConfiguration($input)) {
                     $session->setData('config.db', $this->m_config['database'], 'installation', true);
+                    $this->saveConfiguration();
                 }
                 break;
 
@@ -127,7 +128,6 @@ class CampInstallationBase
                 $this->installEmptyTheme();
                 $this->saveCronJobsScripts();
                 if ($this->finish()) {
-                    $this->saveConfiguration();
                     self::InstallPlugins();
                     $this->initRenditions();
 
@@ -675,6 +675,10 @@ XML;
             @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php');
         }
 
+        if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php')) {
+            @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php');
+        }
+
         return true;
     }
 
@@ -799,6 +803,7 @@ XML;
 
         $path1 = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
         $path2 = CS_PATH_CONFIG.DIR_SEP.'database_conf.php';
+        $path3 = CS_PATH_CONFIG.DIR_SEP.'installation.php';
         if (file_exists($path1) && file_exists($path2)) {
             $isConfigWritable = is_writable($path1);
             $isDBConfigWritable = is_writable($path2);
@@ -815,6 +820,7 @@ XML;
 
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
+        file_put_contents($path3, 'installation');
         @chmod($path2, 0600);
 
         require_once $path2; // load saved db config for next steps
