@@ -23,12 +23,9 @@ class ContactController extends Zend_Controller_Action
             $configOptions = $this->getInvokeArg('bootstrap')->getOption('email');
             $errors = array();
 
-            $publicationObj = new Publication(CampRequest::GetVar('publicationId', '', 'POST'));
-            if ($publicationObj->isCaptchaEnabled()) {
-                $captchaResult = $this->_processCaptcha();
-                if (is_string($captchaResult)) {
-                    $errors[] = $captchaResult;
-                }
+            $captchaResult = $this->_processCaptcha();
+            if (is_string($captchaResult)) {
+                $errors[] = $captchaResult;
             }
 
             if (count($errors) == 0) {
