@@ -74,6 +74,7 @@ case "$1" in
       sed -e "s/__SERVER_ADMIN__/${SA}/;s/__SERVER_NAME__/${SN}/" \
         ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost
       a2ensite newscoop-vhost &>/dev/null
+      a2enmod rewrite &>/dev/null || true
       restart="$webserver $restart"
       dohtaccess="/"
     fi
@@ -116,19 +117,47 @@ case "$1" in
     # Permissions
     dpkg-statoverride --list $datadir &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir
-    dpkg-statoverride --list $datadir/conf &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
-    dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
-    dpkg-statoverride --list $datadir/images &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/images
-    dpkg-statoverride --list $datadir/themes &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
-    dpkg-statoverride --list $datadir/plugins &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
+
     dpkg-statoverride --list $datadir/backup &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/backup
 
+    dpkg-statoverride --list $datadir/cache &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/cache
+
+    dpkg-statoverride --list $datadir/conf &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
+
+    dpkg-statoverride --list $datadir/files &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/files
+
+    dpkg-statoverride --list $datadir/images &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/images
+
+    dpkg-statoverride --list $datadir/images/thumbnails &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/images/thumbnails
+
+    dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
+
+    dpkg-statoverride --list $datadir/pdf &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/pdf
+
+    dpkg-statoverride --list $datadir/plugins &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
+
+    dpkg-statoverride --list $datadir/themes &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
+
+    dpkg-statoverride --list $datadir/videos &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/videos
+
+    dpkg-statoverride --list $datadir/.htaccess &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0644 $datadir/.htaccess
+
+    # Installer needs to own all theme files, not just the themes directory
+    chown -R $WEB_USER.$WEB_GROUP $datadir/themes/ || true
+
+    # Localizer needs to be able to write to translation files
     chown -R $WEB_USER.$WEB_GROUP $datadir/admin-files/lang
     chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/debate/admin-files/lang
     chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/poll/admin-files/lang
@@ -154,6 +183,10 @@ case "$1" in
     servers="apache2"
     . /usr/share/wwwconfig-common/restart.sh
     echo $error >&2
+
+    if [ -n "${SN}" ]; then
+     echo "Please open a browser at http://${SN}/ to complete Newscoop installation."
+    fi
 
     db_stop
 
