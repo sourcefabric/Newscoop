@@ -1,0 +1,73 @@
+#!/bin/bash
+
+BASE_URL="."
+
+exit_usage()
+{
+	if [ "$1" = "ERROR" ]; then
+		echo "ERROR: Received invalid arguments!"
+	fi
+	echo "Arguments for creating the:"
+	echo -e "- package from a branch/tag/commit:"
+	echo -e "\t--what <branch_tag_comming_name> [<package_version>]"
+	exit 1
+}
+
+revision=
+what=$1
+shift 1
+case $what in
+--what)
+	branch=$1
+	if [ "$branch" = "" ] || [ "$branch" = "-r" ]; then
+		exit_usage
+	fi
+	url="$BASE_URL/newscoop"
+    plugins_url="$BASE_URL/plugins"
+	shift 1
+	;;
+--help)
+	exit_usage
+	;;
+-h)
+	exit_usage
+	;;
+*)
+	exit_usage ERROR
+	;;
+esac
+
+version=$1
+if [ "$version" = "" ]; then
+    version=`date +%Y.%m.%d`
+fi
+
+base_cmd="git checkout"
+cmd="$base_cmd $branch"
+
+pushd ../..
+
+$cmd || exit 1
+
+mv ./plugins/* ./newscoop/plugins
+
+rm -fr ./newscoop/tests
+find ./newscoop -name placeholder -exec rm -f {} \;
+
+package_name="newscoop-$version.tar.gz"
+
+tar czf $package_name ./newscoop
+res=$?
+
+mv ./newscoop/plugins .
+
+if [ $res -eq 0 ]; then
+    echo "package $package_name prepared successfully"
+else
+    echo "error creating package $package_name"
+    exit 1
+fi
+
+$base_cmd -- .
+
+popd

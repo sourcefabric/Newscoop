@@ -19,6 +19,7 @@ fi
 
 echo -n "OK? [enter|CTRL-C]" ; read
 
+cp -r ./rpm /tmp/newscoop-${VERSION}/
 cd ${TMP}/
 tar czf /tmp/rpm_newscoop-${VERSION}.tar.gz newscoop-${VERSION}/
 cd -
@@ -45,14 +46,14 @@ else
 	YUMPATH=/home/rgareus/yum
 fi
 
-rsync -P --bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm ${YUMHOST}:${YUMPATH}/14/i386/ || exit
-rsync -P --bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm ${YUMHOST}:${YUMPATH}/14/source/ || exit
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm ${YUMHOST}:${YUMPATH}/16/i386/ || exit
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm ${YUMHOST}:${YUMPATH}/16/source/ || exit
 
 ssh ${YUMHOST} << EOF
-cd ${YUMPATH}/14/x86_64/
+cd ${YUMPATH}/16/x86_64/
 ln ../i386/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm
 
-createrepo ${YUMPATH}/14/source/
-createrepo ${YUMPATH}/14/i386/
-createrepo ${YUMPATH}/14/x86_64/
+createrepo ${YUMPATH}/16/source/
+createrepo ${YUMPATH}/16/i386/
+createrepo ${YUMPATH}/16/x86_64/
 EOF

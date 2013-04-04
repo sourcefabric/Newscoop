@@ -1,0 +1,2 @@
+# newscoop/install/templates/license.tpl is not a duplicate license text
+newscoop binary: extra-license-file var/lib/newscoop/install/templates/license.tpl
