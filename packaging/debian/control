@@ -19,7 +19,7 @@ Depends: apache2 | httpd,
  ttf-dejavu-core,
  wwwconfig-common,
  ${misc:Depends}
-Recommends: php5-xcache
+Recommends: php-apc | php5-xcache
 Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite
 Description: Open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
