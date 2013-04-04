@@ -1,0 +1,8 @@
+# Create apache2 config:
+# Choices: dedicated v-host, system-wide (all v-hosts), no thanks
+newscoop newscoop/apache-setup	select	dedicated v-host
+# FQDN - apache-vhost ServerName:
+newscoop newscoop/apache-servername	string	localhost
+# Email of the vhost-admin - ServerAdmin:
+newscoop newscoop/apache-serveradmin	string	root@localhost
+

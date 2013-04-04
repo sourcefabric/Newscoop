@@ -1,0 +1,28 @@
+Package: newscoop-easy-setup
+Source: newscoop
+Version: 4.0.2-1
+Architecture: all
+Maintainer: Daniel James <daniel@64studio.com>
+Installed-Size: 5
+Depends: apt,
+ debconf-utils,
+ gnupg (>= 1.0.6-4),
+ hostname,
+ lsb-release,
+ apache2 | httpd,
+ curl,
+ graphicsmagick | imagemagick,
+ libapache2-mod-php5 | php5,
+ mysql-server,
+ php5-mysql,
+ php5-cli,
+ php5-gd,
+ ttf-dejavu-core
+Section: web
+Priority: optional
+Homepage: http://www.sourcefabric.org/en/newscoop/
+Description: Metapackage for the Newscoop content management system
+ This metapackage installs the dependencies for the Newscoop content
+ management system, and sets up a typical server configuration. For a
+ multi-server install, you may prefer to install the newscoop and
+ mysql-server packages separately. 
