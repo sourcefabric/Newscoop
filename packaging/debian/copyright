@@ -3,219 +3,323 @@ Name: Newscoop
 Maintainer: Sourcefabric <newscoop-dev@lists.sourcefabric.org>
 Source: http://sourceforge.net/projects/newscoop/files/
 
+Files: *
 Copyright:
- 2010 Sourcefabric o.p.s
+ 2010-2013 Sourcefabric o.p.s
  2004-2009 Media Development Loan Fund
-License: GPL-2+
+License: GPL-3
 
-Files: ./src/classes/Cron.php
+Files: ./newscoop/js/flowplayer/
+Copyright: 2009-2011 Flowplayer Oy <info@flowplayer.org>
+License: GPL-3
+The Flowplayer Free version is released under the
+GNU GENERAL PUBLIC LICENSE Version 3 (GPL).
+.
+The GPL requires that you not remove the Flowplayer copyright notices
+from the user interface. See section 5.d below.
+.
+Commercial licenses are available. The commercial player version
+does not require any Flowplayer notices or texts and also provides
+some additional features.
+.
+========================================================================
+.
+ADDITIONAL TERM per GPL Section 7
+If you convey this program (or any modifications of it) and assume
+contractual liability for the program to recipients of it, you agree
+to indemnify Flowplayer, Ltd. for any liability that those contractual
+assumptions impose on Flowplayer, Ltd.
+.
+Except as expressly provided herein, no trademark rights are granted in
+any trademarks of Flowplayer, Ltd. Licensees are granted a limited,
+non-exclusive right to use the mark Flowplayer and the Flowplayer logos
+in connection with unmodified copies of the Program and the copyright
+notices required by section 5.d of the GPL license. For the purposes
+of this limited trademark license grant, customizing the Flowplayer
+by skinning, scripting, or including PlugIns provided by Flowplayer, Ltd.
+is not considered modifying the Program.
+.
+Licensees that do modify the Program, taking advantage of the open-source
+license, may not use the Flowplayer mark or Flowplayer logos and must
+change the fullscreen notice (and the non-fullscreen notice, if that
+option is enabled), the copyright notice in the dialog box, and the
+notice on the Canvas as follows:
+.
+the full screen (and non-fullscreen equivalent, if activated) notice
+should read: "Based on Flowplayer source code"; in the context menu
+(right-click menu), the link to "About Flowplayer free version #.#.#"
+can remain. The copyright notice can remain, but must be supplemented with
+an additional notice, stating that the licensee modified the Flowplayer. 
+A suitable notice might read "Flowplayer Source code modified by ModOrg 2009";
+for the canvas, the notice should read "Based on Flowplayer source code".
+In addition, licensees that modify the Program must give the modified
+Program a new name that is not confusingly similar to Flowplayer and
+may not distribute it under the name Flowplayer.
+.
+========================================================================
+
+Files: ./newscoop/include/html2pdf/_tcpdf_5.0.002/
+Copyright: 2002-2010 Nicola Asuni <info@tecnick.com>
+License: LGPL-2.1
+
+Files: ./newscoop/js/domTT/
+Copyright: 2002-2005 Dan Allen <dan.allen@mojavelinux.com>
+License: Apache 2.0
+
+Files: ./newscoop/js/geocoding/openlayers/
+Copyright: 2005-2010 OpenLayers Contributors. See http://openlayers.org/dev/doc/authors.txt
+License: BSD-3
+Redistribution and use in source and binary forms, with or without
+modification, are permitted (subject to the limitations in the
+disclaimer below) provided that the following conditions are met:
+.
+ * Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+.
+ * Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the
+   distribution.
+.
+ * Neither the name of OpenLayers nor the names of its contributors 
+   may be used to endorse or promote products derived from this 
+   software without specific prior written permission.
+.
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+GRANTED BY THIS LICENSE.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Files: ./newscoop/js/plupload/
+Copyright: 2004-2012 Moxiecode Systems AB <info@moxiecode.com>
+License: GPL-2
+
+Files: ./newscoop/js/tinymce/
+Copyright: 2004-2012 Moxiecode Systems AB <info@moxiecode.com>
+License: LGPL-2.1
+
+Files: ./newscoop/library/Nette/
+Copyright: 2004, 2011 David Grudl <david@grudl.com>
+License: GPL-3
+
+Files: ./newscoop/library/fabpot-dependency-injection-07ff9ba/
+Copyright: 2008-2009 Fabien Potencier http://fabien.potencier.org
+License: Expat
+
+Files: ./newscoop/library/fabpot-event-dispatcher-782a5ef/
+Copyright: 2008-2009 Fabien Potencier http://fabien.potencier.org
+License: Expat
+
+Files: ./newscoop/js/tapmodo-Jcrop-5e58bc9/
+Copyright: 2011 Tapmodo Interactive LLC http://github.com/tapmodo/Jcrop
+License: Expat
+
+Files: ./newscoop/js/tapmodo-Jcrop-5e58bc9/build/
+Copyright: 2008-2011 Kelly Hallman <khallman@gmail.com>
+License: Expat
+
+Files: ./newscoop/classes/Cron.php
 Copyright: 2002 Klaus P. Pieper <klaus_p.pieper@t-online.de>
 License: GPL-2+
 
-Files: ./*/JSON.php
-Copyright: 2005 Michal Migurski <mike-json@teczno.com>
+Files: ./newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/
+Copyright: 2003 Bitstream, Inc.
 License: other
- Redistribution and use in source and binary forms, with or
- without modification, are permitted provided that the following
- conditions are met: Redistributions of source code must retain the
- above copyright notice, this list of conditions and the following
- disclaimer. Redistributions in binary form must reproduce the above
- copyright notice, this list of conditions and the following disclaimer
- in the documentation and/or other materials provided with the
- distribution.
- .
- THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESS OR IMPLIED
- WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
- NO EVENT SHALL CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
- OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
- TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
- USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
- DAMAGE.
+Fonts are (c) Bitstream (see below). DejaVu changes are in public domain.
+Glyphs imported from Arev fonts are (c) Tavmjong Bah (see below)
+.
+Bitstream Vera Fonts Copyright
+------------------------------
+.
+Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is
+a trademark of Bitstream, Inc.
+.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the fonts accompanying this license ("Fonts") and associated
+documentation files (the "Font Software"), to reproduce and distribute the
+Font Software, including without limitation the rights to use, copy, merge,
+publish, distribute, and/or sell copies of the Font Software, and to permit
+persons to whom the Font Software is furnished to do so, subject to the
+following conditions:
+.
+The above copyright and trademark notices and this permission notice shall
+be included in all copies of one or more of the Font Software typefaces.
+.
+The Font Software may be modified, altered, or added to, and in particular
+the designs of glyphs or characters in the Fonts may be modified and
+additional glyphs or characters may be added to the Fonts, only if the fonts
+are renamed to names not containing either the words "Bitstream" or the word
+"Vera".
+.
+This License becomes null and void to the extent applicable to Fonts or Font
+Software that has been modified and is distributed under the "Bitstream
+Vera" names.
+.
+The Font Software may be sold as part of a larger software package but no
+copy of one or more of the Font Software typefaces may be sold by itself.
+.
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT,
+TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL BITSTREAM OR THE GNOME
+FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING
+ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE
+FONT SOFTWARE.
+.
+Except as contained in this notice, the names of Gnome, the Gnome
+Foundation, and Bitstream Inc., shall not be used in advertising or
+otherwise to promote the sale, use or other dealings in this Font Software
+without prior written authorization from the Gnome Foundation or Bitstream
+Inc., respectively. For further information, contact: fonts at gnome dot
+org. 
+.
+Arev Fonts Copyright
+------------------------------
+.
+Copyright (c) 2006 by Tavmjong Bah. All Rights Reserved.
+.
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the fonts accompanying this license ("Fonts") and
+associated documentation files (the "Font Software"), to reproduce
+and distribute the modifications to the Bitstream Vera Font Software,
+including without limitation the rights to use, copy, merge, publish,
+distribute, and/or sell copies of the Font Software, and to permit
+persons to whom the Font Software is furnished to do so, subject to
+the following conditions:
+.
+The above copyright and trademark notices and this permission notice
+shall be included in all copies of one or more of the Font Software
+typefaces.
+.
+The Font Software may be modified, altered, or added to, and in
+particular the designs of glyphs or characters in the Fonts may be
+modified and additional glyphs or characters may be added to the
+Fonts, only if the fonts are renamed to names not containing either
+the words "Tavmjong Bah" or the word "Arev".
+.
+This License becomes null and void to the extent applicable to Fonts
+or Font Software that has been modified and is distributed under the 
+"Tavmjong Bah Arev" names.
+.
+The Font Software may be sold as part of a larger software package but
+no copy of one or more of the Font Software typefaces may be sold by
+itself.
+.
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL
+TAVMJONG BAH BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+.
+Except as contained in this notice, the name of Tavmjong Bah shall not
+be used in advertising or otherwise to promote the sale, use or other
+dealings in this Font Software without prior written authorization
+from Tavmjong Bah. For further information, contact: tavmjong@free.fr.
 
-Files: ./src/javascript/plupload/src/csharp/Plupload/FileReference.cs
-Copyright: 2009, Moxiecode Systems ABI
-License: GPL-2+
+Files: ./newscoop/vendor/bombayworks/zendframework1/*
+Copyright: 2005-2010, Zend Technologies USA, Inc.
+License: BSD-3
+Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:
+.
+    * Redistributions of source code must retain the above copyright notice,
+      this list of conditions and the following disclaimer.
+.
+    * Redistributions in binary form must reproduce the above copyright notice,
+      this list of conditions and the following disclaimer in the documentation
+      and/or other materials provided with the distribution.
+.
+    * Neither the name of Zend Technologies USA, Inc. nor the names of its
+      contributors may be used to endorse or promote products derived from this
+      software without specific prior written permission.
+.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-Files: ./src/javascript/plupload/src/csharp/Plupload/Properties/AssemblyInfo.cs
-Copyright: 2007-2009, Moxiecode Systems AB, All rights reserved
-License: FIXME - "All rights reversed"-only is not DFSG-clean.
+Files: ./newscoop/vendor/doctrine/*
+Copyright: 2006-2012 Doctrine Project http://www.doctrine-project.org/
+License: LGPL-2.1
 
-Files: ./src/javascript/plupload/src/csharp/Plupload/FJCore/{,IO,Filter,Resize,Encoder}/*
-Copyright: 2008-2009 Jeffrey Powers
-License: other
-﻿ Copyright (c) 2008-2009 Occipital Open Source
- .
- Partial derivations: See IJG.txt and JAI.txt.
- .
- Permission is hereby granted, free of charge, to any person
- obtaining a copy of this software and associated documentation
- files (the "Software"), to deal in the Software without
- restriction, including without limitation the rights to use,
- copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the
- Software is furnished to do so, subject to the following
- conditions:
- .
- The above copyright notice and this permission notice shall be
- included in all copies or substantial portions of the Software.
- .
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- OTHER DEALINGS IN THE SOFTWARE. 
-X-Comment: The content of the
- ./src/javscript/plupload/src/csharp/Plupload/FJCore/JAI.txt file follows:
- ---------------------
- Copyright (c) 2005 Sun Microsystems, Inc. All  Rights Reserved.
- .
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions
- are met: 
- .
- - Redistribution of source code must retain the above copyright 
-   notice, this  list of conditions and the following disclaimer.
- .
- - Redistribution in binary form must reproduce the above copyright
-   notice, this list of conditions and the following disclaimer in 
-   the documentation and/or other materials provided with the
-   distribution.
- .
- Neither the name of Sun Microsystems, Inc. or the names of 
- contributors may be used to endorse or promote products derived 
- from this software without specific prior written permission.
- .
- This software is provided "AS IS," without a warranty of any 
- kind. ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND 
- WARRANTIES, INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, 
- FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE HEREBY
- EXCLUDED. SUN MIDROSYSTEMS, INC. ("SUN") AND ITS LICENSORS SHALL 
- NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF 
- USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS
- DERIVATIVES. IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR 
- ANY LOST REVENUE, PROFIT OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL,
- CONSEQUENTIAL, INCIDENTAL OR PUNITIVE DAMAGES, HOWEVER CAUSED AND
- REGARDLESS OF THE THEORY OF LIABILITY, ARISING OUT OF THE USE OF OR
- INABILITY TO USE THIS SOFTWARE, EVEN IF SUN HAS BEEN ADVISED OF THE
- POSSIBILITY OF SUCH DAMAGES.
- .
- You acknowledge that this software is not designed or intended for 
- use in the design, construction, operation or maintenance of any 
- nuclear facility.
- ---------------------
- The content of the
- ./src/javscript/plupload/src/csharp/Plupload/FJCore/IJG.txt file follows:
- ---------------------
- ﻿This software is based in part on the work of the Independent JPEG Group:
- .
- The Independent JPEG Group's JPEG software
- ==========================================
- .
- LEGAL ISSUES
- ============
- .
- In plain English:
- .
- 1. We don't promise that this software works.  (But if you find any bugs,
-    please let us know!)
- 2. You can use this software for whatever you want.  You don't have to pay us.
- 3. You may not pretend that you wrote this software.  If you use it in a
-    program, you must acknowledge somewhere in your documentation that
-    you've used the IJG code.
- .
- In legalese:
- .
- The authors make NO WARRANTY or representation, either express or implied,
- with respect to this software, its quality, accuracy, merchantability, or
- fitness for a particular purpose.  This software is provided "AS IS", and you,
- its user, assume the entire risk as to its quality and accuracy.
- .
- This software is copyright (C) 1991-1998, Thomas G. Lane.
- All Rights Reserved except as specified below.
- .
- Permission is hereby granted to use, copy, modify, and distribute this
- software (or portions thereof) for any purpose, without fee, subject to these
- conditions:
- (1) If any part of the source code for this software is distributed, then this
- README file must be included, with this copyright and no-warranty notice
- unaltered; and any additions, deletions, or changes to the original files
- must be clearly indicated in accompanying documentation.
- (2) If only executable code is distributed, then the accompanying
- documentation must state that "this software is based in part on the work of
- the Independent JPEG Group".
- (3) Permission for use of this software is granted only if the user accepts
- full responsibility for any undesirable consequences; the authors accept
- NO LIABILITY for damages of any kind.
- .
- These conditions apply to any software derived from or based on the IJG code,
- not just to the unmodified library.  If you use our work, you ought to
- acknowledge us.
- .
- Permission is NOT granted for the use of any IJG author's name or company name
- in advertising or publicity relating to this software or products derived from
- it.  This software may be referred to only as "the Independent JPEG Group's
- software".
- .
- We specifically permit and encourage the use of this software as the basis of
- commercial products, provided that all warranty or liability claims are
- assumed by the product vendor.
- .
- ansi2knr.c is included in this distribution by permission of L. Peter Deutsch,
- sole proprietor of its copyright holder, Aladdin Enterprises of Menlo Park, CA.
- ansi2knr.c is NOT covered by the above copyright and conditions, but instead
- by the usual distribution terms of the Free Software Foundation; principally,
- that you must include source code if you redistribute it.  (See the file
- ansi2knr.c for full details.)  However, since ansi2knr.c is not needed as part
- of any program generated from the IJG code, this does not limit you more than
- the foregoing paragraphs do.
- .
- The Unix configuration script "configure" was produced with GNU Autoconf.
- It is copyright by the Free Software Foundation but is freely distributable.
- The same holds for its supporting scripts (config.guess, config.sub,
- ltconfig, ltmain.sh).  Another support script, install-sh, is copyright
- by M.I.T. but is also freely distributable.
- .
- It appears that the arithmetic coding option of the JPEG spec is covered by
- patents owned by IBM, AT&T, and Mitsubishi.  Hence arithmetic coding cannot
- legally be used without obtaining one or more licenses.  For this reason,
- support for arithmetic coding has been removed from the free JPEG software.
- (Since arithmetic coding provides only a marginal gain over the unpatented
- Huffman mode, it is unlikely that very many implementations will support it.)
- So far as we are aware, there are no patent restrictions on the remaining
- code.
- .
- The IJG distribution formerly included code to read and write GIF files.
- To avoid entanglement with the Unisys LZW patent, GIF reading support has
- been removed altogether, and the GIF writer has been simplified to produce
- "uncompressed GIFs".  This technique does not use the LZW algorithm; the
- resulting GIF files are larger than usual, but are readable by all standard
- GIF decoders.
- .
- We are required to state that
-     "The Graphics Interchange Format(c) is the Copyright property of
-     CompuServe Incorporated.  GIF(sm) is a Service Mark property of
-     CompuServe Incorporated."
+Files: ./newscoop/vendor/guzzle/*
+Copyright: 2011 Michael Dowling https://github.com/mtdowling
+License: Expat
 
-Files: ./src/javascript/plupload/src/csharp/Plupload/PngEncoder/*
-Copyright: 
- Copyright (C) 2001 Mike Krueger
- Copyright (C) 2004 John Reilly
-X-Comment: These files were translated from java, there were part of the
- GNU Classpath, Copyright (C) 2001 Free Software Foundation, Inc.
-License: GPL-2+
+Files: ./newscoop/vendor/hybridauth/*
+Copyright: 2009 hybridAuth authors
+License: GPL-3
+
+Files: ./newscoop/vendor/symfony/console/Symfony/Component/Console/
+Copyright: 2004-2011 Fabien Potencier http://fabien.potencier.org
+License: Expat
+
+Files: ./newscoop/vendor/symfony/event-dispatcher/Symfony/Component/EventDispatcher/
+Copyright: 2004-2012 Fabien Potencier
+License: Expat
+
+Files: ./newscoop/vendor/symfony/yaml/Symfony/Component/Yaml/
+Copyright: 2004-2011 Fabien Potencier http://fabien.potencier.org
+License: Expat
 
 Files: ./debian/*
 Copyright: 
  2010 Alessio Treglia <alessio@debian.org>
  2010 Robin Gareus <robin@gareus.org>
 License: GPL-2+
+
+License: GPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+Comment:
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License can be found in `/usr/share/common-licenses/GPL-3'.
+
+License: GPL-2
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 2 as
+ published by the Free Software Foundation.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+Comment:
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License can be found in `/usr/share/common-licenses/GPL-2'.
 
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
@@ -234,3 +338,55 @@ License: GPL-2+
  02110-1301, USA.
 X-Comment: On Debian systems, the complete text of the GNU General
  Public License can be found in `/usr/share/common-licenses/GPL-2'.
+
+License: LGPL-2.1
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License version 2.1 as published by the Free Software Foundation.
+ .
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+Comment:
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License can be found in `/usr/share/common-licenses/LGPL-2.1'.
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0 (the "License"); you may
+ not use this file except in compliance with the License.  You may obtain
+ a copy of the License at
+ .
+     http://www.apache.org/licenses/LICENSE-2.0
+ .
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+ License for the specific language governing permissions and limitations
+ under the License.
+ .
+ On Debian systems, the complete text of the Apache 2.0 license can be
+ found in the file /usr/share/common-licenses/Apache-2.0.
+
+License: Expat
+ Permission is hereby granted, free of charge, to any person obtaining a
+ copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to permit
+ persons to whom the Software is furnished to do so, subject to the
+ following conditions:
+ .
+ The above copyright notice and this permission notice shall be included
+ in all copies or substantial portions of the Software.
+ .
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT
+ OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+ THE USE OR OTHER DEALINGS IN THE SOFTWARE.

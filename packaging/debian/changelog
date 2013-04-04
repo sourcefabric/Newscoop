@@ -1,3 +1,54 @@
+newscoop (4.1.0-1) unstable; urgency=low
+
+  * Upstream 4.1.0 release
+
+ -- Daniel James <daniel@64studio.com>  Mon, 28 Jan 2013 15:36:13 +0000
+
+newscoop (4.0.4-1) unstable; urgency=low
+
+  * Upstream 4.0.4 release
+
+ -- Daniel James <daniel@64studio.com>  Mon, 07 Jan 2013 12:42:15 +0000
+
+newscoop (4.0.3-1) unstable; urgency=low
+
+  * Upstream 4.0.3 release
+
+ -- Daniel James <daniel@64studio.com>  Wed, 12 Dec 2012 11:49:06 +0000
+
+newscoop (4.0.2-1) unstable; urgency=low
+
+  * Upstream 4.0.2 release
+
+ -- Daniel James <daniel@64studio.com>  Wed, 18 Jul 2012 11:51:01 +0100
+
+newscoop (4.0.1-1) unstable; urgency=low
+
+  * Upstream 4.0.1 release
+  * Only print helpful message in postinst if ServerName is set
+
+ -- Daniel James <daniel@64studio.com>  Tue, 19 Jun 2012 11:51:40 +0100
+
+newscoop (4.0.0-2) unstable; urgency=low
+
+  * Make virtual host the default option for Apache setup
+  * Put DocumentRoot in /var/lib as /usr may be read-only
+  * Print helpful message in postinst for user to view browser installer
+  * Web server must have write access to the pdf directory (CS-4311)
+ 
+ -- Daniel James <daniel@64studio.com>  Tue, 08 May 2012 14:22:22 +0100
+
+newscoop (4.0.0-1) unstable; urgency=low
+
+  * Upstream 4.0.0 release
+  * Strip CAPTCHA fonts, depend on font package (CS-3997)
+  * Suggest flite package for audio CAPTCHA
+  * Change settings path to /etc/newscoop/4.0/
+  * Change document root to /usr/share/
+  * Set permissions for new directory structure (e.g. themes)
+
+ -- Daniel James <daniel@64studio.com>  Tue, 10 Apr 2012 11:00:00 +0000
+
 newscoop (3.5.1-1) 64studio; urgency=low
   * update to upstream 3.5.1
 
