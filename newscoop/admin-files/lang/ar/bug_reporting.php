@@ -19,7 +19,7 @@ regGS("Error ID:", "رقم الخطأ:");
 regGS("Error Message:", "رسالة خطأ");
 regGS("Error Number:", "رقم الخطأ:");
 regGS("Error String:", "سلسلة الخطأ:");
-regGS("Software:", "البرماجيات");
+regGS("Software:", "البرامجيات");
 regGS("We are sorry, but there was a problem sending your bug report.", "نعتذر، ولكن كان هناك مشكلة في إرسال تقرير العلة الخاص بك.");
 regGS("Simply copy and paste the error report below and send it to:", "ببساطة انسخ وإلصق تقرير الخطأ أدناه وأرسله إلى:");
 ?>
