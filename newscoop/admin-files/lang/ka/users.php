@@ -29,7 +29,7 @@ regGS("Comment ban settings", "დაბანვის პარამეტრ
 regGS("Ban for user \"$1\" saved.", "ბანი \"$1\" მომხმარებელზე დამახსოვრებულია.");
 regGS("User account is active", "მომხმარებლის ანგარიში აქტიურია");
 regGS("Allow user's profile to be publicly displayed", "მომხმარებლის პროფილის საჯაროდ ჩვენება");
-regGS("Allow user access to login to site backend", "");
+regGS("Allow user access to login to site backend", "ნება დართეთ მომხმარებელს როგორც ადმინისტრატორი შევიდეს გვერდზე");
 regGS("Templates", "შაბლონები");
 regGS("Username", "მომხმარებლის სახელი");
 regGS("Last Name", "გვარი ");
