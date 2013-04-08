@@ -167,11 +167,11 @@ class Admin_ImageController extends Zend_Controller_Action
         $images = array();
         $articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         foreach ($articleImages as $k => $articleImage) {
-			unset($exifDate);
-			unset($iptcDate);
-			unset($iptcPlace);
-			unset($iptcPhotographer);
-			unset($iptcDescription);
+            unset($exifDate);
+            unset($iptcDate);
+            unset($iptcPlace);
+            unset($iptcPhotographer);
+            unset($iptcDescription);
             
             $image = $articleImage->getImage();
             $allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
@@ -217,8 +217,8 @@ class Admin_ImageController extends Zend_Controller_Action
                 }
             }
             
-			if ($image->getDate() == '0000-00-00') {
-				if (isset($iptcPhotographer)) {
+            if ($image->getDate() == '0000-00-00') {
+                if (isset($iptcPhotographer)) {
                     $image->setPhotographer($iptcPhotographer);
                 }
                 if (isset($iptcDescription)) {
@@ -235,8 +235,12 @@ class Admin_ImageController extends Zend_Controller_Action
                 }
                 
                 $images[] = $image;
-			}
-		}
+            }
+
+            if ($this->_getParam('force_edit')) {
+                $images[] = $image;
+            }
+        }
         
         $this->view->images = $images;
     }
