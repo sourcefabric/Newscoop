@@ -131,14 +131,14 @@ $(function() {
             <li id="image-<?php echo $image->getId(); ?>">
                 <figure>
                     <div><?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?></div>
-                    <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php putGS('Zaznacz zdjęcie'); ?>" />
+                    <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php putGS('Mark image'); ?>" />
                     <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
                 </figure>
             </li>
             <?php } ?>
         </ul>
         <div class="inline">
-            <button id="add-sellected-to-gallery"><?php putGS('Add selected images to gallery'); ?></button>
+            <button id="add-sellected-to-gallery"><?php putGS('Add selected images to slideshow'); ?></button>
         </div>
     </div>
     <?php } ?>
