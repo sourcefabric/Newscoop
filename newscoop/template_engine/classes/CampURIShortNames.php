@@ -237,13 +237,13 @@ class CampURIShortNames extends CampURI
      */
     private function _getLanguage($code, MetaPublication $publication)
     {
+        $language = $publication->default_language;
+        
         if (!empty($code)) {
             $langArray = Language::GetLanguages(null, $code);
             if (is_array($langArray) && sizeof($langArray) == 1) {
                 $language = new MetaLanguage($langArray[0]->getLanguageId());
             }
-        } else {
-            $language = $publication->default_language;
         }
 
         if (empty($language) || !$language->defined()) {
