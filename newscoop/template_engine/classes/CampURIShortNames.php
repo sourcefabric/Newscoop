@@ -246,7 +246,7 @@ class CampURIShortNames extends CampURI
             $language = $publication->default_language;
         }
 
-        if (empty($language) || !$language->defined()) {
+        if (!$language->defined()) {
             throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
         }
 
