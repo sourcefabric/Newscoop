@@ -82,7 +82,7 @@ final class CampTemplate extends SmartyBC
             (array) $this->plugins_dir,
             array(APPLICATION_PATH . self::PLUGINS),
             self::getPluginsPluginsDir()
-        ));
+        );
 
         $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',
