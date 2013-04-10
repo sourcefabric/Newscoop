@@ -1,7 +1,7 @@
 <?php 
-regGS("You have reached the error page", "");
-regGS("Stack trace:", "");
-regGS("Request Parameters:", "");
+regGS("You have reached the error page", "Φτάσατε στη σελίδα σφάλματος");
+regGS("Stack trace:", "Stack trace:");
+regGS("Request Parameters:", "Παράμετροι Αιτημάτων:");
 regGS("Page not found", "Η σελίδα δεν βρέθηκε");
 regGS("Exception information:", "Πληροφορίες εξαίρεσης:");
 regGS("Application error", "Σφάλμα αίτησης");

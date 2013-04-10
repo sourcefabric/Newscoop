@@ -1,10 +1,10 @@
 <?php 
-regGS("Duplicate assignment", "");
-regGS("Templates", "");
-regGS("Import theme", "");
-regGS("Import succeded!", "");
-regGS("Import failed!", "");
-regGS("Edit template: $1", "");
+regGS("Duplicate assignment", "დუპლიკატი დავალება");
+regGS("Templates", "შაბლონები");
+regGS("Import theme", "თემის იმპორტირება");
+regGS("Import succeded!", "იმპორტი წარმატებით შესრულდა!");
+regGS("Import failed!", "იმპორტი წარუმატებელია!");
+regGS("Edit template: $1", "შაბლონის რედაქტირება: $1");
 regGS("Set new name to", "ახალი სახელის მინიჭება");
 regGS("Rename file", "ფაილის სახელის შეცვლა");
 regGS("Caching templates in:", "შაბლონების კეშირება");
@@ -37,7 +37,7 @@ regGS("Template object '$1' was renamed to '$2'.", "შაბლონის ო
 regGS("Template object '$1' was deleted.", "შაბლონის ობიქტი '$1' წაიშალა.");
 regGS("Template '$1' was duplicated into '$2'.", "'$1' შაბლონი დუბლირებულია '$2'-ში");
 regGS("Template '$1' $2.", "შაბლონი '$1' $2");
-regGS("Something broke", "");
+regGS("Something broke", "რაღაც არ მუშაობს");
 regGS("Section page template", "სექციის გვერდის შაბლონი");
 regGS("Saving..", "მიმდინარეობს დამახსოვრება..");
 regGS("Saving settings failed.", "პარამეტრების დამახსოვრება ვერ მოხერხდა.");
@@ -74,8 +74,8 @@ regGS("Copied successfully", "კოპირებულია");
 regGS("Compatibility", "შეთავსებადობა");
 regGS("Click to enlarge", "დააჭირეთ გასადიდებლად");
 regGS("Choose destination", "აირჩიეთ დირექტორია");
-regGS("Can't override directory '$1'.", "");
-regGS("Cache Lifetime", "");
+regGS("Can't override directory '$1'.", "შეუძლებელია '$1' ინსტრუქციის უკუგდება.");
+regGS("Cache Lifetime", "კეში-მეხსიერების სიცოცხლის ხანგრძლივობა");
 regGS("Browse for the theme", "თემის ძიება");
 regGS("Assigned successfully", "მიება");
 regGS("Article page template", "სტატიის გვერდის შაბლონი");

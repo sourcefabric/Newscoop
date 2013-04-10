@@ -1,7 +1,7 @@
 <?php 
 regGS("You must enter a name for the topic.", "Πρέπει να εισάγετε ένα όνομα για το θέμα.");
 regGS("Show All", "Εμφάνιση Όλων");
-regGS("Select the parent of the topic", "");
+regGS("Select the parent of the topic", "Επιλέξτε το γονικό του θέματος");
 regGS("None", "Κανένα");
 regGS("Add new topic", "Προσθήκη νέου θέματος");
 regGS("No topics have been created yet.", "Δεν έχουν δημιουργηθεί ακόμη θέματα.");

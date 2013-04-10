@@ -69,6 +69,7 @@ regGS("Saturday", "السبت");
 regGS("Sunday", "الأحد");
 regGS("You do not have the right to add new languages.", "لا تملك صلاحية إضافة لغات جديدة");
 regGS("There are $1 issue(s) left.", "هنالك $1 عدد باقي");
+regGS("Native name", "الأسم الأصلي");
 regGS("The language $1 has been successfuly added.", "تمت إضافة اللغة  $1 بنجاح");
 regGS("Please check if a language with the same name does not already exist.", "الرجاء التأكد من عدم وجود لغة تحمل الاسم نفسه");
 regGS("The language could not be added.", "لا يمكن إضافة اللغة");
@@ -79,5 +80,4 @@ regGS("Language information has been successfuly updated.", "تم تحديث م�
 regGS("Language information could not be updated.", "لا يمكن تحديث معلومات اللغة");
 regGS("A language with the same name already exists.", " هناك لغة تحمل الاسم نفسه");
 regGS("Add another language", "أضف لغة جديدة");
-regGS("Native name", "الأسم الأصلي");
 ?>

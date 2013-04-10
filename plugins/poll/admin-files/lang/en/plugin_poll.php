@@ -81,4 +81,5 @@ regGS("Answer $1", "Answer $1");
 regGS("Add new Poll", "Add new Poll");
 regGS("---Select---", "---Select---");
 regGS("$1/$2 polls assigned/unassigned.", "$1/$2 polls assigned/unassigned.");
+regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Are you sure you want to remove the file \\'$1\\' from the poll answer?");
 ?>

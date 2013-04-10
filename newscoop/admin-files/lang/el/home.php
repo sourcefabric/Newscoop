@@ -1,11 +1,13 @@
 <?php 
-regGS("Image Rendering", "");
-regGS("Featured Article Lists", "");
+regGS("Rename user", "Μετονομασία χρήστη");
+regGS("Campsite", "Campsite");
+regGS("Image Rendering", "Απόδοση Εικόνας");
+regGS("Featured Article Lists", "Προτεινόμενες Λίστες Άρθρων");
 regGS("You have tried to upload an invalid backup file.", "Προσπαθήσατε να ανεβάσετε ένα άκυρο αρχείο αντιγράφου ασφαλείας.");
 regGS("You do not have the right to manage backups.", "Δεν έχετε το δικαίωμα διαχείρισης αντιγράφων ασφαλείας.");
 regGS("Make a new backup", "Δημιουργία νέου αντιγράφου ασφαλείας");
 regGS("Are you sure you want to make a new backup?", "Είστε σίγουρος/η ότι θέλετε να δημιουργήσετε νέο αντίγραφο ασφαλείας;");
-regGS("Security token expired. Please resubmit the form.", "");
+regGS("Security token expired. Please resubmit the form.", "Η συνεδρία έληξε. Παρακαλούμε υποβάλετε ξανά τη φόρμα.");
 regGS("Templates", "Πρότυπα");
 regGS("Create slideshow", "Δημιουργία slideshow");
 regGS("Create", "Δημιουργία");
@@ -16,8 +18,8 @@ regGS("Pending articles", "Εκκρεμή Άρθρα");
 regGS("Manage Users", "Διαχείριση Χρηστών");
 regGS("Manage User Types", "Διαχείριση Τύπου Χρηστών");
 regGS("Manage User Points System", "Διαχείριση Συστήματος Σημείων Χρήστη");
-regGS("Last", "");
-regGS("First", "");
+regGS("Last", "Τελευταία ");
+regGS("First", "Πρώτα");
 regGS("Feedback", "Feedback");
 regGS("Edit your password", "Επεξεργασία κωδικού πρόσβασης");
 regGS("Edit user", "Επεξεργασία χρήστη");
@@ -31,7 +33,7 @@ regGS("The file $1 could not be moved. Check you have enough of disk space.", "�
 regGS("MiB", "MiB");
 regGS("Download was not successful. Check please that the server is not out of disk space.", "Το κατέβασμα δεν ήταν επιτυχές. Παρακαλούμε ελέγξτε τον εναπομέιναντα ελεύθερο χώρο του διακομιστή σας.");
 regGS("try again later", "Προσπαθήστε ξανά αργότερα");
-regGS("at", "");
+regGS("at", "σε");
 regGS("You must at least upload one file.", "Πρέπει να ανεβάσετε τουλάχιστον ένα αρχείο.");
 regGS("Warning: the existing data and themes will be deleted!", "Προειδοποίηση: τα υπάρχοντα στοιχεία και θέματα θα διαγραφούν!");
 regGS("Value is required and can't be empty", "Η αξία απαιτέιται και δεν μπορεί να παραμείνει κενή");
@@ -62,11 +64,11 @@ regGS("'%value%' is less than %min% characters long", "Η αξία '%value%'  ε
 regGS("User name", "Όνομα Χρήστη");
 regGS("Newscoop", "Newscoop");
 regGS("Your password has been reset.", "Έγινε επαναφορά του κωδικού πρόσβασής σας.");
-regGS("Proceed to login.", "");
+regGS("Proceed to login.", "Προχωρήστε στη σύνδεση.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Καλήσπέρα, \n\nγια ανάκτηση του κωδικού πρόσβασης, παρακαλούμε ακολουθήστε τον παρακάτω σύνδεσμο: $1");
-regGS("Go to login", "");
-regGS("Back to login.", "");
-regGS("Back to login", "");
+regGS("Go to login", "Πηγαίνετε στη σύνδεση");
+regGS("Back to login.", "Πίσω στη σύνδεση.");
+regGS("Back to login", "Πίσω στη σύνδεση");
 regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Ένα mail με οδηγίες για το πώς να ανακτήσετε τον κωδικό πρόσβασης, σας έχει σταλεί στα εισερχόμενά σας.");
 regGS("Session expired.", "Η συνεδρία έληξε.");
 regGS("Processing...", "Επεξεργασία...");
@@ -151,4 +153,5 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Επαναφορά");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Καλήσπέρα, \\n\\nγια ανάκτηση του κωδικού πρόσβασης, παρακαλούμε ακολουθήστε τον παρακάτω σύνδεσμο: $1");
 ?>

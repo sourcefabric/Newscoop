@@ -1,5 +1,5 @@
 <?php 
-regGS("Based on GeoNames.org data", "");
+regGS("Based on GeoNames.org data", "დამყარებულია GeoNames.org-ის მონაცემებზე");
 regGS("selected marker icon", "აირჩიეთ მარკერის იარლიყი (icon)");
 regGS("add location to map", "ლოკაციის რუკაზე დამატება");
 regGS("Video source", "ვიდეო წყარო");
@@ -45,8 +45,8 @@ regGS("Last Saved Map View", "ბოლოს შენახული რუკ
 regGS("List of locations updated", "განახლებული ლოკაციების სია");
 regGS("width", "სიგანე");
 regGS("show initial map view", "საწყისი რუკის ჩვენება");
-regGS("problem at point processing, please send error report", "");
-regGS("plain text", "");
+regGS("problem at point processing, please send error report", "პრობლემა რუკის აღნიშვნებთან. გთხოვთ განაცხადოთ ხარვეზის შესახებ");
+regGS("plain text", "ჩვეულებრივი ტექსტი ");
 regGS("html content", "html კონტენტი");
 regGS("height", "სიმაღლე");
 regGS("fill in map name", "რუკის სახელის მითითება");

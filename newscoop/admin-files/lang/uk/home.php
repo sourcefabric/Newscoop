@@ -1,4 +1,6 @@
 <?php 
+regGS("Rename user", "");
+regGS("Campsite", "");
 regGS("Image Rendering", "Відтворення зобрадже");
 regGS("Featured Article Lists", "Список запланованих статей");
 regGS("You have tried to upload an invalid backup file.", "Ви намагалися завантажити невірний файл архівної копії.");
