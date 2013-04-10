@@ -15,7 +15,7 @@ regGS("Preview Window", "Vorschaufenster");
 regGS("Show translated strings", "Übersetzte Einträge anzeigen");
 regGS("Hide translated strings", "Übersetzte Einträge verbergen");
 regGS("Feedback", "Feedback");
-regGS("You do not have the right to manage the localizer.", "Keine Berechtigung um die Lokalisierung zu verwalten.");
+regGS("You do not have the right to manage the localizer.", "Keine Berechtigung Lokalisierung zu verwalten.");
 regGS("API", "API");
 regGS("User Subscriptions Sections", "User Abonnement Rubriken");
 regGS("User Subscriptions", "User Abonnements");

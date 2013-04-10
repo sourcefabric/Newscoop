@@ -1,5 +1,4 @@
 <?php 
-regGS("Display newsfeed images", "Відображення зображень стрічки новин");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Вибачте, але це зображення замале. Воно повинно бути принаймні %dx%d.");
 regGS("Slideshow rendition", "Комплект размірів слайдшоу");
 regGS("Renditions reloaded", "Комплект розмірів перезавантажений");

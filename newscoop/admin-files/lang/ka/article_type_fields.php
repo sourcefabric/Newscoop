@@ -1,6 +1,6 @@
 <?php 
-regGS("Usage at automatic statistics", "");
-regGS("Event Color", "");
+regGS("Usage at automatic statistics", "ავტომატური სტატისტიკის გამოყენება");
+regGS("Event Color", "მოვლენის ფერი");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "$3 ველში შეიყვანეთ რიცხვი რომელიც $1-ზე მეტია და $2-ზე ნაკლები.");
 regGS("You do not have the right to translate article types.", "თქვენ არ გაქვთ სტატიის ტიპის თარგმნის უფლება.");
 regGS("You do not have the right to reorder article types.", "თქვენ არ გაქვთ სტატიის ტიპების გადაადგილების უფლება.");
@@ -14,10 +14,10 @@ regGS("Large ($1 pixels)", "დიდი ($1 პიქსელი)");
 regGS("Hide human-readable field names", "ადამიანის მიერ წაკითხვადი ველების დამალვა");
 regGS("Editor size", "რედაქტორის ზომა");
 regGS("Edit and translate human-readable field names", "ადამიანის მიერ წაკითხვადი ველების რედაქტირება და თარგმნა");
-regGS("Custom", "");
+regGS("Custom", "საგანგებოდ დამზადებული");
 regGS("Characters limit", "სიმბოლოების ლიმიტი");
 regGS("The template name may only contain letters and the underscore (_) character.", "შაბლონის სახელი უნდა შეიცავდე მხოლოს ასოებს და \"_\" სიმბოლოს.");
-regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
+regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "ველის სახელი უკვე გამოყენებული იქნა, როგორც სტატიის საბაზისო პარამეტრი.  ველის შემადგენლობა არ იქნება ნაჩვენები შაბლონებში.    ");
 regGS("The property '$1' is already in use.", "'$1' უკვე გამოყენებულია");
 regGS("Precision", "სიზუსტე");
 regGS("Can not convert the field $1 from $2 to type $3.", "$1 ველის $2-დან $3 ტიპზე კონვერტირება შეუძლებელია");

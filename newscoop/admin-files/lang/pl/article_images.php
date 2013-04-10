@@ -1,5 +1,4 @@
 <?php 
-regGS("Display newsfeed images", "Pokaż zdjęcia ze źródeł.");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Sorry, te zdjęcie jest za małe. Zdjęcie musi mieć przynajmniej %d na %d");
 regGS("Slideshow rendition", "Galerie obrazów");
 regGS("Renditions reloaded", "Obrazy przeładowane");

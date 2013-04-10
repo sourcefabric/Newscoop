@@ -1,13 +1,13 @@
 <?php 
-regGS("Usage at automatic statistics", "");
+regGS("Usage at automatic statistics", "Automatische Statistiken benutzen");
 regGS("Event Color", "Farbe des Events");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "Bitte geben Sie eine Zahl größer als $1 und kleiner als $2 in das Feld $3.");
 regGS("You do not have the right to translate article types.", "Ihnen fehlt die Berechtigung Artikeltypen zu übersetzen.");
-regGS("You do not have the right to reorder article types.", "Ihnen fehlt die Berechtigung Artikeltypen anders anzuordnen.");
-regGS("You do not have the right to reassign article type fields.", "Ihnen fehlt die Berechtigung Felder von Artikeltypen anders zuzuweisen.");
-regGS("You do not have the right to manage article types.", "Ihnen fehlt die Berechtigung Artikeltypen zu verwalten.");
-regGS("You do not have the right to hide article types.", "Ihnen fehlt die Berechtigung Artikeltypen zu verbergen.");
-regGS("You do not have the right to delete article types.", "Ihnen fehlt die Berechtigung Artikeltypen zu löschen.");
+regGS("You do not have the right to reorder article types.", "Keine Berechtigung Artikeltypen neu zu ordnen.");
+regGS("You do not have the right to reassign article type fields.", "Keine Berechtigung Felder von Artikeltypen neu zuzuweisen.");
+regGS("You do not have the right to manage article types.", "Keine Berechtigung Artikeltypen zu verwalten.");
+regGS("You do not have the right to hide article types.", "Keine Berechtigung Artikeltypen zu verbergen.");
+regGS("You do not have the right to delete article types.", "Keine Berechtigung Artikeltypen zu löschen.");
 regGS("Small ($1 pixels)", "Klein ($1 Pixel)");
 regGS("Medium ($1 pixels)", "Mittel ($1 Pixel)");
 regGS("Large ($1 pixels)", "Groß ($1 Pixel)");
@@ -15,7 +15,7 @@ regGS("Hide human-readable field names", "Verberge von Menschen lesbare Feldname
 regGS("Editor size", "Editorgröße");
 regGS("Edit and translate human-readable field names", "Bearbeite und übersetze von Menschen lesbare Feldnamen");
 regGS("Custom", "Benutzerdefiniert");
-regGS("Characters limit", "Maximale Zeichenmenge");
+regGS("Characters limit", "Maximale Zeichenlänge");
 regGS("The template name may only contain letters and the underscore (_) character.", "Der Templatename darf nur Buchstaben und den Unterstrich (_) enthalten.");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Der Feldname war bereits als Grundeigenschaft für den Artikel in Gebrauch. Der Feldinhalt wird nicht in den Templates angezeigt.");
 regGS("The property '$1' is already in use.", "Die Eigenschaft '$1' ist bereits in Gebrauch.");
@@ -34,7 +34,7 @@ regGS("Translating field", "Feld wird übersetzt");
 regGS("The translation could not be added.", "Die Übersetzung konnte nicht hinzugefügt werden.");
 regGS("The field $1 does not exist.", "das Feld $1 existiert nicht.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Das $1 Feld darf nur Buchstaben und den Unterstrich (_) enthalten.");
-regGS("Template Field Name", "Template Feldnamen");
+regGS("Template Field Name", "Template Feldname");
 regGS("Show/Hide", "Anzeigen/Verbergen");
 regGS("Renaming article type field", "Artikel Feldtyp umbenennen");
 regGS("Rename field", "Feld umbennen");
