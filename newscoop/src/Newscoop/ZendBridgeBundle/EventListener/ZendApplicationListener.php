@@ -23,16 +23,22 @@ class ZendApplicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
-        // Fill zend application options
-        $config = $this->container->getParameterBag()->all();
-        $application = new \Zend_Application(APPLICATION_ENV);
-        $iniConfig = APPLICATION_PATH . '/configs/application.ini';
-        if (file_exists($iniConfig)) {
-            $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
-            $config = $application->mergeOptions($config, $userConfig->toArray());
-        }
+        $request = $event->getRequest();
+        $pos = strpos($request->server->get('REQUEST_URI'), '_profiler');
 
-        $application->setOptions($config);
-        $application->bootstrap();
+        // don't call Zend Application for profiler.
+        if (false === $pos) {
+            // Fill zend application options
+            $config = $this->container->getParameterBag()->all();
+            $application = new \Zend_Application(APPLICATION_ENV);
+            $iniConfig = APPLICATION_PATH . '/configs/application.ini';
+            if (file_exists($iniConfig)) {
+                $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
+                $config = $application->mergeOptions($config, $userConfig->toArray());
+            }
+
+            $application->setOptions($config);
+            $application->bootstrap();
+        }
     }
 }

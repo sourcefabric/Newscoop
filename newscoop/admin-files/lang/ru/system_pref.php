@@ -1,7 +1,13 @@
 <?php 
-regGS("Automatic collection of statistics:", "");
+regGS("MailChimp Settings", "Настройки MailChimp");
+regGS("List Unique Id:", "Перечислить уникальный Id:");
+regGS("Facebook Settings", "Настройки Facebook");
+regGS("App Secret:", "App Secret:");
+regGS("App ID:", "APP ID: ");
+regGS("API Key:", "API ключ:");
+regGS("Automatic collection of statistics:", "Автоматический сбор статистики:");
 regGS("to load geo-names data", "загрузить данные географических названий");
-regGS("MySQL client command path", "");
+regGS("MySQL client command path", "MySQL client command path");
 regGS("according to php.ini settings", "согласно настройкам php.ini");
 regGS("Maximal zoom for auto-focusing:", "Максимальное приближение для автофокусировки:");
 regGS("Map border for auto-focusing:", "Границы карты для автофокусировки:");

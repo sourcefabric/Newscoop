@@ -1,4 +1,5 @@
 <?php 
+regGS("Language id not specified", "");
 regGS("No languages.", "Nessun lingua.");
 regGS("Native Name", "Nome nativo");
 regGS("Name taken.", "Nome gia' usato.");

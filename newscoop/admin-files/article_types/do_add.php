@@ -45,12 +45,6 @@ if ($correct) {
 
     if ($correct) {
         $created = $articleType->create();
-
-        \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article_type.add', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
-                'article_type' => $articleType
-            )));
-
         camp_html_goto_page("/$ADMIN/article_types/fields/add.php?f_article_type=$f_name");
     }
 }

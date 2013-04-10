@@ -104,7 +104,9 @@ class RegisterController extends Zend_Controller_Action
             $values = $form->getValues();
             try {
                 $this->_helper->service('user')->savePending($values, $user);
-                $this->notifyDispatcher($user);
+                $this->_helper->service('dispatcher')->notify(new sfEvent($this, 'user.register', array(
+                    'user' => $user,
+                )));
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->_helper->service('mailchimp.list')->subscribe($user->getEmail(), $values['newsletter']);
 
@@ -178,20 +180,6 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->result = '0';
-    }
-
-    /**
-     * Notify event dispatcher about new user
-     *
-     * @param Newscoop\Entity\User $user
-     * @return void
-     */
-    private function notifyDispatcher(User $user)
-    {
-        $this->_helper->service('dispatcher')
-            ->notify(new sfEvent($this, 'user.register', array(
-            'user' => $user,
-        )));
     }
 
     /**

@@ -1105,7 +1105,7 @@ class DatabaseObject
      * @param EventDispatcher $dispatcher
      * @return void
      */
-    public static function setEventDispatcher(EventDispatcher $dispatcher)
+    public static function setEventDispatcher($dispatcher)
     {
         self::$eventDispatcher = $dispatcher;
     }

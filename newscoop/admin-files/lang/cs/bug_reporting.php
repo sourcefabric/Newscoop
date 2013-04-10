@@ -1,6 +1,6 @@
 <?php 
 regGS("You have reached the error page", "Dostali jste se na stránku chyby");
-regGS("Stack trace:", "");
+regGS("Stack trace:", "Stack trace:");
 regGS("Request Parameters:", "Požadované parametry:");
 regGS("Page not found", "Stránka nenalezena");
 regGS("Exception information:", "Vyjímečná informace:");

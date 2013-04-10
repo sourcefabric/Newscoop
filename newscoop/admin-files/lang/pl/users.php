@@ -1,13 +1,11 @@
 <?php 
-regGS("send confirmation email", "wyślij wiadomość email z potwierdzeniem");
-regGS("edit user", "edytuj użytkownika");
-regGS("delete user", "usuń uzytkowinia");
-regGS("Verified profile", "Profil zweryfikowany");
-regGS("Send email to user:", "Wyślij wiadomość email do użytkownika");
-regGS("Search for username/email", "Szukaj przez login/email");
-regGS("No users found.", "Nie znaleziono żadnych użytkowników.");
-regGS("Are you sure you want to {action}?", "Jesteś pewien że chcesz {action}?");
-regGS("Active Logins", "Aktywne logowania");
+regGS("User renamed.", "Nazwa użytkownika zmieniona.");
+regGS("User attributes", "Właściwości użytkownika");
+regGS("Rename user '$1'", "Zmień nazwę dla '$1'");
+regGS("Pending", "Oczekuje");
+regGS("Inactive", "Nieaktywne");
+regGS("Do you really want to send confirmation email?", "Na pewno chcesz wysłać email z potwierdzeniem?");
+regGS("Do you really want to delete user?", "Na pewno chcesz usunąć tego użytkownika?");
 regGS("Username is used already", "Ta nazwa użytkownika jest już zajęta");
 regGS("User with id '$1' not found", "Użytkownik z id '$1' nie istnieje.");
 regGS("User was deleted.", "Użytkownik został usuniety.");

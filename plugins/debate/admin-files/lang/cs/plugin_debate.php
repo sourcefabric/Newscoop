@@ -14,7 +14,7 @@ regGS("Are you sure you want to reset counters on the selected debatess?", "Jste
 regGS("Are you sure you want to delete the selected debatess?", "Jste si jisti, že chcete vymazat vybrané debaty?");
 regGS("Answer %s", "Odpověď %s");
 regGS("Answer", "Odpověď");
-regGS("Allow not logged in users", "");
+regGS("Allow not logged in users", "Povolit nezalogované uživatele");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Jste si jisti, že chcete odstranit anketu \"$1\" ?");
 regGS("click to edit", "klikněte, aby jste mohli upravit");
 regGS("Debates", "Hlasování");
@@ -95,5 +95,4 @@ regGS("Answer $1", "Odpověď $1");
 regGS("Add new Debate", "Přidat novou anketu");
 regGS("---Select---", "---Vybrat---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 anket přiřazeno/nepřiřazeno.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Jste si jisti, že chcete soubor \\'$1\\' odstranit z odpovědi na anketu?");
 ?>

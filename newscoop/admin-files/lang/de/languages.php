@@ -1,6 +1,7 @@
 <?php 
+regGS("Language id not specified", "Sprachen ID nicht spezifiziert. ");
 regGS("No languages.", "Keine Sprachen. ");
-regGS("Native Name", "Im Original");
+regGS("Native Name", "Name Im Original");
 regGS("Name taken.", "Name bereits vergeben. ");
 regGS("Language saved.", "Sprache gespeichert. ");
 regGS("Language removed.", "Sprache entfernt. ");
@@ -36,7 +37,7 @@ regGS("Feb", "Feb");
 regGS("Dec", "Dez");
 regGS("Aug", "Aug");
 regGS("Apr", "Apr");
-regGS("No language.", "Keine Sprache");
+regGS("No language.", "Keine Sprache. ");
 regGS("Delete language $1", "Sprache $1 löschen");
 regGS("You do not have the right to add languages.", "Keine Berechtigung Sprachen hinzuzufügen.");
 regGS("Please enter the translation for time units.", "Bitte Übersetzung für Zeiteinheiten eingeben.");
@@ -69,7 +70,7 @@ regGS("Saturday", "Samstag");
 regGS("Sunday", "Sonntag");
 regGS("You do not have the right to add new languages.", "Keine Berechtigung neue Sprachen hinzuzufügen.");
 regGS("There are $1 issue(s) left.", "Es sind $1 Ausgaben übrig.");
-regGS("Native name", "Im Original");
+regGS("Native name", "Name Im Original");
 regGS("The language $1 has been successfuly added.", "Sprache $1 ist erfolgreich hinzugefügt worden");
 regGS("Please check if a language with the same name does not already exist.", "Bitte überprüfen, ob bereits eine Sprache mit dem gleichen Namen existiert");
 regGS("The language could not be added.", "Sprache konnte nicht hinzugefügt werden");

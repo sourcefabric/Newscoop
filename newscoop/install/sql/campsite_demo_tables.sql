@@ -139,7 +139,7 @@ CREATE TABLE `ArticleRendition` (
   PRIMARY KEY (`articleNumber`,`image_id`,`rendition_id`),
   KEY `IDX_794B8A6C3DA5256D` (`image_id`),
   KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1913,7 +1913,7 @@ CREATE TABLE `package` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_DE686795989D9B62` (`slug`),
   KEY `IDX_DE686795FD656AA1` (`rendition_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1965,7 +1965,7 @@ CREATE TABLE `package_item` (
   PRIMARY KEY (`id`),
   KEY `IDX_A45640D6F44CABFF` (`package_id`),
   KEY `IDX_A45640D63DA5256D` (`image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2239,7 +2239,7 @@ CREATE TABLE `plugin_debate_vote` (
   `added` datetime NOT NULL,
   PRIMARY KEY (`id_vote`),
   UNIQUE KEY `fk_debate_nr` (`fk_debate_nr`,`fk_user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2414,7 +2414,7 @@ CREATE TABLE `rendition` (
   `offset` int(11) DEFAULT NULL,
   `label` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

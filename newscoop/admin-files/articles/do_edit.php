@@ -159,11 +159,6 @@ foreach ($articleFields as $dbColumnName => $text) {
 
 $articleObj->setIsLocked(false);
 
-\Zend_Registry::get('container')->getService('dispatcher')
-    ->notify('article.update', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
-        'article' => $articleObj
-    )));
-
 Log::ArticleMessage($articleObj, getGS('Content edited'), $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {

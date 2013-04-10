@@ -1,7 +1,7 @@
 <?php 
-regGS("Support", "");
+regGS("Support", "Υποστήριξη");
 regGS("Themes", "Θέματα");
-regGS("Area to localize", "");
+regGS("Area to localize", "Χώρος γλωσσικού προσαρμοστή");
 regGS("Dashboard", "Πίνακας");
 regGS("Authors", "Συγγραφείς");
 regGS("Libraries", "Βιβλιοθήκες");

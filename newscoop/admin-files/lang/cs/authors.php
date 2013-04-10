@@ -8,7 +8,7 @@ regGS("Please enter the last name", "Prosíme zadejte své příjmení");
 regGS("Please enter the first name", "Prosíme zadejte své jméno");
 regGS("No records found", "Nebyly nalezeny žádné záznamy");
 regGS("Last name", "Příjmení");
-regGS("Jabber", "");
+regGS("Jabber", "Jabber");
 regGS("General", "Obecné");
 regGS("First name", "Jméno");
 regGS("Email", "Email");

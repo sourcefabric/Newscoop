@@ -13,9 +13,11 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Newscoop\EventDispatcher\Events\GenericEvent;
+use Newscoop\EventDispatcher\EventDispatcher;
 
 /**
- * Doctrine Event Dispatcher Proxy dispatches sfEvents on certain doctrine events.
+ * Doctrine Event Dispatcher Proxy dispatches Symfony Events on certain doctrine events.
  */
 class EventDispatcherProxy implements EventSubscriber
 {
@@ -28,7 +30,7 @@ class EventDispatcherProxy implements EventSubscriber
     /**
      * @param EventDispatcher $dispatcher
      */
-    public function __construct(\Newscoop\EventDispatcher\EventDispatcher $dispatcher)
+    public function __construct(EventDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
@@ -49,7 +51,7 @@ class EventDispatcherProxy implements EventSubscriber
     }
 
     /**
-     * Dispatch event.create on postPersist.
+     * Dispatch entity.create on postPersist.
      *
      * @param Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return void
@@ -57,7 +59,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.create", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        $this->dispatcher->notify("{$entityName}.create", new GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
@@ -72,7 +74,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->events["{$entityName}.update"] = new \Newscoop\EventDispatcher\Events\GenericEvent($args->getEntity(), array(
+        $this->events["{$entityName}.update"] = new GenericEvent($args->getEntity(), array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
@@ -80,7 +82,7 @@ class EventDispatcherProxy implements EventSubscriber
     }
 
     /**
-     * Dispatch entity.update on preUpdate.
+     * Dispatch entity.update on postUpdate.
      *
      * @param Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return void
@@ -101,7 +103,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.delete", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        $this->dispatcher->notify("{$entityName}.delete", new GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
@@ -116,6 +118,8 @@ class EventDispatcherProxy implements EventSubscriber
      */
     private function getEntityName($entity)
     {
+        // TODO: fix this - it don't work for Newscoop\Image\ArticleImage etc.
+
         $class = str_replace('Newscoop\Entity\\', '', get_class($entity));
         return strtolower(implode('-', explode('\\', $class)));
     }

@@ -81,5 +81,4 @@ regGS("Answer $1", "Odpověď $1");
 regGS("Add new Poll", "Přidat novou anketu");
 regGS("---Select---", "---Vybrat---");
 regGS("$1/$2 polls assigned/unassigned.", "$1/$2 anket přiřazeno/nepřiřazeno.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Jste si jisti, že chcete soubor \\'$1\\' odstranit z odpovědi na anketu?");
 ?>

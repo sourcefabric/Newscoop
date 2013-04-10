@@ -14,3 +14,4 @@ parameters:
                 displayExceptions: "1"
     session:
         cookie_domain: ""
+    newscoop.eventDispatcher.class: "Newscoop\\EventDispatcher\\TraceableEventDispatcher"

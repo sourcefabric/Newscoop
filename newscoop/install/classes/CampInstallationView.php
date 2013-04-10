@@ -100,10 +100,9 @@ final class CampInstallationView
             CS_PATH_SITE.DIR_SEP.'backup' => 'Backup Folder Writable',
             CS_PATH_SITE.DIR_SEP.'images' => 'Images Folder Writable',
             CS_PATH_SITE.DIR_SEP.'images'.DIR_SEP.'thumbnails' => 'Thumbnails Folder Writable',
-            CS_PATH_SITE.DIR_SEP.'files' => 'Attachments Folder Writable',
+            CS_PATH_SITE.DIR_SEP.'public/files' => 'Attachments Folder Writable',
             CS_PATH_SITE.DIR_SEP.'videos' => 'Videos Folder Writable',
-            CS_PATH_SITE.DIR_SEP.'..'.DIR_SEP.'gimme'.DIR_SEP.'app'.DIR_SEP.'cache' => 'REST API Cache',
-            CS_PATH_SITE.DIR_SEP.'..'.DIR_SEP.'gimme'.DIR_SEP.'app'.DIR_SEP.'logs' => 'REST API Logs',
+            CS_PATH_SITE.DIR_SEP.'log' => 'REST API Logs',
         );
 
         foreach ($to_check as $path => $tag) {

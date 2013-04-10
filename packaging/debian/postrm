@@ -19,7 +19,7 @@ fi
 
 package_name="newscoop"
 datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/4.0"
+configdir="/etc/newscoop/4.1"
 
 webserver="apache2"
 php="php5"
