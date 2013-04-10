@@ -35,7 +35,7 @@ regGS("Automatically download", "Automatycznie pobierz");
 regGS("Attachments", "Załączniki");
 regGS("Attachment does not exist.", "Załącznik nie istnieje");
 regGS("Attach File to Poll Answer", "Załącz plik do odpowiedzi w ankiecie");
-regGS("Are you sure you want to remove the file \'$1\' from the poll answer?", "");
+regGS("Are you sure you want to remove the file \'$1\' from the poll answer?", "Na pewno chcesz usunąć plik \'$1\' z odpowiedzi w ankiecie?");
 regGS("All translations", "Wszystkie tłumaczenia");
 regGS("You need to activate at least 1 answer.", "Należy aktywować co najmniej jedną odpowiedź.");
 regGS("You must select number of votes per user.", "Musisz wybrać ilość glosów na użytkownika.");
@@ -81,5 +81,4 @@ regGS("Answer $1", "Odpowiedź $1");
 regGS("Add new Poll", "Dodaj nową Ankietę");
 regGS("---Select---", "---Wybierz---");
 regGS("$1/$2 polls assigned/unassigned.", "$1/$2 ankiety przypisane/nieprzypisane.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Na pewno chcesz usunąć plik \\'$1\\' z odpowiedzi w ankiecie?");
 ?>

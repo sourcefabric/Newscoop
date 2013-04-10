@@ -1,4 +1,10 @@
 <?php 
+regGS("MailChimp Settings", "MailChimp Settings");
+regGS("List Unique Id:", "List Unique Id:");
+regGS("Facebook Settings", "Facebook Settings");
+regGS("App Secret:", "App Secret:");
+regGS("App ID:", "App ID:");
+regGS("API Key:", "API Key:");
 regGS("Automatic collection of statistics:", "Automatic collection of statistics:");
 regGS("to load geo-names data", "to load geo-names data");
 regGS("MySQL client command path", "MySQL client command path");

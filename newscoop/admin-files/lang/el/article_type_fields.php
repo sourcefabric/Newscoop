@@ -1,5 +1,5 @@
 <?php 
-regGS("Usage at automatic statistics", "");
+regGS("Usage at automatic statistics", "Χρήση αυτόματων στατιστικών");
 regGS("Event Color", "Χρώμα Εκδήλωσης");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "Πρέπει να εισάγετε έναν αριθμό μεγαλύτερο από $1 και μικρότερο από $2 στο πεδίο $3.");
 regGS("You do not have the right to translate article types.", "Δεν έχετε το δικαίωμα μετάφρασης τύπων άρθρου.");
@@ -12,7 +12,7 @@ regGS("Small ($1 pixels)", "Μικρό ($1 pixels)");
 regGS("Medium ($1 pixels)", "Μεσσαίο ($1 pixels)");
 regGS("Large ($1 pixels)", "Μεγάλο ($1 pixels)");
 regGS("Hide human-readable field names", "Απόκρυψη ανθρωπίνως αναγνώσιμων ονομάτων πεδίων");
-regGS("Editor size", "");
+regGS("Editor size", "Μέγεθος επεξεργαστή");
 regGS("Edit and translate human-readable field names", "Επεξεργασία και μετάφραση ανθρωπίνως αναγνώσιμων ονομάτων πεδίων");
 regGS("Custom", "Προσαρμογή");
 regGS("Characters limit", "Όριο χαρακτήρων");

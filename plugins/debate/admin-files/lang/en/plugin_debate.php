@@ -95,4 +95,5 @@ regGS("Answer $1", "Answer $1");
 regGS("Add new Debate", "Add new Debate");
 regGS("---Select---", "---Select---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 debates assigned/unassigned.");
+regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Are you sure you want to remove the file \\'$1\\' from the debate answer?");
 ?>

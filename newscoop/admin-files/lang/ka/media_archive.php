@@ -1,14 +1,14 @@
 <?php 
-regGS("Slideshows", "");
-regGS("You can't update used files.", "");
-regGS("Source", "");
-regGS("Local", "");
-regGS("Items updated.", "");
-regGS("Feedback", "");
-regGS("Do you want to update unused only?", "");
-regGS("Disapprove selected", "");
-regGS("Are you sure you want to update selected items?", "");
-regGS("Approve selected", "");
+regGS("Slideshows", "სლაიდშოუები");
+regGS("You can't update used files.", "გამოყენებული ფაილების განახელბა შეუძლებელია. ");
+regGS("Source", "წყარო");
+regGS("Local", "ლოკალური");
+regGS("Items updated.", "ელემენტები განახლებულია.");
+regGS("Feedback", "შეფასება");
+regGS("Do you want to update unused only?", "გსურთ მხოლოდ გამოუყენებლის განახლება?");
+regGS("Disapprove selected", "არჩეულის უკუგდება");
+regGS("Are you sure you want to update selected items?", "დარწმუნებული ხართ, რომ გსურთ არჩეული ელემენტის დადასტურება");
+regGS("Approve selected", "არჩეულის დადასტურება");
 regGS("Image files", "იმიჯ ფაილი");
 regGS("Fix all thumbnails", "ყველა thumbnail-ის გასწორება");
 regGS("You do not have the right to add files.", "თქვენ არ გაქვთ ფაილების დამატების უფლება.");

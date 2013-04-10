@@ -1,7 +1,5 @@
 <?php
-
-// Define application environment, (I am only running this in development)
-define('APPLICATION_ENV', 'development');
+define('DONT_BOOTSTRAP_ZEND', TRUE);
 
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application.php';

@@ -81,5 +81,4 @@ regGS("Answer $1", "Адказ $1");
 regGS("Add new Poll", "Дадаць новае апытанне");
 regGS("---Select---", "---Абраць--- ");
 regGS("$1/$2 polls assigned/unassigned.", "Апытанні  $1/$2 размеркаваныя /неразмеркаваныя");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Вы упэўнены, што хаціце выдаліць файл \\'$1\\' з адказу гэтага апытання?");
 ?>

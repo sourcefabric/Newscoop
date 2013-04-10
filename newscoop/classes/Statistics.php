@@ -146,8 +146,13 @@ class Statistics {
             $session_name = $config['name'];
         }
 
-        session_start($session_name);
-        $session_id = session_id();
+        if(session_id() == '') {
+            session_start($session_name);
+            $session_id = session_id();
+        } else {
+            $session_id = session_id();
+        }
+        
 
         // sql commands used along the workflow
         $sqlSessionSel = 'SELECT user_id FROM Sessions WHERE id = :session_id';

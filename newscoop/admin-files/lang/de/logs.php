@@ -9,6 +9,6 @@ regGS("Diff", "Diff");
 regGS("Broken data", "Kaputte Daten");
 regGS("Action Type:", "Aktionstyp: ");
 regGS("No logs.", "Keine Logs. ");
-regGS("User", "User");
+regGS("User", "Benutzer");
 regGS("Date/Time", "Datum/Uhrzeit");
 ?>

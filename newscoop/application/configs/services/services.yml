@@ -53,7 +53,7 @@ services:
         factory_class: Zend_Auth
         factory_method: getInstance
     event_dispatcher:
-        class:      Newscoop\EventDispatcher\EventDispatcher
+        class:      %newscoop.eventDispatcher.class%
         arguments:  ["@service_container"]
     dispatcher:
         alias: event_dispatcher

@@ -1,6 +1,6 @@
 <?php 
-regGS("Display articles of filtered types", "");
-regGS("Display Articles of Filtered Types", "");
+regGS("Display newswires articles", "Εμφάνιση άρθρων newswire");
+regGS("Display Newswires", "Εμφάνιση Newswires");
 regGS("Webcode", "Webcode");
 regGS("View article", "Προβολή άρθρου");
 regGS("Source", "Πηγή");
@@ -11,9 +11,9 @@ regGS("Title", "Τίτλος");
 regGS("No video playback capabilities, please download the video below", "Δεν υπάρχουν δυνατότητες αναπαραγωγής βίντεο, παρακαλούμε κατεβάστε το ακόλουθο βίντεο ");
 regGS("Article status set to '$1' for $2 articles", "Η κατάσταση του άρθρου ρυθμίστηκε σε '$1' για $2 άρθρα");
 regGS("Article status not set to '$1' for $2 articles", "Η κατάσταση του άρθρου δεν ρυθμίστηκε σε '$1' για $2 άρθρα");
-regGS("$1 toggled for $2 articles.", "");
-regGS("$1 not toggled for $2 articles.", "");
-regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 toggled for $2 articles.", "$1 εναλλάχθηκε με άρθρα $2.");
+regGS("$1 not toggled for $2 articles.", "$1 δεν εναλλάχθηκε με άρθρα $2.");
+regGS("$1 not toggled for $2  articles.", "$1 δεν εναλλάχθηκε με άρθρα $2.");
 regGS("$1 articles have not been removed", "$1 άρθρα δεν αφαιρέθηκαν");
 regGS("$1 Article(s) unlocked", "$1 Άρθρο/α κλειδώθηκαν");
 regGS("$1 Article(s) not unlocked", "$1 Άρθρο/α  δεν κλειδώθηκαν");

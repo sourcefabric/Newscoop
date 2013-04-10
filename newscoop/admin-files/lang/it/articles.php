@@ -1,6 +1,7 @@
 <?php 
+regGS("Rating", "");
+regGS("Enable Rating", "");
 regGS("Blog management", "Gestione blog");
-regGS("Add article to a list", "Aggiungi l'articolo ad una lista");
 regGS("View article", "Vedi articolo");
 regGS("Select a list", "Scegli una lista");
 regGS("Remove list", "Rimuovi lista");
@@ -157,8 +158,8 @@ regGS("Duplicate?", "Duplicare?");
 regGS("Duplicate articles", "Duplica articoli");
 regGS("Article name ($1)", "Nome articolo ($1)");
 regGS("Article List", "Lista articoli");
-regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Confermi di rimuovere l'argomento \'$1\' dall'articolo");
-regGS("Are you sure you want to remove the file \'$1\' from the article?", "Confermi di rimuovere il file \'$1\' dall'articolo?");
+regGS("Are you sure you want to remove the topic \'$1\' from the article?", "Vuoi davvero togliere l'argomento \"$1\" dall'articolo?");
+regGS("Are you sure you want to remove the file \'$1\' from the article?", "Vuoi davvero togliere il file \"$1\" dall'articolo?");
 regGS("Are you sure you want to remove the event scheduled on $1?", "Vuoi davvero eliminare l'evento programmato su $1?");
 regGS("Are you sure you want to delete this article?", "Vuoi davvero eliminare questo articolo?");
 regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "Per la lingua selezionata occorre creare un'edizione: inserisci il nome e l'URL dell'edizione.");
@@ -177,12 +178,9 @@ regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minu
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "non si dispone dNon hai il permesso di cambiare lo stato dell'articolo: una volta inviato, l'articolo può essere modificato solo da utenti autorizzati.");
 regGS("You do not have the right to delete articles.", "Non hai il permesso di eliminare articoli.");
 regGS("You must select an article type.", "Devi selezionare un tipo articolo.");
-regGS("Are you sure you want to remove the image \'$1\' from the article?", "Confermi di rimuovere l'immagine \'$1\' dall'articolo?");
+regGS("Are you sure you want to remove the image \'$1\' from the article?", "Vuoi davvero togliere l'immagine \"$1\" dall'articolo?");
 regGS("There was an error reading request parameters.", "C'e' stato un errore leggendo i paramenti richiesti.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Impossibile mostrare l'anteprima dell'articolo. Assicurati che sia selezionato un template per l'articolo selezionato.");
 regGS("No such article.", "L'articolo non esiste.");
 regGS("No such section.", "La sezione non esiste.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Vuoi davvero togliere l'argomento \"$1\" dall'articolo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Vuoi davvero togliere il file \"$1\" dall'articolo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Vuoi davvero togliere l'immagine \"$1\" dall'articolo?");
 ?>

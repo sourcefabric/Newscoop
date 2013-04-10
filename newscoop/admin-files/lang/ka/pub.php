@@ -36,7 +36,7 @@ regGS("Default time period", "საწყისი დროის პერი
 regGS("Go To Issues", "გამოცემებზე გადასვლა");
 regGS("Delete publication $1", "$1 პუბლიკაციის წაშლა");
 regGS("No publications.", "პუბლიკაციები არ არსებობს.");
-regGS("Default Site Alias", "");
+regGS("Default Site Alias", "ნაგულისხმევი გვერდის მეტსახელი");
 regGS("URL Type", "URL-ის ტიპი");
 regGS("Country<BR><SMALL>(click to edit)</SMALL>", "ქვეყანა<BR><SMALL>(დააჭირეთ რედაქტირებისთვის)</SMALL>");
 regGS("Delete alias $1", "$1 ფსევდონიმის წაშლა");
@@ -66,7 +66,7 @@ regGS("The site alias $1 could not be modified.", "გვერდის $1 ფ�
 regGS("Are you sure you want to delete the alias $1?", "დარწმუნებული ხართ რომ გსურთ $1 ფსევდონიმის წაშლა?");
 regGS("Deleting alias", "ფსევდონიმის წაშლა");
 regGS("The alias $1 could not be deleted.", "$1 ფსევდონიმი ვერ წაიშალა.");
-regGS("$1 is the default publication alias, it can not be deleted.", "");
+regGS("$1 is the default publication alias, it can not be deleted.", "$1 არის ნაგულისხმევი პუბლიკაციის მეტსახელი, მისი წაშლა შეუძლებელია. ");
 regGS("You do not have the right to add publications.", "თქვენ არ გაქვთ პუბლიკაციის დამატების ულფება.");
 regGS("There are $1 issue(s) left.", "დარჩენილია $1 გამოცემა(ები).");
 regGS("Time Unit", "დროის მონაკვეთი");

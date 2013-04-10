@@ -6,12 +6,12 @@ regGS("Delete country", "Land Löschen");
 regGS("You do not have the right to delete countries.", "Keine Berechtigung Länder zu löschen.");
 regGS("Are you sure you want to delete the country $1?", "Land $1 wirklich löschen?");
 regGS("The country $1 could not be deleted.", "Land $1 konnte nicht gelöscht werden.");
-regGS("Edit country name", "Landname bearbeiten");
+regGS("Edit country name", "Ländernamen bearbeiten");
 regGS("You do not have the right to change country names.", "Keine Berechtigung Ländernamen zu ändern.");
-regGS("Changing country name", "Landname wird geändert");
-regGS("The country name $1 could not be changed", "Der Landname $1 konnte nicht geändert werden.");
-regGS("Translate country name", "Landnamen übersetzen");
+regGS("Changing country name", "Ländername wird geändert");
+regGS("The country name $1 could not be changed", "Der Ländername $1 konnte nicht geändert werden.");
+regGS("Translate country name", "Ländernamen übersetzen");
 regGS("You do not have the right to translate country names.", "Keine Berechtigung Ländernamen zu übersetzen.");
-regGS("The country name $1 could not be translated", "Landname $1 konnte nicht übersetzt werden.");
+regGS("The country name $1 could not be translated", "Ländername $1 konnte nicht übersetzt werden.");
 regGS("Add New Country", "Neues Land hinzufügen");
 ?>

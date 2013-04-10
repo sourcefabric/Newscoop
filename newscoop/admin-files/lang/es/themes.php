@@ -1,5 +1,5 @@
 <?php 
-regGS("Duplicate assignment", "");
+regGS("Duplicate assignment", "Duplicar tarea");
 regGS("Templates", "Plantillas");
 regGS("Import theme", "Importar Temas");
 regGS("Import succeded!", "¡Importe exitoso!");

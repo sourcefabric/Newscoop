@@ -1,9 +1,4 @@
 <?php 
-regGS("list", "список");
-regGS("filter", "фільтр");
-regGS("In Lists?", "У списку?");
-regGS("Are you sure you want to $1 articles of article type $2?", "Ви впевнені що хочете до $1 статей застосувати типу статей $2?");
-regGS("$1 articles of article type $2", "$1 статей типу $2");
 regGS("Hide human-readable field names", "Приховати зрозумілі людям назви полів");
 regGS("Edit and translate human-readable field names", "Редагувати та перекласти  зрозумілі людям назви полів");
 regGS("The template name may only contain letters and the underscore (_) character.", "Назва шаблону може містити тільки літери та знак підкреслювання (_)");

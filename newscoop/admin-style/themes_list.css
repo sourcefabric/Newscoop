@@ -187,7 +187,7 @@
 										border-bottom:1px solid #e5e5e5;
 										}
 									.actionDropDown li ul li a, .actionDropDown li ul li a.active {
-										width:135px; height:25px;
+										width:135px; height:auto; min-height:25px;
 										padding:0 0 0 25px;
 										line-height:25px; color:#444444;
 										background-color:#ffffff;

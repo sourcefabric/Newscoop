@@ -19,6 +19,7 @@ use Symfony\Component\EventDispatcher\Event;
  */
 class EventDispatcher extends ContainerAwareEventDispatcher
 {
+    
     /**
      * Adds an event listener that listens on the specified events.
      *

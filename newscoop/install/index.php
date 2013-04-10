@@ -13,6 +13,7 @@
 set_time_limit(0);
 
 define('INSTALL', TRUE);
+define('DONT_BOOTSTRAP_ZEND', TRUE);
 
 // Define path to application directory
 defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/../application');
@@ -28,8 +29,7 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');
 require_once(CS_PATH_CONFIG.DIR_SEP.'install_conf.php');
 
-if (file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
-        && file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
+if (!file_exists(APPLICATION_PATH . '/../conf/installation.php')) {
     header("Location: ".CS_PATH_BASE_URL.str_replace('/install', '', $Campsite['SUBDIR']));
 }
 
@@ -60,6 +60,6 @@ $install->dispatch($step);
 $install->render();
 
 if ($step == 'finish') {
-	$template = CampTemplate::singleton();
-	$template->clearCache();
+    $template = CampTemplate::singleton();
+    $template->clearCache();
 }

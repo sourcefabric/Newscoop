@@ -53,9 +53,9 @@ mkdir -p %{buildroot}/var/lib/
 cp -a newscoop %{buildroot}/var/lib/
 
 # Copy config file
-mkdir -p %{buildroot}/etc/newscoop/4.0/
-cp rpm/newscoop.ini %{buildroot}/etc/newscoop/4.0/
-cp rpm/apache.conf %{buildroot}/etc/newscoop/4.0/
+mkdir -p %{buildroot}/etc/newscoop/4.1/
+cp rpm/newscoop.ini %{buildroot}/etc/newscoop/4.1/
+cp rpm/apache.conf %{buildroot}/etc/newscoop/4.1/
 
 cd $RPM_BUILD_ROOT
 rm -f %{manifest}
@@ -73,14 +73,14 @@ rm -rf %{buildroot}
 %files -f %{manifest}
 %defattr(-,root,root)
 %doc ChangeLog CREDITS README  UPGRADE
-%config /etc/newscoop/4.0/apache.conf
-%config /etc/newscoop/4.0/newscoop.ini
-#%config /etc/newscoop/4.0/apache.vhost.tpl
-#%config /etc/newscoop/4.0/newscoop.cron.tpl
+%config /etc/newscoop/4.1/apache.conf
+%config /etc/newscoop/4.1/newscoop.ini
+#%config /etc/newscoop/4.1/apache.vhost.tpl
+#%config /etc/newscoop/4.1/newscoop.cron.tpl
 
 %post
 # symlink config files
-configdir="/etc/newscoop/4.0"
+configdir="/etc/newscoop/4.1"
 includefile="${configdir}/apache.conf"
 phpinifile="${configdir}/newscoop.ini"
 webserver="httpd"

@@ -323,6 +323,19 @@ $('#attach-images').fancybox({
 	}
 });
 
+$('#edit-images').fancybox({
+    hideOnContentClick: false,
+    width: 1300,
+    height: 800,
+    type: 'iframe',
+    onStart: function() { // check if there are any changes
+        return checkChanged();
+    },
+    onClosed: function() {
+        window.location.reload();
+    }
+});
+
 $('#topic_box_frame a.iframe').each(function() {
     $(this).data('fancybox').width = 1200;
 });

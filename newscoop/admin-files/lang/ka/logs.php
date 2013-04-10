@@ -1,13 +1,13 @@
 <?php 
-regGS("show", "");
-regGS("hide", "");
-regGS("Title", "");
-regGS("Resource Type:", "");
-regGS("Resource Type", "");
-regGS("Resource", "");
-regGS("Diff", "");
-regGS("Broken data", "");
-regGS("Action Type:", "");
+regGS("show", " ჩვენება");
+regGS("hide", "დაფარვა");
+regGS("Title", "სათაური");
+regGS("Resource Type:", "რესურსის ტიპი:");
+regGS("Resource Type", "რესურსის ტიპი");
+regGS("Resource", "რესურსი ");
+regGS("Diff", "შედარება");
+regGS("Broken data", "ხარვეზული მონაცემი");
+regGS("Action Type:", "მოქმედების ტიპი: ");
 regGS("No logs.", "აღრიცხვა არ არსებობს");
 regGS("User", "მომხმარებელი");
 regGS("Warning", "გაფრთხილება");

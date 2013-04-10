@@ -1,6 +1,7 @@
 <?php 
+regGS("Rating", "Рейтинг");
+regGS("Enable Rating", "Активировать рейтинг");
 regGS("Blog management", "Управление блогами");
-regGS("Add article to a list", "Добавить статью к списку");
 regGS("View article", "Просмотр статьи");
 regGS("Select a list", "Выбрать список");
 regGS("Remove list", "Удалить список");
@@ -181,7 +182,7 @@ regGS("Are you sure you want to remove the image \'$1\' from the article?", "В�
 regGS("There was an error reading request parameters.", "Ошибка чтения параметров запроса.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон статьи.");
 regGS("No such article.", "Нет такой статьи.");
-regGS("No such section.", "Нет такой рубрики:ru");
+regGS("No such section.", "Нет такой рубрики.");
 regGS("Reorder", "");
 regGS("No such issue.", "Нет такого выпуска");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Название<BR><SMALL>(щелкните для правки)</SMALL>");
@@ -189,4 +190,7 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>

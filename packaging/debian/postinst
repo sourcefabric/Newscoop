@@ -21,7 +21,7 @@ WEB_GROUP=www-data
 
 package_name="newscoop"
 datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/4.0"
+configdir="/etc/newscoop/4.1"
 includefile="${configdir}/apache.conf"
 a2tplfile="${configdir}/apache.vhost.tpl"
 crontplfile="${configdir}/newscoop.cron.tpl"
@@ -156,6 +156,13 @@ case "$1" in
 
     # Installer needs to own all theme files, not just the themes directory
     chown -R $WEB_USER.$WEB_GROUP $datadir/themes/ || true
+
+    # Localizer needs to be able to write to translation files
+    chown -R $WEB_USER.$WEB_GROUP $datadir/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/debate/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/poll/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/recaptcha/admin-files/lang
+    chown -R $WEB_USER.$WEB_GROUP $datadir/plugins/soundcloud/admin-files/lang
 
 # newscoop-3.5 does not yet support that
 #   # database setup

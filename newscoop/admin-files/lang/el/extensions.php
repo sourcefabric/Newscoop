@@ -1,8 +1,8 @@
 <?php 
 regGS("Sourcefabric.org blog reader", "Αναγνώστης blog Sourcefabric.org  ");
 regGS("Sourcefabric.org News reader", "Αναγνώστης Νέων Sourcefabric.org  ");
-regGS("Feed reader", "");
-regGS("Go", "");
+regGS("Feed reader", "Feed αναγνωστών");
+regGS("Go", "Πήγαινε");
 regGS("Wikipedia Search", "Αναζήτηση Wikipedia");
 regGS("Files", "Αρχεία");
 regGS("Sourcefabric.org newsletter subscription", "συνδρομή newsletter Sourcefabric.org ");

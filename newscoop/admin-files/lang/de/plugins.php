@@ -2,7 +2,7 @@
 regGS("You have no installed plugins.", "Sie haben keine Plugins installiert. ");
 regGS("Some plugins have to be updated. Please press the save button.", "Einige Plugins müssen aktualisiert werden. Bitte auf Speichern klicken.");
 regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "Bitte Deinstallation von Plugin $1 bestätigen. Alle Plugin Daten werden gelöscht!");
-regGS("You do not have the right to manage plugins.", "Keine Berechtigung um Plugins zu verwalten.");
+regGS("You do not have the right to manage plugins.", "Keine Berechtigung Plugins zu verwalten.");
 regGS("Version", "Version");
 regGS("Upload Plugin", "Plugin hochladen");
 regGS("Upload", "Hochladen");

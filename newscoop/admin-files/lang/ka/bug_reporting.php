@@ -1,5 +1,5 @@
 <?php 
-regGS("You have reached the error page", "");
+regGS("You have reached the error page", "თქვენ გახსენით ხარვეზული გვერდი ");
 regGS("Stack trace:", "");
 regGS("Request Parameters:", "მოთხოვნის პარამეტრები:");
 regGS("Page not found", "გვერდი არ მოინახა");

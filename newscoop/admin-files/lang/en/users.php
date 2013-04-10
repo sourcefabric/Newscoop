@@ -1,13 +1,11 @@
 <?php 
-regGS("send confirmation email", "send confirmation email");
-regGS("edit user", "edit user");
-regGS("delete user", "delete user");
-regGS("Verified profile", "Verified profile");
-regGS("Send email to user:", "Send email to user:");
-regGS("Search for username/email", "Search for username/email");
-regGS("No users found.", "No users found.");
-regGS("Are you sure you want to {action}?", "Are you sure you want to {action}?");
-regGS("Active Logins", "Active Logins");
+regGS("User renamed.", "User renamed.");
+regGS("User attributes", "User attributes");
+regGS("Rename user '$1'", "Rename user '$1'");
+regGS("Pending", "Pending");
+regGS("Inactive", "Inactive");
+regGS("Do you really want to send confirmation email?", "Do you really want to send confirmation email?");
+regGS("Do you really want to delete user?", "Do you really want to delete user?");
 regGS("Username is used already", "Username is used already");
 regGS("User with id '$1' not found", "User with id '$1' not found");
 regGS("User was deleted.", "User was deleted.");

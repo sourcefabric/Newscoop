@@ -1,4 +1,6 @@
 <?php 
+regGS("Rename user", "Rename user");
+regGS("Campsite", "Campsite");
 regGS("Image Rendering", "Image Rendering");
 regGS("Featured Article Lists", "Featured Article Lists");
 regGS("You have tried to upload an invalid backup file.", "You have tried to upload an invalid backup file.");

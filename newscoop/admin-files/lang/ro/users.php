@@ -1,13 +1,11 @@
 <?php 
-regGS("send confirmation email", "");
-regGS("edit user", "");
-regGS("delete user", "");
-regGS("Verified profile", "");
-regGS("Send email to user:", "");
-regGS("Search for username/email", "");
-regGS("No users found.", "");
-regGS("Are you sure you want to {action}?", "");
-regGS("Active Logins", "");
+regGS("User renamed.", "");
+regGS("User attributes", "");
+regGS("Rename user '$1'", "");
+regGS("Pending", "");
+regGS("Inactive", "");
+regGS("Do you really want to send confirmation email?", "");
+regGS("Do you really want to delete user?", "");
 regGS("Username is used already", "");
 regGS("User with id '$1' not found", "");
 regGS("User was deleted.", "");
