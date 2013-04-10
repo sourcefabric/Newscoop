@@ -822,7 +822,6 @@ XML;
 
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
-        file_put_contents($path3, 'installation');
 
         @chmod($path2, 0777);
 

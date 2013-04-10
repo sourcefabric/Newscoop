@@ -105,7 +105,7 @@ class ArticleIndex extends DatabaseObject {
 
             $tableIndex = 1;
             foreach ($keywords as $keyword) {
-                $keywordConstraint = 'KI$tableIndex.Keyword = ' . $g_ado_db->escape($keyword);
+                $keywordConstraint = 'KI'.$tableIndex.'.Keyword = ' . $g_ado_db->escape($keyword);
                 $selectKeywordClauseObj->addWhere($keywordConstraint);
                 $tableIndex++;
             }
