@@ -64,6 +64,11 @@ class NewscoopNewscoopExtension extends Extension
             \Zend_Cloud_StorageService_Adapter_FileSystem::LOCAL_DIRECTORY => APPLICATION_PATH . '/..',
         ));
 
+        // load custom instalation parameter
+        if (file_exists($file = APPLICATION_PATH . '/configs/parameters/custom_parameters.yml')) {
+            $this->loader->load($file);
+        }
+
         /**
          * Load all configs from services directory.
          */

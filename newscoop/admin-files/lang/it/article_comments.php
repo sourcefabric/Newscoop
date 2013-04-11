@@ -1,5 +1,6 @@
 <?php 
-regGS("Recommended", "Raccomandato");
+regGS("There are no more comments", "");
+regGS("Show more comments", "");
 regGS("Unrecommend", "Sconsiglia");
 regGS("Save comment", "Salva commento");
 regGS("Recommend", "Consiglia");

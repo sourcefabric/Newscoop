@@ -25,16 +25,14 @@
         "smarty\/smarty":"3.1.13",
         "friendsofsymfony\/rest-bundle":"0.9.0",
         "behat\/behat":">=2.4.0",
-        "behat\/common-contexts":"*",
+        "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
         "kriswallsmith\/buzz":">=0.7",
-        "knplabs\/knp-paginator-bundle":"dev-master",
+        "knplabs/knp-paginator-bundle": "v2.3.2",
         "jms\/serializer-bundle":"0.9.0",
-        "guzzle\/guzzle":"*",
+        "guzzle\/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza\/mailchimp":"dev-master",
         "hybridauth\/hybridauth":"dev-master",
-        "noiselabs\/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
-        "newscoop\/newscoop-paywall-bundle":"*",
-        "ahs/facebook-newscoop-bundle": "*"
+        "noiselabs\/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
     },
     "autoload":{
         "psr-0":{

@@ -1,6 +1,6 @@
 <?php 
-regGS("Display articles of filtered types", "Wyświetl artykuły dla wybranego typu.");
-regGS("Display Articles of Filtered Types", "Wyświetl artykuły dla wybranego typu.");
+regGS("Display newswires articles", "Pokaż artykuły ze źródłeł");
+regGS("Display Newswires", "Pokaż źródła");
 regGS("Webcode", "Kod internetowy");
 regGS("View article", "Zobacz artykuł");
 regGS("Source", "Źródło");

@@ -34,9 +34,10 @@ class PluginsManagerService
     public function __construct(EntityManager $em, $dispatcher)
     {
         $this->em = $em;
-        $this->dispatcher = $dispatcher;    }
+        $this->dispatcher = $dispatcher;    
+    }
 
-    public function installPlugin($pluginName, $version, $output = null) {
+    public function installPlugin($pluginName, $version, $output = null, $notify = true) {
         $this->installComposer();
 
         $pluginMeta = explode('/', $pluginName);
@@ -44,10 +45,11 @@ class PluginsManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        var_dump($this->dispatcher->hasListeners('plugin.install'));
-        $this->dispatcher->notify('plugin.install', new GenericEvent($this, array(
-            'plugin_name' => $pluginName
-        )));
+        if ($notify) {
+            $this->dispatcher->notify('plugin.install', new GenericEvent($this, array(
+                'plugin_name' => $pluginName
+            )));
+        }
 
         $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar require ' . $pluginName .':' . $version);
         $process->setTimeout(3600);
@@ -64,7 +66,7 @@ class PluginsManagerService
         }
     }
 
-    public function removePlugin($pluginName, $output) {
+    public function removePlugin($pluginName, $output, $notify = true) {
         $this->installComposer();
 
         $composerFile = __DIR__ . '/../../../composer.json';
@@ -75,13 +77,15 @@ class PluginsManagerService
                 $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
                 unset($composerDefinitions['require'][$package]);
 
-                $this->dispatcher->notify('plugin.remove', new GenericEvent($this, array(
-                    'plugin_name' => $pluginName
-                )));
+                if ($notify) {
+                    $this->dispatcher->notify('plugin.remove', new GenericEvent($this, array(
+                        'plugin_name' => $pluginName
+                    )));
+                }
 
                 file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
 
-                $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar update ' . $pluginName);
+                $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar update --no-dev ' . $pluginName);
                 $process->setTimeout(3600);
                 $process->run(function ($type, $buffer) use ($output) {
                     if ('err' === $type) {
@@ -98,10 +102,15 @@ class PluginsManagerService
         }
     }
 
-    public function updatePlugin($pluginName) {
-        $this->dispatcher->notify('plugin.update', new GenericEvent($this, array(
-            'plugin_name' => $pluginName
-        ))); 
+    public function updatePlugin($pluginName, $version, $output, $notify = true) {
+        $this->removePlugin($pluginName, $output, false);
+        $this->installPlugin($pluginName, $version, $output, false);
+
+        if ($notify) {
+            $this->dispatcher->notify('plugin.update', new GenericEvent($this, array(
+                'plugin_name' => $pluginName
+            )));
+        } 
     }
 
     public function enablePlugin(Plugin $plugin) {

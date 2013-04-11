@@ -70,15 +70,19 @@ final class CampTemplate extends SmartyBC
         $this->right_delimiter = '}}';
         $this->auto_literal = false;
 
-        $this->setCacheDir(APPLICATION_PATH . '/../cache');
-        $this->setConfigDir(APPLICATION_PATH . '/../configs');
-        $this->setCompileDir(APPLICATION_PATH . '/../cache');
+        $this->cache_dir = APPLICATION_PATH . '/../cache';
+        $this->compile_dir = APPLICATION_PATH . '/../cache';
 
-        $this->addPluginsDir(array_merge(
+        // try load configs from current template
+        $uri = \CampSite::GetURIInstance();
+        $themePath = $uri->getThemePath();
+        $this->config_dir = APPLICATION_PATH . '/../themes/' . $themePath . '_conf';
+
+        $this->plugins_dir = array_merge(
+            (array) $this->plugins_dir,
             array(APPLICATION_PATH . self::PLUGINS),
             self::getPluginsPluginsDir()
-        ));
-   
+        );
 
         $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',

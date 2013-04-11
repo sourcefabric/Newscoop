@@ -181,6 +181,11 @@ foreach ($articleFields as $dbColumnName => $text) {
     $articleTypeObj->setProperty($dbColumnName, $text);
 }
 
+\Zend_Registry::get('container')->getService('dispatcher')
+    ->notify('article.update', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        'article' => $articleObj
+    )));
+
 Log::ArticleMessage($articleObj, getGS('Content edited'), $g_user->getUserId(), 37);
 ArticleIndex::RunIndexer(3, 10, true);
 

@@ -5,6 +5,7 @@ require_once __DIR__ . '/application/bootstrap.php.cache';
 require_once __DIR__ . '/application/AppKernel.php';
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * THIS FILE IS STIL THERE FOR LEGACY (NOT BASED ON INDEX.PHP) FILES
@@ -33,13 +34,22 @@ $container = $kernel->getContainer();
 // init adodb
 require_once __DIR__ . '/db_connect.php';
 
-// Fill zend application options
-$config = $container->getParameterBag()->all();
-$application = new \Zend_Application(APPLICATION_ENV);
-$iniConfig = APPLICATION_PATH . '/configs/application.ini';
-if (file_exists($iniConfig)) {
-    $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
-    $config = $application->mergeOptions($config, $userConfig->toArray());
-}
+try {
+    $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+    $response->send();
+    $kernel->terminate($request, $response);
+} catch (NotFoundHttpException $e) {
+    // Fill zend application options
+    $config = $container->getParameterBag()->all();
+    $application = new \Zend_Application(APPLICATION_ENV);
+    $iniConfig = APPLICATION_PATH . '/configs/application.ini';
+    if (file_exists($iniConfig)) {
+        $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
+        $config = $application->mergeOptions($config, $userConfig->toArray());
+    }
 
-$application->setOptions($config);
+    $application->setOptions($config);
+    if (!defined('DONT_BOOTSTRAP_ZEND')) {
+        $application->bootstrap();
+    }
+}

@@ -83,4 +83,13 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "");
 regGS("Comment \"$1\" saved.", "");
 regGS("Column", "");
 regGS("Change subscriber information", "");
+regGS("Ban for commenter \"$1\" saved.", "");
+regGS("Ban", "");
+regGS("Are you sure you want to do it?", "");
+regGS("Add rating", "");
+regGS("Add new comment commenter", "");
+regGS("Add new comment", "");
+regGS("Add new acceptance criteria", "");
+regGS("Acceptance \"$1\" saved.", "");
+regGS("Acceptance \"$1\" deleted.", "");
 ?>

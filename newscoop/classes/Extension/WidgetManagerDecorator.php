@@ -221,8 +221,8 @@ class WidgetManagerDecorator extends DatabaseObject
      * @return mixed
      */
     public function __call($name, $arguments) {
-	$wdg = $this->getWidget();
-	if (!$wdg) {return null;}
-        return call_user_func_array(array($wdg, $name), $arguments);
+        $wdg = $this->getWidget();
+        if (!$wdg) {return null;}
+            return call_user_func_array(array($wdg, $name), $arguments);
+        }
     }
-}

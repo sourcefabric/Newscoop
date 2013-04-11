@@ -1,6 +1,6 @@
 <?php 
-regGS("Display articles of filtered types", "Відображення статей фільтрованих типів");
-regGS("Display Articles of Filtered Types", "Відображення статей фільтрованих типів");
+regGS("Display newswires articles", "Показати стрічки статей");
+regGS("Display Newswires", "Показати стрічки");
 regGS("Webcode", "Вебкод");
 regGS("View article", "Перегляд статті");
 regGS("Source", "Джерело");
@@ -72,6 +72,4 @@ regGS("Access denied.", "Доступ заборонено");
 regGS("$1 toggled.", " $1 перемкнуто?");
 regGS("$1 articles have been removed", " $1 стаття була видалена.");
 regGS(" - filtering from _MAX_ records", "фільтрація від _MAX_ записів");
-regGS("Display newswires articles", "Показати стрічки статей");
-regGS("Display Newswires", "Показати стрічки");
 ?>

@@ -4,6 +4,9 @@ framework:
     router:
         resource: "%kernel.root_dir%/configs/symfony/routing.yml"
         strict_requirements: %kernel.debug%
+    form:            true
+    csrf_protection: true
+    validation: { enable_annotations: true }
     trust_proxy_headers:  false
     templating:      { engines: ['twig', 'smarty'] }
     profiler: { only_exceptions: false }

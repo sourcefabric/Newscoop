@@ -81,5 +81,4 @@ regGS("Answer $1", "Ответ $1");
 regGS("Add new Poll", "Добавить новый Опрос");
 regGS("---Select---", "---Выбрать---");
 regGS("$1/$2 polls assigned/unassigned.", "Голосования $1/$2 определены/деактивированы");
-regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Вы уверены, что хотите удалить файл \\'$1\\' из ответа этого опроса?");
 ?>

@@ -14,6 +14,8 @@ use Newscoop\Entity\Resource;
 use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\IPublicationService;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 global $g_db;
 
@@ -93,6 +95,7 @@ class CampInstallationBase
                 if ($prevStep != 'loaddemo'
                         && $this->databaseConfiguration($input)) {
                     $session->setData('config.db', $this->m_config['database'], 'installation', true);
+                    $this->saveConfiguration();
                 }
                 break;
 
@@ -127,7 +130,6 @@ class CampInstallationBase
                 $this->installEmptyTheme();
                 $this->saveCronJobsScripts();
                 if ($this->finish()) {
-                    $this->saveConfiguration();
                     self::InstallPlugins();
                     $this->initRenditions();
 
@@ -151,15 +153,15 @@ class CampInstallationBase
 
     private function license()
     {
-    	$license_agreement = Input::Get('license_agreement', 'int', 0);
-    	if ($license_agreement < 1) {
-    		$this->m_step = 'license';
-			$this->m_message = 'You must accept the terms of the License Agreement!';
+        $license_agreement = Input::Get('license_agreement', 'int', 0);
+        if ($license_agreement < 1) {
+            $this->m_step = 'license';
+            $this->m_message = 'You must accept the terms of the License Agreement!';
 
-			return false;
-    	} else {
-    		return true;
-    	}
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -170,11 +172,11 @@ class CampInstallationBase
         global $g_db;
 
         if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
-        	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
-        		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
-        	}
+            if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
+                @copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
+            }
 
-        	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
+            @unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
         }
 
         $session = CampSession::singleton();
@@ -461,12 +463,12 @@ class CampInstallationBase
     <presentation-img src="preview-front.jpg" name="Front page"/>
     <presentation-img src="preview-section.jpg" name="Section page"/>
     <presentation-img src="preview-article.jpg" name="Article page"/>
-	<output name="Web">
-		<frontPage src="front.tpl"/>
-		<sectionPage src="section.tpl"/>
-		<articlePage src="article.tpl"/>
-		<errorPage src="404.tpl"/>
-	</output>
+    <output name="Web">
+        <frontPage src="front.tpl"/>
+        <sectionPage src="section.tpl"/>
+        <articlePage src="article.tpl"/>
+        <errorPage src="404.tpl"/>
+    </output>
 </theme>
 XML;
         $sxml = new SimpleXMLElement($themeXml);
@@ -532,8 +534,8 @@ XML;
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
 
         if (is_dir(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED)) {
-			CampInstallationBaseHelper::CopyFiles(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED, CS_INSTALL_DIR.DIR_SEP.'temp');
-		}
+            CampInstallationBaseHelper::CopyFiles(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED, CS_INSTALL_DIR.DIR_SEP.'temp');
+        }
 
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates'));
 
@@ -626,15 +628,15 @@ XML;
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
         $publicationService = $resourceId->getService(IPublicationService::NAME);
         foreach ($themeService->getUnassignedThemes() as $theme) {
-        	foreach ($publicationService->getEntities() as $publication) {
-        		$themeService->assignTheme($theme, $publication);
-        	}
+            foreach ($publicationService->getEntities() as $publication) {
+                $themeService->assignTheme($theme, $publication);
+            }
         }
 
         if (is_dir(CS_INSTALL_DIR.DIR_SEP.'temp')) {
-			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
-			camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
-		}
+            CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
+            camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
+        }
 
         // set publication alias
         global $g_db;
@@ -664,7 +666,7 @@ XML;
             return false;
         }
 
-		if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess') && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess') && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
 
@@ -673,6 +675,10 @@ XML;
 
         if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php')) {
             @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php');
+        }
+
+        if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php')) {
+            @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php');
         }
 
         return true;
@@ -799,6 +805,7 @@ XML;
 
         $path1 = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
         $path2 = CS_PATH_CONFIG.DIR_SEP.'database_conf.php';
+        $path3 = CS_PATH_CONFIG.DIR_SEP.'installation.php';
         if (file_exists($path1) && file_exists($path2)) {
             $isConfigWritable = is_writable($path1);
             $isDBConfigWritable = is_writable($path2);
@@ -815,6 +822,24 @@ XML;
 
         file_put_contents($path1, $buffer1);
         file_put_contents($path2, $buffer2);
+        file_put_contents($path3, 'installation');
+
+        @chmod($path2, 0777);
+
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $doctrine = escapeshellarg($GLOBALS['g_campsiteDir'].DIR_SEP.'scripts'.DIR_SEP.'doctrine.php');
+        $process = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
+        }
+
         @chmod($path2, 0600);
 
         require_once $path2; // load saved db config for next steps
@@ -822,7 +847,7 @@ XML;
         // create images and files directories
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images');
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
-        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'files');
+        CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'public'.DIR_SEP.'files');
 
         return true;
     }

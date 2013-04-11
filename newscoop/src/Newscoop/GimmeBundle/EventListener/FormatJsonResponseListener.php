@@ -23,11 +23,17 @@ class FormatJsonResponseListener
             return;
         }
 
-        $responseData = $event->getResponse()->getContent();
+        $request = $event->getRequest();
+        $pos = strpos($request->server->get('REQUEST_URI'), 'api');
 
-        $formatedJson = Json::indent($responseData);
-        $newResponse = new Response($formatedJson);
+        // Use this formatter only for gimme api
+        if (false !== $pos) {
+            $responseData = $event->getResponse()->getContent();
 
-        $event->setResponse($newResponse);
+            $formatedJson = Json::indent($responseData);
+            $newResponse = new Response($formatedJson);
+
+            $event->setResponse($newResponse);
+        }
     }
 }

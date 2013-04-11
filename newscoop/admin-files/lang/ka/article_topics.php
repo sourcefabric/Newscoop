@@ -1,9 +1,9 @@
 <?php 
-regGS("You must enter a name for the topic.", "");
-regGS("Show All", "");
-regGS("Select the parent of the topic", "");
-regGS("None", "");
-regGS("Add new topic", "");
+regGS("You must enter a name for the topic.", "თქვენ უნდა აკრიფოთ თემის სახელი.");
+regGS("Show All", "ყველას ნახვა");
+regGS("Select the parent of the topic", "მონიშნეთ თემის მშობელი");
+regGS("None", "არცერთი");
+regGS("Add new topic", "ახალი თემის დამატება");
 regGS("No topics have been created yet.", "თემები ჯერ არ შექმნილა.");
 regGS("Topics updated.", "თემები განახლდა");
 regGS("Topic does not exist.", "თემა არ არსებობს");

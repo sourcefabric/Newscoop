@@ -6,7 +6,7 @@
     </ul>
     <div id="media-images">
         <?php if ($inEditMode && $g_user->hasPermission('AttachImageToArticle')) { ?>
-        <a id="attach-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+        <a style="margin-bottom: 10px;" id="attach-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
             'module' => 'admin',
             'controller' => 'image',
             'action' => 'article-attach',
@@ -15,7 +15,7 @@
         )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
 
         <?php if ($this->_helper->service('image.rendition')->hasRenditions()) { ?>
-        <a id="place-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+        <a style="margin-bottom: 10px;" id="place-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
             'module' => 'admin',
             'controller' => 'image',
             'action' => 'article',
@@ -23,6 +23,15 @@
             'language_id' => $f_language_id,
         )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place images'); ?></a>
         <?php } ?>
+
+        <a style="margin-bottom: 10px;" id="edit-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'edit-image-data',
+            'article_number' => $articleObj->getArticleNumber(),
+            'language_id' => $f_language_id,
+            'force_edit' => true,
+        )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Edit metadata'); ?></a>
 
         <div class="clear"></div>
         <?php } ?>

@@ -1,7 +1,8 @@
 <?php 
+regGS("Language id not specified", "Η ταυτότητα γλώσσας δεν διευκρινήστηκε");
 regGS("No languages.", "Δεν υπάρχουν γλώσσες.");
-regGS("Native Name", "");
-regGS("Name taken.", "");
+regGS("Native Name", "Εγγενές Όνομα");
+regGS("Name taken.", "Μη διαθέσιμο όνομα.");
 regGS("Language saved.", "Η γλωσσα αποθηκεύτηκε.");
 regGS("Language removed.", "Η γλώσσα αφαιρέθηκε.");
 regGS("Language not found.", "Η γλώσσα δεν βρέθηκε.");
