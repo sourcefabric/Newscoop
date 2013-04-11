@@ -1,16 +1,15 @@
 <?php 
-regGS("Anonymous", "");
 regGS("You are about to permanently delete multiple messages.", "Sie sind im Begriff mehrere Nachrichten permanent zu löschen. ");
 regGS("You are about to permanently delete a message.", "Sie sind im Begriff eine Nachricht permanent zu löschen. ");
 regGS("With no attachment", "Ohne Anhang");
 regGS("With image attachment", "Mit angehängtem Bild ");
 regGS("With document attachment", "Mit angehängtem Dokument");
-regGS("User", "User");
-regGS("Starred", "");
-regGS("Star", "");
+regGS("User", "Benutzer");
+regGS("Starred", "Mit Stern versehen");
+regGS("Star", "Stern");
 regGS("Reply to message", "Auf Nachricht antworten");
-regGS("Processed", "");
-regGS("None", "");
+regGS("Processed", "Verarbeitet");
+regGS("None", "Kein");
 regGS("No atachment", "Kein Anhang");
 regGS("Messages updated.", "Nachrichten aktualisiert. ");
 regGS("Messages status change to $1.", "Status der Nachrichen ändern zu $1.");

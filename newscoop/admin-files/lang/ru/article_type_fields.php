@@ -1,5 +1,5 @@
 <?php 
-regGS("Usage at automatic statistics", "");
+regGS("Usage at automatic statistics", "Использование в автоматической статистике");
 regGS("Event Color", "Цвет события");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "В поле $3 нужно ввести число большее, чем $1 и меньшее, чем $2.");
 regGS("You do not have the right to translate article types.", "У вас нет прав на перевод типов статей. ");
@@ -21,8 +21,8 @@ regGS("The field name was already in use as a base property of the article. The 
 regGS("The property '$1' is already in use.", "Свойство '$1' уже используется.");
 regGS("Precision", "Точность");
 regGS("Can not convert the field $1 from $2 to type $3.", "Невозможно конвертировать поле $1 из $2 в поле $3.");
-regGS("Are you sure you want to make $1 a $2 field?", "Вы уверены, что хотите сделать $1 поля $2");
-regGS("Is Content", "В контексте");
+regGS("Are you sure you want to make $1 a $2 field?", "Вы уверены, что хотите сделать $1 полем $2?");
+regGS("Is Content", "Контент");
 regGS("Back to Article Types List", "Вернуться к списку типов статей");
 regGS("show", "Показать");
 regGS("hide", "Спрятать");

@@ -1,5 +1,4 @@
 <?php 
-regGS("Anonymous", "");
 regGS("You are about to permanently delete multiple messages.", "Ви збираєтеся видалити кілька повідомлень.");
 regGS("You are about to permanently delete a message.", "Ви збираєтеся видалити повідомлення.");
 regGS("With no attachment", "При відсутності вкладень");

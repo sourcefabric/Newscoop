@@ -110,6 +110,6 @@ regGS("Are you sure you want to delete the track:", "Jste si jisti, že chcete v
 regGS("All rights are reserved", "Všechna práva vymezena");
 regGS("Advanced settings", "Pokročilé nastavení");
 regGS("Add to set", "Přidejte k nastavení");
-regGS("A space separated list of tags", "");
+regGS("A space separated list of tags", "Prostor oddělující seznam tagů");
 regGS("1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps", "Regustrujte se na http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps");
 ?>

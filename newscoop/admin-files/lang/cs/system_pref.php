@@ -1,7 +1,13 @@
 <?php 
-regGS("Automatic collection of statistics:", "");
-regGS("to load geo-names data", "");
-regGS("MySQL client command path", "");
+regGS("MailChimp Settings", "Nastavení MailChimp");
+regGS("List Unique Id:", "Seznam unikátní Id:");
+regGS("Facebook Settings", "Nastavení Facebook");
+regGS("App Secret:", "App Secret:");
+regGS("App ID:", "App ID:");
+regGS("API Key:", "API Key:");
+regGS("Automatic collection of statistics:", "Atomatický sběr statistik:");
+regGS("to load geo-names data", "Nahrát data geo-jmén");
+regGS("MySQL client command path", "MySQL client command path");
 regGS("according to php.ini settings", "podle php.ini nastavení");
 regGS("Maximal zoom for auto-focusing:", "Maximální zoom pro automatické zaostření:");
 regGS("Map border for auto-focusing:", "Hranice mapy pro automatické zaostření:");

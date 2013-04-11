@@ -1,13 +1,11 @@
 <?php 
-regGS("send confirmation email", "Відправити листа з підтвердженням");
-regGS("edit user", "Редагувати користувача");
-regGS("delete user", "Видалити користувача");
-regGS("Verified profile", "Перевірений профіль");
-regGS("Send email to user:", "Відправити листа користувачу:");
-regGS("Search for username/email", "Пошук за ім’ям / ел.адресою");
-regGS("No users found.", "Корисувачів не знайдено");
-regGS("Are you sure you want to {action}?", "Ви впевнені що хочете {action}?");
-regGS("Active Logins", "Активні Логіни");
+regGS("User renamed.", "");
+regGS("User attributes", "");
+regGS("Rename user '$1'", "");
+regGS("Pending", "В очікуванні");
+regGS("Inactive", "Неактивний");
+regGS("Do you really want to send confirmation email?", "Ви дійсно хочете відправити листа з підтвердженням?");
+regGS("Do you really want to delete user?", "Ви дійсно хочете видалити користувача?");
 regGS("Username is used already", "І’мя користувача вже використовується");
 regGS("User with id '$1' not found", "Користувача з ID '$1' не знайдено.");
 regGS("User was deleted.", "Користувач видалений.");
@@ -158,8 +156,4 @@ regGS("Administrative tasks", "Адміністративні завдання")
 regGS("User will be notified on several events", "Користувача буде повідомлено про декілька подій");
 regGS("Editor Miscellaneous Settings", "Редагувати різні налаштування");
 regGS("No such user account.", "Немає такої акаунту користувача.");
-regGS("Pending", "В очікуванні");
-regGS("Inactive", "Неактивний");
-regGS("Do you really want to send confirmation email?", "Ви дійсно хочете відправити листа з підтвердженням?");
-regGS("Do you really want to delete user?", "Ви дійсно хочете видалити користувача?");
 ?>

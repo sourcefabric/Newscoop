@@ -1,6 +1,7 @@
 <?php 
+regGS("Rating", "");
+regGS("Enable Rating", "");
 regGS("Blog management", "Керування блогами");
-regGS("Add article to a list", "Додати статтю до списку");
 regGS("View article", "Перегляд статті");
 regGS("Select a list", "Вибрати список");
 regGS("Remove list", "Видалити список");
@@ -189,7 +190,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "");
 regGS("Article automatic publishing schedule", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Ви впевнені, що хочете видалити тему \\'$1\\' зі статті?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Ви впевнені, що хочете видалити файл \\'$1\\' зі статті?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Ви впевнені, що хочете видалити зображення  \\'$1\\' зі статті?");
 ?>
