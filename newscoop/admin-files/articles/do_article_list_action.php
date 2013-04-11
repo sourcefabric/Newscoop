@@ -108,11 +108,6 @@ case "delete":
 	foreach ($articleCodes as $articleCode) {
 		$articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
 		$articleObj->delete();
-
-        \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article.delete', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
-                'article' => $articleObj
-            )));
 	}
 	if ($f_article_offset > 15
 	    && (count($articleCodes) + $f_article_offset) == $f_total_articles) {

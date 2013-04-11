@@ -274,7 +274,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
             $user = $this->_helper->service('user')->find($user_id);
             $this->_helper->service->getService('dispatcher')
                 ->notify('image.approved', new GenericEvent($this, array(
-                    'user' => $user
+                    'user' => $user,
+                    'image_id' => $parameters['id']
                 )));
         }
         if ($parameters['type'] == 'document') {
@@ -285,7 +286,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
             $user = $this->_helper->service('user')->find($user_id);
             $this->_helper->service->getService('dispatcher')
                 ->notify('document.approved', new GenericEvent($this, array(
-                    'user' => $user
+                    'user' => $user,
+                    'document_id' => $parameters['id']
                 )));
         }
     }
