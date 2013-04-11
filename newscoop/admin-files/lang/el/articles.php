@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "");
 regGS("Rating", "Αξιολόγηση");
 regGS("Enable Rating", "Ενεργοποίηση Αξιολόγησης");
 regGS("Blog management", "Διαχείριση blog");
@@ -183,7 +184,4 @@ regGS("There was an error reading request parameters.", "Υπήρξε σφάλμ
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο του άρθρου.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>

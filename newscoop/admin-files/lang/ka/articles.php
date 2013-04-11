@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "მეტამონაცემების რედაქტირება");
 regGS("Rating", "რეიტინგი");
 regGS("Enable Rating", "რეიტინგზე ნების დართვა");
 regGS("Blog management", "ბლოგის მართვა");
