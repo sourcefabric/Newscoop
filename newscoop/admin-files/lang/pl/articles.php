@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "");
 regGS("Rating", "Ocenianie");
 regGS("Enable Rating", "Aktywuj ocenianie.");
 regGS("Blog management", "Zarządzanie blogami");
@@ -183,7 +184,4 @@ regGS("There was an error reading request parameters.", "Wystąpił błąd podcz
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Ten artykuł nie może być podejrzany. Upewnij się, że szablon artykułu jest wybrany.");
 regGS("No such article.", "Brak artykułu.");
 regGS("No such section.", "Brak sekcji.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Czy na pewno chcesz usunąć temat \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Czy na pewno chcesz usunąć plik \\'$1\\' z artykułu?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Czy na pewno chcesz usunąć obraz \\'$1\\' z artykułu?");
 ?>
