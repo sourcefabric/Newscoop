@@ -1,6 +1,6 @@
 <?php 
 regGS("You have reached the error page", "თქვენ გახსენით ხარვეზული გვერდი ");
-regGS("Stack trace:", "");
+regGS("Stack trace:", "ხარვეზის ჩვენება");
 regGS("Request Parameters:", "მოთხოვნის პარამეტრები:");
 regGS("Page not found", "გვერდი არ მოინახა");
 regGS("Exception information:", "გამონაკლისი ინფორმაცია:");
@@ -14,7 +14,7 @@ regGS("We are sorry for the inconvenience.", "ბოდიშს გიხდი
 regGS("Show error details", "შეცდომის დეტელაბის ჩვენება");
 regGS("Hide error details", "შეცდომის დეტალების დამალვა");
 regGS("Error Report", "შეცდომის აღრიცხვა");
-regGS("Backtrace:", "");
+regGS("Backtrace:", "ხარვეზის ჩვენება");
 regGS("Error ID:", "შეცდომის ID:");
 regGS("Error Message:", "შეცდომის შეტყობინება:");
 regGS("Error Number:", "შეცდომის ნომერი:");
