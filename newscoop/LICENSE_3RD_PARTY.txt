@@ -30,8 +30,6 @@ PHP Frameworks, Tools, Libraries
 
 * PHPCaptcha - New BSD License
 
-* Phorum - Phorum License (http://www.phorum.org/license.txt)
-
 -------------
 PEAR packages
 -------------
