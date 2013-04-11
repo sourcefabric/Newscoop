@@ -1,3 +1,19 @@
+4.1.1 (April 15, 2014)
+ Improvements
+ ------------
+ - Implement a "manage all captions window" accessible from article edit screen (PR)
+ - .conf files should be searched and found starting with theme's root folder, not from instance root (PR)
+ - Possibility to add multiple elements from attached images to gallery (slideshow) (PR)
+ - Reload renditions after assign and unassign actions (PR)
+ - Reload page after submitting comment (commit)
+ - Complete localizations updated: Czech, Georgian, German, Greek, Polish, Russian, and Spanish
+ - British localization added, Arabic localization improved to 53%
+
+ Bug fixes
+ ------------
+ - fix look on themes management page when publication name was long (PR)
+ - set session.gc_probability to 0 in php config by debian package.
+
 4.1.0 (January 29, 2013)
  New Features
  ------------
