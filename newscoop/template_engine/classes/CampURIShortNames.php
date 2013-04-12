@@ -219,6 +219,9 @@ class CampURIShortNames extends CampURI
 
         if ($aliasObj->exists()) {
             $publication = new MetaPublication($aliasObj->getPublicationId());
+        } else {
+            $aliases = Alias::GetAliases();
+            $publication = new MetaPublication($aliases[0]->getPublicationId());
         }
 
         if (empty($publication) || !$publication->defined()) {
