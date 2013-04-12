@@ -1,5 +1,5 @@
 <?php 
-regGS("Edit metadata", "");
+regGS("Edit metadata", "bearbeiten von Metadaten");
 regGS("Rating", "Bewertung");
 regGS("Enable Rating", "Bewertung zulassen");
 regGS("Blog management", "Blog-Managment");
@@ -188,4 +188,7 @@ regGS("This article cannot be previewed. Please make sure the article has an iss
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>
