@@ -101,7 +101,7 @@ final class CampInstallationView
             CS_PATH_SITE.DIR_SEP.'images' => 'Images Folder Writable',
             CS_PATH_SITE.DIR_SEP.'images'.DIR_SEP.'thumbnails' => 'Thumbnails Folder Writable',
             CS_PATH_SITE.DIR_SEP.'public/files' => 'Attachments Folder Writable',
-            CS_PATH_SITE.DIR_SEP.'videos' => 'Videos Folder Writable',
+            CS_PATH_SITE.DIR_SEP.'public/videos' => 'Videos Folder Writable',
             CS_PATH_SITE.DIR_SEP.'log' => 'REST API Logs',
         );
 

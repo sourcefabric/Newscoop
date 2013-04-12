@@ -13,11 +13,7 @@
         <?php
         if ($articleObj->isPublished()) {
             $requestObject = new RequestObject($articleObj->getProperty('object_id'));
-            if ($requestObject->exists()) {
-                echo $requestObject->getRequestCount();
-            } else {
-                echo '0';
-            }
+            echo $requestObject->exists() ? $requestObject->getRequestCount() : '0';
         } else {
             putGS('N/A');
         }
@@ -33,6 +29,7 @@
       <dd><?php echo '+', $articleObj->getWebcode(); ?></dd>
       <dt><?php putGS('Rating'); ?></dt>
       <dd><?php echo $articleObj->getRating(); ?></dd>
+      <!-- render here results of admin.article.edit.info events classes -->
     </dl>
   </div>
 </div>

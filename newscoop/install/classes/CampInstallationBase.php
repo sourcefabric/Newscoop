@@ -552,9 +552,15 @@ XML;
 
         // copies template data files to corresponding directories.
         // data files are article images and article attachments
-        $source = CS_INSTALL_DIR.DIR_SEP.'sample_data';
-        $target = CS_PATH_SITE;
-        if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
+        $sourceFiles = CS_INSTALL_DIR.DIR_SEP.'sample_data/files';
+        $targetFiles = CS_PATH_SITE.DIR_SEP.'public'.DIR_SEP.'files';
+        $sourceImages = CS_INSTALL_DIR.DIR_SEP.'sample_data/images';
+        $targetImages = CS_PATH_SITE.DIR_SEP.'images';
+
+        if (
+            CampInstallationBaseHelper::CopyFiles($sourceFiles, $targetFiles) == false ||
+            CampInstallationBaseHelper::CopyFiles($sourceImages, $targetImages) == false 
+        ) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site data files';
             die('failed');
