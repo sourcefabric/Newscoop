@@ -74,11 +74,6 @@ final class CampTemplate extends Smarty
         $this->cache_dir = APPLICATION_PATH . '/../cache';
         $this->compile_dir = APPLICATION_PATH . '/../cache';
 
-        // try load configs from current template
-        $uri = \CampSite::GetURIInstance();
-        $themePath = $uri->getThemePath();
-        $this->config_dir = APPLICATION_PATH . '/../themes/' . $themePath . '_conf';
-
         $this->plugins_dir = array_merge(
             (array) $this->plugins_dir,
             array(APPLICATION_PATH . self::PLUGINS),
