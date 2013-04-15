@@ -24,7 +24,7 @@ regGS("Feedback", "Обратная связь");
 regGS("Edit your password", "Редактировать пароль");
 regGS("Edit user", "Редактировать аккаунт пользователя");
 regGS("Edit permissions", "Редактировать права доступа");
-regGS("Detail", "Побробности");
+regGS("Detail", "Подробнее");
 regGS("Create new user", "Создать нового пользователя");
 regGS("Create new account", "Создать новый аккаунт");
 regGS("Add feed", "Добавить источник");

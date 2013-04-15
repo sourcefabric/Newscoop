@@ -1,7 +1,6 @@
 composer.phar
 newscoop/images/*
 newscoop/cache/*
-newscoop/files/*
 newscoop/plugins/*
 newscoop/backup/*
 newscoop/vendor/

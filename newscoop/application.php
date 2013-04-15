@@ -31,8 +31,10 @@ $kernel->boot();
 $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
 
-// init adodb
-require_once __DIR__ . '/db_connect.php';
+if (!defined('DONT_BOOTSTRAP_ZEND')) {
+    // init adodb
+    require_once __DIR__ . '/db_connect.php';
+}
 
 try {
     $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);

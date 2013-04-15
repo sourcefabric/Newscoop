@@ -70,7 +70,7 @@ class MediaPlayer
                 break;
 
             case 'video/flv':
-                $player = $Campsite['WEBSITE_URL'] . '/videos/player.swf';
+                $player = $Campsite['WEBSITE_URL'] . '/public/videos/player.swf';
                 include dirname(__FILE__) . '/flash.phtml';
                 break;
         }
