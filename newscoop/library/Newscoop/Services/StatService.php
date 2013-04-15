@@ -28,7 +28,7 @@ class StatService
 
         if (php_sapi_name() == 'cli') {
             $_SERVER['SERVER_SOFTWARE'] = 'PHP CLI';
-            $_SERVER['SERVER_ADDR'] = null;
+            $_SERVER['SERVER_ADDR'] = '';
         }
     }
     
