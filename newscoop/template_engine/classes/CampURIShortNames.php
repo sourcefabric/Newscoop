@@ -342,6 +342,8 @@ class CampURIShortNames extends CampURI
             throw new InvalidArgumentException("Invalid template in URL or no default template specified.", self::INVALID_TEMPLATE);
         }
 
+        CampTemplate::singleton()->config_dir = APPLICATION_PATH . '/../themes/' . $themePath . '_conf';
+
         return $template;
     }
 

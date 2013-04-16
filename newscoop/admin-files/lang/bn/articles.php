@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "");
 regGS("Rating", "");
 regGS("Enable Rating", "");
 regGS("Blog management", "");
@@ -183,7 +184,4 @@ regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
 regGS("No such article.", "");
 regGS("No such section.", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "");
 ?>
