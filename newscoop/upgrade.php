@@ -19,6 +19,11 @@ if (!file_exists($upgrade_trigger_path)) {
 require_once __DIR__ . '/constants.php';
 require_once __DIR__ . '/application.php';
 
+// 4.2 upgrade
+// 
+// * move all files from /files to /public/files
+// 
+
 // removes library/Zend in favor of vendor
 $libZend = __DIR__ . '/library/Zend';
 if (file_exists($libZend)) {
