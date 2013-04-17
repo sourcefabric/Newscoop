@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "Upravit metadata");
 regGS("Rating", "Hodnocení");
 regGS("Enable Rating", "Povolit hodnocení");
 regGS("Blog management", "Blog management");

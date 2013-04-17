@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "Editar metadatos");
 regGS("Rating", "Calificación");
 regGS("Enable Rating", "Activar calificación");
 regGS("Blog management", "Administración del blog");
