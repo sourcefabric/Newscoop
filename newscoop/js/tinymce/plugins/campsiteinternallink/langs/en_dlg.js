@@ -29,5 +29,6 @@ tinyMCE.addI18n('en.campsiteinternallink_dlg',{
     rtl:"Right to left",
     link_list:"Link list",
     is_email:"The URL you entered seems to be an email address, do you want to add the required mailto: prefix?",
-    is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?"
+    is_external:"The URL you entered seems to external link, do you want to add the required http:// prefix?",
+    showNewswire:"Show Newswire"
 });

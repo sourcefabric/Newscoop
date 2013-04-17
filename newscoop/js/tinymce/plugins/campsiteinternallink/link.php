@@ -33,6 +33,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
 $maxSelectLength = 60;
@@ -42,6 +43,13 @@ $sectionId = Input::get('NrSection', 'int', 0, true);
 $issueId = Input::get('NrIssue', 'int', 0, true);
 $articleId = Input::get('NrArticle', 'int', 0, true);
 $target = Input::get('targetlist', 'string', '', true);
+$articleTypeNewswire = new ArticleType('newswire');
+if ($articleTypeNewswire->exists()) {
+  $newsWireButton = true;
+  $showNewswire = Input::get('showNewswire', 'checkbox', '1', true);
+} else {
+  $showNewswire = 0;
+}
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $publications = Publication::GetPublications();
 if (($languageId != 0) && ($publicationId != 0)) {
@@ -51,7 +59,11 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0)) {
         $sections = Section::GetSections($publicationId, $issueId, $languageId, null, null, null, true);
 }
 if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionId != 0)) {
-        $articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);
+        if ($showNewswire == 0) { 
+              $articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId, '', '', array("type != 'newswire'"));
+        } else {
+              $articles = Article::GetArticles($publicationId, $issueId, $sectionId, $languageId);
+        }
 }
 ?>
 
@@ -164,6 +176,9 @@ if (($languageId != 0) && ($publicationId != 0) && ($issueId != 0) && ($sectionI
               }
               ?>
             </select>
+            <?php if ($newsWireButton) { ?>
+            <input type="checkbox" id="showNewswire" name="showNewswire" onchange="this.form.submit();" <?php if ($showNewswire == 1) { echo 'checked="checked"'; } ?> /><label for="showNewswire">{#campsiteinternallink_dlg.showNewswire}</label>
+            <?php } ?>
           </td>
         </tr>
         <tr>
