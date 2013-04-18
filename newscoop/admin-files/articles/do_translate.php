@@ -149,7 +149,7 @@ if ($f_publication_id > 0) {
 		}
 	} else {
         $f_section_name = Input::Get('f_section_name', 'string', $translationSectionObj->getName());
-    	$f_section_urlname = Input::Get('f_section_urlname', 'string', $translationSectionObj->getUrlName());
+		$f_section_urlname = Input::Get('f_section_urlname', 'string', $translationSectionObj->getUrlName());
         
         $translationSectionObj->update(array('Name' => $f_section_name, 'ShortName' => $f_section_urlname));
     }
