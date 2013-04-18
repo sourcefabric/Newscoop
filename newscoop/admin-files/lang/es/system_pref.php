@@ -1,13 +1,13 @@
 <?php 
-regGS("MailChimp Settings", "");
-regGS("List Unique Id:", "");
-regGS("Facebook Settings", "");
-regGS("App Secret:", "");
-regGS("App ID:", "");
-regGS("API Key:", "");
-regGS("Automatic collection of statistics:", "");
-regGS("to load geo-names data", "");
-regGS("MySQL client command path", "");
+regGS("MailChimp Settings", "Configuración de MailChimp");
+regGS("List Unique Id:", "ID único de la lista:");
+regGS("Facebook Settings", "Configuración de Facebook");
+regGS("App Secret:", "App secreta:");
+regGS("App ID:", "ID del App:");
+regGS("API Key:", "Llave del API:");
+regGS("Automatic collection of statistics:", "Recolección automática de las estadísticas:");
+regGS("to load geo-names data", "para cargar los datos de los nombres geográficos");
+regGS("MySQL client command path", "ruta de comando del cliente MySQL");
 regGS("according to php.ini settings", "según la configuración de php.ini");
 regGS("Maximal zoom for auto-focusing:", "Máxima ampliación para enfoque automático");
 regGS("Map border for auto-focusing:", "Borde del mapa para enfoque automático");

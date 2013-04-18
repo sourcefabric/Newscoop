@@ -95,5 +95,4 @@ regGS("Answer $1", "Odpověď $1");
 regGS("Add new Debate", "Přidat novou anketu");
 regGS("---Select---", "---Vybrat---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 anket přiřazeno/nepřiřazeno.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Jste si jisti, že chcete soubor \\'$1\\' odstranit z odpovědi na anketu?");
 ?>

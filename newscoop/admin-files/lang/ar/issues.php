@@ -55,6 +55,11 @@ regGS("Issue Publishing Schedule", "جدول نشر العدد");
 regGS("Invalid Input: $1", "إدخال غير مقبول: $1");
 regGS("Issue Number", "رقم العدد");
 regGS("Go To Sections", "إذهب إلى الأقسام");
+regGS("There was an error reading the language parameter.", "هنالك خطاء في قراءة متغيرات اللغة");
+regGS("There was an error reading the publication parameter.", "هنالك خطاء في قراءة متغيرات المنشور");
+regGS("There was an error reading the issue parameter.", "هنالك خطاء في قراءة متغيرات العدد");
+regGS("There was an error scheduling the $1 action on $2", "حدث خطاء في جدولة $1 في $2");
+regGS("The action scheduled on $1 could not be deleted.", "العملية المجدولة في $1 لا يمكن إلغاؤها");
 regGS("Issue automatic publishing schedule", "جدول النشر الآلي للعدد");
 regGS("Changing issue status", "تغيير وضع الإصدار");
 regGS("Status of the issue $1 has been changed from $2 to $3", "تمّ تغيير وضع الإصدار $1 من$2 إلى $3");
@@ -71,9 +76,4 @@ regGS("The template has been successfully changed.", "تم تغيير النمو
 regGS("Issue template for publication $1 changed to $2", "تغيير  نموذج الإصدار من المنشور$1  إلى $2");
 regGS("Issue template for single articles from $1 changed to $2", " تغيير نموذج الإصدار للمقالات المنفردة من $1  إلى $2");
 regGS("The template could not be changed.", "لا يمكن تغيير النموذج");
-regGS("There was an error reading the language parameter.", "هنالك خطاء في قراءة متغيرات اللغة");
-regGS("There was an error reading the publication parameter.", "هنالك خطاء في قراءة متغيرات المنشور");
-regGS("There was an error reading the issue parameter.", "هنالك خطاء في قراءة متغيرات العدد");
-regGS("There was an error scheduling the $1 action on $2", "حدث خطاء في جدولة $1 في $2");
-regGS("The action scheduled on $1 could not be deleted.", "العملية المجدولة في $1 لا يمكن إلغاؤها");
 ?>

@@ -4,6 +4,22 @@ Copyright (C) 2002-2009 Media Development Loan Fund
 Newscoop Credits (by Version Number)
 
 -----------------------------------------
+Newscoop 4.1.1 Credits
+-----------------------------------------
+
+- Newscoop Team https://wiki.sourcefabric.org/display/CS/Developers+Team
+
+Localizations:
+
+Christoph Rombach, Eva Dangendorf, Heike Bruysten, Micz Flor (German)
+Claudia Cruz (Spanish)
+Cullen Reddy, Mohamed El Amin (Arabic)
+Elene Margvelashvili (Georgian)
+Katerina Michailidis (Greek)
+Marina Klinova (Russian)
+Paweł Mikołajczuk (Polish)
+
+-----------------------------------------
 Newscoop 4.1.0 Credits
 -----------------------------------------
 

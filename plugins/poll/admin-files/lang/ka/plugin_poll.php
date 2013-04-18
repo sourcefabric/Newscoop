@@ -10,12 +10,12 @@ regGS("You do not have the right to add files.", "თქვენ არ გა�
 regGS("Unable to add attachment.", "ფაილი ვერ მიება.");
 regGS("There was a problem uploading the file.", "ატვირთვის დროს დაფიქსირდა შეცდომა");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "ატვირთული ფაილი ნაწილობრივ აიტვირთა. ეს შეიძლება მომხდარიყო იმიტომ რომ ასატვირთი დრო ფაილის ზომასთან შედარებით ცოტაა. მაქსიმუმი ასატვირთი დრო მითითებულია ფაილში 'php.ini'");
-regGS("The maximum file upload size was not configured in Campsite.", "");
+regGS("The maximum file upload size was not configured in Campsite.", "ფაილის მაქსიმალური ასატვირთი ზომა არ იყო კონფიგურირებული კემპსაიტზე. ");
 regGS("The file exceeds the allowed max file size.", "ფაილის ზომა აღემატება დაშვებულ მაქსიმუმს.");
 regGS("Should this file only be available for this translation, or for all translations?", "ეს ფაილი ხელმისაწვდომი უნდა იყოს მხოლოდ ამ თარგმნისთვის, თუ ყველა თარგმნისთვის?");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "ეს ფაილი ხელმისაწვდომი უნდა იყოს მხოლოდ ამ სტატიის თარგმნისთვის, თუ ყველა თარგმნისთვის?");
 regGS("Poll Answer $1 does not exist.", "გამოკითხვის პასუხი $1 არ არსებობს.");
-regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "გთხოვთ დარწმუნდეთ, რომ სწორად განაახლეთ მონაცემთა ბაზა: გაუშვით $1 გარსში.");
 regGS("Please enter a description for the file.", "მიუთითეთ ფაილის აღწერა");
 regGS("Open in the browser", "ბრაუზერში გახსნა");
 regGS("Only this translation", "მხოლოდ ეს თარგმანი");
@@ -38,7 +38,7 @@ regGS("Attach File to Poll Answer", "ფაილის გამოკითხ
 regGS("Are you sure you want to remove the file \'$1\' from the poll answer?", "დარწმუნებული ხართ რომ გსურთ \'$1\' ფაილის გამოკითხვის პასუხიდან მოხსნა?");
 regGS("All translations", "ყველა თარგმანი");
 regGS("You need to activate at least 1 answer.", "საჭიროა მინიმუმ 1 პასუხის აქტივიზაცია.");
-regGS("You must select number of votes per user.", "");
+regGS("You must select number of votes per user.", "თქვენ უნდა მიუთითოთ ხმების რაოდენობა თვითოეულ მომხმარებელზე.");
 regGS("You must select number of answers.", "აირჩიეთ რამდენიმე პასუხი.");
 regGS("You must select at least one poll to perform an action.", "აირჩიეთ მინიმუმ ერთი გამოკითხვა.");
 regGS("You do not have the right to manage polls.", "თქვენ არ გაქვთ გამოკითხვების მართვის უფლება.");
@@ -50,12 +50,12 @@ regGS("Translate Poll", "გამოკითხვის თარგმნა
 regGS("Title", "სათაური");
 regGS("Standard", "სტანდარტი");
 regGS("Result", "შედეგი");
-regGS("Reset", "");
+regGS("Reset", "ჩამოყრა");
 regGS("Question", "კითხვა");
 regGS("Poll does not exists.", "გამოკითხვა არ არსებობს.");
 regGS("Poll List", "გამოკითხვის სია");
-regGS("Percentage this language", "");
-regGS("Percentage all languages", "");
+regGS("Percentage this language", "პროცენტულობა მოცემული ენისთვის");
+regGS("Percentage all languages", "პროცენტულობა ყველა ენისთვის");
 regGS("Number of answers", "პასუხების რაოდენობა");
 regGS("No polls.", "გამოკითხვები არ არის.");
 regGS("No Polls available.", "გამოკითხვები არ არის.");
@@ -66,10 +66,10 @@ regGS("Error changing attachment", "მიმაგრებული ფაი�
 regGS("End", "ბოლო");
 regGS("Edit Poll", "გამოკითხვის რედაქტირება");
 regGS("Duplicate Poll", "გამოკითხვის დუბლირება");
-regGS("Date end voting", "");
-regGS("Date end", "");
-regGS("Date begin voting", "");
-regGS("Date begin", "");
+regGS("Date end voting", "ხმის მიცემის ბოლო ვადა");
+regGS("Date end", "ბოლო ვადა");
+regGS("Date begin voting", "ხმის მიცემის დასაწყისი");
+regGS("Date begin", "დასაწყისი თარიღი");
 regGS("Copy statistics", "სტატისტიკის კოპირება");
 regGS("Copy", "კოპირება");
 regGS("Begin", "დაწყება");
@@ -77,9 +77,9 @@ regGS("Attach poll", "გამოკითხვის მიმაგრებ
 regGS("Attach Polls", "გამოკითხვების მიმაგრება");
 regGS("Are you sure you want to reset counters on the selected polls?", "დარწმუნებული ხართ რომ გსურთ მონიშნული გამოკითხვების შედეგების ჩამოყრა?");
 regGS("Are you sure you want to delete the selected polls?", "დარწმუნებული ხართ რომ გსურთ მონიშნული გამოკითხვების წაშლა?");
-regGS("Answer $1", "");
+regGS("Answer $1", "პასუხი $1");
 regGS("Add new Poll", "ახალი გამოკითხვის დამატება");
-regGS("---Select---", "---აირჩიეთ---");
-regGS("$1/$2 polls assigned/unassigned.", "");
+regGS("---Select---", "---არჩევა---");
+regGS("$1/$2 polls assigned/unassigned.", "$1/$2 გამოკითხვები განაწილებულია/გაუნაწილებელია.");
 regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "დარწმუნებული ხართ რომ გსურთ \\'$1\\' ფაილის გამოკითხვის პასუხიდან მოხსნა?");
 ?>

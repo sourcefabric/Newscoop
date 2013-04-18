@@ -95,5 +95,4 @@ regGS("Answer $1", "Risposta $1");
 regGS("Add new Debate", "Aggiungi nuovo dibattito");
 regGS("---Select---", "---Seleziona---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 dibatti assegnati/non assegnati.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Vuoi davvero rimuovere il file \\'$1\\' dalla risposta del dibattito?");
 ?>

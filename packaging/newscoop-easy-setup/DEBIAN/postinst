@@ -1,0 +1,61 @@
+#!/bin/bash
+# postinst script for newscoop-easy-setup
+
+set -e
+
+if [ "$DPKG_DEBUG" = "developer" ]; then
+    set -x
+fi
+
+# Set the path to the package signing key
+APT_KEY=/usr/share/keyrings/newscoop-easy-setup-key
+
+case "$1" in
+  configure|reconfigure)
+
+    # Find the distro we are installing on
+    DISTRONAME=$(lsb_release -sc)
+
+    # Replace the Debian repo with the correct repo if we are running Ubuntu
+    if [ "$DISTRONAME" != "squeeze" ]; then
+     if [ -f /etc/apt/sources.list.d/newscoop.list ]; then
+      sed -i "2s:squeeze:$DISTRONAME:g" /etc/apt/sources.list.d/newscoop.list
+     fi
+    fi
+
+    # Install the Sourcefabric package signing key
+    if [ ! -f /usr/share/keyrings/sourcefabric-key ]; then
+     echo "Installing Sourcefabric package signing key..."
+     apt-key add $APT_KEY
+    fi
+
+    # Get the fully qualified domain name of the server
+    DOMAINNAME=$(hostname --fqdn)
+
+    echo "Setting Newscoop domain name to $DOMAINNAME..."
+
+    # Insert the domain name into the preseed file
+    sed -i "s:localhost:$DOMAINNAME:g" /usr/share/newscoop/debconf-selections
+
+    echo "Setting defaults for non-interactive installation..."
+    debconf-set-selections /usr/share/newscoop/debconf-selections
+
+    echo -e "\n Now please run the commands: \n   sudo apt-get update \n   sudo apt-get install newscoop"
+    echo -e "\n After that, installation of Newscoop should be complete in a couple of minutes."
+    echo -e "\n You should then be able to see the Newscoop setup wizard at http://$DOMAINNAME/"
+
+  ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+
+  ;;
+
+  *)
+       echo "postinst called with unknown argument \`$1'" >&2
+       exit 1
+  ;;
+esac
+
+#DEBHELPER#
+
+exit 0

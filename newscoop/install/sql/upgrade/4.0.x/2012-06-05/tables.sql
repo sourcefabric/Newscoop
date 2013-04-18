@@ -1,5 +1,3 @@
-ALTER TABLE `Articles` ADD COLUMN `webcode` VARCHAR(10) DEFAULT NULL;
-
 CREATE TABLE IF NOT EXISTS `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,

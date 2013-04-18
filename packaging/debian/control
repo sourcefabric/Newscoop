@@ -1,28 +1,27 @@
 Source: newscoop
 Section: web
 Priority: optional
-Maintainer: Alessio Treglia <alessio@debian.org>, Robin Gareus <robin@gareus.org>
-Build-Depends: debhelper (>= 7)
-Standards-Version: 3.9.1
+Maintainer: Daniel James <daniel@64studio.com>
+Build-Depends: debhelper (>= 7), po-debconf
+Standards-Version: 3.8.4
 Homepage: http://www.sourcefabric.org/en/products/newscoop_overview/
 
 Package: newscoop
 Architecture: all
 Depends: apache2 | httpd,
+ curl,
+ graphicsmagick | imagemagick,
  libapache2-mod-php5 | php5,
+ mysql-client | virtual-mysql-client,
  php5-mysql,
  php5-cli,
  php5-gd,
- mysql-client | virtual-mysql-client,
- graphicsmagick | imagemagick,
- default-mta | mail-transport-agent,
+ ttf-dejavu-core,
  wwwconfig-common,
- curl,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
-Suggests: mysql-server | virtual-mysql-server
-Description: The open content management system for professional journalists
- Newscoop is the open content management system for professional journalists.
+Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite
+Description: Open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 
  management. The enterprise-standard journalist’s dashboard and a templating

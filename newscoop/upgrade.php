@@ -43,6 +43,7 @@ if (!file_exists($g_documentRoot.'/conf/configuration.php')
     exit(0);
 }
 
+require_once($g_documentRoot.'/db_connect.php');
 require_once($g_documentRoot.'/include/campsite_init.php');
 require_once($g_documentRoot.'/bin/cli_script_lib.php');
 require_once($g_documentRoot.'/install/classes/CampInstallation.php');

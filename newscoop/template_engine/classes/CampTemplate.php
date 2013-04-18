@@ -72,7 +72,6 @@ final class CampTemplate extends Smarty
         $this->auto_literal = false;
 
         $this->cache_dir = APPLICATION_PATH . '/../cache';
-        $this->config_dir = APPLICATION_PATH . '/../configs';
         $this->compile_dir = APPLICATION_PATH . '/../cache';
 
         $this->plugins_dir = array_merge(

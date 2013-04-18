@@ -1,15 +1,15 @@
 <?php 
-regGS("so that default templates can be assigned to the issue.", "");
-regGS("Once this is done, the issue can be published", "");
+regGS("so that default templates can be assigned to the issue.", "ώστε τα προεπιλεγμένα πρότυπα να εκχωρηθούν στο τεύχος.");
+regGS("Once this is done, the issue can be published", "Μετά την ολοκλήρωση, το τεύχος μπορεί να δημοσιευτεί");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Δεν είναι δυνατή η προεπισκόπηση αυτού του τεύχους. Παρακαλούμε βεβαιωθείτε ότι έχει αποδοθεί κάποιο θέμα στην έκδοση.");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Το τεύχος δεν μπορεί να προβληθεί. Παρακαλούμε βεβαιωθείτε ότι το πρότυπο front είναι επιλεγμένο.");
 regGS("Publish all articles:", "Δημοσίευση όλων των άρθρων:");
 regGS("Publish all articles", "Δημοσίευση όλων των άρθρων");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Δημοσίευση όλων των άρθρων. Εάν ρυθμιστεί σε 'Όχι', τότε μόνο τα άρθρα με κατάσταση 'Δημοσίευση ανά Τεύχος' θα δημοσιευτούν.");
 regGS("default", "προεπιλογή");
-regGS("The publishing/unpublishing can not be set the same time", "");
+regGS("The publishing/unpublishing can not be set the same time", "Η δημοσίευση/άρση δημοσίευσης δεν μπορεί να οριστεί την ίδια στιγμή");
 regGS("The publishing schedule can not be set in the past", "Το πρόγραμμα δημοσιεύσεων δεν μπορεί να οριστεί στο παρελθόν");
-regGS("Please assign at least one theme to the publication", "");
+regGS("Please assign at least one theme to the publication", "Παρακαλούμε ορίστε τουλάχιστον ένα θέμα στη δημοσίευση");
 regGS("Issue Theme", "Θέμα Τεύχους");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Οι αξίες που προσπαθείτε να ορίσετε, έρχονται σε σγκρουση με το τεύχος \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Ο αριθμός πρέπει να είναι μοναδικός για κάθε τεύχος σε αυτή τη δημοσίευση της ίδιας γλώσσας.");

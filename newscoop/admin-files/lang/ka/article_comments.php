@@ -1,10 +1,10 @@
 <?php 
-regGS("There are no more comments", "");
-regGS("Show more comments", "");
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
+regGS("There are no more comments", "მეტი კომენტარები არ არის");
+regGS("Show more comments", "მეტი კომენტარების ნახვს");
+regGS("Unrecommend", "რეკომენდაციის უკუგდება");
+regGS("Save comment", "კომენტარის დამახსოვრება");
+regGS("Recommend", "რეკომენდაციის მიცემა");
+regGS("Comment updated.", "კომენტარი განახლებულია. ");
 regGS("Comment saved.", "კომენტარი დამახსოვრდა.");
 regGS("Comments updated.", "კომენტარები განახლდა.");
 regGS("Post a Comment", "კომენტარის დატოვება");

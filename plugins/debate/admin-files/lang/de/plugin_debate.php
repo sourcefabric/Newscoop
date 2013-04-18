@@ -51,7 +51,7 @@ regGS("Automatically download", "Automatisch herunterladen");
 regGS("Attachments", "Anhänge");
 regGS("Attachment does not exist.", "Anhang existiert nicht.");
 regGS("Attach File to Debate Answer", "Datei an Debattenantwort anhängen");
-regGS("Are you sure you want to remove the file \'$1\' from the debate answer?", "Wirklich Datei \'$1\' aus der Debatten/Umfrageantwort entfernen?");
+regGS("Are you sure you want to remove the file \'$1\' from the debate answer?", "Wirklich Datei \'$1\' aus der Debattenantwort entfernen?");
 regGS("All translations", "Alle Übersetzungen");
 regGS("You need to activate at least 1 answer.", "Sie müssen mindestens 1 Antwort aktivieren.");
 regGS("You must select number of votes per user.", "Sie müssen eine Anzahl Stimmen pro User auswählen.");

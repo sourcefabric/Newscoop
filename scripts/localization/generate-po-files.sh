@@ -6,7 +6,7 @@
 BUILDPATH=/tmp
 
 # Set the path to the Newscoop localization files
-GITPATH=../../newscoop/admin-files/lang/
+GITPATH=newscoop/admin-files/lang/
 
 # Set the locales you want to convert
 LOCALES="ar at be bn cs de el es fr he hr it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"

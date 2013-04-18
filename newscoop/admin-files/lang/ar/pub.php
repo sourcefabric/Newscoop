@@ -72,4 +72,8 @@ regGS("There are $1 issue(s) left.", "هنالك $1 أعداد متبقية.");
 regGS("Time Unit", "وحدة الوقت");
 regGS("Currency", "العملة");
 regGS("Edit languages", "تعديل اللغات");
+regGS("Search engine optimization", "");
+regGS("Article title", "");
+regGS("Article keywords", "");
+regGS("Article topics", "");
 ?>

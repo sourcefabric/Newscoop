@@ -15,6 +15,15 @@ global $application;
 $application->bootstrap('container');
 $em = Zend_Registry::get('container')->getService('em');
 
+try {
+    $em->getConnection()->exec('ALTER TABLE `Articles` ADD COLUMN `webcode` VARCHAR(10) DEFAULT NULL');
+} catch (Exception $e) {
+    // ignore if column exists
+    if ($e->getCode() !== '42S21') {
+        throw $e;
+    }
+}
+
 $em->getConnection()->beginTransaction();
 $query = $em->getRepository('Newscoop\Entity\Article')->createQueryBuilder('a')
     ->select('a.number, l.id as language')

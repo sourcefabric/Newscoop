@@ -1,11 +1,11 @@
 <?php 
-regGS("User renamed.", "");
-regGS("User attributes", "");
-regGS("Rename user '$1'", "");
-regGS("Pending", "");
-regGS("Inactive", "");
-regGS("Do you really want to send confirmation email?", "");
-regGS("Do you really want to delete user?", "");
+regGS("User renamed.", "Nazwa użytkownika zmieniona.");
+regGS("User attributes", "Właściwości użytkownika");
+regGS("Rename user '$1'", "Zmień nazwę dla '$1'");
+regGS("Pending", "Oczekuje");
+regGS("Inactive", "Nieaktywne");
+regGS("Do you really want to send confirmation email?", "Na pewno chcesz wysłać email z potwierdzeniem?");
+regGS("Do you really want to delete user?", "Na pewno chcesz usunąć tego użytkownika?");
 regGS("Username is used already", "Ta nazwa użytkownika jest już zajęta");
 regGS("User with id '$1' not found", "Użytkownik z id '$1' nie istnieje.");
 regGS("User was deleted.", "Użytkownik został usuniety.");

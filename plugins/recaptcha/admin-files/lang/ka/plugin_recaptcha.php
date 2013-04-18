@@ -1,6 +1,6 @@
 <?php 
 regGS("Enable reCAPTCHA for subscriptions", "reCAPTCHA-ს ჩართვა გამოწერებისთვის");
-regGS("Add the {{ recaptcha }} tag to your template file containing the comments/subscription form", "");
+regGS("Add the {{ recaptcha }} tag to your template file containing the comments/subscription form", "მიანიჭეთ  {{ recaptcha }} იარლიყი თქვენს შაბლონურ ფაილს, რომელიც კომენტარების/ გამოწერების ფორმას შეიცავს");
 regGS("reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.", "reCAPTCHA გეხმარებათ CAPTCHA კოდების გამოყენებაში რათა დაიცვათ თქვენი ვებგვერდი ბოტებისგან.");
 regGS("reCAPTCHA preferences updated.", "reCAPTCHA თვისებები განახლდა.");
 regGS("reCAPTCHA Settings", "reCAPTCHA პარამეტრები");
