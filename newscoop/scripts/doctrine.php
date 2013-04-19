@@ -1,15 +1,15 @@
 <?php
 
-// Define application environment, (I am only running this in development)
-define('APPLICATION_ENV', 'development');
+define('DONT_BOOTSTRAP_ZEND', 1);
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
+require_once __DIR__ . '/../constants.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../application.php';
-$application->bootstrap();
+
+$application->bootstrap('container');
 
 // Retrieve Doctrine Container resource
-$container = Zend_Registry::get('doctrine')->getEntityManager();
+$em = Zend_Registry::get('container')->getService('em');
 
 // Console
 $cli = new \Symfony\Component\Console\Application(
@@ -21,11 +21,11 @@ try {
     // Bootstrapping Console HelperSet
     $helperSet = array();
 
-    if (($dbal = $container->getConnection()) !== null) {
+    if (($dbal = $em->getConnection()) !== null) {
         $helperSet['db'] = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($dbal);
     }
 
-    if (($em = $container) !== null) {
+    if ($em !== null) {
         $helperSet['em'] = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
     }
 } catch (\Exception $e) {
@@ -54,8 +54,7 @@ $cli->addCommands(array(
     new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
     new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
-    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand()
-
+    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
 ));
 
 $cli->run();
