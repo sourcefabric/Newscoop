@@ -9,7 +9,7 @@ regGS("Complex Date", "Составная дата");
 regGS("vertices", "вершины");
 regGS("There was a problem trying to execute the XML RPC function.", "Ошибка при попытке выполнения функции XML RPC.");
 regGS("The Campcaster server configuration is invalid.", "Неправильные настройки сервера Airtime.");
-regGS("Pan Map", "Панорама карты");
+regGS("Pan Map", "Панорамирование карты");
 regGS("Open large map", "Открыть в большом окне");
 regGS("No news available.", "Нет доступных новостей.");
 regGS("Edit Polygon", "Редактировать ломаную");
