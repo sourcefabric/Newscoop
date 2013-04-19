@@ -211,7 +211,7 @@ class CampInstallationBase
 
         $g_db = $this->getTestDbConnection($connectionParams);
 
-        if (!$g_db->isConnected(true)) {
+        if (!$g_db->isConnected(false)) {
             $error = true;
         } else {
             $isDbEmpty = TRUE;
