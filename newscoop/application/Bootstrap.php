@@ -245,6 +245,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->getService('em')
             ->getEventManager()->addEventSubscriber(new \Gedmo\Tree\TreeListener());
+
+        $container->getService('em')
+            ->getEventManager()->addEventSubscriber(new \Gedmo\Timestampable\TimestampableListener());
+
+        $container->getService('em')
+            ->getEventManager()->addEventSubscriber(new \Gedmo\Sluggable\SluggableListener());
+
     }
 
     protected function _initPlugins()
@@ -329,6 +336,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                      'subscription-rest',
                      'subscription-section-rest',
                      'subscription-ip-rest',
+                     'notice-rest'
                  ),
              )));
 

@@ -167,7 +167,9 @@ class Admin_NoticeController extends Zend_Controller_Action
         $confRepo = $this->em->getRepository('Newscoop\Entity\NoticeConf');
         $confRecord = $confRepo->findOneBy(array('conf_name'=>'notice_hidden_elements'));
 
-        $noticeForm->disableFields($confRecord->getOptions());
+        if ($confRecord) {
+            $noticeForm->disableFields($confRecord->getOptions());
+        }
 
         if ($request->isPost() && $noticeForm->isValid($request->getPost())) {
 
