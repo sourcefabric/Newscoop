@@ -89,12 +89,19 @@ class EmailService
             return;
         }
 
+        $this->view = $GLOBALS['controller']->view;
+        $uri = \CampSite::GetURIInstance();
+
         $this->view->placeholder(self::PLACEHOLDER_SUBJECT)->set('New Comment');
-        $message = $this->view->action('comment-notify', 'email', 'default', array(
-            'comment' => $comment,
-            'article' => $article,
-            'user' => $user,
-        ));
+        if ($user) {
+            $this->view->username = $user->getUsername();
+        }
+        $this->view->comment = $comment;
+        $this->view->article = $article;
+        $this->view->publication = $uri->getBase();
+        $this->view->articleLink = \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueNumber(), $article->getSectionNumber(), $article->getArticleNumber());
+
+        $message = $this->view->render('email_comment-notify.tpl');
 
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($this->view->placeholder(self::PLACEHOLDER_SUBJECT));
