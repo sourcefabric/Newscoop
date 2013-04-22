@@ -89,6 +89,10 @@ class EmailService
             return;
         }
 
+        //clear request
+        \CampRequest::SetVar('acid');
+        \CampRequest::SetVar('f_submit_comment');
+
         $this->view = $GLOBALS['controller']->view;
         $uri = \CampSite::GetURIInstance();
 
