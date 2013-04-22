@@ -67,6 +67,9 @@ final class MetaLanguage extends MetaDbObject {
 	$this->m_customProperties['defined'] = 'defined';
     } // fn __construct
 
-} // class MetaLanguage
-
-?>
+    public static function createFromCode($code)
+    {
+        $languageId = Language::GetLanguageIdByCode($code);
+        return new self($languageId);
+    }
+}
