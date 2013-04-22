@@ -213,7 +213,17 @@ class CampInstallationBase
 
         $g_db = $this->getTestDbConnection($connectionParams);
 
-        if (!$g_db->isConnected(true)) {
+        $isConnected = false;
+
+        try {
+            $isConnected = $g_db->isConnected(true);
+        } catch (Exception $e) {
+            if ($e->getCode() == 1045) {
+                $error = true;
+            }
+        }
+
+        if (!$isConnected) {
             $error = true;
         } else {
             $isDbEmpty = TRUE;
