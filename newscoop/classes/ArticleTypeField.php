@@ -17,6 +17,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
  */
 class ArticleTypeField extends DatabaseObject {
     const TYPE_TEXT = 'text';
+    const TYPE_LONGTEXT = 'longtext';
     const TYPE_BODY = 'body';
     const TYPE_DATE = 'date';
     const TYPE_COMPLEX_DATE = 'complex_date';
@@ -310,9 +311,11 @@ class ArticleTypeField extends DatabaseObject {
 	{
 		switch ($p_type) {
 			case self::TYPE_BODY:
-				return array(self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
+				return array(self::TYPE_LONGTEXT, self::TYPE_TEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
 			case self::TYPE_TEXT:
-				return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
+				return array(self::TYPE_LONGTEXT, self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC);
+            case self::TYPE_LONGTEXT:
+                return array(self::TYPE_DATE, self::TYPE_TOPIC, self::TYPE_SWITCH, self::TYPE_NUMERIC, self::TYPE_BODY);
 			case self::TYPE_DATE:
 				return array();
 			case self::TYPE_TOPIC:
@@ -524,6 +527,7 @@ class ArticleTypeField extends DatabaseObject {
 		switch ($this->getType()) {
 			case self::TYPE_BODY:
 			case self::TYPE_TEXT:
+			case self::TYPE_LONGTEXT:
 				return 'string';
 			case self::TYPE_DATE:
 				return 'date';
@@ -566,6 +570,8 @@ class ArticleTypeField extends DatabaseObject {
 	    	return getGS('Multi-line Text with WYSIWYG');
 	    case self::TYPE_TEXT:
 	    	return getGS('Single-line Text');
+        case self::TYPE_LONGTEXT:
+            return getGS('Multi-line Text');
 	    case self::TYPE_DATE:
 	    	return getGS('Date');
 	    case self::TYPE_TOPIC:
@@ -997,6 +1003,9 @@ class ArticleTypeField extends DatabaseObject {
 
         return array(
             self::TYPE_TEXT => 'VARCHAR(255) DEFAULT NULL',
+            self::TYPE_LONGTEXT => $g_ado_db->getDriverName() === 'pdo_sqlite' 
+                ? 'TEXT DEFAULT NULL' 
+                : 'MEDIUMBLOB DEFAULT NULL',
             self::TYPE_BODY => $g_ado_db->getDriverName() === 'pdo_sqlite'
                 ? 'TEXT DEFAULT NULL'
                 : 'MEDIUMBLOB DEFAULT NULL',

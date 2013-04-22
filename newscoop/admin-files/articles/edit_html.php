@@ -210,6 +210,29 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             ?>
           </li>
         <?php
+
+            } elseif ($dbColumn->getType() == ArticleTypeField::TYPE_LONGTEXT) {
+        ?>
+          <li>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
+            <?php
+            if ($inEditMode) {
+                $fCustomFields[] = $dbColumn->getName();
+            ?>
+              <textarea name="<?php echo $dbColumn->getName(); ?>"
+                id="<?php echo $dbColumn->getName(); ?>"
+                rows="5"
+                cols="40"
+                style="width:70%;height:100%;"
+                class="input_text"
+                <?php print $spellcheck ?>><?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></textarea>
+            <?php 
+            } else {
+                print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
+            }
+            ?>
+          </li>
+        <?php
             } elseif ($dbColumn->getType() == ArticleTypeField::TYPE_DATE) {
                 // Date fields
                 if ($articleData->getProperty($dbColumn->getName()) == '0000-00-00') {
