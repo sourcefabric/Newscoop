@@ -25,6 +25,11 @@ class StatService
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+
+        if (php_sapi_name() == 'cli') {
+            $_SERVER['SERVER_SOFTWARE'] = 'PHP CLI';
+            $_SERVER['SERVER_ADDR'] = '';
+        }
     }
     
     public function getAll()

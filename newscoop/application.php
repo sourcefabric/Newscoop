@@ -52,6 +52,8 @@ try {
 
     $application->setOptions($config);
     if (!defined('DONT_BOOTSTRAP_ZEND')) {
+        // init adodb
+        require_once __DIR__ . '/db_connect.php';
         $application->bootstrap();
     }
 }
