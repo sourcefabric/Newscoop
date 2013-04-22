@@ -88,6 +88,7 @@ class MetaActionSubmit_Comment extends MetaAction
     {
         $p_context->default_url->reset_parameter('f_'.$this->m_name);
         $p_context->url->reset_parameter('f_'.$this->m_name);
+        \CampRequest::SetVar('f_'.$this->m_name);
 
         if (!is_null($this->m_error)) {
             return false;
@@ -202,7 +203,7 @@ class MetaActionSubmit_Comment extends MetaAction
         //If there is a comment idetifier set it the parent of the comment
         if($p_context->comment->identifier)
             $values['parent'] = $p_context->comment->identifier;
-        
+
         $commentObj = $repository->getPrototype();
         $comment = $repository->save($commentObj,$values);
         $repository->flush();
