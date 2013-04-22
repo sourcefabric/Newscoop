@@ -1,7 +1,7 @@
 services:
     newscoop_doctrine:
         class:      Newscoop\Doctrine\Doctrine
-        arguments:  ["%doctrine%"]
+        arguments:  ["%doctrine%", "@event_dispatcher"]
     newscoop_doctrine_connection:
         class:      Doctrine\DBAL\Connection
         factory_service:  newscoop_doctrine
@@ -30,14 +30,6 @@ services:
         class:      Doctrine\Common\EventManager
         factory_service:  doctrine.em
         factory_method:   getEventManager
-    newscoop.doctrine.event_dispatcher_proxy:
-        class: Newscoop\Doctrine\EventDispatcherProxy
-        arguments:  ["@event_dispatcher"]
-    doctrine.event_subscriber:
-        class:      Doctrine\Common\EventSubscriber
-        factory_service:  doctrine.event_manager
-        factory_method:   addEventSubscriber
-        arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
     doctrine.connection:
         class: Doctrine\DBAL\Connection
         factory_service: doctrine.em

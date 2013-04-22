@@ -31,7 +31,6 @@ $kernel->boot();
 $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
 
-
 if (!defined('DONT_BOOTSTRAP_ZEND')) {
     // init adodb
     require_once __DIR__ . '/db_connect.php';
