@@ -282,6 +282,23 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 ?>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Automatic collection of statistics:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td colspan="2" align="left">
+        <strong><?php putGS("Email Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("SMTP Host:"); ?>
     </td>
     <td align="left" valign="top">
@@ -296,18 +313,26 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_smtp_port" value="<?php p(SystemPref::Get("SMTPPort")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("SMTP Port")); ?>" />
     </td>
 </tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Email contact:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_email_contact" value="<?php p(SystemPref::Get("EmailContact")); ?>" maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email contact must be at least four character."); ?>" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Email from:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_email_address" value="<?php p(SystemPref::Get("EmailAddress")); ?>"  maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email from must be at least twelve character."); ?>" />
+    </td>
+</tr>
 <?php
 	}
 ?>
-<tr>
-    <td align="left" width="400px">
-        <?php putGS("Automatic collection of statistics:"); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
-    </td>
-</tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>

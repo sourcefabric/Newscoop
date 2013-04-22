@@ -22,6 +22,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_cache_handler = Input::Get('f_template_cache_handler');
 	$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
 	$f_smtp_port = Input::Get('f_smtp_port', 'int');
+    $f_email_contact = strip_tags(Input::Get('f_email_contact'));
+    $f_email_address = strip_tags(Input::Get('f_email_address'));
 	$f_editor_image_ratio = Input::Get('f_editor_image_ratio', 'int', null, true);
 	$f_editor_image_width = Input::Get('f_editor_image_width', 'int', null, true);
 	$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
@@ -40,6 +42,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
 	$f_smtp_host = SystemPref::Get("SMTPHost");
 	$f_smtp_port = SystemPref::Get("SMTPPort");
+    $f_email_contact = SystemPref::Get("EmailContact");
+    $f_email_address = SystemPref::Get("EmailAddress");
 	$f_editor_image_ratio = SystemPref::Get("EditorImageRatio");
 	$f_editor_image_width = SystemPref::Get("EditorImageResizeWidth");
 	$f_editor_image_height = SystemPref::Get("EditorImageResizeHeight");
@@ -204,6 +208,8 @@ if ($f_smtp_port <= 0) {
     $f_smtp_port = 25;
 }
 SystemPref::Set('SMTPPort', $f_smtp_port);
+SystemPref::Set('EmailContact', $f_email_contact);
+SystemPref::Set('EmailAddress', $f_email_address);
 
 // Statistics collecting
 SystemPref::Set('CollectStatistics', $f_collect_statistics);
