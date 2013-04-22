@@ -34,7 +34,7 @@ $Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
 $Campsite['site']['charset'] = 'utf-8';
 $Campsite['site']['help_url'] = 'http://www.sourcefabric.org/en/products/newscoop_support/';
 $Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/about/page/';
-$Campsite['site']['email'] = 'newscoop-bug@sourcefabric.org';
+$Campsite['site']['email'] = SystemPref::Get('EmailAddress');
 
 $Campsite['sourcefabric']['url'] = 'http://www.sourcefabric.org';
 
