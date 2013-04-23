@@ -697,6 +697,14 @@ XML;
             @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php');
         }
 
+        // Set the site EmailFromAddress to the adminemail as default
+        // Set the site EmailContact to the sitetitle as default
+        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+        $GLOBALS['application']->bootstrap('container');
+        SystemPref::Set('EmailFromAddress', $mcData['adminemail']);
+        SystemPref::Set('EmailContact', $mcData['sitetitle']);
+
         return true;
     }
 
