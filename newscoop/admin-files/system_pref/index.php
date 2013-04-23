@@ -326,7 +326,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <?php putGS("Email from:"); ?>
     </td>
     <td align="left" valign="top">
-        <input type="text" name="f_email_address" value="<?php p(SystemPref::Get("EmailAddress")); ?>"  maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email from must be at least twelve character."); ?>" />
+        <input type="text" name="f_email_from_address" value="<?php p(SystemPref::Get("EmailFromAddress")); ?>"  maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email from must be at least twelve character."); ?>" />
     </td>
 </tr>
 <?php
