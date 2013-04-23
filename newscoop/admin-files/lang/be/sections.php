@@ -1,7 +1,7 @@
 <?php 
-regGS("default", "");
-regGS("before you can configure the section templates.", "");
-regGS("You have to assign a theme to the issue", "");
+regGS("default", "па змаўчанні");
+regGS("before you can configure the section templates.", "перад тым, як вы зможаце наладзіць шаблоны рубрык.");
+regGS("You have to assign a theme to the issue", "Вы павінны прызначыць тэму (шаблон) для выпуску");
 regGS("The section number $1 was already in use.", "Рубрыка \"$1\"  ўжо выкарыстоўваецца.");
 regGS("Delete all articles written in $1 language from this section", "Выдаліць усе артыкулы, напісаныя на мове $1, з гэтай рубрыкі");
 regGS("Delete all articles and all of their translations", "Выдаліць усе артыкулы і ўсе пераклады для гэтага артыкула");

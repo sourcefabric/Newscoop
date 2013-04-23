@@ -1,16 +1,16 @@
 <?php 
-regGS("Slideshows", "");
-regGS("You can't update used files.", "");
-regGS("Source", "");
-regGS("Local", "");
-regGS("Items updated.", "");
-regGS("Feedback", "");
-regGS("Do you want to update unused only?", "");
-regGS("Disapprove selected", "");
-regGS("Are you sure you want to update selected items?", "");
-regGS("Approve selected", "");
-regGS("Image files", "");
-regGS("Fix all thumbnails", "");
+regGS("Slideshows", "Слайд-шоў");
+regGS("You can't update used files.", "Вы не можаце абнавіць выкарыстаныя файлы.");
+regGS("Source", "Крыніца");
+regGS("Local", "Мясцовы");
+regGS("Items updated.", "Пункты абноўленыя.");
+regGS("Feedback", "Зваротная сувязь");
+regGS("Do you want to update unused only?", "Вы жадаеце абнавіць толькі нескарыстанае?");
+regGS("Disapprove selected", "Не прымаць абранае");
+regGS("Are you sure you want to update selected items?", "Вы ўпэўненыя, што жадаеце абнавіць абраныя пункты?");
+regGS("Approve selected", "Прыняць абранае");
+regGS("Image files", "Файлы малюнкаў");
+regGS("Fix all thumbnails", "Выправіць усе эскізы");
 regGS("You do not have the right to add files.", "У Вас няма дазволу для дадання файлаў.");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Гэты файл будзе даступны для гэтага перакладу артыкула або для ўсіх?");
 regGS("Please enter a description for the file: '$1'.", "Калі ласка, увядзіце апісанне файла: '$1'.");

@@ -1,4 +1,6 @@
 <?php 
+regGS("Mark image", "");
+regGS("Add selected images to slideshow", "");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Das Bild ist leider zu klein. Das Bild muss mindestens  %dx%d groß sein.");
 regGS("Slideshow rendition", "Bildzuschnitt für Bildstrecke");
 regGS("Renditions reloaded", "Bildzuschnitte neu geladen");
