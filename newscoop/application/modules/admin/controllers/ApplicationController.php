@@ -14,7 +14,7 @@ class Admin_ApplicationController extends Zend_Controller_Action
 {
     public function init()
     {
-        camp_load_translation_strings('api');
+        camp_load_translation_strings('help');
     }
 
     public function indexAction()

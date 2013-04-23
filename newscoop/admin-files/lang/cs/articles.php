@@ -1,5 +1,5 @@
 <?php 
-regGS("Edit metadata", "");
+regGS("Edit metadata", "Upravit metadata");
 regGS("Rating", "Hodnocení");
 regGS("Enable Rating", "Povolit hodnocení");
 regGS("Blog management", "Blog management");
@@ -185,4 +185,7 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

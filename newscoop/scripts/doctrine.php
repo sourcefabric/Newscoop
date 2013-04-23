@@ -1,6 +1,8 @@
 <?php
 define('DONT_BOOTSTRAP_ZEND', TRUE);
 
+define('DONT_BOOTSTRAP_ZEND', 1);
+
 require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application.php';
 

@@ -43,7 +43,7 @@ $allIssues = array();
 if ($f_destination_publication_id > 0) {
 	$allIssues = Issue::GetIssues($f_destination_publication_id,
 								  $f_article_language, null, null, null, false,
-								  array("LIMIT" => 50, "ORDER BY" => array("Number" => "DESC")), true);
+								  array("ORDER BY" => array("Number" => "DESC")), true);
     if (count($allIssues) == 1) {
         $singleIssue = camp_array_peek($allIssues);
         $f_destination_issue_number = $singleIssue->getIssueNumber();

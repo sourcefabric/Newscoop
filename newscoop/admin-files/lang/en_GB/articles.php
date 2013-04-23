@@ -1,5 +1,5 @@
 <?php 
-regGS("Edit metadata", "");
+regGS("Edit metadata", "Edit metadata");
 regGS("Rating", "Rating");
 regGS("Enable Rating", "Enable Rating");
 regGS("Blog management", "Blog management");
@@ -69,7 +69,7 @@ regGS("No subtopics available", "No subtopics available");
 regGS("Newscoop Subhead", "Newscoop Subhead");
 regGS("Media", "Media");
 regGS("Last modified", "Last modified");
-regGS("Keywords &amp; Topics", "Keywords &amp; Topics");
+regGS("Keywords &amp; Topics", "Keywords & Topics");
 regGS("Info", "Info");
 regGS("Go to live article", "Go to live article");
 regGS("Created", "Created");
@@ -184,4 +184,7 @@ regGS("There was an error reading request parameters.", "There was an error read
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Are you sure you want to remove the topic \\'$1\\' from the article?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Are you sure you want to remove the file \\'$1\\' from the article?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Are you sure you want to remove the image \\'$1\\' from the article?");
 ?>

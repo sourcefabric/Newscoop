@@ -1,6 +1,6 @@
 Newscoop
-version     : 4.1.0
-release date: January 29, 2013 
+version     : 4.1.1
+release date: April 16, 2013 
 contact     : contact@sourcefabric.org
 url         : http://www.sourcefabric.org
 copyright   : (C) 2010-2013 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
@@ -47,7 +47,8 @@ However, the interface can easily be localized to new languages using its built-
 We encourage further development of this software and would like to make any progress accessible to all other users. Please contact us if you have or intend to developed this software further.
 
 
-DEMO
+### DEMO
+
 You can try Newscoop without installing it at our demo site.
 This is the URL for the backend admin:
   `http://newscoop-demo.sourcefabric.org/admin/`
@@ -60,6 +61,28 @@ Please note that the frontend can be made to look however you wish - you have fu
 
 See the INSTALL.txt file
 
+#Newscoop REST API
+
+Codename: Gimme  
+Full Name: Newscoop REST API  
+Endpoint: example.com/api/  
+Documentation: https://wiki.sourcefabric.org/display/CS/Newscoop+REST+API+Reference
+
+## Available SDK's
+
+* [PHP SDK][1]
+* [JavaScript SDK][2]
+
+## BDD Testing
+
+Features directory: features/  
+Behat bootsraped files directory: features/bootstrap/
+
+Run test:
+
+```bash
+php vendor/bin/behat
+```
 
 ### COPYRIGHT
 
@@ -76,3 +99,5 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 
+[1]: https://github.com/sourcefabric/newscoop-api-php-sdk
+[2]: https://github.com/sourcefabric/newscoop-api-js-sdk

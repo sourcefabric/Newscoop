@@ -23,10 +23,12 @@ class Doctrine
     /** @var Doctrine\ORM\EntityManager */
     private $em;
     private $options;
+    private $eventDispatcher;
 
-    public function __construct($options) 
+    public function __construct($options, $eventDispatcher) 
     {
         $this->options = $options;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -122,6 +124,9 @@ class Doctrine
         $platform->registerDoctrineTypeMapping('enum', 'string');
         $platform->registerDoctrineTypeMapping('point', 'string');
         $platform->registerDoctrineTypeMapping('geometry', 'string');
+
+        $eventManager = $this->em->getEventManager();
+        $eventManager->addEventSubscriber(new \Newscoop\Doctrine\EventDispatcherProxy($this->eventDispatcher));
 
         return $this->em;
     }
