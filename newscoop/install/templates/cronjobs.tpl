@@ -62,7 +62,7 @@
 
             <p><strong>Subscriptions Notifier:</strong> Sends emails to subscribers alerting them when their subscription ends.</p><br />
 
-            <p>You can read more on this in the <a href="http://www.sourcefabric.org/en/products/newscoop_manuals/" target="_blank">Newscoop manual</a>.</p>
+            <p>You can read more on this in the <a href="http://www.sourcefabric.org/en/newscoop/manuals/" target="_blank">Newscoop manual</a>.</p>
             </div>
           </td>
         </tr>
