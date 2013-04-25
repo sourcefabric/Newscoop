@@ -74,6 +74,46 @@ $(function() {
     var search = new SearchView({collection: users, el: $('#search-view')});
     users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
     users.reset(users.parse(<?php echo json_encode($this); ?>));
+
+    $('#foobar').dataTable( {
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "sPaginationType": "full_numbers",
+        "bPaging": true,
+        "aoColumnDefs": [{
+            "bSortable": true, 
+            "aTargets": [ '_all' ] 
+        }],
+        "sAjaxSource": <?php echo json_encode($this->url(array('action' => 'table', 'format' => 'json'))); ?>,
+        "fnServerData": function ( sSource, aoData, fnCallback ) {
+            $.getJSON( sSource, aoData, function (json) { 
+                var aaData = [];
+                var totalRecords = json['users'].length;
+                json['users'].forEach(function(user) {
+                    var newUser = [];
+                    for (var key in user) {
+                        console.log(key+': ');
+                        console.log(user[key]);
+                        if (key != 'links' && key != 'id') {
+                            var string = user[key];
+                            if (key == 'username') {
+                                string = '<a href="/~twisted/newscoop/admin/user/edit/user/'+user['id']+'">'+ user['username'] + '</a>';
+                            }
+                            newUser.push(string);
+                        }
+                    }
+                    console.log('');
+                    aaData.push(newUser);
+                });
+                var newData = [];
+                newData.aaData = aaData;
+                newData.iTotalRecords = totalRecords;
+                console.log(newData);
+                fnCallback(newData)
+            });
+        }
+    } );
+
 });
 </script>
 
@@ -114,3 +154,35 @@ $(function() {
         chart.draw(data, options);
     }
 </script>
+
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="foobar">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Verified</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Verified</th>
+        </tr>
+    </tfoot>
+</table>

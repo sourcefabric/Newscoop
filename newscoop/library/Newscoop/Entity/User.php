@@ -889,6 +889,33 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get DataTable view
+     *
+     * @param Zend_View_Abstract $view
+     * @return object
+     */
+    public function getDataTableView(Zend_View_Abstract $view)
+    {
+        $types = array();
+        foreach ($this->getUserTypes() as $type) {
+            $types[] = $type->getId();
+        }
+
+        return (object) array(
+            'id' => $this->id,
+            'username' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
+            'firstname' => $this->first_name,
+            'lastname' => $this->last_name,
+            'email' => $this->email,
+            'groups' => $types,
+            'status' => $this->status,
+            'created' => $this->created->format('d.m.Y H:i'),
+            'updated' => $this->updated->format('d.m.Y H:i'),
+            'is_verified' => (bool) $this->getAttribute(UserAttribute::IS_VERIFIED)
+        );
+    }
+
+    /**
      * Get url for given action
      *
      * @param string $action
