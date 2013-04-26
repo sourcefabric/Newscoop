@@ -58,6 +58,71 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/backbone.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/apps/users.js'); ?>"></script>
 <script type="text/javascript">
+(function($) {
+/*
+ * Function: fnGetColumnData
+ * Purpose:  Return an array of table values from a particular column.
+ * Returns:  array string: 1d data array 
+ * Inputs:   object:oSettings - dataTable settings object. This is always the last argument past to the function
+ *           int:iColumn - the id of the column to extract the data from
+ *           bool:bUnique - optional - if set to false duplicated values are not filtered out
+ *           bool:bFiltered - optional - if set to false all the table data is used (not only the filtered)
+ *           bool:bIgnoreEmpty - optional - if set to false empty values are not filtered from the result array
+ * Author:   Benedikt Forchhammer <b.forchhammer /AT\ mind2.de>
+ */
+$.fn.dataTableExt.oApi.fnGetColumnData = function ( oSettings, iColumn, bUnique, bFiltered, bIgnoreEmpty ) {
+    // check that we have a column id
+    if ( typeof iColumn == "undefined" ) return new Array();
+    
+    // by default we only wany unique data
+    if ( typeof bUnique == "undefined" ) bUnique = true;
+    
+    // by default we do want to only look at filtered data
+    if ( typeof bFiltered == "undefined" ) bFiltered = true;
+    
+    // by default we do not wany to include empty values
+    if ( typeof bIgnoreEmpty == "undefined" ) bIgnoreEmpty = true;
+    
+    // list of rows which we're going to loop through
+    var aiRows;
+    
+    // use only filtered rows
+    if (bFiltered == true) aiRows = oSettings.aiDisplay; 
+    // use all rows
+    else aiRows = oSettings.aiDisplayMaster; // all row numbers
+
+    // set up data array    
+    var asResultData = new Array();
+    
+    for (var i=0,c=aiRows.length; i<c; i++) {
+        iRow = aiRows[i];
+        var aData = this.fnGetData(iRow);
+        var sValue = aData[iColumn];
+        
+        // ignore empty values?
+        if (bIgnoreEmpty == true && sValue.length == 0) continue;
+
+        // ignore unique values?
+        else if (bUnique == true && jQuery.inArray(sValue, asResultData) > -1) continue;
+        
+        // else push the value onto the result data array
+        else asResultData.push(sValue);
+    }
+    
+    return asResultData;
+}}(jQuery));
+
+
+function fnCreateSelect( aData )
+{
+    var r='<select><option value=""></option>', i, iLen=aData.length;
+    for ( i=0 ; i<iLen ; i++ )
+    {
+        r += '<option value="'+aData[i]+'">'+aData[i]+'</option>';
+    }
+    return r+'</select>';
+}
+
 $(function() {
     window.translate = <?php echo json_encode(array(
         'No users found.' => getGS('No users found.'),
@@ -75,15 +140,30 @@ $(function() {
     users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
     users.reset(users.parse(<?php echo json_encode($this); ?>));
 
-    $('#foobar').dataTable( {
+    var oTable = $('#foobar').dataTable( {
         "bProcessing": true,
-        "bAutoWidth": true,
+        "bAutoWidth": false,
         "sPaginationType": "full_numbers",
         "bPaging": true,
-        "aoColumnDefs": [{
-            "bSortable": true, 
-            "aTargets": [ '_all' ] 
-        }],
+        // ***
+        // * This requires 1.9.0 as minimium
+        // * This allows for styling (or something similar) based on COLUMN content.
+        // ***
+        // "aoColumnDefs": [ {
+        //   "aTargets": [4],
+        //   "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //     if (typeof sData == 'string') {
+        //         if ( sData.indexOf("Admin") !== -1) {
+        //           $(nTd).parent().css('font-weight', 'bold');
+        //         }
+        //     }
+        //   }
+        // } ],
+        'bJQueryUI': true,
+        "sDom": 'RC<"clear">lfrtip',
+        "oColVis": {
+            "aiExclude": [ 0 ]
+        },
         "sAjaxSource": <?php echo json_encode($this->url(array('action' => 'table', 'format' => 'json'))); ?>,
         "fnServerData": function ( sSource, aoData, fnCallback ) {
             $.getJSON( sSource, aoData, function (json) { 
@@ -92,27 +172,73 @@ $(function() {
                 json['users'].forEach(function(user) {
                     var newUser = [];
                     for (var key in user) {
-                        console.log(key+': ');
-                        console.log(user[key]);
+                        // console.log(key+': ');
+                        // console.log(user[key]);
                         if (key != 'links' && key != 'id') {
                             var string = user[key];
                             if (key == 'username') {
                                 string = '<a href="/~twisted/newscoop/admin/user/edit/user/'+user['id']+'">'+ user['username'] + '</a>';
                             }
+                            if (key == 'groups') {
+                                string = user[key].join(' / ');
+                            }
+                            if (key == 'email') {
+                                string = '<a href="mailto:'+user['email']+'">'+user['email']+'</a>';
+                            }
                             newUser.push(string);
                         }
                     }
-                    console.log('');
                     aaData.push(newUser);
                 });
                 var newData = [];
                 newData.aaData = aaData;
                 newData.iTotalRecords = totalRecords;
-                console.log(newData);
                 fnCallback(newData)
             });
+        },
+        "fnDrawCallback": function () {
+            
         }
     } );
+
+    setTimeout( function () {
+        /* Add a select menu for each TH element in the table footer */
+        $("tfoot th").each( function ( i ) {
+            // var val = $(this).val();
+            // if (val.indexOf('/') !== -1) {
+            //     var arr = val.split(' / ');
+            //     console.log(arr);
+            // }
+            // console.log(i+':');
+            // console.log(oTable.fnGetColumnData(i));
+            if (i == 4) {
+                var columnData = oTable.fnGetColumnData(i);
+                // console.log(columnData);
+                var xArr = [];
+                columnData.forEach(function(x) {
+                    // console.log(x);
+                    // console.log(x.split(' / '));
+                    x.split(' / ').forEach(function (xRole) {
+                        // console.log(xRole);
+                        if ($.inArray(xRole, xArr) === -1) {
+                            xArr.push(xRole);
+                        }
+                    });
+                });
+                // console.log(xArr);
+                this.innerHTML = fnCreateSelect( xArr );
+            } else if (i == 5 || i == 8) {
+                this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
+            }
+            $('select', this).change( function () {
+                oTable.fnFilter( $(this).val() , i );
+            } );
+        } );
+        oTable.fnSetColumnVis( 5, false );
+        oTable.fnSetColumnVis( 6, false );
+        oTable.fnSetColumnVis( 7, false );
+        oTable.fnSetColumnVis( 8, false );
+    }, 1000 );
 
 });
 </script>

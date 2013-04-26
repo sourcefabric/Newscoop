@@ -898,7 +898,22 @@ class User implements \Zend_Acl_Role_Interface
     {
         $types = array();
         foreach ($this->getUserTypes() as $type) {
-            $types[] = $type->getId();
+            $types[] = $type->getName();
+        }
+
+        switch ($this->status) {
+            case '0':
+                $status = 'Inactive';
+                break;
+            case '1':
+                $status = 'Active';
+                break;
+            case '2':
+                $status = 'Banned';
+                break;
+            case '3':
+                $status = 'Deleted';
+                break;
         }
 
         return (object) array(
@@ -908,10 +923,10 @@ class User implements \Zend_Acl_Role_Interface
             'lastname' => $this->last_name,
             'email' => $this->email,
             'groups' => $types,
-            'status' => $this->status,
-            'created' => $this->created->format('d.m.Y H:i'),
-            'updated' => $this->updated->format('d.m.Y H:i'),
-            'is_verified' => (bool) $this->getAttribute(UserAttribute::IS_VERIFIED)
+            'status' => $status,
+            'created' => $this->created->format('d.m.Y'),
+            'updated' => $this->updated->format('d.m.Y'),
+            'is_verified' => ((bool) $this->getAttribute(UserAttribute::IS_VERIFIED) ? 'Yes' : 'No')
         );
     }
 
