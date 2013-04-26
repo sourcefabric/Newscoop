@@ -46,7 +46,7 @@ if (Input::Get('save') || Input::Get('check')) {
 echo camp_html_breadcrumbs(array(
     array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
     array(getGS('SoundCloud'), ''),
-    array(getGS('SoundCloud Preferences'), ''),
+    array(getGS('Preferences'), ''),
 ));
 
 camp_html_display_msgs();

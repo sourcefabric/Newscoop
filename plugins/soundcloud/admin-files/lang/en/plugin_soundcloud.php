@@ -1,4 +1,5 @@
 <?php 
+regGS("Preferences", "Preferences");
 regGS("You do not have the right to upload SoundCloud tracks.", "You do not have the right to upload SoundCloud tracks.");
 regGS("You do not have the right to update SoundCloud tracks.", "You do not have the right to update SoundCloud tracks.");
 regGS("You do not have the right to manage SoundCloud tracks.", "You do not have the right to manage SoundCloud tracks.");
@@ -16,7 +17,6 @@ regGS("SoundCloud reports an error:", "SoundCloud reports an error:");
 regGS("SoundCloud preferences updated.", "SoundCloud preferences updated.");
 regGS("SoundCloud plugin requires php_curl module.", "SoundCloud plugin requires php_curl module.");
 regGS("SoundCloud checked successfully.", "SoundCloud checked successfully.");
-regGS("SoundCloud Preferences", "SoundCloud Preferences");
 regGS("SoundCloud", "SoundCloud");
 regGS("select range", "select range");
 regGS("connection error", "connection error");

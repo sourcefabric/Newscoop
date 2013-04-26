@@ -260,7 +260,7 @@ regGS("Invalid security token!", "الرمز الأمني غير صالح!");
 regGS("Authors", "المؤلفات");
 regGS("Cuenta", "حساب");
 regGS("Items por p√°gina", "عدد العناصر في كل صفحة");
-regGS("No puede crear el archivo $1\"", "غير قادر أن ينشئ أرشيف $1\");
+regGS("No puede crear el archivo $1\"", "غير قادر أن ينشئ أرشيف $1\"");
 regGS("User name", "اسم المستخدم");
 regGS("Schedule a new publish action", "جدولة اجراءا جديد للنشر");
 regGS("User Types", "أنواع المستخدم");

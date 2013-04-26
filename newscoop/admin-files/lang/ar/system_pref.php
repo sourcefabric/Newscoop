@@ -72,7 +72,7 @@ regGS("SMTP Port:", "منفذ ادخال البيانات SMTP:");
 regGS("SMTP Port", "منفذ ادخال البيانات");
 regGS("SMTP Host:", "المضيف SMTP:");
 regGS("SMTP Host must be at least four character.", "يجب المضيف SMTP ألا يقل أربعة أحرف.");
-regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "الدخول قيمة بين 0 وبين 1 (ينم تحديد الحد الأقصى لحجم في 'php.ini'). يرجى الاستخدام "K" لكيلوبايت، "M" لميغابايت، و "G" لجيجابايت، بدون فراغات بين القيمة وبين الحرف المطابق، مثلا '3M' .");
+regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "الدخول قيمة بين 0 وبين 1 (ينم تحديد الحد الأقصى لحجم في 'php.ini'). يرجى الاستخدام 'K' لكيلوبايت، 'M' لميغابايت، و 'G' لجيجابايت، بدون فراغات بين القيمة وبين الحرف المطابق، مثلا '3M' .");
 regGS("Reader subscriptions managed externally?", "هل تدار اشتراكات القارئ خارجيا؟");
 regGS("Maximum upload file size:", "الحد الأقصى لحجم صور من أجل الرفع:");
 regGS("Max Upload File Size", "الحد الأقصى لحجم صور من أجل الرفع");

@@ -5,7 +5,7 @@ regGS("This issue cannot be previewed. Please make sure the publication has a th
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "لا يمكن ان ترى معاينة الإصدار هذا. يرجى التحقق أن اخترت القالب الأمامي.");
 regGS("Publish all articles:", "نشر جميع المقالات:");
 regGS("Publish all articles", "نشر جميع المقالات");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "نشر مجبر لكل المقالات. اذا عين على " لا "، سيتم نشر المقالات فقط بحالة "نشر بالإصدار".");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "نشر مجبر لكل المقالات. اذا عين على ' لا '، سيتم نشر المقالات فقط بحالة 'نشر بالإصدار'.");
 regGS("default", "الاختيار الافتراضي");
 regGS("The publishing/unpublishing can not be set the same time", "لا يمكن تعيين نفس الوقت النشر وإزالة النشر");
 regGS("The publishing schedule can not be set in the past", "لا يمكن تعيين جدول النشر في الماضي");

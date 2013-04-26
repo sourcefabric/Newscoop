@@ -82,7 +82,7 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "التعليق $4 من $1 في
 regGS("Comment \"$1\" saved.", "تم الحفظ التعليق \"$1\".");
 regGS("Column", "العمود");
 regGS("Change subscriber information", "تغيير معلومات المشترك");
-regGS("Ban for commenter \"$1\" saved.", "تم حفظ تحريم للمعلق"$1\".");
+regGS("Ban for commenter \"$1\" saved.", "تم حفظ تحريم للمعلق \"$1\".");
 regGS("Ban", "تحريم");
 regGS("Are you sure you want to do it?", "هل أنت متأكد أنك تريد أن تفعل ذلك؟");
 regGS("Add rating", "إضافة تقييما");

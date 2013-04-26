@@ -10,5 +10,5 @@ regGS("Remind me in 1 week", "ذكرني بعد مدة اسبوع");
 regGS("Hide feedback data", "إخفاء معلومات التغذية المرتدة");
 regGS("Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.", "ساعد Newscoop في تحسّن بواسطة إطلاعنا بأن تستعمله. سوف تتجمع هذه المعلومات بانتظام -حتى تتحسن خبرتك كمستخدم.");
 regGS("Current status: ", "الحالة الحالية");
-regGS("By clicking on \"Yes, help Newscoop\" button, I agree to $1", "بالضغط على"نعم، ساعد Newscoop"، انا أوافق على $1");
+regGS("By clicking on \"Yes, help Newscoop\" button, I agree to $1", "بالضغط على\"نعم، ساعد Newscoop\"، انا أوافق على $1");
 ?>

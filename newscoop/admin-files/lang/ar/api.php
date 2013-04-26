@@ -52,7 +52,7 @@ regGS("Could not delete record from the database.", "لم يحذف السجل م
 regGS("template path", "مسار القالب");
 regGS("short names", "أسماء قصيرة");
 regGS("Unable to fetch image from remote server.", "لم يحصل عليها الصورة من الخادم اللاسلكي");
-regGS("Last", "الأخير);
+regGS("Last", "الأخير");
 regGS("First", "الأول");
 regGS("Single-line Text", "نص بسطر واحد");
 regGS("Multi-line Text with WYSIWYG", "نص متعدد السطر بـ WYSIWYG");

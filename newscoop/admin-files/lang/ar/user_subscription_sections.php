@@ -4,7 +4,7 @@ regGS("deleted", "تم الحذف");
 regGS("Subscribed sections: $1", "الأقسام المشتركة اليها: $1");
 regGS("Start Date", "تاريخ البدء");
 regGS("Select sections for subscribing", "تحديد الأقسام التي تريد الاشتراك اليها");
-regGS("Sections saved", "تم حفظ الأقسام);
+regGS("Sections saved", "تم حفظ الأقسام");
 regGS("Section $1", "القسم $1:");
 regGS("No sections to edit", "لا أقسام لأجل التحرير");
 regGS("Edit section", "قسم التحرير");
