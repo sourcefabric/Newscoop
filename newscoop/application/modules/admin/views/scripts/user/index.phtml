@@ -1,29 +1,11 @@
 <?php $this->placeholder('title')->captureStart(); ?>
 <?php putGS('Users'); ?>
-<span id="search-view" class="inline-search">
-    <input type="text" size="34" name="q" placeholder="<?php putGS('Search for username/email'); ?>" /> <button><?php putGS('Search'); ?></button>
-</span>
 <?php $this->placeholder('title')->captureEnd(); ?>
 
 <div class="aside">
-    <ul id="status-filter" class="filters">
-        <li class="vspace"><?php putGS('Status'); ?></li>
-        <?php foreach ($this->form->status->getMultiOptions() as $status => $label) { ?>
-        <li><a href="#<?php echo $status; ?>"><?php echo $this->escape($label); ?> (<span><?php echo $this->counts[$status]; ?></span>)</a></li>
-        <?php } ?>
-    </ul>
-
     <?php echo $this->renderActions(); ?>
 
-    <div id="chart"></div>
-</div>
-
-<div id="list-wrapper" class="canvas">
-    <div class="controls">
-        <div id="pagination" class="paginationControl"></div>
-        <div id="filter"><dl><?php echo $this->form->groups; ?></dl></div>
-    </div>
-    <ul id="user-list" class="users"></ul>
+    <!-- <div id="chart"></div> --> <!-- the chart seems to be broken? -->
 </div>
 
 <script type="text/html" id="user-active-template">
@@ -131,18 +113,31 @@ $(function() {
         'User was deleted.' => getGS('User was deleted.'),
     )); ?>;
 
-    var users = new UserCollection();
-    var list = new UserListView({collection: users, el: $('#user-list')});
-    var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
-    var pagination = new PaginationView({collection: users, el: $('#pagination')});
-    var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
-    var search = new SearchView({collection: users, el: $('#search-view')});
-    users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
-    users.reset(users.parse(<?php echo json_encode($this); ?>));
-
+    // var users = new UserCollection();
+    // var list = new UserListView({collection: users, el: $('#user-list')});
+    // var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
+    // var pagination = new PaginationView({collection: users, el: $('#pagination')});
+    // var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
+    // var search = new SearchView({collection: users, el: $('#search-view')});
+    // users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
+    // users.reset(users.parse(<?php echo json_encode($this); ?>));
+    $('#foobar').hide(); // hide the table so it doesn't look jaggy
     var oTable = $('#foobar').dataTable( {
+        'oLanguage': {
+            'oPaginate': {
+                'sNext': '<?php putGS('Next'); ?>',
+                'sPrevious': '<?php putGS('Previous'); ?>',
+            },
+            'sZeroRecords': '<?php putGS('No records found.'); ?>',
+            'sSearch': '<?php putGS('Search'); ?>:',
+            'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
+            'sEmpty': '<?php putGS('No entries to show'); ?>',
+            'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
+            'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+            'sInfoEmpty': '',
+        },
         "bProcessing": true,
-        "bAutoWidth": false,
+        "bAutoWidth": true,
         "sPaginationType": "full_numbers",
         "bPaging": true,
         // ***
@@ -193,52 +188,48 @@ $(function() {
                 var newData = [];
                 newData.aaData = aaData;
                 newData.iTotalRecords = totalRecords;
-                fnCallback(newData)
+                fnCallback(newData);
+                setTimeout( function () {
+                    $("thead th").each( function ( i ) {
+                        // var val = $(this).val();
+                        // if (val.indexOf('/') !== -1) {
+                        //     var arr = val.split(' / ');
+                        //     console.log(arr);
+                        // }
+                        // console.log(i+':');
+                        // console.log(oTable.fnGetColumnData(i));
+                        if (i == 4) {
+                            var columnData = oTable.fnGetColumnData(i);
+                            // console.log(columnData);
+                            var xArr = [];
+                            columnData.forEach(function(x) {
+                                // console.log(x);
+                                // console.log(x.split(' / '));
+                                x.split(' / ').forEach(function (xRole) {
+                                    // console.log(xRole);
+                                    if ($.inArray(xRole, xArr) === -1) {
+                                        xArr.push(xRole);
+                                    }
+                                });
+                            });
+                            // console.log(xArr);
+                            this.innerHTML = fnCreateSelect( xArr );
+                        } else if (i == 5 || i == 8) {
+                            this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
+                        }
+                        $('select', this).change( function () {
+                            oTable.fnFilter( $(this).val() , i );
+                        } );
+                    } );
+                    oTable.fnSetColumnVis( 5, false );
+                    oTable.fnSetColumnVis( 6, false );
+                    oTable.fnSetColumnVis( 7, false );
+                    oTable.fnSetColumnVis( 8, false );
+                    $('#foobar').show();
+                }, 0 );
             });
-        },
-        "fnDrawCallback": function () {
-            
         }
     } );
-
-    setTimeout( function () {
-        /* Add a select menu for each TH element in the table footer */
-        $("tfoot th").each( function ( i ) {
-            // var val = $(this).val();
-            // if (val.indexOf('/') !== -1) {
-            //     var arr = val.split(' / ');
-            //     console.log(arr);
-            // }
-            // console.log(i+':');
-            // console.log(oTable.fnGetColumnData(i));
-            if (i == 4) {
-                var columnData = oTable.fnGetColumnData(i);
-                // console.log(columnData);
-                var xArr = [];
-                columnData.forEach(function(x) {
-                    // console.log(x);
-                    // console.log(x.split(' / '));
-                    x.split(' / ').forEach(function (xRole) {
-                        // console.log(xRole);
-                        if ($.inArray(xRole, xArr) === -1) {
-                            xArr.push(xRole);
-                        }
-                    });
-                });
-                // console.log(xArr);
-                this.innerHTML = fnCreateSelect( xArr );
-            } else if (i == 5 || i == 8) {
-                this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
-            }
-            $('select', this).change( function () {
-                oTable.fnFilter( $(this).val() , i );
-            } );
-        } );
-        oTable.fnSetColumnVis( 5, false );
-        oTable.fnSetColumnVis( 6, false );
-        oTable.fnSetColumnVis( 7, false );
-        oTable.fnSetColumnVis( 8, false );
-    }, 1000 );
 
 });
 </script>
@@ -284,14 +275,19 @@ $(function() {
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="foobar">
     <thead>
         <tr>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th rowspan="2">Username</th>
+            <th rowspan="2">First Name</th>
+            <th rowspan="2">Last Name</th>
+            <th rowspan="2">Email</th>
+            <th></th>
+            <th></th>
+            <th rowspan="2">Created</th>
+            <th rowspan="2">Updated</th>
+            <th></th>
+        </tr>
+        <tr>
             <th>Usertype</th>
             <th>Status</th>
-            <th>Created</th>
-            <th>Updated</th>
             <th>Verified</th>
         </tr>
     </thead>
