@@ -1,2 +1,5 @@
-The city search is based on data by GeoNames, see
+The geo-location search is based on data by GeoNames (used locally)
+and/or by OpenStreetMap (used via MapQuest Nominatim service), see
 http://www.geonames.org/
+http://www.openstreetmap.org/
+http://www.mapquest.com/
