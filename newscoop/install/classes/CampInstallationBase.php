@@ -703,7 +703,7 @@ XML;
         require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
         $GLOBALS['application']->bootstrap('container');
         SystemPref::Set('EmailFromAddress', $mcData['adminemail']);
-        SystemPref::Set('EmailContact', $mcData['sitetitle']);
+        SystemPref::Set('EmailContact', $mcData['adminemail']);
 
         return true;
     }
