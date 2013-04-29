@@ -18,8 +18,6 @@ class EmailService
     const CHARSET = 'utf-8';
     const PLACEHOLDER_SUBJECT = 'subject';
 
-    /** @var array */
-    private $config = array();
 
     /** @var Zend_View_Abstract */
     private $view;
@@ -28,13 +26,11 @@ class EmailService
     private $tokenService;
 
     /**
-     * @param array $config
      * @param Zend_View_Abstract $view
      * @param UserTokenService $tokenService
      */
-    public function __construct(array $config, \Zend_View_Abstract $view, UserTokenService $tokenService)
+    public function __construct(\Zend_View_Abstract $view, UserTokenService $tokenService)
     {
-        $this->config = $config;
         $this->view = $view;
         $this->tokenService = $tokenService;
     }
@@ -99,7 +95,7 @@ class EmailService
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($this->view->placeholder(self::PLACEHOLDER_SUBJECT));
         $mail->setBodyHtml($message);
-        $mail->setFrom($user ? $user->getEmail() : $this->config['from']);
+        $mail->setFrom($user ? $user->getEmail() : \SystemPref::Get('EmailFromAddress'));
 
         foreach ($emails as $email) {
             $mail->addTo($email);
@@ -135,7 +131,7 @@ class EmailService
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($subject);
         $mail->setBodyText($message);
-        $mail->setFrom(isset($from) ? $from : $this->config['from']);
+        $mail->setFrom(isset($from) ? $from : \SystemPref::Get('EmailFromAddress'));
 
         foreach ((array) $tos as $to) {
             $mail->addTo($to);

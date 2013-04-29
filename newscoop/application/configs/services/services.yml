@@ -78,7 +78,7 @@ services:
         arguments:  ["@em"]
     email:
         class:      Newscoop\Services\EmailService
-        arguments:  ["%email%", "@view", "@user.token"]
+        arguments:  ["@view", "@user.token"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
