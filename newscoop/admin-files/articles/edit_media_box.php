@@ -24,6 +24,7 @@
         )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place images'); ?></a>
         <?php } ?>
 
+        <?php if (count((array) $articleImages) > 0) {  ?>
         <a style="margin-bottom: 10px;" id="edit-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
             'module' => 'admin',
             'controller' => 'image',
@@ -32,6 +33,7 @@
             'language_id' => $f_language_id,
             'force_edit' => true,
         )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Edit metadata'); ?></a>
+        <?php } ?>
 
         <div class="clear"></div>
         <?php } ?>
