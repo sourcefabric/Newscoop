@@ -74,7 +74,11 @@ function onCommentsModerated(p_checkbox)
         		</SELECT>&nbsp;
         		<a href="/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php echo $f_publication_id ?>"><?php putGS("Edit aliases"); ?></a>
         		<?php } else { ?>
-                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($_SERVER['HTTP_HOST'])); ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Site')); ?>">
+                <?php
+                $defaultAlias = substr($_SERVER['HTTP_HOST'], 0, strpos($_SERVER['HTTP_HOST'], ':'));
+                $defaultAlias = (!$defaultAlias) ? $_SERVER['HTTP_HOST'] : $defaultAlias;
+                ?>
+                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($defaultAlias)); ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Site')); ?>">
         		<?php } ?>
         	</TD>
         </TR>
