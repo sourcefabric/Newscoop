@@ -2,7 +2,7 @@
 <?php putGS('Users'); ?>
 <?php $this->placeholder('title')->captureEnd(); ?>
 <?php echo $this->renderActions(); ?>
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="foobar">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="userDataTable">
     <thead>
         <tr>
             <th rowspan="2">Username</th>
@@ -14,6 +14,7 @@
             <th rowspan="2">Created</th>
             <th rowspan="2">Updated</th>
             <th></th>
+            <th rowspan="2">Options</th>
         </tr>
         <tr>
             <th>Usertype</th>
@@ -35,6 +36,7 @@
             <th>Created</th>
             <th>Updated</th>
             <th>Verified</th>
+            <th>Options</th>
         </tr>
     </tfoot>
 </table>
@@ -144,16 +146,16 @@ $(function() {
         'User was deleted.' => getGS('User was deleted.'),
     )); ?>;
 
-    // var users = new UserCollection();
-    // var list = new UserListView({collection: users, el: $('#user-list')});
-    // var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
-    // var pagination = new PaginationView({collection: users, el: $('#pagination')});
-    // var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
-    // var search = new SearchView({collection: users, el: $('#search-view')});
-    // users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
-    // users.reset(users.parse(<?php echo json_encode($this); ?>));
-    $('#foobar').hide(); // hide the table so it doesn't look jaggy
-    var oTable = $('#foobar').dataTable( {
+    var users = new UserCollection();
+    var list = new UserListView({collection: users, el: $('#user-list')});
+    var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
+    var pagination = new PaginationView({collection: users, el: $('#pagination')});
+    var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
+    var search = new SearchView({collection: users, el: $('#search-view')});
+    users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
+    users.reset(users.parse(<?php echo json_encode($this); ?>));
+    $('#userDataTable').hide(); // hide the table so it doesn't look jaggy
+    var oTable = $('#userDataTable').dataTable( {
         'oLanguage': {
             'oPaginate': {
                 'sNext': '<?php putGS('Next'); ?>',
@@ -204,7 +206,7 @@ $(function() {
                         if (key != 'id') {
                             var string = user[key];
                             if (key == 'u') {
-                                string = '<a href="/~twisted/newscoop/admin/user/edit/user/'+user['id']+'">'+ user['u'] + '</a>';
+                                string = '<a href="user/edit/user/'+user['id']+'">'+ user['u'] + '</a>';
                             }
                             if (key == 'g') {
                                 string = user[key].join(' / ');
@@ -213,6 +215,13 @@ $(function() {
                                 string = '<a href="mailto:'+user['e']+'">'+user['e']+'</a>';
                             }
                             newUser.push(string);
+                            if (key == 've') {
+                                var optionsUrl = '<a href="user/delete/user/'+user['id']+'">Delete</a>, <a href="user/rename/user/'+user['id']+'">Rename</a>';
+                                if (user['ve'] == 'No') {
+                                    optionsUrl += ', <a href="user/send-confirm-email/user/'+user['id']+'">Confirm</a>';
+                                }
+                                newUser.push(optionsUrl);
+                            }
                         }
                     }
                     aaData.push(newUser);
@@ -223,28 +232,16 @@ $(function() {
                 fnCallback(newData);
                 setTimeout( function () {
                     $("thead th").each( function ( i ) {
-                        // var val = $(this).val();
-                        // if (val.indexOf('/') !== -1) {
-                        //     var arr = val.split(' / ');
-                        //     console.log(arr);
-                        // }
-                        // console.log(i+':');
-                        // console.log(oTable.fnGetColumnData(i));
                         if (i == 4) {
                             var columnData = oTable.fnGetColumnData(i);
-                            // console.log(columnData);
                             var xArr = [];
                             columnData.forEach(function(x) {
-                                // console.log(x);
-                                // console.log(x.split(' / '));
                                 x.split(' / ').forEach(function (xRole) {
-                                    // console.log(xRole);
                                     if ($.inArray(xRole, xArr) === -1) {
                                         xArr.push(xRole);
                                     }
                                 });
                             });
-                            // console.log(xArr);
                             this.innerHTML = fnCreateSelect( xArr );
                         } else if (i == 5 || i == 8) {
                             this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
@@ -257,7 +254,7 @@ $(function() {
                     oTable.fnSetColumnVis( 6, false );
                     oTable.fnSetColumnVis( 7, false );
                     oTable.fnSetColumnVis( 8, false );
-                    $('#foobar').show();
+                    $('#userDataTable').show();
                 }, 0 );
             });
         }
