@@ -918,15 +918,15 @@ class User implements \Zend_Acl_Role_Interface
 
         return (object) array(
             'id' => $this->id,
-            'username' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
-            'firstname' => $this->first_name,
-            'lastname' => $this->last_name,
-            'email' => $this->email,
-            'groups' => $types,
-            'status' => $status,
-            'created' => $this->created->format('d.m.Y'),
-            'updated' => $this->updated->format('d.m.Y'),
-            'is_verified' => ((bool) $this->getAttribute(UserAttribute::IS_VERIFIED) ? 'Yes' : 'No')
+            'u' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
+            'f' => $this->first_name,
+            'l' => $this->last_name,
+            'e' => $this->email,
+            'g' => $types,
+            's' => $status,
+            'c' => $this->created->format('d.m.Y'),
+            'up' => $this->updated->format('d.m.Y'),
+            've' => ((bool) $this->getAttribute(UserAttribute::IS_VERIFIED) ? 'Yes' : 'No')
         );
     }
 

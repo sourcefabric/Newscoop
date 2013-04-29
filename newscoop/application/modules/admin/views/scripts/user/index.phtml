@@ -1,12 +1,43 @@
 <?php $this->placeholder('title')->captureStart(); ?>
 <?php putGS('Users'); ?>
 <?php $this->placeholder('title')->captureEnd(); ?>
-
-<div class="aside">
-    <?php echo $this->renderActions(); ?>
-
-    <!-- <div id="chart"></div> --> <!-- the chart seems to be broken? -->
-</div>
+<?php echo $this->renderActions(); ?>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="foobar">
+    <thead>
+        <tr>
+            <th rowspan="2">Username</th>
+            <th rowspan="2">First Name</th>
+            <th rowspan="2">Last Name</th>
+            <th rowspan="2">Email</th>
+            <th></th>
+            <th></th>
+            <th rowspan="2">Created</th>
+            <th rowspan="2">Updated</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Verified</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Verified</th>
+        </tr>
+    </tfoot>
+</table>
 
 <script type="text/html" id="user-active-template">
 <div class="inline-actions">
@@ -136,6 +167,7 @@ $(function() {
             'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
             'sInfoEmpty': '',
         },
+        // "bServerSide": true,
         "bProcessing": true,
         "bAutoWidth": true,
         "sPaginationType": "full_numbers",
@@ -155,7 +187,7 @@ $(function() {
         //   }
         // } ],
         'bJQueryUI': true,
-        "sDom": 'RC<"clear">lfrtip',
+        "sDom": 'RCf<"clear">rtilp',
         "oColVis": {
             "aiExclude": [ 0 ]
         },
@@ -169,16 +201,16 @@ $(function() {
                     for (var key in user) {
                         // console.log(key+': ');
                         // console.log(user[key]);
-                        if (key != 'links' && key != 'id') {
+                        if (key != 'id') {
                             var string = user[key];
-                            if (key == 'username') {
-                                string = '<a href="/~twisted/newscoop/admin/user/edit/user/'+user['id']+'">'+ user['username'] + '</a>';
+                            if (key == 'u') {
+                                string = '<a href="/~twisted/newscoop/admin/user/edit/user/'+user['id']+'">'+ user['u'] + '</a>';
                             }
-                            if (key == 'groups') {
+                            if (key == 'g') {
                                 string = user[key].join(' / ');
                             }
-                            if (key == 'email') {
-                                string = '<a href="mailto:'+user['email']+'">'+user['email']+'</a>';
+                            if (key == 'e') {
+                                string = '<a href="mailto:'+user['e']+'">'+user['e']+'</a>';
                             }
                             newUser.push(string);
                         }
@@ -271,40 +303,3 @@ $(function() {
         chart.draw(data, options);
     }
 </script>
-
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="foobar">
-    <thead>
-        <tr>
-            <th rowspan="2">Username</th>
-            <th rowspan="2">First Name</th>
-            <th rowspan="2">Last Name</th>
-            <th rowspan="2">Email</th>
-            <th></th>
-            <th></th>
-            <th rowspan="2">Created</th>
-            <th rowspan="2">Updated</th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>Usertype</th>
-            <th>Status</th>
-            <th>Verified</th>
-        </tr>
-    </thead>
-    <tbody>
-        
-    </tbody>
-    <tfoot>
-        <tr>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Usertype</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Updated</th>
-            <th>Verified</th>
-        </tr>
-    </tfoot>
-</table>
