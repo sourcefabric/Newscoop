@@ -5,7 +5,7 @@
 
 Summary:        The open content management system for professional journalists
 Name:           newscoop
-Version:        4.1.1
+Version:        4.1.2
 Release:        1
 License:        GPLv3
 Packager:       Daniel James <daniel@64studio.com>
@@ -72,7 +72,7 @@ rm -rf %{buildroot}
 
 %files -f %{manifest}
 %defattr(-,root,root)
-%doc ChangeLog CREDITS README  UPGRADE
+%doc newscoop/changelog newscoop/CREDITS newscoop/README newscoop/UPGRADE
 %config /etc/newscoop/4.1/apache.conf
 %config /etc/newscoop/4.1/newscoop.ini
 #%config /etc/newscoop/4.1/apache.vhost.tpl

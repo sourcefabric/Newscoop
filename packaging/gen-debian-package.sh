@@ -15,10 +15,6 @@ DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 BUILDDEST=/tmp/newscoop-${DEBVERSION}/
 
-#if test "${UPSTREAMDIST}" == "3.5"; then
-#	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
-#fi
-
 if test ! -d ${DEBPATH}; then
   echo "can not find debian/ folder. Please 'cd <newscoop-git>/packaging/'"
   exit;
@@ -31,7 +27,6 @@ echo "debuild opts:     $@"
 echo "build folder:     /tmp/newscoop-$DEBVERSION"
 
 echo -n "OK? [enter|CTRL-C]" ; read
-
 
 rm -rf /tmp/newscoop-$DEBVERSION
 mkdir  /tmp/newscoop-$DEBVERSION
@@ -105,12 +100,13 @@ sed -i "5s:('fonts/VeraBd.ttf', 'fonts/VeraIt.ttf', 'fonts/Vera.ttf'):('/usr/sha
 
 # documentation for /usr/share/doc/newscoop
 for file in ChangeLog CREDITS README UPGRADE; do
-  mv -vi newscoop/${file}.txt ./${file}
+  mv -vi newscoop/${file}.txt newscoop/${file}
 done
+mv newscoop/ChangeLog newscoop/changelog
 cp -vi newscoop/htaccess newscoop/.htaccess
 
-### fixes for 4.1.1 ###
-if test "${UPSTREAMVERSION}" == "4.1.1"; then
+### fixes for 4.1.2 ###
+if test "${UPSTREAMVERSION}" == "4.1.2"; then
 
 fromdos newscoop/install/sql/create_demo_scripts
 chmod +x newscoop/vendor/doctrine/dbal/bin/doctrine-dbal
