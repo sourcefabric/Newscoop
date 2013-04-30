@@ -8,6 +8,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoNames.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
@@ -282,6 +283,23 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 ?>
 <tr>
     <td align="left" width="400px">
+        <?php putGS("Automatic collection of statistics:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td colspan="2" align="left">
+        <strong><?php putGS("Email Settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
         <?php putGS("SMTP Host:"); ?>
     </td>
     <td align="left" valign="top">
@@ -296,18 +314,26 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_smtp_port" value="<?php p(SystemPref::Get("SMTPPort")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("SMTP Port")); ?>" />
     </td>
 </tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Email contact:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_email_contact" value="<?php p(SystemPref::Get("EmailContact")); ?>" maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email contact must be at least four character."); ?>" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Email from:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_email_from_address" value="<?php p(SystemPref::Get("EmailFromAddress")); ?>"  maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("Email from must be at least twelve character."); ?>" />
+    </td>
+</tr>
 <?php
 	}
 ?>
-<tr>
-    <td align="left" width="400px">
-        <?php putGS("Automatic collection of statistics:"); ?>
-    </td>
-    <td align="left" valign="top">
-        <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
-    </td>
-</tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
@@ -593,6 +619,45 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
             camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Maps');
             camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), 'MapQuest Open');
             camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreetMap');
+            ?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("town names with wildcards, and lat/lon coordinates"); ?>&#10;Data © GeoNames.org, CC-BY. http://www.geonames.org/">
+        <?php putGS("Use Local GeoNames Search:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_geo_search_local_geonames" value="1" <?php echo SystemPref::Get('GeoSearchLocalGeonames') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("addresses: street (number), town"); ?>&#10;Data © OpenStreetMap contributors, ODbL&nbsp;1.0. http://www.openstreetmap.org/">
+        <?php putGS("Use MapQuest Nominatim Search:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_geo_search_mapquest_nominatim" value="1" <?php echo SystemPref::Get('GeoSearchMapquestNominatim') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("For the Nominatim address search") ?>">
+        <?php putGS("Preferred address language:") ?>
+    </td>
+    <td align="left" valign="top">
+        <select name="f_geo_search_preferred_language" class="input_select">
+            <?php
+            $geo_preferred_lang = SystemPref::Get('GeoSearchPreferredLanguage');
+            if (empty($geo_preferred_lang)) {
+                $geo_preferred_lang = 'en';
+            }
+            $language_codes_639_1 = \Language::Get6391List();
+            asort($language_codes_639_1);
+            foreach($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
+                camp_html_select_option($geo_lang_code, $geo_preferred_lang, $geo_lang_name);
+            }
             ?>
         </select>
     </td>

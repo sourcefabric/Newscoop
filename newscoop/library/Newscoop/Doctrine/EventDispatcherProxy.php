@@ -14,7 +14,6 @@ use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Newscoop\EventDispatcher\EventDispatcher;
 
 /**
  * Doctrine Event Dispatcher Proxy dispatches Symfony Events on certain doctrine events.
@@ -30,7 +29,7 @@ class EventDispatcherProxy implements EventSubscriber
     /**
      * @param EventDispatcher $dispatcher
      */
-    public function __construct(EventDispatcher $dispatcher)
+    public function __construct($dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }

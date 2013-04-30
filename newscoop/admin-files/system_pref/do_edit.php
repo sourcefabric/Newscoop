@@ -22,6 +22,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_cache_handler = Input::Get('f_template_cache_handler');
 	$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
 	$f_smtp_port = Input::Get('f_smtp_port', 'int');
+    $f_email_contact = strip_tags(Input::Get('f_email_contact'));
+    $f_email_from_address = strip_tags(Input::Get('f_email_from_address'));
 	$f_editor_image_ratio = Input::Get('f_editor_image_ratio', 'int', null, true);
 	$f_editor_image_width = Input::Get('f_editor_image_width', 'int', null, true);
 	$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
@@ -40,6 +42,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
 	$f_smtp_host = SystemPref::Get("SMTPHost");
 	$f_smtp_port = SystemPref::Get("SMTPPort");
+    $f_email_contact = SystemPref::Get("EmailContact");
+    $f_email_from_address = SystemPref::Get("EmailFromAddress");
 	$f_editor_image_ratio = SystemPref::Get("EditorImageRatio");
 	$f_editor_image_width = SystemPref::Get("EditorImageResizeWidth");
 	$f_editor_image_height = SystemPref::Get("EditorImageResizeHeight");
@@ -101,6 +105,9 @@ $f_geo = array(
     'map_provider_available_map_quest' => Input::Get('f_map_provider_available_map_quest', 'int', 0, true),
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int', 0, true),
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
+    'geo_search_local_geonames' => Input::Get('f_geo_search_local_geonames', 'int', 0, true),
+    'geo_search_mapquest_nominatim' => Input::Get('f_geo_search_mapquest_nominatim', 'int', 0, true),
+    'geo_search_preferred_language' => Input::Get('f_geo_search_preferred_language', 'string'),
     'map_marker_directory' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_marker_directory', 'string') : SystemPref::Get('MapMarkerDirectory'),
     'map_marker_source_default' => Input::Get('f_map_marker_source_default', 'string'),
     'map_popup_width_min' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_popup_width_min', 'int') : SystemPref::Get('MapPopupWidthMin'),
@@ -204,6 +211,8 @@ if ($f_smtp_port <= 0) {
     $f_smtp_port = 25;
 }
 SystemPref::Set('SMTPPort', $f_smtp_port);
+SystemPref::Set('EmailContact', $f_email_contact);
+SystemPref::Set('EmailFromAddress', $f_email_from_address);
 
 // Statistics collecting
 SystemPref::Set('CollectStatistics', $f_collect_statistics);

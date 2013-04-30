@@ -441,7 +441,7 @@ var map_show_preview = function(forced)
         </li>
         <li>
         <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text" title="<?php putGS('Based on GeoNames.org data'); ?>"><a href="#" title="<?php putGS('Search for place or coordinate'); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
+          <input class="map_geo_cityname input_text" id="search-city" type="text" title="<?php putGS('Based on GeoNames.org and OpenStreetMap.org data'); ?>"><a href="#" title="<?php putGS('Search for place or coordinate'); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
         </form>
         </li>
         <li>

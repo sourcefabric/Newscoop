@@ -56,6 +56,8 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'aaSorting': [<?php echo $this->getSorting(); ?>],
     'oLanguage': {
         'oPaginate': {
+            'sFirst': '<?php putGS('First'); ?>',
+            'sLast': '<?php putGS('Last'); ?>',
             'sNext': '<?php putGS('Next'); ?>',
             'sPrevious': '<?php putGS('Previous'); ?>',
         },
