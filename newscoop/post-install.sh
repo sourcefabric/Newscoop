@@ -12,3 +12,4 @@ chmod 777 images/
 chmod 777 images/thumbnails/
 chmod 777 public/files/
 chmod 777 log/
+chmod 777 library/Proxy
