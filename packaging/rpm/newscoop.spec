@@ -158,6 +158,9 @@ fi
 
 
 %changelog
+* Tue Apr 30 2013 Daniel James <daniel@64studio.com>
+- Update for Newscoop 4.1.2
+
 * Thu Apr 18 2013 Daniel James <daniel@64studio.com>
 - Update for Newscoop 4.1.1
 
