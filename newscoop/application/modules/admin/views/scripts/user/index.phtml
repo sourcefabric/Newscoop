@@ -71,7 +71,6 @@
 
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/underscore.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/backbone.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl('js/apps/users.js'); ?>"></script>
 <script type="text/javascript">
 (function($) {
 /*
@@ -146,14 +145,6 @@ $(function() {
         'User was deleted.' => getGS('User was deleted.'),
     )); ?>;
 
-    var users = new UserCollection();
-    var list = new UserListView({collection: users, el: $('#user-list')});
-    var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
-    var pagination = new PaginationView({collection: users, el: $('#pagination')});
-    var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
-    var search = new SearchView({collection: users, el: $('#search-view')});
-    users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
-    users.reset(users.parse(<?php echo json_encode($this); ?>));
     $('#userDataTable').hide(); // hide the table so it doesn't look jaggy
     var oTable = $('#userDataTable').dataTable( {
         'oLanguage': {
@@ -216,9 +207,9 @@ $(function() {
                             }
                             newUser.push(string);
                             if (key == 've') {
-                                var optionsUrl = '<a href="user/delete/user/'+user['id']+'">Delete</a>, <a href="user/rename/user/'+user['id']+'">Rename</a>';
+                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'">Delete</a>, <a href="user/rename/user/'+user['id']+'">Rename</a>';
                                 if (user['ve'] == 'No') {
-                                    optionsUrl += ', <a href="user/send-confirm-email/user/'+user['id']+'">Confirm</a>';
+                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'">Confirm</a>';
                                 }
                                 newUser.push(optionsUrl);
                             }
@@ -259,7 +250,32 @@ $(function() {
             });
         }
     } );
+});
 
+$(document).ready(function(){
+    $('#userDataTable').on('click', '.jsonDelete', function(event){
+        event.preventDefault();
+        $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return false;
+            }
+
+            flashMessage(window.translate['User was deleted.']);
+        });
+    });
+
+    $('#userDataTable').on('click', '.jsonConfirm', function(event){
+        event.preventDefault();
+        $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return false;
+            }
+
+            flashMessage(window.translate['New confirmation email was sent to user.']);
+        });
+    });
 });
 </script>
 
