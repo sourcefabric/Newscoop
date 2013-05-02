@@ -59,6 +59,12 @@ class WeatherStat extends Entity
     private $hour;
 
     /**
+     * @Column(type="date", name="stat_date")
+     * @Var Date 
+     */
+    private $statDate;
+
+    /**
      * @Column(type="integer", name="symbol")
      * @Var int 
      */
@@ -182,6 +188,14 @@ class WeatherStat extends Entity
     public function getHour()
     {
         return $this->hour;
+    }
+
+    /**
+     * @return date
+     */
+    public function getStatDate()
+    {
+        return $this->statDate;
     }
 
     /**
@@ -369,6 +383,18 @@ class WeatherStat extends Entity
     public function setHour($hour)
     {
         $this->hour = $hour;
+        return $this;
+    }
+
+    /**
+     * Set statDate
+     *
+     * @param date $statDate
+     * @return Newscoop\Entity\WeatherStat
+     */
+    public function setStatDate($statDate)
+    {
+        $this->statDate = $statDate;
         return $this;
     }
 

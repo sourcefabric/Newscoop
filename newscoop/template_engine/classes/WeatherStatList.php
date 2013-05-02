@@ -55,6 +55,9 @@ class WeatherStatList extends ListObject
             $hour = date('G');
             $criteria = array_merge($criteria, array( "hour" => $hour ));
         }
+        if (isset($p_parameters['stat_date']) && trim($p_parameters['stat_date'])!="") {
+            $criteria = array_merge($criteria, array( "statDate" => new \DateTime($p_parameters['stat_date']) ));
+        }
 
         $weatherStats = $repo->findBy($criteria, array( "locationName" => "asc"));
 
@@ -133,6 +136,7 @@ class WeatherStatList extends ListObject
                     }
                     $parameters[$parameter] = (int)$value;
                     break;
+                case 'stat_date' :
                 case 'location_list' :
                 case 'location_name' :
                 case 'region_name' :

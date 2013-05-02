@@ -45,6 +45,7 @@ class WeatherStatRepository extends EntityRepository
             ->setLocationList($values['location_list'])
             ->setRegionName($values['region_name'])
             ->setHour($values['hour'])
+            ->setStatDate($values['stat_date'])
             ->setTimeUpdated(new \DateTime);
 
         if (isset($values['symbol'])) {
@@ -123,5 +124,19 @@ class WeatherStatRepository extends EntityRepository
         }
 
         return (int) $query->getSingleScalarResult();
+    }
+
+    /**
+     * Delete by date
+     *
+     * @param date $date
+     * @return boolean 
+     */
+    public function deleteByDate($date)
+    {
+        $em = $this->getEntityManager();
+        $em->createQuery('DELETE FROM Newscoop\Entity\WeatherStat ws WHERE ws.statDate <= (:date)')
+            ->setParameter('date', $date)
+            ->execute();
     }
 }
