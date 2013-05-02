@@ -1,11 +1,11 @@
 <?php 
-regGS("There are no more comments", "");
-regGS("Show more comments", "");
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
-regGS("Comment saved.", "");
+regGS("There are no more comments", "Няма больш каментароў");
+regGS("Show more comments", "Паказаць больш каментароў");
+regGS("Unrecommend", "Не рэкамендаваць");
+regGS("Save comment", "Захаваць каментар");
+regGS("Recommend", "Рэкамендаваць");
+regGS("Comment updated.", "Каментар абноўлены.");
+regGS("Comment saved.", "Каментар захаваны.");
 regGS("Comments updated.", "Каментары абноўленыя.");
 regGS("Post a Comment", "Адправіць каментар");
 regGS("From", "З");

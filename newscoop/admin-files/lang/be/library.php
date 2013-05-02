@@ -1,14 +1,14 @@
 <?php 
-regGS("Display newswires articles", "");
-regGS("Display Newswires", "");
-regGS("Webcode", "");
-regGS("View article", "");
-regGS("Source", "");
-regGS("Select type", "");
-regGS("On", "");
-regGS("Off", "");
-regGS("Title", "");
-regGS("No video playback capabilities, please download the video below", "");
+regGS("Display newswires articles", "Паказаць артыкулы з навінавых стужак");
+regGS("Display Newswires", "Паказаць навінавыя стужкі");
+regGS("Webcode", "Вэб-код");
+regGS("View article", "Прагляд артыкула");
+regGS("Source", "Крыніца");
+regGS("Select type", "Абраць тып");
+regGS("On", "Уключаны");
+regGS("Off", "Выключаны");
+regGS("Title", "Загаловак");
+regGS("No video playback capabilities, please download the video below", "Немагчыма прайграць відэа, калі ласка, запампуйце відэа ніжэй па спасылцы");
 regGS("Article status set to '$1' for $2 articles", "Статут артыкула '$1'  устаноўлены для $2 артыкулаў");
 regGS("Article status not set to '$1' for $2 articles", "Статут артыкула '$1'  не устаноўлены для $2 артыкулаў");
 regGS("$1 toggled for $2 articles.", "$1 уключаны для $2 артыкулаў.");

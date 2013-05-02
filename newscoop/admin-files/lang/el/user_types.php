@@ -1,6 +1,6 @@
 <?php 
 regGS("get", "λήψη");
-regGS("Soundcloud", "Soundcloud");
+regGS("Soundcloud", "SoundCloud");
 regGS("Templates", "Πρότυπα");
 regGS("Feedback Messages", "Μηνύματα Feedback");
 regGS("Article Playlists", "Λίστες Αναπαραγωγής Άρθρου");

@@ -1,16 +1,16 @@
 <?php 
-regGS("so that default templates can be assigned to the issue.", "");
-regGS("Once this is done, the issue can be published", "");
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
-regGS("Publish all articles:", "");
-regGS("Publish all articles", "");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
-regGS("default", "");
-regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
-regGS("Please assign at least one theme to the publication", "");
-regGS("Issue Theme", "");
+regGS("so that default templates can be assigned to the issue.", "так, каб шаблоны па змаўчанні можна было прызначаць для выпуску.");
+regGS("Once this is done, the issue can be published", "У заканчэнні дзеяння можна апублікаваць выпуск");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Немагчыма зрабіць папярэдні прагляд выпуску. Калі ласка, пераканайцеся, што для выдання вызначаная патрэбная тэма (шаблон).");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Немагчыма зрабіць папярэдні прагляд выпуску. Калі ласка, пераканайцеся, што для гэтага абраны шаблон галоўнай старонкі.");
+regGS("Publish all articles:", "Апублікаваць усе артыкулы:");
+regGS("Publish all articles", "Апублікаваць усе артыкулы");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Выконвае публікацыю ўсіх артыкулаў. Калі налада \"Не\", то апублікуйце толькі артыкулы са статусам \"Апублікаваць з выпускам\".");
+regGS("default", "па змаўчанні");
+regGS("The publishing/unpublishing can not be set the same time", "Налады Апублікаваць/Адмяніць публікацыю адначасова не працуюць");
+regGS("The publishing schedule can not be set in the past", "Немагчыма настроіць расклады публікацыі ў мінулым часе");
+regGS("Please assign at least one theme to the publication", "Калі ласка, прызначце для выдання хоця бы адну тэму (шаблон)");
+regGS("Issue Theme", "Тэма (Шаблён) выпуску");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Велічынi, якiя Вы спрабуеце ўстанавіць, канфлiктуюць з выпускам \"$1$2. $3 ($4)$5\". ");
 regGS("The number must be unique for each issue in this publication of the same language.", "Нумар павiнен быць унікальным для кожнага выпуску гэтага выданьня на гэтай жа мове.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Мова i URL павiнны быць унікальным для кожнага выпуску гэтага выданьня.");

@@ -138,7 +138,7 @@ regGS("The system was unable to delete the file '$1'.", "كان النظام غ�
 regGS("The system was unable to create the file '$1'.", "كان النظام غير قادر على إنشاء ملف '$ 1'.");
 regGS("The system was unable to create the directory '$1'.", "كان النظام غير قادر على إنشاء دليل '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "يرجى التحقق إذا كان المستخدم '$1' لديه الاذن للكتابة على هذا الملف.");
-regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "يرجى التحقق إذا كان المستخدم '$1' لديه الإذن للكتابة على الدليل "$2".");
+regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "يرجى التحقق إذا كان المستخدم '$1' لديه الإذن للكتابة على الدليل '$2'.");
 regGS("Type the code shown above:", "اكتب الكود الظاهر أعلاه:");
 regGS("Please enter your user name.", "من فضلك ادخل اسم المستخدم الخاص بك.");
 regGS("Please enter your password.", "من فضلك ادخل كلمة السر الخاصة بك.");

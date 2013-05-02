@@ -1,5 +1,6 @@
 <?php 
-regGS("Display newsfeed images", "Display newsfeed images");
+regGS("Mark image", "Mark image");
+regGS("Add selected images to slideshow", "Add selected images to slideshow");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Sorry that image is too small. Image needs to be at least %dx%d.");
 regGS("Slideshow rendition", "Slideshow rendition");
 regGS("Renditions reloaded", "Renditions reloaded");
