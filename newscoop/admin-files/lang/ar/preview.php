@@ -10,6 +10,6 @@ regGS("Invalid parameter <em>$1</em> in statement <em>$2</em>", "متغير غي
 regGS("Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>", "قيمة غير صالة <em>$1</em> من متغير <em>$2</em> في بيان <em>$3</em>");
 regGS("Missing parameter <em>$1</em> in statement <em>$2</em>", "متغير مفقود <em>$1</em> في بيان <em>$2</em>");
 regGS("Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>", "عامل غير صالح <em>$1</em> من متغير <em>$2</em> في بيان <em>$3</em>");
-regGS("Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter", "");
-regGS("Invalid template <em>$1</em> specified in the <em>$2</em> form", "قالب غير صالح <em>$1</em> محدود في الـ <em>$2</em>");
+regGS("Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter", "سمة غير صالحة <em>$1</em> في بيان <em>$2</em>، متغير  <em>$3</em>");
+regGS("Invalid template <em>$1</em> specified in the <em>$2</em> form", "قالب غير صالح <em>$1</em> محدود في نموذج <em>$2</em>");
 ?>

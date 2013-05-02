@@ -5,13 +5,13 @@ regGS("This issue cannot be previewed. Please make sure the publication has a th
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "لا يمكن ان ترى معاينة الإصدار هذا. يرجى التحقق أن اخترت القالب الأمامي.");
 regGS("Publish all articles:", "نشر جميع المقالات:");
 regGS("Publish all articles", "نشر جميع المقالات");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "نشر مجبر لكل المقالات. اذا عين على ' لا '، سيتم نشر المقالات فقط بحالة 'نشر بالإصدار'.");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "نشر مجبر لكل المقالات. اذا عين على' لا '، سيتم نشر المقالات فقط بحالة 'نشر بالإصدار'.");
 regGS("default", "الاختيار الافتراضي");
 regGS("The publishing/unpublishing can not be set the same time", "لا يمكن تعيين نفس الوقت النشر وإزالة النشر");
 regGS("The publishing schedule can not be set in the past", "لا يمكن تعيين جدول النشر في الماضي");
 regGS("Please assign at least one theme to the publication", "يرجى تعيين ما لا يقل عن مبحث واحد إلى المنشورة");
 regGS("Issue Theme", "مبحث الإصدار");
-regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
+regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "القيم التي تحاول أن تعينها تتعارض مع الاصدار \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "يجب أن يكون فريدا من نوعها العدد لكل اصدار في هذا المنشورة من نفس اللغة.");
 regGS("The language and URL name must be unique for each issue in this publication.", "يجب أن يكون اسم اللغة واسم الرابط فريدين من نوعهما لكل اصدار في هذا المنشورة.");
 regGS("Issue created.", "تم انشاء الاصدار");

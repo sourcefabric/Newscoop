@@ -26,7 +26,7 @@ regGS("Map", "خريطة");
 regGS("Center", "الوسط");
 regGS("Title", "عنوان");
 regGS("Invalid security token.", "الرمز الأمني غير صالح.");
-regGS("Callback '$1' is not callable.", "");
+regGS("Callback '$1' is not callable.", "إعادة النداء '$1' غير قابلة للنداء");
 regGS("Article translated to \"$4\" ($5)", "المقالة مترجمة الى \"$4\" ($5)");
 regGS("Article status changed from $1 to $2.", "غيرت حالة المقالة من $1 الى $2.");
 regGS("Article deleted.", "تم حذف المقالة.");
