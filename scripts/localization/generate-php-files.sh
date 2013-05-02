@@ -41,6 +41,12 @@ if [ -d ${localization} ]; then
    mv "$i" "${i/.po.tmp}".php
   done
 
+  # Check the syntax of the php files for errors
+
+  for i in ${localization}/*.php; do
+   php -l "$i"
+  done
+
 else
 
   echo "The ${localization} directory was not found."
