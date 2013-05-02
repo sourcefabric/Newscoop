@@ -192,8 +192,6 @@ $(function() {
                 json['users'].forEach(function(user) {
                     var newUser = [];
                     for (var key in user) {
-                        // console.log(key+': ');
-                        // console.log(user[key]);
                         if (key != 'id') {
                             var string = user[key];
                             if (key == 'u') {
@@ -238,9 +236,10 @@ $(function() {
                             this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
                         }
                         $('select', this).change( function () {
-                            oTable.fnFilter( $(this).val() , i );
+                            oTable.fnFilter( $(this).val() , i, false, false, false, false );
                         } );
                     } );
+                    oTable.fnFilter( 'Active' , 5, false, false, false, false );
                     oTable.fnSetColumnVis( 5, false );
                     oTable.fnSetColumnVis( 6, false );
                     oTable.fnSetColumnVis( 7, false );
@@ -254,6 +253,8 @@ $(function() {
 
 $(document).ready(function(){
     $('#userDataTable').on('click', '.jsonDelete', function(event){
+        var dataTableCell = $(this).parent();
+        var dataTableRow = dataTableCell.parent().get(0);
         event.preventDefault();
         $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
             if (data.message) {
@@ -261,6 +262,7 @@ $(document).ready(function(){
                 return false;
             }
 
+            $('#userDataTable').dataTable().fnUpdate( "Deleted", dataTableRow, 5 );
             flashMessage(window.translate['User was deleted.']);
         });
     });
