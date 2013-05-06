@@ -107,7 +107,7 @@ class RouterFactory
 
         $router->addRoute(
             'search',
-            new Zend_Controller_Router_Route(
+            new \Zend_Controller_Router_Route(
                 ':language/search',
                 array(
                     'module' => 'default',
