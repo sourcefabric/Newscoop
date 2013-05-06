@@ -58,7 +58,7 @@ class EventDispatcherProxy implements EventSubscriber
     {
         $entityName = $this->getEntityName($args->getEntity());
         $this->dispatcher->dispatch("{$entityName}.create", new GenericEvent($this, array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
@@ -73,7 +73,7 @@ class EventDispatcherProxy implements EventSubscriber
     {
         $entityName = $this->getEntityName($args->getEntity());
         $this->events["{$entityName}.update"] = new GenericEvent($args->getEntity(), array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
         ));
@@ -102,8 +102,8 @@ class EventDispatcherProxy implements EventSubscriber
     {
         $entityName = $this->getEntityName($args->getEntity());
         $this->dispatcher->dispatch("{$entityName}.delete", new GenericEvent($this, array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
-            'diff' => $this->getEntityProperties($args->getEntity(), $args->getManager()),
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
@@ -125,7 +125,7 @@ class EventDispatcherProxy implements EventSubscriber
     /**
      * Get entity properties.
      *
-     * @param object $entity
+     * @param object $entitygetManager
      * @param Doctrine\ORM\EntityManager $em
      * @return array
      */
