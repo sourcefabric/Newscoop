@@ -80,6 +80,14 @@ function smarty_block_comment_form($p_params, $p_content, &$p_smarty, &$p_repeat
         ."value=\"".$campsite->comment->identifier."\" />\n";
     }
     $html .= $p_content;
+    $html .=    '<span style="display:none;visibility:hidden;">
+                <label for="f_comment_email_protect">
+                Ignore this text box. It is used to detect spammers. 
+                If you enter anything into this text box, your message 
+                will not be sent.
+                </label>
+                <input type="text" name="f_comment_email_protect" size="20" value="" />
+                </span>';
     $html .= "<input type=\"submit\" name=\"f_submit_comment\" "
     ."id=\"article_comment_submit\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
