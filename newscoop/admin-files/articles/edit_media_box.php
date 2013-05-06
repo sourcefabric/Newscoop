@@ -67,7 +67,7 @@
 
     <!-- BEGIN Slideshows -->
     <div id="media-slideshows">
-        <?php echo $this->view->partial('slideshow-box.phtml', array(
+        <?php camp_load_translation_strings('home'); echo $this->view->partial('slideshow-box.phtml', array(
             'articleNumber' => $articleObj->getArticleNumber(),
             'slideshows' => $this->_helper->service('package')->findByArticle($articleObj->getArticleNumber()),
         )); ?>
