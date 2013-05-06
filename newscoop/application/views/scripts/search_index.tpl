@@ -3,7 +3,7 @@
 {{block content}}
 <h1>Search results</h1>
 
-{{ list_search_results_solr qf="title^5 deck^3 full_text" start=$smarty.get.start  }}
+{{ list_search_results_solr qf="title^5 deck^3 full_text" start=$smarty.get.start|default:0  }}
   {{ if $gimme->current_list->at_beginning }}
   <ul>
   {{ /if }}
