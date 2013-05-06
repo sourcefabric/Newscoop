@@ -11,5 +11,9 @@ class SearchController extends Zend_Controller_Action
 {
     public function indexAction()
     {
+        if ($this->_getParam('language')) {
+            $gimme = CampTemplate::singleton()->context();
+            $gimme->language = MetaLanguage::createFromCode($this->_getParam('language'));
+        }
     }
 }
