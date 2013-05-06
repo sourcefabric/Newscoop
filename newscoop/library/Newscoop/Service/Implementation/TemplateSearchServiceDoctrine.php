@@ -123,7 +123,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         if ($output instanceof Output) {
             $outputId = $output->getId();
         }
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
 
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
@@ -178,7 +178,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         if ($output instanceof Output) {
             $outputId = $output->getId();
         }
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
 
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
@@ -252,7 +252,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         $issueId = $issue->getId();
         $publicationId = $issue->getPublicationId();
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
                 ->from(OutputSettingsTheme::NAME, 'ot')
@@ -325,7 +325,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         $issueId = $issue->getId();
         $publicationId = $issue->getPublicationId();
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
                 ->from(OutputSettingsTheme::NAME, 'ot')

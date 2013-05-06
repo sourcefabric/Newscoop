@@ -32,7 +32,7 @@ function smarty_function_form_register($params, $smarty)
                 $user = $userService->create($values);
 
                 $dispatcher = $controller->getHelper('service')->getService('dispatcher');
-                $dispatcher->notify('user.register', new GenericEvent($smarty, array(
+                $dispatcher->dispatch('user.register', new GenericEvent($smarty, array(
                     'user' => $user,
                 )));
 

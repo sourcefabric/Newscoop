@@ -8,17 +8,9 @@
 namespace Newscoop\View;
 
 /**
- * Author View
+ * Package View
  */
-class AuthorView extends View
+class PackageView extends View
 {
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $imageId;
+	public $id;
 }

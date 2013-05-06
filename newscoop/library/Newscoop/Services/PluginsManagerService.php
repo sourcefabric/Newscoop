@@ -46,7 +46,7 @@ class PluginsManagerService
         }
 
         if ($notify) {
-            $this->dispatcher->notify('plugin.install', new GenericEvent($this, array(
+            $this->dispatcher->dispatch('plugin.install', new GenericEvent($this, array(
                 'plugin_name' => $pluginName
             )));
         }
@@ -78,7 +78,7 @@ class PluginsManagerService
                 unset($composerDefinitions['require'][$package]);
 
                 if ($notify) {
-                    $this->dispatcher->notify('plugin.remove', new GenericEvent($this, array(
+                    $this->dispatcher->dispatch('plugin.remove', new GenericEvent($this, array(
                         'plugin_name' => $pluginName
                     )));
                 }
@@ -107,21 +107,21 @@ class PluginsManagerService
         $this->installPlugin($pluginName, $version, $output, false);
 
         if ($notify) {
-            $this->dispatcher->notify('plugin.update', new GenericEvent($this, array(
+            $this->dispatcher->dispatch('plugin.update', new GenericEvent($this, array(
                 'plugin_name' => $pluginName
             )));
         } 
     }
 
     public function enablePlugin(Plugin $plugin) {
-        $this->dispatcher->notify('plugin.enable', new GenericEvent($this, array(
+        $this->dispatcher->dispatch('plugin.enable', new GenericEvent($this, array(
             'plugin_name' => $plugin->getName(),
             'plugin' => $plugin
         )));
     }
 
     public function disablePlugin(Plugin $plugin) {
-        $this->dispatcher->notify('plugin.disable', new GenericEvent($this, array(
+        $this->dispatcher->dispatch('plugin.disable', new GenericEvent($this, array(
             'plugin_name' => $plugin->getName(),
             'plugin' => $plugin
         )));

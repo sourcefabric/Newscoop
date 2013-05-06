@@ -18,5 +18,4 @@ monolog:
 # enable the web profiler
 web_profiler:
     toolbar: false
-    intercept_redirects: true
-    verbose: true
+    intercept_redirects: false

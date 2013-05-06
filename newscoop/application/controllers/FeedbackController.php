@@ -79,7 +79,7 @@ class FeedbackController extends Zend_Controller_Action
 
                 $current_user = $this->_helper->service('user')->getCurrentUser();            
                 $this->_helper->service->getService('dispatcher')
-                    ->notify('image.delivered', new GenericEvent($this, array(
+                    ->dispatch('image.delivered', new GenericEvent($this, array(
                         'user' => $current_user,
                         'image_id' => $values['attachment_id']
                     )));
@@ -95,7 +95,7 @@ class FeedbackController extends Zend_Controller_Action
 
                 $current_user = $this->_helper->service('user')->getCurrentUser();
                 $this->_helper->service->getService('dispatcher')
-                    ->notify('document.delivered', new GenericEvent($this, array(
+                    ->dispatch('document.delivered', new GenericEvent($this, array(
                         'user' => $current_user,
                         'document_id' => $values['attachment_id']
                     )));

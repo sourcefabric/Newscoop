@@ -20,14 +20,13 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
  */
 class EventDispatcherProxy implements EventSubscriber
 {
-    /** @var EventDispatcher */
     private $dispatcher;
 
     /** @var array */
     private $events = array();
 
     /**
-     * @param EventDispatcher $dispatcher
+     * @param $dispatcher
      */
     public function __construct($dispatcher)
     {
@@ -58,7 +57,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.create", new GenericEvent($this, array(
+        $this->dispatcher->dispatch("{$entityName}.create", new GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
@@ -89,7 +88,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function postUpdate(LifecycleEventArgs $args)
     {
         foreach ($this->events as $eventName =>  $event) {
-            $this->dispatcher->notify($eventName, $event);
+            $this->dispatcher->dispatch($eventName, $event);
         }
     }
 
@@ -102,7 +101,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.delete", new GenericEvent($this, array(
+        $this->dispatcher->dispatch("{$entityName}.delete", new GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
@@ -126,7 +125,7 @@ class EventDispatcherProxy implements EventSubscriber
     /**
      * Get entity properties.
      *
-     * @param object $entity
+     * @param object $entitygetManager
      * @param Doctrine\ORM\EntityManager $em
      * @return array
      */

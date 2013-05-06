@@ -61,7 +61,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
      * @return Doctrine\ORM\EntityManager
      * The doctrine entity manager.
      */
-    protected function getEntityManager()
+    protected function getManager()
     {
         if ($this->em === NULL) {
             $this->em = \Zend_Registry::get('container')->getService('em');
@@ -71,7 +71,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
     public function findAllTypes()
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->getManager()->createQueryBuilder();
 
         $qb ->select( self::ALIAS )
             ->from( '\Newscoop\Entity\ArticleType', self::ALIAS )
@@ -83,7 +83,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
     public function findFields(ArticleType $type)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->getManager()->createQueryBuilder();
         $qb ->select( self::ALIAS )
             ->from( '\Newscoop\Entity\ArticleTypeField', self::ALIAS )
             ->where( self::ALIAS . '.typeHack = ?1' . ' AND ' . self::ALIAS . ".name IS NOT NULL" . ' AND ' . self::ALIAS . ".name <> 'NULL'" )->setParameter( 1, $type->getName() );
@@ -99,7 +99,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
     public function findFieldByName(ArticleType $type, $name)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->getManager()->createQueryBuilder();
         $qb ->select( self::ALIAS )
             ->from( '\Newscoop\Entity\ArticleTypeField', self::ALIAS )
             ->where
@@ -124,7 +124,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
     public function findTypeByName($name)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $this->getManager()->createQueryBuilder();
 
         $qb ->select( self::ALIAS )
             ->from( '\Newscoop\Entity\ArticleType', self::ALIAS )
@@ -145,7 +145,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     public function create( $name )
     {
         $ret = $this->_create( $name );
-        $this->getEntityManager()->flush();
+        $this->getManager()->flush();
         return $ret;
     }
 
@@ -159,7 +159,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         $artType = new ArticleType();
         $artType->setName( $name );
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->persist( $artType );
 
         return $artType;
@@ -182,7 +182,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     public function createField( $name, ArticleType $type, $props = null )
     {
         $ret = $this->createField( $name, $type, $props );
-        $this->getEntityManager()->flush();
+        $this->getManager()->flush();
         return $ret;
     }
 
@@ -204,7 +204,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
             }
         }
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->persist( $artField );
 
         return $artField;
@@ -233,7 +233,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
         try
         {
-            $this->getEntityManager()->flush();
+            $this->getManager()->flush();
         }
         catch( \PDOException $e )
         {
