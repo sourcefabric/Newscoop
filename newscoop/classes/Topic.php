@@ -419,6 +419,11 @@ class Topic extends DatabaseObject {
 		}
 
 		if (isset($this->m_names[$p_languageId])) {
+            $topics = Topic::GetTopics(null, $p_languageId, $p_value);
+
+            if (is_array($topics) && count($topics) != 0) {
+                return false;
+            }            
 			// Update the name.
 			$oldName = $this->m_names[$p_languageId]->getName();
 			$changed = $this->m_names[$p_languageId]->setName($p_value);
