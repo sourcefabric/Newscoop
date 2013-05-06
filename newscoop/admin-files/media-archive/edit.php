@@ -10,7 +10,7 @@ $f_image_id = Input::Get('f_image_id', 'int', 0);
 $f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0, true);
 if ($f_fix_thumbs) {
     //regenerate missing thumbs
-    $returnMessage = 'No thumbnails were fixed.';
+    $returnMessage = getGS('No thumbnails were fixed.');
     $imageObj = new Image();
     $imagesList = $imageObj->GetList(array(), array(), 0, 0, $imagesCount, TRUE);
 
@@ -18,12 +18,12 @@ if ($f_fix_thumbs) {
         $thumbLocation = $image->getThumbnailStorageLocation();
         if (!file_exists($thumbLocation)) {
             if ($image->generateThumbnailFromImage()) {
-            	$returnMessage = 'Missing thumbnails fixed.';
+            	$returnMessage = getGS('Missing thumbnails fixed.');
             }
         }
     }
 
-    camp_html_add_msg(getGS($returnMessage));
+    camp_html_add_msg($returnMessage);
     camp_html_goto_page("/$ADMIN/media-archive/index.php");
     exit();
 }
