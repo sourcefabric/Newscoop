@@ -889,6 +889,48 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get DataTable view
+     *
+     * @param Zend_View_Abstract $view
+     * @return object
+     */
+    public function getDataTableView(Zend_View_Abstract $view)
+    {
+        $types = array();
+        foreach ($this->getUserTypes() as $type) {
+            $types[] = $type->getName();
+        }
+
+        switch ($this->status) {
+            case '0':
+                $status = 'Inactive';
+                break;
+            case '1':
+                $status = 'Active';
+                break;
+            case '2':
+                $status = 'Banned';
+                break;
+            case '3':
+                $status = 'Deleted';
+                break;
+        }
+
+        return (object) array(
+            'id' => $this->id,
+            'u' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
+            'f' => $this->first_name,
+            'l' => $this->last_name,
+            'e' => $this->email,
+            'g' => $types,
+            's' => $status,
+            'c' => $this->created->format('d.m.Y'),
+            'up' => $this->updated->format('d.m.Y'),
+            've' => ((bool) $this->getAttribute(UserAttribute::IS_VERIFIED) ? 'Yes' : 'No')
+        );
+    }
+
+    /**
      * Get url for given action
      *
      * @param string $action
