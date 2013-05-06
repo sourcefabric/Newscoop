@@ -8,13 +8,9 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Author;  
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
-/**
- * Create simple Author object from Newscoop\Entity\Author object.
- */
-class ImageUriHandler implements SerializationHandlerInterface
+class ImageUriHandler
 {
     private $imageService;
     private $zendRouter;
@@ -27,22 +23,18 @@ class ImageUriHandler implements SerializationHandlerInterface
         $this->publicationAliasName = $publicationService->getPublicationAlias()->getName();
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
-    {   
-        if ($type != 'Newscoop\\Entity\\Author') {
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, array $type)
+    {
+        if (!$data->imageId) {
             return;
         }
 
-        if (!$data->getImage()) {
-            return;
-        }
-
-        $image = $this->imageService->find($data->getImage());
+        $image = $this->imageService->find($data->imageId);
         $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
         $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
             'src' => $imageSrc
         ), 'image');
 
-        $data->setImage($imageUri);
+        return $imageUri;
     }
 }

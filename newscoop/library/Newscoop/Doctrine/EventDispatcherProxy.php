@@ -14,23 +14,21 @@ use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Newscoop\EventDispatcher\EventDispatcher;
 
 /**
  * Doctrine Event Dispatcher Proxy dispatches Symfony Events on certain doctrine events.
  */
 class EventDispatcherProxy implements EventSubscriber
 {
-    /** @var EventDispatcher */
     private $dispatcher;
 
     /** @var array */
     private $events = array();
 
     /**
-     * @param EventDispatcher $dispatcher
+     * @param $dispatcher
      */
-    public function __construct(EventDispatcher $dispatcher)
+    public function __construct($dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
@@ -59,8 +57,8 @@ class EventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.create", new GenericEvent($this, array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+        $this->dispatcher->dispatch("{$entityName}.create", new GenericEvent($this, array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
@@ -75,7 +73,7 @@ class EventDispatcherProxy implements EventSubscriber
     {
         $entityName = $this->getEntityName($args->getEntity());
         $this->events["{$entityName}.update"] = new GenericEvent($args->getEntity(), array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
         ));
@@ -90,7 +88,7 @@ class EventDispatcherProxy implements EventSubscriber
     public function postUpdate(LifecycleEventArgs $args)
     {
         foreach ($this->events as $eventName =>  $event) {
-            $this->dispatcher->notify($eventName, $event);
+            $this->dispatcher->dispatch($eventName, $event);
         }
     }
 
@@ -103,9 +101,9 @@ class EventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.delete", new GenericEvent($this, array(
-            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
-            'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
+        $this->dispatcher->dispatch("{$entityName}.delete", new GenericEvent($this, array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getManager()),
+            'diff' => $this->getEntityProperties($args->getEntity(), $args->getManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }

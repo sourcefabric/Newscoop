@@ -38,7 +38,7 @@ if (php_sapi_name() !== 'cli'
  */
 if (APPLICATION_ENV === 'production') {
     $kernel = new AppKernel('prod', false);
-} else if (APPLICATION_ENV === 'development') {
+} else if (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev') {
     $kernel = new AppKernel('dev', true);
 } else {
     $kernel = new AppKernel(APPLICATION_ENV, true);

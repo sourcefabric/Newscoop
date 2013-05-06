@@ -12,6 +12,10 @@ framework:
     profiler: { only_exceptions: false }
     session : ~
 
+doctrine:
+    dbal:
+        charset: UTF8
+
 # FOSRestBundle Configuration
 fos_rest:
     allowed_methods_listener: true
