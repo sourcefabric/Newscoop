@@ -1,3 +1,4 @@
+<?php camp_load_translation_strings('home'); ?>
 <div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
@@ -67,7 +68,7 @@
 
     <!-- BEGIN Slideshows -->
     <div id="media-slideshows">
-        <?php camp_load_translation_strings('home'); echo $this->view->partial('slideshow-box.phtml', array(
+        <?php echo $this->view->partial('slideshow-box.phtml', array(
             'articleNumber' => $articleObj->getArticleNumber(),
             'slideshows' => $this->_helper->service('package')->findByArticle($articleObj->getArticleNumber()),
         )); ?>
