@@ -37,6 +37,27 @@ class Admin_UserController extends Zend_Controller_Action
         $this->_helper->contextSwitch
             ->addActionContext('index', 'json')
             ->initContext();
+
+        $this->_helper->contextSwitch
+            ->addActionContext('table', 'json')
+            ->initContext();
+
+    }
+
+    public function tableAction()
+    {
+        $users = $this->_helper->service('user')->getCollection(
+            array('q' => null, 'status' => null, 'groups' => null),
+            array('username' => 'asc', 'email' => 'asc'),
+            50000,
+            null
+        );
+        $this->view->users = array();
+        foreach ($users as $user) {
+            $userView = $user->getDataTableView($this->view);
+            $this->view->users[] = $userView;
+        }
+        return;
     }
 
     public function indexAction()

@@ -17,10 +17,16 @@ function smarty_block_form_search_solr($params, $content, $smarty)
         return;
     }
 
+    $language = null;
+    $gimme = $smarty->getTemplateVars('gimme');
+    if ($gimme->language->code !== $gimme->publication->default_language->code) {
+        $language = $gimme->language->code;
+    }
+
     $view = $smarty->getTemplateVars('view');
     $params += array(
         'method' => 'GET',
-        'action' => $view->url(array('controller' => 'search', 'action' => 'index'), 'default'),
+        'action' => $view->url(array('language' => $language), 'search'),
     );
 
     return $view->form('search_articles', $params, $content);
