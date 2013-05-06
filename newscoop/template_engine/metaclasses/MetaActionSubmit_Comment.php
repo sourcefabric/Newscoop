@@ -40,6 +40,8 @@ class MetaActionSubmit_Comment extends MetaAction
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
         $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
+        $this->m_properties['bot_detect'] = $p_input['f_comment_email_protect'];
+
         if (isset($p_input['f_comment_reader_email'])) {
             $readerEmail = trim($p_input['f_comment_reader_email']);
             if (!empty($readerEmail)) {
@@ -107,6 +109,12 @@ class MetaActionSubmit_Comment extends MetaAction
             return false;
         }
 
+        // Detect if it's a bot bot_detect
+        if (!empty($this->m_properties['bot_detect']))  {
+            $this->m_error = new PEAR_Error('The comment cannot be submitted.',
+            ACTION_SUBMIT_COMMENT_BOT_DETECTED);
+            return false;
+        }
 
         $publication_id =  $articleMetaObj->publication->identifier;
 
