@@ -66,12 +66,12 @@
         "post-install-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Newscoop\\Composer\\ScriptHandler::generateOrmProxies",
-            "sh post-install.sh"
+            "sh bin/post-install.sh"
         ],
         "post-update-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Newscoop\\Composer\\ScriptHandler::generateOrmProxies",
-            "sh post-install.sh"
+            "sh bin/post-install.sh"
         ]
     },
     "minimum-stability":"dev",
