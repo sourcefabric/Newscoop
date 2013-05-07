@@ -9,12 +9,16 @@ framework:
     validation: { enable_annotations: true }
     trust_proxy_headers:  false
     templating:      { engines: ['twig', 'smarty'] }
-    profiler: { only_exceptions: false }
-    session : ~
+    default_locale: "en"
+    trusted_proxies: ~
+    session: ~
+    fragments: ~
 
 doctrine:
     dbal:
         charset: UTF8
+    orm:
+        auto_mapping: true
 
 # FOSRestBundle Configuration
 fos_rest:
