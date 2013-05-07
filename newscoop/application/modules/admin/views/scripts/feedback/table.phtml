@@ -3,6 +3,7 @@
     $headStyle = $this->headLink();
     $headStyle->appendStylesheet($this->baseUrl('/admin-style/comments.css'));
     $headStyle->offsetSetStylesheet('table', '');
+    camp_load_translation_strings("feedback");
 ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>

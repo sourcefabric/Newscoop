@@ -185,7 +185,10 @@ $mapPrefixToDir = array(
         '/application/controllers/ErrorController.php',
         '/application/views/scripts/error',
     ),
-    'feedback' => '/admin-files/feedback',
+    'feedback' => array(
+        '/admin-files/feedback',
+        '/application/modules/admin/views/scripts/feedback/',
+    ),
     'preview' => '/template_engine/classes',
     'tiny_media_plugin' => '/js/tinymce/plugins/campsitemedia',
     'plugins' => '/admin-files/plugins',
