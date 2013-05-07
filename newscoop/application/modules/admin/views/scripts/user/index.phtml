@@ -1,30 +1,45 @@
 <?php $this->placeholder('title')->captureStart(); ?>
 <?php putGS('Users'); ?>
-<span id="search-view" class="inline-search">
-    <input type="text" size="34" name="q" placeholder="<?php putGS('Search for username/email'); ?>" /> <button><?php putGS('Search'); ?></button>
-</span>
 <?php $this->placeholder('title')->captureEnd(); ?>
-
-<div class="aside">
-    <ul id="status-filter" class="filters">
-        <li class="vspace"><?php putGS('Status'); ?></li>
-        <?php foreach ($this->form->status->getMultiOptions() as $status => $label) { ?>
-        <li><a href="#<?php echo $status; ?>"><?php echo $this->escape($label); ?> (<span><?php echo $this->counts[$status]; ?></span>)</a></li>
-        <?php } ?>
-    </ul>
-
-    <?php echo $this->renderActions(); ?>
-
-    <div id="chart"></div>
-</div>
-
-<div id="list-wrapper" class="canvas">
-    <div class="controls">
-        <div id="pagination" class="paginationControl"></div>
-        <div id="filter"><dl><?php echo $this->form->groups; ?></dl></div>
-    </div>
-    <ul id="user-list" class="users"></ul>
-</div>
+<?php echo $this->renderActions(); ?>
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="userDataTable">
+    <thead>
+        <tr>
+            <th rowspan="2">Username</th>
+            <th rowspan="2">First Name</th>
+            <th rowspan="2">Last Name</th>
+            <th rowspan="2">Email</th>
+            <th></th>
+            <th></th>
+            <th rowspan="2">Created</th>
+            <th rowspan="2">Updated</th>
+            <th></th>
+            <th rowspan="2">Options</th>
+        </tr>
+        <tr>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Verified</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Usertype</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Verified</th>
+            <th>Options</th>
+        </tr>
+    </tfoot>
+</table>
 
 <script type="text/html" id="user-active-template">
 <div class="inline-actions">
@@ -56,8 +71,72 @@
 
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/underscore.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('js/backbone.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo $this->baseUrl('js/apps/users.js'); ?>"></script>
 <script type="text/javascript">
+(function($) {
+/*
+ * Function: fnGetColumnData
+ * Purpose:  Return an array of table values from a particular column.
+ * Returns:  array string: 1d data array 
+ * Inputs:   object:oSettings - dataTable settings object. This is always the last argument past to the function
+ *           int:iColumn - the id of the column to extract the data from
+ *           bool:bUnique - optional - if set to false duplicated values are not filtered out
+ *           bool:bFiltered - optional - if set to false all the table data is used (not only the filtered)
+ *           bool:bIgnoreEmpty - optional - if set to false empty values are not filtered from the result array
+ * Author:   Benedikt Forchhammer <b.forchhammer /AT\ mind2.de>
+ */
+$.fn.dataTableExt.oApi.fnGetColumnData = function ( oSettings, iColumn, bUnique, bFiltered, bIgnoreEmpty ) {
+    // check that we have a column id
+    if ( typeof iColumn == "undefined" ) return new Array();
+    
+    // by default we only wany unique data
+    if ( typeof bUnique == "undefined" ) bUnique = true;
+    
+    // by default we do want to only look at filtered data
+    if ( typeof bFiltered == "undefined" ) bFiltered = true;
+    
+    // by default we do not wany to include empty values
+    if ( typeof bIgnoreEmpty == "undefined" ) bIgnoreEmpty = true;
+    
+    // list of rows which we're going to loop through
+    var aiRows;
+    
+    // use only filtered rows
+    if (bFiltered == true) aiRows = oSettings.aiDisplay; 
+    // use all rows
+    else aiRows = oSettings.aiDisplayMaster; // all row numbers
+
+    // set up data array    
+    var asResultData = new Array();
+    
+    for (var i=0,c=aiRows.length; i<c; i++) {
+        iRow = aiRows[i];
+        var aData = this.fnGetData(iRow);
+        var sValue = aData[iColumn];
+        
+        // ignore empty values?
+        if (bIgnoreEmpty == true && sValue.length == 0) continue;
+
+        // ignore unique values?
+        else if (bUnique == true && jQuery.inArray(sValue, asResultData) > -1) continue;
+        
+        // else push the value onto the result data array
+        else asResultData.push(sValue);
+    }
+    
+    return asResultData;
+}}(jQuery));
+
+
+function fnCreateSelect( aData )
+{
+    var r='<select><option value=""></option>', i, iLen=aData.length;
+    for ( i=0 ; i<iLen ; i++ )
+    {
+        r += '<option value="'+aData[i]+'">'+aData[i]+'</option>';
+    }
+    return r+'</select>';
+}
+
 $(function() {
     window.translate = <?php echo json_encode(array(
         'No users found.' => getGS('No users found.'),
@@ -66,14 +145,139 @@ $(function() {
         'User was deleted.' => getGS('User was deleted.'),
     )); ?>;
 
-    var users = new UserCollection();
-    var list = new UserListView({collection: users, el: $('#user-list')});
-    var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
-    var pagination = new PaginationView({collection: users, el: $('#pagination')});
-    var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
-    var search = new SearchView({collection: users, el: $('#search-view')});
-    users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
-    users.reset(users.parse(<?php echo json_encode($this); ?>));
+    $('#userDataTable').hide(); // hide the table so it doesn't look jaggy
+    var oTable = $('#userDataTable').dataTable( {
+        'oLanguage': {
+            'oPaginate': {
+                'sNext': '<?php putGS('Next'); ?>',
+                'sPrevious': '<?php putGS('Previous'); ?>',
+            },
+            'sZeroRecords': '<?php putGS('No records found.'); ?>',
+            'sSearch': '<?php putGS('Search'); ?>:',
+            'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
+            'sEmpty': '<?php putGS('No entries to show'); ?>',
+            'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
+            'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+            'sInfoEmpty': '',
+        },
+        // "bServerSide": true,
+        "bProcessing": true,
+        "bAutoWidth": true,
+        "sPaginationType": "full_numbers",
+        "bPaging": true,
+        // ***
+        // * This requires 1.9.0 as minimium
+        // * This allows for styling (or something similar) based on COLUMN content.
+        // ***
+        // "aoColumnDefs": [ {
+        //   "aTargets": [4],
+        //   "fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+        //     if (typeof sData == 'string') {
+        //         if ( sData.indexOf("Admin") !== -1) {
+        //           $(nTd).parent().css('font-weight', 'bold');
+        //         }
+        //     }
+        //   }
+        // } ],
+        'bJQueryUI': true,
+        "sDom": 'RCf<"clear">rtilp',
+        "oColVis": {
+            "aiExclude": [ 0 ]
+        },
+        "sAjaxSource": <?php echo json_encode($this->url(array('action' => 'table', 'format' => 'json'))); ?>,
+        "fnServerData": function ( sSource, aoData, fnCallback ) {
+            $.getJSON( sSource, aoData, function (json) { 
+                var aaData = [];
+                var totalRecords = json['users'].length;
+                json['users'].forEach(function(user) {
+                    var newUser = [];
+                    for (var key in user) {
+                        if (key != 'id') {
+                            var string = user[key];
+                            if (key == 'u') {
+                                string = '<a href="user/edit/user/'+user['id']+'">'+ user['u'] + '</a>';
+                            }
+                            if (key == 'g') {
+                                string = user[key].join(' / ');
+                            }
+                            if (key == 'e') {
+                                string = '<a href="mailto:'+user['e']+'">'+user['e']+'</a>';
+                            }
+                            newUser.push(string);
+                            if (key == 've') {
+                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'">Delete</a>, <a href="user/rename/user/'+user['id']+'">Rename</a>';
+                                if (user['ve'] == 'No') {
+                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'">Confirm</a>';
+                                }
+                                newUser.push(optionsUrl);
+                            }
+                        }
+                    }
+                    aaData.push(newUser);
+                });
+                var newData = [];
+                newData.aaData = aaData;
+                newData.iTotalRecords = totalRecords;
+                fnCallback(newData);
+                setTimeout( function () {
+                    $("thead th").each( function ( i ) {
+                        if (i == 4) {
+                            var columnData = oTable.fnGetColumnData(i);
+                            var xArr = [];
+                            columnData.forEach(function(x) {
+                                x.split(' / ').forEach(function (xRole) {
+                                    if ($.inArray(xRole, xArr) === -1) {
+                                        xArr.push(xRole);
+                                    }
+                                });
+                            });
+                            this.innerHTML = fnCreateSelect( xArr );
+                        } else if (i == 5 || i == 8) {
+                            this.innerHTML = fnCreateSelect( oTable.fnGetColumnData(i) );
+                        }
+                        $('select', this).change( function () {
+                            oTable.fnFilter( $(this).val() , i, false, false, false, false );
+                        } );
+                    } );
+                    oTable.fnFilter( 'Active' , 5, false, false, false, false );
+                    oTable.fnSetColumnVis( 5, false );
+                    oTable.fnSetColumnVis( 6, false );
+                    oTable.fnSetColumnVis( 7, false );
+                    oTable.fnSetColumnVis( 8, false );
+                    $('#userDataTable').show();
+                }, 0 );
+            });
+        }
+    } );
+});
+
+$(document).ready(function(){
+    $('#userDataTable').on('click', '.jsonDelete', function(event){
+        var dataTableCell = $(this).parent();
+        var dataTableRow = dataTableCell.parent().get(0);
+        event.preventDefault();
+        $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return false;
+            }
+
+            $('#userDataTable').dataTable().fnUpdate( "Deleted", dataTableRow, 5 );
+            flashMessage(window.translate['User was deleted.']);
+        });
+    });
+
+    $('#userDataTable').on('click', '.jsonConfirm', function(event){
+        event.preventDefault();
+        $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return false;
+            }
+
+            flashMessage(window.translate['New confirmation email was sent to user.']);
+        });
+    });
 });
 </script>
 

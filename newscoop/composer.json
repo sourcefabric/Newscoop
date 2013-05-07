@@ -34,6 +34,9 @@
         "hybridauth\/hybridauth":"dev-master",
         "noiselabs\/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
     },
+    "require-dev":{
+        "phpunit/phpunit": "3.7.*"
+    },
     "autoload":{
         "psr-0":{
             "Newscoop":[
@@ -59,11 +62,13 @@
     "scripts":{
         "post-install-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Newscoop\\Composer\\ScriptHandler::generateOrmProxies"
+            "Newscoop\\Composer\\ScriptHandler::generateOrmProxies",
+            "sh bin/post-install.sh"
         ],
         "post-update-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Newscoop\\Composer\\ScriptHandler::generateOrmProxies"
+            "Newscoop\\Composer\\ScriptHandler::generateOrmProxies",
+            "sh bin/post-install.sh"
         ]
     },
     "minimum-stability":"dev",
