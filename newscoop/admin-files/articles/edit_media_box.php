@@ -1,3 +1,4 @@
+<?php camp_load_translation_strings('home'); ?>
 <div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
