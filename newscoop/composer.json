@@ -26,7 +26,7 @@
         "jms/di-extra-bundle": "1.3.*",
         "bombayworks\/zendframework1":"1.11.*",
         "smarty\/smarty":"3.1.13",
-        "friendsofsymfony\/rest-bundle":"0.12.x-dev#1054f30",
+        "friendsofsymfony\/rest-bundle":"0.12.0",
         "behat\/behat":">=2.4.0",
         "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
         "kriswallsmith\/buzz":">=0.7",
@@ -72,7 +72,7 @@
             "Newscoop\\Composer\\ScriptHandler::generateOrmProxies"
         ]
     },
-    "minimum-stability":"alpha",
+    "minimum-stability":"dev",
     "config":{
         "bin-dir":"vendor\/bin"
     },

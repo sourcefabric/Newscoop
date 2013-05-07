@@ -47,18 +47,15 @@ if (APPLICATION_ENV === 'production') {
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
-$kernel->boot();
-$container = $kernel->getContainer();
-\Zend_Registry::set('container', $container);
-
-// init adodb
-require_once __DIR__ . '/../db_connect.php';
-
 try {
     $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
+    $kernel->boot();
+    $container = $kernel->getContainer();
+    \Zend_Registry::set('container', $container);
+
     // Fill zend application options
     $config = $container->getParameterBag()->all();
     $application = new \Zend_Application(APPLICATION_ENV);

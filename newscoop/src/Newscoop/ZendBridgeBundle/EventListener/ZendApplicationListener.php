@@ -23,11 +23,16 @@ class ZendApplicationListener
 
     public function onRequest(GetResponseEvent $event)
     {
+        \Zend_Registry::set('container', $this->container);
+
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '_profiler');
 
         // don't call Zend Application for profiler.
         if (false === $pos) {
+            // init adodb
+            require_once __DIR__ . '/../../../../db_connect.php';
+
             // Fill zend application options
             $config = $this->container->getParameterBag()->all();
             $application = new \Zend_Application(APPLICATION_ENV);
