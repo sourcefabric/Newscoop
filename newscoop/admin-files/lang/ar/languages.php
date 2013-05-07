@@ -1,6 +1,6 @@
 <?php 
 regGS("No languages.", "لا لغات");
-regGS("Native Name", "الاسم في اللغة الاصلية");
+regGS("Native Name", "الاسم المحلي");
 regGS("Name taken.", "اسم مأخوذ.");
 regGS("Language saved.", "تم حفظ اللغة.");
 regGS("Language removed.", "تمت إزالة اللغة.");
@@ -69,7 +69,7 @@ regGS("Saturday", "يوم السبت");
 regGS("Sunday", "يوم الأحد");
 regGS("You do not have the right to add new languages.", "ليس لديك الحق في إضافة لغات جديدة.");
 regGS("There are $1 issue(s) left.", "تبقى $1 اصدارات");
-regGS("Native name", "الاسم في اللغة الاصلية");
+regGS("Native name", "الاسم المحلي");
 regGS("The language $1 has been successfuly added.", "تمت إضافة اللغة $1 بنجاح");
 regGS("Please check if a language with the same name does not already exist.", "الرجاء التأكد من عدم وجود لغة تحمل الاسم نفسه");
 regGS("The language could not be added.", "لم تضف اللغة.");
