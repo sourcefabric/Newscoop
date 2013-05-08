@@ -52,7 +52,7 @@ try {
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
-    $container = \Zend_Registry::get('container', $container);
+    $container = \Zend_Registry::get('container');
 
     // Fill zend application options
     $config = $container->getParameterBag()->all();

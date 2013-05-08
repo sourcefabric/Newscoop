@@ -11,7 +11,7 @@ namespace Newscoop\ZendBridgeBundle\EventListener;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
- * Run publication resolver on request
+ * Run zend legacy code (zend router, acl etc...)
  */
 class ZendApplicationListener
 {   
@@ -19,17 +19,17 @@ class ZendApplicationListener
     
     public function __construct($container) {
         $this->container = $container;
+        \Zend_Registry::set('container', $this->container);
     }
 
     public function onRequest(GetResponseEvent $event)
     {
-        \Zend_Registry::set('container', $this->container);
-
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '_profiler');
 
         // don't call Zend Application for profiler.
         if (false === $pos) {
+            
             // init adodb
             require_once __DIR__ . '/../../../../db_connect.php';
 

@@ -1,12 +1,12 @@
 <?php
 /**
  * @package Campsite
- *
+ * 
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @author Holman Romero <holman.romero@gmail.com>
  * @author Mugur Rus <mugur.rus@gmail.com>
- * @copyright 2007 MDLF, Inc.
+ * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
- * @version $Revision$
  * @link http://www.sourcefabric.org
  */
 
@@ -17,7 +17,7 @@ use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
-global $g_db;
+global $g_ado_db;
 
 /**
  * Includes
@@ -70,6 +70,9 @@ class CampInstallationBase
 
     protected function execute()
     {
+        // test ado db connection
+        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+
         $input = CampRequest::GetInput('post');
         $session = CampSession::singleton();
 
@@ -136,7 +139,6 @@ class CampInstallationBase
                     require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
                     SystemPref::DeleteSystemPrefsFromCache();
 
-                    // clear all cache
                     require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
                     CampCache::singleton()->clear('user');
                     CampCache::singleton()->clear();
@@ -145,11 +147,10 @@ class CampInstallationBase
                 break;
 
         }
-    } // fn execute
+    }
 
 
     private function preInstallationCheck() {}
-
 
     private function license()
     {
@@ -164,12 +165,9 @@ class CampInstallationBase
         }
     }
 
-    /**
-     *
-     */
     private function databaseConfiguration($p_input)
     {
-        global $g_db;
+        global $g_ado_db;
 
         if (file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
@@ -193,8 +191,7 @@ class CampInstallationBase
             $db_hostport = 3306;
         }
 
-        if (empty($db_hostname) || empty($db_hostport)
-                || empty($db_username) || empty($db_database)) {
+        if (empty($db_hostname) || empty($db_hostport) || empty($db_username) || empty($db_database)) {
             $this->m_step = 'database';
             $this->m_message = 'Error: Please input the requested data';
 
@@ -211,12 +208,12 @@ class CampInstallationBase
             'port' => $db_hostport,
         );
 
-        $g_db = $this->getTestDbConnection($connectionParams);
+        $g_ado_db = $this->getTestDbConnection($connectionParams);
 
         $isConnected = false;
 
         try {
-            $isConnected = $g_db->isConnected(true);
+            $isConnected = $g_ado_db->isConnected(true);
         } catch (Exception $e) {
             if ($e->getCode() == 1045) {
                 $error = true;
@@ -228,10 +225,10 @@ class CampInstallationBase
         } else {
             $isDbEmpty = TRUE;
 
-            $selectDb = $g_db->hasDatabase($db_database);
+            $selectDb = $g_ado_db->hasDatabase($db_database);
             if ($selectDb) {
-                $g_db = $this->getDbConnection($connectionParams);
-                $dbTables = $g_db->GetAll('SHOW TABLES');
+                $g_ado_db = $this->getDbConnection($connectionParams);
+                $dbTables = $g_ado_db->GetAll('SHOW TABLES');
                 $isDbEmpty = empty($dbTables) ? TRUE : FALSE;
             }
 
@@ -254,8 +251,8 @@ class CampInstallationBase
 
         if (!$error && !$selectDb) {
             try {
-                $g_db->createDatabase($db_database);
-                $g_db = $this->getDbConnection($connectionParams);
+                $g_ado_db->createDatabase($db_database);
+                $g_ado_db = $this->getDbConnection($connectionParams);
             } catch (\Exception $e) {
                 $error = true;
             }
@@ -263,10 +260,11 @@ class CampInstallationBase
 
         if ($error == true) {
             $this->m_step = 'database';
-            $this->m_message = 'Error: Database parameters invalid. Could not '
-                . 'connect to database server.';
+            $this->m_message = 'Error: Database parameters invalid. Could not connect to database server.';
             return false;
         }
+
+        $g_ado_db = $this->getDbConnection($connectionParams);
 
         $sqlFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP.'campsite_core.sql';
         $errors = CampInstallationBaseHelper::ImportDB($sqlFile, $errorQueries);
@@ -308,7 +306,7 @@ class CampInstallationBase
         }
 
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
-        if (!camp_geodata_loaded($g_db)) {
+        if (!camp_geodata_loaded($g_ado_db)) {
             $which_output = '';
             $which_ret = '';
             @exec('which mysql', $which_output, $which_ret);
@@ -329,7 +327,7 @@ class CampInstallationBase
         }
 
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
-        if (!camp_geodata_loaded($g_db)) {
+        if (!camp_geodata_loaded($g_ado_db)) {
             $which_output = '';
             $which_ret = '';
             @exec('which mysql', $which_output, $which_ret);
@@ -351,7 +349,7 @@ class CampInstallationBase
 
         { // installing the stored function for 'point in polygon' checking
             $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
-            importSqlStoredProgram($g_db, $sqlFile);
+            importSqlStoredProgram($g_ado_db, $sqlFile);
         }
 
         $this->m_config['database'] = array(
@@ -365,6 +363,7 @@ class CampInstallationBase
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates', 'unassigned'));
 
+        // this is copyied form upgrade.php file - code duplication
         $db_versions = array_map('basename', glob($GLOBALS['g_campsiteDir'] . '/install/sql/upgrade/[2-9].[0-9]*'));
         if (!empty($db_versions)) {
             usort($db_versions, 'camp_version_compare');
@@ -377,7 +376,7 @@ class CampInstallationBase
                 $db_last_roll_info_keys = array_keys($db_last_roll_info);
                 $db_last_roll = $db_last_roll_info_keys[0];
             }
-            camp_save_database_version($g_db, $db_last_version, $db_last_roll);
+            camp_save_database_version($g_ado_db, $db_last_version, $db_last_roll);
         }
 
         return true;
@@ -386,7 +385,6 @@ class CampInstallationBase
     /**
      * Get database connection
      *
-     * @param array $params
      * @return Newscoop\Doctrine\AdoDbAdapter
      */
     private function getDbConnection(array $params)
@@ -404,12 +402,12 @@ class CampInstallationBase
     /**
      * Get test database connection
      *
-     * @param array $params
      * @return Newscoop\Doctrine\AdoDbAdapter
      */
     private function getTestDbConnection(array $params)
     {
         unset($params['dbname']);
+
         return $this->getDbConnection($params);
     }
 
@@ -448,7 +446,7 @@ class CampInstallationBase
 
     private function installEmptyTheme()
     {
-        global $g_db;
+        global $g_ado_db;
         $templatesDir = CS_PATH_TEMPLATES;
         $unassignedTemplatesDir = $templatesDir.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
         $emptyThemeDir = $unassignedTemplatesDir.DIR_SEP."empty";
@@ -509,7 +507,8 @@ XML;
      */
     private function loadDemoSite()
     {
-        global $g_db;
+        global $g_ado_db;
+
         $session = CampSession::singleton();
         $template_name = $session->getData('config.demo', 'installation');
         $isWritable = true;
@@ -580,8 +579,7 @@ XML;
 
         if (CampInstallationBaseHelper::ConnectDB() == false) {
             $this->m_step = 'loaddemo';
-            $this->m_message = 'Error: Database parameters invalid. Could not '
-                . 'connect to database server.';
+            $this->m_message = 'Error: Database parameters invalid. Could not connect to database server.';
 
             return false;
         }
@@ -620,28 +618,6 @@ XML;
 
             return false;
         }
-        
-        // add session db settings into global Campsite
-        $keyMap = array(
-            'DATABASE_SERVER_ADDRESS' => 'hostname',
-            'DATABASE_NAME' => 'database',
-            'DATABASE_USER' => 'username',
-            'DATABASE_PASSWORD' => 'userpass',
-        );
-
-        if (!isset($GLOBALS['Campsite'])) {
-            $GLOBALS['Campsite'] = array();
-        }
-
-        foreach ($keyMap as $globalKey => $sessionKey) {
-            $GLOBALS['Campsite'][$globalKey] = $_SESSION['installation']['config.db'][$sessionKey];
-        }
-
-        // bootstrap doctrine
-        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-        $GLOBALS['application']->bootstrap('container');
-        $GLOBALS['application']->bootstrap('container');
 
         $resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
@@ -658,9 +634,9 @@ XML;
         }
 
         // set publication alias
-        global $g_db;
-        $sql = 'UPDATE `Aliases` SET ' . $g_db->escapeKeyVal('Name', $_SERVER['HTTP_HOST']);
-        $g_db->executeUpdate($sql);
+        global $g_ado_db;
+        $sql = 'UPDATE `Aliases` SET ' . $g_ado_db->escapeKeyVal('Name', $_SERVER['HTTP_HOST']);
+        $g_ado_db->executeUpdate($sql);
 
         return true;
     }
@@ -702,9 +678,7 @@ XML;
 
         // Set the site EmailFromAddress to the adminemail as default
         // Set the site EmailContact to the sitetitle as default
-        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-        $GLOBALS['application']->bootstrap('container');
         SystemPref::Set('EmailFromAddress', $mcData['adminemail']);
         SystemPref::Set('EmailContact', $mcData['adminemail']);
 
@@ -717,7 +691,7 @@ XML;
      */
     private function saveCronJobsScripts()
     {
-        global $g_db;
+        global $g_ado_db;
 
         $cronJobs = array(
             'newscoop_autopublish',
@@ -747,7 +721,7 @@ XML;
                     return false;
                 }
                 $sqlQuery = "UPDATE SystemPreferences SET value = 'N' WHERE varname = 'ExternalCronManagement'";
-                $g_db->Execute($sqlQuery);
+                $g_ado_db->Execute($sqlQuery);
             }
         }
 
@@ -860,9 +834,21 @@ XML;
 
         $php = escapeshellarg($phpPath);
         $doctrine = escapeshellarg($GLOBALS['g_campsiteDir'].DIR_SEP.'scripts'.DIR_SEP.'doctrine.php');
-        $process = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
-        $process->run();
-        if (!$process->isSuccessful()) {
+        $generateProxies = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
+        $generateProxies->run();
+        if (!$generateProxies->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
+        }
+
+        $env = '';
+        $console = escapeshellarg($GLOBALS['g_campsiteDir'].'/application/console');
+        if (APPLICATION_ENV == 'production') {
+            $env = '--env=prod';
+        }
+
+        $clearCache = new Process("$php $console cache:clear $env ", null, null, null, 300);
+        $clearCache->run();
+        if (!$clearCache->isSuccessful()) {
             throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
         }
 
@@ -946,51 +932,39 @@ class CampInstallationBaseHelper
 
     public static function ConnectDB()
     {
-        global $g_db;
+        global $g_ado_db;
 
-        if ($g_db !== null) {
-            return true;
+        $config_file = APPLICATION_PATH . '/../conf/database_conf.php';
+        if (is_readable($config_file)) {
+            $container = Zend_Registry::get('container');
+            $g_ado_db = $container->getService('doctrine.adodb');
         }
 
-        $session = CampSession::singleton();
-        $dbData = $session->getData('config.db', 'installation');
-
-        if (empty($dbData)) {
+        if (!$g_ado_db->isConnected(true)) {
             return false;
         }
 
-        $params = array(
-            'dbname' => $dbData['database'],
-            'user' => $dbData['username'],
-            'password' => $dbData['userpass'],
-            'host' => $dbData['hostname'],
-            'driver' => 'pdo_mysql',
-            'charset' => 'UTF8',
-        );
-
-        $config = new \Doctrine\DBAL\Configuration();
-        $connection = \Doctrine\DBAL\DriverManager::getConnection($params, $config);
-        return $g_db = new \Newscoop\Doctrine\AdoDbAdapter($connection);
+        return $g_ado_db;
     }
 
     public static function CreateAdminUser($p_email, $p_password)
     {
-        global $g_db;
+        global $g_ado_db;
 
         if (self::ConnectDB() == false) {
             return false;
         }
 
         $sqlQuery1 = "UPDATE liveuser_users SET
-            Password = SHA1(".$g_db->Escape($p_password)."),
-            EMail = ".$g_db->Escape($p_email).",
+            Password = SHA1(".$g_ado_db->Escape($p_password)."),
+            EMail = ".$g_ado_db->Escape($p_email).",
             time_updated = NOW(),
             time_created = NOW(),
             status = '1',
             is_admin = '1'
             WHERE id = 1";
 
-        if (!$g_db->Execute($sqlQuery1)) {
+        if (!$g_ado_db->Execute($sqlQuery1)) {
             return false;
         }
 
@@ -999,7 +973,11 @@ class CampInstallationBaseHelper
 
     public static function ImportDB($p_sqlFile, &$errorQueries)
     {
-        global $g_db;
+        global $g_ado_db;
+
+        if (self::ConnectDB() == false) {
+            return false;
+        }
 
         if(!($sqlFile = file_get_contents($p_sqlFile))) {
             return false;
@@ -1012,7 +990,7 @@ class CampInstallationBaseHelper
         foreach($queries as $query) {
             $query = trim($query);
             if (!empty($query) && $query{0} != '#') {
-                if ($g_db->Execute($query) == false) {
+                if ($g_ado_db->Execute($query) == false) {
                     $errors++;
                     $errorQueries[] = $query;
                 }
@@ -1024,15 +1002,15 @@ class CampInstallationBaseHelper
 
     public static function SetSiteTitle($p_title)
     {
-        global $g_db;
+        global $g_ado_db;
 
         if (self::ConnectDB() == false) {
             return false;
         }
 
-        $p_title = $g_db->escape($p_title);
+        $p_title = $g_ado_db->escape($p_title);
         $sqlQuery = "UPDATE SystemPreferences SET value = $p_title WHERE varname = 'SiteTitle'";
-        return $g_db->Execute($sqlQuery);
+        return $g_ado_db->Execute($sqlQuery);
     }
 
     public static function SplitSQL($p_sqlFile)

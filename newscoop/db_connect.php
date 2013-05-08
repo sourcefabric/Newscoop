@@ -27,6 +27,5 @@ if (empty($g_ado_db)) {
         }
     } else {
         throw new \Exception("Container is missing", 1);
-        
     }
 }
