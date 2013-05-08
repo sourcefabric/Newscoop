@@ -1,4 +1,5 @@
 <?php 
+regGS("Edit metadata", "تعديل بيانات فوقية");
 regGS("Rating", "تقييم");
 regGS("Enable Rating", "تمكين التقييم");
 regGS("Blog management", "إدار ة المدونة");
@@ -185,7 +186,4 @@ regGS("No such article.", "لا يوجد المقالة.");
 regGS("No such section.", "لا يوجد القسم.");
 regGS("Are you sure you want to delete this scheduled action?", "هل أنت متأكد أن تريد أن تحذف هذا الإجراء المجدول؟");
 regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة ' /1$/ ' من المقالة ؟");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "هل أنت متأكد من إزالة الموضوع \\'$1\\' من المقالة؟");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "هل أنت متأكد من إزالة الملف \\'$1\\' من المقالة؟");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "هل أنت متأكد من إزالة الصورة \\'$1\\' من المقالة؟");
 ?>
