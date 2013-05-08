@@ -15,13 +15,7 @@ set_time_limit(0);
 define('INSTALL', TRUE);
 define('DONT_BOOTSTRAP_ZEND', TRUE);
 
-// Define path to application directory
-defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/../application');
-
-// Define application environment
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
-$GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
+require_once __DIR__ . '/../constants.php';
 
 // check if template cache dir is writable
 $templates_cache = dirname(dirname(__FILE__)) . '/cache';
@@ -40,7 +34,6 @@ if (!is_writable($templates_cache)) {
 unset($templates_cache);
 
 require_once __DIR__ . '/../application.php';
-$application->bootstrap('autoloader');
 
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallation.php');

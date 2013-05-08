@@ -638,6 +638,9 @@ XML;
         }
 
         // bootstrap doctrine
+        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+        $GLOBALS['application']->bootstrap('container');
         $GLOBALS['application']->bootstrap('container');
 
         $resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);

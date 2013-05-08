@@ -31,9 +31,7 @@ try {
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
-    $kernel->boot();
-    $container = $kernel->getContainer();
-    \Zend_Registry::set('container', $container);
+    $container = \Zend_Registry::get('container');
 
     // Fill zend application options
     $config = $container->getParameterBag()->all();
@@ -46,8 +44,6 @@ try {
 
     $application->setOptions($config);
     if (!defined('DONT_BOOTSTRAP_ZEND')) {
-        // init adodb
-        require_once __DIR__ . '/db_connect.php';
         $application->bootstrap();
     }
 }
