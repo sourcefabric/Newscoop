@@ -275,7 +275,7 @@ if (isset($_REQUEST["action_button"])) {
                 }
 
                 \Zend_Registry::get('container')->getService('dispatcher')
-                  ->notify('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                  ->dispatch('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                         'article' => $newArticle,
                         'orginal_article_number' => $articleNumber
                     )));
@@ -309,7 +309,7 @@ if (isset($_REQUEST["action_button"])) {
 				$tmpArticles[] = $tmpArticle2;
 
                 \Zend_Registry::get('container')->getService('dispatcher')
-                    ->notify('article.move', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                    ->dispatch('article.move', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                         'article' => $tmpArticle,
                     )));
 			}
@@ -361,7 +361,7 @@ if (isset($_REQUEST["action_button"])) {
 					$tmpArticle->setWorkflowStatus('Y');
 
                     \Zend_Registry::get('container')->getService('dispatcher')
-                        ->notify('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                        ->dispatch('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                             'article' => $tmpArticle,
                         )));
 
@@ -414,7 +414,7 @@ if (isset($_REQUEST["action_button"])) {
 					$tmpArticle->setWorkflowStatus('S');
 
                     \Zend_Registry::get('container')->getService('dispatcher')
-                        ->notify('article.submit', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+                        ->dispatch('article.submit', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                             'article' => $tmpArticle,
                         )));
                         

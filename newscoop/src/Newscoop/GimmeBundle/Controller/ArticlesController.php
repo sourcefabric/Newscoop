@@ -20,14 +20,12 @@ class ArticlesController extends FOSRestController
     /**
      * @Route("/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getArticlesAction(Request $request)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
             ->getArticles($publication, $request->get('type', null), $request->get('language', null));
@@ -43,14 +41,12 @@ class ArticlesController extends FOSRestController
     /**
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"details"})
      */
     public function getArticleAction(Request $request, $number)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication();
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('details'));
 
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))

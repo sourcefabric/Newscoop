@@ -445,7 +445,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $this->cacheThemeConfigs = NULL;
 
             // We need to persist the theme ouput setting for the new publication theme
-            $em = $this->getEntityManager();
+            $em = $this->getManager();
 
 
             $pathRsc = $this->getSyncResourceService()->getThemePath($themeFolder);
@@ -539,7 +539,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $xml->asXML($this->toFullPath($theme, $this->themeConfigFileName));
 
         // We have to update also the output theme settings in the database if there is one.
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $q = $em->createQueryBuilder();
         $q->select('ost')->from(OutputSettingsTheme::NAME, 'ost');
         $q->leftJoin('ost.themePath', 'rsc');
@@ -696,7 +696,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * @return Doctrine\ORM\EntityManager
      * 		The doctrine entity manager.
      */
-    protected function getEntityManager()
+    protected function getManager()
     {
         if($this->em === NULL){
             $this->em = \Zend_Registry::get('container')->getService('em');
@@ -1050,7 +1050,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     function getThemePublication($theme, $output=null)
     {
         $pathRsc = $this->getSyncResourceService()->getThemePath($theme->getPath());
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $qb = $em->createQueryBuilder();
         $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
         $qb->where('th.themePath = :themePath');

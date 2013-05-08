@@ -30,7 +30,7 @@ parameters:
     rendition:
         theme_path: "/../themes"
     doctrine:
-        cache: "Doctrine\Common\Cache\ArrayCache"
+        cache: "array"
         entity:
             dir: "%application_path%/../library/Newscoop"
         proxy:
@@ -139,4 +139,3 @@ parameters:
         cache_path: "%application_path%/../images/cache"
     search:
         solr_server: "http://localhost:8983/solr"
-    newscoop.eventDispatcher.class: "Newscoop\\EventDispatcher\\EventDispatcher"

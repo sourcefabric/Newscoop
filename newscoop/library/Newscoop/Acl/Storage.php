@@ -9,7 +9,6 @@ namespace Newscoop\Acl;
 
 use Resource\Acl\StorageInterface;
 use Newscoop\Utils\PermissionToAcl;
-use Newscoop\Doctrine\Registry;
 
 /**
  * Acl storage
@@ -22,7 +21,7 @@ class Storage implements StorageInterface
     /**
      * @var Newscoop\Doctrine\Registry $doctrine
      */
-    public function __construct(Registry $doctrine)
+    public function __construct($doctrine)
     {
         $this->doctrine = $doctrine;
     }
@@ -35,7 +34,7 @@ class Storage implements StorageInterface
      */
     public function getRules(\Zend_Acl_Role_Interface $role)
     {
-        $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getManager();
         $repository = $em->getRepository('Newscoop\Entity\Acl\Rule');
         $criteria = array(
             'role' => $role->getRoleId(),
@@ -55,7 +54,7 @@ class Storage implements StorageInterface
      */
     public function getResources()
     {
-        $em = $this->doctrine->getEntityManager();
+        $em = $this->doctrine->getManager();
         $repository = $em->getRepository('Newscoop\Entity\Acl\Permission');
 
         $resources = array();

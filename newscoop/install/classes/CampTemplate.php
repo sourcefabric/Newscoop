@@ -62,7 +62,7 @@ final class CampTemplate extends SmartyBC
         return self::$m_instance;
     }
 
-    public function clearCache()
+    public function clearCache($template_name = null, $cache_id = NULL, $compile_id = NULL, $exp_time = NULL, $type = NULL)
     {
         $this->clearCompiledTemplate();
         return $this;

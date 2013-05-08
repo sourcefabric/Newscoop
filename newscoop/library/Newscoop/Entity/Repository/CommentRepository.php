@@ -358,7 +358,7 @@ class CommentRepository extends DatatableSource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $p_cols, $p_search, $qb, $andx)
+    protected function buildWhere(array $p_cols, $p_search, $qb = null, $andx = null)
     {
         $orx = $qb->expr()->orx();
         $orx->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));

@@ -13,37 +13,36 @@ Newscoop\Entity\Article:
             type: string
             groups: ["list", "details"]
             serialized_name: title
-        date:
+        updated:
             expose: true
             read_only: true
-            type: datetime
+            type: DateTime
             groups: ["list", "details"]
             serialized_name: updated
         type:
             expose: true
             read_only: true
-            type: datetime
             groups: ["list", "details"]
             serialized_name: type
         webcode:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: webcode
         keywords:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: keywords
         language:
             expose: true
             read_only: true
-            type: datetime
             groups: ["list", "details"]
+            type: string
             accessor: 
                 getter: getLanguageCode
                 setter: setLanguageCode
@@ -51,7 +50,7 @@ Newscoop\Entity\Article:
         published:
             expose: true
             read_only: true
-            type: string
+            type: DateTime
             groups: ["list", "details"]
             serialized_name: published
         articleAuthors:
@@ -60,12 +59,16 @@ Newscoop\Entity\Article:
             type: author
             groups: ["list", "details"]
             serialized_name: authors
+            accessor:
+                getter: getArticleAuthors
         comments_link:
             expose: true
             read_only: true
             groups: ["list", "details"]
             type: comments_link
             serialized_name: comments
+            accessor:
+                getter: getView
         packages:
             expose: true
             read_only: true
@@ -84,6 +87,8 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             type: article_fields
             serialized_name: fields
+            accessor:
+                getter: getView
         translations:
             expose: true
             read_only: true
@@ -91,6 +96,8 @@ Newscoop\Entity\Article:
             type: article_translations
             access_type: public_method
             serialized_name: translations
+            accessor:
+                getter: getView
         renditions:
             expose: true
             read_only: true
@@ -98,6 +105,8 @@ Newscoop\Entity\Article:
             type: article_renditions
             access_type: public_method
             serialized_name: renditions
+            accessor:
+                getter: getView
         reads:
             expose: true
             read_only: true

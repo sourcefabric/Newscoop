@@ -20,12 +20,12 @@ EOT;
 if (empty($g_ado_db)) {
     if (Zend_Registry::isRegistered('container')) {
         $container = Zend_Registry::get('container');
+        $g_ado_db = $container->getService('doctrine.adodb');
+
+        if (!$g_ado_db->isConnected(true)) {
+            $displayError();
+        }
+    } else {
+        throw new \Exception("Container is missing", 1);
     }
-
-    $g_ado_db = $container->getService('doctrine.adodb');
 }
-
-if (!$g_ado_db->isConnected(true)) {
-    $displayError();
-}
-

@@ -1,31 +1,10 @@
 services:
-    newscoop_doctrine:
-        class:      Newscoop\Doctrine\Doctrine
-        arguments:  ["%doctrine%", "@event_dispatcher"]
-    newscoop_doctrine_connection:
-        class:      Doctrine\DBAL\Connection
-        factory_service:  newscoop_doctrine
-        factory_method:   getConnection
-    newscoop_doctrine_entityManager:
-        class:      Doctrine\ORM\EntityManager
-        factory_service:  newscoop_doctrine
-        factory_method:   getEntityManager
-    doctrine:
-        class:      Newscoop\Doctrine\Registry
-        arguments:
-            - "@service_container"
-            - newscoop: "newscoop_doctrine_connection"
-            - newscoop: "newscoop_doctrine_entityManager"
-            - newscoop
-            - newscoop
     doctrine.em:
-        class:      Doctrine\ORM\EntityManager
-        factory_service:  doctrine
-        factory_method:   getEntityManager
-        arguments:
-            - newscoop
+        alias: doctrine.orm.default_entity_manager
     em:
         alias: doctrine.em
+    dispatcher:
+        alias: event_dispatcher
     doctrine.event_manager:
         class:      Doctrine\Common\EventManager
         factory_service:  doctrine.em
@@ -44,11 +23,6 @@ services:
         class:      Zend_Auth
         factory_class: Zend_Auth
         factory_method: getInstance
-    event_dispatcher:
-        class:      %newscoop.eventDispatcher.class%
-        arguments:  ["@service_container"]
-    dispatcher:
-        alias: event_dispatcher
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth"]

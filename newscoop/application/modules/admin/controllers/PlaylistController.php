@@ -93,7 +93,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $this->view->id = $id;
         $this->playlistRepository->delete($this->playlistRepository->find($id));
         $this->_helper->service->getService('dispatcher')
-            ->notify('playlist.delete', new GenericEvent($this, array(
+            ->dispatch('playlist.delete', new GenericEvent($this, array(
                 'id' => $id
             )));
     }
@@ -128,7 +128,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
         if (!($playlist instanceof \Exception)) {
             $this->_helper->service->getService('dispatcher')
-                ->notify('playlist.save', new GenericEvent($this, array(
+                ->dispatch('playlist.save', new GenericEvent($this, array(
                     'id' => $playlist->getId()
                 )));
 

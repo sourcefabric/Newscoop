@@ -4,7 +4,7 @@ parameters:
             acl:
                 cache: "Doctrine\Common\Cache\ArrayCache"
     doctrine:
-        cache: "Doctrine\Common\Cache\ArrayCache"
+        cache: "array"
     phpSettings:
         display_startup_errors: "1"
         display_errors: "1"
@@ -14,4 +14,3 @@ parameters:
                 displayExceptions: "1"
     session:
         cookie_domain: ""
-    newscoop.eventDispatcher.class: "Newscoop\\EventDispatcher\\TraceableEventDispatcher"

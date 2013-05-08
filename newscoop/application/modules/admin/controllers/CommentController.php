@@ -273,7 +273,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
             $comment = $this->commentRepository->find($commentId);
             $this->_helper->service->getService('dispatcher')
-                ->notify('comment.recommended', new GenericEvent($this, array(
+                ->dispatch('comment.recommended', new GenericEvent($this, array(
                     'id' => $comment->getId(),
                     'subject' => $comment->getSubject(),
                     'article' => $comment->getThread()->getName(),

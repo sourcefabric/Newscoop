@@ -20,13 +20,11 @@ class SlideshowsController extends FOSRestController
     /**
      * @Route("/slideshows/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"slideshowsDetails"})
      */
     public function getSlideshowItemsAction(Request $request, $id)
     {
         $em = $this->container->get('em');
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('slideshowsDetails'));
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('id' => $id));
 

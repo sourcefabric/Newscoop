@@ -20,13 +20,11 @@ class TopicsController extends FOSRestController
     /**
      * @Route("/topics.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getTopicsAction(Request $request)
     {
         $em = $this->container->get('em');
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $topics = $em->getRepository('Newscoop\Entity\Topic')
             ->getTopics();
@@ -46,14 +44,12 @@ class TopicsController extends FOSRestController
     /**
      * @Route("/topics/{id}/{language}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getTopicsArticlesAction(Request $request, $id, $language)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('id' => $id, 'language' => $language));

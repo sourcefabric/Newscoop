@@ -60,7 +60,7 @@ implements IOutputSettingIssueService
         if ($issue instanceof Issue) {
             $issue = $issue->getId();
         }
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $repository = $em->getRepository($this->entityClassName);
         $resources = $repository->findByIssue($issue);
         if (isset($resources) && count($resources) > 0) {
@@ -96,7 +96,7 @@ implements IOutputSettingIssueService
             $issueId = $issue->getId();
         }
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $repository = $em->getRepository($this->entityClassName);
         $resources = $repository->findBy(array('issue' => $issueId, 'output' => $outputId));
         if (!empty($resources)) {
@@ -118,7 +118,7 @@ implements IOutputSettingIssueService
             $themes = array();
         }
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         // we need to find if the theme is used by anyoane.
         $q = $em->createQueryBuilder();
         $q->select('i.name')
@@ -141,7 +141,7 @@ implements IOutputSettingIssueService
 
         $issues = array();
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         // we need to find if the theme is used by anyoane.
         $q = $em->createQueryBuilder();
         $q->select('iss')
@@ -162,7 +162,7 @@ implements IOutputSettingIssueService
      */
     public function insert(OutputSettingsIssue $outputSettingsIssue)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $outputSettingsIssue->setId(null);
         $em->persist($outputSettingsIssue);
         $em->flush();
@@ -175,7 +175,7 @@ implements IOutputSettingIssueService
      */
     public function update(OutputSettingsIssue $outputSettingsIssue)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->persist($outputSettingsIssue);
         $em->flush();
     }
@@ -187,7 +187,7 @@ implements IOutputSettingIssueService
      */
     public function delete(OutputSettingsIssue $outputSettingsIssue)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->remove($outputSettingsIssue);
         $em->flush();
     }

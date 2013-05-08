@@ -24,7 +24,7 @@ if ($articleType->exists()) {
     $articleType->setCommentsEnabled(!$articleType->commentsEnabled());
 
     \Zend_Registry::get('container')->getService('dispatcher')
-        ->notify('article_type.comments_management', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        ->dispatch('article_type.comments_management', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'article_type' => $articleType,
             'new_status' => !$articleType->commentsEnabled()
         )));

@@ -48,7 +48,7 @@ abstract class AEntityServiceDoctrine extends AEntityBaseServiceDoctrine impleme
 
 	function getCount(Search $search = NULL)
 	{
-		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb = $this->getManager()->createQueryBuilder();
 
 		$qb->select('COUNT('.self::ALIAS.')')->from($this->entityClassName, self::ALIAS);
 
@@ -65,7 +65,7 @@ abstract class AEntityServiceDoctrine extends AEntityBaseServiceDoctrine impleme
 
 	function getEntities(Search $search = NULL, $offset = 0, $limit = -1)
 	{
-		$qb = $this->getEntityManager()->createQueryBuilder();
+		$qb = $this->getManager()->createQueryBuilder();
 
 		$qb->select(self::ALIAS)->from($this->entityClassName, self::ALIAS);
 

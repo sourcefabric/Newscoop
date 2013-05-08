@@ -9,6 +9,7 @@ namespace Newscoop\Package;
 
 use Newscoop\Image\Rendition;
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\View\PackageView;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Package\PackageRepository")
@@ -256,5 +257,17 @@ class Package
     public function getItemsCount()
     {
         return $this->itemsCount !== null ? $this->itemsCount : count($this->items);
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\AuthorView
+     */
+    public function getView()
+    {
+        return new PackageView(array(
+            'id' => $this->getId()
+        ));
     }
 }

@@ -20,13 +20,11 @@ class UsersController extends FOSRestController
     /**
      * @Route("/users.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getUsersAction(Request $request)
     {
         $em = $this->container->get('em');
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $users = $em->getRepository('Newscoop\Entity\User')
             ->getActiveUsers();
@@ -46,13 +44,11 @@ class UsersController extends FOSRestController
     /**
      * @Route("/users/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getUserAction(Request $request, $id)
     {
         $em = $this->container->get('em');
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $user = $em->getRepository('Newscoop\Entity\User')
             ->getOneActiveUser($id)

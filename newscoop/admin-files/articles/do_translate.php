@@ -170,7 +170,7 @@ if( $articleObj->translationTitleExists( $f_translation_title, $f_translation_la
 $articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->getUserId(), $f_translation_title);
 
 \Zend_Registry::get('container')->getService('dispatcher')
-    ->notify('article.translate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+    ->dispatch('article.translate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
         'article' => $articleCopy
     )));
 

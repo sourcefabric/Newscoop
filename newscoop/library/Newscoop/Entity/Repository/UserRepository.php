@@ -38,7 +38,7 @@ class UserRepository extends EntityRepository
      * @param array $values
      * @return void
      */
-    public function save(User $user, array $values)
+    public function save($user, array $values)
     {
         $this->setProperties($user, $values);
 

@@ -98,7 +98,7 @@ case "workflow_publish":
 		$articleObj->setWorkflowStatus('Y');
 
         \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+            ->dispatch('article.publish', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article' => $articleObj
             )));
 	}
@@ -153,7 +153,7 @@ case "copy":
 						  $languageArray);
 
         \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+            ->dispatch('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article' => $articleObj,
                 'orginal_article_number' => $articleNumber
             )));

@@ -6,15 +6,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Article;  
+namespace Newscoop\GimmeBundle\Serializer\Article;
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create simple Author object from Newscoop\Entity\Author object.
  */
-class CommentsLinkHandler implements SerializationHandlerInterface
+class CommentsLinkHandler
 {
     protected $router;
 
@@ -23,14 +22,8 @@ class CommentsLinkHandler implements SerializationHandlerInterface
         $this->router = $router;
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {   
-        if ($type != 'Newscoop\\Entity\\Article') {
-            return false;
-        }
-
-        $data->setCommentsLink($this->router->generate('newscoop_gimme_comments_getcommentsforarticle', array('number' => $data->getNumber(), 'language' => $data->getLanguage()->getCode()), true));
-
-        return true;
+        return $this->router->generate('newscoop_gimme_comments_getcommentsforarticle', array('number' => $data->number, 'language' => $data->language), true);
     }
 }

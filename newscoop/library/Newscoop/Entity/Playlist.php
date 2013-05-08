@@ -30,7 +30,7 @@ class Playlist extends AbstractEntity
     protected $name;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
     private $articles;
 

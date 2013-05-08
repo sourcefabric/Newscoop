@@ -4,6 +4,11 @@ services:
         arguments: ["@plugins.manager", "@service_container"]
         tags:
             - { name: routing.loader }
+    newscoop_newscoop.doctrine.event_dispatcher_proxy:
+        class: Newscoop\Doctrine\EventDispatcherProxy
+        arguments: ["@event_dispatcher"]
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"

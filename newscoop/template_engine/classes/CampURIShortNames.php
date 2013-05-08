@@ -507,20 +507,4 @@ class CampURIShortNames extends CampURI
         }
         $this->validateCache(true);
     }
-
-    /**
-     * Get zend views which should not be handled with shortURL
-     *
-     * @return array
-     */
-    private function getZendViews()
-    {
-        return array(
-            'auth',
-            'dashboard',
-            'error',
-            'register',
-            'user',
-        );
-    }
 }

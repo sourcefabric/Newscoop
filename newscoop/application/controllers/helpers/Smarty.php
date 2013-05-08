@@ -49,5 +49,8 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
 
         $controller->getHelper('layout')
             ->disableLayout();
+
+        // reverse templates directory order
+        \CampTemplate::singleton()->setTemplateDir(array_reverse(\CampTemplate::singleton()->getTemplateDir()));
     }
 }

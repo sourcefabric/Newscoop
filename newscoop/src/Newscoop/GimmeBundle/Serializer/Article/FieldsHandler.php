@@ -8,27 +8,21 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Article;  
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create array of Article type fields.
  */
-class FieldsHandler implements SerializationHandlerInterface
+class FieldsHandler
 {
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {   
-        if ($type != 'Newscoop\\Entity\\Article') {
-            return;
-        }
-
         $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../../newscoop/');
 
-        $articleData = new \ArticleData($data->getType(), $data->getNumber(), $data->getLanguageId());
+        $articleData = new \ArticleData($data->type, $data->number, $data->languageId);
         if (count($articleData->getUserDefinedColumns()) == 0) {
-            $data->setFields(null);
-            return;
+            return null;
         }
 
         $fields = array();
@@ -36,6 +30,6 @@ class FieldsHandler implements SerializationHandlerInterface
             $fields[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
         }
 
-        $data->setFields($fields);
+        return $fields;
     }
 }

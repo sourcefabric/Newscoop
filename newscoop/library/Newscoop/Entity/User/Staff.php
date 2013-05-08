@@ -24,8 +24,8 @@ use Newscoop\Entity\Acl\Role;
 class Staff extends User implements \Zend_Acl_Role_Interface
 {
     /**
-     * @ORM\manyToMany(targetEntity="Newscoop\Entity\User\Group")
-     * @ORM\joinTable(name="liveuser_groupusers",
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User\Group")
+     * @ORM\JoinTable(name="liveuser_groupusers",
      *      joinColumns={@ORM\JoinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
      *      )

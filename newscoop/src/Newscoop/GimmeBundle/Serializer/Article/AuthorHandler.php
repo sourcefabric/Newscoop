@@ -6,15 +6,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Article;  
+namespace Newscoop\GimmeBundle\Serializer\Article;
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create simple Author object from Newscoop\Entity\Author object.
  */
-class AuthorHandler implements SerializationHandlerInterface
+class AuthorHandler
 {
     protected $router;
 
@@ -23,27 +22,20 @@ class AuthorHandler implements SerializationHandlerInterface
         $this->router = $router;
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $articleAuthors, $type)
     {   
-        if ($type != 'Newscoop\\Entity\\Article') {
-            return false;
-        }
-
-        if (count($data->getArticleAuthors()) == 0) {
-            $data->setArticleAuthors(null);
+        if (count($articleAuthors) == 0) {
             return null;
         }
 
-        $articleAuthors = array();
-        foreach ($data->getArticleAuthors() as $author) {
-            $articleAuthors[] = array(
+        $simpleArticleAuthors = array();
+        foreach ($articleAuthors as $author) {
+            $simpleArticleAuthors[] = array(
                 'name' => $author->getFullName(),
                 'link' => $this->router->generate('newscoop_gimme_authors_getarticle', array('id' => $author->getId()), true)
             );
         }
 
-        $data->setArticleAuthors($articleAuthors);
-
-        return true;
+        return $simpleArticleAuthors;
     }
 }

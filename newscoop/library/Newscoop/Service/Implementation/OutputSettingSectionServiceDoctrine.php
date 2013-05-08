@@ -73,7 +73,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
             $sectionId = $section->getId();
         }
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $repository = $em->getRepository($this->entityClassName);
         $resources = $repository->findBy(array('section' => $sectionId, 'output' => $outputId));
         if (!empty($resources)) {
@@ -96,7 +96,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
         if ($section instanceof Section) {
             $section = $section->getId();
         }
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $repository = $em->getRepository($this->entityClassName);
         $resources = $repository->findBySection($section);
         if (isset($resources) && count($resources) > 0) {
@@ -112,7 +112,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function update(OutputSettingsSection $outputSettingsSection)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->persist($outputSettingsSection);
         $em->flush();
     }
@@ -124,7 +124,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function insert(OutputSettingsSection $outputSettingsSection)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->persist($outputSettingsSection);
         $em->flush();
     }
@@ -136,7 +136,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function delete(OutputSettingsSection $outputSettingsSection)
     {
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $em->remove($outputSettingsSection);
         $em->flush();
     }

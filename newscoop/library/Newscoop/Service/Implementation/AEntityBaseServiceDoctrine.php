@@ -70,7 +70,7 @@ abstract class AEntityBaseServiceDoctrine
     function findById($id)
     {
         Validation::notEmpty($id, 'id');
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         return $em->find($this->entityClassName, $id);
     }
 
@@ -92,7 +92,7 @@ abstract class AEntityBaseServiceDoctrine
      * @return Doctrine\ORM\EntityManager
      * 		The doctrine entity manager.
      */
-    protected function getEntityManager()
+    protected function getManager()
     {
         if ($this->em === NULL) {
             $this->em = \Zend_Registry::get('container')->getService('em');

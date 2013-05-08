@@ -8,7 +8,7 @@ parameters:
     community_feed:
         events: false
     doctrine:
-        cache: "Doctrine\Common\Cache\ArrayCache"
+        cache: "array"
         database:
             driver: "pdo_sqlite"
             path: ":memory:"

@@ -51,7 +51,6 @@ class PluginsLoader implements LoaderInterface
         }
 
         $routesCollection = new \Symfony\Component\Routing\RouteCollection();
-        $routesCollection->addPrefix('plugin');
         foreach ($dirs as $directory) {
             $routeLoader = $this->container->get('routing.loader');
             $routesCollection->addCollection($routeLoader->load($directory.'/routing.yml'));

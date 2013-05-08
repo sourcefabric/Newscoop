@@ -18,9 +18,8 @@ $articleType = new ArticleType($articleTypeName);
 $articleType->setStatus($status);
 
 \Zend_Registry::get('container')->getService('dispatcher')
-->notify('article_type.hide', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
-    'article_type' => $articleType
-)));
+	->dispatch('article_type.hide', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+	    'article_type' => $articleType
+	)));
 
 camp_html_goto_page("/$ADMIN/article_types/");
-?>

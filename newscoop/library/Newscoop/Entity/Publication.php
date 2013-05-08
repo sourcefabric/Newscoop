@@ -46,7 +46,7 @@ class Publication
     private $language;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
      * @var array
      */
     private $issues;

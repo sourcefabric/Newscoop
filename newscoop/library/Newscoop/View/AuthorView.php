@@ -16,4 +16,9 @@ class AuthorView extends View
      * @var string
      */
     public $name;
+
+    /**
+     * @var string
+     */
+    public $imageId;
 }

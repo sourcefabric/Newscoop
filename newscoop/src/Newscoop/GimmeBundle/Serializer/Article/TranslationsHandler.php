@@ -8,13 +8,12 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Article;  
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create Article translations array.
  */
-class TranslationsHandler implements SerializationHandlerInterface
+class TranslationsHandler
 {
     private $em;
     private $router;
@@ -25,21 +24,22 @@ class TranslationsHandler implements SerializationHandlerInterface
         $this->router = $router;
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {   
-        if ($type != 'Newscoop\\Entity\\Article') {
-            return;
-        }
 
         $articleTranslations = $this->em->getRepository('Newscoop\Entity\Article')
-            ->getArticleTranslations($data->getNumber(), $data->getLanguageId())
+            ->getArticleTranslations($data->number, $data->languageId)
             ->getResult();
+
+        if (count($articleTranslations) == 0) {
+            return null;
+        }
 
         $articleTranslationsArray = array();
         foreach ($articleTranslations as $article) {
             $articleTranslationsArray[$article->getLanguageCode()] = $this->router->generate('newscoop_gimme_articles_getarticle', array('number' => $article->getNumber(), 'language' => $article->getLanguageCode()), true);
         }
 
-        $data->setTranslations($articleTranslationsArray);
+        return $articleTranslationsArray;
     }
 }

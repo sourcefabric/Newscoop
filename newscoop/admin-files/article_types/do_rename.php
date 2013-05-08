@@ -57,7 +57,7 @@ if (empty($f_name)) {
         $old_articleType->rename($f_name);
 
         \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article_type.hide', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+            ->dispatch('article_type.hide', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article_type' => $articleType,
                 'old_name' => $f_oldName
             )));

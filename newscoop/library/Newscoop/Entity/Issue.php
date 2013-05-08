@@ -99,7 +99,7 @@ class Issue
     private $shortName = '';
 
     /**
-    * @ORM\oneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
+    * @ORM\OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
     * @var Newscoop\Entity\Output\OutputSettingsIssue
     */
     private $outputSettingsIssues;

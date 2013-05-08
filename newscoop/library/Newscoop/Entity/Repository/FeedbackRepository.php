@@ -172,7 +172,7 @@ class FeedbackRepository extends DatatableSource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $cols, $search, $qb, $andx)
+    protected function buildWhere(array $cols, $search, $qb = null, $andx = null)
     {
         $orx = $qb->expr()->orx();
         $orx->add($qb->expr()->like('s.name', $qb->expr()->literal("%{$search}%")));

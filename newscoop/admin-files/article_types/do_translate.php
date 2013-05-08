@@ -37,7 +37,7 @@ if ($correct) {
     $created = $type->setName($f_type_language_id, $f_type_translation_name);
     if ($created) {
         \Zend_Registry::get('container')->getService('dispatcher')
-            ->notify('article_type.translate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+            ->dispatch('article_type.translate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article_type' => $type
             )));
 

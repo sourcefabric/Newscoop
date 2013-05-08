@@ -119,8 +119,8 @@ class User implements \Zend_Acl_Role_Interface
     private $role;
 
     /**
-     * @ORM\manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
-     * @ORM\joinTable(name="liveuser_groupusers",
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
+     * @ORM\JoinTable(name="liveuser_groupusers",
      *      joinColumns={@ORM\JoinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
@@ -129,13 +129,13 @@ class User implements \Zend_Acl_Role_Interface
     private $groups;
 
     /**
-     * @ORM\oneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @ORM\OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;

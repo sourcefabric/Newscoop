@@ -25,7 +25,7 @@ class Role
     private $id;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Acl\Rule", mappedBy="role")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Acl\Rule", mappedBy="role")
      */
     private $rules;
 

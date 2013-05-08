@@ -273,7 +273,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
             $user_id = $image->getUploadingUserId();
             $user = $this->_helper->service('user')->find($user_id);
             $this->_helper->service->getService('dispatcher')
-                ->notify('image.approved', new GenericEvent($this, array(
+                ->dispatch('image.approved', new GenericEvent($this, array(
                     'user' => $user,
                     'image_id' => $parameters['id']
                 )));
@@ -285,7 +285,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
             $user_id = $document->getUploadingUserId();
             $user = $this->_helper->service('user')->find($user_id);
             $this->_helper->service->getService('dispatcher')
-                ->notify('document.approved', new GenericEvent($this, array(
+                ->dispatch('document.approved', new GenericEvent($this, array(
                     'user' => $user,
                     'document_id' => $parameters['id']
                 )));

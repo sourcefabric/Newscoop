@@ -20,14 +20,12 @@ class SectionsController extends FOSRestController
     /**
      * @Route("/sections.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getSectionsAction(Request $request)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $sections = $em->getRepository('Newscoop\Entity\Section')
             ->getSections($publication);
@@ -47,14 +45,12 @@ class SectionsController extends FOSRestController
     /**
      * @Route("/sections/{number}/{language}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getSectionsArticlesAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
 
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));

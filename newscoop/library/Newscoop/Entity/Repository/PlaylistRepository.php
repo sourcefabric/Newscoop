@@ -17,6 +17,18 @@ use Newscoop\Entity\PlaylistArticle,
 
 class PlaylistRepository extends EntityRepository
 {
+
+    public function getPlaylists()
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Playlist')
+            ->createQueryBuilder('p');
+
+        $query = $queryBuilder->getQuery();
+        
+        return $query;
+    }
+
     /**
      * Returns articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist

@@ -23,7 +23,7 @@ class StaffRepository extends UserRepository
      * @param array $values
      * @return void
      */
-    public function save(Staff $staff, array $values)
+    public function save($staff, array $values)
     {
         $em = $this->getEntityManager();
 

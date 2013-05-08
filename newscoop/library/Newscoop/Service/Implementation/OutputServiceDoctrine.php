@@ -31,7 +31,7 @@ class OutputServiceDoctrine extends AEntityServiceDoctrine implements IOutputSer
 	function findByName($name)
 	{
 		Validation::notEmpty($name, 'name');
-		$em = $this->getEntityManager();
+		$em = $this->getManager();
 		$outputs = $em->getRepository($this->entityClassName)->findByName($name);
 		if(isset($outputs) && count($outputs) > 0){
 			return $outputs[0];

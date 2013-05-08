@@ -16,7 +16,7 @@ Newscoop\Entity\Comment:
         time_created:
             expose: true
             read_only: true
-            type: datetime
+            type: DateTime
             groups: ["details", "list"]
             serialized_name: created
         commenter:

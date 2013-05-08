@@ -4,4 +4,4 @@ parameters:
             acl:
                 cache: "Doctrine\Common\Cache\ArrayCache"
     doctrine:
-        cache: "Doctrine\Common\Cache\ArrayCache"
+        cache: "array"

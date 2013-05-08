@@ -8,13 +8,12 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Article;  
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create Renditions array for Newscoop\Entity\Article resource.
  */
-class RenditionsHandler implements SerializationHandlerInterface
+class RenditionsHandler
 {
     private $imageService;
     private $zendRouter;
@@ -29,18 +28,17 @@ class RenditionsHandler implements SerializationHandlerInterface
         $this->renditionService = $renditionService;
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {   
-        if ($type != 'Newscoop\\Entity\\Article') {
-            return;
-        }
-
-        $articleRenditions = $this->renditionService->getArticleRenditions($data->getNumber());
+        $articleRenditions = $this->renditionService->getArticleRenditions($data->number);
         $renditions = $this->renditionService->getRenditions();
         $media = array();
+
+        if (count($renditions) == 0) {
+            return null;
+        }
         
         foreach ($renditions as $renditionName => $rendition) {
-
             if (!$articleRenditions->offsetExists($rendition, true)) {
                 continue;
             }
@@ -58,6 +56,6 @@ class RenditionsHandler implements SerializationHandlerInterface
             );
         }
 
-        $data->setRenditions($media);
+        return $media;
     }
 }

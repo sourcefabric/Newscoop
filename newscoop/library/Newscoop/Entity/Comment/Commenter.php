@@ -66,7 +66,7 @@ class Commenter
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
      */
     private $comments;
 

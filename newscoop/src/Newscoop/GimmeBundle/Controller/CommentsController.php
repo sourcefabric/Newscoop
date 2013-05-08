@@ -19,13 +19,11 @@ class CommentsController extends FOSRestController
     /**
      * @Route("/articles/{number}/{language}/comments.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getCommentsForArticleAction($number, $language)
     {
         $em = $this->container->get('em');
-        $serializer = $this->get('serializer');
-        $serializer->setGroups(array('list'));
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
 

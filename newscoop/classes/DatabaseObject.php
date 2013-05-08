@@ -1123,7 +1123,7 @@ class DatabaseObject
             return;
         }
 
-        self::$eventDispatcher->notify($event, new GenericEvent($subject, $params));
+        self::$eventDispatcher->dispatch($event, new GenericEvent($subject, $params));
     }
 
     /**

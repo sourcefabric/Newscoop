@@ -5,17 +5,22 @@ Newscoop\Entity\Author:
         biography:
             expose: true
             read_only: true
+            type: string
             serialized_name: biography
             access_type: public_method
         first_name:
             expose: true
+            type: string
             serialized_name: firstName
         last_name:
             expose: true
             read_only: true
+            type: string
             serialized_name: lastName
         image:
             expose: true
             read_only: true
             type: image_uri
             serialized_name: image
+            accessor: 
+                getter: getView

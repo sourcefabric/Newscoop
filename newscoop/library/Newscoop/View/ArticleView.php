@@ -40,6 +40,11 @@ class ArticleView extends View
     /**
      * @var int
      */
+    public $languageId;
+
+    /**
+     * @var int
+     */
     public $publication_number;
 
     /**

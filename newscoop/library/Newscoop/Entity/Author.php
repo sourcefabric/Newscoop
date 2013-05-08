@@ -158,6 +158,7 @@ class Author
     {
         return new AuthorView(array(
             'name' => $this->getFullName(),
+            'imageId' => $this->getImage()
         ));
     }
 }

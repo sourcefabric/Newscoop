@@ -18,3 +18,5 @@ Newscoop\Package\Package:
             type: items_link
             groups: ["details", "list"]
             serialized_name: itemsLink
+            accessor:
+                getter: getView
