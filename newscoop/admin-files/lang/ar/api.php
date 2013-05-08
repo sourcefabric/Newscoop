@@ -52,10 +52,10 @@ regGS("Could not delete record from the database.", "لم يحذف السجل م
 regGS("template path", "مسار القالب");
 regGS("short names", "أسماء قصيرة");
 regGS("Unable to fetch image from remote server.", "لم يحصل عليها الصورة من الخادم اللاسلكي");
-regGS("Last", "الأخير);
-regGS("First", "الأول");
-regGS("Single-line Text", "نص بسطر واحد");
-regGS("Multi-line Text with WYSIWYG", "نص متعدد السطر بـ WYSIWYG");
-regGS("URL \"$1\" is invalid or is not an image.", "عنوان الرابط \"$1\" غير صحيح أو ليس صورة.");
-regGS("URL \"$1\" is not an image.", "عنوان الرابط \"$1\" ليس صورة.");
+regGS("Last", "");
+regGS("First", "");
+regGS("Single-line Text", "");
+regGS("Multi-line Text with WYSIWYG", "");
+regGS("URL \"$1\" is invalid or is not an image.", "");
+regGS("URL \"$1\" is not an image.", "");
 ?>

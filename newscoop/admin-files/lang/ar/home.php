@@ -1,5 +1,6 @@
 <?php 
 regGS("Rename user", "إعادة تسمية المستخدم");
+regGS("Campsite", "");
 regGS("Image Rendering", "في عملية تغديم الصورة");
 regGS("Featured Article Lists", "قوائم مقالات مميزة");
 regGS("You have tried to upload an invalid backup file.", "حاولت تحميل ملف نسخة احتياطة غير صالح.");
@@ -138,19 +139,18 @@ regGS("The system was unable to delete the file '$1'.", "كان النظام غ�
 regGS("The system was unable to create the file '$1'.", "كان النظام غير قادر على إنشاء ملف '$ 1'.");
 regGS("The system was unable to create the directory '$1'.", "كان النظام غير قادر على إنشاء دليل '$1'.");
 regGS("Please check if the user '$1' has permission to write to this file.", "يرجى التحقق إذا كان المستخدم '$1' لديه الاذن للكتابة على هذا الملف.");
-regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "يرجى التحقق إذا كان المستخدم '$1' لديه الإذن للكتابة على الدليل "$2".");
-regGS("Type the code shown above:", "اكتب الكود الظاهر أعلاه:");
-regGS("Please enter your user name.", "من فضلك ادخل اسم المستخدم الخاص بك.");
-regGS("Please enter your password.", "من فضلك ادخل كلمة السر الخاصة بك.");
-regGS("Please enter the code shown in the image.", "يرجى إدخال الكود الظاهر في الصورة.");
-regGS("CAPTCHA code is not valid.  Please try again.", "رمز CAPTCHA غير صالح. يرجى المحاولة مرة أخرى.");
-regGS("Signed in: $1", "تم تسجيل الدخول بحساب: $1");
-regGS("Help", "المساعدة");
-regGS("Please enter your user name and password", "يرجى إدخال اسم المستخدم وكلمة السر");
-regGS("You do not have the right to access this page.", "ليس لديك الحق في الوصول الى هذه الصفحة");
-regGS("Login failed", "فشلت عملية الدخول");
-regGS("Please make sure that you typed the correct user name and password.", "يرجى الحقق من إدخال اسم المستخدم وكلمة السر الصحيحين");
-regGS("If your problem persists please contact the site administrator $1", "إذا استمررت بمواجه المشاكل, أتصل بمدير الموقع $1");
-regGS("Backup/Restore", "نسخ احتياطيا/استعادة");
-regGS("Hi, \\n \\n for password recovery, please follow this link: $1", "مرحبا، \\n \\n لاستعادة كلمة السر، يرجى اتباع هذا الرابط: $1");
+regGS("Please check if the user '$1' has permission to write to the directory '$2'.", "");
+regGS("Type the code shown above:", "");
+regGS("Please enter your user name.", "");
+regGS("Please enter your password.", "");
+regGS("Please enter the code shown in the image.", "");
+regGS("CAPTCHA code is not valid.  Please try again.", "");
+regGS("Signed in: $1", "");
+regGS("Help", "");
+regGS("Please enter your user name and password", "");
+regGS("You do not have the right to access this page.", "");
+regGS("Login failed", "");
+regGS("Please make sure that you typed the correct user name and password.", "");
+regGS("If your problem persists please contact the site administrator $1", "");
+regGS("Backup/Restore", "");
 ?>

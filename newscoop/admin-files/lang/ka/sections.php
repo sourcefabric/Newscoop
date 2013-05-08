@@ -1,5 +1,5 @@
 <?php 
-regGS("default", "საწყისი");
+regGS("default", "ნაგულისხმევი");
 regGS("before you can configure the section templates.", "სექციების შაბლონების კონფიგურაციამდე");
 regGS("You have to assign a theme to the issue", "თქვენ უნდა მიუთითოთ გამოცემის თემა");
 regGS("The section number $1 was already in use.", "სექცია ნომერ $1 უკვე გამოყენებულია");
