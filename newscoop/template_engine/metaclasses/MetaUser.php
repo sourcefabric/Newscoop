@@ -307,7 +307,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function isAuthor()
     {
-        return $this->m_dbObject->getAuthorId() && $this->isAdmin();
+        if ($this->m_dbObject->getAuthorId()) {
+            return true;
+        }
+        
+        return false;
     }
 
     /**
