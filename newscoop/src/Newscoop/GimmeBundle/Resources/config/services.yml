@@ -14,7 +14,6 @@ services:
             - { name: kernel.event_subscriber}
     newscoop.paginator.pagination_extra_data_subscriber:
         class: Newscoop\GimmeBundle\EventListener\PaginationExtraDataSubscriber
-        scope: request
         arguments:  ["@newscoop.paginator.paginator_service"]
         tags:
             - { name: kernel.event_subscriber}
@@ -41,27 +40,35 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 34 }
     newscoop.gimme.serializer.article_author_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\AuthorHandler
-        arguments:  ["@router"]
-    newscoop.gimme.serializer.article_comments_link_handler:
-        class: Newscoop\GimmeBundle\Serializer\Article\CommentsLinkHandler
-        arguments:  ["@router"]
+        arguments: ["@router"]
+        tags:
+            - { name: jms_serializer.handler, type: author, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.author_image_uri_handler:
         class: Newscoop\GimmeBundle\Serializer\Author\ImageUriHandler
         arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+        tags:
+            - { name: jms_serializer.handler, type: image_uri, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.package_items_link_handler:
         class: Newscoop\GimmeBundle\Serializer\Package\ItemsLinkHandler
         arguments:  ["@router"]
-    newscoop.gimme.serializer.item_link_handler:
-        class: Newscoop\GimmeBundle\Serializer\Item\LinkHandler
-        arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
-    newscoop.gimme.serializer.topic_articles_link_handler:
-        class: Newscoop\GimmeBundle\Serializer\Topic\ArticlesLinkHandler
-        arguments:  ["@em", "@router"]
+        tags:
+            - { name: jms_serializer.handler, type: items_link, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.article_fields_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\FieldsHandler
+        tags:
+            - { name: jms_serializer.handler, type: article_fields, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.article_translations_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\TranslationsHandler
         arguments:  ["@em", "@router"]
+        tags:
+            - { name: jms_serializer.handler, type: article_translations, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.article_renditions_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\RenditionsHandler
         arguments:  ["@image", "@zend_router", "@newscoop.publication_service", "@image.rendition"]
+        tags:
+            - { name: jms_serializer.handler, type: article_renditions, direction: serialization, format:json, method:serializeToJson }
+    newscoop.gimme.serializer.article_comments_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\CommentsLinkHandler
+        arguments:  ["@router"]
+        tags:
+            - { name: jms_serializer.handler, type: comments_link, direction: serialization, format:json, method:serializeToJson }

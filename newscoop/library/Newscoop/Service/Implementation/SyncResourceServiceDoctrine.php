@@ -41,7 +41,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
         Validation::notEmpty($resource, 'resource');
         Validation::notEmpty($resource->getPath(), 'resource.path');
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         if ($resource->getId() === NULL) {
             $resources = $em->getRepository($this->entityClassName)->findByPath($resource->getPath());
             if (isset($resources) && count($resources) > 0) {
@@ -58,7 +58,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
     function findByPath($path)
     {
         Validation::notEmpty($path, 'path');
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $resources = $em->getRepository($this->entityClassName)->findByPath($path);
         if (isset($resources) && count($resources) > 0) {
             return $resources[0];
@@ -69,7 +69,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
     function findByPathOrId($pathOrId)
     {
         Validation::notEmpty($pathOrId, 'path');
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         if (is_numeric($pathOrId)) {
             $resources = $em->getRepository($this->entityClassName)->findById($pathOrId);
         } else {
@@ -106,7 +106,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
     {
         Validation::notEmpty($path, 'path');
 
-        $em = $this->getEntityManager();
+        $em = $this->getManager();
         $q = $em->createQueryBuilder();
         $q->delete(Resource::NAME, 'rsc')
                 ->where('rsc.path like :path');

@@ -906,6 +906,7 @@ class Article
             $view = new ArticleView(array(
                 'number' => $this->number,
                 'language' => $this->language->getCode(),
+                'languageId' => $this->language->getId(),
                 'title' => $this->name,
                 'updated' => $this->updated,
                 'published' => $this->published,

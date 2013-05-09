@@ -104,7 +104,7 @@ class RegisterController extends Zend_Controller_Action
             $values = $form->getValues();
             try {
                 $this->_helper->service('user')->savePending($values, $user);
-                $this->_helper->service('dispatcher')->notify(new sfEvent($this, 'user.register', array(
+                $this->_helper->service('dispatcher')->dispatch(new sfEvent($this, 'user.register', array(
                     'user' => $user,
                 )));
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');

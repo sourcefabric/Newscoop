@@ -8,13 +8,14 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
  * This is the class that loads and manages your bundle configuration
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class NewscoopNewscoopExtension extends Extension
+class NewscoopNewscoopExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritDoc}
@@ -26,8 +27,87 @@ class NewscoopNewscoopExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    public function prepend(ContainerBuilder $container)
+    {
+        global $Campsite;
 
         $this->mergeParameters($container);
+        $containerParameters = $container->getParameterBag()->all();
+
+        $config_file = APPLICATION_PATH . '/../conf/database_conf.php';
+        if (is_readable($config_file)) {
+            require_once $config_file;
+        }
+
+        $doctrine_dbal_config = array(
+            'default_connection' => 'default',
+            'connections' => array(
+                'default' => array(
+                    'dbname' => $Campsite['DATABASE_NAME'],
+                    'host' => $Campsite['DATABASE_SERVER_ADDRESS'],
+                    'port' => $Campsite['DATABASE_SERVER_PORT'],
+                    'user' => $Campsite['DATABASE_USER'],
+                    'password' => $Campsite['DATABASE_PASSWORD'],
+                    'driver' => 'pdo_mysql',
+                    'charset' => 'UTF8',
+                    'mapping_types' => array(
+                        'enum' => 'string',
+                        'point' => 'string',
+                        'geometry' => 'string',
+                    ),
+                ),
+            ),
+        );
+
+        $doctrine_orm_config = array(
+            'auto_generate_proxy_classes' => $containerParameters['doctrine']['proxy']['autogenerate'],
+            'proxy_namespace' => $containerParameters['doctrine']['proxy']['namespace'],
+            'proxy_dir' =>  $this->truepath($containerParameters['doctrine']['proxy']['dir']),
+            'default_entity_manager' => 'default',
+            'entity_managers' => array(
+                'default' => array(
+                    # The name of a DBAL connection (the one marked as default is used if not set)
+                    'connection' => 'default',
+                    'auto_mapping' => false,
+                    'mappings' => array(
+                        'newscoop_entity' => array(
+                            'mapping' => 'true',
+                            'type' => 'annotation',
+                            'dir' => $this->truepath($containerParameters['doctrine']['entity']['dir']),
+                            'is_bundle' => false,
+                            'prefix' => 'Newscoop\Entity'
+                        ),
+                        'newscoop_package' => array(
+                            'mapping' => 'true',
+                            'type' => 'annotation',
+                            'dir' => $this->truepath($containerParameters['doctrine']['entity']['dir']),
+                            'is_bundle' => false,
+                            'prefix' => 'Newscoop\Package'
+                        ),
+                        'newscoop_image' => array(
+                            'mapping' => 'true',
+                            'type' => 'annotation',
+                            'dir' => $this->truepath($containerParameters['doctrine']['entity']['dir']),
+                            'is_bundle' => false,
+                            'prefix' => 'Newscoop\Image'
+                        ),
+                    ),
+                    # All cache drivers have to be array, apc, xcache or memcache
+                    'metadata_cache_driver' => $containerParameters['doctrine']['cache'],
+                    'query_cache_driver' => $containerParameters['doctrine']['cache'],
+                    'dql' => array(
+                        'numeric_functions' => $containerParameters['doctrine']['functions']
+                    ),
+                ),
+            ),
+        );
+
+        $container->prependExtensionConfig('doctrine', array(
+            'dbal' => $doctrine_dbal_config,
+            'orm' => $doctrine_orm_config
+        ));
     }
 
     /**
@@ -35,13 +115,13 @@ class NewscoopNewscoopExtension extends Extension
      */
     public function mergeParameters($container) 
     {
-        $this->loader = new YamlFileLoader($container, new FileLocator(APPLICATION_PATH . '/configs/'));
+        $container->setParameter('application_path', APPLICATION_PATH);
 
         /**
          * Allways load config for env
          */
+        $this->loader = new YamlFileLoader($container, new FileLocator(APPLICATION_PATH . '/configs/'));
         $this->loader->load(APPLICATION_PATH . '/configs/parameters/parameters.yml');
-        $container->setParameter('application_path', APPLICATION_PATH);
 
         if (APPLICATION_ENV !== 'production') {
             $tempContainer = new ContainerBuilder();
@@ -119,5 +199,36 @@ class NewscoopNewscoopExtension extends Extension
         }
      
         return $merged;
+    }
+
+    /**
+     * This function is to replace PHP's extremely buggy realpath().
+     * @param string The original path, can be relative etc.
+     * @return string The resolved path, it might not exist.
+     */
+    public function truepath($path){
+        $path = str_replace('%application_path%', APPLICATION_PATH, $path);
+
+        // whether $path is unix or not
+        $unipath=strlen($path)==0 || $path{0}!='/';
+        // attempts to detect if path is relative in which case, add cwd
+        if(strpos($path,':')===false && $unipath)
+            $path=getcwd().DIRECTORY_SEPARATOR.$path;
+        // resolve path parts (single dot, double dot and double delimiters)
+        $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+        $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
+        $absolutes = array();
+        foreach ($parts as $part) {
+            if ('.'  == $part) continue;
+            if ('..' == $part) {
+                array_pop($absolutes);
+            } else {
+                $absolutes[] = $part;
+            }
+        }
+        $path=implode(DIRECTORY_SEPARATOR, $absolutes);
+        // put initial separator that could have been lost
+        $path=!$unipath ? '/'.$path : $path;
+        return $path;
     }
 }

@@ -34,7 +34,7 @@ Newscoop\Entity\User:
         attributes:
             expose: true
             read_only: true
-            type: user_atributes
+            type: array
             groups: ["list"]
             access_type: public_method
             serialized_name: attributes
