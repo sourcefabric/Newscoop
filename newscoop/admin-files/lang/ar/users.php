@@ -129,7 +129,7 @@ regGS("User may use underline", "يحق للمستخدم إستخدام الخط
 regGS("User may use strikethrough", "يحق للمستخدم إستخدام التسطير الوسطي");
 regGS("User may change text alignment", "يحق للمستخدم تغيير محاذاة النص");
 regGS("User may copy, cut, and paste", "يحق للمستخدم إستخدام الحافظة");
-regGS("User may undo/redo", "يحق للمستخدم إستخدام الإزالة والإعادة");
+regGS("User may undo/redo", "يحق للمستخدم إستخدام الغاء وإعادة الإجراء");
 regGS("User may change text direction", "يحق للمستخدم تغيير إتجاة الخط");
 regGS("User may set indents", "يحق للمستخدم تحديد المسافة البادئة");
 regGS("User may add links", "يحق للمستخدم إضافة روابط");
