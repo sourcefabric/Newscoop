@@ -77,7 +77,7 @@ class Source extends EntityRepository implements ISource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    private function buildWhere(array $p_cols, $p_search)
+    private function buildWhere(array $p_cols, $p_search, $qb = null, $andx = null)
     {
         $qb = $this->createQueryBuilder('e');
         $or = $qb->expr()->orx();

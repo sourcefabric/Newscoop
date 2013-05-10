@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 if (APPLICATION_ENV === 'production') {
     $kernel = new AppKernel('prod', false);
-} else if (APPLICATION_ENV === 'development') {
+} else if (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev') {
     $kernel = new AppKernel('dev', true);
 } else {
     $kernel = new AppKernel(APPLICATION_ENV, true);
@@ -26,21 +26,13 @@ if (APPLICATION_ENV === 'production') {
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
-$kernel->boot();
-
-$container = $kernel->getContainer();
-\Zend_Registry::set('container', $container);
-
-if (!defined('DONT_BOOTSTRAP_ZEND')) {
-    // init adodb
-    require_once __DIR__ . '/db_connect.php';
-}
-
 try {
     $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
+    $container = \Zend_Registry::get('container');
+
     // Fill zend application options
     $config = $container->getParameterBag()->all();
     $application = new \Zend_Application(APPLICATION_ENV);
@@ -52,8 +44,6 @@ try {
 
     $application->setOptions($config);
     if (!defined('DONT_BOOTSTRAP_ZEND')) {
-        // init adodb
-        require_once __DIR__ . '/db_connect.php';
         $application->bootstrap();
     }
 }

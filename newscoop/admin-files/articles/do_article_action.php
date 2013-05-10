@@ -45,7 +45,7 @@ switch ($f_action) {
 			$articleObj->setIsLocked(false);
 
 			\Zend_Registry::get('container')->getService('dispatcher')
-		        ->notify('article.unlock', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+		        ->dispatch('article.unlock', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
 		            'article' => $articleObj
 		        )));
 		}

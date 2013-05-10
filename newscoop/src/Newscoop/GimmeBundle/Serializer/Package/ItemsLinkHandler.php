@@ -8,29 +8,22 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Package;  
 
-use JMS\SerializerBundle\Serializer\VisitorInterface;
-use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
+use JMS\Serializer\JsonSerializationVisitor;
 
 /**
  * Create uri for items resource.
  */
-class ItemsLinkHandler implements SerializationHandlerInterface
+class ItemsLinkHandler
 {
-    private $router;
+    protected $router;
 
     public function __construct($router)
     {
         $this->router = $router;
     }
 
-    public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
+    public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {   
-        if ($type != 'Newscoop\\Package\\Package') {
-            return;
-        }
-
-        $uri = $this->router->generate('newscoop_gimme_slideshows_getslideshowitems', array('id' => $data->getId()), true);
-
-        $data->setItemsLink($uri);
+        return $uri = $this->router->generate('newscoop_gimme_slideshows_getslideshowitems', array('id' => $data->id), true);
     }
 }

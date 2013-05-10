@@ -4,19 +4,25 @@ imports:
 framework:
     router:
         resource: "%kernel.root_dir%/configs/symfony/routing_dev.yml"
+    profiler: { only_exceptions: false }
+    fragments:
+        enabled:              false
+        path:                 /_fragment
 
 monolog:
     handlers:
         main:
-            type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
+            type: stream
+            path: %kernel.logs_dir%/%kernel.environment%.log
             level: debug
         firephp:
-            type:  firephp
+            type: firephp
+            level: info
+        chromephp:
+            type: chromephp
             level: info
 
 # enable the web profiler
 web_profiler:
-    toolbar: false
-    intercept_redirects: true
-    verbose: true
+    toolbar: true
+    intercept_redirects: false

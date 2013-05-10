@@ -146,7 +146,7 @@ class UserTopicService
             return;
         }
 
-        $this->dispatcher->notify('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
+        $this->dispatcher->dispatch('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
             'topic_id' => $topic->getTopic()->getId(),
             'user' => $user,
