@@ -86,8 +86,8 @@ function removeFromContext(param) {
 
 function fnPreviewArticle(data)
 {
-	$("#preview-article-date").val(data.date);
-	$("#preview-article-title").html(data.title);
+	$("#preview-article-date").val(data.Date);
+	$("#preview-article-title").html(data.Title);
 	var bodyHtml = '';
 	for (i in data)
 	{
