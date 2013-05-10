@@ -1,8 +1,7 @@
 <?php 
-regGS("Edit metadata", "تعديل بيانات فوقية");
 regGS("Rating", "تقييم");
 regGS("Enable Rating", "تمكين التقييم");
-regGS("Blog management", "إدار ة المدونة");
+regGS("Blog management", "إدارة المدونة");
 regGS("View article", "عرض المقالة");
 regGS("Select a list", "تحديد قائمة");
 regGS("Remove list", "إزالة قائمة");
@@ -17,26 +16,26 @@ regGS("Featured Articles", "مقالات مميزة");
 regGS("Featured Article Lists", "قوائم مقالات مميزة");
 regGS("Featured Article List", "قائمة المقالات المميزة");
 regGS("Duplicate list", "قائمة مكررة");
-regGS("Duplicate article entry found", "يوجد ادخال مقالة مكررة");
+regGS("Duplicate article entry found", "تم العثور على ادخال مقالة مكررة");
 regGS("Drag here to add to list", "اسحب هنا من أجل الإضافة إلى القائمة");
 regGS("Could not save the list", "لم يحفظ القائمة");
 regGS("Available Articles", "مقالات متوفرة");
 regGS("Are you sure you want to delete this list?", "هل تريد بالتأكيد حذف هذه القائمة؟");
 regGS("Add to list", "إضافة إلى القائمة");
 regGS("Add list", "إضافة قائمة");
-regGS("Multi date events", "أحداث متعدد التاريخ");
+regGS("Multi date events", "أحداث متعددة التواريخ");
 regGS("Slideshows", "عروض الشرائح");
 regGS("Place images", "وضع الصور");
-regGS("You're not allowed to edit article.", "لا يسمح لك أن تعدّل المقالة");
+regGS("You're not allowed to edit article.", "لا يسمح لك أن تعدل المقالة");
 regGS("Webcode", "كود الويب");
 regGS("Unapproved", "غير موافق عليه");
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "لا يمكن أن ترى معاينة الإصدار هذا. يرجى التأكد أن تم تعيين مبحثا للمنشورة.");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "لا يمكن أن ترى معاينة الإصدار هذا. يرجى التأكد أن تم تعيين نسق للمنشور.");
 regGS("The article could not be submitted.", "لم تسلّم هذه المقالة.");
 regGS("Submit articles", "تسليم المقالات");
 regGS("Submit article", "تسليم المقالة");
 regGS("Related Articles", "مقالات متعلقة:");
-regGS("Pending articles", "مقالات في انتظار");
-regGS("Pending Articles", "مقالات في انتظار");
+regGS("Pending articles", "مقالات قيد انتظار");
+regGS("Pending Articles", "مقالات قيد انتظار");
 regGS("Context Box updated", "تم تحديث صندوق السياق");
 regGS("On", "قيد التشغيل");
 regGS("Off", "قيد الإيقاف");
@@ -52,13 +51,13 @@ regGS("Overwrite articles with matching names", "الكتابة فوق المق�
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "المقالة \"<i>$1</i>\" موجودة من قبل، ولم يكتب فوقها. <br />");
 regGS("Files", "ملفات");
 regGS("Select section:", "اختيار القسم");
-regGS("Add another author", "إضافة كاتبا آخرا");
+regGS("Add another author", "إضافة كاتب آخر");
 regGS("The article has been locked by $1 ($2) $3 minute(s) ago.", "تم تأمين المقالة من $1 ($2) $3 دقائق مضت.");
 regGS("The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.", "تم تأمين المقالة من $1 ($2) $3 ساعة(-ات) و $4 دقائق مضت.");
 regGS("Switches saved.", "تم حفظ التبديلات.");
-regGS("Keywords saved.", "تم حفظ كلمات البحث.");
+regGS("Keywords saved.", "تم حفظ كلمات الرئيسية.");
 regGS("Comment settings", "إعدادات التعليقات");
-regGS("Authors", "المؤلفات");
+regGS("Authors", "المؤلفون");
 regGS("Attach Topic To Article", "ارفاق الموضوع بالمقالة");
 regGS("Article saved.", "تم حفظ المقالة.");
 regGS("Article is locked", "تم تأمين المقالة");
@@ -69,16 +68,16 @@ regGS("No subtopics available", "لا يتوفر أي موضوعات فرعية"
 regGS("Newscoop Subhead", "عنوان فرعي لـ Newscoop.");
 regGS("Media", "وسائل الإعلام");
 regGS("Last modified", "آخر تعديل");
-regGS("Keywords &amp; Topics", "كلمات البحث والموضوعات");
+regGS("Keywords &amp; Topics", "كلمات الرئيسية والموضوعات");
 regGS("Info", "معلومات");
-regGS("Go to live article", "الذهاب الى المقالة النشيطة");
+regGS("Go to live article", "إذهب الى المقالة النشيطة");
 regGS("Created", "تم الانشاء");
 regGS("Are you sure you want to remove the map from the article?", "هل أنت متأكد أنك تريد إزالة الخريطة من المقالة؟");
 regGS("Scheduled action added", "تم إضافة الإجراء المجدول");
 regGS("Content edited", "تم تحرير المحتوى");
 regGS("You must select an article language.", "يجب عليك تحديد لغة المقالة.");
-regGS("You must select a publication.", "يجب عليك تحديد منشورة.");
-regGS("You must select a file to upload.", "يجب عليك تحديد ملفا للرفع.");
+regGS("You must select a publication.", "يجب عليك تحديد منشور.");
+regGS("You must select a file to upload.", "يجب عليك تحديد ملف للرفع.");
 regGS("You must select a XML input file.", "يجب عليك تحديد ملف XML للإدخال.");
 regGS("You do not have the right to import XML archives.", "ليس لديك الحق في استيراد أرشيفات XML.");
 regGS("There was a problem uploading the file.", "حدثت مشكلة في رفع الملف.");
@@ -87,7 +86,7 @@ regGS("The file exceeds the allowed max file size.", "يتجاوز الملف ا
 regGS("Optional", "اختياري");
 regGS("Input File", "ملف الإدخال");
 regGS("Import XML", "استيراد XML");
-regGS("File is not a valid XML file.", "الملف ليس ملفا XML صالحا.");
+regGS("File is not a valid XML file.", "الملف ليس ملف XML صالح.");
 regGS("File does not exist.", "الملف غير موجود.");
 regGS("File could not be uploaded.", "لم يرفع الملف");
 regGS("File could not be read.", "لم يقرأ الملف.");
@@ -101,9 +100,9 @@ regGS("Save All", "حفظ الكل");
 regGS("Online Server: On", "الخادم على الانترنت: قيد التشغيل");
 regGS("Online Server: Off", "الخادم على الانترنت: قيد الإيقاف");
 regGS("Download", "تحميل");
-regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "لا يمكن أن مقالتين تحملا نفس الاسم في نفس القسم. اسم المقالة الذي حددته قيد الاستخدام من قبل من المقالة '$1'.");
-regGS("Visible to non-subscribers", "قابل للزيارة لغير المشتركين");
-regGS("The article could not be published.", "لم ينشر المقالة.");
+regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "لا يمكن أن تحمل مقالتين نفس الاسم في نفس القسم. اسم المقالة الذي حددته قيد الاستخدام من قبل من المقالة '$1'.");
+regGS("Visible to non-subscribers", "منظور لغير المشتركين");
+regGS("The article could not be published.", "لم تنشر المقالة.");
 regGS("Scheduled action deleted.", "تم حذف الإجراء المجدول.");
 regGS("Scheduled action added.", "تم إضافة الإجراء المجدول.");
 regGS("Article(s) unlocked.", "المقالة (-ات) غير مقفلة.");
@@ -126,24 +125,24 @@ regGS("Enabled", "تم التمكين");
 regGS("Disabled", "تم المنع من العمل");
 regGS("Comments", "تعليقات");
 regGS("The article has already been translated into $1.", "تم ترجمة المقالة من قبل في $1.");
-regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "يجب عليك تحديد المنشورة، الاصدار والقسم لهذه المقالة قبل جدولتها للنشر. إذهب إلى قائمة \"$1\" واختر \"$2\" لفعل هذا.");
+regGS("You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the \"$1\" menu and select \"$2\" to do this.", "يجب عليك تحديد المنشور والاصدار والقسم لهذه المقالة قبل جدولتها للنشر. إذهب إلى قائمة \"$1\" واختر \"$2\" لفعل هذا.");
 regGS("You do not have the right to translate articles.", "ليس لديك الحق في ترجمة مقالات.");
 regGS("You do not have the right to publish articles.", "ليس لديك الحق في نشر مقالات.");
 regGS("You do not have the right to move articles.", "ليس لديك الحق في نقل مقالات.");
-regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "لا يمكنك $1 المقالات المحددة باللون الأحمر لان لم تتم ترجمة الاصدار النهائى للغة المناسبة.");
+regGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", "لا يمكنك $1 المقالات المحددة باللون الأحمر لان لم تتم ترجمة الاصدار المستهدف للغة المناسبة.");
 regGS("Publish?", "يتم النشر؟");
 regGS("Publish articles", "نشر المقالات.");
 regGS("Publish article", "نشر المقالة.");
 regGS("Move?", "يتم النقل؟");
 regGS("Move articles", "نقل المقالات.");
 regGS("Move article", "نقل المقالة.");
-regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "يجب أن ينشئ إصدارا للغة المختارة ولكن ليس لديك الحق في إنشاء إصدارا.");
-regGS("A section must be created for the selected language but you do not have the right to create a section.", "يجب أن ينشئ قسما للغة المختارة ولكن ليس لديك الحق في إنشاء قسما.");
+regGS("An issue must be created for the selected language but you do not have the right to create an issue.", "يجب أن ينشئ إصدار للغة المختارة ولكن ليس لديك الحق في إنشاء إصدار.");
+regGS("A section must be created for the selected language but you do not have the right to create a section.", "يجب أن ينشئ قسم للغة المختارة ولكن ليس لديك الحق في إنشاء قسم.");
 regGS("to section", "إلى قسم");
 regGS("You must choose a language", "يجب عليك إختيار لغة");
 regGS("Unable to create the section for translation $1.", "غير قادر على إنشاء القسم للترجمة $1.");
 regGS("Unable to create the issue for translation $1.", "غير قادر على إنشاء الإصدار للترجمة $1.");
-regGS("The following articles are new; it is not possible to schedule them for automatic publishing", "المقالات التالية جديدة. لا تمكن جدولتها للنشر الأوتوماتي.");
+regGS("The following articles are new; it is not possible to schedule them for automatic publishing", "المقالات التالية جديدة. لا يمكن جدولتها للنشر الأوتوماتي.");
 regGS("Section URL Name", "اسم الرابط للقسم");
 regGS("Section Name", "اسم القسم");
 regGS("Publish Schedule", "نشر الجدولة");
@@ -152,7 +151,7 @@ regGS("New section name", "اسم قسم جديد");
 regGS("New section URL name", "اسم الرابط لقسم جديد");
 regGS("New issue name", "اسم إصدار جديد");
 regGS("New issue URL name", "اسم الرابط لإصدار جديد");
-regGS("New article name", "اسم مقالة جديدة");
+regGS("New article name", "اسم مقالة جديد");
 regGS("Issue URL Name", "اسم الرابط للإصدار");
 regGS("Issue Name", "اسم الإصدار");
 regGS("Duplicate?", "يتم التكرار؟");
@@ -163,8 +162,8 @@ regGS("Are you sure you want to remove the topic \'$1\' from the article?", "ه�
 regGS("Are you sure you want to remove the file \'$1\' from the article?", "هل أنت متأكد من إزالة الملف \'$1\' من المقالة؟");
 regGS("Are you sure you want to remove the event scheduled on $1?", "هل أنت متأكد من إزالة الحدث المجدول في $1؟");
 regGS("Are you sure you want to delete this article?", "هل أنت متأكد من إزالة هذه المقالة؟");
-regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "يجب إنشاء إصدارا للغة المختارة. الرجاء إدخال اسم الإصدار وعنوان الرابط.");
-regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "يجب إنشاء قسما للغة المختارة. الرجاء إدخال اسم القسم وعنوان الرابط.");
+regGS("An issue must be created for the selected language.  Please enter the issue name and URL name.", "يجب إنشاء إصدار للغة المختارة. الرجاء إدخال اسم الإصدار وعنوان الرابط.");
+regGS("A section must be created for the selected language.  Please enter the section name and URL name.", "يجب إنشاء قسم للغة المختارة. الرجاء إدخال اسم القسم وعنوان الرابط.");
 regGS("Article Type", "نوع المقالة");
 regGS("Show article on front page", "إظهار المقالة في الصفحة الرئيسية");
 regGS("Show article on section page", "إظهار المقالة في صفحة الأقسام");
@@ -172,18 +171,21 @@ regGS("Translate article", "ترجمة المقالة");
 regGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", "ليس لديك الحق في تغيير هذه المقالة.يسمح لك تعديل فقط المقالات الخاصة بك وعند التسليم يمكن تغير المقالات فقط من مستخدمين مفوضين.");
 regGS("Duplicate article", "مقالة مكررة");
 regGS("The destination section is the same as the source section.", "القسم النائي هو نفس القسم المصدري");
-regGS("The article is new; it is not possible to schedule it for automatic publishing.", "المقالة جديدة. لا تمكن جدولتها للنشر الأوتوماتي.");
-regGS("No article types were defined. You must create an article type first.", "لم يحدد أي نوع المقالة. الرجاء إنشاء نوع مقالة أولاً.");
+regGS("The article is new; it is not possible to schedule it for automatic publishing.", "المقالة جديدة. لا يمكن جدولتها للنشر الأوتوماتي.");
+regGS("No article types were defined. You must create an article type first.", "لم يحدد أي نوع المقالة. الرجاء إنشاء نوع مقالة أولا.");
 regGS("Edit article types", "تعديل أنواع المقالة");
 regGS("Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.", "لم تحفظ المقالة. لقد تم قفل المقالة بواسطة $1 منذ $2 ساعات و $3 دقائق.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "ليس لديك الحق في تغيير حالة المقالة. عند التسليم، لا يمكن تغييرها إلا من مستخدمين مفوصين .");
 regGS("You do not have the right to delete articles.", "ليس لديك الحق في حذف المقالات.");
 regGS("You must select an article type.", "يحب عليك إختيار نوع مقالة.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "هل أنت متأكد من إزالة الصورة \'$1\' من المقالة؟");
-regGS("There was an error reading request parameters.", "حدث خطأ في قراءة متغيرات الطلب");
-regGS("This article cannot be previewed. Please make sure it has the article template selected.", "لا تمكن معاينة هذه المقالة. الرجاء التأكد أن قالب المقالة مختارا.");
-regGS("No such article.", "لا يوجد المقالة.");
+regGS("There was an error reading request parameters.", "حدث خطأ أثناء قراءة متغيرات الطلب");
+regGS("This article cannot be previewed. Please make sure it has the article template selected.", "لا يمكن معاينة هذه المقالة. الرجاء التأكد أن قالب المقالة مختار.");
+regGS("No such article.", "لا يوجد مثل هذه المقالة.");
 regGS("No such section.", "لا يوجد القسم.");
-regGS("Are you sure you want to delete this scheduled action?", "هل أنت متأكد أن تريد أن تحذف هذا الإجراء المجدول؟");
+regGS("Are you sure you want to delete this scheduled action?", "هل أنت متأكد أنك تريد أن تحذف هذا الإجراء المجدول؟");
 regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة ' /1$/ ' من المقالة ؟");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "هل أنت متأكد من إزالة الموضوع \\'$1\\' من المقالة؟");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "هل أنت متأكد من إزالة الملف \\'$1\\' من المقالة؟");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "هل أنت متأكد من إزالة الصورة \\'$1\\' من المقالة؟");
 ?>

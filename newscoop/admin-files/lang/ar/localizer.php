@@ -1,6 +1,6 @@
 <?php 
 regGS("Support", "الدعم");
-regGS("Themes", "مباحث");
+regGS("Themes", "أنسق");
 regGS("Area to localize", "المنطقة من أجل تحديد الموقع");
 regGS("Dashboard", "لوحة أجهزة القياس ");
 regGS("Authors", "المؤلفات");
@@ -17,10 +17,10 @@ regGS("Hide translated strings", "إخفاء سلسلات الرموز المت�
 regGS("Feedback", "التغذية المرتدة");
 regGS("You do not have the right to manage the localizer.", "ليس لديك الحق في إدارة محدد الموقع .");
 regGS("API", "واجهة برمجة التطبيقات");
-regGS("User Subscriptions Sections", "أقسام إشتراكات المستخدمين");
-regGS("User Subscriptions", "إشتراكات المستخدمين");
-regGS("Translate to:", "الترجمة إلى:");
-regGS("Translate from:", "الترجمة من:");
+regGS("User Subscriptions Sections", "أقسام إشتراكات المستخدم");
+regGS("User Subscriptions", "إشتراكات لامستخدم");
+regGS("Translate to:", "ترجم إلى:");
+regGS("Translate from:", "ترجم من:");
 regGS("The following strings are not used:", "سلسلات الرموز التالية غير مستخدمة:");
 regGS("The following strings are missing from the translation files:", "سلسلات الرموز التالية مفقودة من ملفات الترجمة:");
 regGS("No source strings found.", "لم يتم العثور على سلسلات مصدرية");

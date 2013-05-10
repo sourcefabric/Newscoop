@@ -6,10 +6,10 @@ regGS("first", "الأول");
 regGS("You must input a number greater than 0 into the Number of addresses field.", "يجب عليك إدخال رقم لا يقل عن 1 في حقل عدد عناوين.");
 regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "يجب عليك إدخال رقم بين 0 وبين 255 في حقل بدء عنوان بروتوكول الإنترنت $1.");
 regGS("User IP access list management", "إدارة قائمة الوصول لبروتوكول الانترنت للمستخدم");
-regGS("The IP address group conflicts with another existing group.", "تتعارض مجموعة عنوان بورتوكول الإنترنت مع مجموعة موجودة آخرى.");
+regGS("The IP address group conflicts with another existing group.", "تتعارض مجموعة عنوان بورتوكول الإنترنت مع مجموعة موجودة أخرى.");
 regGS("Subscription sections", "أقسام الاشتراكات");
 regGS("No records.", "لا توجد سجلات.");
-regGS("You have subscription for all available publications", "لديك اشتراك لجميع المنشورات المتاحة");
+regGS("You have subscription for all available publications", "لديك اشتراك لجميع المنشورات المتوفرة");
 regGS("Subscription type:", "نوع الاشتراك:");
 regGS("Start:", "بدء:");
 regGS("Start Date", "تاريخ البدء");
@@ -22,29 +22,29 @@ regGS("No subscriptions", "لا الاشتراكات");
 regGS("Languages:", "لغات:");
 regGS("Edit all sections", "تحرير جميع الأقسام");
 regGS("Days:", "الأيام:");
-regGS("Days must be number", "يجب أن تكون الأيام رقما");
+regGS("Days must be number", "يجب أن تكون الأيام رقم");
 regGS("Any", "أي");
-regGS("Add section", "إضافة قسما");
+regGS("Add section", "إضافة قسم");
 regGS("saved", "تم الحفظ");
-regGS("removed", "تمت الإزالة");
+regGS("removed", "تم الإزالة");
 regGS("deleted", "تم الحذف");
 regGS("deactivated", "تم الإبطال");
 regGS("activated", "تم التنشيط");
-regGS("Value is required and can't be empty", "الحقل مطلوب ولا يمكن أن يكون فارغا");
+regGS("Value is required and can't be empty", "الحقل مطلوب ولا يمكن أن يكون قارغ");
 regGS("That user name already exists, please choose a different login name.", "اسم المستخدم هذا قيد الاستخدام من قبل، الرجاء اختيار اسم تسجيل دخول مختلف.");
-regGS("That $1 already exists, please choose a different $2.", "ذلك/تلك الــ $1 موجود(ة) من قبل ، الرجاء اختيار $2 مختلف(ة).");
-regGS("Subscriptions exist for all available publications.", "توجد اشتراكات لجميع المنشورات المتاحة.");
+regGS("That $1 already exists, please choose a different $2.", "ذلك الــ $1 موجود من قبل ، الرجاء اختيار $2 مختلف.");
+regGS("Subscriptions exist for all available publications.", "توجد اشتراكات لجميع المنشورات المتوفرة.");
 regGS("Subscription IP Addresses", "عناوين بروتوكول الإنترنت لإشتراكات");
 regGS("Subscription $1", "الاشتراك $1");
 regGS("Subscriber saved.", "تم حفظ المشترك.");
 regGS("Subscriber management", "إدارة المشتركين");
 regGS("Subscriber deleted.", "تم حذف المشترك.");
 regGS("Start IP", "بدء بروتوكول الإنترنت (IP)");
-regGS("Select country", "اختيار بلدا");
+regGS("Select country", "اختيار دولة");
 regGS("Number of addresses", "عدد العناوين");
 regGS("Number of Addressses", "عدد العناوين");
 regGS("No IP Addresses", "لا عناوين بروتوكول الإنترنت");
-regGS("IP Address added allready", "تمت إضافة عنوان بروتوكول الإنترنت من قبل.");
+regGS("IP Address added allready", "تم إضافة عنوان بروتوكول الإنترنت من قبل.");
 regGS("IP Address $1", "عنوان بروتوكول الإنترنت $1");
 regGS("IP Access", "وصول بروتوكول الإنترنت");
 regGS("Full Name", "الاسم الكامل");
@@ -58,7 +58,7 @@ regGS("Add new IP address", "إضافة عنوان جديد من بروتوكو�
 regGS("Add new IP Address", "إضافة عنوان جديد من بروتوكول الإنترنت");
 regGS("Accout Name", "اسم الحساب");
 regGS("'%value%' must be greater than '%min%'", "يجب '%value%' أن يكون أكبر من '%min%'");
-regGS("'%value%' is not a valid IP Address", "ليس '%value%' عنوانا صالحا لبورتوكول الإنترنت");
+regGS("'%value%' is not a valid IP Address", "ليس '%value%' عنوان صالح لبورتوكول الإنترنت");
 regGS("Regardless of the language", "على الرغم من اللغة");
 regGS("Individual languages", "لغات فردية");
 regGS("Add sections now", "إضافة أقسام الآن");
