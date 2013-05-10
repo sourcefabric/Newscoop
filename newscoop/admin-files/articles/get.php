@@ -43,7 +43,9 @@ foreach ($dbColumns as $dbColumn) {
         $articleInfo[htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId()))] = $articleData->getProperty($dbColumn->getName());
     }
 }
-$articleInfo[getGs('Title')] = $articleObj->getTitle();
-$articleInfo[getGs('Date')] = $articleObj->getCreationDate();
+$articleInfo[getGs('Title')] = $articleObj->getTitle();         // THIS IS REALLY BAD, NEVER LOCALIZE INTERNALLY
+$articleInfo[getGs('Date')] = $articleObj->getCreationDate();   // But I don't know what possibly depends on this so we leave it for now
+$articleInfo['title'] = $articleObj->getTitle();
+$articleInfo['date'] = $articleObj->getCreationDate();
 
 echo $this->view->json($articleInfo);
