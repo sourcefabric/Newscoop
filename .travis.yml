@@ -6,4 +6,5 @@ notifications:
   email: false
 before_script:
   - "cp -r dependencies/include/* newscoop/include/"
+  - cd newscoop/
   - composer install
