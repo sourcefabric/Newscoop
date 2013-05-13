@@ -1,0 +1,16 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/configs/symfony/routing_dev.yml"
+    test: ~
+    session:
+        storage_id: session.storage.mock_file
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%.log
+            level: debug
