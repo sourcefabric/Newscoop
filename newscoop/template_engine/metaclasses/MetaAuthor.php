@@ -30,10 +30,18 @@ final class MetaAuthor extends MetaDbObject
         'type' => 'getType',
         'defined' => 'defined',
         'user' => 'getUser',
+        'has_url' => 'hasUrl',
+        'url' => 'getUrl',
     );
 
     /** @var AuthorBiography **/
     private $m_biography = NULL;
+
+    /** @var MetaUser */
+    private $user;
+
+    /** @var string */
+    private $url;
 
     public function __construct($p_idOrName = NULL, $p_type = NULL)
     {
@@ -79,9 +87,40 @@ final class MetaAuthor extends MetaDbObject
      *
      * @return MetaUser
      */
-    public function getUser()
+    protected function getUser()
     {
         $user = \Zend_Registry::get('container')->getService('user')->findByAuthor($this->m_dbObject->getId());
         return new \MetaUser($user);
+    }
+
+    /**
+     * Test if author has profile url
+     *
+     * @return bool
+     */
+    protected function hasUrl()
+    {
+        return $this->getUrl() !== '';
+    }
+
+    /**
+     * Get author profile url
+     *
+     * @return string
+     */
+    protected function getUrl()
+    {
+        if ($this->url === null) {
+            $user = $this->getUser();
+            if (!$user->defined || !$user->is_active) {
+                $this->url = '';
+            } else {
+                $this->url = \Zend_Registry::get('view')->url(array(
+                    'username' => $user->uname,
+                ), 'user');
+            }
+        }
+
+        return $this->url;
     }
 }
