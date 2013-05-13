@@ -34,12 +34,11 @@ class Admin_Form_Comment_ReplyForm extends Form
         $this->addElement('text', 'subject',
                 array(
             'label' => getGS('Subject'),
-            'required' => true,
+            'required' => false,
             'filters' => array(
                 'stringTrim',
             ),
             'validators' => array(
-                array('NotEmpty', true),
                 array('stringLength', false, array(1, 140)),
             ),
             'errorMessages' => array(getGS('Subject is not $1 characters long',
