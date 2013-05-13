@@ -48,6 +48,7 @@ class Admin_Form_Comment_EditForm extends Form
         $this->addElement('textarea', 'message',
                 array(
             'label' => getGS('Comment'),
+            'class' => 'comment',
             'required' => false,
         ));
 
