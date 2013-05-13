@@ -23,7 +23,7 @@ echo camp_html_breadcrumbs(array(
     <li>
         <h3><?php echo $widget->getTitle(); ?></h3>
         <p><a href="#<?php echo $widget->getExtension()->getId(); ?>" class="add"><?php putGS('Add to dashboard'); ?></a>&nbsp;</p>
-        <p><?php echo $widget->getDescription(); ?></p>
+        <p><?php putGS($widget->getDescription()); ?></p>
         <?php $widget->renderMeta(); ?>
     </li>
     <?php } ?>
