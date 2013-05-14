@@ -30,7 +30,11 @@ class ResetIndexCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
-        $indexer->reset();
+        if ($this->getApplication()->getKernel()->getContainer()->hasService('search.indexer.article')) {
+            $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
+            $indexer->reset();
+        } else {
+            $output->writeln('Indexer is not configured.');
+        }
     }
 }
