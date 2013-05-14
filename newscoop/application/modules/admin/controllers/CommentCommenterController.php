@@ -80,7 +80,20 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
         $table = $this->getHelper('datatable');
 
         $table->setDataSource($this->commenterRepository);
-
+        $table->setOption('oLanguage', array('oPaginate' => array(
+                'sFirst' => getGS('First'),
+                'sLast' => getGS('Last'),
+                'sNext' => getGS('Next'),
+                'sPrevious' => getGS('Previous'),
+            ),
+            'sZeroRecords' => getGS('No records found.'),
+            'sSearch' => getGS('Search'),
+            'sInfo' => getGS('Showing _START_ to _END_ of _TOTAL_ entries'),
+            'sEmpty' => getGS('No entries to show'),
+            'sInfoFiltered' => getGS(' - filtering from _MAX_ records'),
+            'sLengthMenu' => getGS('Display _MENU_ records'),
+            'sInfoEmpty' => '')
+        );
         $table->setCols(
             array('time_created' => getGS('Date Created'), 'name' => getGS('Name'), 'user' => getGS('Username'),
                  'email' => getGS('Email'), 'url' => getGS('Website'), 'ip' => getGS('Ip'), 'edit' => getGS('Edit'),
