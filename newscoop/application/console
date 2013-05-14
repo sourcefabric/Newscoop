@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+global $g_ado_db;
 
 // if you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
@@ -23,7 +24,14 @@ $kernel = new AppKernel($env, $debug);
 $cli = new Application($kernel);
 
 $kernel->boot();
-\Zend_Registry::set('container', $kernel->getContainer());
+$container = $kernel->getContainer();
+\Zend_Registry::set('container', $container);
+
+$g_ado_db = $container->getService('doctrine.adodb');
+
+if (!$g_ado_db->isConnected(true)) {
+    throw new \Exception("Container is missing", 1);
+}
 
 $cli->setCatchExceptions(false);
 
