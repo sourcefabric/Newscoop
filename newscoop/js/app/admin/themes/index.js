@@ -169,7 +169,7 @@ $( function()
 				var thisA = $(this)
 				confirmUnassignDialog.dialog( 'option', 'buttons', 
 				{
-					"Unnasign" : function()
+					"Unassign" : function()
 					{
 						$.ajax
 						({
