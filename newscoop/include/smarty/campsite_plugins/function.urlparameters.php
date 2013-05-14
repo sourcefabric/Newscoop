@@ -16,9 +16,13 @@
  * @return string $uriString
  *      The URL parameters requested
  */
-function smarty_function_urlparameters($p_params, &$p_smarty)
+function smarty_function_urlparameters($p_params = array(), &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
+
+    if (!array_key_exists('options', $params)) {
+        $params['options'] = array();
+    }
 
     $url = 'url';
     $params = preg_split("/[\s]+/", $p_params['options']);
