@@ -138,12 +138,12 @@ services:
         arguments: ["@em"]
     http.client.factory:
         class: Newscoop\Http\ClientFactory
-    # search.index:
-    #     class: Newscoop\Search\SolrIndex
-    #     arguments: ["@http.client.factory", "%search%"]
-    # search.indexer.article:
-    #     class: Newscoop\Search\ArticleIndexer
-    #     arguments: ["@em", "@search.index"]
+    search.index:
+        class: Newscoop\Search\SolrIndex
+        arguments: ["@http.client.factory", "%search%"]
+    search.indexer.article:
+        class: Newscoop\Search\ArticleIndexer
+        arguments: ["@em", "@search.index"]
     preferences:
         class: SystemPref
     mailchimp.api.factory:
@@ -155,4 +155,9 @@ services:
     plugins.manager:
         class: Newscoop\Services\PluginsManagerService
         arguments: ["@em", "@event_dispatcher"]
+    search_indexer:
+        class:      Newscoop\Search\ArticleIndexer
+        arguments:  ["@em", "@search.index"]
+        tags:
+            -  { name: kernel.event_listener, event: article.delete, method: update }
 

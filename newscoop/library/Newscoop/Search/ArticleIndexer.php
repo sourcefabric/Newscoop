@@ -94,9 +94,7 @@ class ArticleIndexer
 
         try {
             $this->index->commit();
-        } catch (Exception $e) {
-            // ignore
-        }
+        } catch (Exception $e) {}
     }
 
     /**
