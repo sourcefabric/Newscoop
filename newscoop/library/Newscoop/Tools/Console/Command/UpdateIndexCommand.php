@@ -31,7 +31,13 @@ class UpdateIndexCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
-        $indexer->updateIndex($input->getArgument('limit'));
+        if ($this->getApplication()->getKernel()->getContainer()->hasService('search.indexer.article')) {
+            $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
+            $result = $indexer->updateIndex($input->getArgument('limit'));
+
+            $output->writeln(sprintf('Indexed %s articles.', $result));
+        } else {
+            $output->writeln('Indexer is not configured.');
+        }
     }
 }
