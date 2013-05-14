@@ -73,7 +73,7 @@ foreach ($publications as $pub) { ?>
         <TD>
             <?php
                 $languageObj = new Language($pub->getDefaultLanguageId());
-                p(htmlspecialchars($languageObj->getName()));
+                p(htmlspecialchars($languageObj->getNativeName()));
             ?>&nbsp;
         </TD>
         <?php  if ($g_user->hasPermission("ManagePub")) { ?>
