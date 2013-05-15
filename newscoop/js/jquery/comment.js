@@ -244,7 +244,11 @@ $(function () {
             data: $(this).serialize(),
             success: function (data) {
                 datatable.fnDraw();
-                flashMessage(putGS('Comment updated.'));
+                if (data['message'] == "successful") {
+                    flashMessage(putGS('Comment updated.'));
+                } else {
+                    flashMessage(data['data']['subject'][0], "error");
+                }
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
