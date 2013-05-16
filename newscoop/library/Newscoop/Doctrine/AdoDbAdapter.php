@@ -60,10 +60,10 @@ class AdoDbAdapter
      * @param string $sql
      * @return null
      */
-    public function execute($sql)
+    public function execute($sql, $params = array())
     {
         $this->affectedRows = 0;
-        return $this->statement = new AdoDbStatement($this->connection->executeQuery($sql));
+        return $this->statement = new AdoDbStatement($this->connection->executeQuery($sql, $params));
     }
 
     /**
