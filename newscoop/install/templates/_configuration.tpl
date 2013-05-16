@@ -11,7 +11,7 @@
 
 global $Campsite, $ADMIN_DIR;
 
-$GLOBALS['g_campsiteDir'] = __DIR__;
+$GLOBALS['g_campsiteDir'] =  __DIR__ . '/../';
 
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 // sets the PEAR local directory
