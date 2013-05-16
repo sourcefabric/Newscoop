@@ -51,7 +51,8 @@ class PluginsManagerService
             )));
         }
 
-        $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar require ' . $pluginName .':' . $version);
+        $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .' --no-dev');
+
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
