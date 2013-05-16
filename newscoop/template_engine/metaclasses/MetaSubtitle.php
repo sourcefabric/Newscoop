@@ -288,14 +288,18 @@ final class MetaSubtitle {
         }
 
         $isCentered = false;
-        $imgString = '</p><div class="cs_img"';
+        $imgString = '</p><div class="cs_img';
         if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
             if ($detailsArray['align'] == 'middle') {
-                $imgString = '</p><div align="center"><div class="cs_img"';
+                $imgString = '</p><div align="center"><div class="cs_img';
                 $isCentered = true;
-            } else {
-                $imgString .= ' style="float:' . $detailsArray['align'] . ';"';
             }
+            $imgString .= ' cs_fl_' . $detailsArray['align'] . '"';
+        } else {
+            $imgString .= '"';
+        }
+        if (isset($detailsArray['width'])) {
+            $imgString .= 'style="width:' . $detailsArray['width'] . 'px;"';
         }
         $imgString .= '>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '<p>'.$imgZoomLink : '<p>';
@@ -311,11 +315,7 @@ final class MetaSubtitle {
         $imgString .= ' border="0"/>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-        	if (isset($detailsArray['width'])) {
-        	   $imgString .= '<p class="cs_img_caption" style="width:'.$detailsArray['width'].'px">';
-        	} else {
-        		$imgString .= '<p class="cs_img_caption">';
-        	}
+    		$imgString .= '<p class="cs_img_caption">';
             $imgString .= $detailsArray['sub'] . '</p>';
         }
         if ($isCentered) {
