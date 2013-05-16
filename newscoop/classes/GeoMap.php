@@ -1522,10 +1522,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
             ad 7) this for all languages, with display=false for the other ones
 */
 
-        // ad B 1)
-        $queryStr_loc_in = 'INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (';
-        $queryStr_loc_in .= "GeomFromText('POINT(? ?)'), 'point', 0, PointFromText('POINT(? ?)'), 0, %%user_id%%";
-        $queryStr_loc_in .= ')';
+        // removed cause params are not properly processed atm
         // ad B 3)
         // ad B 5)
         $queryStr_maploc = 'INSERT INTO MapLocations (fk_map_id, fk_location_id, poi_style, rank) ';
@@ -1566,12 +1563,10 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                 else
                 {
                     // ad B 1)
-                    $loc_in_params = array();
-                    $loc_in_params[] = $poi['latitude'];
+                    $queryStr_loc_in = 'INSERT INTO Locations (poi_location, poi_type, poi_type_style, poi_center, poi_radius, IdUser) VALUES (';
+                    $queryStr_loc_in .= "GeomFromText('POINT(".$poi['latitude']." ".$poi['longitude'].")'), 'point', 0, PointFromText('POINT(".$poi['latitude']." ".$poi['longitude'].")'), 0, %%user_id%%";
+                    $queryStr_loc_in .= ')';
 
-                    $loc_in_params[] = $poi['longitude'];
-                    $loc_in_params[] = $poi['latitude'];
-                    $loc_in_params[] = $poi['longitude'];
 
                     // the POI itself insertion
                     $queryStr_loc_in = str_replace('%%user_id%%', $g_user->getUserId(), $queryStr_loc_in);
