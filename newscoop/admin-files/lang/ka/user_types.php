@@ -1,6 +1,6 @@
 <?php 
 regGS("get", "მიღება");
-regGS("Soundcloud", "Soundcloud");
+regGS("Soundcloud", "SoundCloud");
 regGS("Templates", "შაბლონები");
 regGS("Feedback Messages", "შეფასების შეტყობინებები ");
 regGS("Article Playlists", "სტატიების სია");
