@@ -1,6 +1,6 @@
 <?php 
 regGS("get", "");
-regGS("Soundcloud", "Soundcloud");
+regGS("Soundcloud", "SoundCloud");
 regGS("Templates", "Template");
 regGS("Feedback Messages", "Messaggi di feedback");
 regGS("Article Playlists", "Vetrine di articoli");

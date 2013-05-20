@@ -1,11 +1,11 @@
 <?php 
 regGS("Translate from", "الترجمة من");
-regGS("Total articles", "مجموع المقالات");
+regGS("Total articles", "كل المقالات");
 regGS("Skype", "Skype");
 regGS("Save All", "حفظ الكل");
 regGS("Reset", "إعادة التعيين");
-regGS("Please enter the last name", "من فضلك ادخل اسم العائلة");
-regGS("Please enter the first name", "من فضلك ادخل الاسم الأول");
+regGS("Please enter the last name", "يرجى ادخال اسم العائلة");
+regGS("Please enter the first name", "يرجى ادخال الاسم الأول");
 regGS("No records found", "لا توجد سجلات تاريخية");
 regGS("Last name", "اسم العائلة");
 regGS("Jabber", "Jabber");

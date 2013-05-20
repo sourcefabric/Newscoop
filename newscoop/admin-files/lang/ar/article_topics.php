@@ -1,13 +1,13 @@
 <?php 
 regGS("You must enter a name for the topic.", "يجب عليك إدخال اسم للموضوع.");
-regGS("Show All", "مشاهدة الجميع");
+regGS("Show All", "إظهار الجميع");
 regGS("Select the parent of the topic", "حدد أصل الموضوع");
-regGS("None", "بلا");
-regGS("Add new topic", "إضافة موضوعا جديدا");
-regGS("No topics have been created yet.", "لم يتم بعد إنشاء أي موضوع.");
+regGS("None", "لا شيئ");
+regGS("Add new topic", "إضافة موضوع جديد");
+regGS("No topics have been created yet.", "لم يتم حتى الآن إنشاء أي موضوع.");
 regGS("Topics updated.", "تم تحديث المواضيع");
 regGS("Topic does not exist.", "الموضوع غير موجود.");
-regGS("The topic '$1' has been removed from article.", "تمت إزالة الموضوع '$1' من المقالة.");
+regGS("The topic '$1' has been removed from article.", "تم إزالة الموضوع '$1' من المقالة.");
 regGS("You do not have the right to detach topics from articles.", "ليس لديك الحق في فصل المواضيع من المقالات.");
 regGS("You do not have the right to attach topics to articles.", "ليس لديك الحق في إرفاق المواضيع بالمقالات.");
 regGS("Attach Topics", "ارفاق مواضيع");

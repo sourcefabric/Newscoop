@@ -1,7 +1,4 @@
 <?php 
-regGS("No such article type", "No such article type");
-regGS("Filter saved", "Filter saved");
-regGS("Filter not saved", "Filter not saved");
 regGS("Not a color", "Not a color");
 regGS("No such field", "No such field");
 regGS("Color saved", "Color saved");
