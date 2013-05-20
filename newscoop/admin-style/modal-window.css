@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-html, body {
+html {
 	height:100%;
 }
 body.modal-window {
@@ -52,6 +52,8 @@ body.modal-window {
 				margin-top:40px;
 				}
 
-
+#app {
+	padding: 0;
+}
 
 		
