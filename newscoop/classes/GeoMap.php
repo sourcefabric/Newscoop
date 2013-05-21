@@ -1571,7 +1571,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
                     // the POI itself insertion
                     $queryStr_loc_in = str_replace('%%user_id%%', $g_user->getUserId(), $queryStr_loc_in);
 
-                    $success = $g_ado_db->Execute($queryStr_loc_in, $loc_in_params);
+                    $success = $g_ado_db->Execute($queryStr_loc_in);
                     // ad B 2)
                     // taking its ID for the next processing
                     $loc_id = $g_ado_db->Insert_ID();
