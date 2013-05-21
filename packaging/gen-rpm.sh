@@ -46,14 +46,14 @@ else
 	YUMPATH=/home/rgareus/yum
 fi
 
-rsync -P --bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm ${YUMHOST}:${YUMPATH}/16/i386/ || exit
-rsync -P --bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm ${YUMHOST}:${YUMPATH}/16/source/ || exit
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/RPMS/noarch/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm ${YUMHOST}:${YUMPATH}/18/i386/ || exit
+rsync -P --bwlimit=70 ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}.src.rpm ${YUMHOST}:${YUMPATH}/18/source/ || exit
 
 ssh ${YUMHOST} << EOF
-cd ${YUMPATH}/16/x86_64/
+cd ${YUMPATH}/18/x86_64/
 ln ../i386/newscoop-${RPMVERS}${RPMRELEASE}.noarch.rpm
 
-createrepo ${YUMPATH}/16/source/
-createrepo ${YUMPATH}/16/i386/
-createrepo ${YUMPATH}/16/x86_64/
+createrepo ${YUMPATH}/18/source/
+createrepo ${YUMPATH}/18/i386/
+createrepo ${YUMPATH}/18/x86_64/
 EOF

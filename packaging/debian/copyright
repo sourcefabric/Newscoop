@@ -1,6 +1,6 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=135
-Name: Newscoop
-Maintainer: Sourcefabric <newscoop-dev@lists.sourcefabric.org>
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Newscoop
+Upstream-Contact: Sourcefabric <newscoop-dev@lists.sourcefabric.org>
 Source: http://sourceforge.net/projects/newscoop/files/
 
 Files: *
@@ -12,51 +12,51 @@ License: GPL-3
 Files: ./newscoop/js/flowplayer/
 Copyright: 2009-2011 Flowplayer Oy <info@flowplayer.org>
 License: GPL-3
-The Flowplayer Free version is released under the
-GNU GENERAL PUBLIC LICENSE Version 3 (GPL).
-.
-The GPL requires that you not remove the Flowplayer copyright notices
-from the user interface. See section 5.d below.
-.
-Commercial licenses are available. The commercial player version
-does not require any Flowplayer notices or texts and also provides
-some additional features.
-.
-========================================================================
-.
-ADDITIONAL TERM per GPL Section 7
-If you convey this program (or any modifications of it) and assume
-contractual liability for the program to recipients of it, you agree
-to indemnify Flowplayer, Ltd. for any liability that those contractual
-assumptions impose on Flowplayer, Ltd.
-.
-Except as expressly provided herein, no trademark rights are granted in
-any trademarks of Flowplayer, Ltd. Licensees are granted a limited,
-non-exclusive right to use the mark Flowplayer and the Flowplayer logos
-in connection with unmodified copies of the Program and the copyright
-notices required by section 5.d of the GPL license. For the purposes
-of this limited trademark license grant, customizing the Flowplayer
-by skinning, scripting, or including PlugIns provided by Flowplayer, Ltd.
-is not considered modifying the Program.
-.
-Licensees that do modify the Program, taking advantage of the open-source
-license, may not use the Flowplayer mark or Flowplayer logos and must
-change the fullscreen notice (and the non-fullscreen notice, if that
-option is enabled), the copyright notice in the dialog box, and the
-notice on the Canvas as follows:
-.
-the full screen (and non-fullscreen equivalent, if activated) notice
-should read: "Based on Flowplayer source code"; in the context menu
-(right-click menu), the link to "About Flowplayer free version #.#.#"
-can remain. The copyright notice can remain, but must be supplemented with
-an additional notice, stating that the licensee modified the Flowplayer. 
-A suitable notice might read "Flowplayer Source code modified by ModOrg 2009";
-for the canvas, the notice should read "Based on Flowplayer source code".
-In addition, licensees that modify the Program must give the modified
-Program a new name that is not confusingly similar to Flowplayer and
-may not distribute it under the name Flowplayer.
-.
-========================================================================
+ The Flowplayer Free version is released under the
+ GNU GENERAL PUBLIC LICENSE Version 3 (GPL).
+ .
+ The GPL requires that you not remove the Flowplayer copyright notices
+ from the user interface. See section 5.d below.
+ .
+ Commercial licenses are available. The commercial player version
+ does not require any Flowplayer notices or texts and also provides
+ some additional features.
+ .
+ ========================================================================
+ .
+ ADDITIONAL TERM per GPL Section 7
+ If you convey this program (or any modifications of it) and assume
+ contractual liability for the program to recipients of it, you agree
+ to indemnify Flowplayer, Ltd. for any liability that those contractual
+ assumptions impose on Flowplayer, Ltd.
+ .
+ Except as expressly provided herein, no trademark rights are granted in
+ any trademarks of Flowplayer, Ltd. Licensees are granted a limited,
+ non-exclusive right to use the mark Flowplayer and the Flowplayer logos
+ in connection with unmodified copies of the Program and the copyright
+ notices required by section 5.d of the GPL license. For the purposes
+ of this limited trademark license grant, customizing the Flowplayer
+ by skinning, scripting, or including PlugIns provided by Flowplayer, Ltd.
+ is not considered modifying the Program.
+ .
+ Licensees that do modify the Program, taking advantage of the open-source
+ license, may not use the Flowplayer mark or Flowplayer logos and must
+ change the fullscreen notice (and the non-fullscreen notice, if that
+ option is enabled), the copyright notice in the dialog box, and the
+ notice on the Canvas as follows:
+ .
+ the full screen (and non-fullscreen equivalent, if activated) notice
+ should read: "Based on Flowplayer source code"; in the context menu
+ (right-click menu), the link to "About Flowplayer free version #.#.#"
+ can remain. The copyright notice can remain, but must be supplemented with
+ an additional notice, stating that the licensee modified the Flowplayer. 
+ A suitable notice might read "Flowplayer Source code modified by ModOrg 2009";
+ for the canvas, the notice should read "Based on Flowplayer source code".
+ In addition, licensees that modify the Program must give the modified
+ Program a new name that is not confusingly similar to Flowplayer and
+ may not distribute it under the name Flowplayer.
+ .
+ ========================================================================
 
 Files: ./newscoop/include/html2pdf/_tcpdf_5.0.002/
 Copyright: 2002-2010 Nicola Asuni <info@tecnick.com>
@@ -64,40 +64,40 @@ License: LGPL-2.1
 
 Files: ./newscoop/js/domTT/
 Copyright: 2002-2005 Dan Allen <dan.allen@mojavelinux.com>
-License: Apache 2.0
+License: Apache-2.0
 
 Files: ./newscoop/js/geocoding/openlayers/
 Copyright: 2005-2010 OpenLayers Contributors. See http://openlayers.org/dev/doc/authors.txt
 License: BSD-3
-Redistribution and use in source and binary forms, with or without
-modification, are permitted (subject to the limitations in the
-disclaimer below) provided that the following conditions are met:
-.
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted (subject to the limitations in the
+ disclaimer below) provided that the following conditions are met:
+ .
  * Redistributions of source code must retain the above copyright
    notice, this list of conditions and the following disclaimer.
-.
+ .
  * Redistributions in binary form must reproduce the above copyright
    notice, this list of conditions and the following disclaimer in the
    documentation and/or other materials provided with the
    distribution.
-.
+ .
  * Neither the name of OpenLayers nor the names of its contributors 
    may be used to endorse or promote products derived from this 
    software without specific prior written permission.
-.
-NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
-GRANTED BY THIS LICENSE.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
-HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE
+ GRANTED BY THIS LICENSE.  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT
+ HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+ WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+ BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
+ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
+ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files: ./newscoop/js/plupload/
 Copyright: 2004-2012 Moxiecode Systems AB <info@moxiecode.com>
@@ -134,130 +134,130 @@ License: GPL-2+
 Files: ./newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/
 Copyright: 2003 Bitstream, Inc.
 License: other
-Fonts are (c) Bitstream (see below). DejaVu changes are in public domain.
-Glyphs imported from Arev fonts are (c) Tavmjong Bah (see below)
-.
-Bitstream Vera Fonts Copyright
-------------------------------
-.
-Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is
-a trademark of Bitstream, Inc.
-.
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of the fonts accompanying this license ("Fonts") and associated
-documentation files (the "Font Software"), to reproduce and distribute the
-Font Software, including without limitation the rights to use, copy, merge,
-publish, distribute, and/or sell copies of the Font Software, and to permit
-persons to whom the Font Software is furnished to do so, subject to the
-following conditions:
-.
-The above copyright and trademark notices and this permission notice shall
-be included in all copies of one or more of the Font Software typefaces.
-.
-The Font Software may be modified, altered, or added to, and in particular
-the designs of glyphs or characters in the Fonts may be modified and
-additional glyphs or characters may be added to the Fonts, only if the fonts
-are renamed to names not containing either the words "Bitstream" or the word
-"Vera".
-.
-This License becomes null and void to the extent applicable to Fonts or Font
-Software that has been modified and is distributed under the "Bitstream
-Vera" names.
-.
-The Font Software may be sold as part of a larger software package but no
-copy of one or more of the Font Software typefaces may be sold by itself.
-.
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT,
-TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL BITSTREAM OR THE GNOME
-FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING
-ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
-WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
-THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE
-FONT SOFTWARE.
-.
-Except as contained in this notice, the names of Gnome, the Gnome
-Foundation, and Bitstream Inc., shall not be used in advertising or
-otherwise to promote the sale, use or other dealings in this Font Software
-without prior written authorization from the Gnome Foundation or Bitstream
-Inc., respectively. For further information, contact: fonts at gnome dot
-org. 
-.
-Arev Fonts Copyright
-------------------------------
-.
-Copyright (c) 2006 by Tavmjong Bah. All Rights Reserved.
-.
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of the fonts accompanying this license ("Fonts") and
-associated documentation files (the "Font Software"), to reproduce
-and distribute the modifications to the Bitstream Vera Font Software,
-including without limitation the rights to use, copy, merge, publish,
-distribute, and/or sell copies of the Font Software, and to permit
-persons to whom the Font Software is furnished to do so, subject to
-the following conditions:
-.
-The above copyright and trademark notices and this permission notice
-shall be included in all copies of one or more of the Font Software
-typefaces.
-.
-The Font Software may be modified, altered, or added to, and in
-particular the designs of glyphs or characters in the Fonts may be
-modified and additional glyphs or characters may be added to the
-Fonts, only if the fonts are renamed to names not containing either
-the words "Tavmjong Bah" or the word "Arev".
-.
-This License becomes null and void to the extent applicable to Fonts
-or Font Software that has been modified and is distributed under the 
-"Tavmjong Bah Arev" names.
-.
-The Font Software may be sold as part of a larger software package but
-no copy of one or more of the Font Software typefaces may be sold by
-itself.
-.
-THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
-OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL
-TAVMJONG BAH BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
-DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
-OTHER DEALINGS IN THE FONT SOFTWARE.
-.
-Except as contained in this notice, the name of Tavmjong Bah shall not
-be used in advertising or otherwise to promote the sale, use or other
-dealings in this Font Software without prior written authorization
-from Tavmjong Bah. For further information, contact: tavmjong@free.fr.
+ Fonts are (c) Bitstream (see below). DejaVu changes are in public domain.
+ Glyphs imported from Arev fonts are (c) Tavmjong Bah (see below)
+ .
+ Bitstream Vera Fonts Copyright
+ ------------------------------
+ .
+ Copyright (c) 2003 by Bitstream, Inc. All Rights Reserved. Bitstream Vera is
+ a trademark of Bitstream, Inc.
+ .
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of the fonts accompanying this license ("Fonts") and associated
+ documentation files (the "Font Software"), to reproduce and distribute the
+ Font Software, including without limitation the rights to use, copy, merge,
+ publish, distribute, and/or sell copies of the Font Software, and to permit
+ persons to whom the Font Software is furnished to do so, subject to the
+ following conditions:
+ .
+ The above copyright and trademark notices and this permission notice shall
+ be included in all copies of one or more of the Font Software typefaces.
+ .
+ The Font Software may be modified, altered, or added to, and in particular
+ the designs of glyphs or characters in the Fonts may be modified and
+ additional glyphs or characters may be added to the Fonts, only if the fonts
+ are renamed to names not containing either the words "Bitstream" or the word
+ "Vera".
+ .
+ This License becomes null and void to the extent applicable to Fonts or Font
+ Software that has been modified and is distributed under the "Bitstream
+ Vera" names.
+ .
+ The Font Software may be sold as part of a larger software package but no
+ copy of one or more of the Font Software typefaces may be sold by itself.
+ .
+ THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF COPYRIGHT, PATENT,
+ TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL BITSTREAM OR THE GNOME
+ FOUNDATION BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, INCLUDING
+ ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES,
+ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF
+ THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM OTHER DEALINGS IN THE
+ FONT SOFTWARE.
+ .
+ Except as contained in this notice, the names of Gnome, the Gnome
+ Foundation, and Bitstream Inc., shall not be used in advertising or
+ otherwise to promote the sale, use or other dealings in this Font Software
+ without prior written authorization from the Gnome Foundation or Bitstream
+ Inc., respectively. For further information, contact: fonts at gnome dot
+ org. 
+ .
+ Arev Fonts Copyright
+ ------------------------------
+ .
+ Copyright (c) 2006 by Tavmjong Bah. All Rights Reserved.
+ .
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of the fonts accompanying this license ("Fonts") and
+ associated documentation files (the "Font Software"), to reproduce
+ and distribute the modifications to the Bitstream Vera Font Software,
+ including without limitation the rights to use, copy, merge, publish,
+ distribute, and/or sell copies of the Font Software, and to permit
+ persons to whom the Font Software is furnished to do so, subject to
+ the following conditions:
+ .
+ The above copyright and trademark notices and this permission notice
+ shall be included in all copies of one or more of the Font Software
+ typefaces.
+ .
+ The Font Software may be modified, altered, or added to, and in
+ particular the designs of glyphs or characters in the Fonts may be
+ modified and additional glyphs or characters may be added to the
+ Fonts, only if the fonts are renamed to names not containing either
+ the words "Tavmjong Bah" or the word "Arev".
+ .
+ This License becomes null and void to the extent applicable to Fonts
+ or Font Software that has been modified and is distributed under the 
+ "Tavmjong Bah Arev" names.
+ .
+ The Font Software may be sold as part of a larger software package but
+ no copy of one or more of the Font Software typefaces may be sold by
+ itself.
+ .
+ THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+ OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL
+ TAVMJONG BAH BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+ DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+ OTHER DEALINGS IN THE FONT SOFTWARE.
+ .
+ Except as contained in this notice, the name of Tavmjong Bah shall not
+ be used in advertising or otherwise to promote the sale, use or other
+ dealings in this Font Software without prior written authorization
+ from Tavmjong Bah. For further information, contact: tavmjong@free.fr.
 
 Files: ./newscoop/vendor/bombayworks/zendframework1/*
 Copyright: 2005-2010, Zend Technologies USA, Inc.
 License: BSD-3
-Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:
-.
+ Redistribution and use in source and binary forms, with or without modification,
+ are permitted provided that the following conditions are met:
+ .
     * Redistributions of source code must retain the above copyright notice,
       this list of conditions and the following disclaimer.
-.
+ .
     * Redistributions in binary form must reproduce the above copyright notice,
       this list of conditions and the following disclaimer in the documentation
       and/or other materials provided with the distribution.
-.
+ .
     * Neither the name of Zend Technologies USA, Inc. nor the names of its
       contributors may be used to endorse or promote products derived from this
       software without specific prior written permission.
-.
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ .
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Files: ./newscoop/vendor/doctrine/*
 Copyright: 2006-2012 Doctrine Project http://www.doctrine-project.org/
