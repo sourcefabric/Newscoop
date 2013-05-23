@@ -7,7 +7,7 @@
 {{ foreach $gimme->article->slideshows as $slideshow }}
 
           <div id="gallery" class="clearfix">
-              <h3>Article Gallery</h3>
+              <h3>{{ #articleGallery# }}</h3>
               <h4>{{ $slideshow->headline }}</h4>
 {{ assign var="counter" value=0 }}              
 {{ foreach $slideshow->items as $item }}      
@@ -21,7 +21,7 @@
 {{* this creates article map with markers for selected POIs *}}        
 {{ if $gimme->article->has_map }}         
             <figure id="map-box">
-                <h3>Map</h3>
+                <h3>{{ #map# }}</h3>
                 {{ map show_locations_list="false" show_reset_link="Show initial Map" width="350" height="300" }}
             </figure>  
 {{ /if }}
@@ -32,21 +32,21 @@
 {{ if $gimme->attachment->extension == oga }}           
 
             <div class="audio-attachment">
-              <h3>Listen</h3>
+              <h3>{{ #listen# }}</h3>
                 <audio src="{{ uri options="articleattachment" }}" width="100%" controls>
-              <a href="{{ uri options="articleattachment" }}">Download audio file</a>
+              <a href="{{ uri options="articleattachment" }}">{{ #downloadAudioFile# }}</a>
               </audio>
             </div><!-- /#audio-attachment -->
             
 {{ elseif $gimme->attachment->extension == ogv || $gimme->attachment->extension == ogg || $gimme->attachment->extension == mp4 || $gimme->attachment->extension == webm }}             
 
             <div class="video-attachment"><!-- read http://diveintohtml5.org/video.html -->
-              <h3>Watch</h3>
+              <h3>{{ #watch# }}</h3>
               <video id="video_{{ $gimme->current_list->index }}" class="video-js vjs-default-skin" controls
                 preload="auto" width="100%"
                 data-setup="{}">
               <source src="{{ uri options="articleattachment" }}" type='{{ $gimme->attachment->mime_type }}'>
-              <a href="{{ uri options="articleattachment" }}">Download .{{ $gimme->attachment->extension }} file</a>
+              <a href="{{ uri options="articleattachment" }}">{{ #download# }} .{{ $gimme->attachment->extension }} {{ #file# }}</a>
              </video>
 
       </div><!-- /#video-attachment --> 
@@ -54,8 +54,8 @@
 {{ else }}
 
       <div class="attachment">
-          <h3>Download</h3>
-          <p>File of type: {{ $gimme->attachment->mime_type }}</p>
+          <h3>{{ #download# }}</h3>
+          <p>{{ #fileOfType# }} {{ $gimme->attachment->mime_type }}</p>
           <a href="{{ uri options="articleattachment" }}">{{ $gimme->attachment->file_name }} ({{ $gimme->attachment->size_kb }}kb)</a>
           <p><em>{{ $gimme->attachment->description }}</em></p>
       </div><!-- /.attachment -->
@@ -65,11 +65,17 @@
 
 {{ /if }}{{* end of $gimme->article->content_accessible *}}
 
-{{* here we show short bio of article authors *}}
+{{* here we include debate voting tool, if article type is 'debate' *}}
+{{ if $gimme->article->type_name == "debate" }}
+{{ include file="_tpl/debate-voting.tpl" }}
+
+{{ else }}
+
+{{* here we show short bio of article authors for article of non-debate type *}}
 {{ list_article_authors }} 
 {{ if $gimme->current_list->at_beginning }}            
             <div id="author-box">
-              <h3>About the author{{ if $gimme->current_list->count gt 1 }}s{{ /if }}</h3>
+              <h3>{{ #aboutAuthor# }}</h3>
 {{ /if }}              
                 <article class="clearfix">
                 	<figure class="threecol">
@@ -86,13 +92,15 @@
             </div><!-- /#author-box -->
 {{ /if }}
 {{ /list_article_authors }}            
+
+{{ /if }}
                 
 {{* related content *}}                
             <div id="related">
             
 {{ list_related_articles }}
 {{ if $gimme->current_list->at_beginning }}
-                <h3>Related articles</h3>
+                <h3>{{ #relatedArticles# }}</h3>
         			 <ul>
 {{ /if }}        			 
                     <li><a href="{{ uri options="article" }}">{{ $gimme->article->name }}</a></li>
@@ -102,7 +110,7 @@
 {{ /list_related_articles }}                                               
             
             
-                <h3>More in this section</h3>
+                <h3>{{ #moreInThisSection# }}</h3>
         <ul>
 {{ assign var="curart" value=$gimme->article->number }}        
 {{ list_articles length="5" ignore_issue="true" order="bypublishdate desc" constraints="number not $curart" }}

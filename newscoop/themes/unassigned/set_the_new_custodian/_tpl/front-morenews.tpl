@@ -1,5 +1,5 @@
         <section id="morenews" class="row clearfix">
-        <h2>More news</h2>
+        <h2>{{ #moreNews# }}</h2>
 
             {{ list_sections length="3" constraints="number greater 30" }}
 

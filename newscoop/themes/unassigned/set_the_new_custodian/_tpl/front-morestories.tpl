@@ -10,7 +10,7 @@
                         {{ include file="_tpl/img/img_150x150.tpl" }}
                         <div class="ninecol last">
                         <h4><a href="{{ url options="article"}}">{{ $gimme->article->name }}</a></h4>
-                        <p class="article-info"><em>Published on {{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }} in <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a></em><span class="right">{{ include file="_tpl/article-icons.tpl" }}</span></p>
+                        <p class="article-info"><em>{{ #publishedOn# }} {{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }} {{ #in# }} <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a></em><span class="right">{{ include file="_tpl/article-icons.tpl" }}</span></p>
                         <p>{{ include file="_tpl/_edit-article.tpl" }}{{ $gimme->article->deck }}</p>
                         </div>
                     </li>

@@ -11,7 +11,7 @@ function afterRegistration() {
 </script>
 
 
-<h3>Welcome {{ $user->name }}</h3>
+<h3>{{ #welcome# }} {{ $user->name }}</h3>
 
 <figure class="user-image threecol">
     <img src="{{ include file="_tpl/user-image.tpl" user=$user width=156 height=156 }}" style="max-width: 100%" rel="resizable" />
