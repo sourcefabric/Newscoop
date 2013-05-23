@@ -2,7 +2,7 @@
 {{ list_article_authors }}            
             <div class="author-info">
                 	<img rel="resizable" style="width: 130px; max-width:100%;" alt="{{ $gimme->author->name }}" src="{{ $gimme->author->picture->imageurl }}" />
-                    {{ if $gimme->author->user->defined }}<span class="more"><a href="{{ $view->url(['username' => $gimme->author->user->uname], 'user') }}">+  VIEW PROFILE</a></span>{{ /if }}
+                    {{ if $gimme->author->user->defined }}<span class="more"><a href="{{ $view->url(['username' => $gimme->author->user->uname], 'user') }}">+  {{ #viewProfile# }}</a></span>{{ /if }}
                     <p><em>{{ $gimme->author->type }}</em></p>
                     <h3>{{ $gimme->author->name }}</h3>
                     {{*<p><em><b>Rockstar Staff*</b></em></p>*}}
