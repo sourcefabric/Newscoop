@@ -99,7 +99,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `ArticleTypeMetadata` WRITE;
 /*!40000 ALTER TABLE `ArticleTypeMetadata` DISABLE KEYS */;
-INSERT INTO `ArticleTypeMetadata` VALUES ('news','NULL',NULL,0,1,NULL,NULL,NULL,0,NULL),('news','deck',2,0,0,NULL,'body','editor_size=250',0,NULL),('news','full_text',3,0,0,NULL,'body','editor_size=750',1,NULL),('news','highlight',1,0,0,NULL,'switch',NULL,0,NULL),('page','NULL',NULL,0,0,NULL,NULL,NULL,0,NULL),('page','full_text',1,0,0,NULL,'body','editor_size=750',1,NULL),('link','NULL',NULL,0,0,NULL,NULL,NULL,0,NULL),('link','url',1,0,0,NULL,'text',NULL,0,NULL);
+INSERT INTO `ArticleTypeMetadata` VALUES ('news','NULL',NULL,0,1,NULL,NULL,NULL,0,NULL),('news','deck',2,0,0,NULL,'longtext','editor_size=250',0,NULL),('news','full_text',3,0,0,NULL,'body','editor_size=750',1,NULL),('news','highlight',1,0,0,NULL,'switch',NULL,0,NULL),('page','NULL',NULL,0,0,NULL,NULL,NULL,0,NULL),('page','full_text',1,0,0,NULL,'body','editor_size=750',1,NULL),('link','NULL',NULL,0,0,NULL,NULL,NULL,0,NULL),('link','url',1,0,0,NULL,'text',NULL,0,NULL);
 /*!40000 ALTER TABLE `ArticleTypeMetadata` ENABLE KEYS */;
 UNLOCK TABLES;
 
