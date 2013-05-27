@@ -12,7 +12,7 @@
 {{ assign var="counter" value=0 }}              
 {{ foreach $slideshow->items as $item }}      
 {{ assign var="counter" value=$counter+1 }}
-                <a href="http://{{ $gimme->publication->site }}/{{ $item->image->original }}" rel="gallery" class="threecol gallery_thumbnail{{ if $counter%4 == 0 }} last{{ /if }}" title="{{ $item->caption }}" /><img src="{{ $item->image->src }}" width="{{ $item->image->width }}" height="{{ $item->image->height }}" alt="{{ $item->caption }}" style="max-width: 100%" rel="resizable" /></a>                         
+                <a href="//{{ $gimme->publication->site }}/{{ $item->image->original }}" rel="gallery" class="threecol gallery_thumbnail{{ if $counter%4 == 0 }} last{{ /if }}" title="{{ $item->caption }}" /><img src="{{ $item->image->src }}" width="{{ $item->image->width }}" height="{{ $item->image->height }}" alt="{{ $item->caption }}" style="max-width: 100%" rel="resizable" /></a>                         
 {{ /foreach }}
             </div><!-- /#gallery -->
 

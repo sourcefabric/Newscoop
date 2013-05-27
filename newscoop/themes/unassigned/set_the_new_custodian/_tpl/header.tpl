@@ -11,7 +11,7 @@
     
         <div class="row">
             <hgroup class="eightcol">
-                <h1><a href="http://{{ $gimme->publication->site }}"><img alt="Home" src="{{ url static_file='_img/logo.png' }}" /></a></h1>         
+                <h1><a href="//{{ $gimme->publication->site }}"><img alt="Home" src="{{ url static_file='_img/logo.png' }}" /></a></h1>         
             </hgroup>
             <div class="fourcol last">
                 <div id="search-box">

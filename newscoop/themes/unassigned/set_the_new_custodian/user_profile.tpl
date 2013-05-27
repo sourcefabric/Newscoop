@@ -69,7 +69,7 @@
     
     {{ if $label == "website" }}
       <dt>{{ $label }}:</dt>
-      <dd><a rel="nofollow" href="http://{{ $profile['website']|escape:url }}">{{ $profile['website']|escape }}</a></dd>
+      <dd><a rel="nofollow" href="//{{ $profile['website']|escape:url }}">{{ $profile['website']|escape }}</a></dd>
     {{ else }}       
     {{ if !($label == "bio") }}<dt>{{ $label }}:</dt>{{ /if }}
     <dd>{{ $value|default:"n/a" }}</dd>

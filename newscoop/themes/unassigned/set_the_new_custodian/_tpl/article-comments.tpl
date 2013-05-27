@@ -10,7 +10,7 @@
         <header>
             <h4>
             {{ if $gimme->comment->user->identifier }}
-                <a href="http://{{ $gimme->publication->site }}/user/profile/{{ $gimme->comment->user->uname|urlencode }}">{{ $gimme->comment->user->uname }}</a>
+                <a href="//{{ $gimme->publication->site }}/user/profile/{{ $gimme->comment->user->uname|urlencode }}">{{ $gimme->comment->user->uname }}</a>
             {{ else }}
                 {{ $gimme->comment->nickname }} (Anonymous)
             {{ /if }}
