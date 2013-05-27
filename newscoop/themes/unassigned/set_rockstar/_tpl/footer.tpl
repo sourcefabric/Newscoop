@@ -26,7 +26,7 @@
                         </ul>
                     </li>
                     <li>
-                      <p>&copy; Rockstar {{ $smarty.now|camp_date_format:"%Y" }} - Powered by Newscoop</p>
+                      <p>&copy; {{ $gimme->publication->name }} {{ $smarty.now|camp_date_format:"%Y" }} - {{ #poweredBy# }}</p>
                         <ul>
           {{ list_articles ignore_issue="true" ignore_section="true" constraints="issue is 1 section is 15 type is link"}}
           <li><a href="{{ $gimme->article->url_address }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>

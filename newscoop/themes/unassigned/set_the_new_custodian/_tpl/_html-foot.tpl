@@ -5,6 +5,9 @@
   <script src="{{ url static_file='_js/script.js' }}"></script>
   <script src="{{ url static_file='_js/libs/bootstrap-transition.js' }}"></script>
   <script src="{{ url static_file='_js/libs/bootstrap-collapse.js' }}"></script>
+  {{ if $gimme->article->defined }}
+      <script src="{{ url static_file='_js/article-rating.js' }}"></script>
+  {{ /if }}
   <script type="text/javascript">
 		$(".collapse").collapse()
   </script>

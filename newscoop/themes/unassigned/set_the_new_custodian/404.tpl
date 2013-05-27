@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 <body id="sectionpage">
@@ -11,7 +13,7 @@
       <div id="maincol" class="eightcol clearfix">
         
 {{ if !($gimme->url->is_valid) }}
-  <h1>Sorry, the requested page was not found.</h1>
+  <h1>{{ #sorryNoFound# }}</h1>
 {{ /if }}                        
 
         </div><!-- /#maincol -->

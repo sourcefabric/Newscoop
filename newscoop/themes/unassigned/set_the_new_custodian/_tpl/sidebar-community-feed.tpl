@@ -4,7 +4,7 @@
 
 {{ if $gimme->current_list->at_beginning }}
 <div class="community_ticker" class="clearfix">
-    <h3>Community Feed</h3>
+    <h3>{{ #communityFeed# }}</h3>
         <ul>
 {{ /if }}
 
@@ -12,9 +12,9 @@
         {{ $user=$gimme->community_feed->user }}
 
         {{ if $gimme->community_feed->type == 'user-register' && $user->uname }}
-        <li class="registered">{{ include file="_tpl/relative_date.tpl" date=$created }} <a{{ if $user->is_active }} href="{{ $view->url(['username' => $user->uname], 'user') }}"{{ /if }}>{{ $user->first_name }} {{ $user->last_name }}</a> registered</li>
+        <li class="registered">{{ include file="_tpl/relative_date.tpl" date=$created }} <a{{ if $user->is_active }} href="{{ $view->url(['username' => $user->uname], 'user') }}"{{ /if }}>{{ $user->first_name }} {{ $user->last_name }}</a> {{ #registered# }}</li>
         {{ elseif $gimme->community_feed->type == 'comment-recommended' && $gimme->community_feed->comment->article }}
-        <li class="commented">{{ include file="_tpl/relative_date.tpl" date=$created }} New comment on: <a href="{{ $gimme->community_feed->comment->article->url }}">{{ $gimme->community_feed->comment->article->title }}</a></li>
+        <li class="commented">{{ include file="_tpl/relative_date.tpl" date=$created }} {{ #newCommentOn# }} <a href="{{ $gimme->community_feed->comment->article->url }}">{{ $gimme->community_feed->comment->article->title }}</a></li>
         {{ /if }}
 
 {{ if $gimme->current_list->at_end }}

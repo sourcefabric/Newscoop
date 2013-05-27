@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -9,7 +11,7 @@
 {{ assign var="userindex" value=1 }}
 
             <div class="title page-title">
-            	<h2>RESET <span>PASSWORD</span></h2>
+            	<h2>{{ #resetPassword# }}</h2>
             </div>
 
             <section class="grid-6 extended-small">
@@ -20,15 +22,15 @@
     <fieldset>
         {{ if $form->email->hasErrors() }}
         <div class="alert alert-error">
-            <h5>E-mail is not correct</h5>
-            <p>Maybe you registered on <em>{{ $gimme->publication->name }}</em> with another e-mail account?</p>
+            <h5>{{ #emailNotCorrect# }}</h5>
+            <p>{{ #maybeRegisteredOn# }} <em>{{ $gimme->publication->name }}</em> {{ #withAnotherEmail# }}</p>
         </div>
         {{ /if }}
     </fieldset>
     <fieldset class="background-block login">
-        <dl> {{ $form->email->setLabel("E-Mail")->removeDecorator('Errors') }}</dl>
+        <dl> {{ $form->email->setLabel("{{ #email# }}")->removeDecorator('Errors') }}</dl>
         <div class="form-buttons right">
-            <input type="submit" id="submit" class="button" value="Request new password" />
+            <input type="submit" id="submit" class="button" value="{{ #requestNewPassword# }}" />
         </div>
     </fieldset>
 </form>

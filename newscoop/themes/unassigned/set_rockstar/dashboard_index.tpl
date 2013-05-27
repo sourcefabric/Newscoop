@@ -15,7 +15,7 @@ function afterRegistration() {
 </script>
 
             <div class="title page-title">
-            	<h2>WELCOME <span>{{ $user->name }}</span></h2>
+            	<h2>{{ #welcome# }} <span>{{ $user->name }}</span></h2>
             </div>
 
             <section class="grid-6 extended-small">

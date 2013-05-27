@@ -7,13 +7,13 @@
 <!--{{ $user->uname }}
 <ul class="links">
     {{ if $user->logged_in }}
-    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">Edit profile</a></li>
+    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
     {{ /if }}
 </ul>-->
 {{ if $user->isAuthor() }}
-  Editor profile
+  {{ #editorProfile# }}
 {{ else }}
-  User profile
+  {{ #userProfile# }}
 {{ /if }}
 </h3>
 
@@ -29,11 +29,11 @@
   <h5>{{ $user->first_name }} {{ $user->last_name }}<i>{{ $user->uname }}</i>
     <ul class="links">
     {{ if $user->logged_in }}
-    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">Edit profile</a></li>
+    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
     {{ /if }}
 </ul>
     </h5>
-  <p class="date">member from {{ $user->created }}<span class="posts">Number of posts: {{ $user->posts_count }}</span></p>
+  <p class="date">member from {{ $user->created }}<span class="posts">{{ #numberOfPosts# }} {{ $user->posts_count }}</span></p>
     
     <div class="user-profile-posts">
       {{ include file="_tpl/user-content.tpl" user=$user }}
@@ -57,11 +57,11 @@
 <h5>{{ $user->first_name }} {{ $user->last_name }}<i>{{ $user->uname }}</i>
     <ul class="links">
         {{ if $user->logged_in }}
-        <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">Edit profile</a></li>
+        <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
         {{ /if }}
     </ul>
 </h5>
-<p class="date">member from {{ $user->created }}<span class="posts">Number of posts: {{ $user->posts_count }}</span></p>
+<p class="date">member from {{ $user->created }}<span class="posts">{{ #numberOfPosts# }} {{ $user->posts_count }}</span></p>
 
 <dl class="profile">
     {{ foreach $profile as $label => $value }} 

@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -9,15 +11,15 @@
 {{ assign var="userindex" value=1 }}
 
             <div class="title page-title">
-            	<h2>USER <span>ACCOUNT</span></h2>
+            	<h2>{{ #userAccount# }}</h2>
             </div>
 
             <section class="grid-6 extended-small">
 
 {{ assign var="userindex" value=1 }}
 
-    <h5 class="checkHeading">We've sent you an e-mail.</h5>
-    <p>Please check your inbox and click on the link in the email to reset your password.</p>
+    <h5 class="checkHeading">{{ #weSentEmail# }}</h5>
+    <p>{{ #pleaseCheckInbox# }}</p>
 
             </section><!-- / 6 articles grid -->
         
