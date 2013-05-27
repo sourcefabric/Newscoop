@@ -4,7 +4,7 @@
 
 {{ assign var="userindex" value=1 }}
 
-<h3>Register</h3>
+<h3>{{ #register# }}</h3>
 <div class="register-block">
 {{ $form }}
 

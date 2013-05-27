@@ -4,7 +4,7 @@
           {{ list_sections }}       
           <li><a href="{{ url options="section" }}" title="{{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
           {{ /list_sections }}      
-          <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">Community</a></li>
+          <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">{{ #community# }}</a></li>
       </ul>
       <ul class="clearfix sec-nav">
       	 {{ local }}
@@ -13,9 +13,9 @@
           <li><a href="{{ uri options="article" }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>
           {{ /list_articles }}
                    
-          <li><a href="{{ uri options="template archive.tpl" }}">Archives</a></li>
+          <li><a href="{{ uri options="template archive.tpl" }}">{{ #archives# }}</a></li>
       </ul>      
-    <p>Powered by <a href="http://newscoop.sourcefabric.org/">Newscoop</a>. Designed by <a href="http://www.sourcefabric.org/">Sourcefabric</a>. Last update: {{ list_articles length="1" ignore_issue="true" ignore_section="true"  order="bypublishdate desc" }}{{ $gimme->article->modify_date|camp_date_format:"%M %y, %Y" }}{{ /list_articles }}</p>
+    <p>Powered by <a href="http://newscoop.sourcefabric.org/">Newscoop</a>. {{ #designedBy# }} <a href="http://www.sourcefabric.org/">Sourcefabric</a>. {{ #lastUpdate# }} {{ list_articles length="1" ignore_issue="true" ignore_section="true"  order="bypublishdate desc" }}{{ $gimme->article->modify_date|camp_date_format:"%M %y, %Y" }}{{ /list_articles }}</p>
 
     		 {{ /local }} 
     </footer>

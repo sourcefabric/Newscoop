@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -7,7 +9,7 @@
 		<div id="content">
             
             <div class="title page-title">
-            	<h2>ISSUES <span>ARCHIVE</span></h2>
+            	<h2>{{ #issuesArchive# }}</h2>
             </div>
 
 {{ list_issues order="bynumber desc" constraints="number not 1" }}           

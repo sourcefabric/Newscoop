@@ -1,5 +1,5 @@
         <div id="top" class="clearfix">
-            <h3>Welcome to the Rockstar Magazine</h3>
+            <h3>{{ #welcomeRockstar# }}</h3>
             <div class="top-menu">
                 <ul>
                 
@@ -7,30 +7,30 @@
                     {{ if $gimme->user->logged_in }}
                     <li class="login"><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ $gimme->user->first_name }} {{ $gimme->user->last_name }}</a>
                 <ul class="sub">
-                           <li><a href="{{ $view->url(['controller' => 'auth', 'action' => 'logout'], 'default') }}?t={{ time() }}">Logout</a></li>
+                           <li><a href="{{ $view->url(['controller' => 'auth', 'action' => 'logout'], 'default') }}?t={{ time() }}">{{ #logout# }}</a></li>
                         </ul>                    
                     </li>
                     {{ else }}
-                    <li class="login"><a href="{{ $view->url(['controller' => 'auth', 'action' =>'index'], 'default') }}">Login/SignUp</a></li>
+                    <li class="login"><a href="{{ $view->url(['controller' => 'auth', 'action' =>'index'], 'default') }}">{{ #loginSignup# }}</a></li>
                     {{ /if }}
                     {{ /dynamic }}                 
 
-                    <li class="follow"><a href="#">Follow Us</a>
+                    <li class="follow"><a href="#">{{ #followUs# }}</a>
                       <ul class="sub">
-                          <li><a href="#">Follow at Twitter</a></li>
-                          <li><a href="#">Like on Facebook</a></li>
-                          <li><a href="http://{{ $gimme->publication->site }}/static/rss">Sign up to RSS</a></li>
+                          <li><a href="#">{{ #followAtTwitter# }}</a></li>
+                          <li><a href="#">{{ #likeOnFacebook# }}</a></li>
+                          <li><a href="http://{{ $gimme->publication->site }}/static/rss">{{ #signupRSS# }}</a></li>
                         </ul>
                     </li>
-                    <li class="share"><a href="#">Share This</a>
+                    <li class="share"><a href="#">{{ #shareThis# }}</a>
                       <ul class="sub">
-                          <li><a href="#">Tweet on Twitter</a></li>
-                          <li><a href="#">Post to Facebook</a></li>
-                          <li><a href="#">Share at Google+</a></li>
+                          <li><a href="#">{{ #tweetOnTwitter# }}</a></li>
+                          <li><a href="#">{{ #postToFacebook# }}</a></li>
+                          <li><a href="#">{{ #shareGooglePlus# }}</a></li>
                         </ul>
                     </li>
                     {{*
-                    <li class="language"><a href="#">Language</a>
+                    <li class="language"><a href="#">{{ #language# }}</a>
                       <ul class="sub">
                           <li><a href="#">English</a></li>
                           <li><a href="#">Deutsch</a></li>
@@ -46,10 +46,13 @@
         </div><!-- / Top -->
         
         <div id="header" class="clearfix">
-        <a href="http://{{ $gimme->publication->site }}">
+        <div class="grid-3">
+        <article>
+        <a href="http://{{ $gimme->publication->site }}" title="{{ #home# }}">
             <h1>{{ $gimme->publication->name }}</h1>
             <h4>{{ $siteinfo.description }}</h4>
         </a>
+        </div>
             <section class="grid-3-top">
 {{ local }}
 {{ unset_topic }}            
@@ -67,14 +70,13 @@
         
         <div id="nav-bar" class="clearfix">
           <ul>
-              <li{{ if $gimme->template->name == "front.tpl" }} class="active"{{ /if }}><a href="/">Home</a></li>
     {{ local }}
     {{ set_current_issue }}
     {{ list_sections }}              
-               <li{{ if $gimme->section->number == $gimme->default_section->number }} class="active"{{ /if }}><a href="{{ uri options="section" }}" title="View all posts filed under {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
+               <li{{ if $gimme->section->number == $gimme->default_section->number }} class="active"{{ /if }}><a href="{{ uri options="section" }}" title="{{ #viewAllPosts# }} {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
     {{ /list_sections }}
     {{ /local }}
             </ul>
-            <span class="right"><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">Community</a></span>            
+            <span class="right"><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="{{ #communityIndex# }}">{{ #community# }}</a></span>            
             
         </div><!-- / Nav Bar -->

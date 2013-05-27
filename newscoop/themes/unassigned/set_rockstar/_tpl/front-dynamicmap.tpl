@@ -1,12 +1,12 @@
 {{* All possible constraints for setting the map you can see here:
 https://wiki.sourcefabric.org/display/CS/Dynamic+maps+-+Constraints *}}
 {{ set_map
-    label="Latest locations"
+    label="{{ #latestLocations# }}"
     issues="_current"
     max_points=5
 }}            
             <div class="title">
-            	<h2>HOT <span>SPOTS</span></h2>
+            	<h2>{{ #hotSpots# }}</h2>
             </div>            
             
             <div class="event-map">
@@ -26,7 +26,7 @@ https://wiki.sourcefabric.org/display/CS/Dynamic+maps+-+Display *}}
     map_margin=20
     area_show="focus"
 }}            
-            	<p class="left">Latest locations</a></p>
+            	<p class="left">{{ #latestLocations# }}</a></p>
                 <p class="right">{{ list_map_locations }}{{ $gimme->location->name }}{{ if !($gimme->current_list->at_end) }}  +  {{ /if }}{{ /list_map_locations }}</p>
             
             </div>

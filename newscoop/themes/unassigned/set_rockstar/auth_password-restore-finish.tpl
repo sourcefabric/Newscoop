@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -9,7 +11,7 @@
 {{ assign var="userindex" value=1 }}
 
             <div class="title page-title">
-            	<h2>SET NEW <span>PASSWORD</span></h2>
+            	<h2>{{ #setNewPassword# }}</h2>
             </div>
 
             <section class="grid-6 extended-small">
@@ -20,32 +22,32 @@
 	<fieldset>
         {{ if $form->isErrors() }}
         <div class="alert alert-error">
-            <p>Your password could not be changed. Please follow the instructions and try again.</p>
+            <p>{{ #passCouldntChange# }}</p>
         </div>
         {{ /if }}
     </fieldset>
     <fieldset class="fixBackground background-block login">
         <dl>
-                {{ $form->password->setLabel("Neues Passwort")->removeDecorator('Errors') }}
+                {{ $form->password->setLabel("{{ #newPassLabel# }}")->removeDecorator('Errors') }}
                 {{ if $form->password->hasErrors() }}
                 <dt class="info-block">&nbsp;</dt>
                 <dd class="info-block">
-                	<span class="error-info">Please enter your new password (minimum 6 characters)</span>
+                	<span class="error-info">{{ #pleaseEnterNewPass# }}</span>
                 </dd>
                 {{ /if }}
         </dl>
         <dl>
-                {{ $form->password_confirm->setLabel("Retype your password")->removeDecorator('Errors') }}
+                {{ $form->password_confirm->setLabel("{{ #retypePassLabel# }}")->removeDecorator('Errors') }}
                 {{ if $form->password_confirm->hasErrors() && !$form->password->hasErrors() }}
                 <dt class="info-block">&nbsp;</dt>
                 <dd class="info-block">
-                	<span class="error-info">The confirmation of your password does not match your password.</span>
+                	<span class="error-info">{{ #confirmDoesntMatch# }}</span>
                 </dd>
                 {{ /if }}
          </dl>
 
 		<div class="form-buttons right">
-            <input type="submit" id="submit" class="button" value="Save password" />
+            <input type="submit" id="submit" class="button" value="{{ #savePassButton# }}" />
         </div>
     </fieldset>
     </form>

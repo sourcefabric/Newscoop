@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -9,7 +11,7 @@
 {{ assign var="userindex" value=1 }}
 
             <div class="title page-title">
-            	<h2>Register <span> </span></h2>
+            	<h2>{{ #registerTitle# }}</h2>
             </div>
 
             <section class="grid-6 extended-small">

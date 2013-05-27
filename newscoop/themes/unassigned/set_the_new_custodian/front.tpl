@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 <body>
@@ -25,8 +27,10 @@
 {{ include file="_tpl/sidebar-most.tpl" }} 
             
 {{ include file="_tpl/sidebar-community-feed.tpl" }}      
+
+{{ include file="_tpl/sidebar-poll.tpl" }}
             
-{{ include file="_tpl/_banner-sidebar.tpl" }}   
+{{* include file="_tpl/_banner-sidebar.tpl" *}}   
             
         </div><!-- /#sidebar -->
         

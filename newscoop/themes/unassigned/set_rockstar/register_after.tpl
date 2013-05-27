@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -7,14 +9,14 @@
 		<div id="content">
 
             <div class="title page-title">
-            	<h2>Confirmation <span>has been sent</span></h2>
+            	<h2>{{ #confirmSent# }}</h2>
             </div>
 
             <section class="grid-6 extended-small">
 
 <div class="alert alert-info">
-    <p>Follow the steps you will find in your email.</p>
-    <p>Thanks for registering.</p>
+    <p>{{ #followEmailSteps# }}</p>
+    <p>{{ #thanksForRegistering# }}</p>
 </div>
 
             </section><!-- / 6 articles grid -->
