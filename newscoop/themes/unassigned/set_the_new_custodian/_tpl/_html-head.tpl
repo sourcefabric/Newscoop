@@ -22,12 +22,12 @@
   <meta name="generator" content="Bluefish 2.0.3" >  
 
   <!-- RSS & Pingback -->
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://{{ $gimme->publication->site }}/en/static/rss/">
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="//{{ $gimme->publication->site }}/en/static/rss/">
 
 {{ if $gimme->article->defined }}{{* Open Graph protocol metatags for Facebook sharing *}}
   <meta property="og:title" content="{{$gimme->article->name|html_entity_decode|regex_replace:'/&(.*?)quo;/':'&quot;'}}" />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="http://{{ $gimme->publication->site }}{{ uri }}" />
+  <meta property="og:url" content="//{{ $gimme->publication->site }}{{ uri }}" />
   <meta property="og:site_name" content="{{ $gimme->publication->name }}" />
   <meta property="og:description" content="{{$gimme->article->deck|strip_tags:false|strip|escape:'html':'utf-8' }}" />
 {{ list_article_images }}
