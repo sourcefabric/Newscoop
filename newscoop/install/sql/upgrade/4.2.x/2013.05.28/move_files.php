@@ -38,17 +38,20 @@ if (count($notWritable)) {
 	foreach($notWritable as $object) {
 		echo 'File/dir "'.$object.'" must be writable'."\n";
 	}
-	exit;
+	die;
 }
 
 
 rmove($newscoop_dir . '/files', $newscoop_dir . '/public/files');
 rmove($newscoop_dir . '/videos', $newscoop_dir . '/public/videos');
 
+$fail = false;
+
 foreach($files as $file) {
 	if (file_exists($newscoop_dir . $file)) {
 		if(unlink(realpath($newscoop_dir . $file)) !== true) {
-			echo 'Please remove file manulay rm "'.realpath($newscoop_dir . $file).'"'."\n";
+			echo 'Please remove file manulay rm "'.realpath($newscoop_dir . $file).'"'."\n";die;
+			$fail = true;
 		};
 	}
 }
@@ -56,9 +59,14 @@ foreach($files as $file) {
 foreach($dirs as $dir) {
 	if (file_exists($newscoop_dir . $dir)) {
 		if(rrmdir(realpath($newscoop_dir . $dir)) !== true) {
-			echo 'Please remove directory manulay rm -R "'.realpath($newscoop_dir . $dir).'"'."\n";
+			echo 'Please remove directory manulay rm -R "'.realpath($newscoop_dir . $dir).'"'."\n";die;
+			$fail = true;
 		};
 	}
+}
+
+if ($fail) {
+	die;
 }
 
 /**
