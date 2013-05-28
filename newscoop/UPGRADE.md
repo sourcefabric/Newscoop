@@ -1,15 +1,37 @@
 UPGRADE
 =======
 
+
 Upgrading from version older than 3.5.0 is not supported anymore. If you
 had an older version you need to install Newscoop 3.5.0 and upgrade to this
 version.
 
 #### Warning! Backup your site before performing the upgrade!
 
-### Upgrading from Newscoop 4.0.x
+### Upgrading to Newscoop 4.2
 
-TODO!!
+Before upgrading (replacing files) you must remove all files/directories form /vendor directory. If you forget about this, then you can remove all vendor directory and run `php composer.phar install` command.
+
+Also all those files and directories must be writable:
+
+```
+'/application/configs/application.ini-dist',
+'/library/Newscoop/Services/EventDispatcherService.php',
+'/application/modules/admin/controllers/TestController.php',
+'/library/Newscoop/Entity/User/Subscriber.php',
+'/library/Newscoop/Entity/Entity.php',
+'/.disable_upgrade',
+'/README.txt',
+'/.travis.yml',
+'/UPGRADE.txt'
+'/library/Newscoop/Entity/Proxy',
+'/library/fabpot-dependency-injection-07ff9ba',
+'/library/fabpot-event-dispatcher-782a5ef',
+'/library/smarty3',
+'/docs',
+'/files',
+'/videos',
+```
 
 ### Upgrading from Newscoop 3.5.x:
 

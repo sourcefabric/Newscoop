@@ -13,25 +13,39 @@ if (!file_exists(__DIR__ . '/../vendor')) {
 }
 
 require_once __DIR__ . '/../constants.php';
-require_once __DIR__ . '/../application/bootstrap.php.cache';
-require_once __DIR__ . '/../application/AppKernel.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
 
-// goes to install process if configuration files does not exist yet
-if (php_sapi_name() !== 'cli'
-    && !defined('INSTALL')
-    && (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
+$subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+
+// check if this is upgrade
+if (php_sapi_name() !== 'cli' &&
+    file_exists(APPLICATION_PATH . '/../conf/configuration.php') &&
+    file_exists(APPLICATION_PATH . '/../conf/database_conf.php') &&
+    file_exists(APPLICATION_PATH . '/../conf/upgrading.php') &&
+    file_exists(APPLICATION_PATH . '/../conf/installation.php')
 ) {
-    $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+    // it's old installation
+    // remove installation mark
+    @unlink(APPLICATION_PATH . '/../conf/installation.php');
+}
+
+// check if this is installation
+if (php_sapi_name() !== 'cli' &&
+    !defined('INSTALL') &&
+    (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
+) {
     if (strpos($subdir, 'install') === false) {
         header("Location: $subdir/install/");
         exit;
     }
 }
+
+require_once __DIR__ . '/../application/bootstrap.php.cache';
+require_once __DIR__ . '/../application/AppKernel.php';
 
 /**
  * Create Symfony kernel
