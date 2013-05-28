@@ -9,7 +9,7 @@ global $g_ado_db;
 set_time_limit(0);
 define('APPLICATION_ENV', 'cli');
 
-require_once __DIR__ . '/../../newscoop/constants.php';
+require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/bootstrap.php.cache';
 require_once __DIR__ . '/AppKernel.php';
 
