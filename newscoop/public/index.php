@@ -12,6 +12,8 @@ if (!file_exists(__DIR__ . '/../vendor')) {
     die;
 }
 
+require_once __DIR__ . '/../constants.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -29,10 +31,6 @@ if (php_sapi_name() !== 'cli' &&
     // it's old installation
     // remove installation mark
     @unlink(APPLICATION_PATH . '/../conf/installation.php');
-    
-    // go to upgrade
-    header("Location: $subdir/upgrade.php");
-    exit;
 }
 
 // check if this is installation
@@ -46,7 +44,6 @@ if (php_sapi_name() !== 'cli' &&
     }
 }
 
-require_once __DIR__ . '/../constants.php';
 require_once __DIR__ . '/../application/bootstrap.php.cache';
 require_once __DIR__ . '/../application/AppKernel.php';
 
