@@ -1,0 +1,1 @@
+system php ./move_files.php

@@ -51,11 +51,6 @@ class CampInstallationBase
     /**
      * @var string
      */
-    protected $m_sampleSiteName = 'classic';
-
-    /**
-     * @var string
-     */
     protected $m_message = null;
 
     /**
@@ -668,10 +663,6 @@ XML;
             return false;
         }
 
-        if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php')) {
-            @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php');
-        }
-
         if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php')) {
             @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'installation.php');
         }
@@ -806,7 +797,7 @@ XML;
 
         $path1 = CS_PATH_CONFIG.DIR_SEP.'configuration.php';
         $path2 = CS_PATH_CONFIG.DIR_SEP.'database_conf.php';
-        $path3 = CS_PATH_CONFIG.DIR_SEP.'installation.php';
+
         if (file_exists($path1) && file_exists($path2)) {
             $isConfigWritable = is_writable($path1);
             $isDBConfigWritable = is_writable($path2);
