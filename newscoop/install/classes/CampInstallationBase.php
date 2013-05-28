@@ -849,7 +849,7 @@ XML;
         $clearCache = new Process("$php $console cache:clear $env ", null, null, null, 300);
         $clearCache->run();
         if (!$clearCache->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
+            throw new \RuntimeException('An error occurred when clearing cache.');
         }
 
         @chmod($path2, 0600);
