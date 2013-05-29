@@ -41,6 +41,8 @@ chmod -R 777 files/
 chmod -R 777 videos/
 ```
 
+*If this produces a `chmod: changing permissions of [snip]` error, try it as `root`*
+
 The following files have to be removed. The script will try to do it automatically but in case it might not be able you can do it manually too!
 
 ```
