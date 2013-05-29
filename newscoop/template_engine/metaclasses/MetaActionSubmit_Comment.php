@@ -211,7 +211,7 @@ class MetaActionSubmit_Comment extends MetaAction
         //If there is a comment idetifier set it the parent of the comment
         if($p_context->comment->identifier)
             $values['parent'] = $p_context->comment->identifier;
-        
+
         $commentObj = $repository->getPrototype();
         $comment = $repository->save($commentObj,$values);
         $repository->flush();
