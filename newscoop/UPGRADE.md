@@ -43,7 +43,7 @@ chmod -R 777 videos/
 
 *If this produces a `chmod: changing permissions of [snip]` error, try it as `root`*
 
-The following files have to be removed. The script will try to do it automatically but in case it might not be able you can do it manually too!
+The following files have to be removed.
 
 ```
 rm -rf application/configs/application.ini-dist
@@ -65,7 +65,6 @@ rm -rf library/fabpot-event-dispatcher-782a5ef
 rm -rf library/smarty3
 rm -rf docs/
 ```
-This can however still be troublesome so it can sometimes be recommended to remove them manually.
 
 #### Clearing the `Cache`
 
@@ -87,9 +86,8 @@ cd ..
 If you have the `ZIP`
 
 ```
-unzip newscoop-4.2.zip
+unzip -oq newscoop-4.2.zip
 ```
-This will then proceed to ask you if you want to replace certain files, you can answer with `A` for All.
 
 If you have the `TAR.GZ`
 
