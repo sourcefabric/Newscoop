@@ -1,0 +1,1 @@
+ALTER TABLE `rendition` CHANGE `offset` `offset` INT( 11 ) NULL , CHANGE `label` `label` VARCHAR( 80 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL;
