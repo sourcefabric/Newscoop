@@ -12,7 +12,7 @@ version.
 
 Before upgrading (replacing files) you must remove all files/directories form /vendor directory. If you forget about this, then you can remove all vendor directory and run `php composer.phar install` command.
 
-Also all those files and directories must be writable/removed:
+The following files can either be deleted manually or can be left to the upgrade script which will attempt to remove them. If you decide to leave them they must be in read/write state for the script to work.
 
 ```
 '/application/configs/application.ini-dist',
