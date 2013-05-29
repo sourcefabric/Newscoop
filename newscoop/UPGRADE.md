@@ -35,27 +35,33 @@ php composer.phar install
 
 The following files have to be read/writable by the `upgrade.php` script in order to upgrade Newscoop automatically.
 
+
 ```
-chmod 777 application/configs/application.ini-dist
-chmod 777 library/Newscoop/Services/EventDispatcherService.php
-chmod 777 library/Newscoop/DoctrineEventDispatcherProxy.php
-chmod 777 library/Newscoop/Entity/Repository/User/SubscriberRepository.php
-chmod 777 library/Resource/Doctrine.php
-chmod 777 application/modules/admin/controllers/TestController.php
-chmod 777 application/controllers/ArticleofthedayController.php
-chmod 777 library/Newscoop/Entity/User/Subscriber.php
-chmod 777 library/Newscoop/Entity/Entity.php
-chmod 777 .disable_upgrade
-chmod 777 README.txt
-chmod 777 .travis.yml
-chmod 777 UPGRADE.txt
-chmod -R 777 library/Newscoop/Entity/Proxy
-chmod -R 777 library/fabpot-dependency-injection-07ff9ba
-chmod -R 777 library/fabpot-event-dispatcher-782a5ef
-chmod -R 777 library/smarty3
-chmod -R 777 docs/
 chmod -R 777 files/
 chmod -R 777 videos/
+```
+
+The following files have to be removed. The script will try to do it automatically but in case it might not be able you can do it manually too!
+
+```
+rm -rf application/configs/application.ini-dist
+rm -rf library/Newscoop/Services/EventDispatcherService.php
+rm -rf library/Newscoop/DoctrineEventDispatcherProxy.php
+rm -rf library/Newscoop/Entity/Repository/User/SubscriberRepository.php
+rm -rf library/Resource/Doctrine.php
+rm -rf application/modules/admin/controllers/TestController.php
+rm -rf application/controllers/ArticleofthedayController.php
+rm -rf library/Newscoop/Entity/User/Subscriber.php
+rm -rf library/Newscoop/Entity/Entity.php
+rm -rf .disable_upgrade
+rm -rf README.txt
+rm -rf .travis.yml
+rm -rf UPGRADE.txt
+rm -rf library/Newscoop/Entity/Proxy
+rm -rf library/fabpot-dependency-injection-07ff9ba
+rm -rf library/fabpot-event-dispatcher-782a5ef
+rm -rf library/smarty3
+rm -rf docs/
 ```
 This can however still be troublesome so it can sometimes be recommended to remove them manually.
 
