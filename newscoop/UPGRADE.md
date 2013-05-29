@@ -65,8 +65,22 @@ rm -rf docs/
 ```
 This can however still be troublesome so it can sometimes be recommended to remove them manually.
 
+#### Clearing the `Cache`
+
+Now we should not forget to clear the `cache`
+
+```
+rm -rf cache/*
+```
+
 #### Actual unpacking of files
-Now we have to unpack the upgrade over your old one. Place the `Newscoop 4.2` `ZIP` or `TAR.GZ` one directory higher then your `Newscoop directory`. This will usually be `/var/www/`. Once this file is there you can do the following:
+Now we have to unpack the upgrade over your old one. Place the `Newscoop 4.2` `ZIP` or `TAR.GZ` one directory higher then your `Newscoop directory`. This will usually be `/var/www/`. Once this file is there you can do the following.
+
+First we change to the directory above your `Newscoop directory`.
+
+```
+cd ..
+```
 
 If you have the `ZIP`
 
