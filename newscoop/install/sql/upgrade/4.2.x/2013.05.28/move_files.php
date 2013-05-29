@@ -6,7 +6,11 @@ $newscoop_dir = __DIR__ . '/../../../../..';
 $files = array(
 	'/application/configs/application.ini-dist',
 	'/library/Newscoop/Services/EventDispatcherService.php',
+	'/library/Newscoop/DoctrineEventDispatcherProxy.php',
+	'/library/Newscoop/Entity/Repository/User/SubscriberRepository.php',
+	'/library/Resource/Doctrine.php',
 	'/application/modules/admin/controllers/TestController.php',
+	'/application/controllers/ArticleofthedayController.php',
 	'/library/Newscoop/Entity/User/Subscriber.php',
 	'/library/Newscoop/Entity/Entity.php',
 	'/.disable_upgrade',
@@ -50,7 +54,7 @@ $fail = false;
 foreach($files as $file) {
 	if (file_exists($newscoop_dir . $file)) {
 		if(unlink(realpath($newscoop_dir . $file)) !== true) {
-			echo 'Please remove file manulay rm "'.realpath($newscoop_dir . $file).'"'."\n";die;
+			echo 'Please remove file manulay rm "'.realpath($newscoop_dir . $file).'"'."\n";
 			$fail = true;
 		};
 	}
@@ -59,7 +63,7 @@ foreach($files as $file) {
 foreach($dirs as $dir) {
 	if (file_exists($newscoop_dir . $dir)) {
 		if(rrmdir(realpath($newscoop_dir . $dir)) !== true) {
-			echo 'Please remove directory manulay rm -R "'.realpath($newscoop_dir . $dir).'"'."\n";die;
+			echo 'Please remove directory manulay rm -R "'.realpath($newscoop_dir . $dir).'"'."\n";
 			$fail = true;
 		};
 	}

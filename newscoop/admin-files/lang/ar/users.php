@@ -1,7 +1,11 @@
 <?php 
 regGS("User renamed.", "تمة إعادة تسمية المستخدم");
 regGS("User attributes", "سمات المستخدم");
-regGS("Rename user '$1'", "اعد تسمية المستخدم '$1'");
+regGS("Rename user '$1'", "$1'اعد تسمية المستخدم");
+regGS("Pending", "قيد الإنتظار");
+regGS("Inactive", "غير قائم");
+regGS("Do you really want to send confirmation email?", "هل انت متأكد من ارسال بريد التأكيد؟");
+regGS("Do you really want to delete user?", "هل انت متأكد من حذف المستخدم ؟");
 regGS("Username is used already", "اسم المستخدم قيد الاستخدام");
 regGS("User with id '$1' not found", "لم يتم العثور على المستخدم بالهوية '$1'");
 regGS("User was deleted.", "تم حذف المستخدم");
@@ -11,7 +15,6 @@ regGS("User '$1' created", "تم  انشاء المستخدم '$1'");
 regGS("Send confirm email", "ارسل البريد الاكتروني الخاص بالتاكيد");
 regGS("Profile saved.", "تم حفظ الشاكلة");
 regGS("Picture", "صورة");
-regGS("Pending", "قيد الإنتظار");
 regGS("Password updated", "تم تحديث كلمة السر");
 regGS("None", "لا يوجد");
 regGS("New confirmation email was sent to user.", "تم ارسال بريد التاكيد للمستخدم");

@@ -12,18 +12,22 @@ version.
 
 Before upgrading (replacing files) you must remove all files/directories form /vendor directory. If you forget about this, then you can remove all vendor directory and run `php composer.phar install` command.
 
-Also all those files and directories must be writable:
+Also all those files and directories must be writable/removed:
 
 ```
 '/application/configs/application.ini-dist',
 '/library/Newscoop/Services/EventDispatcherService.php',
+'/library/Newscoop/DoctrineEventDispatcherProxy.php',
+'/library/Newscoop/Entity/Repository/User/SubscriberRepository.php',
+'/library/Resource/Doctrine.php',
 '/application/modules/admin/controllers/TestController.php',
+'/application/controllers/ArticleofthedayController.php',
 '/library/Newscoop/Entity/User/Subscriber.php',
 '/library/Newscoop/Entity/Entity.php',
 '/.disable_upgrade',
 '/README.txt',
 '/.travis.yml',
-'/UPGRADE.txt'
+'/UPGRADE.txt',
 '/library/Newscoop/Entity/Proxy',
 '/library/fabpot-dependency-injection-07ff9ba',
 '/library/fabpot-event-dispatcher-782a5ef',
