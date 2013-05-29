@@ -95,6 +95,15 @@ If you have the `TAR.GZ`
 tar -xzf newscoop-4.2.tar.gz
 ```
 
+##### Setting permissions
+Now in order to have everything work correctly we need to set some permissions. This can be done easily now:
+
+
+```
+cd newscoop/
+sh bin/post-install.sh
+```
+
 #### Run the `upgrade.php` script
 Now we point our browser to our `Newscoop Web Site` and type /upgrade.php behind the URL. This will automatically run the required Scripts and Database Upgrades required for 4.2.
 
