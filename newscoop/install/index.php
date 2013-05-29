@@ -17,18 +17,30 @@ define('DONT_BOOTSTRAP_ZEND', TRUE);
 
 require_once __DIR__ . '/../constants.php';
 
-// check if template cache dir is writable
 $templates_cache = dirname(dirname(__FILE__)) . '/cache';
+$logs = dirname(dirname(__FILE__)) . '/log';
 
-if (!is_writable($templates_cache)) {
+$templates_cache_not_writable = !is_writable($templates_cache);
+$logs_not_writable = !is_writable($logs);
+
+if ($templates_cache_not_writable || $logs_not_writable) {
     echo '<!DOCTYPE html>';
     echo '<html><head><meta charset="utf-8" />';
     echo '<title>Install requirement</title>';
     echo '<link rel="shortcut icon" href="' . $GLOBALS['g_campsiteDir'] . '/admin-style/images/7773658c3ccbf03954b4dacb029b2229.ico" />';
     echo '</head><body>';
     echo '<h1>Install requirement</h1>';
-    echo "<p>Directory '$templates_cache' is not writable.</p>";
-    echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $templates_cache</code> on linux)</p>";
+
+    if ($templates_cache_not_writable) {
+        echo "<p>Directory '$templates_cache' is not writable.</p>";
+        echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $templates_cache</code> on linux)</p>";
+    }
+
+    if ($logs_not_writable) {
+        echo "<p>Directory '$logs' is not writable.</p>";
+        echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $logs</code> on linux)</p>";
+    }
+    
     echo '</body></html>';
     exit;
 }
