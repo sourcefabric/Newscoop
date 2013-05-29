@@ -73,7 +73,7 @@ regGS("An email with instructions on how to recover you password has been sent t
 regGS("Session expired.", "ვიზიტის დრო ამოიწურა. გთხოვთ თავიდან გაიაროთ ავტორიზაცია.");
 regGS("Processing...", "დამუშავება...");
 regGS("Please", "გთხოვთ");
-regGS("Go to dashboard", "დეშბორდი");
+regGS("Go to dashboard", "დეშბორდში შესვლა");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "თქვენი ბრაუზერს პრობლემა აქვს ჯავასკრიპტთან ან თქვენ გამორთული გაქვთ ჯავასკრიპტი. გთხოვთ გამოასწოროთ ეს პრობლემა რათა შეძლოთ ნიუსქუფის გამოყენება.");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "ნიუსქუფმა გააუმჯობესა დაცვის ზომები. იმისათვის რათა განაახლოთ თქვენი ანგარიში და შეძლოთ ამ ახალი ზომების გამოყენება, გთხოვთ შეიყვანოთ პაროლი თავიდან.");
 regGS("Newscoop cache was cleaned up", "ნიუსქუფის ქეში გაიწმინდა");

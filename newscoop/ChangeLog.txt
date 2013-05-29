@@ -1,3 +1,11 @@
+4.1.2 (April 15, 2014)
+ Bug fixes
+ ------------
+ - fix problem with wrong section name after article translation
+ - fix error on image upload to media archive
+ - fix multiple comments bug
+ - fix package table default encoding
+
 4.1.1 (April 15, 2014)
  Improvements
  ------------

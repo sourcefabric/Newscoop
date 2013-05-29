@@ -1,4 +1,4 @@
-<?php 
+<?php
 regGS("Don't remind me", "لا تذكّر لي");
 regGS("You are sending daily statistics.", "ترسل إحداثيات يومية");
 regGS("You are NOT sending daily statistics.", "لا ترسل إحداثيات يومية");
