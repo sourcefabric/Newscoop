@@ -78,7 +78,7 @@ tar -xzf newscoop-4.2.tar.gz
 #### Run the `upgrade.php` script
 Now we point our browser to our `Newscoop Web Site` and type /upgrade.php behind the URL. This will automatically run the required Scripts and Database Upgrades required for 4.2.
 
-Once this process is complete, congratulations! Your now on Newscoop 4.2!
+Once this process is complete, congratulations! You're now on Newscoop 4.2!
 
 ### Upgrading from Newscoop 3.5.x:
 
