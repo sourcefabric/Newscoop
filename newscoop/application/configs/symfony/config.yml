@@ -49,10 +49,13 @@ fos_rest:
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Doctrine\ORM\OptimisticLockException': true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
 
 jms_serializer:
     metadata:
