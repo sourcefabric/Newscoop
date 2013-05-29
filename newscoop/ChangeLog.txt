@@ -1,3 +1,32 @@
+4.2 RC (April 29, 2014)
+ New Features
+ ------------
+ - Read REST API
+ - New Plugins system.
+ - New theme in installer - Quetzal
+
+  Improvements
+ - themes update (+ new sample data)
+ - topics have new route - :language/topic/:id/[:topicName]
+ - new look in users management page
+ - "email from" and "contact email" are now in system preferences (instead config file)
+ - some new tricks preventng smap in comments
+
+  Bug fixes
+ ------------
+ - fis lots of non-translated strings
+ - fix fast reply on comment
+ - fix slideshow buttons do not show translations
+ - fix bug with duplicated comments
+
+ 4.1.1 (April 15, 2014)
+ Bug fixes
+ ------------
+ - fix problem with wrong section name after article translation
+ - fix error on image upload to media archive
+ - fix multiple comments bug
+ - fix package table default encoding
+
 4.1.2 (April 15, 2014)
  Bug fixes
  ------------
