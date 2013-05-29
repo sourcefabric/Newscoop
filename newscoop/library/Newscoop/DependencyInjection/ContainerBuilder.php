@@ -8,15 +8,15 @@
 
 namespace Newscoop\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
+use Symfony\Component\DependencyInjection\Container as SymfonyContainer;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
  * ContainerBuilder class.
  *
- * Provides wrapper methods for symfony's ContainerBuilder.
+ * Provides wrapper methods for symfony's Container.
  */
-class ContainerBuilder extends SymfonyContainerBuilder
+class ContainerBuilder extends SymfonyContainer
 {
     /**
     * Construct object.

@@ -62,7 +62,12 @@ $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
 try {
-    $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+    if (strpos($_SERVER['REQUEST_URI'], '/api') !== false) {
+        $response = $kernel->handle($request);
+    } else {
+        $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+    }
+
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
