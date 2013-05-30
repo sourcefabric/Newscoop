@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 global $g_ado_db;
 
