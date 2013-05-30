@@ -1,21 +1,16 @@
 {{ include file="_tpl/debate-answers.tpl" scope="parent" }}
 
 {{ capture name="votes" }}
-    <div class="debate-score">
+    <ul class="debatte-score">
         {{ strip }}
         {{ foreach $answers as $answer }}
-        <div class="debate-value">
-	    	<div class="progress progress-danger progress-striped debate-bar">
-				<div class="bar" style="width: {{ $answer.percent }}%"></div>
-			</div>
-	        <span><b>{{ $answer.answer|escape }}</b> {{ $answer.percent }}%</span>
-    	</div>
+        <li style="width:{{ $answer.percent }}%;" class="{{ if $answer@first }}yes{{ else }}no{{ /if }}"><span><b>{{ $answer.answer|escape }}</b> {{ $answer.percent }}%</span></li>
         {{ /foreach }}
         {{ /strip }}
-    </div>
+    </ul>
 {{ /capture }}
 
 {{ if !$gimme->debate->is_votable }}
     {{ $smarty.capture.votes }}
-    <small>{{ if $gimme->debate->is_current && !$gimme->user->logged_in }}{{ #currentResult# }}{{ else }}{{ #finalResult# }}{{ /if }}</small>
+    <small>{{ if $gimme->debate->is_current && !$gimme->user->logged_in }}Current result{{ else }}Final result{{ /if }}</small>
 {{ /if }}

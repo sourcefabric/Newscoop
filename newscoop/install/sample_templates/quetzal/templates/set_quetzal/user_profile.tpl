@@ -1,36 +1,85 @@
-{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
-{{ include file="_tpl/_html-head.tpl" }}
+{{extends file="layout.tpl"}}
 
-<body>
-<!--[if lt IE 7]>
-    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-<![endif]-->
- 
-{{ include file="_tpl/header.tpl" }}
-<section role="main" class="internal-page section-page">
-    <div class="wrapper">
+{{block content}}
 
-        {{ include file="_tpl/user-header.tpl" }}
+<h3>
 
-        <div class="container">
-            <section id="content">
-                <div class="row profile">
-                {{ include file="_tpl/user_profile-cont.tpl" }}
-                </div> <!--end div class="row"-->
-                <div class="row home-featured-news community">
-                {{ if $user->isAuthor() }}
-                {{ include file="_tpl/user-articles.tpl" }}          
-                {{ else }}
-                {{ include file="_tpl/user-comments.tpl" }}          
-                {{ /if }}
-                {{ include file="_tpl/user-sidebar.tpl" }}          
-                </div> 
-            </section> <!-- end section id=content -->
-        </div> <!-- end div class='container' -->
-    </div> <!-- end div class='wrapper' -->
-</section> <!-- end section role main -->
+<!--{{ $user->uname }}
+<ul class="links">
+    {{ if $user->logged_in }}
+    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
+    {{ /if }}
+</ul>-->
+{{ if $user->isAuthor() }}
+  {{ #editorProfile# }}
+{{ else }}
+  {{ #userProfile# }}
+{{ /if }}
+</h3>
 
-{{ include file="_tpl/footer.tpl" }}
+{{ if $user->isAuthor() }}
 
-{{ include file="_tpl/_html-foot.tpl" }}
+<div class="user-profile-data twelvecol">
 
+<figure class="user-image threecol">
+  <img src="{{ include file="_tpl/user-image.tpl" user=$user width=156 height=156 }}" />
+</figure>
+
+<div class="user-profile-data editor ninecol last">
+  <h5>{{ $user->first_name }} {{ $user->last_name }}<i>{{ $user->uname }}</i>
+    <ul class="links">
+    {{ if $user->logged_in }}
+    <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
+    {{ /if }}
+</ul>
+    </h5>
+  <p class="date">member from {{ $user->created }}<span class="posts">{{ #numberOfPosts# }} {{ $user->posts_count }}</span></p>
+    
+    <div class="user-profile-posts">
+      {{ include file="_tpl/user-content.tpl" user=$user }}
+    </div>
+</div>
+
+<!--<div class="user-profile-posts twelvecol">
+{{ include file="_tpl/user-content.tpl" user=$user }}
+</div>-->
+</div>
+
+{{ else }}
+
+<div class="user-profile-data twelvecol">
+
+<figure class="user-image threecol">
+  <img src="{{ include file="_tpl/user-image.tpl" user=$user width=156 height=156 }}" />
+</figure>
+
+<div class="user-profile-data ninecol last">
+<h5>{{ $user->first_name }} {{ $user->last_name }}<i>{{ $user->uname }}</i>
+    <ul class="links">
+        {{ if $user->logged_in }}
+        <li><a href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ #editProfile# }}</a></li>
+        {{ /if }}
+    </ul>
+</h5>
+<p class="date">member from {{ $user->created }}<span class="posts">{{ #numberOfPosts# }} {{ $user->posts_count }}</span></p>
+
+<dl class="profile">
+    {{ foreach $profile as $label => $value }} 
+    {{ if !empty($value) }}
+    
+    {{ if $label == "website" }}
+      <dt>{{ $label }}:</dt>
+      <dd><a rel="nofollow" href="http://{{ $profile['website']|escape:url }}">{{ $profile['website']|escape }}</a></dd>
+    {{ else }}       
+    {{ if !($label == "bio") }}<dt>{{ $label }}:</dt>{{ /if }}
+    <dd>{{ $value|default:"n/a" }}</dd>
+    {{ /if }}
+    {{ /if }}
+    {{ /foreach }}
+</dl>
+</div>
+</div>
+
+{{ /if }}
+
+{{/block}}

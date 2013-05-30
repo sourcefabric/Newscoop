@@ -7,6 +7,7 @@
     </section>
 
     <!-- TABS SIDEBAR -->
+    {{ if $gimme->section->name != "Dialogue" }}
     <section class="sidebar-widget-tabs visible-desktop">
         <ul class="nav nav-tabs">
             <li class="active"> <a href="#last-comments" data-toggle="tab">{{ #latestComments# }}</a> </li>
@@ -114,4 +115,5 @@
             </div>
         </div>
     </section>
+    {{/if}}
 </aside>  
