@@ -47,6 +47,9 @@ The following files have to be removed.
 
 ```
 rm -rf application/configs/application.ini-dist
+rm -rf library/Newscoop/News
+rm -rf library/Newscoop/Entity/Subscription.php 
+rm -rf library/Newscoop/Entity/SubscriptionSection.php
 rm -rf library/Newscoop/Services/EventDispatcherService.php
 rm -rf library/Newscoop/DoctrineEventDispatcherProxy.php
 rm -rf library/Newscoop/Entity/Repository/User/SubscriberRepository.php
