@@ -93,6 +93,13 @@ class NewscoopNewscoopExtension extends Extension implements PrependExtensionInt
                             'is_bundle' => false,
                             'prefix' => 'Newscoop\Image'
                         ),
+                        'newscoop_subscription' => array(
+                            'mapping' => 'true',
+                            'type' => 'annotation',
+                            'dir' => $this->truepath($containerParameters['doctrine']['entity']['dir']),
+                            'is_bundle' => false,
+                            'prefix' => 'Newscoop\Subscription'
+                        )
                     ),
                     # All cache drivers have to be array, apc, xcache or memcache
                     'metadata_cache_driver' => $containerParameters['doctrine']['cache'],
