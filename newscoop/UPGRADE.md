@@ -46,6 +46,7 @@ chmod -R 777 videos/
 The following files have to be removed.
 
 ```
+rm -rf cache/*
 rm -rf application/configs/application.ini-dist
 rm -rf library/Newscoop/Services/EventDispatcherService.php
 rm -rf library/Newscoop/DoctrineEventDispatcherProxy.php
