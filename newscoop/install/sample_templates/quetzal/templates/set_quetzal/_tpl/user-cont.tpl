@@ -25,3 +25,8 @@
     </section>
 
 </div>
+
+<script type="text/javascript">
+    // Hide header search form for mobile devices
+    $('#seachform').addClass("hidden-phone");
+</script>

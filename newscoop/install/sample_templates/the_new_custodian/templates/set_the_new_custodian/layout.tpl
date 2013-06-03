@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 <body>
@@ -10,15 +12,15 @@
     
       <div id="maincol" class="community eightcol clearfix">
     
-        {{block content}}{{/block}}
+        {{ block content }}{{ /block }}
         
       </div><!-- /#maincol -->
         
       <div id="sidebar" class="community fourcol last">
 
-{{ if empty($userindex) }}                  
-{{ if !empty($user) && $user->isAuthor() }}
-<h3>About {{ $user->first_name }}</h3>
+{{ if !($userindex == 1) }}                  
+{{ if $user->isAuthor() }}
+<h3>{{ #about# }} {{ $user->first_name }}</h3>
 <dl class="profile">
     {{ foreach $profile as $label => $value }} 
     {{ if !empty($value) }}

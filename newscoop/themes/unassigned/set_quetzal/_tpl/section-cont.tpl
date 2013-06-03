@@ -1,7 +1,7 @@
 <div class="span8 home-featured-news section-articles">
     <!-- SECTION ARTICLES -->                                
     <div class="row section-articles">
-    {{ list_articles length="5" ignore_issue="true" }}
+    {{ list_articles length="5" ignore_issue="true" constraints="type not poll" }}
         {{ if $gimme->current_list->at_beginning }}            
 
         <article class="span8 section-article section-featured">                                        
@@ -19,7 +19,7 @@
                 <span class="article-date"><time datetime="{{ $gimme->article->publish_date|date_format:"%Y-%m-%dT%H:%MZ" }}">{{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }}</time> </span>
             </header>
             <div class="article-excerpt hidden-phone">
-                {{ $gimme->article->full_text|truncate:255:"...":true }}
+                {{ $gimme->article->full_text|truncate:250:"...":true }}
             </div>  
             <div class="article-links hidden-phone">
                 <hr>
@@ -45,7 +45,7 @@
                 <span class="article-date"><time datetime="{{ $gimme->article->publish_date|date_format:"%Y-%m-%dT%H:%MZ" }}">{{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }}</time> </span>
             </header>
             <div class="article-excerpt hidden-phone">
-                {{ $gimme->article->full_text|truncate:200:"...":true}}
+                {{ $gimme->article->full_text|truncate:190:"...":true}}
             </div>  
             <div class="article-links hidden-phone">
                 <hr>
