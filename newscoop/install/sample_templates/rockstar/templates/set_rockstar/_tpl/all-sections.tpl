@@ -10,7 +10,7 @@
                     <div class="article">
                     {{ if $gimme->current_list->index == 1 }}{{ include file="_tpl/img/img_square.tpl" }}{{ /if }}
                     <h4><a href="{{ url options="article" }}">{{ $gimme->article->name }}</a> {{ list_article_topics }}{{ if $gimme->current_list->at_beginning }}<em>/ {{ /if }}<a href="{{ url options="template topic.tpl" }}">{{ $gimme->topic->name }}</a>{{ if $gimme->current_list->at_end }}</em>{{ /if }}{{ /list_article_topics }}</h4>
-                      <span class="time">{{ include file="_tpl/relative_date.tpl" date=$gimme->article->publish_date }}{{ if ! $gimme->article->content_accessible }} / <a href="{{ url options="article" }}">premium*</a>{{ /if }}</span>
+                      <span class="time">{{ include file="_tpl/relative_date.tpl" date=$gimme->article->publish_date }}{{ if ! $gimme->article->content_accessible }} / <a href="{{ url options="article" }}">{{ #premium# }}</a>{{ /if }}</span>
                     </div>
 {{ /list_articles }}
                 </article>

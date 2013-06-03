@@ -39,20 +39,24 @@
                     </li>
                     *}}
                 </ul>
-                {{ search_form template="search.tpl" html_code="class=\"search-box\"" button_html_code="class=\"button\"" }} 
+                 {{ search_form template="search.tpl" html_code="class=\"search-box\"" button_html_code="class=\"button\"" }} 
+                <a href="#" class="search-trigger"></a>
+                <div class="hiden">
                    {{ camp_edit object="search" attribute="keywords" html_code="placeholder=\"input search\"" }}
-                {{ /search_form }}                  
+
+                {{ /search_form }}
+                </div>               
             </div>
         </div><!-- / Top -->
         
         <div id="header" class="clearfix">
-        <div class="grid-3">
-        <article>
+      
+        
         <a href="http://{{ $gimme->publication->site }}" title="{{ #home# }}">
             <h1>{{ $gimme->publication->name }}</h1>
             <h4>{{ $siteinfo.description }}</h4>
         </a>
-        </div>
+       
             <section class="grid-3-top">
 {{ local }}
 {{ unset_topic }}            
@@ -69,7 +73,8 @@
         </div><!-- / Header -->
         
         <div id="nav-bar" class="clearfix">
-          <ul>
+          <a href="#" class="cat-trigger">Categories</a>
+          <ul class="show">
     {{ local }}
     {{ set_current_issue }}
     {{ list_sections }}              

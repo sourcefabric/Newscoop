@@ -2,7 +2,7 @@
   <h2>{{ #section# }} <span>{{ $gimme->section->name }}</span></h2>
 </div>
 
-{{ list_articles length="8" ignore_issue="true" }}
+{{ list_articles length="8" ignore_issue="true" constraints="type not poll" }}
 
 {{ if $gimme->current_list->at_beginning }}
           <section class="grid-2">       
@@ -14,7 +14,7 @@
                     <small><a href="{{ url options="section" }}">{{ $gimme->section->name }}</a> {{ list_article_topics }}{{ if $gimme->current_list->at_beginning }}<em>/ {{ /if }}<a href="{{ url options="template topic.tpl" }}">{{ $gimme->topic->name }}</a>{{ if $gimme->current_list->at_end }}</em>{{ else }}, {{ /if }}{{ /list_article_topics }}</small>
                     <h3><a href="{{ url options="article" }}">{{ $gimme->article->name }}</a></h3>
                     <span class="date">{{ $gimme->article->publish_date|camp_date_format:"%M %d, %Y" }} /  {{ #by# }} {{ list_article_authors }}{{ if $gimme->author->user->defined }}<a href="{{ $view->url(['username' => $gimme->author->user->uname], 'user') }}">{{ /if }}{{ $gimme->author->name }}{{ if $gimme->author->user->defined }}</a>{{ /if }} ({{ $gimme->author->type|lower }}){{ if !$gimme->current_list->at_end }}, {{ /if }}{{ /list_article_authors }}</span>
-                    <p>{{ include file="_tpl/_edit-article.tpl" }}{{ $gimme->article->deck }}</p>
+                    <p>{{ include file="_tpl/_edit-article.tpl" }}{{ if $gimme->article->type_name == "debate" }}{{ $gimme->article->teaser }}{{ else }}{{ $gimme->article->deck }}{{ /if }}</p>
                     <span class="more"><a href="{{ url options="article" }}">+  {{ #readMore# }}</a> or <a href="{{ url options="article" }}#comments">{{ #addComment# }} ({{ $gimme->article->comment_count }})</a></span>
                 </article>
 {{ /if }}

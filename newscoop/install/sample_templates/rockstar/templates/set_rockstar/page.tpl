@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -9,7 +11,7 @@
             <section class="main entry page">
             
             	<article>
-                    <h2>About <span>Us</span></h2>
+                    <h2>{{ #aboutUs# }}</h2>
                 	<figure>
                     	<img src="pictures/article-img-grid-1.jpg" alt="">
                         <p><em>Source</em> / All images made by Sean McGrath released as CC</p>
@@ -40,7 +42,7 @@
             
             <aside>
             
-            	<h2>Contact <span>Us</span></h2>
+            	<h2>{{ #contactUs# }}</h2>
                 <div class="aside-box">
                 	<img src="pictures/map-sample-small.png" alt="" />
                     <p>We're always happy to hear from you. You can contact us via email at<br />

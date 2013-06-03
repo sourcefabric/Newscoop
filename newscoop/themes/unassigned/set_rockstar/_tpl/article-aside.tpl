@@ -58,7 +58,12 @@
       </div><!-- /.attachment -->
 {{ /if }}      
 {{ /list_article_attachments }}      
-{{ /if }}                 
+{{ /if }}  
+
+{{* here we include debate voting tool, if article type is 'debate' *}}
+{{ if $gimme->article->type_name == "debate" }}
+{{ include file="_tpl/debate-voting.tpl" }}
+{{ /if }}               
                 
                 <h2>{{ #alsoIn# }} <span>{{ $gimme->section->name }}</span></h2>
                 <div class="aside-box">

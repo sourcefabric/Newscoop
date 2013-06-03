@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">

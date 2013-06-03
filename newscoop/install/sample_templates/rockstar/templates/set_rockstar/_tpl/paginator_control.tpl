@@ -1,6 +1,6 @@
             <div class="paging-holder">
                {{if isset($paginator->previous)}}
-            	<a href="{{ $view->url(['page' => $paginator->previous]) }}" class="prev"><span>+ previous</span> Page</span></a>
+            	<a href="{{ $view->url(['page' => $paginator->previous]) }}" class="prev"><span>+ {{ #previous# }}</span> {{ #page# }}</span></a>
             	{{/if}}
             	
             	<span class="paging">
@@ -10,6 +10,6 @@
             	</span>
             	
             	{{if isset($paginator->next)}}
-            	<a href="#" class="next"><span>next</span> Page <span>+</span></a>
+            	<a href="#" class="next"><span>{{ #next# }}</span> {{ #page# }} <span>+</span></a>
             	{{/if}}
             </div><!-- / Pagination -->

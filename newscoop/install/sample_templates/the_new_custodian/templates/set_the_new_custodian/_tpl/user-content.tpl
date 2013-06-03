@@ -1,9 +1,9 @@
 <article id="user-content">
   <header><ul>
     {{ if $user->isAuthor() }}
-    <li><a href="#articles">Articles</a></li>
+    <li><a href="#articles">{{ #articles# }}</a></li>
     {{ /if }}
-    <li><a href="#usercomments">Comments</a></li>
+    <li><a href="#usercomments">{{ #comments# }}</a></li>
   </ul></header>
   
   {{ if $user->isAuthor() }}
@@ -17,7 +17,7 @@
       {{ /if }}
       <li class="clearfix">
       <h6><a href="{{ $gimme->article->url }}" title="{{ $gimme->article->title }}">{{ $gimme->article->title }}</a></h6>
-        <p class="article-info"><em>Published on {{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }} in <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a></em><span class="right">{{ include file="_tpl/article-icons.tpl" }}</span></p>
+        <p class="article-info"><em>{{ #publishedOn# }} {{ $gimme->article->publish_date|camp_date_format:"%M %e, %Y" }} in <a href="{{ uri options="section" }}">{{ $gimme->section->name }}</a></em><span class="right">{{ include file="_tpl/article-icons.tpl" }}</span></p>
         {{ include file="_tpl/img/img_250x167.tpl" where="author" }}{{ $gimme->article->deck }}
       </li>
 {{ if $gimme->current_list->at_end }}
@@ -27,7 +27,7 @@
 {{ $curpage=intval($gimme->url->get_parameter($gimme->current_list_id())) }}
 {{ if $pages gt 1 }}
 <ul class="pagination">
-    {{ if $gimme->current_list->has_previous_elements }}<li class="prev"><a href="?{{ urlparameters options="previous_items" }}">Previous</a></li>{{ /if }}
+    {{ if $gimme->current_list->has_previous_elements }}<li class="prev"><a href="?{{ urlparameters options="previous_items" }}">{{ #previous# }}</a></li>{{ /if }}
     {{ for $i=0 to $pages - 1 }}
         {{ $curlistid=$i*5 }}
         {{ $gimme->url->set_parameter($gimme->current_list_id(),$curlistid) }}
@@ -38,7 +38,7 @@
         {{ $remi=$i+1 }}
         {{ /if }}
     {{ /for }}
-    {{ if $gimme->current_list->has_next_elements }}<li class="next"><a href="?{{ urlparameters options="next_items" }}">Next</a></li>{{ /if }}
+    {{ if $gimme->current_list->has_next_elements }}<li class="next"><a href="?{{ urlparameters options="next_items" }}">{{ #next# }}</a></li>{{ /if }}
 </ul>
 {{ $gimme->url->set_parameter($gimme->current_list_id(),$curpage) }}
 {{ /if }}
@@ -54,7 +54,7 @@
       <li class="commentar">{{ $date=date_create($gimme->user_comment->submit_date) }}
             <time>{{ $date->format('d.m.Y \u\m H:i') }}</time>
               <h6{{* class="{{ cycle values="green-txt," }}"*}}>{{ $gimme->user_comment->subject|escape }}</6>
-              «{{ $gimme->user_comment->content|escape|truncate:255:"...":true }}»  Zum Artikel: <a href="{{ $gimme->user_comment->article->url }}">{{ $gimme->user_comment->article->name }}</a>
+              «{{ $gimme->user_comment->content|escape|truncate:255:"...":true }}»  {{ #onArticle# }}: <a href="{{ $gimme->user_comment->article->url }}">{{ $gimme->user_comment->article->name }}</a>
       </li>
       {{ /list_user_comments }}
     </ul></li>

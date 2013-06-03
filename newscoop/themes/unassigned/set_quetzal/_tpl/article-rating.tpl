@@ -1,6 +1,5 @@
-<div class="twelvecol">
 <div class="article_rating">
-    <h3>Article rating:</h3>
+    <h4>Article rating:</h4>
     <div id="{{ $gimme->article->number }}" class="rate_widget">
         <ul class="stars">
             <li class="star_1 ratings_stars"></li>
@@ -13,10 +12,7 @@
         <p class="rating_error"></p>
     </div>
 </div>
-</div>
-
 <script>
-
 $(document).ready(function() {
     
     $('.rate_widget').each(function(i) {
@@ -71,9 +67,6 @@ $(document).ready(function() {
             'json'
         ); 
     });
-    
-    
-    
 });
 
 function set_votes(widget) {
@@ -89,5 +82,4 @@ function set_votes(widget) {
         $(widget).find('.rating_error').text(error);
     }
 }
-
 </script>
