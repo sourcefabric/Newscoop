@@ -246,6 +246,9 @@
   .profile .span6 {
     width: 47%;
   }
+  .community .span8 {
+    width: 100%;
+  }
 }
 /* --- End 768px to 979px screen resolution*/
 /* --- Begin 481px to 767px screen resolution */

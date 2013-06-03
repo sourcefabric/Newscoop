@@ -21,7 +21,7 @@
                 </div> 
                 <div class="row">
                     <div class="span12 more-news-tabs tab-sections">
-                        <a class="back-link visible-phone" href="#">&larr; {{ #back# }}</a>
+                        <a class="back-link visible-phone" href="javascript:history.back()">&larr; {{ #back# }}</a>
                     </div>
                 </div>                       
             </div>
@@ -36,8 +36,8 @@
                              <fieldset>
                                  {{ if $form->email->hasErrors() }}
                                  <div class="alert alert-error">
-                                     <h5>{{ #emailIsNotCorrect #}}</h5>
-                                     <p>{{ #maybeYouRegisteredOn# }} <em>{{ $gimme->publication->name }}</em> with another e-mail account?</p>
+                                     <h5>{{ #emailIsNotCorrect# }}</h5>
+                                     <p>{{ #maybeYouRegistered# }} <em>{{ $gimme->publication->name }}</em> {{ #withAnotherEmail# }}</p>
                                  </div>
                                  {{ /if }}
                              </fieldset>

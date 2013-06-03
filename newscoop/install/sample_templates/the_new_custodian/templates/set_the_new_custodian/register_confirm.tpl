@@ -1,12 +1,12 @@
 {{extends file="layout.tpl"}}
 
-{{block title}}Registration confirm{{/block}}
+{{block title}}{{ #registerConfirm# }}{{/block}}
 
 {{block content}}
 
 {{ assign var="userindex" value=1 }}
 
-<h3>Please fill your data</h3>
+<h3>{{ #pleaseFill# }}</h3>
 <fieldset class="background-block">
 {{ $form }}
 

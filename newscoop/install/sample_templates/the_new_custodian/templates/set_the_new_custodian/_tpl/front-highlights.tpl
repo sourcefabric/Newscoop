@@ -1,5 +1,5 @@
             <section id="highlights" class="threecol last">
-              <h3>Highlights</h3>
+              <h3>{{ #highlights# }}</h3>
                 <ul>
 
 {{ list_articles length="4" ignore_issue="true" ignore_section="true" order="bydate desc" constraints="highlight is on" }}                

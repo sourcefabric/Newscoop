@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" section="poll" }}
+
 {{ list_articles length="1" ignore_issue="true" ignore_section="true" constraints="type is poll" }}
 
 {{ list_debates length="1" item="article" }}
@@ -22,7 +24,7 @@
                             </li>
                             {{ assign var="votes" value=$votes+$gimme->debateanswer->votes }}
                             {{ if $gimme->current_list->at_end }}
-                            <li class="total-votes"><span>Number of votes: {{ $votes }}</span></li>
+                            <li class="total-votes"><span>{{ #numberOfVotes# }} {{ $votes }}</span></li>
                             {{ /if }} 
                         {{ /list_debate_answers }}
 

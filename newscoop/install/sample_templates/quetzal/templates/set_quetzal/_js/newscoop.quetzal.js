@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  
+  $.support.placeholder = (function(){
+      var i = document.createElement('input');
+      return 'placeholder' in i;
+  })();
 
 	// initialize timeago plugin for dates
  	$(".timeago").timeago();
@@ -15,7 +20,7 @@ $(document).ready(function() {
                         $(this).val('').removeClass('hasPlaceholder');
                 }
         }).blur(function () {
-                if ($(this).attr('placeholder') != '' && ($(this).val() == '' || $(this).val() == $(this).attr('placeholder'))) {
+                if ($(this).attr('placeholder') != '' && typeof $(this).attr('placeholder') != 'undefined' && ($(this).val() == '' || $(this).val() == $(this).attr('placeholder'))) {
                         $(this).val($(this).attr('placeholder')).addClass('hasPlaceholder');
                 }
         });
@@ -26,6 +31,10 @@ $(document).ready(function() {
         });
     }
 
+    /* Poll Ajaxified
+    *   -------------------------------------------------------*/
+    $('#poll-button').click(function(){
+      $.post($('form[name=debate]').attr("action"),$('form[name=debate]').serialize(),function(data){$('#poll').html(data);});
+      return false;
+    }); 
 });
-
-

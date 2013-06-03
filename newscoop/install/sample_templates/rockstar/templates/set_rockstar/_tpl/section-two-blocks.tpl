@@ -1,7 +1,7 @@
             <section class="grid-2">
                 
             	<article>
-                	<h2>MOST <span>READ</span></h2>
+                	<h2>{{ #mostRead# }}</h2>
                     <ul class="article-list">
 {{ local }}
 {{ set_current_issue }}
@@ -14,7 +14,7 @@
                 </article>
                 
             	<article>
-                	<h2>Community <span>Feed</span></h2>
+                	<h2>{{ #communityFeed# }}</h2>
                     <ul class="comments-list">
 
 {{ list_community_feeds length="5" }}                    
@@ -25,7 +25,7 @@
         {{ if $gimme->community_feed->type == 'user-register' && $user->uname }}
         <li class="registered"><span class="time"><b>{{ include file="_tpl/relative_date.tpl" date=$created }} /</b> <a{{ if $user->is_active }} href="{{ $view->url(['username' => $user->uname], 'user') }}"{{ /if }}>{{ $user->first_name }} {{ $user->last_name }}</a> registered</span></li>
         {{ elseif $gimme->community_feed->type == 'comment-recommended' && $gimme->community_feed->comment->article }}
-        <li class="commented"><span class="time"><b>{{ include file="_tpl/relative_date.tpl" date=$created }} /</b> New comment on: <a href="{{ $gimme->community_feed->comment->article->url }}">{{ $gimme->community_feed->comment->article->title }}</a></span></li>
+        <li class="commented"><span class="time"><b>{{ include file="_tpl/relative_date.tpl" date=$created }} /</b> {{ #newCommentOn# }} <a href="{{ $gimme->community_feed->comment->article->url }}">{{ $gimme->community_feed->comment->article->title }}</a></span></li>
         {{ /if }}
 
 {{ /list_community_feeds }}

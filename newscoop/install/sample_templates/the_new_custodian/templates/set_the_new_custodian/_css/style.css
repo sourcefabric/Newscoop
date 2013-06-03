@@ -770,7 +770,7 @@ div#sidebar,
 	margin: 10px 0;
 	margin-left: 3.8%;
 	}
-	div#sidebar p, div#sidebar ul, div#sidebar label {
+	div#sidebar p, div#sidebar ul {
 		font-size:0.9375em;
 		}
 
@@ -1120,6 +1120,9 @@ form input#article_comment_submit {
 #related ul {
   margin-left: 0;
 }
+
+.cs_fl_right { float:right; margin-left: 20px;} 
+.cs_fl_left { float:left; margin-right: 20px;}
 
 /* 
   + Pagination / Tab navigation
@@ -1826,6 +1829,67 @@ aside .profile dt, aside .profile dd,
 				}
 
 /* =============================================================================
+   Article rating
+   ========================================================================== */
+.rate_widget {
+    border: none;
+    overflow: visible;
+    position: relative;
+}
+.ratings_stars {
+    background: url('../_img/rating/star_empty.png') no-repeat;
+    float:      left;
+    height:     28px;
+    padding:    2px;
+    width:      28px;
+}
+.ratings_vote {
+    background: url('../_img/rating/star_full.png') no-repeat;
+}
+.ratings_over {
+    background: url('../_img/rating/star_highlight.png') no-repeat;
+}
+ 
+.total_votes {
+    margin-top: 2px;
+    float: left;
+    display: inline-block;
+    color: #464646;
+    font-size: 14px;
+}
+.article_rating {
+    font: 21px Arial, Helvetica, sans-serif;
+    width: 100%;
+    float: left;
+    padding: 12px 0px;
+}
+  .article_rating h3 {
+    display: inline-block;
+    float: left;
+    margin-right: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    border-bottom: none;
+    font-size: 21px;
+  }
+
+.rating_error {
+    margin-top: 2px;
+    float: left;
+    display: inline-block;
+    color: #464646;
+    font-size: 14px;
+}
+
+.stars {
+padding: 0;
+margin: 0 4px 0 0;
+list-style-type: none;
+display: inline-block;
+float: left;
+}
+
+/* =============================================================================
    jQuery UI overrides
    ========================================================================== */
 .ui-tabs-nav.ui-widget-header {
@@ -1957,3 +2021,138 @@ nav:before, nav:after {
   h2, h3{ page-break-after: avoid; }
 }
 
+
+	/* Debatte */
+	ul.debatte-score {
+		overflow:hidden;
+		margin: 0!important;
+		list-style-type:none;
+		padding: 0;
+		}
+		ul.debatte-score li {
+			float:left; position:relative;
+			width:50%; height:35px;
+			}
+			ul.debatte-score li.yes {background:#5a9b97;}
+			ul.debatte-score li.no {background:#31827d;}
+				ul.debatte-score li.no:before {
+					content:"";
+					position:absolute; left:-1px; top:0;
+					width:1px; height:100%;
+					background:#fff;
+					}
+			ul.debatte-score li span {
+				position:absolute; left:5px; top:0;
+				font-size:12px; color:#fff; line-height:35px; white-space:nowrap;
+				}
+				ul.debatte-score li.no span {left:auto; right:5px;}
+
+		/* Debatte single */
+		
+		.headline {padding:14px 10px; font-size:14px;}
+		
+		.debatte-single header {padding:10px 0;}
+			.debatte-single header h6,
+			.debatte-single header h3 {text-align:center; font-size:24px;}
+				.debatte-single header h6 a {color:#B40032; text-decoration:none;}
+				.debatte-single header h3 a {color:#000; text-decoration:none;}
+		.debatte-single.debatte-detail header {padding:30px 0 20px 0;}			
+				
+		.debatte-single ul.debatte-score li {height:57px;}
+		.debatte-single ul.debatte-score li span {line-height:57px; font-size:14px;}
+		.debatte-single .score-box {position:relative; padding-top: 0;}
+	/*
+			.debatte-single .score-box:after {content:""; position:absolute; left:0; bottom:-20px; height:25px; width:100%; background:#fff;}
+    */
+			.debatte-single .score-box small {text-align: center; color: #666666; font-size: 13px;}
+		
+		.debatte-list article {margin-bottom:25px;}
+		.debatte-list article h3 {color:#B40032;}
+
+
+	.debatte-single.debatte-detail header {padding:10px 0;}	
+		.debatte-single .score-box small {padding-top: 5px}
+	ul.debatte-score {width:auto; margin:0 10px;}
+	.vote-box {padding:10px 10px 0;}
+	.debatte-list.left-thumb article figure,
+		.debatte-list.left-thumb article figure img {width:auto;}
+	.debatte-list.left-thumb article p {display:block;}
+
+			.vote-box {padding:4% 4% 0 4%;}
+				.button-group {overflow:hidden; margin-bottom:7px;}
+					.button-group a {width:47%; float:left; box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box; border-left: 2px solid #fff; border-right: 2px solid #fff;}
+						.button-group a:last-child {float:right;}
+				.vote-box p {font-size:14px; line-height:18px; text-align:left; margin:0;}
+					
+	.button.debbut {
+		color:#fff;
+		background: #31827d;
+		text-align: center;
+		padding: 5px;
+		}
+		.button.debbut:hover,
+		.button.debbut.active  {
+			background: #5a9b97;
+		}		
+		
+							.inner-highlight {
+			width:330px;
+			padding:15px;
+			background:#e5e5e5;
+			}
+			.inner-highlight.right {margin-left:15px;}
+			.inner-highlight.left {margin-right:15px;}
+			.inner-highlight h3 {margin-bottom:0; color:#B40032;}
+			.inner-highlight p {font-size:14px; line-height:21px;}
+			.inner-highlight figure {float:left; margin-right:15px; max-width: 97px;}
+
+		/* Question list */
+        #polldiv blockquote {margin: 0 0 20px 0;}		
+		
+		ul.question-list {
+			margin:0 0 20px 0; padding:0 20px 16px 0px;
+			list-style-type:none;
+			border-bottom:#ccc dashed 1px;
+			position: relative;
+			}
+		    ul.question-list label {padding-left: 3px;}
+			ul.question-list li {margin-bottom:10px; padding-left:0; position:relative;}
+				ul.question-list li .ui-button {overflow:visible;}
+					ul.question-list li .ui-icon {position:absolute; left:0; top:0;}
+
+				ul.question-list li.total-votes {
+					position: absolute;
+					padding: 0;
+					left: 0;
+					right: 0;
+					text-align: center;
+					margin-top: 6px;
+					}
+					ul.question-list li.total-votes span {
+						background: #fff;
+						display: inline-block;
+						padding: 2px 4px;
+						color: #999;
+						} 	
+
+			.q-score {
+				display:block; clear:both; position:relative;
+				height:6px;
+				margin:5px 0;
+				background:#b40032;
+				max-width: 94%;
+				}
+				.q-score small {
+					position:absolute; top:-6px; right:-35px;
+					background: #fff; width: 32px;
+					font-size:12px; color:#b40032;
+					}
+		
+		.poll-info {
+			text-align: center;
+			margin-bottom: 10px;
+			font-size: 17px;
+			font-family: UnitSlabWeb-Bold, Georgia, "Times New Roman", Times, serif;
+			}	
+		
+	p.poll-info {text-align: left; margin-bottom: 10px; font-size: 15px; display: block;}			

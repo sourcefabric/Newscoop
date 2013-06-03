@@ -1,4 +1,4 @@
-{{ list_playlist_articles name="Front page" length="1" }}            
+{{ list_playlist_articles id="1" length="1" }}            
 
             <section id="topstory" class="clearfix">
           {{ include file="_tpl/img/img_500x333.tpl" }}

@@ -1,16 +1,16 @@
 {{extends file="layout.tpl"}}
 
-{{block title}}Register yourself{{/block}}
+{{block title}}{{ #registerYourself# }}{{/block}}
 
 {{block content}}
 
 {{ assign var="userindex" value=1 }}
 
-<h3>Confirmation has been sent.</h3>
+<h3>{{ #confirmationSent# }}</h3>
 
 <div class="alert alert-info">
-    <p>Follow the steps you will find in your email.</p>
-    <p>Thanks for registering.</p>
+    <p>{{ #followEmailSteps# }}</p>
+    <p>{{ #thanksForRegistering# }}</p>
 </div>
 
 {{/block}}

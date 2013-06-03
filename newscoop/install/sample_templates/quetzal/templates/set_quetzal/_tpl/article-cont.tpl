@@ -37,7 +37,9 @@
 
             {{ include file="_tpl/article-attachments.tpl"}}
         </section>
-                <!-- AddThis Button BEGIN -->
+
+        {{ if $gimme->article->type_name == "news" }}
+        <!-- Social Buttons BEGIN -->
         <div class="addthis_toolbox addthis_default_style">
 
             <!--- Twitter button -->
@@ -61,12 +63,14 @@
             </script>
 
         </div>
+        <!-- Social Buttons END -->
 
-        <!-- AddThis Button END -->
         {{ include file="_tpl/article-rating.tpl" }}
 
         {{ include file="_tpl/article-comments.tpl" }}
-        </section>
+        
+        {{ /if }} {{* end if type content *}}
+
         {{ else }}
         <header>
             <div class="alert">{{ #infoOnLockedArticles# }}</div>

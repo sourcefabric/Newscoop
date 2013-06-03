@@ -17,11 +17,14 @@
 {{ if $gimme->article->content_accessible }}                
                 
                 {{ if $gimme->article->type_name == "news" }}
+                <!-- if you want to use responsive images use {{ include file="_tpl/img/img_picturefill.tpl" }} -->
                 {{ include file="_tpl/img/img_600x400.tpl" }}
                 {{ /if }}
+                {{ count }}
                 <div class="clearfix">{{ include file="_tpl/_edit-article.tpl" }}{{ $gimme->article->full_text }}</div>
             </article>
 
+    {{ if $gimme->article->type_name !== "page" }}
             <div id="social-group">
                 <div id="twitter">
                     <script src="http://platform.twitter.com/widgets.js" type="text/javascript"></script>
@@ -29,7 +32,7 @@
                 </div><!-- /#twitter -->
                 <div id="fb-root"></div><script src="http://connect.facebook.net/en_US/all.js#appId=100924830001723&amp;xfbml=1"></script><fb:like href="http://{{ $gimme->publication->site }}{{ uri }}" send="true" width="385" show_faces="true" font=""></fb:like>       
             </div><!-- /#social-group -->
-            
+    {{ /if }}            
 {{ else }}        
-            <p>{{ #infoOnLockedArticles# }}</p>
-{{ /if }}    
+            <p>{{ #infoOnLockedArticles# }}</p>    
+{{ /if }}

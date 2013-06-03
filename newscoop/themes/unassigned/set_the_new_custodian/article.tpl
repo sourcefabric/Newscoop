@@ -13,14 +13,22 @@
       <div id="maincol" class="eightcol clearfix">
 
 {{ if $gimme->article->type_name == "debate" }}
+
 {{ include file="_tpl/article-debate.tpl" }}
+
 {{ else }}
+
 {{ include file="_tpl/article-cont.tpl" }}
+
 {{ /if }}
+
+{{ if $gimme->article->type_name !== "page" }}
 
 {{ include file="_tpl/article-rating.tpl" }}
 
 {{ include file="_tpl/article-comments.tpl" }}
+
+{{ /if }}                              
                               
       </div><!-- /#maincol -->
 

@@ -1,3 +1,5 @@
+{{ config_load file="{{ $gimme->language->english_name }}.conf" }}
+
 {{ include file="_tpl/_html-head.tpl" }}
 
 	<div id="wrapper">
@@ -21,7 +23,7 @@
                     <div class="article">
                 		{{ if $gimme->current_list->at_beginning }}{{ include file="_tpl/img/img_square.tpl" }}{{ /if }}
                 		<h4><a href="{{ url options="article" }}">{{ $gimme->article->name }}</a> <em>/ <a href="{{ url options="section" }}">{{ $gimme->section->name }}</a></em></h4>
-                            <span class="time">{{ include file="_tpl/relative_date.tpl" date=$gimme->article->publish_date }}{{ if ! $gimme->article->content_accessible }} / <a href="{{ url options="article" }}">premium*</a>{{ /if }}</span>
+                            <span class="time">{{ include file="_tpl/relative_date.tpl" date=$gimme->article->publish_date }}{{ if ! $gimme->article->content_accessible }} / <a href="{{ url options="article" }}">{{ #premium# }}</a>{{ /if }}</span>
                     </div>
                     
 {{ if $gimme->current_list->at_end }}                    
