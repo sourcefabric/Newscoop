@@ -16,9 +16,10 @@ if (!file_exists($upgrade_trigger_path)) {
     exit(0);
 }
 
+$cliMessageAboutConfigChanges = '';
 // check if user have application.ini file and show message about changes.
 if (!file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini')) {
-    if (!$_GET['skip_alert']) {
+    if (array_key_exists('skip_alert', $_GET) && PHP_SAPI !== 'cli') {
         echo $message = <<<EOF
 <!doctype html>
 <html lang="en">
@@ -56,6 +57,15 @@ p{margin:0 0 10px}</style>
 </html>
 EOF;
 die();
+    } else if (PHP_SAPI === 'cli') {
+        $cliMessageAboutConfigChanges = <<<EOF
+The configuration files have changed.
+We have detected that your configuration files have custom changes, some of these can cause problems.
+Read more about the changes here:
+https://wiki.sourcefabric.org/display/CS/Changes+in+config+files
+    
+    
+EOF;
     }
 }
 
@@ -105,6 +115,7 @@ $dbInfo = $dbVersion;
 if (!in_array($dbRoll, array('', '.'))) {
     $dbInfo .= ', roll ' . $dbRoll;
 }
+echo $cliMessageAboutConfigChanges;
 echo "Upgrading the database from version $dbInfo...";
 
 // initiates the campsite site
