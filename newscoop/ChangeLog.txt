@@ -1,4 +1,5 @@
-4.2 RC (April 29, 2014)
+4.2 (June 04, 2014)
+4.2 RC (May 29, 2013)
  New Features
  ------------
  - Read REST API
@@ -19,7 +20,7 @@
  - fix slideshow buttons do not show translations
  - fix bug with duplicated comments
 
- 4.1.1 (April 15, 2014)
+ 4.1.1 (April 15, 2013)
  Bug fixes
  ------------
  - fix problem with wrong section name after article translation
@@ -27,7 +28,7 @@
  - fix multiple comments bug
  - fix package table default encoding
 
-4.1.2 (April 15, 2014)
+4.1.2 (April 15, 2013)
  Bug fixes
  ------------
  - fix problem with wrong section name after article translation
@@ -35,7 +36,7 @@
  - fix multiple comments bug
  - fix package table default encoding
 
-4.1.1 (April 15, 2014)
+4.1.1 (April 15, 2013)
  Improvements
  ------------
  - Implement a "manage all captions window" accessible from article edit screen

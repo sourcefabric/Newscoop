@@ -111,3 +111,6 @@ sh bin/post-install.sh
 Now we point our browser to our `Newscoop Web Site` and type `/upgrade.php` behind the URL. This will automatically run the required Scripts and Database Upgrades required for 4.2.
 
 Once this process is complete, congratulations! You're now on Newscoop 4.2!
+
+### Release notes.
+Some custom parameters defined in application.ini file can cause problems. Read more about migration on https://wiki.sourcefabric.org/display/CS/Changes+in+config+files.
