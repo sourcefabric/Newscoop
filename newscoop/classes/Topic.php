@@ -933,9 +933,11 @@ class Topic extends DatabaseObject {
 
         $topicTable = $p_parentTopic->m_dbTableName;
 
-        $g_ado_db->Execute("LOCK TABLE `$topicTable`");
+        $g_ado_db->Execute("LOCK TABLES `$topicTable` WRITE;");
 
         $maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
+
+        $g_ado_db->Execute("UNLOCK TABLES;");
 
         $leftTopic = new Topic($p_leftTopicId);
         $rightTopic = new Topic($p_rightTopicId);
