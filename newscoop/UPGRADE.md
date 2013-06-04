@@ -6,7 +6,7 @@ It is always safe to Backup your files before performing an upgrade! Please make
 
 ### Upgrading from Newscoop 3.5.x:
 
-Upgrading from version older than 3.5.0 is not supported anymore. If you had an older version you need to install Newscoop 4.1.2 and then upgrade to 4.2.
+Upgrading from version older than 3.5.0 is not supported anymore. If you had an older version you need to upgrade to Newscoop 4.1.2 first and then upgrade to 4.2.
 
 ### Upgrading from Newscoop 4.1.x to Newscoop 4.2
 #### Find your Newscoop dir
