@@ -16,6 +16,8 @@ if (!file_exists($upgrade_trigger_path)) {
     exit(0);
 }
 
+@unlink(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'installation.php');
+
 $cliMessageAboutConfigChanges = '';
 // check if user have application.ini file and show message about changes.
 if (!file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini')) {
