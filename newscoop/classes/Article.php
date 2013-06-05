@@ -1121,7 +1121,10 @@ class Article extends DatabaseObject {
      */
     public function getPublicationId()
     {
-        return (int)$this->m_data['IdPublication'];
+        if (isset($this->m_data['IdPublication'])) {
+            return (int)$this->m_data['IdPublication'];
+        }
+        return 0;
     } // fn getPublicationId
 
 
@@ -1148,7 +1151,10 @@ class Article extends DatabaseObject {
      */
     public function getIssueNumber()
     {
-        return (int)$this->m_data['NrIssue'];
+        if (isset($this->m_data['NrIssue'])) {
+            return (int)$this->m_data['NrIssue'];
+        }
+        return 0;
     } // fn getIssueNumber
 
 
@@ -1175,7 +1181,10 @@ class Article extends DatabaseObject {
      */
     public function getSectionNumber()
     {
-        return (int)$this->m_data['NrSection'];
+        if (isset($this->m_data['NrSection'])) {
+            return (int)$this->m_data['NrSection'];
+        }
+        return 0;
     } // fn getSectionNumber
 
 
@@ -1202,7 +1211,10 @@ class Article extends DatabaseObject {
      */
     public function getLanguageId()
     {
-        return (int)$this->m_data['IdLanguage'];
+        if (isset($this->m_data['IdLanguage'])) {
+            return (int)$this->m_data['IdLanguage'];
+        }
+        return 0;
     } // fn getLanguageId
 
 
@@ -1217,7 +1229,10 @@ class Article extends DatabaseObject {
      */
     public function getArticleNumber()
     {
-        return (int)$this->m_data['Number'];
+        if (isset($this->m_data['Number'])) {
+            return (int)$this->m_data['Number'];
+        }
+        return 0;
     } // fn getArticleNumber
 
 
