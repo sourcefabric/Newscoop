@@ -144,14 +144,13 @@ CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
 
+//We don't need this step now. 
 // update plugins
 // CampPlugin::OnUpgrade();
-
-CampRequest::SetVar('step', 'finish');
-$install = new CampInstallation();
-$install->initSession();
-$step = $install->execute();
-
+//CampRequest::SetVar('step', 'finish');
+//$install = new CampInstallation();
+//$install->initSession();
+//$step = $install->execute();
 // update plugins environment
 // CampPlugin::OnAfterUpgrade();
 
