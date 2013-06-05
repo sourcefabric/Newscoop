@@ -145,7 +145,7 @@ CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
 
 // update plugins
-CampPlugin::OnUpgrade();
+// CampPlugin::OnUpgrade();
 
 CampRequest::SetVar('step', 'finish');
 $install = new CampInstallation();
@@ -153,7 +153,7 @@ $install->initSession();
 $step = $install->execute();
 
 // update plugins environment
-CampPlugin::OnAfterUpgrade();
+// CampPlugin::OnAfterUpgrade();
 
 CampTemplate::singleton()->clearCache();
 
