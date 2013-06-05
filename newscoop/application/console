@@ -32,7 +32,7 @@ if (!$g_ado_db->isConnected(true)) {
     throw new \Exception("Container is missing", 1);
 }
 
-//$cli->setCatchExceptions(false);
+$cli->setCatchExceptions(false);
 
 $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
