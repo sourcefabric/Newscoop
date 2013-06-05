@@ -21,7 +21,7 @@ WEB_GROUP=www-data
 
 package_name="newscoop"
 datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/4.1"
+configdir="/etc/newscoop/4.2"
 includefile="${configdir}/apache.conf"
 a2tplfile="${configdir}/apache.vhost.tpl"
 crontplfile="${configdir}/newscoop.cron.tpl"
@@ -138,6 +138,12 @@ case "$1" in
 
     dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
+
+    dpkg-statoverride --list $datadir/library/Proxy &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/library/Proxy
+
+    dpkg-statoverride --list $datadir/log &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/log
 
     dpkg-statoverride --list $datadir/pdf &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/pdf
