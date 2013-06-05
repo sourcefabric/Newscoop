@@ -66,7 +66,7 @@ class CampInstallationBase
     protected function execute()
     {
         // test ado db connection
-        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
+        //require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 
         $input = CampRequest::GetInput('post');
         $session = CampSession::singleton();
