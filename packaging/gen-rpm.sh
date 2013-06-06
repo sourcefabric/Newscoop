@@ -21,6 +21,11 @@ echo -n "OK? [enter|CTRL-C]" ; read
 
 cp -r ./rpm /tmp/newscoop-${VERSION}/
 cd ${TMP}/
+
+# workarounds for Newscoop 4.2 spaces in filenames etc.
+mv newscoop-${VERSION}/newscoop/vendor/symfony/symfony/src/Symfony/Component/Finder/Tests/Fixtures/with\ space/ newscoop-${VERSION}/newscoop/vendor/symfony/symfony/src/Symfony/Component/Finder/Tests/Fixtures/with_space/
+mv newscoop-${VERSION}/newscoop/vendor/smarty/smarty/development/lexer/Lempar\ Original.php newscoop-${VERSION}/newscoop/vendor/smarty/smarty/development/lexer/Lempar_Original.php
+
 tar czf /tmp/rpm_newscoop-${VERSION}.tar.gz newscoop-${VERSION}/
 cd -
 

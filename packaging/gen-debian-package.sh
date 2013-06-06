@@ -116,6 +116,7 @@ rm newscoop/themes/unassigned/set_rockstar/pictures/.DS_Store
 
 chmod +x newscoop/bin/post-install.sh
 chmod +x newscoop/vendor/doctrine/dbal/bin/doctrine-dbal
+chmod +x newscoop/vendor/doctrine/orm/bin/doctrine
 chmod +x newscoop/vendor/knplabs/knp-components/bin/vendors.php
 
 chmod -x newscoop/plugins/debate/template_engine/classes/DebateIssue.php
@@ -570,7 +571,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Ex
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/AutomaticControllerInjectionsTest.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_e.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc9.php
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/SimpleArrayType.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoQuery.php
 chmod -x newscoop/admin-files/lang/pl/languages.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/doctrine.rst
@@ -910,7 +910,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/asset
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Feed.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/front.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_150x100.tpl
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/JsonArrayType.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb6.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9d.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/register_index.tpl
@@ -1473,7 +1472,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Ex
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/AutomaticControllerInjectionsTest.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_e.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc9.php
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/SimpleArrayType.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoQuery.php
 chmod -x newscoop/admin-files/lang/pl/languages.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/doctrine.rst
@@ -1813,7 +1811,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/asset
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Feed.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/front.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_150x100.tpl
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/JsonArrayType.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb6.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9d.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/register_index.tpl
@@ -1937,8 +1934,8 @@ debuild -k174C1854 $@ || exit
 ls -l /tmp/newscoop*deb
 ls -l /tmp/newscoop*changes
 
-lintian -i --pedantic /tmp/newscoop_${DEBRELEASE}_*.changes | tee /tmp/newscoop-${DEBRELEASE}.issues
+lintian -i --pedantic /tmp/newscoop_${DEBRELEASE}_amd64.changes | tee /tmp/newscoop-${DEBRELEASE}.issues
 
 #echo -n "UPLOAD? [enter|CTRL-C]" ; read
 
-#dput sfo /tmp/newscoop_${DEBRELEASE}_*.changes
+#dput sfo /tmp/newscoop_${DEBRELEASE}_amd64.changes
