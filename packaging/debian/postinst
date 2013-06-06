@@ -127,8 +127,8 @@ case "$1" in
     dpkg-statoverride --list $datadir/conf &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/conf
 
-    dpkg-statoverride --list $datadir/files &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/files
+    dpkg-statoverride --list $datadir/public/files &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/public/files
 
     dpkg-statoverride --list $datadir/images &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/images
@@ -154,8 +154,8 @@ case "$1" in
     dpkg-statoverride --list $datadir/themes &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
 
-    dpkg-statoverride --list $datadir/videos &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/videos
+    dpkg-statoverride --list $datadir/public/videos &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/public/videos
 
     dpkg-statoverride --list $datadir/.htaccess &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0644 $datadir/.htaccess
