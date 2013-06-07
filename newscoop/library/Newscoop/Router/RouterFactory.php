@@ -114,6 +114,8 @@ class RouterFactory
                     'controller' => 'search',
                     'action' => 'index',
                     'language' => null,
+                ), array(
+                    'language' => '[a-z]{2}',
                 )
             )
         );

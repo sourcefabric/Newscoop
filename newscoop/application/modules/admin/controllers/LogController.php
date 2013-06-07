@@ -25,6 +25,7 @@ class Admin_LogController extends Zend_Controller_Action
      */
     public function indexAction()
     {
+        $this->_helper->layout->setLayout('admin');
         $this->view->form = $this->getForm()->setMethod('get')->setAction('');
         
         $criteria = array();
