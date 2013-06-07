@@ -1,7 +1,17 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__ . '/newscoop_bootstrap.php';
+global $CAMPSITE_DIR;
+
+require_once __DIR__ . '/../application.php';
+
+$application->bootstrap();
+$GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR = realpath(dirname(dirname(__FILE__)));
+
+if (!defined('WWW_DIR')) {
+    define('WWW_DIR', $GLOBALS['g_campsiteDir']);
+}
+
 require_once __DIR__ . '/cli_script_lib.php';
 
 $ETC_DIR = __DIR__ . '/../conf';
@@ -55,6 +65,8 @@ if (!$result = mysql_query($sql_query)) {
 
 $i = 0;
 $num_rows = mysql_num_rows($result);
+
+print_r(get_users_to_notify());die;
 
 // if events log exists, inits smarty template system
 if ($num_rows > 0) {
