@@ -66,8 +66,6 @@ if (!$result = mysql_query($sql_query)) {
 $i = 0;
 $num_rows = mysql_num_rows($result);
 
-print_r(get_users_to_notify());die;
-
 // if events log exists, inits smarty template system
 if ($num_rows > 0) {
     $tpl = init_smarty();
