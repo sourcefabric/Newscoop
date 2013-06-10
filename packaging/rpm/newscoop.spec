@@ -27,6 +27,8 @@ Requires: php
 Requires: php-cli
 Requires: php-gd
 Requires: php-mysql
+Requires: php-process
+Requires: php-xml
 Requires: curl
 Requires: mysql
 Requires: ImageMagick
