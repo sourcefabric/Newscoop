@@ -1065,8 +1065,7 @@ CREATE TABLE `Subscriptions` (
   `ToPay` float(10,2) unsigned NOT NULL DEFAULT '0.00',
   `Currency` varchar(70) NOT NULL DEFAULT '',
   `Type` enum('T','P') NOT NULL DEFAULT 'T',
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
+  PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
