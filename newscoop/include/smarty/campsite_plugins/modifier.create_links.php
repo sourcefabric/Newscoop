@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-$this->smarty->loadPlugin('smarty_shared_modifier_escape');
-
 /**
  * Create links from urls
  *
@@ -21,8 +19,8 @@ function smarty_modifier_create_links($input)
     ), function($url) {
         return sprintf('%s<a rel="nofollow" href="%s">%s</a>',
             $url[1],
-            smarty_modifier_escape((!empty($url[2]) ? 'http://' : '') .trim($url[0]), 'html'), // add http:// to www. links
-            smarty_modifier_escape(preg_replace('@^https?://@', '', trim($url[0])), 'html')
+            htmlspecialchars((!empty($url[2]) ? 'http://' : '') .trim($url[0]), ENT_QUOTES), // add http:// to www. links
+            htmlspecialchars(preg_replace('@^https?://@', '', trim($url[0])), ENT_QUOTES)
         );
     }, $input);
 }
