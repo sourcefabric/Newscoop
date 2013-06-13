@@ -64,7 +64,7 @@ class Smarty_CacheResource_Newscoop {
      * @param object $_template current template
      * @return boolean status
      */
-    public function writeCachedContent($_template, $content)
+    public function writeCachedContent(Smarty_Internal_Template $_template, $content)
     {
         $template = $_template->template_resource;
         $handler = $this->cacheClass;
@@ -78,7 +78,7 @@ class Smarty_CacheResource_Newscoop {
      * @param integer $exp_time expiration time
      * @return integer number of cache files deleted
      */
-    public function clearAll($exp_time = null)
+    public function clearAll(Smarty $smarty, $exp_time = null)
     {
         $handler = $this->cacheClass;
         return $handler::handler('clean', $this->smarty, null, null, null, null, null);
@@ -93,10 +93,66 @@ class Smarty_CacheResource_Newscoop {
      * @param integer $exp_time expiration time
      * @return integer number of cache files deleted
      */
-    public function clear($resource_name, $cache_id, $compile_id, $exp_time)
+    public function clear(Smarty $smarty, $resource_name, $cache_id, $compile_id, $exp_time)
     {
         $handler = $this->cacheClass;
         return $handler::handler('clean', $this->smarty, null, $resource_name, null, null, null);
+    }
+
+    /** These functions are direct copies of the Smarty source. We have to properly extend their class **/
+
+    /**
+     * populate Cached Object with meta data from Resource
+     *
+     * @param Smarty_Template_Cached   $cached    cached object
+     * @param Smarty_Internal_Template $_template template object
+     * @return void
+     */
+    public function populate(Smarty_Template_Cached $cached, Smarty_Internal_Template $_template)
+    {
+        $_cache_id = isset($cached->cache_id) ? preg_replace('![^\w\|]+!', '_', $cached->cache_id) : null;
+        $_compile_id = isset($cached->compile_id) ? preg_replace('![^\w\|]+!', '_', $cached->compile_id) : null;
+
+        $cached->filepath = sha1($cached->source->filepath . $_cache_id . $_compile_id);
+        $this->populateTimestamp($cached);
+    }
+
+    /**
+     * populate Cached Object with timestamp and exists from Resource
+     *
+     * @param Smarty_Template_Cached $source cached object
+     * @return void
+     */
+    public function populateTimestamp(Smarty_Template_Cached $cached)
+    {
+        $mtime = $this->fetchTimestamp($cached->filepath, $cached->source->name, $cached->cache_id, $cached->compile_id);
+        if ($mtime !== null) {
+            $cached->timestamp = $mtime;
+            $cached->exists = !!$cached->timestamp;
+            return;
+        }
+        $timestamp = null;
+        // I personally don't know what is being fetched here and what for.
+        // $this->fetch($cached->filepath, $cached->source->name, $cached->cache_id, $cached->compile_id, $cached->content, $timestamp);
+        $cached->timestamp = isset($timestamp) ? $timestamp : false;
+        $cached->exists = !!$cached->timestamp;
+    }
+
+    /**
+     * Fetch cached content's modification timestamp from data source
+     *
+     * {@internal implementing this method is optional.
+     *  Only implement it if modification times can be accessed faster than loading the complete cached content.}}
+     *
+     * @param string $id         unique cache content identifier
+     * @param string $name       template name
+     * @param string $cache_id   cache id
+     * @param string $compile_id compile id
+     * @return integer|boolean timestamp (epoch) the template was modified, or false if not found
+     */
+    protected function fetchTimestamp($id, $name, $cache_id, $compile_id)
+    {
+        return null;
     }
 }
 
