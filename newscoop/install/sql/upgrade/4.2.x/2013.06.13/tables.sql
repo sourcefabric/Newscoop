@@ -1,0 +1,1 @@
+ALTER TABLE `package_item` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
