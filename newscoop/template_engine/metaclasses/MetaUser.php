@@ -84,7 +84,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getDisplayName()
     {
-        $url = $GLOBALS['controller']->view->url(array('username' => $this->m_dbObject->getUsername()), 'user');
+        $url = \Zend_Registry::get('container')->get('zend_router')->assemble(array('username' => $this->m_dbObject->getUsername()), 'user');
 
         $name = trim($this->m_dbObject->getFirstName() . ' ' . $this->m_dbObject->getLastName());
 
@@ -196,12 +196,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     {
         require_once dirname(__FILE__) . '/../../include/get_ip.php';
 
-        global $controller;
+        $em = \Zend_Registry::get('container')->getService('em');
 
         $userIp = getIp();
         $publication_id = CampTemplate::singleton()->context()->publication->identifier;
-        $repositoryAcceptance = $controller->getHelper('user')->getRepository('Newscoop\user\Comment\Acceptance');
-        $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
+        $repositoryAcceptance = $em->getRepository('Newscoop\user\Comment\Acceptance');
         return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
     }
 
@@ -214,14 +213,14 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function image($width = 80, $height = 80)
     {
-        global $controller;
-
         if (!$this->m_dbObject->getImage()) {
             return '';
         }
 
-        return $controller->view->url(array(
-            'src' => $controller->getHelper('service')->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height),
+        $container = \Zend_Registry::get('container');
+
+        return $container->get('zend_router')->assemble(array(
+            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height),
         ), 'image', false, false);
     }
 
@@ -236,7 +235,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
             return array();
         }
 
-        $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
+        $service = \Zend_Registry::get('container')->getService('user.topic');
         $topics = array();
         foreach ($service->getTopics($this->m_dbObject) as $topic) {
             $topics[$topic->getTopicId()] = $topic->getName();
@@ -255,12 +254,13 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if (!$this->m_dbObject->getId()) {
             return 0;
         }
+        $em = \Zend_Registry::get('container')->getService('em');
 
         $sum = 0;
-        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Comment')
+        $sum +=  $em->getRepository('Newscoop\Entity\Comment')
             ->countByUser($this->m_dbObject);
 
-        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Feedback')
+        $sum +=  $em->getRepository('Newscoop\Entity\Feedback')
             ->countByUser($this->m_dbObject);
 
         return $sum;
