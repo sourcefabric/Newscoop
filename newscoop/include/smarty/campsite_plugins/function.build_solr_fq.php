@@ -17,20 +17,33 @@
  *      The Solr FQ requested
  *
  * @example
- *  {{ list_search_results_solr fq={{build_solr_fq type=$smarty.get.type published=$smarty.get.published from=$smarty.get.from to=$smarty.get.to }} }}
+ *  {{ list_search_results_solr fq=build_solr_fq }}
  *
  */
 function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
 {
     $solrFq = '';
-    if (array_key_exists('type', $p_params) && !empty($p_params['type'])) {
-        $solrFq .= 'type:'.$p_params['type'];
+
+    // The $p_params override the $_GET
+    $acceptedParams = array('type', 'published', 'from', 'to');
+    $cleanParam = array();
+
+    foreach ($acceptedParams as $key) {
+        if (array_key_exists($key, $p_params) && !empty($p_params[$key])) {
+            $cleanParam[$key] = $p_params[$key];
+        } else if (array_key_exists($key, $_GET) && !empty($_GET[$key])) {
+            $cleanParam[$key] = $_GET[$key];
+        }
     }
 
-    if (array_key_exists('published', $p_params) && !empty($p_params['published'])) {
+    if (array_key_exists('type', $cleanParam) && !empty($cleanParam['type'])) {
+        $solrFq .= 'type:'.$cleanParam['type'];
+    }
+
+    if (array_key_exists('published', $cleanParam) && !empty($cleanParam['published'])) {
         $published = '';
 
-        switch ($p_params['published']) {
+        switch ($cleanParam['published']) {
             case '24h':
                 $published = '[NOW-1DAY/HOUR TO *]';
                 break;
@@ -46,14 +59,14 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         }
     }
 
-    if (array_key_exists('from', $p_params) && !empty($p_params['from'])) {
-        $fromDate = date_create_from_format('d.m.y', $p_params['from']);
-        $solrFromDate = date_format($fromDate, 'Y-m-d');
+    if (array_key_exists('from', $cleanParam) && !empty($cleanParam['from'])) {
+        $fromDate = date_create_from_format('d.m.y', $cleanParam['from']);
+        $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
     }
 
-    if (array_key_exists('to', $p_params) && !empty($p_params['to'])) {
-        $toDate = date_create_from_format('d.m.y', $p_params['to']);
-        $solrToDate = date_format($toDate, 'Y-m-d');
+    if (array_key_exists('to', $cleanParam) && !empty($cleanParam['to'])) {
+        $toDate = date_create_from_format('d.m.y', $toParam);
+        $solrToDate = date_format($toDate, 'Y-m-d').'T00:00:00Z/DAY';
     }
 
     if (!empty($solrFromDate) && !empty($solrToDate)) {
