@@ -36,10 +36,6 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         }
     }
 
-    if (array_key_exists('type', $cleanParam) && !empty($cleanParam['type'])) {
-        $solrFq .= 'type:'.$cleanParam['type'];
-    }
-
     if (array_key_exists('published', $cleanParam) && !empty($cleanParam['published'])) {
         $published = '';
 
@@ -57,6 +53,10 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
                 $published = '';
                 break;
         }
+    }
+
+    if (array_key_exists('type', $cleanParam) && !empty($cleanParam['type'])) {
+        $solrFq .= 'type:'.$cleanParam['type'];
     }
 
     if (array_key_exists('from', $cleanParam) && !empty($cleanParam['from'])) {
@@ -77,11 +77,11 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         $published = '[* TO '. $solrToDate .']';
     }
 
-    if (!empty($solrFq)) {
-        $solrFq .= ' AND ';
-    }
-    
     if (!empty($published)) {
+        if (!empty($solrFq)) {
+            $solrFq .= ' AND ';
+        }
+        
         $solrFq .= 'published:' . $published;
     }
 
