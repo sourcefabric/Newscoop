@@ -501,26 +501,6 @@ LOCK TABLES `SubsDefTime` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `SubsSections`
---
-
-LOCK TABLES `SubsSections` WRITE;
-/*!40000 ALTER TABLE `SubsSections` DISABLE KEYS */;
-INSERT INTO `SubsSections` VALUES (1,1,10,1,'2010-10-06',5,0,'N'),(2,1,20,1,'2010-10-06',5,0,'N'),(3,1,30,1,'2010-10-06',5,0,'N'),(4,1,40,1,'2010-10-06',5,0,'N'),(5,1,50,1,'2010-10-06',5,0,'N'),(6,1,60,1,'2010-10-06',5,0,'N'),(7,2,5,NULL,'2011-03-10',0,0,'N'),(8,2,10,NULL,'2011-03-10',0,0,'N'),(9,2,15,NULL,'2011-03-10',0,0,'N'),(10,2,20,NULL,'2011-03-10',0,0,'N'),(11,2,30,NULL,'2011-03-10',0,0,'N'),(12,2,40,NULL,'2011-03-10',0,0,'N'),(13,2,50,NULL,'2011-03-10',0,0,'N'),(14,2,60,NULL,'2011-03-10',0,0,'N'),(15,3,5,NULL,'2011-03-10',0,0,'N'),(16,3,10,NULL,'2011-03-10',0,0,'N'),(17,3,15,NULL,'2011-03-10',0,0,'N'),(18,3,20,NULL,'2011-03-10',0,0,'N'),(19,3,30,NULL,'2011-03-10',0,0,'N'),(20,3,40,NULL,'2011-03-10',0,0,'N'),(21,3,50,NULL,'2011-03-10',0,0,'N'),(22,3,60,NULL,'2011-03-10',0,0,'N');
-/*!40000 ALTER TABLE `SubsSections` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `Subscriptions`
---
-
-LOCK TABLES `Subscriptions` WRITE;
-/*!40000 ALTER TABLE `Subscriptions` DISABLE KEYS */;
-INSERT INTO `Subscriptions` VALUES (2,26,2,'Y',0.00,'','P'),(3,1,2,'Y',0.00,'','P');
-/*!40000 ALTER TABLE `Subscriptions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `SystemPreferences`
 --
 

@@ -29,7 +29,7 @@ final class MetaSubscriptions extends MetaDbObject {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
             if($subscription->has_section($sectionNumber)) {
-                return true;
+                return $subscription;
             }
         }
 
@@ -40,7 +40,7 @@ final class MetaSubscriptions extends MetaDbObject {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
             if($subscription->has_article($articleNumber)) {
-                return true;
+                return $subscription;
             }
         }
 
@@ -51,7 +51,7 @@ final class MetaSubscriptions extends MetaDbObject {
         foreach ($this->m_dbObject as $subscription) {
             $subscription = new MetaSubscription($subscription->getSubscriptionId());
             if($subscription->has_issue($issueNumber)) {
-                return true;
+                return $subscription;
             }
         }
 
