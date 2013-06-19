@@ -5,7 +5,7 @@
 
 Summary:        The open content management system for professional journalists
 Name:           newscoop
-Version:        4.1.2
+Version:        4.2.0
 Release:        1
 License:        GPLv3
 Packager:       Daniel James <daniel@64studio.com>
@@ -27,6 +27,8 @@ Requires: php
 Requires: php-cli
 Requires: php-gd
 Requires: php-mysql
+Requires: php-process
+Requires: php-xml
 Requires: curl
 Requires: mysql
 Requires: ImageMagick
@@ -53,9 +55,9 @@ mkdir -p %{buildroot}/var/lib/
 cp -a newscoop %{buildroot}/var/lib/
 
 # Copy config file
-mkdir -p %{buildroot}/etc/newscoop/4.1/
-cp rpm/newscoop.ini %{buildroot}/etc/newscoop/4.1/
-cp rpm/apache.conf %{buildroot}/etc/newscoop/4.1/
+mkdir -p %{buildroot}/etc/newscoop/4.2/
+cp rpm/newscoop.ini %{buildroot}/etc/newscoop/4.2/
+cp rpm/apache.conf %{buildroot}/etc/newscoop/4.2/
 
 cd $RPM_BUILD_ROOT
 rm -f %{manifest}
@@ -72,15 +74,15 @@ rm -rf %{buildroot}
 
 %files -f %{manifest}
 %defattr(-,root,root)
-%doc newscoop/changelog newscoop/CREDITS newscoop/README newscoop/UPGRADE
-%config /etc/newscoop/4.1/apache.conf
-%config /etc/newscoop/4.1/newscoop.ini
-#%config /etc/newscoop/4.1/apache.vhost.tpl
-#%config /etc/newscoop/4.1/newscoop.cron.tpl
+%doc newscoop/changelog newscoop/CREDITS newscoop/README.md newscoop/UPGRADE.md
+%config /etc/newscoop/4.2/apache.conf
+%config /etc/newscoop/4.2/newscoop.ini
+#%config /etc/newscoop/4.2/apache.vhost.tpl
+#%config /etc/newscoop/4.2/newscoop.cron.tpl
 
 %post
 # symlink config files
-configdir="/etc/newscoop/4.1"
+configdir="/etc/newscoop/4.2"
 includefile="${configdir}/apache.conf"
 phpinifile="${configdir}/newscoop.ini"
 webserver="httpd"
@@ -158,6 +160,9 @@ fi
 
 
 %changelog
+* Wed Jun 5 2013 Daniel James <daniel@64studio.com>
+- Update for Newscoop 4.2.0
+
 * Tue Apr 30 2013 Daniel James <daniel@64studio.com>
 - Update for Newscoop 4.1.2
 
