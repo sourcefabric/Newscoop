@@ -17,7 +17,8 @@
  *      The Solr FQ requested
  *
  * @example
- *  {{ list_search_results_solr fq=build_solr_fq }}
+ *  {{ list_search_results_solr fq="{{ build_solr_fq }}" }}
+ *  {{ list_search_results_solr fq="{{ build_solr_fq type=$smarty.post.type }}" }}
  *
  */
 function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
