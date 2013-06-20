@@ -60,14 +60,20 @@ if (empty($this->events)) { // no logs
             echo('<table id="res_diff_'. $item_count .'" style="display: none;">');
             if (is_array($resource_diff)) {
                 foreach ($resource_diff as $key => $value) {
-                    echo('<tr><td>'.$key.': </td><td>'.$value.'</td></tr>');
+                    if(is_array($value)){
+                        $value = 'array';
+                    } else {
+                        $value = $value;
+                    }
+
+                    echo('<tr><td>'.$key.': </td><td>'. $value.'</td></tr>');
                 }
             } else {
                 echo('<tr><td colspan="2">'.getGS('Broken data').'</td></tr>');
             }
             echo('</table>');
         ?></td>
-        <td><?php echo $event->getUser()->getUserName(); ?></td>
+        <td><?php if ($event->getUser()){ $event->getUser()->getUserName(); } ?></td>
     </tr>
     <?php $item_count = $item_count + 1; ?>
     <?php } ?>
