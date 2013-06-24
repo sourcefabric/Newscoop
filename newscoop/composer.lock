@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "734c2e38b06c58687f0132dd7e7e3f14",
+    "hash": "ae259ad6d0c13bfc9c8f44546c6042fa",
     "packages": [
         {
             "name": "behat/behat",
@@ -1857,74 +1857,6 @@
             "time": "2013-05-28 12:09:06"
         },
         {
-            "name": "noiselabs/smarty-bundle",
-            "version": "dev-master",
-            "target-dir": "NoiseLabs/Bundle/SmartyBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/noiselabs/SmartyBundle.git",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/noiselabs/SmartyBundle/zipball/a605ae7cd1abd6005fc0a5bcebb87366f7a0c73d",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "smarty/smarty": "3.1.*@stable",
-                "symfony/framework-bundle": ">=2.1.0"
-            },
-            "require-dev": {
-                "symfony/assetic-bundle": ">=2.0",
-                "symfony/security": ">=2.1.0",
-                "symfony/yaml": ">=2.1.0"
-            },
-            "suggest": {
-                "knplabs/knp-menu-bundle": "Smarty3 integration with KnpMenu (object oriented menus)",
-                "liip/theme-bundle": "Integration of Twitter Bootstrap into Symfony2 (themes)",
-                "mopa/bootstrap-bundle": "Integration of Twitter Bootstrap into Symfony2",
-                "mopa/bootstrap-sandbox-bundle": "Integration of Twitter Bootstrap into Symfony2 (extra)",
-                "symfony/assetic-bundle": "Assetic support in Smarty templates"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "NoiseLabs\\Bundle\\SmartyBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Vítor Brandão",
-                    "email": "noisebleed@noiselabs.org",
-                    "homepage": "http://blog.noiselabs.org"
-                },
-                {
-                    "name": "Community contributions",
-                    "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
-                }
-            ],
-            "description": "This Symfony2 bundle provides integration for the Smarty3 template engine.",
-            "homepage": "http://smartybundle.noiselabs.org",
-            "keywords": [
-                "noiselabs",
-                "smarty",
-                "symfony",
-                "templating"
-            ],
-            "time": "2013-02-20 01:13:38"
-        },
-        {
             "name": "phpcollection/phpcollection",
             "version": "dev-master",
             "source": {
@@ -2110,12 +2042,12 @@
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensio/SensioDistributionBundle.git",
+                "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
                 "reference": "v2.3.0-BETA1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.0-BETA1",
                 "reference": "v2.3.0-BETA1",
                 "shasum": ""
             },
@@ -2157,12 +2089,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "v2.2.2"
+                "reference": "v2.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.2.2",
-                "reference": "v2.2.2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.2.3",
+                "reference": "v2.2.3",
                 "shasum": ""
             },
             "require": {
@@ -2204,12 +2136,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "v2.2.2"
+                "reference": "v2.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/v2.2.2",
-                "reference": "v2.2.2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/v2.2.3",
+                "reference": "v2.2.3",
                 "shasum": ""
             },
             "require": {
@@ -2247,59 +2179,32 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
-            "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
-            },
-            "require": {
-                "php": ">=5.2"
+            "version": "3.0.9",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.smarty.net/files/Smarty-3.0.9.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "libs/"
                 ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Monte Ohrt",
-                    "email": "monte@ohrt.com"
-                },
-                {
-                    "name": "Uwe Tews",
-                    "email": "uwe.tews@googlemail.com"
-                },
-                {
-                    "name": "Rodney Rehm",
-                    "email": "rodney.rehm@medialize.de"
-                }
-            ],
-            "description": "Smarty - the compiling PHP template engine",
-            "homepage": "http://www.smarty.net",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2013-01-26 12:03:52"
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "v5.0.0"
+                "reference": "v5.0.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v5.0.0",
-                "reference": "v5.0.0",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/v5.0.1",
+                "reference": "v5.0.1",
                 "shasum": ""
             },
             "require": {
@@ -2308,7 +2213,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.1-dev"
                 }
             },
             "autoload": {
@@ -2335,21 +2240,21 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2013-04-30 17:35:30"
+            "time": "2013-06-17 13:32:32"
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "dev-master",
+            "version": "2.2.x-dev",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "v2.3.0"
+                "reference": "3c4b4c43933f93e6f887df201bdbbb10a1bf5b97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/3c4b4c43933f93e6f887df201bdbbb10a1bf5b97",
+                "reference": "3c4b4c43933f93e6f887df201bdbbb10a1bf5b97",
                 "shasum": ""
             },
             "require": {
@@ -2393,7 +2298,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2013-05-27 18:06:55"
+            "time": "2013-06-05 09:21:54"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2402,12 +2307,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "v2.3.0-RC1"
+                "reference": "v2.3.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/v2.3.0-RC1",
-                "reference": "v2.3.0-RC1",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/v2.3.1",
+                "reference": "v2.3.1",
                 "shasum": ""
             },
             "require": {
@@ -2550,6 +2455,17 @@
             "time": "2013-06-04 15:00:11"
         },
         {
+            "name": "terwey/smarty-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/terwey/SmartyBundle",
+                "reference": "59519bab1093e783b904c5cbb98347be486e25db"
+            },
+            "type": "library",
+            "time": "2013-06-24 14:20:55"
+        },
+        {
             "name": "twig/twig",
             "version": "dev-master",
             "source": {
@@ -2610,7 +2526,7 @@
         "guzzle/guzzle": 20,
         "rezzza/mailchimp": 20,
         "hybridauth/hybridauth": 20,
-        "noiselabs/smarty-bundle": 20
+        "terwey/smarty-bundle": 20
     },
     "platform": {
         "php": ">=5.3.0"

@@ -25,7 +25,7 @@
         "jms/security-extra-bundle":"1.4.*",
         "jms/di-extra-bundle":"1.3.*",
         "bombayworks/zendframework1":"1.11.*",
-        "3rd-party/smarty": "v3.0.9",
+        "smarty/smarty": "3.0.9",
         "friendsofsymfony/rest-bundle":"0.12.0",
         "behat/behat":">=2.4.0",
         "behat/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
@@ -35,8 +35,36 @@
         "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
-        "noiselabs/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+        "terwey/smarty-bundle":"dev-master#59519bab1093e783b904c5cbb98347be486e25db"
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "smarty/smarty",
+                "version": "3.0.9",
+                "dist": {
+                    "url": "http://www.smarty.net/files/Smarty-3.0.9.zip",
+                    "type": "zip"
+                },
+                "autoload": {
+                    "classmap": ["libs/"]
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name":"terwey/smarty-bundle",
+                "version":"dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/terwey/SmartyBundle",
+                    "reference": "dev-master"
+                }
+            }
+        }
+    ],
     "require-dev":{
         "phpunit/phpunit":"3.7.*"
     },
