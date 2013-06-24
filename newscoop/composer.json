@@ -35,7 +35,7 @@
         "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
-        "terwey/smarty-bundle":"dev-master#59519bab1093e783b904c5cbb98347be486e25db"
+        "noiselabs/smarty-bundle":"dev-master#59519bab1093e783b904c5cbb98347be486e25db"
     },
     "repositories": [
         {
@@ -55,12 +55,15 @@
         {
             "type": "package",
             "package": {
-                "name":"terwey/smarty-bundle",
+                "name":"noiselabs/smarty-bundle",
                 "version":"dev-master",
                 "source": {
                     "type": "git",
                     "url": "https://github.com/terwey/SmartyBundle",
                     "reference": "dev-master"
+                },
+                "autoload": {
+                    "psr-0": { "NoiseLabs\\Bundle\\SmartyBundle": "" }
                 }
             }
         }
