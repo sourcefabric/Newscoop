@@ -53,19 +53,8 @@
             }
         },
         {
-            "type": "package",
-            "package": {
-                "name":"noiselabs/smarty-bundle",
-                "version":"dev-master",
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/terwey/SmartyBundle",
-                    "reference": "dev-master"
-                },
-                "autoload": {
-                    "psr-0": { "NoiseLabs\\Bundle\\SmartyBundle": "" }
-                }
-            }
+            "type": "vcs",
+            "url": "https://github.com/terwey/SmartyBundle"
         }
     ],
     "require-dev":{

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3238c2e814dea5f8fc7be3092f38845d",
+    "hash": "aba99fb313618a1706b1c8e8e6b57a4b",
     "packages": [
         {
             "name": "behat/behat",
@@ -1215,7 +1215,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1262,9 +1262,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1378,7 +1378,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1867,16 +1867,71 @@
         {
             "name": "noiselabs/smarty-bundle",
             "version": "dev-master",
+            "target-dir": "NoiseLabs/Bundle/SmartyBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/terwey/SmartyBundle",
+                "url": "https://github.com/terwey/SmartyBundle.git",
                 "reference": "59519bab1093e783b904c5cbb98347be486e25db"
             },
-            "type": "library",
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/terwey/SmartyBundle/zipball/59519bab1093e783b904c5cbb98347be486e25db",
+                "reference": "59519bab1093e783b904c5cbb98347be486e25db",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": ">=2.1.0"
+            },
+            "require-dev": {
+                "symfony/assetic-bundle": ">=2.0",
+                "symfony/security": ">=2.1.0",
+                "symfony/yaml": ">=2.1.0"
+            },
+            "suggest": {
+                "knplabs/knp-menu-bundle": "Smarty3 integration with KnpMenu (object oriented menus)",
+                "liip/theme-bundle": "Integration of Twitter Bootstrap into Symfony2 (themes)",
+                "mopa/bootstrap-bundle": "Integration of Twitter Bootstrap into Symfony2",
+                "mopa/bootstrap-sandbox-bundle": "Integration of Twitter Bootstrap into Symfony2 (extra)",
+                "symfony/assetic-bundle": "Assetic support in Smarty templates"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "NoiseLabs\\Bundle\\SmartyBundle": ""
                 }
+            },
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Vítor Brandão",
+                    "email": "noisebleed@noiselabs.org",
+                    "homepage": "http://blog.noiselabs.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
+                }
+            ],
+            "description": "This Symfony2 bundle provides integration for the Smarty3 template engine.",
+            "homepage": "http://smartybundle.noiselabs.org",
+            "keywords": [
+                "noiselabs",
+                "smarty",
+                "symfony",
+                "templating"
+            ],
+            "support": {
+                "irc": "irc://irc.freenode.org/noiselabs",
+                "issues": "https://github.com/noiselabs/SmartyBundle/issues",
+                "source": "https://github.com/terwey/SmartyBundle/tree/master"
             },
             "time": "2013-06-24 14:20:55"
         },
@@ -1914,7 +1969,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
