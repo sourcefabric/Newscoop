@@ -45,12 +45,16 @@ class UpdateWeatherCommand extends Console\Command\Command
             'important_regions', 
             //'important_winter_regions', 
             'important_summer_regions', 
-            'wanderwetter_regions', 
-            'teaser_regions'
+            'wanderwetter_regions'
+            //'teaser_regions'
         );
 
-        $mexsLists = array(
+        $winterLists = array(
             //'important_winter_slopes',
+        );
+
+        $summerLists = array(
+            'teaser_regions'
         );
 
         // get data for geonames ids
@@ -64,13 +68,14 @@ class UpdateWeatherCommand extends Console\Command\Command
                     $locationType,
                     $list,
                     $location->region,
-                    $location->elevation
+                    $location->elevation,
+                    true
                 );
             }
         }
         
         // get data for mexs ids
-        foreach ($mexsLists as $list) {
+        foreach ($winterLists as $list) {
             foreach ($config->$list as $location) {
                 $locationType = 'mexs';
 
@@ -82,7 +87,8 @@ class UpdateWeatherCommand extends Console\Command\Command
                     'mexs',
                     $list,
                     $location->region,
-                    $location->elevation
+                    $location->elevation,
+                    true
                 );
 
                 // get wintersports data
@@ -96,37 +102,64 @@ class UpdateWeatherCommand extends Console\Command\Command
                 );
             }
         }
+
+        // get data for mexs ids
+        foreach ($summerLists as $list) {
+            foreach ($config->$list as $location) {
+                $locationType = 'mexs';
+
+                // get forecast data
+                $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
+                $this->saveForecastData($data,
+                    $location->id,
+                    $location->name,
+                    'mexs',
+                    $list,
+                    $location->region,
+                    $location->elevation,
+                    true
+                );
+            }
+        }
         
-        // get data for all slopes lists
+        // get data for all baths lists
         foreach ($config->main_regions as $location) {
             $locationType = 'geonames';
-            $slopeData = $this->getApiData('wintersports',$locationType,$location->id,'1h');
-            $this->saveAllWintersportsData($slopeData,
+            $bathData = $this->getApiData('waters',$locationType,$location->id,'1h');
+            // only needed suring winter months
+            //$this->saveAllWintersportsData($slopeData,
+            //    'mexs',
+            //    'all_slopes',
+            //    $location->name
+            //);
+            $this->saveAllBathsData($bathData,
                 'mexs',
-                'all_slopes',
+                'all_baths',
                 $location->name
             );
 
             // now load forecast data
-            foreach ($slopeData->content as $regions) {
+            foreach ($bathData->content as $regions) {
                 foreach ($regions as $key => $record) {
-                    $locationId = $record["mexs_id"];
-                    $locationName = $record["name"];
-                        
+                    $locationId = $record->mexs_id;
+                    $locationName = empty($record->description) ? $record->name: $record->description;
+                    
+    
                     $data = $this->getApiData('forecasts','mexs',$locationId,'1h');
                     $this->saveForecastData($data,
                         $locationId,
                         $locationName,
                         'mexs',
-                        'all_slopes',
+                        'all_baths',
                         $location->name,
-                        $location->elevation
+                        $location->elevation,
+                        false
                     );
                 }
             } 
         }
 
-	// load mountain evelation forecast data for the next 5 days
+	    // load mountain evelation forecast data for the next 5 days
         foreach ($config->bergwetter as $location) {
             $locationType = 'mexs';
             $start = date('Y-m-d');
@@ -138,7 +171,8 @@ class UpdateWeatherCommand extends Console\Command\Command
                 'mexs',
                 'bergwetter',
                 'bergwetter' . $location->elevation,
-                $location->elevation
+                $location->elevation,
+                true
             );
         }
 
@@ -155,7 +189,7 @@ class UpdateWeatherCommand extends Console\Command\Command
         $url = "http://mmv.feeds.meteonews.net/$feed/$locationType/$locationId.xml";
         $user = $this->config->api_user;
         $pass = $this->config->api_pass;
-	$parameters = array( 'cumulation' => $cumulation, 'lang' => 'de');
+	    $parameters = array( 'cumulation' => $cumulation, 'lang' => 'de');
         if ($begin) {
             $parameters['begin'] = $begin;
         }
@@ -176,7 +210,7 @@ class UpdateWeatherCommand extends Console\Command\Command
         }
     }
 
-    protected function saveForecastData($xml,$locationId,$locationName,$locationType,$locationList,$regionName,$locationElevation)
+    protected function saveForecastData($xml,$locationId,$locationName,$locationType,$locationList,$regionName,$locationElevation,$statDate)
     {
         $em = \Zend_Registry::get('container')->getService('em');
         $weatherStatRepository = $em->getRepository('Newscoop\Entity\WeatherStat'); 
@@ -185,9 +219,13 @@ class UpdateWeatherCommand extends Console\Command\Command
             foreach ($timeperiods as $key => $record) {
                 $time = date_parse($record["end_datetime"]);
                 $hour = $time['hour'];
-		$date = $time['year'] . '-' . $time['month'] . '-' . $time['day'];
+		        $date = $time['year'] . '-' . $time['month'] . '-' . $time['day'];
 
-                $searchBy = array('locationId' => $locationId, 'locationList' => $locationList, 'statDate' => new \DateTime($date), 'hour' => $hour);
+                if ($statDate) {
+                    $searchBy = array('locationId' => $locationId, 'locationList' => $locationList, 'statDate' => new \DateTime($date), 'hour' => $hour);
+                } else {
+                    $searchBy = array('locationId' => $locationId, 'locationList' => $locationList, 'hour' => $hour);
+                }
 
                 if ($weatherStatRepository->countBy($searchBy) > 0) {
                     $weatherStat = $weatherStatRepository->findOneBy($searchBy);
@@ -200,7 +238,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                     'location_name' => (string)$locationName,
                     'location_list' => (string)$locationList,
                     'region_name' => (string)$regionName,
-		    'stat_date' =>  new \DateTime($date),
+		            'stat_date' =>  new \DateTime($date),
                     'hour' => (int)$hour,
                     'symbol' => (int)($record->symb) ? $record->symb : 0,
                     'temperature' => (int)($record->temp) ? $record->temp : 0,
@@ -287,6 +325,42 @@ class UpdateWeatherCommand extends Console\Command\Command
                         'total_slopes' => (int)($record->ski->facilities["total"]) ? $record->ski->facilities["total"] : 0,
                         'open_slopes' => (int)($record->ski->facilities) ? $record->ski->facilities : 0
                     );
+                    $weatherStatRepository->save($weatherStat, $values);
+                    $weatherStatRepository->flush();
+                }
+            }
+        }
+    }
+
+    protected function saveAllBathsData($xml,$locationType,$locationList,$regionName)
+    {
+        $em = \Zend_Registry::get('container')->getService('em');
+        $weatherStatRepository = $em->getRepository('Newscoop\Entity\WeatherStat'); 
+
+        foreach ($xml->content as $regions) {
+            foreach ($regions as $key => $record) {
+                $locationId = $record->mexs_id;
+                $locationName = empty($record->description) ? $record->name : $record->description;
+
+                // save slope data for every hour
+                for ($hour = 0; $hour <= 23; $hour++) {
+                    $searchBy = array('locationId' => $locationId, 'hour' => $hour, 'locationList' => $locationList);
+
+                    if ($weatherStatRepository->countBy($searchBy) > 0) {
+                        $weatherStat = $weatherStatRepository->findOneBy($searchBy);
+                    } else { 
+                        $weatherStat = new WeatherStat();
+                    }
+                    $values = array(
+                        'location_id' => $locationId,
+                        'location_type' => (string)$locationType,
+                        'location_name' => (string)$locationName,
+                        'location_list' => (string)$locationList,
+                        'region_name' => (string)$regionName,
+                        'hour' => $hour,
+                        'water_temp' => $record->measurements->measurement->water_temp,
+                    );
+
                     $weatherStatRepository->save($weatherStat, $values);
                     $weatherStatRepository->flush();
                 }

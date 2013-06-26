@@ -131,6 +131,12 @@ class WeatherStat extends Entity
     private $openSlopes;
 
     /**
+     * @Column(type="integer", name="water_temp", nullable=True)
+     * @Var int
+     */
+    private $waterTemp;
+
+    /**
      * @Column(type="integer", name="elevation", nullable=True)
      * @Var int
      */
@@ -284,6 +290,14 @@ class WeatherStat extends Entity
     public function getOpenSlopes()
     {
         return $this->openSlopes;
+    }
+
+    /**
+     * @return int 
+     */
+    public function getWaterTemp()
+    {
+        return $this->waterTemp;
     }
 
     /**
@@ -527,6 +541,18 @@ class WeatherStat extends Entity
     public function setOpenSlopes($openSlopes)
     {
         $this->openSlopes = $openSlopes;
+        return $this;
+    }
+
+    /**
+     * Set waterTemp
+     *
+     * @param int $waterTemp
+     * @return Newscoop\Entity\WeatherStat
+     */
+    public function setWaterTemp($waterTemp)
+    {
+        $this->waterTemp = $waterTemp;
         return $this;
     }
 

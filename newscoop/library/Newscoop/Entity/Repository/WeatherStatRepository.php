@@ -81,6 +81,9 @@ class WeatherStatRepository extends EntityRepository
         if (isset($values['open_slopes'])) {
             $entity->setOpenSlopes($values['open_slopes']);
         }
+        if (isset($values['water_temp'])) {
+            $entity->setWaterTemp($values['water_temp']);
+        }
         if (isset($values['elevation'])) {
             $entity->setElevation($values['elevation']);
         }
