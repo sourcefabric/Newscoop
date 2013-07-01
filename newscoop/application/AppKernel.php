@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Newscoop\GimmeBundle\NewscoopGimmeBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new NoiseLabs\Bundle\SmartyBundle\SmartyBundle(),
+            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
             new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
         );

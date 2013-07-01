@@ -3,8 +3,55 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c5426a6069a99091b01a6a08d78a0ecb",
+    "hash": "6fb46ddcc428f458d74c7e7490dda513",
     "packages": [
+        {
+            "name": "ahs/facebook-newscoop-bundle",
+            "version": "dev-master",
+            "target-dir": "AHS/FacebookNewscoopBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/FacebookNewscoopBundle.git",
+                "reference": "d67e60bd26b8512fa227bbca6d0d8e138cf18eaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/FacebookNewscoopBundle/zipball/d67e60bd26b8512fa227bbca6d0d8e138cf18eaa",
+                "reference": "d67e60bd26b8512fa227bbca6d0d8e138cf18eaa",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "kriswallsmith/buzz": ">=v0.9",
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "AHS\\FacebookNewscoopBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "mikolajczuk.private@gmail.com"
+                }
+            ],
+            "description": "Usefull sevices for integration Newscoop and Facebook",
+            "keywords": [
+                "ahs",
+                "cms",
+                "facebook",
+                "integration",
+                "newscoop"
+            ],
+            "time": "2013-06-21 09:58:10"
+        },
         {
             "name": "behat/behat",
             "version": "dev-master",
@@ -368,9 +415,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -827,7 +874,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/51dfc3654bd02b821406a23ee3cae764396b7298",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/86f38b11c21a4ee3a7f35cca878691a3c0367d38",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -1525,6 +1572,124 @@
             "time": "2013-02-20 12:05:07"
         },
         {
+            "name": "knplabs/knp-menu",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenu.git",
+                "reference": "6e3d276aef1d621249c23e0321f9737b45dc5084"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/6e3d276aef1d621249c23e0321f9737b45dc5084",
+                "reference": "6e3d276aef1d621249c23e0321f9737b45dc5084",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "pimple/pimple": "1.0.*",
+                "silex/silex": "1.0.*",
+                "twig/twig": ">=1.2,<2.0-dev"
+            },
+            "suggest": {
+                "pimple/pimple": "for the built-in implementations of the menu provider and renderer provider",
+                "silex/silex": "for the integration with your silex application",
+                "twig/twig": "for the TwigRenderer and the integration with your templates"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Menu\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "KnpLabs",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
+                }
+            ],
+            "description": "An object oriented menu library",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "menu",
+                "tree"
+            ],
+            "time": "2013-05-20 16:52:41"
+        },
+        {
+            "name": "knplabs/knp-menu-bundle",
+            "version": "dev-master",
+            "target-dir": "Knp/Bundle/MenuBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
+                "reference": "f090ba579745484f73e22877f0b59a6039645f65"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/f090ba579745484f73e22877f0b59a6039645f65",
+                "reference": "f090ba579745484f73e22877f0b59a6039645f65",
+                "shasum": ""
+            },
+            "require": {
+                "knplabs/knp-menu": "2.0.*",
+                "symfony/framework-bundle": ">=2.0,<3.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Bundle\\MenuBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "Knplabs",
+                    "homepage": "http://knplabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://github.com/KnpLabs/KnpMenuBundle/contributors"
+                }
+            ],
+            "description": "This bundle provides an integration of the KnpMenu library",
+            "keywords": [
+                "menu"
+            ],
+            "time": "2013-05-25 11:24:09"
+        },
+        {
             "name": "knplabs/knp-paginator-bundle",
             "version": "v2.3.2",
             "target-dir": "Knp/Bundle/PaginatorBundle",
@@ -1632,6 +1797,44 @@
             "time": "2013-06-04 15:32:22"
         },
         {
+            "name": "mike182uk/paypal-ipn-listener",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mike182uk/paypal-ipn-listener.git",
+                "reference": "c55b102dd78e8ff531afc7820a0d1b0533ed7ea4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mike182uk/paypal-ipn-listener/zipball/c55b102dd78e8ff531afc7820a0d1b0533ed7ea4",
+                "reference": "c55b102dd78e8ff531afc7820a0d1b0533ed7ea4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PayPal": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mike Barrett",
+                    "email": "mike182uk@gmail.com"
+                }
+            ],
+            "description": "A composer compatible PHP >=5.3.0 PayPal IPN Listener.",
+            "keywords": [
+                "ipn",
+                "listener",
+                "paypal"
+            ],
+            "time": "2013-03-29 18:45:02"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
@@ -1692,6 +1895,88 @@
                 "psr-3"
             ],
             "time": "2013-05-28 12:09:06"
+        },
+        {
+            "name": "newscoop/newscoop-paywall-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/PaywallBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newscoop/plugin-NewscoopPaywallBundle.git",
+                "reference": "a1f34376fc6560f4d9b8a41f82814f2341f82b4a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newscoop/plugin-NewscoopPaywallBundle/zipball/a1f34376fc6560f4d9b8a41f82814f2341f82b4a",
+                "reference": "a1f34376fc6560f4d9b8a41f82814f2341f82b4a",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "mike182uk/paypal-ipn-listener": "*",
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\PaywallBundle\\NewscoopPaywallBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "description": "Paywall/Payment providers support in Newscoop",
+            "keywords": [
+                "cms",
+                "integration",
+                "newscoop",
+                "pawyall"
+            ],
+            "time": "2013-06-19 08:43:42"
+        },
+        {
+            "name": "newscoop/plugins-installer",
+            "version": "dev-master",
+            "target-dir": "Newscoop/Composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/newscoop-plugins-installer.git",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/newscoop-plugins-installer/zipball/56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "shasum": ""
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Newscoop\\Composer\\PluginsInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\Composer": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "time": "2013-03-09 10:34:56"
         },
         {
             "name": "noiselabs/smarty-bundle",
@@ -2176,17 +2461,17 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "2.2.x-dev",
+            "version": "dev-master",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "3c4b4c43933f93e6f887df201bdbbb10a1bf5b97"
+                "reference": "v2.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/3c4b4c43933f93e6f887df201bdbbb10a1bf5b97",
-                "reference": "3c4b4c43933f93e6f887df201bdbbb10a1bf5b97",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/v2.3.0",
+                "reference": "v2.3.0",
                 "shasum": ""
             },
             "require": {
@@ -2230,7 +2515,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2013-06-05 09:21:54"
+            "time": "2013-05-27 18:06:55"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2447,7 +2732,8 @@
         "guzzle/guzzle": 20,
         "rezzza/mailchimp": 20,
         "hybridauth/hybridauth": 20,
-        "noiselabs/smarty-bundle": 20
+        "noiselabs/smarty-bundle": 20,
+        "knplabs/knp-menu-bundle": 20
     },
     "platform": {
         "php": ">=5.3.0"

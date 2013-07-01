@@ -10,5 +10,23 @@ services:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
 
+    newscoop_newscoop.menu_builder:
+        class: Newscoop\NewscoopBundle\Menu\Builder
+        arguments: ["@knp_menu.factory", "@service_container"]
+
+    newscoop_newscoop.menu.main:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: newscoop_newscoop.menu_builder
+        factory_method: mainMenu
+        tags:
+            - { name: knp_menu.menu, alias: main } # The alias is what is used to retrieve the menu
+
+    newscoop_newscoop.menu.breadcrumb:
+        class: Knp\Menu\MenuItem # the service definition requires setting the class
+        factory_service: newscoop_newscoop.menu_builder
+        factory_method: mainBreadcrumb
+        tags:
+            - { name: knp_menu.menu, alias: breadcrumb } # The alias is what is used to retrieve the menu
+
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"

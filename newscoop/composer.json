@@ -35,7 +35,10 @@
         "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
-        "noiselabs/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+        "noiselabs/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+        "knplabs/knp-menu-bundle": "dev-master",
+        "ahs/facebook-newscoop-bundle": "*",
+        "newscoop/newscoop-paywall-bundle": "*"
     },
     "require-dev":{
         "phpunit/phpunit":"3.7.*"

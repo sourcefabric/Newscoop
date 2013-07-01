@@ -65,6 +65,8 @@ class PluginsManagerService
         if (!$process->isSuccessful()) {
             throw new \Exception("Error with installing plugin", 1);
         }
+
+        // clear cache here
     }
 
     public function removePlugin($pluginName, $output, $notify = true) {
@@ -99,6 +101,8 @@ class PluginsManagerService
                 if (!$process->isSuccessful()) {
                     throw new \Exception("Error with removing plugin", 1);
                 }
+
+                // clear cache here
             }
         }
     }
