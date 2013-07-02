@@ -142,7 +142,8 @@ class UpdateWeatherCommand extends Console\Command\Command
             foreach ($bathData->content as $regions) {
                 foreach ($regions as $key => $record) {
                     $locationId = $record->mexs_id;
-                    $locationName = empty($record->description) ? $record->name: $record->description;
+                    //$locationName = empty($record->description) ? $record->name: $record->description;
+                    $locationName = $record->water;
                     
     
                     $data = $this->getApiData('forecasts','mexs',$locationId,'1h');
@@ -340,7 +341,8 @@ class UpdateWeatherCommand extends Console\Command\Command
         foreach ($xml->content as $regions) {
             foreach ($regions as $key => $record) {
                 $locationId = $record->mexs_id;
-                $locationName = empty($record->description) ? $record->name : $record->description;
+                //$locationName = empty($record->description) ? $record->name : $record->description;
+                $locationName = $record->water;
 
                 // save slope data for every hour
                 for ($hour = 0; $hour <= 23; $hour++) {
