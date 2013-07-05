@@ -11,15 +11,26 @@
 
 
 $upgrade_trigger_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'upgrading.php';
+$application_ini_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini';
+$application_ini_bak_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini.bak';
 if (!file_exists($upgrade_trigger_path)) {
     header('Location: index.php');
     exit(0);
 }
 
+if (
+    file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'configuration.php') &&
+    file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'database_conf.php')
+) {
+    @unlink(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'installation.php');
+}
+
 $cliMessageAboutConfigChanges = '';
 // check if user have application.ini file and show message about changes.
-if (!file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'application' . DIRECTORY_SEPARATOR . 'configs' . DIRECTORY_SEPARATOR . 'application.ini')) {
-    if (array_key_exists('skip_alert', $_GET) && PHP_SAPI !== 'cli') {
+if (file_exists($application_ini_path)) {
+    // backup application.ini
+    exec("mv $application_ini_path $application_ini_bak_path", $output = array(), $code);
+    if (PHP_SAPI !== 'cli') {
         echo $message = <<<EOF
 <!doctype html>
 <html lang="en">
@@ -43,8 +54,9 @@ p{margin:0 0 10px}</style>
         </div>
         <h2>The configuration files have changed.</h2>
         <p>We have detected that your configuration files have custom changes, some of these can cause problems.</p>
+        <p>We had to move $application_ini_path to $application_ini_bak_path</p>
         <p>Read more about the changes here: <a href="https://wiki.sourcefabric.org/display/CS/Changes+in+config+files">https://wiki.sourcefabric.org/display/CS/Changes+in+config+files</a></p>
-        <p style="text-align:center"><a href="?skip_alert=true">Continue (Skip)</p></p>
+        <p style="text-align:center"><a href="">Continue</p></p>
     </div>
     <div class="footer">
         <a href="http://newscoop.sourcefabric.org/" target="_blank">
@@ -61,6 +73,7 @@ die();
         $cliMessageAboutConfigChanges = <<<EOF
 The configuration files have changed.
 We have detected that your configuration files have custom changes, some of these can cause problems.
+We had to move $application_ini_path to $application_ini_bak_path
 Read more about the changes here:
 https://wiki.sourcefabric.org/display/CS/Changes+in+config+files
     
@@ -144,16 +157,15 @@ CampCache::singleton()->clear('user');
 CampCache::singleton()->clear();
 SystemPref::DeleteSystemPrefsFromCache();
 
+//We don't need this step now. 
 // update plugins
-CampPlugin::OnUpgrade();
-
-CampRequest::SetVar('step', 'finish');
-$install = new CampInstallation();
-$install->initSession();
-$step = $install->execute();
-
+// CampPlugin::OnUpgrade();
+//CampRequest::SetVar('step', 'finish');
+//$install = new CampInstallation();
+//$install->initSession();
+//$step = $install->execute();
 // update plugins environment
-CampPlugin::OnAfterUpgrade();
+// CampPlugin::OnAfterUpgrade();
 
 CampTemplate::singleton()->clearCache();
 

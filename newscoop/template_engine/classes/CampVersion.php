@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2013-06-05';
+    private $m_releaseDate = '2013-06-10';
 
     /**
      * @var string
@@ -115,6 +115,11 @@ final class CampVersion
     public function getWebURL()
     {
         return $this->m_website;
+    }
+
+    public function getCopyrightYear()
+    {
+        return $this->m_copyrightYear;
     }
 
     function getFullInfo()

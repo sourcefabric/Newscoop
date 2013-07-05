@@ -1456,6 +1456,10 @@ class Article extends DatabaseObject {
 
             // send out an article.published event
             self::dispatchEvent("article.published", $this);
+            self::dispatchEvent("article.publish", $this, array(
+                'number' => $this->getArticleNumber(),
+                'language' => $this->getLanguageId(),
+            ));
 
             // dispatch blog.published
             $blogConfig = \Zend_Registry::get('container')->getParameter('blog');

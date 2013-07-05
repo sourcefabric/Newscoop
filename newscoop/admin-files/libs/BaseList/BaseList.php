@@ -321,7 +321,7 @@ class BaseList
             $search = array();
             foreach ($this->searchCols as $col) {
                 $search[] = sprintf('%s LIKE "%%%s%%"', $col,
-                    mysql_real_escape_string($aoData['sSearch']));
+                    $aoData['sSearch']);
             }
             $queryStr .= ' AND (' . implode(' OR ', $search) . ' ) ';
         }

@@ -7,7 +7,7 @@ $(function() {
         var menu = $(this);
 
         // init menu for all but first
-        if (i > 0) {
+        if (i > 0 && !(menu.parent().data('menu') == 'not-menu')) {
             $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s').prependTo(menu);
 
             menu.topmenu({
