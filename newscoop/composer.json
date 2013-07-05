@@ -37,8 +37,7 @@
         "hybridauth/hybridauth":"dev-master",
         "noiselabs/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
         "knplabs/knp-menu-bundle": "dev-master",
-        "ahs/facebook-newscoop-bundle": "*",
-        "newscoop/newscoop-paywall-bundle": "*"
+        "raulfraile/ladybug-bundle": "dev-master"
     },
     "require-dev":{
         "phpunit/phpunit":"3.7.*"

@@ -117,6 +117,11 @@ final class CampVersion
         return $this->m_website;
     }
 
+    public function getCopyrightYear()
+    {
+        return $this->m_copyrightYear;
+    }
+
     function getFullInfo()
     {
         $text  = $this->m_package.' '.$this->getVersion();

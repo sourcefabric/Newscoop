@@ -8,6 +8,7 @@
 namespace Newscoop\NewscoopBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Newscoop\NewscoopBundle\Event\ConfigureMenuEvent;
 
 class Builder
 {
@@ -58,7 +59,7 @@ class Builder
     public function mainMenu()
     {
         camp_load_translation_strings('home');
-        $this->user  = \Zend_Registry::get('user');
+        $this->user  = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
 
         $menu = $this->factory->createItem('root');
@@ -98,8 +99,14 @@ class Builder
 
         $this->preparePluginsMenu($menu);
 
+        // Extend menu with events
+        $this->container->get('event_dispatcher')->dispatch('newscoop_newscoop.menu_configure', new ConfigureMenuEvent(
+            $this->factory, 
+            $menu, 
+            $this->container->get('router')
+        ));
+
         $menu = $this->decorateMenu($menu);
-        // ... add more children
 
         return $menu;
     }
