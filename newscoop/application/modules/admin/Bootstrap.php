@@ -169,6 +169,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         $storage = new Newscoop\Acl\Storage($doctrine);
         $acl->setStorage($storage);
+
+        Zend_Registry::set('acl', $acl);
     }
 
     /**

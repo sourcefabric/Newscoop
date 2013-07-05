@@ -65,9 +65,6 @@ class CampInstallationBase
 
     protected function execute()
     {
-        // test ado db connection
-        require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-
         $input = CampRequest::GetInput('post');
         $session = CampSession::singleton();
 
@@ -831,17 +828,7 @@ XML;
             throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
         }
 
-        $env = '';
-        $console = escapeshellarg($GLOBALS['g_campsiteDir'].'/application/console');
-        if (APPLICATION_ENV == 'production') {
-            $env = '--env=prod';
-        }
-
-        $clearCache = new Process("$php $console cache:clear $env ", null, null, null, 300);
-        $clearCache->run();
-        if (!$clearCache->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when clearing cache.');
-        }
+        exec('rm -rf '.$GLOBALS["g_campsiteDir"].DIR_SEP.'cache'.DIR_SEP.'*', $output = array(), $code);
 
         @chmod($path2, 0600);
 

@@ -648,9 +648,11 @@ class User implements \Zend_Acl_Role_Interface
      * Check permissions
      *
      * @param string $permission
+     * @param string $resource
+     * @param string $action
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission($permission, $resource = null, $action = null)
     {
         $blogService = \Zend_Registry::get('container')->getService('blog');
         if ($blogService->isBlogger($this)) {
@@ -659,9 +661,16 @@ class User implements \Zend_Acl_Role_Interface
 
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
-            list($resource, $action) = PermissionToAcl::translate($permission);
+            if (!$resource && !$action){ 
+                list($resource, $action) = PermissionToAcl::translate($permission);
+            }
+
             if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-				return \SaaS::singleton()->hasPermission($permission);
+                if (!$resource && !$action){ 
+                    return \SaaS::singleton()->hasPermission($permission);
+                }
+
+                return true;
             } else {
             	return FALSE;
             }

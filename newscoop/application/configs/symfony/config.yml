@@ -8,7 +8,7 @@ framework:
     csrf_protection: true
     validation: { enable_annotations: true }
     trust_proxy_headers:  false
-    templating:      { engines: ['twig', 'smarty'] }
+    templating:      { engines: ['twig', 'smarty', 'php'] }
     default_locale: "en"
     trusted_proxies: ~
     session: ~

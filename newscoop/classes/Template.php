@@ -1,16 +1,9 @@
 <?php
-/**
- * @package Campsite
- */
-
-/**
- * Includes
- */
 require_once('DatabaseObject.php');
 require_once('DbObjectArray.php');
 
 /**
- * @package Campsite
+ * @Annotation()
  */
 class Template extends DatabaseObject {
     var $m_dbTableName = 'Templates';
@@ -24,6 +17,7 @@ class Template extends DatabaseObject {
      * @param mixed p_templateIdOrName
      * 		Give the template ID or the template name relative
      * 		to the template base directory.
+     *
      */
     public function Template($p_templateIdOrName = null)
     {
