@@ -21,14 +21,62 @@ echo -n "OK? [enter|CTRL-C]" ; read
 
 cp -r ./rpm /tmp/newscoop-${VERSION}/
 cd ${TMP}/
+
+# workarounds for Newscoop 4.2 spaces in filenames, symbolic links etc.
+mv newscoop-${VERSION}/newscoop/vendor/symfony/symfony/src/Symfony/Component/Finder/Tests/Fixtures/with\ space/ newscoop-${VERSION}/newscoop/vendor/symfony/symfony/src/Symfony/Component/Finder/Tests/Fixtures/with_space/
+mv newscoop-${VERSION}/newscoop/vendor/smarty/smarty/development/lexer/Lempar\ Original.php newscoop-${VERSION}/newscoop/vendor/smarty/smarty/development/lexer/Lempar_Original.php
+
+cd /tmp/newscoop-${VERSION}/newscoop/admin-files/lang/
+rm by
+cp -r be by
+
+rm cz
+cp -r cs cz
+
+rm ge
+cp -r ka ge
+
+rm kr
+cp -r ko kr
+
+cd /tmp/newscoop-${VERSION}/newscoop/plugins/poll/admin-files/lang/
+rm by
+cp -r be by
+
+rm cz
+cp -r cs cz
+
+rm ge
+cp -r ka ge
+
+rm kr
+cp -r ko kr
+
+cd /tmp/newscoop-${VERSION}/newscoop/plugins/recaptcha/admin-files/lang/
+rm by
+cp -r be by
+
+rm cz
+cp -r cs cz
+
+rm ge
+cp -r ka ge
+
+rm kr
+cp -r ko kr
+
+cd /tmp
+
+# end workarounds
+
 tar czf /tmp/rpm_newscoop-${VERSION}.tar.gz newscoop-${VERSION}/
-cd -
+cd /tmp/newscoop-${VERSION}/
 
 mv -vi /tmp/rpm_newscoop-${VERSION}.tar.gz ${HOME}/rpmbuild/SOURCES/newscoop-${VERSION}.tar.gz
-rpmbuild -ba --sign rpm/newscoop.spec || exit 1
+rpmbuild -bb --sign rpm/newscoop.spec || exit 1
 
 ls -l ${HOME}/rpmbuild/RPMS/*/newscoop-${RPMVERS}${RPMRELEASE}*.rpm
-ls -l ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}*.src.rpm
+#ls -l ${HOME}/rpmbuild/SRPMS/newscoop-${RPMVERS}${RPMRELEASE}*.src.rpm
 
 if [ `hostname` != "soyuz" ]; then
 	exit
