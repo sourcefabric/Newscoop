@@ -134,11 +134,11 @@
 </div>
 
 {% set breadcrumbsMenu = knp_menu_get('breadcrumb') %}
-{% set breadcrumbsArray = breadcrumbsMenu.getBreadcrumbsArray() %}
-{% if breadcrumbsArray|length > 1 %}
+{% set breadcrumbsMenuArray = getBreadcrumbsArray(breadcrumbsMenu) %}
+{% if breadcrumbsMenuArray|length > 1 %}
     <div class="breadcrumb-bar clearfix">
         <ul class="breadcrumbs clearfix">
-        {% for key, menu in breadcrumbsArray %}
+        {% for key, menu in breadcrumbsMenuArray %}
             {% if (menu['label'] != 'root') %}
                 {% if loop.index0 != loop.length-1 %}
                     <li class="separator"><a href="{{ menu['uri'] }}">{{ menu['label'] }}</a></li>
