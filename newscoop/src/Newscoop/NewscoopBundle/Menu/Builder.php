@@ -137,7 +137,6 @@ class Builder
         }
 
         return $current;
-
     }
 
     private function decorateMenu($menu) {
