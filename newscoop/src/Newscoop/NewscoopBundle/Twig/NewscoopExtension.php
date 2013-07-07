@@ -57,13 +57,10 @@ class NewscoopExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFunction('loadTranslationStrings', 'camp_load_translation_strings'),
-            new \Twig_SimpleFunction('getGS', 'getGS'),
+            new \Twig_SimpleFunction('getGS', array($this, 'getGS')),
             new \Twig_SimpleFunction('strpos', 'strpos'),
+            new \Twig_SimpleFunction('getBreadcrumbsArray', array($this, 'getBreadcrumbsArray')),
         );
-    }
-
-    public function strpos($text, $lookFor) {
-        return strpos($text, $lookFor);
     }
 
     public function getGS()
@@ -72,6 +69,11 @@ class NewscoopExtension extends \Twig_Extension
         require_once( __DIR__ . '/../../../../admin-files/localizer/Localizer.php');
 
         return call_user_func_array('getGS', $args);
+    }
+
+    public function getBreadcrumbsArray($currentMenuItem) {
+        $manipulator = new \Knp\Menu\Util\MenuManipulator();
+        return $manipulator->getBreadcrumbsArray($currentMenuItem);
     }
 
     public function getName()
