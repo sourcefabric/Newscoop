@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Services;
+namespace Newscoop\Services\Plugins;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
@@ -15,8 +15,11 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * Plugins Manager Service
+ *
+ * Manage plugins installation, status and more...
  */
-class PluginsManagerService
+class ManagerService
 {
     /** 
      * @var Doctrine\ORM\EntityManager 
@@ -30,6 +33,7 @@ class PluginsManagerService
 
     /**
      * @param Doctrine\ORM\EntityManager $em
+     * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
      */
     public function __construct(EntityManager $em, $dispatcher)
     {
@@ -51,7 +55,7 @@ class PluginsManagerService
             )));
         }
 
-        $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .' --no-dev');
+        $process = new Process('cd ' . __DIR__ . '/../../../../ && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .' --no-dev');
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
@@ -72,7 +76,7 @@ class PluginsManagerService
     public function removePlugin($pluginName, $output, $notify = true) {
         $this->installComposer();
 
-        $composerFile = __DIR__ . '/../../../composer.json';
+        $composerFile = __DIR__ . '/../../../../composer.json';
         $composerDefinitions = json_decode(file_get_contents($composerFile), true);
         
         foreach ($composerDefinitions['require'] as $package => $version) {
@@ -88,7 +92,7 @@ class PluginsManagerService
 
                 file_put_contents($composerFile, \Newscoop\Gimme\Json::indent(json_encode($composerDefinitions)));
 
-                $process = new Process('cd ' . __DIR__ . '/../../../ && php composer.phar update --no-dev ' . $pluginName);
+                $process = new Process('cd ' . __DIR__ . '/../../../../ && php composer.phar update --no-dev ' . $pluginName);
                 $process->setTimeout(3600);
                 $process->run(function ($type, $buffer) use ($output) {
                     if ('err' === $type) {
@@ -137,7 +141,7 @@ class PluginsManagerService
     }
 
     public function getInstalledPlugins() {
-        $cachedAvailablePlugins = __DIR__ . '/../../../plugins/avaiable_plugins.json';
+        $cachedAvailablePlugins = __DIR__ . '/../../../../plugins/avaiable_plugins.json';
         if (!file_exists($cachedAvailablePlugins)) {
             return array();
         }
@@ -147,8 +151,8 @@ class PluginsManagerService
 
     public function installComposer(){
         $filesystem = new Filesystem();
-        if (!$filesystem->exists(__DIR__ . '/../../../composer.phar')) {
-            $installComposer = new Process('cd '.__DIR__ . '/../../../ && curl -s https://getcomposer.org/installer | php');
+        if (!$filesystem->exists(__DIR__ . '/../../../../composer.phar')) {
+            $installComposer = new Process('cd '.__DIR__ . '/../../../../ && curl -s https://getcomposer.org/installer | php');
             $installComposer->setTimeout(3600);
             $installComposer->run();
 

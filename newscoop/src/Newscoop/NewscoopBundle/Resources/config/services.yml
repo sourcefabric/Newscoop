@@ -1,7 +1,7 @@
 services:
     newscoop_newscoop.routing.loader.plugins:
         class: Newscoop\NewscoopBundle\Routing\PluginsLoader
-        arguments: ["@plugins.manager", "@service_container"]
+        arguments: ["@newscoop.plugins.manager", "@service_container"]
         tags:
             - { name: routing.loader }
     newscoop.gimme.listener.publication:
