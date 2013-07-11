@@ -1018,7 +1018,7 @@ INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`,
 (35, 'English (Britain)', 'ISO_8859-1', 'English (Britain)', 'en_GB', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (36, 'Kurdish', 'UTF-8', 'کوردی', 'ku', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
 (37, 'German (Austria)', 'ISO_8859-1', 'Deutsch (Österreich)', 'de_AT', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
-(38, 'Hungarian', 'UTF-8', 'Magyar', 'hu', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+(38, 'Hungarian', 'UTF-8', 'Magyar', 'hu', 'Január', 'Február', 'Március', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December', 'Vasárnap', 'Hétfő', 'Kedd', 'Szerda', 'Csütörtök', 'Péntek', 'Szombat', 'Jan', 'Feb', 'Már', 'Ápr', 'Május', 'Jún', 'Júl', 'Aug', 'Szep', 'Okt', 'Nov', 'Dec', 'Va', 'Hé', 'Ke', 'Sze', 'Cs', 'Pé', 'Szu');
 /*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
 UNLOCK TABLES;
 --
