@@ -20,7 +20,7 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
 
-    if (!array_key_exists('options', $params)) {
+    if (!array_key_exists('options', $p_params)) {
         $params['options'] = array();
     }
 
