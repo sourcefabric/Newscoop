@@ -428,7 +428,17 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       ?>
       <!-- END Multi date table -->
 
+      <!-- Old plugins hooks -->
       <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
+
+      <!-- New plugins hooks -->
+      <?php 
+      echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
+        ->renderPluginHooks('newscoop_admin.interface.article.edit.sidebar', null, array(
+            'article' => $articleObj, 
+            'edit_mode' => $f_edit_mode
+        ));
+      ?>
 
   </div>
   <script type="text/javascript">

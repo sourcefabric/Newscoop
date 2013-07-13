@@ -440,9 +440,9 @@ class CampPlugin extends DatabaseObject
         foreach (self::GetEnabled(true) as $CampPlugin) {
             if ($CampPlugin->getFsVersion() != $CampPlugin->getDbVersion()) {
                 $upgradable[$CampPlugin->getName()]  = array(
-                                                            'db' => $CampPlugin->getDbVersion(),
-                                                            'current' => $CampPlugin->getFsVersion()
-                                                        );
+                    'db' => $CampPlugin->getDbVersion(),
+                    'current' => $CampPlugin->getFsVersion()
+                );
             }
         }
         return $upgradable;

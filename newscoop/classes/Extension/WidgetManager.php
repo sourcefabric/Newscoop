@@ -46,7 +46,7 @@ class WidgetManager
     public static function ExtPath() {
         $dirs = array();
         $dirs[] = DIR_SEP . 'extensions' . DIR_SEP;
-        $pluginsManager = \Zend_Registry::get('container')->getService('plugins.manager');
+        $pluginsManager = \Zend_Registry::get('container')->getService('newscoop.plugins.manager');
         $availablePlugins = $pluginsManager->getInstalledPlugins();
         foreach ($availablePlugins as $plugin) {
             $pluginPath = explode('\\', $plugin);

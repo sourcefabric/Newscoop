@@ -311,7 +311,16 @@ if($themePath != null && $themePath != '0'){
 		</TABLE>
 		</FORM>
 		<P>
+		<!-- Old plugins hooks -->
 		<?php CampPlugin::adminHook(__FILE__, array( 'issueObj' => $issueObj ) ); ?>
+
+		<!-- New plugins hooks -->
+		<?php 
+		echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
+			->renderPluginHooks('newscoop_admin.interface.issue.edit', null, array(
+			    'issue' => $issueObj
+			));
+		?>
 	</td>
 
 	<td valign="top">

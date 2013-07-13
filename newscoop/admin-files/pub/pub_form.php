@@ -299,7 +299,16 @@ function onCommentsModerated(p_checkbox)
 <?php if (isset($publicationObj)) { ?>
 <tr>
 	<td colspan="2">
+        <!-- Old plugins hooks -->
         <?php CampPlugin::adminHook(__FILE__, array('publicationObj'=>$publicationObj)); ?>
+
+        <!-- New plugins hooks -->
+        <?php 
+        echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
+            ->renderPluginHooks('newscoop_admin.interface.publication.edit', null, array(
+                'publication' => $publicationObj
+            ));
+        ?>
     </td>
 </tr>
 <?php } ?>

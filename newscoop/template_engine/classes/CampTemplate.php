@@ -100,7 +100,7 @@ final class CampTemplate extends SmartyBC
      */
     public static function getPluginsPluginsDir()
     {
-        $pluginsManager = \Zend_Registry::get('container')->getService('plugins.manager');
+        $pluginsManager = \Zend_Registry::get('container')->getService('newscoop.plugins.manager');
         $availablePlugins = $pluginsManager->getInstalledPlugins();
         $dirs = array();
         foreach ($availablePlugins as $plugin) {
