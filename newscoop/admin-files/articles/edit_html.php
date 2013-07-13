@@ -434,7 +434,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <!-- New plugins hooks -->
       <?php 
       echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
-        ->renderPluginHooks('newscoop_admin.interface.edit.sidebar', null, array(
+        ->renderPluginHooks('newscoop_admin.interface.article.edit.sidebar', null, array(
             'article' => $articleObj, 
             'edit_mode' => $f_edit_mode
         ));

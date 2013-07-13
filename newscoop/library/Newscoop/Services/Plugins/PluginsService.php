@@ -17,7 +17,7 @@ use Newscoop\EventDispatcher\Events\PluginHooksEvent;
  */
 class PluginsService
 {
-	/**
+    /**
      * @var Newscoop\EventDispatcher\EventDispatcher
      */
     private $dispatcher;
@@ -30,15 +30,23 @@ class PluginsService
         $this->dispatcher = $dispatcher;    
     }
 
-	public function renderPluginHooks($eventName, $subject = null, $options = null)
-	{
-		$content = '';
-		$pluginHooksEvent = $this->dispatcher->dispatch($eventName, new PluginHooksEvent($subject, $options));
+    /**
+     * Dispatch hook event and render collected Response objects
+     * @param  string $eventName
+     * @param  mixed $subject
+     * @param  array $options
+     * 
+     * @return string
+     */
+    public function renderPluginHooks($eventName, $subject = null, $options = null)
+    {
+        $content = '';
+        $pluginHooksEvent = $this->dispatcher->dispatch($eventName, new PluginHooksEvent($subject, $options));
 
-		foreach ($pluginHooksEvent->getHooksResponses() as $key => $response) {
-			$content .= $response->getContent();
-		}
+        foreach ($pluginHooksEvent->getHooksResponses() as $key => $response) {
+            $content .= $response->getContent();
+        }
 
-		return $content;
-	}
+        return $content;
+    }
 }
