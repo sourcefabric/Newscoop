@@ -209,7 +209,16 @@ if($issueHasTheme){
 ?>
 <tr>
 	<td colspan="2">
+    <!-- Old plugins hooks -->
 		<?php CampPlugin::adminHook(__FILE__, array( 'sectionObj' => $sectionObj ) ); ?>
+
+    <!-- New plugins hooks -->
+    <?php 
+    echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
+        ->renderPluginHooks('newscoop_admin.interface.section.edit', null, array(
+            'section' => $sectionObj
+        ));
+    ?>
 	</td>
 </tr>
 <tr>
