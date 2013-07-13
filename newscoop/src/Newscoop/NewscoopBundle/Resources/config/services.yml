@@ -4,7 +4,7 @@ services:
         arguments: ["@newscoop.plugins.manager", "@service_container"]
         tags:
             - { name: routing.loader }
-    newscoop.gimme.listener.publication:
+    newscoop.gimme.listener.access_listener:
         class: Newscoop\NewscoopBundle\EventListener\AccessListener
         arguments:  ["@zend_router", "@user"]
         tags:
