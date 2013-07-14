@@ -2,24 +2,24 @@
 <?php putGS('Users'); ?>
 <?php $this->placeholder('title')->captureEnd(); ?>
 <?php echo $this->renderActions(); ?>
-<table cellpadding="0" cellspacing="0" border="0" class="display" id="userDataTable">
+<table cellpadding="0" cellspacing="0" border="0" class="display" id="userDataTable" style="max-width:1300px">
     <thead>
         <tr>
-            <th rowspan="2">Username</th>
-            <th rowspan="2">First Name</th>
-            <th rowspan="2">Last Name</th>
-            <th rowspan="2">Email</th>
+            <th rowspan="2"><?php putGS('Username'); ?></th>
+            <th rowspan="2"><?php putGS('First Name'); ?></th>
+            <th rowspan="2"><?php putGS('Last Name'); ?></th>
+            <th rowspan="2"><?php putGS('Email'); ?></th>
             <th></th>
             <th></th>
-            <th rowspan="2">Created</th>
-            <th rowspan="2">Updated</th>
+            <th rowspan="2"><?php putGS('Created'); ?></th>
+            <th rowspan="2"><?php putGS('Updated'); ?></th>
             <th></th>
-            <th rowspan="2">Options</th>
+            <th rowspan="2"><?php putGS('Options'); ?></th>
         </tr>
         <tr>
-            <th>Usertype</th>
-            <th>Status</th>
-            <th>Verified</th>
+            <th><?php putGS('Usertype'); ?></th>
+            <th><?php putGS('Status'); ?></th>
+            <th><?php putGS('Verified'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -27,16 +27,16 @@
     </tbody>
     <tfoot>
         <tr>
-            <th>Username</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Usertype</th>
-            <th>Status</th>
-            <th>Created</th>
-            <th>Updated</th>
-            <th>Verified</th>
-            <th>Options</th>
+            <th><?php putGS('Username'); ?></th>
+            <th><?php putGS('First Name'); ?></th>
+            <th><?php putGS('Last Name'); ?></th>
+            <th><?php putGS('Email'); ?></th>
+            <th><?php putGS('Usertype'); ?></th>
+            <th><?php putGS('Status'); ?></th>
+            <th><?php putGS('Created'); ?></th>
+            <th><?php putGS('Updated'); ?></th>
+            <th><?php putGS('Verified'); ?></th>
+            <th><?php putGS('Options'); ?></th>
         </tr>
     </tfoot>
 </table>
@@ -150,7 +150,9 @@ $(function() {
         'oLanguage': {
             'oPaginate': {
                 'sNext': '<?php putGS('Next'); ?>',
+                'sLast': '<?php putGS('Last'); ?>',
                 'sPrevious': '<?php putGS('Previous'); ?>',
+                'sFirst': '<?php putGS('First'); ?>'
             },
             'sZeroRecords': '<?php putGS('No records found.'); ?>',
             'sSearch': '<?php putGS('Search'); ?>:',
@@ -205,9 +207,9 @@ $(function() {
                             }
                             newUser.push(string);
                             if (key == 've') {
-                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'">Delete</a>, <a href="user/rename/user/'+user['id']+'">Rename</a>';
+                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'"><?php putGS('Delete'); ?></a>, <a href="user/rename/user/'+user['id']+'"><?php putGS('Rename'); ?></a>';
                                 if (user['ve'] == 'No') {
-                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'">Confirm</a>';
+                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'"><?php putGS('Confirm'); ?></a>';
                                 }
                                 newUser.push(optionsUrl);
                             }
@@ -252,7 +254,7 @@ $(function() {
 });
 
 $(document).ready(function(){
-    $('#userDataTable').on('click', '.jsonDelete', function(event){
+    $('#userDataTable .jsonDelete').live('click', function(event){
         var dataTableCell = $(this).parent();
         var dataTableRow = dataTableCell.parent().get(0);
         event.preventDefault();
@@ -267,7 +269,7 @@ $(document).ready(function(){
         });
     });
 
-    $('#userDataTable').on('click', '.jsonConfirm', function(event){
+    $('#userDataTable .jsonConfirm').live('click', function(event){
         event.preventDefault();
         $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
             if (data.message) {
@@ -279,42 +281,4 @@ $(document).ready(function(){
         });
     });
 });
-</script>
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-    // Load the Visualization API and the piechart package.
-    google.load('visualization', '1.0', {'packages':['corechart']});
-
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(drawChart);
-
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
-    function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Type');
-        data.addColumn('number', 'Users');
-        data.addRows([
-            ['Newscoop', <?php echo $this->newscoopLoginCount; ?>],
-            ['Facebook', <?php echo $this->facebookLoginCount; ?>]
-        ]);
-
-        // Set chart options
-        var options = {
-            'title':<?php echo json_encode(getGS('Active Logins')); ?>,
-            'width':180,
-            'height':180,
-            'legend': {
-                'position': 'bottom'
-            }
-        };
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart'));
-        chart.draw(data, options);
-    }
 </script>
