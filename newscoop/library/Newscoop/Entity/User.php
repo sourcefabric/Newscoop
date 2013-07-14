@@ -933,9 +933,9 @@ class User implements \Zend_Acl_Role_Interface
             'e' => $this->email,
             'g' => $types,
             's' => $status,
-            'c' => $this->created->format('d.m.Y'),
-            'up' => $this->updated->format('d.m.Y'),
-            've' => ((bool) $this->getAttribute(UserAttribute::IS_VERIFIED) ? 'Yes' : 'No')
+            'c' => $this->created->format('Y-m-d h:i:s'),
+            'up' => $this->updated->format('Y-m-d h:i:s'),
+            've' => ((bool) !$this->isPending() ? 'Yes' : 'No')
         );
     }
 
