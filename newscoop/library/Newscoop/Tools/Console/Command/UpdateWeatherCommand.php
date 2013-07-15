@@ -366,7 +366,7 @@ class UpdateWeatherCommand extends Console\Command\Command
             foreach ($regions as $key => $record) {
                 $locationId = $record->mexs_id;
                 $locationName = $record->water . ", " . $record->name;
-                $description = empty($record->description) ? $regionName : $record->description;
+                $description = empty($record->description) ? "" : $record->description;
 
                 // save slope data for every hour
                 for ($hour = 0; $hour <= 23; $hour++) {
