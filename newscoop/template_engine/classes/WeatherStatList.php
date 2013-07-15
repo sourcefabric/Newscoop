@@ -48,6 +48,9 @@ class WeatherStatList extends ListObject
         if (isset($p_parameters['region_name']) && trim($p_parameters['region_name'])!="") {
             $criteria = array_merge($criteria, array( "regionName" => $p_parameters['region_name'] ));
         }
+        if (isset($p_parameters['description']) && trim($p_parameters['description'])!="") {
+            $criteria = array_merge($criteria, array( "description" => $p_parameters['description'] ));
+        }
         if (isset($p_parameters['hour']) && trim($p_parameters['hour'])!="") {
             $criteria = array_merge($criteria, array( "hour" => $p_parameters['hour'] ));
         } else {
@@ -140,6 +143,7 @@ class WeatherStatList extends ListObject
                 case 'location_list' :
                 case 'location_name' :
                 case 'region_name' :
+                case 'description' :
                     $parameters[$parameter] = (string)$value;
                     break;
                 case 'location_id' :

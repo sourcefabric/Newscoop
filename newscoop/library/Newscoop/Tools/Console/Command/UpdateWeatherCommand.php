@@ -66,15 +66,17 @@ class UpdateWeatherCommand extends Console\Command\Command
             foreach ($config->$list as $location) {
                 $locationType = 'geonames';
                 $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
-                $this->saveForecastData($data,
-                    $location->id,
-                    $location->name,
-                    $locationType,
-                    $list,
-                    $location->region,
-                    $location->elevation,
-                    true
-                );
+                if ($data) {
+                    $this->saveForecastData($data,
+                        $location->id,
+                        $location->name,
+                        $locationType,
+                        $list,
+                        $location->region,
+                        $location->elevation,
+                        true
+                    );
+                }
             }
         }
         
@@ -85,25 +87,28 @@ class UpdateWeatherCommand extends Console\Command\Command
 
                 // get forecast data
                 $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
-                $this->saveForecastData($data,
-                    $location->id,
-                    $location->name,
-                    'mexs',
-                    $list,
-                    $location->region,
-                    $location->elevation,
-                    true
-                );
-
+                if ($data) {
+                    $this->saveForecastData($data,
+                        $location->id,
+                        $location->name,
+                        'mexs',
+                        $list,
+                        $location->region,
+                        $location->elevation,
+                        true
+                    );
+                }
                 // get wintersports data
                 $data = $this->getApiData('wintersports',$locationType,$location->id,'1h');
-                $this->saveWintersportsData($data,
-                    $location->id,
-                    $location->name,
-                    $locationType,
-                    $list,
-                    $location->region
-                );
+                if ($data) {
+                    $this->saveWintersportsData($data,
+                        $location->id,
+                        $location->name,
+                        $locationType,
+                        $list,
+                        $location->region
+                    );
+                }
             }
         }
 
@@ -114,15 +119,17 @@ class UpdateWeatherCommand extends Console\Command\Command
 
                 // get forecast data
                 $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
-                $this->saveForecastData($data,
-                    $location->id,
-                    $location->name,
-                    'mexs',
-                    $list,
-                    $location->region,
-                    $location->elevation,
-                    true
-                );
+                if ($data) {
+                    $this->saveForecastData($data,
+                        $location->id,
+                        $location->name,
+                        'mexs',
+                        $list,
+                        $location->region,
+                        $location->elevation,
+                        true
+                    );
+                }
             }
         }
         
@@ -146,20 +153,20 @@ class UpdateWeatherCommand extends Console\Command\Command
             foreach ($bathData->content as $regions) {
                 foreach ($regions as $key => $record) {
                     $locationId = $record->mexs_id;
-                    //$locationName = empty($record->description) ? $record->name: $record->description;
-                    $locationName = $record->water;
-                    
+                    $locationName = $record->water . ", " . $record->name;
     
                     $data = $this->getApiData('forecasts','mexs',$locationId,'1h');
-                    $this->saveForecastData($data,
-                        $locationId,
-                        $locationName,
-                        'mexs',
-                        'all_baths',
-                        $location->name,
-                        $location->elevation,
-                        false
-                    );
+                    if ($data) {
+                        $this->saveForecastData($data,
+                            $locationId,
+                            $locationName,
+                            'mexs',
+                            'all_baths',
+                            $location->name,
+                            $location->elevation,
+                            false
+                        );
+                    }
                 }
             } 
         }
@@ -170,21 +177,24 @@ class UpdateWeatherCommand extends Console\Command\Command
             $start = date('Y-m-d');
             $end = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 4, date('Y')));
             $data = $this->getApiData('forecasts',$locationType,$location->id,'3h',$start,$end);
-            $this->saveForecastData($data,
-                $location->id,
-                'bergwetter' . $location->elevation,
-                'mexs',
-                'bergwetter',
-                'bergwetter' . $location->elevation,
-                $location->elevation,
-                true
-            );
+            if ($data) {
+                $this->saveForecastData($data,
+                    $location->id,
+                    'bergwetter' . $location->elevation,
+                    'mexs',
+                    'bergwetter',
+                    'bergwetter' . $location->elevation,
+                    $location->elevation,
+                    true
+                );
+            }
         }
 
     }
 
     protected function getApiData($feed,$locationType,$locationId,$cumulation,$begin = null,$end = null)
     {
+        $retries = 3;
         $url = "http://mmv.feeds.meteonews.net/$feed/$locationType/$locationId.xml";
         $user = $this->config->api_user;
         $pass = $this->config->api_pass;
@@ -196,11 +206,27 @@ class UpdateWeatherCommand extends Console\Command\Command
             $parameters['end'] = $end;
         }
 
-        $client = new \Zend_Http_Client($url, array('timeout', 30));
+        $client = new \Zend_Http_Client($url, array(
+            'timeout' => 30,
+            'keepalive' => true));
         $client->setMethod(\Zend_Http_Client::GET);
         $client->setAuth($user,$pass, \Zend_Http_Client::AUTH_BASIC);
         $client->setParameterGet($parameters);
-        $body = $client->request()->getBody();
+        try 
+        {
+            $body = $client->request()->getBody();
+        } 
+        catch (Zend_Http_Client_Adapter_Exception $e)
+        {
+            // check if this was a timeout, if so retry
+            // otherwise fail
+            print "Exception caught:<br>";
+            print "Code: ".$e->getCode()."<br>";
+            print "Message: ".$e->getMessage()."<br>";
+            print "Error thrown on Line: ".$e->getLine()."<br>";
+            print "Trace: <br>".$e->getTraceAsString."<br>";
+            return false;
+        }
 
         if ($body) {
             return simplexml_load_string($body);
@@ -339,8 +365,8 @@ class UpdateWeatherCommand extends Console\Command\Command
         foreach ($xml->content as $regions) {
             foreach ($regions as $key => $record) {
                 $locationId = $record->mexs_id;
-                //$locationName = empty($record->description) ? $record->name : $record->description;
-                $locationName = $record->water;
+                $locationName = $record->water . ", " . $record->name;
+                $description = empty($record->description) ? $regionName : $record->description;
 
                 // save slope data for every hour
                 for ($hour = 0; $hour <= 23; $hour++) {
@@ -357,6 +383,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                         'location_name' => (string)$locationName,
                         'location_list' => (string)$locationList,
                         'region_name' => (string)$regionName,
+                        'description' => (string)$description,
                         'hour' => $hour,
                         'water_temp' => $record->measurements->measurement->water_temp,
                     );

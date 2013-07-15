@@ -48,6 +48,9 @@ class WeatherStatRepository extends EntityRepository
             ->setStatDate($values['stat_date'])
             ->setTimeUpdated(new \DateTime);
 
+        if (isset($values['description'])) {
+            $entity->setDescription($values['description']);
+        }
         if (isset($values['symbol'])) {
             $entity->setSymbol($values['symbol']);
         }

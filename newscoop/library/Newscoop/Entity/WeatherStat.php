@@ -53,6 +53,12 @@ class WeatherStat extends Entity
     private $regionName;
 
     /**
+     * @Column(name="description", nullable=True)
+     * @Var string 
+     */
+    private $description;
+
+    /**
      * @Column(type="integer", name="hour", nullable=True)
      * @Var int 
      */
@@ -186,6 +192,14 @@ class WeatherStat extends Entity
     public function getRegionName()
     {
         return $this->regionName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**
@@ -385,6 +399,18 @@ class WeatherStat extends Entity
     public function setRegionName($regionName)
     {
         $this->regionName = $regionName;
+        return $this;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Newscoop\Entity\WeatherStat
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 
