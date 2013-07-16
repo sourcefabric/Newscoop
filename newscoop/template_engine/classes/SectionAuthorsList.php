@@ -34,23 +34,26 @@ class SectionAuthorsList extends ListObject
 
         $query = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('DISTINCT u.id')
-            ->leftJoin('a.creator', 'u');
+            ->select('DISTINCT au.id')
+            ->leftJoin('a.creator', 'u')
+            ->leftJoin('u.author', 'au');
 
         foreach($this->m_constraints as $comparison) {
             $query->andWhere('a.'.$comparison->getLeftOperand().' = :'.$comparison->getLeftOperand().'');
             $query->setParameter($comparison->getLeftOperand(), $comparison->getRightOperand());
         }
 
-        $articleAuthorsList = $query->getQuery()->getArrayResult();
+        $sectionAuthorsList = $query->getQuery()->getArrayResult();
+
+
 
         $metaAuthorsList = array();
-        foreach ($articleAuthorsList as $author) {
+        foreach ($sectionAuthorsList as $author) {
             if ($author['id']) {
+                $MetaAuthor = new MetaAuthor($author['id'], null);
                 $metaAuthorsList[] = new MetaAuthor($author['id'], null);
             }
         }
-
         return $metaAuthorsList;
     }
 
@@ -81,7 +84,7 @@ class SectionAuthorsList extends ListObject
             switch ($state) {
             case 1: // reading the order field
                 if (array_search(strtolower($word), self::$s_orderFields) === false) {
-                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_article_authors, order parameter");
+                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_section_authors, order parameter");
                 } else {
                     $orderField = $word;
                     $state = 2;
@@ -91,14 +94,14 @@ class SectionAuthorsList extends ListObject
                 if (MetaOrder::IsValid($word)) {
                     $order[] = array('field'=>$orderField, 'dir'=>$word);
                 } else {
-                    CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_article_authors, order parameter");
+                    CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_section_authors, order parameter");
                 }
                 $state = 1;
                 break;
             }
         }
         if ($state != 1) {
-            CampTemplate::singleton()->trigger_error('unexpected end of order parameter in list_article_authors');
+            CampTemplate::singleton()->trigger_error('unexpected end of order parameter in list_section_authors');
         }
         return $order;
     }
@@ -139,12 +142,12 @@ class SectionAuthorsList extends ListObject
         $operator = new Operator('is', 'integer');
         $context = CampTemplate::singleton()->context();
         if (!$context->section->defined) {
-            CampTemplate::singleton()->trigger_error("undefined environment attribute 'Section' in statement list_article_authors");
+            CampTemplate::singleton()->trigger_error("undefined environment attribute 'Section' in statement list_section_authors");
             return array();
         }
         $this->m_constraints[] = new ComparisonOperation('section', $operator, $context->section->number);
         if (!$context->language->defined) {
-            CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_article_authors");
+            CampTemplate::singleton()->trigger_error("undefined environment attribute 'Language' in statement list_section_authors");
             return array();
         }
         $this->m_constraints[] = new ComparisonOperation('language', $operator, $context->language->number);

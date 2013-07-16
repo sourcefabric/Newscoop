@@ -29,7 +29,7 @@ function smarty_block_list_section_authors($p_params, $p_content, &$p_smarty, &$
         $start = $context->next_list_start('SectionAuthorsList');
         $sectionAuthorsList = new SectionAuthorsList($start, $p_params);
         
-        if ($sectionAuthorsList->isEmpty()) {
+        if ($sectionAuthorsList->isEmpty()) {error_log('current_before before');
             $context->setCurrentList($sectionAuthorsList, array());
             $context->resetCurrentList();
             $p_repeat = false;
