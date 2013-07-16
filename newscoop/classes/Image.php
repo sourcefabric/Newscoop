@@ -727,6 +727,9 @@ class Image extends DatabaseObject
 	public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
 	                                   $p_keepRatio = true, $type = IMAGETYPE_JPEG)
 	{
+        if (!isset($p_image) || empty($p_image)) {
+            return new PEAR_Error('The image resource handler is not available.');
+        }
         require_once APPLICATION_PATH . '/../library/Nette/Image.php';
 
 		$origImageWidth = imagesx($p_image);
