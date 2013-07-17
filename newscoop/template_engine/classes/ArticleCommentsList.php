@@ -186,7 +186,7 @@ class ArticleCommentsList extends ListObject
             $this->m_constraints['language'] = $context->language->number;
         }
 
-        if ($parameters['recommended']) {
+        if (array_key_exists('recommended', $parameters)) {
 			if ($parameters['recommended'] == 'true') $this->m_constraints['recommended'] = 1;
 			if ($parameters['recommended'] == 'false') $this->m_constraints['recommended'] = 0;
 		}

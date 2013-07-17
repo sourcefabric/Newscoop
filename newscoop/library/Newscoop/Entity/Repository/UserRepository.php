@@ -358,7 +358,7 @@ class UserRepository extends EntityRepository
         for($i=0; $i < count($keywords); $i++) {
             $innerOr = $qb->expr()->orx();
             for ($j=0; $j < count($attributes); $j++) {
-                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'$keywords[$i]'"));
+                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'$keywords[$i]%'"));
             }
             $outerAnd->add($innerOr);
         }

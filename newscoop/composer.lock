@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "c5426a6069a99091b01a6a08d78a0ecb",
+    "hash": "5e5573d7379042219a70008af2a666e2",
     "packages": [
         {
             "name": "behat/behat",
@@ -79,7 +79,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/CommonContexts/zipball/dbcd56d46277563690b60c49e94e0b1c0bf114a0",
+                "url": "https://api.github.com/repos/Behat/CommonContexts/zipball/cb2da81067f3298a1426998ffd7791cb7329e97e",
                 "reference": "b9f0dc44d415e94a03152ca6413c89e21889ab56",
                 "shasum": ""
             },
@@ -95,6 +95,11 @@
                 "kriswallsmith/buzz": ">=0.5.0"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Behat\\CommonContexts": ""
@@ -135,7 +140,7 @@
                 "Context",
                 "Symfony2"
             ],
-            "time": "2013-03-07 16:08:49"
+            "time": "2013-06-20 09:38:27"
         },
         {
             "name": "behat/gherkin",
@@ -1044,7 +1049,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1091,9 +1096,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1207,7 +1212,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1406,7 +1411,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/bc4c8ddf89c1daba6d24d696e261e088677f49af",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/66d2fe197bacb82f7b476099144f03596719b24d",
                 "reference": "ab2ca25",
                 "shasum": ""
             },
@@ -1461,7 +1466,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-03-14 09:30:30"
+            "time": "2013-06-10 06:27:25"
         },
         {
             "name": "knplabs/knp-components",
@@ -1699,18 +1704,17 @@
             "target-dir": "NoiseLabs/Bundle/SmartyBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/noiselabs/SmartyBundle.git",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+                "url": "https://github.com/terwey/SmartyBundle.git",
+                "reference": "59519bab1093e783b904c5cbb98347be486e25db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/noiselabs/SmartyBundle/zipball/a605ae7cd1abd6005fc0a5bcebb87366f7a0c73d",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+                "url": "https://api.github.com/repos/terwey/SmartyBundle/zipball/59519bab1093e783b904c5cbb98347be486e25db",
+                "reference": "59519bab1093e783b904c5cbb98347be486e25db",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "smarty/smarty": "3.1.*@stable",
                 "symfony/framework-bundle": ">=2.1.0"
             },
             "require-dev": {
@@ -1736,7 +1740,6 @@
                     "NoiseLabs\\Bundle\\SmartyBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
@@ -1759,7 +1762,12 @@
                 "symfony",
                 "templating"
             ],
-            "time": "2013-02-20 01:13:38"
+            "support": {
+                "irc": "irc://irc.freenode.org/noiselabs",
+                "issues": "https://github.com/noiselabs/SmartyBundle/issues",
+                "source": "https://github.com/terwey/SmartyBundle/tree/master"
+            },
+            "time": "2013-06-24 14:20:55"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -1795,7 +1803,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1947,12 +1955,12 @@
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensio/SensioDistributionBundle.git",
+                "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
                 "reference": "v2.3.0-BETA1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.0-BETA1",
                 "reference": "v2.3.0-BETA1",
                 "shasum": ""
             },
@@ -2084,46 +2092,19 @@
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
-            "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
-            },
-            "require": {
-                "php": ">=5.2"
+            "version": "3.0.9",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.smarty.net/files/Smarty-3.0.9.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "libs/"
                 ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Monte Ohrt",
-                    "email": "monte@ohrt.com"
-                },
-                {
-                    "name": "Uwe Tews",
-                    "email": "uwe.tews@googlemail.com"
-                },
-                {
-                    "name": "Rodney Rehm",
-                    "email": "rodney.rehm@medialize.de"
-                }
-            ],
-            "description": "Smarty - the compiling PHP template engine",
-            "homepage": "http://www.smarty.net",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2013-01-26 12:03:52"
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
