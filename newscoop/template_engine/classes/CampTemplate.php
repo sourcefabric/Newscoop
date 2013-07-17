@@ -89,6 +89,9 @@ final class CampTemplate extends Smarty
             $this->assign('view', $GLOBALS['controller']->view);
         }
 
+        $this->assign('userindex', false);
+        $this->assign('user', new MetaUser());
+
         // fix for "filemtime(): stat failed"
         //$this->unmuteExpectedErrors();
     }
