@@ -41,15 +41,19 @@ class SectionAuthorsList extends ListObject
             $query->setParameter($comparison->getLeftOperand(), $comparison->getRightOperand());
         }
 
-        $sectionAuthorsList = $query->getQuery()->getArrayResult();
+        if (array_key_exists('order', $p_parameters)) {
+            $orderOptions = explode(' ', $p_parameters['order']);
+            $query->orderBy('au.'.str_replace('by', '', $orderOptions[0]), $orderOptions[1]);
+        }
 
+        $sectionAuthorsList = $query->getQuery()->getArrayResult();
         $metaAuthorsList = array();
         foreach ($sectionAuthorsList as $author) {
             if ($author['id']) {
-                $MetaAuthor = new MetaAuthor($author['id'], null);
                 $metaAuthorsList[] = new MetaAuthor($author['id'], null);
             }
         }
+
         return $metaAuthorsList;
     }
 
