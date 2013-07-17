@@ -13,7 +13,7 @@
 /**
  * Class CampTemplate
  */
-final class CampTemplate extends SmartyBC
+final class CampTemplate extends Smarty
 {
     const PLUGINS = '/../include/smarty/campsite_plugins';
     const SCRIPTS = '/views/scripts';
@@ -93,7 +93,7 @@ final class CampTemplate extends SmartyBC
         $this->assign('user', new MetaUser());
 
         // fix for "filemtime(): stat failed"
-        $this->unmuteExpectedErrors();
+        //$this->unmuteExpectedErrors();
     }
 
     /**
