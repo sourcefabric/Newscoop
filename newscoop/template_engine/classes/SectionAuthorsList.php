@@ -30,8 +30,6 @@ class SectionAuthorsList extends ListObject
     {
         $em = \Zend_Registry::get('container')->get('em');
 
-        //echo '<pre>'; print_r($p_limit);die;
-
         $query = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->select('DISTINCT au.id')
@@ -44,8 +42,6 @@ class SectionAuthorsList extends ListObject
         }
 
         $sectionAuthorsList = $query->getQuery()->getArrayResult();
-
-
 
         $metaAuthorsList = array();
         foreach ($sectionAuthorsList as $author) {
