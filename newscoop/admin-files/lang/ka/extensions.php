@@ -1,4 +1,7 @@
 <?php 
+regGS("Loading...", "");
+regGS("Latest 20 articles by popularity", "");
+regGS("Articles diagrams", "");
 regGS("Sourcefabric.org blog reader", "Sourcefabric.org ბლოგის მკითხველი ");
 regGS("Sourcefabric.org News reader", "Sourcefabric.org ახალი ამბების მკითხველი ");
 regGS("Feed reader", "არხის მკითხველი ");

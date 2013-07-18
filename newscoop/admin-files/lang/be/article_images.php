@@ -1,4 +1,5 @@
 <?php 
+regGS("Display newsfeed images", "");
 regGS("Mark image", "Адзначыць выяву");
 regGS("Add selected images to slideshow", "Дадаць выбраныя выявы ў слайд-шоў");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "На жаль, гэта выява занадта малая. Памер малюнкаў павінен быць па меншай меры %dx%d.");
@@ -76,5 +77,4 @@ regGS("Unlink", "Адвязаць");
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкулу.");
 regGS("Are you sure you want to delete the image \'$1\'?", "Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл \'$1\'?");
 regGS("Click one of the ", "");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл \\'$1\\'?");
 ?>

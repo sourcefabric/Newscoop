@@ -1,4 +1,6 @@
 <?php 
+regGS("No thumbnails were fixed.", "");
+regGS("Missing thumbnails fixed.", "");
 regGS("Slideshows", "Слайд-шоў");
 regGS("You can't update used files.", "Вы не можаце абнавіць выкарыстаныя файлы.");
 regGS("Source", "Крыніца");

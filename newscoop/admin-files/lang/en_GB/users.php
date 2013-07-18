@@ -1,11 +1,20 @@
 <?php 
+regGS("send confirmation email", "");
+regGS("edit user", "");
+regGS("delete user", "");
+regGS("Verified profile", "");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "");
+regGS("Send email to user:", "");
+regGS("No users found.", "");
+regGS("No records found.", "");
+regGS("No entries to show", "");
+regGS("Display _MENU_ records", "");
+regGS("Are you sure you want to {action}?", "");
+regGS("Active Logins", "");
+regGS(" - filtering from _MAX_ records", "");
 regGS("User renamed.", "User renamed.");
 regGS("User attributes", "User attributes");
 regGS("Rename user '$1'", "Rename user '$1'");
-regGS("Pending", "Pending");
-regGS("Inactive", "Inactive");
-regGS("Do you really want to send confirmation email?", "Do you really want to send confirmation email?");
-regGS("Do you really want to delete user?", "Do you really want to delete user?");
 regGS("Username is used already", "Username is used already");
 regGS("User with id '$1' not found", "User with id '$1' not found");
 regGS("User was deleted.", "User was deleted.");

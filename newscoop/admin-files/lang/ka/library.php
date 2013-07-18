@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "ახალი ამბების სააგენტოების სტატიების ჩვენება");
-regGS("Display Newswires", "ახალი ამბების სააგენტოების ჩვენება");
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "ქსელური კოდი");
 regGS("View article", "სტატიის ნახვა");
 regGS("Source", "წყარო");
