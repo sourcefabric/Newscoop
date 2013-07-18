@@ -1,5 +1,5 @@
 <?php 
-regGS("MailChimp Settings", "");
+regGS("MailChimp Settings", "Налады MailChimp");
 regGS("List Unique Id:", "");
 regGS("Facebook Settings", "");
 regGS("App Secret:", "");

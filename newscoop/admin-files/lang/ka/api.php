@@ -14,7 +14,7 @@ regGS("Open large map", "გახსენით დიდი რუკა");
 regGS("No news available.", "ახალი ამბები არ არის.");
 regGS("Edit Polygon", "პოლიგონის რედაქტირება");
 regGS("Create Polygon", "პოლიგონის შექმნა");
-regGS("Communication error: ", "კომუნიკაციის შეცდომა:");
+regGS("Communication error: ", "კომუნიკაციის ხარვეზი:");
 regGS("Can't fetch news from '$1'", "'$1'-დან ნიუსი არ მოდის");
 regGS("Loading...", "იტვირთება...");
 regGS("Version", "ვერსია");

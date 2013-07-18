@@ -1,6 +1,6 @@
 <?php 
 regGS("MailChimp Settings", "Настройки MailChimp");
-regGS("List Unique Id:", "Перечислить уникальный Id:");
+regGS("List Unique Id:", "Список уникальных Id:");
 regGS("Facebook Settings", "Настройки Facebook");
 regGS("App Secret:", "App Secret:");
 regGS("App ID:", "APP ID: ");

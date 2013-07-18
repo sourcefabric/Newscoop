@@ -4,7 +4,7 @@ regGS("Edit and translate human-readable field names", "ადამიანი
 regGS("The template name may only contain letters and the underscore (_) character.", "შაბლონის სახელი უნდა შეიცავდეს მხოლოდ ასოებსა და \"_\" ქვედა ტირეს ");
 regGS("Rename article type '$1'", "შეცვალეთ '$1' ტიპის სტატიის სახელი");
 regGS("Invalid article type '$1'.", "'$1' არასწორი სტატიის ტიპი");
-regGS("You cannot merge the same type into itself.", "ერთი და იგივე ტიპის შეერთება შეუძლებელია");
+regGS("You cannot merge the same type into itself.", "ერთი და იგივე ტიპის მის თავთან შეერთება შეუძლებელია.");
 regGS("View the source ($1) version of $2", "$2-ის ($2) საწყისი ვერსიის ჩვენება");
 regGS("View of original ($1) $2", "ორიგინალის ჩვენება ($1) $2");
 regGS("To return to the preview click here", "გადახედვაზე დასაბრუნებლად დააჭირეთ აქ");

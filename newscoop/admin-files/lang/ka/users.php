@@ -146,14 +146,14 @@ regGS("User may insert horizontal rules", "მომხმარებელს 
 regGS("User may change the font color", "მომხმარებელს შეუძია ფონტის შრიფტის შეცვლა");
 regGS("User may use superscripts", "მომხმარებელს შეუძლია ზედა ინდექსის გამოყენება");
 regGS("User may use subscripts", "მომხმარებელს შეუძლია ქვედა ინდექსის გამოყენება");
-regGS("User may backup and restore the site data", "მომხმარებელს შეუძლია საიტის მასალის ბექაფი და აღდგენა");
+regGS("User may backup and restore the site data", "მომხმარებელს შეუძლია საიტის მასალის დარეზერვება და აღდგენა");
 regGS("Miscellaneous", "სხვადასხვა");
 regGS("Staff/Subscribers Management", "შტატის/გამომწერების მართვა");
 regGS("Editor Basic Settings", "რედაქტორის პარამეტრები");
 regGS("Editor Advanced Font Settings", "რედაქტორის შრიფტის პარამეტრები");
 regGS("Editor Table Settings", "რედაქტორის ცხრილების პარამეტრები");
 regGS("Administrative tasks", "ადმინისტრაციული დავალებები");
-regGS("User will be notified on several events", "მომხმარებელი ივენთების დროს მიიღებს შეტყობინება");
+regGS("User will be notified on several events", "მომხმარებელი რამდენიმე მოვლენების დროს მიიღებს შეტყობინება");
 regGS("Editor Miscellaneous Settings", "რედაქტორის სხვადასხვა პარამეტრები");
 regGS("No such user account.", "ასეთი მომხმარებელი არ არსებობს.");
 regGS("Street address", "ქუჩის მისამართი");
