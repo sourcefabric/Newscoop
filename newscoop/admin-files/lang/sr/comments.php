@@ -1,4 +1,5 @@
 <?php 
+regGS("No atachment", "");
 regGS("at", "");
 regGS("With no attachment", "");
 regGS("With image attachment", "");
@@ -12,7 +13,6 @@ regGS("Reply", "");
 regGS("Processed", "");
 regGS("No records found.", "");
 regGS("No entries to show", "");
-regGS("No atachment", "");
 regGS("Messages updated.", "");
 regGS("Messages status change to $1.", "");
 regGS("Messages deleted.", "");

@@ -1,6 +1,6 @@
 <?php 
-regGS("Display articles of filtered types", "");
-regGS("Display Articles of Filtered Types", "");
+regGS("Display articles of filtered types", "Display articles of filtered types");
+regGS("Display Articles of Filtered Types", "Display Articles of Filtered Types");
 regGS("Webcode", "Webcode");
 regGS("View article", "View article");
 regGS("Source", "Source");

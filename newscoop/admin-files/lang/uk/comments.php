@@ -1,4 +1,5 @@
 <?php 
+regGS("No atachment", "");
 regGS("at", "на");
 regGS("With no attachment", "При відсутності вкладень");
 regGS("With image attachment", "З зображенням у прікріпленні");
@@ -12,7 +13,6 @@ regGS("Reply", "Відповідь");
 regGS("Processed", "Оброблено");
 regGS("No records found.", "");
 regGS("No entries to show", "");
-regGS("No atachment", "Немає прікріплень");
 regGS("Messages updated.", "Повідомлення оновлено.");
 regGS("Messages status change to $1.", "Статус повідомленнь змінено на $1.");
 regGS("Messages deleted.", "Повідомлення видалені.");

@@ -1,7 +1,7 @@
 <?php 
-regGS("You are about to permanently delete multiple messages.", "");
-regGS("You are about to permanently delete a message.", "");
-regGS("Are you sure you want to do it?", "");
+regGS("You are about to permanently delete multiple messages.", "You are about to permanently delete multiple messages.");
+regGS("You are about to permanently delete a message.", "You are about to permanently delete a message.");
+regGS("Are you sure you want to do it?", "Are you sure you want to do it?");
 regGS("Approve", "Approve");
 regGS("Approved.", "Approved.");
 regGS("at", "at");

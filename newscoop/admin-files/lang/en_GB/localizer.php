@@ -1,5 +1,5 @@
 <?php 
-regGS("Help", "");
+regGS("Help", "Help");
 regGS("Support", "Support");
 regGS("Themes", "Themes");
 regGS("Area to localize", "Area to localize");
