@@ -35,7 +35,7 @@ class MeteonewsController extends Zend_Controller_Action
         $pass = $this->config->api_pass;
 
         $fOpts = array(
-            'lifetime' => 14400,
+            'lifetime' => 300,
         );
 
         $bOpts = array(

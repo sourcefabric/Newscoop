@@ -58,7 +58,7 @@ class UpdateWeatherCommand extends Console\Command\Command
         );
 
         $summerLists = array(
-            'teaser_regions'
+            //'teaser_regions'
         );
 
         // get data for geonames ids
@@ -176,7 +176,7 @@ class UpdateWeatherCommand extends Console\Command\Command
             $locationType = 'mexs';
             $start = date('Y-m-d');
             $end = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 4, date('Y')));
-            $data = $this->getApiData('forecasts',$locationType,$location->id,'3h',$start,$end);
+            $data = $this->getApiData('forecasts',$locationType,$location->id,'1h',$start,$end);
             if ($data) {
                 $this->saveForecastData($data,
                     $location->id,
@@ -218,14 +218,22 @@ class UpdateWeatherCommand extends Console\Command\Command
         } 
         catch (Zend_Http_Client_Adapter_Exception $e)
         {
-            // check if this was a timeout, if so retry
-            // otherwise fail
-            print "Exception caught:<br>";
-            print "Code: ".$e->getCode()."<br>";
-            print "Message: ".$e->getMessage()."<br>";
-            print "Error thrown on Line: ".$e->getLine()."<br>";
-            print "Trace: <br>".$e->getTraceAsString."<br>";
-            return false;
+            // wait and try again (accomodate meteonews timeouts)
+            print "Request Failed: " . $e->getMessage().". Retrying in 10 seconds\n";
+            sleep(10);
+            try {
+                $body = $client->request()->getBody();
+            } 
+            // really fail next time
+            catch (Zend_Http_Client_Adapter_Exception $e)
+            {
+                print "Exception caught:\n";
+                print "Code: ".$e->getCode()."\n";
+                print "Message: ".$e->getMessage()."\n";
+                print "Error thrown on Line: ".$e->getLine()."\n";
+                print "Trace: <br>".$e->getTraceAsString."\n";
+                return false;
+            }
         }
 
         if ($body) {
@@ -266,7 +274,7 @@ class UpdateWeatherCommand extends Console\Command\Command
 		            'stat_date' =>  new \DateTime($date),
                     'hour' => (int)$hour,
                     'symbol' => (int)($record->symb) ? $record->symb : 0,
-                    'temperature' => (int)($record->temp) ? $record->temp : 0,
+                    'temperature' => (int)($record->temp_avg) ? $record->temp_avg : 0,
                     'temperature_min' => (int)($record->temp_min) ? $record->temp_min : 0,
                     'temperature_max' => (int)($record->temp_max) ? $record->temp_max : 0,
                     'precip' => (int)($record->precip) ? $record->precip : 0,
