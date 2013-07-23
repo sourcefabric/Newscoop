@@ -33,8 +33,7 @@ class SectionAuthorsList extends ListObject
         $query = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->select('DISTINCT au.id')
-            ->leftJoin('a.creator', 'u')
-            ->leftJoin('u.author', 'au');
+            ->leftJoin('a.authors', 'au');
 
         foreach($this->m_constraints as $comparison) {
             $query->andWhere('a.'.$comparison->getLeftOperand().' = :'.$comparison->getLeftOperand().'');
