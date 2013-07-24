@@ -77,7 +77,7 @@ abstract class BaseList
      *
      * @var Criteria
      */
-    protected $critera
+    protected $critera;
 
 
     /**

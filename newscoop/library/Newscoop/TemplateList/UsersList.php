@@ -18,5 +18,9 @@ use Newscoop\ListResult;
 class UsersList extends BaseList 
 {
 
+    protected function getList($firstResult, $maxResults, Criteria $criteria)
+    {
+
+    }
 
 }
