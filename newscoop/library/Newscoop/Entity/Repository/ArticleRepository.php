@@ -135,21 +135,21 @@ class ArticleRepository extends DatatableSource
         return $query;
     }
 
-    public function getArticlesForSection($publication, $sectionId)
+    public function getArticlesForSection($publication, $sectionNumber)
     {
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->select('a')
-            ->where('a.section = :sectionId')
-            ->setParameter('sectionId', $sectionId);
+            ->where('a.section = :sectionNumber')
+            ->setParameter('sectionNumber', $sectionNumber);
 
         $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->select('count(a)')
-            ->where('a.section = :sectionId')
-            ->setParameter('sectionId', $sectionId);
+            ->where('a.section = :sectionNumber')
+            ->setParameter('sectionNumber', $sectionNumber);
 
         $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 

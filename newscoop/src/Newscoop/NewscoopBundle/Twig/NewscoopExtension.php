@@ -60,6 +60,8 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getGS', array($this, 'getGS')),
             new \Twig_SimpleFunction('strpos', 'strpos'),
             new \Twig_SimpleFunction('getBreadcrumbsArray', array($this, 'getBreadcrumbsArray')),
+            new \Twig_SimpleFunction('getReCaptchaImage', array($this, 'getReCaptchaImage')),
+            new \Twig_SimpleFunction('getSystemPref', '\SystemPref::Get'),
         );
     }
 
@@ -74,6 +76,20 @@ class NewscoopExtension extends \Twig_Extension
     public function getBreadcrumbsArray($currentMenuItem) {
         $manipulator = new \Knp\Menu\Util\MenuManipulator();
         return $manipulator->getBreadcrumbsArray($currentMenuItem);
+    }
+
+    public function getReCaptchaImage()
+    {
+        $fontsDirectory = __DIR__.'/../../../../include/captcha/';
+        $aFonts = array(
+            $fontsDirectory.'fonts/VeraBd.ttf', 
+            $fontsDirectory.'fonts/VeraIt.ttf', 
+            $fontsDirectory.'fonts/Vera.ttf'
+        );
+        $oVisualCaptcha = new \PhpCaptcha($aFonts, 200, 60);
+        $oVisualCaptcha->Create(__DIR__.'/../../../../images/cache/recaptcha.png');
+
+        return '/images/cache/recaptcha.png';
     }
 
     public function getName()

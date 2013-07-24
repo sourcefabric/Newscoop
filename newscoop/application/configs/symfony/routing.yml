@@ -1,3 +1,10 @@
+admin_login:
+    pattern:   /admin/login
+    defaults:  { _controller: NewscoopNewscoopBundle:Security:login }
+admin_login_check:
+    pattern:   /admin/example_plugin/login_check
+admin_logout:
+    pattern:   /admin/example_plugin/logout
 gimme:
     type: rest
     prefix: /api

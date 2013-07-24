@@ -51,8 +51,7 @@ class UserService
     {
         if ($this->currentUser === NULL) {
             if ($this->auth->hasIdentity()) {
-                $this->currentUser = $this->getRepository()
-                    ->find($this->auth->getIdentity());
+                $this->currentUser = $this->getRepository()->find($this->auth->getIdentity());
             }
         }
 
@@ -67,8 +66,7 @@ class UserService
      */
     public function find($id)
     {
-        return $this->getRepository()
-            ->find($id);
+        return $this->getRepository()->find($id);
     }
 
     /**
@@ -92,8 +90,7 @@ class UserService
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->getRepository()
-            ->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->getRepository()->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -144,8 +141,7 @@ class UserService
      */
     public function findOneBy(array $criteria)
     {
-        return $this->getRepository()
-            ->findOneBy($criteria);
+        return $this->getRepository()->findOneBy($criteria);
     }
 
     /**
@@ -171,6 +167,7 @@ class UserService
 
         $this->getRepository()->save($user, $data);
         $this->em->flush();
+
         return $user;
     }
 
@@ -281,6 +278,7 @@ class UserService
 
         $this->em->persist($user);
         $this->em->flush();
+
         return $user;
     }
 
@@ -300,6 +298,8 @@ class UserService
         $user->setActive();
         $user->setPublic(true);
         $this->save($data, $user);
+
+        return $this;
     }
 
     /**

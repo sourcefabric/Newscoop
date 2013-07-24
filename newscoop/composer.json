@@ -13,20 +13,21 @@
         
     ],
     "require":{
-        "php":">=5.3.0",
-        "symfony/symfony":"2.2.*",
-        "doctrine/orm": "2.2.*",
-        "doctrine/doctrine-bundle":"1.2.*",
-        "symfony/swiftmailer-bundle":"2.2.*",
-        "symfony/monolog-bundle":"2.2.*",
-        "sensio/distribution-bundle":"2.2.*",
-        "sensio/framework-extra-bundle":"2.2.*",
-        "sensio/generator-bundle":"2.2.*",
-        "jms/security-extra-bundle":"1.4.*",
-        "jms/di-extra-bundle":"1.3.*",
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.3.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "1.2.*",
+        "twig/extensions": "1.0.*",
+        "symfony/assetic-bundle": "2.3.*",
+        "symfony/swiftmailer-bundle": "2.3.*",
+        "symfony/monolog-bundle": "2.3.*",
+        "sensio/distribution-bundle": "2.3.*",
+        "sensio/framework-extra-bundle": "2.3.*",
+        "sensio/generator-bundle": "2.3.*",
+        "incenteev/composer-parameter-handler": "~2.0",
         "bombayworks/zendframework1":"1.11.*",
         "smarty/smarty":"3.1.13",
-        "friendsofsymfony/rest-bundle":"0.12.0",
+        "friendsofsymfony/rest-bundle": "0.13.*@dev",
         "behat/behat":">=2.4.0",
         "behat/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
         "kriswallsmith/buzz":">=0.7",
@@ -36,8 +37,9 @@
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
         "noiselabs/smarty-bundle":"dev-master#c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
-        "knplabs/knp-menu-bundle": "dev-master",
-        "raulfraile/ladybug-bundle": "dev-master"
+        "knplabs/knp-menu-bundle": "2.0.*@dev",
+        "knplabs/knp-menu": "2.0.*@dev",
+        "raulfraile/ladybug-bundle": "dev-ladybug_v1.0"
     },
     "require-dev":{
         "phpunit/phpunit":"3.7.*"
@@ -83,6 +85,6 @@
         "symfony-web-dir":"public"
     },
     "branch-alias":{
-        "dev-master":"2.2-dev"
+        "dev-master":"2.3-dev"
     }
 }
