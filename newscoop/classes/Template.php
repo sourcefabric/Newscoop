@@ -1,6 +1,7 @@
 <?php
 require_once('DatabaseObject.php');
 require_once('DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 
 /**
  * @Annotation()

@@ -322,27 +322,6 @@ final class CampContext
         $this->m_properties['map_dynamic_id_counter'] = 0;
         $this->m_properties['map_common_header_set'] = false;
 
-        if (defined('APPLICATION_PATH')) {
-            $container = \Zend_Registry::get('container');
-
-            $form = new \Application_Form_Contact();
-            $form->setMethod('POST');
-            if (CampRequest::GetMethod() === "POST" && $form->isValid(CampRequest::GetInput('POST'))) {
-                $email = new \Zend_Mail('utf-8');
-                $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
-                    ->setSubject($form->subject->getValue())
-                    ->setBodyText($form->message->getValue())
-                    ->addTo(\SystemPref::Get("EmailContact"))
-                    ->send();
-
-                $controller->getHelper('flashMessenger')->addMessage("form_contact_done");
-                $controller->getHelper('redirector')->gotoUrl(CampRequest::GetVar('path_info'));
-                exit;
-            }
-
-            $this->form_contact = $form;
-        }
-
         $flashMessenger = new \Newscoop\Controller\Helper\FlashMessenger();
         $this->flash_messages = $flashMessenger->getMessages();
     } // fn __construct

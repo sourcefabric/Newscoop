@@ -52,6 +52,7 @@ if (-1 < $tinymce_start) {
 $Campsite['SUBDIR'] = substr($use_script_name, 0, strrpos($use_script_name, '/', -2));
 
 $ADMIN = empty($Campsite['SUBDIR']) ? 'admin' : substr($Campsite['SUBDIR'], 1) . '/admin';
+$Campsite['ADMIN'] = $ADMIN;
 $Campsite['WEBSITE_URL'] = $scheme.$Campsite['HOSTNAME'].$Campsite['SUBDIR'];
 unset($scheme);
 
