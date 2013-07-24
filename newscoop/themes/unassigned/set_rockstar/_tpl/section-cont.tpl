@@ -4,9 +4,13 @@
 
 {{ list_articles length="8" ignore_issue="true" constraints="type not poll" }}
 
-{{ if $gimme->current_list->at_beginning }}
-          <section class="grid-2">       
-{{ /if }}     
+  {{ if $gimme->current_list->at_beginning }}
+    {{ if $gimme->current_list->index lte 2 }}
+      <section class="grid-2">
+    {{ else }}
+      <section class="grid-3">
+    {{ /if }}
+  {{ /if }}
 
 {{ if $gimme->current_list->index lte 2 }}         
               <article>
