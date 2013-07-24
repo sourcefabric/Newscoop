@@ -6,7 +6,7 @@
 BUILDPATH=/tmp
 
 # Set the locales you want to convert
-LOCALES="ar at be bn cs de el es fr he hr hu it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
+LOCALES="ar be bn cs de de_AT el en en_GB es fr he hr hu it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
 
 cd ${BUILDPATH}/po/
 
@@ -28,20 +28,20 @@ if [ -d ${localization} ]; then
   sed -i '/<?php/!s/[ ]*$/);/g' ${localization}/*.po
   sed -i '$ a\?>' ${localization}/*.po
 
-  # Strip the final newline from the file
+  echo " Stripping the final newline from the file..."
 
   for i in ${localization}/*.po; do
    awk '{q=p;p=$0}NR>1{print q}END{ORS = ""; print p}' $i > $i.tmp
    rm $i
   done
 
-  # Give the changed files a .php extension
+  echo " Giving the changed files a .php extension..."
 
-  for i in ${localization}/*.po.tmp; do
-   mv "$i" "${i/.po.tmp}".php
+  for i in ${localization}/*.${localization}.po.tmp; do
+   mv "$i" "${i/.${localization}.po.tmp}".php
   done
 
-  # Check the syntax of the php files for errors
+  echo " Checking the syntax of the php files for errors..."
 
   for i in ${localization}/*.php; do
    php -l "$i"

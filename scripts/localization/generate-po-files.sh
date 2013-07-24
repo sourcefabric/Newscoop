@@ -9,7 +9,7 @@ BUILDPATH=/tmp
 GITPATH=newscoop/admin-files/lang/
 
 # Set the locales you want to convert
-LOCALES="ar at be bn cs de el en_GB es fr he hr hu it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
+LOCALES="ar be bn cs de de_AT el en en_GB es fr he hr hu it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
 
 echo "Cleaning up any previous builds..."
 
@@ -39,9 +39,9 @@ sed -i 's/", "/"\nmsgstr "/g' ${localization}/*.php
 sed -i 's/);/\n/g' ${localization}/*.php
 sed -i 's/?>//g' ${localization}/*.php
 
-# Give the changed files a .po extension
+echo " Giving the ${localization} files the .${localization}.po extension..."
 
-for i in ${localization}/*.php; do mv "$i" "${i/.php}".po; done
+for i in ${localization}/*.php; do mv "$i" "${i/.php}".${localization}.po; done
 
 }
 
