@@ -55,8 +55,8 @@ class WeatherStatList extends ListObject
             $criteria = array_merge($criteria, array( "hour" => $p_parameters['hour'] ));
         } else {
             // use current hour
-            $hour = date('G');
-            $criteria = array_merge($criteria, array( "hour" => $hour ));
+            //$hour = date('G');
+            $criteria = array_merge($criteria, array( "hour" => "0" ));
         }
         if (isset($p_parameters['stat_date']) && trim($p_parameters['stat_date'])!="") {
             $criteria = array_merge($criteria, array( "statDate" => new \DateTime($p_parameters['stat_date']) ));

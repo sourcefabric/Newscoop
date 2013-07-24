@@ -65,7 +65,7 @@ class UpdateWeatherCommand extends Console\Command\Command
         foreach ($geonamesLists as $list) {
             foreach ($config->$list as $location) {
                 $locationType = 'geonames';
-                $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
+                $data = $this->getApiData('forecasts',$locationType,$location->id,'24h');
                 if ($data) {
                     $this->saveForecastData($data,
                         $location->id,
@@ -86,7 +86,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                 $locationType = 'mexs';
 
                 // get forecast data
-                $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
+                $data = $this->getApiData('forecasts',$locationType,$location->id,'24h');
                 if ($data) {
                     $this->saveForecastData($data,
                         $location->id,
@@ -99,7 +99,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                     );
                 }
                 // get wintersports data
-                $data = $this->getApiData('wintersports',$locationType,$location->id,'1h');
+                $data = $this->getApiData('wintersports',$locationType,$location->id,'24h');
                 if ($data) {
                     $this->saveWintersportsData($data,
                         $location->id,
@@ -118,7 +118,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                 $locationType = 'mexs';
 
                 // get forecast data
-                $data = $this->getApiData('forecasts',$locationType,$location->id,'1h');
+                $data = $this->getApiData('forecasts',$locationType,$location->id,'24h');
                 if ($data) {
                     $this->saveForecastData($data,
                         $location->id,
@@ -136,7 +136,7 @@ class UpdateWeatherCommand extends Console\Command\Command
         // get data for all baths lists
         foreach ($config->main_regions as $location) {
             $locationType = 'geonames';
-            $bathData = $this->getApiData('waters',$locationType,$location->id,'1h');
+            $bathData = $this->getApiData('waters',$locationType,$location->id,'24h');
             // only needed suring winter months
             //$this->saveAllWintersportsData($slopeData,
             //    'mexs',
@@ -155,7 +155,7 @@ class UpdateWeatherCommand extends Console\Command\Command
                     $locationId = $record->mexs_id;
                     $locationName = $record->water . ", " . $record->name;
     
-                    $data = $this->getApiData('forecasts','mexs',$locationId,'1h');
+                    $data = $this->getApiData('forecasts','mexs',$locationId,'24h');
                     if ($data) {
                         $this->saveForecastData($data,
                             $locationId,
@@ -176,7 +176,7 @@ class UpdateWeatherCommand extends Console\Command\Command
             $locationType = 'mexs';
             $start = date('Y-m-d');
             $end = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + 4, date('Y')));
-            $data = $this->getApiData('forecasts',$locationType,$location->id,'1h',$start,$end);
+            $data = $this->getApiData('forecasts',$locationType,$location->id,'3h',$start,$end);
             if ($data) {
                 $this->saveForecastData($data,
                     $location->id,
