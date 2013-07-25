@@ -32,6 +32,9 @@ final class MetaAuthor extends MetaDbObject
         'user' => 'getUser',
         'has_url' => 'hasUrl',
         'url' => 'getUrl',
+        'aim' => 'getAim',
+        'skype' => 'getSkype',
+        'jabber' => 'getJabber'
     );
 
     /** @var AuthorBiography **/
@@ -60,6 +63,20 @@ final class MetaAuthor extends MetaDbObject
     	return $this->m_dbObject->getName($p_format);
     }
 
+    protected function getAim()
+    {
+        return $this->m_dbObject->getAim();
+    }
+
+    protected function getSkype()
+    {
+        return $this->m_dbObject->getSkype();
+    }
+
+    protected function getJabber()
+    {
+        return $this->m_dbObject->getJabber();
+    }
 
     protected function getBiography()
     {
@@ -67,6 +84,7 @@ final class MetaAuthor extends MetaDbObject
             $language = (int) CampTemplate::singleton()->context()->language->number;
             $this->m_biography = new MetaAuthorBiography($this->m_dbObject->getId(), $language);
         }
+        
         return $this->m_biography;
     }
 
