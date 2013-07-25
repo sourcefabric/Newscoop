@@ -75,7 +75,6 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
 
     if (array_key_exists('fqfrom', $cleanParam) && !empty($cleanParam['fqfrom'])) {
         $fromDate = date_create_from_format($cleanParam['fqdateformat'], $cleanParam['fqfrom']);
-        var_dump($fromDate);
         $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
     }
 

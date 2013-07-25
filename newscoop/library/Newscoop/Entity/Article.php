@@ -510,6 +510,16 @@ class Article
     }
 
     /**
+     * Test if article is published
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->workflowStatus === self::STATUS_PUBLISHED;
+    }
+
+    /**
      * Set indexed
      *
      * @return void
@@ -549,7 +559,7 @@ class Article
                 'language' => $this->language->getCode(),
                 'title' => $this->name,
                 'updated' => $this->updated,
-                'published' => $this->published,
+                'published' => $this->isPublished() ? $this->published : null,
                 'indexed' => $this->indexed,
                 'type' => $this->type,
                 'webcode' => $this->webcode ? (string) $this->webcode : null,
