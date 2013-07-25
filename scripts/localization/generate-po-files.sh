@@ -8,8 +8,14 @@ BUILDPATH=/tmp
 # Set the path to the Newscoop localization files
 GITPATH=newscoop/admin-files/lang/
 
+# Set the path to the Newscoop plugins
+PLUGINPATH=plugins/
+
 # Set the locales you want to convert
-LOCALES="ar at be bn cs de el en_GB es fr he hr it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
+LOCALES="ar be bn cs de de_AT el en en_GB es fr he hr hu it ka ko ku nl pl pt pt_BR ro ru sh sq sr sv uk zh zh_TW"
+
+# Set the plugins you want to convert
+PLUGINS="debate poll recaptcha soundcloud"
 
 echo "Cleaning up any previous builds..."
 
@@ -21,8 +27,14 @@ mkdir -p ${BUILDPATH}/po/
 
 echo "Copying the files to the temporary directory..."
 
-cd ${GITPATH}
-cp -r ${LOCALES} ${BUILDPATH}/po/
+for localization in ${LOCALES}; do
+cp -r ${GITPATH}${localization} ${BUILDPATH}/po/
+
+ for plugin in ${PLUGINS};
+ do cp -r ${PLUGINPATH}${plugin}/admin-files/lang/${localization}/plugin_${plugin}.php ${BUILDPATH}/po/${localization}/;
+ done
+
+done
 
 # Begin function that converts the files
 
@@ -39,9 +51,9 @@ sed -i 's/", "/"\nmsgstr "/g' ${localization}/*.php
 sed -i 's/);/\n/g' ${localization}/*.php
 sed -i 's/?>//g' ${localization}/*.php
 
-# Give the changed files a .po extension
+echo " Giving the ${localization} files the .${localization}.po extension..."
 
-for i in ${localization}/*.php; do mv "$i" "${i/.php}".po; done
+for i in ${localization}/*.php; do mv "$i" "${i/.php}".${localization}.po; done
 
 }
 
