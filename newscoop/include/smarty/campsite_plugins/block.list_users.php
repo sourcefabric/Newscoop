@@ -24,6 +24,8 @@ function smarty_block_list_users($params, $content, &$smarty, &$repeat)
     if (!isset($content)) { // init
         $start = $context->next_list_start('UsersList');
         $list = new UsersList($start, $params);
+        $newList = \Zend_Registry::get('container')->get('newscoop.template_lists.users');
+        $newList->getList($start, $params);
         if ($list->isEmpty()) {
             $context->setCurrentList($list, array());
             $context->resetCurrentList();

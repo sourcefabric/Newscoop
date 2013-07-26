@@ -44,6 +44,7 @@ class UsersList extends ListObject
      */
     protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
     {
+
         $criteria = new UserCriteria();
         $criteria->status = User::STATUS_ACTIVE;
         $criteria->is_public = true;
@@ -79,7 +80,7 @@ class UsersList extends ListObject
             }
         }
 
-        $service = $GLOBALS['controller']->getHelper('service')->getService('user.list');
+        $service = \Zend_Registry::get('container')->get('user.list');
         $list = $service->findByCriteria($criteria);
         $p_count = count($list);
 
@@ -154,6 +155,7 @@ class UsersList extends ListObject
                 case 'search':
                 case 'filter':
                 case 'editor_groups':
+                case 'constraints':
                 case 'page':
                 case 'order':
                     if ($parameter == 'length' || $parameter == 'columns') {

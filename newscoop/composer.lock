@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ee9e89c4d19d583d8791b70f4250618d",
+    "hash": "f297042c7d0ccdb5e6c5fc3dbdb7fc26",
     "packages": [
         {
             "name": "behat/behat",
@@ -463,12 +463,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "3db3ab843ff76774bee4679d4cb3a10cffb0a935"
+                "reference": "623caf42551b416460df786154d89bc50e3d1798"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/3db3ab843ff76774bee4679d4cb3a10cffb0a935",
-                "reference": "3db3ab843ff76774bee4679d4cb3a10cffb0a935",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/623caf42551b416460df786154d89bc50e3d1798",
+                "reference": "623caf42551b416460df786154d89bc50e3d1798",
                 "shasum": ""
             },
             "require": {
@@ -522,7 +522,7 @@
                 "collections",
                 "iterator"
             ],
-            "time": "2013-05-26 05:21:22"
+            "time": "2013-07-23 08:27:26"
         },
         {
             "name": "doctrine/common",
@@ -927,18 +927,72 @@
             "time": "2013-06-30 08:43:27"
         },
         {
+            "name": "friendsofsymfony/jsrouting-bundle",
+            "version": "1.2.0",
+            "target-dir": "FOS/JsRoutingBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git",
+                "reference": "1.2.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSJsRoutingBundle/zipball/1.2.0",
+                "reference": "1.2.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/console": "~2.0",
+                "symfony/framework-bundle": "~2.0",
+                "symfony/serializer": "~2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "FOS\\JsRoutingBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/friendsofsymfony/FOSJsRoutingBundle/contributors"
+                }
+            ],
+            "description": "Symfony FOSJsRoutingBundle",
+            "homepage": "http://friendsofsymfony.github.com",
+            "keywords": [
+                "Js Routing"
+            ],
+            "time": "2013-07-15 09:21:37"
+        },
+        {
             "name": "friendsofsymfony/rest",
             "version": "dev-master",
             "target-dir": "FOS/Rest",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRest.git",
-                "reference": "0.8.0"
+                "reference": "b836af42daef72117b1694934a77fffa9d4a82a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRest/zipball/0.8.0",
-                "reference": "0.8.0",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRest/zipball/b836af42daef72117b1694934a77fffa9d4a82a8",
+                "reference": "b836af42daef72117b1694934a77fffa9d4a82a8",
                 "shasum": ""
             },
             "require": {
@@ -975,7 +1029,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-03-02 20:35:05"
+            "time": "2013-07-24 18:23:56"
         },
         {
             "name": "friendsofsymfony/rest-bundle",
@@ -984,12 +1038,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSRestBundle.git",
-                "reference": "b5ba32718c036ba42a32354d854b8397c70773b0"
+                "reference": "e37547baa761b791555b6af48996227636a8230b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/b5ba32718c036ba42a32354d854b8397c70773b0",
-                "reference": "b5ba32718c036ba42a32354d854b8397c70773b0",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSRestBundle/zipball/e37547baa761b791555b6af48996227636a8230b",
+                "reference": "e37547baa761b791555b6af48996227636a8230b",
                 "shasum": ""
             },
             "require": {
@@ -1049,7 +1103,7 @@
             "keywords": [
                 "rest"
             ],
-            "time": "2013-07-18 08:40:32"
+            "time": "2013-07-26 07:04:19"
         },
         {
             "name": "guzzle/guzzle",
@@ -1061,7 +1115,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f5873446b256b4b7c4d8d2ef862a018d2335dc14",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/edb9816c59ed5f4c7c829ebf6a0ec40768a0b7eb",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -1199,12 +1253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "8e559af963b6442a208fcd8f9c675e60cf99e0f8"
+                "reference": "d76d17d14abfaa5103342a43cfeb4126000abab6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/8e559af963b6442a208fcd8f9c675e60cf99e0f8",
-                "reference": "8e559af963b6442a208fcd8f9c675e60cf99e0f8",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/d76d17d14abfaa5103342a43cfeb4126000abab6",
+                "reference": "d76d17d14abfaa5103342a43cfeb4126000abab6",
                 "shasum": ""
             },
             "require": {
@@ -1212,12 +1266,14 @@
                 "symfony/yaml": "~2.0"
             },
             "require-dev": {
-                "composer/composer": "*"
+                "composer/composer": "1.0.*@dev",
+                "phpspec/prophecy-phpunit": "~1.0",
+                "symfony/filesystem": "~2.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0.x-dev"
+                    "dev-master": "2.1.x-dev"
                 }
             },
             "autoload": {
@@ -1240,7 +1296,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2013-07-15 09:27:51"
+            "time": "2013-07-20 18:35:49"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1920,12 +1976,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kriswallsmith/assetic.git",
-                "reference": "41930af87d8182c3298cf66f49a1606fa3c1d367"
+                "reference": "v1.1.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/41930af87d8182c3298cf66f49a1606fa3c1d367",
-                "reference": "41930af87d8182c3298cf66f49a1606fa3c1d367",
+                "url": "https://api.github.com/repos/kriswallsmith/assetic/zipball/v1.1.2",
+                "reference": "v1.1.2",
                 "shasum": ""
             },
             "require": {
@@ -1983,7 +2039,7 @@
                 "compression",
                 "minification"
             ],
-            "time": "2013-07-11 15:46:25"
+            "time": "2013-07-19 00:03:27"
         },
         {
             "name": "kriswallsmith/buzz",
@@ -2101,18 +2157,17 @@
             "target-dir": "NoiseLabs/Bundle/SmartyBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/noiselabs/SmartyBundle.git",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4"
+                "url": "https://github.com/terwey/SmartyBundle.git",
+                "reference": "50de401fd7ddfdc78b7d65fc113e073783f38233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/noiselabs/SmartyBundle/zipball/7f3c02242a8bdbc177770fc662677b73033cbaae",
-                "reference": "c909b94dcf51093b982dde7f01e5f21afc7c3ab4",
+                "url": "https://api.github.com/repos/terwey/SmartyBundle/zipball/50de401fd7ddfdc78b7d65fc113e073783f38233",
+                "reference": "50de401fd7ddfdc78b7d65fc113e073783f38233",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "smarty/smarty": "3.1.*@stable",
                 "symfony/framework-bundle": ">=2.1.0"
             },
             "require-dev": {
@@ -2138,19 +2193,18 @@
                     "NoiseLabs\\Bundle\\SmartyBundle": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
             "authors": [
                 {
-                    "name": "Community contributions",
-                    "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
-                },
-                {
                     "name": "Vítor Brandão",
                     "email": "vitor@noiselabs.org",
                     "homepage": "http://blog.noiselabs.org"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
                 }
             ],
             "description": "This Symfony2 bundle provides integration for the Smarty3 template engine.",
@@ -2161,7 +2215,12 @@
                 "symfony",
                 "templating"
             ],
-            "time": "2013-02-20 01:13:38"
+            "support": {
+                "irc": "irc://irc.freenode.org/noiselabs",
+                "issues": "https://github.com/noiselabs/SmartyBundle/issues",
+                "source": "https://github.com/terwey/SmartyBundle/tree/master"
+            },
+            "time": "2013-07-24 21:17:22"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -2347,12 +2406,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/ladybug.git",
-                "reference": "0527700b6e6bde705cbdd93d67d0b00abd6b2a3d"
+                "reference": "v1.0.0-alpha2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/0527700b6e6bde705cbdd93d67d0b00abd6b2a3d",
-                "reference": "0527700b6e6bde705cbdd93d67d0b00abd6b2a3d",
+                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/v1.0.0-alpha2",
+                "reference": "v1.0.0-alpha2",
                 "shasum": ""
             },
             "require": {
@@ -2403,7 +2462,7 @@
                 "print_r",
                 "var_dump"
             ],
-            "time": "2013-07-17 22:11:46"
+            "time": "2013-07-20 23:03:07"
         },
         {
             "name": "raulfraile/ladybug-bundle",
@@ -2412,12 +2471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/LadybugBundle.git",
-                "reference": "f5a9c526c79e0f28803a6954c82c000a9c8471e6"
+                "reference": "e367d3f30d50e04efad99a0e0c801b8e875f4a36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/f5a9c526c79e0f28803a6954c82c000a9c8471e6",
-                "reference": "f5a9c526c79e0f28803a6954c82c000a9c8471e6",
+                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/e367d3f30d50e04efad99a0e0c801b8e875f4a36",
+                "reference": "e367d3f30d50e04efad99a0e0c801b8e875f4a36",
                 "shasum": ""
             },
             "require": {
@@ -2454,7 +2513,7 @@
                 "tree",
                 "twig"
             ],
-            "time": "2013-07-15 16:58:42"
+            "time": "2013-07-20 23:17:50"
         },
         {
             "name": "rezzza/mailchimp",
@@ -2506,12 +2565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "v2.3.2"
+                "reference": "4dad0ba10df54ea44581a51937f1a601b9d64575"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.2",
-                "reference": "v2.3.2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/4dad0ba10df54ea44581a51937f1a601b9d64575",
+                "reference": "4dad0ba10df54ea44581a51937f1a601b9d64575",
                 "shasum": ""
             },
             "require": {
@@ -2543,7 +2602,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2013-07-17 06:24:17"
+            "time": "2013-07-24 08:45:20"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -2552,12 +2611,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "v2.3.2"
+                "reference": "cce05719041d952bbec856789ca18646a1891d03"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/v2.3.2",
-                "reference": "v2.3.2",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/cce05719041d952bbec856789ca18646a1891d03",
+                "reference": "cce05719041d952bbec856789ca18646a1891d03",
                 "shasum": ""
             },
             "require": {
@@ -2590,7 +2649,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2013-07-09 09:29:53"
+            "time": "2013-07-24 08:49:53"
         },
         {
             "name": "sensio/generator-bundle",
@@ -2599,12 +2658,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "0bbed7349cee7fc768420865989c621a3c9fd1ff"
+                "reference": "2e57c0e7ece80a8717768818871329c82931b9d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/0bbed7349cee7fc768420865989c621a3c9fd1ff",
-                "reference": "0bbed7349cee7fc768420865989c621a3c9fd1ff",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/2e57c0e7ece80a8717768818871329c82931b9d9",
+                "reference": "2e57c0e7ece80a8717768818871329c82931b9d9",
                 "shasum": ""
             },
             "require": {
@@ -2638,50 +2697,23 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-07-17 17:50:07"
+            "time": "2013-07-24 09:19:19"
         },
         {
             "name": "smarty/smarty",
-            "version": "v3.1.13",
-            "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn",
-                "reference": "/tags/v3.1.13/@4699"
-            },
-            "require": {
-                "php": ">=5.2"
+            "version": "3.0.9",
+            "dist": {
+                "type": "zip",
+                "url": "http://www.smarty.net/files/Smarty-3.0.9.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "distribution/libs/Smarty.class.php",
-                    "distribution/libs/SmartyBC.class.php"
+                    "libs/"
                 ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Monte Ohrt",
-                    "email": "monte@ohrt.com"
-                },
-                {
-                    "name": "Uwe Tews",
-                    "email": "uwe.tews@googlemail.com"
-                },
-                {
-                    "name": "Rodney Rehm",
-                    "email": "rodney.rehm@medialize.de"
-                }
-            ],
-            "description": "Smarty - the compiling PHP template engine",
-            "homepage": "http://www.smarty.net",
-            "keywords": [
-                "templating"
-            ],
-            "time": "2013-01-26 12:03:52"
+            }
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2962,12 +2994,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "40f7e6875fdf15cddebdd21a7be791023c6a0255"
+                "reference": "364ccd1cb3e0d86c0b54ddc8a206400ffee15243"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/40f7e6875fdf15cddebdd21a7be791023c6a0255",
-                "reference": "40f7e6875fdf15cddebdd21a7be791023c6a0255",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/364ccd1cb3e0d86c0b54ddc8a206400ffee15243",
+                "reference": "364ccd1cb3e0d86c0b54ddc8a206400ffee15243",
                 "shasum": ""
             },
             "require": {
@@ -3062,7 +3094,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-07-17 08:47:37"
+            "time": "2013-07-25 17:13:25"
         },
         {
             "name": "twig/extensions",
@@ -3117,12 +3149,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "c35d7f267ffed95060066a6edd610cb23e9e3e50"
+                "reference": "0e63ef04a00fb238ee457708f8b4e8918aa51d7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/c35d7f267ffed95060066a6edd610cb23e9e3e50",
-                "reference": "c35d7f267ffed95060066a6edd610cb23e9e3e50",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/0e63ef04a00fb238ee457708f8b4e8918aa51d7e",
+                "reference": "0e63ef04a00fb238ee457708f8b4e8918aa51d7e",
                 "shasum": ""
             },
             "require": {
@@ -3158,7 +3190,60 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-07-15 15:12:47"
+            "time": "2013-07-24 03:16:45"
+        },
+        {
+            "name": "willdurand/expose-translation-bundle",
+            "version": "dev-master",
+            "target-dir": "Bazinga/ExposeTranslationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/willdurand/BazingaExposeTranslationBundle.git",
+                "reference": "6df1246d89d1eb36242c8ee12d57f46a6a43f195"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/willdurand/BazingaExposeTranslationBundle/zipball/6df1246d89d1eb36242c8ee12d57f46a6a43f195",
+                "reference": "6df1246d89d1eb36242c8ee12d57f46a6a43f195",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": ">=2.0,<2.4-dev",
+                "symfony/finder": ">=2.0,<2.4-dev",
+                "symfony/framework-bundle": ">=2.0,<2.4-dev"
+            },
+            "require-dev": {
+                "symfony/browser-kit": ">=2.0,<2.4-dev",
+                "symfony/yaml": ">=2.0,<2.4-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Bazinga\\ExposeTranslationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "William Durand",
+                    "email": "william.durand1@gmail.com",
+                    "homepage": "http://www.willdurand.fr"
+                }
+            ],
+            "description": "A pretty nice way to expose your translation messages to your JavaScript.",
+            "keywords": [
+                "javascript",
+                "translation"
+            ],
+            "time": "2013-06-20 15:42:20"
         }
     ],
     "packages-dev": null,
@@ -3176,7 +3261,8 @@
         "noiselabs/smarty-bundle": 20,
         "knplabs/knp-menu-bundle": 20,
         "knplabs/knp-menu": 20,
-        "raulfraile/ladybug-bundle": 20
+        "raulfraile/ladybug-bundle": 20,
+        "willdurand/expose-translation-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

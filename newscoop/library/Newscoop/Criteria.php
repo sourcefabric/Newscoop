@@ -26,4 +26,10 @@ class Criteria
      * @var array
      */
     public $orderBy = array();
+
+    /**
+     * Criteria parameters operators chars
+     * @var array
+     */
+    public $perametersOperators = array();
 }

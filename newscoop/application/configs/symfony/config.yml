@@ -17,6 +17,7 @@ framework:
         handler_id: ~
     fragments: ~
     http_method_override: true
+    translator: { fallback: en }
 
 doctrine:
     dbal:
@@ -115,6 +116,9 @@ smarty:
         left_delimiter: "{{"
         right_delimiter: "}}"
         caching: false
+
+bazinga_expose_translation:
+    locale_fallback: "en"
 
 parameters:
     smarty.class: "CampTemplate"

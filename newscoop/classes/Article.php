@@ -563,22 +563,16 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
         $origNewName = $p_currentName . " (".getGS("Duplicate");
-        $newName = $origNewName .")";
-        $count = 1;
-        while (true) {
-            $queryStr = 'SELECT * FROM Articles '
-                        .' WHERE IdPublication = '.$this->m_data['IdPublication']
-                        .' AND NrIssue = ' . $this->m_data['NrIssue']
-                        .' AND NrSection = ' . $this->m_data['NrSection']
-                        .' AND IdLanguage = ' . $this->m_data['IdLanguage']
-                        ." AND Name = " . $g_ado_db->escape($newName);
-            $row = $g_ado_db->GetRow($queryStr);
-            if (count($row) > 0) {
-                $newName = $origNewName.' '.++$count.')';
-            } else {
-                break;
-            }
+        $newName = $origNewName .") 1";
+
+        $query = 'SELECT `Name` FROM `Articles` WHERE `Name` LIKE "'.substr($newName, 0, -1).'%" ORDER BY `Name` DESC LIMIT 1;';
+        $result = $g_ado_db->GetOne($query);
+        if (!empty($result)) {
+            $num = substr($result, -1);
+            $num = intval($num)+1;
+            $newName = substr($result, 0, -2) . ' '.$num;
         }
+
         return $newName;
     } // fn getUniqueName
 

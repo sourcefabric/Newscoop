@@ -5,6 +5,12 @@ admin_login_check:
     pattern:   /admin/example_plugin/login_check
 admin_logout:
     pattern:   /admin/example_plugin/logout
+fos_js_routing:
+    prefix: /admin
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+_bazinga_exposetranslation:
+    prefix: /admin
+    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
 gimme:
     type: rest
     prefix: /api

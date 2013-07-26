@@ -61,6 +61,18 @@ final class CampContext
         )
     );
 
+/*    $taggedServices = $container->findTaggedServiceIds(
+        'acme_mailer.transport'
+    );
+    foreach ($taggedServices as $id => $tagAttributes) {
+        foreach ($tagAttributes as $attributes) {
+            $definition->addMethodCall(
+                'addTransport',
+                array(new Reference($id), $attributes["alias"])
+            );
+        }
+    }*/
+
     // Defines the list objects
     private $m_listObjects = array(
         'languages'=>array('class'=>'Languages', 'list'=>'languages',
@@ -76,6 +88,9 @@ final class CampContext
         'articleauthors'=>array('class'=>'ArticleAuthors',
                              'list'=>'article_authors',
                              'url_id'=>'aas'),
+        'sectionauthors'=>array('class'=>'SectionAuthors',
+                             'list'=>'section_authors',
+                             'url_id'=>'sas'),
         'articlelocations'=>array('class'=>'ArticleLocations',
                             'list'=>'article_locations',
                             'url_id'=>'alc'),

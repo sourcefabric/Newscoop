@@ -79,7 +79,6 @@ abstract class BaseList
      */
     protected $critera;
 
-
     /**
      * The list of objects.
      *
@@ -107,13 +106,24 @@ abstract class BaseList
      */
     protected $cacheKey = null;
 
+    protected $operatorsMap = array(
+        'is' => '=',
+        'smaller_equal' => '<=',
+        'greater_equal' => '>=',
+        'smaller' => '<',
+        'greater' => '>',
+        'not' => '<>',
+        'like' => 'like',
+        'match'=> 'match'
+    );
+
     /**
      * Default cache time
      * @var integer
      */
     protected $defaultTTL = 600;
 
-    public function __construct(Criteria $criteria)
+    public function __construct($criteria)
     {
         $this->setCriteria($criteria);
     }
@@ -122,9 +132,18 @@ abstract class BaseList
      * Set Criteria object
      * @param Criteria $criteria
      */
-    protected function setCriteria(Criteria $criteria)
+    protected function setCriteria($criteria)
     {
+        // check if implement Newscoop/Criteria
         $this->criteria = $criteria;
+    }
+
+    public function getList($firstResult, $parameters)
+    {
+        $this->convertParameters($firstResult, $parameters);
+        $this->convertConstraints($this->parseConstraintsString($parameters['constraints']));
+
+        return $this->prepareList($this->criteria);
     }
 
     /**
@@ -136,7 +155,67 @@ abstract class BaseList
      * 
      * @return ListResult
      */
-    abstract protected function getList($firstResult = 0, $maxResults = 0, Criteria $criteria);
+    abstract protected function prepareList($criteria);
+
+    /**
+     * Convert constraints array to Criteria
+     * 
+     * @param  array  $constraints
+     * @param  Criteria $criteria
+     * 
+     * @return Criteria
+     */
+    protected function convertConstraints($constraints){
+        $perametersOperators = array();
+        $constraints = array_chunk($constraints, 3, true);
+        foreach ($constraints as $constraint) {
+            if (count($constraint) == 3) {
+                foreach ($this->criteria as $key => $value) {
+                    if ($key == $constraint[0]) {
+                        $perametersOperators[] = array($constraint[0], $this->operatorsMap[$constraint[1]]);
+                        $this->criteria->$key = $constraint[2];
+                    }
+                }
+            }
+        }
+
+        $this->criteria->perametersOperators = $perametersOperators;
+    }
+
+    /**
+     * Convert parameters array to Criteria
+     * 
+     * @param  array  $parameters
+     * @param  Criteria $criteria
+     * 
+     * @return Criteria
+     */
+    protected function convertParameters($firstResult, $parameters)
+    {
+        $this->firstResult = is_numeric($firstResult) ? (int)$firstResult : 0;
+        $this->maxResults = isset($parameters['length']) ? (int)$parameters['length'] : 0;
+        $this->columns = isset($parameters['columns']) ? (int)$parameters['columns'] : 0;
+        $name = isset($parameters['name']) ? $parameters['name'] : '';
+        $this->name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
+
+        $this->orderString = isset($parameters['order']) ? str_replace('by', '', $parameters['order']) : '';
+        $orderArray = $this->parseConstraintsString($this->orderString);
+
+        foreach (array_chunk($orderArray, 2, true) as $order) {
+            if (count($order) == 2) {
+                foreach ($this->criteria as $key) {
+                    if ($key == $order[0]) {
+                        $this->criteria->orderBy = array($order[0], $order[1]);
+                    }
+                }
+            }
+        }
+
+
+        // Set first and max results values to critera. 
+        $this->criteria->firstResult = $this->firstResult;
+        $this->criteria->maxResults = $this->firstResult;
+    }
 
     /**
      * Generates a unique name for this list object.
@@ -145,7 +224,7 @@ abstract class BaseList
      */
     private function defaultName()
     {
-
+        return sha1(time());
     }
 
     /**
@@ -407,6 +486,48 @@ abstract class BaseList
                                 . OF_OBJECT_STRING . ' list';
                 CampTemplate::singleton()->trigger_error($errorMessage);
         }
+    }
+
+    /**
+     * Parses the constraints string and returns an array of words
+     *
+     * @param string $constraintsString
+     * @return array
+     */
+    private function parseConstraintsString($constraintsString)
+    {
+        if (empty($constraintsString)) {
+            return array();
+        }
+
+        $words = array();
+        $escaped = false;
+        $lastWord = '';
+        foreach (str_split($constraintsString) as $char) {
+            if (preg_match('/[\s]/', $char) && !$escaped) {
+                if (strlen($lastWord) > 0) {
+                    if ($lastWord == "''") {
+                        $lastWord = '';
+                    }
+                    $words[] = $lastWord;
+                    $lastWord = '';
+                }
+            } elseif ($char == "\\" && !$escaped) {
+                $escaped = true;
+            } else {
+                $lastWord .= $char;
+                $escaped = false;
+            }
+        }
+
+        if (strlen($lastWord) > 0) {
+            if ($lastWord == "''") {
+                $lastWord = '';
+            }
+            $words[] = $lastWord;
+        }
+
+        return $words;
     }
 
     /**

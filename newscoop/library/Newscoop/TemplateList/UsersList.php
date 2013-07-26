@@ -9,7 +9,6 @@
 
 namespace Newscoop\TemplateList;
 
-use Newscoop\Criteria;
 use Newscoop\ListResult;
 
 /**
@@ -18,9 +17,48 @@ use Newscoop\ListResult;
 class UsersList extends BaseList 
 {
 
-    protected function getList($firstResult, $maxResults, Criteria $criteria)
+    protected function prepareList($criteria)
     {
-
+        // get entity manager and call getUsersListByCriteria($this->criteria) on UsersReposiotory 
+        // or make all stuff here.
+        // 
+        // that's bery easy - everything should be in Criteria object - as public properties.
+        //
+        //  echo '<pre>';print_r($criteria);die;
     }
 
+    protected function convertParameters($firstResult, $parameters)
+    {
+        // ren default simple parameters converting
+        parent::convertParameters($firstResult, $parameters);
+
+        // convert your special parameters into criteria properties.
+        if (array_key_exists('search', $parameters)) {
+            $this->criteria->query = $parameters['search'];
+        } else if (array_key_exists('filter', $parameters)) {
+            $filter = $parameters['filter'];
+            $this->criteria->groups = !empty($parameters['editor_groups']) ? array_map('intval', explode(',', $parameters['editor_groups'])) : array();
+            switch ($filter) {
+                case 'active':
+                    $this->criteria->orderBy = array('comments' => 'desc');
+                    $this->criteria->excludeGroups = true;
+                    break;
+
+                case 'editors':
+                    $this->criteria->excludeGroups = false;
+                    break;
+
+                default:
+                    $this->criteria->groups = array();
+
+                    // example: filter="a-c"
+                    if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
+                        $this->criteria->nameRange = range($matches[1], $matches[2]);
+                    } else {
+                        CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                    }
+                    break;
+            }
+        }
+    }
 }
