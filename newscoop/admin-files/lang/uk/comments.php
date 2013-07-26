@@ -10,7 +10,7 @@ regGS("Star", "Зірка");
 regGS("Reply to message", "Відповісти на коментар");
 regGS("Processed", "Оброблено");
 regGS("None", "Жоден");
-regGS("No atachment", "Немає прікріплень");
+regGS("No attachment", "Немає прікріплень");
 regGS("Messages updated.", "Повідомлення оновлено.");
 regGS("Messages status change to $1.", "Статус повідомленнь змінено на $1.");
 regGS("Messages deleted.", "Повідомлення видалені.");

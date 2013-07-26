@@ -10,7 +10,7 @@ regGS("Star", "");
 regGS("Reply to message", "");
 regGS("Processed", "");
 regGS("None", "");
-regGS("No atachment", "");
+regGS("No attachment", "");
 regGS("Messages updated.", "");
 regGS("Messages status change to $1.", "");
 regGS("Messages deleted.", "");

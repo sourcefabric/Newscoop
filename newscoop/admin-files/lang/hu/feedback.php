@@ -17,7 +17,7 @@ regGS("Messages status change to $1.", "Üzenetek állapotváltozása $1.");
 regGS("Message status change to $1.", "Üzenet állapotváltozása $1.");
 regGS("Messages updated.", "Üzenetek frissítve.");
 regGS("Message updated.", "Üzenet frissítve.");
-regGS("No atachment", "Nincs melléklet");
+regGS("No attachment", "Nincs melléklet");
 regGS("Processed", "Feldolgozva.");
 regGS("Reply", "Válasz");
 regGS("Reply to message", "Válasz az üzenetre");

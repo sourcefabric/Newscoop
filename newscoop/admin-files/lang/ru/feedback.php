@@ -14,7 +14,7 @@ regGS("Messages status change to $1.", "Статус сообщения изме
 regGS("Message status change to $1.", "Статус сообщения изменен на $1.");
 regGS("Messages updated.", "Сообщения обновлены");
 regGS("Message updated.", "Сообщение обновлено");
-regGS("No atachment", "Нет вложения");
+regGS("No attachment", "Нет вложения");
 regGS("Processed", "Обработанное");
 regGS("Reply", "Ответ");
 regGS("Reply to message", "Ответить на собщение");

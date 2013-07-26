@@ -10,7 +10,7 @@ regGS("Star", "Зорачка");
 regGS("Reply to message", "Адказаць на паведамленне");
 regGS("Processed", "Апрацаванае");
 regGS("None", "Пуста");
-regGS("No atachment", "Няма ўкладання");
+regGS("No attachment", "Няма ўкладання");
 regGS("Messages updated.", "Паведамленні абноўленыя");
 regGS("Messages status change to $1.", "Статус паведамлення зменены на $1.");
 regGS("Messages deleted.", "Паведамленні выдаленыя.");

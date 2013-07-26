@@ -14,7 +14,7 @@ regGS("Messages status change to $1.", "تتغير حالة الرسائل ال�
 regGS("Message status change to $1.", "تتغير حالة الرسالة الى $1 .");
 regGS("Messages updated.", "تم تحديث الرسائل.");
 regGS("Message updated.", "تم تحديث الرسالة.");
-regGS("No atachment", "لا مرفق");
+regGS("No attachment", "لا مرفق");
 regGS("Processed", "تم المعالجة");
 regGS("Reply", "الردّ");
 regGS("Reply to message", "الرد على الرسالة");

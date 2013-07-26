@@ -12,7 +12,7 @@ regGS("Reply", "Válasz");
 regGS("Processed", "Feldolgozva");
 regGS("No records found.", "Nem talál bejegyzést.");
 regGS("No entries to show", "Nincs megjeleníthető bejegyzés");
-regGS("No atachment", "Nincs melléklet");
+regGS("No attachment", "Nincs melléklet");
 regGS("Messages updated.", "Üzenetek frissítve.");
 regGS("Messages status change to $1.", "Az üzenetek állapotának módosítása $1.");
 regGS("Messages deleted.", "Üzenetek törölve.");
