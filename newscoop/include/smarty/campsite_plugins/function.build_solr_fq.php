@@ -75,12 +75,16 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
 
     if (array_key_exists('fqfrom', $cleanParam) && !empty($cleanParam['fqfrom'])) {
         $fromDate = date_create_from_format($cleanParam['fqdateformat'], $cleanParam['fqfrom']);
-        $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
+        if ($fromDate instanceof \DateTime) {
+            $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
+        }
     }
 
     if (array_key_exists('fqto', $cleanParam) && !empty($cleanParam['fqto'])) {
         $toDate = date_create_from_format($cleanParam['fqdateformat'], $cleanParam['fqto']);
-        $solrToDate = date_format($toDate, 'Y-m-d').'T00:00:00Z/DAY';
+        if ($toDate instanceof \DateTime) {
+            $solrToDate = date_format($toDate, 'Y-m-d').'T00:00:00Z/DAY';
+        }
     }
 
     if (!empty($solrFromDate) && !empty($solrToDate)) {
