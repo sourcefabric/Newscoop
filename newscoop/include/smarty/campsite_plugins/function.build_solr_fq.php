@@ -60,14 +60,18 @@ function smarty_function_build_solr_fq($p_params = array(), &$p_smarty)
         $solrFq .= 'type:'.$cleanParam['type'];
     }
 
-    if (array_key_exists('from', $cleanParam) && !empty($cleanParam['from'])) {
-        $fromDate = date_create_from_format('d.m.y', $cleanParam['from']);
-        $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
+    if (array_key_exists('fqfrom', $cleanParam) && !empty($cleanParam['fqfrom'])) {
+        $fromDate = date_create_from_format($cleanParam['fqdateformat'], $cleanParam['fqfrom']);
+        if ($fromDate instanceof \DateTime) {
+            $solrFromDate = date_format($fromDate, 'Y-m-d').'T00:00:00Z/DAY';
+        }
     }
 
-    if (array_key_exists('to', $cleanParam) && !empty($cleanParam['to'])) {
-        $toDate = date_create_from_format('d.m.y', $cleanParam['to']);
-        $solrToDate = date_format($toDate, 'Y-m-d').'T00:00:00Z/DAY';
+    if (array_key_exists('fqto', $cleanParam) && !empty($cleanParam['fqto'])) {
+        $toDate = date_create_from_format($cleanParam['fqdateformat'], $cleanParam['fqto']);
+        if ($toDate instanceof \DateTime) {
+            $solrToDate = date_format($toDate, 'Y-m-d').'T00:00:00Z/DAY';
+        }
     }
 
     if (!empty($solrFromDate) && !empty($solrToDate)) {

@@ -1,5 +1,5 @@
 <?php 
-regGS("No atachment", "");
+regGS("No attachment", "");
 regGS("at", "на");
 regGS("With no attachment", "Без ўкладання");
 regGS("With image attachment", "З прыкладзенай выявай");

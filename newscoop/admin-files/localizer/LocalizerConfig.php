@@ -153,6 +153,7 @@ $mapPrefixToDir = array(
         '/application/modules/admin/views/scripts/auth',
         '/application/modules/admin/forms/User.php',
         '/application/modules/admin/forms/Profile.php',
+        '/application/forms/Register.php',
     ),
     'user_subscriptions' => array(
         '/admin-files/users/subscriptions',
