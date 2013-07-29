@@ -1,4 +1,6 @@
 <?php 
+regGS("Continue", "");
+regGS("Accepting terms of use", "");
 regGS("send confirmation email", "send confirmation email");
 regGS("edit user", "edit user");
 regGS("delete user", "delete user");
