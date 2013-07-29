@@ -149,6 +149,7 @@ $mapPrefixToDir = array(
         '/admin-files/users',
         '/application/modules/admin/controllers/UserController.php',
         '/application/modules/admin/controllers/AuthController.php',
+        '/application/controllers/RegisterController.php',
         '/application/modules/admin/views/scripts/user',
         '/application/modules/admin/views/scripts/auth',
         '/application/modules/admin/forms/User.php',
