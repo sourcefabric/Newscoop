@@ -1,6 +1,8 @@
 <?php 
-regGS("Continue", "");
-regGS("Accepting terms of use", "");
+regGS("User with email %s is registered already.", "Bu mail adresi kullanımda");
+regGS("Username is used. Please use another one.", "");
+regGS("Continue", "İleri");
+regGS("Accepting terms of use", "Yasal koşulları kabul ediyorum");
 regGS("send confirmation email", "");
 regGS("edit user", "");
 regGS("delete user", "");

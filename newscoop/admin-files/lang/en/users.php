@@ -1,4 +1,6 @@
 <?php 
+regGS("User with email %s is registered already.", "User with email %s is registered already.");
+regGS("Username is used. Please use another one.", "Username is used. Please use another one.");
 regGS("Continue", "Continue");
 regGS("Accepting terms of use", "Accepting terms of use");
 regGS("send confirmation email", "send confirmation email");
