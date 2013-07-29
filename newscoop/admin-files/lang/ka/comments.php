@@ -1,5 +1,5 @@
 <?php 
-regGS("No atachment", "დანართი არ არის");
+regGS("No attachment", "");
 regGS("at", "-ზე");
 regGS("With no attachment", "დანართის გარეშე");
 regGS("With image attachment", "თანდართულია გამოსახულება");

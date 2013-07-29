@@ -44,7 +44,7 @@ class RegisterController extends Zend_Controller_Action
             }
 
             if (!$user->isPending()) {
-                $form->email->addError("User with email '$values[email]' is registered already.");
+                $form->email->addError($this->view->translate("User with email '$values[email]' is registered already."));
             } else {
                 $this->_helper->service('email')->sendConfirmationToken($user);
                 $this->_helper->redirector('after');
@@ -121,7 +121,7 @@ class RegisterController extends Zend_Controller_Action
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (InvalidArgumentException $e) {
-                $form->username->addError('Username is used. Please use another one.');
+                $form->username->addError($this->view->translate('Username is used. Please use another one.'));
             }
         }
 
