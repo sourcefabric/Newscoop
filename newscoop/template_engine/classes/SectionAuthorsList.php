@@ -34,9 +34,9 @@ class SectionAuthorsList extends ListObject
             ->createQueryBuilder('a')
             ->select('DISTINCT au.id')
             ->leftJoin('a.authors', 'au');
-
+        
         foreach($this->m_constraints as $comparison) {
-            $query->andWhere('a.'.$comparison->getLeftOperand().' = :'.$comparison->getLeftOperand().'');
+            $query->andWhere('a.'.$comparison->getLeftOperand().' '.$comparison->getOperator()->getSymbol().' :'.$comparison->getLeftOperand().'');
             $query->setParameter($comparison->getLeftOperand(), $comparison->getRightOperand());
         }
 
@@ -44,7 +44,7 @@ class SectionAuthorsList extends ListObject
             $orderOptions = explode(' ', $p_parameters['order']);
             $query->orderBy('au.'.str_replace('by', '', $orderOptions[0]), $orderOptions[1]);
         }
-
+        
         $sectionAuthorsList = $query->getQuery()->getArrayResult();
         $metaAuthorsList = array();
         foreach ($sectionAuthorsList as $author) {
@@ -63,8 +63,17 @@ class SectionAuthorsList extends ListObject
      * @return array
      */
     protected function ProcessConstraints(array $p_constraints)
-    {
-        return array();
+    {   
+        $processesConstraints = array();
+        $constraints = array_chunk($p_constraints, 3, true);
+        foreach ($constraints as $constraint) {
+            if (count($constraint) == 3) {
+                $operator = new Operator($constraint[1]);
+                $processesConstraints[] = new ComparisonOperation($constraint[0], $operator, $constraint[2]);
+            }
+        }
+
+        return $processesConstraints;
     }
 
     /**
@@ -122,6 +131,7 @@ class SectionAuthorsList extends ListObject
                 case 'length':
                 case 'columns':
                 case 'name':
+                case 'constraints':
                 case 'order':
                     if ($parameter == 'length' || $parameter == 'columns') {
                         $intValue = (int)$value;
