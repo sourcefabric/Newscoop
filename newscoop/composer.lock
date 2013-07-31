@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5e5573d7379042219a70008af2a666e2",
+    "hash": "44c85af06bfe52afe64318c4fabf28c7",
     "packages": [
         {
             "name": "behat/behat",
@@ -140,7 +140,7 @@
                 "Context",
                 "Symfony2"
             ],
-            "time": "2013-06-20 09:38:27"
+            "time": "2013-03-07 16:08:49"
         },
         {
             "name": "behat/gherkin",
@@ -1049,7 +1049,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1096,9 +1096,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1212,7 +1212,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1411,7 +1411,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/66d2fe197bacb82f7b476099144f03596719b24d",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/bc4c8ddf89c1daba6d24d696e261e088677f49af",
                 "reference": "ab2ca25",
                 "shasum": ""
             },
@@ -1466,7 +1466,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-06-10 06:27:25"
+            "time": "2013-03-14 09:30:30"
         },
         {
             "name": "knplabs/knp-components",
@@ -1705,12 +1705,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/terwey/SmartyBundle.git",
-                "reference": "59519bab1093e783b904c5cbb98347be486e25db"
+                "reference": "50de401fd7ddfdc78b7d65fc113e073783f38233"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/terwey/SmartyBundle/zipball/59519bab1093e783b904c5cbb98347be486e25db",
-                "reference": "59519bab1093e783b904c5cbb98347be486e25db",
+                "url": "https://api.github.com/repos/terwey/SmartyBundle/zipball/50de401fd7ddfdc78b7d65fc113e073783f38233",
+                "reference": "50de401fd7ddfdc78b7d65fc113e073783f38233",
                 "shasum": ""
             },
             "require": {
@@ -1746,7 +1746,7 @@
             "authors": [
                 {
                     "name": "Vítor Brandão",
-                    "email": "noisebleed@noiselabs.org",
+                    "email": "vitor@noiselabs.org",
                     "homepage": "http://blog.noiselabs.org"
                 },
                 {
@@ -1767,7 +1767,7 @@
                 "issues": "https://github.com/noiselabs/SmartyBundle/issues",
                 "source": "https://github.com/terwey/SmartyBundle/tree/master"
             },
-            "time": "2013-06-24 14:20:55"
+            "time": "2013-07-24 21:17:22"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -1803,7 +1803,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1955,12 +1955,12 @@
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
+                "url": "https://github.com/sensio/SensioDistributionBundle.git",
                 "reference": "v2.3.0-BETA1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/v2.3.0-BETA1",
                 "reference": "v2.3.0-BETA1",
                 "shasum": ""
             },
