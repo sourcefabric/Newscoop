@@ -48,7 +48,16 @@ class ArticleAuthorsList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-		return array();
+        $processesConstraints = array();
+        $constraints = array_chunk($p_constraints, 3, true);
+        foreach ($constraints as $constraint) {
+            if (count($constraint) == 3) {
+                $operator = new Operator($constraint[1]);
+                $processesConstraints[] = new ComparisonOperation($constraint[0], $operator, $constraint[2]);
+            }
+        }
+
+        return $processesConstraints;
 	}
 
 	/**
@@ -106,6 +115,7 @@ class ArticleAuthorsList extends ListObject
 	            case 'length':
 	            case 'columns':
 	            case 'name':
+                case 'constraints':
 	            case 'order':
 	                if ($parameter == 'length' || $parameter == 'columns') {
 	                    $intValue = (int)$value;
