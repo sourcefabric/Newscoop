@@ -35,7 +35,7 @@
         "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
-        "noiselabs/smarty-bundle":"dev-master#59519bab1093e783b904c5cbb98347be486e25db"
+        "noiselabs/smarty-bundle":"dev-master#50de401fd7ddfdc78b7d65fc113e073783f38233"
     },
     "repositories": [
         {
