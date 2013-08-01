@@ -60,11 +60,11 @@ abstract class BaseList
     protected $columns;
 
     /**
-     * The initial constraints string.
+     * The constraints array.
      *
-     * @var string
+     * @var array
      */
-    private $constraintsStr;
+    private $constraints;
 
     /**
      * The clean array of parameters
@@ -134,16 +134,40 @@ abstract class BaseList
      */
     protected function setCriteria($criteria)
     {
-        // check if implement Newscoop/Criteria
+        // TODO: check if implement Newscoop/Criteria
         $this->criteria = $criteria;
     }
 
     public function getList($firstResult, $parameters)
-    {
-        $this->convertParameters($firstResult, $parameters);
-        $this->convertConstraints($this->parseConstraintsString($parameters['constraints']));
+    {   
+        if (!array_key_exists('constraints', $parameters)) {
+            $parameters['constraints'] = '';
+        }
 
-        return $this->prepareList($this->criteria);
+        $this->convertParameters($firstResult, $parameters);
+        $this->constraints = $this->parseConstraintsString($parameters['constraints']);
+        $this->convertConstraints($this->constraints);
+
+        if ($this->constraints === false || $parameters === false) {
+            $this->totalCount = 0;
+            $this->objectsList = new ListResult();
+            $this->hasNextResults = false;
+            return;
+        }
+
+        $this->objectsList = $this->fetchFromCache();
+        if (!is_null($this->objectsList)) {
+            $this->duplicateObject($this->objectsList);
+            return;
+        }
+
+        $this->objectsList = $this->prepareList($this->criteria);
+        $this->totalCount = $this->objectsList->count();
+
+        $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->getLength());
+        $this->storeInCache();
+
+        return $this->objectsList;
     }
 
     /**
@@ -172,13 +196,14 @@ abstract class BaseList
             if (count($constraint) == 3) {
                 foreach ($this->criteria as $key => $value) {
                     if ($key == $constraint[0]) {
-                        $perametersOperators[] = array($constraint[0], $this->operatorsMap[$constraint[1]]);
+                        $perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
                         $this->criteria->$key = $constraint[2];
                     }
                 }
             }
         }
 
+        // save constraints operators into criteria objects
         $this->criteria->perametersOperators = $perametersOperators;
     }
 
@@ -198,23 +223,65 @@ abstract class BaseList
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $this->name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
 
-        $this->orderString = isset($parameters['order']) ? str_replace('by', '', $parameters['order']) : '';
-        $orderArray = $this->parseConstraintsString($this->orderString);
+        $orderString = isset($parameters['order']) ? str_replace('by', '', $parameters['order']) : '';
+        $orderArray = $this->parseConstraintsString($orderString);
 
         foreach (array_chunk($orderArray, 2, true) as $order) {
             if (count($order) == 2) {
-                foreach ($this->criteria as $key) {
+                foreach ($this->criteria as $key => $value) {
                     if ($key == $order[0]) {
-                        $this->criteria->orderBy = array($order[0], $order[1]);
+                        $this->criteria->orderBy[$order[0]] = $order[1];
                     }
                 }
             }
         }
 
-
         // Set first and max results values to critera. 
         $this->criteria->firstResult = $this->firstResult;
-        $this->criteria->maxResults = $this->firstResult;
+        $this->criteria->maxResults = $this->maxResults;
+    }
+
+    private function fetchFromCache()
+    {
+        if (\CampCache::IsEnabled()) {
+            $object = \CampCache::singleton()->fetch($this->getCacheKey());
+            if ($object !== false && is_object($object)) {
+                return $object;
+            }
+        }
+
+        return null;
+    }
+
+
+    private function storeInCache()
+    {
+        if (\CampCache::IsEnabled()) {
+            \CampCache::singleton()->store($this->getCacheKey(), $this, $this->defaultTTL);
+        }
+    }
+
+
+    protected function getCacheKey()
+    {
+        if (is_null($this->cacheKey)) {
+            $this->cacheKey = get_class($this) . '__' . serialize($this->criteria) . '__' . $this->columns;
+        }
+        return $this->cacheKey;
+    }
+
+
+    /**
+     * Copies the given object
+     *
+     * @param object $p_source
+     * @return object
+     */
+    private function duplicateObject($source)
+    {
+        foreach ($source as $key=>$value) {
+            $this->$key = $value;
+        }
     }
 
     /**
@@ -234,7 +301,11 @@ abstract class BaseList
      */
     public function defaultIterator()
     {
+        if (!isset($this->defaultIterator)) {
+            $this->defaultIterator = $this->getIterator();
+        }
         
+        return $this->defaultIterator;
     }
 
     /**
@@ -244,7 +315,11 @@ abstract class BaseList
      */
     public function getCurrent()
     {
-        
+        if ($this->isEmpty()) {
+            return null;
+        }
+
+        return $this->defaultIterator()->current();
     }
 
     /**
@@ -254,7 +329,11 @@ abstract class BaseList
      */
     public function getIndex()
     {
-        
+        if ($this->isEmpty()) {
+            return 0;
+        }
+
+        return 1 + $this->firstResult + $this->defaultIterator()->key();
     }
 
     /**
@@ -264,7 +343,7 @@ abstract class BaseList
      */
     public function getIterator()
     {
-        
+        return $this->objectsList->getIterator();
     }
 
     /**
@@ -274,7 +353,7 @@ abstract class BaseList
      */
     public function getName()
     {
-        
+        return $this->name;
     }
 
     /**
@@ -284,7 +363,7 @@ abstract class BaseList
      */
     public function getLength()
     {
-        
+        return $this->objectsList->count();
     }
 
     /**
@@ -294,7 +373,7 @@ abstract class BaseList
      */
     public function isBlank()
     {
-        
+        return $this->firstResult < 0;
     }
 
     /**
@@ -304,7 +383,7 @@ abstract class BaseList
      */
     public function isEmpty()
     {
-        
+        return $this->objectsList->count() == 0;
     }
 
     /**
@@ -314,7 +393,7 @@ abstract class BaseList
      */
     public function isLimited()
     {
-        
+        return $this->maxResults > 0;
     }
 
     /**
@@ -324,7 +403,7 @@ abstract class BaseList
      */
     public function getLimit()
     {
-        
+        return $this->maxResults;
     }
 
     /**
@@ -335,7 +414,7 @@ abstract class BaseList
      */
     public function getStart()
     {
-
+        return $this->firstResult;
     }
 
     /**
@@ -346,7 +425,11 @@ abstract class BaseList
      */
     private function getPrevStart()
     {
-       
+        if ($this->maxResults == 0) {
+            return null;
+        }
+
+        return ($this->firstResult >= $this->maxResults ? ($this->firstResult - $this->maxResults) : 0);
     }
 
     /**
@@ -357,7 +440,11 @@ abstract class BaseList
      */
     private function getNextStart()
     {
-        
+        if ($this->maxResults == 0) {
+            return null;
+        }
+
+        return $this->firstResult + $this->maxResults;
     }
 
     /**
@@ -368,7 +455,7 @@ abstract class BaseList
      */
     public function getEnd()
     {
-
+        return $this->firstResult + count($this->objectsList->items);
     }
 
     /**
@@ -380,7 +467,7 @@ abstract class BaseList
      */
     public function hasPreviousElements()
     {
-
+        return $this->firstResult > 0;
     }
 
     /**
@@ -392,7 +479,7 @@ abstract class BaseList
      */
     public function hasNextElements()
     {
-
+        return $this->hasNextResults;
     }
 
     /**
@@ -402,16 +489,35 @@ abstract class BaseList
      */
     public function getTotalCount()
     {
+        return $this->totalCount;
+    }
+
+    /**
+     * Set list total count.
+     *
+     * @return unknown
+     */
+    public function setTotalCount($totalCount)
+    {
+        return $this->totalCount = $totalCount;
     }
 
     /**
      * Returns the column number for the given iterator
      *
-     * @param int $p_iterator
+     * @param int $iterator
      */
-    public function getColumn($p_iterator = null)
+    public function getColumn($iterator = null)
     {
-    
+        if (!isset($iterator)) {
+            $iterator = $this->defaultIterator();
+        }
+
+        if ($this->columns == 0 || $iterator->count() == 0) {
+            return 0;
+        }
+
+        return 1 + ($iterator->key() % $this->columns);
     }
 
     /**
@@ -419,9 +525,17 @@ abstract class BaseList
      *
      * @param int $p_iterator
      */
-    public function getRow($p_iterator = null)
+    public function getRow($iterator = null)
     {
+        if (!isset($iterator)) {
+            $iterator = $this->defaultIterator();
+        }
 
+        if ($this->columns == 0 || $this->columns == 1) {
+            return (1 + $iterator->key());
+        }
+
+        return 1 + (int)($iterator->key() / $this->columns);
     }
 
     /**
@@ -431,7 +545,17 @@ abstract class BaseList
      */
     public function getColumns()
     {
-        
+        return $this->columns;
+    }
+
+    /**
+     * Returns the constraints.
+     *
+     * @return array
+     */
+    public function getConstraints()
+    {
+        return $this->constraints;
     }
 
     /**
@@ -484,7 +608,7 @@ abstract class BaseList
             default:
                 $errorMessage = INVALID_PROPERTY_STRING . " $property "
                                 . OF_OBJECT_STRING . ' list';
-                CampTemplate::singleton()->trigger_error($errorMessage);
+                \CampTemplate::singleton()->trigger_error($errorMessage);
         }
     }
 

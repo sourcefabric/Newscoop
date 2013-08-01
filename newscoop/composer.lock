@@ -3,8 +3,55 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f297042c7d0ccdb5e6c5fc3dbdb7fc26",
+    "hash": "28cc854d9f27b18185aeac26356a2681",
     "packages": [
+        {
+            "name": "ahs/facebook-newscoop-bundle",
+            "version": "dev-master",
+            "target-dir": "AHS/FacebookNewscoopBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/FacebookNewscoopBundle.git",
+                "reference": "5dd0364c615914faabfa36b28e92dfa9cef21299"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/FacebookNewscoopBundle/zipball/5dd0364c615914faabfa36b28e92dfa9cef21299",
+                "reference": "5dd0364c615914faabfa36b28e92dfa9cef21299",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "kriswallsmith/buzz": ">=v0.9",
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "AHS\\FacebookNewscoopBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "mikolajczuk.private@gmail.com"
+                }
+            ],
+            "description": "Usefull sevices for integration Newscoop and Facebook",
+            "keywords": [
+                "ahs",
+                "cms",
+                "facebook",
+                "integration",
+                "newscoop"
+            ],
+            "time": "2013-06-21 13:32:08"
+        },
         {
             "name": "behat/behat",
             "version": "dev-master",
@@ -2150,6 +2197,42 @@
                 "psr-3"
             ],
             "time": "2013-07-17 16:11:27"
+        },
+        {
+            "name": "newscoop/plugins-installer",
+            "version": "dev-master",
+            "target-dir": "Newscoop/Composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/newscoop-plugins-installer.git",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/newscoop-plugins-installer/zipball/56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "shasum": ""
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Newscoop\\Composer\\PluginsInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\Composer": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "time": "2013-03-09 10:34:56"
         },
         {
             "name": "noiselabs/smarty-bundle",

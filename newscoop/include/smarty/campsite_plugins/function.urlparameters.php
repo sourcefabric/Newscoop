@@ -25,8 +25,8 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
     }
 
     $url = 'url';
-    $p_params = preg_split("/[\s]+/", $p_params['options']);
-    foreach ($p_params as $index=>$param) {
+    $params = preg_split("/[\s]+/", $p_params['options']);
+    foreach ($params as $index=>$param) {
         if (strcasecmp('fromstart', $param) == 0) {
             $url = 'default_url';
             unset($p_params[$index]);

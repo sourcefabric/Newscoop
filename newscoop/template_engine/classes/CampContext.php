@@ -127,6 +127,12 @@ final class CampContext
             'list' => 'users',
             'url_id' => 'uid',
         ),
+        'newscoop\templatelist\users' => array(
+//            'class' => 'Newscoop\TemplateList\UsersList',
+            'class' => 'Newscoop\TemplateList\Users',
+            'list' => 'users',
+            'url_id' => 'uid',
+        ),
         'communityfeeds' => array(
             'class' => 'CommunityFeeds',
             'list' => 'community_feeds',
@@ -660,6 +666,7 @@ final class CampContext
    	    $this->m_readonlyProperties['current_list'] =& $p_list;
    	    $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
    	    $this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
+        
    	    return $this->m_readonlyProperties;
     } // fn setCurrentList
 

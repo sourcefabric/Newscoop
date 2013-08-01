@@ -31,6 +31,11 @@ class UserCriteria extends Criteria
     public $orderBy = array('username' => 'asc');
 
     /**
+     * @var boolean
+     */
+    public $is_admin = false;
+
+    /**
      * @var array
      */
     public $groups = array();

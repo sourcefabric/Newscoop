@@ -19,17 +19,19 @@ class UsersList extends BaseList
 
     protected function prepareList($criteria)
     {
-        // get entity manager and call getUsersListByCriteria($this->criteria) on UsersReposiotory 
-        // or make all stuff here.
-        // 
-        // that's bery easy - everything should be in Criteria object - as public properties.
-        //
-        //  echo '<pre>';print_r($criteria);die;
+        $service = \Zend_Registry::get('container')->get('user.list');
+        $list = $service->findByCriteria($criteria);
+        foreach ($list as $key => $user) {
+            $list->items[$key] = new \MetaUser($user);
+        }
+
+        return $list;
     }
 
     protected function convertParameters($firstResult, $parameters)
     {
-        // ren default simple parameters converting
+        $this->criteria->orderBy = array();
+        // run default simple parameters converting
         parent::convertParameters($firstResult, $parameters);
 
         // convert your special parameters into criteria properties.
