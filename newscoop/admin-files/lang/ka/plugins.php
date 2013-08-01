@@ -6,7 +6,7 @@ regGS("You do not have the right to manage plugins.", "თქვენ არ �
 regGS("Version", "ვერსია");
 regGS("Upload Plugin", "პლაგინის ატვირთვა");
 regGS("Upload", "ატვირთვა");
-regGS("Uninstall", "წაშლა");
+regGS("Uninstall", "ინსტალიაციის გაუქმება");
 regGS("The plugin $1 was sucessfully installed.", "$1 პლაგინი დაყენდა.");
 regGS("No plugins found.", "პლაგინი არ მოიძებნა");
 regGS("Manage", "მართვა");

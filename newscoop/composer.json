@@ -41,8 +41,7 @@
         "knplabs/knp-menu": "2.0.*@dev",
         "raulfraile/ladybug-bundle": "dev-ladybug_v1.0",
         "friendsofsymfony/jsrouting-bundle": "~1.1",
-        "willdurand/expose-translation-bundle": "0.3.*@dev",
-        "ahs/facebook-newscoop-bundle": "*"
+        "willdurand/expose-translation-bundle": "0.3.*@dev"
     },
     "repositories": [
         {

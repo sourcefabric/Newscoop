@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "ახალი ამბების სააგენტოების სტატიების ჩვენება");
-regGS("Display Newswires", "ახალი ამბების სააგენტოების ჩვენება");
+regGS("Display articles of filtered types", "გაფილტრული ტიპის სტატიების ჩვენება");
+regGS("Display Articles of Filtered Types", "გაფილტრული ტიპის სტატიების ჩვენება");
 regGS("Webcode", "ქსელური კოდი");
 regGS("View article", "სტატიის ნახვა");
 regGS("Source", "წყარო");
@@ -71,5 +71,7 @@ regGS("Added", "დაემატა");
 regGS("Access denied.", "წვდომა აკრძალულია");
 regGS("$1 toggled.", "$1 ჩაირთო");
 regGS("$1 articles have been removed", "$1 სტატიები მოიხსნა");
-regGS(" - filtering from _MAX_ records", "- filtering from _MAX_ records");
+regGS(" - filtering from _MAX_ records", "- ფილტრაცია ხდება _MAX_ records");
+regGS("Display newswires articles", "ახალი ამბების სააგენტოების სტატიების ჩვენება");
+regGS("Display Newswires", "ახალი ამბების სააგენტოების ჩვენება");
 ?>

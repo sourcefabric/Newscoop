@@ -324,6 +324,19 @@ class ArticleAuthor extends DatabaseObject
 
         // sets the where conditions
         foreach ($p_parameters as $param) {
+
+            if ($param->getLeftOperand() == 'type') {
+                $whereCondition = 'fk_type_id '.$param->getOperator()->getSymbol().' (SELECT id FROM '.AuthorType::TABLE.' WHERE type="'.str_replace("'", "", $param->getRightOperand()).'")';
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
+            }
+
+            if ($param->getLeftOperand() == 'id') {
+                $whereCondition = 'fk_author_id '.$param->getOperator()->getSymbol().' '.$param->getRightOperand();
+                $selectClauseObj->addWhere($whereCondition);
+                $countClauseObj->addWhere($whereCondition);
+            }
+
             $comparisonOperation = self::ProcessListParameters($param);
             if (sizeof($comparisonOperation) < 1) {
                 break;

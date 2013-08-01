@@ -11,8 +11,9 @@ class Application_Form_Register extends Zend_Form
 {
     public function init()
     {
+        camp_load_translation_strings('users');
         $this->addElement('text', 'email', array(
-            'label' => 'Email',
+            'label' => getGS('Email'),
             'required' => true,
             'filters' => array(
                 'stringTrim',
@@ -23,7 +24,7 @@ class Application_Form_Register extends Zend_Form
         ));
 
         $this->addElement('checkbox', 'terms_of_use', array(
-            'label' => 'Accepting terms of use',
+            'label' => getGS('Accepting terms of use'),
             'required' => true,
             'validators' => array(
                 array('greaterThan', true, array('min' => 0)),
@@ -32,7 +33,7 @@ class Application_Form_Register extends Zend_Form
 
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Continue',
+            'label' => getGS('Continue'),
             'ignore' => true,
         ));
     }
