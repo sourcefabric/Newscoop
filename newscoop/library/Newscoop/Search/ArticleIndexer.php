@@ -45,9 +45,10 @@ class ArticleIndexer
      */
     public function updateIndex($limit = 50)
     {
-        foreach ($this->getArticleRepository()->getIndexBatch($limit) as $article) {
-            $article->setIndexed();
+        $articles = $this->getArticleRepository()->getIndexBatch($limit);
+        foreach ($articles as $article) {
             $articleView = $article->getView();
+            $this->getArticleRepository()->setArticleIndexedNow($article);
             if ($articleView->published !== null) {
                 $this->index->add($articleView);
             } elseif ($articleView->number) {
@@ -56,7 +57,8 @@ class ArticleIndexer
         }
 
         $this->index->commit();
-        $this->em->flush();
+
+        return count($articles);
     }
 
     /**
