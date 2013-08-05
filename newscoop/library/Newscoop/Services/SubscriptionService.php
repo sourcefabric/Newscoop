@@ -62,6 +62,24 @@ class SubscriptionService
 
     }
 
+    /**
+     * Remove Subscription by Id
+     * @param  integer $id - user subscription id
+     * @return void
+     */
+    public function removeById($id) {
+        
+        $subscription = $this->em->getRepository('Newscoop\Subscription\Subscription')
+            ->findOneBy(array(
+                'id' => $id
+            ));
+            
+        if ($subscription) {
+            $subscription->setActive(false);
+            $this->em->flush();
+        }
+    }
+
     public function getOneById($id)
     {
 
