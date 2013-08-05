@@ -233,4 +233,17 @@ class ArticleRepository extends DatatableSource
             ->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
         $query->execute();
     }
+
+    public function setArticleIndexedNow($article)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery("UPDATE Newscoop\Entity\Article a SET a.indexed = :date, a.updated = a.updated WHERE a.number = :number AND a.language = :language")
+                ->setParameters(array(
+                    'date' => new \DateTime(), 
+                    'number' => $article->getNumber(), 
+                    'language' => $article->getLanguageId(), 
+                ));
+
+        $query->execute();
+    }
 }

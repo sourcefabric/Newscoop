@@ -1,4 +1,18 @@
 <?php 
+regGS("Website", "");
+regGS("Twitter", "");
+regGS("Save profile", "");
+regGS("Profile image", "");
+regGS("Organisation", "");
+regGS("Last Name Public", "");
+regGS("Google+", "");
+regGS("Geolocation", "");
+regGS("Gender", "");
+regGS("First Name Public", "");
+regGS("Facebook", "");
+regGS("Date of birth", "");
+regGS("Allow sending emails", "");
+regGS("About me", "");
 regGS("User with email %s is registered already.", "");
 regGS("Username is used. Please use another one.", "");
 regGS("Continue", "");

@@ -155,6 +155,7 @@ $mapPrefixToDir = array(
         '/application/modules/admin/forms/User.php',
         '/application/modules/admin/forms/Profile.php',
         '/application/forms/Register.php',
+        '/application/forms/Profile.php',
     ),
     'user_subscriptions' => array(
         '/admin-files/users/subscriptions',

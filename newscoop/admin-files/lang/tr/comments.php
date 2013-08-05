@@ -44,7 +44,7 @@ regGS("You are about to permanently delete multiple comments.", "");
 regGS("You are about to permanently delete a comment.", "");
 regGS("Website", "");
 regGS("Value is not $1 characters long", "");
-regGS("Username", "");
+regGS("Username", "Kullanıcı adı");
 regGS("User id", "");
 regGS("User ban settings", "");
 regGS("Update comment", "");

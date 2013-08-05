@@ -22,7 +22,7 @@ regGS("Name", "");
 regGS("Code", "");
 regGS("Edit", "");
 regGS("Login", "");
-regGS("Password", "");
+regGS("Password", "Şifreniz");
 regGS("Site", "");
 regGS("Path", "");
 regGS("Go up", "");

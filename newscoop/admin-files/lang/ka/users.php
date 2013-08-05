@@ -1,4 +1,18 @@
 <?php 
+regGS("Website", "");
+regGS("Twitter", "");
+regGS("Save profile", "");
+regGS("Profile image", "");
+regGS("Organisation", "");
+regGS("Last Name Public", "");
+regGS("Google+", "");
+regGS("Geolocation", "");
+regGS("Gender", "სქესი");
+regGS("First Name Public", "");
+regGS("Facebook", "");
+regGS("Date of birth", "");
+regGS("Allow sending emails", "");
+regGS("About me", "");
 regGS("User with email %s is registered already.", "");
 regGS("Username is used. Please use another one.", "");
 regGS("Continue", "");
@@ -190,7 +204,6 @@ regGS("User account information changed for \"$1\"", "\"$1\"-სთვის მ
 regGS("Permissions changed for user \"$1\"", "\"$1\" მომხმარებლისთვის ნებართვები შეიცვალა.");
 regGS("65 or over", "65-ის ან მეტი");
 regGS("Title", "");
-regGS("Gender", "სქესი");
 regGS("Mr.", "");
 regGS("Mrs.", "");
 regGS("Ms.", "");
