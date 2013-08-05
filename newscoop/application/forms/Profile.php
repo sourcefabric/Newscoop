@@ -13,6 +13,7 @@ class Application_Form_Profile extends Zend_Form
 {
     public function init()
     {
+        camp_load_translation_strings('users');
         $this->setAttrib('enctype', 'multipart/form-data');
 
         $this->addElement('text', 'first_name', array(
