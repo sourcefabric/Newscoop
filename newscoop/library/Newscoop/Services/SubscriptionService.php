@@ -10,6 +10,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Subscription\Subscription;
 use Newscoop\Subscription\SubscriptionData;
+use Symfony\Component\Yaml\Parser;
 
 /**
  */
@@ -19,11 +20,25 @@ class SubscriptionService
     protected $em;
 
     /**
+     * Subscriptions config
+     * @var array
+     */
+    private $subscriptionsConfig;
+
+    /**
      * @param Doctrine\ORM\EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $subscriptionsConfigFile = __DIR__ . '/../../../application/configs/subscriptions/subscriptions.yml';
+
+        if (file_exists($subscriptionsConfigFile)) {
+            $yamlParser = new Parser();
+            $this->subscriptionsConfig = $yamlParser->parse(file_get_contents($subscriptionsConfigFile));
+        } else {
+            $this->subscriptionsConfig = array();
+        }
     }
 
     public function getSubscriptionsConfig() {
