@@ -38,6 +38,11 @@ class Issue
      */
     private $issueNumber;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
+     * @ORM\JoinColumn(name="issue_number", referencedColumnName="Number")
+     * @var Newscoop\Entity\Issue
+     */
     private $issue;
 
     /**
