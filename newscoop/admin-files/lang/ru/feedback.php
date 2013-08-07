@@ -1,4 +1,8 @@
 <?php 
+regGS("No attachment", "");
+regGS("You are about to permanently delete multiple messages.", "");
+regGS("You are about to permanently delete a message.", "");
+regGS("Are you sure you want to do it?", "");
 regGS("Approve", "Утвердить");
 regGS("Approved.", "Утверждено");
 regGS("at", "на");
@@ -14,7 +18,6 @@ regGS("Messages status change to $1.", "Статус сообщения изме
 regGS("Message status change to $1.", "Статус сообщения изменен на $1.");
 regGS("Messages updated.", "Сообщения обновлены");
 regGS("Message updated.", "Сообщение обновлено");
-regGS("No atachment", "Нет вложения");
 regGS("Processed", "Обработанное");
 regGS("Reply", "Ответ");
 regGS("Reply to message", "Ответить на собщение");

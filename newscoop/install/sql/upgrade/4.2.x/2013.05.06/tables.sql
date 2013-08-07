@@ -5,7 +5,7 @@ ALTER TABLE `ArticleRendition` CHANGE `articleNumber` `articleNumber` INT( 11 ) 
 ALTER TABLE `ArticleRendition` CHANGE `imageSpecs` `imageSpecs` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
 
 ALTER TABLE `package_item` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-ALTER TABLE `package_item` CHANGE `id` `id` INT( 11 ) NOT NULL;
+ALTER TABLE `package_item` CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `package_item` CHANGE `package_id` `package_id` INT( 11 ) DEFAULT NULL;
 ALTER TABLE `package_item` CHANGE `image_id` `image_id` INT( 11 ) DEFAULT NULL;
 ALTER TABLE `package_item` CHANGE `offset` `offset` INT( 11 ) NOT NULL;

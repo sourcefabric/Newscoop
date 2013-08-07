@@ -14,7 +14,7 @@ regGS("Large ($1 pixels)", "დიდი ($1 პიქსელი)");
 regGS("Hide human-readable field names", "ადამიანის მიერ წაკითხვადი ველების დამალვა");
 regGS("Editor size", "რედაქტორის ზომა");
 regGS("Edit and translate human-readable field names", "ადამიანის მიერ წაკითხვადი ველების რედაქტირება და თარგმნა");
-regGS("Custom", "საგანგებოდ დამზადებული");
+regGS("Custom", "პერსონალიზებული");
 regGS("Characters limit", "სიმბოლოების ლიმიტი");
 regGS("The template name may only contain letters and the underscore (_) character.", "შაბლონის სახელი უნდა შეიცავდე მხოლოს ასოებს და \"_\" სიმბოლოს.");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "ველის სახელი უკვე გამოყენებული იქნა, როგორც სტატიის საბაზისო პარამეტრი.  ველის შემადგენლობა არ იქნება ნაჩვენები შაბლონებში.    ");
@@ -38,7 +38,7 @@ regGS("Template Field Name", "შაბლონის ველის სახ
 regGS("Show/Hide", "ჩვენება/დამალვა");
 regGS("Renaming article type field", "სტატიის ტიპის ველის სახელის შეცვლა");
 regGS("Rename field", "ველის სახელის შეცვლა");
-regGS("Reassign a field type", "ველის ტიპის ხელახლა განაწილება");
+regGS("Reassign a field type", "ველის ტიპის ხელახლა მინიჭება");
 regGS("Display Name", "საჩვენებელი სახელი");
 regGS("Are you sure you want to $1 the article type field $2?", "დარწმუნებული ხართ რომ გსურთ $1 $2 სტატიის ტიპის ველი?");
 regGS("Adding new article type", "ახალი სტატიის ტიპის დამატება");

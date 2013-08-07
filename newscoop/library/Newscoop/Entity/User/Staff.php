@@ -30,13 +30,13 @@ class Staff extends User implements \Zend_Acl_Role_Interface
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      */
-    private $groups;
+    protected $groups;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role")
      * @var Newscoop\Entity\Acl\Role
      */
-    private $role;
+    protected $role;
 
     /**
      */

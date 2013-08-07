@@ -1,11 +1,11 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "გთხოვთ შეიყვანოთ \"მოდერატორის მისამართი\"");
-regGS("click to see issues", "დააწირეთ გამოცემების სანახავად");
+regGS("click to see issues", "დააჭირეთ გამოცემების სანახავად");
 regGS("Moderator Address", "მოდერატორის მისამართი");
 regGS("From Address", "მისამართიდან");
 regGS("Use CAPTCHA to prevent spam?", "გსურთ გამოიყენოთ CAPTCHA სპამის თავიდან ასაცილებლად?");
 regGS("Public allowed to comment?", "ყველამ შეძლოს კომენტარის დატოვება");
-regGS("Enable spam blocking?", "ჩაირთოს სპამის ბლოკირება?");
+regGS("Enable spam blocking?", "ჩაირთოს სპამის ბლოკი?");
 regGS("The subscription settings for '$1' could not be added.", "გამოწერის პარამეტრები '$1'-სთვის ვერ დაემატა.");
 regGS("The publication name you specified conflicts with publication '$1'.", "თქვენს მიერ შეყვანილი პუბლიკაციის სახელი ემთვევა \"$1' პუბლიკაციას.");
 regGS("The publication alias you specified conflicts with publication '$1'.", "თქვენს მიერ აღნიშნული პუბლიკაციის ფსევდონიმი ემთხვევა '$1' პუბლიკაციას.");
@@ -36,7 +36,7 @@ regGS("Default time period", "საწყისი დროის პერი
 regGS("Go To Issues", "გამოცემებზე გადასვლა");
 regGS("Delete publication $1", "$1 პუბლიკაციის წაშლა");
 regGS("No publications.", "პუბლიკაციები არ არსებობს.");
-regGS("Default Site Alias", "ნაგულისხმევი გვერდის მეტსახელი");
+regGS("Default Site Alias", "ნაგულისხმევი გვერდის ფსევდონიმი");
 regGS("URL Type", "URL-ის ტიპი");
 regGS("Country<BR><SMALL>(click to edit)</SMALL>", "ქვეყანა<BR><SMALL>(დააჭირეთ რედაქტირებისთვის)</SMALL>");
 regGS("Delete alias $1", "$1 ფსევდონიმის წაშლა");
@@ -66,7 +66,7 @@ regGS("The site alias $1 could not be modified.", "გვერდის $1 ფ�
 regGS("Are you sure you want to delete the alias $1?", "დარწმუნებული ხართ რომ გსურთ $1 ფსევდონიმის წაშლა?");
 regGS("Deleting alias", "ფსევდონიმის წაშლა");
 regGS("The alias $1 could not be deleted.", "$1 ფსევდონიმი ვერ წაიშალა.");
-regGS("$1 is the default publication alias, it can not be deleted.", "$1 არის ნაგულისხმევი პუბლიკაციის მეტსახელი, მისი წაშლა შეუძლებელია. ");
+regGS("$1 is the default publication alias, it can not be deleted.", "$1 არის ნაგულისხმევი პუბლიკაციის ფსევდონიმი, მისი წაშლა შეუძლებელია. ");
 regGS("You do not have the right to add publications.", "თქვენ არ გაქვთ პუბლიკაციის დამატების ულფება.");
 regGS("There are $1 issue(s) left.", "დარჩენილია $1 გამოცემა(ები).");
 regGS("Time Unit", "დროის მონაკვეთი");

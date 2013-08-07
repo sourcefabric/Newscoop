@@ -468,7 +468,7 @@ $(document).ready(function() {
             return true;
         });
 
-        var leave_links = ['/admin', '/admin/auth/logout', '/admin/application/help'];
+        var leave_links = ['/admin', '/admin/logout', '/admin/application/help'];
         var leave_links_length = leave_links.length;
 
         for (var lind = 0; lind < leave_links_length; lind++) {

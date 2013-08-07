@@ -1,4 +1,5 @@
 <?php 
+regGS("Recommended", "");
 regGS("There are no more comments", "لا يوجد المزيد من التعليقات");
 regGS("Show more comments", "عرض المزيد من التعليقات");
 regGS("Unrecommend", "إلغاء التوصية");

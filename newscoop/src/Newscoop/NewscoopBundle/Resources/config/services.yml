@@ -4,11 +4,7 @@ services:
         arguments: ["@newscoop.plugins.manager", "@service_container"]
         tags:
             - { name: routing.loader }
-    newscoop.gimme.listener.access_listener:
-        class: Newscoop\NewscoopBundle\EventListener\AccessListener
-        arguments:  ["@zend_router", "@user"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.doctrine.event_dispatcher_proxy:
         class: Newscoop\Doctrine\EventDispatcherProxy
         arguments: ["@event_dispatcher"]
@@ -40,5 +36,17 @@ services:
         tags:
             - { name: twig.extension }
 
+    newscoop_newscoop.password_encoder:
+        class: Newscoop\NewscoopBundle\Security\Encoder\NewscoopPasswordEncoder
+
+    newscoop_newscoop.security.authentication.success_handler:
+        class: %newscoop_newscoop.security.authentication.success_handler.class%
+        public: false
+        arguments:  ['@security.http_utils', {}, '@auth.adapter']
+
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
+    newscoop_newscoop.security.authentication.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationSuccessHandler"
+    security.authentication.failure_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFailedHandler"
+    security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
+    security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"

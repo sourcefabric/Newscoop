@@ -8,7 +8,7 @@
 
 namespace Newscoop\EventDispatcher\Events;
 
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\EventDispatcher\GenericEvent as SymfonyGenericEvent;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * Collect Response objects from plugins admin iterface hooks.
  */
-class PluginHooksEvent extends GenericEvent
+class PluginHooksEvent extends SymfonyGenericEvent
 {	
 	/**
 	 * Array with Response objects from hooks

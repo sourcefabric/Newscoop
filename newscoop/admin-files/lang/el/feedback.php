@@ -1,4 +1,8 @@
 <?php 
+regGS("No attachment", "");
+regGS("You are about to permanently delete multiple messages.", "");
+regGS("You are about to permanently delete a message.", "");
+regGS("Are you sure you want to do it?", "");
 regGS("Approve", "Έγκριση");
 regGS("Approved.", "Εγκρίθηκε.");
 regGS("at", "σε");
@@ -14,7 +18,6 @@ regGS("Messages status change to $1.", "Η κατάσταση του μηνύμ�
 regGS("Message status change to $1.", "Η κατάσταση μηνύματος άλλαξε σε $1.");
 regGS("Messages updated.", "Τα μηνύματα ενημερώθηκαν.");
 regGS("Message updated.", "Το μήνυμα ενημερώθηκε.");
-regGS("No atachment", "Δεν υπάρχει συνημμένο ");
 regGS("Processed", "Επεξεργασμένα");
 regGS("Reply", "Απάντηση");
 regGS("Reply to message", "Απάντηση στο μήνυμα");

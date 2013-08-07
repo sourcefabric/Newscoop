@@ -16,9 +16,9 @@ require_once __DIR__ . '/../constants.php';
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Debug\Debug;
 
 error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
-
 $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
 
 // check if this is upgrade
@@ -53,6 +53,9 @@ require_once __DIR__ . '/../application/AppKernel.php';
 if (APPLICATION_ENV === 'production') {
     $kernel = new AppKernel('prod', false);
 } else if (APPLICATION_ENV === 'development' || APPLICATION_ENV === 'dev') {
+    $current_error_reporting = error_reporting();
+    Debug::enable();
+    error_reporting($current_error_reporting);
     $kernel = new AppKernel('dev', true);
 } else {
     $kernel = new AppKernel(APPLICATION_ENV, true);
@@ -60,29 +63,6 @@ if (APPLICATION_ENV === 'production') {
 
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
-
-try {
-    if (strpos($_SERVER['REQUEST_URI'], '/api') !== false) {
-        $response = $kernel->handle($request);
-    } else {
-        $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
-    }
-
-    $response->send();
-    $kernel->terminate($request, $response);
-} catch (NotFoundHttpException $e) {
-    $container = \Zend_Registry::get('container');
-
-    // Fill zend application options
-    $config = $container->getParameterBag()->all();
-    $application = new \Zend_Application(APPLICATION_ENV);
-    $iniConfig = APPLICATION_PATH . '/configs/application.ini';
-    if (file_exists($iniConfig)) {
-        $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
-        $config = $application->mergeOptions($config, $userConfig->toArray());
-    }
-
-    $application->setOptions($config);
-    $application->bootstrap();
-    $application->run();
-}
+$response = $kernel->handle($request);
+$response->send();
+$kernel->terminate($request, $response);

@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "Agenturmeldungen anzeigen");
-regGS("Display Newswires", "Agenturmeldungen anzeigen");
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "Webcode");
 regGS("View article", "Artikel ansehen. ");
 regGS("Source", "Quelle");

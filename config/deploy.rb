@@ -1,4 +1,4 @@
-set :application, "example.com"
+set :application, "newscoop-test.sourcefabric.org"
 set :repository,  "git://github.com/sourcefabric/Newscoop.git"
 set :branch, 'stable'
 
@@ -7,7 +7,7 @@ set :runner, "root"
 set :user, "root"
 set :use_sudo, false
 
-server "example.com", :app, :web, :db, :primary => true
+server "newscoop-test.sourcefabric.org", :app, :web, :db, :primary => true
 set :deploy_to, "/var/www/#{application}"
 set :deploy_via, :remote_cache
 set :keep_releases, 3
@@ -16,18 +16,6 @@ set :normalize_asset_timestamps, false
 after "deploy:restart", "deploy:install", "deploy:cleanup"
 
 set :shared_children, ['newscoop/conf', 'newscoop/public/pdf', 'newscoop/public/videos', 'newscoop/public/files', 'newscoop/images', 'newscoop/themes', 'newscoop/vendor', 'newscoop/backup', 'newscoop/plugins']
-
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
-
-# If you are using Passenger mod_rails uncomment this:
-# namespace :deploy do
-#   task :start do ; end
-#   task :stop do ; end
-#   task :restart, :roles => :app, :except => { :no_release => true } do
-#     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-#   end
-# end
 
 namespace :deploy do
     desc "run composer install and ensure all dependencies are installed"

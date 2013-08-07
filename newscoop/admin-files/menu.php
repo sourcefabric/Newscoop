@@ -142,7 +142,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <body>
 <div class="meta-bar">
     <ul>
-        <li><a href="/<?php p($ADMIN); ?>/auth/logout"><?php putGS('Logout'); ?></a></li>
+        <li><a href="/<?php p($ADMIN); ?>/logout"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php p($Campsite['site']['help_url']); ?>" target="_blank"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $g_user->getFirstName() . '</strong>'); ?></li>
     </ul>

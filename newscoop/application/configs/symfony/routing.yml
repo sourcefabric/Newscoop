@@ -1,3 +1,17 @@
+admin_login:
+    pattern:   /admin/login
+    defaults:  { _controller: NewscoopNewscoopBundle:Security:login }
+admin_login_check:
+    pattern:   /admin/login_check
+admin_logout:
+    pattern:   /admin/logout{php}
+    defaults: { php: ".php" }
+fos_js_routing:
+    prefix: /admin
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+_bazinga_exposetranslation:
+    prefix: /admin
+    resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
 gimme:
     type: rest
     prefix: /api
@@ -5,3 +19,6 @@ gimme:
 plugins:
     resource: .
     type: plugins
+zendBridge:
+    prefix: /
+    resource: "@NewscoopZendBridgeBundle/Resources/config/routing.yml"

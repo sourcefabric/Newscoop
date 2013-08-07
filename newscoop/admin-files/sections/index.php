@@ -79,7 +79,7 @@ if (count($allSections) > 0) {
 			<?php p($section->getSectionNumber()); ?>
 		</TD>
 		<TD >
-              <A HREF="/<?php p($ADMIN); ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
+              <A HREF="/<?php p($ADMIN); ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php  p($section->getIssueNumber()); ?>&f_section_number=<?php p($section->getSectionNumber()); ?>&f_language_id=<?php  p($section->getLanguageId()); ?>&f_language_selected=<?php  p($section->getLanguageId()); ?>"><?php p(htmlspecialchars($section->getName())); ?></A>
 		</TD>
         <TD ALIGN="CENTER">
             <?php echo $numberOfPublishedArticles.' / '.$numberOfArticles; ?>

@@ -1,4 +1,8 @@
 <?php 
+regGS("No such article type", "ასეთი სტატიის ტიპი არ არსებობს");
+regGS("Multi-line Text", "მრავალხაზიანი ტექსტი");
+regGS("Filter saved", "ფილტრი დამახსოვრებულია");
+regGS("Filter not saved", "ფილტრი არ არის დამახსოვრებული");
 regGS("Not a color", "ეს ფერი არ არის");
 regGS("No such field", "ასეთი ველი არ არსებობს");
 regGS("Color saved", "ფერი დამახსოვრებულია");
@@ -14,7 +18,7 @@ regGS("Open large map", "გახსენით დიდი რუკა");
 regGS("No news available.", "ახალი ამბები არ არის.");
 regGS("Edit Polygon", "პოლიგონის რედაქტირება");
 regGS("Create Polygon", "პოლიგონის შექმნა");
-regGS("Communication error: ", "კომუნიკაციის შეცდომა:");
+regGS("Communication error: ", "კომუნიკაციის ხარვეზი:");
 regGS("Can't fetch news from '$1'", "'$1'-დან ნიუსი არ მოდის");
 regGS("Loading...", "იტვირთება...");
 regGS("Version", "ვერსია");

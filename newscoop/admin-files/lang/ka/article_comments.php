@@ -1,4 +1,5 @@
 <?php 
+regGS("Recommended", "რეკომენდირებული");
 regGS("There are no more comments", "მეტი კომენტარები არ არის");
 regGS("Show more comments", "მეტი კომენტარების ნახვს");
 regGS("Unrecommend", "რეკომენდაციის უკუგდება");

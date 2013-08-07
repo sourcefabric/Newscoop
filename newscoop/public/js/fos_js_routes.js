@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"newscoop_exampleplugin_default_admin":{"tokens":[["text","\/admin\/example_plugin"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

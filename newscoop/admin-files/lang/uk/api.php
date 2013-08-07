@@ -1,4 +1,8 @@
 <?php 
+regGS("No such article type", "");
+regGS("Multi-line Text", "");
+regGS("Filter saved", "");
+regGS("Filter not saved", "");
 regGS("Not a color", "Не кольорове");
 regGS("No such field", "Немає полів");
 regGS("Color saved", "Колір збережено");

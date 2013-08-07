@@ -48,7 +48,7 @@ regGS("OR", "ან");
 regGS("URL Name", "URL-ს სახელი");
 regGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", "მითითებული სექციის ნომერი უკვე არსებობს, გთხოვთ მიუთეთ ახალი, ან შეამოწმეთ არსებულები ჩამონათვალში.");
 regGS("Warning", "გაფრთხილება");
-regGS("You must select a section.", "თქვენ უნდა მონიშნოთ რუბრიკა");
+regGS("You must select a section.", "თქვენ უნდა მონიშნოთ სექცია");
 regGS("You must specify a name for the section.", "მიუთითეთ სექციის სახელი");
 regGS("The section could not be added.", "სექცია ვერ დაემატა.");
 regGS("Add new section", "სექციის დამატება");

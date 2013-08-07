@@ -1,11 +1,24 @@
 <?php 
+regGS("User with email %s is registered already.", "Bu mail adresi kullanımda");
+regGS("Username is used. Please use another one.", "");
+regGS("Continue", "İleri");
+regGS("Accepting terms of use", "Yasal koşulları kabul ediyorum");
+regGS("send confirmation email", "");
+regGS("edit user", "");
+regGS("delete user", "");
+regGS("Verified profile", "");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "");
+regGS("Send email to user:", "");
+regGS("No users found.", "");
+regGS("No records found.", "");
+regGS("No entries to show", "");
+regGS("Display _MENU_ records", "");
+regGS("Are you sure you want to {action}?", "");
+regGS("Active Logins", "");
+regGS(" - filtering from _MAX_ records", "");
 regGS("User renamed.", "");
 regGS("User attributes", "");
 regGS("Rename user '$1'", "");
-regGS("Pending", "");
-regGS("Inactive", "");
-regGS("Do you really want to send confirmation email?", "");
-regGS("Do you really want to delete user?", "");
 regGS("Username is used already", "");
 regGS("User with id '$1' not found", "");
 regGS("User was deleted.", "");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Loading...", "");
+regGS("Latest 20 articles by popularity", "");
+regGS("Articles diagrams", "");
 regGS("Sourcefabric.org blog reader", "Lector del blog de Sourcefabric.org");
 regGS("Sourcefabric.org News reader", "Lector de las noticias de Sourcefabric.org");
 regGS("Feed reader", "Lector");

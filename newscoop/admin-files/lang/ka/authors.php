@@ -1,7 +1,7 @@
 <?php 
 regGS("Translate from", "თარგმანის ფორმა");
 regGS("Total articles", "სულ სტატიები");
-regGS("Skype", "სკაიპი");
+regGS("Skype", "Skype");
 regGS("Save All", "ყველაფრის დამახსოვრება");
 regGS("Reset", "საწყის მდგომარეობაში დაბრუნება");
 regGS("Please enter the last name", "შეიყვანეთ გვარი");
@@ -11,7 +11,7 @@ regGS("Last name", "გვარი");
 regGS("Jabber", "Jabber");
 regGS("General", "ზოგადი");
 regGS("First name", "სახელი");
-regGS("Email", "იმეილი");
+regGS("Email", "ელფოსტა");
 regGS("Delete author", "ავტორის წაშლა");
 regGS("Contacts", "კონტაქტები");
 regGS("Biography", "ბიოგრაფია");

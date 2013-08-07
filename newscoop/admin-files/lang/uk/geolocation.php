@@ -1,5 +1,5 @@
 <?php 
-regGS("Based on GeoNames.org data", "На підставі даних GeoNames.org");
+regGS("Based on GeoNames.org and OpenStreetMap.org data", "");
 regGS("selected marker icon", "значок обраних маркерів");
 regGS("add location to map", "додати локацію на мапу");
 regGS("Video source", "Джерело відео");

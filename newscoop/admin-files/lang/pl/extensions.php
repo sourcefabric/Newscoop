@@ -1,4 +1,7 @@
 <?php 
+regGS("Loading...", "Ładowanie...");
+regGS("Latest 20 articles by popularity", "Popularność ostatnich 20 artykułów.");
+regGS("Articles diagrams", "Wykresy dla artykułów");
 regGS("Sourcefabric.org blog reader", "Nowe posty od Sourcefabric.org");
 regGS("Sourcefabric.org News reader", "Newsy od Sourcefabric.org");
 regGS("Feed reader", "Czytnik newsow");
@@ -23,7 +26,4 @@ regGS("Google gadget", "Gadżet Google");
 regGS("Feed url", "URL źródła");
 regGS("Access Denied", "Dostęp zabroniony");
 regGS("Render diagrams for articles statistics", "Wyświetla wykresy ze statystykami dla artykułów");
-regGS("Loading...", "Ładowanie...");
-regGS("Latest 20 articles by popularity", "Popularność ostatnich 20 artykułów.");
-regGS("Articles diagrams", "Wykresy dla artykułów");
 ?>

@@ -1,0 +1,39 @@
+security:
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Newscoop\Entity\User: 
+            id: newscoop_newscoop.password_encoder
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        user_db:
+            entity: { class: Newscoop\Entity\User, property: username }
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/admin/login$
+            security: false
+
+        admin_area:
+            pattern:    ^/admin
+            provider: user_db
+            form_login:
+                use_forward: true
+                login_path:  admin_login
+                check_path:  admin_login_check
+                success_handler: newscoop_newscoop.security.authentication.success_handler
+            logout:
+                path: admin_logout
+                target: /admin
+                invalidate_session: false
+
+    access_control:
+        - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/password_recovery.php, role: IS_AUTHENTICATED_ANONYMOUSLY }

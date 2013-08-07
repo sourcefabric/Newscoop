@@ -1,4 +1,8 @@
 <?php 
+regGS("No such article type", "");
+regGS("Multi-line Text", "");
+regGS("Filter saved", "");
+regGS("Filter not saved", "");
 regGS("Not a color", "ليس لون");
 regGS("No such field", "الحقل غير موجود");
 regGS("Color saved", "تم حقظ اللون");

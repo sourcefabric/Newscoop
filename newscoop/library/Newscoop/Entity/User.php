@@ -8,22 +8,24 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-use Zend_View_Abstract;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\User\Group;
 use Newscoop\Entity\Author;
 use Newscoop\View\UserView;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Zend_View_Abstract;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
  * @ORM\Table(name="liveuser_users", uniqueConstraints={
  *      @ORM\UniqueConstraint(name="username_idx", columns={"Uname"})
- *      })
- *  @ORM\HasLifecycleCallbacks
+ * })
+ * @ORM\HasLifecycleCallbacks
  */
-class User implements \Zend_Acl_Role_Interface
+class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -38,85 +40,85 @@ class User implements \Zend_Acl_Role_Interface
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=80, name="EMail")
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=TRUE, name="UName")
      * @var string
      */
-    private $username;
+    protected $username;
 
     /**
      * @ORM\Column(type="string", length=60, nullable=TRUE, name="Password")
      * @var string
      */
-    private $password;
+    protected $password;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=TRUE, name="Name")
      * @var string
      */
-    private $first_name;
+    protected $first_name;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=TRUE)
      * @var string
      */
-    private $last_name;
+    protected $last_name;
 
     /**
      * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated", nullable=true)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="integer", length=1)
      * @var int
      */
-    private $status = self::STATUS_INACTIVE;
+    protected $status = self::STATUS_INACTIVE;
 
     /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $is_admin;
+    protected $is_admin;
 
     /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $is_public;
+    protected $is_public;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $points;
+    protected $points;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=TRUE)
      * @var string
      */
-    private $image;
+    protected $image;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
-    private $role;
+    protected $role;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
@@ -126,31 +128,31 @@ class User implements \Zend_Acl_Role_Interface
      *      )
      * @var Doctrine\Common\Collections\Collection;
      */
-    private $groups;
+    protected $groups;
 
     /**
      * @ORM\OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
      * @var Doctrine\Common\Collections\Collection;
      */
-    private $attributes;
+    protected $attributes;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
      * @var Doctrine\Common\Collections\Collection;
      */
-    private $commenters;
+    protected $commenters;
 
     /**
      * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
-    private $subscriber;
+    protected $subscriber;
 
     /**
      * @ORM\OneToOne(targetEntity="Author")
      * @var Newscoop\Entity\Author
      */
-    private $author;
+    protected $author;
 
     /**
      * @param string $email
@@ -189,6 +191,7 @@ class User implements \Zend_Acl_Role_Interface
         $username = preg_replace('~[^\\pL0-9_.]+~u', '-', $username);
         $username = trim($username, '-.');
         $this->username = str_replace('-', ' ', $username);
+
         return $this;
     }
 
@@ -238,7 +241,35 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
+
         return $password_hash === hash($algo, $salt . $password);
+    }
+
+    /**
+     * Get password salt for authentication (symfony)
+     * @return string
+     */
+    public function getSalt()
+    {
+        list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
+        return $salt;
+    }
+
+    /**
+     * Get password for authentication (symfony)
+     * @return [type] [description]
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     */
+    public function eraseCredentials()
+    {
+        return true;
     }
 
     /**
@@ -310,6 +341,7 @@ class User implements \Zend_Acl_Role_Interface
     public function getName()
     {
         $name = $this->getFirstName().' '.$this->getLastName();
+
         return $name;
     }
 
@@ -322,8 +354,6 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string)  $this->first_name.' '.$this->last_name;
     }
-
-
 
     /**
      * Set status
@@ -345,6 +375,7 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         $this->status = $status;
+
         return $this;
     }
 
@@ -397,6 +428,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setEmail($email)
     {
         $this->email = (string) $email;
+
         return $this;
     }
 
@@ -439,6 +471,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setAdmin($admin)
     {
         $this->is_admin = (bool) $admin;
+
         return $this;
     }
 
@@ -461,6 +494,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setPublic($public = true)
     {
         $this->is_public = (bool) $public;
+
         return $this;
     }
 
@@ -497,6 +531,7 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         $this->points = $points;
+
         return $this;
     }
 
@@ -519,6 +554,7 @@ class User implements \Zend_Acl_Role_Interface
     public function addUserType(Group $type)
     {
         $this->groups->add($type);
+
         return $this;
     }
 
@@ -533,6 +569,20 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get user roles for authentication (symfony)
+     * @return array array with roles
+     */
+    public function getRoles()
+    {   
+        $roles = array();
+        foreach($this->groups as $group) {
+            $roles[] = strtoupper(str_replace(" ", "_", $group->getName()));
+        }
+
+        return $roles;
+    }
+
+    /**
      * Set role
      *
      * @param Newscoop\Entity\Acl\Role $role
@@ -541,6 +591,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setRole(Role $role)
     {
         $this->role = $role;
+
         return $this;
     }
 
@@ -631,6 +682,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setImage($image)
     {
         $this->image = $image;
+
         return $this;
     }
 
@@ -760,6 +812,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setSubscriber($subscriber)
     {
         $this->subscriber = $subscriber;
+
         return $this;
     }
 
@@ -782,6 +835,7 @@ class User implements \Zend_Acl_Role_Interface
     public function setAuthor(Author $author = null)
     {
         $this->author = $author;
+
         return $this;
     }
 
@@ -825,6 +879,9 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     *
+     * TODO: move this to user service - it's not a part of entity
+     * 
      * Update user profile
      *
      * @param string $username
@@ -864,6 +921,8 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * TODO: move this to user service - it's not a part of entity
+     * 
      * Get edit view
      *
      * @param Zend_View_Abstract $view
@@ -898,6 +957,8 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * TODO: move this to user service - it's not a part of entity
+     * 
      * Get DataTable view
      *
      * @param Zend_View_Abstract $view
@@ -940,6 +1001,8 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * TODO: move this to user service - it's not a part of entity
+     *  
      * Get url for given action
      *
      * @param string $action
@@ -957,6 +1020,8 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * TODO: move this to user service - it's not a part of entity
+     * 
      * Rename user
      *
      * @param string $username
@@ -968,6 +1033,8 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * TODO: move this to user service - it's not a part of entity
+     * 
      * Render user
      *
      * @return UserView
@@ -1001,5 +1068,20 @@ class User implements \Zend_Acl_Role_Interface
     public function getView()
     {
         return $this->render();
+    }
+
+    public function serialize()
+    {
+        return serialize($this->id);
+    }
+
+    public function unserialize($data)
+    {
+        $this->id = unserialize($data);
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        return $this->id === $user->getId();
     }
 }

@@ -1,4 +1,15 @@
 <?php 
+regGS("town names with wildcards, and lat/lon coordinates", "town names with wildcards, and latitude/longitude coordinates");
+regGS("addresses: street (number), town", "addresses: street (number), town");
+regGS("Use MapQuest Nominatim Search:", "Use MapQuest Nominatim Search:");
+regGS("Use Local GeoNames Search:", "Use Local GeoNames Search:");
+regGS("Preferred address language:", "Preferred address language:");
+regGS("For the Nominatim address search", "For the Nominatim address search");
+regGS("Email from:", "Email from:");
+regGS("Email from must be at least twelve character.", "Email from must be at least twelve characters.");
+regGS("Email contact:", "Email contact:");
+regGS("Email contact must be at least four character.", "Email contact must be at least four characters.");
+regGS("Email Settings", "Email Settings");
 regGS("MailChimp Settings", "MailChimp Settings");
 regGS("List Unique Id:", "List Unique Id:");
 regGS("Facebook Settings", "Facebook Settings");

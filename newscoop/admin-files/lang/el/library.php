@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "Εμφάνιση άρθρων newswire");
-regGS("Display Newswires", "Εμφάνιση Newswires");
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "Webcode");
 regGS("View article", "Προβολή άρθρου");
 regGS("Source", "Πηγή");

@@ -355,13 +355,12 @@ function callServer(p_callback, p_args, p_handle, p_direct)
         },
         'error': function(xhr, textStatus, errorThrown) {
 			window.ajax_had_problems = true;
-        	if(xhr.getResponseHeader('Not-Logged-In'))
+        	if(xhr.status == '401')
         	{
         		flash.hide();
-        		if( !$(document.body).data('loginDialog') )
-        		{
+        		if (!$(document.body).data('loginDialog')) {
         			loginIframe = $('<iframe />')
-        				.attr( 'src', g_admin_url+'/login.php?request=ajax' )
+        				.attr( 'src', g_admin_url+'/login?ajax=true' )
         				.attr( 'frameborder', 0 )
         				.attr( 'width', 500 )
         				.attr( 'height', 400 )
@@ -388,10 +387,10 @@ function callServer(p_callback, p_args, p_handle, p_direct)
         		}
 
                 popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', false);
-        	}
-        	else {
+        	} else {
         		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', false);
         	}
+            
             // store request
             queue.push({
                 callback: p_callback,

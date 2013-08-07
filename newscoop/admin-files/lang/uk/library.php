@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "Показати стрічки статей");
-regGS("Display Newswires", "Показати стрічки");
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "Вебкод");
 regGS("View article", "Перегляд статті");
 regGS("Source", "Джерело");

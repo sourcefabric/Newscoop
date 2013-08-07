@@ -15,7 +15,7 @@ class Application_Plugin_CampPluginAutoload extends Zend_Controller_Plugin_Abstr
      */
     public function dispatchLoopStartup()
     {
-        $includePaths = array(
+     /*   $includePaths = array(
             'classes',
             'template_engine/classes',
             'template_engine/metaclasses',
@@ -34,6 +34,6 @@ class Application_Plugin_CampPluginAutoload extends Zend_Controller_Plugin_Abstr
                     )));
                 }
             }
-        }
+        }*/
     }
 }

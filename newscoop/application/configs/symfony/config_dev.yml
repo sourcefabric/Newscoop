@@ -5,9 +5,6 @@ framework:
     router:
         resource: "%kernel.root_dir%/configs/symfony/routing_dev.yml"
     profiler: { only_exceptions: false }
-    fragments:
-        enabled:              false
-        path:                 /_fragment
 
 monolog:
     handlers:
@@ -26,3 +23,6 @@ monolog:
 web_profiler:
     toolbar: true
     intercept_redirects: false
+
+assetic:
+    use_controller: false

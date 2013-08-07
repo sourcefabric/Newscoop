@@ -1,10 +1,15 @@
 <?php 
+regGS("list", "სია");
+regGS("filter", "ფილტრი");
+regGS("In Lists?", "სიაში?");
+regGS("Are you sure you want to $1 articles of article type $2?", "დარწმუნებული ხართ, რომ გსურთ $2 სტატიის ტიპის $1 სატატიები?");
+regGS("$1 articles of article type $2", "$2 სტატიის ტიპის $1 სტატიები ");
 regGS("Hide human-readable field names", "ადამიანის მიერ წაკითხვადი ველების სახელების დამალვა");
 regGS("Edit and translate human-readable field names", "ადამიანის მიერ წაკითხვადი ველების სახელების რედაქტირება და თარგმნა");
 regGS("The template name may only contain letters and the underscore (_) character.", "შაბლონის სახელი უნდა შეიცავდეს მხოლოდ ასოებსა და \"_\" ქვედა ტირეს ");
 regGS("Rename article type '$1'", "შეცვალეთ '$1' ტიპის სტატიის სახელი");
 regGS("Invalid article type '$1'.", "'$1' არასწორი სტატიის ტიპი");
-regGS("You cannot merge the same type into itself.", "ერთი და იგივე ტიპის შეერთება შეუძლებელია");
+regGS("You cannot merge the same type into itself.", "ერთი და იგივე ტიპის მის თავთან შეერთება შეუძლებელია.");
 regGS("View the source ($1) version of $2", "$2-ის ($2) საწყისი ვერსიის ჩვენება");
 regGS("View of original ($1) $2", "ორიგინალის ჩვენება ($1) $2");
 regGS("To return to the preview click here", "გადახედვაზე დასაბრუნებლად დააჭირეთ აქ");
