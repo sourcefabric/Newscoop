@@ -21,7 +21,7 @@ regGS("Type", "");
 regGS("Name", "");
 regGS("Code", "");
 regGS("Edit", "");
-regGS("Login", "");
+regGS("Login", "İleri");
 regGS("Password", "Şifreniz");
 regGS("Site", "");
 regGS("Path", "");
