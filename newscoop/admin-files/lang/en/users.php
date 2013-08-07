@@ -1,4 +1,6 @@
 <?php 
+regGS("Password confirmation does not match your password.", "Password confirmation does not match your password.");
+regGS("Password Confirmation", "Password Confirmation");
 regGS("Website", "Website");
 regGS("Twitter", "Twitter");
 regGS("Save profile", "Save profile");
