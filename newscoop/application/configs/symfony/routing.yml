@@ -2,9 +2,10 @@ admin_login:
     pattern:   /admin/login
     defaults:  { _controller: NewscoopNewscoopBundle:Security:login }
 admin_login_check:
-    pattern:   /admin/example_plugin/login_check
+    pattern:   /admin/login_check
 admin_logout:
-    pattern:   /admin/example_plugin/logout
+    pattern:   /admin/logout{php}
+    defaults: { php: ".php" }
 fos_js_routing:
     prefix: /admin
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
@@ -18,3 +19,6 @@ gimme:
 plugins:
     resource: .
     type: plugins
+zendBridge:
+    prefix: /
+    resource: "@NewscoopZendBridgeBundle/Resources/config/routing.yml"

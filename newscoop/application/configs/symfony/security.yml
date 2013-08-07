@@ -22,7 +22,7 @@ security:
             security: false
 
         admin_area:
-            pattern:    ^/admin/example_plugin
+            pattern:    ^/admin
             provider: user_db
             form_login:
                 use_forward: true
@@ -30,7 +30,7 @@ security:
                 check_path:  admin_login_check
                 success_handler: newscoop_newscoop.security.authentication.success_handler
             logout:
-                path: /admin/example_plugin/logout
+                path: admin_logout
                 target: /admin
                 invalidate_session: false
 

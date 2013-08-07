@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "28cc854d9f27b18185aeac26356a2681",
+    "hash": "15b23d989ba7c1d4f26e4a3c72c820e6",
     "packages": [
         {
             "name": "ahs/facebook-newscoop-bundle",
@@ -1431,7 +1431,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1478,9 +1478,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1594,7 +1594,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1722,7 +1722,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/bc4c8ddf89c1daba6d24d696e261e088677f49af",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/66d2fe197bacb82f7b476099144f03596719b24d",
                 "reference": "ab2ca25",
                 "shasum": ""
             },
@@ -2199,6 +2199,52 @@
             "time": "2013-07-17 16:11:27"
         },
         {
+            "name": "newscoop/facebook-newscoop-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/FacebookNewscoopBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newscoop/plugin-NewscoopFacebook.git",
+                "reference": "f50855eeba38a3d522d4c9ad5bb2b6ac85593775"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newscoop/plugin-NewscoopFacebook/zipball/f50855eeba38a3d522d4c9ad5bb2b6ac85593775",
+                "reference": "f50855eeba38a3d522d4c9ad5bb2b6ac85593775",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "kriswallsmith/buzz": ">=v0.9",
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\FacebookNewscoopBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "mikolajczuk.private@gmail.com"
+                }
+            ],
+            "description": "Usefull sevices for integration Newscoop and Facebook",
+            "keywords": [
+                "cms",
+                "facebook",
+                "integration",
+                "newscoop"
+            ],
+            "time": "2013-08-02 07:37:42"
+        },
+        {
             "name": "newscoop/plugins-installer",
             "version": "dev-master",
             "target-dir": "Newscoop/Composer",
@@ -2339,7 +2385,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -2597,6 +2643,52 @@
                 "twig"
             ],
             "time": "2013-07-20 23:17:50"
+        },
+        {
+            "name": "recaptcha/php5",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/AlekseyKorzun/reCaptcha-PHP-5.git",
+                "reference": "v1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/AlekseyKorzun/reCaptcha-PHP-5/zipball/v1.0.0",
+                "reference": "v1.0.0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Captcha": "Package"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksey Korzun",
+                    "email": "al.ko@webfoundation.net",
+                    "homepage": "http://www.alekseykorzun.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A properly coded PHP 5 reCaptcha class that will allow you to interact with Google'sreCaptcha API.",
+            "homepage": "https://github.com/AlekseyKorzun/reCaptcha-PHP-5",
+            "keywords": [
+                "api",
+                "captcha",
+                "google",
+                "php",
+                "recaptcha"
+            ],
+            "time": "2013-06-17 03:37:20"
         },
         {
             "name": "rezzza/mailchimp",

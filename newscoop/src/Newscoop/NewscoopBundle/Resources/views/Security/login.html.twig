@@ -17,16 +17,23 @@
     <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/crypt.js"></script>
 </head>
 <body>
-    <form name="login_form" action="{{ path('admin_login_check') }}" method="post">
+    <form name="login_form" action="{{ path('admin_login_check') }}{% if app.request.query.has('ajax') %}?ajax=true{% endif %} " method="post">
         <div class="login_box">
+            {% if not app.request.query.has('ajax') %}
             <div class="logobox">
                 <img src="{{ Newscoop['ADMIN_IMAGE_BASE_URL'] }}/sign_big.gif" border="0" alt="" />
             </div>
+            {% endif %}
             <h2>{{ getGS("Login") }}</h2>
             <noscript>
                {{ getGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.") }}
             </noscript>
-            <div class="login_error"></div>
+
+            <div class="login_error">
+            {% if error %}
+                {{ getGS(error.message) }}
+            {% endif %}
+            </div>
 
             <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
                 <tr>
@@ -44,7 +51,7 @@
                     <td align="right"><strong>{{ getGS("Password") }}:</strong></td>
                     <td>
                         <input type="password" name="_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="{{ getGS("Please enter your password.") }}" />
-                        <input type="hidden" name="_target_path" value="{% if app.request.server.get('REDIRECT_URL') != path('admin_login') %}{{ app.request.server.get('REDIRECT_URL') }}{% else %}/admin{% endif %}" />
+                        <input type="hidden" name="_target_path" value="{% if app.request.server.get('REDIRECT_URL') != path('admin_login') %}{{ app.request.server.get('REDIRECT_URL') }}?{{ app.request.server.get('REDIRECT_QUERY_STRING') }}{% else %}/admin{% endif %}" />
                     </td>
                 </tr>
                 <tr>

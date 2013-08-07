@@ -45,7 +45,7 @@ class ZendApplicationListener
             $application->setOptions($config);
             $application->bootstrap();
 
-            // check here if user is authenticated in zend - if not then forward him to login page.
+            \Zend_Registry::set('zend_application', $application);
         }
     }
 }

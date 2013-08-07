@@ -35,12 +35,12 @@ class SecurityController extends Controller
             'last_username'     => $request->getSession()->get(SecurityContext::LAST_USERNAME),
             'error'             => $error,
             'languages'         => $languages,
-            'defaultLanguage'   => $this->getDefaultLanguage($request),
+            'defaultLanguage'   => $this->getDefaultLanguage($request, $languages),
             'maxLoginAttemptsExceeded' => \LoginAttempts::MaxLoginAttemptsExceeded()
         );
     }
 
-    private function getDefaultLanguage($request)
+    private function getDefaultLanguage($request, $languages)
     {
         $defaultLanguage = 'en';
 

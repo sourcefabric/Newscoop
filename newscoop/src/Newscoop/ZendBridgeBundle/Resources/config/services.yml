@@ -4,9 +4,3 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 31 }
-
-    newscoop.zendbridge.exception_listener:
-        class: Newscoop\ZendBridgeBundle\EventListener\ExceptionListener
-        arguments: ["@service_container"]
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 1 }
