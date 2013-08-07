@@ -1,4 +1,6 @@
 <?php 
+regGS("Password confirmation does not match your password.", "Parola (tekrar) ve Parola alanları aynı değil.");
+regGS("Password Confirmation", "Şifrenizi tekrar girin");
 regGS("Website", "");
 regGS("Twitter", "Twitter");
 regGS("Save profile", "Profil'i kaydet");
