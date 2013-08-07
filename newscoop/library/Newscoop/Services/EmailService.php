@@ -49,7 +49,7 @@ class EmailService
             'format' => null,
         ));
 
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail());
+        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), \SystemPref::Get('EmailFromAddress'));
     }
 
     /**
@@ -66,7 +66,7 @@ class EmailService
             'format' => null,
         ));
 
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail());
+        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), \SystemPref::Get('EmailFromAddress'));
     }
 
     /**
