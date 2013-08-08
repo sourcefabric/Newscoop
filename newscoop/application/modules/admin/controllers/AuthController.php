@@ -23,7 +23,7 @@ class Admin_AuthController extends Zend_Controller_Action
         if ($auth->hasIdentity()) {
             Article::UnlockByUser((int) $auth->getIdentity());
             $auth->clearIdentity();
-            
+            setcookie('NO_CACHE', 'NO', time()-3600, '/');
             unset($_SESSION['statDisplayed']);
         }
 
