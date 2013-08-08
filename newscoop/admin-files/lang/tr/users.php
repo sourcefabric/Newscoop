@@ -1,4 +1,5 @@
 <?php 
+regGS("Terms of use have to be accepted.", "Yasal bilgiler bölümünü okuduktan sonra şartları kabul etmelisiniz");
 regGS("User with given username exists.", "Bu isim kullanılıyor");
 regGS("Password confirmation does not match your password.", "Parola (tekrar) ve Parola alanları aynı değil.");
 regGS("Password Confirmation", "Şifrenizi tekrar girin");
