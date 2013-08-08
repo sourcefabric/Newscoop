@@ -29,15 +29,15 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
     foreach ($params as $index=>$param) {
         if (strcasecmp('fromstart', $param) == 0) {
             $url = 'default_url';
-            unset($p_params[$index]);
-            $p_params['options'] = implode(', ', $p_params);
+            unset($params[$index]);
+            $p_params['options'] = implode(', ', $params);
             break;
         }
     }
 
     // sets the URL parameter option
     $context->$url->uri_parameter = $p_params['options'];
-	
+
     return $context->$url->url_parameters;
 } // fn smarty_function_urlparameters
 

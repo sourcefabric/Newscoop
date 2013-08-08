@@ -13,36 +13,37 @@ class Application_Form_Profile extends Zend_Form
 {
     public function init()
     {
+        camp_load_translation_strings('users');
         $this->setAttrib('enctype', 'multipart/form-data');
 
         $this->addElement('text', 'first_name', array(
-            'label' => 'First Name',
+            'label' => getGS('First Name'),
             'filters' => array('stringTrim'),
         ));
 
         $this->addElement('text', 'last_name', array(
-            'label' => 'Last Name',
+            'label' => getGS('Last Name'),
             'filters' => array('stringTrim'),
         ));
 
         $this->addElement('text', 'username', array(
-            'label' => 'Username',
+            'label' => getGS('Username'),
             'filters' => array('stringTrim'),
             'required' => true,
         ));
 
         $this->addElement('password', 'password', array(
-            'label' => 'Password',
+            'label' => getGS('Password'),
         ));
 
         $this->addElement('file', 'image', array(
-            'label' => 'Profile image',
+            'label' => getGS('Profile image'),
         ));
 
         $profile = new Zend_Form_SubForm();
 
         $profile->addElement('radio', 'gender', array(
-            'label' => 'Gender',
+            'label' => getGS('Gender'),
             'multioptions' => array(
                 'male' => 'Male',
                 'female' => 'Female',
@@ -50,64 +51,64 @@ class Application_Form_Profile extends Zend_Form
         ));
 
         $profile->addElement('textarea', 'bio', array(
-            'label' => 'About me',
+            'label' => getGS('About me'),
             'filters' => array('stringTrim'),
             'cols' => 60,
             'rows' => 4,
         ));
 
         $profile->addElement('text', 'birth_date', array(
-            'label' => 'Date of birth',
+            'label' => getGS('Date of birth'),
             'class' => 'date',
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'organisation', array(
-            'label' => 'Organisation',
+            'label' => getGS('Organisation'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'website', array(
-            'label' => 'Website',
+            'label' => getGS('Website'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'twitter', array(
-            'label' => 'Twitter',
+            'label' => getGS('Twitter'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'facebook', array(
-            'label' => 'Facebook',
+            'label' => getGS('Facebook'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'google', array(
-            'label' => 'Google+',
+            'label' => getGS('Google+'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('text', 'geolocation', array(
-            'label' => 'Geolocation',
+            'label' => getGS('Geolocation'),
             'filters' => array('stringTrim'),
         ));
 
         $profile->addElement('checkbox', 'first_name_public', array(
-            'label' => 'First Name Public',
+            'label' => getGS('First Name Public'),
         ));
 
         $profile->addElement('checkbox', 'last_name_public', array(
-            'label' => 'Last Name Public',
+            'label' => getGS('Last Name Public'),
         ));
 
         $profile->addElement('checkbox', 'email_public', array(
-            'label' => 'Allow sending emails',
+            'label' => getGS('Allow sending emails'),
         ));
 
         $this->addSubForm($profile, 'attributes');
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Save profile',
+            'label' => getGS('Save profile'),
             'ignore' => true,
         ));
     }
