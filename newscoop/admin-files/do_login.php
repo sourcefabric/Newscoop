@@ -99,6 +99,7 @@ if ($auth->hasIdentity()) {
             $this->_forward($this->_getParam('action'), $this->_getParam('controller'), 'admin');
         } else { // redirect GET request
             setcookie("TOL_Language", $f_login_language);
+            setcookie('NO_CACHE', '1', NULL, '/');
             if (array_key_exists(SecurityToken::SECURITY_TOKEN, $_GET)) {
                 $_SERVER['REQUEST_URI'] .= sprintf('&%s=%s', SecurityToken::SECURITY_TOKEN, SecurityToken::GetToken());
             }
