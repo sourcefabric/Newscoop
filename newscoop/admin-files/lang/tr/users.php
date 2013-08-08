@@ -1,4 +1,5 @@
 <?php 
+regGS("User with given username exists.", "Bu isim kullanılıyor");
 regGS("Password confirmation does not match your password.", "Parola (tekrar) ve Parola alanları aynı değil.");
 regGS("Password Confirmation", "Şifrenizi tekrar girin");
 regGS("Website", "");
@@ -16,7 +17,7 @@ regGS("Date of birth", "");
 regGS("Allow sending emails", "");
 regGS("About me", "Hakkımda");
 regGS("User with email %s is registered already.", "Bu mail adresi kullanımda");
-regGS("Username is used. Please use another one.", "");
+regGS("Username is used. Please use another one.", "Bu isim kullanılıyor");
 regGS("Continue", "İleri");
 regGS("Accepting terms of use", "Yasal koşulları kabul ediyorum");
 regGS("send confirmation email", "");

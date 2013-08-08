@@ -68,7 +68,7 @@ class DashboardController extends Zend_Controller_Action
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
                     case 'username_conflict':
-                        $form->username->addError($this->view->translate("User with given username exists."));
+                        $form->username->addError(getGS("User with given username exists."));
                         break;
 
                     default:

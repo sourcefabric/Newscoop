@@ -1,4 +1,5 @@
 <?php 
+regGS("User with given username exists.", "");
 regGS("Password confirmation does not match your password.", "");
 regGS("Password Confirmation", "");
 regGS("Website", "");

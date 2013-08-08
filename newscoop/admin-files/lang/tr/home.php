@@ -77,7 +77,7 @@ regGS("Go to dashboard", "");
 regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.", "");
 regGS("Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.", "");
 regGS("Newscoop cache was cleaned up", "");
-regGS("Dashboard", "");
+regGS("Dashboard", "Benim sayfam");
 regGS("Your changes will be saved after login.", "");
 regGS("Upload backup file", "");
 regGS("The file $1 has been uploaded successfully.", "");
