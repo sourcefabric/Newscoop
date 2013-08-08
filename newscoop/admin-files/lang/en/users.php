@@ -1,4 +1,5 @@
 <?php 
+regGS("Terms of use have to be accepted.", "Terms of use have to be accepted.");
 regGS("User with given username exists.", "User with given username exists.");
 regGS("Password confirmation does not match your password.", "Password confirmation does not match your password.");
 regGS("Password Confirmation", "Password Confirmation");
