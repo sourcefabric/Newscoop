@@ -1,9 +1,12 @@
 <?php 
+regGS("No such article type", "");
+regGS("Multi-line Text", "");
+regGS("Filter saved", "");
+regGS("Filter not saved", "");
 regGS("Not a color", "");
 regGS("No such field", "");
 regGS("Color saved", "");
 regGS("Color not saved", "");
-<<<<<<< HEAD
 regGS("Topic created", "");
 regGS("The topic name is already in use by another topic.", "");
 regGS("Complex Date", "");
@@ -59,6 +62,4 @@ regGS("Single-line Text", "");
 regGS("Multi-line Text with WYSIWYG", "");
 regGS("URL \"$1\" is invalid or is not an image.", "");
 regGS("URL \"$1\" is not an image.", "");
-=======
->>>>>>> 39153157ae57358a61e660e8e5e2a485ace9633d
 ?>

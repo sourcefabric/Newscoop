@@ -13,7 +13,7 @@
 /**
  * Class CampTemplate
  */
-final class CampTemplate extends SmartyBC
+final class CampTemplate extends Smarty
 {
     /**
      * Holds instance of the class.

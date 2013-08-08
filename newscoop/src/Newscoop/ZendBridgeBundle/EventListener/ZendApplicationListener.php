@@ -44,6 +44,8 @@ class ZendApplicationListener
 
             $application->setOptions($config);
             $application->bootstrap();
+
+            \Zend_Registry::set('zend_application', $application);
         }
     }
 }

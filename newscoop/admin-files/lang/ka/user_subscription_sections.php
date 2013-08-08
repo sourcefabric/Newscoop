@@ -1,6 +1,6 @@
 <?php 
-regGS("saved", "დამახსოვრდა");
-regGS("deleted", "წაიშალა");
+regGS("saved", "დამახსოვრებულია");
+regGS("deleted", "წაშლილია");
 regGS("Subscribed sections: $1", "გამოწერილი სექცია: $1");
 regGS("Start Date", "დაწყების თარიღი");
 regGS("Select sections for subscribing", "აირჩიეთ გამოსაწერი სექცია");

@@ -311,6 +311,7 @@ abstract class ListObject
 		if (!isset($this->m_defaultIterator)) {
 			$this->m_defaultIterator = $this->getIterator();
 		}
+		
 		return $this->m_defaultIterator;
 	}
 

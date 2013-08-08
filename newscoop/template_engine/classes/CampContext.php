@@ -61,6 +61,18 @@ final class CampContext
         )
     );
 
+/*    $taggedServices = $container->findTaggedServiceIds(
+        'acme_mailer.transport'
+    );
+    foreach ($taggedServices as $id => $tagAttributes) {
+        foreach ($tagAttributes as $attributes) {
+            $definition->addMethodCall(
+                'addTransport',
+                array(new Reference($id), $attributes["alias"])
+            );
+        }
+    }*/
+
     // Defines the list objects
     private $m_listObjects = array(
         'languages'=>array('class'=>'Languages', 'list'=>'languages',
@@ -76,6 +88,9 @@ final class CampContext
         'articleauthors'=>array('class'=>'ArticleAuthors',
                              'list'=>'article_authors',
                              'url_id'=>'aas'),
+        'sectionauthors'=>array('class'=>'SectionAuthors',
+                             'list'=>'section_authors',
+                             'url_id'=>'sas'),
         'articlelocations'=>array('class'=>'ArticleLocations',
                             'list'=>'article_locations',
                             'url_id'=>'alc'),
@@ -109,6 +124,12 @@ final class CampContext
         'images'=>array('class'=>'Images', 'list'=>'images', 'url_id'=>'img'),
         'users' => array(
             'class' => 'Users',
+            'list' => 'users',
+            'url_id' => 'uid',
+        ),
+        'newscoop\templatelist\users' => array(
+//            'class' => 'Newscoop\TemplateList\UsersList',
+            'class' => 'Newscoop\TemplateList\Users',
             'list' => 'users',
             'url_id' => 'uid',
         ),
@@ -321,27 +342,6 @@ final class CampContext
         $this->m_properties['map_dynamic_map_label'] = "";
         $this->m_properties['map_dynamic_id_counter'] = 0;
         $this->m_properties['map_common_header_set'] = false;
-
-        if (defined('APPLICATION_PATH')) {
-            $container = \Zend_Registry::get('container');
-
-            $form = new \Application_Form_Contact();
-            $form->setMethod('POST');
-            if (CampRequest::GetMethod() === "POST" && $form->isValid(CampRequest::GetInput('POST'))) {
-                $email = new \Zend_Mail('utf-8');
-                $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
-                    ->setSubject($form->subject->getValue())
-                    ->setBodyText($form->message->getValue())
-                    ->addTo(\SystemPref::Get("EmailContact"))
-                    ->send();
-
-                $controller->getHelper('flashMessenger')->addMessage("form_contact_done");
-                $controller->getHelper('redirector')->gotoUrl(CampRequest::GetVar('path_info'));
-                exit;
-            }
-
-            $this->form_contact = $form;
-        }
 
         $flashMessenger = new \Newscoop\Controller\Helper\FlashMessenger();
         $this->flash_messages = $flashMessenger->getMessages();
@@ -666,6 +666,7 @@ final class CampContext
    	    $this->m_readonlyProperties['current_list'] =& $p_list;
    	    $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
    	    $this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
+        
    	    return $this->m_readonlyProperties;
     } // fn setCurrentList
 

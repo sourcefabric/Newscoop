@@ -17,6 +17,26 @@ use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 class ExceptionController extends FOSExceptionController
 {
+   /**
+     * Converts an Exception to a Response.
+     *
+     * @param Request              $request   Request
+     * @param FlattenException     $exception A FlattenException instance
+     * @param DebugLoggerInterface $logger    A DebugLoggerInterface instance
+     * @param string               $format    The format to use for rendering (html, xml, ...)
+     *
+     * @return Response Response instance
+     */
+    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
+    {
+        $pos = strpos($request->server->get('REQUEST_URI'), '/api');
+
+        if ($pos === false) {
+            return $response;
+        }
+
+        return parent::showAction($request, $exception, $logger, $format);
+    }
 
     protected function createExceptionWrapper(array $parameters)
     {

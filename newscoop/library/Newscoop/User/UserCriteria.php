@@ -7,12 +7,13 @@
 
 namespace Newscoop\User;
 
+use Newscoop\Criteria;
 use Newscoop\Entity\User;
 
 /**
  * Available criteria for users listing.
  */
-class UserCriteria
+class UserCriteria extends Criteria
 {
     /**
      * @var string
@@ -25,19 +26,14 @@ class UserCriteria
     public $is_public = true;
 
     /**
-     * @var int
-     */
-    public $firstResult = 0;
-
-    /**
-     * @var int
-     */
-    public $maxResults = 25;
-
-    /**
      * @var array
      */
     public $orderBy = array('username' => 'asc');
+
+    /**
+     * @var boolean
+     */
+    public $is_admin = false;
 
     /**
      * @var array
@@ -53,4 +49,9 @@ class UserCriteria
      * @var array
      */
     public $nameRange = array();
+
+    /**
+     * @var string
+     */
+    public $query;
 }

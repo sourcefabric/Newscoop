@@ -1,11 +1,24 @@
 <?php 
+regGS("User with email %s is registered already.", "");
+regGS("Username is used. Please use another one.", "");
+regGS("Continue", "");
+regGS("Accepting terms of use", "");
+regGS("send confirmation email", "");
+regGS("edit user", "");
+regGS("delete user", "");
+regGS("Verified profile", "");
+regGS("Showing _START_ to _END_ of _TOTAL_ entries", "");
+regGS("Send email to user:", "");
+regGS("No users found.", "");
+regGS("No records found.", "");
+regGS("No entries to show", "");
+regGS("Display _MENU_ records", "");
+regGS("Are you sure you want to {action}?", "");
+regGS("Active Logins", "");
+regGS(" - filtering from _MAX_ records", "");
 regGS("User renamed.", "Nazwa użytkownika zmieniona.");
 regGS("User attributes", "Właściwości użytkownika");
 regGS("Rename user '$1'", "Zmień nazwę dla '$1'");
-regGS("Pending", "Oczekuje");
-regGS("Inactive", "Nieaktywne");
-regGS("Do you really want to send confirmation email?", "Na pewno chcesz wysłać email z potwierdzeniem?");
-regGS("Do you really want to delete user?", "Na pewno chcesz usunąć tego użytkownika?");
 regGS("Username is used already", "Ta nazwa użytkownika jest już zajęta");
 regGS("User with id '$1' not found", "Użytkownik z id '$1' nie istnieje.");
 regGS("User was deleted.", "Użytkownik został usuniety.");

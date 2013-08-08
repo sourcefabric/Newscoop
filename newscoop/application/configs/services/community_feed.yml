@@ -3,6 +3,7 @@ services:
         class:      Newscoop\Services\CommunityFeedService
         arguments:  ["@em"]
         tags:
+            -  { name: kernel.event_listener, event: user.register, method: update }
             -  { name: kernel.event_listener, event: print.subscribe, method: update }
             -  { name: kernel.event_listener, event: comment.recommended, method: update }
             -  { name: kernel.event_listener, event: topic.follow, method: update }

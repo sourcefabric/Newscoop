@@ -17,7 +17,7 @@ use Symfony\Component\Yaml\Parser;
 class SubscriptionService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * Subscriptions config
@@ -60,6 +60,24 @@ class SubscriptionService
     public function remove($id)
     {
 
+    }
+
+    /**
+     * Remove Subscription by Id
+     * @param  integer $id - user subscription id
+     * @return void
+     */
+    public function removeById($id) {
+        
+        $subscription = $this->em->getRepository('Newscoop\Subscription\Subscription')
+            ->findOneBy(array(
+                'id' => $id
+            ));
+            
+        if ($subscription) {
+            $subscription->setActive(false);
+            $this->em->flush();
+        }
     }
 
     public function getOneById($id)

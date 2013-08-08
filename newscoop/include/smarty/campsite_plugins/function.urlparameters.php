@@ -20,8 +20,8 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
 
-    if (!array_key_exists('options', $params)) {
-        $params['options'] = array();
+    if (!array_key_exists('options', $p_params)) {
+        $p_params['options'] = '';
     }
 
     $url = 'url';
@@ -29,8 +29,8 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
     foreach ($params as $index=>$param) {
         if (strcasecmp('fromstart', $param) == 0) {
             $url = 'default_url';
-            unset($params[$index]);
-            $p_params['options'] = implode(', ', $params);
+            unset($p_params[$index]);
+            $p_params['options'] = implode(', ', $p_params);
             break;
         }
     }

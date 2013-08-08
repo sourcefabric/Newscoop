@@ -1,6 +1,6 @@
 <?php 
 regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "თუ განაგრძობთ, მოცემული თემა და ყველა ქვე-თემა გამოეყოფა დანარჩენ სტატიებს, და წაიშლება. ");
-regGS("Delete anyway", "ნებისმიერ შემთხვევაში წაშლის გაგრძელება");
+regGS("Delete anyway", "ნებისმიერ შემთხვევაში წაშლა");
 regGS("Reset order", "თანმიმდევრობის საწყის მდგომარეობაში დაბრუნება");
 regGS("Order changes will be lost. Are you sure you want to continue?", "თანმიმდევრობის ცვლილება არ დამახსოვრდება. გსურთ გაგრძელება?");
 regGS("Topics order saved.", "თემების თანმიმდევრობა დამახსოვრდა.");
