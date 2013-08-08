@@ -27,7 +27,7 @@ class Application_Form_Register extends Zend_Form
             'label' => getGS('Accepting terms of use'),
             'required' => true,
             'validators' => array(
-                array('greaterThan', true, array('min' => 0)),
+                array('greaterThan', true, array('min' => 0, 'messages'=>getGS('Terms of use have to be accepted.'))),
             ),
         ));
 
