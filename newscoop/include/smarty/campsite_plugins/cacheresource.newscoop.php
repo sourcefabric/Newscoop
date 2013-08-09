@@ -59,9 +59,9 @@ class Smarty_CacheResource_Newscoop {
         $template = $_template->template_resource;
         $cache_content = Smarty_CacheResource_Newscoop::content($template);
         ob_start();
-	    try {
+        try {
             $this->ext_eval("?>" . $cache_content, $_smarty_tpl);
-	    } catch (Exception $e) {
+        } catch (Exception $e) {
             ob_get_clean();
             $handler = $this->cacheClass;
             $handler::clean($template);
@@ -72,7 +72,7 @@ class Smarty_CacheResource_Newscoop {
             $time = (empty($_SERVER['QUERY_STRING']) ? '?' : '&') . time();
             header('Location: '. $_SERVER['REQUEST_URI'] . $time);
             exit;
-	    }
+        }
         return ob_get_clean();
     }
 
