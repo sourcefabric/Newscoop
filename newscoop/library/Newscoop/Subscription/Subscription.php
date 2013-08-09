@@ -12,6 +12,7 @@ use Newscoop\Entity\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Subscription\Article;
 use Newscoop\Subscription\Issue;
+use Newscoop\PaywallBundle\Entity\Subscriptions;
 
 /**
  * Subscription entity
@@ -38,6 +39,13 @@ class Subscription
      * @var Newscoop\Entity\User
      */
     private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\PaywallBundle\Entity\Subscriptions")
+     * @ORM\JoinColumn(name="IdSubscription", referencedColumnName="id")
+     * @var Newscoop\PaywallBundle\Entity\Subscription_specification
+     */
+    private $subscription;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
@@ -106,6 +114,28 @@ class Subscription
     public function getId()
     {
         return (int) $this->id;
+    }
+
+    /**
+     * Set subscription
+     *
+     * @param Newscoop\PaywallBundle\Entity\Subscriptions $subscription
+     * @return void
+     */
+    public function setSubscription(Subscriptions $subscription)
+    {
+        $this->subscription = $subscription;
+        return $this;
+    }
+
+    /**
+     * Get subscription
+     *
+     * @return Newscoop\PaywallBundle\Entity\Subscription_specification
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
     }
 
     /**
