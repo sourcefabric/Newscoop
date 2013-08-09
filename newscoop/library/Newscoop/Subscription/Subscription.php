@@ -43,7 +43,7 @@ class Subscription
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\PaywallBundle\Entity\Subscriptions")
      * @ORM\JoinColumn(name="IdSubscription", referencedColumnName="id")
-     * @var Newscoop\PaywallBundle\Entity\Subscription_specification
+     * @var Newscoop\PaywallBundle\Entity\Subscriptions
      */
     private $subscription;
 
@@ -119,7 +119,7 @@ class Subscription
     /**
      * Set subscription
      *
-     * @param Newscoop\PaywallBundle\Entity\Subscriptions $subscription
+     * @param Newscoop\PaywallBundle\Entity\Subscriptions
      * @return void
      */
     public function setSubscription(Subscriptions $subscription)
@@ -131,7 +131,7 @@ class Subscription
     /**
      * Get subscription
      *
-     * @return Newscoop\PaywallBundle\Entity\Subscription_specification
+     * @return Newscoop\PaywallBundle\Entity\Subscriptions
      */
     public function getSubscription()
     {
