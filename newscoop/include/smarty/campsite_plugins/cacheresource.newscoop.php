@@ -41,6 +41,12 @@ class Smarty_CacheResource_Newscoop {
 
     }
 
+    private function ext_eval($content, $_smarty_tpl) {
+        if (@eval($content) === false) {
+            throw new Exception($content);
+        }
+    }
+
     /**
      * Returns the cached template output
      *
@@ -52,9 +58,21 @@ class Smarty_CacheResource_Newscoop {
         $_smarty_tpl = $_template;
         $template = $_template->template_resource;
         $cache_content = Smarty_CacheResource_Newscoop::content($template);
-
         ob_start();
-        eval("?>" . $cache_content);
+	    try {
+    	    $this->ext_eval("?>" . $cache_content, $_smarty_tpl);
+	    } catch (Exception $e) {
+    	    ob_get_clean();
+    	    $handler = $this->cacheClass;
+    	    $handler::clean($template);
+    	    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); 
+    	    header('Cache-Control: no-store, no-cache, must-revalidate'); 
+    	    header('Cache-Control: post-check=0, pre-check=0', false); 
+    	    header('Pragma: no-cache');
+    	    $time = (empty($_SERVER['QUERY_STRING']) ? '?' : '&') . time();
+    	    header('Location: '. $_SERVER['REQUEST_URI'] . $time);
+    	    exit;
+	    }
         return ob_get_clean();
     }
 
