@@ -60,18 +60,18 @@ class Smarty_CacheResource_Newscoop {
         $cache_content = Smarty_CacheResource_Newscoop::content($template);
         ob_start();
 	    try {
-    	    $this->ext_eval("?>" . $cache_content, $_smarty_tpl);
+            $this->ext_eval("?>" . $cache_content, $_smarty_tpl);
 	    } catch (Exception $e) {
-    	    ob_get_clean();
-    	    $handler = $this->cacheClass;
-    	    $handler::clean($template);
-    	    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); 
-    	    header('Cache-Control: no-store, no-cache, must-revalidate'); 
-    	    header('Cache-Control: post-check=0, pre-check=0', false); 
-    	    header('Pragma: no-cache');
-    	    $time = (empty($_SERVER['QUERY_STRING']) ? '?' : '&') . time();
-    	    header('Location: '. $_SERVER['REQUEST_URI'] . $time);
-    	    exit;
+            ob_get_clean();
+            $handler = $this->cacheClass;
+            $handler::clean($template);
+            header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); 
+            header('Cache-Control: no-store, no-cache, must-revalidate'); 
+            header('Cache-Control: post-check=0, pre-check=0', false); 
+            header('Pragma: no-cache');
+            $time = (empty($_SERVER['QUERY_STRING']) ? '?' : '&') . time();
+            header('Location: '. $_SERVER['REQUEST_URI'] . $time);
+            exit;
 	    }
         return ob_get_clean();
     }
