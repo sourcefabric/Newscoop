@@ -46,6 +46,8 @@ services:
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
+    smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"
+    smarty.extension.assetic.static.class: "Newscoop\\NewscoopBundle\\Extension\\StaticAsseticExtension"
     newscoop_newscoop.security.authentication.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationSuccessHandler"
     security.authentication.failure_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFailedHandler"
     security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
