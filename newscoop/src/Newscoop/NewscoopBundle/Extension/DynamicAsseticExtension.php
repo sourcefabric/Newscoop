@@ -8,11 +8,12 @@
 namespace Newscoop\NewscoopBundle\Extension;
 
 use Newscoop\NewscoopBundle\Extension\AsseticExtension;
+use NoiseLabs\Bundle\SmartyBundle\Extension\DynamicAsseticExtension as SmartyDynamicAsseticExtension;
 
 /**
  * The "dynamic" reincarnation of AsseticExtension.
  *
  * @author Vítor Brandão <vitor@noiselabs.com>
  */
-class DynamicAsseticExtension extends AsseticExtension
+class DynamicAsseticExtension extends SmartyDynamicAsseticExtension
 {}

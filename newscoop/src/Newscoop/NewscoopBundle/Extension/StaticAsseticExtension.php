@@ -8,11 +8,12 @@
 namespace Newscoop\NewscoopBundle\Extension;
 
 use Newscoop\NewscoopBundle\Extension\AsseticExtension;
+use NoiseLabs\Bundle\SmartyBundle\Extension\StaticAsseticExtension as SmartyStaticAsseticExtension;
 
 /**
  * The "static" reincarnation of AsseticExtension.
  *
  * @author Vítor Brandão <vitor@noiselabs.com>
  */
-class StaticAsseticExtension extends AsseticExtension
+class StaticAsseticExtension extends SmartyStaticAsseticExtension
 {}
