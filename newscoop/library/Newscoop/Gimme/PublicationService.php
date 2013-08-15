@@ -106,7 +106,7 @@ class PublicationService
      * @param  Request $request Request object
      * @return Publication $publication Publication entity object
      */
-    public function poblicationResolver(Request $request)
+    public function publicationResolver(Request $request)
     {   
         /**
          * By default try get publication alias from requested http_host
