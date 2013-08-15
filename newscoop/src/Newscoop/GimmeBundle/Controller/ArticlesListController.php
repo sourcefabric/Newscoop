@@ -49,7 +49,7 @@ class ArticlesListController extends FOSRestController
     public function getSectionsArticlesAction(Request $request, $id)
     {
         $em = $this->container->get('em');
-        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('id' => $id));

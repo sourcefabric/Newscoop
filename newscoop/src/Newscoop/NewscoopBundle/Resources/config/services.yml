@@ -108,6 +108,22 @@ services:
         tags:
           - { name: kernel.event_listener, event: newscoop.listobjects.register, method: registerObjects }
 
+    newscoop_newscoop.publication_service:
+        class: Newscoop\NewscoopBundle\PublicationService
+        arguments:  ["@em"]
+    newscoop_newscoop.listener.publication:
+        class: Newscoop\NewscoopBundle\EventListener\PublicationListener
+        arguments:  ["@newscoop_newscoop.publication_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
+    newscoop_newscoop.listener.comment_listener:
+        class: Newscoop\NewscoopBundle\EventListener\CommentListener
+        tags:
+            # - { name: comment.event_listener, event: comment.submit, method: onCommentSubmit }
+            - { name: kernel.event_listener, event: kernel.request, method: onCommentSubmit }
+        arguments: ["@logger"]
+
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
     smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"
