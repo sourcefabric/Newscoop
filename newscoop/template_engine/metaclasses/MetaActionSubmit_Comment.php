@@ -37,7 +37,8 @@ class MetaActionSubmit_Comment extends MetaAction
         }
         $this->m_properties['nickname'] = isset($p_input['f_comment_nickname']) ?
                                           $p_input['f_comment_nickname'] : '';
-        $this->m_properties['subject'] = $p_input['f_comment_subject'];
+        $this->m_properties['subject'] = (!empty($p_input['f_comment_subject'])) ? $p_input['f_comment_subject'] : '';
+        $this->m_properties['parent'] = (!empty($p_input['f_comment_parent'])) ? $p_input['f_comment_parent'] : 0;
         $this->m_properties['content'] = $p_input['f_comment_content'];
         $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
         $this->m_properties['bot_detect'] = $p_input['f_comment_email_protect'];
@@ -192,6 +193,7 @@ class MetaActionSubmit_Comment extends MetaAction
             'email'=> $userEmail,
             'message' =>  $this->m_properties['content'],
             'subject' => $this->m_properties['subject'],
+            'parent' => $this->m_properties['parent'],
             'ip' => $userIp,
             'time_created' => new DateTime
         );
@@ -227,11 +229,13 @@ class MetaActionSubmit_Comment extends MetaAction
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
         $p_context->default_url->reset_parameter('f_comment_content');
+        $p_context->default_url->reset_parameter('f_comment_parent');
         $p_context->default_url->reset_parameter('f_submit_comment');
         $p_context->default_url->reset_parameter('f_captcha_code');
         $p_context->url->reset_parameter('f_comment_reader_email');
         $p_context->url->reset_parameter('f_comment_subject');
         $p_context->url->reset_parameter('f_comment_content');
+        $p_context->url->reset_parameter('f_comment_parent');
         $p_context->url->reset_parameter('f_submit_comment');
         $p_context->url->reset_parameter('f_captcha_code');
 
