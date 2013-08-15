@@ -27,16 +27,15 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "bombayworks/zendframework1":"1.11.*",
         "friendsofsymfony/rest-bundle": "0.13.*@dev",
-        "smarty/smarty": "3.0.9",
         "behat/behat":">=2.4.0",
         "behat/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
         "kriswallsmith/buzz":">=0.7",
         "knplabs/knp-paginator-bundle":"v2.3.2",
-        "jms/serializer-bundle":"0.12.x-dev#ab2ca25",
+        "jms/serializer-bundle":"0.12.x-dev",
         "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
         "rezzza/mailchimp":"dev-master",
         "hybridauth/hybridauth":"dev-master",
-        "noiselabs/smarty-bundle":"dev-master#50de401fd7ddfdc78b7d65fc113e073783f38233",
+        "noiselabs/smarty-bundle":"dev-master",
         "knplabs/knp-menu-bundle": "2.0.*@dev",
         "knplabs/knp-menu": "2.0.*@dev",
         "raulfraile/ladybug-bundle": "dev-ladybug_v1.0",
@@ -44,26 +43,6 @@
         "willdurand/expose-translation-bundle": "0.3.*@dev",
         "recaptcha/php5": "v1.0.0"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "smarty/smarty",
-                "version": "3.0.9",
-                "dist": {
-                    "url": "http://www.smarty.net/files/Smarty-3.0.9.zip",
-                    "type": "zip"
-                },
-                "autoload": {
-                    "classmap": ["libs/"]
-                }
-            }
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/terwey/SmartyBundle"
-        }
-    ],
     "require-dev":{
         "phpunit/phpunit":"3.7.*"
     },
