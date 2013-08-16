@@ -129,6 +129,56 @@ class RenditionService
     }
 
     /**
+     * Get article image rendition
+     *
+     * @param int    $articleNumber
+     * @param string $renditionName
+     * @param int    $width
+     * @param int    $height
+     * @return array
+     */
+    public function getArticleRenditionImage($articleNumber, $renditionName, $width = null, $height = null)
+    {
+        $renditions = $this->getRenditions();
+        if (!array_key_exists($renditionName, $renditions)) {
+            return false;
+        }
+
+        $articleRenditions = $this->getArticleRenditions($articleNumber);
+        $rendition = $articleRenditions[$renditions[$renditionName]];
+        if ($rendition === null) {
+            return false;
+        }
+
+        try {
+            if ($width !== null && $height !== null) {
+                $preview = $rendition->getRendition()->getPreview($width, $height);
+                $thumbnail = $preview->getThumbnail($rendition->getImage(), $this->imageService);
+            } else {
+                $thumbnail = $rendition->getRendition()->getThumbnail($rendition->getImage(), $this->imageService);
+            }
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        $originalRendition = new Rendition($rendition->getImage()->getWidth(), $rendition->getImage()->getHeight());
+
+        return array(
+            'id' => $rendition->getImage()->getId(),
+            'src' => $thumbnail->src,
+            'width' => $thumbnail->width,
+            'height' => $thumbnail->height,
+            'caption' => $rendition->getImage()->getCaption(),
+            'photographer' => $rendition->getImage()->getPhotographer(),
+            'original' => (object) array(
+                'width' => $rendition->getImage()->getWidth(),
+                'height' => $rendition->getImage()->getHeight(),
+                'src' => $originalRendition->getThumbnail($rendition->getImage(), $this->imageService)->src,
+            ),
+        );
+    }
+
+    /**
      * Get article renditions
      *
      * @param int $articleNumber
