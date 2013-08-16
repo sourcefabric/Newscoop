@@ -117,6 +117,15 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
+    newscoop_newscoop.article_service:
+        class: Newscoop\NewscoopBundle\ArticleService
+        arguments:  ["@em"]
+    newscoop_newscoop.listener.article:
+        class: Newscoop\NewscoopBundle\EventListener\ArticleListener
+        arguments:  ["@newscoop_newscoop.article_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.listener.comment_listener:
         class: Newscoop\NewscoopBundle\EventListener\CommentListener
         tags:
