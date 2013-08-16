@@ -131,7 +131,7 @@ services:
         tags:
             # - { name: comment.event_listener, event: comment.submit, method: onCommentSubmit }
             - { name: kernel.event_listener, event: kernel.request, method: onCommentSubmit }
-        arguments: ["@logger"]
+        arguments: ["@logger", "@em"]
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"

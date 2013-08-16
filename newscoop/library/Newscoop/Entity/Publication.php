@@ -352,5 +352,10 @@ class Publication
     {
         return $this->moderator_from;
     }
+
+    public function getCaptchaEnabled()
+    {
+        return $this->commentsCaptchaEnabled;
+    }
 }
 
