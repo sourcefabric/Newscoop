@@ -358,7 +358,7 @@ class UserRepository extends EntityRepository
         for($i=0; $i < count($keywords); $i++) {
             $innerOr = $qb->expr()->orx();
             for ($j=0; $j < count($attributes); $j++) {
-                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'$keywords[$i]'"));
+                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'$keywords[$i]%'"));
             }
             $outerAnd->add($innerOr);
         }
@@ -651,6 +651,11 @@ class UserRepository extends EntityRepository
         $qb->andWhere('u.is_public = :is_public')
             ->setParameter('is_public', $criteria->is_public);
 
+        foreach ($criteria->perametersOperators as $key => $operator) {
+            $qb->andWhere('u.'.$key.' = :'.$key)
+                ->setParameter($key, $criteria->$key);
+        }
+
         if (!empty($criteria->groups)) {
             $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
             $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
@@ -670,8 +675,15 @@ class UserRepository extends EntityRepository
         $list->count = (int) $qb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
 
         $qb->select('u, ' . $this->getUserPointsSelect());
-        $qb->setFirstResult($criteria->firstResult);
-        $qb->setMaxResults($criteria->maxResults);
+
+        if($criteria->firstResult != 0) {
+            $qb->setFirstResult($criteria->firstResult);
+        }
+
+        if($criteria->maxResults != 0) {
+            $qb->setMaxResults($criteria->maxResults);
+        }
+        
 
         $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {

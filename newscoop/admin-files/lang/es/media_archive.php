@@ -1,4 +1,6 @@
 <?php 
+regGS("No thumbnails were fixed.", "");
+regGS("Missing thumbnails fixed.", "");
 regGS("Slideshows", "Diapositivas");
 regGS("You can't update used files.", "No puede actualizar archivos usados.");
 regGS("Source", "Fuente");

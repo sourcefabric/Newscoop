@@ -11,7 +11,6 @@
 
 require_once dirname(__FILE__) . '/DatabaseObject.php';
 require_once dirname(__FILE__) . '/../template_engine/metaclasses/MetaAction.php';
-require_once dirname(__FILE__) . '/LiveUserMock.php';
 
 /**
  * Class CampPlugin

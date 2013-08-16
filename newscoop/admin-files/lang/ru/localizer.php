@@ -1,4 +1,5 @@
 <?php 
+regGS("Help", "");
 regGS("Support", "Поддержка");
 regGS("Themes", "Темы (шаблоны)");
 regGS("Area to localize", "Район локализации");

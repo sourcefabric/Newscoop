@@ -1,0 +1,4 @@
+NewscoopZendBridgeBundle:
+    resource: "@NewscoopZendBridgeBundle/Controller/BridgeController.php"
+    prefix:   /
+    type:     annotation

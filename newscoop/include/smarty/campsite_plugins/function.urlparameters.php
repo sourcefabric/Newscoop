@@ -20,8 +20,8 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
 
-    if (!array_key_exists('options', $params)) {
-        $params['options'] = array();
+    if (!array_key_exists('options', $p_params)) {
+        $p_params['options'] = '';
     }
 
     $url = 'url';
@@ -37,7 +37,7 @@ function smarty_function_urlparameters($p_params = array(), &$p_smarty)
 
     // sets the URL parameter option
     $context->$url->uri_parameter = $p_params['options'];
-	
+
     return $context->$url->url_parameters;
 } // fn smarty_function_urlparameters
 

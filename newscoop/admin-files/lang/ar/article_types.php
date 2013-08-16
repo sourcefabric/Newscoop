@@ -1,4 +1,9 @@
 <?php 
+regGS("list", "");
+regGS("filter", "");
+regGS("In Lists?", "");
+regGS("Are you sure you want to $1 articles of article type $2?", "");
+regGS("$1 articles of article type $2", "");
 regGS("Hide human-readable field names", "إخفاء أسماء الحقول القابلة للقراءة من الانسان");
 regGS("Edit and translate human-readable field names", "تعديل أسماء الحقول القابلة للقراءة من الانسان وترجمتها");
 regGS("The template name may only contain letters and the underscore (_) character.", "يسمح لإسم القالب فقط ان يحتوي على حروف أجنبية والحرف (_).");
@@ -58,8 +63,8 @@ regGS("Comments enabled?", "هل تم تمكين التعليقات؟");
 regGS("Back to Step 2", "العودة إلى الخطوة 2");
 regGS("Back to Step 1", "العودة إلى الخطوة 1");
 regGS("Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.", "هل أنت متأكد أنك تريد حذف نوع المقالة 1$ ؟ تحذير: حذف هذا النوع من المقالة سوف يحذف جميع المقالات المرتبطة بهذا النوع من المقالة.");
-regGS("Are you sure you want to $1 the article type $2?", "هل أنت متأكد أنك تريد أن $1 نوع المقالة 2$؟");
-regGS("Are you sure you want to $1 comments for article type $2?", "هل أنت متأكد أنك تريد أن $1 تعليقات لنوع المقالة 2$؟");
+regGS("Are you sure you want to $1 the article type $2?", "هل أنت متأكد أنك تريد أن $1 نوع المقالة 2");
+regGS("Are you sure you want to $1 comments for article type $2?", "هل أنت متأكد أنك تريد أن $1 تعليقات لنوع المقالة 2");
 regGS("Allow users without subscriptions to view the article", "السماح للمستخدمين بدون اشتراكات أن يروا المقالة");
 regGS("Add translation:", "إضافة ترجمة:");
 regGS("$1 comments for article type $2", "$1 تعليقات نوع المقالة $2");

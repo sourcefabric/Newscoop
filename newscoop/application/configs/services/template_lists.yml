@@ -1,0 +1,9 @@
+services:
+    newscoop.criteria.users:
+        class: Newscoop\User\UserCriteria
+
+    newscoop.template_lists.users:
+        class:      Newscoop\TemplateList\UsersList
+        arguments:  ["@newscoop.criteria.users"]
+        tags:
+            -  { name: newscoop.template_lists }

@@ -1,6 +1,6 @@
 <?php 
-regGS("Display newswires articles", "Zobrazit newswires články");
-regGS("Display Newswires", "Zobrazit newswires");
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "Webcode");
 regGS("View article", "Ukázat článek");
 regGS("Source", "Zdroj");

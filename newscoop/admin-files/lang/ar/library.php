@@ -1,12 +1,12 @@
 <?php 
+regGS("Display articles of filtered types", "");
+regGS("Display Articles of Filtered Types", "");
 regGS("Webcode", "كود الويب");
 regGS("View article", "عرض المقالة");
 regGS("Source", "مصدر");
 regGS("Select type", "تحديد نوع");
 regGS("On", "قيد التشغيل");
 regGS("Off", "قيد الإيقاف");
-regGS("Display newswires articles", "عرض المقالات من التقارير الأخيرة");
-regGS("Display Newswires", "عرض التقارير الأخيرة");
 regGS("Title", "العنوان");
 regGS("No video playback capabilities, please download the video below", "لا قدرات لتشغيل الفيديو، يرجى تحميل الفيديو أدناه");
 regGS("Article status set to '$1' for $2 articles", "تم تعيين حالة المقالة الى '$1' لـ $2 مقالات");

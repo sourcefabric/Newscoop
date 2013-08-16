@@ -1,4 +1,8 @@
 <?php 
+regGS("No such article type", "");
+regGS("Multi-line Text", "");
+regGS("Filter saved", "");
+regGS("Filter not saved", "");
 regGS("Not a color", "Wartość nie jest kolorem.");
 regGS("No such field", "Nie ma takiego pola");
 regGS("Color saved", "Kolor zapisany");

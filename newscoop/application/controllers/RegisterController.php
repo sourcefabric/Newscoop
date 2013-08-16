@@ -14,6 +14,7 @@ class RegisterController extends Zend_Controller_Action
 {
     public function init()
     {
+        camp_load_translation_strings('users');
         $this->_helper->contextSwitch
             ->addActionContext('generate-username', 'json')
             ->addActionContext('check-username', 'json')
@@ -44,7 +45,7 @@ class RegisterController extends Zend_Controller_Action
             }
 
             if (!$user->isPending()) {
-                $form->email->addError("User with email '$values[email]' is registered already.");
+                $form->email->addError(sprintf(getGS('User with email %s is registered already.'), $values['email']));
             } else {
                 $this->_helper->service('email')->sendConfirmationToken($user);
                 $this->_helper->redirector('after');
@@ -121,7 +122,7 @@ class RegisterController extends Zend_Controller_Action
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (InvalidArgumentException $e) {
-                $form->username->addError('Username is used. Please use another one.');
+                $form->username->addError(getGS('Username is used. Please use another one.'));
             }
         }
 
