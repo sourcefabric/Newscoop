@@ -19,7 +19,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Debug\Debug;
 
 error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
-$subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+
+// don't add php session Cache-Control values.
+session_cache_limiter('none');
 
 // check if this is upgrade
 if (php_sapi_name() !== 'cli' &&
@@ -38,6 +40,7 @@ if (php_sapi_name() !== 'cli' &&
     !defined('INSTALL') &&
     (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
 ) {
+    $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     if (strpos($subdir, 'install') === false) {
         header("Location: $subdir/install/");
         exit;
