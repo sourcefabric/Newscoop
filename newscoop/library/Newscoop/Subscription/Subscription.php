@@ -41,13 +41,6 @@ class Subscription
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\PaywallBundle\Entity\Subscriptions")
-     * @ORM\JoinColumn(name="IdSubscription", referencedColumnName="id")
-     * @var Newscoop\PaywallBundle\Entity\Subscriptions
-     */
-    private $subscription;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -114,28 +107,6 @@ class Subscription
     public function getId()
     {
         return (int) $this->id;
-    }
-
-    /**
-     * Set subscription
-     *
-     * @param Newscoop\PaywallBundle\Entity\Subscriptions
-     * @return void
-     */
-    public function setSubscription(Subscriptions $subscription)
-    {
-        $this->subscription = $subscription;
-        return $this;
-    }
-
-    /**
-     * Get subscription
-     *
-     * @return Newscoop\PaywallBundle\Entity\Subscriptions
-     */
-    public function getSubscription()
-    {
-        return $this->subscription;
     }
 
     /**

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "91554019c23793b920a76be02f96116f",
+    "hash": "9a2839f6fdc570bf0f16f4aba3e5f652",
     "packages": [
         {
             "name": "behat/behat",
@@ -114,7 +114,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -259,65 +259,6 @@
             "time": "2012-10-16 16:37:45"
         },
         {
-            "name": "dflydev/markdown",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dflydev/dflydev-markdown.git",
-                "reference": "11f8faa2d17f717a038b4d372abd22a6ac4a15dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-markdown/zipball/11f8faa2d17f717a038b4d372abd22a6ac4a15dc",
-                "reference": "11f8faa2d17f717a038b4d372abd22a6ac4a15dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "dflydev\\markdown": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Dragonfly Development Inc.",
-                    "email": "info@dflydev.com",
-                    "homepage": "http://dflydev.com"
-                },
-                {
-                    "name": "Beau Simensen",
-                    "email": "beau@dflydev.com",
-                    "homepage": "http://beausimensen.com"
-                },
-                {
-                    "name": "Michel Fortin",
-                    "homepage": "http://michelf.com"
-                },
-                {
-                    "name": "John Gruber",
-                    "homepage": "http://daringfireball.net"
-                }
-            ],
-            "description": "PHP Markdown & Extra",
-            "homepage": "http://github.com/dflydev/dflydev-markdown",
-            "keywords": [
-                "markdown"
-            ],
-            "time": "2012-07-15 16:31:27"
-        },
-        {
             "name": "doctrine/annotations",
             "version": "v1.1.2",
             "source": {
@@ -355,7 +296,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -373,9 +314,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -390,7 +331,7 @@
         },
         {
             "name": "doctrine/cache",
-            "version": "dev-master",
+            "version": "v1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/cache.git",
@@ -491,7 +432,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -509,7 +450,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -530,12 +471,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "9c6b8615a988117dec83bdbb0fad80afef23eab8"
+                "reference": "b4c7860e0c5a8d13598ca34d156533300b0dacf0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/9c6b8615a988117dec83bdbb0fad80afef23eab8",
-                "reference": "9c6b8615a988117dec83bdbb0fad80afef23eab8",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/b4c7860e0c5a8d13598ca34d156533300b0dacf0",
+                "reference": "b4c7860e0c5a8d13598ca34d156533300b0dacf0",
                 "shasum": ""
             },
             "require": {
@@ -563,7 +504,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -581,7 +522,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -596,7 +537,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2013-07-30 05:35:10"
+            "time": "2013-08-20 18:10:31"
         },
         {
             "name": "doctrine/dbal",
@@ -633,7 +574,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -765,7 +706,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -785,7 +726,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -842,9 +783,9 @@
                     "email": "roman@code-factory.org"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -862,12 +803,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "465bf0f4114db55de9e7d436a00e967002ee0bc7"
+                "reference": "b1ba11c06ffbf795417cdacddaa21e22209d5789"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/465bf0f4114db55de9e7d436a00e967002ee0bc7",
-                "reference": "465bf0f4114db55de9e7d436a00e967002ee0bc7",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b1ba11c06ffbf795417cdacddaa21e22209d5789",
+                "reference": "b1ba11c06ffbf795417cdacddaa21e22209d5789",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +841,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/"
                 },
@@ -924,7 +865,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-08-10 16:05:40"
+            "time": "2013-08-20 08:02:51"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1116,7 +1057,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/e643dc13e4f24b2e1a0586cc1c94bb19146be402",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/99a690a7444304a1e136e3d361c2f760c7df057d",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -1442,12 +1383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "9e0fcd00a374e9ad484687628c6c25ab1083ea5a"
+                "reference": "89a43cbe84e079bcd81d82889b03ded9abda2f47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/9e0fcd00a374e9ad484687628c6c25ab1083ea5a",
-                "reference": "9e0fcd00a374e9ad484687628c6c25ab1083ea5a",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/89a43cbe84e079bcd81d82889b03ded9abda2f47",
+                "reference": "89a43cbe84e079bcd81d82889b03ded9abda2f47",
                 "shasum": ""
             },
             "require": {
@@ -1472,7 +1413,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.13-dev"
+                    "dev-master": "0.14-dev"
                 }
             },
             "autoload": {
@@ -1501,21 +1442,21 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2013-07-29 13:39:49"
+            "time": "2013-08-17 18:17:07"
         },
         {
             "name": "jms/serializer-bundle",
-            "version": "dev-master",
+            "version": "0.12.0",
             "target-dir": "JMS/SerializerBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSSerializerBundle.git",
-                "reference": "5531198a73c4adee669a8a2d1452999349822771"
+                "reference": "0.12.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/5531198a73c4adee669a8a2d1452999349822771",
-                "reference": "5531198a73c4adee669a8a2d1452999349822771",
+                "url": "https://api.github.com/repos/schmittjoh/JMSSerializerBundle/zipball/0.12.0",
+                "reference": "0.12.0",
                 "shasum": ""
             },
             "require": {
@@ -1812,6 +1753,59 @@
             "time": "2013-02-18 17:29:20"
         },
         {
+            "name": "knplabs/packagist-api",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/packagist-api.git",
+                "reference": "f8edf32d836d0398a6e38d4a59f1a65601fe7991"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/KnpLabs/packagist-api/zipball/f8edf32d836d0398a6e38d4a59f1a65601fe7991",
+                "reference": "f8edf32d836d0398a6e38d4a59f1a65601fe7991",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "~1.0",
+                "guzzle/http": "~3.0",
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpspec/php-diff": "*@dev",
+                "phpspec/phpspec2": "1.0.*@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Packagist\\Api\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "KnpLabs Team",
+                    "homepage": "http://knplabs.com"
+                }
+            ],
+            "description": "Packagist API client.",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "api",
+                "composer",
+                "packagist"
+            ],
+            "time": "2013-08-08 13:48:57"
+        },
+        {
             "name": "kriswallsmith/assetic",
             "version": "1.1.x-dev",
             "source": {
@@ -1931,6 +1925,44 @@
             "time": "2013-06-04 15:32:22"
         },
         {
+            "name": "mike182uk/paypal-ipn-listener",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mike182uk/paypal-ipn-listener.git",
+                "reference": "f1034c7ab5b7a209a3aa984d76b75a19246b929b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mike182uk/paypal-ipn-listener/zipball/f1034c7ab5b7a209a3aa984d76b75a19246b929b",
+                "reference": "f1034c7ab5b7a209a3aa984d76b75a19246b929b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PayPal": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mike Barrett",
+                    "email": "mike182uk@gmail.com"
+                }
+            ],
+            "description": "A composer compatible PHP >=5.3.0 PayPal IPN Listener.",
+            "keywords": [
+                "ipn",
+                "listener",
+                "paypal"
+            ],
+            "time": "2013-07-17 21:10:37"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
@@ -1991,6 +2023,180 @@
                 "psr-3"
             ],
             "time": "2013-08-09 12:12:38"
+        },
+        {
+            "name": "newscoop/articles-calendar-plugin",
+            "version": "dev-master",
+            "target-dir": "Newscoop/ArticlesCalendarBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newscoop/plugin-ArticlesCalendar.git",
+                "reference": "90bca51ec89cbd13c2340060d9438cea409e3c5f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newscoop/plugin-ArticlesCalendar/zipball/90bca51ec89cbd13c2340060d9438cea409e3c5f",
+                "reference": "90bca51ec89cbd13c2340060d9438cea409e3c5f",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\ArticlesCalendarBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                },
+                {
+                    "name": "Rafał Muszyński",
+                    "email": "rafal.muszynski@sourcefabric.org"
+                }
+            ],
+            "description": "Show All \"Articles of the day\" in nice calendar widget",
+            "keywords": [
+                "calendar",
+                "cms",
+                "newscoop",
+                "widget"
+            ],
+            "time": "2013-08-23 10:31:00"
+        },
+        {
+            "name": "newscoop/example-plugin-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/ExamplePluginBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newscoop/plugin-ExamplePluginBundle.git",
+                "reference": "22a51a0b66f6be199d2148024fd5b93b29aa52ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newscoop/plugin-ExamplePluginBundle/zipball/22a51a0b66f6be199d2148024fd5b93b29aa52ef",
+                "reference": "22a51a0b66f6be199d2148024fd5b93b29aa52ef",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\ExamplePluginBundle\\NewscoopExamplePluginBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "description": "Example plugin bundle for Newscoop",
+            "keywords": [
+                "cms",
+                "example",
+                "integration",
+                "newscoop"
+            ],
+            "time": "2013-08-17 14:59:40"
+        },
+        {
+            "name": "newscoop/newscoop-paywall-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/PaywallBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/newscoop/plugin-NewscoopPaywallBundle.git",
+                "reference": "34f91789847ab125bf44676b1538c95881ebb72d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/newscoop/plugin-NewscoopPaywallBundle/zipball/34f91789847ab125bf44676b1538c95881ebb72d",
+                "reference": "34f91789847ab125bf44676b1538c95881ebb72d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "mike182uk/paypal-ipn-listener": "*",
+                "newscoop/plugins-installer": "*",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\PaywallBundle\\NewscoopPaywallBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "description": "Paywall/Payment providers support in Newscoop",
+            "keywords": [
+                "cms",
+                "integration",
+                "newscoop",
+                "pawyall"
+            ],
+            "time": "2013-07-29 13:50:09"
+        },
+        {
+            "name": "newscoop/plugins-installer",
+            "version": "dev-master",
+            "target-dir": "Newscoop/Composer",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ahilles107/newscoop-plugins-installer.git",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ahilles107/newscoop-plugins-installer/zipball/56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "reference": "56f46e17c42598ca1da3b5bc9e29b9c0fedac26d",
+                "shasum": ""
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "Newscoop\\Composer\\PluginsInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\Composer": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Pawel Mikolajczuk",
+                    "email": "pawel.mikolajczuk@sourcefabric.org"
+                }
+            ],
+            "time": "2013-03-09 10:34:56"
         },
         {
             "name": "noiselabs/smarty-bundle",
@@ -2066,12 +2272,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/php-collection.git",
-                "reference": "0.3.0"
+                "reference": "4925a0d7a39e137447a8f9d6339e6921fa09dca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/0.3.0",
-                "reference": "0.3.0",
+                "url": "https://api.github.com/repos/schmittjoh/php-collection/zipball/4925a0d7a39e137447a8f9d6339e6921fa09dca8",
+                "reference": "4925a0d7a39e137447a8f9d6339e6921fa09dca8",
                 "shasum": ""
             },
             "require": {
@@ -2109,52 +2315,6 @@
                 "set"
             ],
             "time": "2013-07-16 08:26:26"
-        },
-        {
-            "name": "phpdocumentor/reflection-docblock",
-            "version": "2.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "2.0.0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2.0.0",
-                "reference": "2.0.0",
-                "shasum": ""
-            },
-            "require": {
-                "dflydev/markdown": "1.0.*",
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "3.7.*@stable"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "phpDocumentor": [
-                        "src/"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mike van Riel",
-                    "email": "mike.vanriel@naenius.com"
-                }
-            ],
-            "time": "2013-08-07 11:04:22"
         },
         {
             "name": "phpoption/phpoption",
@@ -2245,44 +2405,28 @@
         },
         {
             "name": "raulfraile/ladybug",
-            "version": "dev-master",
+            "version": "v0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/ladybug.git",
-                "reference": "88e7a36c02fbd1e2ca969745d4495ca53795b29d"
+                "reference": "v0.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/88e7a36c02fbd1e2ca969745d4495ca53795b29d",
-                "reference": "88e7a36c02fbd1e2ca969745d4495ca53795b29d",
+                "url": "https://api.github.com/repos/raulfraile/ladybug/zipball/v0.7",
+                "reference": "v0.7",
                 "shasum": ""
             },
             "require": {
-                "jms/serializer": ">=0.11.0",
                 "php": ">=5.3.0",
-                "phpdocumentor/reflection-docblock": "2.0.0",
-                "symfony/config": ">=2.0.4",
-                "symfony/console": ">=2.0.4",
-                "symfony/dependency-injection": ">=2.0.4",
-                "symfony/finder": ">=2.0.4",
-                "twig/twig": ">=v1.7.0"
-            },
-            "require-dev": {
-                "fabpot/php-cs-fixer": "0.1.*@dev",
-                "mockery/mockery": "0.8.0",
-                "symfony/dom-crawler": ">=2.0.4"
-            },
-            "suggest": {
-                "symfony/yaml": "Required to serialize data to YAML format"
+                "symfony/serializer": ">=2.0.4",
+                "symfony/yaml": ">=2.0.4"
             },
             "type": "library",
             "autoload": {
                 "psr-0": {
                     "Ladybug": "lib/"
-                },
-                "files": [
-                    "lib/Ladybug/helpers.php"
-                ]
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2300,31 +2444,29 @@
             "homepage": "https://github.com/raulfraile/ladybug",
             "keywords": [
                 "dump",
-                "dumper",
                 "ladybug",
-                "print_r",
-                "var_dump"
+                "tree"
             ],
-            "time": "2013-08-15 00:03:34"
+            "time": "2013-08-07 21:05:16"
         },
         {
             "name": "raulfraile/ladybug-bundle",
-            "version": "dev-ladybug_v1.0",
+            "version": "0.x-dev",
             "target-dir": "RaulFraile/Bundle/LadybugBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/raulfraile/LadybugBundle.git",
-                "reference": "e367d3f30d50e04efad99a0e0c801b8e875f4a36"
+                "reference": "7de824af330945c4f10c1385266d870af685ea8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/e367d3f30d50e04efad99a0e0c801b8e875f4a36",
-                "reference": "e367d3f30d50e04efad99a0e0c801b8e875f4a36",
+                "url": "https://api.github.com/repos/raulfraile/LadybugBundle/zipball/7de824af330945c4f10c1385266d870af685ea8d",
+                "reference": "7de824af330945c4f10c1385266d870af685ea8d",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
-                "raulfraile/ladybug": "dev-master",
+                "raulfraile/ladybug": "v0.7",
                 "symfony/framework-bundle": ">=2.0.0"
             },
             "replace": {
@@ -2356,7 +2498,7 @@
                 "tree",
                 "twig"
             ],
-            "time": "2013-07-20 23:17:50"
+            "time": "2013-08-19 07:29:36"
         },
         {
             "name": "recaptcha/php5",
@@ -2411,12 +2553,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rezzza/mailchimp.git",
-                "reference": "1.3.1"
+                "reference": "1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rezzza/mailchimp/zipball/1.3.1",
-                "reference": "1.3.1",
+                "url": "https://api.github.com/repos/rezzza/mailchimp/zipball/1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d",
+                "reference": "1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d",
                 "shasum": ""
             },
             "require": {
@@ -2547,12 +2689,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "8daadf79d5f305fbcf4261c052968415f4e69a00"
+                "reference": "4a7b126e9c22f858e3584b19ddce6e5bdd7677ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/8daadf79d5f305fbcf4261c052968415f4e69a00",
-                "reference": "8daadf79d5f305fbcf4261c052968415f4e69a00",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/4a7b126e9c22f858e3584b19ddce6e5bdd7677ee",
+                "reference": "4a7b126e9c22f858e3584b19ddce6e5bdd7677ee",
                 "shasum": ""
             },
             "require": {
@@ -2586,7 +2728,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2013-08-13 20:01:59"
+            "time": "2013-08-21 18:09:35"
         },
         {
             "name": "smarty/smarty",
@@ -2799,12 +2941,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "v2.3.0"
+                "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/v2.3.0",
-                "reference": "v2.3.0",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
+                "reference": "03ed73bc11367b3156cc21f22ac37c7f70fcd10a",
                 "shasum": ""
             },
             "require": {
@@ -2911,12 +3053,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "91e5b10d0595c077c73564e2e4a6246810651dbf"
+                "reference": "cbc30a31e2248bccd9ee8e8142177b617fb32e37"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/91e5b10d0595c077c73564e2e4a6246810651dbf",
-                "reference": "91e5b10d0595c077c73564e2e4a6246810651dbf",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/cbc30a31e2248bccd9ee8e8142177b617fb32e37",
+                "reference": "cbc30a31e2248bccd9ee8e8142177b617fb32e37",
                 "shasum": ""
             },
             "require": {
@@ -3011,7 +3153,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-08-15 17:08:02"
+            "time": "2013-08-21 19:09:08"
         },
         {
             "name": "twig/extensions",
@@ -3221,7 +3363,6 @@
     "stability-flags": {
         "friendsofsymfony/rest-bundle": 20,
         "behat/common-contexts": 20,
-        "jms/serializer-bundle": 20,
         "guzzle/guzzle": 20,
         "rezzza/mailchimp": 20,
         "hybridauth/hybridauth": 20,
@@ -3229,7 +3370,8 @@
         "knplabs/knp-menu-bundle": 20,
         "knplabs/knp-menu": 20,
         "raulfraile/ladybug-bundle": 20,
-        "willdurand/expose-translation-bundle": 20
+        "willdurand/expose-translation-bundle": 20,
+        "knplabs/packagist-api": 20
     },
     "platform": {
         "php": ">=5.3.3"

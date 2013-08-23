@@ -1,50 +1,54 @@
 {
-    "name":"sourcefabric/newscoop",
+    "name":"sourcefabric\/newscoop",
     "description":"The open source CMS for news",
     "keywords":[
         "cms",
         "journalism",
         "publication"
     ],
-    "homepage":"http://www.sourcefabric.org/en/newscoop/",
+    "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
     "version":"4.1",
     "license":"GPL-3.0",
     "authors":[
         
     ],
     "require":{
-        "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
-        "doctrine/orm": ">=2.2.3,<2.4-dev",
-        "doctrine/doctrine-bundle": "1.2.*",
-        "twig/extensions": "1.0.*",
-        "symfony/assetic-bundle": "2.3.*",
-        "symfony/swiftmailer-bundle": "2.3.*",
-        "symfony/monolog-bundle": "2.3.*",
-        "sensio/distribution-bundle": "2.3.*",
-        "sensio/framework-extra-bundle": "2.3.*",
-        "sensio/generator-bundle": "2.3.*",
-        "incenteev/composer-parameter-handler": "~2.0",
-        "bombayworks/zendframework1":"1.11.*",
-        "friendsofsymfony/rest-bundle": "0.13.*@dev",
-        "behat/behat":">=2.4.0",
-        "behat/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
-        "kriswallsmith/buzz":">=0.7",
-        "knplabs/knp-paginator-bundle":"v2.3.2",
-        "jms/serializer-bundle":"0.12.x-dev",
-        "guzzle/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
-        "rezzza/mailchimp":"dev-master",
-        "hybridauth/hybridauth":"dev-master",
-        "noiselabs/smarty-bundle":"dev-master",
-        "knplabs/knp-menu-bundle": "2.0.*@dev",
-        "knplabs/knp-menu": "2.0.*@dev",
-        "raulfraile/ladybug-bundle": "dev-ladybug_v1.0",
-        "friendsofsymfony/jsrouting-bundle": "~1.1",
-        "willdurand/expose-translation-bundle": "0.3.*@dev",
-        "recaptcha/php5": "v1.0.0"
+        "php":">=5.3.3",
+        "symfony\/symfony":"2.3.*",
+        "doctrine\/orm":">=2.2.3,<2.4-dev",
+        "doctrine\/doctrine-bundle":"1.2.*",
+        "twig\/extensions":"1.0.*",
+        "symfony\/assetic-bundle":"2.3.*",
+        "symfony\/swiftmailer-bundle":"2.3.*",
+        "symfony\/monolog-bundle":"2.3.*",
+        "sensio\/distribution-bundle":"2.3.*",
+        "sensio\/framework-extra-bundle":"2.3.*",
+        "sensio\/generator-bundle":"2.3.*",
+        "incenteev\/composer-parameter-handler":"~2.0",
+        "bombayworks\/zendframework1":"1.11.*",
+        "friendsofsymfony\/rest-bundle":"0.13.*@dev",
+        "behat\/behat":">=2.4.0",
+        "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
+        "kriswallsmith\/buzz":">=0.7",
+        "knplabs\/knp-paginator-bundle":"v2.3.2",
+        "jms\/serializer-bundle":"0.12.0",
+        "guzzle\/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
+        "rezzza\/mailchimp":"dev-master",
+        "hybridauth\/hybridauth":"dev-master",
+        "noiselabs\/smarty-bundle":"dev-master",
+        "knplabs\/knp-menu-bundle":"2.0.*@dev",
+        "knplabs\/knp-menu":"2.0.*@dev",
+        "raulfraile\/ladybug-bundle":"0.*@dev",
+        "friendsofsymfony\/jsrouting-bundle":"~1.1",
+        "willdurand\/expose-translation-bundle":"0.3.*@dev",
+        "recaptcha\/php5":"v1.0.0",
+        "knplabs\/packagist-api":"0.1.*@dev",
+        "newscoop\/example-plugin-bundle":"*",
+        "newscoop\/newscoop-paywall-bundle":"*",
+        "newscoop/articles-calendar-plugin": "*"
     },
     "require-dev":{
-        "phpunit/phpunit":"3.7.*"
+        "phpunit\/phpunit":"3.7.*"
     },
     "autoload":{
         "psr-0":{
@@ -66,7 +70,7 @@
     },
     "include-path":[
         "include",
-        "./../dependencies/include"
+        ".\/..\/dependencies\/include"
     ],
     "scripts":{
         "post-install-cmd":[
@@ -80,7 +84,7 @@
     },
     "minimum-stability":"dev",
     "config":{
-        "bin-dir":"vendor/bin"
+        "bin-dir":"vendor\/bin"
     },
     "extra":{
         "symfony-app-dir":"application",

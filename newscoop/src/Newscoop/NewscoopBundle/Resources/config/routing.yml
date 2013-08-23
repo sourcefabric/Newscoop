@@ -1,0 +1,4 @@
+NewscoopNewscoopBundle:
+    resource: "@NewscoopNewscoopBundle/Controller/PluginsController.php"
+    prefix:   /
+    type:     annotation
