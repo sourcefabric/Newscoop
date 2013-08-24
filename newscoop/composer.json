@@ -42,10 +42,7 @@
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
         "willdurand\/expose-translation-bundle":"0.3.*@dev",
         "recaptcha\/php5":"v1.0.0",
-        "knplabs\/packagist-api":"0.1.*@dev",
-        "newscoop\/example-plugin-bundle":"*",
-        "newscoop\/newscoop-paywall-bundle":"*",
-        "newscoop/articles-calendar-plugin": "*"
+        "knplabs\/packagist-api":"0.1.*@dev"
     },
     "require-dev":{
         "phpunit\/phpunit":"3.7.*"
