@@ -45,8 +45,6 @@ class LocaleListener
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);
             $request->setLocale($language->getCode());
-        } else {
-            $request->setLocale($request->cookies->get('TOL_Language'));
         }
     }
 }
