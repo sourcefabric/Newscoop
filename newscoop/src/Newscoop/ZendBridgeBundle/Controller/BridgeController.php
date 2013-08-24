@@ -16,7 +16,11 @@ class BridgeController extends Controller
     * @Route("/{rest}", requirements={"rest" = ".+"})
     */
     public function indexAction(Request $request)
-    {   
+    {
+        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
+        $language = $this->container->get('em')->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);
+        $request->setLocale($language->getCode());
+
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 
