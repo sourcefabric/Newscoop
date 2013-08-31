@@ -1,0 +1,291 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+
+{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ getGS('System Preferences') }}{% endblock %}
+{% block admin_page_title_content %}{{ getGS('System Preferences') }}
+
+{% endblock %}
+
+{% block admin_content %}
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/bootstrap.min.js"></script>
+{{ loadTranslationStrings('system_pref') }}
+{% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="flash-error">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+<form action="{{ path('newscoop_newscoop_systempref_index') }}" method="post" {{ form_enctype(form) }} >
+<div class="system_pref">
+    <div class="tabbable tabs-left"> 
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#general_settings" data-toggle="tab">{{ getGS("General Settings") }}</a></li>
+            {% if hasManagePermission %}
+                <li><a href="#email_settings" data-toggle="tab">{{ getGS("Email Settings") }}</a></li>
+                <li><a href="#editor_settings" data-toggle="tab">{{ getGS("Editor Settings") }}</a></li>
+            {% endif %}
+            <li><a href="#geolocation_settings" data-toggle="tab">{{ getGS("Geolocation Settings") }}</a></li>
+            <li><a href="#mailchimp_settings" data-toggle="tab">MailChimp Settings</a></li>
+            <li><a href="#facebook_settings" data-toggle="tab">Facebook Settings</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="general_settings">
+                <h3>{{ getGS("General Settings") }}</h3>
+                    <dl>
+                        <dt>
+                            <label>{{ getGS("Site On-Line:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.siteonline) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Site Title:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.title, {'attr' : {'class' : 'input_text'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Site Meta Keywords:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.meta_keywords, {'attr' : {'class' : 'input_text'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Site Meta Description:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.meta_description, {'attr' : {'class' : 'input_text'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Time Zone:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.timezone, {'attr' : {'class' : 'input_select wide'}}) }} 
+                        </dd>
+                        {% if hasManagePermission %}
+                            <dt>
+                                <label>{{ getGS("Database Cache Engine:") }}</label>
+                            </dt>
+                            <dd>
+                                {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
+                            </dd>
+                            <dt>
+                                <label>{{ getGS("Template Cache Handler:") }}</label>
+                            </dt>
+                            <dd>
+                                {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }} 
+                            </dd>
+                        {% endif %}
+                        <dt>
+                            <label>{{ getGS("Imagecache Lifetime:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Allow password recovery:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.allow_recovery) }} 
+                        </dd>
+                        <div id="password_recovery">
+                        <dt>
+                            <label>{{ getGS('From email address:') }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.password_recovery_form, {'attr' : {'class' : 'input_text'}}) }} 
+                        </dd>
+                        </div>
+                        <dt>
+                            <label>{{ getGS("Secret Key:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Session Lifetime:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.session_lifetime, {'attr' : {'class' : 'input_text'}}) }}
+                            {% if php_ini_max_seconds %}
+                                <span style="margin-top:8px;"><= {{ php_ini_max_seconds }}, {{ getGS('according to php.ini settings') }}
+                                </span>
+                            {% endif %}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Keyword separator:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.separator, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Number of failed login attempts before showing CAPTCHA :") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.captcha, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Maximum upload file size:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.max_upload_size, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }}
+                            <p>{{ getGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", upload_min_filesize ) }}</p>
+                        </dd>
+                        {% if hasManagePermission %}
+                        <dt>
+                            <label>{{ getGS("Automatic collection of statistics:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.automatic_collection) }} 
+                        </dd>
+                        {% endif %}
+                    <dl> 
+            </div>
+            {% if hasManagePermission %}
+            <div class="tab-pane" id="email_settings">
+                <h3>{{ getGS("Email Settings") }}</h3>
+                <dl>
+                    <dt>
+                        <label>{{ getGS("SMTP Host:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.smtp_host, {'attr' : {'class' : 'input_text'}}) }} 
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("SMTP Port:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Email contact:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.email_contact, {'attr' : {'class' : 'input_text'}}) }} 
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Email from:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
+                    </dd>
+                </dl>
+            </div>        
+            <div class="tab-pane" id="editor_settings">
+                <h3>{{ getGS("Editor Settings") }}</h3>
+                <dl>
+                    <dt>
+                        <label>{{ getGS("Image Resizing Ratio:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.image_ratio, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} %
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Image Resizing Width:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.image_width, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} pixels
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Image Resizing Height:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.image_height, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} pixels
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Zoom enabled for images in article content?") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.zoom) }}
+                    </dd>
+                    <dt class="border"><label>{{ getGS("Reader subscriptions managed externally?") }}</label></dt>
+                    <dd>
+                        {{ form_widget(form.external_management) }}
+                    </dd>
+                    <dt class="border"><label>{{ getGS("Setting up a Newscoop Replication Server?")}}</label></dt>
+                    <dd>
+                        {{ form_widget(form.use_replication) }}
+                    </dd>
+                    <div id="replication_server">
+                        <dl>
+                            <dt><h4>{{ getGS("Newscoop Online Server Database") }}</h4></dt>
+                            <dt><label>{{ getGS("Database Replication Host:") }}</label></dt>
+                            <dd>
+                                {{ form_widget(form.use_replication_host, {'attr' : {'class' : 'input_text'}}) }}
+                            </dd>
+                            <dt><label>{{ getGS("Database Replication User:") }}</label></dt>
+                            <dd>
+                                {{ form_widget(form.use_replication_user, {'attr' : {'class' : 'input_text'}}) }}
+                            </dd>
+                            <dt><label>{{ getGS("Database Replication Password:") }}</label></dt>
+                            <dd>
+                                {{ form_widget(form.use_replication_password, {'attr' : {'class' : 'input_text'}}) }}
+                            </dd>
+                            <dt><label>{{ getGS("Database Replication Port:") }}</label></dt>
+                            <dd>
+                                {{ form_widget(form.use_replication_port, {'attr' : {'class' : 'input_text'}}) }}
+                            </dd>
+                        </dl>
+                    </div>
+                    <dt class="border"><label>{{ getGS("Templates filter mask (separated by comma)") }}</label></dt>
+                    <dd>
+                       {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
+                    </dd> 
+                    <dt class="border"><label>{{ getGS("Run scheduled tasks externally?") }}</label></dt>
+                    <dd>
+                        {{ form_widget(form.external_cron_management) }}
+                    </dd>
+                </dl>
+            </div>
+            {% endif %}
+            <div class="tab-pane" id="geolocation_settings">
+                <h3>{{ getGS("Geolocation Settings") }}</h3>
+                <dl>
+                    {% if mysql_client_command_path %}
+                    <dt align="left" width="400px" title="{{ getGS("to load geo-names data") }}" style="color:#b06000">
+                            {{ getGS("MySQL client command path") }}
+                    </dt>
+                    <dd align="left" valign="top">
+                            <input type="text" name="f_mysql_client_command_path" value="{{ mysql_client_command_path }}" maxlength="200" size="40" class="input_text" />
+                    </dd>
+                    {% endif %}
+                    <dt><label>Map Center Latitude:</label></dt>
+                    <dd>
+                         <input type="text" name="f_map_center_latitude_default" value="50.089926" maxlength="10" size="10" class="input_text">
+                    </dd> 
+                </dl>
+              </div>
+            <div class="save-button-bar">
+                    <input type="submit" name="save" value="Save" class="save-button">
+                </div>
+            <div class="tab-pane" id="email_settings">
+                <h3>Editor Settings</h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+{{ form_rest(form) }}
+</form>
+<script type="text/javascript"><!--
+    $(function() {
+        $("input:radio[name=preferencesform\\[allow_recovery\\]]").change(function() {
+            var email_div = $('#password_recovery');
+            if ($(this).val() == 'Y') {
+                email_div.show();
+            } else {
+                email_div.hide();
+            }
+        });
+        $("input:radio[name=preferencesform\\[use_replication\\]]").change(function() {
+            var replication_div = $('#replication_server');
+            if ($(this).val() == 'Y') {
+                replication_div.show();
+            } else {
+                replication_div.hide();
+            }
+        });
+
+        $("input:radio[name=preferencesform\\[use_replication\\]]:checked").change();
+    });
+//--></script>
+{% endblock %}
