@@ -92,6 +92,13 @@ class PreferencesType extends AbstractType
             $cacheLifetime[$k] = $v;
         }
 
+        $language_codes_639_1 = \Language::Get6391List();
+        asort($language_codes_639_1);
+        $languages = array();
+        foreach($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
+            $languages[$geo_lang_code] = $geo_lang_name;
+        }
+
         $builder
         ->add('siteonline', 'choice', array(
             'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
@@ -250,13 +257,12 @@ class PreferencesType extends AbstractType
         ))
         ->add('use_replication_port', 'integer', array(
             'attr' => array('max' => 999999, 'min' => 0),
-            'error_bubbling' => true,
             'required' => false
         ))
-        ->add('template_filter', null, array(
+        ->add('template_filter', 'text', array(
             'attr' => array('maxlength' => 50, 'size' => 30),
             'error_bubbling' => true,
-            'required' => false
+            'required' => true
         ))
         ->add('external_cron_management', 'choice', array(
             'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
@@ -264,6 +270,150 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
+        ))
+        ->add('mysql_client_command_path', 'text', array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('center_latitude_default', 'number', array(
+            'attr' => array('size' => 10),
+            'error_bubbling' => true,
+            'invalid_message' => 'newscoop.preferences.error.latitude',
+            'precision' => 6,
+            'required' => true
+        ))
+        ->add('center_longitude_default', 'number', array(
+            'attr' => array('size' => 10),
+            'error_bubbling' => true,
+            'invalid_message' => 'newscoop.preferences.error.longitude',
+            'precision' => 6,
+            'required' => true
+        ))
+        ->add('map_display_resolution_default', 'integer', array(
+            'attr' => array('max' => 99, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_view_width_default', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_view_height_default', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_auto_cSS_file', null, array(
+            'attr' => array('maxlength' => 80, 'size' => 50),
+            'error_bubbling' => true,
+            'required' => true
+        ))
+        ->add('map_auto_focus_default', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('map_auto_focus_max_zoom', 'integer', array(
+            'attr' => array('max' => 18, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_auto_focus_border', 'integer', array(
+            'attr' => array('max' => 999, 'min' => -99),
+            'required' => true
+        ))
+        ->add('map_provider_available_google_v3', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('map_provider_available_map_quest', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('map_provider_available_oSM', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('map_provider_default', 'choice', array(
+            'choices'   => array(
+                'GoogleV3' => 'Google Maps', 
+                'MapQuest' => 'MapQuest Open',
+                'OSM' => 'OpenStreetMap',
+            ),
+            'required' => true
+        ))
+        ->add('geo_search_local_geonames', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('geo_search_mapquest_nominatim', 'checkbox', array(
+            'required' => false
+        ))
+        ->add('geo_search_preferred_language', 'choice', array(
+            'choices'   => $languages,
+            'required' => true
+        ))
+        ->add('map_marker_directory', null, array(
+            'attr' => array('maxlength' => 80, 'size' => 50),
+            'error_bubbling' => true,
+            'required' => true
+        ))
+        ->add('map_marker_source_default', null, array(
+            'required' => false
+        ))
+        ->add('map_popup_width_min', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_popup_height_min', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_width_you_tube', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_height_you_tube', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_width_vimeo', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_height_vimeo', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_width_flash', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('map_video_height_flash', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 0),
+            'required' => true
+        ))
+        ->add('geo_flash_server', null, array(
+            'attr' => array('maxlength' => 80, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('geo_flash_directory', null, array(
+            'attr' => array('maxlength' => 80, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('facebook_appid', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('facebook_appsecret', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('mailchimp_apikey', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('mailchimp_listid', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
         ));
     }
 

@@ -1,0 +1,6 @@
+newscoop:
+  preferences:
+    error:
+      latitude: "Latitude field value is not valid."
+      longitude: "Longitude field value is not valid."
+

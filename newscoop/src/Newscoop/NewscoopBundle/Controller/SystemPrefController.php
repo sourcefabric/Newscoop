@@ -22,10 +22,6 @@ class SystemPrefController extends Controller
      */
     public function indexAction(Request $request)
     {   
-        /*if (!\SecurityToken::isValid()) {
-            camp_html_display_error(getGS('Invalid security token!'));
-            exit;
-        }*/
         $em = $this->container->get('em');
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
@@ -33,8 +29,14 @@ class SystemPrefController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
+        $cities = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityNames')
+            ->createQueryBuilder('a')
+            ->select('count(a)')
+            ->getQuery()
+            ->getOneOrNullResult();
+
         $hasManagePermission = false;
-        
+
         if(\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
             $hasManagePermission = true;
         }
@@ -46,6 +48,7 @@ class SystemPrefController extends Controller
         }
 
         $currentUser = $this->get('user')->getCurrentUser();
+        $translator = $this->get('translator');
 
         $sp_session_lifetime = 0 + \SystemPref::Get('SiteSessionLifeTime');
         $php_ini_max_seconds = 0;
@@ -63,38 +66,27 @@ class SystemPrefController extends Controller
         $upload_min_filesize = min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
         $mysql_client_command_path = \SystemPref::Get('MysqlClientCommandPath');
 
-        if (!$locations) {
+        if (!$locations || !$cities) {
             $mysql_client_command_path_def = '/usr/bin/mysql';
             if (empty($mysql_client_command_path) && file_exists($mysql_client_command_path_def)) {
                 $mysql_client_command_path = $mysql_client_command_path_def;
             }
         }
-        //var_dump(camp_geodata_loaded($g_ado_db));die;
-        /*if (!\camp_geodata_loaded($g_ado_db)) {
 
-            $mysql_client_command_path_def = '/usr/bin/mysql';
-            if ((empty($mysql_client_command_path)) && (file_exists($mysql_client_command_path_def))) {
-                $mysql_client_command_path = $mysql_client_command_path_def;
+        $geo_preferred_lang = \SystemPref::Get('GeoSearchPreferredLanguage');
+        if (empty($geo_preferred_lang)) {
+            $geo_preferred_lang = 'en';
+        }
+
+        $default_marker_source = \SystemPref::Get('MapMarkerSourceDefault');
+
+        $marker_icons = \Geo_Preferences::GetIconsFiles();
+        if (0 < count($marker_icons)) {
+            $default_marker_source = array();
+            foreach ($marker_icons as $one_icon) {
+                $default_marker_source[$one_icon] = $one_icon;
             }
-        }*/
-        /*function camp_geodata_loaded($g_conn)
-        {
-            $queryStr_loc = 'SELECT count(*) AS cnt FROM CityLocations';
-            $queryStr_nam = 'SELECT count(*) AS cnt FROM CityNames';
-
-            $got_data = true;
-            foreach (array($queryStr_loc, $queryStr_nam) as $one_query) {
-                $rows = $g_conn->GetAll($one_query);
-                foreach ((array) $rows as $row) {
-                    if (0 == $row['cnt']) {
-                        $got_data = false;
-                        break;
-                    }
-                }
-            }
-
-            return $got_data;
-        }*/
+        }
 
         $form = $this->container->get('form.factory')->create(new PreferencesType(), array(
             'siteonline' => \SystemPref::Get("SiteOnline"),
@@ -129,8 +121,40 @@ class SystemPrefController extends Controller
             'use_replication_port' => \SystemPref::Get("DBReplicationPort"),
             'template_filter' => \SystemPref::Get("TemplateFilter"),
             'external_cron_management' => \SystemPref::Get('ExternalCronManagement'),
-     
-        ), array());
+            'mysql_client_command_path' => $mysql_client_command_path,
+            'center_latitude_default' => (float)\SystemPref::Get('MapCenterLatitudeDefault'),
+            'center_longitude_default' => (float)\SystemPref::Get('MapCenterLongitudeDefault'),
+            'map_display_resolution_default' => (int)\SystemPref::Get('MapDisplayResolutionDefault'),
+            'map_view_width_default' => \SystemPref::Get('MapViewWidthDefault'),
+            'map_view_height_default' => \SystemPref::Get('MapViewHeightDefault'),
+            'map_auto_focus_default' => \SystemPref::Get('MapAutoFocusDefault') == '0' ? false : true,
+            'map_auto_focus_max_zoom' => \SystemPref::Get('MapAutoFocusMaxZoom'),
+            'map_auto_focus_border' => \SystemPref::Get('MapAutoFocusBorder'),
+            'map_auto_cSS_file' => \SystemPref::Get("MapAutoCSSFile"),
+            'map_provider_available_google_v3' => \SystemPref::Get('MapProviderAvailableGoogleV3') == '0' ? false : true,
+            'map_provider_available_map_quest' => \SystemPref::Get('MapProviderAvailableMapQuest') == '0' ? false : true,
+            'map_provider_available_oSM' => \SystemPref::Get('MapProviderAvailableOSM') == '0' ? false : true,
+            'map_provider_default' => \SystemPref::Get('MapProviderDefault'),
+            'geo_search_local_geonames' => \SystemPref::Get('GeoSearchLocalGeonames') == '0' ? false : true,
+            'geo_search_mapquest_nominatim' => \SystemPref::Get('GeoSearchMapquestNominatim') == '0' ? false : true,
+            'geo_search_preferred_language' => $geo_preferred_lang,
+            'map_marker_directory' => \SystemPref::Get('MapMarkerDirectory'),
+            'map_popup_width_min' => \SystemPref::Get('MapPopupWidthMin'),
+            'map_popup_height_min' => \SystemPref::Get('MapPopupHeightMin'),
+            'map_video_width_you_tube' => \SystemPref::Get('MapVideoWidthYouTube'),
+            'map_video_height_you_tube' => \SystemPref::Get('MapVideoHeightYouTube'),
+            'map_video_width_vimeo' => \SystemPref::Get('MapVideoWidthVimeo'),
+            'map_video_height_vimeo' => \SystemPref::Get('MapVideoHeightVimeo'),
+            'map_video_width_flash' => \SystemPref::Get('MapVideoWidthFlash'),
+            'map_video_height_flash' => \SystemPref::Get('MapVideoHeightFlash'),
+            'geo_flash_server' => \SystemPref::Get('FlashServer'),
+            'geo_flash_directory' => \SystemPref::Get('FlashDirectory'),
+            'facebook_appid' => \SystemPref::Get('facebook_appid'),
+            'facebook_appsecret' => \SystemPref::Get('facebook_appsecret'),
+            'mailchimp_apikey' => \SystemPref::Get('mailchimp_apikey'),
+            'mailchimp_listid' => \SystemPref::Get('mailchimp_listid'),
+        )
+        , array());
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -141,6 +165,42 @@ class SystemPrefController extends Controller
                 }
 
                 $data = $form->getData();
+                $geoLocation = array(
+                    'map_display_resolution_default' => $data['map_display_resolution_default'],
+                    'map_view_width_default' => $hasManagePermission ? $data['map_view_width_default'] : \SystemPref::Get('MapViewWidthDefault'),
+                    'map_view_height_default' => $hasManagePermission ? $data['map_view_height_default'] : \SystemPref::Get('MapViewHeightDefault'),
+                    'map_auto_cSS_file' => strip_tags($data['map_auto_cSS_file']),
+                    'map_auto_focus_default' => $data['map_auto_focus_default'] ? '1' : '0',
+                    'map_auto_focus_max_zoom' => $data['map_auto_focus_max_zoom'],
+                    'map_auto_focus_border' => $data['map_auto_focus_border'],
+                    'map_provider_available_google_v3' => $data['map_provider_available_google_v3'] ? '1' : '0',
+                    'map_provider_available_map_quest' => $data['map_provider_available_map_quest'] ? '1' : '0',
+                    'map_provider_available_oSM' => $data['map_provider_available_oSM'] ? '1' : '0',
+                    'map_provider_default' => $data['map_provider_default'],
+                    'geo_search_local_geonames' => $data['geo_search_local_geonames'] ? '1' : '0',
+                    'geo_search_mapquest_nominatim' => $data['geo_search_mapquest_nominatim'] ? '1' : '0',
+                    'geo_search_preferred_language' => $data['geo_search_preferred_language'],
+                    'map_marker_directory' => $hasManagePermission ? strip_tags($data['map_marker_directory']) : \SystemPref::Get('MapMarkerDirectory'),
+                    'map_marker_source_default' => strip_tags($data['map_marker_source_default']),
+                    'map_popup_width_min' => $hasManagePermission ? $data['map_popup_width_min'] : \SystemPref::Get('MapPopupWidthMin'),
+                    'map_popup_height_min' => $hasManagePermission ? $data['map_popup_height_min'] : \SystemPref::Get('MapPopupHeightMin'),
+                    'map_video_width_you_tube' => $hasManagePermission ? $data['map_video_width_you_tube'] : \SystemPref::Get('MapVideoWidthYouTube'),
+                    'map_video_height_you_tube' => $hasManagePermission ? $data['map_video_height_you_tube'] : \SystemPref::Get('MapVideoHeightYouTube'),
+                    'map_video_width_vimeo' => $hasManagePermission ? $data['map_video_width_vimeo'] : \SystemPref::Get('MapVideoWidthVimeo'),
+                    'map_video_height_vimeo' => $hasManagePermission ? $data['map_video_height_vimeo'] : \SystemPref::Get('MapVideoHeightVimeo'),
+                    'map_video_width_flash' => $hasManagePermission ? $data['map_video_width_flash'] : \SystemPref::Get('MapVideoWidthFlash'),
+                    'map_video_height_flash' => $hasManagePermission ? $data['map_video_height_flash'] : \SystemPref::Get('MapVideoHeightFlash'),
+                    'flash_server' => $hasManagePermission ? strip_tags($data['geo_flash_server']) : \SystemPref::Get('FlashServer'),
+                    'flash_directory' => $hasManagePermission ? strip_tags($data['geo_flash_directory']) : \SystemPref::Get('FlashDirectory'),
+                );
+                // Site title
+                \SystemPref::Set('SiteTitle', strip_tags($data['title']));
+
+                // Site Meta Keywords
+                \SystemPref::Set('SiteMetaKeywords', strip_tags($data['meta_keywords']));
+
+                // Site Meta Description
+                \SystemPref::Set('SiteMetaDescription', strip_tags($data['meta_description']));
 
                 \SystemPref::Set('TimeZone', (string)$data['timezone']);
 
@@ -154,7 +214,10 @@ class SystemPrefController extends Controller
                         } else {
                             $this->get('session')->getFlashBag()->add(
                                 'error',
-                                getGS('Invalid: You need PHP $1 enabled in order to use the caching system.', $data['cache_engine'])
+                                $translator->trans(
+                                    'newscoop.preferences.error.cache',
+                                    array('%cache%' => $data['cache_engine'])
+                                )
                             );
 
                             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -170,7 +233,10 @@ class SystemPrefController extends Controller
                         } else {
                             $this->get('session')->getFlashBag()->add(
                                 'error',
-                                getGS('Invalid: You need PHP $1 enabled in order to use the template caching system.', $data['cache_template'])
+                                $translator->trans(
+                                    'newscoop.preferences.error.cache',
+                                    array('%cache%' => $data['cache_template'])
+                                )
                             );
 
                             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -183,7 +249,7 @@ class SystemPrefController extends Controller
                     \SystemPref::Set('CollectStatistics', $data['automatic_collection']);
 
                     // SMTP Host/Port
-                    \SystemPref::Set('SMTPHost', $data['smtp_host']);
+                    \SystemPref::Set('SMTPHost', strip_tags($data['smtp_host']));
                     \SystemPref::Set('SMTPPort', $data['smtp_port']);
                     \SystemPref::Set('EmailContact', $data['email_contact']);
                     \SystemPref::Set('EmailFromAddress', $data['email_from']);
@@ -201,14 +267,14 @@ class SystemPrefController extends Controller
                     if ($data['use_replication'] == 'Y') {
                         // Database Replication Host, User and Password
                         if (!empty($data['use_replication_host']) && !empty($data['use_replication_user'])) {
-                            \SystemPref::Set("DBReplicationHost", $data['use_replication_host']);
-                            \SystemPref::Set("DBReplicationUser", $data['use_replication_user']);
-                            \SystemPref::Set("DBReplicationPass", $data['use_replication_password']);
+                            \SystemPref::Set("DBReplicationHost", strip_tags($data['use_replication_host']));
+                            \SystemPref::Set("DBReplicationUser", strip_tags($data['use_replication_user']));
+                            \SystemPref::Set("DBReplicationPass", strip_tags($data['use_replication_password']));
                             \SystemPref::Set("UseDBReplication", $data['use_replication']);
                         } else {;
                             $this->get('session')->getFlashBag()->add(
                                 'error',
-                                getGS("Database Replication data incomplete")
+                                $translator->trans('newscoop.preferences.error.replication')
                             );
 
                             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -223,9 +289,20 @@ class SystemPrefController extends Controller
                     }
 
                     // template filter
-                    \SystemPref::Set("TemplateFilter", $data['template_filter']);
+                    \SystemPref::Set("TemplateFilter", strip_tags($data['template_filter']));
 
                     // External cron management
+                    if ($data['external_cron_management'] != 'Y' && $data['external_cron_management'] != 'N') {
+                        $data['external_cron_management'] = SystemPref::Get('ExternalSubscriptionManagement');
+                    }
+                    if ($data['external_cron_management'] != 'Y' && $data['external_cron_management'] != 'N') {
+                        $data['external_cron_management'] = SystemPref::Get('ExternalCronManagement');
+                    }
+                    if ($data['external_cron_management'] == 'N'
+                            && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
+                        $data['external_cron_management'] = 'Y';
+                    }
+                    
                     \SystemPref::Set('ExternalCronManagement', $data['external_cron_management']);
                 }
 
@@ -236,13 +313,13 @@ class SystemPrefController extends Controller
                 \SystemPref::Set('PasswordRecoveryFrom', $data['password_recovery_form']);
 
                 // Secret key
-                \SystemPref::Set('SiteSecretKey', $data['secret_key']);
+                \SystemPref::Set('SiteSecretKey', strip_tags($data['secret_key']));
 
                 // Session life time
                 \SystemPref::Set('SiteSessionLifeTime', $data['session_lifetime']);
 
                 // Keyword Separator
-                \SystemPref::Set("KeywordSeparator", $data['separator']);
+                \SystemPref::Set("KeywordSeparator", strip_tags($data['separator']));
 
                 // Number of failed login attempts
                 \SystemPref::Set("LoginFailedAttemptsNum", $data['captcha']);
@@ -251,13 +328,52 @@ class SystemPrefController extends Controller
                 $max_upload_filesize_bytes = camp_convert_bytes($data['max_upload_size']);
                 if ($max_upload_filesize_bytes > 0 &&
                         $max_upload_filesize_bytes <= min(camp_convert_bytes(ini_get('post_max_size')), camp_convert_bytes(ini_get('upload_max_filesize')))) {
-                    \SystemPref::Set("MaxUploadFileSize", $data['max_upload_size']);
+                    \SystemPref::Set("MaxUploadFileSize", strip_tags($data['max_upload_size']));
                 } else {
                     $this->get('session')->getFlashBag()->add(
                         'error',
-                        getGS('Invalid Max Upload File Size value submitted')
+                        $translator->trans('newscoop.preferences.error.maxupload')
                     );
                 }
+                
+                if (strip_tags($data['mysql_client_command_path'])) {
+                    \SystemPref::Set('MysqlClientCommandPath', strip_tags($data['mysql_client_command_path']));
+                }
+                
+                if ($data['center_latitude_default'] > 90 || $data['center_latitude_default'] < -90 || 
+                    $data['center_longitude_default'] > 180 || $data['center_longitude_default'] < -180) {
+                    $this->get('session')->getFlashBag()->add(
+                        'error',
+                        $translator->trans('newscoop.preferences.error.geolocation')
+                    );
+                } else {
+                    \SystemPref::Set('MapCenterLatitudeDefault', $data['center_latitude_default']);
+                    \SystemPref::Set('MapCenterLongitudeDefault', $data['center_longitude_default']);
+                }
+
+                // geolocation
+                foreach ($geoLocation as $key => $value) {
+                    $name = '';
+                        foreach (explode('_', $key) as $part) {
+                            $name .= ucfirst($part);
+                        }
+
+                        \SystemPref::Set($name, $value);
+                }
+
+                //Mailchimp
+                \SystemPref::Set('mailchimp_apikey', strip_tags($data['mailchimp_apikey']));
+                \SystemPref::Set('mailchimp_listid', strip_tags($data['mailchimp_listid']));
+
+                //Facebook
+                \SystemPref::Get('facebook_appid', strip_tags($data['facebook_appid']));
+                \SystemPref::Get('facebook_appsecret', strip_tags($data['facebook_appsecret']));
+
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $translator->trans('newscoop.preferences.success.saved')
+                );
+                return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
         }
 
@@ -267,6 +383,8 @@ class SystemPrefController extends Controller
             'upload_min_filesize' => $upload_min_filesize,
             'hasManagePermission' => $hasManagePermission,
             'mysql_client_command_path' => $mysql_client_command_path,
+            'map_marker_source_default' => $default_marker_source,
+            'map_marker_source_selected' => \SystemPref::Get('MapMarkerSourceDefault'),
         );
     }
 }

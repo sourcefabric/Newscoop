@@ -1,16 +1,24 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 
-{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ getGS('System Preferences') }}{% endblock %}
-{% block admin_page_title_content %}{{ getGS('System Preferences') }}
-
-{% endblock %}
+{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'newscoop.preferences.label.title'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
 
 {% block admin_content %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/bootstrap.min.js"></script>
 {{ loadTranslationStrings('system_pref') }}
+{% if form_errors(form) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
 {% for flashMessage in app.session.flashbag.get('error') %}
-        <div class="flash-error">
+        <div class="alerts alert-danger">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alerts alert-success">
             {{ flashMessage }}
         </div>
 {% endfor %}
@@ -24,8 +32,8 @@
                 <li><a href="#editor_settings" data-toggle="tab">{{ getGS("Editor Settings") }}</a></li>
             {% endif %}
             <li><a href="#geolocation_settings" data-toggle="tab">{{ getGS("Geolocation Settings") }}</a></li>
-            <li><a href="#mailchimp_settings" data-toggle="tab">MailChimp Settings</a></li>
-            <li><a href="#facebook_settings" data-toggle="tab">Facebook Settings</a></li>
+            <li><a href="#mailchimp_settings" data-toggle="tab">{{ getGS("MailChimp Settings") }}</a></li>
+            <li><a href="#facebook_settings" data-toggle="tab">{{ getGS("Facebook Settings") }}</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="general_settings">
@@ -245,26 +253,232 @@
                             {{ getGS("MySQL client command path") }}
                     </dt>
                     <dd align="left" valign="top">
-                            <input type="text" name="f_mysql_client_command_path" value="{{ mysql_client_command_path }}" maxlength="200" size="40" class="input_text" />
+                        {{ form_widget(form.mysql_client_command_path, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     {% endif %}
-                    <dt><label>Map Center Latitude:</label></dt>
+                    <dt>
+                        <label>{{ getGS("Map Center Latitude:") }}</label>
+                    </dt>
                     <dd>
-                         <input type="text" name="f_map_center_latitude_default" value="50.089926" maxlength="10" size="10" class="input_text">
-                    </dd> 
+                        {{ form_widget(form.center_latitude_default, {'attr' : {'class' : 'input_text'}}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Map Center Longitude:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.center_longitude_default, {'attr' : {'class' : 'input_text'}}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Map Zoom Level:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_display_resolution_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                    </dd>
+                    {% if hasManagePermission %}
+                        <dt>
+                            <label>{{ getGS("Map Default Width:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_view_width_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Map Default Height:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_view_height_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                    {% endif %}
+                    <dt class="border">
+                        <label>{{ getGS("Include CSS file for map view") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_auto_cSS_file, {'attr' : {'class' : 'input_text'}}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Map auto-focusing as the default behavior:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_auto_focus_default, {'attr' : {'class' : 'input_text'}}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Maximal zoom for auto-focusing:") }} (0-18)</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_auto_focus_max_zoom, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Map border for auto-focusing:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_auto_focus_border, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                    </dd>
+                    <dt class="border">
+                        <label>{{ getGS("Allow Google Streets Map Provider:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_provider_available_google_v3) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Allow MapQuest Map Provider:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_provider_available_map_quest) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Allow OpenStreet Map Provider:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_provider_available_oSM) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Default Map Provider:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.map_provider_default, {'attr' : {'class' : 'input_select'}}) }}
+                    </dd>
+                    <dt class="border">
+                        <label>{{ getGS("Use Local GeoNames Search:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.geo_search_local_geonames) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Use MapQuest Nominatim Search:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.geo_search_mapquest_nominatim) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS("Preferred address language:") }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.geo_search_preferred_language, {'attr' : {'class' : 'input_select'}}) }}
+                    </dd>
+                    {% if hasManagePermission %}
+                        <dt class="border">
+                            <label>{{ getGS("Map Marker Directory:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_marker_directory, {'attr' : {'class' : 'input_text'}}) }}
+                        </dd>
+                         <dt>
+                            <label>{{ getGS("Map Marker Default:") }}</label>
+                        </dt>
+                        <dd>
+                            {% if map_marker_source_default is iterable %}
+                                <select name="preferencesform[map_marker_source_default]" class="input_select">
+                                    {% for mark in map_marker_source_default %}
+                                        <option value="{{ mark }}" {% if map_marker_source_selected == mark %} selected="selected" {% endif %}>{{ mark }}</option>
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                <input type="text" name="preferencesform[map_marker_source_default]" value="{{ map_marker_source_default }}" maxlength="80" size="40" class="input_text"/>
+                            {% endif %}
+                        </dd>
+                        <dt class="border">
+                            <label>{{ getGS("Map Popup Minimal Width:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_popup_width_min, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                         <dt>
+                            <label>{{ getGS("Map Popup Minimal Height:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_popup_height_min, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt class="border">
+                            <label>{{ getGS("Youtube Default Width:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_width_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Youtube Default Height:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_height_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt class="border">
+                            <label>{{ getGS("Vimeo Default Width:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_width_vimeo, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Vimeo Default Height:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_height_vimeo, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt class="border">
+                            <label>{{ getGS("Flash Default Width:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_width_flash, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Flash Default Height:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.map_video_height_flash, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
+                        </dd>
+                        <dt class="border">
+                            <label>{{ getGS("Local Flash Server:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.geo_flash_server, {'attr' : {'class' : 'input_text' }}) }}
+                        </dd>
+                        <dt>
+                            <label>{{ getGS("Local Flash Directory:") }}</label>
+                        </dt>
+                        <dd>
+                            {{ form_widget(form.geo_flash_directory, {'attr' : {'class' : 'input_text' }}) }}
+                        </dd>
+                    {% endif %}
                 </dl>
-              </div>
-            <div class="save-button-bar">
-                    <input type="submit" name="save" value="Save" class="save-button">
-                </div>
-            <div class="tab-pane" id="email_settings">
-                <h3>Editor Settings</h3>
             </div>
-
+            <div class="tab-pane" id="mailchimp_settings">
+                <h3>{{ getGS("MailChimp Settings") }}</h3>
+                <dl>
+                    <dt>
+                        <label>{{ getGS('API Key:') }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.mailchimp_apikey, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS('List Unique Id:') }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.mailchimp_listid, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                </dl>
+            </div>
+            <div class="tab-pane" id="facebook_settings">
+                <h3>{{ getGS("Facebook Settings") }}</h3>
+                <dl>
+                    <dt>
+                        <label>{{ getGS('App ID:') }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.facebook_appid, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ getGS('App Secret:') }}</label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.facebook_appsecret, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                </dl>
+            </div>
+            <div class="save-button-bar">
+                <button type="submit" class="save-button">{{ getGS('Save') }}</button>
+            </div>
         </div>
     </div>
 </div>
-{{ form_rest(form) }}
+{{ form_widget(form._token) }}
 </form>
 <script type="text/javascript"><!--
     $(function() {
