@@ -366,8 +366,8 @@ class SystemPrefController extends Controller
                 \SystemPref::Set('mailchimp_listid', strip_tags($data['mailchimp_listid']));
 
                 //Facebook
-                \SystemPref::Get('facebook_appid', strip_tags($data['facebook_appid']));
-                \SystemPref::Get('facebook_appsecret', strip_tags($data['facebook_appsecret']));
+                \SystemPref::Set('facebook_appid', strip_tags($data['facebook_appid']));
+                \SystemPref::Set('facebook_appsecret', strip_tags($data['facebook_appsecret']));
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
