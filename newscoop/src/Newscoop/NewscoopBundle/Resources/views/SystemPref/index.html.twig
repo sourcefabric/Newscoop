@@ -178,13 +178,13 @@
                         {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.email'|trans }}</label>
+                        <label>{{ 'newscoop.preferences.label.email'|trans }} <small id="contactemail">(?)</small></label>
                     </dt>
                     <dd>
                         {{ form_widget(form.email_contact, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.emailfrom'|trans }}</label>
+                        <label>{{ 'newscoop.preferences.label.emailfrom'|trans }} <small id="emailfrom">(?)</small></label>
                     </dt>
                     <dd>
                         {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
@@ -545,6 +545,8 @@
     popover($('#filter'), '{{ 'newscoop.preferences.popover.filter'|trans }}');
     popover($('#cron'), '{{ 'newscoop.preferences.popover.cron'|trans }}');
     popover($('#video'), '{{ 'newscoop.preferences.popover.video'|trans }}');
+    popover($('#emailfrom'), '{{ 'newscoop.preferences.popover.emailfrom'|trans }}');
+    popover($('#contactemail'), '{{ 'newscoop.preferences.popover.contactemail'|trans }}');
 
 //--></script>
 {% endblock %}
