@@ -261,6 +261,14 @@ class SystemPrefController extends Controller
         );
     }
 
+    /**
+     * Sets database caching
+     *
+     * @param string                                   $cache_engine Values 1 or 0
+     * @param Symfony\Component\Translation\Translator $translator   Translator
+     *
+     * @return void|RedirectResponse
+     */
     private function databaseCache($cache_engine, $translator) {
 
         if (\SystemPref::Get('DBCacheEngine') != $cache_engine) {
@@ -279,6 +287,14 @@ class SystemPrefController extends Controller
         }
     }
 
+    /**
+     * Sets templates caching
+     *
+     * @param string                                   $cache_template Values 1 or 0
+     * @param Symfony\Component\Translation\Translator $translator     Translator
+     *
+     * @return void|RedirectResponse
+     */
     private function templateCache($cache_template, $translator) {
         if (\SystemPref::Get('TemplateCacheHandler') !=  $cache_template && $cache_template) {
             $handler = \CampTemplateCache::factory($cache_template);
@@ -298,6 +314,18 @@ class SystemPrefController extends Controller
         }
     }
 
+    /**
+     * Sets replication settings
+     *
+     * @param string                                   $user            Replication server user
+     * @param string                                   $host            Replication server hostname
+     * @param string                                   $user            Replication server password
+     * @param string                                   $use_replication Defines if replication is on or off
+     * @param int                                      $port            Replication server port
+     * @param Symfony\Component\Translation\Translator $translator      Translator
+     *
+     * @return void|RedirectResponse
+     */
     private function useReplication($user, $host, $password, $use_replication, $port, $translator) {
         if ($use_replication == 'Y') {
             // Database Replication Host, User and Password
@@ -322,6 +350,13 @@ class SystemPrefController extends Controller
         }
     }
 
+    /**
+     * Sets scheduled tasks externally - options
+     *
+     * @param string $cron Values 1 or 0
+     *
+     * @return void
+     */
     private function cronManagement($cron) {
         if ($cron != 'Y' && $cron != 'N') {
             $cron = \SystemPref::Get('ExternalCronManagement');
@@ -334,6 +369,14 @@ class SystemPrefController extends Controller
         \SystemPref::Set('ExternalCronManagement', $cron);
     }
 
+    /**
+     * Defines and sets max upload file size
+     *
+     * @param string $max_size                                     Max upload file size
+     * @param Symfony\Component\Translation\Translator $translator Translator
+     *
+     * @return void|RedirectResponse
+     */
     private function maxUpload($max_size, $translator) {
         $max_upload_filesize_bytes = trim($max_size);
 
@@ -347,6 +390,16 @@ class SystemPrefController extends Controller
         }
     }
 
+    /**
+     * Sets geolocation options
+     *
+     * @param point                                    $latitude    Latitude
+     * @param point                                    $longitude   Longitude
+     * @param array                                    $geoLocation Geolocation data
+     * @param Symfony\Component\Translation\Translator $translator  Translator
+     *
+     * @return void|RedirectResponse
+     */
     private function geolocation($latitude, $longitude, $geoLocation, $translator) {
         if ($latitude > 90 || $latitude < -90 || 
             $longitude > 180 || $longitude < -180) {
@@ -369,20 +422,53 @@ class SystemPrefController extends Controller
         }
     }
 
+    /**
+     * Sets mailchimp options
+     *
+     * @param string $apiKey Mailchimp API key
+     * @param string $listId Mailchimp List ID
+     *
+     * @return void
+     */
     private function mailchimp($apiKey, $listId) {
         \SystemPref::Set('mailchimp_apikey', strip_tags($apiKey));
         \SystemPref::Set('mailchimp_listid', strip_tags($listId));            
     }
 
+    /**
+     * Sets facebook options
+     *
+     * @param string $appId  Facebook application ID
+     * @param string $secret Facebook Secret key
+     *
+     * @return void
+     */
     private function facebook($appId, $secret) {
         \SystemPref::Set('facebook_appid', strip_tags($appId));
         \SystemPref::Set('facebook_appsecret', strip_tags($secret));
     }
 
+    /**
+     * Sets automatic statistics collection options
+     *
+     * @param string $automatic_collection Values 1 or 0
+     *
+     * @return void
+     */
     private function collectStats($automatic_collection){
         \SystemPref::Set('CollectStatistics', $automatic_collection);
     }
 
+    /**
+     * Sets SMTP options
+     *
+     * @param string $host      SMTP host
+     * @param int    $port      SMTP port
+     * @param string $email     SMTP email
+     * @param string $emailFrom SMTP email From
+     *
+     * @return void
+     */
     private function smtpConfiguration($host, $port, $email, $emailFrom) {
         \SystemPref::Set('SMTPHost', strip_tags($host));
         \SystemPref::Set('SMTPPort', $port);
@@ -390,6 +476,16 @@ class SystemPrefController extends Controller
         \SystemPref::Set('EmailFromAddress', $emailFrom);
     }
 
+    /**
+     * Sets images resizing options
+     *
+     * @param string $ratio        Image ratio
+     * @param int    $image_width  Image width
+     * @param int    $image_height Image height
+     * @param int    $zoom         Image zoom
+     *
+     * @return void
+     */
     private function imageResizing($ratio, $image_width, $image_height, $zoom) {
         \SystemPref::Set('EditorImageRatio', $ratio);
         \SystemPref::Set('EditorImageResizeWidth', $image_width);
@@ -397,10 +493,35 @@ class SystemPrefController extends Controller
         \SystemPref::Set('EditorImageZoom', $zoom);
     }
 
+    /**
+     * Sets template filter
+     *
+     * @param string $template_filter Template filter
+     *
+     * @return void
+     */
     private function templateFilter($template_filter) {
         \SystemPref::Set("TemplateFilter", strip_tags($template_filter));
     }
 
+    /**
+     * Sets general options
+     *
+     * @param string $title                     Website title
+     * @param string $meta_keywords             Website meta keywords
+     * @param string $meta_description          Website meta description
+     * @param string $timezone                  Website timezone
+     * @param int    $cache_image               Image cache lifetime
+     * @param string $allow_recovery            Password recovery
+     * @param string $password_recovery_form    Password recovery
+     * @param string $secret_key                Newscoop secret key
+     * @param int    $session_lifetime          Session lifetime
+     * @param string $separator                 Keyword separator
+     * @param int    $captcha                   Number of failed login attempts before showing CAPTCHA
+     * @param string $mysql_client_command_path MySQL client command path
+     *
+     * @return void
+     */
     private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery,
         $password_recovery_form, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
         \SystemPref::Set('SiteTitle', strip_tags($title));
