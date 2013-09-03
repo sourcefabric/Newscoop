@@ -160,7 +160,7 @@ class SystemPrefController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 if (!$currentUser->hasPermission('ChangeSystemPreferences')) {
-                    camp_html_display_error(getGS("You do not have the right to change system preferences."));
+                    camp_html_display_error($translator->trans('newscoop.preferences.error.noaccess'));
                     exit;
                 }
 
@@ -354,11 +354,11 @@ class SystemPrefController extends Controller
                 // geolocation
                 foreach ($geoLocation as $key => $value) {
                     $name = '';
-                        foreach (explode('_', $key) as $part) {
-                            $name .= ucfirst($part);
-                        }
+                    foreach (explode('_', $key) as $part) {
+                        $name .= ucfirst($part);
+                    }
 
-                        \SystemPref::Set($name, $value);
+                    \SystemPref::Set($name, $value);
                 }
 
                 //Mailchimp
@@ -366,13 +366,14 @@ class SystemPrefController extends Controller
                 \SystemPref::Set('mailchimp_listid', strip_tags($data['mailchimp_listid']));
 
                 //Facebook
-                \SystemPref::Get('facebook_appid', strip_tags($data['facebook_appid']));
-                \SystemPref::Get('facebook_appsecret', strip_tags($data['facebook_appsecret']));
+                \SystemPref::Set('facebook_appid', strip_tags($data['facebook_appid']));
+                \SystemPref::Set('facebook_appsecret', strip_tags($data['facebook_appsecret']));
 
                 $this->get('session')->getFlashBag()->add(
                     'success',
                     $translator->trans('newscoop.preferences.success.saved')
                 );
+
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
         }

@@ -15,7 +15,9 @@ class PreferencesType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $timeZoneCities = array(
             0 => 'London, Lisbon, Casablanca',
             1 => 'Brussels, Copenhagen, Madrid, Paris',
@@ -67,7 +69,7 @@ class PreferencesType extends AbstractType
         }
 
         $cacheLifetime = array();
-        foreach (array(0 => 'disabled',
+        foreach (array(0 => $translator->trans('newscoop.preferences.label.disabled'),
                        30   => '30 Seconds',
                        60   => '1 Minute',
                        300  => '5 Minutes',
@@ -101,7 +103,10 @@ class PreferencesType extends AbstractType
 
         $builder
         ->add('siteonline', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -124,17 +129,17 @@ class PreferencesType extends AbstractType
         ))
         ->add('timezone', 'choice', array(
             'choices'   => $timezones,
-            'empty_value' => getGS('disabled'),
+            'empty_value' => $translator->trans('newscoop.preferences.label.disabled'),
             'required' => false
         ))
         ->add('cache_engine', 'choice', array(
             'choices'   => $cacheEngines,
-            'empty_value' => getGS('disabled'),
+            'empty_value' => $translator->trans('newscoop.preferences.label.disabled'),
             'required' => false
         ))
         ->add('cache_template', 'choice', array(
             'choices'   => $cacheTemplate,
-            'empty_value' => getGS('disabled'),
+            'empty_value' => $translator->trans('newscoop.preferences.label.disabled'),
             'required' => false
         ))
         ->add('cache_image', 'choice', array(
@@ -142,7 +147,10 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('allow_recovery', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -178,7 +186,10 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('automatic_collection', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -220,21 +231,30 @@ class PreferencesType extends AbstractType
             'required' => false
         ))
         ->add('zoom', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
             'required' => true,
         ))
         ->add('external_management', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
             'required' => true,
         ))
         ->add('use_replication', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -265,7 +285,10 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('external_cron_management', 'choice', array(
-            'choices'   => array('Y' => getGS("Yes"), 'N' => getGS("No")),
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -279,14 +302,14 @@ class PreferencesType extends AbstractType
         ->add('center_latitude_default', 'number', array(
             'attr' => array('size' => 10),
             'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.latitude',
+            'invalid_message' => $translator->trans('newscoop.preferences.error.latitude'),
             'precision' => 6,
             'required' => true
         ))
         ->add('center_longitude_default', 'number', array(
             'attr' => array('size' => 10),
             'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.longitude',
+            'invalid_message' => $translator->trans('newscoop.preferences.error.longitude'),
             'precision' => 6,
             'required' => true
         ))
