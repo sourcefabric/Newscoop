@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Newscoop\NewscoopBundle\Form\Type\PreferencesType;
 
 class SystemPrefController extends Controller
@@ -41,9 +42,9 @@ class SystemPrefController extends Controller
             $hasManagePermission = true;
         }
 
-        $max_upload_filesize = \SystemPref::Get("MaxUploadFileSize");
 
-        if(empty($max_upload_filesize) || $max_upload_filesize == 0) {
+        $max_upload_filesize = \SystemPref::Get("MaxUploadFileSize");
+        if(empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
             \SystemPref::Set("MaxUploadFileSize", ini_get('upload_max_filesize'));
         }
 
@@ -113,7 +114,6 @@ class SystemPrefController extends Controller
             'image_width' => (int)\SystemPref::Get('EditorImageResizeWidth'),     
             'image_height' => (int)\SystemPref::Get('EditorImageResizeHeight'),
             'zoom' => \SystemPref::Get('EditorImageZoom'),
-            'external_management' => \SystemPref::Get('ExternalSubscriptionManagement'),
             'use_replication_host' => \SystemPref::Get("DBReplicationHost"),
             'use_replication_user' => \SystemPref::Get("DBReplicationUser"),
             'use_replication_password' => \SystemPref::Get("DBReplicationPass"),
@@ -193,186 +193,58 @@ class SystemPrefController extends Controller
                     'flash_server' => $hasManagePermission ? strip_tags($data['geo_flash_server']) : \SystemPref::Get('FlashServer'),
                     'flash_directory' => $hasManagePermission ? strip_tags($data['geo_flash_directory']) : \SystemPref::Get('FlashDirectory'),
                 );
-                // Site title
-                \SystemPref::Set('SiteTitle', strip_tags($data['title']));
-
-                // Site Meta Keywords
-                \SystemPref::Set('SiteMetaKeywords', strip_tags($data['meta_keywords']));
-
-                // Site Meta Description
-                \SystemPref::Set('SiteMetaDescription', strip_tags($data['meta_description']));
-
-                \SystemPref::Set('TimeZone', (string)$data['timezone']);
+                // General Settings
+                $this->generalSettings($data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], 
+                    $data['password_recovery_form'], $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
 
                 if($hasManagePermission) {
                     // DB Caching
-                    if (\SystemPref::Get('DBCacheEngine') != $data['cache_engine']) {
-                        if (!$data['cache_engine'] || \CampCache::IsSupported($data['cache_engine'])) {
-                            \SystemPref::Set('DBCacheEngine', $data['cache_engine']);
-                            \CampCache::singleton()->clear('user');
-                            \CampCache::singleton()->clear();
-                        } else {
-                            $this->get('session')->getFlashBag()->add(
-                                'error',
-                                $translator->trans(
-                                    'newscoop.preferences.error.cache',
-                                    array('%cache%' => $data['cache_engine'])
-                                )
-                            );
+                    $databaseCacheSettings = $this->databaseCache($data['cache_engine'], $translator);
 
-                            return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
-                        }
+                    if ($databaseCacheSettings instanceof RedirectResponse) {
+                        return $databaseCacheSettings;
                     }
-
                     // Template Caching
-                    if (\SystemPref::Get('TemplateCacheHandler') !=  $data['cache_template'] && $data['cache_template']) {
-                        $handler = \CampTemplateCache::factory($data['cache_template']);
-                        if ($handler && \CampTemplateCache::factory($data['cache_template'])->isSupported()) {
-                            \SystemPref::Set('TemplateCacheHandler', $data['cache_template']);
-                            \CampTemplateCache::factory($data['cache_template'])->clean();
-                        } else {
-                            $this->get('session')->getFlashBag()->add(
-                                'error',
-                                $translator->trans(
-                                    'newscoop.preferences.error.cache',
-                                    array('%cache%' => $data['cache_template'])
-                                )
-                            );
+                    $templateCacheSettings = $this->templateCache($data['cache_template'], $translator);
 
-                            return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
-                        }
-                    } else {
-                        \SystemPref::Set('TemplateCacheHandler', $data['cache_template']);
+                    if ($templateCacheSettings instanceof RedirectResponse) {
+                        return $templateCacheSettings;
                     }
-
                     // Statistics collecting
-                    \SystemPref::Set('CollectStatistics', $data['automatic_collection']);
-
+                    $this->collectStats($data['automatic_collection']);
                     // SMTP Host/Port
-                    \SystemPref::Set('SMTPHost', strip_tags($data['smtp_host']));
-                    \SystemPref::Set('SMTPPort', $data['smtp_port']);
-                    \SystemPref::Set('EmailContact', $data['email_contact']);
-                    \SystemPref::Set('EmailFromAddress', $data['email_from']);
-
+                    $this->smtpConfiguration($data['smtp_host'], $data['smtp_port'], $data['email_contact'], $data['email_from']);
                     // Image resizing for WYSIWYG editor
-                    \SystemPref::Set('EditorImageRatio', $data['image_ratio']);
-                    \SystemPref::Set('EditorImageResizeWidth', $data['image_width']);
-                    \SystemPref::Set('EditorImageResizeHeight', $data['image_height']);
-                    \SystemPref::Set('EditorImageZoom', $data['zoom']);
-
-                    // External subscription management
-                    \SystemPref::Set('ExternalSubscriptionManagement', $data['external_management']);
-
+                    $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
                     // Replication
-                    if ($data['use_replication'] == 'Y') {
-                        // Database Replication Host, User and Password
-                        if (!empty($data['use_replication_host']) && !empty($data['use_replication_user'])) {
-                            \SystemPref::Set("DBReplicationHost", strip_tags($data['use_replication_host']));
-                            \SystemPref::Set("DBReplicationUser", strip_tags($data['use_replication_user']));
-                            \SystemPref::Set("DBReplicationPass", strip_tags($data['use_replication_password']));
-                            \SystemPref::Set("UseDBReplication", $data['use_replication']);
-                        } else {;
-                            $this->get('session')->getFlashBag()->add(
-                                'error',
-                                $translator->trans('newscoop.preferences.error.replication')
-                            );
+                    $replicationSettings = $this->useReplication($data['use_replication_user'], $data['use_replication_host'], $data['use_replication_password'], 
+                        $data['use_replication'], $data['use_replication_port'], $translator);
 
-                            return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
-                        }
-                        // Database Replication Port
-                        if (empty($data['use_replication_port']) || !is_int($data['use_replication_port'])) {
-                            $data['use_replication_port'] = 3306;
-                        }
-                        \SystemPref::Set("DBReplicationPort", $data['use_replication_port']);
-                    } else {
-                        \SystemPref::Set("UseDBReplication", 'N');
+                    if ($replicationSettings instanceof RedirectResponse) {
+                        return $replicationSettings;
                     }
-
                     // template filter
-                    \SystemPref::Set("TemplateFilter", strip_tags($data['template_filter']));
-
+                    $this->templateFilter($data['template_filter']);
                     // External cron management
-                    if ($data['external_cron_management'] != 'Y' && $data['external_cron_management'] != 'N') {
-                        $data['external_cron_management'] = SystemPref::Get('ExternalSubscriptionManagement');
-                    }
-                    if ($data['external_cron_management'] != 'Y' && $data['external_cron_management'] != 'N') {
-                        $data['external_cron_management'] = SystemPref::Get('ExternalCronManagement');
-                    }
-                    if ($data['external_cron_management'] == 'N'
-                            && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
-                        $data['external_cron_management'] = 'Y';
-                    }
-                    
-                    \SystemPref::Set('ExternalCronManagement', $data['external_cron_management']);
+                    $this->cronManagement($data['external_cron_management']);
                 }
-
-                \SystemPref::Set('ImagecacheLifetime', $data['cache_image']);
-
-                // Allow Password Recovery
-                \SystemPref::Set('PasswordRecovery', $data['allow_recovery']);
-                \SystemPref::Set('PasswordRecoveryFrom', $data['password_recovery_form']);
-
-                // Secret key
-                \SystemPref::Set('SiteSecretKey', strip_tags($data['secret_key']));
-
-                // Session life time
-                \SystemPref::Set('SiteSessionLifeTime', $data['session_lifetime']);
-
-                // Keyword Separator
-                \SystemPref::Set("KeywordSeparator", strip_tags($data['separator']));
-
-                // Number of failed login attempts
-                \SystemPref::Set("LoginFailedAttemptsNum", $data['captcha']);
-
                 // Max Upload File Size
-                $max_upload_filesize_bytes = camp_convert_bytes($data['max_upload_size']);
-                if ($max_upload_filesize_bytes > 0 &&
-                        $max_upload_filesize_bytes <= min(camp_convert_bytes(ini_get('post_max_size')), camp_convert_bytes(ini_get('upload_max_filesize')))) {
-                    \SystemPref::Set("MaxUploadFileSize", strip_tags($data['max_upload_size']));
-                } else {
-                    $this->get('session')->getFlashBag()->add(
-                        'error',
-                        $translator->trans('newscoop.preferences.error.maxupload')
-                    );
+                $uploadSettings = $this->maxUpload($data['max_upload_size'], $translator);
+
+                if ($uploadSettings instanceof RedirectResponse) {
+                    return $uploadSettings;
                 }
+                //geolocation
+                $geolocationSettings = $this->geolocation($data['center_latitude_default'], $data['center_longitude_default'], $geoLocation, $translator);
                 
-                if (strip_tags($data['mysql_client_command_path'])) {
-                    \SystemPref::Set('MysqlClientCommandPath', strip_tags($data['mysql_client_command_path']));
+                if ($geolocationSettings instanceof RedirectResponse) {
+                    return $geolocationSettings;
                 }
-                
-                if ($data['center_latitude_default'] > 90 || $data['center_latitude_default'] < -90 || 
-                    $data['center_longitude_default'] > 180 || $data['center_longitude_default'] < -180) {
-                    $this->get('session')->getFlashBag()->add(
-                        'error',
-                        $translator->trans('newscoop.preferences.error.geolocation')
-                    );
-                } else {
-                    \SystemPref::Set('MapCenterLatitudeDefault', $data['center_latitude_default']);
-                    \SystemPref::Set('MapCenterLongitudeDefault', $data['center_longitude_default']);
-                }
-
-                // geolocation
-                foreach ($geoLocation as $key => $value) {
-                    $name = '';
-                    foreach (explode('_', $key) as $part) {
-                        $name .= ucfirst($part);
-                    }
-
-                    \SystemPref::Set($name, $value);
-                }
-
                 //Mailchimp
-                \SystemPref::Set('mailchimp_apikey', strip_tags($data['mailchimp_apikey']));
-                \SystemPref::Set('mailchimp_listid', strip_tags($data['mailchimp_listid']));
-
+                $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
                 //Facebook
-                \SystemPref::Set('facebook_appid', strip_tags($data['facebook_appid']));
-                \SystemPref::Set('facebook_appsecret', strip_tags($data['facebook_appsecret']));
-
-                $this->get('session')->getFlashBag()->add(
-                    'success',
-                    $translator->trans('newscoop.preferences.success.saved')
-                );
+                $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
+                $this->get('session')->getFlashBag()->add('success', $translator->trans('newscoop.preferences.success.saved'));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
@@ -388,4 +260,162 @@ class SystemPrefController extends Controller
             'map_marker_source_selected' => \SystemPref::Get('MapMarkerSourceDefault'),
         );
     }
+
+    private function databaseCache($cache_engine, $translator) {
+
+        if (\SystemPref::Get('DBCacheEngine') != $cache_engine) {
+
+            if (!$cache_engine || \CampCache::IsSupported($cache_engine)) {
+                \SystemPref::Set('DBCacheEngine', $cache_engine);
+                \CampCache::singleton()->clear('user');
+                \CampCache::singleton()->clear();
+            } else {
+                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
+                    array('%cache%' => $cache_engine)
+                ));
+
+                return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
+            }
+        }
+    }
+
+    private function templateCache($cache_template, $translator) {
+        if (\SystemPref::Get('TemplateCacheHandler') !=  $cache_template && $cache_template) {
+            $handler = \CampTemplateCache::factory($cache_template);
+
+            if ($handler && \CampTemplateCache::factory($cache_template)->isSupported()) {
+                \SystemPref::Set('TemplateCacheHandler', $cache_template);
+                \CampTemplateCache::factory($cache_template)->clean();
+            } else {
+                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
+                    array('%cache%' => $cache_template)
+                ));
+
+                return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
+            }
+        } else {
+            \SystemPref::Set('TemplateCacheHandler', $cache_template);
+        }
+    }
+
+    private function useReplication($user, $host, $password, $use_replication, $port, $translator) {
+        if ($use_replication == 'Y') {
+            // Database Replication Host, User and Password
+            if (!empty($host) && !empty($user)) {
+                \SystemPref::Set("DBReplicationHost", strip_tags($host));
+                \SystemPref::Set("DBReplicationUser", strip_tags($user));
+                \SystemPref::Set("DBReplicationPass", strip_tags($password));
+                \SystemPref::Set("UseDBReplication", $use_replication);
+            } else {
+                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.replication'));
+
+                return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
+            }
+            // Database Replication Port
+            if (empty($port) || !is_int($port)) {
+                $port = 3306;
+            }
+
+            \SystemPref::Set("DBReplicationPort", $port);
+        } else {
+            \SystemPref::Set("UseDBReplication", 'N');
+        }
+    }
+
+    private function cronManagement($cron) {
+        if ($cron != 'Y' && $cron != 'N') {
+            $cron = \SystemPref::Get('ExternalCronManagement');
+        }
+
+        if ($cron == 'N' && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
+            $cron = 'Y';
+        }
+
+        \SystemPref::Set('ExternalCronManagement', $cron);
+    }
+
+    private function maxUpload($max_size, $translator) {
+        $max_upload_filesize_bytes = trim($max_size);
+
+        if ($max_upload_filesize_bytes > 0 &&
+            $max_upload_filesize_bytes <= min(trim(ini_get('post_max_size')), trim(ini_get('upload_max_filesize')))) {
+            \SystemPref::Set("MaxUploadFileSize", strip_tags($max_size));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.maxupload'));
+
+            return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
+        }
+    }
+
+    private function geolocation($latitude, $longitude, $geoLocation, $translator) {
+        if ($latitude > 90 || $latitude < -90 || 
+            $longitude > 180 || $longitude < -180) {
+
+            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.geolocation'));
+
+            return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
+        } else {
+            \SystemPref::Set('MapCenterLatitudeDefault', $latitude);
+            \SystemPref::Set('MapCenterLongitudeDefault', $longitude);
+        }
+
+        foreach ($geoLocation as $key => $value) {
+            $name = '';
+            foreach (explode('_', $key) as $part) {
+                $name .= ucfirst($part);
+         
+            \SystemPref::Set($name, $value);
+            }
+        }
+    }
+
+    private function mailchimp($apiKey, $listId) {
+        \SystemPref::Set('mailchimp_apikey', strip_tags($apiKey));
+        \SystemPref::Set('mailchimp_listid', strip_tags($listId));            
+    }
+
+    private function facebook($appId, $secret) {
+        \SystemPref::Set('facebook_appid', strip_tags($appId));
+        \SystemPref::Set('facebook_appsecret', strip_tags($secret));
+    }
+
+    private function collectStats($automatic_collection){
+        \SystemPref::Set('CollectStatistics', $automatic_collection);
+    }
+
+    private function smtpConfiguration($host, $port, $email, $emailFrom) {
+        \SystemPref::Set('SMTPHost', strip_tags($host));
+        \SystemPref::Set('SMTPPort', $port);
+        \SystemPref::Set('EmailContact', $email);
+        \SystemPref::Set('EmailFromAddress', $emailFrom);
+    }
+
+    private function imageResizing($ratio, $image_width, $image_height, $zoom) {
+        \SystemPref::Set('EditorImageRatio', $ratio);
+        \SystemPref::Set('EditorImageResizeWidth', $image_width);
+        \SystemPref::Set('EditorImageResizeHeight', $image_height);
+        \SystemPref::Set('EditorImageZoom', $zoom);
+    }
+
+    private function templateFilter($template_filter) {
+        \SystemPref::Set("TemplateFilter", strip_tags($template_filter));
+    }
+
+    private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery,
+        $password_recovery_form, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
+        \SystemPref::Set('SiteTitle', strip_tags($title));
+        \SystemPref::Set('SiteMetaKeywords', strip_tags($meta_keywords));
+        \SystemPref::Set('SiteMetaDescription', strip_tags($meta_description));
+        \SystemPref::Set('TimeZone', (string)$timezone);
+        \SystemPref::Set('ImagecacheLifetime', $cache_image);
+        \SystemPref::Set('PasswordRecovery', $allow_recovery);
+        \SystemPref::Set('PasswordRecoveryFrom', $password_recovery_form);
+        \SystemPref::Set('SiteSecretKey', strip_tags($secret_key));
+        \SystemPref::Set('SiteSessionLifeTime', $session_lifetime);
+        \SystemPref::Set("KeywordSeparator", strip_tags($separator));
+        \SystemPref::Set("LoginFailedAttemptsNum", $captcha);
+        if (strip_tags($mysql_client_command_path)) {
+            \SystemPref::Set('MysqlClientCommandPath', strip_tags($mysql_client_command_path));
+        }
+    }            
 }

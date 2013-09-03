@@ -7,6 +7,7 @@
 {% endblock %}
 {% block admin_scripts %}
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
 {% endblock %}
 {% block admin_content %}
 {% if form_errors(form) %}
@@ -29,9 +30,11 @@
     <div class="tabbable tabs-left"> 
         <ul class="nav nav-tabs">
             <li class="active"><a href="#general_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
+            <li><a href="#cache_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.cache'|trans }}</a></li>
             {% if hasManagePermission %}
                 <li><a href="#email_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.email'|trans }}</a></li>
                 <li><a href="#editor_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.editor'|trans }}</a></li>
+                <li><a href="#media_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.media'|trans }}</a></li>
             {% endif %}
             <li><a href="#geolocation_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.geolocation'|trans }}</a></li>
             <li><a href="#mailchimp_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.mailchimp'|trans }}</a></li>
@@ -71,28 +74,8 @@
                         <dd>
                             {{ form_widget(form.timezone, {'attr' : {'class' : 'input_select wide'}}) }} 
                         </dd>
-                        {% if hasManagePermission %}
-                            <dt>
-                                <label>{{ 'newscoop.preferences.label.cacheengine'|trans }}</label>
-                            </dt>
-                            <dd>
-                                {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
-                            </dd>
-                            <dt>
-                                <label>{{ 'newscoop.preferences.label.cachetemplate'|trans }}</label>
-                            </dt>
-                            <dd>
-                                {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }} 
-                            </dd>
-                        {% endif %}
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.cacheimage'|trans }}</label>
-                        </dt>
-                        <dd>
-                            {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }} 
-                        </dd>
-                        <dt>
-                            <label>{{ 'newscoop.preferences.label.allowrecovery'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.allowrecovery'|trans }} <small id="allowrecovery">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.allow_recovery) }} 
@@ -106,7 +89,7 @@
                         </dd>
                         </div>
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.secretkey'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.secretkey'|trans }} <small id="secret">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
@@ -122,7 +105,7 @@
                             {% endif %}
                         </dd>
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.separator'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.separator'|trans }} <small id="separator">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.separator, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
@@ -142,13 +125,38 @@
                         </dd>
                         {% if hasManagePermission %}
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.stats'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.stats'|trans }} <small id="stats">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.automatic_collection) }} 
                         </dd>
                         {% endif %}
                     <dl> 
+            </div>
+            <div class="tab-pane" id="cache_settings">
+                <h3>{{ 'newscoop.preferences.menu.cache'|trans }}</h3>
+                <dl>
+                 {% if hasManagePermission %}
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.cacheengine'|trans }} <small id="cacheengine">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
+                    </dd>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.cachetemplate'|trans }} <small id="cachetemplate">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }} 
+                    </dd>
+                {% endif %}
+                    <dt>
+                         <label>{{ 'newscoop.preferences.label.cacheimage'|trans }} <small id="cacheimage">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }} 
+                    </dd>
+                </dl>
             </div>
             {% if hasManagePermission %}
             <div class="tab-pane" id="email_settings">
@@ -184,7 +192,7 @@
                 <h3>{{ 'newscoop.preferences.menu.editor'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.imageratio'|trans }}</label>
+                        <label>{{ 'newscoop.preferences.label.imageratio'|trans }} <small id="ratio">(?)</small></label>
                     </dt>
                     <dd>
                         {{ form_widget(form.image_ratio, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} %
@@ -202,16 +210,12 @@
                         {{ form_widget(form.image_height, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} pixels
                     </dd>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.zoom'|trans }}</label>
+                        <label>{{ 'newscoop.preferences.label.zoom'|trans }} <small id="zoom">(?)</small></label>
                     </dt>
                     <dd>
                         {{ form_widget(form.zoom) }}
                     </dd>
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.external'|trans }}</label></dt>
-                    <dd>
-                        {{ form_widget(form.external_management) }}
-                    </dd>
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.usereplication'|trans }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.usereplication'|trans }} <small id="replication">(?)</small></label></dt>
                     <dd>
                         {{ form_widget(form.use_replication) }}
                     </dd>
@@ -236,11 +240,11 @@
                             </dd>
                         </dl>
                     </div>
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }} <small id="filter">(?)</small></label></dt>
                     <dd>
                        {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
                     </dd> 
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }} <small id="cron">(?)</small></label></dt>
                     <dd>
                         {{ form_widget(form.external_cron_management) }}
                     </dd>
@@ -309,7 +313,7 @@
                         {{ form_widget(form.map_auto_focus_max_zoom, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.boderautofocus'|trans }}</label>
+                        <label>{{ 'newscoop.preferences.label.borderautofocus'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_auto_focus_border, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
@@ -389,8 +393,15 @@
                         <dd>
                             {{ form_widget(form.map_popup_height_min, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
-                        <dt class="border">
-                            <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }}</label>
+                    {% endif %}
+                </dl>
+            </div>
+            {% if hasManagePermission %}
+                <div class="tab-pane" id="media_settings">
+                    <h3>{{ 'newscoop.preferences.menu.media'|trans }}</h3>
+                    <dl>
+                        <dt>
+                            <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }} <small id="video">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_width_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
@@ -437,9 +448,9 @@
                         <dd>
                             {{ form_widget(form.geo_flash_directory, {'attr' : {'class' : 'input_text' }}) }}
                         </dd>
-                    {% endif %}
-                </dl>
-            </div>
+                    </dl>
+                </div>
+            {% endif %}
             <div class="tab-pane" id="mailchimp_settings">
                 <h3>{{ 'newscoop.preferences.menu.mailchimp'|trans }}</h3>
                 <dl>
@@ -483,6 +494,13 @@
 {{ form_widget(form._token) }}
 </form>
 <script type="text/javascript"><!--
+    function popover(target, content) {
+        target.popover({
+            trigger: 'hover',
+            content : content
+        });
+    };
+
     $(function() {
         $("input:radio[name=preferencesform\\[allow_recovery\\]]").change(function() {
             var email_div = $('#password_recovery');
@@ -503,5 +521,20 @@
 
         $("input:radio[name=preferencesform\\[use_replication\\]]:checked").change();
     });
+
+    popover($('#cacheengine'), '{{ 'newscoop.preferences.popover.cacheengine'|trans }}');
+    popover($('#cachetemplate'), '{{ 'newscoop.preferences.popover.cachetemplate'|trans }}');
+    popover($('#cacheimage'), '{{ 'newscoop.preferences.popover.cacheimage'|trans }}');
+    popover($('#allowrecovery'), '{{ 'newscoop.preferences.popover.recovery'|trans }}');
+    popover($('#secret'), '{{ 'newscoop.preferences.popover.secret'|trans }}');
+    popover($('#separator'), '{{ 'newscoop.preferences.popover.separator'|trans }}');
+    popover($('#stats'), '{{ 'newscoop.preferences.popover.stats'|trans }}');
+    popover($('#zoom'), '{{ 'newscoop.preferences.popover.zoom'|trans }}');
+    popover($('#ratio'), '{{ 'newscoop.preferences.popover.ratio'|trans }}');
+    popover($('#replication'), '{{ 'newscoop.preferences.popover.replication'|trans }}');
+    popover($('#filter'), '{{ 'newscoop.preferences.popover.filter'|trans }}');
+    popover($('#cron'), '{{ 'newscoop.preferences.popover.cron'|trans }}');
+    popover($('#video'), '{{ 'newscoop.preferences.popover.video'|trans }}');
+
 //--></script>
 {% endblock %}
