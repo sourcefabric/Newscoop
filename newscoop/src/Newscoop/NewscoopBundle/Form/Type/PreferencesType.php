@@ -302,14 +302,14 @@ class PreferencesType extends AbstractType
         ->add('center_latitude_default', 'number', array(
             'attr' => array('size' => 10),
             'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.latitude',
+            'invalid_message' => $translator->trans('newscoop.preferences.error.latitude'),
             'precision' => 6,
             'required' => true
         ))
         ->add('center_longitude_default', 'number', array(
             'attr' => array('size' => 10),
             'error_bubbling' => true,
-            'invalid_message' => 'newscoop.preferences.error.longitude',
+            'invalid_message' => $translator->trans('newscoop.preferences.error.longitude'),
             'precision' => 6,
             'required' => true
         ))

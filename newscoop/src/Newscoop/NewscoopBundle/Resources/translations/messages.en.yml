@@ -8,6 +8,8 @@ newscoop:
       maxupload: "Invalid Max Upload File Size value submitted"
       geolocation: "Invalid Geolocation fields. Must contain numbers. Latitude can't be > 90 and < -90. Logitude can't be > 180 and < -180."
       noaccess: "You do not have the right to change system preferences."
+      latitude: "Latitude field value is not valid."
+      longitude: "Longitude field value is not valid."
     success:
       saved: "System preferences updated."
     menu:
