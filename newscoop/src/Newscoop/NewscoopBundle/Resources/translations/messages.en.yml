@@ -1,0 +1,13 @@
+newscoop:
+  preferences:
+    error:
+      cache: "Invalid: You need PHP %cache% enabled in order to use the template caching system."
+      replication: "Database Replication data incomplete"
+      maxupload: "Invalid Max Upload File Size value submitted"
+      geolocation: "Invalid Geolocation fields. Must contain numbers. Latitude can't be > 90 and < -90. Logitude can't be > 180 and < -180."
+    success:
+      saved: "System preferences updated."
+    label:
+      title: "System Preferences"
+      header: "Preferences"
+

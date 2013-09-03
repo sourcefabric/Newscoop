@@ -21,6 +21,8 @@ framework:
 doctrine:
     dbal:
         charset: UTF8
+        types:
+            point: Newscoop\NewscoopBundle\ORM\PointType
     orm:
         auto_mapping: true
 
