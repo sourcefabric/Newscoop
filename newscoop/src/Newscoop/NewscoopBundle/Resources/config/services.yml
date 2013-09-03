@@ -126,13 +126,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
-    newscoop_newscoop.listener.comment_listener:
-        class: Newscoop\NewscoopBundle\EventListener\CommentListener
-        tags:
-            # - { name: comment.event_listener, event: comment.submit, method: onCommentSubmit }
-            - { name: kernel.event_listener, event: kernel.request, method: onCommentSubmit }
-        arguments: ["@logger", "@em"]
-
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
     smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"

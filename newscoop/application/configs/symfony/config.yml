@@ -139,3 +139,9 @@ ewz_recaptcha:
 parameters:
     smarty.class: "CampTemplate"
     templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
+
+ewz_recaptcha:
+    public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA
+    private_key:  6LeVFuASAAAAAGhz6dWgsO6WVGY_pcg_7wAt61eQ
+    secure:       false
+    locale_key:   kernel.default_locale
