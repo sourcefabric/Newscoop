@@ -2,11 +2,13 @@
 
 {% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'newscoop.preferences.label.title'|trans }}{% endblock %}
 {% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
-
-{% block admin_content %}
+{% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+{% endblock %}
+{% block admin_scripts %}
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/bootstrap.min.js"></script>
-{{ loadTranslationStrings('system_pref') }}
+{% endblock %}
+{% block admin_content %}
 {% if form_errors(form) %}
     <div class="alerts alert-danger">
         {{ form_errors(form) }}
@@ -26,121 +28,121 @@
 <div class="system_pref">
     <div class="tabbable tabs-left"> 
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#general_settings" data-toggle="tab">{{ getGS("General Settings") }}</a></li>
+            <li class="active"><a href="#general_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
             {% if hasManagePermission %}
-                <li><a href="#email_settings" data-toggle="tab">{{ getGS("Email Settings") }}</a></li>
-                <li><a href="#editor_settings" data-toggle="tab">{{ getGS("Editor Settings") }}</a></li>
+                <li><a href="#email_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.email'|trans }}</a></li>
+                <li><a href="#editor_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.editor'|trans }}</a></li>
             {% endif %}
-            <li><a href="#geolocation_settings" data-toggle="tab">{{ getGS("Geolocation Settings") }}</a></li>
-            <li><a href="#mailchimp_settings" data-toggle="tab">{{ getGS("MailChimp Settings") }}</a></li>
-            <li><a href="#facebook_settings" data-toggle="tab">{{ getGS("Facebook Settings") }}</a></li>
+            <li><a href="#geolocation_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.geolocation'|trans }}</a></li>
+            <li><a href="#mailchimp_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.mailchimp'|trans }}</a></li>
+            <li><a href="#facebook_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.fb'|trans }}</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="general_settings">
-                <h3>{{ getGS("General Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.general'|trans }}</h3>
                     <dl>
                         <dt>
-                            <label>{{ getGS("Site On-Line:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.siteonline'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.siteonline) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Site Title:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.sitetitle'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.title, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Site Meta Keywords:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.metakeywords'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.meta_keywords, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Site Meta Description:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.metadescription'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.meta_description, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Time Zone:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.timezone'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.timezone, {'attr' : {'class' : 'input_select wide'}}) }} 
                         </dd>
                         {% if hasManagePermission %}
                             <dt>
-                                <label>{{ getGS("Database Cache Engine:") }}</label>
+                                <label>{{ 'newscoop.preferences.label.cacheengine'|trans }}</label>
                             </dt>
                             <dd>
                                 {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
                             </dd>
                             <dt>
-                                <label>{{ getGS("Template Cache Handler:") }}</label>
+                                <label>{{ 'newscoop.preferences.label.cachetemplate'|trans }}</label>
                             </dt>
                             <dd>
                                 {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }} 
                             </dd>
                         {% endif %}
                         <dt>
-                            <label>{{ getGS("Imagecache Lifetime:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.cacheimage'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Allow password recovery:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.allowrecovery'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.allow_recovery) }} 
                         </dd>
                         <div id="password_recovery">
                         <dt>
-                            <label>{{ getGS('From email address:') }}</label>
+                            <label>{{ 'newscoop.preferences.label.recoveryform'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.password_recovery_form, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         </div>
                         <dt>
-                            <label>{{ getGS("Secret Key:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.secretkey'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Session Lifetime:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.session_lifetime, {'attr' : {'class' : 'input_text'}}) }}
                             {% if php_ini_max_seconds %}
-                                <span style="margin-top:8px;"><= {{ php_ini_max_seconds }}, {{ getGS('according to php.ini settings') }}
+                                <span style="margin-top:8px;"><= {{ php_ini_max_seconds }}, {{ 'newscoop.preferences.label.sessionlifetimemsg'|trans }}
                                 </span>
                             {% endif %}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Keyword separator:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.separator'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.separator, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Number of failed login attempts before showing CAPTCHA :") }}</label>
+                            <label>{{ 'newscoop.preferences.label.captcha'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.captcha, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ getGS("Maximum upload file size:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.maxupload'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.max_upload_size, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }}
-                            <p>{{ getGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", upload_min_filesize ) }}</p>
+                            <p>{{ 'newscoop.preferences.label.maxuploadmsg'|trans({'%max%': upload_min_filesize}) }}</p>
                         </dd>
                         {% if hasManagePermission %}
                         <dt>
-                            <label>{{ getGS("Automatic collection of statistics:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.stats'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.automatic_collection) }} 
@@ -150,28 +152,28 @@
             </div>
             {% if hasManagePermission %}
             <div class="tab-pane" id="email_settings">
-                <h3>{{ getGS("Email Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.email'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ getGS("SMTP Host:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.smtphost'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.smtp_host, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                     <dt>
-                        <label>{{ getGS("SMTP Port:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.smtpport'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                     <dt>
-                        <label>{{ getGS("Email contact:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.email'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.email_contact, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                     <dt>
-                        <label>{{ getGS("Email from:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.emailfrom'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
@@ -179,66 +181,66 @@
                 </dl>
             </div>        
             <div class="tab-pane" id="editor_settings">
-                <h3>{{ getGS("Editor Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.editor'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ getGS("Image Resizing Ratio:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.imageratio'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.image_ratio, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} %
                     </dd>
                     <dt>
-                        <label>{{ getGS("Image Resizing Width:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.imagewidth'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.image_width, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} pixels
                     </dd>
                     <dt>
-                        <label>{{ getGS("Image Resizing Height:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.imageheight'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.image_height, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} pixels
                     </dd>
                     <dt>
-                        <label>{{ getGS("Zoom enabled for images in article content?") }}</label>
+                        <label>{{ 'newscoop.preferences.label.zoom'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.zoom) }}
                     </dd>
-                    <dt class="border"><label>{{ getGS("Reader subscriptions managed externally?") }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.external'|trans }}</label></dt>
                     <dd>
                         {{ form_widget(form.external_management) }}
                     </dd>
-                    <dt class="border"><label>{{ getGS("Setting up a Newscoop Replication Server?")}}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.usereplication'|trans }}</label></dt>
                     <dd>
                         {{ form_widget(form.use_replication) }}
                     </dd>
                     <div id="replication_server">
                         <dl>
-                            <dt><h4>{{ getGS("Newscoop Online Server Database") }}</h4></dt>
-                            <dt><label>{{ getGS("Database Replication Host:") }}</label></dt>
+                            <dt><h4>{{ 'newscoop.preferences.label.serverdb'|trans }}</h4></dt>
+                            <dt><label>{{ 'newscoop.preferences.label.replicationhost'|trans }}</label></dt>
                             <dd>
                                 {{ form_widget(form.use_replication_host, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
-                            <dt><label>{{ getGS("Database Replication User:") }}</label></dt>
+                            <dt><label>{{ 'newscoop.preferences.label.replicationuser'|trans }}</label></dt>
                             <dd>
                                 {{ form_widget(form.use_replication_user, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
-                            <dt><label>{{ getGS("Database Replication Password:") }}</label></dt>
+                            <dt><label>{{ 'newscoop.preferences.label.replicationpw'|trans }}</label></dt>
                             <dd>
                                 {{ form_widget(form.use_replication_password, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
-                            <dt><label>{{ getGS("Database Replication Port:") }}</label></dt>
+                            <dt><label>{{ 'newscoop.preferences.label.replicationport'|trans }}</label></dt>
                             <dd>
                                 {{ form_widget(form.use_replication_port, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
                         </dl>
                     </div>
-                    <dt class="border"><label>{{ getGS("Templates filter mask (separated by comma)") }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }}</label></dt>
                     <dd>
                        {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
                     </dd> 
-                    <dt class="border"><label>{{ getGS("Run scheduled tasks externally?") }}</label></dt>
+                    <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }}</label></dt>
                     <dd>
                         {{ form_widget(form.external_cron_management) }}
                     </dd>
@@ -246,123 +248,123 @@
             </div>
             {% endif %}
             <div class="tab-pane" id="geolocation_settings">
-                <h3>{{ getGS("Geolocation Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.geolocation'|trans }}</h3>
                 <dl>
                     {% if mysql_client_command_path %}
-                    <dt align="left" width="400px" title="{{ getGS("to load geo-names data") }}" style="color:#b06000">
-                            {{ getGS("MySQL client command path") }}
+                    <dt align="left" width="400px" title="{{ 'newscoop.preferences.label.mysqlpathmsg'|trans }}" style="color:#b06000">
+                            {{ 'newscoop.preferences.label.mysqlpath'|trans }}
                     </dt>
                     <dd align="left" valign="top">
                         {{ form_widget(form.mysql_client_command_path, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     {% endif %}
                     <dt>
-                        <label>{{ getGS("Map Center Latitude:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.latitude'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.center_latitude_default, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Map Center Longitude:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.longitude'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.center_longitude_default, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Map Zoom Level:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.zoomlevel'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_display_resolution_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                     </dd>
                     {% if hasManagePermission %}
                         <dt>
-                            <label>{{ getGS("Map Default Width:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.defaultwidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_view_width_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Map Default Height:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.defaultheight'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_view_height_default, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                     {% endif %}
                     <dt class="border">
-                        <label>{{ getGS("Include CSS file for map view") }}</label>
+                        <label>{{ 'newscoop.preferences.label.css'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_auto_cSS_file, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Map auto-focusing as the default behavior:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.autofocus'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_auto_focus_default, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Maximal zoom for auto-focusing:") }} (0-18)</label>
+                        <label>{{ 'newscoop.preferences.label.zoomautofocus'|trans }} (0-18)</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_auto_focus_max_zoom, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Map border for auto-focusing:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.boderautofocus'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_auto_focus_border, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                     </dd>
                     <dt class="border">
-                        <label>{{ getGS("Allow Google Streets Map Provider:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.mapprovider'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_provider_available_google_v3) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Allow MapQuest Map Provider:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.mapquest'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_provider_available_map_quest) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Allow OpenStreet Map Provider:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.openstreet'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_provider_available_oSM) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Default Map Provider:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.defaultmapprovider'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.map_provider_default, {'attr' : {'class' : 'input_select'}}) }}
                     </dd>
                     <dt class="border">
-                        <label>{{ getGS("Use Local GeoNames Search:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.geosearch'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.geo_search_local_geonames) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Use MapQuest Nominatim Search:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.nominatimsearch'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.geo_search_mapquest_nominatim) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS("Preferred address language:") }}</label>
+                        <label>{{ 'newscoop.preferences.label.preflanguage'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.geo_search_preferred_language, {'attr' : {'class' : 'input_select'}}) }}
                     </dd>
                     {% if hasManagePermission %}
                         <dt class="border">
-                            <label>{{ getGS("Map Marker Directory:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.markerdir'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_marker_directory, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
                          <dt>
-                            <label>{{ getGS("Map Marker Default:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.defaultmarker'|trans }}</label>
                         </dt>
                         <dd>
                             {% if map_marker_source_default is iterable %}
@@ -376,61 +378,61 @@
                             {% endif %}
                         </dd>
                         <dt class="border">
-                            <label>{{ getGS("Map Popup Minimal Width:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.popupwidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_popup_width_min, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                          <dt>
-                            <label>{{ getGS("Map Popup Minimal Height:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.popupheight'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_popup_height_min, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt class="border">
-                            <label>{{ getGS("Youtube Default Width:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_width_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Youtube Default Height:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.youtubeheight'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_height_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt class="border">
-                            <label>{{ getGS("Vimeo Default Width:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.vimeowidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_width_vimeo, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Vimeo Default Height:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.vimeoheight'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_height_vimeo, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt class="border">
-                            <label>{{ getGS("Flash Default Width:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.flashwidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_width_flash, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Flash Default Height:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.flashheight'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_height_flash, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
                         </dd>
                         <dt class="border">
-                            <label>{{ getGS("Local Flash Server:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.flashserver'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.geo_flash_server, {'attr' : {'class' : 'input_text' }}) }}
                         </dd>
                         <dt>
-                            <label>{{ getGS("Local Flash Directory:") }}</label>
+                            <label>{{ 'newscoop.preferences.label.flashdir'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.geo_flash_directory, {'attr' : {'class' : 'input_text' }}) }}
@@ -439,16 +441,16 @@
                 </dl>
             </div>
             <div class="tab-pane" id="mailchimp_settings">
-                <h3>{{ getGS("MailChimp Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.mailchimp'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ getGS('API Key:') }}</label>
+                        <label>{{ 'newscoop.preferences.label.apikey'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.mailchimp_apikey, {'attr' : {'class' : 'input_text' }}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS('List Unique Id:') }}</label>
+                        <label>{{ 'newscoop.preferences.label.mailchimplist'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.mailchimp_listid, {'attr' : {'class' : 'input_text' }}) }}
@@ -456,16 +458,16 @@
                 </dl>
             </div>
             <div class="tab-pane" id="facebook_settings">
-                <h3>{{ getGS("Facebook Settings") }}</h3>
+                <h3>{{ 'newscoop.preferences.menu.fb'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ getGS('App ID:') }}</label>
+                        <label>{{ 'newscoop.preferences.label.appid'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.facebook_appid, {'attr' : {'class' : 'input_text' }}) }}
                     </dd>
                     <dt>
-                        <label>{{ getGS('App Secret:') }}</label>
+                        <label>{{ 'newscoop.preferences.label.fbsecret'|trans }}</label>
                     </dt>
                     <dd>
                         {{ form_widget(form.facebook_appsecret, {'attr' : {'class' : 'input_text' }}) }}
@@ -473,7 +475,7 @@
                 </dl>
             </div>
             <div class="save-button-bar">
-                <button type="submit" class="save-button">{{ getGS('Save') }}</button>
+                <button type="submit" class="save-button">{{ 'newscoop.btn.save'|trans }}</button>
             </div>
         </div>
     </div>
