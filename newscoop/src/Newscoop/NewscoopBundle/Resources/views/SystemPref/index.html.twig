@@ -39,6 +39,9 @@
             <li><a href="#geolocation_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.geolocation'|trans }}</a></li>
             <li><a href="#mailchimp_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.mailchimp'|trans }}</a></li>
             <li><a href="#facebook_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.fb'|trans }}</a></li>
+            {% if hasManagePermission %}
+                <li><a href="#other_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.other'|trans }}</a></li>
+            {% endif %}
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="general_settings">
@@ -215,39 +218,6 @@
                     <dd>
                         {{ form_widget(form.zoom) }}
                     </dd>
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.usereplication'|trans }} <small id="replication">(?)</small></label></dt>
-                    <dd>
-                        {{ form_widget(form.use_replication) }}
-                    </dd>
-                    <div id="replication_server">
-                        <dl>
-                            <dt><h4>{{ 'newscoop.preferences.label.serverdb'|trans }}</h4></dt>
-                            <dt><label>{{ 'newscoop.preferences.label.replicationhost'|trans }}</label></dt>
-                            <dd>
-                                {{ form_widget(form.use_replication_host, {'attr' : {'class' : 'input_text'}}) }}
-                            </dd>
-                            <dt><label>{{ 'newscoop.preferences.label.replicationuser'|trans }}</label></dt>
-                            <dd>
-                                {{ form_widget(form.use_replication_user, {'attr' : {'class' : 'input_text'}}) }}
-                            </dd>
-                            <dt><label>{{ 'newscoop.preferences.label.replicationpw'|trans }}</label></dt>
-                            <dd>
-                                {{ form_widget(form.use_replication_password, {'attr' : {'class' : 'input_text'}}) }}
-                            </dd>
-                            <dt><label>{{ 'newscoop.preferences.label.replicationport'|trans }}</label></dt>
-                            <dd>
-                                {{ form_widget(form.use_replication_port, {'attr' : {'class' : 'input_text'}}) }}
-                            </dd>
-                        </dl>
-                    </div>
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }} <small id="filter">(?)</small></label></dt>
-                    <dd>
-                       {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
-                    </dd> 
-                    <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }} <small id="cron">(?)</small></label></dt>
-                    <dd>
-                        {{ form_widget(form.external_cron_management) }}
-                    </dd>
                 </dl>
             </div>
             {% endif %}
@@ -398,10 +368,10 @@
             </div>
             {% if hasManagePermission %}
                 <div class="tab-pane" id="media_settings">
-                    <h3>{{ 'newscoop.preferences.menu.media'|trans }}</h3>
+                    <h3>{{ 'newscoop.preferences.menu.media'|trans }} <label><small id="video">(?)</small></label></h3> 
                     <dl>
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }} <small id="video">(?)</small></label>
+                            <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }}</label>
                         </dt>
                         <dd>
                             {{ form_widget(form.map_video_width_you_tube, {'attr' : {'class' : 'input_text', 'style' : 'width: 81px;'}}) }}
@@ -485,6 +455,46 @@
                     </dd>
                 </dl>
             </div>
+            {% if hasManagePermission %}
+                <div class="tab-pane" id="other_settings">
+                    <h3>{{ 'newscoop.preferences.menu.other'|trans }}</h3>
+                    <dl>
+                        <dt><label>{{ 'newscoop.preferences.label.usereplication'|trans }} <small id="replication">(?)</small></label></dt>
+                        <dd>
+                            {{ form_widget(form.use_replication) }}
+                        </dd>
+                        <div id="replication_server">
+                            <dl>
+                                <dt><h4>{{ 'newscoop.preferences.label.serverdb'|trans }}</h4></dt>
+                                <dt><label>{{ 'newscoop.preferences.label.replicationhost'|trans }}</label></dt>
+                                <dd>
+                                    {{ form_widget(form.use_replication_host, {'attr' : {'class' : 'input_text'}}) }}
+                                </dd>
+                                <dt><label>{{ 'newscoop.preferences.label.replicationuser'|trans }}</label></dt>
+                                <dd>
+                                    {{ form_widget(form.use_replication_user, {'attr' : {'class' : 'input_text'}}) }}
+                                </dd>
+                                <dt><label>{{ 'newscoop.preferences.label.replicationpw'|trans }}</label></dt>
+                                <dd>
+                                    {{ form_widget(form.use_replication_password, {'attr' : {'class' : 'input_text'}}) }}
+                                </dd>
+                                <dt><label>{{ 'newscoop.preferences.label.replicationport'|trans }}</label></dt>
+                                <dd>
+                                    {{ form_widget(form.use_replication_port, {'attr' : {'class' : 'input_text'}}) }}
+                                </dd>
+                            </dl>
+                        </div>
+                        <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }} <small id="filter">(?)</small></label></dt>
+                        <dd>
+                           {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
+                        </dd> 
+                        <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }} <small id="cron">(?)</small></label></dt>
+                        <dd>
+                            {{ form_widget(form.external_cron_management) }}
+                        </dd>
+                    </dl>
+                </div>
+            {% endif %}
             <div class="save-button-bar">
                 <button type="submit" class="save-button">{{ 'newscoop.btn.save'|trans }}</button>
             </div>

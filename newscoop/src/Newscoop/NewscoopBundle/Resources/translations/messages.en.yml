@@ -21,6 +21,7 @@ newscoop:
       fb: "Facebook Settings"
       media: "Video Settings"
       cache: "Cache Settings"
+      other: "Other Settings"
     label:
       title: "System Preferences"
       header: "Preferences"
