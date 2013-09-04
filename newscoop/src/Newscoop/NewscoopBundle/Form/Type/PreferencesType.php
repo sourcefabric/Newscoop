@@ -154,10 +154,6 @@ class PreferencesType extends AbstractType
             'expanded' => true,
             'required' => true,
         ))
-        ->add('password_recovery_form', 'email', array(
-            'attr' => array('maxlength' => '80', 'size' => '64'),
-            'required' => false
-        ))
         ->add('secret_key', null, array(
             'attr' => array('maxlength' => '32', 'size' => '64'),
             'error_bubbling' => true,
@@ -200,11 +196,6 @@ class PreferencesType extends AbstractType
         ))
         ->add('smtp_port', 'integer', array(
             'attr' => array('max' => 999999, 'min' => 1),
-            'error_bubbling' => true,
-            'required' => true
-        ))
-        ->add('email_contact', 'email', array(
-            'attr' => array('maxlength' => 100, 'size' => 64),
             'error_bubbling' => true,
             'required' => true
         ))

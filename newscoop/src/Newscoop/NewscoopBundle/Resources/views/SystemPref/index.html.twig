@@ -83,14 +83,12 @@
                         <dd>
                             {{ form_widget(form.allow_recovery) }} 
                         </dd>
-                        <div id="password_recovery">
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.recoveryform'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.emailfrom'|trans }} <small id="emailfrom">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.password_recovery_form, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
-                        </div>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.secretkey'|trans }} <small id="secret">(?)</small></label>
                         </dt>
@@ -176,18 +174,6 @@
                     </dt>
                     <dd>
                         {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
-                    </dd>
-                    <dt>
-                        <label>{{ 'newscoop.preferences.label.email'|trans }} <small id="contactemail">(?)</small></label>
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.email_contact, {'attr' : {'class' : 'input_text'}}) }} 
-                    </dd>
-                    <dt>
-                        <label>{{ 'newscoop.preferences.label.emailfrom'|trans }} <small id="emailfrom">(?)</small></label>
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                 </dl>
             </div>        
@@ -512,14 +498,6 @@
     };
 
     $(function() {
-        $("input:radio[name=preferencesform\\[allow_recovery\\]]").change(function() {
-            var email_div = $('#password_recovery');
-            if ($(this).val() == 'Y') {
-                email_div.show();
-            } else {
-                email_div.hide();
-            }
-        });
         $("input:radio[name=preferencesform\\[use_replication\\]]").change(function() {
             var replication_div = $('#replication_server');
             if ($(this).val() == 'Y') {
@@ -546,7 +524,6 @@
     popover($('#cron'), '{{ 'newscoop.preferences.popover.cron'|trans }}');
     popover($('#video'), '{{ 'newscoop.preferences.popover.video'|trans }}');
     popover($('#emailfrom'), '{{ 'newscoop.preferences.popover.emailfrom'|trans }}');
-    popover($('#contactemail'), '{{ 'newscoop.preferences.popover.contactemail'|trans }}');
 
 //--></script>
 {% endblock %}
