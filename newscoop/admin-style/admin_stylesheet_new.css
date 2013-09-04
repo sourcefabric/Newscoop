@@ -46,11 +46,11 @@ hr {
 
 .input_checkbox {
     height:13px;
-	width:13px;
-	margin:0;
-	padding:0;
-	border:none;
-	outline:none;
+    width:13px;
+    margin:0;
+    padding:0;
+    border:none;
+    outline:none;
 }
 
 .table_list {
@@ -96,7 +96,7 @@ hr {
 
 .action_buttons {
     padding-left: 30px;
-	font-size:12px;
+    font-size:12px;
 }
 .action_buttons td {
     padding-right: 6px;
@@ -261,7 +261,7 @@ ul.tree.sortable .item > div {
     margin: 0;
     padding: 6px 5px 6px 18px;
     font-size: 1.2em;
-	background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
+    background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
 }
 
 ul.tree.sortable .item_alt {
@@ -276,7 +276,7 @@ ul.tree.sortable .item_alt > div {
     width: 600px;
     height: 1%;
     padding: 6px 5px 6px 18px;
-	background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
+    background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
 }
 
 ul.tree.sortable .open {
@@ -333,8 +333,8 @@ ul.tree.sortable .icon {
     cursor: pointer;
     text-decoration: none;
     font-size: 0.9em;
-	text-indent:9999px;
-	overflow:hidden;
+    text-indent:9999px;
+    overflow:hidden;
 }
 
 ul.tree.sortable .icon span {
@@ -430,7 +430,7 @@ fieldset.controls.search .input_text {
 	font-weight:normal;
 }
 
-	
+
 
 .smartlist td { width: 5em; }
 .smartlist td.id { width: 1em; padding: 3px 0; text-align: center; }
@@ -468,7 +468,7 @@ fieldset.controls.search .input_text {
 
 .smartlist .ui-widget-header {
     padding: 12px 12px 10px 12px;
-	background:#fff;
+    background:#fff;
 }
 
 .DataTables_sort_wrapper .ui-icon {
@@ -490,8 +490,8 @@ fieldset.controls.search .input_text {
     float: left;
     cursor: pointer;
     padding: 2px 7px;
-	font-size:12px;
-	font-weight:normal;
+    font-size:12px;
+    font-weight:normal;
 }
 
 .ui-buttonset .ui-button {
@@ -507,56 +507,56 @@ fieldset.controls.search .input_text {
 
 /*.smartlist fieldset:first-child {
     margin-left: 30px;
-}*/
-.smartlist fieldset:first-child {
-    float: none;
-    margin: 16px 30px;
-    width: auto;
-}
-.smartlist fieldset.buttons {
-    float: none;
-    margin: 16px 30px;
-    width: auto;
-	background:#fff;
-}
-.smartlist fieldset select {
-    width: 256px;
-}
+    }*/
+    .smartlist fieldset:first-child {
+        float: none;
+        margin: 16px 30px;
+        width: auto;
+    }
+    .smartlist fieldset.buttons {
+        float: none;
+        margin: 16px 30px;
+        width: auto;
+        background:#fff;
+    }
+    .smartlist fieldset select {
+        width: 256px;
+    }
 
-.smartlist .table {
-    clear: both;
-}
+    .smartlist .table {
+        clear: both;
+    }
 
-.smartlist .extra {
-    margin-top: 8px;
-}
+    .smartlist .extra {
+        margin-top: 8px;
+    }
 
-.smartlist a.detach {
-    margin-left: 5px;
-    color: red;
-    font-weight: bold;
-    cursor: pointer;
-}
-.dataTables_info {
-	font-weight:normal;
-	font-size:11px;
-	color:#696969;
-	padding-bottom:10px;
-}
-.smartlist .ui-state-disabled,
-.smartlist .ui-widget-content .ui-state-disabled,
-.smartlist .ui-widget-header .ui-state-disabled,
-.smartlist .ui-state-disabled:hover,
-.smartlist .ui-widget-content .ui-state-disabled:hover,
-.smartlist .ui-widget-header .ui-state-disabled:hover {
+    .smartlist a.detach {
+        margin-left: 5px;
+        color: red;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .dataTables_info {
+       font-weight:normal;
+       font-size:11px;
+       color:#696969;
+       padding-bottom:10px;
+   }
+   .smartlist .ui-state-disabled,
+   .smartlist .ui-widget-content .ui-state-disabled,
+   .smartlist .ui-widget-header .ui-state-disabled,
+   .smartlist .ui-state-disabled:hover,
+   .smartlist .ui-widget-content .ui-state-disabled:hover,
+   .smartlist .ui-widget-header .ui-state-disabled:hover {
     background-image: none;
-	background-color:#FFF;
-	border:1px solid #cecece;
-	color:#b2b3b2;
+    background-color:#FFF;
+    border:1px solid #cecece;
+    color:#b2b3b2;
 }
 /*------ END  Smartlist ----------*/
- 
- 
+
+
 /*------ Author Management ----------*/
 .aliasContainer {
 	float:left;
@@ -577,7 +577,7 @@ fieldset.controls.search .input_text {
     height: 130px;
     padding: 0;
     width: 110px;
-	overflow:hidden;
+    overflow:hidden;
 }
 
 fieldset ul.nameList {
@@ -594,7 +594,7 @@ fieldset ul.nameList {
 }
 .textHolder textarea{
     width: 100%;
-	margin:0;
+    margin:0;
 }
 .omega {
     margin-right: 0;
@@ -612,7 +612,7 @@ fieldset ul.nameList {
     display: block;
     float: left;
 }
-	
+
 .datatable tbody tr.even td {
     background-color: #F9F9F9;
 }
@@ -636,21 +636,21 @@ fieldset ul.nameList {
 }
 
 .map-control-wrapper {
-        margin-left: 182px;
+    margin-left: 182px;
 }
 .map-control-wrapper h4 {
-        float:left;
-        font-size:13px;
-        font-weight:bold;
-        line-height:140%;
-        padding:0;
-        margin:10px 0 1px 15px;
+    float:left;
+    font-size:13px;
+    font-weight:bold;
+    line-height:140%;
+    padding:0;
+    margin:10px 0 1px 15px;
 }   
 .geo_map_name {
-        margin:0;
-		clear:both;
-        padding-top: 10px;
-        font-size: 13px;
+    margin:0;
+    clear:both;
+    padding-top: 10px;
+    font-size: 13px;
 }
 
 /*------ END Locations box ----------*/
@@ -675,4 +675,107 @@ td.name .ui-icon {
     float: left;
     margin: -2px 0 0 -2px;
     cursor: help;
+}
+
+/*------ System Preferences ----------*/
+.system_pref {
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
+    float: none;
+    margin: 30px 30px;
+    padding: 20px 20px 50px 20px;
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    box-shadow: 0 2px 2px rgba(0,0,0,.10);
+}
+.system_pref h3 {
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 8px 0;
+}
+.system_pref input {
+    float:none !important;
+    background: #f0f0f0;
+    -webkit-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.15);
+}
+.system_pref input:focus {
+    background-color: #fff;
+}
+.system_pref input[type=radio] {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    margin-left: 4px;
+}
+.system_pref dl {
+}
+.system_pref dl dl {
+  margin: -5px 0 30px 30px;
+}
+.system_pref dl dl dd {
+    margin-bottom: 10px;
+    padding-top: 0;
+}
+.system_pref dl dl h4 {
+    margin: 0;
+    font-size: 13px;
+}
+.system_pref dt {
+    margin-bottom: 8px;
+    padding-top: 10px;
+}
+.system_pref dt label {
+    font-weight: bold;
+}
+.system_pref dd {
+    margin-bottom: 12px;
+    margin-left: 0;
+    font-size: 13px;
+}
+.system_pref dd .input_select {
+    background-color: #f0f0f0;
+    min-width: 280px;
+}
+.system_pref dd .input_select.wide {
+    min-width: 348px;
+}
+.system_pref dd .input_select:focus {
+    background-color: #fff;
+}
+.system_pref dd p {
+    margin-top: 7px;
+    max-width: 460px;
+    font-size: 13px;
+}
+.system_pref dd.border, 
+.system_pref dt.border {
+    border-top:1px solid #ccc;
+    margin-top: 25px;
+    padding-top: 20px;
+}
+.alerts {
+    padding: 8px 35px 8px 14px;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    line-height: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.alert-success {
+    color: #468847;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+.alert-danger {
+    color: #b94a48;
+    background-color: #f2dede;
+    border-color: #eed3d7;
+}
+.popover-content {
+    font-weight: normal;
+    background-color: #F4FBFF;
 }

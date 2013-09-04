@@ -233,18 +233,16 @@ class User extends DatabaseObject {
      *    null No one user found
      *    object User object
      */
-    public static function FetchUserByEmail($email, $adminOnly = false)
+    public static function FetchUserByEmail($email, $adminOnly = true)
     {
         global $g_ado_db;
 
-        $queryStr = 'SELECT * FROM liveuser_users WHERE EMail = ?';
-        $inputArray[] = $email;
-        if ($p_adminOnly) {
-            $queryStr .= ' AND Reader = ?';
-            $inputArray[] = 'N';
+        $queryStr = 'SELECT * FROM liveuser_users WHERE EMail = "'.$email.'"';
+        if ($adminOnly) {
+            $queryStr .= ' AND Reader = "N"';
         }
 
-        $row = $g_ado_db->GetRow($queryStr, $inputArray);
+        $row = $g_ado_db->GetRow($queryStr);
         if ($row) {
             $user = new User();
             $user->fetch($row);

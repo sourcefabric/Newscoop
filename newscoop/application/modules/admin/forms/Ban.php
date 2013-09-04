@@ -102,9 +102,9 @@ class Admin_Form_Ban extends Zend_Form
      * @param $values
      */
     public function setValues($p_commenter, $p_values)
-    {
+    {   
         /* @var $name Zend_Form_Element_CheckBox */
-        $this->name->setLabel(getGS('Name').":".$p_commenter->getName())
+        $this->name->setLabel(getGS('Name').":".strip_tags($p_commenter->getName()))
                     ->setChecked($p_values['name']);
 
         $this->email->setLabel(getGS('Email').":".$p_commenter->getEmail())
