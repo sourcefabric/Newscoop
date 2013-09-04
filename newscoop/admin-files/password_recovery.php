@@ -134,7 +134,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
       </td>
     </tr>
     <tr class="buttonBlock2">
-    <td><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php putGS('Back to login.'); ?></a></td>
+    <td><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Back to login.'); ?></a></td>
       <td>
         <input type="submit" class="button" name="Login" value="<?php  putGS('Recover password'); ?>" />
       </td>
@@ -143,10 +143,10 @@ if (Input::Get("f_post_sent", "int",0)==1) {
 
     <?php } else if ($disabled) { ?>
     <p><?php putGS('Password recovery is disabled.'); ?></p>
-    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php putGS('Back to login'); ?></a>
+    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Back to login'); ?></a>
     <?php } else { ?>
     <p><?php putGS('An email with instructions on how to recover you password has been sent to your inbox.'); ?></p>
-    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php putGS('Proceed to login.'); ?></a>
+    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Proceed to login.'); ?></a>
     <?php } ?>
     </div>
   </div>

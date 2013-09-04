@@ -400,8 +400,8 @@ class Builder
     {
         $this->addChild($menu, getGS('System Preferences'), array('zend_route' => array(
                 'module' => 'admin',
-                'controller' => 'system_pref',
-                'action' => 'index.php'
+                'controller' => 'preferences',
+                'action' => 'index'
             ),
             'resource' => 'system-preferences',
             'privilege' => 'edit',

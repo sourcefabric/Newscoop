@@ -21,6 +21,14 @@ security:
             pattern:  ^/admin/login$
             security: false
 
+        password_recovery:
+            pattern: ^/admin/password_recovery.php
+            security: false
+
+        password_check_token:
+            pattern: ^/admin/password_check_token.php
+            security: false
+
         admin_area:
             pattern:    ^/admin
             provider: user_db
@@ -36,4 +44,3 @@ security:
 
     access_control:
         - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/password_recovery.php, role: IS_AUTHENTICATED_ANONYMOUSLY }

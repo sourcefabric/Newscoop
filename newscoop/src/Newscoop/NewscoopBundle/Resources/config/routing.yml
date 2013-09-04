@@ -1,0 +1,4 @@
+newscoop_newscoop:
+    resource: "@NewscoopNewscoopBundle/Controller/"
+    type: annotation
+    prefix: /
