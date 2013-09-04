@@ -99,7 +99,6 @@ class SystemPrefController extends Controller
             'cache_template' => \SystemPref::Get('TemplateCacheHandler'),
             'cache_image' => \SystemPref::Get('ImagecacheLifetime'),
             'allow_recovery' => \SystemPref::Get('PasswordRecovery'),
-            'password_recovery_form' => \SystemPref::Get('PasswordRecoveryFrom'),
             'secret_key' => \SystemPref::Get('SiteSecretKey'),
             'session_lifetime' => $sp_session_lifetime,
             'separator' => \SystemPref::Get("KeywordSeparator"),
@@ -108,7 +107,6 @@ class SystemPrefController extends Controller
             'automatic_collection' => \SystemPref::Get('CollectStatistics'),
             'smtp_host' => \SystemPref::Get('SMTPHost'),
             'smtp_port' => \SystemPref::Get('SMTPPort'),
-            'email_contact' => \SystemPref::Get('EmailContact'),
             'email_from' => \SystemPref::Get('EmailFromAddress'),
             'image_ratio' => \SystemPref::Get('EditorImageRatio'),
             'image_width' => (int)\SystemPref::Get('EditorImageResizeWidth'),     
@@ -193,9 +191,18 @@ class SystemPrefController extends Controller
                     'flash_server' => $hasManagePermission ? strip_tags($data['geo_flash_server']) : \SystemPref::Get('FlashServer'),
                     'flash_directory' => $hasManagePermission ? strip_tags($data['geo_flash_directory']) : \SystemPref::Get('FlashDirectory'),
                 );
-                // General Settings
-                $this->generalSettings($data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], 
-                    $data['password_recovery_form'], $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
+                // Max Upload File Size
+                $uploadSettings = $this->maxUpload($data['max_upload_size'], $translator);
+
+                if ($uploadSettings instanceof RedirectResponse) {
+                    return $uploadSettings;
+                }
+                //geolocation
+                $geolocationSettings = $this->geolocation($data['center_latitude_default'], $data['center_longitude_default'], $geoLocation, $translator);
+                
+                if ($geolocationSettings instanceof RedirectResponse) {
+                    return $geolocationSettings;
+                }
 
                 if($hasManagePermission) {
                     // DB Caching
@@ -210,36 +217,29 @@ class SystemPrefController extends Controller
                     if ($templateCacheSettings instanceof RedirectResponse) {
                         return $templateCacheSettings;
                     }
-                    // Statistics collecting
-                    $this->collectStats($data['automatic_collection']);
-                    // SMTP Host/Port
-                    $this->smtpConfiguration($data['smtp_host'], $data['smtp_port'], $data['email_contact'], $data['email_from']);
-                    // Image resizing for WYSIWYG editor
-                    $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
-                    // Replication
+
                     $replicationSettings = $this->useReplication($data['use_replication_user'], $data['use_replication_host'], $data['use_replication_password'], 
                         $data['use_replication'], $data['use_replication_port'], $translator);
 
                     if ($replicationSettings instanceof RedirectResponse) {
                         return $replicationSettings;
                     }
+                    // Statistics collecting
+                    $this->collectStats($data['automatic_collection']);
+                    // SMTP Host/Port
+                    $this->smtpConfiguration($data['smtp_host'], $data['smtp_port']);
+                    // Image resizing for WYSIWYG editor
+                    $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
+                    // Replication
+                    
                     // template filter
                     $this->templateFilter($data['template_filter']);
                     // External cron management
                     $this->cronManagement($data['external_cron_management']);
                 }
-                // Max Upload File Size
-                $uploadSettings = $this->maxUpload($data['max_upload_size'], $translator);
-
-                if ($uploadSettings instanceof RedirectResponse) {
-                    return $uploadSettings;
-                }
-                //geolocation
-                $geolocationSettings = $this->geolocation($data['center_latitude_default'], $data['center_longitude_default'], $geoLocation, $translator);
-                
-                if ($geolocationSettings instanceof RedirectResponse) {
-                    return $geolocationSettings;
-                }
+                // General Settings
+                $this->generalSettings($data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
+                    $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
                 //Mailchimp
                 $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
                 //Facebook
@@ -464,16 +464,12 @@ class SystemPrefController extends Controller
      *
      * @param string $host      SMTP host
      * @param int    $port      SMTP port
-     * @param string $email     SMTP email
-     * @param string $emailFrom SMTP email From
      *
      * @return void
      */
-    private function smtpConfiguration($host, $port, $email, $emailFrom) {
+    private function smtpConfiguration($host, $port) {
         \SystemPref::Set('SMTPHost', strip_tags($host));
         \SystemPref::Set('SMTPPort', $port);
-        \SystemPref::Set('EmailContact', $email);
-        \SystemPref::Set('EmailFromAddress', $emailFrom);
     }
 
     /**
@@ -513,7 +509,7 @@ class SystemPrefController extends Controller
      * @param string $timezone                  Website timezone
      * @param int    $cache_image               Image cache lifetime
      * @param string $allow_recovery            Password recovery
-     * @param string $password_recovery_form    Password recovery
+     * @param string $emailFrom                 Email address for system notifications
      * @param string $secret_key                Newscoop secret key
      * @param int    $session_lifetime          Session lifetime
      * @param string $separator                 Keyword separator
@@ -522,15 +518,15 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery,
-        $password_recovery_form, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
+    private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery, 
+        $emailFrom, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
         \SystemPref::Set('SiteTitle', strip_tags($title));
         \SystemPref::Set('SiteMetaKeywords', strip_tags($meta_keywords));
         \SystemPref::Set('SiteMetaDescription', strip_tags($meta_description));
         \SystemPref::Set('TimeZone', (string)$timezone);
         \SystemPref::Set('ImagecacheLifetime', $cache_image);
         \SystemPref::Set('PasswordRecovery', $allow_recovery);
-        \SystemPref::Set('PasswordRecoveryFrom', $password_recovery_form);
+        \SystemPref::Set('EmailFromAddress', $emailFrom);
         \SystemPref::Set('SiteSecretKey', strip_tags($secret_key));
         \SystemPref::Set('SiteSessionLifeTime', $session_lifetime);
         \SystemPref::Set("KeywordSeparator", strip_tags($separator));
