@@ -50,6 +50,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\InstallPluginCommand(),
     new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
     new \Newscoop\Tools\Console\Command\UpdatePluginCommand(),
+    new \Newscoop\Tools\Console\Command\ConvertTranslationsCommand(),
 ));
 
 $cli->run($input);
