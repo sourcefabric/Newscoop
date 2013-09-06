@@ -159,7 +159,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         . "content = '" . addslashes($cache_content) . "' WHERE "
                         . $cacheParams[$tpl_file]['where'];
                     } else {
-                        $queryStr = 'INSERT IGNORE INTO Cache (' . implode(',', array_keys($campsiteVector))
+                        $queryStr = 'INSERT INTO Cache (' . implode(',', array_keys($campsiteVector))
                         . ',template,expired,content) VALUES (';
                         foreach ($campsiteVector as $key => $value) {
                             $queryStr .= !isset($value) ? ($key == 'params' ? "''" : '0') . ','
