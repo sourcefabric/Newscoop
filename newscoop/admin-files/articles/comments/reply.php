@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-camp_load_translation_strings("globals");
-camp_load_translation_strings("articles");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_language_id = Input::Get('f_language_id', 'int', 0, true);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
@@ -9,7 +8,7 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_comment_id = Input::Get('f_comment_id');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
@@ -35,19 +34,19 @@ $languageObj = new Language($articleObj->getLanguageId());
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
-camp_html_content_top(getGS("Reply to comment"), $topArray);
+camp_html_content_top($translator->trans("Reply to comment", array(), 'article_comments'), $topArray);
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
   <td><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0" /></td>
-  <td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS('Back to Edit Article'); ?></b></a></td>
+  <td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php echo $translator->trans('Back to Edit Article'); ?></b></a></td>
 </tr>
 </table>
 <p>
 <table id="comment-reply-to" cellspacing="0" cellpadding="0" border="0" class="box_table" style="display:none;">
 <tr>
   <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
-    &nbsp;<b><?php putGS('Comment'); ?></b>
+    &nbsp;<b><?php echo $translator->trans('Comment'); ?></b>
   </td>
 <tr>
 <?php
@@ -62,19 +61,19 @@ if (isset($connectedToOnlineServer)
 } else {
 ?>
 <tr>
-  <td align="right" valign="top" nowrap><?php putGS('From'); ?>:</td>
+  <td align="right" valign="top" nowrap><?php echo $translator->trans('From', array(), 'article_comments'); ?>:</td>
   <td>${name} &lt;${email}&gt; (${ip})</td>
 </tr>
 <tr>
-  <td align="right" valign="top" nowrap><?php putGS('Date'); ?>:</td>
+  <td align="right" valign="top" nowrap><?php echo $translator->trans('Date'); ?>:</td>
   <td>${time_created}</td>
 </tr>
 <tr>
-  <td align="right" valign="top" nowrap><?php putGS('Subject'); ?>:</td>
+  <td align="right" valign="top" nowrap><?php echo $translator->trans('Subject'); ?>:</td>
   <td>${subject}</td>
 </tr>
 <tr>
-  <td align="right" valign="top" nowrap><?php putGS('Comment'); ?>:</td>
+  <td align="right" valign="top" nowrap><?php echo $translator->trans('Comment'); ?>:</td>
   <td>${message}</td>
 </tr>
 </table>
@@ -88,13 +87,13 @@ if (isset($connectedToOnlineServer)
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2" style="padding-left: 5px;">
-    <b><?php putGS('Reply to comment'); ?></b>
+    <b><?php echo $translator->trans('Reply to comment', array(), 'article_comments'); ?></b>
     <hr noshade size="1" color="black" />
   </td>
 </tr>
 <tr>
   <td valign="middle" align="right">
-    <?php putGS('Subject'); ?>:
+    <?php echo $translator->trans('Subject'); ?>:
   </td>
   <td>
     <input id="comment_subject" type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?> >
@@ -102,7 +101,7 @@ if (isset($connectedToOnlineServer)
 </tr>
 <tr>
   <td valign="top" align="right" style="padding-top: 5px;">
-    <?php putGS('Comment'); ?>:
+    <?php echo $translator->trans('Comment'); ?>:
   </td>
   <td>
     <textarea id="comment_message" name="f_comment_body" class="input_text_area" rows="10" cols="60" <?php print $spellcheck ?>></textarea>
@@ -110,7 +109,7 @@ if (isset($connectedToOnlineServer)
 </tr>
 <tr>
   <td colspan="2" align="center">
-    <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
+    <input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="button">
   </td>
 </tr>
 </table>

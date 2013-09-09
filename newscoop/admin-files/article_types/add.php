@@ -39,7 +39,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  echo $translator->trans('Save', array(), 'globals'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  echo $translator->trans('Save'); ?>">
 	</DIV>
 	</TD>
 </TR>
