@@ -1,5 +1,4 @@
 <?php
-camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
@@ -10,8 +9,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -42,14 +43,14 @@ $backLink = "/$ADMIN/articles/images/edit.php?"
 		. "&f_image_template_id=" . $f_orig_image_template_id;
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
 	exit;
 }
 
 $articleObj = new Article($f_language_selected, $f_article_number);
 
 if (!$g_user->hasPermission('ChangeImage') && !$g_user->hasPermission('AttachImageToArticle')) {
-	camp_html_add_msg(getGS("You do not have the right to change image information."));
+	camp_html_add_msg($translator->trans("You do not have the right to change image information.", array(), 'article_images'));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 }
 
@@ -70,13 +71,13 @@ if ($g_user->hasPermission('AttachImageToArticle')) {
 		$articleImageObj = new ArticleImage($f_article_number, $f_image_id);
 		$updated = $articleImageObj->setTemplateId($f_image_template_id);
 		if ($updated == false) {
-			camp_html_add_msg(getGS("Image number '$1' already exists", $f_image_template_id));
+			camp_html_add_msg($translator->trans("Image number $1 already exists", array('$1' => $f_image_template_id), 'article_images'));
 			camp_html_goto_page($backLink);
 		}
 	}
 }
 
-camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok");
+camp_html_add_msg($translator->trans("Image '$1' updated.", array('$1' => $imageObj->getDescription()), 'article_images'), "ok");
 
 ?>
 
