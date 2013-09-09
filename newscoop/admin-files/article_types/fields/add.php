@@ -1,13 +1,12 @@
 <?php
-camp_load_translation_strings("article_type_fields");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to add article type fields."));
+	camp_html_display_error($translator->trans('You do not have the right to add article types.', array(), 'article_type_fields'));
 	exit;
 }
 
@@ -20,11 +19,11 @@ $currentLanguageId = $langObj->getLanguageId();
 $topics = Topic::GetTree();
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans('Configure'), "");
+$crumbs[] = array($translator->trans('Article Types'), "/$ADMIN/article_types/");
 $crumbs[] = array($articleTypeName, '');
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-$crumbs[] = array(getGS("Add new field"), "");
+$crumbs[] = array($translator->trans("Article type fields", array(), 'article_type_fields'), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
+$crumbs[] = array($translator->trans("Add new field", array(), 'article_type_fields'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -92,15 +91,15 @@ function UpdateArticleFieldContext() {
 <input type="hidden" name="show_precision" id="show_precision" value="false">
 <input type="hidden" name="show_maxsize" id="show_maxsize" value="true">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
-<TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?></TD></TR>
+<TR><TD COLSPAN="2"><?php echo $translator->trans('The template name may only contain letters and the underscore (_) character.', array(), 'article_type_fields'); ?></TD></TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Template Field Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Template Field Name", array(), 'article_type_fields'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" class="input_text" NAME="f_field_name" SIZE="20" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php putGS("The template name may only contain letters and the underscore (_) character."); ?>">
+	<INPUT TYPE="TEXT" class="input_text" NAME="f_field_name" SIZE="20" MAXLENGTH="32" alt="alnum|1|A|false|false|_" emsg="<?php echo $translator->trans("The template name may only contain letters and the underscore (_) character.", array(), 'article_type_fields'); ?>">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
         <?php foreach ($options as $k => $v) {
@@ -114,7 +113,7 @@ function UpdateArticleFieldContext() {
 	</TD>
 </TR>
 <tr style="display: none;" id="topic_list">
-	<td align="right"><?php putGS("Top element"); ?>:</td>
+	<td align="right"><?php echo $translator->trans("Top element", array(), 'article_type_fields'); ?>:</td>
 	<td>
 		<select name="f_root_topic_id" class="input_select">
 <?php
@@ -182,7 +181,7 @@ window.set_field_color = function(color) {
 </script>
 
 <tr class="color_sel_hidden" id="event_color_part">
-    <td align="right"><?php putGS('Event Color'); ?>:</td><td>
+    <td align="right"><?php echo $translator->trans('Event Color', array(), 'article_type_fields'); ?>:</td><td>
 <?php
 
 $color_list = array(
@@ -230,37 +229,37 @@ $color_list = array(
 
 </tr>
 <tr style="display: none;" id="is_content">
-    <td align="right"><?php putGS('Is Content'); ?>:</td>
+    <td align="right"><?php echo $translator->trans('Is Content', array(), 'article_type_fields'); ?>:</td>
     <td><input type="checkbox" name="f_is_content"></td>
 </tr>
 <tr style="display: none;" id="editor_size">
-    <td align="right"><?php putGS('Editor size'); ?>:</td>
+    <td align="right"><?php echo $translator->trans('Editor size'); ?>:</td>
     <td>
 		<select name="f_editor_size" onChange="if (this.value == 'custom') document.getElementById('editor_size_custom').style.display = 'inline'; else document.getElementById('editor_size_custom').style.display = 'none';">
-			<option value="small"><?php putGS('Small ($1 pixels)', ArticleTypeField::BODY_ROWS_SMALL)?></option>
-			<option value="medium"><?php putGS('Medium ($1 pixels)', ArticleTypeField::BODY_ROWS_MEDIUM)?></option>
-			<option value="large"><?php putGS('Large ($1 pixels)', ArticleTypeField::BODY_ROWS_LARGE)?></option>
-			<option value="custom"><?php putGS('Custom')?></option>
+			<option value="small"><?php echo $translator->trans('Small ($1 pixels)', array('$1' => ArticleTypeField::BODY_ROWS_SMALL), 'article_type_fields'); ?></option>
+			<option value="medium"><?php echo $translator->trans('Medium ($1 pixels)', array('$1' => ArticleTypeField::BODY_ROWS_MEDIUM), 'article_type_fields'); ?></option>
+			<option value="large"><?php echo $translator->trans('Large ($1 pixels)', array('$1' => ArticleTypeField::BODY_ROWS_LARGE), 'article_type_fields');?></option>
+			<option value="custom"><?php echo $translator->trans('Custom', array(), 'article_type_fields'); ?></option>
 		</select>
 		&nbsp;
 		<input type="text" name="f_editor_size_custom" class="input_text" value="160" id="editor_size_custom" size="3" style="display: none;">
     </td>
 </tr>
 <tr style="display: none;" id="precision">
-    <td align="right"><?php putGS('Precision'); ?>:</td>
-    <td><input type="text" class="input_text" size="2" maxlength="2" name="f_precision" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 99, getGS('Precision')); ?>" alt="number|0|0|99|bok" ></td>
+    <td align="right"><?php echo $translator->trans('Precision', array(), 'article_type_fields'); ?>:</td>
+    <td><input type="text" class="input_text" size="2" maxlength="2" name="f_precision" emsg="<?php echo $translator->trans('You must input a number greater than $1 and less than $2 into the $3 field.', array('$1' => 0, '$2' => 99, '$3' => $translator->trans('Precision', array(), 'article_type_fields')), 'article_type_fields'); ?>" alt="number|0|0|99|bok" ></td>
 </tr>
 <tr style="display: table-row;" id="maxsize">
-    <td align="right"><?php putGS('Characters limit'); ?>:</td>
+    <td align="right"><?php echo $translator->trans('Characters limit', array(), 'article_type_fields'); ?>:</td>
     <td>
-        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 999, getGS('Characters limit')); ?>" alt="number|0|1|999|bok" >
+        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php echo $translator->trans('You must input a number greater than $1 and less than $2 into the $3 field.', array('$1' => 0, '$2' => 999, '$3' => $translator->trans('Characters limit', array(), 'article_type_fields')), 'article_type_fields'); ?>" alt="number|0|1|999|bok" >
     </td>
 </tr>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
-	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('Save'); ?>">
 	</DIV>
 	</TD>
 </TR>

@@ -1,18 +1,19 @@
 <?php
-camp_load_translation_strings("article_types");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-    camp_html_display_error(getGS("You do not have the right to rename article types."));
+    camp_html_display_error($translator->trans("You do not have the right to rename article types.", array(), 'article_types'));
     exit;
 }
 
@@ -29,19 +30,19 @@ $created = false;
 $errorMsgs = array();
 if (empty($f_name)) {
     $correct = false;
-    $errorMsgs[] = getGS('You must fill in the $1 field.','</B>'.getGS('Name').'</B>');
+    $errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '</B>'.$translator->trans('Name').'</B>'));
 } else {
     $valid = ArticleType::IsValidFieldName($f_name);
     if (!$valid) {
         $correct = false;
-        $errorMsgs[] = getGS('The $1 field may only contain letters and underscore (_) character.', '</B>' . getGS('Name') . '</B>');
+        $errorMsgs[] = $translator->trans('The $1 field may only contain letters and underscore (_) character.', array('$1' => '</B>'.$translator->trans('Name').'</B>'), 'article_types');
     }
 
     if ($correct) {
         $old_articleType = new ArticleType($f_oldName);
         if (!$old_articleType->exists()) {
             $correct = false;
-            $errorMsgs[] = getGS('The article type $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>');
+            $errorMsgs[] = $translator->trans('The article type $1 does not exist.', array('$1' => '<B>'.htmlspecialchars($f_oldName).'</B>'), 'article_types');
         }
     }
 
@@ -49,7 +50,7 @@ if (empty($f_name)) {
         $articleType = new ArticleType($f_name);
         if ($articleType->exists()) {
             $correct = false;
-            $errorMsgs[] = getGS('The article type $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
+            $errorMsgs[] = $translator->trans('The article type $1 already exists.', array('$1' => '<B>'. htmlspecialchars($f_name). '</B>'), 'article_types');
         }
     }
 
@@ -67,9 +68,9 @@ if (empty($f_name)) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Rename article type '$1'", $f_oldName), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans("Rename article type $1", array('$1' => $f_oldName), 'article_types'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -90,7 +91,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
     <TD COLSPAN="2">
     <DIV ALIGN="CENTER">
-    <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/rename.php?f_name=<?php p($f_oldName); ?>'">
+    <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/rename.php?f_name=<?php p($f_oldName); ?>'">
     </DIV>
     </TD>
 </TR>

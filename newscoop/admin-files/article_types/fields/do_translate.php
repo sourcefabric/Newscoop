@@ -1,19 +1,19 @@
 <?php
-camp_load_translation_strings("article_type_fields");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to translate article types."));
+	camp_html_display_error($translator->trans("You do not have the right to translate article types.", array(), 'article_type_fields'));
 	exit;
 }
 
@@ -30,12 +30,12 @@ $created = false;
 $errorMsgs = array();
 if (empty($f_field_translation_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+	$errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>'));
 }
 
 if ($f_field_language_id <= 0) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must choose a language for the field.');
+	$errorMsgs[] = $translator->trans('You must choose a language for the field.');
 }
 
 if ($correct) {
@@ -47,16 +47,16 @@ if ($correct) {
 		exit;
 	}
 	else {
-		$errorMsgs[] = getGS('The translation could not be added.');
+		$errorMsgs[] = $translator->trans('The translation could not be added.');
 	}
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans('Configure'), "");
+$crumbs[] = array($translator->trans('Article Types'), "/$ADMIN/article_types/");
 $crumbs[] = array($f_article_type, '');
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($f_article_type));
-$crumbs[] = array(getGS("Adding new article type"), "");
+$crumbs[] = array($translator->trans("Article type fields", array(), 'article_type_fields'), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($f_article_type));
+$crumbs[] = array($translator->trans('Add new article type', array(), 'article_types'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 ?>
@@ -64,7 +64,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Translating field"); ?> </B>
+		<B> <?php  echo $translator->trans("Translating field"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -82,7 +82,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
 	</DIV>
 	</TD>
 </TR>

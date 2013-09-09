@@ -1,18 +1,19 @@
 <?php
-camp_load_translation_strings("article_types");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-    camp_html_display_error(getGS("You do not have the right to add article types."));
+    camp_html_display_error($translator->trans("You do not have the right to add article types.", array(), 'article_types'));
     exit;
 }
 
@@ -28,7 +29,7 @@ $errorMsgs = array();
 
 if ($f_type_language_id <= 0) {
     $correct = false;
-    $errorMsgs[] = getGS('You must choose a language for the article type.');
+    $errorMsgs[] = $translator->trans('You must choose a language for the article type.', array(), 'article_types');
 }
 
 if ($correct) {
@@ -44,14 +45,14 @@ if ($correct) {
         camp_html_goto_page("/$ADMIN/article_types/index.php");
     }
     else {
-        $errorMsgs[] = getGS('The translation could not be added.');
+        $errorMsgs[] = $translator->trans('The translation could not be added.', array(), 'article_types');
     }
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Adding new article type"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans("Adding new article type", array(), 'article_types'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -60,7 +61,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
     <TD COLSPAN="2">
-        <B> <?php  putGS("Adding new article type"); ?> </B>
+        <B> <?php echo $translator->trans("Adding new article type", array(), 'article_types'); ?> </B>
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
@@ -78,7 +79,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
     <TD COLSPAN="2">
     <DIV ALIGN="CENTER">
-    <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/'">
+    <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/'">
     </DIV>
     </TD>
 </TR>
