@@ -1,5 +1,7 @@
-<?php if (empty($userIsBlogger)) : ?>
-<div class="articlebox" title="<?php putGS('Featured Article Lists'); ?>">
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+if (empty($userIsBlogger)) : ?>
+<div class="articlebox" title="<?php echo $translator->trans('Featured Article Lists', array(), 'articles'); ?>">
   <div>
     <div id="playlist">
       <div id="playlistArticles" style="display:block; padding-bottom:8px;">
@@ -36,7 +38,7 @@
       <a class="iframe ui-state-default icon-button right-floated"
         popup-width="600"
         href="<?php echo camp_html_article_url($articleObj, $f_language_id, "playlist/popup.php"); ?>">
-        <span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
+        <span class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
       <?php endif; ?>
     </div>
   </div>

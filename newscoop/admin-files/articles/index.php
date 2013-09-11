@@ -8,7 +8,7 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
-camp_load_translation_strings("api");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
@@ -25,7 +25,7 @@ $f_article_offset = camp_session_get($offsetVarName, 0);
 $ArticlesPerPage = 15;
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -40,19 +40,19 @@ if ($f_article_offset < 0) {
 
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
+	camp_html_display_error($translator->trans('Section does not exist.'));
 	exit;
 }
 
 $publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
+	camp_html_display_error($translator->trans('Publication does not exist.'));
 	exit;
 }
 
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
+	camp_html_display_error($translator->trans('Issue does not exist.'));
 	exit;
 }
 
@@ -114,15 +114,15 @@ $pager = new SimplePager($numUniqueArticles, $ArticlesPerPage, $offsetVarName, $
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Article List') . ': ' . $this->view->escape($sectionObj->getName()), $topArray);
+camp_html_content_top($translator->trans('Article List', array(), 'articles') . ': ' . $this->view->escape($sectionObj->getName()), $topArray);
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php echo $translator->trans("Section List"); ?></B></A></TD>
 	<?php if ($g_user->hasPermission('AddArticle')) { ?>
     <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/articles/add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/articles/add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/articles/add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php echo $translator->trans("Add new article"); ?></B></A></TD>
 	<?php  } ?>
 </tr>
 </TABLE>

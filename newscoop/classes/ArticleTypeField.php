@@ -565,37 +565,39 @@ class ArticleTypeField extends DatabaseObject {
 	 */
 	public static function VerboseTypeName($p_typeName, $p_languageId = 1, $p_rootTopicId = null)
 	{
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $translator->trans('Invalid security token!', array(), 'api');
 		switch ($p_typeName) {
 	    case self::TYPE_BODY:
-	    	return getGS('Multi-line Text with WYSIWYG');
+	    	return $translator->trans('Multi-line Text with WYSIWYG', array(), 'api');
 	    case self::TYPE_TEXT:
-	    	return getGS('Single-line Text');
+	    	return $translator->trans('Single-line Text', array(), 'api');
         case self::TYPE_LONGTEXT:
-            return getGS('Multi-line Text');
+            return $translator->trans('Multi-line Text', array(), 'api');
 	    case self::TYPE_DATE:
-	    	return getGS('Date');
+	    	return $translator->trans('Date');
 	    case self::TYPE_TOPIC:
 	    	if (is_null($p_rootTopicId)) {
-	    		return getGS('Topic');
+	    		return $translator->trans('Topic');
 	    	}
    			$topic = new Topic($p_rootTopicId);
    			$translations = $topic->getTranslations();
    			if (array_key_exists($p_languageId, $translations)) {
-   				return getGS('Topic') . ' (' . $translations[$p_languageId] . ')';
+   				return $translator->trans('Topic') . ' (' . $translations[$p_languageId] . ')';
    			} elseif ($p_languageId != 1 && array_key_exists(1, $translations)) {
-   				return getGS('Topic') . ' (' . $translations[1] . ')';
+   				return $translator->trans('Topic') . ' (' . $translations[1] . ')';
    			} else {
-   				return getGS('Topic') . ' (' . end($translations) . ')';
+   				return $translator->trans('Topic') . ' (' . end($translations) . ')';
    			}
 	    	break;
 	    case self::TYPE_SWITCH:
-	    	return getGS('Switch');
+	    	return $translator->trans('Switch', array(), 'api');
 	    case self::TYPE_NUMERIC:
-	    	return getGS('Numeric');
+	    	return $translator->trans('Numeric', array(), 'api');
 	    case self::TYPE_COMPLEX_DATE:
-	    	return getGS('Complex Date');
+	    	return $translator->trans('Complex Date', array(), 'api');
 	    default:
-	    	return getGS("unknown");
+	    	return $translator->trans("unknown", array(), 'api');
 		}
 	} // fn VerboseTypeName
 

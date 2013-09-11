@@ -1,5 +1,5 @@
 <?php
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 // set language url
 $languageUrl = implode('&', array(
     "edit.php?f_publication_id=$f_publication_id",
@@ -39,7 +39,7 @@ function action_selected(dropdownElement)
 
     // if the user has selected the "delete" option
     if (dropdownElement.selectedIndex == deleteOptionIndex) {
-        ok = confirm("<?php putGS("Are you sure you want to delete this article?"); ?>");
+        ok = confirm("<?php echo $translator->trans("Are you sure you want to delete this article?", array(), 'articles'); ?>");
         if (!ok) {
             dropdownElement.options[0].selected = true;
             return;
@@ -81,32 +81,32 @@ function change_language(select)
       echo '<strong class="right-floated" id="article_language">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
   }
   ?>
-    <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php putGS('Language'); ?></label>
+    <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php echo $translator->trans('Language'); ?></label>
     <!-- END Language -->
 
     <?php if (empty($userIsBlogger)) { ?>
     <!-- BEGIN Actions -->
     <select name="f_action" class="input_select" onchange="action_selected(this);" style="margin-bottom:2px;">
-      <option value=""><?php putGS("Actions"); ?>...</option>
+      <option value=""><?php echo $translator->trans("Actions"); ?>...</option>
       <option value=""></option>
       <?php if ($articleObj->userCanModify($g_user) && $articleObj->isLocked()) { ?>
-      <option value="unlock"><?php putGS('Unlock'); ?></option>
+      <option value="unlock"><?php echo $translator->trans('Unlock'); ?></option>
       <?php } ?>
 
       <?php if (!$locked && $g_user->hasPermission('DeleteArticle')) { ?>
-      <option value="delete"><?php putGS('Delete'); ?></option>
+      <option value="delete"><?php echo $translator->trans('Delete'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('AddArticle')) { ?>
-      <option value="copy"><?php putGS('Duplicate'); ?></option>
+      <option value="copy"><?php echo $translator->trans('Duplicate'); ?></option>
       <?php } ?>
 
       <?php if ($g_user->hasPermission('TranslateArticle')) { ?>
-      <option value="translate"><?php putGS('Translate'); ?></option>
+      <option value="translate"><?php echo $translator->trans('Translate'); ?></option>
       <?php } ?>
 
       <?php if (!$locked && $g_user->hasPermission('MoveArticle')) { ?>
-      <option value="move"><?php putGS('Move'); ?></option>
+      <option value="move"><?php echo $translator->trans('Move'); ?></option>
       <?php } ?>
     </select>
     <!-- END Actions -->
@@ -118,37 +118,37 @@ function change_language(select)
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     if (!isset($issueObj)) {
-        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Publish'));
+        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), $translator->trans('Publish'));
     } elseif ($issueObj->isPublished()) {
-        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Published'));
+        camp_html_select_option('Y', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('Published'));
     } else {
-        camp_html_select_option('M', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Publish with issue'));
+        camp_html_select_option('M', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('Publish with issue'));
     }
-    camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));
-    camp_html_select_option('N', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('New'));
+    camp_html_select_option('S', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('Submitted'));
+    camp_html_select_option('N', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('New'));
     ?>
     </select>
     <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
     <select name="f_action_workflow" class="input_select" id="f_action_workflow"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
-    camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));
-    camp_html_select_option('N', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('New'));
+    camp_html_select_option('S', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('Submitted'));
+    camp_html_select_option('N', $articleObj->getWorkflowStatus(), $translator->trans('Status') . ': ' . $translator->trans('New'));
     ?>
     </select>
     <?php } else {
         switch ($articleObj->getWorkflowStatus()) {
             case 'Y':
-                echo getGS('Status') . ': ' . getGS('Published');
+                echo $translator->trans('Status') . ': ' . $translator->trans('Published');
                 break;
             case 'M':
-                echo getGS('Status') . ': ' . getGS('Publish with issue');
+                echo $translator->trans('Status') . ': ' . $translator->trans('Publish with issue');
                 break;
             case 'S':
-                echo getGS('Status') . ': ' . getGS('Submitted');
+                echo $translator->trans('Status') . ': ' . $translator->trans('Submitted');
                 break;
             case 'N':
-                echo getGS('Status') . ': ' . getGS('New');
+                echo $translator->trans('Status') . ': ' . $translator->trans('New');
                 break;
         }
     }

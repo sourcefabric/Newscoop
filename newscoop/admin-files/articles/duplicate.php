@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 // Optional input, for articles that are inside of sections.
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);
@@ -26,17 +27,17 @@ $f_action = Input::Get('f_action');
 //
 if ($f_action == "duplicate") {
 	if (!$g_user->hasPermission("AddArticle")) {
-		camp_html_display_error(getGS("You do not have the right to add articles."));
+		camp_html_display_error($translator->trans("You do not have the right to add articles."));
 		exit;
 	}
 } elseif ($f_action == "move") {
 	if (!$g_user->hasPermission("MoveArticle")) {
-		camp_html_display_error(getGS("You do not have the right to move articles."));
+		camp_html_display_error($translator->trans("You do not have the right to move articles.", array(), 'articles'));
 		exit;
 	}
 } elseif ($f_action == "publish") {
 	if (!$g_user->hasPermission("Publish")) {
-		camp_html_display_error(getGS("You do not have the right to publish articles."));
+		camp_html_display_error($translator->trans("You do not have the right to publish articles.", array(), 'articles'));
 		exit;
 	}
 }
@@ -102,28 +103,28 @@ foreach ($articles as $articleNumber => $languageArray) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())));
 	exit;
 }
 
 if ($f_publication_id > 0) {
 	$publicationObj = new Publication($f_publication_id);
 	if (!$publicationObj->exists()) {
-		camp_html_display_error(getGS('Publication does not exist.'));
+		camp_html_display_error($translator->trans('Publication does not exist.'));
 		exit;
 	}
 
 	if ($f_issue_number > 0) {
 	    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 	    if (!$issueObj->exists()) {
-	        camp_html_display_error(getGS('Issue does not exist.'));
+	        camp_html_display_error($translator->trans('Issue does not exist.'));
 	        exit;
 	    }
 
 	    if ($f_section_number > 0) {
 	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 	        if (!$sectionObj->exists()) {
-	            camp_html_display_error(getGS('Section does not exist.'));
+	            camp_html_display_error($translator->trans('Section does not exist.'));
 	            exit;
 	        }
 	    }
@@ -218,7 +219,7 @@ if (isset($_REQUEST["action_button"])) {
 	}
 
 	if (!empty($f_action) && !SecurityToken::isValid()) {
-		camp_html_display_error(getGS('Invalid security token!'));
+		camp_html_display_error($translator->trans('Invalid security token!'));
 		exit;
 	}
 
@@ -289,7 +290,7 @@ if (isset($_REQUEST["action_button"])) {
 		}
 		ArticleIndex::RunIndexer(3, 10, true);
 
-		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
+		camp_html_add_msg($translator->trans("Article(s) duplicated.", array(), 'articles'), "ok");
 		camp_html_goto_page($url);
 
 	} elseif ($f_action == "move") {
@@ -321,7 +322,7 @@ if (isset($_REQUEST["action_button"])) {
 			$url = $destArticleIndexUrl;
 		}
 		ArticleIndex::RunIndexer(3, 10, true);
-		camp_html_add_msg(getGS("Article moved."), "ok");
+		camp_html_add_msg($translator->trans("Article moved.", array(), 'articles'), "ok");
 		camp_html_goto_page($url);
 
 	} elseif ($f_action == "publish") {
@@ -343,8 +344,8 @@ if (isset($_REQUEST["action_button"])) {
 					$conflictingArticleLink = camp_html_article_url($conflictingArticle,
 									$conflictingArticle->getLanguageId(),
 									"edit.php");
-    				camp_html_add_msg(getGS("The article could not be published.")." ".getGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.",
-     						"<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"));
+    				camp_html_add_msg($translator->trans("The article could not be published.", array(), 'articles')." ".$translator->trans("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.", array(
+    					'$1' => "<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"), 'articles'));
      				$args = $_REQUEST;
      				unset($args["action_button"]);
 					unset($args["f_article_code"]);
@@ -396,8 +397,8 @@ if (isset($_REQUEST["action_button"])) {
 					$conflictingArticleLink = camp_html_article_url($conflictingArticle,
 									$conflictingArticle->getLanguageId(),
 									"edit.php");
-    				camp_html_add_msg(getGS("The article could not be submitted.")." ".getGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.",
-     						"<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"));
+    				camp_html_add_msg($translator->trans("The article could not be submitted.", array(), 'articles')." ".$translator->trans("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", array(
+     						'$1' => "<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"), 'articles'));
      				$args = $_REQUEST;
      				unset($args["action_button"]);
 					unset($args["f_article_code"]);
@@ -437,23 +438,23 @@ if (isset($_REQUEST["action_button"])) {
 $title = "";
 if (count($doAction) > 1) {
 	if ($f_action == "duplicate") {
-		$title = getGS("Duplicate articles");
+		$title = $translator->trans("Duplicate articles", array(), 'articles');
 	} elseif ($f_action == "move") {
-		$title = getGS("Move articles");
+		$title = $translator->trans("Move articles", array(), 'articles');
 	} elseif ($f_action == "publish") {
-		$title = getGS("Publish articles");
+		$title = $translator->trans("Publish articles", array(), 'articles');
 	} elseif ($f_action == "submit") {
-		$title = getGS("Submit articles");
+		$title = $translator->trans("Submit articles", array(), 'articles');
 	}
 } else {
 	if ($f_action == "duplicate") {
-		$title = getGS("Duplicate article");
+		$title = $translator->trans("Duplicate article", array(), 'articles');
 	} elseif ($f_action == "move") {
-		$title = getGS("Move article");
+		$title = $translator->trans("Move article", array(), 'articles');
 	} elseif ($f_action == "publish") {
-		$title = getGS("Publish article");
+		$title = $translator->trans("Publish article", array(), 'articles');
 	} elseif ($f_action == "submit") {
-		$title = getGS("Submit article");
+		$title = $translator->trans("Submit article", array(), 'articles');
 	}
 }
 
@@ -461,20 +462,20 @@ if ($f_publication_id > 0) {
 	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 					  'Section' => $sectionObj);
 	if (count($articles) > 1) {
-		$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
+		$crumbs = array($translator->trans("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
 		camp_html_content_top($title, $topArray, true, false, $crumbs);
 	} elseif ($f_issue_number > 0 && $f_section_number > 0) {
 		$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
 		camp_html_content_top($title, $topArray);
 	} else {
 	    $crumbs = array();
-	    $crumbs[] = array(getGS("Pending articles"), "/$ADMIN/pending_articles");
+	    $crumbs[] = array($translator->trans("Pending articles", array(), 'articles'), "/$ADMIN/pending_articles");
 	    $crumbs[] = array($title, "");
 	    echo camp_html_breadcrumbs($crumbs);
 	}
 } else {
 	$crumbs = array();
-	$crumbs[] = array(getGS("Actions"), "");
+	$crumbs[] = array($translator->trans("Actions"), "");
 	$crumbs[] = array($title, "");
 	echo camp_html_breadcrumbs($crumbs);
 }
@@ -484,7 +485,7 @@ if ($f_publication_id > 0) {
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
-	<td><a href="<?php echo camp_html_article_url($article, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+	<td><a href="<?php echo camp_html_article_url($article, $f_language_id, "edit.php"); ?>"><b><?php echo $translator->trans("Back to Edit Article"); ?></b></a></td>
 </tr>
 </table>
 <?php } ?>
@@ -524,18 +525,18 @@ foreach ($articles as $languageArray) {
 			<TD valign="top">
 				<?php
 				if ($f_action == "duplicate") {
-					putGS("Duplicate?");
+					echo $translator->trans("Duplicate?", array(), 'articles');
 //				} elseif ($f_action == "move") {
 //					putGS("Move?");
 				} elseif ($f_action == "publish") {
-					putGS("Publish?");
+					echo $translator->trans("Publish?", array(), 'articles');
 				}
 				?>
 			</TD>
 			<?php } ?>
-			<TD valign="top"><?php putGS("Name"); ?></TD>
-			<TD valign="top"><?php putGS("Language"); ?></TD>
-			<TD valign="top"><?php putGS("Type"); ?></TD>
+			<TD valign="top"><?php echo $translator->trans("Name"); ?></TD>
+			<TD valign="top"><?php echo $translator->trans("Language"); ?></TD>
+			<TD valign="top"><?php echo $translator->trans("Type"); ?></TD>
 		</TR>
 
 		<?php
@@ -583,7 +584,7 @@ foreach ($articles as $languageArray) {
 	<td colspan="2" style="padding-left: 17px; padding-bottom: 8px;" align="center">
 		<div style="border: 1px solid #AF2041; background-color: #FFD4E4; font-size: 12pt; padding: 5px; font-weight: bold; color: #AF2041;">
 		<?php
-			putGS("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", ($f_action == "move") ? getGS("move") : getGS("duplicate"));
+			$translator->trans("You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.", array('$1' => ($f_action == "move") ? $translator->trans("move") : $translator->trans("duplicate")), 'articles');
 		?>
 		</div>
 	</td>
@@ -593,7 +594,7 @@ foreach ($articles as $languageArray) {
 
 <p>
 <div class="page_title" style="padding-left: 18px;">
-<?php putGS("to section"); ?>:
+<?php echo $translator->trans("to section", array(), 'articles'); ?>:
 </div>
 <p>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
@@ -601,7 +602,7 @@ foreach ($articles as $languageArray) {
 	<TD align="left">
 		<TABLE align="left" border="0" width="100%">
 		<TR>
-			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination"); ?></TD>
+			<td colspan="2" style="padding-left: 20px; padding-bottom: 5px;font-size: 12pt; font-weight: bold;"><?php echo $translator->trans("Select destination"); ?></TD>
 		</TR>
 		<TR>
 			<td>
@@ -610,11 +611,11 @@ foreach ($articles as $languageArray) {
 
 				<!-- PUBLICATION -->
 				<tr>
-					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Publication'); ?>: </TD>
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php echo $translator->trans('Publication'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (count($allPublications) > 1) { ?>
 						<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}">
-						<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
+						<OPTION VALUE="0"><?php echo $translator->trans('---Select publication---'); ?></option>
 						<?php
 						foreach ($allPublications as $tmpPublication) {
 							camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
@@ -628,18 +629,18 @@ foreach ($articles as $languageArray) {
 							<input type="hidden" name="f_destination_publication_id" value="<?php p($tmpPublication->getPublicationId()); ?>">
 
 						<?php } else { ?>
-							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
+							<SELECT class="input_select" DISABLED><OPTION><?php echo $translator->trans('No publications'); ?></option></SELECT>
 						<?php }	?>
 					</td>
 				</tr>
 
 				<!-- ISSUE -->
 				<tr>
-					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Issue'); ?>: </TD>
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php echo $translator->trans('Issue'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (($f_destination_publication_id > 0) && (count($allIssues) > 1)) { ?>
 						<SELECT NAME="f_destination_issue_number" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_issue_number); ?>) { this.form.submit(); }">
-						<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
+						<OPTION VALUE="0"><?php echo $translator->trans('---Select issue---'); ?></option>
 						<?php
 						foreach ($allIssues as $tmpIssue) {
 							camp_html_select_option($tmpIssue->getIssueNumber(), $f_destination_issue_number, $tmpIssue->getIssueNumber().". ".$tmpIssue->getName());
@@ -652,18 +653,18 @@ foreach ($articles as $languageArray) {
 							?>
 							<input type="hidden" name="f_destination_issue_number" value="<?php p($f_destination_issue_number); ?>">
 						<?php } else { ?>
-							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+							<SELECT class="input_select" DISABLED><OPTION><?php echo $translator->trans('No issues'); ?></SELECT>
 						<?php } ?>
 					</td>
 				</tr>
 
 				<!-- SECTION -->
 				<tr>
-					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  putGS('Section'); ?>: </TD>
+					<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php echo $translator->trans('Section'); ?>: </TD>
 					<TD valign="middle" ALIGN="LEFT">
 						<?php if (($f_destination_issue_number > 0) && (count($allSections) > 1)) { ?>
 						<SELECT NAME="f_destination_section_number" class="input_select" ONCHANGE="this.form.submit();">
-						<OPTION VALUE="0"><?php  putGS('---Select section---'); ?></OPTION>
+						<OPTION VALUE="0"><?php echo $translator->trans('---Select section---'); ?></OPTION>
 						<?php
 						$previousSection = camp_array_peek($allSections);
 						foreach ($allSections as $tmpSection) {
@@ -677,7 +678,7 @@ foreach ($articles as $languageArray) {
 							?>
 							<input type="hidden" name="f_destination_section_number" value="<?php p($f_destination_section_number); ?>">
 						<?php } else { ?>
-							<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No sections'); ?></SELECT>
+							<SELECT class="input_select" DISABLED><OPTION><?php echo $translator->trans('No sections'); ?></SELECT>
 						<?php }	?>
 					</td>
 				</tr>
@@ -690,7 +691,7 @@ foreach ($articles as $languageArray) {
 			<td colspan="2"><?php
 				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_number)
 				&& ($f_section_number == $f_destination_section_number) && ($f_section_number > 0)) {
-					putGS("The destination section is the same as the source section."); echo "<BR>\n";
+					echo $translator->trans("The destination section is the same as the source section.", array(), 'articles'); echo "<BR>\n";
 				}
 			?></td>
 		</tr>

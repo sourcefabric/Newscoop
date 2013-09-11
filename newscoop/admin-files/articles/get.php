@@ -2,8 +2,11 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
+
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission('CommentModerate')) {
-    camp_html_display_error(getGS("You do not have the right to moderate comments." ));
+    camp_html_display_error($translator->trans("You do not have the right to moderate comments.", array(), 'articles'));
     exit;
 }
 // These are optional, depending on whether you are in a section
@@ -27,7 +30,7 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 // Fetch article
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-    camp_html_display_error(getGS('No such article.'));
+    camp_html_display_error($translator->trans('No such article.', array(), 'articles'));
     exit;
 }
 
@@ -37,14 +40,14 @@ $articleData = $articleObj->getArticleData();
 $dbColumns = $articleData->getUserDefinedColumns(false, true);
 foreach ($dbColumns as $dbColumn) {
     if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
-        $value = $articleData->getProperty($dbColumn->getName()) ? getGS('On') : getGS('Off');
+        $value = $articleData->getProperty($dbColumn->getName()) ? $translator->trans('On', array(), 'articles') : $translator->trans('Off', array(), 'articles');
         $articleInfo[htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId()))] = $value;
     } else {
         $articleInfo[htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId()))] = $articleData->getProperty($dbColumn->getName());
     }
 }
-$articleInfo[getGs('Title')] = $articleObj->getTitle();         // THIS IS REALLY BAD, NEVER LOCALIZE INTERNALLY
-$articleInfo[getGs('Date')] = $articleObj->getCreationDate();   // But I don't know what possibly depends on this so we leave it for now
+$articleInfo[$translator->trans('Title', array(), 'articles')] = $articleObj->getTitle();         // THIS IS REALLY BAD, NEVER LOCALIZE INTERNALLY
+$articleInfo[$translator->trans('Date')] = $articleObj->getCreationDate();   // But I don't know what possibly depends on this so we leave it for now
 $articleInfo['title'] = $articleObj->getTitle();
 $articleInfo['date'] = $articleObj->getCreationDate();
 

@@ -3,10 +3,12 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_countable.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/ArticleType.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 global $Campsite;
 
 if (!$g_user->hasPermission('AddArticle')) {
-	camp_html_display_error(getGS("You do not have the right to add articles."));
+	camp_html_display_error($translator->trans("You do not have the right to add articles."));
 	exit;
 }
 
@@ -23,7 +25,7 @@ $f_article_type = Input::Get('f_article_type', 'string', '', true);
 $f_article_language = Input::Get('f_article_language', 'int', $f_language_id, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -54,13 +56,13 @@ $allArticleTypes = ArticleType::GetArticleTypes();
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(getGS("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
+camp_html_content_top($translator->trans('Add new article'), $topArray, true, false, array($translator->trans("Articles") => "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"));
 
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php  putGS("Article List"); ?></B></A></TD>
+	<TD><A HREF="<?php echo "/$ADMIN/articles/?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id"; ?>"><B><?php echo $translator->trans("Article List", array(), 'articles'); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -71,8 +73,8 @@ if (sizeof($allArticleTypes) == 0) {
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
 	<td align="center" class="error_message">
-	<?php putGS("No article types were defined. You must create an article type first."); ?>
-	<p><b><a href="/<?php echo $ADMIN; ?>/article_types/"><?php putGS("Edit article types"); ?></a></b></p>
+	<?php echo $translator->trans("No article types were defined. You must create an article type first.", array(), 'articles'); ?>
+	<p><b><a href="/<?php echo $ADMIN; ?>/article_types/"><?php echo $translator->trans("Edit article types", array(), 'articles'); ?></a></b></p>
 	</td>
 </tr>
 </table>
@@ -99,7 +101,7 @@ if (sizeof($allArticleTypes) == 0) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Add new article"); ?></B>
+		<B><?php echo $translator->trans("Add new article"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -107,13 +109,13 @@ if (sizeof($allArticleTypes) == 0) {
 	<td valign="top">
 		<table>
 		<tr>
-			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+			<TD ALIGN="RIGHT" ><?php echo $translator->trans("Name"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
+			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Name'))); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
 			</TD>
 		</TR>
 		<TR>
-			<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
+			<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Type"); ?>:</TD>
 			<TD>
 			    <?php if (count($allArticleTypes) == 1) { ?>
 			        <INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php echo $allArticleTypes[0]; ?>">
@@ -121,7 +123,7 @@ if (sizeof($allArticleTypes) == 0) {
                         $tmpAT = new ArticleType($allArticleTypes[0]);
                         echo $tmpAT->getDisplayName($f_language_id);
 			    } else { ?>
-    				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must fill in the $1 field.', getGS('Article Type')); ?>">
+    				<SELECT NAME="f_article_type" class="input_select" alt="select" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Article Type'))); ?>">
 	   		      	<option></option>
 		  		    <?php
     				foreach ($allArticleTypes as $tmpType) {
@@ -134,11 +136,11 @@ if (sizeof($allArticleTypes) == 0) {
 			</TD>
 		</TR>
 		<TR>
-			<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
+			<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Language"); ?>:</TD>
 			<TD style="padding-top: 3px;">
 				<?php if (count($allLanguages) > 1) { ?>
-				<SELECT NAME="f_article_language" alt="select" emsg="<?php putGS("You must select a language.")?>" class="input_select">
-				<option value="0"><?php putGS("---Select language---"); ?></option>
+				<SELECT NAME="f_article_language" alt="select" emsg="<?php echo $translator->trans("You must select a language.");?>" class="input_select">
+				<option value="0"><?php echo $translator->trans("---Select language---"); ?></option>
 				<?php
 			 	foreach ($allLanguages as $tmpLanguage) {
 			 		camp_html_select_option($tmpLanguage->getLanguageId(),
@@ -164,7 +166,7 @@ if (sizeof($allArticleTypes) == 0) {
 <TR>
 	<TD COLSPAN="2" align="center">
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
-		<INPUT TYPE="submit" NAME="save" VALUE="<?php  putGS('Save'); ?>" class="button">
+		<INPUT TYPE="submit" NAME="save" VALUE="<?php  echo $translator->trans('Save'); ?>" class="button">
 	</TD>
 </TR>
 </TABLE>
