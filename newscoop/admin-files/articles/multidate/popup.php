@@ -163,7 +163,7 @@ function submitSpecificForm() {
 	var valid = 1;
 	if ( $('#start-date-specific').val() == '' ) {
 		valid = 0;
-		alert("<?php echo $translator->trans("Start date can't be empty", array(), 'articles'); ?>");
+		alert("<?php echo $translator->trans('Start date can not be empty', array(), 'articles'); ?>");
 		$('#start-date-specific').focus();
 	}
 	var radio = $('input:radio[name=specific-radio]:checked').val();
@@ -171,13 +171,13 @@ function submitSpecificForm() {
 		if ( valid == 1) {
 			if ( $('#start-time-specific').val() == '' ) {
 				valid = 0;
-				alert("<?php echo $translator->trans("Start time can't be empty", array(), 'articles')?>");
+				alert("<?php echo $translator->trans('Start time can not be empty', array(), 'articles')?>");
 				$('#start-time-specific').focus();
 			}
 		}
 		if (radio == 'start-and-end' && valid == 1) {
 			if ( $('#end-time-specific').val() == '' ) {
-				alert("<?php echo $translator->trans("End time can't be empty", array(), 'articles') ?>");
+				alert("<?php echo $translator->trans('End time can not be empty', array(), 'articles') ?>");
 				valid = 0;
 				$('#end-time-specific').focus();
 			}
@@ -185,7 +185,7 @@ function submitSpecificForm() {
 			if (valid == 1) {
 				if ( !timeOk($('#start-date-specific').val(), $('#start-time-specific').val(), $('#start-date-specific').val(), $('#end-time-specific').val()) ) {
 					valid = 0;
-					alert("<?php echo $translator->trans("End time can't be set before start time", array(), 'articles')?>");
+					alert("<?php echo $translator->trans('End time can not be set before start time'", array(), 'articles')?>");
 					$('#end-time-specific').focus();
 				}
 			}		
@@ -215,14 +215,14 @@ function submitDaterangeForm() {
 	//start date
 	if ( $('#start-date-daterange').val() == '' ) {
 		valid = 0;
-		alert("<?php echo $translator->trans("Start date can't be empty", array(), 'articles')?>");
+		alert("<?php echo $translator->trans('Start date can not be empty', array(), 'articles')?>");
 		$('#start-date-daterange').focus();
 	}
 	//start time
 	if ( valid == 1 && needTime) {
 		if ( $('#start-time-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo $translator->trans("Start time can't be empty", array(), 'articles')?>");
+			alert("<?php echo $translator->trans("Start time can not be empty", array(), 'articles')?>");
 			$('#start-time-daterange').focus();
 		}
 	}
@@ -230,7 +230,7 @@ function submitDaterangeForm() {
 	if (valid == 1 && needDate) {
 		if ( $('#end-date-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo $translator->trans("End date can't be empty", array(), 'articles')?>");
+			alert("<?php echo $translator->trans("End date can not be empty", array(), 'articles')?>");
 			$('#end-date-daterange').focus();
 		}
 	}
@@ -238,7 +238,7 @@ function submitDaterangeForm() {
 	if ( valid == 1 && needTime) {
 		if ( $('#end-time-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo $translator->trans("End time can't be empty", array(), 'articles')?>");
+			alert("<?php echo $translator->trans("End time can not be empty", array(), 'articles')?>");
 			$('#end-time-daterange').focus();
 		}
 	}
@@ -250,7 +250,7 @@ function submitDaterangeForm() {
 		
 		if ( !timeOk(auxDate, startTime, auxDate, endTime) ) {
 			valid = 0;
-			alert("<?php echo $translator->trans("End time can't be set before start time", array(), 'articles')?>");
+			alert("<?php echo $translator->trans("End time can not be set before start time", array(), 'articles')?>");
 			$('#end-time-daterange').focus();
 		}
 	}	
@@ -262,7 +262,7 @@ function submitDaterangeForm() {
 		
 		if ( !timeOk(startDate, auxTime, endDate, auxTime) ) {
 			valid = 0;
-			alert("<?php echo $translator->trans("Last date can't be set before first date", array(), 'articles')?>");
+			alert("<?php echo $translator->trans("Last date can not be set before first date", array(), 'articles')?>");
 			$('#end-date-daterange').focus();
 		}
 	}	
@@ -360,7 +360,7 @@ function loadSpecificEvent(event) {
 function removeSpecificEvent() {
 	var id = $('#specific-multidate-id').val();
 	if (id.length > 0) {
-	    if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event", array(), 'articles'); ?>') ) {
+	    if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event?", array(), 'articles'); ?>') ) {
 	        removeEvent(id);
 	        resetSpecificForm();
 	    }
@@ -370,7 +370,7 @@ function removeSpecificEvent() {
 function removeDaterangeEvent() {
 	var id = $('#daterange-multidate-id').val();
     if (id.length > 0) {
-        if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event", array(), 'articles'); ?>' ) ) {
+        if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event?", array(), 'articles'); ?>' ) ) {
             removeEvent(id);
             resetDaterangeForm();
         }
