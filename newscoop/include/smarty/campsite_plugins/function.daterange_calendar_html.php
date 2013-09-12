@@ -105,13 +105,13 @@ function smarty_function_daterange_calendar_html($p_params = array(), &$p_smarty
                 $maxDay = $cleanParam['end']['day'];
             }
 
-            $monthString .= '<li><h3><a href="?fqfrom='.$year.'-'.$month.'-'.$beginDay.'&fqto='.$year.'-'.$month.'-'.$maxDay.'">';
+            $monthString .= '<li><h3><a href="?fqfrom='.date('Y-m-d', strtotime($year.'-'.$month.'-'.$beginDay)).'&fqto='.date('Y-m-d', strtotime($year.'-'.$month.'-'.$maxDay)).'">';
             $monthString .= $dateFormatter['month']->format(new \DateTime($year.'-'.$month));
             $monthString .= '</h3>';
 
             $dayString = '<ol class="month m'.$month.'">';
             for ($day=$beginDay; $day <= $maxDay; $day++) { 
-                $currIterateDate = $year.'-'.$month.'-'.$day;
+                $currIterateDate = date('Y-m-d', strtotime($year.'-'.$month.'-'.$day));
                 $dayString .= '<li';
                 $week = 'w'.date('W', strtotime($currIterateDate));
                 $dayoftheweek = 'd'.date('N', strtotime($currIterateDate));
