@@ -45,6 +45,8 @@ class MediaPlayer
     {
         global $Campsite;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         ob_start();
         echo '<div class="mediaplayer ', str_replace('/', ' ', $this->type), '">';
 
@@ -76,7 +78,7 @@ class MediaPlayer
         }
 
         // download link
-        echo '<p><strong>', getGS('Download file'), ':</strong> ';
+        echo '<p><strong>', $translator->trans('Download file', array(), 'library'), ':</strong> ';
         echo '<a href="', $this->src, '">', $this->alt, '</a></p>';
 
         echo '</div>';

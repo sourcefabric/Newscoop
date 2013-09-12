@@ -26,20 +26,22 @@ class ImageList extends BaseList
     {
         parent::__construct();
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->model = new Image;
 
         $this->cols = array(
             'Id' => NULL,
-            'ThumbnailFileName' => getGS('Thumbnail'),
-            'Description' => getGS('Description'),
-            'Photographer' => getGS('Photographer'),
-            'Place' => getGS('Place'),
-            'Date' => getGS('Date'),
-            'TimeCreated' => getGS('Added'),
-            'LastModified' => getGS('Last modified'),
-            'Source' => getGS('Source'),
-            'Status' => getGS('Status'),
-            'InUse' => getGS('In use')
+            'ThumbnailFileName' => $translator->trans('Thumbnail'),
+            'Description' => $translator->trans('Description'),
+            'Photographer' => $translator->trans('Photographer'),
+            'Place' => $translator->trans('Place'),
+            'Date' => $translator->trans('Date'),
+            'TimeCreated' => $translator->trans('Added'),
+            'LastModified' => $translator->trans('Last modified', array(), 'library'),
+            'Source' => $translator->trans('Source', array(), 'library'),
+            'Status' => $translator->trans('Status'),
+            'InUse' => $translator->trans('In use')
         );
 
         $this->searchCols = array(

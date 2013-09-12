@@ -12,29 +12,30 @@
 <div class="actions">
 <?php
 	global $g_user;
+    $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <fieldset class="actions">
-    <legend><?php putGS('Select action'); ?></legend>
+    <legend><?php echo $translator->trans('Select action', array(), 'library'); ?></legend>
     <select name="action">
         <option value="">---</option>
         <?php if ($g_user->hasPermission('Publish')) { ?>
-        <option value="workflow_publish"><?php putGS('Status: Publish'); ?></option>
+        <option value="workflow_publish"><?php echo $translator->trans('Status: Publish', array(), 'library'); ?></option>
         <?php } ?>
-        <option value="workflow_submit"><?php putGS('Status: Submit'); ?></option>
-        <option value="workflow_new"><?php putGS('Status: Set New'); ?></option>
-        <option value="switch_onfrontpage"><?php putGS("Toggle: 'On Front Page'"); ?></option>
-        <option value="switch_onsectionpage"><?php putGS("Toggle: 'On Section Page'"); ?></option>
-        <option value="switch_comments"><?php putGS("Toggle: 'Comments'"); ?></option>
+        <option value="workflow_submit"><?php echo $translator->trans('Status: Submit', array(), 'library'); ?></option>
+        <option value="workflow_new"><?php echo $translator->trans('Status: Set New', array(), 'library'); ?></option>
+        <option value="switch_onfrontpage"><?php echo $translator->trans("Toggle: On Front Page", array(), 'library'); ?></option>
+        <option value="switch_onsectionpage"><?php echo $translator->trans("Toggle: On Section Page", array(), 'library'); ?></option>
+        <option value="switch_comments"><?php echo $translator->trans("Toggle: Comments", array(), 'library'); ?></option>
         <?php if ($this->publication > 0 && $this->issue > 0 && $this->section > 0) { ?>
-        <option value="publish_schedule"><?php putGS('Publish Schedule'); ?></option>
+        <option value="publish_schedule"><?php echo $translator->trans('Publish Schedule', array(), 'library'); ?></option>
         <?php } ?>
-        <option value="unlock"><?php putGS('Unlock'); ?></option>
+        <option value="unlock"><?php echo $translator->trans('Unlock'); ?></option>
         <?php if ($g_user->hasPermission('DeleteArticle')) { ?>
-        <option value="delete"><?php putGS('Delete'); ?></option>
+        <option value="delete"><?php echo $translator->trans('Delete'); ?></option>
         <?php } ?>
-        <option value="duplicate"><?php putGS('Duplicate'); ?></option>
-        <option value="duplicate_interactive"><?php putGS('Duplicate to another section'); ?></option>
-        <option value="move"><?php putGS('Move'); ?></option>
+        <option value="duplicate"><?php echo $translator->trans('Duplicate'); ?></option>
+        <option value="duplicate_interactive"><?php echo $translator->trans('Duplicate to another section', array(), 'library'); ?></option>
+        <option value="move"><?php echo $translator->trans('Move'); ?></option>
     </select>
 </fieldset>
 </div><!-- /.smartlist-actions -->
@@ -69,13 +70,13 @@ $('.smartlist .actions select').change(function() {
     });
 
     if (items.length == 0) {
-        flashMessage('<?php putGS('Select some article first.'); ?>', 'error');
+        flashMessage('<?php echo $translator->trans('Select some article first.', array(), 'library'); ?>', 'error');
         return;
     }
 
     params = [];
     if (action == 'delete') {
-        if (!confirm('<?php putGS('Are you sure you want to delete selected articles?'); ?>')) {
+        if (!confirm('<?php echo $translator->trans('Are you sure you want to delete selected articles?', array(), 'library'); ?>')) {
             return;
         }
     } else if (action == 'move'

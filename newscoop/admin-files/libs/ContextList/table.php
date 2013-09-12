@@ -7,7 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 
 <script>
@@ -82,7 +82,7 @@ function sendOrder(form, hash)
         ], function(data) {
             tables[hash].fnSort([[2, 'asc']]);
             tables[hash].fnDraw(true);
-            flashMessage('<?php putGS('Order updated.'); ?>');
+            flashMessage('<?php echo $translator->trans('Order updated.', array(), 'library'); ?>');
         });
     return false;
 }
@@ -107,18 +107,18 @@ $(document).ready(function()
         'sDom': '<?php echo $this->getContextSDom(); ?>',
         'oLanguage': {
             'oPaginate': {
-                'sFirst': '<?php putGS('First'); ?>',
-                'sNext': '<?php putGS('Next'); ?>',
-                'sPrevious': '<?php putGS('Previous'); ?>',
-                'sLast': '<?php putGS('Last'); ?>',
+                'sFirst': '<?php echo $translator->trans('First', array(), 'library'); ?>',
+                'sNext': '<?php echo $translator->trans('Next'); ?>',
+                'sPrevious': '<?php echo $translator->trans('Previous'); ?>',
+                'sLast': '<?php echo $translator->trans('Last', array(), 'library'); ?>',
             },
 
-            'sZeroRecords': '<?php putGS('No records found.'); ?>',
+            'sZeroRecords': '<?php echo $translator->trans('No records found.', array(), 'library'); ?>',
             'sSearch': '',
-            'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
-            'sEmpty': '<?php putGS('No entries to show'); ?>',
-            'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
-            'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+            'sInfo': '<?php echo $translator->trans('Showing _START_ to _END_ of _TOTAL_ entries', array(), 'library'); ?>',
+            'sEmpty': '<?php echo $translator->trans('No entries to show', array(), 'library'); ?>',
+            'sInfoFiltered': '<?php echo $translator->trans(' - filtering from _MAX_ records', array(), 'library'); ?>',
+            'sLengthMenu': '<?php echo $translator->trans('Display _MENU_ records', array(), 'library'); ?>',
             'sInfoEmpty': '',
         },
         'aoColumnDefs': [
@@ -240,7 +240,7 @@ $(document).ready(function()
         <?php if ($this->colVis) { ?>
         'oColVisx': { // disable Show/hide column
             //'aiExclude': [0, 1, 2],
-           // 'buttonText': '<?php putGS('Show / hide columns'); ?>',
+           // 'buttonText': '<?php echo $translator->trans('Show / hide columns', array(), 'library'); ?>',
         },
         <?php } ?>
         <?php if ($this->order) { ?>

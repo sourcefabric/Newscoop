@@ -14,15 +14,17 @@ require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
 require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 // get publications
 $publications = Publication::GetPublications();
 $publicationsNo = is_array($publications) ? sizeof($publications) : 0;
-$menuPubTitle = $publicationsNo > 0 ? getGS('All Publications') : getGS('No publications found');
+$menuPubTitle = $publicationsNo > 0 ? $translator->trans('All Publications', array(), 'library') : $translator->trans('No publications found', array(), 'library');
 
 // get issues
 $issues = Issue::GetIssues($this->publication, NULL);
 $issuesNo = is_array($issues) ? sizeof($issues) : 0;
-$menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
+$menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
 
 $articleTypes = ArticleType::GetArticleTypes(true);
 
@@ -37,7 +39,7 @@ foreach ($section_objects as $section) {
 }
 
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
-$menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
+$menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
 $topics = array();
 foreach (Topic::GetTree() as $topic) {
@@ -57,7 +59,7 @@ contextListFilters = {}
                   <dd>
 
 <fieldset class="toggle filters" style="display:block">
-<legend><?php putGS('Filter'); ?></legend>
+<legend><?php echo $translator->trans('Filter', array(), 'library'); ?></legend>
 <dl>
     <dd>
 <select
@@ -93,7 +95,7 @@ contextListFilters = {}
             ?>
             <!-- Type filter -->
             <select name="type" id="type_filter">
-            	<option value=""><?php echo getGS('Select type'); ?></option>
+            	<option value=""><?php echo $translator->trans('Select type', array(), 'library'); ?></option>
             	<?php if (count($articleTypes)) foreach ($articleTypes as $atype) : ?>
             		<option <?php if (strtolower($atype)==$filterValue) : ?>selected="selected"<?php endif ?>">
             		    <?php echo htmlspecialchars($atype) ?>
@@ -111,61 +113,61 @@ contextListFilters = {}
 <div class="extra">
 
 <dl>
-	<dt><label for="filter_date"><?php putGS('Publish date'); ?></label></dt>
+	<dt><label for="filter_date"><?php echo $translator->trans('Publish date', array(), 'library'); ?></label></dt>
 	<dd><input id="filter_date" type="text" name="publish_date"
 		class="date" /></dd>
 </dl>
 <dl>
-	<dt><label for="filter_from"><?php putGS('Published after'); ?></label></dt>
+	<dt><label for="filter_from"><?php echo $translator->trans('Published after', array(), 'library'); ?></label></dt>
 	<dd><input id="filter_from" type="text" name="publish_date_from"
 		class="date" /></dd>
 </dl>
 <dl>
-	<dt><label for="filter_to"><?php putGS('Published before'); ?></label></dt>
+	<dt><label for="filter_to"><?php echo $translator->trans('Published before', array(), 'library'); ?></label></dt>
 	<dd><input id="filter_to" type="text" name="publish_date_to"
 		class="date" /></dd>
 </dl>
 <dl>
-	<dt><label for="filter_author"><?php putGS('Author'); ?></label></dt>
+	<dt><label for="filter_author"><?php echo $translator->trans('Author'); ?></label></dt>
 	<dd><select name="author">
-		<option value=""><?php putGS('All'); ?></option>
+		<option value=""><?php echo $translator->trans('All'); ?></option>
 		<?php foreach (Author::GetAuthors() as $author) { ?>
 		<option value="<?php echo htmlspecialchars($author->getName()); ?>"><?php echo htmlspecialchars($author->getName()); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
 <dl>
-	<dt><label for="filter_creator"><?php putGS('Creator'); ?></label></dt>
+	<dt><label for="filter_creator"><?php echo $translator->trans('Creator', array(), 'library'); ?></label></dt>
 	<dd><select name="creator">
-		<option value=""><?php putGS('All'); ?></option>
+		<option value=""><?php echo $translator->trans('All'); ?></option>
 		<?php foreach (User::GetUsers() as $creator) { ?>
 		<option value="<?php echo $creator->getUserId(); ?>"><?php echo htmlspecialchars($creator->getRealName()); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
 <dl>
-	<dt><label for="filter_status"><?php putGS('Status'); ?></label></dt>
+	<dt><label for="filter_status"><?php echo $translator->trans('Status'); ?></label></dt>
 	<dd><select name="workflow_status">
-		<option value=""><?php putGS('All'); ?></option>
-		<option value="published"><?php putGS('Published'); ?></option>
-		<option value="new"><?php putGS('New'); ?></option>
-		<option value="submitted"><?php putGS('Submitted'); ?></option>
-		<option value="withissue"><?php putGS('Publish with issue'); ?></option>
+		<option value=""><?php echo $translator->trans('All'); ?></option>
+		<option value="published"><?php echo $translator->trans('Published'); ?></option>
+		<option value="new"><?php echo $translator->trans('New'); ?></option>
+		<option value="submitted"><?php echo $translator->trans('Submitted'); ?></option>
+		<option value="withissue"><?php echo $translator->trans('Publish with issue'); ?></option>
 	</select></dd>
 </dl>
 <dl>
-	<dt><label for="filter_topic"><?php putGS('Topic'); ?></label></dt>
+	<dt><label for="filter_topic"><?php echo $translator->trans('Topic'); ?></label></dt>
 	<dd><select name="topic">
-		<option value=""><?php putGS('All'); ?></option>
+		<option value=""><?php echo $translator->trans('All'); ?></option>
 		<?php foreach ($topics as $id => $topic) { ?>
 		<option value="<?php echo $id; ?>"><?php echo htmlspecialchars($topic); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
 <dl>
-	<dt><label for="filter_language"><?php putGS('Language'); ?></label></dt>
+	<dt><label for="filter_language"><?php echo $translator->trans('Language'); ?></label></dt>
 	<dd><select id="filter_name" name="language">
-		<option value=""><?php putGS('All'); ?></option>
+		<option value=""><?php echo $translator->trans('All'); ?></option>
 		<?php foreach(Language::GetLanguages() as $language) { ?>
 		<option value="<?php echo $language->getLanguageId(); ?>"><?php echo htmlspecialchars($language->getNativeName()); ?></option>
 		<?php } ?>
@@ -179,7 +181,7 @@ contextListFilters = {}
 </dd>
 <dd>
     <input type="checkbox" name="show_filtered" id="show_filtered"></input>
-    <label for="show_filtered"><?php putGS('Display Articles of Filtered Types') ?></label>
+    <label for="show_filtered"><?php echo $translator->trans('Display Articles of Filtered Types', array(), 'library') ?></label>
 </dd>
 </dl>
 </div>
@@ -351,7 +353,7 @@ $(document).ready(function()
             .appendTo(extra)
             .each(function() { // init options
                 var select = $(this);
-                $('<option value=""><?php putGS('Filter by...'); ?></option>')
+                $('<option value=""><?php echo $translator->trans('Filter by...', array(), 'library'); ?></option>')
                     .appendTo(select);
                 $('dl dt label', extra).each(function() {
                     var label = $(this).text();
@@ -390,7 +392,7 @@ $(document).ready(function()
         var smartlistId = smartlist.attr('id').split('-')[1];
 
         // reset all button
-        var resetMsg = '<?php putGS('Reset all filters'); ?>';
+        var resetMsg = '<?php echo $translator->trans('Reset all filters', array(), 'library'); ?>';
 
         $('<a href="#" class="reset" title="'+resetMsg+'">'+resetMsg+'</a>')
             .appendTo(fieldset)

@@ -51,6 +51,7 @@ class ContextList extends BaseList
     {
         parent::__construct();
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // generate id - unique per page instance
         if (empty(self::$lastId)) {
             self::$lastId = __FILE__;
@@ -64,8 +65,8 @@ class ContextList extends BaseList
         // column titles
         $this->cols = array(
             'Number' => NULL,
-            'Language' => getGS('Language'),
-            'Order' => getGS('Order'),
+            'Language' => $translator->trans('Language'),
+            'Order' => $translator->trans('Order'),
         );
     }
 
@@ -192,6 +193,7 @@ class ContextList extends BaseList
     public function processItem(Article $article)
     {
         global $g_user, $Campsite;
+        $translator = \Zend_Registry::get('container')->getService('translator');
         return array(
             $article->getArticleNumber(),
             $article->getLanguageId(),
@@ -205,7 +207,7 @@ class ContextList extends BaseList
                     <a href="javascript:void(0)" class="corner-button" style="display: none" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));removeFromContext($(this).parents(\'.item:eq(0)\').attr(\'id\'));toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>
                     <div class="context-item-summary">%s</div>
                     </div>
-            ', $article->getLanguageId(), $article->getCreationDate(), $article->getWorkflowDisplayString(), getGS('View article'), $article->getName()),
+            ', $article->getLanguageId(), $article->getCreationDate(), $article->getWorkflowDisplayString(), $translator->trans('View article', array(), 'library'), $article->getName()),
         );
     }
 
@@ -236,6 +238,8 @@ class ContextList extends BaseList
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         foreach ($_REQUEST['args'] as $arg) {
             $_REQUEST[$arg['name']] = $arg['value'];
         }
@@ -255,7 +259,7 @@ class ContextList extends BaseList
         $newIssues = array();
         $issues = Issue::GetIssues($publication, $language);
         $issuesNo = is_array($issues) ? sizeof($issues) : 0;
-        $menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
+        $menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
         foreach($issues as $issue) {
             $newIssues[] = array('val' => $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId() , 'name' => $issue->getName());
         }
@@ -277,6 +281,8 @@ class ContextList extends BaseList
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
         require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         foreach ($_REQUEST['args'] as $arg) {
             $_REQUEST[$arg['name']] = $arg['value'];
         }
@@ -315,7 +321,7 @@ class ContextList extends BaseList
             $newSections[] = array('val' => $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(), 'name' => $section->getName());
         }
         $sectionsNo = is_array($newSections) ? sizeof($newSections) : 0;
-        $menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
+        $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
         $returns = array();
         $returns['items'] = $newSections;
