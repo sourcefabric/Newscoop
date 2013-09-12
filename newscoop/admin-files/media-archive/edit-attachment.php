@@ -1,7 +1,4 @@
 <?php
-camp_load_translation_strings("media_archive");
-camp_load_translation_strings("article_files");
-camp_load_translation_strings("library");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
@@ -9,6 +6,7 @@ require_once LIBS_DIR . '/MediaList/MediaList.php';
 require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!Input::IsValid()) {
     camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
@@ -18,10 +16,10 @@ $object = new Attachment($f_attachment_id);
 
 $label_text = '';
 if ($g_user->hasPermission('ChangeImage')) {
-    $label_text = getGS('Change attachment information');
+    $label_text = $translator->trans('Change attachment information', array(), 'media_archive');
 }
 else {
-    $label_text = getGS('View attachment');
+    $label_text = $translator->trans('View attachment', array(), 'media_archive');
 }
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
@@ -36,19 +34,19 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <div class="wrapper"><div class="main-content-wrapper">
 
 <h2><?php echo $object->getFileName(); ?></h2>
-<p class="dates"><?php putGS('Created'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php putGS('Last modified'); ?>: <?php echo $object->getLastModified(); ?></p>
+<p class="dates"><?php echo $translator->trans('Created', array(), 'media_archive'); ?>: <?php echo $object->getTimeCreated(); ?>, <?php echo $translator->trans('Last modified', array(), 'media_archive'); ?>: <?php echo $object->getLastModified(); ?></p>
 
 <?php echo new MediaPlayer($object->getAttachmentUrl() . '?g_show_in_browser=1', $object->getMimeType()); ?>
 
 <dl class="attachment">
-    <dt><?php putGS('Type'); ?>:</dt>
+    <dt><?php echo $translator->trans('Type'); ?>:</dt>
     <dd><?php echo $object->getMimeType(); ?></dd>
 
-    <dt><?php putGS('Size'); ?>:</dt>
+    <dt><?php echo $translator->trans('Size', array(), 'media_archive'); ?>:</dt>
     <dd><?php echo MediaList::FormatFileSize($object->getSizeInBytes()); ?></dd>
 
     <?php if ($object->getCharset()) { ?>
-    <dt><?php putGS('Charset'); ?>:</dt>
+    <dt><?php echo $translator->trans('Charset', array(), 'media_archive'); ?>:</dt>
     <dd><?php echo $object->getCharset(); ?></dd>
     <?php } ?>
 
@@ -61,23 +59,23 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <div class="ui-widget-content big-block block-shadow padded-strong">
     <fieldset class="plain">
 
-    <legend><?php putGS('Change attachment information'); ?></legend>
+    <legend><?php echo $translator->trans('Change attachment information', array(), 'media_archive'); ?></legend>
 
     <ul>
         <li>
-            <label for="description"><?php putGS("Description"); ?>:</label>
+            <label for="description"><?php echo $translator->trans("Description"); ?>:</label>
             <input id="description" type="text" name="f_description" value="<?php echo htmlspecialchars($object->getDescription($object->getLanguageId())); ?>" size="50" maxlength="255" class="input_text" />
         </li>
         <li>
-            <label><?php putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></label>
+            <label><?php echo $translator->trans("Do you want this file to open in the users browser, or to automatically download?", array(), 'media_archive'); ?></label>
             <input id="disposition0" class="input_radio" type="radio" name="f_content_disposition" value=""<?php if ($object->getContentDisposition() == NULL) { echo ' checked="checked"'; } ?> />
-            <label for="disposition0" class="inline-style left-floated" style="padding-right:15px"><?php putGS("Open in the browser"); ?></label>
+            <label for="disposition0" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Open in the browser", array(), 'media_archive'); ?></label>
             <input id="disposition1" class="input_radio" type="radio" name="f_content_disposition" value="attachment"<?php if ($object->getContentDisposition() == 'attachment') { echo ' checked="checked"'; } ?> />
-            <label for="disposition1" class="inline-style left-floated"><?php putGS("Automatically download"); ?></label>
+            <label for="disposition1" class="inline-style left-floated"><?php echo $translator->trans("Automatically download", array(), 'media_archive'); ?></label>
         </li>
         <li>
             <label>&nbsp;</label>
-            <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button" />
+            <input type="submit" name="Save" value="<?php  echo $translator->trans('Save'); ?>" class="button" />
         </li>
     </ul>
 

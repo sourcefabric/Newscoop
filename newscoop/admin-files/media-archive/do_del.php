@@ -1,13 +1,14 @@
 <?php
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -24,7 +25,7 @@ if (!$g_user->hasPermission('DeleteImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");
 }
 if ($imageObj->inUse()) {
-	camp_html_add_msg(getGS("Image is in use, it cannot be deleted."));
+	camp_html_add_msg($translator->trans("Image is in use, it cannot be deleted.", array(), 'media_archive'));
 	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
@@ -34,7 +35,7 @@ if (PEAR::isError($result)) {
 	camp_html_add_msg($result->getMessage());
 } else {
 	// Go back to article image list.
-	camp_html_add_msg(getGS("Image '$1' deleted.", $imageDescription), "ok");
+	camp_html_add_msg($translator->trans("Image $1 deleted.", array('$1' => $imageDescription), 'media_archive'), "ok");
 }
 camp_html_goto_page("/$ADMIN/media-archive/index.php");
 

@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
+$translator = \Zend_Registry::get('container')->getService('translator');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
@@ -20,14 +20,14 @@ if (!$g_user->hasPermission('AddFile')) {
 $fileData = Attachment::GetUnedited($g_user->getUserId());
 
 if (empty($fileData)) {
-    camp_html_add_msg(getGS('No files for multi editing.'), 'ok');
+    camp_html_add_msg($translator->trans('No files for multi editing.', array(), 'media_archive'), 'ok');
     camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Media Archive'), "/$ADMIN/media-archive/index.php");
-$crumbs[] = array(getGS('Edit files'), "");
+$crumbs[] = array($translator->trans('Content'), "");
+$crumbs[] = array($translator->trans('Media Archive', array(), 'media_archive'), "/$ADMIN/media-archive/index.php");
+$crumbs[] = array($translator->trans('Edit files', array(), 'media_archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
 echo $breadcrumbs;
@@ -54,31 +54,31 @@ camp_html_display_msgs();
     <li>
         <h2><?php echo $file->getFileName(); ?></h2>
         <fieldset>
-            <legend><?php  putGS("Change file information"); ?></legend>
+            <legend><?php  echo $translator->trans("Change file information", array(), 'media_archive'); ?></legend>
 
             <dl>
-                <dt><?php  putGS("Description"); ?>:</dt>
-                <dd><input type="text" name="file[<?php echo $file->getAttachmentId(); ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file: '$1'.",$file->getFileName()); ?>"/></dd>
+                <dt><?php  echo $translator->trans("Description"); ?>:</dt>
+                <dd><input type="text" name="file[<?php echo $file->getAttachmentId(); ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php echo $translator->trans("Please enter a description for the file: $1.", array('$1' => $file->getFileName()), 'media_archive'); ?>"/></dd>
             </dl>
             <dl>
-                <dt><?php  putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></dt>
+                <dt><?php  echo $translator->trans("Should this file only be available for this translation of the article, or for all translations?", array(), 'media_archive'); ?></dt>
                 <dd>
                     <p>
                         <input id="language_specific_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_language_specific]" value="yes">
-                        <label for="language_specific_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php putGS("Only this translation"); ?></label>
+                        <label for="language_specific_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Only this translation", array(), 'media_archive'); ?></label>
                         <input id="language_specific_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_language_specific]" value="no" checked="checked" />
-                        <label for="language_specific_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php putGS("All translations"); ?></label>
+                        <label for="language_specific_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("All translations", array(), 'media_archive'); ?></label>
                     </p>
                 </dd>
             </dl>
             <dl>
-                <dt><?php  putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></dt>
+                <dt><?php  echo $translator->trans("Do you want this file to open in the user's browser, or to automatically download?", array(), 'media_archive'); ?></dt>
                 <dd>
                     <p>
                         <input id="disposition_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_content_disposition]" value=""/>
-                        <label for="disposition_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php putGS("Open in the browser"); ?></label>
+                        <label for="disposition_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Open in the browser", array(), 'media_archive'); ?></label>
                         <input id="disposition_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_content_disposition]" value="attachment" checked="checked" />
-                        <label for="disposition_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php putGS("Automatically download"); ?></label>
+                        <label for="disposition_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Automatically download", array(), 'media_archive'); ?></label>
                     </p>
                 </dd>
             </dl>
@@ -90,7 +90,7 @@ camp_html_display_msgs();
 </fieldset>
 
 <fieldset class="plain" style="margin-top: 13px">
-    <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="save-button" />
+    <input type="submit" name="Save" value="<?php  echo $translator->trans('Save'); ?>" class="save-button" />
 </fieldset>
 
 </form>
