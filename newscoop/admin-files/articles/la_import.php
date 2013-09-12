@@ -143,7 +143,7 @@ if ($isValidXMLFile) {
 	    $existingArticle = array_pop($existingArticles);
 	    // Is overwrite articles false? then skip and process next article
 	    if ($f_overwrite_articles == 'N') {
-	        $errorMessages[][] = $translator->trans('Article $1 already exists, and was not overwritten.',array('$1' => '"<i>'.$article->name.'</i>"'), 'articles').'<br />';
+	        $errorMessages[][] = $translator->trans('Article <i>$1</i> already exists, and was not overwritten.<br />',array('$1' => $article->name), 'articles');
 	        continue;
 	    }
 	}

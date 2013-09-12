@@ -97,7 +97,7 @@ camp_html_content_top($translator->trans('Issue Publishing Schedule', array(), '
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Publish all articles", array(), 'issues')); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Publish all articles", array(), 'issues'); ?>:</TD>
 	<TD>
 	<SELECT NAME="publish_articles" class="input_select">
 		<OPTION VALUE="Y" <?php if ($publish_articles == "Y") echo "SELECTED"; ?>><?php echo $translator->trans("Yes"); ?></OPTION>
