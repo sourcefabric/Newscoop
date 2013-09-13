@@ -1,6 +1,8 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $f_show_languages = camp_session_get('f_show_languages', array());
 
 $topics = Topic::GetTree();
@@ -19,8 +21,8 @@ if (count($f_show_languages) <= 0) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Topics"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Topics"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 camp_html_display_msgs("0.5em", 0);
@@ -28,24 +30,24 @@ camp_html_display_msgs("0.5em", 0);
 
 <form action="" method="post">
 <fieldset class="controls">
-    <legend><?php putGS("Show languages"); ?></legend>
+    <legend><?php echo $translator->trans("Show languages", array(), 'topics'); ?></legend>
     <div class="buttons">
-        <input type="button" value="<?php putGS("Select All"); ?>" onclick="checkAllLang(this);" class="button" />
-        <input type="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAllLang(this);" class="button" />
+        <input type="button" value="<?php echo $translator->trans("Select All"); ?>" onclick="checkAllLang(this);" class="button" />
+        <input type="button" value="<?php echo $translator->trans("Select None"); ?>" onclick="uncheckAllLang(this);" class="button" />
     </div>
     <div class="lang">
         <?php foreach ($allLanguages as $tmpLanguage) { ?>
         <input type="checkbox" name="f_show_languages[]" value="<?php p($tmpLanguage->getLanguageId()); ?>" id="checkbox_<?php p($tmpLanguage->getLanguageId()); ?>" <?php if (in_array($tmpLanguage->getLanguageId(), $f_show_languages)) { echo 'checked="checked"'; } ?> />
         <label for="checkbox_<?php echo $tmpLanguage->getLanguageId(); ?>">	<?php echo htmlspecialchars($tmpLanguage->getCode()); ?></label>
     	<?php } ?>
-		<input type="submit" name="f_show" value="<?php putGS("Show"); ?>" class="button" />
+		<input type="submit" name="f_show" value="<?php echo $translator->trans("Show"); ?>" class="button" />
     </div>
 </fieldset>
 </form>
 
 <fieldset class="controls search">
-    <legend><?php putGS('Search'); ?></legend>
-    <input type="text" name="search" class="autocomplete topics" /> <input type="submit" name="search_submit" value="<?php putGS('Search'); ?>" />
+    <legend><?php echo $translator->trans('Search'); ?></legend>
+    <input type="text" name="search" class="autocomplete topics" /> <input type="submit" name="search_submit" value="<?php echo $translator->trans('Search'); ?>" />
 </fieldset>
 
 <?php  if ($g_user->hasPermission('ManageTopics')) { ?>
@@ -53,9 +55,9 @@ camp_html_display_msgs("0.5em", 0);
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_topic_parent_id" value="0" />
 <fieldset class="controls">
-    <legend><?php  putGS("Add root topic"); ?></legend>
-    <select name="f_topic_language_id" class="input_select" title="<?php putGS("You must select a language."); ?>">
-        <option value="0"><?php putGS("---Select language---"); ?></option>
+    <legend><?php  echo $translator->trans("Add root topic", array(), 'topics'); ?></legend>
+    <select name="f_topic_language_id" class="input_select" title="<?php echo $translator->trans("You must select a language."); ?>">
+        <option value="0"><?php echo $translator->trans("---Select language---"); ?></option>
         <?php foreach ($allLanguages as $tmpLanguage) {
             camp_html_select_option($tmpLanguage->getLanguageId(),
                                     $loginLanguageId,
@@ -63,8 +65,8 @@ camp_html_display_msgs("0.5em", 0);
         } ?>
 	</select>
 
-    <input type="text" name="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" />
-    <input type="submit" name="add" value="<?php putGS("Add"); ?>" class="button" />
+    <input type="text" name="f_topic_name" value="" class="input_text" size="20" title="<?php echo $translator->trans('You must enter a name for the topic.', array(), 'topics'); ?>" />
+    <input type="submit" name="add" value="<?php echo $translator->trans("Add"); ?>" class="button" />
 </fieldset>
 </form>
 <?php  } ?>
@@ -72,7 +74,7 @@ camp_html_display_msgs("0.5em", 0);
 <?php
 if (count($topics) == 0) { ?>
 <blockquote>
-	<p><?php putGS('No topics'); ?></p>
+	<p><?php echo $translator->trans('No topics'); ?></p>
 </blockquote>
 
 <?php } else { ?>
@@ -111,10 +113,10 @@ foreach ($topics as $topicPath) {
 ?>
 
         <div class="item"><div>
-            <a class="icon delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&amp;f_topic_language_id=$topicLanguageId"); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the topic $1?', htmlspecialchars($topicName)); ?>');" title="<?php putGS("Delete"); ?>"><span></span>x</a>
-            <a class="edit" title="<?php putGS('Edit'); ?>"><?php putGS('Edit'); ?></a>
+            <a class="icon delete" href="<?php p("/$ADMIN/topics/do_del.php?f_topic_delete_id=".$currentTopic->getTopicId()."&amp;f_topic_language_id=$topicLanguageId"); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php echo $translator->trans('Are you sure you want to delete the topic $1?', array('$1' => htmlspecialchars($topicName)), 'topics'); ?>');" title="<?php echo $translator->trans("Delete"); ?>"><span></span>x</a>
+            <a class="edit" title="<?php echo $translator->trans('Edit'); ?>"><?php echo $translator->trans('Edit'); ?></a>
 
-            <span class="open" title="<?php putGS('Click to edit'); ?>">
+            <span class="open" title="<?php echo $translator->trans('Click to edit'); ?>">
                 <span><?php echo $topicLanguage->getCode(); ?></span>
                 <strong><?php echo htmlspecialchars($topicName); ?></strong>
             </span>
@@ -125,9 +127,9 @@ foreach ($topics as $topicPath) {
 	            <input type="hidden" name="f_topic_language_id" value="<?php  echo $topicLanguageId; ?>" />
 
             <fieldset class="name">
-                <legend><?php  putGS("Change topic name"); ?></legend>
-                <input type="text" class="input_text" name="f_name" value="<?php echo htmlspecialchars($topicName); ?>" size="32" maxlength="255"  title="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>" />
-	            <input type="submit" class="button" name="Save" value="<?php  putGS('Save'); ?>" />
+                <legend><?php  echo $translator->trans("Change topic name", array(), 'topics'); ?></legend>
+                <input type="text" class="input_text" name="f_name" value="<?php echo htmlspecialchars($topicName); ?>" size="32" maxlength="255"  title="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Name'))); ?>" />
+	            <input type="submit" class="button" name="Save" value="<?php  echo $translator->trans('Save'); ?>" />
             </fieldset>
             </form>
 
@@ -138,10 +140,10 @@ foreach ($topics as $topicPath) {
 
 
             <fieldset class="subtopic">
-                <legend><?php putGS("Add subtopic:"); ?></legend>
+                <legend><?php echo $translator->trans("Add subtopic:", array(), 'topics'); ?></legend>
                 <label><?php echo $this->view->escape($topicLanguage->getNativeName()); ?></label>
-                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php putGS('You must enter a name for the topic.'); ?>" />
-                <input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button" />
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php echo $translator->trans('You must enter a name for the topic.', array(), 'topics'); ?>" />
+                <input type="submit" name="f_submit" value="<?php echo $translator->trans("Add"); ?>" class="button" />
             </fieldset>
             </form>
 
@@ -153,16 +155,16 @@ foreach ($topics as $topicPath) {
                 <input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>" />
 
             <fieldset class="translate">
-                <legend><?php putGS("Add translation:"); ?></legend>
-                <select name="f_topic_language_id" class="input_select" title="<?php putGS("You must select a language."); ?>">
-                    <option value="0"><?php putGS("---Select language---"); ?></option>
+                <legend><?php echo $translator->trans("Add translation:", array(), 'topics'); ?></legend>
+                <select name="f_topic_language_id" class="input_select" title="<?php echo $translator->trans("You must select a language."); ?>">
+                    <option value="0"><?php echo $translator->trans("---Select language---"); ?></option>
                     <?php foreach ($allLanguages as $tmpLanguage) {
                     camp_html_select_option($tmpLanguage->getLanguageId(),
                                             null, $tmpLanguage->getNativeName());
                     } ?>
                 </select>
-                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php putGS('You must enter a name for the topic.'); ?>" />
-                <input type="submit" name="f_submit" value="<?php putGS("Translate"); ?>" class="button" />
+                <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php echo $translator->trans('You must enter a name for the topic.', array(), 'topics'); ?>" />
+                <input type="submit" name="f_submit" value="<?php echo $translator->trans("Translate"); ?>" class="button" />
             </fieldset>
             </form>
             <?php } ?>
@@ -179,8 +181,8 @@ echo str_repeat('</li></ul>', $level);
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="languages" value="<?php echo implode('_', $f_show_languages); ?>" />
 <fieldset class="buttons">
-    <input type="submit" name="Save" value="<?php putGS('Save order'); ?>" />
-    <input type="reset" name="Reset" value="<?php putGS('Reset order'); ?>" />
+    <input type="submit" name="Save" value="<?php echo $translator->trans('Save order', array(), 'topics'); ?>" />
+    <input type="reset" name="Reset" value="<?php echo $translator->trans('Reset order', array(), 'topics'); ?>" />
 </fieldset>
 </form>
 
@@ -288,7 +290,7 @@ $('form[action*=do_order]').submit(function(e) {
 // check for changes before reload
 $('ul.sortable input:submit, ul.sortable a.delete').click(function() {
     if ($('fieldset.buttons').hasClass('active')) {
-        return confirm('<?php putGS('Order changes will be lost. Are you sure you want to continue?'); ?>');
+        return confirm('<?php echo $translator->trans('Order changes will be lost. Are you sure you want to continue?', array(), 'topics'); ?>');
     }
 });
 
