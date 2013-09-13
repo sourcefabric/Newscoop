@@ -194,22 +194,23 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	global $Campsite;
 	global $ADMIN;
 	global $ADMIN_DIR;
+    $translator = \Zend_Registry::get('container')->getService('translator');
 	$publicationObj = camp_array_get_value($p_objArray, 'Pub', null);
 	$issueObj = camp_array_get_value($p_objArray, 'Issue', null);
 	$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
 	$articleObj = camp_array_get_value($p_objArray, 'Article', null);
 
 	$breadcrumbs = array();
-	$breadcrumbs[] = array(getGS("Content"), "");
+	$breadcrumbs[] = array($translator->trans("Content"), "");
 	if (!is_null($publicationObj)) {
-	    $prompt =  getGS("Publication").":";
+	    $prompt =  $translator->trans("Publication").":";
 	    $name = $publicationObj->getName();
     	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
     	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 	}
 
 	if ($issueObj instanceof Issue) {
-	    $prompt = getGS("Issue").":";
+	    $prompt = $translator->trans("Issue").":";
     	$breadcrumbs[] = array($prompt,
     	       "/$ADMIN/issues/"
     	       ."?Pub=".$issueObj->getPublicationId()
@@ -224,7 +225,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	       ."&Language=".$issueObj->getLanguageId());
 	}
 	if ($sectionObj instanceof Section) {
-	    $prompt = getGS("Section").":";
+	    $prompt = $translator->trans("Section").":";
 		$breadcrumbs[] = array($prompt,
 		        "/$ADMIN/sections/"
 		        ."?Pub=".$sectionObj->getPublicationId()
@@ -241,7 +242,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&Section=".$sectionObj->getSectionNumber());
 	}
 	if ($articleObj instanceof Article) {
-	    $prompt = getGS("Article").":";
+	    $prompt = $translator->trans("Article").":";
 		$breadcrumbs[] = array($prompt,
                 "/$ADMIN/articles/index.php"
                 ."?f_publication_id=" . $articleObj->getPublicationId()

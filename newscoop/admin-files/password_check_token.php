@@ -6,6 +6,8 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $defaultLanguage = null;
 if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_REQUEST['TOL_Language'];
@@ -22,7 +24,7 @@ $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";
 if (SystemPref::Get("PasswordRecovery") == 'N') {
-    $errors[] = getGS('Password recovery is disabled.');
+    $errors[] = $translator->trans('Password recovery is disabled.', array(), 'home');
 } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
     $usr = User::FetchUserByEmail($email);
     if ($usr != null) {
@@ -32,18 +34,18 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
             $newPassword = Input::Get("f_password","string");
             if (strlen($newPassword) > 0) {
                $usr->setPassword($newPassword);
-               $errors[] = getGS('Your password has been reset.');
+               $errors[] = $translator->trans('Your password has been reset.', array(), 'home');
             } else {
                 $action = "inputs";
             }
         } else {
-            $errors[] = getGS('This link is not valid.');
+            $errors[] = $translator->trans('This link is not valid.', array(), 'home');
         }
     } else {
-        $errors[] = getGS('Bad input parameters.');
+        $errors[] = $translator->trans('Bad input parameters.', array(), 'home');
     }
 } else {
-    $errors[] = getGS('Bad input parameters.');
+    $errors[] = $translator->trans('Bad input parameters.', array(), 'home');
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
