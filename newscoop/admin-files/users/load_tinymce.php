@@ -11,6 +11,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 {
     global $Campsite;
 
+    $translator = \Zend_Registry::get('container')->getService('translator');
     $stylesheetFile = $Campsite['WEBSITE_URL'] . '/admin/articles/article_stylesheet.css';
 
     /** STEP 1 ********************************************************
@@ -247,7 +248,7 @@ $().ready(function() {
             });
 
             ed.addButton('campsite-subhead', {
-                title : '<?php putGS("Newscoop Subhead"); ?>',
+                title : '<?php echo $translator->trans("Newscoop Subhead", array(), 'users'); ?>',
                 image : website_url + '/js/tinymce/themes/advanced/img/campsite_subhead.gif',
                 onclick : function() {
                     CampsiteSubhead(ed);

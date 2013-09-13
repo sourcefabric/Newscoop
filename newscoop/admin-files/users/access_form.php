@@ -3,10 +3,12 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
 require_once('permission_list.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $uType = 'Staff';
 compute_user_rights($g_user, $canManage, $canDelete);
 if (!$canManage) {
-	$error = getGS("You do not have the right to change user account permissions.");
+	$error = $translator->trans("You do not have the right to change user account permissions.", array(), 'users');
 	camp_html_display_error($error);
 	exit;
 }
@@ -15,11 +17,11 @@ $userId = Input::Get('User', 'int', 0);
 if ($userId > 0) {
 	$editUser = new User($userId);
 	if ($editUser->getUserName() == '') {
-		camp_html_display_error(getGS('No such user account.'));
+		camp_html_display_error($translator->trans('No such user account.', array(), 'users'));
 		exit;
 	}
 } else {
-	camp_html_display_error(getGS('No such user account.'));
+	camp_html_display_error($translator->trans('No such user account.', array(), 'users'));
 	exit;
 }
 
