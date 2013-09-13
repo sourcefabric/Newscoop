@@ -1,3 +1,6 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <script type="text/javascript">
 function onCommentsActivated(p_checkbox)
 {
@@ -22,7 +25,7 @@ function onCommentsModerated(p_checkbox)
 {
     moderator = document.getElementById('moderator_to').value;
     if (p_checkbox.checked && moderator == '') {
-        alert('<?php putGS('Make sure to enter the "Moderator Address" below'); ?>');
+        alert('<?php echo $translator->trans('Make sure to enter the Moderator Address below', array(), 'pub'); ?>');
     }
 }
 </script>
@@ -39,14 +42,14 @@ function onCommentsModerated(p_checkbox)
 		">
         <tr>
             <td colspan="2">
-                <font size="+1"><b><?php putGS("General attributes"); ?></b></font>
+                <font size="+1"><b><?php echo $translator->trans("General attributes", array(), 'pub'); ?></b></font>
             </td>
         </tr>
 
         <?php if (isset($publicationObj)) { ?>
         <TR>
         	<TD align="right">
-        		<?php putGS("Number"); ?>:
+        		<?php echo $translator->trans("Number"); ?>:
         	</TD>
         	<td>
         		<?php p($publicationObj->getPublicationId()); ?>
@@ -55,14 +58,14 @@ function onCommentsModerated(p_checkbox)
         <?php } ?>
 
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Name"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Name"); ?>:</TD>
         	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getName())); } ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Name')); ?>">
+        	<INPUT TYPE="TEXT" class="input_text" NAME="f_name" VALUE="<?php  if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getName())); } ?>" SIZE="32" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.',array('$1' => $translator->trans('Name'))); ?>">
         	</TD>
         </TR>
 
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Default Site Alias"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default Site Alias", array(), 'pub'); ?>:</TD>
         	<TD>
                 <?php if (isset($publicationObj)) { ?>
         		<SELECT NAME="f_default_alias" class="input_select">
@@ -72,18 +75,18 @@ function onCommentsModerated(p_checkbox)
         		}
         		?>
         		</SELECT>&nbsp;
-        		<a href="/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php echo $f_publication_id ?>"><?php putGS("Edit aliases"); ?></a>
+        		<a href="/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php echo $f_publication_id ?>"><?php echo $translator->trans("Edit aliases", array(), 'pub'); ?></a>
         		<?php } else { ?>
                 <?php
                 $defaultAlias = substr($_SERVER['HTTP_HOST'], 0, strpos($_SERVER['HTTP_HOST'], ':'));
                 $defaultAlias = (!$defaultAlias) ? $_SERVER['HTTP_HOST'] : $defaultAlias;
                 ?>
-                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($defaultAlias)); ?>" SIZE="32" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',getGS('Site')); ?>">
+                <INPUT TYPE="TEXT" class="input_text" NAME="f_default_alias" VALUE="<?php p(urlencode($defaultAlias)); ?>" SIZE="32" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Site'))); ?>">
         		<?php } ?>
         	</TD>
         </TR>
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Default language"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default language"); ?>:</TD>
         	<TD>
         	<SELECT NAME="f_language" class="input_select">
         	<?php
@@ -96,11 +99,11 @@ function onCommentsModerated(p_checkbox)
         	}
         	?>
         	</SELECT>&nbsp;
-        <a href="/<?php echo $ADMIN; ?>/languages/"><?php putGS("Edit languages"); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/languages/"><?php echo $translator->trans("Edit languages", array(), 'pub'); ?></a>
         	</TD>
         </TR>
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("URL Type"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("URL Type", array(), 'pub'); ?>:</TD>
         	<TD>
         	<SELECT NAME="f_url_type" class="input_select"
         	onchange="
@@ -122,15 +125,15 @@ function onCommentsModerated(p_checkbox)
         	</TD>
         </TR>
         <TR id="seo" <?php if(isset($publicationObj) && $publicationObj->getUrlTypeId() != '2') echo 'style="display:none;"'?>>
-            <TD ALIGN="RIGHT"><?php  putGS("Search engine optimization"); ?>:</TD>
+            <TD ALIGN="RIGHT"><?php  echo $translator->trans("Search engine optimization", array(), 'pub'); ?>:</TD>
             <TD>
                 <?php $seo = isset($publicationObj) ? $publicationObj->getSeo() : array(); ?>
                 <input type="checkbox" NAME="f_seo[name]" class="input_checkbox" <?php if (!empty($seo['name'])) { ?>checked<?php } ?>>
-                <?php  putGS("Article title"); ?><br>
+                <?php  echo $translator->trans("Article title", array(), 'pub'); ?><br>
                 <input type="checkbox" NAME="f_seo[keywords]" class="input_checkbox" <?php if (!empty($seo['keywords'])) { ?>checked<?php } ?>>
-                <?php  putGS("Article keywords"); ?><br>
+                <?php  echo $translator->trans("Article keywords", array(), 'pub'); ?><br>
                 <input type="checkbox" NAME="f_seo[topics]" class="input_checkbox" <?php if (!empty($seo['topics'])) { ?>checked<?php } ?>>
-                <?php  putGS("Article topics"); ?>
+                <?php  echo $translator->trans("Article topics", array(), 'pub'); ?>
             </TD>
         </TR>
 
@@ -144,7 +147,7 @@ function onCommentsModerated(p_checkbox)
         ?>
         <tr>
             <td colspan="2">
-                <font size="+1"><b><?php putGS("Comments"); ?></b></font>
+                <font size="+1"><b><?php echo $translator->trans("Comments"); ?></b></font>
             </td>
         </tr>
 
@@ -154,56 +157,56 @@ function onCommentsModerated(p_checkbox)
         	   <table>
         	   <tr>
         	       <td>
-               	       <?php  putGS("Comments enabled?"); ?>:
+               	       <?php  echo $translator->trans("Comments enabled?", array(), 'pub'); ?>:
                	   </td>
                	   <td>
                	       <input type="checkbox" NAME="f_comments_enabled" class="input_checkbox" <?php if ($commentsEnabled) { ?>checked<?php } ?> onchange="onCommentsActivated(this);">
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Article comments default to enabled?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Article comments default to enabled?", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="checkbox" NAME="f_comments_article_default" class="input_checkbox" id="comment_default" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsArticleDefaultEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Subscriber comments moderated?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Subscriber comments moderated?", array(), 'pub'); ?>:</td>
                 	<td>
                         <input type="checkbox" NAME="f_comments_subscribers_moderated" id="subscriber_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsSubscribersModerated()) { ?>checked<?php } ?> onchange="onCommentsModerated(this);">
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Public allowed to comment?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Public allowed to comment?", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="checkbox" NAME="f_comments_public_enabled" id="public_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->publicComments()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 40px;"><?php  putGS("Public comments moderated?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 40px;"><?php  echo $translator->trans("Public comments moderated?", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="checkbox" NAME="f_comments_public_moderated" id="public_moderated" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->commentsPublicModerated()) { ?>checked<?php } ?> onchange="onCommentsModerated(this);">
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Use CAPTCHA to prevent spam?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Use CAPTCHA to prevent spam?", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="checkbox" NAME="f_comments_captcha_enabled" id="captcha_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isCaptchaEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>
                 <!--<TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Enable spam blocking?"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Enable spam blocking?", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="checkbox" NAME="f_comments_spam_blocking_enabled" id="spam_blocking_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isSpamBlockingEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>-->
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Moderator Address"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("Moderator Address", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="text" class="input_text" NAME="f_comments_moderator_to" id="moderator_to" value="<?php echo isset($publicationObj)? $publicationObj->getCommentsModeratorTo(): ''; ?>">
                 	</TD>
                 </TR>
                 <TR>
-                	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("From Address"); ?>:</td>
+                	<TD ALIGN="left" style="padding-left: 20px;"><?php  echo $translator->trans("From Address", array(), 'pub'); ?>:</td>
                 	<td>
                     <input type="text" class="input_text" NAME="f_comments_moderator_from" id="moderator_from" value="<?php echo isset($publicationObj)? $publicationObj->getCommentsModeratorFrom(): ''; ?>">
                 	</TD>
@@ -222,12 +225,12 @@ function onCommentsModerated(p_checkbox)
         <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
         <tr>
             <td colspan="2">
-                <font size="+1"><b><?php putGS("Subscription defaults"); ?></b></font>
+                <font size="+1"><b><?php echo $translator->trans("Subscription defaults"); ?></b></font>
             </td>
         </tr>
 
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Time Unit"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Time Unit", array(), 'pub'); ?>:</TD>
         	<TD>
             <SELECT NAME="f_time_unit" class="input_select">
         	<?php
@@ -243,49 +246,49 @@ function onCommentsModerated(p_checkbox)
         	</TD>
         </TR>
         <tr>
-        	<td colspan="2" align="left"><b><?php putGS('Paid subscriptions'); ?></b></td>
+        	<td colspan="2" align="left"><b><?php echo $translator->trans('Paid subscriptions', array(), 'pub'); ?></b></td>
         </tr>
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Currency"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Currency"); ?>:</TD>
         	<TD>
         	<INPUT TYPE="TEXT" class="input_text" NAME="f_currency" VALUE="<?php if (isset($publicationObj)) { p(htmlspecialchars($publicationObj->getCurrency())); } ?>" SIZE="10" MAXLENGTH="10">
         	</TD>
         </TR>
         <tr>
-        	<td colspan="2" align="left"><?php  putGS("Time unit cost per one section"); ?>:</td>
+        	<td colspan="2" align="left"><?php  echo $translator->trans("Time unit cost per one section", array(), 'pub'); ?>:</td>
         </tr>
         <TR>
-        	<TD ALIGN="RIGHT">- <?php putGS('one language'); ?>:</TD>
+        	<TD ALIGN="RIGHT">- <?php echo $translator->trans('one language', array(), 'pub'); ?>:</TD>
         	<TD>
         	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost" VALUE="<?php  if (isset($publicationObj)) { p($publicationObj->getUnitCost()); } ?>" SIZE="10" MAXLENGTH="10">
         	</TD>
         </TR>
         <TR>
-        	<TD ALIGN="RIGHT">- <?php putGS('all languages'); ?>:</TD>
+        	<TD ALIGN="RIGHT">- <?php echo $translator->trans('all languages', array(), 'pub'); ?>:</TD>
         	<TD>
         	<INPUT TYPE="TEXT" class="input_text" NAME="f_unit_cost_all_lang" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getUnitCostAllLang()); } ?>" SIZE="10" MAXLENGTH="10">
         	</TD>
         </TR>
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Default time period"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default time period", array(), 'pub'); ?>:</TD>
         	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_paid" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getPaidTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
+        	<INPUT TYPE="TEXT" class="input_text" NAME="f_paid" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getPaidTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php echo $translator->trans('time units', array(), 'pub'); ?>
         	</TD>
         </TR>
         <tr>
-        	<td colspan="2" align="left" style="padding-top: 1em;"><b><?php putGS('Trial subscriptions'); ?></b></td>
+        	<td colspan="2" align="left" style="padding-top: 1em;"><b><?php echo $translator->trans('Trial subscriptions', array(), 'pub'); ?></b></td>
         </tr>
         <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Default time period"); ?>:</TD>
+        	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Default time period", array(), 'pub'); ?>:</TD>
         	<TD>
-        	<INPUT TYPE="TEXT" class="input_text" NAME="f_trial" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getTrialTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php putGS('time units'); ?>
+        	<INPUT TYPE="TEXT" class="input_text" NAME="f_trial" VALUE="<?php if (isset($publicationObj)) { p($publicationObj->getTrialTime()); } ?>" SIZE="10" MAXLENGTH="10"> <?php echo $translator->trans('time units', array(), 'pub'); ?>
         	</TD>
         </TR>
 
         <?php if (isset($publicationObj)) { ?>
         <tr>
             <td colspan="2" align="center" style="padding-top: 1em;">
-                <a href="/<?php echo $ADMIN; ?>/pub/deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
+                <a href="/<?php echo $ADMIN; ?>/pub/deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php echo $translator->trans("Set subscription settings by country", array(), 'pub'); ?></a>
             </td>
         </tr>
         <?php } ?>
@@ -320,7 +323,7 @@ function onCommentsModerated(p_checkbox)
         	<?php if (isset($publicationObj)) { ?>
         	<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
         	<?php } ?>
-        	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
+        	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  echo $translator->trans('Save'); ?>">
         	</TD>
        </tr>
        </table>

@@ -4,9 +4,10 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to edit publication information."));
+	camp_html_display_error($translator->trans("You do not have the right to edit publication information.", array(), 'pub'));
 	exit;
 }
 
@@ -15,7 +16,7 @@ $Language = Input::Get('Language', 'int', 1, true);
 $CountryCode = Input::Get('CountryCode');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -30,8 +31,8 @@ $country = new Country($CountryCode, $Language);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-$crumbs = array(getGS("Subscriptions") => "deftime.php?Pub=$Pub&Language=$Language");
-camp_html_content_top(getGS("Change country subscription settings"), array("Pub" => $publicationObj), true, false, $crumbs);
+$crumbs = array($translator->trans("Subscriptions") => "deftime.php?Pub=$Pub&Language=$Language");
+camp_html_content_top($translator->trans("Change country subscription settings", array(), 'pub'), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
 <P>
@@ -43,31 +44,31 @@ camp_html_content_top(getGS("Change country subscription settings"), array("Pub"
 <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php p($Language); ?>">
 <TR>
 	<TD ALIGN="center" colspan="2">
-		<b><?php  putGS("Country"); ?>: <?php p(htmlspecialchars($country->getName()." (".$country->getCode().")")); ?></b>
+		<b><?php  echo $translator->trans("Country"); ?>: <?php p(htmlspecialchars($country->getName()." (".$country->getCode().")")); ?></b>
 	</TD>
 </TR>
 <tr>
-	<td colspan="2" align="left"><?php putGS('Default time periods:'); ?></td>
+	<td colspan="2" align="left"><?php echo $translator->trans('Default time periods:', array(), 'pub'); ?></td>
 </tr>
 <TR>
-	<TD ALIGN="RIGHT" >- <?php  putGS("trial subscription"); ?>:</TD>
+	<TD ALIGN="RIGHT" >- <?php  echo $translator->trans("trial subscription", array(), 'pub'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php p($defaultTime->getTrialTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "&quot;".getGS("trial subscription")."&quot;"); ?>">
+	<INPUT TYPE="TEXT" NAME="cTrialTime" VALUE="<?php p($defaultTime->getTrialTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php echo $translator->trans("You must input a number greater than 0 into the $1 field.", array('$1' => "&quot;".$translator->trans("trial subscription", array(), 'pub')."&quot;")); ?>">
 	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" >- <?php  putGS("paid subscription"); ?>:</TD>
+	<TD ALIGN="RIGHT" >- <?php  echo $translator->trans("paid subscription", array(), 'pub'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php p($defaultTime->getPaidTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php putGS("You must input a number greater than 0 into the $1 field.", "&quot;".getGS("paid subscription")."&quot;"); ?>">
+	<INPUT TYPE="TEXT" NAME="cPaidTime" VALUE="<?php p($defaultTime->getPaidTime()); ?>" SIZE="5" MAXLENGTH="5" class="input_text" alt="number|0|1|100000" emsg="<?php echo $translator->trans("You must input a number greater than 0 into the $1 field.", array('$1' => "&quot;".$translator->trans("paid subscription", array(), 'pub')."&quot;")); ?>">
 	<?php p($pubTimeUnit->getName()); ?>
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/pub/deftime.php?Pub=<?php  p($Pub); ?>&Language=<?php  p($Language); ?>'">-->
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  echo $translator->trans('Save'); ?>">
+	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  echo $translator->trans('Cancel'); ?>" ONCLICK="location.href='/admin/pub/deftime.php?Pub=<?php  p($Pub); ?>&Language=<?php  p($Language); ?>'">-->
 	</DIV>
 	</TD>
 </TR>

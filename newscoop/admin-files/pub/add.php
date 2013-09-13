@@ -5,11 +5,12 @@ require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
-camp_load_translation_strings("api");
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub') || !SaaS::singleton()->hasPermission("AddPub")) {
-	camp_html_display_error(getGS("You do not have the right to add publications."));
+	camp_html_display_error($translator->trans("You do not have the right to add publications.", array(), 'pub'));
 	exit;
 }
 
@@ -21,8 +22,8 @@ $shortNameUrlType = UrlType::GetByName('short names');
 $aliases = array();
 
 $crumbs = array();
-$crumbs[] = array(getGS("Publications"), "/$ADMIN/pub/");
-$crumbs[] = array(getGS("Add new publication"), "");
+$crumbs[] = array($translator->trans("Publications"), "/$ADMIN/pub/");
+$crumbs[] = array($translator->trans("Add new publication"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
@@ -31,7 +32,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  putGS("Publication List"); ?></B></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/pub/"><B><?php  echo $translator->trans("Publication List"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php camp_html_display_msgs(); ?>
