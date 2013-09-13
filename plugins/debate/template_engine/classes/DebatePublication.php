@@ -159,6 +159,7 @@ class DebatePublication extends DatabaseObject {
 
         $DebatePublication = new DebatePublication();
 
+        $where = '';
         if (!empty($p_debate_nr)) {
             $where .= "AND fk_debate_nr = $p_debate_nr ";
         }
