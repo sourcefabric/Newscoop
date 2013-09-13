@@ -3,13 +3,15 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php
 require_once($GLOBALS['g_campsiteDir']. "/classes/Article.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/Subscription.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('DeleteSection')) {
-	camp_html_display_error(getGS('You do not have the right to delete sections.'));
+	camp_html_display_error($translator->trans('You do not have the right to delete sections.', array(), 'sections'));
 	exit;
 }
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -52,29 +54,29 @@ if ($SectOffs >= $totalSections) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-camp_html_content_top(getGS('Delete section'), $topArray);
+camp_html_content_top($translator->trans('Delete section', array(), 'sections'), $topArray);
 ?>
 
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting section"); ?> </B>
+		<B> <?php  echo $translator->trans("Deleting section", array(), 'sections'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-        <LI><?php putGS('The section $1 has been deleted.','<B>'.htmlspecialchars($sectionName).'</B>'); ?></LI>
-		<LI><?php putGS('A total of $1 subscriptions were updated.','<B>'.$numSubscriptionsDeleted.'</B>'); ?></LI>
-		<LI><?php putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
+        <LI><?php echo $translator->trans('The section $1 has been deleted.', array('$1' => '<B>'.htmlspecialchars($sectionName).'</B>'), 'sections'); ?></LI>
+		<LI><?php echo $translator->trans('A total of $1 subscriptions were updated.', array('$1' => '<B>'.$numSubscriptionsDeleted.'</B>'), 'sections'); ?></LI>
+		<LI><?php echo $translator->trans('A total of $1 articles were deleted.', array('$1' => '<B>'.$numArticlesDeleted.'</B>'), 'sections'); ?></LI>
         </BLOCKQUOTE>
     </TD>
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/index.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
+        <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/sections/index.php?Pub=<?php  p($f_publication_id); ?>&Issue=<?php  p($f_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 	</TD>
 </TR>
 </TABLE>

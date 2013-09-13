@@ -9,8 +9,10 @@ use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Service\IOutputSettingSectionService;
 //@New theme management
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission('ManageSection')) {
-    camp_html_display_error(getGS("You do not have the right to modify sections."));
+    camp_html_display_error($translator->trans("You do not have the right to modify sections.", array(), 'sections'));
     exit;
 }
 
@@ -26,7 +28,7 @@ $issueObj = new Issue($Pub, $Language, $Issue);
 $sectionObj = new Section($Pub, $Issue, $Language, $Section);
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-camp_html_content_top(getGS("Configure section"), $topArray);
+camp_html_content_top($translator->trans("Configure section", array(), 'sections'), $topArray);
 
 $url_args1 = "Pub=$Pub&Issue=$Issue&Language=$Language";
 $url_args2 = $url_args1."&Section=$Section";
@@ -79,8 +81,8 @@ if($issueHasTheme){
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons" style="padding-top: 5px;">
 <tr>
   <td><a href="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" border="0" /></a></td>
-  <td><a href="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><b><?php putGS("Section List"); ?></b></a></td>
-  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php p($sectionObj->getLanguageId()); ?>"><b><?php putGS("Go To Articles"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($issueObj->getIssueNumber()); ?>&Language=<?php p($issueObj->getLanguageId()); ?>"><b><?php echo $translator->trans("Section List"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php p($sectionObj->getLanguageId()); ?>"><b><?php echo $translator->trans("Go To Articles", array(), 'sections'); ?></b></a></td>
   <td><a href="/<?php echo $ADMIN; ?>/articles/?f_publication_id=<?php p($Pub); ?>&f_issue_number=<?php p($sectionObj->getIssueNumber()); ?>&f_section_number=<?php p($sectionObj->getSectionNumber()); ?>&f_language_id=<?php p($sectionObj->getLanguageId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/go_to.png" border="0" /></a></td>
 </tr>
 </table>
@@ -89,11 +91,11 @@ if($issueHasTheme){
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons">
 <tr>
   <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
-  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><b><?php echo $translator->trans("Add new section", array(), 'sections'); ?></b></a></td>
   <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
-  <td><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>" ><b><?php echo $translator->trans("Duplicate"); ?></b></a></td>
   <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
-  <td><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>" ><b><?php echo $translator->trans("Delete"); ?></b></a></td>
 </tr>
 </table>
 
@@ -105,38 +107,38 @@ if($issueHasTheme){
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2">
-    <b><?php putGS("Configure section"); ?></b>
+    <b><?php echo $translator->trans("Configure section", array(), 'sections'); ?></b>
     <hr noshade size="1" color="black">
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Number"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Number"); ?>:</td>
   <td>
     <?php p($sectionObj->getSectionNumber()); ?>
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Name"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Name"); ?>:</td>
   <td>
     <input type="text" class="input_text" name="cName" size="32" value="<?php p(htmlspecialchars($sectionObj->getName())); ?>" />
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("URL Name"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("URL Name", array(), 'sections'); ?>:</td>
   <td>
-    <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>"/>
+    <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php echo $translator->trans('The $1 field may only contain letters, digits and underscore (_) character.', array('$1' => "'" . $translator->trans('URL Name', array(), 'sections') . "'")); ?>"/>
   </td>
 </tr>
 <?php
 	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
 ?>
 <tr>
-  <td align="right"><?php putGS("Subscriptions"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Subscriptions"); ?>:</td>
   <td>
     <select name="cSubs" class="input_select">
     <option value="n"> --- </option>
-    <option value="a"><?php putGS("Add section to all subscriptions."); ?></option>
-    <option value="d"><?php putGS("Delete section from all subscriptions."); ?></option>
+    <option value="a"><?php echo $translator->trans("Add section to all subscriptions.", array(), 'sections'); ?></option>
+    <option value="d"><?php echo $translator->trans("Delete section from all subscriptions.", array(), 'sections'); ?></option>
     </select>
   </td>
 </tr>
@@ -144,7 +146,7 @@ if($issueHasTheme){
 	}
 ?>
 <tr>
-  <td align="right" valign="top"><?php putGS("Description"); ?>:</td>
+  <td align="right" valign="top"><?php echo $translator->trans("Description"); ?>:</td>
   <td>
     <textarea name="cDescription" id="cDescription" class="tinymce"
     rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></textarea>
@@ -155,16 +157,16 @@ if($issueHasTheme){
 ?>
 <tr>
   <td colspan="2" style="padding-top:20px;">
-    <b><?php putGS("Default templates"); ?></b>
+    <b><?php echo $translator->trans("Default templates"); ?></b>
     <hr noshade size="1" color="black" />
   </td>
 </tr>
 <?php if($issueHasTheme){ ?>
 <tr>
-  <td align="right"><?php putGS("Section Template"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Section Template"); ?>:</td>
   <td>
     <select name="cSectionTplId" class="input_select">
-    <option value="0">&lt;<?php  putGS("default"); ?>&gt;</option>
+    <option value="0">&lt;<?php  echo $translator->trans("default", array(), 'sections'); ?>&gt;</option>
     <?php
 	foreach ($allTemplates as $template) {
 		camp_html_select_option($template->getPath(), $tplSectionPath, $template->getName());
@@ -174,10 +176,10 @@ if($issueHasTheme){
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Article Template"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Article Template"); ?>:</td>
   <td>
     <select name="cArticleTplId" class="input_select">
-    <option value="0">&lt;<?php  putGS("default"); ?>&gt;</option>
+    <option value="0">&lt;<?php  echo $translator->trans("default", array(), 'sections'); ?>&gt;</option>
     <?php
 	foreach ($allTemplates as $template) {
 		camp_html_select_option($template->getPath(), $tplArticlePath, $template->getName());
@@ -191,9 +193,9 @@ if($issueHasTheme){
 	<TD ALIGN="LEFT" colspan="2" style="color: red;">
 	<INPUT TYPE="hidden" NAME="cSectionTplId" VALUE="0"/>
 	<INPUT TYPE="hidden" NAME="cArticleTplId" VALUE="0"/>
-	<?php putGS("You have to assign a theme to the issue");?>
+	<?php echo $translator->trans("You have to assign a theme to the issue", array(), 'sections');?>
 	<br/>
-	<?php putGS("before you can configure the section templates.");?>
+	<?php echo $translator->trans("before you can configure the section templates.", array(), 'sections');?>
 	</TD>
 </TR>
 <?php }?>
@@ -228,7 +230,7 @@ if($issueHasTheme){
     <input type="hidden" name="Language" value="<?php p($Language); ?>" />
     <input type="hidden" name="Section" value="<?php p($Section); ?>" />
     <input type="hidden" name="f_language_selected" ID="f_language_selected" value="<?php p($editorLanguage); ?>" />
-    <input type="submit" class="button" name="Save" value="<?php putGS('Save'); ?>" />
+    <input type="submit" class="button" name="Save" value="<?php echo $translator->trans('Save'); ?>" />
   </td>
 </tr>
 </table>
