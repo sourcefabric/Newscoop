@@ -10,6 +10,7 @@ namespace Newscoop\NewscoopBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class PreferencesType extends AbstractType
 {
@@ -417,6 +418,14 @@ class PreferencesType extends AbstractType
             'error_bubbling' => true,
             'required' => false
         ));
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {    
+        $resolver->setDefaults(array(
+            'translation_domain' => 'system_pref'
+        ));
+
     }
 
     public function getName()

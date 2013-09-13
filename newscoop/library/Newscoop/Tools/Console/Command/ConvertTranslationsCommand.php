@@ -41,6 +41,8 @@ class ConvertTranslationsCommand extends Console\Command\Command
             $this->backupOldTranslations($zip_file, $oldTranslationsPath, $output);
 
             $count = 0;
+            $sentences = 0;
+            $oldFileline = 0;
             $directoryIterator = new \RecursiveDirectoryIterator($oldTranslationsPath);
             foreach (new \RecursiveIteratorIterator($directoryIterator) as $filename => $file) {
                 if (strtolower(substr($filename, -4)) == ".php") {
@@ -51,15 +53,18 @@ class ConvertTranslationsCommand extends Console\Command\Command
                     while (!feof($currentFile))
                     {  
                         $line = fgets($currentFile);
+                        $oldFileline++;
                         $regex = '#\((([^()]+|(?R))*)\)#';
                         $double_quotes = '/"([^"]+)"/';
                         if (preg_match_all($regex, $line ,$matches)) {
                             $result = implode('', $matches[1]);
-                            $resultArray = explode(',', $result);
-                            preg_match($double_quotes, $resultArray[0], $matchKey);
-                            preg_match($double_quotes, $resultArray[1], $matchValue);
+                            $resultArray = explode('",', $result);
+                            $matchKey = str_replace('"', "", $resultArray[0]);
+                            $value = str_replace('\"', "", $resultArray[1]);
+                            preg_match($double_quotes, $value, $matchValue);
                             if (!empty($matchValue[1])) {
-                                $translations[str_replace($toRemove, '', $matchKey[1])] = str_replace($toRemove, '', $matchValue[1]);
+                                $sentences++;
+                                $translations[str_replace($toRemove, '', $matchKey)] = str_replace($toRemove, '', $matchValue[1]);
                             }
                         }
                     }
@@ -75,6 +80,8 @@ class ConvertTranslationsCommand extends Console\Command\Command
 
             $output->writeln('<info>Old Newscoop translations successfully converted!</info>');
             $output->writeln('<info>Converted '.$count.' files.</info>');
+            $output->writeln('<info>Converted '.$sentences.' sentences.</info>');
+            $output->writeln('<info>Total sentences in old translation files: '.$oldFileline.'</info>');
             if ($this->removeDirectory($oldTranslationsPath)) {
                 $output->writeln('<info>Old Newscoop translations successfully removed!</info>');
             } else {
