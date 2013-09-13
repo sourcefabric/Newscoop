@@ -159,6 +159,7 @@ class PollPublication extends DatabaseObject {
         
         $PollPublication = new PollPublication();
         
+        $where = '';
         if (!empty($p_poll_nr)) {
             $where .= "AND fk_poll_nr = $p_poll_nr ";   
         }

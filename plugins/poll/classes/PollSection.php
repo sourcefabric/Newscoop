@@ -176,6 +176,7 @@ class PollSection extends DatabaseObject {
         
         $PollSection = new PollSection();
         
+        $where = '';
         if (!empty($p_fk_poll_nr)) {
             $where .= "AND fk_poll_nr = $p_fk_poll_nr ";   
         }
