@@ -28,7 +28,6 @@ class SecurityController extends Controller
 
         $languages = $em->getRepository('Newscoop\Entity\Language')->getLanguages();
 
-        //Delete IP records older than 12 hours from the database.
         \LoginAttempts::DeleteOldLoginAttempts();
 
         return array(

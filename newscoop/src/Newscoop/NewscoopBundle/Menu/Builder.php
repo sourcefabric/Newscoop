@@ -697,12 +697,16 @@ class Builder
                 )
             ));
         }
-        
-        foreach ($plugin_infos as $info) {
-            if (\CampPlugin::IsPluginEnabled($info['name'])) {
-                $parent_menu = false;
 
-                $Plugin = new \CampPlugin($info['name']);
+        $enabled = \CampPlugin::GetEnabled();
+        $enabledIds = array();
+        foreach ($enabled as $plugin) {
+            $enabledIds[] = $plugin->getName();
+        }
+
+        foreach ($plugin_infos as $info) {
+            if (in_array($info['name'], $enabledIds)) {
+                $parent_menu = false;
 
                 if (isset($info['menu']['permission']) && $this->user->hasPermission($info['menu']['permission'])) {
                     $parent_menu = true;

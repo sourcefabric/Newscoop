@@ -31,6 +31,11 @@ try {
     $response->send();
     $kernel->terminate($request, $response);
 } catch (NotFoundHttpException $e) {
+    if (!\Zend_Registry::isRegistered('container')) {
+        $container = $kernel->getContainer();
+        \Zend_Registry::set('container', $container);
+    }
+    
     $container = \Zend_Registry::get('container');
 
     // Fill zend application options

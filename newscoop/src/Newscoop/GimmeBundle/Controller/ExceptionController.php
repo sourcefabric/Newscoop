@@ -32,7 +32,7 @@ class ExceptionController extends FOSExceptionController
         $pos = strpos($request->server->get('REQUEST_URI'), '/api');
 
         if ($pos === false) {
-            return $response;
+            return;
         }
 
         return parent::showAction($request, $exception, $logger, $format);
