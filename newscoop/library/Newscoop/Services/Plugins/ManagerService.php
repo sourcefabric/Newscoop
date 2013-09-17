@@ -223,8 +223,7 @@ class ManagerService
 
             return;
         }*/
-
-        $output->writeln('<info>Update "'.$pluginName.'"</info>');
+        $output->writeln('<info>Update "'.$pluginName.'"</info>');sleep(10);
         $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar update --prefer-dist --no-dev ' . $pluginName);
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
@@ -244,7 +243,7 @@ class ManagerService
         $this->clearCache($output);
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update');
+            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update --env=prod');
 
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
@@ -312,7 +311,7 @@ class ManagerService
 
     private function clearCache($output)
     {
-        $process = new Process('cd '.$this->newsoopDir.' && rm -rf cache/* && php application/console cache:clear --env=prod');
+        $process = new Process('cd '.$this->newsoopDir.' && rm -rf cache/prod/* && php application/console cache:clear --env=prod');
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
