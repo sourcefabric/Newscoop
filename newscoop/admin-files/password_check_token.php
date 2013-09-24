@@ -15,11 +15,7 @@ if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_COOKIE['TOL_Language'];
 }
 
-// Load the language files.
-camp_load_translation_strings("globals");
-camp_load_translation_strings("home");
-
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans("Newscoop", array(), 'home') . $Campsite['VERSION'];
 $email = Input::Get("f_email");
 $token = Input::Get("token");
 $action = "msg";
@@ -52,7 +48,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title><?php p($siteTitle.' - ').putGS("Password recovery"); ?></title>
+  <title><?php p($siteTitle.' - ').$translator->trans("Password recovery", array(), 'home'); ?></title>
 
   <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
@@ -67,10 +63,10 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
   <input type="hidden" name="token" value="<?php echo htmlentities($token, ENT_QUOTES); ?>" />
   <div class="login_box">
     <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
-    <h2><?php putGS("Password Recovery"); ?></h2>
+    <h2><?php echo $translator->trans("Password Recovery", array(), 'home'); ?></h2>
     <noscript>
     <?php
-        putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
+        echo $translator->trans('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.', array(), 'home');
     ?>
     </noscript>
 
@@ -79,7 +75,7 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
         <?php foreach ($errors as $error) { ?>
         <p><?php echo $error; ?></p>
         <?php } ?>
-        <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php putGS('Go to login'); ?></a>
+        <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login.php"><?php echo $translator->trans('Go to login', array(), 'home'); ?></a>
     </div>
     <?php
     }
@@ -89,16 +85,16 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
     <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
     <tr>
       <td align="right">
-        <strong><?php putGS("Password"); ?> :</strong>
+        <strong><?php echo $translator->trans("Password"); ?> :</strong>
       </td>
       <td>
-        <input type="password" name="f_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your password."); ?>" />
+        <input type="password" name="f_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php echo $translator->trans("Please enter your password.", array(), 'home'); ?>" />
       </td>
     </tr>
     <tr class="buttonBlock2">
       <td></td>
       <td>
-        <input type="submit" class="button" name="Login" value="<?php putGS('Recover password'); ?>" />
+        <input type="submit" class="button" name="Login" value="<?php echo $translator->trans('Recover password', array(), 'home'); ?>" />
       </td>
     </tr>
     </table>
