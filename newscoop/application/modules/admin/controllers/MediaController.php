@@ -16,8 +16,6 @@ class Admin_MediaController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('article_images');
-
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
 
         $this->_helper->contextSwitch

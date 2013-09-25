@@ -36,8 +36,6 @@ class Admin_PlaylistController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('articles');
 
         $this->playlistRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Playlist');
         $this->playlistArticleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\PlaylistArticle');
@@ -110,7 +108,8 @@ class Admin_PlaylistController extends Zend_Controller_Action
     }
 
     public function saveDataAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $playlistId = $this->_request->getParam('id', null);
         $playlist = null;
         $playlistName = $this->_request->getParam('name', '');
@@ -122,7 +121,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
             }
         } else {
             $playlist = new Playlist();
-            $playlist->setName(trim($playlistName)!='' ? $playlistName:getGS('Playlist').strftime('%F') );
+            $playlist->setName(trim($playlistName)!='' ? $playlistName:$translator->trans('Playlist', array(), 'articles').strftime('%F') );
         }
 
         $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));

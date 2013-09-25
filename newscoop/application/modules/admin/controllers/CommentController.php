@@ -36,7 +36,6 @@ class Admin_CommentController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('comments');
 
         // get comment repository
         $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
@@ -63,28 +62,29 @@ class Admin_CommentController extends Zend_Controller_Action
      * Action to make the table
      */
     public function tableAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('table', 'json')->initContext();
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->commentRepository);
         $table->setOption('oLanguage', array('oPaginate' => array(
-                'sFirst' => getGS('First'),
-                'sLast' => getGS('Last'),
-                'sNext' => getGS('Next'),
-                'sPrevious' => getGS('Previous'),
+                'sFirst' => $translator->trans('First', array(), 'comments'),
+                'sLast' => $translator->trans('Last', array(), 'comments'),
+                'sNext' => $translator->trans('Next'),
+                'sPrevious' => $translator->trans('Previous'),
             ),
-            'sZeroRecords' => getGS('No records found.'),
-            'sSearch' => getGS('Search'),
-            'sInfo' => getGS('Showing _START_ to _END_ of _TOTAL_ entries'),
-            'sEmpty' => getGS('No entries to show'),
-            'sInfoFiltered' => getGS(' - filtering from _MAX_ records'),
-            'sLengthMenu' => getGS('Display _MENU_ records'),
+            'sZeroRecords' => $translator->trans('No records found.', array(), 'comments'),
+            'sSearch' => $translator->trans('Search'),
+            'sInfo' => $translator->trans('Showing _START_ to _END_ of _TOTAL_ entries', array(), 'comments'),
+            'sEmpty' => $translator->trans('No entries to show', array(), 'comments'),
+            'sInfoFiltered' => $translator->trans(' - filtering from _MAX_ records', array(), 'comments'),
+            'sLengthMenu' => $translator->trans('Display _MENU_ records', array(), 'comments'),
             'sInfoEmpty' => '')
         );
-        $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => getGS('Author'),
-                             'comment' => getGS('Date') . ' / ' . getGS('Comment'), 'thread' => getGS('Article'),
+        $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => $translator->trans('Author'),
+                             'comment' => $translator->trans('Date') . ' / ' . $translator->trans('Comment'), 'thread' => $translator->trans('Article'),
                              'threadorder' => '',), array('index' => false));
 
         $table->setInitialSorting(array('comment' => 'desc'));
@@ -215,11 +215,13 @@ class Admin_CommentController extends Zend_Controller_Action
      * @Acl(action="moderate")
      */
     public function setStatusAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->getHelper('contextSwitch')->addActionContext('set-status', 'json')->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
 
@@ -238,13 +240,13 @@ class Admin_CommentController extends Zend_Controller_Action
                 $comment = $this->commentRepository->find($id);
 
                 if ($status == "deleted") {
-                    $msg = getGS('Comment delete by $1 from the article $2 ($3)', Zend_Registry::get('user')->getName(),
-                                 $comment->getThread()->getName(), $comment->getLanguage()->getCode());
+                    $msg = $translator->trans('Comment delete by $1 from the article $2 ($3)', array('$1' => Zend_Registry::get('user')->getName(),
+                                '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'comments');
 
                     $this->_helper->flashMessenger($msg);
                 } else {
-                    $msg = getGS('Comment $4 by $1 in the article $2 ($3)', Zend_Registry::get('user')->getName(),
-                                 $comment->getThread()->getName(), $comment->getLanguage()->getCode(), $status);
+                    $msg = $translator->trans('Comment $4 by $1 in the article $2 ($3)', array('$1' => Zend_Registry::get('user')->getName(),
+                                '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status), 'comments');
                     $this->_helper->flashMessenger($msg);
                 }
             }
@@ -264,11 +266,12 @@ class Admin_CommentController extends Zend_Controller_Action
      * @Acl(action="moderate")
      */
     public function setRecommendedAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('set-recommended', 'json')->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
 
@@ -311,7 +314,8 @@ class Admin_CommentController extends Zend_Controller_Action
      *
      */
     public function addToArticleAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('add-to-article', 'json')->initContext();
         $comment = new Comment;
         $request = $this->getRequest();
@@ -328,7 +332,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
 
@@ -399,10 +403,11 @@ class Admin_CommentController extends Zend_Controller_Action
      */
     public function updateContentsAction()
     {
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('update-contents', 'json')->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
 
@@ -463,12 +468,13 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     public function replyAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('reply', 'json')->initContext();
 
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
         $values = $this->getRequest()->getParams();
@@ -528,7 +534,8 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     private function handleForm(Zend_Form $p_form, Comment $p_comment)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
             $values['ip'] = $this->getRequest()->getClientIp();
@@ -536,7 +543,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['time_created'] = new DateTime;
             $this->commentRepository->save($p_comment, $values);
             $this->commentRepository->flush();
-            $this->_helper->flashMessenger(getGS('Comment "$1" saved.', $p_comment->getSubject()));
+            $this->_helper->flashMessenger($translator->trans('Comment $1 saved.', array('$1' => $p_comment->getSubject()), 'comments'));
             $this->_helper->redirector->gotoSimple('index');
         }
     }

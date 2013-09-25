@@ -20,10 +20,6 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('users');
-        camp_load_translation_strings('user_subscription_sections');
-
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\SubscriptionSection');
 
         $sections = array();
@@ -38,13 +34,14 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $this->view->subscription = $subscription;
 
         $this->view->actions = array(
             array(
-                'label' => getGS('Add new section'),
+                'label' => $translator->trans('Add new section', array(), 'user_subscription_sections'),
                 'module' => 'admin',
                 'controller' => 'subscription-section',
                 'action' => 'add',
@@ -54,7 +51,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'class' => 'add',
             ),
             array(
-                'label' => getGS('Edit all sections'),
+                'label' => $translator->trans('Edit all sections', array(), 'user_subscription_sections'),
                 'module' => 'admin',
                 'controller' => 'subscription-section',
                 'action' => 'edit-all',
@@ -66,7 +63,8 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_Subscription_SectionAddForm;
         $form->setAction('')->setMethod('post');
 
@@ -87,13 +85,13 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 $subscriptionRepository->addSections($subscription, $form->getValues());
                 $this->_helper->entity->flushManager();
 
-                $this->_helper->flashMessenger(getGS('Section $1', getGS('saved')));
+                $this->_helper->flashMessenger($translator->trans('Section $1', array('$1' => $translator->trans('saved', array(), 'user_subscription_sections')), 'user_subscription_sections'));
                 $this->_helper->redirector('index', 'subscription-section', 'admin', array(
                     'user' => $this->_getParam('user'),
                     'subscription' => $this->_getParam('subscription'),
                 ));
             } catch (\InvalidArgumentException $e) {
-                $this->_helper->flashMessenger(array('error', getGS('Select sections for subscribing')));
+                $this->_helper->flashMessenger(array('error', $translator->trans('Select sections for subscribing', array(), 'user_subscription_sections')));
                 $this->_helper->redirector('add', 'subscription-section', 'admin', array(
                     'user' => $this->_getParam('user'),
                     'subscription' => $this->_getParam('subscription'),
@@ -105,7 +103,8 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $section = $this->_helper->entity->get('Newscoop\Entity\SubscriptionSection', 'section');
         $form = new Admin_Form_Subscription_SectionEditForm;
         $form->setAction('')->setMethod('post');
@@ -121,7 +120,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
             $this->repository->save($section, $form->getValues());
             $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Section $1', getGS('saved')));
+            $this->_helper->flashMessenger($translator->trans('Section $1', array('$1' => $translator->trans('saved', array(), 'user_subscription_sections')), 'user_subscription_sections'));
             $this->_helper->redirector('index', 'subscription-section', 'admin', array(
                 'user' => $this->_getParam('user'),
                 'subscription' => $this->_getParam('subscription'),
@@ -132,11 +131,12 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     public function editAllAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $sections = $subscription->getSections();
         if (empty($sections)) {
-            $this->_helper->flashMessenger(getGS('No sections to edit'));
+            $this->_helper->flashMessenger($translator->trans('No sections to edit', array(), 'user_subscription_sections'));
             $this->_helper->redirector('index', 'subscription-section', 'admin', array(
                 'user' => $this->_getParam('user'),
                 'subscription' => $this->_getParam('subscription'),
@@ -148,8 +148,8 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
         $form = new Admin_Form_Subscription_SectionEditForm;
         $form->setAction('')->setMethod('post');
         $form->setDefaults(array(
-            'name' => getGS('All'),
-            'language' => getGS('N/A'),
+            'name' => $translator->trans('All'),
+            'language' => $translator->trans('N/A'),
             'start_date' => $section->getStartDate()->format('Y-m-d'),
             'days' => $section->getDays(),
             'paid_days' => $section->getPaidDays(),
@@ -161,7 +161,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
             }
             $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Sections saved'));
+            $this->_helper->flashMessenger($translator->trans('Sections saved', array(), 'user_subscription_sections'));
             $this->_helper->redirector('index', 'subscription-section', 'admin', array(
                 'user' => $this->_getParam('user'),
                 'subscription' => $this->_getParam('subscription'),
@@ -172,12 +172,13 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     public function deleteAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $section = $this->_helper->entity->get('Newscoop\Entity\SubscriptionSection', 'section');
         $this->repository->delete($section);
         $this->_helper->entity->flushManager();
 
-        $this->_helper->flashMessenger(getGS('Section $1', getGS('deleted')));
+        $this->_helper->flashMessenger($translator->trans('Section $1', array('$1' => $translator->trans('deleted', array(), 'user_subscription_sections')), 'user_subscription_sections'));
         $this->_helper->redirector('index', 'subscription-section', 'admin', array(
             'user' => $this->_getParam('user'),
             'subscription' => $this->_getParam('subscription'),
@@ -185,7 +186,8 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
     }
 
     private function getOptions(array $sections, $language = FALSE)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $options = array();
         foreach ($sections as $section) {
             $key = $section->getNumber() . ($language ? '_' . $section->getLanguageId() : '');

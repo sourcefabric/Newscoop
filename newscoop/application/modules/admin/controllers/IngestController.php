@@ -66,11 +66,12 @@ class Admin_IngestController extends Zend_Controller_Action
     }
 
     public function prepareAction()
-    {
+    {   
         try {
+            $translator = \Zend_Registry::get('container')->getService('translator');
             $entry = $this->service->find($this->_getParam('entry'));
             $article = $this->service->publish($entry, 'N');
-            $this->_helper->flashMessenger(getGS("Entry '$1' prepared for publishing", $entry->getTitle()));
+            $this->_helper->flashMessenger($translator->trans("Entry $1 prepared for publishing", array('$1' => $entry->getTitle())));
             $this->_helper->redirector->gotoUrl($this->_helper->article->getEditLink($article));
         } catch (Exception $e) {
             var_dump($e);
@@ -81,8 +82,9 @@ class Admin_IngestController extends Zend_Controller_Action
     public function deleteAction()
     {
         try {
+            $translator = \Zend_Registry::get('container')->getService('translator');
             $this->service->deleteEntryById($this->_getParam('entry'));
-            $this->_helper->flashMessenger(getGS("Entry deleted"));
+            $this->_helper->flashMessenger($translator->trans("Entry deleted"));
             $this->_helper->redirector('index', 'ingest');
         } catch (Exception $e) {
             var_dump($e);
@@ -94,10 +96,11 @@ class Admin_IngestController extends Zend_Controller_Action
     {
         $form = new Admin_Form_Ingest();
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $feed = $this->_helper->service('ingest.feed')->save($form->getValues());
-            $this->_helper->flashMessenger(getGS('Feed saved'));
+            $this->_helper->flashMessenger($translator->trans('Feed saved'));
             $this->_helper->redirector('index');
         }
 
@@ -111,17 +114,19 @@ class Admin_IngestController extends Zend_Controller_Action
     }
 
     public function publishAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $item = $this->_helper->service('ingest.item')->find($this->_getParam('item', null));
         $this->_helper->service('ingest.item')->publish($item);
-        $this->_helper->flashMessenger(getGS('Item published'));
+        $this->_helper->flashMessenger($translator->trans('Item published'));
         $this->_helper->redirector('index', 'ingest', 'admin', array(
             'item' => null,
         ));
     }
 
     public function settingsAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $settings = $this->_helper->service('ingest.settings')->find('ingest');
         $form = new Admin_Form_IngestSettings();
         $form->publication->addMultiOptions($this->_helper->service('content.publication')->getOptions());
@@ -135,7 +140,7 @@ class Admin_IngestController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('ingest.settings')->save($form->getValues(), $settings);
-            $this->_helper->flashMessenger(getGS('Settings saved'));
+            $this->_helper->flashMessenger($translator->trans('Settings saved'));
             $this->_helper->redirector('settings');
         }
 
