@@ -48,32 +48,33 @@ class Admin_Form_BanUser extends Zend_Form
 
     public function init()
     {
-
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('checkbox', 'name', array(
-            'label' => getGS(getGS('Name').":"),
+            'label' => $translator->trans($translator->trans('Name').":"),
             'required' => false,
             'order' => 10,
         ));
 
         $this->addElement('checkbox', 'email', array(
-            'label' => getGS(getGS('Email').":"),
+            'label' => $translator->trans($translator->trans('Email').":"),
             'required' => false,
             'order' => 20,
         ));
 
         $this->addElement('checkbox', 'delete_messages', array(
-            'label' => getGS('Delete feedback messages?'),
+            'label' => $translator->trans('Delete feedback messages?', array(), 'feedback'),
             'required' => false,
             'order' => 40,
         ));
 
         $this->addElement('submit', 'cancel', array(
-            'label' => getGS('Cancel'),
+            'label' => $translator->trans('Cancel'),
             'order' => 98,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
             'order' => 99,
         ));
     }
@@ -85,12 +86,13 @@ class Admin_Form_BanUser extends Zend_Form
      * @param $values
      */
     public function setValues($p_user, $p_values)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         /* @var $name Zend_Form_Element_CheckBox */
-        $this->name->setLabel(getGS('Name').":".$p_user->getName())
+        $this->name->setLabel($translator->trans('Name').":".$p_user->getName())
                     ->setChecked($p_values['name']);
 
-        $this->email->setLabel(getGS('Email').":".$p_user->getEmail())
+        $this->email->setLabel($translator->trans('Email').":".$p_user->getEmail())
                     ->setChecked($p_values['email']);
     }
 

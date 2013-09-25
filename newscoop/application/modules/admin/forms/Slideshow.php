@@ -12,22 +12,24 @@ class Admin_Form_Slideshow extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->addElement('text', 'headline', array(
-            'label' => getGS('Headline'),
+            'label' => $translator->trans('Headline', array(), 'article_images'),
             'required' => true,
         ));
 
         $this->addElement('text', 'slug', array(
-            'label' => getGS('Slug'),
+            'label' => $translator->trans('Slug', array(), 'article_images'),
         ));
 
         $this->addElement('text', 'description', array(
-            'label' => getGS('Description'),
+            'label' => $translator->trans('Description'),
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
             'ignore' => true,
         ));
     }

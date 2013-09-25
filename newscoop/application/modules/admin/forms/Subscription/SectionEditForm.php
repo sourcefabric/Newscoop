@@ -8,35 +8,36 @@
 class Admin_Form_Subscription_SectionEditForm extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->addElement('text', 'name', array(
-            'label' => getGS('Section'),
+            'label' => $translator->trans('Section'),
             'readonly' => true,
         ));
 
         $this->addElement('text', 'language', array(
-            'label' => getGS('Language'),
+            'label' => $translator->trans('Language'),
             'readonly' => true,
         ));
 
         $this->addElement('text', 'start_date', array(
-            'label' => getGS('Start'),
+            'label' => $translator->trans('Start'),
             'required' => true,
             'class' => 'date',
         ));
 
         $this->addElement('text', 'days', array(
-            'label' => getGS('Days'),
+            'label' => $translator->trans('Days'),
             'required' => true,
         ));
 
         $this->addElement('text', 'paid_days', array(
-            'label' => getGS('Paid Days'),
+            'label' => $translator->trans('Paid Days'),
             'required' => true,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
         ));
     }
 }

@@ -10,11 +10,13 @@
 class Admin_Form_Profile extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->setAttrib('enctype', 'multipart/form-data');
 
         $this->addElement('file', 'image', array(
-            'label' => getGS('Picture'),
+            'label' => $translator->trans('Picture', array(), 'users'),
         ));
 
         $this->addElement('submit', 'submit', array(
