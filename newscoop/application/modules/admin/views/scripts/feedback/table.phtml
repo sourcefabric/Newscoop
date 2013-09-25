@@ -3,14 +3,14 @@
     $headStyle = $this->headLink();
     $headStyle->appendStylesheet($this->baseUrl('/admin-style/comments.css'));
     $headStyle->offsetSetStylesheet('table', '');
-    camp_load_translation_strings("feedback");
+    $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/feedback.js')); ?>
 
-<?php $this->placeholder('title')->set(getGS('Feedback Messages')); ?>
+<?php $this->placeholder('title')->set($translator->trans('Feedback Messages', array(), 'feedback')); ?>
 <script>
     function putGS(str) {
         var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
@@ -44,23 +44,23 @@
     ];
     
     serverObj.translateObj = [
-        '<?php putGS('Search'); ?>',
-        '<?php putGS('Messages updated.'); ?>',
-        '<?php putGS('Messages deleted.'); ?>',
-        '<?php putGS('Messages status change to $1.'); ?>',
-        '<?php putGS('Message updated.'); ?>',
-        '<?php putGS('Message deleted.'); ?>',
-        '<?php putGS('Message status change to $1.'); ?>',
-        '<?php putGS('Change selected messages status'); ?>',
-        '<?php putGS('Actions');?>',
-        '<?php putGS('New'); ?>',
-        '<?php putGS('Processed'); ?>',
-        '<?php putGS('Starred'); ?>',
-        '<?php putGS('Deleted'); ?>',
-        '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
-        <?php echo json_encode(getGS("You are about to permanently delete a message.")); ?>,
-        <?php echo json_encode(getGS("You are about to permanently delete multiple messages.")); ?>,
-        <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>
+        '<?php echo $translator->trans('Search'); ?>',
+        '<?php echo $translator->trans('Messages updated.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Messages deleted.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Messages status change to $1.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Message updated.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Message deleted.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Message status change to $1.', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Change selected messages status', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Actions');?>',
+        '<?php echo $translator->trans('New'); ?>',
+        '<?php echo $translator->trans('Processed', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Starred', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Deleted', array(), 'feedback'); ?>',
+        '<?php echo $translator->trans('Unable to reach Newscoop. Please check your internet connection.', array(), 'feedback'); ?>',
+        <?php echo json_encode($translator->trans("You are about to permanently delete a message.", array(), 'feedback')); ?>,
+        <?php echo json_encode($translator->trans("You are about to permanently delete multiple messages.", array(), 'feedback')); ?>,
+        <?php echo json_encode($translator->trans("Are you sure you want to do it?", array(), 'feedback')); ?>
     ];
 </script>
 <table>
@@ -88,20 +88,20 @@
                     
             <p><a href="mailto:{{user.email}}">{{user.email}}</a></p>
             <p><a href="{{user.url}}">{{user.url}}</a></p>
-            <p><a href="{{user.banurl}}" class="banUser"><span><?php putGS('Ban/Unban user'); ?></span></a></p>
+            <p><a href="{{user.banurl}}" class="banUser"><span><?php echo $translator->trans('Ban/Unban user', array(), 'feedback'); ?></span></a></p>
             </p>
           </div>
         </td>
         <td class="commentMessage">
           <div class="dateCommentHolder">
             <h4>
-              <span>{{message.created.date}} <?php putGS('at'); ?> {{message.created.time}}</span>
+              <span>{{message.created.date}} <?php echo $translator->trans('at', array(), 'feedback'); ?> {{message.created.time}}</span>
               <span class="commentSubject">{{message.subject}}</span>
             </h4>
             <p class="commentBody">{{message.message}}</p>
             {% if (attachment.type == 'image') %}
 				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
-				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php echo $translator->trans('Attachment', array(), 'feedback'); ?></span>
 				<img src="{{attachment.thumbnail}}" style="margin: 4px; float: left; border: 1px solid #000000;">
 				<p>{{attachment.name}}</p>
 				{% if (attachment.status == 'unapproved') %}
@@ -111,20 +111,20 @@
 						<input type="hidden" name="attachment_id" value="{{attachment.id}}" />
 						<?php echo SecurityToken::FormParameter(); ?>
 						<div class="buttonBar">
-						<input type="submit" value="<?php putGS('Approve'); ?>" class="button">
+						<input type="submit" value="<?php echo $translator->trans('Approve', array(), 'feedback'); ?>" class="button">
 						</div>
 					</form>
 					</div>
 				{% endif %}
 				{% if (attachment.status == 'approved') %}
-					<?php putGS('Approved.'); ?>
+					<?php echo $translator->trans('Approved.', array(), 'feedback'); ?>
 				{% endif %}
 				<div style="clear: both;"></div>
 				</div>
             {% endif %}
             {% if (attachment.type == 'document') %}
 				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
-				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php echo $translator->trans('Attachment', array(), 'feedback'); ?></span>
 				<img src="<?php echo $this->baseUrl('/admin-style/images/pdf.png'); ?>" style="width: 60px; margin: 4px; float: left; border: 1px solid #000000;">
 				<p>{{attachment.name}}</p>
 				{% if (attachment.status == 'unapproved') %}
@@ -134,20 +134,20 @@
 						<input type="hidden" name="attachment_id" value="{{attachment.id}}" />
 						<?php echo SecurityToken::FormParameter(); ?>
 						<div class="buttonBar">
-						<input type="submit" value="<?php putGS('Approve'); ?>" class="button">
+						<input type="submit" value="<?php echo $translator->trans('Approve', array(), 'feedback'); ?>" class="button">
 						</div>
 					</form>
 					</div>
 				{% endif %}
 				{% if (attachment.status == 'approved') %}
-					<?php putGS('Approved.'); ?>
+					<?php echo $translator->trans('Approved.', array(), 'feedback'); ?>
 				{% endif %}
 				<div style="clear: both;"></div>
 				</div>
             {% endif %}
             {% if (attachment.type == 'none') %}
 				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
-				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('No attachment'); ?></span>
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php echo $translator->trans('No attachment', array(), 'feedback'); ?></span>
 				<div style="clear: both;"></div>
 				</div>
             {% endif %}
@@ -155,17 +155,17 @@
 
           <div class="dateCommentHolderReply">
             <fieldset class="content-reply" style="display:none;">
-              <h3><?php putGS('Reply to message'); ?></h3>
+              <h3><?php echo $translator->trans('Reply to message', array(), 'feedback'); ?></h3>
               <form action="{{message.action.reply}}">
               <input type="hidden" name="parent" value="{{message.id}}" />
               <?php echo SecurityToken::FormParameter(); ?>
-              <label><?php putGS('Subject'); ?></label>
+              <label><?php echo $translator->trans('Subject'); ?></label>
               <input name="subject" type="text" class="input_text">
-              <label><?php putGS('Message'); ?></label>
+              <label><?php echo $translator->trans('Message', array(), 'feedback'); ?></label>
               <textarea name="message" class="input_text_area"></textarea>
               <div class="buttonBar">
-                <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
-                <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
+                <input type="button" value="<?php echo $translator->trans('Cancel'); ?>" class="button reply-cancel">
+                <input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="button">
               </div>
               </form>
             </fieldset>
@@ -176,7 +176,7 @@
             <p>
 				<a href="{{ message.article.url }}" class="articleLink">{{ message.article.name }}</a>
 				<br>
-				<span>{{ message.publication }}; <b><?php putGS('Section'); ?></b> {{ message.section }}</span>
+				<span>{{ message.publication }}; <b><?php echo $translator->trans('Section'); ?></b> {{ message.section }}</span>
             </p>
             <p><span>URL: <a href="{{ message.url }}">{{message.url}}</a></span></p>
           </div>
@@ -188,24 +188,24 @@
     <ul>
       <li>
         <input type="radio" name="action_comment_{{message.id}}" class="action new" id="pending_{{message.id}}" value="pending"/>
-        <label for="pending_{{message.id}}"><?php putGS('New'); ?></label>
+        <label for="pending_{{message.id}}"><?php echo $translator->trans('New'); ?></label>
         &nbsp;&nbsp;
       </li>
 
       <li>
         <input type="radio" name="action_comment_{{message.id}}" class="action processed" id="processed_{{message.id}}" value="processed"/>
-        <label for="processed_{{message.id}}"><?php putGS('Processed'); ?></label>
+        <label for="processed_{{message.id}}"><?php echo $translator->trans('Processed', array(), 'feedback'); ?></label>
         &nbsp;&nbsp;
       </li>
       <li>
         <input type="radio" name="action_comment_{{message.id}}" class="action starred" id="starred_{{message.id}}" value="starred" style="height: auto"/>
-        <label for="starred_{{message.id}}"><?php putGS('Star'); ?></label>
+        <label for="starred_{{message.id}}"><?php echo $translator->trans('Star', array(), 'feedback'); ?></label>
         &nbsp;&nbsp;
       </li>
 
 
-      <li><a href="javascript:;" class="actionButton action-reply"><?php putGS('Reply'); ?></a></li>
-      <li><a href="javascript:;" id="deleted_{{message.id}}" class="actionButton action"><?php putGS('Delete'); ?></a></li>
+      <li><a href="javascript:;" class="actionButton action-reply"><?php echo $translator->trans('Reply', array(), 'feedback'); ?></a></li>
+      <li><a href="javascript:;" id="deleted_{{message.id}}" class="actionButton action"><?php echo $translator->trans('Delete'); ?></a></li>
 
     </ul>
   </div>
@@ -221,31 +221,31 @@
       <div class="tabs">
         <div id="tabs-1">
           <div id="showComments">
-            <fieldset><legend><?php putGS('Show'); ?></legend>
+            <fieldset><legend><?php echo $translator->trans('Show'); ?></legend>
             <ul class="status_filter">
               <li class="published" style="display: none;">
-                <input type="checkbox" id="show_published" value="approved"> <label for="show_published"><?php putGS('Published'); ?></label>
+                <input type="checkbox" id="show_published" value="approved"> <label for="show_published"><?php echo $translator->trans('Published'); ?></label>
               </li>
               <li class="new">
-                <input type="checkbox" id="show_new" value="pending"> <label for="show_new"><?php putGS('New'); ?></label>
+                <input type="checkbox" id="show_new" value="pending"> <label for="show_new"><?php echo $translator->trans('New'); ?></label>
               </li>
               <li class="approved">
-                <input type="checkbox" id="show_processed" value="processed"> <label for="show_processed"><?php putGS('Processed'); ?></label>
+                <input type="checkbox" id="show_processed" value="processed"> <label for="show_processed"><?php echo $translator->trans('Processed', array(), 'feedback'); ?></label>
               </li>
               <li class="hidden">
-                <input type="checkbox" id="show_starred" value="starred"> <label for="show_starred"><?php putGS('Starred'); ?></label>
+                <input type="checkbox" id="show_starred" value="starred"> <label for="show_starred"><?php echo $translator->trans('Starred', array(), 'feedback'); ?></label>
               </li>
             </ul>
             <br>
             <ul class="attachment_filter">
               <li class="none">
-                <input type="checkbox" id="show_none" value="none"> <label for="show_none"><?php putGS('With no attachment'); ?></label>
+                <input type="checkbox" id="show_none" value="none"> <label for="show_none"><?php echo $translator->trans('With no attachment', array(), 'feedback'); ?></label>
               </li>
               <li class="image">
-                <input type="checkbox" id="show_image" value="image"> <label for="show_image"><?php putGS('With image attachment'); ?></label>
+                <input type="checkbox" id="show_image" value="image"> <label for="show_image"><?php echo $translator->trans('With image attachment', array(), 'feedback'); ?></label>
               </li>
               <li class="document">
-                <input type="checkbox" id="show_document" value="document"> <label for="show_document"><?php putGS('With document attachment'); ?></label>
+                <input type="checkbox" id="show_document" value="document"> <label for="show_document"><?php echo $translator->trans('With document attachment', array(), 'feedback'); ?></label>
               </li>
             </ul>
             </fieldset>
@@ -279,4 +279,4 @@
       id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a>
   </div>
 </div>
-<div class="dialogPopup dialog-1" title="<?php putGS('Full article');?>"></div>
+<div class="dialogPopup dialog-1" title="<?php echo $translator->trans('Full article', array(), 'feedback');?>"></div>
