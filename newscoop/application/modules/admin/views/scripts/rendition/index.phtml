@@ -1,7 +1,10 @@
-<?php $this->placeholder('title')->set('Renditions'); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set('Renditions'); 
+?>
 
 <?php if (count($this->renditions) === 0) {
-echo '<p class="message">', getGS('No renditions defined.'), '</p>';
+echo '<p class="message">', $translator->trans('No renditions defined.', array(), 'article_images'), '</p>';
 return;
 } ?>
 
@@ -9,7 +12,7 @@ return;
     'controller' => 'rendition',
     'action' => 'reload-renditions',
 )); ?>">
-    <button><?php putGS('Reload renditions'); ?></button>
+    <button><?php echo $translator->trans('Reload renditions', array(), 'article_images'); ?></button>
 </form>
 
 <form id="rendition-list-form" method="POST">
@@ -21,7 +24,7 @@ return;
     <?php } ?>
 </ul>
 
-<button><?php putGS('Save'); ?></button>
+<button><?php echo $translator->trans('Save'); ?></button>
 
 </form>
 
@@ -32,15 +35,15 @@ $(function() {
         e.preventDefault();
         var form = $(this);
         var button = form.find('button');
-        button.text(<?php echo json_encode(getGS('Saving...')); ?>);
+        button.text(<?php echo json_encode($translator->trans('Saving...', array(), 'article_images')); ?>);
         $.post(<?php echo json_encode($this->url(array(
             'module' => 'admin',
             'controller' => 'rendition',
             'action' => 'index',
         ))); ?>, {'order': $('#rendition-list').sortable('toArray'), 'labels': form.serializeArray()}, function(data, textStatus) {
-            button.text(<?php echo json_encode(getGS('Saved')); ?>);
+            button.text(<?php echo json_encode($translator->trans('Saved', array(), 'article_images')); ?>);
             window.setTimeout(function() {
-                button.text(<?php echo json_encode(getGS('Save')); ?>);
+                button.text(<?php echo json_encode($translator->trans('Save')); ?>);
             }, 3000);
         });
     });
