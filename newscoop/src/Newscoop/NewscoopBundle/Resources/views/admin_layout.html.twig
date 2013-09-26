@@ -1,4 +1,4 @@
-{{ loadTranslationStrings('home') }}
+{% trans_default_domain "home" %}
 <html lang="{{ localeFromCookie }}" dir="ltr">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -29,12 +29,12 @@
     var popupFlash = false;
 
     var localizer = localizer || {
-        processing: '{{ getGS('Processing...') }}',
-        session_expired: '{{ getGS('Session expired.') }}',
-        please: '{{ getGS('Please') }}',
-        login: '{{ getGS('login') }}',
-        connection_interrupted : '{{ getGS('Connection interrupted') }}',
-        try_again_later : '{{ getGS('try again later') }}'
+        processing: '{{ 'Processing...'|trans }}',
+        session_expired: '{{ 'Session expired.'|trans }}',
+        please: '{{ 'Please'|trans }}',
+        login: '{{ 'login'|trans }}',
+        connection_interrupted : '{{ 'Connection interrupted'|trans }}',
+        try_again_later : '{{ 'try again later'|trans }}'
     };
 
     $(function() {
@@ -124,9 +124,9 @@
 <div class="meta-bar">
     {% if NewscoopUser %}
     <ul>
-        <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ getGS('Logout') }}</a></li>
-        <li><a href="{{ Newscoop['site']['help_url'] }}" target="_blank">{{ getGS('Help') }}</a></li>
-        <li>{{ getGS("Signed in: $1", '<strong>' ~ NewscoopUser.getFirstName() ~ '</strong>')|raw }}</li>
+        <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ 'Logout'|trans }}</a></li>
+        <li><a href="{{ Newscoop['site']['help_url'] }}" target="_blank">{{ 'Help'|trans }}</a></li>
+        <li>{{ "Signed in: $1"|trans({'$1': '<strong>' ~ NewscoopUser.getFirstName() ~ '</strong>'})|raw }}</li>
     </ul>
     {% endif %}
 </div>

@@ -1,6 +1,7 @@
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <form action="http://en.wikipedia.org/wiki/Special:Search" method="GET" target="_blank">
 <fieldset class="wikipedia">
     <input type="text" class="search" name="search" value="" />
-    <input type="submit" value="<?php putGS('Go'); ?>" />
+    <input type="submit" value="<?php echo $translator->trans('Go', array(), 'extensions'); ?>" />
 </fieldset>
 </form>

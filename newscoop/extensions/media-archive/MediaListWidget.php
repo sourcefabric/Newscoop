@@ -17,8 +17,9 @@ require_once LIBS_DIR . '/MediaList/MediaList.php';
 class MediaListWidget extends Widget
 {
     public function __construct()
-    {
-        $this->title = getGS('Files');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Files');
     }
 
     public function render()

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <?php echo $this->headTitle(); ?>
-
+    <?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
     <meta http-equiv="Expires" content="now" />
 
     <script>
@@ -15,13 +15,13 @@
         var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
 
         var localizer = localizer || {
-            processing: '<?php putGS('Processing...'); ?>',
-            session_expired: '<?php putGS('Session expired.'); ?>',
-            please: '<?php putGS('Please'); ?>',
-            login: '<?php putGS('login'); ?>',
-            confirm: '<?php putGS('Are you sure you want to'); ?>',
-            connection_interrupted : '<?php putGS('Connection interrupted') ?>',
-            try_again_later : '<?php putGS('try again later') ?>'
+            processing: '<?php echo $translator->trans('Processing...', array(), 'home'); ?>',
+            session_expired: '<?php echo $translator->trans('Session expired.', array(), 'home'); ?>',
+            please: '<?php echo $translator->trans('Please', array(), 'home'); ?>',
+            login: '<?php echo $translator->trans('login', array(), 'home'); ?>',
+            confirm: '<?php echo $translator->trans('Are you sure you want to', array(), 'home'); ?>',
+            connection_interrupted : '<?php echo $translator->trans('Connection interrupted', array(), 'home') ?>',
+            try_again_later : '<?php echo $translator->trans('try again later', array(), 'home') ?>'
         };
     </script>
 
