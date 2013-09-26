@@ -183,6 +183,7 @@ class ArticleTypeField extends DatabaseObject {
         public static function SetFieldColor($p_article_type, $p_field_name, $p_color_value) {
             $p_color_value = trim(strtolower('' . $p_color_value));
 
+            $translator = \Zend_Registry::get('container')->getService('translator');
             $is_color = false;
             if (7 == strlen($p_color_value)) {
                 if (preg_match('/^#[0-9a-f]{6}$/', $p_color_value)) {
@@ -190,19 +191,19 @@ class ArticleTypeField extends DatabaseObject {
                 }
             }
             if (!$is_color) {
-                return getGS('Not a color');
+                return $translator->trans('Not a color', array(), 'api');
             }
 
             $field = new ArticleTypeField($p_article_type, $p_field_name);
             if (!$field->exists()) {
-                return getGS('No such field');
+                return $translator->trans('No such field', array(), 'api');
             }
 
             $res = $field->setColor($p_color_value);
             if (!$res) {
-                return getGS('Color not saved');
+                return $translator->trans('Color not saved', array(), 'api');
             }
-            return getGS('Color saved');
+            return $translator->trans('Color saved', array(), 'api');
         }
 
     /**

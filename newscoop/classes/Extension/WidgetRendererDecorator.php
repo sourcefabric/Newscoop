@@ -26,6 +26,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
     {
         $this->getWidget(); // init
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // set view if possible
         if (method_exists($this->widget, 'setView')) {
             $this->widget->setView($view);
@@ -68,7 +69,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             echo '</div>';
         }
         echo '<div class="content"><div class="scroll ui-dialog-content ui-widget-content">', "\n";
-        echo '<div class="loading" style="height:', $height, 'px"><p>', getGS('Loading...'), '</p></div>';
+        echo '<div class="loading" style="height:', $height, 'px"><p>', $translator->trans('Loading...', array(), 'api'), '</p></div>';
         echo '</div></div>', "\n";
         echo '<div class="extra">';
         $this->renderMeta();
@@ -84,15 +85,16 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
     public function renderMeta()
     {
     	/*
-    	 * getGS('Author')
-    	 * getGS('Version')
-    	 * getGS('Homepage')
-    	 * getGS('License')
+    	 * $translator->trans('Author')
+    	 * $translator->trans('Version', array(), 'api')
+    	 * $translator->trans('Homepage', array(), 'api')
+    	 * $translator->trans('License', array(), 'api')
     	 */
         $meta = array(
             'Author', 'Version', 'Homepage', 'License',
         );
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         ob_start();
         foreach ($meta as $key) {
             $method = 'get' . $key;
@@ -101,7 +103,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
                 continue;
             }
 
-            echo '<dt>' . getGS($key) . ':</dt>' . "\n";
+            echo '<dt>' . $translator->trans($key, array(), 'api') . ':</dt>' . "\n";
             echo '<dd>';
             if (preg_match('#^http://#', $value)) { // generate link
                 $title = str_replace('http://', '', $value);
@@ -125,8 +127,9 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
      * @return void
      */
     public function renderSettings()
-    {
+    {   
         ob_start();
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $reflection = new ReflectionObject($this->widget);
         $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED;
         foreach ($reflection->getProperties($filter) as $property) {
@@ -151,7 +154,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
             $method = 'get' . ucfirst($property->getName());
 
             echo '<dl><dt>';
-            echo '<label for="', $id, '">', rtrim(getGS($label), ' (*)'), '</label>';
+            echo '<label for="', $id, '">', rtrim($translator->trans($label, array(), 'extensions'), ' (*)'), '</label>';
             echo '</dt><dd>';
             printf('<input id="%s" type="text" name="%s" value="%s" maxlength="255" />',
                 $id,
@@ -167,7 +170,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
 
         echo '<form class="settings" action="" method="">';
         echo '<fieldset>', $settings;
-        echo '<input type="submit" value="', getGS('Save'), '" />';
+        echo '<input type="submit" value="', $translator->trans('Save'), '" />';
         echo '</fieldset>';
         echo '</form>';
     }

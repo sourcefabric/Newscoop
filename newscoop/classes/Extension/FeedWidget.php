@@ -38,7 +38,8 @@ abstract class FeedWidget extends Widget
      * @return void
      */
     public function render()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $even = false;
         $count = $this->getCount();
 
@@ -46,7 +47,7 @@ abstract class FeedWidget extends Widget
             $url = $this->getUrl();
             $items = $this->getItems($url);
         } catch (Exception $e) {
-            echo '<p>', getGS("Can't fetch news from '$1'", $url), '</p>';
+            echo '<p>', $translator->trans("Cant fetch news from $1", array('$1' => $url), 'api'), '</p>';
             return;
         }
 
@@ -76,7 +77,7 @@ abstract class FeedWidget extends Widget
         $content = ob_get_clean();
 
         if (empty($content)) {
-            echo '<p>', getGS('No news available.'), '</p>';
+            echo '<p>', $translator->trans('No news available.', array(), 'api'), '</p>';
             return;
         }
 

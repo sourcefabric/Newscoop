@@ -109,7 +109,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         global $Campsite;
 
-        $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
+        $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans('Newscoop', array(), 'home') . $Campsite['VERSION'];
 
         $view = $this->getResource('view');
         $view->headTitle($title)
@@ -177,16 +177,17 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      * Init forms translator
      */
     protected function _initForm()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $translate = new Zend_Translate(array(
             'adapter' => 'array',
             'disableNotices' => TRUE,
             'content' => array(
-                "Value is required and can't be empty" => getGS("Value is required and can't be empty"),
-                "'%value%' is less than %min% characters long" => getGS("'%value%' is less than %min% characters long"),
-                "'%value%' is more than %max% characters long" => getGS("'%value%' is more than %max% characters long"),
-                "The two given tokens do not match" => getGS("Security token expired. Please resubmit the form."),
-                "No token was provided to match against" => getGS("Security token expired. Please resubmit the form."),
+                "Value is required and can't be empty" => $translator->trans("Value is required and cant be empty", array(), 'home'),
+                "'%value%' is less than %min% characters long" => $translator->trans("%value% is less than %min% characters long", array(), 'home'),
+                "'%value%' is more than %max% characters long" => $translator->trans("%value% is more than %max% characters long", array(), 'home'),
+                "The two given tokens do not match" => $translator->trans("Security token expired. Please resubmit the form.", array(), 'home'),
+                "No token was provided to match against" => $translator->trans("Security token expired. Please resubmit the form.", array(), 'home'),
             ),
         ));
 

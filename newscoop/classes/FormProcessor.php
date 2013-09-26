@@ -14,8 +14,8 @@ define('CAMP_FORM_INPUT_TEXT_STANDARD_MAXLENGTH', 256);
 define('CAMP_FORM_TEXTAREA_STANDARD_ROWS', 8);
 define('CAMP_FORM_TEXTAREA_STANDARD_COLS', 60);
 define('CAMP_FORM_MISSINGNOTE', '$1');
-define('CAMP_FORM_REQUIREDNOTE', getGS('* Marked fields are mandatory.'));
-define('CAMP_FORM_JS_PREWARNING', getGS('The following fields are mandatory:'));
+define('CAMP_FORM_REQUIREDNOTE',  \Zend_Registry::get('container')->getService('translator')->trans('* Marked fields are mandatory.', array(), 'api'));
+define('CAMP_FORM_JS_PREWARNING', \Zend_Registry::get('container')->getService('translator')->trans('The following fields are mandatory:', array(), 'api'));
 define('CAMP_FORM_JS_POSTWARNING', '');
 
 /**
@@ -144,7 +144,7 @@ class FormProcessor
             }
             ## add required rule ###################
             if ($v['required']) {
-                $form->addRule($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS(CAMP_FORM_MISSINGNOTE, $v['label']), 'required', NULL, $side);
+                $form->addRule($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : $translator->trans(CAMP_FORM_MISSINGNOTE, array('$1' => $v['label'])), 'required', NULL, $side);
             }
             ## add constant value ##################
             if (isset($v['constant'])) {
@@ -156,7 +156,7 @@ class FormProcessor
             }
             ## add other rules #####################
             if ($v['rule']) {
-                $form->addRule($v['element'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 is of type $2', $v['element'], getGS($v['rule'])), $v['rule'] ,$v['format'], $side);
+                $form->addRule($v['element'], isset($v['rulemsg']) ? $v['rulemsg'] : $translator->trans('$1 is of type $2', array('$1' => $v['element'], '$2' => $translator->trans($v['rule'])), 'api'), $v['rule'] ,$v['format'], $side);
             }
             ## add group ###########################
             if (is_array($v['group'])) {
@@ -165,7 +165,7 @@ class FormProcessor
                 }
                 $form->addGroup($groupthose, $v['name'], $v['label'], $v['seperator'], $v['appendName']);
                 if ($v['rule']) {
-                    $form->addRule($v['name'], isset($v['rulemsg']) ? $v['rulemsg'] : getGS('$1 is of type $2', $v['name'], getGS($v['rule'])), $v['rule'], $v['format'], $side);
+                    $form->addRule($v['name'], isset($v['rulemsg']) ? $v['rulemsg'] : $translator->trans('$1 is of type $2', array('$1' => $v['name'], '$2' => $translator->trans($v['rule'])), 'api'), $v['rule'], $v['format'], $side);
                 }
                 if ($v['grouprule']) {
                     $form->addGroupRule($v['name'], $v['arg1'], $v['grouprule'], $v['format'], $v['howmany'], $side, $v['reset']);
@@ -175,7 +175,7 @@ class FormProcessor
             ## check error on type file ##########
             if ($v['type']=='file') {
                 if (isset($_POST[$v['element']]['error'])) {
-                    $form->setElementError($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS('Missing value for $1', $v['label']));
+                    $form->setElementError($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : $translator->trans('Missing value for $1', array('$1' => $v['label']), 'api'));
                 }
             }
         }
