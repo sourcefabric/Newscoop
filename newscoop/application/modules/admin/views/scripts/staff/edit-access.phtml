@@ -1,3 +1,4 @@
 <?php echo $this->jQueryUtils() ?>
-<?php $this->placeholder('title')
-->set(getGS('Permissions: $1', $this->staff)); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Permissions: $1', $this->staff)); ?>

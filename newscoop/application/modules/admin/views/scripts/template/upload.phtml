@@ -1,7 +1,10 @@
-<?php $this->placeholder('title')->set(getGS('Upload')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Upload', array(), 'themes')); 
+?>
 
 <?php if (!$this->isWritable) {
-    echo $this->renderError(getGS("'$1' is not writable", $this->path));
+    echo $this->renderError($translator->trans("$1 is not writable", array('$1' => $this->path), 'themes'));
     return;
 } ?>
 
@@ -27,7 +30,7 @@ $(function() {
             var file = files[i];
 
             if (file.size == 0) {
-            	alert("<?php putGS("The file '$1' is empty.", '" + file.name + "'); ?>");
+            	alert("<?php echo $translator->trans("The file $1 is empty.", array('$1' => '" + file.name + "'), 'themes'); ?>");
             	uploader.removeFile(uploader.getFile(file.id));
             }
 
@@ -35,9 +38,9 @@ $(function() {
                 var item = items[j];
                 if (item.name == file.name) { // conflict
                     if (!item.id) { // dir
-                        alert("<?php putGS("Can't override directory '$1'.", '" + item.name + "'); ?>");
+                        alert("<?php echo $translator->trans("Cant override directory $1.", array('$1' => '" + item.name + "'), 'themes'); ?>");
                         up.removeFile(file);
-                    } else if (!confirm("<?php putGS("Do you want to override '$1'?", '" + file.name + "'); ?>")) {
+                    } else if (!confirm("<?php echo $translator->trans("Do you want to override $1?", array('$1' => '" + file.name + "'), 'themes'); ?>")) {
                         up.removeFile(file);
                     }
 

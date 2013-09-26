@@ -12,7 +12,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 	<tbody>
     	<tr>
         	<td class="message" colspan="<?php echo sizeof( $this->cols ); ?>">
-        	    <?php echo $translator->trans(('Loading..', array(), 'api'); ?>
+        	    <?php echo $translator->trans('Loading..', array(), 'api'); ?>
         	</td>
     	</tr>
 	</tbody>

@@ -1,5 +1,7 @@
-<?php $this->placeholder('title')->captureStart(); ?>
-<?php echo getGS('Permissions:'); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->captureStart(); ?>
+<?php echo $translator->trans('Permissions:', array(), 'user_types'); ?>
 <form action="<?php echo $this->url(array(
     'action' => 'edit',
 )); ?>" method="POST">

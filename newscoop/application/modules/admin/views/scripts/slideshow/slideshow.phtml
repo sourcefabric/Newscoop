@@ -1,7 +1,10 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <dl class="slideshow-preview">
     <dt><?php echo $this->escape($this->helperSlideshow->getHeadline()); ?> (<?php echo $this->helperSlideshow->getItemsCount(), ' ',  $this->translate(array(
-        getGS('Item'),
-        getGS('Items'),
+        $translator->trans('Item', array(), 'article_images'),
+        $translator->trans('Items', array(), 'article_images'),
         $this->helperSlideshow->getItemsCount(),
     )); ?>)</dt>
     <?php $counter = 0; ?>

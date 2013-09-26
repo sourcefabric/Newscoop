@@ -1,17 +1,20 @@
-<?php $this->placeholder('title')->set(getGS('IP Access')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('IP Access', array(), 'user_subscriptions')); 
+?>
 
 <?php $this->renderActions(); ?>
 
 <?php if (!$this->subscriber->hasIps()) {
-    $this->renderMessage(getGS('No IP Addresses'));
+    $this->renderMessage($translator->trans('No IP Addresses', array(), 'user_subscriptions'));
     return;
 } ?>
 
 <table>
 <tr>
-    <th><?php putGS('Start IP'); ?></th>
-    <th><?php putGS('Number of Addressses'); ?></th>
-    <th><?php putGS('Delete'); ?></th>
+    <th><?php echo $translator->trans('Start IP', array(), 'user_subscriptions'); ?></th>
+    <th><?php echo $translator->trans('Number of Addressses', array(), 'user_subscriptions'); ?></th>
+    <th><?php echo $translator->trans('Delete'); ?></th>
 </tr>
 <?php foreach ($this->subscriber->getIps() as $ip) { ?>
 <tr>
@@ -22,7 +25,7 @@
         'action' => 'delete',
         'user' => $this->subscriber->getId(),
         'ip' => $ip->getIp(),
-    )); ?>"><?php putGS('Delete'); ?></a></td>
+    )); ?>"><?php echo $translator->trans('Delete'); ?></a></td>
 </tr>
 <?php } ?>
 </table>

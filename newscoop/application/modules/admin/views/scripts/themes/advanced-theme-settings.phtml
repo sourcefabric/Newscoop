@@ -1,4 +1,6 @@
-<?php $this->headLink( array( 'type' => 'text/css', 'href' => $this->baseUrl('/admin-style/common.css'), 'media' => 'screen', 'rel'	=> 'stylesheet' ) ); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->headLink( array( 'type' => 'text/css', 'href' => $this->baseUrl('/admin-style/common.css'), 'media' => 'screen', 'rel'	=> 'stylesheet' ) ); ?>
 
 <div class="ui-widget-content small-block block-shadow theme-settings">
 	<div class="padded clearfix inner-tabs">
@@ -18,7 +20,7 @@
 
 					<?php echo $this->action( 'wizard-theme-article-types', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>
 
-					<input type="button" name="submit" id="submit-settings-ctrl" class="button themeSettingsBtn" value="<?php echo getGS( 'Save All' ) ?>" alt="<?php echo getGS( 'Saving..' ) ?>">
+					<input type="button" name="submit" id="submit-settings-ctrl" class="button themeSettingsBtn" value="<?php echo $translator->trans( 'Save All' , array(), 'themes') ?>" alt="<?php echo $translator->trans( 'Saving..' , array(), 'themes') ?>">
 
 				</div>
 			</div>

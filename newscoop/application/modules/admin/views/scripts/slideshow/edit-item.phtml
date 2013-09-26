@@ -1,6 +1,9 @@
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php 
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); 
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
-<h1><?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
+<h1><?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
 
 <div class="editarea">
@@ -12,27 +15,27 @@
         <?php if ($this->item->isVideo()) { ?>
         <input type="text" name="url" value="<?php echo $this->escape($this->form->url->getValue()); ?>" />
         <?php } ?>
-        <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php putGS('Add caption'); ?>" /><br />
-        <button class="save-button"><?php putGS('Save'); ?></button>
+        <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php echo $translator->trans('Add caption', array(), 'article_images'); ?>" /><br />
+        <button class="save-button"><?php echo $translator->trans('Save'); ?></button>
     </div>
 
     <?php if (($prev = $this->package->getPrev($this->item)) !== null) { ?>
     <a href="<?php echo $this->url(array(
         'item' => $this->package->getPrev($this->item)->getId(),
-    )); ?>" class="prev"><span></span><?php putGS('Previous'); ?></a>
+    )); ?>" class="prev"><span></span><?php echo $translator->trans('Previous'); ?></a>
     <?php } ?>
 
     <?php if (($next = $this->package->getNext($this->item)) !== null) { ?>
     <a href="<?php echo $this->url(array(
         'item' => $next->getId(),
-    )); ?>" class="next"><span></span><?php putGS('Next'); ?></a>
+    )); ?>" class="next"><span></span><?php echo $translator->trans('Next'); ?></a>
     <?php } ?>
 
     <a href="<?php echo $this->url(array(
         'action' => 'edit',
         'item' => null,
         'format' => null
-    )); ?>" class="done button"><?php putGS('Done editing'); ?></a>
+    )); ?>" class="done button"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
 </div>
 
 </form>

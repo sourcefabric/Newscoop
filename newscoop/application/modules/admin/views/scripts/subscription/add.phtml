@@ -1,4 +1,6 @@
-<?php $this->placeholder('title')->set(getGS('Add new subscription')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Add new subscription')); ?>
 
 <?php echo $this->form; ?>
 

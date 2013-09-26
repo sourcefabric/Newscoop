@@ -1,3 +1,6 @@
-<?php $this->placeholder('title')->set(getGS('Change subscriber information')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Change subscriber information', array(), 'user_subscriptions')); 
+?>
 
 <?php echo $this->form; ?>

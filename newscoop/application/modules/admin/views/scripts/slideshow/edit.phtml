@@ -1,14 +1,17 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
-<?php $this->placeholder('bodyId')->set('next'); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('bodyId')->set('next'); 
+?>
 
 <div id="modal-top">
     <div class="toolbar fixed-top">
     <div class="save-button-bar"></div>
     <h1>
-        <?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->slideshow->getRendition()->getInfo(); ?></small>
+        <?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->slideshow->getRendition()->getInfo(); ?></small>
         <form id="edit_slideshow_form" method="<?php echo $this->form->getMethod(); ?>">
         <span style="float: right;">
-            <input type="submit" value="<?php echo putGS('Save and Close'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+            <input type="submit" value="<?php echo $translator->trans('Save and Close'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
         </span>
     </h1>
     </div>
@@ -16,8 +19,8 @@
 <div style="margin-top:40px;">&nbsp;</div>
 
 <div class="inline">
-    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->escape($this->form->headline->getValue()); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : getGS('Slideshow headline'); ?>" />
-    <button class="button"><?php putGS('Save headline'); ?></button>
+    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->escape($this->form->headline->getValue()); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : $translator->trans('Slideshow headline', array(), 'article_images'); ?>" />
+    <button class="button"><?php echo $translator->trans('Save headline', array(), 'article_images'); ?></button>
 </div></form>
 
 <ul id="slideshow-items" class="slideshow">
@@ -29,7 +32,7 @@
 <form method="<?php echo $this->form->getMethod(); ?>" action="<?php echo $this->url(array(
     'action' => 'add-video-item',
 )); ?>"><div class="inline top-shadow">
-    <input type="text" name="url" title="<?php putGS("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)"); ?>" placeholder="<?php putGS('Video URL'); ?>" /> <button><?php putGS('Add video'); ?></button>
+    <input type="text" name="url" title="<?php echo $translator->trans("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", array(), 'article_images'); ?>" placeholder="<?php echo $translator->trans('Video URL', array(), 'article_images'); ?>" /> <button><?php echo $translator->trans('Add video', array(), 'article_images'); ?></button>
 </div></form>
 
 <script>
@@ -120,8 +123,8 @@ $(function() {
 
 <div id="select-image" class="tabs popup-tabs">
     <ul>
-        <?php if (!empty($this->images)) { ?><li><a href="#attached-images"><?php putGS('Attached images'); ?></a></li><?php } ?>
-        <li><a href="#media-archive"><?php putGS('Media Archive'); ?></a></li>
+        <?php if (!empty($this->images)) { ?><li><a href="#attached-images"><?php echo $translator->trans('Attached images', array(), 'article_images'); ?></a></li><?php } ?>
+        <li><a href="#media-archive"><?php echo $translator->trans('Media Archive', array(), 'article_images'); ?></a></li>
     </ul>
 
     <?php if (!empty($this->images)) { ?>
@@ -131,14 +134,14 @@ $(function() {
             <li id="image-<?php echo $image->getId(); ?>">
                 <figure>
                     <div><?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?></div>
-                    <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php putGS('Mark image'); ?>" />
+                    <input type="checkbox" id="default-<?php echo $image->getId(); ?>" name="checked-images[]" value="<?php echo $image->getId(); ?>" title="<?php echo $translator->trans('Mark image', array(), 'article_images'); ?>" />
                     <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
                 </figure>
             </li>
             <?php } ?>
         </ul>
         <div class="inline">
-            <button id="add-sellected-to-gallery"><?php putGS('Add selected images to slideshow'); ?></button>
+            <button id="add-sellected-to-gallery"><?php echo $translator->trans('Add selected images to slideshow', array(), 'article_images'); ?></button>
         </div>
     </div>
     <?php } ?>

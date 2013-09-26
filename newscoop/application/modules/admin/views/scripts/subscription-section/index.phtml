@@ -1,15 +1,18 @@
-<?php $this->placeholder('title')->set(getGS('Subscribed sections: $1', $this->subscription->getPublicationName())); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Subscribed sections: $1', array('$1' => $this->subscription->getPublicationName()), 'user_subscription_sections')); 
+?>
 
 <?php $this->renderActions(); ?>
 
 <table>
 <tr>
-    <th><?php putGS('Section'); ?></th>
-    <th><?php putGS('Language'); ?></th>
-    <th><?php putGS('Start Date'); ?></th>
-    <th><?php putGS('Days'); ?></th>
-    <th><?php putGS('Paid Days'); ?></th>
-    <th><?php putGS('Delete'); ?></th>
+    <th><?php echo $translator->trans('Section'); ?></th>
+    <th><?php echo $translator->trans('Language'); ?></th>
+    <th><?php echo $translator->trans('Start Date', array(), 'user_subscriptions'); ?></th>
+    <th><?php echo $translator->trans('Days', array(), 'user_subscriptions'); ?></th>
+    <th><?php echo $translator->trans('Paid Days', array(), 'user_subscriptions'); ?></th>
+    <th><?php echo $translator->trans('Delete'); ?></th>
 </tr>
 <?php foreach ($this->subscription->getSections() as $section) { ?>
 <tr>
@@ -17,14 +20,14 @@
         'action' => 'edit',
         'section' => $section->getId(),
     )); ?>"><?php echo $this->sections[$section->getSectionNumber()]; ?></a></td>
-    <td><?php echo $section->getLanguageName() ?: getGS('All languages'); ?></td>
+    <td><?php echo $section->getLanguageName() ?: $translator->trans('All languages', array(), 'user_subscription_sections'); ?></td>
     <td><?php echo $section->getStartDate()->format('Y-m-d'); ?></td>
     <td><?php echo $section->getDays(); ?></td>
     <td><?php echo $section->getPaidDays(); ?></td>
     <td><a href="<?php echo $this->url(array(
         'action' => 'delete',
         'section' => $section->getId(),
-    )); ?>"><?php putGS('Delete'); ?></a></td>
+    )); ?>"><?php echo $translator->trans('Delete'); ?></a></td>
 </tr>
 <?php } ?>
 </table>
