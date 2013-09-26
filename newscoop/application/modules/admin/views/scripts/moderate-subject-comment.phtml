@@ -1,3 +1,4 @@
-<?php putGS('New comment added');?>
-<?php putGS('Subject');?>:
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
+<?php echo $translator->trans('New comment added', array(), 'home');?>
+<?php echo $translator->trans('Subject');?>:
 <?php echo $this->comment->getSubject(); ?>

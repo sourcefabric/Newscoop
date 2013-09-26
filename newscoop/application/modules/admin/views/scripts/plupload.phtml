@@ -1,6 +1,6 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
-
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <script type="text/javascript">
 $(function() {
     var form = $('form<?php echo $this->plupload->form; ?>');
@@ -64,7 +64,7 @@ $(function() {
             // if no file, then at least url shall be provided (if some at that page)
             var url_str = $.trim($('#form-url').val());
             if ('' == url_str) {
-                alert(<?php echo json_encode(getGS('You must at least upload one file.')); ?>);
+                alert(<?php echo json_encode($translator->trans('You must at least upload one file.', array(), 'home')); ?>);
                 if (e && e.preventDefault) {
                     e.preventDefault();
                 }
@@ -76,15 +76,15 @@ $(function() {
 });
 
 plupload.addI18n({
-    'Select files' : '<?php putGS('Select files'); ?>',
-    'Add files to the upload queue and click the start button.' : '<?php putGS('Add files to the upload queue and click the start button.'); ?>',
-    'Filename' : '<?php putGS('Filename'); ?>',
-    'Status' : '<?php putGS('Status'); ?>',
-    'Size' : '<?php putGS('Size'); ?>',
-    'Add files' : '<?php putGS('Add files'); ?>',
-    'Start upload' : '<?php putGS('Start upload'); ?>',
-    'Stop current upload' : '<?php putGS('Stop current upload'); ?>',
-    'Start uploading queue' : '<?php putGS('Start uploading queue'); ?>',
-    'Drag files here.' : '<?php putGS('Drag files here.'); ?>'
+    'Select files' : '<?php echo $translator->trans('Select files', array(), 'home'); ?>',
+    'Add files to the upload queue and click the start button.' : '<?php echo $translator->trans('Add files to the upload queue and click the start button.', array(), 'home'); ?>',
+    'Filename' : '<?php echo $translator->trans('Filename', array(), 'home'); ?>',
+    'Status' : '<?php echo $translator->trans('Status'); ?>',
+    'Size' : '<?php echo $translator->trans('Size', array(), 'home'); ?>',
+    'Add files' : '<?php echo $translator->trans('Add files', array(), 'home'); ?>',
+    'Start upload' : '<?php echo $translator->trans('Start upload', array(), 'home'); ?>',
+    'Stop current upload' : '<?php echo $translator->trans('Stop current upload', array(), 'home'); ?>',
+    'Start uploading queue' : '<?php echo $translator->trans('Start uploading queue', array(), 'home'); ?>',
+    'Drag files here.' : '<?php echo $translator->trans('Drag files here.', array(), 'home'); ?>'
 });
 </script>
