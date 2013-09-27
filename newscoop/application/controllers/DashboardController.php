@@ -48,6 +48,7 @@ class DashboardController extends Zend_Controller_Action
         $form->setMethod('POST');
         $form->setDefaults((array) $this->user->getView());
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $listView = $this->_helper->service('mailchimp.list')->getListView();
         $memberView = $this->_helper->service('mailchimp.list')->getMemberView($this->user->getEmail());
         $this->_helper->newsletter->initForm($form, $listView, $memberView);
@@ -63,7 +64,7 @@ class DashboardController extends Zend_Controller_Action
                 }
                 $this->service->save($values, $this->user);
                 $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
-                $this->_helper->flashMessenger->addMessage(getGS('Profile saved.'));
+                $this->_helper->flashMessenger->addMessage($translator->trans('Profile saved.', array(), 'users'));
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {

@@ -1,13 +1,12 @@
 <?php
-camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Languages"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Languages"), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 

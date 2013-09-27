@@ -18,7 +18,7 @@ class YourArticlesWidget extends ArticlesWidget
     public function __construct()
     {   
         $translator = \Zend_Registry::get('container')->getService('translator');
-        $this->title = getGS('Your Articles', array(), 'extensions');
+        $this->title = $translator->trans('Your Articles', array(), 'extensions');
     }
 
     public function beforeRender()

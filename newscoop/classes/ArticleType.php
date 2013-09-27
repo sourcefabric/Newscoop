@@ -462,14 +462,14 @@ class ArticleType {
         $field = new ArticleTypeField($p_article_type, 'NULL');
 
         if (!$field->exists()) {
-            return getGS('No such article type', array(), 'api');
+            return $translator->trans('No such article type', array(), 'api');
         }
 
         $res = $field->setFilter($p_filter_value);
         if (!$res) {
-            return getGS('Filter not saved', array(), 'api');
+            return $translator->trans('Filter not saved', array(), 'api');
         }
-        return getGS('Filter saved', array(), 'api');
+        return $translator->trans('Filter saved', array(), 'api');
     }
 
 	/**

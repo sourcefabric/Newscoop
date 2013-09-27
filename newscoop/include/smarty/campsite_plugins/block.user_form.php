@@ -32,6 +32,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         return null;
     }
 
+    $translator = \Zend_Registry::get('container')->getService('translator');
     $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
     $campsite = $p_smarty->getTemplateVars('gimme');
 
@@ -50,11 +51,7 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         $template = $campsite->default_template;
     }
     if (!isset($p_params['submit_button'])) {
-    	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
-    	if (!isGS('Submit')) {
-    		camp_load_translation_strings("globals", $campsite->language->code);
-    	}
-    	$p_params['submit_button'] = getGS('Submit');
+    	$p_params['submit_button'] = $translator->trans('Submit');
     }
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
         $p_params['html_code'] = '';

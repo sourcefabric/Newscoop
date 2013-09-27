@@ -27,7 +27,8 @@ class RegisterController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Application_Form_Register();
         $form->setMethod('POST');
 
@@ -45,7 +46,7 @@ class RegisterController extends Zend_Controller_Action
             }
 
             if (!$user->isPending()) {
-                $form->email->addError(sprintf(getGS('User with email %s is registered already.'), $values['email']));
+                $form->email->addError(sprintf($translator->trans('User with email %s is registered already.', array(), 'users'), $values['email']));
             } else {
                 $this->_helper->service('email')->sendConfirmationToken($user);
                 $this->_helper->redirector('after');
@@ -83,6 +84,8 @@ class RegisterController extends Zend_Controller_Action
     {
         $user = $this->getAuthUser();
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
         $form->setDefaults(array(
@@ -122,7 +125,7 @@ class RegisterController extends Zend_Controller_Action
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (InvalidArgumentException $e) {
-                $form->username->addError(getGS('Username is used. Please use another one.'));
+                $form->username->addError($translator->trans('Username is used. Please use another one.', array(), 'users'));
             }
         }
 

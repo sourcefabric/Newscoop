@@ -391,6 +391,7 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function outputEditAction()
     {
         $thmServ    = $this->getThemeService();
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         // getting the theme entity
         $themeId    = $this->_request->getParam( 'themeid' );
@@ -445,7 +446,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
                     $this->getThemeService()->assignOutputSetting( $settings, $theme );
 
-                    $msg = getGS( 'Theme settings saved.' ) ;
+                    $msg = $translator->trans( 'Theme settings saved.' , array(), 'themes') ;
                     $this->view->success = $msg;
                     $this->_helper->flashMessenger( $msg );
                 }
@@ -456,7 +457,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
         catch( \Exception $e )
         {
-//            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
+//            $this->_helper->flashMessenger( ( $this->view->error = $translator->trans( 'Saving settings failed.' ) ) );
         }
         $this->view->outputForm = $outputForm;
 
