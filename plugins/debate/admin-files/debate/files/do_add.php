@@ -41,7 +41,7 @@ if (isset($_FILES["f_file"])) {
 			camp_html_display_error($translator->trans("The file exceeds the allowed max file size.", array(), 'article_files'), null, true);
 			break;
 		case 3: // UPLOAD_ERR_PARTIAL
-			camp_html_display_error($translator->trans("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", array(), 'article_files'), null, true);
+			camp_html_display_error($translator->trans("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini", array(), 'article_files'), null, true);
 			break;
 		case 4: // UPLOAD_ERR_NO_FILE
 			camp_html_display_error($translator->trans("You must select a file to upload.", array(), 'article_files'), null, true);
