@@ -1,6 +1,4 @@
 <?php
-camp_load_translation_strings("article_types");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');

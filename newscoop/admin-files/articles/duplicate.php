@@ -527,7 +527,7 @@ foreach ($articles as $languageArray) {
 				if ($f_action == "duplicate") {
 					echo $translator->trans("Duplicate?", array(), 'articles');
 //				} elseif ($f_action == "move") {
-//					putGS("Move?");
+//					echo $translator->trans("Move?");
 				} elseif ($f_action == "publish") {
 					echo $translator->trans("Publish?", array(), 'articles');
 				}

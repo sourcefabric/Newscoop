@@ -226,26 +226,6 @@ function camp_mime_content_type($p_file)
 
 
 /**
- * Load the language files for the given prefix.
- *
- * @param string $p_prefix
- * @return void
- */
-function camp_load_translation_strings($p_prefix, $p_langCode = null)
-{
-    $langCode = null;
-    if (!is_null($p_langCode)) {
-        $langCode = $p_langCode;
-    } elseif (isset($_REQUEST['TOL_Language'])) {
-        $langCode = $_REQUEST['TOL_Language'];
-    } elseif (isset($_COOKIE['TOL_Language'])) {
-        $langCode = $_COOKIE['TOL_Language'];
-    }
-    Localizer::LoadLanguageFiles($p_prefix, $langCode);
-} // fn camp_load_translation_strings
-
-
-/**
  * Return TRUE if the given name is a valid URL name for a issue or section.
  *
  * @param string $p_name

@@ -69,7 +69,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<INPUT TYPE="HIDDEN" NAME="f_country_code" VALUE="<?php print $f_country_code; ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_country_orig_language" VALUE="<?php  print $f_country_language; ?>">
 	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  echo $translator->trans('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
+	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  echo $translator->trans('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
 	</DIV>
 	</TD>
 </TR>

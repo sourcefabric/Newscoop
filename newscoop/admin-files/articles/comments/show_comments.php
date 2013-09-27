@@ -272,7 +272,7 @@ var updateStatus = function(button) {
     var call_url = '../comment/set-status/format/json';
 
     var res_handle = function(data) {
-        //flashMessage('<?php putGS('Comments updated.'); ?>');
+        //flashMessage('<?php echo $translator->trans('Comments updated.'); ?>');
         toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
         if ('deleted' == wanted_status) {
             loadComments();

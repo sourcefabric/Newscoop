@@ -68,7 +68,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting topic"); ?> </B>
+		<B> <?php  echo $translator->trans("Deleting topic", array(), 'topics'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -83,7 +83,7 @@ echo camp_html_breadcrumbs($crumbs);
                 <?php
             }
             ?>
-            <li><?php putGS("If you continue, topic and all subtopics will be detached from all articles, and deleted."); ?></li>
+            <li><?php echo $translator->trans("If you continue, topic and all subtopics will be detached from all articles, and deleted.", array(), 'topics'); ?></li>
             <?php
         }
     ?>
@@ -94,12 +94,12 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
     <?php
         if ($doDelete == false) {
             ?>
             <?php echo SecurityToken::FormParameter(); ?>
-            <INPUT TYPE="button" class="button" VALUE="<?php putGS('Delete anyway'); ?>" ONCLICK="location.href=location.href + '&f_confirmed=1'">
+            <INPUT TYPE="button" class="button" VALUE="<?php echo $translator->trans('Delete anyway', array(), 'topics'); ?>" ONCLICK="location.href=location.href + '&f_confirmed=1'">
             <?php
         }
     ?>

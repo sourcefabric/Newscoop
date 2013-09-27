@@ -83,9 +83,6 @@ class BaseList
         $this->web = $Campsite['WEBSITE_URL'];
         $this->path = $this->web . '/admin/libs/ArticleList';
 
-        camp_load_translation_strings('articles');
-        camp_load_translation_strings('library');
-
         $this->id = substr(sha1(get_class($this)), -6);
     }
 

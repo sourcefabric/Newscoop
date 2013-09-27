@@ -55,7 +55,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
 		<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php echo $translator->trans('Save'); ?>">
-		<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
+		<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  echo $translator->trans('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
 		</DIV>
 	</TD>
 </TR>
