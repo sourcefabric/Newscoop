@@ -23,8 +23,8 @@ class Admin_View_Helper_LinkDelete extends Zend_View_Helper_Abstract
     {   
         $translator = \Zend_Registry::get('container')->getService('translator');
         $params = array_merge(array(
-            'name'  => $translator->trans(('Delete'),
-            'title' => $translator->trans(('Delete'),
+            'name'  => $translator->trans('Delete'),
+            'title' => $translator->trans('Delete'),
             'class' => array('delete','confirm'),
             'attributes' => array()
         ),is_null($p_params)? array():$p_params);

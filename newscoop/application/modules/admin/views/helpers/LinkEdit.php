@@ -23,8 +23,8 @@ class Admin_View_Helper_LinkEdit extends Zend_View_Helper_Abstract
     {   
         $translator = \Zend_Registry::get('container')->getService('translator');
         $params = array_merge(array(
-            'name'  => $translator->trans(('Edit'),
-            'title' => $translator->trans(('Edit'),
+            'name'  => $translator->trans('Edit'),
+            'title' => $translator->trans('Edit'),
             'class' => array('edit','confirm'),
             'attributes' => array()
         ),is_null($p_params)? array():$p_params);

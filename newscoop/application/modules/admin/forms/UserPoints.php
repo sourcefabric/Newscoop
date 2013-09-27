@@ -38,7 +38,7 @@ class Admin_Form_UserPoints extends Zend_Form
         }
 
         $this->addElement('submit', 'submit', array(
-            'label' => $translator->trans(('Save'),
+            'label' => $translator->trans('Save'),
             'ignore' => TRUE,
         ));
 

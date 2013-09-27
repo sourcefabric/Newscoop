@@ -51,7 +51,7 @@ class CommentController extends Zend_Controller_Action
 		}
 
 		if (!array_key_exists('f_comment_subject', $parameters) || empty($parameters['f_comment_subject'])) {
-			//$errors[] = $translator->trans(('The comment subject was not filled in.');
+			//$errors[] = $translator->trans('The comment subject was not filled in.');
 			$errors[] = $this->view->translate('The comment subject was not filled in.');
 		}
 		if (!array_key_exists('f_comment_content', $parameters) || empty($parameters['f_comment_content'])) {
