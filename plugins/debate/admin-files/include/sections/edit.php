@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 $section_language_id = $sectionObj->getLanguageId();
 $section_nr = $sectionObj->getSectionNumber();
 $issue_nr = $sectionObj->getIssueNumber();
@@ -10,7 +10,7 @@ $publication_id = $sectionObj->getPublicationId();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input" width="806">
 <TR>
 	<TD>
-		<B><?php  putGS("Debates"); ?></B>
+		<B><?php  putGS("Debates", array(), 'plugin_debate'); ?></B>
 	</TD>
     <?php if ($g_user->hasPermission('plugin_debate_admin')) {  ?>
     	<TD align="right">

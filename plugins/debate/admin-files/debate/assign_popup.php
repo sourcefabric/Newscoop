@@ -1,9 +1,8 @@
 <?php
-camp_load_translation_strings("plugin_debate");
-camp_load_translation_strings('home');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission("plugin_debate_admin")) {
-	camp_html_display_error(getGS("You do not have the right to manage debate."));
+	camp_html_display_error($translator->trans("You do not have the right to manage debate.", array(), 'plugin_debate'));
 	exit;
 }
 
@@ -24,7 +23,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <html>
 <head>
     <meta charset="utf-8" />
-	<title><?php putGS("Attach debate"); ?></title>
+	<title><?php echo $translator->trans("Attach debate", array(), 'plugin_debate'); ?></title>
 
 	<meta http-equiv="Expires" content="now" />
 
