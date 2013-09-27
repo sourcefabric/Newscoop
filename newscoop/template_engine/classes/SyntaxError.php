@@ -84,15 +84,15 @@ class SyntaxError {
 			return null;
 		}
 
-		$errorMessage = $translator->trans(SyntaxError::ErrorMessage($this->m_errorCode), $this->m_what);
+		$errorMessage = $translator->trans(SyntaxError::ErrorMessage($this->m_errorCode), array('$1' => $this->m_what), 'preview');
 		if (is_null($errorMessage)) {
 			return null;
 		}
 
 		if (isset($this->m_templateName)) {
-			$message .= $translator->trans('template') . ' ' . $this->m_templateName;
+			$message .= $translator->trans('template', array(), 'preview') . ' ' . $this->m_templateName;
 			if (isset($this->m_line)) {
-				$message .= ', ' . $translator->trans('line') . ' ' . $this->m_line;
+				$message .= ', ' . $translator->trans('line', array(), 'preview') . ' ' . $this->m_line;
 			}
 			$message .= ': ';
 		}

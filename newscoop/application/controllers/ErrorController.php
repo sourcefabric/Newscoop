@@ -9,10 +9,7 @@
  */
 class ErrorController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        camp_load_translation_strings('bug_reporting');
-    }
+    public function init(){}
 
     /**
      * Forward to legacy controller if controller/action not found

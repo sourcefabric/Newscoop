@@ -159,17 +159,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
-        	if (!isGS('Publication')) {
-        		camp_load_translation_strings("globals", $campsite->language->code);
-        	}
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
                 .'<option value="1" selected="selected">' . $translator->trans('Publication') . '</option>'
                 .'<option value="2">' . $translator->trans('Issue') . '</option>'
                 .'<option value="3">' . $translator->trans('Section') . '</option>'
                 .'</select>';
         } elseif ($attribute == 'section') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
         	$constraints = array();
             $operator = new Operator('is', 'integer');
             if ($campsite->publication->defined) {
@@ -182,9 +177,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
             }
             $sectionsList = Section::GetList($constraints, array('Name'=>'ASC'), 0, 0, $count);
-            if (!isGS('-- ALL SECTIONS --')) {
-            	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
-            }
+            
             $html = '<select name="f_search_section" ' . $p_params['html_code'] . '>';
             $html .= '<option value="0" selected="selected">' . $translator->trans('-- ALL SECTIONS --') . '</option>';
             foreach ($sectionsList as $section) {

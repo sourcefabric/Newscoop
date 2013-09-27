@@ -14,7 +14,6 @@ class RegisterController extends Zend_Controller_Action
 {
     public function init()
     {
-        camp_load_translation_strings('users');
         $this->_helper->contextSwitch
             ->addActionContext('generate-username', 'json')
             ->addActionContext('check-username', 'json')

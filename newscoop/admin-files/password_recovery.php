@@ -58,9 +58,6 @@ if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_COOKIE['TOL_Language'];
 }
 
-// Load the language files.
-camp_load_translation_strings("globals");
-camp_load_translation_strings("home");
 $sent = false;
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans("Newscoop", array(), 'home') . $Campsite['VERSION'];
 $disabled=false;

@@ -10,7 +10,6 @@
 
 require_once dirname(__FILE__) . '/User.php';
 require_once dirname(__FILE__) . '/SecurityToken.php';
-require_once dirname(__FILE__) . '/../admin-files/localizer/Localizer.php';
 
 /**
  * Server request class

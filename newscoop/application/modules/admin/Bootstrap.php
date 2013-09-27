@@ -60,15 +60,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             }, error_reporting());
         }
 
-        camp_load_translation_strings("api");
-        $plugins = CampPlugin::GetEnabled(true);
-        foreach ($plugins as $plugin) {
-            camp_load_translation_strings("plugin_".$plugin->getName());
-        }
-
-        // Load common translation strings
-        camp_load_translation_strings('globals');
-
         require_once APPLICATION_PATH . "/../$ADMIN_DIR/init_content.php";
 
         if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {

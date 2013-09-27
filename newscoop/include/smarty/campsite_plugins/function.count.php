@@ -4,7 +4,6 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
 require_once($GLOBALS['g_campsiteDir'] . '/admin-files/lib_campsite.php');
 
 /**

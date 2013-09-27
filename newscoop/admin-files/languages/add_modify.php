@@ -1,6 +1,5 @@
 <?php
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
