@@ -61,7 +61,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_Upgrade());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
-        $front->registerPlugin(new Application_Plugin_Locale());
     }
 
     protected function _initRouter()
@@ -75,19 +74,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
         Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
-    }
-
-    protected function _initTranslate()
-    {
-        $options = $this->getOptions();
-
-        $translate = new Zend_Translate(array(
-            'adapter' => 'array',
-            'disableNotices' => TRUE,
-            'content' => $options['translation']['path'],
-        ));
-
-        Zend_Registry::set('Zend_Translate', $translate);
     }
 
     protected function _initOdm()

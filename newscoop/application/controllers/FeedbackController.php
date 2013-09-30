@@ -25,7 +25,8 @@ class FeedbackController extends Zend_Controller_Action
     }
 
     public function saveAction()
-    {
+    {   
+        $translator = Zend_Registry::get('container')->getService('translator');
         $this->_helper->layout->disableLayout();
         $parameters = $this->getRequest()->getParams();
 
@@ -41,14 +42,14 @@ class FeedbackController extends Zend_Controller_Action
 
             $userIp = getIp();
             if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
-                $errors[] = $this->view->translate('You have been banned from writing feedbacks.');
+                $errors[] = $translator->trans('You have been banned from writing feedbacks.');
             }
         } else {
-            $errors[] = $this->view->translate('You are not logged in.');
+            $errors[] = $translator->trans('You are not logged in.');
         }
 
         if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
-            $errors[] = $this->view->translate('Feedback content was not filled in.');
+            $errors[] = $translator->trans('Feedback content was not filled in.');
         }
 
         if (empty($errors)) {
@@ -84,7 +85,7 @@ class FeedbackController extends Zend_Controller_Action
                         'image_id' => $values['attachment_id']
                     )));
 
-                $this->view->response = $this->view->translate('File is uploaded and your message is sent.');
+                $this->view->response = $translator->trans('File is uploaded and your message is sent.');
             }
             else if (isset($parameters['document_id'])) {
                 $values['attachment_type'] = 'document';
@@ -100,18 +101,18 @@ class FeedbackController extends Zend_Controller_Action
                         'document_id' => $values['attachment_id']
                     )));
 
-                $this->view->response = $this->view->translate('File is uploaded and your message is sent.');
+                $this->view->response = $translator->trans('File is uploaded and your message is sent.');
             }
             else {
                 $feedbackRepository->save($feedback, $values);
                 $feedbackRepository->flush();
 
-                $this->view->response = $this->view->translate('Your message is sent.');
+                $this->view->response = $translator->trans('Your message is sent.');
             }
         }
         else {
             $errors = implode('<br>', $errors);
-            $errors = $this->view->translate('Following errors have been found:') . '<br>' . $errors;
+            $errors = $translator->trans('Following errors have been found:') . '<br>' . $errors;
             $this->view->response = $errors;
         }
     }

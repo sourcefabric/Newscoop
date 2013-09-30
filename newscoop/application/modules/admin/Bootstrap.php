@@ -164,27 +164,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         Zend_Registry::set('acl', $acl);
     }
 
-    /**
-     * Init forms translator
-     */
-    protected function _initForm()
-    {   
-        $translator = \Zend_Registry::get('container')->getService('translator');
-        $translate = new Zend_Translate(array(
-            'adapter' => 'array',
-            'disableNotices' => TRUE,
-            'content' => array(
-                "Value is required and can't be empty" => $translator->trans("Value is required and cant be empty", array(), 'home'),
-                "'%value%' is less than %min% characters long" => $translator->trans("%value% is less than %min% characters long", array(), 'home'),
-                "'%value%' is more than %max% characters long" => $translator->trans("%value% is more than %max% characters long", array(), 'home'),
-                "The two given tokens do not match" => $translator->trans("Security token expired. Please resubmit the form.", array(), 'home'),
-                "No token was provided to match against" => $translator->trans("Security token expired. Please resubmit the form.", array(), 'home'),
-            ),
-        ));
-
-        Zend_Form::setDefaultTranslator($translate);
-    }
-
     protected function _initNewscoopViewHelpers()
     {
         $this->bootstrap('view');
