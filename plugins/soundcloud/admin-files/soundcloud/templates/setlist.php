@@ -37,5 +37,5 @@ $translator = \Zend_Registry::get('container')->getService('translator');
   </tbody>
 </table>
 <? if ($counter == 0): ?>
-    <? putGS('No sets found', array(), 'plugin_soundcloud') ?>
+    <? echo $translator->trans('No sets found', array(), 'plugin_soundcloud') ?>
 <? endif ?>
