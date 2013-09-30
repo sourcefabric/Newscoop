@@ -37,7 +37,7 @@ final class MetaSlideshowItem
      */
     private $item;
 
-    /**q
+    /**
      * @param Newscoop\Package\Item $item
      */
     public function __construct(\Newscoop\Package\Item $item)
