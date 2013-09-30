@@ -1,0 +1,82 @@
+'Are you sure you want to delete the poll $1?': 'Tem certeza que quer apagar a pesquisa $1?'
+'click to edit': 'clique para editar'
+Polls: Pesquisas
+'You must select a file to upload.': 'Você tem que selecionar um arquivo para upload.'
+'You do not have the right to delete files.': 'Você não tem permissão para apagar arquivos.'
+'You do not have the right to change the article.': 'Você não tem permissão para alterar o artigo.'
+'You do not have the right to change files.': 'Você não tem permissão para alterar arquivos.'
+'You do not have the right to add files.': 'Você não tem permissão para adicionar arquivos.'
+'Unable to add attachment.': 'Não foi possível adicionar um anexo.'
+'There was a problem uploading the file.': 'Houve um problema durante o upload do arquivo.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'O upload do arquivo foi apenas parcial. Isso acontece quando o tempo máximo para fazer upload é curto comparado com o tamanho do arquivo que você está tentando mandar. O tempo máximo do upload é definido no php.ini.'
+'The maximum file upload size was not configured in Campsite.': 'O tamanho máximo de arquivo para upload não foi configurado no Campsite.'
+'The file exceeds the allowed max file size.': 'O arquivo é maior do que é permitido.'
+'Should this file only be available for this translation, or for all translations?': 'Este arquivo deve estar disponível apenas para esta tradução, ou para todas as traduções?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Este arquivo deve estar disponível apenas para esta tradução do artigo, ou para todas as traduções?'
+'Poll Answer $1 does not exist.': 'Resposta $1 da pesquisa não existe.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Por favor verifique se atualizou a base de dados corretamente: executar $1 na cápsula.'
+'Please enter a description for the file.': 'Por favor descreva o arquivo.'
+'Open in the browser': 'Abrir no navegador'
+'Only this translation': 'Apenas esta tradução'
+'Maximum Upload Size': 'Tamanho máximo para upload'
+Files: Arquivos
+'File information': 'Dados sobre o arquivo'
+'File Size': 'Tamanho do arquivo'
+'File Name': 'Nome do arquivo'
+'File $1 updated.': 'Arquivo $1 foi atualizado.'
+'File $1 deleted.': 'Arquivo $1 foi apagado.'
+'File $1 added.': 'Arquivo $1 foi adicionado.'
+'Edit article': 'Editar artigo'
+Download: Baixar
+'Do you want this file to open in the users browser, or to automatically download?': 'Quer que este arquivo seja aberto no navegador do usuário, ou que seja baixado automaticamente?'
+'Change file information': 'Modificar dados do arquivo'
+'Automatically download': 'Baixar automaticamente'
+Attachments: Aenxos
+'Attachment does not exist.': 'Não há anexo.'
+'Attach File to Poll Answer': 'Anexar arquivo para a resposta à pesquisa'
+'Are you sure you want to remove the file $1 from the poll answer?': 'Tem certeza que quer remover o arquivo $1  da resposta à pesquisa?'
+'All translations': 'Todas as traduções'
+'You need to activate at least 1 answer.': 'Precisa ativar pelo menos 1 resposta.'
+'You must select number of votes per user.': 'Você tem que selecionar o número de votos por usuário.'
+'You must select number of answers.': 'Você tem que selecionar o número de respostas.'
+'You must select at least one poll to perform an action.': 'Tem que selecionar pelo menos uma pesquisa para realizar uma ação.'
+'You do not have the right to manage polls.': 'Você não tem permissão para gerenciar pesquisas.'
+'You do not have the right to manage poll.': 'Você não tem permissão para gerenciar a pesquisa.'
+'Votes per unique User': 'Votos por um usuário'
+'Votes per single User': 'Votos por um usuário'
+Votes: Votos
+'Translate Poll': 'Traduzir pesquisa'
+Title: Título
+Standard: Padrão
+Result: Resultado
+Reset: Zerar
+Question: Pergunta
+'Poll does not exists.': 'Pesquisa não existe.'
+'Poll List': 'Lista da pesquisa'
+'Percentage this language': 'Percentagem este idioma'
+'Percentage all languages': 'Percentagem todos os idiomas'
+'Number of answers': 'Número de respostas'
+'No polls.': 'Não há pesquisas'
+'No Polls available.': 'Não há pesquisas disponíveis'
+'Invalid input': 'Entrada inválida'
+Extended: Extendido/a
+'Error changing attachment.': 'Erro durante a substituição do anexo.'
+'Error changing attachment': 'Erro durante a substituição do anexo'
+End: Fim
+'Edit Poll': 'Editar pesquisa'
+'Duplicate Poll': 'Duplicar pesquisa'
+'Date end voting': 'Data de término da votação'
+'Date end': 'Data do término'
+'Date begin voting': 'Data do começo da votação'
+'Date begin': 'Data de início'
+'Copy statistics': 'Copiar estatísticas'
+Copy: Copiar
+Begin: Começar
+'Attach poll': 'Anexar pesquisa'
+'Attach Polls': 'Anexar pesquisas'
+'Are you sure you want to reset counters on the selected polls?': 'Tem certeza que quer zerar os contadores das pesquisas selecionadas?'
+'Are you sure you want to delete the selected polls?': 'Tem certeza que quer apagar a pesquisa selecionada?'
+'Answer $1': 'Resposta $1'
+'Add new Poll': 'Adicionar nova pesquisa'
+---Select---: ---Selecionar---
+'$1/$2 polls assigned/unassigned.': 'Pesquisas $1/$2 atribuídas/não atribuídas'

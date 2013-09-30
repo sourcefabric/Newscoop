@@ -1,0 +1,113 @@
+'You do not have the right to upload SoundCloud tracks.': 'You do not have the right to upload SoundCloud tracks.'
+'You do not have the right to update SoundCloud tracks.': 'You do not have the right to update SoundCloud tracks.'
+'You do not have the right to manage SoundCloud tracks.': 'You do not have the right to manage SoundCloud tracks.'
+'You do not have the right to manage SoundCloud preferences.': 'You do not have the right to manage SoundCloud preferences.'
+'You do not have the right to delete SoundCloud tracks.': 'You do not have the right to delete SoundCloud tracks.'
+'User may upload tracks to SoundCloud': 'User may upload tracks to SoundCloud'
+'User may update SoundCloud track data': 'User may update SoundCloud track data'
+'User may manage SoundCloud preferences': 'User may manage SoundCloud preferences'
+'User may delete SoundCloud tracks': 'User may delete SoundCloud tracks'
+'User may browse SoundCloud tracks': 'User may browse SoundCloud tracks'
+'Upload Track to SoundCloud': 'Upload Track to SoundCloud'
+'Track has been updated on SoundCloud': 'Track has been updated on SoundCloud'
+'Track $1 has been uploaded to SoundCloud. Click to close': 'Track $1 has been uploaded to SoundCloud. Click to close'
+'SoundCloud reports an error:': 'SoundCloud reports an error:'
+'SoundCloud preferences updated.': 'SoundCloud preferences updated.'
+'SoundCloud plugin requires php_curl module.': 'SoundCloud plugin requires php_curl module.'
+'SoundCloud checked successfully.': 'SoundCloud checked successfully.'
+'SoundCloud Preferences': 'SoundCloud Preferences'
+SoundCloud: SoundCloud
+'select range': 'select range'
+'connection error': 'connection error'
+'a comma separated list of tags': 'a comma separated list of tags'
+'a comma separated list of genres': 'a comma separated list of genres'
+'Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player': 'Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player'
+'Wrong file format': 'Wrong file format'
+'Work in progress': 'Work in progress'
+'We support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC files. Please, respect the <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> and only upload tracks with permission from the rights holders.': 'We support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC files. Please, respect the <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> and only upload tracks with permission from the rights holders.'
+'Video link': 'Video link'
+'Uploading... please wait': 'Uploading... please wait'
+'Upload successful': 'Upload successful'
+'Upload error!': 'Upload error!'
+'Upload error': 'Upload error'
+Upload: Upload
+'Tracks not found': 'Tracks not found'
+Tracks: Tracks
+'Track type': 'Track type'
+'Track not found': 'Track not found'
+'Track manager': 'Track manager'
+'To get preferences you need:': 'To get preferences you need:'
+Title: Title
+'This track is currently available to everyone': 'This track is currently available to everyone'
+'The work is in the public domain': 'The work is in the public domain'
+Tags: Tags
+Streamable: Streamable
+Stem: Stem
+Spoken: Spoken
+'Specify the artwork file': 'Specify the artwork file'
+'Sound Effect': 'Sound Effect'
+'Social media sharing message': 'Social media sharing message'
+'Showing $1 to $2': 'Showing $1 to $2'
+Settings: Settings
+'Set list': 'Set list'
+'Select type': 'Select type'
+'Select license type': 'Select license type'
+'Select key': 'Select key'
+'Search options': 'Search options'
+'Search error': 'Search error'
+'Save successful': 'Save successful'
+'Save error': 'Save error'
+'Save and attach successful': 'Save and attach successful'
+Reset: Reset
+Remix: Remix
+'Release/catalogue number': 'Release/catalogue number'
+'Release date': 'Release date'
+Recording: Recording
+Public: Public
+Processing...: Processing...
+Private: Private
+Podcast: Podcast
+'Please define the track title': 'Please define the track title'
+'Please choose the track file': 'Please choose the track file'
+'Please check php settings for file uploading': 'Please check php settings for file uploading'
+Play: Play
+Original: Original
+'Only you have access': 'Only you have access'
+'One Shot Sample': 'One Shot Sample'
+Ok: Ok
+'No tracks found': 'No tracks found'
+'No sets found': 'No sets found'
+'More options': 'More options'
+Loop: Loop
+Live: Live
+License: License
+Label: Label
+'Key signature': 'Key signature'
+'Image file': 'Image file'
+ISRC: ISRC
+Genres: Genres
+Genre: Genre
+'Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery': 'Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery'
+Filter: Filter
+'Error during create attachement': 'Error during creation of attachment'
+'Enter permalink or email address': 'Enter permalink or email address'
+'Enter password': 'Enter password'
+'Enter Client secret': 'Enter Client secret'
+'Enter Client ID': 'Enter Client ID'
+'Edit error': 'Edit error'
+Downlodable: Downloadable
+Downloadable: Downloadable
+Demo: Demo
+'Click to make this track private': 'Click to make this track private'
+'Click to make this track available to everyone': 'Click to make this track available to everyone'
+'Check connection': 'Check connection'
+'Buy link': 'Buy link'
+Bpm: Bpm
+Attention!: Attention!
+'Attach error': 'Attach error'
+'Are you sure you want to delete the track:': 'Are you sure you want to delete the track:'
+'All rights are reserved': 'All rights are reserved'
+'Advanced settings': 'Advanced settings'
+'Add to set': 'Add to set'
+'A space separated list of tags': 'A space separated list of tags'
+'1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps': '1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps'

@@ -1,0 +1,96 @@
+'You must fill in the $1 field %s.': 'თქვენ უნდა შეავსოთ $1 ველი % ები.'
+Weekly: ყოველკვირეული
+Week: კვირა
+Results: შედეგები
+'Please input at least 2 answers': 'გთხოვთ მიუთითოთ არანაკლებ 2 პასუხისა'
+Monthly: 'ყოველთვიური '
+Month: თვე
+'End time cannot be set before start time': 'დასრულების დროის მითითება შეუძლებელია დაწყების დრომდე'
+Day: დღე
+Daily: 'ყოველდღიური '
+'Attach Debate': 'დებატის მიბმა'
+'Are you sure you want to reset counters on the selected debatess?': 'დარწმუნებული ხართ, რომ გსურთ გადატვირთოთ აღნიშნული დაბატების მრიცხველი?'
+'Are you sure you want to delete the selected debatess?': 'დარწმუნებული ხართ, რომ გსურთ აღნიშნული დებატების წაშლა?'
+'Answer %s': 'პასუხი % ები'
+Answer: 'პასუხი '
+'Allow not logged in users': 'არაავტორიზებული მომხმარებლების დაშვება'
+'Are you sure you want to delete the debate $1?': 'დარწმუნებული ხართ რომ გსურთ წაშალოთ დებატი $1?'
+'click to edit': 'რედაქტირებისთვის დააჭირეთ'
+Debates: დებატები
+'You must select a file to upload.': 'თქვენ უნდა მონიშნოთ ფაილი ასატვირთად.'
+'You do not have the right to delete files.': 'თქვენ არ გაქვთ ფაილების წაშლის უფლება.'
+'You do not have the right to change the article.': 'თქვენ არ გაქვთ სტატიის შეცვლის უფლება. '
+'You do not have the right to change files.': 'თქვენ არ გაქვთ ფაილების შეცვლის უფლება. '
+'You do not have the right to add files.': 'თქვენ არ გაქვთ ფაილების დამატების უფლება.'
+'Unable to add attachment.': 'შეუძლებელია დანართის დამატება. '
+'There was a problem uploading the file.': 'ფაილის ატვირთვისას ადგილი ჰქონა პრობლემას. '
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'ასატვირთი ფაილი მხოლოდ ნაწილობრივ აიტვირთა. ეს მიღებულია, როდესაც ფაილის ატვირთვის მაქსიმალური დრო დაბალია იმ ფაილის მოცულობასთან შედარებით, რომლის შეყვანასაც ცდილობთ. მაქსიმალური შეყვანის დრო მითითებულია php.ini-ში. '
+'The maximum file upload size was not configured in Campsite.': 'ფაილის მაქსიმალური ასატვირთი ზომა არ იყო კონფიგურირებული კეპმსაიტში. '
+'The file exceeds the allowed max file size.': 'ფაილის ზომა აჭარბებს მაქსიმალურ დაშვებულ სიდიდეს. '
+'Should this file only be available for this translation, or for all translations?': 'მოცემული ფაილი მხოლოდ ამ თარგმანისთვის უნდა იყოს ხელმისაწვდომი, თუ ყველა სხვა თარგმანისთვის?'
+'Should this file only be available for this translation of the article, or for all translations?': 'მოცეული ფაილი მხოლოდ ამ სტატიის თარგმანისთვის უნდა იყოს ხელმისაწვდომი, თუ ყველა სხვა თარგმანისთვის? '
+'Debate Answer $1 does not exist.': 'დებატის პასუხი $1 არ არსებობს.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'გთხოვთ დარწმუნდეთ, რომ სწორად განაახლეთ მონაცემთა ბაზა: გაუშვით $1 გარსის მოდულში. '
+'Please enter a description for the file.': 'გთხოვთ შეიყვანოთ ფაილის აღწერა. '
+'Open in the browser': 'ბრაუზერში გახსნა'
+'Only this translation': 'მხოლოდ ეს თარგმანი'
+'Maximum Upload Size': 'მაქსიმალური ასატვირთი ზომა'
+Files: ფაილი
+'File information': 'ფაილის ინფორმაცია'
+'File Size': 'ფაილის ზომა'
+'File Name': 'ფაილის სახელი '
+'File $1 updated.': 'ფაილი $1 განახლებულია. '
+'File $1 deleted.': 'ფაილი $1 წაშლილია. '
+'File $1 added.': 'ფაილი $1 დამატებულია. '
+'Edit article': 'სტატიის რედაქტირება'
+Download: გადმოწერა
+'Do you want this file to open in the users browser, or to automatically download?': 'გსურთ რომ ეს ფაილი მხოლოდ მომხმარებლის ბრაუზერში გაიხსნას, თუ ჩამოიტვირთოს ავტომატურად? '
+'Change file information': 'ფაილის ინფორმაციის შეცვლა'
+'Automatically download': 'ავტომატურად გადმოწერა'
+Attachments: დანართები
+'Attachment does not exist.': 'დანართი არ არსებობს.'
+'Attach File to Debate Answer': 'დებატის პასუხისთვის ფაილის მიმაგრება'
+'Are you sure you want to remove the file $1 from the debate answer?': 'დარწმუნებული ხართ, რომ გსურთ მოაცილოთ $1 ფაილი დებატის პასუხიდან?'
+'All translations': 'ყველა თარგმანი'
+'You need to activate at least 1 answer.': 'თქვენ უნდა გააქტიუროთ სულ მცირე ერთი პასუხი. '
+'You must select number of votes per user.': 'თქვენ უნდა მონიშნოთ ხმების რაოდენობა მომხმარებლის მიხედვით.'
+'You must select number of answers.': 'თქვენ უნდა მოიუთითოთ პასუხების რაოდენობა. '
+'You must select at least one debate to perform an action.': 'თქვენ უნდა მონიშნოთ სულ მცირე ერთი დებატი რომ ჩაატაროთ ეს მოქმედება.'
+'You do not have the right to manage debates.': 'თქვენ არ გაქვთ უფლება მართოთ დებატები.'
+'You do not have the right to manage debate.': 'თქვენ არ გაქვთ უფლება მართოთ დებატი. '
+'Votes per unique User': 'ხმების რაოდნობა უნიკალური მომხმარებლისთვის. '
+'Votes per single User': 'ხმების რაოდენობა თვითოეული მომხმარებლისთვის. '
+Votes: ხმები
+'Translate Debate': 'დებატის თარგმნა'
+Title: 'სათაური '
+Standard: სტანდარტული
+Result: შედეგი
+Reset: ჩამოყრა
+Question: შეკითხვა
+'Debate does not exists.': 'დებატი არ არსებობს.'
+'Debate List': 'დებატების სია'
+'Percentage this language': 'ამ ენის პროცენტულობა'
+'Percentage all languages': 'ყველა ენის პროცენტები'
+'Number of answers': 'პასუხების რაოდენობა'
+'No debates.': 'დებატები არ არის. '
+'No Debates available.': 'დებატები არ არის ხელმისაწვდომი. '
+'Invalid input': 'არასწორი შენატანი'
+Extended: გაფართოებული
+'Error changing attachment.': 'ხარვეზი სტატიაზე მიმაგრებული ბმულის შეცვლისას.'
+'Error changing attachment': 'ხარვეზი სტატიაზე მიმაგრებული ბმულის შეცვლისას'
+End: დასასრული
+'Edit Debate': 'დებატის რედაქტირება'
+'Duplicate Debate': 'დებატის დუპლიკატი'
+'Date end voting': 'ხმის მიცემის ბოლო ვადა'
+'Date end': 'ბოლო ვადა'
+'Date begin voting': 'ხმის მიცემის დაწყება'
+'Date begin': 'დაწყების თარიღი'
+'Copy statistics': 'სტატისტიკის ასლი'
+Copy: ასლი
+Begin: დაწყება
+'Attach debate': 'დებატის მიმაგრება'
+'Attach Debates': 'დებატების მიმაგრება'
+'Answer $1': 'პასუხი $1'
+'Add new Debate': 'ახალი დებატის დამატება'
+---Select---: ---მონიშვნა---
+'$1/$2 debates assigned/unassigned.': '$1/$2 დებატები განაწილებულია/გაუნაწილებელია.'

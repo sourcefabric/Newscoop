@@ -1,0 +1,96 @@
+'You must fill in the $1 field %s.': 'Musisz wpisać w pole $1 %s'
+Weekly: Tygodniowo
+Week: Tydzień
+Results: Wyniki
+'Please input at least 2 answers': 'Wprowadź przynajmniej 2 odpowiedzi'
+Monthly: Miesięcznie
+Month: Miesiąc
+'End time cannot be set before start time': 'Data zakończenia nie może być wcześniej niż data startu'
+Day: Dzień
+Daily: Dziennie
+'Attach Debate': 'Dołącz debatę'
+'Are you sure you want to reset counters on the selected debatess?': 'Jesteś pewien że chcesz wyzerować liczniki dla wybranych debat?'
+'Are you sure you want to delete the selected debatess?': 'Jesteś pewien że chchesz usunąc wybrane debaty?'
+'Answer %s': 'Odpowiedź %s'
+Answer: Odpowiedź
+'Allow not logged in users': 'Zezwól dla niezalogowanych.'
+'Are you sure you want to delete the debate $1?': 'Na pewno usunąć ankietę $1?'
+'click to edit': 'kliknij aby edytować'
+Debates: Ankiety
+'You must select a file to upload.': 'Musisz wskazać plik do wgrania'
+'You do not have the right to delete files.': 'Nie masz praw aby usuwać pliki.'
+'You do not have the right to change the article.': 'Nie masz praw do zmian w artykule.'
+'You do not have the right to change files.': 'Nie masz praw do zmian w pliku.'
+'You do not have the right to add files.': 'Nie masz praw do dodawania plików.'
+'Unable to add attachment.': 'Nie można dodać załącznika.'
+'There was a problem uploading the file.': 'Wystąpił błąd podczas dodawania pliku.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Wybrany plik został dodany tylko częściowo. '
+'The maximum file upload size was not configured in Campsite.': 'Maksymalny rozmiar pliku nie został określony w Newscoop'
+'The file exceeds the allowed max file size.': 'Plik jest większy niż dozwolony maksymalny rozmiar.'
+'Should this file only be available for this translation, or for all translations?': 'Czy ten plik powinien być dostępny tylko dla tego tłumaczenie, czy dla wszystkich?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Czy ten plik powinien być dostępny tylko dla tego tłumaczenie, czy dla wszystkich?'
+'Debate Answer $1 does not exist.': 'Odpowiedź $1 w ankiecie nie istnieje.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Upewnij się, że baza danych została zaktualizowana poprawnie: uruchom $1 w shellu.'
+'Please enter a description for the file.': 'Podaj opis dla pliku.'
+'Open in the browser': 'Otwórz w przeglądarce'
+'Only this translation': 'Tylko to tłumazenie'
+'Maximum Upload Size': 'Maksymalny Rozmiar Pliku'
+Files: Pliki
+'File information': 'Informacje o pliku'
+'File Size': 'Rozmiar Pliku'
+'File Name': 'Nazwa pliku'
+'File $1 updated.': 'Plik $1 zaktualizowany.'
+'File $1 deleted.': 'Plik $1 usunięty.'
+'File $1 added.': 'Plik $1 dodany.'
+'Edit article': 'Edytuj artykuł'
+Download: Pobierz
+'Do you want this file to open in the users browser, or to automatically download?': "Czy chcesz aby ten plik otwierał się\_w przeglądarce użytwkonika, czy automatycznie pobierał?"
+'Change file information': 'Zmień informację o pliku'
+'Automatically download': 'Automatycznie pobierz'
+Attachments: Załączniki
+'Attachment does not exist.': 'Załącznik nie istnieje'
+'Attach File to Debate Answer': 'Załącz plik do odpowiedzi w ankiecie'
+'Are you sure you want to remove the file $1 from the debate answer?': 'Na pewno chcesz usunąć plik $1 z odpowiedzi w ankiecie?'
+'All translations': 'Wszystkie tłumaczenia'
+'You need to activate at least 1 answer.': 'Należy aktywować co najmniej jedną odpowiedź.'
+'You must select number of votes per user.': 'Musisz wybrać ilość glosów na użytkownika.'
+'You must select number of answers.': 'Musisz wybrać liczbę odpowiedzi.'
+'You must select at least one debate to perform an action.': 'Musisz wybrać co najmniej jedną ankietę aby to uczynić.'
+'You do not have the right to manage debates.': 'Nie masz praw do zarządzania ankietami.'
+'You do not have the right to manage debate.': 'Nie masz praw do zarządzania ankietą.'
+'Votes per unique User': 'Głosów na Unikalnego Użytkownika.'
+'Votes per single User': 'Głosów na pojedyneczego użytkownika'
+Votes: Głost
+'Translate Debate': 'Przetłumacz Ankietę'
+Title: Tytuł
+Standard: Standard
+Result: Wynik
+Reset: Reset
+Question: Pytanie
+'Debate does not exists.': 'Ankieta nie istnieje.'
+'Debate List': 'Lista Ankiet'
+'Percentage this language': 'Oprocentuj ten język'
+'Percentage all languages': 'Oprocentuj wszystkie języki'
+'Number of answers': 'Licza odpowiedzi'
+'No debates.': 'Brak ankiet.'
+'No Debates available.': 'Brak dostępnych ankiet.'
+'Invalid input': 'Niewłaściwy input'
+Extended: Rozszerzone
+'Error changing attachment.': 'Błąd przy zmianie załącznika.'
+'Error changing attachment': 'Błąd przy zmianie załącznika'
+End: Koniec
+'Edit Debate': 'Edytuj Ankietę'
+'Duplicate Debate': 'Zduplikuj Ankietę'
+'Date end voting': 'Data i głosowanie'
+'Date end': 'Data zakończenia'
+'Date begin voting': 'Data rozpoczęcia głosowania'
+'Date begin': 'Data rozpoczęcia'
+'Copy statistics': 'Kopiuj statystyki'
+Copy: Kopiuj
+Begin: Rozpocznij
+'Attach debate': 'Załącz ankietę'
+'Attach Debates': 'Załącz Ankiety'
+'Answer $1': 'Odpowiedź $1'
+'Add new Debate': 'Dodaj nową Ankietę'
+---Select---: ---Wybierz---
+'$1/$2 debates assigned/unassigned.': '$1/$2 ankiety przypisane/nieprzypisane.'

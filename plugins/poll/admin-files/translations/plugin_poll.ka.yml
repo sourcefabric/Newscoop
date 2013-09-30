@@ -1,0 +1,82 @@
+'Are you sure you want to delete the poll $1?': 'დარწმუნებული ხართ რომ გსურთ $1 გამოკითხვის წაშლა?'
+'click to edit': რედაქტირება
+Polls: გამოკითხვები
+'You must select a file to upload.': 'აირჩიეთ ასატვირთი ფაილი'
+'You do not have the right to delete files.': 'თქვენ არ გაქვთ ფაილების წაშლის უფლება.'
+'You do not have the right to change the article.': 'თქვენ არ გაქვთ სტატიების შეცვლის უფლება.'
+'You do not have the right to change files.': 'თქვენ არ გაქვთ ფაილების შეცვლის უფლება.'
+'You do not have the right to add files.': 'თქვენ არ გაქვთ ფაილების დამატების უფლება.'
+'Unable to add attachment.': 'ფაილი ვერ მიება.'
+'There was a problem uploading the file.': 'ატვირთვის დროს დაფიქსირდა შეცდომა'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'ატვირთული ფაილი ნაწილობრივ აიტვირთა. ეს შეიძლება მომხდარიყო იმიტომ რომ ასატვირთი დრო ფაილის ზომასთან შედარებით ცოტაა. მაქსიმუმი ასატვირთი დრო მითითებულია ფაილში php.ini'
+'The maximum file upload size was not configured in Campsite.': 'ფაილის მაქსიმალური ასატვირთი ზომა არ იყო კონფიგურირებული კემპსაიტზე. '
+'The file exceeds the allowed max file size.': 'ფაილის ზომა აღემატება დაშვებულ მაქსიმუმს.'
+'Should this file only be available for this translation, or for all translations?': 'ეს ფაილი ხელმისაწვდომი უნდა იყოს მხოლოდ ამ თარგმნისთვის, თუ ყველა თარგმნისთვის?'
+'Should this file only be available for this translation of the article, or for all translations?': 'ეს ფაილი ხელმისაწვდომი უნდა იყოს მხოლოდ ამ სტატიის თარგმნისთვის, თუ ყველა თარგმნისთვის?'
+'Poll Answer $1 does not exist.': 'გამოკითხვის პასუხი $1 არ არსებობს.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'გთხოვთ დარწმუნდეთ, რომ სწორად განაახლეთ მონაცემთა ბაზა: გაუშვით $1 გარსში.'
+'Please enter a description for the file.': 'მიუთითეთ ფაილის აღწერა'
+'Open in the browser': 'ბრაუზერში გახსნა'
+'Only this translation': 'მხოლოდ ეს თარგმანი'
+'Maximum Upload Size': 'ატვირთვის მაქსიმალური ზომა'
+Files: ფაილები
+'File information': 'ფაილის ინფორმაცია'
+'File Size': 'ფაილის ზომა'
+'File Name': 'ფაილის სახელი'
+'File $1 updated.': 'ფაილი $1 განახლდა.'
+'File $1 deleted.': 'ფაილი $1 წაიშალა.'
+'File $1 added.': 'ფაილი $1 დაემატა'
+'Edit article': 'სტატიის რედაქტირება'
+Download: ჩამოტვირთვა
+'Do you want this file to open in the users browser, or to automatically download?': 'ფაილი გაიხსნას მომხმარებლის ბრაუზერში თუ ავტომატურად ჩამოიტვირთოს?'
+'Change file information': 'ფაილის ინფორმაციის შეცვლა'
+'Automatically download': 'ავტომატური ჩამოტვირთვა'
+Attachments: 'მიმაგრებული ფაილები'
+'Attachment does not exist.': 'მიმაგრებული ფაილი არ არსებობს.'
+'Attach File to Poll Answer': 'ფაილის გამოკითხვის პასუხზე მიმაგრება'
+'Are you sure you want to remove the file $1 from the poll answer?': 'დარწმუნებული ხართ რომ გსურთ $1 ფაილის გამოკითხვის პასუხიდან მოხსნა?'
+'All translations': 'ყველა თარგმანი'
+'You need to activate at least 1 answer.': 'საჭიროა მინიმუმ 1 პასუხის აქტივიზაცია.'
+'You must select number of votes per user.': 'თქვენ უნდა მიუთითოთ ხმების რაოდენობა თვითოეულ მომხმარებელზე.'
+'You must select number of answers.': 'აირჩიეთ რამდენიმე პასუხი.'
+'You must select at least one poll to perform an action.': 'აირჩიეთ მინიმუმ ერთი გამოკითხვა.'
+'You do not have the right to manage polls.': 'თქვენ არ გაქვთ გამოკითხვების მართვის უფლება.'
+'You do not have the right to manage poll.': 'თქვენ არ გაქვთ გამოკითხვების მართვის უფლება.'
+'Votes per unique User': 'ხმები ერთ უნიკალურ მომხმარებელზე'
+'Votes per single User': 'ხმები ერთ მომხმარებელზე'
+Votes: ხმები
+'Translate Poll': 'გამოკითხვის თარგმნა'
+Title: სათაური
+Standard: სტანდარტი
+Result: შედეგი
+Reset: ჩამოყრა
+Question: კითხვა
+'Poll does not exists.': 'გამოკითხვა არ არსებობს.'
+'Poll List': 'გამოკითხვის სია'
+'Percentage this language': 'პროცენტულობა მოცემული ენისთვის'
+'Percentage all languages': 'პროცენტულობა ყველა ენისთვის'
+'Number of answers': 'პასუხების რაოდენობა'
+'No polls.': 'გამოკითხვები არ არის.'
+'No Polls available.': 'გამოკითხვები არ არის.'
+'Invalid input': 'არასწორი შენატანი'
+Extended: გავრცობილი
+'Error changing attachment.': 'მიმაგრებული ფაილის ცვლილებისას დაფიქსირდა შეცდომა.'
+'Error changing attachment': 'მიმაგრებული ფაილის ცვლილებისას დაფიქსირდა შეცდომა.'
+End: ბოლო
+'Edit Poll': 'გამოკითხვის რედაქტირება'
+'Duplicate Poll': 'გამოკითხვის დუბლირება'
+'Date end voting': 'ხმის მიცემის ბოლო ვადა'
+'Date end': 'ბოლო ვადა'
+'Date begin voting': 'ხმის მიცემის დასაწყისი'
+'Date begin': 'დასაწყისი თარიღი'
+'Copy statistics': 'სტატისტიკის კოპირება'
+Copy: კოპირება
+Begin: დაწყება
+'Attach poll': 'გამოკითხვის მიმაგრება'
+'Attach Polls': 'გამოკითხვების მიმაგრება'
+'Are you sure you want to reset counters on the selected polls?': 'დარწმუნებული ხართ რომ გსურთ მონიშნული გამოკითხვების შედეგების ჩამოყრა?'
+'Are you sure you want to delete the selected polls?': 'დარწმუნებული ხართ რომ გსურთ მონიშნული გამოკითხვების წაშლა?'
+'Answer $1': 'პასუხი $1'
+'Add new Poll': 'ახალი გამოკითხვის დამატება'
+---Select---: ---არჩევა---
+'$1/$2 polls assigned/unassigned.': '$1/$2 გამოკითხვები განაწილებულია/გაუნაწილებელია.'
