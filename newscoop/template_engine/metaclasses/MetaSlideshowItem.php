@@ -37,7 +37,7 @@ final class MetaSlideshowItem
      */
     private $item;
 
-    /**
+    /**q
      * @param Newscoop\Package\Item $item
      */
     public function __construct(\Newscoop\Package\Item $item)
@@ -48,6 +48,7 @@ final class MetaSlideshowItem
 
         if ($item->isImage()) {
             $thumbnail = $item->getRendition()->getThumbnail($item->getImage(), Zend_Registry::get('container')->getService('image'));
+            $image = $item->getImage();
             $this->image = (object) array(
                 'src' => Zend_Registry::get('view')->url(array(
                     'src' => $thumbnail->src,
@@ -55,6 +56,7 @@ final class MetaSlideshowItem
                 'width' => $thumbnail->width,
                 'height' => $thumbnail->height,
                 'original' => $item->getImage()->getPath(),
+                'id' => $image->getId()
             );
         } else {
             $this->video = (object) array(
