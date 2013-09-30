@@ -47,8 +47,8 @@ final class MetaSlideshowItem
         $this->is_video = $item->isVideo();
 
         if ($item->isImage()) {
-            $thumbnail = $item->getRendition()->getThumbnail($item->getImage(), Zend_Registry::get('container')->getService('image'));
             $image = $item->getImage();
+            $thumbnail = $item->getRendition()->getThumbnail($image, Zend_Registry::get('container')->getService('image'));
             $this->image = (object) array(
                 'src' => Zend_Registry::get('view')->url(array(
                     'src' => $thumbnail->src,
