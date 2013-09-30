@@ -8,10 +8,10 @@
 
 include 'data.php';
 require_once CS_PATH_PLUGINS.DIR_SEP.'soundcloud'.DIR_SEP.'classes'.DIR_SEP.'soundcloud.api.php';
-camp_load_translation_strings('plugin_soundcloud');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission('plugin_soundcloud_browser')) {
-    camp_html_display_error(getGS('You do not have the right to manage SoundCloud tracks.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage SoundCloud tracks.', array(), 'plugin_soundcloud'));
     exit;
 }
 
@@ -45,22 +45,22 @@ $track = array(
 );
 if ($action) {
     if (!$g_user->hasPermission('plugin_soundcloud_upload')) {
-        camp_html_display_error(getGS('You do not have the right to upload SoundCloud tracks.'));
+        camp_html_display_error($translator->trans('You do not have the right to upload SoundCloud tracks.', array(), 'plugin_soundcloud'));
         exit;
     }
 
     if (!empty($_FILES['asset_data']['error'])) {
         $showMessage = array (
-            'title' => getGS('Upload error'),
-            'message' => getGS('Please check php settings for file uploading'),
+            'title' => $translator->trans('Upload error', array(), 'plugin_soundcloud'),
+            'message' => $translator->trans('Please check php settings for file uploading', array(), 'plugin_soundcloud'),
             'type' => 'error',
             'fixed' => 'false',
         );
     }
     if (empty($_FILES['asset_data']['name'])) {
         $showMessage = array (
-            'title' => getGS('Upload error!'),
-            'message' => getGS('Please choose the track file'),
+            'title' => $translator->trans('Upload error!', array(), 'plugin_soundcloud'),
+            'message' => $translator->trans('Please choose the track file', array(), 'plugin_soundcloud'),
             'type' => 'error',
             'fixed' => 'false',
         );
@@ -69,8 +69,8 @@ if ($action) {
     if (!empty($_FILES['asset_data']['type'])
     && substr($_FILES['asset_data']['type'], 0, 5) != 'audio') {
         $showMessage = array (
-            'title' => getGS('Upload error'),
-            'message' => getGS('Wrong file format'),
+            'title' => $translator->trans('Upload error', array(), 'plugin_soundcloud'),
+            'message' => $translator->trans('Wrong file format', array(), 'plugin_soundcloud'),
             'type' => 'error',
             'fixed' => 'false',
         );
@@ -78,8 +78,8 @@ if ($action) {
 
     if (!$track['title']) {
         $showMessage = array (
-            'title' => getGS('Upload error'),
-            'message' => getGS('Please define the track title'),
+            'title' => $translator->trans('Upload error', array(), 'plugin_soundcloud'),
+            'message' => $translator->trans('Please define the track title', array(), 'plugin_soundcloud'),
             'type' => 'error',
             'fixed' => 'false',
         );
@@ -99,15 +99,15 @@ if ($action) {
         $result = $soundcloud->trackUpload($track);
         if (!$result) {
             $showMessage = array (
-                'title' => getGS('Upload error'),
-                'message' => getGS('SoundCloud reports an error:') . ' ' . $soundcloud->error,
+                'title' => $translator->trans('Upload error', array(), 'plugin_soundcloud'),
+                'message' => $translator->trans('SoundCloud reports an error:', array(), 'plugin_soundcloud') . ' ' . $soundcloud->error,
                 'type' => 'error',
                 'fixed' => 'true',
             );
         } else {
             $showMessage = array (
-                'title' => getGS('Upload successful'),
-                'message' => getGS('Track $1 has been uploaded to SoundCloud. Click to close', $result['id']),
+                'title' => $translator->trans('Upload successful', array(), 'plugin_soundcloud'),
+                'message' => $translator->trans('Track $1 has been uploaded to SoundCloud. Click to close', array('$1' => $result['id']), 'plugin_soundcloud'),
                 'type' => 'success',
                 'fixed' => 'true',
             );

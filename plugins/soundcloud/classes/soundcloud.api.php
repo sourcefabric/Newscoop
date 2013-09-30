@@ -311,22 +311,24 @@ class SoundcloudAPI
     }
 
     private static function _checkCURL()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if (!function_exists('curl_init')) {
-            camp_html_display_error(getGS('SoundCloud plugin requires php_curl module.'));
+            camp_html_display_error($translator->trans('SoundCloud plugin requires php_curl module.', array(), 'plugin_soundcloud'));
             exit;
         }
         return true;
     }
 
     private function _setError($result)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if (!empty($result['error'])) {
             $this->error = $result['error'];
         } elseif (!empty($result['errors'])) {
             $this->error = $result['errors']['error'];
         } else {
-            $this->error = getGS('connection error');
+            $this->error = $translator->trans('connection error', array(), 'plugin_soundcloud');
         }
     }
 }
