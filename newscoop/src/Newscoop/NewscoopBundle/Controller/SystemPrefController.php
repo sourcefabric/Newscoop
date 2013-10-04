@@ -158,7 +158,7 @@ class SystemPrefController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 if (!$currentUser->hasPermission('ChangeSystemPreferences')) {
-                    camp_html_display_error($translator->trans('newscoop.preferences.error.noaccess'));
+                    camp_html_display_error($translator->trans('newscoop.preferences.error.noaccess', array(), 'system_pref'));
                     exit;
                 }
 
@@ -244,7 +244,7 @@ class SystemPrefController extends Controller
                 $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
                 //Facebook
                 $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
-                $this->get('session')->getFlashBag()->add('success', $translator->trans('newscoop.preferences.success.saved'));
+                $this->get('session')->getFlashBag()->add('success', $translator->trans('newscoop.preferences.success.saved', array(), 'system_pref'));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
@@ -279,7 +279,7 @@ class SystemPrefController extends Controller
                 \CampCache::singleton()->clear();
             } else {
                 $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
-                    array('%cache%' => $cache_engine)
+                    array('%cache%' => $cache_engine), 'system_pref'
                 ));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -304,7 +304,7 @@ class SystemPrefController extends Controller
                 \CampTemplateCache::factory($cache_template)->clean();
             } else {
                 $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
-                    array('%cache%' => $cache_template)
+                    array('%cache%' => $cache_template), 'system_pref'
                 ));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -335,7 +335,7 @@ class SystemPrefController extends Controller
                 \SystemPref::Set("DBReplicationPass", strip_tags($password));
                 \SystemPref::Set("UseDBReplication", $use_replication);
             } else {
-                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.replication'));
+                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.replication', array(), 'system_pref'));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
@@ -384,7 +384,7 @@ class SystemPrefController extends Controller
             $max_upload_filesize_bytes <= min(trim(ini_get('post_max_size')), trim(ini_get('upload_max_filesize')))) {
             \SystemPref::Set("MaxUploadFileSize", strip_tags($max_size));
         } else {
-            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.maxupload'));
+            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.maxupload', array(), 'system_pref'));
 
             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
         }
@@ -404,7 +404,7 @@ class SystemPrefController extends Controller
         if ($latitude > 90 || $latitude < -90 || 
             $longitude > 180 || $longitude < -180) {
 
-            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.geolocation'));
+            $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.geolocation', array(), 'system_pref'));
 
             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
         } else {
