@@ -51,6 +51,12 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
         arguments:  ['@em']
 
+    newscoop_newscoop.translation_listener:
+        class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
+        arguments:  ['@translator']
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
     smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"
