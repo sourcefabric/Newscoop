@@ -34,13 +34,20 @@ class OldPluginsTranslationListener
         $locale = $request->getLocale();
         $this->translator->addLoader('yaml', new YamlFileLoader());
         $finder = new Finder();
-        $finder->files()->in(__DIR__.'/../../../../plugins');
-        $finder->files()->name('*.'.$locale.'.yml');
         $extension = $locale.'.yml';
-        
-        foreach ($finder as $file) {
-            $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
-            $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);    
+
+        try {
+
+            $finder->files()->in(__DIR__.'/../../../../plugins')->exclude('Newscoop');
+            $finder->files()->name('*.'.$locale.'.yml');
+            
+            foreach ($finder as $file) {
+                $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
+                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);    
+            }
+            
+        } catch (\InvalidArgumentException $exception) {
+            throw new \Exception('Plugins directory doesn\'t exist!');
         }
     }
 }
