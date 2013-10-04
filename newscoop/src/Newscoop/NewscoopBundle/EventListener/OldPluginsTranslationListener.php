@@ -38,7 +38,7 @@ class OldPluginsTranslationListener
 
         try {
 
-            $finder->files()->in(__DIR__.'/../../../../plugins')->exclude('Newscoop');
+            $finder->files()->in(__DIR__.'/../../../../plugins');
             $finder->files()->name('*.'.$locale.'.yml');
             
             foreach ($finder as $file) {
