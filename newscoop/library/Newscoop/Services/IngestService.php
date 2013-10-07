@@ -14,6 +14,7 @@ use Newscoop\Ingest\Parser;
 use Newscoop\Ingest\Parser\NewsMlParser;
 use Newscoop\Ingest\Parser\SwissinfoParser;
 use Newscoop\Ingest\Parser\SwisstxtParser;
+use Newscoop\Ingest\Parser\InfosperberParser;
 use Newscoop\Ingest\Publisher;
 use Newscoop\Services\Ingest\PublisherService;
 
@@ -108,6 +109,23 @@ class IngestService
 
         if ($feed) {
             $this->updateSTXFeed($feed);
+        }
+    }
+
+    /**
+     * Update Infosperber
+     *
+     * @return void
+     */
+    public function updateInfosperber()
+    {
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+            ->findOneBy(array(
+                'title' => 'infosperber',
+            ));
+
+        if ($feed) {
+            $this->updateInfosperberFeed($feed);
         }
     }
 
@@ -281,6 +299,62 @@ class IngestService
         $feed->setUpdated(new \DateTime());
 
         $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
+        $this->em->flush();
+    }
+
+    /**
+     * Update Infosperber feed
+     *
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return void
+     */
+    private function updateInfosperberFeed(Feed $feed)
+    {
+        $stories    = array();
+        $fetchables = array(
+            'section_wirtschaft'     => 'http://www.infosperber.ch/inc/rss.cfm?id=4', // Economy
+            'section_politik'        => 'http://www.infosperber.ch/inc/rss.cfm?id=3', // Politics
+            'section_gesellschaft'   => 'http://www.infosperber.ch/inc/rssSpezial.cfm', // Society
+        );
+
+        foreach ($fetchables as $section => $url) {
+            try {
+                $http = new \Zend_Http_Client($url);
+                $response = $http->request();
+                if ($response->isSuccessful()) {
+                    $responseBody = $response->getBody();
+                } else {
+                    continue;
+                }
+            } catch (\Zend_Http_Client_Exception $e) {
+                throw new \Exception("Infosperber http error {$e->getMessage()}");
+                continue;
+            } catch(\Exception $e) {
+                continue;
+            }
+
+            $storiesPerSection[$section] = InfosperberParser::getStories($responseBody);
+        }
+
+        // Handle stories
+        foreach ($storiesPerSection as $section => $stories) {
+            foreach ($stories as $story) {
+                try {
+                    $parser = new InfosperberParser($story, $section);
+                    $entry = $this->getPrevious($parser, $feed);
+
+                    if ($feed->isAutoMode()) {
+                        $this->publish($entry);
+                    }
+                } catch(\Exception $e) {
+                    throw new \Exception("Infosperber story error {$e->getMessage()}");
+                    continue;
+                }
+            }
+        }
+
+        $feed->setUpdated(new \DateTime());
+        $this->em->persist($feed);
         $this->em->flush();
     }
 

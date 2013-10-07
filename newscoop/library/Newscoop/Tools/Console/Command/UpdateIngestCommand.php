@@ -37,5 +37,6 @@ EOT
     {
         $ingest = $this->getHelper('container')->getService('ingest');
         $ingest->updateSTX();
+        $ingest->updateInfosperber();
     }
 }
