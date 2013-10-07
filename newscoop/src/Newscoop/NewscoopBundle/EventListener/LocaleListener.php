@@ -41,6 +41,9 @@ class LocaleListener
     public function onRequest(GetResponseEvent $event) {
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '/admin');
+        $cookies = $request->cookies->all();
+        $request->setLocale($cookies["TOL_Language"]);
+        
         if ($pos === false) {
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);

@@ -50,6 +50,7 @@ Folder: Ordner
 'Directory $1 was deleted': 'Verzeichnis $1 wurde gelöscht.'
 'Directory $1 created.': 'Verzeichnis $1 wurde erstellt.'
 'You must select a file to upload.': 'Eine Datei zum Hochladen auswählen.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Datei $1 konnte nicht zum Pfad $2 gespeichert werden.'
 Replace: Ersetzen
 'File $1 replaced.': 'Datei $1 ersetzt.'

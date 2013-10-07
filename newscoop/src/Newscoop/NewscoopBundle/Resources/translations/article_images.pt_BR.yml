@@ -1,3 +1,10 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 
+'Slideshow rendition': 
+'Renditions reloaded': 
+'Reload renditions': 
 'Edit images': 'Editar imagens'
 'Specify image url if you want to load it.': 'Especifique o endereço url da imagem se quer fazer o load dela.'
 'Items: ': 'itens:'
@@ -7,6 +14,8 @@
 'Video URL': 'URL do vídeo'
 'Use for all': 'Usar para tudo'
 'Use default': 'Usar padrão'
+'Slug must be unique': 
+Slug: 
 'Slideshow headline': 'Título do slideshow'
 Slideshow: Slideshow
 'Set selected as default image': 'Definir a selecionada como imagem padrão'
@@ -14,11 +23,13 @@ Slideshow: Slideshow
 Saving...: Carregando...
 Saved: Salvo
 'Save headline': 'Salvar manchete'
+'Place Images': 
 'No renditions defined.': 'Nenhum formato foi definido.'
 'No images found.': 'Nenhuma imagem encontrada'
 'No images attached to article.': 'O artigo não tem imagens anexadas.'
 'No images': 'Não há imagens'
 'Next: Upload and Edit Metadata': 'Próximo: Upload e edição de metadados'
+'Next: Place Images': 
 'Media Archive': 'Arquivo de mídia'
 Location: Localidade
 Items: Itens
@@ -34,6 +45,7 @@ Detach: 'Remover anexo'
 Create: Criar
 Caption: Legenda
 'Attached images': 'Imagens anexadas'
+'Attach & Place': 
 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Adicionar o url do vídeo (ex: http://vimeo.com/25083275 para Vimeo, http://youtu.be/1XsPVO61e9w para YouTube)'
 'Add video': 'Adicionar vídeo'
 'Add caption': 'Adicionar legenda'
@@ -59,3 +71,5 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Data<BR><SMALL>(aaaa-mm-dd)</SMALL>
 'You do not have the right to add images': 'Não tem permissões para adicionar imagens'
 'Items per page': 'Items por página'
 'Delete image $1': 'Apagar imagem'
+'Click one of the ': 
+'Are you sure you want to delete the image $1?': 

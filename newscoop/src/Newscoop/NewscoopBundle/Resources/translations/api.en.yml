@@ -18,7 +18,7 @@ vertices: vertices
 'Edit Polygon': 'Edit Polygon'
 'Create Polygon': 'Create Polygon'
 'Communication error: ': 'Communication error: '
-'Cant fetch news from $1': 'Cannot fetch news from $1'
+'Cant fetch news from $1': 'Cant fetch news from $1'
 Loading...: Loading...
 Version: Version
 License: License
@@ -61,4 +61,3 @@ First: First
 'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
 'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
 'URL $1 is not an image.': 'URL $1 is not an image.'
-Author: Author

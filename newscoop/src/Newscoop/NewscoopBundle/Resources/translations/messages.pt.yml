@@ -253,6 +253,9 @@ Send: Enviar
 (optional): (opcional)
 'The URL you entered is invalid: $1': 'O Endereço introduzido é inválido: $1'
 Reads: Leituras
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
 Authors: Autores
 'User name': 'Nome de Utilizador'
 'User Types': 'Tipo de Utilizadores'

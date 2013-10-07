@@ -1,3 +1,14 @@
+'town names with wildcards, and lat/lon coordinates': 
+'addresses: street (number), town': 
+'Use MapQuest Nominatim Search:': 
+'Use Local GeoNames Search:': 
+'Preferred address language:': 
+'For the Nominatim address search': 
+'Email from:': 
+'Email from must be at least twelve character.': 
+'Email contact:': 
+'Email contact must be at least four character.': 
+'Email Settings': 
 'to load geo-names data': 'من أجل التحميل معلومات الأسماء الجغرافية'
 'MySQL client command path': 'مسار ادارة العميل MySQL'
 'MailChimp Settings': 'اعدادات لـ MailChimp'

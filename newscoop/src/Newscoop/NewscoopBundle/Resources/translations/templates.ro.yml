@@ -1,3 +1,47 @@
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 
+'Stop current upload': 
+'Start uploading queue': 
+'Start upload': 
+Size: 
+'Select files': 
+Filename: 
+'Drag files here.': 
+'Cache lifetime, sec': 
+'Add files to the upload queue and click the start button.': 
+'Add files': 
+'$1 files uploaded.': 
+'Replace current with:': 
+'Edit template:': 
+'Changes have not been saved. Load new template without saving the current one?': 
+'to folder': 
+'You must select at least one template to perform an action.': 
+'You must select a destination folder': 
+'You may only translate one article at a time.': 
+'You do not have the right to rename templates.': 
+'You do not have the right to move templates.': 
+'You do not have the right to move articles.': 
+'Unable to create folder.': 
+'Unable to $1 template.': 
+'To New Name': 
+'These templates': 
+'The template object $1 is in use and can not be deleted.': 
+'The template object $1 could not be renamed.': 
+'Template(s) moved.': 
+'Template(s) deleted.': 
+'Template object $1 was renamed to $2': 
+'Template object $1 was deleted': 
+'Some templates could not be deleted because they are in use.': 
+'Select folder': 
+'Rename template': 
+'Rename file': 
+Rename: 
+'No folders': 
+'New Name': 
+'Move templates': 
+Folder: 
+'File cannot be read.': 
+'Are you sure you want to delete the template object $1 from folder $2?': 
+'Are you sure you want to delete the selected templates?': 
 'Template ID:': 'ID-ul şablonului:'
 'Template ID': 'ID-ul şablonului'
 'Template $1 no longer exists!': 'Şablonul $1 nu mai există!'
@@ -6,6 +50,7 @@
 'Directory $1 was deleted': 'Directorul $1 a fost şters'
 'Directory $1 created.': 'Directorul $1 a fost creat.'
 'You must select a file to upload.': 'Trebuie să selectezi un fişier pentru a-l încărca în sistem.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Fişierul $1 nu a putut fi salvat în $2.'
 Replace: Înlocuieşte
 'File $1 replaced.': 'Fişierul $1 a fost înlocuit.'

@@ -1,3 +1,15 @@
+'so that default templates can be assigned to the issue.': 
+'Once this is done, the issue can be published': 
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
+'This issue cannot be previewed. Please make sure it has the front template selected.': 
+'Publish all articles:': 
+'Publish all articles': 
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
+default: 
+'The publishing/unpublishing can not be set the same time': 
+'The publishing schedule can not be set in the past': 
+'Please assign at least one theme to the publication': 
+'Issue Theme': 
 'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 'Valorile pe care încerci să le impui intră în conflict cu numărul $1$2. $3 ($4)$5.'
 'The number must be unique for each issue in this publication of the same language.': 'Numărul trebuie să fie unic pentru fiecare ediţie din această publicaţie în aceeaşi limbă.'
 'The language and URL name must be unique for each issue in this publication.': 'Limba şi adresa de Internet trebuie să fie unice pentru fiecare ediţiei a acestei publicaţii.'

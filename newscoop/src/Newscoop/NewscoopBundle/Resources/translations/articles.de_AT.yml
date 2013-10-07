@@ -129,6 +129,7 @@ Comments: Kommentare
 'You do not have the right to translate articles.': 'Keine Berechtigung Artikel zu übersetzen.'
 'You do not have the right to publish articles.': 'Keine Berechtigung Artikel zu publizieren.'
 'You do not have the right to move articles.': 'Keine Berechtigung Artikel zu verschieben.'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 
 'Publish?': 'Veröffentlichen?'
 'Publish articles': 'Artikel veröffentlichen'
 'Publish article': 'Artikel veröffentlichen'
@@ -185,3 +186,4 @@ Comments: Kommentare
 'This article cannot be previewed. Please make sure the article has an issue assigned.': 'Vom Artikel kann keine Vorschau erstellt werden. Bitte stellen Sie sicher, dass er einer Ausgabe zugeordnet wurde. '
 Reorder: Nachbestellen
 Author: AutorIn
+'Are you sure you want to delete this scheduled action?': 

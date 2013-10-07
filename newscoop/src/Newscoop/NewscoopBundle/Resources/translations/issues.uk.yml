@@ -4,6 +4,7 @@
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Попередній перегляд випуска неможливий. Будь ласка переконайтесь, що для визначен шаблон головної сторінки.'
 'Publish all articles:': 'Опублікувати всі статті:'
 'Publish all articles': 'Опублікувати всі статті.'
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
 default: 'За замовчуванням'
 'The publishing/unpublishing can not be set the same time': 'Налаштування Опублікувати /  Відмінити публікацію одночасно не працюють'
 'The publishing schedule can not be set in the past': 'Неможливо налаштувати розклад публікації у минулому часі'

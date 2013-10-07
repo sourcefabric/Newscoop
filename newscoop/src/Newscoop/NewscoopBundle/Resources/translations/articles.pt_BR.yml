@@ -1,5 +1,31 @@
+'Edit metadata': 
+Rating: 
+'Enable Rating': 
+'Blog management': 
+'View article': 
+'Select a list': 
+'Remove list': 
+'Please select a list': 
+Playlist: 
+'List updated.': 
+'List saved': 
+'List Name': 
+'List ID': 
+'Item already exists in the list': 
+'Featured Articles': 
+'Featured Article Lists': 
+'Featured Article List': 
+'Duplicate list': 
+'Duplicate article entry found': 
+'Drag here to add to list': 
+'Could not save the list': 
+'Available Articles': 
+'Are you sure you want to delete this list?': 
+'Add to list': 
+'Add list': 
 'Multi date events': 'Eventos de datas múltiplas'
 Slideshows: Slideshows
+'Place images': 
 'Youre not allowed to edit article.': 'Você não tem permissão de editar o artigo.'
 Webcode: 'Código de web'
 Unapproved: 'Não foi aprovado'
@@ -10,6 +36,7 @@ Unapproved: 'Não foi aprovado'
 'Related Articles': 'Artigos relacionados'
 'Pending articles': 'Artigos pendentes'
 'Pending Articles': 'Artigos pendentes'
+'Context Box updated': 
 On: Ligar
 Off: Desligar
 'You do not have the right to moderate comments.': 'Você não tem o direito de moderar os comentários.'
@@ -37,6 +64,8 @@ Authors: Autores
 'Actions updated.': 'Ações atualizadas'
 'Your work has not been saved. Do you want to continue and lose your changes?': 'Seu trabalho não foi salvo. Quer continuar e perder as mudanças feitas?'
 Switches: Interruptores
+'No subtopics available': 
+'Newscoop Subhead': 
 Media: Mídia
 'Last modified': 'Modificado pela última vez'
 'Keywords &amp; Topics': 'Palavras chaves & Tópicos'
@@ -154,3 +183,4 @@ Comments: Comentários
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à visualização de artigos.'
 'No such article.': 'Artigo Desconhecido.'
 'No such section.': 'Secção Desconhecida.'
+'Are you sure you want to delete this scheduled action?': 

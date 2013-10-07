@@ -1,3 +1,4 @@
+'Duplicate assignment': 
 Templates: Templates
 'Import theme': 'Importar o tema'
 'Import succeded!': 'Importação completada!'
@@ -5,9 +6,13 @@ Templates: Templates
 'Edit template: $1': 'Editar template: $1'
 'Set new name to': 'Dar novo nome para'
 'Rename file': 'Mudar o nome do arquivo'
+'Caching templates in:': 
+'Caching templates finished': 
 'Theme name': 'Nome do tema'
 'Theme is assigned and can not be deleted': 'O tema foi designado e não pode ser apagado'
 'Theme export was not successful. Check please that the server is not out of disk space.': 'Exportação do tema fracassou. Por favor verifique se o servidor tem bastante espaço livre.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 
+zip: 
 version: versão
 uploaded: 'Upload completado'
 updated: atualizado
@@ -17,6 +22,9 @@ installed: instalado
 deleted: removido
 'You must select at least one template to perform an action.': 'Tem que selecionar pelo menos um template para realizar uma ação.'
 Upload: Upload
+'Unassign theme': 
+'Unassign successful': 
+Unassign: 
 'Theme version': 'Versão do tema'
 'Theme settings updated.': 'Preferências do tema foram atualizadas.'
 'Theme settings saved.': 'Preferências do tema foram '
@@ -40,12 +48,14 @@ Replace: Substituir
 'Name cant be empty': 'Nome não pode ficar vazio'
 'Last modified': 'Última modificação'
 'Issue page': 'Página da edição'
+'Go to parent': 
 'Go to $1': 'Ir para $1'
 'Geo Filtering': Geofiltragem
 'Front page template': 'Template da página principal'
 'File size': 'Tamanho do arquivo'
 'File name': 'Nome do arquivo'
 'File $1 was replaced.': 'Arquivo $1 foi substituido.'
+'Failed unassigning theme': 
 Export: Exportar
 'Error page template': 'Erro no template da página'
 'Edit $1': 'Editar $1'
@@ -66,9 +76,12 @@ Compatibility: Compatibilidade
 'Cant override directory $1.': 'Não é possível substituir diretório $1.'
 'Cache Lifetime': 'Duração do cache'
 'Browse for the theme': 'Navegar para o tema'
+'Assigned successfully': 
 'Article page template': 'Template da página do artigo'
 'Article page': 'Página do artigo'
+'Are you sure you want to unassign this theme?': 
 'Are you sure you want to delete this theme?': 'Tem certeza que quer apagar este tema?'
 'Add to publication': 'Adicionar a publicação'
+'$1 is not writable': 
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 arquivos $2'

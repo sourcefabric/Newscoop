@@ -1,3 +1,41 @@
+'Language id not specified': 
+'No languages.': 
+'Native Name': 
+'Name taken.': 
+'Language saved.': 
+'Language removed.': 
+'Language not found.': 
+'Language is in use and cannot be removed.': 
+'Language added.': 
+'English language cannot be removed.': 
+'Edit short month names': 
+'Edit short day names': 
+'Edit month names': 
+'Edit language: $1': 
+'Edit day names': 
+'Code Page': 
+'Add new Language': 
+'Add Language': 
+We: 
+Tu: 
+Th: 
+Su: 
+Sep: 
+Sa: 
+'Please enter the translation for week day short names.': 
+'Please enter the translation for month short names.': 
+Oct: 
+Nov: 
+Mo: 
+Mar: 
+Jun: 
+Jul: 
+Jan: 
+Fr: 
+Feb: 
+Dec: 
+Aug: 
+Apr: 
 'No language.': 'Aucune langue.'
 'Delete language $1': 'Supprimer langue $1'
 'You do not have the right to add languages.': 'Vous navez pas le droit dajouter des langues'

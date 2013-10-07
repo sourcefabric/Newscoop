@@ -125,6 +125,7 @@ Enabled: Дазволена
 Disabled: Забаронена
 Comments: Камэнтары
 'The article has already been translated into $1.': 'Артыкул ужо быў перакладены на $1.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 
 'You do not have the right to translate articles.': 'Вы ня маеце правоў  перакладаць рубрыкі.'
 'You do not have the right to publish articles.': 'Вы ня маеце правоў  публiкаваць артыкулы.'
 'You do not have the right to move articles.': 'Вы ня маеце правоў перамяшчаць артыкулы.'
@@ -182,6 +183,7 @@ Comments: Камэнтары
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Немагчыма зрабіць папярэдні агляд артыкула. Пераканайцеся, ці выбраны шаблён артыкула.'
 'No such article.': 'Няма такога артыкула.'
 'No such section.': 'Няма такой рубрыкі:by '
+Reorder: 
 'No such issue.': 'Няма такога выпуску'
 'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва <BR><SMALL>(націсьніце дзеля праўцы)</SMALL> '
 'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.': 'Немагчыма захаваць артыкул. Ён быў заблякаваны карыстальнікам $1 $2 гадзіны  і $3 хвілін таму.'

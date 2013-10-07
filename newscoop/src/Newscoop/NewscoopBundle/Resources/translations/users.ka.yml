@@ -1,4 +1,23 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
 Gender: სქესი
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
 'send confirmation email': 'დადასტურების ელფოსტის გაგზავნა'
 'edit user': 'მომხმარებლის რედაქტირება'
 'delete user': 'მომხმარებლის წაშლა'
@@ -185,6 +204,11 @@ E-mail: იმეილი
 'User account information changed for $1': '$1-სთვის მომხმარებლის ინფორმაცია შეიცვალა'
 'Permissions changed for user $1': '$1 მომხმარებლისთვის ნებართვები შეიცვალა.'
 '65 or over': '65-ის ან მეტი'
+Title: 
+Mr.: 
+Mrs.: 
+Ms.: 
+Dr.: 
 Male: მამრობითი
 Female: მდედრობითი
 'under 18': '18 წლამდე'

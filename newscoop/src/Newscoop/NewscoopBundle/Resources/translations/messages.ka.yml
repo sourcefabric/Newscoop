@@ -262,6 +262,7 @@ Authors: ავტორები
 'User Types': 'მომხმარებლის ტიპები'
 'Add new user account': 'დაამატე ახალი მომხმარებლის მონაცემის ჩანაწერი'
 'Schedule a new publish action': 'ახალი ოპერაციის დაგეგმვა'
+'Subscription Default Time': 
 'No such language.': 'ასეთი ენა არაა'
 'No such infotype.': 'ასეთი კლასი არაა'
 'No such keyword.': 'ასეთი საკვანძო სიტყვა არ არის'
@@ -270,4 +271,5 @@ Authors: ავტორები
 'User may delete user accounts': 'მომხმარებელს შეუძლია მომხმარებლის ჩანაწერის წაშლა'
 'There are $1 issue(s) left.': 'დარჩა $1 ნომერი/ჟურნალი/გამოშვება'
 'There are $1 keyword(s) left.': 'დარჩა $1 საკვანძო სიტყვები: ru'
+'Name<BR><SMALL>(click to edit)</SMALL>': 
 'New field': 'ახალი ველი'

@@ -1,8 +1,43 @@
+'No attachment': 
 at: u
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop nije dostupan. Proverite svoju internet vezu.'
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
 Reply: Odgovori
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
 'Full article': 'Ceo tekst'
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
 Deleted: Obrisano
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+User: 
+None: 
+'Coming from': 
+'Ban/Unban user': 
+Ip: 
 'Bans can be applied to a users name, email address or IP address.': 'Zabrane mogu biti primenjene na korisničko ime, email adresu ili IP adresu.'
 'You are about to permanently delete multiple comments.': 'Nepovaratno ćete Izbrisati više komentara.'
 'You are about to permanently delete a comment.': 'Nepovaratno ćete Izbrisati komentar.'

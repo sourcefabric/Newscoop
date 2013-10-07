@@ -1,0 +1,15 @@
+'The country $1 could not be created.': 
+'Country with code $1 exists already.': 
+'You do not have the right to add countries.': 
+'Delete country': 
+'You do not have the right to delete countries.': 
+'Are you sure you want to delete the country $1?': 
+'The country $1 could not be deleted.': 
+'Edit country name': 
+'You do not have the right to change country names.': 
+'Changing country name': 
+'The country name $1 could not be changed': 
+'Translate country name': 
+'You do not have the right to translate country names.': 
+'The country name $1 could not be translated': 
+'Add New Country': 

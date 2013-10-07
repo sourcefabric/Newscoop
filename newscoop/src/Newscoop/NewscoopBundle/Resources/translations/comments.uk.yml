@@ -1,3 +1,4 @@
+'No attachment': 
 at: на
 'With no attachment': 'При відсутності вкладень'
 'With image attachment': 'З зображенням у прікріпленні'
@@ -5,9 +6,12 @@ at: на
 'Unable to reach Newscoop. Please check your internet connection.': 'Неможливо зв’язатись з NEWSCOOP. Будь ласка перевірте ваше інтернет-з’єднання '
 Starred: Зірковий
 Star: Зірка
+'Showing _START_ to _END_ of _TOTAL_ entries': 
 'Reply to message': 'Відповісти на коментар'
 Reply: Відповідь
 Processed: Оброблено
+'No records found.': 
+'No entries to show': 
 'Messages updated.': 'Повідомлення оновлено.'
 'Messages status change to $1.': 'Статус повідомленнь змінено на $1.'
 'Messages deleted.': 'Повідомлення видалені.'
@@ -15,13 +19,18 @@ Processed: Оброблено
 'Message status change to $1.': 'Статус повідомлення змінений на  $1.'
 'Message deleted.': 'Повідомлення видалено.'
 Message: Повідомлення
+Last: 
 'Full article': 'Повна стаття'
+First: 
 'Feedback Messages': 'Повідомлення зворотнього зв’язку'
+'Display _MENU_ records': 
 Deleted: Видалено
 'Change selected messages status': 'Змінити статус вибраних повідомлень'
 Attachment: Прікріплення
 Approved.: Затверджено.
 Approve: Затвердження
+Anonymous: 
+' - filtering from _MAX_ records': 
 'You are about to permanently delete multiple messages.': 'Ви збираєтеся видалити кілька повідомлень.'
 'You are about to permanently delete a message.': 'Ви збираєтеся видалити повідомлення.'
 User: Користувач

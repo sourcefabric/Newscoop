@@ -1,0 +1,87 @@
+'Duplicate assignment': 
+Templates: 
+'Import theme': 
+'Import succeded!': 
+'Import failed!': 
+'Edit template: $1': 
+'Set new name to': 
+'Rename file': 
+'Caching templates in:': 
+'Caching templates finished': 
+'Theme name': 
+'Theme is assigned and can not be deleted': 
+'Theme export was not successful. Check please that the server is not out of disk space.': 
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 
+zip: 
+version: 
+uploaded: 
+updated: 
+'or higher': 
+moved: 
+installed: 
+deleted: 
+'You must select at least one template to perform an action.': 
+Upload: 
+'Unassign theme': 
+'Unassign successful': 
+Unassign: 
+'Theme version': 
+'Theme settings updated.': 
+'Theme settings saved.': 
+'Theme name / version': 
+'Theme management': 
+'Theme $1': 
+'The file $1 is empty.': 
+'Template object $1 was renamed to $2.': 
+'Template object $1 was deleted.': 
+'Template $1 was duplicated into $2.': 
+'Template $1 $2.': 
+'Something broke': 
+'Section page template': 
+Saving..: 
+'Saving settings failed.': 
+'Save All': 
+'Required Newscoop version': 
+Replace: 
+'New template $1 created.': 
+'New name': 
+'Name cant be empty': 
+'Last modified': 
+'Issue page': 
+'Go to parent': 
+'Go to $1': 
+'Geo Filtering': 
+'Front page template': 
+'File size': 
+'File name': 
+'File $1 was replaced.': 
+'Failed unassigning theme': 
+Export: 
+'Error page template': 
+'Edit $1': 
+'Done uploading': 
+'Do you want to override $1?': 
+'Directory is empty': 
+'Directory $1 created.': 
+Design: 
+'Delete theme': 
+'Current directory:': 
+'Create folder': 
+'Create file': 
+'Copy to available themes': 
+'Copied successfully': 
+Compatibility: 
+'Click to enlarge': 
+'Choose destination': 
+'Cant override directory $1.': 
+'Cache Lifetime': 
+'Browse for the theme': 
+'Assigned successfully': 
+'Article page template': 
+'Article page': 
+'Are you sure you want to unassign this theme?': 
+'Are you sure you want to delete this theme?': 
+'Add to publication': 
+'$1 is not writable': 
+'$1 $2': 
+'$1 files $2': 

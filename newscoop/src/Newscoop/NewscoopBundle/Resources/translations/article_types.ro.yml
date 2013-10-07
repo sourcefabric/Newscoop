@@ -1,3 +1,13 @@
+list: 
+filter: 
+'In Lists?': 
+'Are you sure you want to $1 articles of article type $2?': 
+'$1 articles of article type $2': 
+'Hide human-readable field names': 
+'Edit and translate human-readable field names': 
+'The template name may only contain letters and the underscore (_) character.': 
+'Rename article type $1': 
+'Invalid article type $1.': 
 'You cannot merge the same type into itself.': 'Nu poţi combina acelaşi tip cu el însuşi.'
 'View the source ($1) version of $2': 'Vezi versiunea ($1) a sursei pentru $2'
 'View of original ($1) $2': 'Vizualizarea originalului ($1) $2'
@@ -17,6 +27,7 @@ NOTHING: NIMIC
 'Destination Article Type': 'Tipul de articol destinaţie'
 'Delete the source article type ($1) when finished.': 'Şterge tipul de articol sursă ($1) când procedura s-a încheiat.'
 'Cycle through your articles to verify that the merge configuration is correct.': 'Navighează prin articole pentru a verifica dacă este corectă configuraţia de combinare.'
+'Clicking Merge will merge ($1) article(s).': 
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Nu se poate combina un câmp $1 ($2) cu un câmp $3 ($4).'
 --None--: '--Nici unul--'
 '(Null merge warning.)': '(Atenţionare de combinare invalidă).'

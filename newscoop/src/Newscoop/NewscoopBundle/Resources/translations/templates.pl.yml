@@ -50,6 +50,7 @@ Folder: Folder
 'Directory $1 was deleted': 'Folder $1 został usunięty'
 'Directory $1 created.': 'Folder $1 utworzony'
 'You must select a file to upload.': 'Wybierz plik do dodania'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Nie można zapisać pliku $1 to ścieżki $2.'
 Replace: Zamień
 'File $1 replaced.': 'Plik $1 zamieniony.'

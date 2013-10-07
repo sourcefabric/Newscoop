@@ -1,5 +1,11 @@
+list: 
+filter: 
+'In Lists?': 
+'Are you sure you want to $1 articles of article type $2?': 
+'$1 articles of article type $2': 
 'Hide human-readable field names': 'Esconder nomes de campos legíveis por pessoas.'
 'Edit and translate human-readable field names': 'Editar e traduzir nomes de campos legíveis por pessoas'
+'The template name may only contain letters and the underscore (_) character.': 
 'Rename article type $1': 'Modifique o nome do artigo tipo $1'
 'Invalid article type $1.': 'Artigo tipo $1 é inválido.'
 'You cannot merge the same type into itself.': 'Você não pode fundir um tipo com si mesmo.'
@@ -14,10 +20,13 @@
 'Preview of $1': 'Visualização do $1'
 'Preview a sample of the merge configuration.': 'Visualizar amostra da configuração de fusão.'
 NOTHING: NADA
+'Merge failed.': 
 'Merge configuration for merging $1 into $2.': 'Configuração de fusão para fundir $1 com $2.'
 'Merge Article Types: Step $1 of $2': 'Fundir tipos de artigos: Passo $1 de $2'
 'Merge $1 into $2': 'Fundir $1 com $2.'
+'Destination Article Type': 
 'Delete the source article type ($1) when finished.': 'Apagar o tipo do artigo fonte ($1) quando terminar.'
+'Cycle through your articles to verify that the merge configuration is correct.': 
 'Clicking Merge will merge ($1) article(s).': 'Clicando no Fundir você vai fundir ($1) artigo(s).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Não é possível fundir um campo do tipo $1 ($2) com um campo do tipo $3 ($4).'
 --None--: --Nenhum--
@@ -36,6 +45,7 @@ activate: ativar
 'You do not have the right to merge article types.': 'Você não tem o direito de fundir tipos de artigos.'
 'The translation could not be added.': 'A tradução não pôde ser adicionada.'
 'The article type $1 does not exist.': 'O artigo do tipo $1 não existe.'
+'Template Type Name': 
 Show/Hide: Mostrar/esconder
 'Show article on section page': 'Mostrar artigo na página de seção'
 'Show article on front page': 'Mostrar artigo na página principal'
@@ -43,8 +53,10 @@ Show/Hide: Mostrar/esconder
 Merge!: Fundir!
 'Merge types': 'Tipos de fusão'
 'Merge article type': 'Fundir tipo de arquivo'
+'Link to public page': 
 'Go to Step 3': 'Vá para passo 3'
 'Go to Step 2': 'Vá para passo 2'
+'Display Name': 
 'Delete article type $1.': 'Remover artigo do tipo $1'
 'Comments enabled?': 'Comentários ativados?'
 'Back to Step 2': 'Voltar para passo 2'

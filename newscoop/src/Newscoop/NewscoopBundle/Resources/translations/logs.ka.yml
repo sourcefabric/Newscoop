@@ -10,9 +10,12 @@ Diff: შედარება
 'No logs.': 'აღრიცხვა არ არსებობს'
 User: მომხმარებელი
 Warning: გაფრთხილება
+'Severity:': 
+Severity: 
 Notice: შეტყობინება
 Info: ინფო
 Filter: ფილტრი
+Emergency: 
 Debug: გამართვა
 Critical: კრიტიკული
 Alert: შეტყობინება

@@ -256,6 +256,8 @@ Reads: Citiri
 'Publish with issue': 'Publică cu ediția'
 'Universal List': 'Listă universală'
 'Invalid security token!': 'Jetonul de securitate e invalid!'
+'Campsite is unable to write to the file/directory $1. Please set the permissions to allow the user $2 to write to it.': 
+'Unable to add new image.': 
 'User name': 'Nume utilizator'
 'User Types': 'Tipuri de utilizatori'
 'Subscription Default Time': 'Timpul implicit de subscriere'
@@ -270,3 +272,4 @@ Reads: Citiri
 'There are $1 keyword(s) left.': 'Mai sunt $1 cuvinte cheie'
 'Name<BR><SMALL>(click to edit)</SMALL>': Nume
 'New field': 'Câmp nou'
+Authors: 

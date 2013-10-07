@@ -1,8 +1,42 @@
+'No attachment': 
 at: no
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
 'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possível acessar Newscoop. Por favor verifique a sua conexão.'
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
 Reply: Responder
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
 'Full article': 'Artigo inteiro'
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
 Deleted: Removido
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+User: 
+None: 
+'Coming from': 
+'Ban/Unban user': 
 Ip: Ip
 'Bans can be applied to a users name, email address or IP address.': 'Proibições podem ser aplicadas no nome do usuário, endereço de email, ou endereço IP'
 'You are about to permanently delete multiple comments.': 'Você vai apagar comentários múltiplos para sempre.'
@@ -20,6 +54,8 @@ Unrecommend: 'Não recomendar'
 'Show parent comment': 'Mostrar o comentário matriz'
 'Show commenter details': 'Mostrar dados do autor do comentário'
 'Show commenter': 'Mostrar o autor do comentário'
+'Show comment user details': 
+'Show comment user': 
 'Show comment details': 'Mostrar dados do comentário'
 'Select status': 'Selecionar status'
 'Search Type': 'Tipo de busca'
@@ -57,5 +93,8 @@ Column: Coluna
 Ban: Banir
 'Are you sure you want to do it?': 'Tem certeza que quer fazer isso?'
 'Add rating': 'Dar nota'
+'Add new comment commenter': 
 'Add new comment': 'Adicionar novo comentários'
 'Add new acceptance criteria': 'Adicionar novos critérios de aceitação'
+'Acceptance $1 saved.': 
+'Acceptance $1 deleted.': 

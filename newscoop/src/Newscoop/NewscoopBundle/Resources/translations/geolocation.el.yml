@@ -1,3 +1,4 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
 'selected marker icon': 'επιλεγμένο εικονίδιο δείκτη'
 'add location to map': 'προσθήκη τοποθεσίας στο χάρτη'
 'Video source': 'Πηγή βίντεο'
@@ -72,3 +73,5 @@ center: κέντρο
 save: αποθήκευση
 'resize article view': 'αλλαγή μεγέθους προβολής άρθρου'
 Find: Εύρεση
+'show article view': 
+'set as the article view': 

@@ -1,0 +1,26 @@
+third: 
+second: 
+forth: 
+first: 
+'You must input a number greater than 0 into the Number of addresses field.': 
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 
+'User IP access list management': 
+'The IP address group conflicts with another existing group.': 
+'Subscription sections': 
+'No records.': 
+'You have subscription for all available publications': 
+'Subscription type:': 
+'Start:': 
+'Start Date': 
+'Sections:': 
+'Publication:': 
+'Paid days': 
+'Paid Days:': 
+Paid: 
+'No subscriptions': 
+'Languages:': 
+'Edit all sections': 
+'Days:': 
+'Days must be number': 
+Any: 
+'Add section': 

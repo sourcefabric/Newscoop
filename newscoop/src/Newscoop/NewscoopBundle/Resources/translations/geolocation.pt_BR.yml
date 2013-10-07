@@ -1,3 +1,4 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
 'selected marker icon': 'ícone de marcador selecionado'
 'add location to map': 'adicionar localidade no mapa'
 'Video source': 'Fonte de vídeo'
@@ -43,6 +44,7 @@ Center: Centro
 'List of locations updated': 'Lista das localidades atualizadas'
 width: largura
 'show initial map view': 'mostrar a visualização inicial do mapa'
+'problem at point processing, please send error report': 
 'plain text': 'texto puro'
 'html content': 'conteúdo html'
 height: altura
@@ -52,6 +54,7 @@ height: altura
 'Video ID': 'ID do viídeo'
 'The map has been removed from the article.': 'O mapa foi removido do artigo.'
 'Point no.': 'Ponto no.'
+'Point markers': 
 None: Nenhum
 'Map Search Example': 'Exemplo da busca no mapa'
 'Map Preview': 'Visualização do mapa'

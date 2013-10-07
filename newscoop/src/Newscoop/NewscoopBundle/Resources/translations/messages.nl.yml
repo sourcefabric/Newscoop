@@ -212,8 +212,46 @@ N/A: N/A
 'On Section Page': 'Op Sectiepagina'
 'Created by': 'Gemaakt door'
 'Creation date': 'Gemaakt op'
+'Publication List': 
+'Issue List': 
+'Section List': 
+All: 
+duplicate: 
+move: 
+Move: 
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': 
+Author: 
+'Article name': 
+'Hide article': 
+'Show article': 
+'Article Type Fields': 
+'Article Images': 
+'Log Messages': 
+'Article Files': 
+'Article Comments': 
 'Are you sure you want to deactivate the subscription?': 'Weet je zeker dat je het abonnement wilt uitschakelen?'
 'Are you sure you want to activate the subscription?': 'Weet je zeker dat je het abonnement wilt activeren?'
+Other: 
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 
+'Thank you.': 
+'Please take a minute to send us an email.': 
+(optional): 
+'The URL you entered is invalid: $1': 
+Reads: 
+Plugins: 
 'Cannot create file $1': 'Kan bestand $1 niet maken'
 'URL $1 is invalid or is not an image.': 'URL $1 is niet geldig of is geen afbeelding'
 'URL $1 is not an image.': 'URL $1 is geen afbeelding'
@@ -357,3 +395,7 @@ Identifier: Onderscheider
 'New Field': 'Nieuw Veld'
 'Add New Field': 'Voeg nieuw veld toe'
 'No such section.': 'Sectie bestaat niet.'
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

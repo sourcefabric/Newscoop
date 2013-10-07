@@ -1,3 +1,5 @@
+Plugins: 
+'Manage Plugins': 
 Account: Konto
 'Items per page': 'Föremål per sida'
 'Add new': 'Lägg till ny'
@@ -239,11 +241,19 @@ Author: Författare
 'Article Comments': Artikelkommentarer
 'Are you sure you want to deactivate the subscription?': 'Är du säker att du vill avaktivera prenumerationen?'
 'Are you sure you want to activate the subscription?': 'Är du säker att du vill aktivera prenumerationen?'
+Other: 
 'Time:': 'Tid:'
 'No events.': 'Inga händelser.'
+'Default templates': 
 'System Preferences': Systeminställningar
 'The date must be in the future.': 'Datumet måste vara i framtiden'
 Send: Skicka
 'Thank you.': Tack.
+'Please take a minute to send us an email.': 
 (optional): (frivilligt)
 'The URL you entered is invalid: $1': 'Den URL du skrev in är ogiltig: $1'
+Reads: 
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

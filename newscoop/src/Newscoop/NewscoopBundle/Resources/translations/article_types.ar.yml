@@ -1,3 +1,8 @@
+list: 
+filter: 
+'In Lists?': 
+'Are you sure you want to $1 articles of article type $2?': 
+'$1 articles of article type $2': 
 'Hide human-readable field names': 'إخفاء أسماء الحقول القابلة للقراءة من الانسان'
 'Edit and translate human-readable field names': 'تعديل أسماء الحقول القابلة للقراءة من الانسان وترجمتها'
 'The template name may only contain letters and the underscore (_) character.': 'يسمح لإسم القالب فقط ان يحتوي على حروف أجنبية والحرف (_).'

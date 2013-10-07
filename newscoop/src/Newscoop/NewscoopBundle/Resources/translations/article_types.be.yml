@@ -1,3 +1,10 @@
+list: 
+filter: 
+'In Lists?': 
+'Are you sure you want to $1 articles of article type $2?': 
+'$1 articles of article type $2': 
+'Hide human-readable field names': 
+'Edit and translate human-readable field names': 
 'The template name may only contain letters and the underscore (_) character.': 'Імя шаблёну можа змяшчаць толькі літары і знак падкрэслівання (_).'
 'Rename article type $1': 'Пераіменаваць тып артыкула  $1 '
 'Invalid article type $1.': 'Няправільны тып артыкула $1.'
@@ -20,6 +27,7 @@ NOTHING: НIЧОГА
 'Destination Article Type': 'Тып вынiковага артыкула'
 'Delete the source article type ($1) when finished.': 'Выдалiць тып артыкула ($1) пасьля завяршэньня.'
 'Cycle through your articles to verify that the merge configuration is correct.': 'Пракруціць Ваш артыкул для праверкi, цi канфiгурацыя абяднаньня сулшная. '
+'Clicking Merge will merge ($1) article(s).': 
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Немагчыма зьлiць поле $1 ($2) у поле $3 ($4). '
 --None--: --Нічога--
 '(Null merge warning.)': '(Няма папярэджаньняў аб абяднаньнi.)'

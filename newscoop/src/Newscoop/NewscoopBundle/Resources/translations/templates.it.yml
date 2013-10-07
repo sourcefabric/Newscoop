@@ -1,0 +1,86 @@
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 
+'Stop current upload': 
+'Start uploading queue': 
+'Start upload': 
+Size: 
+'Select files': 
+Filename: 
+'Drag files here.': 
+'Cache lifetime, sec': 
+'Add files to the upload queue and click the start button.': 
+'Add files': 
+'$1 files uploaded.': 
+'Replace current with:': 
+'Edit template:': 
+'Changes have not been saved. Load new template without saving the current one?': 
+'to folder': 
+'You must select at least one template to perform an action.': 
+'You must select a destination folder': 
+'You may only translate one article at a time.': 
+'You do not have the right to rename templates.': 
+'You do not have the right to move templates.': 
+'You do not have the right to move articles.': 
+'Unable to create folder.': 
+'Unable to $1 template.': 
+'To New Name': 
+'These templates': 
+'The template object $1 is in use and can not be deleted.': 
+'The template object $1 could not be renamed.': 
+'Template(s) moved.': 
+'Template(s) deleted.': 
+'Template object $1 was renamed to $2': 
+'Template object $1 was deleted': 
+'Some templates could not be deleted because they are in use.': 
+'Select folder': 
+'Rename template': 
+'Rename file': 
+Rename: 
+'No folders': 
+'New Name': 
+'Move templates': 
+Folder: 
+'File cannot be read.': 
+'Are you sure you want to delete the template object $1 from folder $2?': 
+'Are you sure you want to delete the selected templates?': 
+'Template ID:': 
+'Template ID': 
+'Template $1 no longer exists!': 
+'New template $1 created': 
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': 
+'Directory $1 was deleted': 
+'Directory $1 created.': 
+'You must select a file to upload.': 
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
+'Unable to save the file $1 to the path $2.': 
+Replace: 
+'File $1 replaced.': 
+'The folder name cant be .. or .': 
+'The template $1 was saved successfully.': 
+'Create new folder': 
+'Upload template': 
+'You do not have the right to create new folders.': 
+'A file or folder having the name $1 already exists': 
+'You do not have the right to delete templates.': 
+'Are you sure you want to delete the folder $1 from $2?': 
+'Delete folder': 
+Folders: 
+'No folders.': 
+Files: 
+'No templates.': 
+'Create new template': 
+'Duplicate template': 
+'Edit template': 
+'The template $1 could not be created.': 
+'Template $1 was changed': 
+'Template $1 was duplicated into $2': 
+'Template charset': 
+'Select a language/character set': 
+'All languages': 
+'You do not have the right to modify templates.': 
+'Invalid template file $1': 
+'You do not have the right to create folders.': 
+'You do not have the right to upload templates.': 
+'You do not have the right to create templates.': 
+'Duplicate file': 
+'Delete file': 
+'Please check if the user $1 has permission to write in this directory.': 

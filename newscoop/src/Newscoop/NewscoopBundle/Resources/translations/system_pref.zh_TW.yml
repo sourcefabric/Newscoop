@@ -1,0 +1,56 @@
+'town names with wildcards, and lat/lon coordinates': 
+'addresses: street (number), town': 
+'Use MapQuest Nominatim Search:': 
+'Use Local GeoNames Search:': 
+'Preferred address language:': 
+'For the Nominatim address search': 
+'Email from:': 
+'Email from must be at least twelve character.': 
+'Email contact:': 
+'Email contact must be at least four character.': 
+'Email Settings': 
+'MailChimp Settings': 
+'List Unique Id:': 
+'Facebook Settings': 
+'App Secret:': 
+'App ID:': 
+'API Key:': 
+'Automatic collection of statistics:': 
+'to load geo-names data': 
+'MySQL client command path': 
+'according to php.ini settings': 
+'Maximal zoom for auto-focusing:': 
+'Map border for auto-focusing:': 
+'Map auto-focusing as the default behavior:': 
+'Include CSS file for map view': 
+'Please enter password recovery from email.': 
+'From email address:': 
+'Run scheduled tasks externally?': 
+'Setting up a Newscoop Replication Server?': 
+'Newscoop Online Server Database': 
+'Allow Google Streets Map Provider:': 
+'Allow MapQuest Map Provider:': 
+'Local Flash Server:': 
+'Local Flash Directory:': 
+'Youtube Default Width:': 
+'Youtube Default Height:': 
+'Vimeo Default Width:': 
+'Vimeo Default Height:': 
+'Map Zoom Level:': 
+'Map Popup Minimal Width:': 
+'Map Popup Minimal Height:': 
+'Map Marker Directory:': 
+'Map Marker Default:': 
+'Map Default Width:': 
+'Map Default Height:': 
+'Map Center Longitude:': 
+'Map Center Latitude:': 
+'Geolocation Settings': 
+'Flash Default Width:': 
+'Flash Default Height:': 
+'Default Map Provider:': 
+'Allow OpenStreet Map Provider:': 
+'Allow password recovery:': 
+'Template Cache Handler:': 
+'Invalid: You need PHP $1 enabled in order to use the template caching system.': 
+'Database Cache Engine:': 

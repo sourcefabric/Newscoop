@@ -1,3 +1,4 @@
+'Usage at automatic statistics': 
 'Event Color': 'Cor do evento'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Você tem que digitar um número maior que $1 e menor que $2 no campo $3.'
 'You do not have the right to translate article types.': 'Você não tem o direito de traduzir tipos de artigos.'
@@ -15,10 +16,12 @@
 Custom: Customisado
 'Characters limit': 'Limite de caracteres'
 'The template name may only contain letters and the underscore (_) character.': 'O nome do template pode ter apenas letras e o underscore (_).'
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 
 'The property $1 is already in use.': 'A propriedade $1 já está em uso.'
 Precision: Precisão
 'Can not convert the field $1 from $2 to type $3.': 'Não é possível converter o campo $1 de $2 para o tipo $3'
 'Are you sure you want to make $1 a $2 field?': 'Tem certeza que quer transformar $1 em campo do tipo $2?'
+'Is Content': 
 'Back to Article Types List': 'Voltar para a lista de tipos de artigos'
 show: mostrar
 hide: esconder

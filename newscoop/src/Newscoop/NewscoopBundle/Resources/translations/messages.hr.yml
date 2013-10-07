@@ -219,12 +219,43 @@ All: Sve
 duplicate: udvostruči
 move: premjesti
 Move: Premjesti
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': 
+Author: 
+'Article name': 
+'Hide article': 
+'Show article': 
 'Article Type Fields': 'Polja tipova članka'
 'Article Images': 'Slike članaka'
 'Log Messages': 'Log poruka'
 'Article Files': 'Datoteke članaka'
+'Article Comments': 
 'Are you sure you want to deactivate the subscription?': 'Sigurno želite prekinuti pretplatu?'
 'Are you sure you want to activate the subscription?': 'Sigurno želite aktivirati pretplatu?'
+Other: 
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 
+'Thank you.': 
+'Please take a minute to send us an email.': 
+(optional): 
+'The URL you entered is invalid: $1': 
+Reads: 
+Plugins: 
 'Add new umember': 'Dodaj novog suradnika'
 'Your articles': 'Vaši članci'
 'Submitted articles': 'Predani članci'
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

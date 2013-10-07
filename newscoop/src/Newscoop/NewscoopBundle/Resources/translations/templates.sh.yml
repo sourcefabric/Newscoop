@@ -50,6 +50,7 @@ Folder: folder
 'Directory $1 was deleted': 'direktorijum $1 je obrisan'
 'Directory $1 created.': 'direktorijum $1 je napravljen.'
 'You must select a file to upload.': 'Morate izabrati fajl za upload.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Nije moguće snimiti fajl $1 na putanju $2.'
 Replace: Zameni
 'File $1 replaced.': 'Fajl $1 zamenjen.'

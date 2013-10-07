@@ -50,6 +50,7 @@ Folder: Φάκελος
 'Directory $1 was deleted': 'Ο καταλογος $1 διαγράφτηκε'
 'Directory $1 created.': 'Ο κατάλογος $1 δημιουργήθηκε.'
 'You must select a file to upload.': 'Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Η αποθήκευση του αρχείου $1 στη διαδρομή $2 ήταν αδύνατη.'
 Replace: Αντικατάσταση
 'File $1 replaced.': 'Το αρχείο $1 αντικαταστάθηκε.'

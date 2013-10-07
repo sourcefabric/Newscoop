@@ -50,6 +50,7 @@ Folder: Тэчка
 'Directory $1 was deleted': 'Папка $1 была выдаленая.'
 'Directory $1 created.': ' Папка $1 была створаная.'
 'You must select a file to upload.': 'Вы павiнны азначыць файл для загрузкі.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Немагчыма захаваць файл $1 у $2.'
 Replace: 'Замянiць:'
 'File $1 replaced.': 'Файл $1 заменены.'

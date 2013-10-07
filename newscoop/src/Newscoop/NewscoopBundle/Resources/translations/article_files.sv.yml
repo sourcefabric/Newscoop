@@ -1,3 +1,22 @@
+'Files attached.': 
+'File $1 unattached.': 
+'Attach new file': 
+'Attach existing file': 
+'$1 file/s attached to article': 
+'File attached.': 
+'The maximum file upload size was not configured in Newscoop.': 
+'File #$1 $2 unattached': 
+'File #$1 $2 attached to article': 
+'Unable to add attachment.': 
+'There was a problem uploading the file.': 
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 
+'The file exceeds the allowed max file size.': 
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 
+'Maximum Upload Size': 
+'File Size': 
+'File Name': 
+Download: 
+'File $1 updated.': 
 'Edit article': 'Redigera artikel'
 'You do not have the right to delete file attachments.': 'Du har inte rättighet att radera bifogade filer.'
 'You must select a file to upload.': 'Du måste välja en fil att ladda upp.'

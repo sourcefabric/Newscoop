@@ -50,6 +50,7 @@ Folder: фолдер
 'Directory $1 was deleted': 'директоријум $1 је обрисан'
 'Directory $1 created.': 'директоријум $1 је направљен'
 'You must select a file to upload.': 'Морате изабрати фајл за аплоуд'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Није могуће снимити фајл $1 на путању $2.'
 Replace: Замени
 'File $1 replaced.': 'Фајл $1 замењен.'

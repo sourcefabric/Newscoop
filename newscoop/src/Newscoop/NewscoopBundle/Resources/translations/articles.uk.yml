@@ -1,3 +1,6 @@
+'Edit metadata': 
+Rating: 
+'Enable Rating': 
 'Blog management': 'Керування блогами'
 'View article': 'Перегляд статті'
 'Select a list': 'Вибрати список'
@@ -180,5 +183,10 @@ Comments: Коментарі
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Попередній перегляд неможливий. Переконайтесь, що вибран шаблон статті.'
 'No such article.': 'Немає такої статті.'
 'No such section.': 'Немає такої рубрики:ua'
+Reorder: 
 'No such issue.': 'Немає такого випуску'
 'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва <BR><SMALL>(редагувати)</SMALL>'
+'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.': 
+'Back to article details': 
+'Article automatic publishing schedule': 
+'Are you sure you want to delete this scheduled action?': 

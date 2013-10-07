@@ -1,3 +1,6 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'К сожалению, это изображение слишком мало. Размер изображений должен быть по меньшей мере %dx%d.'
 'Slideshow rendition': 'Комплект размеров слайд-шоу'
 'Renditions reloaded': 'Комплект размеров  перезагружен'
@@ -71,3 +74,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(гггг-мм-дд)</SM
 Unlink: Отвязать
 'Back to article details': 'Назад к подробностям статьи'
 'Are you sure you want to delete the image $1?': 'Вы уверены, что хотите удалить картинку $1?'
+'Click one of the ': 

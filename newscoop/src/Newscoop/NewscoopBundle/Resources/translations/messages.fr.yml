@@ -219,9 +219,40 @@ All: Tous
 duplicate: duplicate
 move: Déplacer
 Move: Déplacer
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': 
+Author: 
+'Article name': 
+'Hide article': 
+'Show article': 
 'Article Type Fields': 'Champs de Type dArticle'
 'Article Images': 'Images dArticle '
 'Log Messages': 'Messages Log'
 'Article Files': 'Fichiers d Article'
+'Article Comments': 
 'Are you sure you want to deactivate the subscription?': 'Etes-vous sûr de vouloir désactiver labonnement?'
 'Are you sure you want to activate the subscription?': 'Etes-vous sûr de vouloir activer labonnement?'
+Other: 
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 
+'Thank you.': 
+'Please take a minute to send us an email.': 
+(optional): 
+'The URL you entered is invalid: $1': 
+Reads: 
+Plugins: 
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

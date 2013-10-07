@@ -1,3 +1,38 @@
+'Make sure to enter the Moderator Address below': 
+'click to see issues': 
+'Moderator Address': 
+'From Address': 
+'Use CAPTCHA to prevent spam?': 
+'Public allowed to comment?': 
+'Enable spam blocking?': 
+'The subscription settings for $1 could not be added.': 
+'The publication name you specified conflicts with publication $1.': 
+'The publication alias you specified conflicts with publication $1.': 
+'Subscription defaults': 
+'Subscription Settings by Country': 
+'Set subscription settings for a country': 
+'Set subscription settings by country': 
+'Default time periods:': 
+'Country subscription settings updated.': 
+'Country subscription settings deleted.': 
+'Change country subscription settings': 
+'Are you sure you want to delete the subscription settings for $1?': 
+'Publication updated': 
+'Subscriber comments moderated?': 
+'Public comments moderated?': 
+'Comments enabled?': 
+'Comments enabled': 
+'Article comments default to enabled?': 
+'trial subscription': 
+'paid subscription': 
+'time units': 
+'one language': 
+'all languages': 
+'Trial subscriptions': 
+'Time unit cost per one section': 
+'Paid subscriptions': 
+'Default time period': 
+'Go To Issues': 
 'Delete publication $1': 删除出版物$1
 'No publications.': 无出版物
 'Country<BR><SMALL>(click to edit)</SMALL>': 国家
@@ -16,3 +51,4 @@
 'You must select a country.': 您必须选择一个国家
 'Time Unit': 时间单位
 Currency: 货币
+'Edit languages': 

@@ -1,3 +1,55 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 
+'No such field': 
+'Color saved': 
+'Color not saved': 
+'Topic created': 
+'The topic name is already in use by another topic.': 
+'Complex Date': 
+vertices: 
+'There was a problem trying to execute the XML RPC function.': 
+'The Campcaster server configuration is invalid.': 
+'Pan Map': 
+'Open large map': 
+'No news available.': 
+'Edit Polygon': 
+'Create Polygon': 
+'Communication error: ': 
+'Cant fetch news from $1': 
+Loading...: 
+Version: 
+License: 
+Homepage: 
+'Show original map': 
+'The uploaded archive does not contain an valid newscoop plugin.': 
+Map: 
+Center: 
+Title: 
+'Invalid security token.': 
+'Callback $1 is not callable.': 
+'Article translated to $4 ($5)': 
+'Article status changed from $1 to $2.': 
+'Article deleted.': 
+'Article created.': 
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 
+'Article URL': 
+'Article Number': 
+'Access denied.': 
+'Publish with issue': 
+unknown: 
+Switch: 
+Numeric: 
+'The uploaded file format is unsupported.': 
+'The following fields are mandatory:': 
+'Missing value for $1': 
+'Manage Plugins': 
+'* Marked fields are mandatory.': 
+'$1 is of type $2': 
+'Invalid resize width/height.': 
+'Image type $1 is not supported.': 
 'The file uploaded is not an image.': 'Den uppladdade filen är inte en bild.'
 'Could not delete record from the database.': 'Kunde inte radera posten från databasen.'
 'template path': mallsökväg

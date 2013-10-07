@@ -1,3 +1,8 @@
+list: 
+filter: 
+'In Lists?': 
+'Are you sure you want to $1 articles of article type $2?': 
+'$1 articles of article type $2': 
 'Hide human-readable field names': 'Скрыть названия полей удобных для восприятия человеком'
 'Edit and translate human-readable field names': 'Редактировать и перевести названия полей удобных для восприятия человеком'
 'The template name may only contain letters and the underscore (_) character.': 'Имя шаблона может содержать только буквы и знак подчеркивания (_).'

@@ -1,9 +1,32 @@
+'town names with wildcards, and lat/lon coordinates': 
+'addresses: street (number), town': 
+'Use MapQuest Nominatim Search:': 
+'Use Local GeoNames Search:': 
+'Preferred address language:': 
+'For the Nominatim address search': 
+'Email from:': 
+'Email from must be at least twelve character.': 
+'Email contact:': 
+'Email contact must be at least four character.': 
+'Email Settings': 
+'MailChimp Settings': 
+'List Unique Id:': 
+'Facebook Settings': 
+'App Secret:': 
+'App ID:': 
+'API Key:': 
+'Automatic collection of statistics:': 
+'to load geo-names data': 
+'MySQL client command path': 
+'according to php.ini settings': 
 'Maximal zoom for auto-focusing:': 'Zoom máximo para foco automático:'
 'Map border for auto-focusing:': 'Limite de mapa para foco automático:'
 'Map auto-focusing as the default behavior:': 'Foco automático do mapa como comportamento padrão:'
 'Include CSS file for map view': 'Incluir arquivo CSS para a visualização do mapa'
+'Please enter password recovery from email.': 
 'From email address:': 'Do endereço de email:'
 'Run scheduled tasks externally?': 'Executar tarefas agendadas externamente?'
+'Setting up a Newscoop Replication Server?': 
 'Newscoop Online Server Database': 'Base de dados do servidor online do Newscoop'
 'Allow Google Streets Map Provider:': 'Permitir o provedor de mapas Google Streets:'
 'Allow MapQuest Map Provider:': 'Permitir o provedor de mapas MapQuest:'
@@ -28,17 +51,26 @@
 'Default Map Provider:': 'Provedor de mapa padrão:'
 'Allow OpenStreet Map Provider:': 'Permitir provedor de mapas OpenStreet:'
 'Allow password recovery:': 'Autorizar recuperação da senha:'
+'Template Cache Handler:': 
+'Invalid: You need PHP $1 enabled in order to use the template caching system.': 
+'Database Cache Engine:': 
 'Zoom enabled for images in article content?': 'Zoom ativado para imagens que fazem parte do artigo?'
 'Image Resizing Width:': 'Largura de redimensionamento da imagem:'
 'Image Resizing Width': 'Largura de redimensionamento da imagem'
 'Image Resizing Height:': 'Altura de redimensionamento da imagem:'
 'Image Resizing Height': 'Altura de redimensionamento da imagem'
 'Please enter a valid value (1 - 100) for the $1 field.': 'Por favor digite um valor válido (1 - 100) para o campo $1'
+'Imagecache Lifetime:': 
+'Templates filter mask (separated by comma)': 
+'Invalid: You need PHP $1 enabled in order to use the caching system.': 
+'Image Resizing Ratio:': 
+'Image Resizing Ratio': 
 'Editor Settings': 'Preferências do editor'
 'Session Lifetime': 'Duração da sessão'
 'Please enter the site title': 'Por favor digite o título do site'
 'Please enter the site meta keywords': 'Por favor digite as palavras-chave meta do site'
 'Please enter the site meta description': 'Por favor digite a descrição meta do site'
+'Please enter the secret key': 
 'Please enter the Keyword Seperator': 'Por favor digite o separador da palavra-chave'
 'Site Title:': 'Título do site:'
 'Site On-Line:': 'Site online:'

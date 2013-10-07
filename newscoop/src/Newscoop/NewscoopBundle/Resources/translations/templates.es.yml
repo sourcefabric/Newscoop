@@ -50,6 +50,7 @@ Folder: Carpeta.
 'Directory $1 was deleted': 'Se eliminó el directorio $1 '
 'Directory $1 created.': 'Se creó el directorio $1 '
 'You must select a file to upload.': 'Debe seleccionar un archivo para cargar'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'No fue posible almacenar el archivo $1 al path $2'
 Replace: Reemplazar
 'File $1 replaced.': 'Se reemplazo el archivo $1.'

@@ -50,6 +50,7 @@ Folder: Папка
 'Directory $1 was deleted': 'Папка $1 была удалена'
 'Directory $1 created.': 'Папка $1 была создана.'
 'You must select a file to upload.': 'Вы должны указать файл для загрузки.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 
 'Unable to save the file $1 to the path $2.': 'Невозможно сохранить файл $1 в $2.'
 Replace: 'Заменить:'
 'File $1 replaced.': 'Файл $1 заменен.'

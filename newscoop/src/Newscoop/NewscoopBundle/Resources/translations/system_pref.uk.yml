@@ -1,3 +1,20 @@
+'town names with wildcards, and lat/lon coordinates': 
+'addresses: street (number), town': 
+'Use MapQuest Nominatim Search:': 
+'Use Local GeoNames Search:': 
+'Preferred address language:': 
+'For the Nominatim address search': 
+'Email from:': 
+'Email from must be at least twelve character.': 
+'Email contact:': 
+'Email contact must be at least four character.': 
+'Email Settings': 
+'MailChimp Settings': 
+'List Unique Id:': 
+'Facebook Settings': 
+'App Secret:': 
+'App ID:': 
+'API Key:': 
 'Automatic collection of statistics:': 'Автоматичний збір статистики:'
 'to load geo-names data': 'для завантаження даних гео-назв '
 'MySQL client command path': 'командна строка MySQL клієнту'
