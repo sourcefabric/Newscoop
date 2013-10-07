@@ -66,7 +66,7 @@ final class CampTemplate extends Smarty
         require_once APPLICATION_PATH . self::PLUGINS . '/function.render.php';
         $this->registerPlugin('function', 'render', 'smarty_function_render', false);
 
-        // define translate block
+        // define translate modifier
         require_once APPLICATION_PATH . self::PLUGINS . '/modifier.translate.php';
         $this->registerPlugin('modifier', 'translate', 'smarty_modifier_translate', false);
 
