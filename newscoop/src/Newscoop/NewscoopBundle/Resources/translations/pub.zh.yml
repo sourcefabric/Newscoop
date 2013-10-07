@@ -1,0 +1,18 @@
+'Delete publication $1': 删除出版物$1
+'No publications.': 无出版物
+'Country<BR><SMALL>(click to edit)</SMALL>': 国家
+'Delete alias $1': 删除入口$1
+'Change publication information': 改变出版信息
+'You do not have the right to edit publication information.': 您无权编辑出版信息
+'You do not have the right to change publication information.': 您无权编辑出版信息
+'The publication information could not be updated.': 出版信息不能被更新
+'You do not have the right to delete publications.': 您无权删除出版物
+'Are you sure you want to delete the publication $1?': 您确认要删除出版物$1？
+'Deleting publication': 正在删除出版物
+'There are $1 subscription(s) left.': 还有$1个订阅
+'The publication $1 could not be deleted.': 出版物$1不能被删除
+'The publication could not be added.': 不能添加出版物
+'You do not have the right to manage publications.': 您无权管理出版物
+'You must select a country.': 您必须选择一个国家
+'Time Unit': 时间单位
+Currency: 货币

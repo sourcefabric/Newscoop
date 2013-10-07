@@ -1,0 +1,72 @@
+'Language id not specified': 'ენის საიდენტიფიკაციო ნომერი არ არის მითითებული'
+'No languages.': 'ენები არ არის.'
+'Native Name': 'მშობლიური ენა'
+'Name taken.': 'სახელი გამოყენებულია.'
+'Language saved.': 'ენა დამახსოვრებულია.'
+'Language removed.': 'ენა მოიხსნა.'
+'Language not found.': 'ენა ვერ მოიძებნა.'
+'Language is in use and cannot be removed.': 'ენა ამჟამად გამოყენებაშია და მისი მოხსნა შეუძლებელია.'
+'Language added.': 'ენა დაემატა.'
+'English language cannot be removed.': 'ინგლისური ენის მოხსნა შეუძლებელია.'
+'Edit short month names': 'თვეების მოკლე სახელების რედაქტირება.'
+'Edit short day names': 'დღეების მოკლე სახელების რედაქტირება.'
+'Edit month names': 'თვეების სახელების რედაქტირება.'
+'Edit language: $1': '$1 ენის რედაქტირება'
+'Edit day names': 'დღეების სახელების რედაქტირება'
+'Code Page': 'კოდის გვერდი'
+'Add new Language': 'ახალი ენის დამატება'
+'Add Language': 'ენის დამატება'
+We: ოთხ
+Tu: სამ
+Th: ხუთ
+Su: კვი
+Sep: სექ
+Sa: შაბ
+'Please enter the translation for week day short names.': 'მიუთითეთ კვირის დღეების მოკლე სახელების თარგმანი.'
+'Please enter the translation for month short names.': 'მიუთითეთ თვეების სახელების მოკლე თარგმანი.'
+Oct: ოქტ
+Nov: ნოე
+Mo: ორშ
+Mar: მარ
+Jun: ივნ
+Jul: ივლ
+Jan: იან
+Fr: პარ
+Feb: თებ
+Dec: დეკ
+Aug: აგვ
+Apr: აპრ
+'No language.': 'ენა არ არის.'
+'Delete language $1': '$1 ენის წაშლა'
+'You do not have the right to add languages.': 'თქვენ არ გაქვთ ენების დამატების უფლება.'
+'Please enter the translation for time units.': 'მიუთითეთ დროის ერთეულების თარგმანი.'
+'You do not have the right to delete languages.': 'თქვენ არ გაქვთ ენების წაშლის უფლება.'
+'Are you sure you want to delete the language $1?': 'დარწმუნებული ხართ რომ გსურთ $1 ენის წაშლა'
+'Deleting language': 'ენის წაშლა'
+'The language $1 could not be deleted.': '$1 ენა ვერ წაიშალა.'
+'Edit language': 'ენის რედაქტირება'
+'You do not have the right to edit languages.': 'თქვენ არ გაქვთ ენების რედაქტირების უფლება.'
+'Please enter the translation for month names.': 'მიუთითეთ თვეების სახელების თარგმანი.'
+'Please enter the translation for week day names.': 'მიუთითეთ კვირის დღეების სახელების თარგმანი'
+January: იანვარი
+February: თებერვალი
+March: მარტი
+April: აპრილი
+May: მაისი
+June: ივნისი
+July: ივლისი
+August: აგვისტო
+September: სექტემბერი
+October: ოქტომბერი
+November: ნოემბერი
+December: დეკემბერი
+Monday: ორშაბათი
+Tuesday: სამშაბათი
+Wednesday: ოთხშაბათი
+Thursday: ხუთშაბათი
+Friday: პარასკევი
+Saturday: შაბათი
+Sunday: კვირა
+'You do not have the right to add new languages.': 'თქვენ არ გაქვთ ახალი ენის დამატების უფლება'
+'There are $1 issue(s) left.': 'დარჩენილია $1 გამოცემა(ები).'
+'Native name': 'მშობლიური ენა'

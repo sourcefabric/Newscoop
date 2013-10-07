@@ -1,0 +1,71 @@
+'Display newsfeed images': 'Display newsfeed images'
+'Mark image': 'Mark image'
+'Add selected images to slideshow': 'Add selected images to slideshow'
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry that image is too small. Image needs to be at least %dx%d.'
+'Slideshow rendition': 'Slideshow rendition'
+'Renditions reloaded': 'Renditions reloaded'
+'Reload renditions': 'Reload renditions'
+'Edit images': 'Edit images'
+'Specify image url if you want to load it.': 'Specify image url if you want to load it.'
+'Items: ': 'Items: '
+'Attach slideshows': 'Attach slideshows'
+'original size:': 'original size:'
+'no caption': 'no caption'
+'Video URL': 'Video URL'
+'Use for all': 'Use for all'
+'Use default': 'Use default'
+'Slug must be unique': 'Slug must be unique'
+Slug: Slug
+'Slideshow headline': 'Slideshow headline'
+Slideshow: Slideshow
+'Set selected as default image': 'Set selected as default image'
+'Set as default': 'Set as default'
+Saving...: Saving...
+Saved: Saved
+'Save headline': 'Save headline'
+'Place Images': 'Place Images'
+'No renditions defined.': 'No renditions defined.'
+'No images found.': 'No images found.'
+'No images attached to article.': 'No images attached to article.'
+'No images': 'No images'
+'Next: Upload and Edit Metadata': 'Next: Upload and Edit Metadata'
+'Next: Place Images': 'Next: Place Images'
+'Media Archive': 'Media Archive'
+Location: Location
+Items: Items
+Item: Item
+'Image files': 'Image files'
+'Image Files: ': 'Image Files: '
+Headline: Headline
+Finish: Finish
+'Edit Image Data': 'Edit Image Data'
+'Edit $1': 'Edit $1'
+'Done editing': 'Done editing'
+Detach: Detach
+Create: Create
+Caption: Caption
+'Attached images': 'Attached images'
+'Attach & Place': 'Attach & Place'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)'
+'Add video': 'Add video'
+'Add caption': 'Add caption'
+'Show all': 'Show all'
+'The image has been removed from the article.': 'The image has been removed from the article.'
+'Unable to add new image.': 'Unable to add new image.'
+'Image number $1 already exists': 'Image number $1 already exists'
+'You do not have the right to change image information.': 'You do not have the right to change image information.'
+'The image number specified is already in use.': 'The image number specified is already in use.'
+'Image $1 updated.': 'Image $1 updated.'
+'Image $1 added.': 'Image $1 added.'
+'Edit article': 'Edit article'
+'You do not have the right to attach images to articles.': 'You do not have the right to attach images to articles.'
+'You do not have the right to add images.': 'You do not have the right to add images.'
+'Image information': 'Image information'
+'Attach New Image': 'Attach New Image'
+'Attach Image To Article': 'Attach Image To Article'
+'Attach Existing Image': 'Attach Existing Image'
+'Add New Image': 'Add New Image'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Date<BR><SMALL>(yyyy-mm-dd)</SMALL>
+'You must select an image file to upload.': 'You must select an image file to upload.'
+'Change image information': 'Change image information'
+'You do not have the right to add images': 'You do not have the right to add images'

@@ -1,0 +1,39 @@
+'Area to localize': 'Рэгіён лакалізацыі'
+Dashboard: 'Мой Newscoop'
+Authors: Аўтары
+Libraries: Бібліятэкі
+'Media Archive': 'Архіў Медыа'
+Extensions: Пашырэнні
+Geo-location: Геалакацыя
+'Translation status:': 'Статус перакладу '
+'Editor Media Plugin': 'Плагін Медыя-рэдактара'
+'$1 of $2 strings translated': '$1 з $2  радкоў перакладзены'
+'Preview Window': 'Акно прадагляду'
+'Show translated strings': 'Паказаць перакладзеныя радкі'
+'Hide translated strings': 'Схаваць перакладзеныя радкі'
+Feedback: 'Зваротная сувязь'
+'You do not have the right to manage the localizer.': 'Вы ня маеце права доступу для кiраваньня лякалізацыяй.'
+API: 'Праграмны інтэрфэйс'
+'User Subscriptions Sections': 'Карыстальнiцкая сэкцыя падпiсак'
+'User Subscriptions': 'Карыстальнiцкiя падпiскі'
+'Translate to:': 'Перакласьцi на:'
+'Translate from:': 'Перакласьцi з:'
+'The following strings are not used:': 'Наступныя радкі не выкарыстоўваюцца:'
+'The following strings are missing from the translation files:': 'Наступныя радкі прапушчаныя ў файлах перакладу:'
+'No source strings found.': 'Ня знойдзена зыходных радкоў.'
+'No matches found.': 'Ня знойдзена супадзеньняў.'
+Globals: Агульныя
+'Are you sure you want to delete this entry?': 'Ці Вы ўпэўнены, што хочаце выдалiць гэты запiс?'
+'All strings have been translated.': 'Усе радкi былi перакладзеныя.'
+'Bug Reporting': 'Паведамленьні аб памылках'
+'Article Topics': 'Тэмы артыкулаў'
+'native name': 'арыгінальная назва'
+name: назва
+edit: рэдагаваць
+delete: выдалiць
+code: код
+'Click Here to Convert': 'Нацiсьнiце тут для канвэртаваньня'
+success: посьпех
+fail: няўдача
+'cannot read $1': 'немагчыма прачытаць $1'
+Converting...: Канвэртаваньне...

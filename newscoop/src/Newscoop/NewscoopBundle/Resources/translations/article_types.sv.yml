@@ -1,0 +1,8 @@
+'No article types.': 'Inga artikeltyper.'
+'Delete article type $1': 'Radera artikeltyp $1'
+'You do not have the right to add article types.': 'Du har inte rätt att lägga till artikeltyper.'
+'Adding new article type': 'Lägger till ny artikeltyp'
+'The $1 field may only contain letters and underscore (_) character.': 'Fältet $1 får bara innehålla bokstäver och understreck (_)'
+'The article type $1 already exists.': 'Artikeltypen $1 finns redan.'
+'You do not have the right to delete article types.': 'Du har inte rätt att radera artikeltyper.'
+'The article type $1 could not be deleted.': 'Artikeltypen $1 kunde inte raderas.'

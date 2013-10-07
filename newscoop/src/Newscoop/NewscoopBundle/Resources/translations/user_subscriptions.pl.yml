@@ -1,0 +1,67 @@
+third: trzeci
+second: drugi
+forth: czwarty
+first: pierwszy
+'You must input a number greater than 0 into the Number of addresses field.': 'W pole liczba adresów musisz wpisać liczbę większa niż 0.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Dla pola początkowe adresy IP $1 musisz podać liczbę z zakresu pomiędzy 0 a 255.'
+'User IP access list management': 'Zarządzanie listą adresów IP użytkownika'
+'The IP address group conflicts with another existing group.': 'Ta grupa adresów IP koliduje z inną istniejącą grupą.'
+'Subscription sections': 'Sekcje subskrybcji'
+'No records.': 'Brak wyników'
+'You have subscription for all available publications': 'Masz subskrybcje dla wszystkich dostępnych publikacji'
+'Subscription type:': 'Typ subskrybcji:'
+'Start:': Start
+'Start Date': 'Data startu'
+'Sections:': Sekcja
+'Publication:': Publickacja
+'Paid days': 'Opłacone dni'
+'Paid Days:': 'Opłacone dni'
+Paid: Oplacone
+'No subscriptions': 'Brak subskrypcji'
+'Languages:': Języki
+'Edit all sections': 'Edytuj wszystkie sekcje'
+'Days:': Dni
+'Days must be number': 'Dni muszą być liczbą'
+Any: Każdy
+'Add section': 'Dodaj sekcję'
+saved: zapisane
+removed: usunięte
+deleted: usunięte
+deactivated: wyłączone
+activated: aktywowane
+'Value is required and cant be empty': 'Wartość jest wymagana i nie może być pusta.'
+'That user name already exists, please choose a different login name.': 'Ta nazwa użytkownika już istnieje, wybierz inną nazwę.'
+'That $1 already exists, please choose a different $2.': 'Ten $1 już istnieje, wybierz inny $2'
+'Subscriptions exist for all available publications.': 'Subskrybcje istnieją dla wszystkich dostępnych publikacji.'
+'Subscription IP Addresses': 'Adresy IP subskrypcji'
+'Subscription $1': 'Subskrypcja $1'
+'Subscriber saved.': 'Subskrypcja zapisana.'
+'Subscriber management': 'Zarządzanie subskrypcjami'
+'Subscriber deleted.': 'Subskrypcja usunięta.'
+'Start IP': 'Początkowy adres IP'
+'Select country': 'Wybierz kraj'
+'Number of addresses': 'Liczba adresów'
+'Number of Addressses': 'Liczba adresów'
+'No IP Addresses': 'Brak adresu IP'
+'IP Address added allready': 'Ten adres IP już jest dodany'
+'IP Address $1': 'Adres IP $1'
+'IP Access': 'Dostęp IP'
+'Full Name': 'Pełna nazwa'
+'Edit subscriptions': 'Edytuj subskrybcje'
+'Edit subscriber $1': 'Edytuj subskrybera'
+E-Mail: 'Adres email'
+'Delete subscriber $1': 'Usuń subskrybera'
+'Creation Date': 'Data utworzenia'
+'Change subscriber information': 'Zmień informacje subskrybenta'
+'Add new IP address': 'Dodaj nowy adres IP'
+'Add new IP Address': 'Dodaj nowy adres IP'
+'Accout Name': 'Nazwa konta'
+'%value% must be greater than %min%': '%value% musi mieć więcej znaków niż %max%'
+'%value% is not a valid IP Address': '%value% nie jest prawidłowym adresem IP'
+'Regardless of the language': 'Niezależnie od języka'
+'Individual languages': 'Indiwydualne języki'
+'Add sections now': 'Dodaj sekcję'
+'Add sections later': 'Dodaj sekcję później'
+'Subscription Type': 'Typ subskrypcji'
+'Paid (payment will be confirmed later)': 'Zapłacone (płatność zostanie potwierdzona później)'
+'Paid (confirm payment now)': 'Zapłacone (potwierdź płatność teraz)'

@@ -1,0 +1,7 @@
+'Signed in: $1': '사용중: $1'
+Help: 도움말
+'Please enter your user name and password': '아이디와 패스워드를 입력하시오'
+'You do not have the right to access this page.': '페이지를 악세스 할 권한이  없습니다.'
+'Login failed': '로그인 실패'
+'Please make sure that you typed the correct user name and password.': '아이디와 패스워드를 정확하게 입력했는지 확인하시오'
+'If your problem persists please contact the site administrator $1': '문제가 해결되지 않으면, 시스템 운영자에게 연락하시오'

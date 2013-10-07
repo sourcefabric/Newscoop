@@ -1,0 +1,32 @@
+Help: დახმარება
+Support: მხარდაჭერა
+Themes: თემები
+'Area to localize': 'ლოკალიზების დამატება'
+Dashboard: დეშბორდი
+Authors: ავტორები
+Libraries: ბიბლიოთეკები
+'Media Archive': 'მედია არქივი'
+Extensions: გაფართოებები
+Geo-location: 'გეოგრაფიული ლოკაცია'
+'Translation status:': 'თარგმანის სტატუსი:'
+'Editor Media Plugin': 'მედია პლაგინ რედაქტორი'
+'$1 of $2 strings translated': '$1 $2 ველიდან ითარგმნა'
+'Preview Window': 'ფანჯრის ეკრანზე გამოტანა'
+'Show translated strings': 'ნათარგმნი ველების ჩვენება'
+'Hide translated strings': 'ნათარგმნი ველების დამალვა'
+Feedback: უკუკავშირი
+'You do not have the right to manage the localizer.': 'თქვენ არ გაქვთ ლოკალიზატორის მართვის უფლება'
+API: API
+'User Subscriptions Sections': 'მოხმარებლის გამოწერის სექციები'
+'User Subscriptions': 'გამოწერის დამატება'
+'Translate to:': 'ითარგმნოს ენაზე: '
+'Translate from:': 'ითარგმნოს ენიდან:'
+'The following strings are not used:': 'ეს ველები არ გამოიყენება:'
+'The following strings are missing from the translation files:': 'შემდეგი ტექსტი გამოტოვებულია ნათარგმნ ფაილებში: '
+'No source strings found.': 'წყარო ველი ვერ მოიძებნა'
+'No matches found.': 'დამთხვევა არ მოიძებნა.'
+Globals: 'გლობალური '
+'Are you sure you want to delete this entry?': 'დარწმუნებული ხართ რომ გსურთ ამ ჩანაწერის წაშლა?'
+'All strings have been translated.': 'ყველა ვერლი ითარგმნა'
+'Bug Reporting': 'შეცდომის რეპორტინგი'
+'Article Topics': 'სტატიის საკითხები'

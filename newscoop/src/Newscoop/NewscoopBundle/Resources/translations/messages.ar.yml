@@ -1,0 +1,268 @@
+Plugins: 'وحدات قابسة'
+'Manage Plugins': 'إدارة الوحدات القابسة'
+Account: حساب
+'Items per page': 'عدد العناصر في كل صفحة'
+'Add new': 'إضافة جديدا'
+Home: البداية
+Logout: 'تسجيل الخروج'
+More...: المزيد...
+Content: المحتوى
+Languages: اللغات
+Countries: الدول
+Themes: المباحث
+Topics: المواضيع
+Configure: إعداد
+'Image Archive': 'أرشيف الصور'
+'Add Article': 'إضافة مقالة'
+Fields: الحقول
+Delete: حذف
+Type: نوع
+Name: اسم
+Code: رمز
+Edit: تعديل
+Login: 'تسجيل الدخول'
+Password: 'كلمة السر'
+Site: الموقع
+Path: المسار
+'Go up': 'ذهاب للأعلى'
+URL: 'عنوان الرابط'
+Order: الترتيب
+Hide: إخفاء
+Duplicate: تكرار
+Subscription: الإشتراك
+expires: ينتهي
+starts: يبدأ
+before: قبل
+after: بعد
+on: 'قيد التشغيل'
+status: الحالة
+active: 'قيد الاستخدام'
+inactive: 'قيد الإيقاف'
+Subscribers: المشتركون
+Staff: 'طاقم العمل'
+'Select destination': 'اختيار المكان المقصود'
+'No languages': 'لا لغات'
+'---Select language---': 'اختيار اللغة'
+'No publications': 'لا منشورات'
+'---Select publication---': 'اختيار المنشور'
+'No issues': 'لا إصدارات'
+'---Select issue---': 'اختيار الإصدار'
+'No sections': 'لا أقسام'
+'---Select section---': 'اختيار القسم'
+Language: اللغة
+Country: الدولة
+'Account name': 'اسم الحساب'
+Publication: المنشور
+'Default language': 'اللغة الرئيسية'
+Subscriptions: إشتراكات
+Issue: الإصدار
+Number: الرقم
+Section: القسم
+Keywords: 'كلمات البحث'
+Topic: الموضوع
+'URL Name': 'اسم عنوان الرابط'
+'Left to pay': 'الباقي للدفع'
+Active: 'قيد الاستخدام'
+Trial: تجريبي
+Next: التالي
+Previous: السابق
+Translate: الترجمة
+View: عرض
+'Scheduled Publishing': 'النشر المجدول'
+Time: الوقت
+Action: الاجراء
+'Schedule a new action': 'تعيين اجراءا جديدا'
+'Scheduling a new publish action': 'في عملية تعيين اجراءا جديدا للنشر'
+'Delete scheduled publish action': 'حذف الاجراء المجدول للنشر'
+Date/Time: التاريخ/الوقت
+'You must select an action.': 'يجب عليك أن تختار اجراءا.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'ليس لديك الحق في جدولة إصدارات أو مقالات للنشر الأوتوماتي'
+'Front page': 'الصفحة الرئيسية'
+'Section page': 'صفحة الأقسام'
+'Show on front page': 'اظهار على الصفحة الرئيسية'
+'Remove from front page': 'إزالة عن الصفحة الرئيسية'
+'Show on section page': 'اظهار على صفحة الأقسام'
+'Remove from section page': 'إزالة عن صفحة الأقسام'
+Actions: الاجراءات
+Publishing: النشر
+Show: إظهار
+Remove: إزالة
+'Article Types': 'أنواع المقالة'
+'Staff User Types': 'أنواع المستخدم من طاقم العمل'
+Publications: المنشورات
+Issues: الإصدارات
+Sections: الأقسام
+Articles: المقالات
+Images: الصور
+Change: تغيير
+'Add new issue': 'إضافة إصدارا جديدا'
+'Section Template': 'قالب القسم'
+'Article Template': 'قالب المقالة'
+'Default Language': 'اللغة الرئيسية'
+'Paid Period': 'فترة الدفع'
+Preview: معاينة
+'You must fill in the $1 field.': 'يجب عليك أن تملأ الحقل $1'
+Error: خطأ
+'Invalid input: $1': 'إدخال غير صالح: $1'
+'Language does not exist.': 'اللغة غير موجودة'
+'Publication does not exist.': 'المنشورة غير موجودة'
+'Issue does not exist.': 'الإصدار غير موجود'
+'You must select a language.': 'يجب عليك أن تختار لغة'
+'Section does not exist.': 'القسم غير موجود'
+'No articles.': 'لا مقالات.'
+'Article does not exist.': 'المقالة غير موجودة'
+'Image does not exist.': 'الصورة غير موجودة'
+'Access denied': 'الدخول غير مقبول'
+'Invalid parameters received': 'تم إستقبال متغيرات غير صالحة'
+'Add new article': 'إضافة مقالة جديدة'
+Status: الحالة
+Published: 'تم النشر'
+'Not published': 'لم ينشر'
+Submitted: 'تم التسليم'
+New: جديد
+Article: مقالة
+Publish: نشر
+Unpublish: 'إزالة النشر'
+Unlock: 'فتح القفل'
+Uploaded: 'تم الرفع'
+YYYY-MM-DD: 'DD-MM-YYYY (السنة - الشهر - اليوم)'
+Submit: تسليم
+Image: صورة
+Description: وصف
+Photographer: المصوّر
+Place: المكان
+Date: التاريخ
+Thumbnail: 'الصورة المصغرة'
+'In use': 'قيد الاستعمال'
+'Additional searches': 'بحوث إضافية'
+'Most Recently Added': 'آخر ما أضيف'
+'Most Recently Modified': 'آخر التعديلات'
+'$1 images found': 'تم العثور على $1 صور.'
+'Reset search conditions': 'إعادة تعديل شروط البحث'
+'Image number': 'رقم الصورة'
+Users: المستخدمون
+Localizer: 'محدد الموقع'
+'Adding new translation': 'في عملية إضافة ترجمة جديدة'
+'No more languages.': 'ليس هناك المزيد من اللغات'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'يسمح للحقل $1 أن يحتوي فقط على أحرف, أرقام والحرف (_)'
+'Add new publication': 'إضافة منشورة جديدة'
+'Upload new template': 'رفع قالبا جديدا'
+'Add new staff member': 'إضافة عضو طاقم العمل الجديد'
+'Add new subscriber': 'إضافة مشتركا جديدا'
+'Add new user type': 'إضافة نوع مستخدم جديد'
+'Add new article type': 'إضافة نوع جديد من المقالة'
+'Add new country': 'إضافة دولة جديدة'
+'Add new language': 'إضافة لغة جديدة'
+'View logs': 'عرض السجلات'
+'Change your password': 'تعديل كلمة السر'
+'Your Articles': مقالاتك
+'Submitted Articles': 'المقالات المسلّمة'
+Logs: السجلات
+'There are $1 article(s) left.': 'تبقى $1 مقالات.'
+'There are $1 issues(s) left.': 'تبقى $1 إصدارات.'
+'There are $1 section(s) left.': 'تبقى $1 أقسام.'
+'There are $1 publication(s) left.': 'تبقى $1 منشورات.'
+'There are $1 countries left.': 'تبقى $1 دول.'
+'Name <SMALL>(click to edit)</SMALL>': 'الاسم <SMALL>(اضغط لتعديل)</SMALL>'
+'Add new subscription': 'إضافة إشتراكا جديدا'
+'You do not have the right to add subscriptions.': 'ليس لديك الحق في إضافة الإشتراكات'
+'Adding subscription': 'في عملية إضافة اشتراكا'
+'Delete subscription': 'حذف الإشتراك'
+'You do not have the right to delete subscriptions.': 'ليس لديك الحق في حذف الإشتراكات'
+'No such subscription.': 'لا يوجد هذا الاشتراك'
+Yes: نعم
+No: لا
+Close: إغلاق
+'No issues.': 'لا إصدارات'
+'Back to Edit Article': 'العودة الى تعديل المقالة'
+'No topics': 'لا مواضيع'
+'You do not have the right to add articles.': 'ليس لديك الحق في إضافة المقالات'
+Start: البداية
+Days: الأيام
+'The sections could not be added successfully. Some of them were already added !': 'لم تضف الأقسام بنجاح. كان بعض الأقسام مضافة من قبل!'
+'Add another': 'إضافة آخرا'
+Cancel: إلغاء
+Done: خلص
+OK: تمام
+Save: حفظ
+Search: بحث
+'Make a selection': 'قم بالإختيار'
+'You must input a number greater than 0 into the $1 field.': 'يجب عليك إدخال رقما أكبر من صفر في حقل $1.'
+'You must input a valid date.': 'يجب عليك إدخال تاريخا صالحا.'
+'Add new field': 'إضافة حقلا جديدا'
+'Article automatic publishing schedule': 'جدول النشر الأوتوماتي للمقالات'
+'Are you sure you want to delete this scheduled action?': 'هل أنت متأكد أن تريد أن تحذف هذا الإجراء المجدول؟'
+Unlink: 'فصل الرابط'
+'Are you sure you want to delete the image $1?': 'هل أنت متأكد أن تريد أن تحذف الصورة $1؟'
+'No such issue.': 'لا يوجد هذا الإصدار'
+'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أن تريد أن تحذف الإشتراك للمنشور $1؟'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'لا يمكن حفظ التغييرات للإصدار $1. يرجى التأكد ألّم يستخدم اسم العنوان $2 من قبل في منشور $3.'
+GB: جيجابايت
+MB: ميغابايت
+KB: كيلوبايت
+bytes: بايت
+Attach: إرفاق
+Back: العودة
+File: ملف
+'Save and Close': 'حفظ وإغلاق'
+Add: إضافة
+'Select All': 'اختيار الجميع'
+'Select None': 'اختيار لا شئ'
+'Add Event': 'إضافة حدثا'
+N/A: 'غير متوفر'
+'On Front Page': 'على الصفحة الرئيسية'
+'On Section Page': 'على صفحة الأقسام'
+'Created by': بقلم
+'Creation date': 'تاريخ الإنشاء'
+'Publication List': 'قائمة المنشورات'
+'Issue List': 'قائمة الإصدارات'
+'Section List': 'قائمة الأقسام'
+All: الجميع
+duplicate: تكرار
+move: نقل
+Move: نقل
+'From:': 'من:'
+'Date:': 'التاريخ:'
+Hidden: 'مخفي '
+Comments: تعليقات
+Comment: التعليق
+Approved: 'موافق عليه'
+Subject: الموضوع
+'IP address:': 'عنوان بروتوكول الإنترنت:'
+'Email:': 'البريد الإلكتروني:'
+Author: المؤلف
+'Article name': 'اسم المقالة'
+'Hide article': 'إخفاء المقالة'
+'Show article': 'إظهار المقالة'
+'Article Type Fields': 'حقول لأنواع المقالة'
+'Article Images': 'صور المقالة'
+'Log Messages': 'رسائل السجلات'
+'Article Files': 'ملفات المقالة'
+'Article Comments': 'تعليقات المقالة'
+'Are you sure you want to deactivate the subscription?': 'هل أنت متأكد من إيقاف الإشتراك؟'
+'Are you sure you want to activate the subscription?': 'هل أنت متأكد من تفعيل الإشتراك؟'
+Other: 'غير ذلك'
+'Time:': 'الوقت:'
+'No events.': 'لا أحداث.'
+'Default templates': 'قوالب افتراضية'
+'System Preferences': 'تفضيلات النظام'
+'The date must be in the future.': 'يجب أن يقع تاريخ البدء في المستقبل'
+Send: الإرسال
+'Thank you.': 'شكرًا لكم.'
+'Please take a minute to send us an email.': 'يرجى إرسال لنا رسالة قصيرة من جلال بريد إلكتروني.'
+(optional): (اختياري)
+'The URL you entered is invalid: $1': 'العنوان الإلكروني الذي أدخلته غير صالح: $1'
+Reads: يقرأ
+'Publish with issue': 'نشر مع الإصدار'
+'Universal List': 'قائمة عالمية'
+'Invalid security token!': 'الرمز الأمني غير صالح!'
+Authors: المؤلفات
+Cuenta: حساب
+'Items por p√°gina': 'عدد العناصر في كل صفحة'
+'No puede crear el archivo $1': 'غير قادر أن ينشئ أرشيف $1'
+'User name': 'اسم المستخدم'
+'Schedule a new publish action': 'جدولة اجراءا جديد للنشر'
+'User Types': 'أنواع المستخدم'
+'User may add/change user accounts and passwords': 'يسمح للمستخدم أن يضيف وتعدل الحسابات وكلمات السر'
+'User may delete user accounts': 'يسمح للمستخدم أن تذيل حسابات المستخدمين'
+'Add new user account': 'إضافة حساب مستخدم جديد'

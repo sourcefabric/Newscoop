@@ -1,0 +1,59 @@
+'Not a color': 'Не зяўляецца колерам'
+'No such field': 'Няма такога поля'
+'Color saved': 'Колер захаваны'
+'Color not saved': 'Колер не захаваны'
+'Topic created': 'Тэма створаная'
+'The topic name is already in use by another topic.': 'Гэтае імя ўжо выкарыстоўваецца іншай тэмай.'
+'Complex Date': 'Складовая дата'
+vertices: вяршыні
+'There was a problem trying to execute the XML RPC function.': 'Памылка ў спробе выканання функцыі XML RPC.'
+'The Campcaster server configuration is invalid.': 'Няправільныя налады сервера Airtime.'
+'Pan Map': 'Панарамаванне Карты'
+'Open large map': 'Адкрыць у вялікім акне'
+'No news available.': 'Няма даступных навін.'
+'Edit Polygon': 'Рэдагаваць ламаную'
+'Create Polygon': 'Стварыць ламаную'
+'Communication error: ': 'Памылка сувязі:'
+'Cant fetch news from $1': 'Немагчыма атрымаць навіны з $1'
+Loading...: Пампуецца...
+Version: Версія
+License: Ліцэнзія
+Homepage: Галоўная
+'Show original map': 'Паказаць азначаную карту'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Загружаны архіў не змяшчае правільны плагін Newscoop.'
+Map: Карта
+Center: Цэнтр
+Title: Загаловак
+'Invalid security token.': 'Няправільны маркер бяспекі.'
+'Callback $1 is not callable.': 'Зваротнае тэлефанаванне $ 1 недаступнае'
+'Article translated to $4 ($5)': 'Артыкул перакладзены на $4 ($5)'
+'Article status changed from $1 to $2.': 'Статут артыкула зменены з $1 на $2.'
+'Article deleted.': 'Артыкул выдалены.'
+'Article created.': 'Артыкул створаны.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Артыкул скапіраваны ў артыкул Article # $ 4 (выданне $5, выпуск $6, рубрыка $7)'
+'Article URL': 'URL артыкула'
+'Article Number': 'Нумар артыкула'
+'Access denied.': 'Адмоўлена ў доступе.'
+'Publish with issue': 'Апублiкаваць выпуск'
+unknown: невядома
+Switch: Пераключальнік
+Numeric: Лічбавы
+'The uploaded file format is unsupported.': 'Фармат файлу для загрузкі не падтрымліваецца сыстэмай.'
+'The following fields are mandatory:': 'Дадзеныя палі абавязковыя  для запаўненьня'
+'Missing value for $1': 'Прапушчанае значэньне пераменнай $1'
+'Manage Plugins': 'Кіраваць  прагінамі'
+'* Marked fields are mandatory.': '* Адзначаныя  палі абавязковыя  для запаўненьня'
+'$1 is of type $2': '$1 мае тып $2'
+'Invalid resize width/height.': 'Немагчыма зьмяніць даўжыню/шырыню.'
+'Image type $1 is not supported.': 'Тып графiчнага файла $1 не падтрымлiваецца.'
+'The file uploaded is not an image.': 'Загружаны файл ня ёсьць графiчны файл.'
+'Could not delete record from the database.': 'Не ўдалося выдаліць запiс з базы даных.'
+'template path': 'шлях да шаблёну'
+'short names': 'кароткiя iмёны '
+'Unable to fetch image from remote server.': 'Немагчыма '
+Last: Апошнi
+First: Першы
+'Single-line Text': Тэкст
+'Multi-line Text with WYSIWYG': 'Цела артыкула'
+'URL $1 is invalid or is not an image.': 'URL $1 няправільны цi не зьяўляецца графічным файлам.'
+'URL $1 is not an image.': 'URL $1 не зьяўляецца графIчным файлам.'

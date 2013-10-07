@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'Ви не маєте прав інсталювати плагини'
+'Some plugins have to be updated. Please press the save button.': 'Деякі плагіни повинні бути оновлені. Будь ласка збережіть усе.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Підтвердіть видалення плагіну $1. Всі дані плагіну будуть видалені!'
+'You do not have the right to manage plugins.': 'Ви не маєте прав керувати плагінами.'
+Version: Версія
+'Upload Plugin': 'Завантажити плагін'
+Upload: Завантажити
+Uninstall: Видалити
+'The plugin $1 was sucessfully installed.': 'Плагін $1 встановлений.'
+'No plugins found.': 'Плагінів не знайдено.'
+Manage: Керування
+Enabled: Дозволено
+'Delete plugin': 'Видалити плагін'
+'Add new image': 'Додати нове зображення'

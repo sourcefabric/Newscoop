@@ -1,0 +1,81 @@
+'Language id not specified': 'ID jazyku není specifikováno'
+'No languages.': 'Žádné jazyky.'
+'Native Name': 'Rodné jméno'
+'Name taken.': Příjmení
+'Language saved.': 'Jazyk uložen.'
+'Language removed.': 'Jazyk odstraněn.'
+'Language not found.': 'Jazyk nenalezen.'
+'Language is in use and cannot be removed.': 'Jazyk se používá a nelze být odstraněn.'
+'Language added.': 'Jazyk přidán.'
+'English language cannot be removed.': 'Anglický jazyk nemůže být odstraněn.'
+'Edit short month names': 'Upravit krátké názvy měsíců'
+'Edit short day names': 'Upravit krátké názvy dnů'
+'Edit month names': 'Upravit jména měsíců'
+'Edit language: $1': 'Upravit jazyk: $1'
+'Edit day names': 'Upravit jména dnů'
+'Code Page': 'Kódovací stránka'
+'Add new Language': 'Přidat nový jazyk'
+'Add Language': 'Přidat jazyk'
+We: St
+Tu: Út
+Th: Čt
+Su: Ne
+Sep: Zář
+Sa: So
+'Please enter the translation for week day short names.': 'Prosím vložte překlad pro zkratky dnů v týdnu.'
+'Please enter the translation for month short names.': 'Prosím vložte překlad pro zkratky měsíců.'
+Oct: Říj
+Nov: Lis
+Mo: Po
+Mar: Bře
+Jun: Čvn
+Jul: Čvc
+Jan: Led
+Fr: Pá
+Feb: Úno
+Dec: Pro
+Aug: Srp
+Apr: Dub
+'No language.': 'Žádný jazyk'
+'Delete language $1': 'Smazat jazyk $1'
+'You do not have the right to add languages.': 'Nemáte práva přidat jazyk'
+'Please enter the translation for time units.': 'Přeložte časové jednotky'
+'You do not have the right to delete languages.': 'Nemáte práva smazat jazyk'
+'Are you sure you want to delete the language $1?': 'Určitě chcete smazat jazyk $1'
+'Deleting language': 'Smazat jazyk'
+'The language $1 could not be deleted.': '$1 jazyk nemohl být smazán'
+'Edit language': 'Editovat jazyk'
+'You do not have the right to edit languages.': 'Nemáte práva editovat jazyk'
+'Please enter the translation for month names.': 'Napište přeložené názvy měsíců'
+'Please enter the translation for week day names.': 'Napište přeložené dny v týdnu'
+January: Leden
+February: Únor
+March: Březen
+April: Duben
+May: Květen
+June: Červen
+July: Červenec
+August: Srpen
+September: Září
+October: Říjen
+November: Listopad
+December: Prosinec
+Monday: Pondělí
+Tuesday: Úterý
+Wednesday: Středa
+Thursday: Čtvrtek
+Friday: Pátek
+Saturday: Sobota
+Sunday: Neděle
+'You do not have the right to add new languages.': 'Nemáte oprávnění přidávat další jazyky.'
+'There are $1 issue(s) left.': 'Zbývá $1 vydání.'
+'Native name': 'Jazyk (nepřeložen)'
+'The language $1 has been successfuly added.': 'Jazyk $1 byl úspěšně přidán'
+'Please check if a language with the same name does not already exist.': 'Zkontrolujte, zda už neexistuje stejný jazyk'
+'The language could not be added.': 'Jazyk nemohl být přidán'
+'Delete language': 'Smazat jazyk'
+'The language $1 has been deleted.': '$1 jazyk byl smazán'
+'Updating language information': 'Obnovit jazyk'
+'Language information has been successfuly updated.': 'Jazyk obnoven'
+'Language information could not be updated.': 'Jazyk nemohl být obnoven'
+'A language with the same name already exists.': 'Jazyk se stejným názvem už existuje'

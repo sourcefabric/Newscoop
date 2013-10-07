@@ -1,0 +1,7 @@
+'Signed in: $1': 'Autenticado como: $1'
+Help: Ajuda
+'Please enter your user name and password': 'Introduza o seu Nome de Utlizador e a sua Palavra-Passe'
+'You do not have the right to access this page.': 'Não tem permissão para aceder a esta página'
+'Login failed': 'A autenticação falhou'
+'Please make sure that you typed the correct user name and password.': 'Certifique-se que introduziu o Nome de Utilizador e a Palavra-Passe correctas.'
+'If your problem persists please contact the site administrator $1': 'Se o problema persistir, contacte o Administrador de Sistema $1.'

@@ -1,0 +1,59 @@
+'Not a color': 'Не является цветом'
+'No such field': 'Нет такого поля'
+'Color saved': 'Цвет сохранен'
+'Color not saved': 'Цвет не сохранен'
+'Topic created': 'Тема создана'
+'The topic name is already in use by another topic.': 'Это имя уже используется другой темой.'
+'Complex Date': 'Составная дата'
+vertices: вершины
+'There was a problem trying to execute the XML RPC function.': 'Ошибка при попытке выполнения функции XML RPC.'
+'The Campcaster server configuration is invalid.': 'Неправильные настройки сервера Airtime.'
+'Pan Map': 'Панорамирование карты'
+'Open large map': 'Открыть в большом окне'
+'No news available.': 'Нет доступных новостей.'
+'Edit Polygon': 'Редактировать ломаную'
+'Create Polygon': 'Создать ломаную'
+'Communication error: ': 'Ошибка связи:'
+'Cant fetch news from $1': 'Не удалось получить новости из $1'
+Loading...: Загрузка...
+Version: Версия
+License: Лицензия
+Homepage: Главная
+'Show original map': 'Показать исходную карту'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Загруженный архив не содержит верный плагин Newscoop.'
+Map: Карта
+Center: Центр
+Title: Заголовок
+'Invalid security token.': 'Неверный маркер безопасности.'
+'Callback $1 is not callable.': 'Обратный звонок $1 недоступен'
+'Article translated to $4 ($5)': 'Статья переведена на $4 ($5)'
+'Article status changed from $1 to $2.': 'Статус статьи изменен с $1 на $2.'
+'Article deleted.': 'Статья удалена.'
+'Article created.': 'Статья создана.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Статья скопирована в статью Article #$4 (издание $5, выпуск $6, рубрика $7 )'
+'Article URL': 'URL статьи'
+'Article Number': 'Номер статьи'
+'Access denied.': 'Отказано в доступе.'
+'Publish with issue': 'Опубликовать выпуск'
+unknown: неизвестно
+Switch: Переключатель
+Numeric: Числовой
+'The uploaded file format is unsupported.': 'Формат файл для загрузки не поддерживается системой.'
+'The following fields are mandatory:': 'Данные поля обязательны для заполнения:'
+'Missing value for $1': 'Пропущено значение переменной $1'
+'Manage Plugins': 'Управлять прагинами'
+'* Marked fields are mandatory.': '* Отмеченные поля обязательны для заполнения'
+'$1 is of type $2': '$1 имеет тип $2'
+'Invalid resize width/height.': 'Невозможно изменить длину/ширину.'
+'Image type $1 is not supported.': 'Тип картинки $1 не поддерживается.'
+'The file uploaded is not an image.': 'Загруженный файл не является изображением.'
+'Could not delete record from the database.': 'Не удалось удалить запись из базы данных.'
+'template path': 'путь к шаблону'
+'short names': 'короткие имена'
+'Unable to fetch image from remote server.': 'Невозможно извлечь изображение из удаленного сервера.'
+Last: Последний
+First: Первый
+'Single-line Text': Текст
+'Multi-line Text with WYSIWYG': 'Тело статьи'
+'URL $1 is invalid or is not an image.': 'URL $1 неверен или не является изображением.'
+'URL $1 is not an image.': 'URL $1 не является изображением.'

@@ -1,0 +1,31 @@
+Support: Pomoc
+Themes: Szablony
+'Area to localize': 'Obszar do przetłumaczenia'
+Dashboard: Dashboard
+Authors: Autorzy
+Libraries: Biblioteki
+'Media Archive': 'Archiwum mediów'
+Extensions: Rozszerzenia
+Geo-location: Geolokacja
+'Translation status:': 'Stan tłumaczenia'
+'Editor Media Plugin': 'Edytor Media Pluginów'
+'$1 of $2 strings translated': '$1 z $2 zmiennych przetłumaczonych'
+'Preview Window': 'Okno podglądu'
+'Show translated strings': 'Pokaż przetłumaczone zmienne'
+'Hide translated strings': 'Schowaj przetłumaczone zmienne'
+Feedback: Feedback
+'You do not have the right to manage the localizer.': 'Brak wystarczających praw do zarzadzania lokalizacją.'
+API: API
+'User Subscriptions Sections': 'Sekcje subskrypcji użytkowników'
+'User Subscriptions': 'Subskrypcje użytkowników'
+'Translate to:': 'Przetłumacz na:'
+'Translate from:': 'Przetłumacz z:'
+'The following strings are not used:': 'Poniższe zmienne nie są używane'
+'The following strings are missing from the translation files:': 'Poniższe zmienne nie znajdują się w plikach tłumaczeń:'
+'No source strings found.': 'Brak zmiennych źródłowych.'
+'No matches found.': 'Brak rezultatów.'
+Globals: Globalne
+'Are you sure you want to delete this entry?': 'Na pewno usunąć ten wpis?'
+'All strings have been translated.': 'Wszystkie zmienne zostały przetłumaczone'
+'Bug Reporting': 'Raportowanie błędów'
+'Article Topics': 'Tematy artykułów'

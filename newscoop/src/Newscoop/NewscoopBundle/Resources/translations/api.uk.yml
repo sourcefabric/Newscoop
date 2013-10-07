@@ -1,0 +1,59 @@
+'Not a color': 'Не кольорове'
+'No such field': 'Немає полів'
+'Color saved': 'Колір збережено'
+'Color not saved': 'Колір не збережено'
+'Topic created': 'Тема створена'
+'The topic name is already in use by another topic.': 'Назва вже існуе у іншій темі'
+'Complex Date': 'Комплексна дата'
+vertices: вершини
+'There was a problem trying to execute the XML RPC function.': 'Проблеми с виконанням XML RPC'
+'The Campcaster server configuration is invalid.': 'Конфігурація сервера Campcaster пошкоджена'
+'Pan Map': 'Панорама карти'
+'Open large map': 'Відкрити збільшену карту'
+'No news available.': 'Немає доступних новин'
+'Edit Polygon': 'Редагувати полігон'
+'Create Polygon': 'Створити полігон'
+'Communication error: ': 'Помилка зв’язку'
+'Cant fetch news from $1': 'Не вдалося отримати новини з $ 1'
+Loading...: Завантаження...
+Version: Версія
+License: Ліцензія
+Homepage: 'Домашнья сторінка'
+'Show original map': 'Показати первинну карту'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Завантажений архів не містить дійсних плагінів'
+Map: Карта
+Center: Центр
+Title: Заголовок
+'Invalid security token.': 'Не дійсний маркер безпеки'
+'Callback $1 is not callable.': 'Колбек $1 не є зворотним'
+'Article translated to $4 ($5)': 'Стаття перекладена на $4 ($5)'
+'Article status changed from $1 to $2.': 'Статус статті змінений з $1 на $2.'
+'Article deleted.': 'Стаття видалена.'
+'Article created.': 'Стаття створена'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Стаття скопійована як стаття #$4 (публікація $5, випуск $6, секція $7).'
+'Article URL': 'посилання статті'
+'Article Number': 'номер статті'
+'Access denied.': 'Доступ заборонено'
+'Publish with issue': 'Опублікувати з випуском'
+unknown: невідомий
+Switch: Перемикнути
+Numeric: Числовий
+'The uploaded file format is unsupported.': 'формат завантаженого файлу не підтримується'
+'The following fields are mandatory:': 'Наступні поля є обовязковими:'
+'Missing value for $1': 'не вистачае значення для $1'
+'Manage Plugins': 'Керування плагінами'
+'* Marked fields are mandatory.': '* відмічені поля є обовязковими:'
+'$1 is of type $2': '$1 це тип $2'
+'Invalid resize width/height.': 'Невірний розмір ширини / висоти.'
+'Image type $1 is not supported.': 'Тип зображення $1 не підтримується.'
+'The file uploaded is not an image.': 'Завантажений файл не є зображенням.'
+'Could not delete record from the database.': 'Не вдалося видалили запис з бази даних.'
+'template path': 'шлях до шаблону'
+'short names': 'коротке ім’я'
+'Unable to fetch image from remote server.': 'Неможливо отримати зображення з видаленого сервера.'
+Last: Останнє
+First: Перше
+'Single-line Text': 'Однорядковий текст'
+'Multi-line Text with WYSIWYG': 'Декількарядковий текст с WYSIWYG'
+'URL $1 is invalid or is not an image.': 'посилання $1 невірне або це не зображення'
+'URL $1 is not an image.': 'посилання  $1 не є зображенням'

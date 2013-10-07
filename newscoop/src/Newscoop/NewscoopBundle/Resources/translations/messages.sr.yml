@@ -1,0 +1,265 @@
+Plugins: Плагинови
+'Manage Plugins': 'Управљање плагиновима'
+Account: Налог
+'Items per page': 'Ставки по страни'
+'Add new': 'Додај нови'
+Home: Почетак
+Logout: Одјава
+More...: Даље...
+Content: Садржаји
+Languages: Језици
+Countries: Државе
+Themes: Шаблони
+Topics: Топици
+Configure: Подешавања
+'Image Archive': 'Фото архива'
+'Add Article': 'Додај текст'
+Fields: Поља
+Delete: Обриши
+Type: Тип
+Name: Наслов
+Code: Код
+Edit: Уреди
+Login: Пријава
+Password: Лозинка
+Site: Сајт
+Path: Путања
+'Go up': 'Ниво изнад'
+URL: УРЛ
+Order: Поредак
+Hide: Сакри
+Duplicate: Дуплирај
+Subscription: Претплата
+expires: истиче
+starts: почиње
+before: пре
+after: после
+on: у
+status: статус
+active: активна
+inactive: неактивна
+Subscribers: Претплатници
+Staff: Сарадници
+'Select destination': 'Изабери дестинацију'
+'No languages': 'Нема језика'
+'---Select language---': '--- Изабери језик ---'
+'No publications': 'Нема публикација'
+'---Select publication---': '--- Изабери публикацију ---'
+'No issues': 'Нема текстова'
+'---Select issue---': '--- Изабери текст ---'
+'No sections': 'Нема рубрика'
+'---Select section---': '--- Изабери рубрику ---'
+Language: Језик
+Country: Држава
+'Account name': 'Име налога'
+Publication: Публикација
+'Default language': 'Основни језик'
+Subscriptions: Претплате
+Issue: Издање
+Number: Број
+Section: Рубрика
+Keywords: 'Кључне речи'
+Topic: Топик
+'URL Name': 'Скраћено име'
+'Left to pay': 'Преостало за плаћање'
+Active: Активна
+Trial: Пробна
+Next: Следећи
+Previous: Претходни
+Translate: Преведи
+View: 'Приказ '
+'Scheduled Publishing': 'Аутоматско објављивање'
+Time: Време
+Action: Акција
+'Schedule a new action': 'Закажи нову акцију'
+'Scheduling a new publish action': 'Закажи нову акцију објављивања'
+'Delete scheduled publish action': 'Обриши заказану акцију објављивања'
+Date/Time: Датум/време
+'You must select an action.': 'Морате изабрати акцију.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Немате право да заказујете аутоматско објављивање издања и текстова.'
+'Front page': 'Почетна страна'
+'Section page': 'Страна рубрике'
+'Show on front page': 'Прикажи на почетној страни'
+'Remove from front page': 'Повуци са почетне стране'
+'Show on section page': 'Прикажи на страни рубрике'
+'Remove from section page': 'Повуци са стране рубрике'
+Actions: Акције
+Publishing: Објављивање
+Show: Прикажи
+Remove: Уклони
+'Article Types': 'Типови текстова'
+'Staff User Types': 'Типови сарадника'
+Publications: Публикације
+Issues: Издања
+Sections: Рубрике
+Articles: Текстови
+Images: Слике
+Change: Промени
+'Add new issue': 'Додај ново издање'
+'Section Template': 'Шаблон рубрике'
+'Article Template': 'Шаблон текста'
+'Default Language': 'Основни језик'
+'Paid Period': 'Плаћени период'
+Preview: Преглед
+'You must fill in the $1 field.': 'Морате попунити поље $1'
+Error: Грешка
+'Invalid input: $1': 'Погрешан унос: $1'
+'Language does not exist.': 'Нема тог језика.'
+'Publication does not exist.': 'Нема такве публикације.'
+'Issue does not exist.': 'Нема тог издања.'
+'You must select a language.': 'Морате изабрати језик.'
+'Section does not exist.': 'Та рубрика не постоји.'
+'No articles.': 'Нема текстова.'
+'Article does not exist.': 'Текст не постоји.'
+'Image does not exist.': 'Слика не постоји.'
+'Access denied': 'Забрањен приступ'
+'Invalid parameters received': 'Примљени су погрешни параметри'
+'Add new article': 'Додај нови чланак'
+Status: Статус
+Published: Објављен
+'Not published': Необјављено
+Submitted: Предат
+New: Нови
+Article: Текст
+Publish: Објави
+Unpublish: Повуци
+Unlock: Откључај
+Uploaded: Аплоудован
+YYYY-MM-DD: ГГГГ-ММ-ДД
+Submit: Пошаљи
+Image: Слика
+Description: Опис
+Photographer: Фотограф
+Place: Место
+Date: Датум
+Thumbnail: 'Умањена слика'
+'In use': 'У употреби'
+'Additional searches': 'Додатне претраге'
+'Most Recently Added': 'Најновије додато'
+'Most Recently Modified': 'Најскорије мењано'
+'$1 images found': 'Пронађено/а је $1 слика'
+'Reset search conditions': 'Поништи услове претраге'
+'Image number': 'Број слике'
+Users: Корисници
+Localizer: Локализатор
+'Adding new translation': 'Додавање новог превода'
+'No more languages.': 'Нема више језика.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Поље $1 може садржати искључиво слова, бројке и доњу црту (_).'
+'Add new publication': 'Додај нову публикацију'
+'Upload new template': 'Аплоудуј нови шаблон'
+'Add new staff member': 'Додај новог сарадника'
+'Add new subscriber': 'додај новог претплатника'
+'Add new user type': 'Додај нови тип корисника'
+'Add new article type': 'Додај нови тип текста'
+'Add new country': 'Додај државу'
+'Add new language': 'Додај језик'
+'View logs': 'Прикажи логове'
+'Change your password': 'Промени лозинку'
+'Your Articles': 'Твоји текстови'
+'Submitted Articles': 'Предати текстови'
+Logs: Логови
+'There are $1 article(s) left.': 'Преоста(л)о је $1 текст(ова)'
+'There are $1 issues(s) left.': 'Преостало је $1 издања.'
+'There are $1 section(s) left.': 'Преостало је $1 рубрика'
+'There are $1 publication(s) left.': 'Преостало(а) је $1 публикација'
+'There are $1 countries left.': 'Преостало је $1 држава'
+'Name <SMALL>(click to edit)</SMALL>': 'Име<br><small>(клик за уређивање)</small>'
+'Add new subscription': 'Додај нову претплату'
+'You do not have the right to add subscriptions.': 'Немате право да додајете претплате'
+'Adding subscription': 'Додавање претплате'
+'Delete subscription': 'Обриши претплату'
+'You do not have the right to delete subscriptions.': 'Немате право да бришете претплате'
+'No such subscription.': 'Нема такве претплате'
+Yes: Да
+No: Не
+Close: Затвори
+'No issues.': 'Нема издања'
+'Back to Edit Article': 'Назад на детаље текста'
+'No topics': 'Нема топика'
+'You do not have the right to add articles.': 'Немате право да додајете текстове'
+Start: Почетак
+Days: Дана
+'The sections could not be added successfully. Some of them were already added !': 'Рубрике не могу бити додате. Неке од њих већ постоје!'
+'Add another': 'Настави са додавањем'
+Cancel: Батали
+Done: Готово
+OK: OK
+Save: Сними
+Search: Тражи
+'Make a selection': Изаберите
+'You must input a number greater than 0 into the $1 field.': 'Морате унети број већи од 0 у поље $1'
+'You must input a valid date.': 'Морате исправно унети датум'
+'Add new field': 'Додај ново поље'
+'Article automatic publishing schedule': 'Распоред аутоматског објављивања текстова'
+'Are you sure you want to delete this scheduled action?': 'Да ли сте сигурни да желите да обришете заказану акцију?'
+Unlink: 'Уклони линк'
+'Are you sure you want to delete the image $1?': 'Да ли сте сигурни да желите да обришете слику $1?'
+'No such issue.': 'Нема тог издања.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Да ли сте сигурни да желите да обришете претплату на публикацију $1? '
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Промена у издању $1 не може бити снимљена. Проверите да ли УРЛ име издања $2 није већ коришћено у публикацији $3.'
+GB: ГБ
+MB: МБ
+KB: КБ
+bytes: бајтова
+Attach: Прикачи
+Back: Назад
+File: Фајл
+'Save and Close': 'Сними и затвори'
+Add: Додај
+'Select All': 'Изабери све'
+'Select None': 'Изабери ниједан'
+'Add Event': 'Додајте акцију'
+N/A: 'без података'
+'On Front Page': 'На првој страни'
+'On Section Page': 'На страни рубрике'
+'Created by': 'Креирао:'
+'Creation date': 'Датум креирања'
+'Publication List': 'Листа публикација'
+'Issue List': 'Листа издања'
+'Section List': 'Листа рубрика'
+All: Све
+duplicate: дуплирај
+move: премести
+Move: Премести
+'From:': 'Од:'
+'Date:': 'Датум:'
+Hidden: Сакривен
+Comments: Коментари
+Comment: Коментар
+Approved: Одобрен
+Subject: Наслов
+'IP address:': 'ИП адреса:'
+'Email:': 'Имејл:'
+Author: Аутор
+'Article name': 'Наслов текста'
+'Hide article': 'Сакри текст'
+'Show article': 'Прикажи текст'
+'Article Type Fields': 'Поља типа текста'
+'Article Images': 'Слике у тексту'
+'Log Messages': 'Лог поруке'
+'Article Files': 'Фајлови уз текст'
+'Article Comments': 'Коментари на текст'
+'Are you sure you want to deactivate the subscription?': 'Да ли сте сигурни да желите да деактивирате претплату?'
+'Are you sure you want to activate the subscription?': 'Да ли сте сигурни да желите да активирате претплату?'
+Other: Друго
+'Time:': Време
+'No events.': 'Без догађаја.'
+'Default templates': 'Основни шаблони'
+'System Preferences': 'Системске поставке'
+'The date must be in the future.': 'Датум мора бити у будућности.'
+Send: Пошаљи
+'Thank you.': Хвала.
+'Please take a minute to send us an email.': 'Молимо Вас одвојите који минут да нам пошаљете имејл'
+(optional): (опционо)
+'The URL you entered is invalid: $1': 'УРЛ који сте унели је неисправан: $1'
+Reads: читања
+'Publish with issue': 'Објави заједно са издањем'
+'Universal List': 'Универзална листа'
+'Invalid security token!': 'Погрешан сигурносни симбол'
+Authors: Аутори
+'User name': 'Корисничко име'
+'User Types': 'Типови корисника'
+'Add new user account': 'Додај новог корисника'
+'Schedule a new publish action': 'Закажи нову акцију објављивања'
+'User may add/change user accounts and passwords': 'Корисник може да додаје/мења корисничке налоге и лозинке'
+'User may delete user accounts': 'Корисник може да брише корисничке налоге'

@@ -1,0 +1,129 @@
+Home: 首页
+Logout: 注销
+Languages: 语言
+Countries: 国家
+Themes: 模版
+Topics: 主题
+Fields: 字段
+Delete: 删除
+Type: 输入
+Name: 名称
+Code: 号码
+Edit: 编辑
+Login: 登陆
+Password: 密码
+Site: 地址
+Path: 路径
+'Go up': 向上
+Duplicate: 复制
+'No languages': 无语言
+'---Select language---': －－选择语言－－
+'No publications': 无出版物
+'---Select publication---': －－选择出版物－－
+'No issues': 无文章
+'---Select issue---': －－选择文章－－
+'No sections': 无区
+'---Select section---': －－选择区－－
+Language: 语言
+Country: 国家
+Publication: 出版物
+'Default language': 默认语言
+Subscriptions: 订阅
+Issue: 问题
+Number: 数字
+Section: 区
+Keywords: 关键词
+Topic: 主题
+Next: 下一个
+Previous: 上一个
+Translate: 翻译
+View: 查看
+'Article Types': 文章类型
+Publications: 出版物
+Issues: 问题
+Sections: 区域
+Articles: 文章
+Images: 图片
+Change: 变化
+'Add new issue': 添加新论题
+'Default Language': 默认语言
+'Paid Period': 已付期
+Preview: 预览
+'You must fill in the $1 field.': 你必须填写$1字段
+'Publication does not exist.': 无此出版物
+'You must select a language.': 您必须选择一种语言
+'No articles.': 无此文字
+'Access denied': 拒绝访问
+'Add new article': 添加新文章
+Status: 状态
+Published: 已发布
+'Not published': 未发布
+Submitted: 已提交
+New: 新
+Article: 文章
+Publish: 发布
+Unpublish: 不发布
+Unlock: 解锁
+Uploaded: 已上载
+YYYY-MM-DD: YYYY-MM-DD
+Submit: 提交
+Image: 图片
+Description: 描述
+Photographer: 摄影
+Place: 地点
+Date: 日期
+'Image number': 图片号码
+Users: 用户
+'Adding new translation': 添加新翻译
+'No more languages.': 无更多语言
+'Add new publication': 添加新发布
+'Upload new template': 上载新模版
+'Add new user type': 添加新用户类型
+'Add new article type': 添加新文章类型
+'Add new country': 添加新国家
+'Add new language': 添加新语言
+'View logs': 查看日志
+'Change your password': 修改你的密码
+'Your Articles': 你的文章
+'Submitted Articles': 提交文章
+Logs: 日志
+'There are $1 article(s) left.': 还有$1篇文章
+'There are $1 section(s) left.': 还有$1区
+'There are $1 publication(s) left.': 还有$1发布
+'There are $1 countries left.': 还有$1个国家
+'Add new subscription': 添加新订阅
+'You do not have the right to add subscriptions.': 你没有添加订阅的权限
+'Adding subscription': 添加订阅
+'Delete subscription': 删除订阅
+'You do not have the right to delete subscriptions.': 你没有删除订阅的权限
+'No such subscription.': 无此订阅
+Yes: 是
+No: 否
+'No issues.': 无问题
+'No topics': 无主题
+'You do not have the right to add articles.': 您无权添加文章
+Start: 开始
+Days: 天数
+'The sections could not be added successfully. Some of them were already added !': 区未成功添加，其中一些已经存在
+'Add another': 添加另一个
+Cancel: 取消
+Done: 完成
+OK: 成功
+Search: 搜索
+'Add new field': 增加新字段
+'No such issue.': 无此问题
+Add: 增加
+'User name': 用户名
+'User Types': 用户类型
+'Subscription Default Time': 默认订阅时间
+'No such language.': 无此语言
+'No such infotype.': 无此类型
+'No such keyword.': 无此关键字
+'No such country.': 无此国家
+'User may add/change user accounts and passwords': 用户可添加/删除帐户与密码
+'User may delete user accounts': 用户可删除帐户
+'Add new user account': 添加新帐户
+'There are $1 issue(s) left.': 还有$1个问题
+'There are $1 keyword(s) left.': 还有$1个关键字
+'Name<BR><SMALL>(click to edit)</SMALL>': 名称（点击编辑）
+'New field': 新字段

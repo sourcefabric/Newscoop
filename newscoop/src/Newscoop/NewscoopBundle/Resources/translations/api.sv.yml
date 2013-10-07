@@ -1,0 +1,11 @@
+'The file uploaded is not an image.': 'Den uppladdade filen är inte en bild.'
+'Could not delete record from the database.': 'Kunde inte radera posten från databasen.'
+'template path': mallsökväg
+'short names': 'korta namn'
+'Unable to fetch image from remote server.': 'Kunde inte hämta bilden från servern.'
+Last: Sista
+First: Första
+'Single-line Text': Text
+'Multi-line Text with WYSIWYG': Artikeltext
+'URL $1 is invalid or is not an image.': 'URL $1 är ogiltig eller inte en bild.'
+'URL $1 is not an image.': 'URL $1 är inte en bild.'

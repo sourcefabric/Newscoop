@@ -1,0 +1,72 @@
+'Language id not specified': 'Brakuje numeru języka'
+'No languages.': 'Brak języków'
+'Native Name': 'Nazwa lokalna'
+'Name taken.': 'Wybrana nazwa jest już zajęta'
+'Language saved.': 'Język został zapisany.'
+'Language removed.': 'Język został usunięty.'
+'Language not found.': 'Nie ma takiego języka.'
+'Language is in use and cannot be removed.': 'Język jest używany i nie może być usunięty.'
+'Language added.': 'Język został dodany.'
+'English language cannot be removed.': 'Język angielski nie może być usunięty.'
+'Edit short month names': 'Edytuj krótkie nazwy miesięcy'
+'Edit short day names': 'Edytuj krótkie nazwy dni'
+'Edit month names': 'Edytuj nazwy miesięcy'
+'Edit language: $1': 'Edytuj jezyk: $1'
+'Edit day names': 'Edytuj nazwy dni tygodnia'
+'Code Page': 'Strona kodowa'
+'Add new Language': 'Dodaj nowy język'
+'Add Language': 'Dodaj nowy język'
+We: Śr
+Tu: Wt
+Th: Czw
+Su: Nd
+Sep: Wrz
+Sa: Sob
+'Please enter the translation for week day short names.': 'Podaj tłumaczenie skrótów nazw dni tygodnia'
+'Please enter the translation for month short names.': 'Podaj tłumaczenie skrótów nazw miesięcy'
+Oct: Paź
+Nov: Lis
+Mo: Pin
+Mar: Mar
+Jun: Cz
+Jul: Lip
+Jan: St
+Fr: Pt
+Feb: Lu
+Dec: Gr
+Aug: Sie
+Apr: Kw
+'No language.': 'Brak języka'
+'Delete language $1': 'Usuń język $1'
+'You do not have the right to add languages.': 'Brak wystarczających praw do dodawania języków'
+'Please enter the translation for time units.': 'Podaj tłumaczenie jednostek czasowych.'
+'You do not have the right to delete languages.': 'Nie masz praw aby usuwać języki.'
+'Are you sure you want to delete the language $1?': 'Czy na pewno chcesz usunąć język $1?'
+'Deleting language': 'Usuwanie języka.'
+'The language $1 could not be deleted.': 'Język $1 nie mógł być usunięty.'
+'Edit language': 'Edytuj język'
+'You do not have the right to edit languages.': 'Nie masz praw aby edytować języki.'
+'Please enter the translation for month names.': 'Podaj tłumaczenie nazw miesięcy.'
+'Please enter the translation for week day names.': 'Podaj tłumaczenie nazw dni tygodnia.'
+January: Styczeń
+February: Luty
+March: Marzec
+April: Kwiecień
+May: Maj
+June: Czerwiec
+July: Lipiec
+August: Sierpień
+September: Wrzesień
+October: Październik
+November: Listopad
+December: Grudzień
+Monday: Poniedziałek
+Tuesday: Wtorek
+Wednesday: Środa
+Thursday: Czwartek
+Friday: Piątek
+Saturday: Sobota
+Sunday: Niedziela
+'You do not have the right to add new languages.': 'Nie masz praw aby dodawać nowe języki'
+'There are $1 issue(s) left.': 'Pozostało wydań: $1'
+'Native name': 'Nazwisko panieńskie'

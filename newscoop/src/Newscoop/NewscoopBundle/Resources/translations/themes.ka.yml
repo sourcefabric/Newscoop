@@ -1,0 +1,92 @@
+'Duplicate assignment': 'დუპლიკატი დავალება'
+Templates: შაბლონები
+'Import theme': 'თემის იმპორტირება'
+'Import succeded!': 'იმპორტი წარმატებით შესრულდა!'
+'Import failed!': 'იმპორტი წარუმატებელია!'
+'Edit template: $1': 'შაბლონის რედაქტირება: $1'
+'Set new name to': 'ახალი სახელის მინიჭება'
+'Rename file': 'ფაილის სახელის შეცვლა'
+'Caching templates in:': 'შაბლონების კეშირება'
+'Caching templates finished': 'შაბლონების კეშირება დასრულდა'
+'Theme name': 'თემის სახელი'
+'Theme is assigned and can not be deleted': 'თემა მიბმულია და მისი წაშლა შეუძლებელია'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'თემის ექსპორტირება უშედეგოდ დასრულდა. შეამოწმეთ არის თუ არა სერვერზე არის საკმარისი სივრცე.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'თემის მოხსნა შეუძლებელია რადგანაც იგი გამოყენებულია ამ პუბლიკაციის გამოცემაში ($1)'
+zip: zip
+version: ვერსია
+uploaded: აიტვირთა
+updated: განახლდა
+'or higher': 'ან უფრო დიდი'
+moved: გადავიდა
+installed: დაინსტალირებულია
+deleted: წაიშალა
+'You must select at least one template to perform an action.': 'აირჩიეთ მინიმუმ ერთი შაბლონი'
+Upload: ატვირთვა
+'Unassign theme': 'თემის მოხსნა'
+'Unassign successful': 'წარმატებით მოიხსნა'
+Unassign: მოხსნა
+'Theme version': 'თემის ვერსია'
+'Theme settings updated.': 'თემის პარამეტრები განახლდა'
+'Theme settings saved.': 'თემის პარამეტრები დამახსოვრდა.'
+'Theme name / version': 'თემის სახელი / ვერსია'
+'Theme management': 'თემის მართვა'
+'Theme $1': '$1 თემა'
+'The file $1 is empty.': '$1 ფაილი ცარიელია'
+'Template object $1 was renamed to $2.': 'შაბლონის ობიექტს $1 გადაერქვა: $2'
+'Template object $1 was deleted.': 'შაბლონის ობიქტი $1 წაიშალა.'
+'Template $1 was duplicated into $2.': '$1 შაბლონი დუბლირებულია $2-ში'
+'Template $1 $2.': 'შაბლონი $1 $2'
+'Something broke': 'რაღაც არ მუშაობს'
+'Section page template': 'სექციის გვერდის შაბლონი'
+Saving..: 'მიმდინარეობს დამახსოვრება..'
+'Saving settings failed.': 'პარამეტრების დამახსოვრება ვერ მოხერხდა.'
+'Save All': 'ყველაფრის დამახსოვრება'
+'Required Newscoop version': 'მოთხოვნილი Newscoop ვერსია'
+Replace: ჩანაცვლება
+'New template $1 created.': 'ახალი შაბლონი $1 შეიქმნა.'
+'New name': 'ახალი სახელი'
+'Name cant be empty': 'სახელი არ შეიძლება იყოს ცარიელი'
+'Last modified': 'ბოლოს მოდიფიცირებული'
+'Issue page': 'გამოცემის გვერდი'
+'Go to parent': 'საწყისზე გადასვლა'
+'Go to $1': '$1-ზე გადასვლა'
+'Geo Filtering': 'გეოგრაფიული ფილტრაცია'
+'Front page template': 'მთავარი გვერდის შაბლონი'
+'File size': 'ფაილის ზომა'
+'File name': 'ფაილის სახელი'
+'File $1 was replaced.': '$ ფაილი ჩანაცვლდა.'
+'Failed unassigning theme': 'თემის მოხსნა ვერ მოხერხდა'
+Export: ექსპორტი
+'Error page template': 'გვერდის შაბლონის შეცდომა'
+'Edit $1': '$1-ის რედაქტირება'
+'Done uploading': აიტვირთა
+'Do you want to override $1?': 'გსურთ $1-ზე გადაწერა?'
+'Directory is empty': 'დირექტორია ცარიელია'
+'Directory $1 created.': '$1 დირექტორია შეიქმნა.'
+Design: დიზაინი
+'Delete theme': 'თემის წაშლა'
+'Current directory:': 'მიმდინარე დირექტორია'
+'Create folder': 'ფოლდერის შექმნა'
+'Create file': 'ფაილის შექმნა'
+'Copy to available themes': 'არსებულ თემაში კოპირება'
+'Copied successfully': კოპირებულია
+Compatibility: შეთავსებადობა
+'Click to enlarge': 'დააჭირეთ გასადიდებლად'
+'Choose destination': 'აირჩიეთ დირექტორია'
+'Cant override directory $1.': 'შეუძლებელია $1 ინსტრუქციის უკუგდება.'
+'Cache Lifetime': 'კეში-მეხსიერების სიცოცხლის ხანგრძლივობა'
+'Browse for the theme': 'თემის ძიება'
+'Assigned successfully': მიება
+'Article page template': 'სტატიის გვერდის შაბლონი'
+'Article page': 'სტატიის გვერდი'
+'Are you sure you want to unassign this theme?': 'დარწმუნებული ხართ რომ გსურთ ამ თემის მოხსნა?'
+'Are you sure you want to delete this theme?': 'დარწმუნებული ხართ რომ გსურთ ამ თემის წაშლა?'
+'Add to publication': 'პუბლიკაზე დამატება'
+'$1 is not writable': '$1 არ არის ჩაწერადი'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 ფაილები $2'
+'Upload theme': 'თემის ატვირთვა'
+'Upload succeded!': 'წარმატებით აიტვირთა!'
+'Upload failed!': 'ვერ აიტვირთა!'
+'Template Id': 'შაბლონის id'
+'Edit template: $1 (Template ID: $2)': 'შაბლონის რედაქტირება: $1 (შაბოლნის ID: $2)'

@@ -1,0 +1,259 @@
+Plugins: Πρόσθετα
+'Manage Plugins': 'Διαχείριση Προσθέτων'
+Account: Λογαριασμός
+'Items per page': 'Στοιχεία ανά σελίδα'
+'Add new': 'Προσθήκη νέου'
+Home: 'Αρχική Σελίδα'
+Logout: Έξοδος
+More...: Περισσότερα...
+Content: Περιεχόμενο
+Languages: Γλώσσες
+Countries: Χώρες
+Themes: Πρότυπα
+Topics: Θέματα
+Configure: Διαμόρφωση
+'Image Archive': 'Αρχείο Εικόνων'
+'Add Article': 'Προσθήκη Άρθρου'
+Fields: Πεδία
+Delete: Διαγραφή
+Type: Τύπος
+Name: Όνομα
+Code: Κώδικας
+Edit: Επεξεργασία
+Login: Είσοδος
+Password: 'Κωδικός πρόσβασης'
+Site: Ιστότοπος
+Path: Διαδρομή
+'Go up': 'Πήγαινε επάνω'
+URL: URL
+Order: Εντολή
+Hide: Απόκρυψη
+Duplicate: Αντιγραφή
+Subscription: Συνδρομή
+expires: λήγει
+starts: αρχίζει
+before: πρίν
+after: μετά
+on: on
+status: κατάσταση
+active: ενεργός
+inactive: ανενεργός
+Subscribers: Συνδρομητές
+Staff: Προσωπικό
+'Select destination': 'Επιλογή προορισμού'
+'No languages': 'Καμία γλώσσα'
+'---Select language---': '---Επιλογή γλώσσας---'
+'No publications': 'Καμία δημοσίευση'
+'---Select publication---': '---Επιλογή δημοσίευσης---'
+'No issues': 'Κανένα άρθρο'
+'---Select issue---': '---Επιλογή άρθρου---'
+'No sections': 'Καμία ενότητα'
+'---Select section---': '---Επιλογή ενότητας---'
+Language: Γλώσσα
+Country: Χώρα
+'Account name': 'Όνομα λογαριασμού'
+Publication: Δημοσίευση
+'Default language': 'Προεπιλεγμένη Γλώσσα'
+Subscriptions: Συνδρομές
+Issue: Τεύχος
+Number: Αριθμός
+Section: Ενότητα
+Keywords: 'Λέξεις κλειδιά'
+Topic: Θέμα
+'URL Name': 'Όνομα URL'
+'Left to pay': 'Απομένει να πληρωθεί'
+Active: Ενεργό
+Trial: Δοκιμή
+Next: Επόμενο
+Previous: Προηγούμενο
+Translate: Μετάφραση
+View: Προβολή
+'Scheduled Publishing': 'Προγραμματισμένη Δημοσίευση'
+Time: Ώρα
+Action: Ενέργεια
+'Schedule a new action': 'Προγραμματισμός νέας ενέργειας'
+'Scheduling a new publish action': 'Προγραμματισμός νέας εκδοτικής ενέργειας'
+'Delete scheduled publish action': 'Διαγραφή προγραμματισμένης εκδοτικής ενέργειας'
+Date/Time: Ημερομηνία/Ώρα
+'You must select an action.': 'Πρέπει να επιλέξετε μια ενέργεια.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Δεν έχετε το δικαίωμα να προγραμματίσετε τεύχη ή άρθρα για αυτόματη έκδοση.'
+'Front page': 'Πρώτη σελίδα'
+'Section page': 'Σελίδα ενότητας'
+'Show on front page': 'Δείξε στην αρχική σελίδα'
+'Remove from front page': 'Αφαίρεση από την αρχική σελίδα'
+'Show on section page': 'Δείξε στην σελίδα ενότητας'
+'Remove from section page': 'Αφαίρεση από την σελίδα ενότητας'
+Actions: Ενέργειες
+Publishing: Δημοσίευση
+Show: Εμφάνιση
+Remove: Αφαίρεση
+'Article Types': 'Τύποι Αρθρων'
+'Staff User Types': 'Τύποι Χρηστών Προσωπικού'
+Publications: Δημοσιεύσεις
+Issues: Τεύχη
+Sections: Ενότητες
+Articles: Άρθρα
+Images: Εικόνες
+Change: Αλλαγή
+'Add new issue': 'Προσθήκη νέου τεύχους'
+'Section Template': 'Κατηγορία Προτύπου'
+'Article Template': 'Πρότυπο Άρθρου'
+'Default Language': 'Προεπιλεγμένη γλώσσα'
+'Paid Period': 'Πληρωμένη Περίοδος'
+Preview: Προεπισκόπιση
+'You must fill in the $1 field.': 'Πρέπει να συμπληρώσετε το πεδίο $1.'
+Error: Σφάλμα
+'Invalid input: $1': 'Άκυρη εισαγωγή: $1'
+'Language does not exist.': 'Η γλώσσα δεν υπάρχει.'
+'Publication does not exist.': 'Η δημοσίευση δεν υπάρχει.'
+'Issue does not exist.': 'Το τεύχος δεν υπάρχει.'
+'You must select a language.': 'Πρέπει να επιλέξετε γλώσσα.'
+'Section does not exist.': 'Η ενότητα δεν υπάρχει.'
+'No articles.': 'Κανένα άρθρο.'
+'Article does not exist.': 'Το άρθρο δεν υπάρχει.'
+'Image does not exist.': 'Η εικόνα δεν υπάρχει.'
+'Access denied': 'Άρνηση πρόσβασης'
+'Invalid parameters received': 'Ελήφθησαν μη έγκυρες παράμετροι'
+'Add new article': 'Προσθήκη νέου άρθρου'
+Status: Κατάσταση
+Published: Δημοσιευμένα
+'Not published': Αδημοσίευτα
+Submitted: Υποβεβλημμένα
+New: Νέο
+Article: Άρθρο
+Publish: Δημοσίευση
+Unpublish: 'Αναίρεση δημοσίευσης'
+Unlock: Ξεκλείδωμα
+Uploaded: Ανεβασμένα
+YYYY-MM-DD: ΕΕΕΕ-ΜΜ-ΗΗ
+Submit: Υποβολλή
+Image: Εικόνα
+Description: Περιγραφή
+Photographer: Φωτογράφος
+Place: Τόπος
+Date: Ημερομηνία
+Thumbnail: Thumbnail
+'In use': 'Σε χρήση'
+'Additional searches': 'Πρόσθετες αναζητήσεις'
+'Most Recently Added': 'Προστέθηκαν Πιο Πρόσφατα'
+'Most Recently Modified': 'Τροποποιήθηκαν Πιο Πρόσφατα'
+'$1 images found': 'Βρέθηκαν $1 εικόνες'
+'Reset search conditions': 'Επαναρρύθμιση των συνθηκών αναζήτησης'
+'Image number': 'Αριθμός εικόνας'
+Users: Χρήστες
+Localizer: 'Τοπικός Προσαρμοστής'
+'Adding new translation': 'Προσθήκη νέας μετάφρασης'
+'No more languages.': 'Όχι άλλες γλώσσες.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Το πεδίο  $1 μπορεί να περιλαμβάνει μόνο γράμματα, ψηφία και τον χαρακτήρα υπογράμμισης (_).'
+'Add new publication': 'Προσθήκη νέας δημοσίευσης'
+'Upload new template': 'Ανέβασμα νέου προτύπου'
+'Add new staff member': 'Προσθήκη νέου μέλους προσωπικού'
+'Add new subscriber': 'Προσθήκη νέου συνδρομητή'
+'Add new user type': 'Προσθήκη νέου τύπου χρήστη'
+'Add new article type': 'Προσθήκη νέου τύπου άρθρου'
+'Add new country': 'Προσθήκη νέας χώρας'
+'Add new language': 'Προσθήκη νέας γλώσσας'
+'View logs': 'Εμφάνιση μητρώου πρακτικών'
+'Change your password': 'Αλλαγή κωδικού πρόσβασης'
+'Your Articles': 'Τα άρθρα σας'
+'Submitted Articles': 'Υποβεβλημμένα Άρθρα'
+Logs: 'Καταγραφή μητρώου πρακτικών'
+'There are $1 article(s) left.': 'Απομένουν άρθρα $1.'
+'There are $1 issues(s) left.': 'Απομένουν τεύχη $1.'
+'There are $1 section(s) left.': 'Απομένουν ενότητες $1.'
+'There are $1 publication(s) left.': 'Απομένουν δημοσιεύσεις $1.'
+'There are $1 countries left.': 'Απομένουν χώρες $1.'
+'Name <SMALL>(click to edit)</SMALL>': 'Όνομα <SMALL>(κάντε κλίκ για επεξεργασία)</SMALL>'
+'Add new subscription': 'Προσθήκη νέας συνδρομής'
+'You do not have the right to add subscriptions.': 'Δεν έχετε το δικαίωμα προσθήκης συνδρομών.'
+'Adding subscription': 'Προσθήκη συνδρομής'
+'Delete subscription': 'Διαγραφή συνδρομής'
+'You do not have the right to delete subscriptions.': 'Δεν έχετε το δικαίωμα διαγραφής συνδρομών.'
+'No such subscription.': 'Δεν υπάρχει τέτοια συνδρομή.'
+Yes: Ναι
+No: Όχι
+Close: Κλείσιμο
+'No issues.': 'Κανένα τεύχος.'
+'Back to Edit Article': 'Πίσω στην Επεξεργασία Κειμένου'
+'No topics': 'Κανένα θέμα'
+'You do not have the right to add articles.': 'Δεν έχετε το δικαίωμα προσθήκης άρθρων.'
+Start: Έναρξη
+Days: Ημέρες
+'The sections could not be added successfully. Some of them were already added !': 'Οι ενότητες δεν μπόρεσαν να προστεθούν επιτυχώς. Μερικές έχουν ήδη προστεθεί!'
+'Add another': 'Προσθήκη νέου'
+Cancel: Ακύρωση
+Done: Έτοιμο
+OK: ΟΚ
+Save: Αποθήκευση
+Search: Αναζήτηση
+'Make a selection': Επιλέξτε
+'You must input a number greater than 0 into the $1 field.': 'Πρέπει να εισάγετε έναν αριθμό μεγαλύτερο του 0 στο πεδίο $1.'
+'You must input a valid date.': 'Πρέπει να εισάγετε έγκυρη ημερομηνία.'
+'Add new field': 'Προσθήκη νέου πεδίου'
+'Article automatic publishing schedule': 'Αυτόματο πρόγραμμα δημοσίευσης άρθρου'
+'Are you sure you want to delete this scheduled action?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε την προγραμματισμένη ενέργεια;'
+Unlink: Αποσύνδεση
+'Are you sure you want to delete the image $1?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε την εικόνα $1;'
+'No such issue.': 'Δεν υπάρχει τέτοιο τεύχος.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε την συνδρομή στην δημοσίευση $1;'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Δεν ήταν δυνατή η αποθήκευση των αλλαγών στο τεύχος $1. Παρακαλούμε βεβαιωθείτε ότι το όνομα URL $2 του τεύχους  δεν είχε χρησιμοποιηθεί πρωτύτερα στην δημοσίευση $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Σύναψη
+Back: Πίσω
+File: Αρχείο
+'Save and Close': 'Αποθήκευση και έξοδος'
+Add: Προσθήκη
+'Select All': 'Επιλογή όλων'
+'Select None': 'Καμία επιλογή'
+'Add Event': 'Προσθήκη Εκδήλωσης'
+N/A: Ν/Α
+'On Front Page': 'Στην Πρώτη Σελίδα'
+'On Section Page': 'Στην Σελίδα Ενότητας'
+'Created by': 'Δημιουργήθηκε από'
+'Creation date': 'Ημερομηνία δημιουργίας'
+'Publication List': 'Λίστα Δημοσιεύσεων'
+'Issue List': 'Λίστα Τευχών'
+'Section List': 'Λίστα Ενοτήτων'
+All: Όλα
+duplicate: αντιγραφή
+move: μετακίνηση
+Move: Μετακίνηση
+'From:': 'Από:'
+'Date:': 'Ημερομηνία:'
+Hidden: Κρυμμένα
+Comments: Σχόλια
+Comment: Σχόλιο
+Approved: Εγκεκριμμένα
+Subject: Θέμα
+'IP address:': 'ΙΡ διεύθυνση'
+'Email:': Email
+Author: Συγγραφέας
+'Article name': 'Όνομα άρθρου'
+'Hide article': 'Απόκρυψη άρθρου'
+'Show article': 'Εμφάνιση άρθρου'
+'Article Type Fields': 'Πεδία Τύπου Άρθρου'
+'Article Images': 'Εικόνες άρθρου'
+'Log Messages': 'Μηνύματα Μητρώου Πρακτικών '
+'Article Files': 'Αρχεία άρθρου'
+'Article Comments': 'Σχόλια άρθρου'
+'Are you sure you want to deactivate the subscription?': 'Είστε σίγουρος/η ότι θέλετε να απενεργοποιήσετε την συνδρομή;'
+'Are you sure you want to activate the subscription?': 'Είστε σίγουρος/η ότι θέλετε να ενεργοποιήσετε την συνδρομή;'
+Other: Άλλο
+'Time:': 'Ώρα:'
+'No events.': 'Καμία εκδήλωση.'
+'Default templates': 'Προεπιλεγμένα πρότυπα'
+'System Preferences': 'Προτιμήσεις Συστήματος'
+'The date must be in the future.': 'Η ημερομηνία πρέπει να είναι στο μέλλον.'
+Send: Αποστολή
+'Thank you.': Ευχαριστούμε.
+'Please take a minute to send us an email.': 'Παρακαλούμε αφιερώστε ένα λεπτό για να μας στείλετε ένα email.'
+(optional): (προαιρετικό)
+'The URL you entered is invalid: $1': 'Το URL που εισήχθει είναι άκυρο: $1'
+Reads: Αναγνώσεις
+'Publish with issue': 'Δημοσίευση με τεύχος'
+'Universal List': 'Καθολική λίστα'
+'Invalid security token!': 'Άκυρο τεκμήριο ασφαλείας!'
+Authors: Συγγραφείς

@@ -1,0 +1,41 @@
+Support: Поддержка
+Themes: 'Темы (шаблоны)'
+'Area to localize': 'Район локализации'
+Dashboard: 'Мой Newscoop'
+Authors: Авторы
+Libraries: Библиотеки
+'Media Archive': 'Архив Медиа'
+Extensions: Расширения
+Geo-location: Геолокация
+'Translation status:': 'Статус перевода:'
+'Editor Media Plugin': 'Плагин Медиа-редактора'
+'$1 of $2 strings translated': '$1 из $2 строк переведены'
+'Preview Window': 'Окно предосмотра'
+'Show translated strings': 'Показать переведенные строки'
+'Hide translated strings': 'Спрятать переведённые строки'
+Feedback: 'Обратная связь'
+'You do not have the right to manage the localizer.': 'Вы не имеете прав доступа для управления локализацией.'
+API: 'Программный интерфейс'
+'User Subscriptions Sections': 'Пользовательская секция подписок'
+'User Subscriptions': 'Пользовательские подписки'
+'Translate to:': 'Перевести на:'
+'Translate from:': 'Перевести с:'
+'The following strings are not used:': 'Следующие строки не используются:'
+'The following strings are missing from the translation files:': 'Следующие строк пропущены в файлах перевода:'
+'No source strings found.': 'Не найдено исходных строк.'
+'No matches found.': 'Не найдено совпадений.'
+Globals: Общие
+'Are you sure you want to delete this entry?': 'Вы уверены, что хотите удалить эту запись?'
+'All strings have been translated.': 'Все строки были переведены.'
+'Bug Reporting': 'Сообщения об ошибках'
+'Article Topics': 'Темы статей'
+'native name': 'оригинальное название'
+name: название
+edit: редактировать
+delete: удалить
+code: код
+'Click Here to Convert': 'Щелкните здесь для конвертации'
+success: успех
+fail: неудача
+'cannot read $1': 'невозможно прочитать $1'
+Converting...: Конвертация...

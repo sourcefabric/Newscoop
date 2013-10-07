@@ -1,0 +1,14 @@
+Soundcloud: SoundCloud
+'User types': 用户类型
+'No user types.': 无用户类型
+'You do not have the right to add user types.': 您无权增加用户类型
+'Adding new user type': 增加新用户类型
+'The user type $1 has been added.': 用户类型$1已被添加
+'The user type could not be added.': 用户类型不能被添加
+'Please check if an user type with the same name does not already exist.': 请检查同样名称的用户类型已经存在
+'Deleting user type': 正在删除用户类型
+'The user type has been deleted.': 用户类型已删除
+'The user type could not be deleted.': 用户类型不能删除
+'Updating user type permissions': 正在更新用户类型许可
+'User type permissions have been successfuly updated.': 用户类型许可已成功更新
+'User type permissions could not be updated.': 用户类型许可不能更新

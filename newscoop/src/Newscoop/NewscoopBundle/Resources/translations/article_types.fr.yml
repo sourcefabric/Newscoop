@@ -1,0 +1,8 @@
+'No article types.': 'Aucun type darticles.'
+'Delete article type $1': 'Supprimer type darticle $1'
+'You do not have the right to add article types.': 'Vous navez pas le droit dajouter des types darticles.'
+'Adding new article type': 'Ajout nouveau type darticle'
+'The $1 field may only contain letters and underscore (_) character.': 'Le champ $1 peut seulement contenir des lettres et le caractère souligné (_).'
+'The article type $1 already exists.': 'Le type darticle $1 existe déjà.'
+'You do not have the right to delete article types.': 'Vous navez pas le droit de supprimer des types darticle.'
+'The article type $1 could not be deleted.': 'Le type darticle $1 ne pouvait pas être supprimé.'

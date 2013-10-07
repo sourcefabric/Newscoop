@@ -1,0 +1,81 @@
+'Language id not specified': 'Sprachen ID nicht spezifiziert. '
+'No languages.': 'Keine Sprachen. '
+'Native Name': 'Name Im Original'
+'Name taken.': 'Name bereits vergeben. '
+'Language saved.': 'Sprache gespeichert. '
+'Language removed.': 'Sprache entfernt. '
+'Language not found.': 'Sprache nicht gefunden. '
+'Language is in use and cannot be removed.': 'Die Sprache ist in Verwendung und kann nicht entfernt werden. '
+'Language added.': 'Sprache hinzugefügt. '
+'English language cannot be removed.': 'Die Sprache Englisch kann nicht entfernt werden. '
+'Edit short month names': 'Bearbeite die Kurzformen der Monatsnamen'
+'Edit short day names': 'Bearbeite die Kurzformen der Wochentage'
+'Edit month names': 'Bearbeite Monatsnamen'
+'Edit language: $1': 'Bearbeite Sprache: $1'
+'Edit day names': 'Bearbeite Wochentage'
+'Code Page': 'Code Page'
+'Add new Language': 'Neue Sprache hinzufügen'
+'Add Language': 'Sprache hinzufügen'
+We: Mi
+Tu: Di
+Th: Do
+Su: So
+Sep: Sep
+Sa: Sa
+'Please enter the translation for week day short names.': 'Bitte Übersetzung für Kurzformen der Wochentage eingeben.'
+'Please enter the translation for month short names.': 'Bitte Übersetzung für Kurzformen der Monate eingeben.'
+Oct: Okt
+Nov: Nov
+Mo: Mo
+Mar: Mär
+Jun: Jun
+Jul: Jul
+Jan: Jan
+Fr: Fr
+Feb: Feb
+Dec: Dez
+Aug: Aug
+Apr: Apr
+'No language.': 'Keine Sprache. '
+'Delete language $1': 'Sprache $1 löschen'
+'You do not have the right to add languages.': 'Keine Berechtigung Sprachen hinzuzufügen.'
+'Please enter the translation for time units.': 'Bitte Übersetzung für Zeiteinheiten eingeben.'
+'You do not have the right to delete languages.': 'Keine Berechtigung Sprachen zu löschen.'
+'Are you sure you want to delete the language $1?': 'Sprache $1 wirklich löschen?'
+'Deleting language': 'Sprache wird gelöscht.'
+'The language $1 could not be deleted.': 'Sprache $1 konnte nicht gelöscht werden.'
+'Edit language': 'Sprache bearbeiten'
+'You do not have the right to edit languages.': 'Keine Berechtigung Sprachen zu bearbeiten.'
+'Please enter the translation for month names.': 'Bitte die Übersetzung für Monatsnamen eingeben.'
+'Please enter the translation for week day names.': 'Bitte die Übersetzung für Wochentage eingeben.'
+January: Januar
+February: Februar
+March: März
+April: April
+May: Mai
+June: Juni
+July: Juli
+August: August
+September: September
+October: Oktober
+November: November
+December: Dezember
+Monday: Montag
+Tuesday: Dienstag
+Wednesday: Mittwoch
+Thursday: Donnertsag
+Friday: Freitag
+Saturday: Samstag
+Sunday: Sonntag
+'You do not have the right to add new languages.': 'Keine Berechtigung neue Sprachen hinzuzufügen.'
+'There are $1 issue(s) left.': 'Es sind $1 Ausgaben übrig.'
+'Native name': 'Name Im Original'
+'The language $1 has been successfuly added.': 'Sprache $1 ist erfolgreich hinzugefügt worden'
+'Please check if a language with the same name does not already exist.': 'Bitte überprüfen, ob bereits eine Sprache mit dem gleichen Namen existiert'
+'The language could not be added.': 'Sprache konnte nicht hinzugefügt werden'
+'Delete language': 'Sprache löschen'
+'The language $1 has been deleted.': 'Sprache $1 wurde gelöscht'
+'Updating language information': 'Sprachinformation wird aktualisiert'
+'Language information has been successfuly updated.': 'Sprachinformation wurde erfolgreich aktualisiert'
+'Language information could not be updated.': 'Sprachinformation konnte nicht aktualisiert werden'
+'A language with the same name already exists.': 'Eine Name desselben Namens existiert bereits'

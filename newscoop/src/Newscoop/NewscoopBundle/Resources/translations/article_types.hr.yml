@@ -1,0 +1,8 @@
+'No article types.': 'Nema tipova članaka.'
+'Delete article type $1': 'Izbriši tip članka $1'
+'You do not have the right to add article types.': 'Nemate ovlasti dodavati tipove članaka.'
+'Adding new article type': 'Dodavanje novog tipa članka'
+'The $1 field may only contain letters and underscore (_) character.': 'Polje $1 može imati samo slova i znak podvlake (_).'
+'The article type $1 already exists.': 'Tip članka $1 već postoji.'
+'You do not have the right to delete article types.': 'Nemate ovlasti brisati tipove članaka.'
+'The article type $1 could not be deleted.': 'Tip članka $1 ne može se obrisati.'

@@ -1,0 +1,14 @@
+Version: Versiune
+License: Licență
+Map: Hartă
+'The file uploaded is not an image.': 'Fişierul încărcat în baza de date nu este o imagine.'
+'Could not delete record from the database.': 'Nu a putut fi ştearsă înregistrarea din baza de date.'
+'template path': 'calea către şablon'
+'short names': 'denumiri scurte'
+'Unable to fetch image from remote server.': 'Nu a putut fi preluată imaginea de pe serverul distant.'
+Last: Ultimul
+First: Primul
+'Single-line Text': Text
+'Multi-line Text with WYSIWYG': 'Corpul articolului'
+'URL $1 is invalid or is not an image.': 'Adresa de Internet $1 nu este validă sau nu este un fişier de tip imagine.'
+'URL $1 is not an image.': 'Adresa de Internet $1 nu este un fişier de tip imagine.'

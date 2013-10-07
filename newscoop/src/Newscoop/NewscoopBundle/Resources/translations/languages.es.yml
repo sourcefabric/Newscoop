@@ -1,0 +1,81 @@
+'Language id not specified': 'No se especificó el ID del idioma'
+'No languages.': 'Sin idiomas'
+'Native Name': 'Nombre original'
+'Name taken.': 'Nombre ocupado'
+'Language saved.': 'Idioma guardado'
+'Language removed.': 'Idioma eliminado'
+'Language not found.': 'Idioma no encontrado'
+'Language is in use and cannot be removed.': 'El idioma está en uso y no puede ser eliminado.'
+'Language added.': 'Idioma agregado'
+'English language cannot be removed.': 'El idioma inglés no puede eliminarse'
+'Edit short month names': 'Editar nombres cortos de mes'
+'Edit short day names': 'Editar nombres cortos de día'
+'Edit month names': 'Editar nombres de mes'
+'Edit language: $1': 'Editar idioma $1'
+'Edit day names': 'Editar nombres de día'
+'Code Page': 'Página de códigos'
+'Add new Language': 'Agregar nuevo idioma'
+'Add Language': 'Agregar idioma'
+We: mie
+Tu: mar
+Th: jue
+Su: dom
+Sep: sept
+Sa: sab
+'Please enter the translation for week day short names.': 'Ingrese una traducción abreviada para los días de la semana.'
+'Please enter the translation for month short names.': 'Ingrese una traducción abreviada para los meses del año.'
+Oct: oct
+Nov: nov
+Mo: lun
+Mar: mar
+Jun: jun
+Jul: jul
+Jan: en
+Fr: vie
+Feb: feb
+Dec: dic
+Aug: ag
+Apr: abr
+'No language.': 'Sin idioma'
+'Delete language $1': 'Borrar idioma $1'
+'You do not have the right to add languages.': 'No tiene derecho a agregar idiomas'
+'Please enter the translation for time units.': 'Favor entre la traducción por unidad de tiempo'
+'You do not have the right to delete languages.': 'No tiene derecho a borrar idiomas'
+'Are you sure you want to delete the language $1?': '¿Esta seguro que desea borrar el idioma $1?'
+'Deleting language': 'Borrando idioma'
+'The language $1 could not be deleted.': 'El idioma $1 no pudo ser borrado'
+'Edit language': 'Editar idioma'
+'You do not have the right to edit languages.': 'No tiene derecho a editar idiomas'
+'Please enter the translation for month names.': 'Favor entre la traducción para los nombres de meses'
+'Please enter the translation for week day names.': 'Favor entre la traducción para los nombres de semanas'
+January: Enero
+February: Febrero
+March: Marzo
+April: Abril
+May: Mayo
+June: Junio
+July: Julio
+August: Agosto
+September: Septiembre
+October: Octubre
+November: Noviembre
+December: Diciembre
+Monday: Lunes
+Tuesday: Martes
+Wednesday: Miércoles
+Thursday: Jueves
+Friday: Viernes
+Saturday: Sábado
+Sunday: Domingo
+'You do not have the right to add new languages.': 'No puede añadir un nuevo idioma.'
+'There are $1 issue(s) left.': 'Queda(n) $1 edición(es).'
+'Native name': 'Nombre local'
+'The language $1 has been successfuly added.': 'El idioma $1 ha sido agregado con éxito'
+'Please check if a language with the same name does not already exist.': 'Favor revise si un idioma con el mismo nombre no existe ya'
+'The language could not be added.': 'El idioma no pudo ser agregado'
+'Delete language': 'Borrar idioma'
+'The language $1 has been deleted.': 'El idioma $1 ha sido borrado'
+'Updating language information': 'Actualizando información de idioma'
+'Language information has been successfuly updated.': 'Información de idioma ha sido actualizada con éxito'
+'Language information could not be updated.': 'Información de idioma no pudo ser actualizado'
+'A language with the same name already exists.': 'Un idioma con el mismo nombre ya existe'

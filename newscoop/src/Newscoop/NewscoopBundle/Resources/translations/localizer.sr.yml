@@ -1,0 +1,30 @@
+Themes: Теме
+'Area to localize': 'Подручје за локализацију'
+Dashboard: 'Контролна табла'
+Authors: Аутори
+Libraries: Библиотеке
+'Media Archive': 'Архив медијских записа'
+Extensions: Проширења
+Geo-location: 'Гео локације'
+'Translation status:': 'Статус превода:'
+'Editor Media Plugin': 'Едитор Медиа плагин'
+'$1 of $2 strings translated': '$1 од $2 стринг(ов)а преведено'
+'Preview Window': 'Прозор за преглед'
+'Show translated strings': 'Прикажи преведене стрингове'
+'Hide translated strings': 'Сакриј преведене стрингове'
+Feedback: 'Повратна информација'
+'You do not have the right to manage the localizer.': 'Немате право да управљате локализатором.'
+API: АПИ
+'User Subscriptions Sections': 'Претплате корисника на рубрике'
+'User Subscriptions': 'Претплате корисника'
+'Translate to:': 'Преведи у:'
+'Translate from:': 'Преведи из:'
+'The following strings are not used:': 'Следећи стрингови се не користе:'
+'The following strings are missing from the translation files:': 'Следећи стрингови фале у фајловима за превођење:'
+'No source strings found.': 'Није пронађен изворни стринг.'
+'No matches found.': 'Нема подударности.'
+Globals: 'Општи стрингови'
+'Are you sure you want to delete this entry?': 'Да ли сте сигурни да желите да обришете овај унос?'
+'All strings have been translated.': 'Ура, сви стрингови су преведени! wOOt!'
+'Bug Reporting': 'Пријављивање грешке'
+'Article Topics': 'Теме у чланцима (topics)'
