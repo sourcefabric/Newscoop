@@ -72,7 +72,7 @@ class ArticleList extends BaseList
             'Number' => NULL,
             'Language' => $translator->trans('Language'),
             'Order' => $translator->trans('Order'),
-            'Name' => $translator->trans('Title'),
+            'Name' => $translator->trans('Title', array(), 'api'),
             'Section' => $translator->trans('Section'),
             'Webcode' => $translator->trans('Webcode', array(), 'library'),
             'Type' => $translator->trans('Type'),

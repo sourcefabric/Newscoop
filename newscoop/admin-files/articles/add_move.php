@@ -109,7 +109,7 @@ if (sizeof($allArticleTypes) == 0) {
 		<tr>
 			<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Title", array(), 'api'); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Title'))); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
+			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Title', array(), 'api'))); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
 			</TD>
 		</TR>
 		<TR>

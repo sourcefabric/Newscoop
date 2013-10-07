@@ -17,7 +17,7 @@ class Admin_Form_Blog extends Zend_Form
         $this->addElement('hash', 'csrf');
 
         $this->addElement('text', 'title', array(
-            'label' => $translator->trans('Title'),
+            'label' => $translator->trans('Title', array(), 'api'),
             'required' => TRUE,
             'filters' => array(
                 'stringTrim',
