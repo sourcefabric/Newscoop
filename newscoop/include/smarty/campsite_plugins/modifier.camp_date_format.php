@@ -24,8 +24,8 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_only
 {
     static $attributes = array('year'=>'%Y', 'mon'=>'%c', 'mday'=>'%e', 'yday'=>'%j',
                         'wday'=>'%w', 'hour'=>'%H', 'min'=>'%i', 'sec'=>'%S',
-                        'mon_name'=>'%M', 'wday_name'=>'%W');
-    static $specifiersMap = array('%h'=>'%I', '%i'=>'%M', '%s'=>'%S');
+                        'mon_name'=>'%M', 'wday_name'=>'%W', 'epoch'=>'epoch');
+    static $specifiersMap = array('%h'=>'%I', '%i'=>'%M', '%s'=>'%S', 'epoch'=>'%s');
     static $conversionMap = array('%M'=>'__month_name__', '%W'=>'__weekday_name__',
                                   '%c'=>'__month__', '%e'=>'__day_of_the_month__',
                                   '%D'=>'__day_of_the_month_suffix__', '%l'=>'__hour_12_clock__');
