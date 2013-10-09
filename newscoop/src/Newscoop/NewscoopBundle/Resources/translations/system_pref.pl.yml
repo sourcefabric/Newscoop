@@ -1,104 +1,113 @@
-'town names with wildcards, and lat/lon coordinates': 
-'addresses: street (number), town': 
-'Use MapQuest Nominatim Search:': 
-'Use Local GeoNames Search:': 
-'Preferred address language:': 
-'For the Nominatim address search': 
-'Email from:': 
-'Email from must be at least twelve character.': 
-'Email contact:': 
-'Email contact must be at least four character.': 
-'Email Settings': 
-'MailChimp Settings': 'Ustawienia MailChimp'
-'List Unique Id:': 'Wyświetl listę unikalnych id'
-'Facebook Settings': 'Ustawienia Facebooka'
-'App Secret:': 'Kod sekretny aplikacji'
-'App ID:': 'ID aplikacji'
-'API Key:': 'Klucz API'
-'Automatic collection of statistics:': 'Zbieraj statystyki automatycznie'
-'to load geo-names data': 'by załadować dane geo-nazw'
-'MySQL client command path': 'Ścieżka do klienta MySQL'
-'according to php.ini settings': 'zgodnie z ustawieniami php.ini'
-'Maximal zoom for auto-focusing:': 'Największe powiększenie dla auto-zbliżenia'
-'Map border for auto-focusing:': 'Granice mapy dla auto-zbliżenia'
-'Map auto-focusing as the default behavior:': 'Domyślne zachowanie auto-zbliżenia'
-'Include CSS file for map view': 'Dołącz plik CSS do widoku mapy'
-'Please enter password recovery from email.': 'Podaj odzyskane hasło z wiadomości email'
-'From email address:': 'Adres email OD:'
-'Run scheduled tasks externally?': 'Uruchamiaj zaprogramowane zadania zewnętrznie?'
-'Setting up a Newscoop Replication Server?': 'Ustawić Serwer Replikacji Newscoop?'
-'Newscoop Online Server Database': 'Baza danych serwera Newscoop'
-'Allow Google Streets Map Provider:': 'Zezwól na dostawcę Google Streets Map'
-'Allow MapQuest Map Provider:': 'Zezwól na dostawcę Map Mapquest'
-'Local Flash Server:': 'Lokalny Serwer Flash:'
-'Local Flash Directory:': 'Lokalny katalog Flash:'
-'Youtube Default Width:': 'Domyślna szerokość Youtube:'
-'Youtube Default Height:': 'Domyślna wysokość Youtube:'
-'Vimeo Default Width:': 'Domyślna szerokość Vimeo:'
-'Vimeo Default Height:': 'Domyślna wysokość Vimeo:'
-'Map Zoom Level:': 'Poziom zoomu mapy:'
-'Map Popup Minimal Width:': 'Minimalna szerokość popupu z mapą'
-'Map Popup Minimal Height:': 'Minimalna wysokość popupu z mapą:'
-'Map Marker Directory:': 'Katalor markerów mapy:'
-'Map Marker Default:': 'Domyślny marker mapy:'
-'Map Default Width:': 'Domyślna szerokość mapy:'
-'Map Default Height:': 'Domyślna wysokość mapy:'
-'Map Center Longitude:': 'Środek długości geograficznej mapy:'
-'Map Center Latitude:': 'Środek wysokości geograficznej mapy:'
-'Geolocation Settings': 'Ustawienia geolokacji'
-'Flash Default Width:': 'Domyślna szerokość Flash'
-'Flash Default Height:': 'Domyśłna wysokość flash:'
-'Default Map Provider:': 'Domyślny dostawca map:'
-'Allow OpenStreet Map Provider:': 'Zezwół na dostawcę OpenStree Map:'
-'Allow password recovery:': 'Zezwól na odzyskiwanie hasła:'
-'Template Cache Handler:': 'Template Cache Handler:'
-'Invalid: You need PHP $1 enabled in order to use the template caching system.': 'Błąd: Potrzebujesz PHP $1 aby korzystać z cacheowania szablonów.'
-'Database Cache Engine:': 'Silnik cache bazy danych:'
-'Zoom enabled for images in article content?': 'Włączyć zoom dla zdjęć w obrębie artykułu?'
-'Image Resizing Width:': 'Długość pomniejszanych zdjęć'
-'Image Resizing Width': 'Długość pomniejszanych zdjęć'
-'Image Resizing Height:': 'Wysokość pomniejszanych zdjęć'
-'Image Resizing Height': 'Wysokość pomniejszanych zdjęć'
-'Please enter a valid value (1 - 100) for the $1 field.': 'Podaj wartość od 1 do 11 w pole $1'
-'Imagecache Lifetime:': 'Ważność cache zdjęć'
-'Templates filter mask (separated by comma)': 'Maska filtra szablonów (oddzielone przecinkami)'
-'Invalid: You need PHP $1 enabled in order to use the caching system.': 'Błąd: Potrzebujesz PHP $1 aby korzystać z systemu cacheowania.'
-'Image Resizing Ratio:': 'Ratio pomniejszanych zdjęć:'
-'Image Resizing Ratio': 'Ratio pomniejszanych zdjęć:'
-'Editor Settings': 'Ustawienia edytora'
-'Session Lifetime': 'Ważność sesji'
-'Please enter the site title': 'Podaj tytuł strony'
-'Please enter the site meta keywords': 'Podaj słowa kluczowe meta strony'
-'Please enter the site meta description': 'Wprowadź opis meta strony'
-'Please enter the secret key': 'Wprowadź sekretny klucz'
-'Please enter the Keyword Seperator': 'Wprowadź separator słów kluczowych'
-'Site Title:': 'Tytuł strony'
-'Site On-Line:': 'Strona On-Line:'
-'Site Meta Keywords:': 'Słowa kluczowe Meta strony:'
-'Site Meta Description:': 'Opis Meta Strony:'
-'Session Lifetime:': 'Długość sesji'
-'Secret Key:': 'Sekretny klucz:'
-'SMTP Port:': 'Port SMTP:'
-'SMTP Port': 'Port SMTP'
-'SMTP Host:': 'Host SMTP:'
-'SMTP Host must be at least four character.': 'Host SMTP musi mieć co najmniej 4 znaki.'
-'Enter a value between 0 and $1 (the maximum size is specified in php.ini). Please use K for kilobytes, M for megabytes and G for gigabytes, without white spaces between the value and the corresponding letter, e.g. 3M.': 'Podaj wartość pomiędzy 0 a $1 (maksymalny rozmiar znajduje się w pliku php.ini). Użyj K dla kilobajtów, M dla megabajtów i G dla gigabajtów, bez spacji pomiędzy wartością a liter, np 3M'
-'Reader subscriptions managed externally?': 'Subskrypcje czytelników zarządzane zewnętrznie?'
-'Maximum upload file size:': 'Maksymalny rozmiar plików:'
-'Max Upload File Size': 'Maksymalny rozmiar plików'
-'Invalid Max Upload File Size value submitted': 'Niepoprawna wartość Maksymalnego Rozmiaru Plików'
-'General Settings': 'Ustawienia główne'
-'Database Replication data incomplete': 'Replikacja bazy danych - dane niekompletne'
-'Database Replication User:': 'Użytkownik do replikacji bazy danych:'
-'Database Replication Port:': 'Port do replikacji bazy danych:'
-'Database Replication Password:': 'Hasło do replikacji bazy danych:'
-'Database Replication Host:': 'Host do replikacji bazy danych'
-'System preferences updated.': 'Preferencje systemowe zaktualizowane.'
-'Please enter a positive number for the $1 field.': 'Podaj dodatni numer do pola $1'
-'Login Attempts': 'Prób logowania'
-'Keyword separator must be at least one character.': 'Separator słów kluczowych musi mieć co najmniej jeden znak.'
-'You do not have the right to change system preferences.': 'Nie masz praw aby zmieniać preferencje systemowe.'
-'Number of failed login attempts before showing CAPTCHA :': 'Liczba nieudanych logowań przed pokazaniem CAPTCHA:'
-'Keyword separator:': 'separator słów kluczowych:'
-'Time Zone:': 'Strefa czasowa:'
-disabled: nieaktywne
+newscoop:
+  btn:
+    save: "Zapisz"
+  preferences:
+    error:
+      cache: "Błąd: Potrzebujesz PHP $1 aby korzystać z cacheowania szablonów."
+      replication: "Replikacja bazy danych - dane niekompletne"
+      maxupload: "Niepoprawna wartość Maksymalnego Rozmiaru Plików"
+      geolocation: "Niepoprawne wartości pól geolokalizacji. Pola muszą zawierać liczby. Szerokość geograficzna nie może być > 90 i <= 90. Długość geograficzna nie może być > 180 i <= 180."
+      noaccess: "Nie masz praw aby zmieniać preferencje systemowe."
+      latitude: "Pole szerokości geograficznej jest niepoprawne."
+      longitude: "Pole długości geograficznej jest niepoprawne."
+    success:
+      saved: "Preferencje systemowe zaktualizowane."
+    menu:
+      general: "Ustawienia główne"
+      email: "Ustawienia e-mail"
+      editor: "Ustawienia edytora"
+      geolocation: "Ustawienia geolokalizacji"
+      mailchimp: "Ustawienia MailChimp"
+      fb: "Ustawienia Facebook"
+      media: "Ustawienia wideo"
+      cache: "Ustawienia cache"
+      other: "Inne ustawienia"
+    label:
+      title: "Preferencje systemowe"
+      header: "Ustawienia"
+      siteonline: "Strona On-Line:"
+      sitetitle: "Tytuł strony:"
+      metakeywords: "Słowa kluczowe Meta strony:"
+      metadescription: "Opis Meta Strony:"
+      timezone: "Strefa czasowa:"
+      cacheengine: "Silnik cache bazy danych:"
+      cachetemplate: "Template Cache Handler:"
+      cacheimage: "Ważność cache zdjęć:"
+      allowrecovery: "Zezwól na odzyskiwanie hasła:"
+      secretkey: "Sekretny klucz:"
+      sessionlifetime: "Ważność sesji:"
+      sessionlifetimemsg: "nawiązująć do ustawień php.ini."
+      separator: "Separator słów kluczowych:"
+      captcha: "Liczba nieudanych logowań przed pokazaniem CAPTCHA :"
+      maxupload: "Maksymalny rozmiar plików:"
+      maxuploadmsg: "Podaj wartość pomiędzy 0 a $1 (maksymalny rozmiar znajduje się w pliku php.ini). Użyj K dla kilobajtów, M dla megabajtów i G dla gigabajtów, bez spacji pomiędzy wartością a literą, np. '3M'"
+      stats: "Zbieraj statystyki automatycznie:"
+      smtphost: "SMTP Host:"
+      smtpport: "SMTP Port:"
+      email: "SMTP Email, adres 'Od':"
+      emailfrom: "Adres Email dla powiadomień systemowych:"
+      imageratio: "Ratio pomniejszanych zdjęć:"
+      imagewidth: "Długość pomniejszanych zdjęć:"
+      imageheight: "Wysokość pomniejszanych zdjęć:"
+      zoom: "Włączyć zoom dla zdjęć w obrębie artykułu??"
+      external: "Subskrypcje czytelników zarządzane zewnętrznie?"
+      usereplication: "Ustawić Serwer Replikacji Newscoop?"
+      serverdb: "Baza danych serwera Newscoop"
+      replicationhost: "Host do replikacji bazy danych:"
+      replicationuser: "Użytkownik do replikacji bazy danych:"
+      replicationpw: "Hasło do replikacji bazy danych:"
+      replicationport: "Port do replikacji bazy danych:"
+      filter: "Maska filtra szablonów (oddzielone przecinkami)"
+      cron: "Uruchamiaj zaprogramowane zadania zewnętrznie?"
+      mysqlpath: "Ścieżka do klienta MySQL"
+      mysqlpathmsg: "by załadować dane geo-nazw"
+      latitude: "Środek szerokości geograficznej mapy:"
+      longitude: "Środek długości geograficznej mapy:"
+      zoomlevel: "Poziom zoomu mapy:"
+      defaultwidth: "Domyślna szerokość mapy:"
+      defaultheight: "Domyślna wysokość mapy:"
+      css: "Dołącz plik CSS do widoku mapy"
+      autofocus: "Domyślne zachowanie auto-zbliżenia:"
+      zoomautofocus: "Największe powiększenie dla auto-zbliżenia:"
+      borderautofocus: "Granice mapy dla auto-zbliżenia:"
+      mapprovider: "Zezwól na dostawcę Google Streets Map:"
+      mapquest: "Zezwól na dostawcę map MapQuest:"
+      openstreet: "Zezwół na dostawcę OpenStreet Map:"
+      defaultmapprovider: "Domyślny dostawca map:"
+      nominatimsearch: "Użyj szukania MapQuest Nominatim:"
+      preflanguage: "Preferred address language:"
+      markerdir: "Katalor markerów mapy:"
+      defaultmarker: "Domyślny marker mapy:"
+      popupwidth: "Minimalna szerokość popupu z mapą:"
+      popupheight: "Minimalna wysokość popupu z mapą:"
+      youtubewidth: "Domyślna szerokość Youtube:"
+      youtubeheight: "Domyślna wysokość Youtube:"
+      vimeowidth: "Domyślna szerokość Vimeo:"
+      vimeoheight: "Domyślna wysokość Vimeo:"
+      flashwidth: "Domyślna szerokość Flash:"
+      flashheight: "Domyślna wysokość Flash:"
+      flashserver: "Lokalny Serwer Flash:"
+      flashdir: "Lokalna ścieżka Flash:"
+      apikey: "Klucz API:"
+      mailchimplist: "Wyświetl listę unikalnych id:"
+      appid: "ID aplikacji:"
+      fbsecret: "Kod sekretny aplikacji:"
+      disabled: "nieaktywne"
+      yesoption: "Tak"
+      nooption: "Nie"
+      geosearch: "Użyj wyszukiwania lokalnego GeoNames:"
+    popover:
+      cacheengine: "Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop."
+      cacheimage: "Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności."
+      cachetemplate: "Wybierz DB aby włączyć cache dla szablonów."
+      recovery: "Użytkownicy mogą poprosić o przypomnienie hasła przez e-mail. Zauważ, że jeśli ta funkcja jest włączona, a konto e-mail jest zagrożone, publikacja Newscoop może być łatwo naruszona."
+      secret: "Klucz bezpieczeństwa, który Newscoop może wykorzystać do integracji usług internetowych i innych zaawansowanych funkcji."
+      separator: "Określa separator słów kluczowych na stronie Edycji artykułu (przecinek lub myślnik)."
+      stats: "Ta opcja pozwala na gromadzenie statystyk dostępu czytelników do publikacji na serwerze. Jeśli używasz innej usługi do statystyk, wybierz 'Nie'. Wyłaczenie zbierania statystyk może zmniejszyć obciążenie serwera Newscoop."
+      zoom: "Jeśli jest ustawiona na Tak, czytelnicy mogą powiększać obrazy artykułów w publikacjach stron, klikając na nie. Ta funkcja powiększania działa na wszelkie obrazy wstawiane do tekstu artykułu."
+      ratio: "Wskaźnik zmiany rozmiaru ma pierwszeństwo przed każdą zmianą szerokości lub wartości zmiany wysokości, który jest ustawiony tutaj. Jeśli współczynnik nie jest ustawiony, ale wysokość i szerokość są ustawione to Newscoop użyje tych ostatnich wartości, co skutkuje mniejszym rozmiarem. Domyślne ustawienia mogą być przesłonięte przez stosunek szerokości lub wysokości ustawienia dla konkretnego obrazu ustawionej na inline stronie Edycji artykułu."
+      replication: "Pozwala ustawić Newscoop aby działał na dwóch serwerach jednocześnie, co jest cechą bezpieczeństwa w przypadku sprzętu lub problemu z siecią."
+      filter: "Wprowadź słowa kluczowe dla szablonów, które chcesz ukryć przed edytorami szablonów dostępnych za pośrednictwem strony 'Szablony'. Na przykład szablony, które są już w użyciu, ale nie chcesz, aby zostały usunięte z serwera."
+      cron: "Oznacza korzystanie z własnych harmonogramów cron-a dla zadań automatycznych, zamiast harmonogramu zawartego w Newscoop."
+      video: "Domyślna szerokość i wysokość zarówno zewnętrznie, jak i lokalnie obsługiwanych plików wideo można ustawić w tej sekcji, aby upewnić się, że filmy są wyświetlane poprawnie w publikacjach szablonów stron."
+      emailfrom: "Adres e-mail używany do powiadomień z systemu."
