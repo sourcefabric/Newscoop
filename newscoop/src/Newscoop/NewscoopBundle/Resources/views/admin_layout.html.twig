@@ -124,7 +124,7 @@
 <div class="meta-bar">
     {% if NewscoopUser %}
     <ul>
-        <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ 'Logout'|trans }}</a></li>
+        <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ 'Logout'|trans({}, 'messages') }}</a></li>
         <li><a href="{{ Newscoop['site']['help_url'] }}" target="_blank">{{ 'Help'|trans }}</a></li>
         <li>{{ "Signed in: $1"|trans({'$1': '<strong>' ~ NewscoopUser.getFirstName() ~ '</strong>'})|raw }}</li>
     </ul>
