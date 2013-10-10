@@ -683,17 +683,6 @@ class Builder
             'privilege' => 'manage',
         ));
 
-        $status = $this->addChild($menu[$translator->trans('Manage User Types')], $translator->trans('Add new user type'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'user-group',
-                'action' => 'add',
-            )
-        ));
-
-        if ($status) {
-            $menu[$translator->trans('Manage User Types', array(), 'home')][$translator->trans('Add new user type', array(), 'home')]->setDisplay(false);
-        }
-
         $status = $this->addChild($menu[$translator->trans('Manage User Types', array(), 'home')], $translator->trans('Edit user type', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user-group',
