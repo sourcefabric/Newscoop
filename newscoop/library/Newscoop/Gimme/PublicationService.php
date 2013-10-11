@@ -117,8 +117,8 @@ class PublicationService
         /**
          * If in request GET or POST params exists 'publication' use it.
          */
-        if ($request->query->has('publication') || $request->request->has('publication')) {
-            $publication = $request->get('publication');
+        if ($request->query->has('__publication_alias_name') || $request->request->has('__publication_alias_name')) {
+            $publication = $request->get('__publication_alias_name');
             $this->publicationMetadata['source'] = 'optional_parameter';
         }
 
