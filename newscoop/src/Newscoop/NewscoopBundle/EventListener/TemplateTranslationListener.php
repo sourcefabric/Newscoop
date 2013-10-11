@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * Loads templates translations
@@ -34,19 +35,18 @@ class TemplateTranslationListener
         $locale = $request->getLocale();
         $this->translator->addLoader('yaml', new YamlFileLoader());
         $finder = new Finder();
+        $filesystem = new Filesystem();
         $extension = $locale.'.yml';
+        $dir = $_SERVER['DOCUMENT_ROOT'].'/themes/'.\CampSite::GetURIInstance()->getThemePath().'translations';
 
-        try {
-            $finder->files()->in($_SERVER['DOCUMENT_ROOT'].'/themes/'.\CampSite::GetURIInstance()->getThemePath().'translations');
+        if ($filesystem->exists($dir)) {
+            $finder->files()->in($dir);
             $finder->files()->name('*.'.$locale.'.yml');
             
             foreach ($finder as $file) {
                 $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
                 $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);    
             }
-            
-        } catch (\InvalidArgumentException $exception) {
-            throw new \Exception('Translation directory doesn\'t exist for specified theme!');
         }
     }
 }

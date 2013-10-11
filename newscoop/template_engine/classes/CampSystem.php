@@ -174,7 +174,7 @@ abstract class CampSystem
             if (is_null($publication)) {
                 $publication = new Publication($p_pubId);
             }
-            $lastIssue = self::GetLastIssue($publicatiCampSystemon, $p_lngId, $p_isPublished);
+            $lastIssue = self::GetLastIssue($publication, $p_lngId, $p_isPublished);
             if (is_null($lastIssue)) {
                 $template = null;
             }
