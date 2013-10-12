@@ -8,5 +8,5 @@ before_script:
   - "cp -r dependencies/include/* newscoop/include/"
   - cd newscoop/
   - composer self-update
-  - compooser install
+  - composer install
   - php scripts/doctrine.php
