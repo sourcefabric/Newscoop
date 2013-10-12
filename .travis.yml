@@ -7,4 +7,6 @@ notifications:
 before_script:
   - "cp -r dependencies/include/* newscoop/include/"
   - cd newscoop/
+  - php composer.phar self-update
+  - php composer.phar install
   - php scripts/doctrine.php
