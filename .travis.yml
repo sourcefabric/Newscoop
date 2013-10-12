@@ -7,4 +7,4 @@ notifications:
 before_script:
   - "cp -r dependencies/include/* newscoop/include/"
   - cd newscoop/
-  - composer install --no-dev
+  - php scripts doctrine.php
