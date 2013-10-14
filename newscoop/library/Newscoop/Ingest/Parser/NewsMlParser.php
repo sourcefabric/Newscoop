@@ -131,7 +131,7 @@ class NewsMlParser implements Parser
     }
 
     /**
-     * Test if is image 
+     * Test if is image
      *
      * @return bool
      */
@@ -156,6 +156,16 @@ class NewsMlParser implements Parser
         }
 
         return $images;
+    }
+
+    /**
+     * Get link
+     *
+     * @return string or null
+     */
+    public function getLink()
+    {
+        return null;
     }
 
     /**

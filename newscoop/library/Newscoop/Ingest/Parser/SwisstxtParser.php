@@ -184,7 +184,7 @@ class SwisstxtParser implements Parser
 
     public function getProduct()
     {
-        return 'swisstext';
+        return 'Swiss txt';
     }
 
     public function getSubtitle()
@@ -233,6 +233,11 @@ class SwisstxtParser implements Parser
     }
 
     public function getImages()
+    {
+        return null;
+    }
+
+    public function getLink()
     {
         return null;
     }

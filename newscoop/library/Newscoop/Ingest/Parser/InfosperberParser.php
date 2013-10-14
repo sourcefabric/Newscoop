@@ -174,7 +174,7 @@ class InfosperberParser implements Parser
 
     public function getProduct()
     {
-        return 'infosperber';
+        return 'Infosperber';
     }
 
     public function getSubtitle()
@@ -225,6 +225,11 @@ class InfosperberParser implements Parser
     public function getImages()
     {
         return null;
+    }
+
+    public function getLink()
+    {
+        return $this->getString($this->story->xpath('link'));
     }
 
     /**

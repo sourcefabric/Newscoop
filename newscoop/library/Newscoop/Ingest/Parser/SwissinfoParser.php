@@ -158,7 +158,7 @@ class SwissinfoParser implements Parser
 
     public function getProduct()
     {
-        return "swissinfo";
+        return "Swissinfo";
     }
 
     public function getSubtitle()
@@ -209,6 +209,11 @@ class SwissinfoParser implements Parser
     }
 
     public function getImages()
+    {
+        return null;
+    }
+
+    public function getLink()
     {
         return null;
     }

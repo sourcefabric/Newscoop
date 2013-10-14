@@ -420,6 +420,16 @@ class Entry
     }
 
     /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getLink()
+    {
+        return $this->getAttribute('link');
+    }
+
+    /**
      * Get status
      *
      * @return string
@@ -525,6 +535,7 @@ class Entry
         $entry->setAttribute('catch_line', (string) $parser->getCatchLine());
         $entry->setAttribute('catch_word', (string) $parser->getCatchWord());
         $entry->setAttribute('authors', (string) $parser->getAuthors());
+        $entry->setAttribute('link', (string) $parser->getLink());
     }
 
     /**

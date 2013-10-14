@@ -222,6 +222,7 @@ ingest_publisher.field.NewsLineText = "getCatchLine"
 ingest_publisher.field.DataLead = "getSummary"
 ingest_publisher.field.DataContent = "getContent"
 ingest_publisher.field.AuthorNames = "getAuthors"
+ingest_publisher.field.DataLink   = "getLink"
 
 ingest_publisher.image_path = ""
 
@@ -265,6 +266,7 @@ ingest_publisher.field.NewsLineText = 0
 ingest_publisher.field.DataContent = 0
 ingest_publisher.field.DataLead = 0
 ingest_publisher.field.AuthorNames = 0
+ingest_publisher.field.DataLink   = 0
 ingest_publisher.field.deck = "getSummary"
 ingest_publisher.field.full_text = "getContent"
 
