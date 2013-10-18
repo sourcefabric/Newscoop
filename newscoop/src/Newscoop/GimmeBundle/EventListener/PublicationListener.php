@@ -33,10 +33,7 @@ class PublicationListener
     
     public function onRequest(GetResponseEvent $event)
     {
-        $pos = strpos($_SERVER['REQUEST_URI'], '_profiler');
-        if ($pos === false) {
-            $request = $event->getRequest();
-            $this->publicationService->poblicationResolver($event->getRequest());
-        }
+        $request = $event->getRequest();
+        $this->publicationService->poblicationResolver($event->getRequest());
     }
 }

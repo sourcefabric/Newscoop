@@ -310,7 +310,7 @@ class Builder
             'privilege' => 'manage',
         ));
 
-        $this->addChild($menu[getGS('Merge article types')], getGS('Step 2'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Merge article types')], getGS('Step 2'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge2.php',
@@ -319,9 +319,12 @@ class Builder
             'resource' => 'article-type',
             'privilege' => 'manage',
         ));
-        $menu[getGS('Merge article types')][getGS('Step 2')]->setDisplay(false);
+        
+        if ($status) {
+            $menu[getGS('Merge article types')][getGS('Step 2')]->setDisplay(false);
+        }
 
-        $this->addChild($menu[getGS('Merge article types')], getGS('Step 3'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Merge article types')], getGS('Step 3'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge3.php',
@@ -330,16 +333,22 @@ class Builder
             'resource' => 'article-type',
             'privilege' => 'manage',
         ));
-        $menu[getGS('Merge article types')][getGS('Step 3')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Merge article types')][getGS('Step 3')]->setDisplay(false);
+        }
 
         if($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
-            $this->addChild($menu, getGS('Countries'), array('zend_route' => array(
+            $status = $this->addChild($menu, getGS('Countries'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
                     'action' => 'index.php',
                 )
             ));
-            $menu[getGS('Countries')]->setDisplay(false);
+
+            if ($status) {
+                $menu[getGS('Countries')]->setDisplay(false);
+            }
 
             $this->addChild($menu[getGS('Countries')], getGS('Add new country'), array('zend_route' => array(
                     'module' => 'admin',
@@ -350,7 +359,7 @@ class Builder
                 'privilege' => 'manage',
             ));
 
-            $this->addChild($menu[getGS('Countries')], getGS('Edit country'), array('zend_route' => array(
+            $status = $this->addChild($menu[getGS('Countries')], getGS('Edit country'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
                     'action' => 'edit.php',
@@ -359,7 +368,10 @@ class Builder
                 'resource' => 'country',
                 'privilege' => 'manage',
             ));
-            $menu[getGS('Countries')][getGS('Edit country')]->setDisplay(false);
+
+            if ($status) {
+                $menu[getGS('Countries')][getGS('Edit country')]->setDisplay(false);
+            }
         }
 
         $this->addChild($menu, getGS('Edit your password'), array('zend_route' => array(
@@ -407,29 +419,38 @@ class Builder
             'privilege' => 'edit',
         ));
 
-        $this->addChild($menu, getGS('Templates'), array('zend_route' => array(
+        $status = $this->addChild($menu, getGS('Templates'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'index'
             )
         ));
-        $menu[getGS('Templates')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Templates')], getGS('Edit'), array('zend_route' => array(
+        if($status) {
+            $menu[getGS('Templates')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Templates')], getGS('Edit'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'edit'
             )
         ));
-        $menu[getGS('Templates')][getGS('Edit')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Templates')], getGS('Upload'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Templates')][getGS('Edit')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Templates')], getGS('Upload'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'upload'
             )
         ));
-        $menu[getGS('Templates')][getGS('Upload')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Templates')][getGS('Upload')]->setDisplay(false);
+        }
 
         $this->addChild($menu, getGS('Themes'), array('zend_route' => array(
                 'module' => 'admin',
@@ -440,7 +461,7 @@ class Builder
             'privilege' => 'manage'
         ));
 
-        $this->addChild($menu[getGS('Themes')], getGS('Settings'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Themes')], getGS('Settings'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'themes',
                 'action' => 'advanced-theme-settings',
@@ -451,25 +472,34 @@ class Builder
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Themes')][getGS('Settings')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Themes')][getGS('Settings')], getGS('Upload'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Themes')][getGS('Settings')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Themes')][getGS('Settings')], getGS('Upload'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'upload',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Themes')][getGS('Settings')][getGS('Upload')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Themes')][getGS('Settings')], getGS('Edit'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Themes')][getGS('Settings')][getGS('Upload')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Themes')][getGS('Settings')], getGS('Edit'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'template',
                 'action' => 'edit',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Themes')][getGS('Settings')][getGS('Edit')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Themes')][getGS('Settings')][getGS('Edit')]->setDisplay(false);
+        }
 
         if($this->user->hasPermission('DeleteArticleTypes')) {
             $this->addChild($menu, getGS('Article Types'), array('zend_route' => array(
@@ -500,7 +530,7 @@ class Builder
             'privilege' => 'manage'
         ));
 
-        $this->addChild($menu[getGS('Languages')], getGS('Edit language'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Languages')], getGS('Edit language'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'languages',
                 'action' => 'edit',
@@ -509,9 +539,12 @@ class Builder
             'resource' => 'language',
             'privilege' => 'manage'
         ));
-        $menu[getGS('Languages')][getGS('Edit language')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Languages')], getGS('Add new language'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Languages')][getGS('Edit language')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Languages')], getGS('Add new language'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'languages',
                 'action' => 'add',
@@ -519,7 +552,10 @@ class Builder
             'resource' => 'language',
             'privilege' => 'manage'
         ));
-        $menu[getGS('Languages')][getGS('Add new language')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Languages')][getGS('Add new language')]->setDisplay(false);
+        }
 
         if($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
             $this->addChild($menu, getGS('Countries'), array('zend_route' => array(
@@ -578,40 +614,52 @@ class Builder
             )
         ));
 
-        $this->addChild($menu[getGS('Manage Users')], getGS('Edit user'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Manage Users')], getGS('Edit user'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'edit',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Manage Users')][getGS('Edit user')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Manage Users')][getGS('Edit user')], getGS('Edit permissions'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Manage Users')][getGS('Edit user')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Manage Users')][getGS('Edit user')], getGS('Edit permissions'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'acl',
                 'action' => 'edit'
             )
         ));
-        $menu[getGS('Manage Users')][getGS('Edit user')][getGS('Edit permissions')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Manage Users')], getGS('Rename user'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Manage Users')][getGS('Edit user')][getGS('Edit permissions')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Manage Users')], getGS('Rename user'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'rename',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Manage Users')][getGS('Rename user')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Manage Users')], getGS('Create new user'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Manage Users')][getGS('Rename user')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Manage Users')], getGS('Create new user'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Manage Users')][getGS('Create new user')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Manage Users')][getGS('Create new user')]->setDisplay(false);
+        }
 
         $this->addChild($menu, getGS('Manage Authors'), array('zend_route' => array(
                 'module' => 'admin',
@@ -638,22 +686,28 @@ class Builder
             'privilege' => 'manage',
         ));
 
-        $this->addChild($menu[getGS('Manage User Types')], getGS('Add new user type'), array('zend_route' => array(
+        $status = $this->addChild($menu[getGS('Manage User Types')], getGS('Add new user type'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user-group',
                 'action' => 'add',
             )
         ));
-        $menu[getGS('Manage User Types')][getGS('Add new user type')]->setDisplay(false);
 
-        $this->addChild($menu[getGS('Manage User Types')], getGS('Edit user type'), array('zend_route' => array(
+        if ($status) {
+            $menu[getGS('Manage User Types')][getGS('Add new user type')]->setDisplay(false);
+        }
+
+        $status = $this->addChild($menu[getGS('Manage User Types')], getGS('Edit user type'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user-group',
                 'action' => 'edit-access',
                 'reset_params' => false
             )
         ));
-        $menu[getGS('Manage User Types')][getGS('Edit user type')]->setDisplay(false);
+
+        if ($status) {
+            $menu[getGS('Manage User Types')][getGS('Edit user type')]->setDisplay(false);
+        }
 
         $this->addChild($menu, getGS('Create new account'), array('zend_route' => array(
                 'module' => 'admin',
@@ -697,12 +751,16 @@ class Builder
                 )
             ));
         }
-        
-        foreach ($plugin_infos as $info) {
-            if (\CampPlugin::IsPluginEnabled($info['name'])) {
-                $parent_menu = false;
 
-                $Plugin = new \CampPlugin($info['name']);
+        $enabled = \CampPlugin::GetEnabled();
+        $enabledIds = array();
+        foreach ($enabled as $plugin) {
+            $enabledIds[] = $plugin->getName();
+        }
+
+        foreach ($plugin_infos as $info) {
+            if (in_array($info['name'], $enabledIds)) {
+                $parent_menu = false;
 
                 if (isset($info['menu']['permission']) && $this->user->hasPermission($info['menu']['permission'])) {
                     $parent_menu = true;
@@ -748,15 +806,17 @@ class Builder
     private function addChild($menu, $name, $element) {
         if(array_key_exists('resource', $element) && array_key_exists('privilege', $element)) {
             if (!$this->hasPermission($element['resource'], $element['privilege'])) {
-                return;
+                return false;
             }
         }
 
         if(array_key_exists('zend_route', $element)) {
             $element['uri'] = $this->generateZendRoute($element['zend_route']['module'], $element); 
         }
-
-        return $menu->addChild($name, $element);
+        
+        if (is_object($menu)) {
+            return $menu->addChild($name, $element);
+        }
     }
 
     private function hasPermission($resource, $action) 

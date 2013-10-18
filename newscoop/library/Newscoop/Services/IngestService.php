@@ -18,6 +18,11 @@ use Newscoop\Ingest\Publisher;
 use Newscoop\Services\Ingest\PublisherService;
 
 /**
+ *
+ * TODO:
+ *  * Add ui to core
+ *  * Move parsers and providers to plugins.
+ * 
  * Ingest service
  */
 class IngestService

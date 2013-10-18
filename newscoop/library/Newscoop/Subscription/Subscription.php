@@ -12,6 +12,7 @@ use Newscoop\Entity\User;
 use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Subscription\Article;
 use Newscoop\Subscription\Issue;
+use Newscoop\PaywallBundle\Entity\Subscriptions;
 
 /**
  * Subscription entity

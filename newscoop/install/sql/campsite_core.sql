@@ -1291,15 +1291,22 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `Plugins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Plugins` (
-  `Name` varchar(255) NOT NULL,
-  `Version` varchar(255) NOT NULL DEFAULT '',
-  `Enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE Plugins (
+  Id INT AUTO_INCREMENT NOT NULL, 
+  Name VARCHAR(256) NOT NULL, 
+  Details LONGTEXT NOT NULL, 
+  type INT NOT NULL, 
+  installed_with INT NOT NULL, 
+  Description LONGTEXT NOT NULL, 
+  Version VARCHAR(256) NOT NULL, 
+  author VARCHAR(256) NOT NULL, 
+  license VARCHAR(256) NOT NULL, 
+  Enabled TINYINT(1) NOT NULL, 
+  installed_at DATETIME NOT NULL, 
+  updated_at DATETIME DEFAULT NULL, 
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `Plugins`
@@ -1606,20 +1613,21 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `Subscriptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Subscriptions` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `IdUser` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
-  `Active` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `ToPay` float(10,2) unsigned NOT NULL DEFAULT '0.00',
-  `Currency` varchar(70) NOT NULL DEFAULT '',
-  `Type` enum('T','P') NOT NULL DEFAULT 'T',
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `IdUser` (`IdUser`,`IdPublication`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE Subscriptions (
+  Id INT AUTO_INCREMENT NOT NULL, 
+  ToPay NUMERIC(10, 0) NOT NULL, 
+  Type VARCHAR(255) NOT NULL, 
+  Currency VARCHAR(255) NOT NULL, 
+  Active VARCHAR(255) NOT NULL, 
+  IdUser INT DEFAULT NULL, 
+  IdSubscription INT DEFAULT NULL, 
+  IdPublication INT DEFAULT NULL, 
+  INDEX IDX_B709C1F4F9C28DE1 (IdUser), 
+  INDEX IDX_B709C1F4303CB8FA (IdSubscription), 
+  INDEX IDX_B709C1F45C1FD3F4 (IdPublication), 
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `Subscriptions`

@@ -227,7 +227,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     public function articleAction()
     {
-        $article = json_decode($this->getRequest()->getRawBody(), true);
+        $request = \Zend_Registry::get('container')->get('request');
+        $article = json_decode(utf8_encode($request->getContent()), true);
         $this->_helper->service('package')->saveArticle($article);
         $this->_helper->json(array());
     }

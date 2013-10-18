@@ -10,7 +10,6 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     templating:      { engines: ['twig', 'smarty', 'php'] }
-    default_locale: "en"
     trusted_proxies: ~
     session:
         storage_id: session.storage.php_bridge

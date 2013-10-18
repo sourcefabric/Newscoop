@@ -7,6 +7,11 @@
 
 namespace Newscoop\Services\Plugins;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ExpressionBuilder;
+use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
 use Newscoop\EventDispatcher\Events\PluginHooksEvent;
 
@@ -22,12 +27,45 @@ class PluginsService
      */
     private $dispatcher;
 
+    /** 
+     * @var Doctrine\ORM\EntityManager 
+     */
+    private $em;
+
+    /**
+     * Avaiable plugins
+     * @var Collection
+     */
+    private $avaiablePlugins;
+
     /**
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
+     * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct($dispatcher)
+    public function __construct($dispatcher, EntityManager $em)
     {
-        $this->dispatcher = $dispatcher;    
+        $this->dispatcher = $dispatcher;
+        $this->em = $em; 
+    }
+
+    public function getAllAvailablePlugins()
+    {   
+        if ($this->avaiablePlugins) {
+            return $this->avaiablePlugins;
+        }
+
+        return $this->avaiablePlugins = $this->em->getRepository('Newscoop\Entity\Plugin')->findAll();
+    }
+
+    public function getEnabledPlugins()
+    {
+        $eb = new ExpressionBuilder();
+        $expr = $eb->eq('enabled', true);
+        $criteria = new Criteria($expr);
+
+        $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
+        
+        return $avaiablePlugins->matching($criteria);
     }
 
     /**
