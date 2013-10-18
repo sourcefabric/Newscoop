@@ -196,7 +196,7 @@ class ManagerService
             }
         }
 
-        $cachedPluginMeta = $this->pluginsDir.'/cache/uninstall_'.str_replace('/', '-', $pluginName).'_package.json';
+        $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/uninstall_'.str_replace('/', '-', $pluginName).'_package.json';
 
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
@@ -259,7 +259,7 @@ class ManagerService
             }
         }
 
-        $cachedPluginMeta = $this->pluginsDir.'/cache/update_'.str_replace('/', '-', $pluginName).'_package.json';
+        $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/update_'.str_replace('/', '-', $pluginName).'_package.json';
 
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
