@@ -109,7 +109,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $section = $thread->getSection();
             $hook = \Zend_Registry::get('container')->getService('newscoop.plugins.service')
                 ->renderPluginHooks('newscoop_admin.interface.comment.options', null, array(
-                    'comment' => new Comment
+                    'comment' => $comment
             ));
 
             return array(
