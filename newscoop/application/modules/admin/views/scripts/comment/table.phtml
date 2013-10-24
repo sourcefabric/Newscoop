@@ -180,6 +180,9 @@
                 {% if(comment.recommended == 1) %}
                 <li><a href="javascript:;" id="unrecommend_{{comment.id}}" class="actionButton action-unrecommend"><?php echo $translator->trans('Unrecommend', array(), 'comments'); ?></a></li>
                 {% endif %}
+
+                <!-- New plugins hooks -->
+                    {{ pluginHook }}
                 
                 {% endif %}
                 <!--
