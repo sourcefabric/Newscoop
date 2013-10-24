@@ -20,7 +20,7 @@ class Builder
     private $showConfigureMenu;
     private $showUserMenu;
 
-    private function preparePrivileges()
+    protected function preparePrivileges()
     {
         $this->showPublishingEnvironmentMenu = (
             $this->user->hasPermission('ManageTempl') || 
@@ -138,7 +138,7 @@ class Builder
         return $current;
     }
 
-    private function decorateMenu($menu) {
+    protected function decorateMenu($menu) {
         foreach ($menu as $key => $value) {
             $value->setLinkAttribute('class', 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
@@ -146,7 +146,7 @@ class Builder
         return $menu;
     }
 
-    private function prepareContentMenu($menu) {
+    protected function prepareContentMenu($menu) {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
@@ -252,7 +252,7 @@ class Builder
         }    
     }
 
-    private function prepareActionsMenu($menu) 
+    protected function prepareActionsMenu($menu) 
     {
         $translator = $this->container->get('translator');
 
@@ -410,7 +410,7 @@ class Builder
         }
     }
 
-    private function prepareConfigureMenu($menu) 
+    protected function prepareConfigureMenu($menu) 
     {   
         $translator = $this->container->get('translator');
 
@@ -599,7 +599,7 @@ class Builder
         ));
     }
 
-    private function prepareUsersMenu($menu) 
+    protected function prepareUsersMenu($menu) 
     {   
         $translator = $this->container->get('translator');
 
@@ -806,12 +806,12 @@ class Builder
         }
     }
 
-    private function hasPermission($resource, $action) 
+    protected function hasPermission($resource, $action) 
     {
         return $this->user->hasPermission(null, $resource, $action);
     }
 
-    private function generateZendRoute($module, $element = array()) 
+    protected function generateZendRoute($module, $element = array()) 
     {
         if(!array_key_exists('zend_route', $element)) {
             $element['zend_route'] = array();
