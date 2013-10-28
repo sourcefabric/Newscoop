@@ -180,9 +180,6 @@
                 {% if(comment.recommended == 1) %}
                 <li><a href="javascript:;" id="unrecommend_{{comment.id}}" class="actionButton action-unrecommend"><?php echo $translator->trans('Unrecommend', array(), 'comments'); ?></a></li>
                 {% endif %}
-
-                <!-- New plugins hooks -->
-                <li>{{ pluginHook }}</li>
                 
                 {% endif %}
                 <!--
@@ -230,12 +227,12 @@
                             </ul><br>
                             <ul class="recommended_filter">
                                 <li class="hidden">
-									<input type="checkbox" id="show_recommended" value="recommended"> 
-									<label for="show_recommended"><?php echo $translator->trans('Recommended', array(), 'comments'); ?></label>
+                                    <input type="checkbox" id="show_recommended" value="recommended"> 
+                                    <label for="show_recommended"><?php echo $translator->trans('Recommended', array(), 'comments'); ?></label>
                                 </li>
                                 <li class="hidden">
-									<input type="checkbox" id="show_unrecommended" value="unrecommended"> 
-									<label for="show_unrecommended"><?php echo $translator->trans('Unrecommended', array(), 'comments'); ?></label>
+                                    <input type="checkbox" id="show_unrecommended" value="unrecommended"> 
+                                    <label for="show_unrecommended"><?php echo $translator->trans('Unrecommended', array(), 'comments'); ?></label>
                                 </li>
                             </ul>
                         </fieldset>

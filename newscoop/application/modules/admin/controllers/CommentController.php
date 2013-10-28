@@ -107,13 +107,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
             $forum = $comment->getForum();
             $section = $thread->getSection();
-            $hook = \Zend_Registry::get('container')->getService('newscoop.plugins.service')
-                ->renderPluginHooks('newscoop_admin.interface.comment.options', null, array(
-                    'comment' => $comment
-            ));
-
             return array(
-                'pluginHook' => $hook,
                 'index' => $index++, 
                 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
                 'commenter' =>array(
