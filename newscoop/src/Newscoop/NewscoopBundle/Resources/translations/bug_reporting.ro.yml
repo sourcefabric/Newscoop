@@ -1,0 +1,23 @@
+'You have reached the error page': 
+'Stack trace:': 
+'Request Parameters:': 
+'Page not found': 
+'Exception information:': 
+'Application error': 
+'An error occurred': 
+'Newscoop has encountered a problem.': 'Campsite a întâmpinat o problemă.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 
+'What were you trying to do when this happened?': 'Ce încercai să faci când a avut loc incidentul?'
+'Description:': 'Descriere:'
+'We are sorry for the inconvenience.': 'Ne pare rău pentru această neplăcere.'
+'Show error details': 'Arată detaliile erorii'
+'Hide error details': 'Ascunde detaliile erorii'
+'Error Report': 'Raportarea erorii'
+'Backtrace:': 'Traseul:'
+'Error ID:': 'ID-ul erorii:'
+'Error Message:': 'Mesajul de eroare:'
+'Error Number:': 'Numărul erorii:'
+'Error String:': 'String-ul erorii:'
+'Software:': 'Software:'
+'We are sorry, but there was a problem sending your bug report.': 'Ne pare rău, dar a apărut o problemă la trimiterea raportului.'
+'Simply copy and paste the error report below and send it to:': 'Copiază şi lipeşte raportul de mai jos al erorii şi trimite-l la:'

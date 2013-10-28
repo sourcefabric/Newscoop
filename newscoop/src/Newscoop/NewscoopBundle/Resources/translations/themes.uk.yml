@@ -1,0 +1,88 @@
+'Duplicate assignment': 'Дублювання призначення'
+Templates: Шаблони
+'Import theme': 'Імпортувати тему'
+'Import succeded!': Імпортовано!
+'Import failed!': Неімпортовано
+'Edit template: $1': 'Редагувати шаблон: $1'
+'Set new name to': 'Встановити нову назву для'
+'Rename file': 'Перейменувати файл'
+'Caching templates in:': 'Шаблони кешуються у:'
+'Caching templates finished': 'Кешування шаблонів завершено'
+'Theme name': 'Назва теми'
+'Theme is assigned and can not be deleted': 'Тема призначена та не може бути видалена'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Експортування не вдалося. Перевірте вільне місце або зв’язок із сервером.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Тема не може скасувати, оскілки вона використовується у випусках ($1)'
+zip: Zip
+version: версія
+uploaded: Завантажено
+updated: оновлено
+'or higher': 'або вище'
+moved: переміщено
+installed: встановлено
+deleted: видалено
+'You must select at least one template to perform an action.': 'Ви маєте вибрати принаймні один шаблон щоб зробити це.'
+Upload: Завантажити
+'Unassign theme': 'Скасувати тему'
+'Unassign successful': 'Тема скасована успішно'
+Unassign: Відмінити
+'Theme version': 'Версія теми'
+'Theme settings updated.': 'Налаштування теми оновлені.'
+'Theme settings saved.': 'Налаштування теми збережені.'
+'Theme name / version': 'Назва / версія теми'
+'Theme management': 'Керування темами'
+'Theme $1': 'Тема $1'
+'The file $1 is empty.': 'Файл $1 порожній.'
+'Template object $1 was renamed to $2.': 'Об’єкт шаблону $1 був перейменован у $2'
+'Template object $1 was deleted.': 'Об’єкт шаблону $1 був видалений.'
+'Template $1 was duplicated into $2.': 'Для шаблону $1 було створено дублікат $2.'
+'Template $1 $2.': 'Шаблон $1 $2.'
+'Something broke': 'мертві бджоли не гудуть та меду не носять (або щось порушено)'
+'Section page template': 'Шаблон сторінки рубрики'
+Saving..: Зберігається...
+'Saving settings failed.': 'Не вдалося зберегти Налаштування збереження.'
+'Save All': 'Зберегти все'
+'Required Newscoop version': 'Вимагається версія Newscoop'
+Replace: Перемістить
+'New template $1 created.': 'Створено новий шаблон  $1.'
+'New name': 'Нова назва'
+'Name cant be empty': 'Поле назви неможна залишати незаповненим'
+'Last modified': 'Останні зміни'
+'Issue page': 'Сторінка випуску'
+'Go to parent': 'Перейти до джерела'
+'Go to $1': 'Перейти до  $1'
+'Geo Filtering': ГЕО-фільтрація
+'Front page template': 'Шаблон головної сторінки'
+'File size': 'Розмір файлу'
+'File name': 'Назва файлу'
+'File $1 was replaced.': 'Файл  $1 було переміщено.'
+'Failed unassigning theme': 'Скасування теми не вдалося'
+Export: Експорт
+'Error page template': 'Шаблон сторінки помилки'
+'Edit $1': 'Редагувати  $1'
+'Done uploading': 'Завантаження завершено'
+'Do you want to override $1?': 'Бажаєте змінити  $1?'
+'Directory is empty': 'Тека пуста'
+'Directory $1 created.': 'Тека  $1 створена.'
+Design: Дизайн
+'Delete theme': 'Видалити тему'
+'Current directory:': 'Поточна тека:'
+'Create folder': 'Створити теку'
+'Create file': 'Створити файл'
+'Copy to available themes': 'Копіювати у доступні теми'
+'Copied successfully': 'Скопійовано успішно'
+Compatibility: Сумісність
+'Click to enlarge': Збільшити
+'Choose destination': 'Виберіть місце призначення'
+'Cant override directory $1.': 'Неможливо змінити теку  $1.'
+'Cache Lifetime': 'Час існування кешу'
+'Browse for the theme': 'Шукати тему'
+'Assigned successfully': 'Призначена успішно'
+'Article page template': 'Шаблон сторінки статті'
+'Article page': 'Сторінка статті'
+'Are you sure you want to unassign this theme?': 'Ви впевнені що хочете скасувати цю тему?'
+'Are you sure you want to delete this theme?': 'Ви впевнені що хочете видалити цю тему?'
+'Add to publication': 'Додати до публікації'
+'$1 is not writable': '$1. не може бути перезаписаний'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 файли $2'
+'Duplicate assignation': 'Дублювати призначення'

@@ -10,11 +10,13 @@
 class Admin_Form_Upload extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('hash', 'csrf');
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Upload'),
+            'label' => $translator->trans('Upload', array(), 'themes'),
             'ignore' => TRUE,
         ));
     }

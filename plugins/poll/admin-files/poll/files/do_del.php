@@ -1,18 +1,18 @@
 <?php
-camp_load_translation_strings("article_files");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage polls.', array(), 'plugin_poll'));
     exit;
 }
 if (!$g_user->hasPermission('DeleteFile')) {
-	camp_html_display_error(getGS('You do not have the right to delete files.' ), null, true);
+	camp_html_display_error($translator->trans('You do not have the right to delete files.' , array(), 'article_files'), null, true);
 	exit;
 }
 $f_poll_nr = Input::Get('f_poll_nr', 'int', 0);
@@ -22,7 +22,7 @@ $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
 $attachmentObj = new Attachment($f_attachment_id);
 if (!$attachmentObj->exists()) {
-	camp_html_display_error(getGS('Attachment does not exist.'), null, true);
+	camp_html_display_error($translator->trans('Attachment does not exist.', array(), 'article_files'), null, true);
 	exit;
 }
 $filePath = dirname($attachmentObj->getStorageLocation()) . '/' . $attachmentObj->getFileName();
@@ -37,7 +37,7 @@ $PollAnswerAttachment = new PollAnswerAttachment($f_poll_nr, $f_pollanswer_nr, $
 $PollAnswerAttachment->delete();
 
 // Go back to upload screen.
-camp_html_add_msg(getGS("File '$1' deleted.", $attachmentObj->getFileName()), "ok");
+camp_html_add_msg($translator->trans("File $1 deleted.", array('$1' => $attachmentObj->getFileName()), 'article_files'), "ok");
 
 $attachmentObj->delete();
 ?>

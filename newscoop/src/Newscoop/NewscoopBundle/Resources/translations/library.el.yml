@@ -1,0 +1,73 @@
+'Display articles of filtered types': 
+'Display Articles of Filtered Types': 
+Webcode: Webcode
+'View article': 'Προβολή άρθρου'
+Source: Πηγή
+'Select type': 'Επιλέξτε τύπο'
+On: On
+Off: Off
+Title: Τίτλος
+'No video playback capabilities, please download the video below': 'Δεν υπάρχουν δυνατότητες αναπαραγωγής βίντεο, παρακαλούμε κατεβάστε το ακόλουθο βίντεο '
+'Article status set to $1 for $2 articles': 'Η κατάσταση του άρθρου ρυθμίστηκε σε $1 για $2 άρθρα'
+'Article status not set to $1 for $2 articles': 'Η κατάσταση του άρθρου δεν ρυθμίστηκε σε $1 για $2 άρθρα'
+'$1 toggled for $2 articles.': '$1 εναλλάχθηκε με άρθρα $2.'
+'$1 not toggled for $2 articles.': '$1 δεν εναλλάχθηκε με άρθρα $2.'
+'$1 not toggled for $2  articles.': '$1 δεν εναλλάχθηκε με άρθρα $2.'
+'$1 articles have not been removed': '$1 άρθρα δεν αφαιρέθηκαν'
+'$1 Article(s) unlocked': '$1 Άρθρο/α κλειδώθηκαν'
+'$1 Article(s) not unlocked': '$1 Άρθρο/α  δεν κλειδώθηκαν'
+'$1 Article(s) duplicated': '$1 Άρθρο/α αντιγράφηκαν'
+'Download file': 'Κατέβασμα αρχείου'
+'You do not have the right to delete articles.': 'Δεν έχετε το δικαίωμα να διαγράψετε άρθρα.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Από την στιγμή υποβολλής ενός άρθρου, μόνο εξουσιοδοτημένοι χρήστες μπορούν να πραγματοποιήσουν αλλαγές.'
+'Use Map': 'Χρήση Χάρτη'
+'Toggle: On Section Page': 'Εναλλαγή: Στην Σελίδα Ενότητας'
+'Toggle: On Front Page': 'Εναλλαγή: Στην Πρώτη Σελίδα'
+'Toggle: Comments': 'Εναλλαγή: Σχόλια'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 ώρα/ες και $4 λεπτό/ά.'
+'Status: Submit': 'Κατάσταση: Υποβολλή'
+'Status: Set New': 'Κατάσταση: Ορισμός Νέου'
+'Status: Publish': 'Κατάσταση: Δημοσίευση'
+Size: Μέγεθος
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους'
+'Show / hide columns': 'Εμφάνιση/απόκρυψη στηλών '
+'Select some article first.': 'Επιλέξτε πρώτα κάποια άρθρα.'
+'Select action': 'Επιλογή ενέργειας'
+'Save order': 'Αποθήκευση εντολής'
+'Reset all filters': 'Επαναφορά όλων των φίλτρων'
+'Published before': 'Δημοσιεύτηκε πρίν'
+'Published after': 'Δημοσιεύτηκε μετά'
+'Publish date': 'Δημοσίευση ημερομηνίας'
+'Publish Schedule': 'Δημοσίευση Προγράμματος'
+'Publish Date': 'Δημοσίευση Ημερομηνίας'
+'Order updated.': 'Η εντολή ανανεώθηκε.'
+'Open in browser': 'Άνοιγμα στο πρόγραμμα πλοήγησης'
+'No sections found': 'Δεν βρέθηκαν ενότητες'
+'No records found.': 'Δεν βρέθηκαν καταχωρήσεις.'
+'No publications found': 'Δεν βρέθηκαν δημοσιεύσεις'
+'No issues found': 'Δεν βρέθηκαν τεύχη'
+'No entries to show': 'Καμία είσοδος προς προβολή'
+Locations: Τοποθεσίες
+'Loading data': 'Φόρτωση δεδομένων'
+'Last modified': 'Τελευταίως τροποποιημένα'
+'Last Modified': 'Τελευταίως Τροποποιημένα'
+Last: Τελευταίο
+First: Πρώτο
+'Filter by...': 'Φιλτράρεται από...'
+Filter: Φίλτρο
+Filename: 'Όνομα αρχείου'
+'Duplicate to another section': 'Αντιγραφή σε άλλη ενότητα'
+'Display _MENU_ records': 'Εμφάνιση καταχωρήσεων _MENU_ '
+Creator: Δημιουργός
+'Create Date': 'Δημιουργία Ημερομηνίας'
+'Article status set to $1': 'Η κατάσταση του άρθρου ορίστηκε σε $1'
+'Are you sure you want to delete selected articles?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε τα επιλεγμένα άρθρα;'
+'All Sections': 'Όλες οι Ενότητες'
+'All Publications': 'Όλες οι Δημοσιεύσεις'
+'All Issues': 'Όλα τα Τεύχη'
+Added: Προστέθηκε
+'Access denied.': 'Άρνηση πρόσβασης'
+'$1 toggled.': '$1 εναλλάχθηκε.'
+'$1 articles have been removed': 'Έχουν μεταφερθεί $1 άρθρα '
+' - filtering from _MAX_ records': '-φιλτράρισμα από _MAX_ καταχωρήσεις'

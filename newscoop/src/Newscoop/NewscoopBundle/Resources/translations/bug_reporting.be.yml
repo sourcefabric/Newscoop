@@ -1,0 +1,23 @@
+'You have reached the error page': 
+'Stack trace:': 
+'Request Parameters:': 
+'Page not found': 
+'Exception information:': 
+'Application error': 
+'An error occurred': 
+'Newscoop has encountered a problem.': 'Campsite сутыкнуўся з праблемай.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'Для таго, каб дапамагчы камандзе Newscoop даследаваць і вызначыць прычыну непаладкі, калі ласка, апішыце, што адбылося падчас працы.'
+'What were you trying to do when this happened?': 'Якiя дзеяньнi Вы выконвалі, калi гэта адбылося?'
+'Description:': 'Апiсаньне:'
+'We are sorry for the inconvenience.': 'Прыносiм свае прабачэньні за нязручнасьці.'
+'Show error details': 'Паказаць падрабязнасьцi памылкi'
+'Hide error details': 'Схаваць падрабязнасьцi памылкi'
+'Error Report': 'Справаздача аб памылках'
+'Backtrace:': 'Зваротная трасіроўка:'
+'Error ID:': 'ID памылкi:'
+'Error Message:': 'Паведамленьне аб памылцы'
+'Error Number:': 'Нумар памылкі'
+'Error String:': 'Радок памылкі:'
+'Software:': 'Праграмнае забесьпячэньне'
+'We are sorry, but there was a problem sending your bug report.': 'На жаль, адбыўся збой пры адпраўцы Вашага паведамленьня аб памылцы.'
+'Simply copy and paste the error report below and send it to:': 'Проста скапiюйце i ўстаўце нiжэй справаздачу аб памылках i адпраўце яе ў:'

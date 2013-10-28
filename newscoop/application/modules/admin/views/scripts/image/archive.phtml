@@ -1,9 +1,12 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <div id="image-search">
     <form method="GET" action="<?php echo $this->url(array(
         'controller' => 'media',
         'action' => 'list-images',
     )); ?>">
-        <input type="text" name="q" placeholder="<?php putGS('Search'); ?>" /> <button class="button"><?php putGS('Search'); ?></button>
+        <input type="text" name="q" placeholder="<?php echo $translator->trans('Search'); ?>" /> <button class="button"><?php echo $translator->trans('Search'); ?></button>
     </form>
 </div>
 <div id="image-archive"></div>

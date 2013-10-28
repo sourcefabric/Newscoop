@@ -1,10 +1,10 @@
 <?php $this->headScript()->appendFile($this->baseUrl('js/underscore.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('js/backbone.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); ?>
-
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <div id="slideshow-app">
     <div id="slideshow-paginator"></div><br />
-    <a id="add-slideshow" href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'create')); ?>" class="modal button"><?php putGS('Create slideshow'); ?></a>
+    <a id="add-slideshow" href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'create')); ?>" class="modal button"><?php echo $translator->trans('Create slideshow', array(), 'home'); ?></a>
 </div>
 
 <ul id="slideshow-list" class="list-view grid slideshow-list"></ul>
@@ -20,7 +20,7 @@
     <span class="video"></span>
     <% } %>
 </div>
-<a href="#" class="delete"><?php putGS('Delete'); ?></a>
+<a href="#" class="delete"><?php echo $translator->trans('Delete'); ?></a>
 </script>
 <?php echo $this->render('paginator-template.phtml'); ?>
 
@@ -80,7 +80,7 @@
 
         delete: function(e) {
             e.preventDefault();
-            if (confirm(<?php echo json_encode(getGS('Are you sure you want to delete slideshow?')); ?>)) {
+            if (confirm(<?php echo json_encode($translator->trans('Are you sure you want to delete slideshow?', array(), 'home')); ?>)) {
                 this.model.destroy();
                 this.remove();
             }

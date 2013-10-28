@@ -12,13 +12,11 @@ use Newscoop\Annotations\Acl;
  */
 class Admin_AuthController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        camp_load_translation_strings('users');
-    }
+    public function init(){}
 
     public function logoutAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
             Article::UnlockByUser((int) $auth->getIdentity());
@@ -27,7 +25,7 @@ class Admin_AuthController extends Zend_Controller_Action
             unset($_SESSION['statDisplayed']);
         }
 
-        $this->_helper->FlashMessenger(getGS('You were logged out.'));
+        $this->_helper->FlashMessenger($translator->trans('You were logged out.', array(), 'users'));
         $this->_helper->redirector('index', 'index');
     }
 }

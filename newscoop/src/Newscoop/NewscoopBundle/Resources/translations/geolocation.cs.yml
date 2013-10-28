@@ -1,0 +1,66 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'Vyberte značící ikonu'
+'add location to map': 'přidat lokaci do mapy'
+'Video source': 'Zdroj k videu'
+'The point will be removed from all translations of the article.': 'Bod bude odstraněn ze všech překladů článku.'
+'Specify country (optional)': 'Specifikuj zemi (nepovinné)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Omlouváme se, místo nebylo nalezeno. Zkontrolujte název zadaného místa nebo zadejte nové hledání. '
+'Show search results': 'Ukázat výsledky hledání'
+'Search for place or coordinate': 'Hledat místo nebo souřadnice'
+'Return to edit': 'Vrátit se k úpravě'
+'Really delete this point?': 'Opravdu chcete vymazat tento bod?'
+'Name and describe this location': 'Pojmenujte a popiště tuto lokaci'
+'Map size': 'Velikost mapy'
+'Location label': 'Značka lokace'
+'Location description:': 'Popis lokace:'
+'Label url': 'URL značky'
+'Hide search results': 'Skrýt vyhledané výsledky'
+Geo-filtering: Geo-filtrace
+'Fill in youtube ID or link, e.g.': 'Doplňte YouTube ID nebo odkaz, atd.'
+'Fill in vimeo ID or link, e.g': 'Doplňte vimeo ID nebo odkaz, atd.'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Doplňte video ID, odkaz nebo jméno souboru pro YouTube, Vimeo nebo flash video.'
+'Fill in location label': 'Doplňte značku lokace '
+'Fill in local swf flash file name or link, e.g.': 'Doplňte lokální název swf flash souboru nebo odkaz, atd. '
+'Fill in local flv flash file name or link, e.g.': 'Doplňte lokalní název flv flash souboru nebo odkaz, atd.'
+'Fill in image link, like': 'Doplňte odkaz k obrázku jako'
+'Describe the location...': 'Popiště lokaci...'
+'Delete location': 'Vymažte lokaci'
+Coordinates: Souřadnice
+'Change video display size': 'Změnit velikost zobrazení videa'
+'Change image display size': 'Změnit velikost zobrazení obrázku'
+'Change icon of this location': 'Změnit značku této lokace '
+'Center map on location': 'Vycentrovat mapu k lokaci'
+'Advanced editing': 'Pokročilé upravování'
+'Add an image to this location': 'Přidat obrázek k této lokaci'
+'Add a video to this location': 'Přidat video k této lokaci'
+'Are you sure you want to quit without saving your changes?': 'Jste si jisti, že chcete odejít, aniž byste změny uložili?'
+'Map preview': 'Náhled mapy'
+'Locations updated.': 'Lokality aktualizovány.'
+'Setting the map name helps with map search': 'Zadání názvu mapy pomůže s jejím vyhledáním'
+Longitude: 'Zeměpisná délka'
+Latitude: 'Zeměpisná šířka'
+Center: Centrum
+'Last Saved Map View': 'Naposledy uložený náhled mapy'
+'List of locations updated': 'Seznam lokalit aktualizován'
+width: šířka
+'show initial map view': 'ukázat výchozí náhled mapy'
+'problem at point processing, please send error report': 'problém se zpracováním bodu, prosíme zašlete nám zprávu o chybě'
+'plain text': 'pouze text'
+'html content': 'obsah html'
+height: výška
+'fill in map name': 'vyplňte název mapy'
+'You do not have the right to remove maps from articles.': 'Nemáte oprávnění odstraňovat mapy z článků.'
+'Video file': Videosoubor
+'Video ID': 'Video ID'
+'The map has been removed from the article.': 'Mapa byla z článku odstraněna.'
+'Point no.': 'Bod č.'
+'Point markers': 'Značení bodu'
+None: Žádný
+'Map Search Example': 'Příklad vyhledání mapy'
+'Map Preview': 'Přehled map'
+'Image URL': 'URL obrázku'
+video: video
+text: text
+image: obrázek
+icon: ikona
+'Setting Map Locations': 'Nastavení lokací map'

@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'You have no installed plugins.'
+'Some plugins have to be updated. Please press the save button.': 'Some plugins have to be updated. Please press the save button.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Please confirm the plugin $1 uninstall. All plugin data will be deleted!'
+'You do not have the right to manage plugins.': 'You do not have the right to manage plugins.'
+Version: Version
+'Upload Plugin': 'Upload Plugin'
+Upload: Upload
+Uninstall: Uninstall
+'The plugin $1 was sucessfully installed.': 'The plugin $1 was sucessfully installed.'
+'No plugins found.': 'No plugins found.'
+Manage: Manage
+Enabled: Enabled
+'Delete plugin': 'Delete plugin'
+'Add new image': 'Add new image'

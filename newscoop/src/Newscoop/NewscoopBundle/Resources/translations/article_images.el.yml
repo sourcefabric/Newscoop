@@ -1,0 +1,71 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Η εικόνα είναι πολύ μικρή. Πρέπει να είναι τουλάχιστον %dx%d.'
+'Slideshow rendition': 'Απόδοση Slideshow'
+'Renditions reloaded': 'Οι αποδόσεις επαναφορτώθηκαν'
+'Reload renditions': 'Επαναφόρτωση αποδόσεων'
+'Edit images': 'Επεξεργασία εικόνων'
+'Specify image url if you want to load it.': 'Προσδιορίστε το url της εικόνας, σε περίπτωση φόρτωσης.'
+'Items: ': 'Αντικείμενα:'
+'Attach slideshows': 'Σύναψη slideshows'
+'original size:': 'αρχικό μέγεθος:'
+'no caption': 'καμία λεζάντα'
+'Video URL': 'URL Βίντεο'
+'Use for all': 'Χρήση για όλα'
+'Use default': 'Χρήση προεπιλογής'
+'Slug must be unique': 'Ο κωδικός άρθρου πρέπει να είναι μοναδικός'
+Slug: 'Κωδικός άρθρου'
+'Slideshow headline': 'Επικεφαλίδα Slideshow'
+Slideshow: Slideshow
+'Set selected as default image': 'Η ομάδα ορίστηκε ως εικόνα προεπιλογής'
+'Set as default': 'Ορισμός ως προεπιλογή'
+Saving...: Αποθήκευση...
+Saved: Αποθηκεύτηκε
+'Save headline': 'Αποθήκευση επικεφαλίδας'
+'Place Images': 'Τοποθέτηση Εικόνων'
+'No renditions defined.': 'Δεν ορίστηκαν αποδόσεις.'
+'No images found.': 'Δεν βρέθηκαν εικόνες.'
+'No images attached to article.': 'Δεν υπάρχουν συνημμένες εικόνες στο άρθρο.'
+'No images': 'Δεν υπάρχουν εικόνες'
+'Next: Upload and Edit Metadata': 'Επομενο: Ανέβασμα και Επεξεργασία Μεταδεδομένων (Metadata)'
+'Next: Place Images': 'Επόμενο: Τοποθέτηση Εικόνων'
+'Media Archive': 'Αρχείο Πολυμέσων'
+Location: Τοποθεσία
+Items: Αντικείμενα
+Item: Αντικείμενο
+'Image files': 'Αρχεία εικόνων'
+'Image Files: ': 'Αρχεία Εικόνων:'
+Headline: Επικεφαλίδα
+Finish: Τέλος
+'Edit Image Data': 'Επεξεργασία Δεδομένων Εικόνας'
+'Edit $1': 'Επεξεργασία $1'
+'Done editing': 'Τέλος επεξεργασίας'
+Detach: Αφαίρεση
+Create: Δημιουργία
+Caption: Λεζάντα
+'Attached images': 'Συνημμένες εικόνες'
+'Attach & Place': 'Σύναψη και Τοποθέτηση'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Προσθήκη url βίντεο (e.g. http://vimeo.com/25083275 για Vimeo, http://youtu.be/1XsPVO61e9w για YouTube)'
+'Add video': 'Προσθήκη βίντεο'
+'Add caption': 'Προσθήκη λεζάντας'
+'Show all': 'Εμφάνιση όλων'
+'The image has been removed from the article.': 'Η εικόνα έχει αφαιρεθεί από το άρθρο.'
+'Unable to add new image.': 'Η προσθήκη νέας εικόνας ήταν αδύνατη.'
+'Image number $1 already exists': 'Ο αριθμός εικόνας $1 ήδη υπάρχει '
+'You do not have the right to change image information.': 'Δεν έχετε το δικαίωμα να αλλάξετε τις πληροφορίες εικόνας. '
+'The image number specified is already in use.': 'Ο προσδιορισμένος αριθμός εικόνας βρίσκεται ήδη σε χρήση.'
+'Image $1 updated.': 'Η εικόνα $1 ανανεώθηκε.'
+'Image $1 added.': 'Η εικόνα $1 προστέθηκε.'
+'Edit article': 'Επεξεργασία άρθρου'
+'You do not have the right to attach images to articles.': 'Δεν έχετε το δικαίωμα να επισυνάψετε εικόνες στα άρθρα.'
+'You do not have the right to add images.': 'Δεν έχετε το δικαίωμα να προσθέσετε εικόνες.'
+'Image information': 'Πληροφορίες εικόνας'
+'Attach New Image': 'Επισύναψη Νέας Εικόνας'
+'Attach Image To Article': 'Επισύναψη Εικόνας στο Άρθρο'
+'Attach Existing Image': 'Επισύναψη Υπάρχουσας Εικόνας'
+'Add New Image': 'Προσθήκη Νέας Εικόνας'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Ημερομηνία<BR><SMALL>(εεεε-μμ-ηη)</SMALL>
+'You must select an image file to upload.': 'Πρέπει να επιλέξετε ένα αρχείο εικόνας για ανέβασμα.'
+'Change image information': 'Αλλαγή πληροφοριών εικόνας'
+'You do not have the right to add images': 'Δεν έχετε το δικαίωμα προσθήκης εικόνων'

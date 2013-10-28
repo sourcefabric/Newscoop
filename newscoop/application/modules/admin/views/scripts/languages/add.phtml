@@ -1,3 +1,6 @@
-<?php $this->placeholder('title')->set(getGS('Add Language')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Add Language', array(), 'languages')); 
+?>
 
 <?php echo $this->form->render(); ?>

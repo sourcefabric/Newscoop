@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'Non ci sono plugin installati.'
+'Some plugins have to be updated. Please press the save button.': 'Alcuni plugin devono essere aggiornati. Premere il pulsante salva.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Conferma leliminazione del plugin $1. Tutti i dati del plugin andranno persi!'
+'You do not have the right to manage plugins.': 'Non si possiedono i permessi per gestire i plugin.'
+Version: Versione
+'Upload Plugin': 'Carica plugin'
+Upload: Carica
+Uninstall: Disistalla
+'The plugin $1 was sucessfully installed.': 'Il plugin $1 è stato installato con successo.'
+'No plugins found.': 'Nessun plugin trovato.'
+Manage: Gestisci
+Enabled: Attivato
+'Delete plugin': 'Elimina plugin'
+'Add new image': 'Aggiungi immagine'

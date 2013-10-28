@@ -3,8 +3,10 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/Log.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-	camp_html_display_error(getGS('Invalid security token!'));
+	camp_html_display_error($translator->trans('Invalid security token!'));
 	exit;
 }
 
@@ -12,7 +14,7 @@ read_user_common_parameters(); // $uType, $userOffs, $ItemsPerPage, search param
 verify_user_type();
 compute_user_rights($g_user, $canManage, $canDelete);
 if (!$canManage) {
-	camp_html_display_error(getGS('You do not have the right to create user accounts.'));
+	camp_html_display_error($translator->trans('You do not have the right to create user accounts.', array(), 'users'));
 	exit;
 }
 
@@ -45,22 +47,22 @@ if ( ($uType == 'Staff') && !$Type && ($errorField == '') ) {
 if ($errorField != "") {
 	$desc = $notNullFields[$errorField];
 	if ($errorField == 'Type') {
-		$errorMsg = getGS('You must select a $1', $desc);
+		$errorMsg = $translator->trans('You must select a $1', array('$1' => $desc), 'users');
 	} else {
-		$errorMsg = getGS('You must fill in the $1 field.', $desc);
+		$errorMsg = $translator->trans('You must fill in the $1 field.', array('$1' => $desc), 'users');
 	}
 	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);
 }
 
 if (User::UserNameExists($fieldValues['UName'])) {
-	$errorMsg = getGS('That user name already exists, please choose a different login name.');
+	$errorMsg = $translator->trans('That user name already exists, please choose a different login name.', array(), 'users');
 	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);
 }
 
 if (User::EmailExists($fieldValues['EMail'])) {
-    $errorMsg = getGS('Another user is registered with that e-mail address, please choose a different one.');
+    $errorMsg = $translator->trans('Another user is registered with that e-mail address, please choose a different one.', array(), 'users');
     camp_html_add_msg($errorMsg);
     camp_html_goto_page($backLink);
 }
@@ -69,7 +71,7 @@ if (User::EmailExists($fieldValues['EMail'])) {
 $password = Input::Get('password', 'string', '');
 $passwordConf = Input::Get('passwordConf', 'string', '');
 if (strlen($password) < 6 || $password != $passwordConf) {
-	$errorMsg = getGS('The password must be at least 6 characters long and both passwords should match.');
+	$errorMsg = $translator->trans('The password must be at least 6 characters long and both passwords should match.', array(), 'users');
 	camp_html_add_msg($errorMsg);
 	camp_html_goto_page($backLink);
 }
@@ -82,10 +84,10 @@ if ($editUser->create($fieldValues)) {
     if ($uType == 'Staff') {
         $editUser->setUserType($Type);
     }
-    camp_html_add_msg(getGS('User account $1 was created successfully.', $editUser->getUserName()), "ok");
+    camp_html_add_msg($translator->trans('User account $1 was created successfully.', array('$1' => $editUser->getUserName()), 'users'), "ok");
     camp_html_goto_page("/$ADMIN/users/edit.php?User=".$editUser->getUserId()."&$typeParam");
 } else {
-    camp_html_add_msg(getGS('The user account could not be created.'));
+    camp_html_add_msg($translator->trans('The user account could not be created.', array(), 'users'));
     camp_html_goto_page($backLink);
 }
 

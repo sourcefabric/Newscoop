@@ -1,0 +1,186 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 'Lusername è già in uso'
+'User with id $1 not found': 'Lutente con ID $1 non esiste'
+'User was deleted.': 'Lutenza è stata cancellata'
+'User saved': 'Utenza salvata'
+'User id not specified': 'ID Utente non specificato'
+'User $1 created': 'Utenza $1 creata'
+'Send confirm email': 'Invia e-mail di conferma'
+'Profile saved.': 'Profilo memorizzato.'
+Picture: Foto
+'Password updated': 'Password aggiornata'
+None: Nessuno
+'New confirmation email was sent to user.': 'Unaltra e-mail di conferma è stata inviata allutente'
+'Email is used already': 'Le-mail è già utilizzata'
+'Edit your password': 'Modifica la tua password'
+'Edit user $1': 'Modifica lutente $1'
+'Edit subscriptions': 'Modifica le iscrizioni'
+'Edit profile': 'Modifica il profilo'
+'Edit permissions': 'Modifica i permessi'
+'Create new account': 'Crea un nuovo account'
+'Comment ban settings': 'Impostazioni blocco dei commenti'
+'Ban for user $1 saved.': 'Blocco per lutente $1 attivato.'
+'User account is active': 'Laccount utente è attivo'
+'Allow users profile to be publicly displayed': 'Consenti la visualizzazione al pubblico dei profili utente'
+'Allow user access to login to site backend': 'Consenti allutente di accedere al login del backend del sito'
+Templates: Template
+Username: 'Nome utente'
+'Last Name': Cognome
+'First Name': Nome
+Email: E-mail
+'You were logged out.': 'Ti sei scollegato.'
+'Newscoop Subhead': 'Sottotitolo Newscoop'
+Filters: Filtri
+'Add new Author': 'Aggiungi autore'
+'Loading Data': 'Caricamento dati'
+'Delete author type': 'Elimina tipo autore'
+'Cannot remove author type.': 'Impossibile rimuovere tipo autore'
+'Cannot remove author alias.': 'Impossibile rimuovere alias autore.'
+'Author alias removed.': 'Alias autore rimosso.'
+'Are you sure you want to delete this author?': 'Vuoi davvero cancellare questo autore?'
+'Are you sure you want to delete this author alias?': 'Vuoi davvero eliminare questo alias autore?'
+'All Author Types': 'Tutti i tipi autore'
+'Add author type': 'Tutti i tipi autore'
+'You do not have the permission to change authors.': 'Non hai il permesso di cambiare autori.'
+'Please fill at least first name and last name.': 'Devi indicare almeno nome e cognome'
+'Cannot add author type, this type already exists.': 'Impossibile aggiungere tipo autore, questo tipo esiste già.'
+'Author type removed.': 'Tipo autore rimosso.'
+'Author type must be at least three characters long.': 'Il tipo autore deve essere lungo almeno 3 caratteri.'
+'Author type added.': 'Tipo autore aggiunto.'
+'Are you sure you want to delete this author type?': 'Vuoi davvero eliminare questo tipo autore?'
+'User may change authors': 'Lutente può  cambiare autori'
+'Unable to add new image, target directory is not writable.': 'Impossibile aggiungere immagine, non si può scrivere nella cartella di destinazione.'
+'Author saved.': 'Autore salvato.'
+'Author deleted.': 'Autore eliminato.'
+'Enable Firefox spell checking by default': 'Attivadi default il controllo ortografico di Firefox '
+'User may use the editor status bar': 'Lutente può usare la barra di stato delleditor'
+'User may clear up the system cache': 'Lutente può cancellare la cache di sistema'
+'Another user is registered with that e-mail address, please choose a different one.': 'Un altro utente ha usato questa e-mail per registrarsi, usane una diversa.'
+'There was an error when trying to update the user info.': 'Si è verificato un errore durante laggiornamento delle informazioni utente.'
+'User may moderate comments': 'Lutente può moderare commenti'
+'User may enable comments': 'Lutente può abilitare commenti'
+'User may translate articles': 'Lutente può tradurre articoli'
+'User may move articles': 'Lutente può spostare articoli'
+'User may find and replace': 'Lutente può trovare e sostituire'
+'User may change system preferences': 'Lutente può cambiare le preferenze di sistema'
+'User may attach topics to articles': 'Lutente può collegare argomenti ad articoli'
+'User may attach images to articles': 'Lutente può collegare immagini ad articoli'
+'User may add special characters': 'Lutente può aggiungere caratteri speciali'
+'That user name already exists, please choose a different login name.': 'Questo nome utente esiste, scegli un nome account differente.'
+'User may delete article attachments': 'Lutente può eliminare allegati degli articoli'
+'User may change article attachments': 'Lutente può cambiare allegati agli articoli'
+'User may add article attachments': 'Lutente può aggiungere allegati agli articoli'
+'You do not have the right to create user accounts.': 'Non hai il permesso di creare account utenti.'
+'You must select a $1': 'Devi selezionare un $1'
+'The password must be at least 6 characters long and both passwords should match.': 'La password deve essere di almeno 6 caratteri e le due password devono essere uguali.'
+'The user account could not be created.': 'Impossibile creare laccount utente.'
+'User account $1 was created successfully.': 'Laccount $1 è stato creato.'
+'You do not have the right to change user account permissions.': 'Non hai il permesso di cambiare i permessi utente.'
+'You do not have the right to change user account information.': 'Non hai il permesso di cambiare le informazioni degli account.'
+'The password you typed is incorrect.': 'La password inserita è errata.'
+'You do not have the right to delete user accounts.': 'Non hai il permesso di eliminare account.'
+'User account $1 was deleted successfully.': 'Laccount utente $1 è stato eliminato.'
+'The IP Group $1 has been created.': 'Il gruppo di indirizzi IP $1 è stato creato.'
+'There was an error creating the IP address group.': 'Si è verificato un errore durante la creazione del gruppo di indirizzi IP.'
+'The IP address group $1 has been deleted.': 'Il gruppo di indirizzi IP è stato rimosso.'
+'User $1 information was changed successfully.': 'Le informazioni dellutente $1 sono state cambiate.'
+'User Type': 'Tipo utente'
+'The IP address group $1:$2 conflicts with another existing group.': 'il gruppo di indirizzi IP $1:$2 va in conflitto con un altro gruppo esistente.'
+'User may add/change publications': 'Lutente può aggiungere/cambiare pubblicazioni'
+'Invalid value of user type parameter': 'Valore non valido per il parametro del tipo utente'
+'User may delete publications': 'Lutente può eliminare pubblicazioni'
+'User may add/change issues': 'Lutente può aggiungere/cambiare edizioni'
+'User may delete issues': 'Lutente può eliminare edizioni'
+'User may add/change sections': 'Lutente può aggiungere/cambiare sezioni'
+'User may delete sections': 'Lutente può eliminare sezioni'
+'User may add articles': 'Lutente può aggiungere articoli'
+'User may change articles': 'Lutente può cambiare articoli'
+'User may delete articles': 'Lutente può eliminare articoli'
+'User may add images': 'Lutente può aggiungere immagini'
+'User may change images': 'Lutente può cambiare immagini'
+'User may delete images': 'Lutente può eliminare immagini'
+'User may delete templates': 'Lutente può eliminare template'
+'User may add/change staff accounts and passwords': 'Lutente può aggiungere/cambiare account dello staff e password'
+'User may add/change subscribers accounts and passwords': 'Lutente può aggiungere/cambiare account e password degli iscritti'
+'User may delete staff accounts': 'Lutente può eliminare account dello staff'
+'User may manage user subscriptions': 'Lutente può gestire iscrizioni degli utenti'
+'User may manage account types': 'Lutente può gestire i tipi di account'
+'User may add/change article types': 'Lutente può aggiungere/cambiare tipi di articoli'
+'User may delete article types': 'Lutente può eliminare tipi di articoli'
+'User may manage templates': 'Lutente può gestire template'
+'User may add/change country entries': 'Lutente può aggiungere/cambiare nazioni'
+'User may add languages and manage language information': 'Lutente può aggiungere lingue e gestirne le informazioni'
+'User may delete languages': 'Lutente può eliminare lingue'
+'User may view audit logs': 'Lutente può vedere i log'
+'User may delete country entries': 'Lutente può eliminare nazioni'
+'User may manage localizer': 'Lutente può gestire le localizzazioni'
+'User may publish articles': 'Lutente può pubblicare articoli'
+'User may manage topics': 'Lutente può gestire argomenti'
+'User may use bold': 'Lutente può usare il grassetto'
+'User may use italic': 'Lutente può usare litaliaco'
+'User may use underline': 'Lutente può usare il sottolineato'
+'User may use strikethrough': 'Lutente può usare lo sbarrato'
+'User may change text alignment': 'Lutente può cambiare allineamento al testo'
+'User may copy, cut, and paste': 'Lutente può copiare, tagliare, incollare'
+'User may undo/redo': 'Lutente può annullare/rifare'
+'User may change text direction': 'Lutente può cambiare direzione del testo'
+'User may set indents': 'Lutente puo indentare'
+'User may add links': 'Lutente puo aggiungere links'
+'User may add subheads': 'Lutente puo aggiungere sottotitoli'
+'User may insert images': 'Lutente puo inserire imamgini'
+'User may view the HTML source': 'Lutente puo vedere il codice sorgente HTML'
+'User may enlarge the editor': 'Lutente puo allargare l-editor'
+'User may change the font face': 'Lutente puo cambiare font'
+'User may change the font size': 'Lutente puo cambiare grandezza del testo'
+'User may create bulleted lists': 'Lutente puo creare liste puntate'
+'User may create numbered lists': 'Lutente puo creare liste numerate'
+'User may insert tables': 'Lutente puo inserire tabelle'
+'User may insert horizontal rules': 'Lutente puo  inserire barre orizzontali'
+'User may change the font color': 'Lutente puo cambiare il colroe del testo'
+'User may use superscripts': 'Lutente puo usare apice'
+'User may use subscripts': 'Lutente puo usare pedice'
+'User may backup and restore the site data': 'Lutente puo fare e ripristinare backup del sito'
+Miscellaneous: Varie
+'Staff/Subscribers Management': 'Gestione Staff/sottoscrittori'
+'Editor Basic Settings': 'Impostazioni editor'
+'Editor Advanced Font Settings': 'Impostazioni avanzate Editor'
+'Editor Table Settings': 'Impostazioni tabelle editor'
+'Administrative tasks': 'Task amministrativi'
+'User will be notified on several events': 'Lutente sara notificato'
+'Editor Miscellaneous Settings': 'Impostazioni varie editor'
+'No such user account.': 'Laccount non esiste.'

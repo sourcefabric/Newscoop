@@ -1,0 +1,261 @@
+Plugins: הרחבות
+'Manage Plugins': 'ניהול הרחבות'
+Account: חשבון
+'Items per page': 'פריטים לעמוד'
+'Add new': 'הוסף חדש'
+Campsite: Newscoop
+Home: בית
+Logout: יציאה
+More...: ...עוד
+Content: תוכן
+Languages: שפות
+Countries: ארצות
+Themes: תבניות
+Topics: נושאים
+Configure: הגדרות
+'Image Archive': 'ארכיון תמונות'
+'Add Article': 'הוסף כתבה'
+Fields: שדות
+Delete: מחק
+Type: סוג
+Name: שם
+Code: קוד
+Edit: עריכה
+Login: כניסה
+Password: סיסמא
+Site: אתר
+Path: נתיב
+'Go up': עלה
+URL: '(URL) כתובת אינטרנט '
+Order: מיין
+Hide: הסתר
+Duplicate: הכפל
+Subscription: מנוי
+expires: פג-תוקף
+starts: התחלת
+before: לפני
+after: אחרי
+on: פעיל
+status: מצב
+active: פעיל
+inactive: 'לא פעיל'
+Subscribers: מנויים
+Staff: צוות
+'Select destination': 'בחר יעד'
+'No languages': 'אין שפות מוגדרות'
+'---Select language---': 'בחר שפה'
+'No publications': 'אין הוצאות מוגדרות'
+'---Select publication---': 'בחר הוצאה'
+'No issues': 'אין כתבות'
+'---Select issue---': 'בחר כתבה'
+'No sections': 'אין מדורים מוגדרים'
+'---Select section---': 'בחר מדור'
+Language: שפה
+Country: ארץ
+'Account name': 'שם פרופיל'
+Publication: הוצאה
+'Default language': 'שפת ברירת-מחדל'
+Subscriptions: מנויים
+Issue: מהדורה
+Number: מספר
+Section: מדור
+Keywords: 'מילות מפתח'
+Topic: נושא
+'URL Name': 'שם קישור'
+'Left to pay': 'שארית לתשלום'
+Active: פעיל
+Trial: ניסיון
+Next: הבא
+Previous: קודם
+Translate: תרגם
+View: הצג
+'Scheduled Publishing': 'פרסומים מתוזמנים'
+Time: זמן
+Action: פעולה
+'Schedule a new action': 'תזמן פעולה חדשה'
+'Scheduling a new publish action': 'מתזמן פרסום '
+'Delete scheduled publish action': 'מחק פרסום מתוזמן'
+Date/Time: תאריךזמן
+'You must select an action.': 'עלייך לבחור פעולה'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'אין הרשאה לתזמן מהדורה או כתבה לפרסום אוטומטי '
+'Front page': 'דף ראשי'
+'Section page': 'דף מדור'
+'Show on front page': 'הצג בעמוד הראשי'
+'Remove from front page': 'הסר מהעמוד הראשי'
+'Show on section page': 'הראה בדף המדור'
+'Remove from section page': 'הסדר מדף המדור'
+Actions: פעילויות
+Publishing: מפרסם
+Show: הראה
+Remove: הסר
+'Article Types': 'סוג כתבה'
+'Staff User Types': 'סוג איש צוות'
+Publications: הוצאות
+Issues: מהדורות
+Sections: מדורים
+Articles: כתבות
+Images: תמונות
+Change: שינוי
+'Add new issue': 'הוסף מהדורה חדשה'
+'Section Template': 'תבנית מדור'
+'Article Template': 'תבנית כתבה'
+'Default Language': 'שפת ברירת-מחדל'
+'Paid Period': 'תקופת תשלום'
+Preview: 'תצוגה מקדימה'
+'You must fill in the $1 field.': 'חובה למלא את שדה ה$1'
+Error: שגיאה
+'Invalid input: $1': 'נתון לא תקין: $1'
+'Language does not exist.': 'שפה לא קיימת'
+'Publication does not exist.': 'הוצאה לא קיימת'
+'Issue does not exist.': 'מהדורה לא קיימת'
+'You must select a language.': 'חובה לבחור שפה'
+'Section does not exist.': 'מדור לא קיים'
+'No articles.': 'אין כתבות'
+'Article does not exist.': 'כתבה לא קיימת'
+'Image does not exist.': 'תמונה לא קיימת'
+'Access denied': 'כניסה נדחתה'
+'Invalid parameters received': 'פרמטר שגוי'
+'Add new article': 'הוסף כתבה חדשה'
+Status: מצב
+Published: פורסם
+'Not published': 'לא פורסם'
+Submitted: נמסר
+New: חדש
+Article: כתבה
+Publish: פרסם
+Unpublish: 'הסר פרסום'
+Unlock: 'בטל נעילה'
+Uploaded: נטעןהתקבל
+YYYY-MM-DD: 
+Submit: נמסר
+Image: תמונה
+Description: הגדרה
+Photographer: צלם
+Place: מקום
+Date: תאריך
+Thumbnail: 'תמונה ממוזערת'
+'In use': בשימוש
+'Additional searches': 'חיפושים נוספים'
+'Most Recently Added': 'הוספו לאחרונה'
+'Most Recently Modified': 'שונו לאחרונה'
+'$1 images found': 'תמונות נמצאו $1'
+'Reset search conditions': 'אפס הגדרות חיפוש'
+'Image number': 'מספר תמונה'
+Users: משתמשים
+Localizer: 'הגדרות מיקום'
+'Adding new translation': 'הוספת תרגום'
+'No more languages.': 'אין שפות נוספות'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'שדה ה$1 יכול להכיל רק אותיות, ספרות, וקו_תחתי'
+'Add new publication': 'הוסף מהדורה חדשה'
+'Upload new template': 'טעןהוסף תבנית חדשה'
+'Add new staff member': 'צור איש צוות חדש'
+'Add new subscriber': 'צור מנוי חדש'
+'Add new user type': 'צור סוג משתמש חדש'
+'Add new article type': 'צור סוג כתבה חדש'
+'Add new country': 'הוסף מדינה'
+'Add new language': 'הוסף שפה חדשה'
+'View logs': 'צפה בקובץ הנתונים'
+'Change your password': 'שנה סיסמא'
+'Your Articles': 'הכתבות שלך'
+'Submitted Articles': 'כתבות שהוגשו'
+Logs: נתונים
+'There are $1 article(s) left.': 'יש $1 כתבות נותרות'
+'There are $1 issues(s) left.': 'יש $1 מהדורות נותרות'
+'There are $1 section(s) left.': 'יש $1 מדורים נותרים'
+'There are $1 publication(s) left.': 'יש $1 הוצאות נותרות'
+'There are $1 countries left.': 'יש $1 מדינות נותרות'
+'Name <SMALL>(click to edit)</SMALL>': 'שם <SMALL>(לחץ לעריכה)</SMALL>'
+'Add new subscription': 'הוסף מנוי חדש'
+'You do not have the right to add subscriptions.': 'אין לך הרשאות להוסיף מנויים'
+'Adding subscription': 'מוסיף מנויים'
+'Delete subscription': 'מחק מנוי'
+'You do not have the right to delete subscriptions.': 'אין לך הרשאות למחק מנויים'
+'No such subscription.': 'אין מנויים כאלה'
+Yes: כן
+No: לא
+Close: סגור
+'No issues.': 'אין מהדורות'
+'Back to Edit Article': 'חזרה לעריכת הכתבה'
+'No topics': 'אין נושאים'
+'You do not have the right to add articles.': 'אין לך את ההרשאה להוסיף כתבות'
+Start: התחל
+Days: ימים
+'The sections could not be added successfully. Some of them were already added !': 'המדורים לא הוספו בצורה תקינה. חלק מהם כבר הוספו'
+'Add another': 'הוסף עוד'
+Cancel: בטל
+Done: בוצא
+OK: 
+Save: שמור
+Search: חפש
+'Make a selection': 'בצע בחירה'
+'You must input a number greater than 0 into the $1 field.': 'ערך חייב להיות גדול מ-0 בשדה ה-$1'
+'You must input a valid date.': 'הכנס תאריך עם ערך תקין'
+'Add new field': 'הוסף שדה חדש'
+'Article automatic publishing schedule': 'תזמן פרסום אוטומטי לכתבה'
+'Are you sure you want to delete this scheduled action?': 'האם ברצונך לבטל את הפעולה המתוזמנת'
+Unlink: 'בטל קישור'
+'Are you sure you want to delete the image $1?': 'האם ברצונך לבטל את התמונה$1?1  '
+'No such issue.': 'אין מהדורה כזאת'
+'Are you sure you want to delete the subscription to the publication $1?': '?האם ברצונך לבטל את המנוי להוצאה $1'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'לא ניתן לשמור את השינויים למהדורה $1. בבקשה בדוק שהקישור של הכתבה $2 לא היה בשימוש בעבר בהוצאה $3'
+GB: גיגה-בייט
+MB: מגה-בייט
+KB: קילו-בייט
+bytes: בייט
+Attach: מצורף
+Back: חזור
+File: קובץ
+'Save and Close': 'שמור וסגור'
+Add: הוסף
+'Select All': 'בחר הכל'
+'Select None': 'בטל בחירות'
+'Add Event': 'הוסף ארוע'
+N/A: בלתי-זמין
+'On Front Page': 'בעמוד הראשי'
+'On Section Page': 'בדף המדור'
+'Created by': 'נוצר עי'
+'Creation date': 'תאריך יצירה'
+'Publication List': 'רשימת הוצאה'
+'Issue List': 'רשימת מהדורה'
+'Section List': 'רשימת מדור'
+All: הכל
+duplicate: שכפל
+move: העבר
+Move: העבר
+'From:': 'מאת:'
+'Date:': 'תאריך:'
+Hidden: נסתר
+Comments: תגובות
+Comment: תגובה
+Approved: מאושר
+Subject: נושא
+'IP address:': ': IP כתובת'
+'Email:': 'דואל:'
+Author: כתב
+'Article name': 'שם הכתבה'
+'Hide article': 'הסתר כתבה'
+'Show article': 'הראה כתבה'
+'Article Type Fields': 'שדות סוג כתבה'
+'Article Images': 'תמונות כתבה'
+'Log Messages': 'הודעות (log)'
+'Article Files': 'קבצי כתבה'
+'Article Comments': 'תגובות הכתבה'
+'Are you sure you want to deactivate the subscription?': 'האם ברצונך להשעות את המנוי'
+'Are you sure you want to activate the subscription?': 'האם ברצונך להפעיל את המנוי'
+Other: אחר
+'Time:': זמן
+'No events.': 'אין ארועים.'
+'Default templates': 'תבניות ברירת-המחדל'
+'System Preferences': 'העדפות מערכת'
+'The date must be in the future.': 'התאריך חייב להיות בעתיד'
+Send: שלח
+'Thank you.': תודה
+'Please take a minute to send us an email.': 'בבקשה הקדש רגע לשלוח לנו דואל'
+(optional): '(לא מחוייב)'
+'The URL you entered is invalid: $1': 'כתובת האינטרנט לא תקינה: $11'
+'There was an error logging in to the Campcaster server': 'Airtime היתה שגיאה בחיבור לשרת '
+Reads: קריאות
+'Publish with issue': 'פרסם עם מהדורה'
+'Universal List': 'רשימה אוניברסלית'
+'Invalid security token!': 'מפתח אבטחה שגוי'
+Authors: כתבים

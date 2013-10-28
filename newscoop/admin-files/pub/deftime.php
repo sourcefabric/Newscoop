@@ -4,9 +4,10 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to manage publications."));
+	camp_html_display_error($translator->trans("You do not have the right to manage publications.", array(), 'pub'));
 	exit;
 }
 
@@ -14,7 +15,7 @@ $Pub = Input::Get('Pub', 'int');
 $Language = Input::Get('Language', 'int', 1);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -28,14 +29,14 @@ $defaultTimes = SubscriptionDefaultTime::GetSubscriptionDefaultTimes(null, $Pub)
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-camp_html_content_top(getGS("Subscription Settings by Country"), array("Pub" => $publicationObj));
+camp_html_content_top($translator->trans("Subscription Settings by Country", array(), 'pub'), array("Pub" => $publicationObj));
 
 ?>
 <p>
 <TABLE class="action_buttons">
 <TR>
     <TD><A HREF="/<?php echo $ADMIN; ?>/pub/countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Set subscription settings for a country"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  echo $translator->trans("Set subscription settings for a country", array(), 'pub'); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -43,13 +44,13 @@ camp_html_content_top(getGS("Subscription Settings by Country"), array("Pub" => 
 <P>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP" rowspan="2"><B><?php  putGS("Country<BR><SMALL>(click to edit)</SMALL>"); ?></B></TD>
-	<td colspan="2"><?php putGS('Default time period'); ?> (<?php p($pubTimeUnit->getName()); ?>):</td>
-	<TD ALIGN="LEFT" VALIGN="TOP" rowspan="2"><B><?php  putGS("Delete"); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP" rowspan="2"><B><?php  echo $translator->trans("Country<BR><SMALL>(click to edit)</SMALL>", array(), 'pub'); ?></B></TD>
+	<td colspan="2"><?php echo $translator->trans('Default time period', array(), 'pub'); ?> (<?php p($pubTimeUnit->getName()); ?>):</td>
+	<TD ALIGN="LEFT" VALIGN="TOP" rowspan="2"><B><?php  echo $translator->trans("Delete"); ?></B></TD>
 </TR>
 <tr class="table_list_header">
-	<TD ALIGN="LEFT" VALIGN="TOP" nowrap><B><?php  putGS("trial subscription"); ?></B></TD>
-	<TD ALIGN="LEFT" VALIGN="TOP" nowrap><B><?php  putGS("paid subscription"); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP" nowrap><B><?php  echo $translator->trans("trial subscription", array(), 'pub'); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP" nowrap><B><?php  echo $translator->trans("paid subscription", array(), 'pub'); ?></B></TD>
 </tr>
 <?php
 $color = 0;
@@ -67,7 +68,7 @@ foreach ($defaultTimes as $time) {
 			<?php p(htmlspecialchars($time->getPaidTime())); ?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN); ?>/pub/do_deldeftime.php?Pub=<?php p($Pub); ?>&CountryCode=<?php  p($time->getCountryCode()); ?>&Language=<?php p($Language); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the subscription settings for $1?', "&quot;".htmlspecialchars($publicationObj->getName()).':'.htmlspecialchars($time->getCountryCode())."&quot;"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete'); ?>" TITLE="<?php  putGS('Delete'); ?>" ></A>
+			<A HREF="/<?php p($ADMIN); ?>/pub/do_deldeftime.php?Pub=<?php p($Pub); ?>&CountryCode=<?php  p($time->getCountryCode()); ?>&Language=<?php p($Language); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php echo $translator->trans('Are you sure you want to delete the subscription settings for $1?', "&quot;".htmlspecialchars($publicationObj->getName()).':'.htmlspecialchars($time->getCountryCode())."&quot;"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  echo $translator->trans('Delete'); ?>" TITLE="<?php  echo $translator->trans('Delete'); ?>" ></A>
 		</TD>
 	</TR>
 <?php

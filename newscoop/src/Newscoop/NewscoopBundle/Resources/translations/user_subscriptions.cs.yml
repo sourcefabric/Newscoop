@@ -1,0 +1,73 @@
+third: třeti
+second: druhý
+forth: čtvrtý
+first: první
+'You must input a number greater than 0 into the Number of addresses field.': 'Musíte vložit číslo větší než 0 do políčka Počet adres'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Musíte vložit číslo mezi 0 a 255 do políčka Start IP adresa $1 '
+'User IP access list management': 'User IP access list management'
+'The IP address group conflicts with another existing group.': 'Adresa IP skupiny je v rozporu s jinou existující skupinou.'
+'Subscription sections': 'Sekce předplatného'
+'No records.': 'Žádný záznam'
+'You have subscription for all available publications': 'Máte předplatné pro všechny dostupné publikace'
+'Subscription type:': 'Typ předplatného:'
+'Start:': 'Začátek:'
+'Start Date': 'Počáteční datum'
+'Sections:': 'Sekce:'
+'Publication:': 'Publikace:'
+'Paid days': 'Placené dny'
+'Paid Days:': 'Placené dny:'
+Paid: Zaplaceno
+'No subscriptions': 'Žádné předplatné'
+'Languages:': 'Jazyky:'
+'Edit all sections': 'Upravit všechny sekce'
+'Days:': 'Dny:'
+'Days must be number': 'Dny musejí být číslo'
+Any: Jakékoliv
+'Add section': 'Přidat sekci'
+saved: uloženo
+removed: odstraněno
+deleted: vymazáno
+deactivated: deaktivováno
+activated: aktivováno
+'Value is required and cant be empty': 'Hodnota je požadována a nemůže zůstat nevyplněna'
+'That user name already exists, please choose a different login name.': 'Toto uživatlské jméno již existuje, prosím vyberte si jiné přihlašovací jméno.'
+'That $1 already exists, please choose a different $2.': ' $1 již existuje, prosím vyberte si jiné  $2.'
+'Subscriptions exist for all available publications.': 'Předplatné existuje pro všechny dostupné publikace.'
+'Subscription IP Addresses': 'IP adresy předplatného'
+'Subscription $1': 'Předplatné $1'
+'Subscriber saved.': 'Předplatitel uložen.'
+'Subscriber management': 'Management předplatitele'
+'Subscriber deleted.': 'Předplatitel vymazán.'
+'Start IP': 'Start IP'
+'Select country': 'Vyberte zemi'
+'Number of addresses': 'Počet adres'
+'Number of Addressses': 'Počet adres'
+'No IP Addresses': 'Žádné IP adresy'
+'IP Address added allready': 'IP adresa již přidána'
+'IP Address $1': 'IP adresa $1'
+'IP Access': 'IP přístup'
+'Full Name': 'Celé jméno'
+'Edit subscriptions': 'Editovat předplatné'
+'Edit subscriber $1': 'Upravit předplatitele $1'
+E-Mail: Email
+'Delete subscriber $1': 'Vymazat předplatitele $1'
+'Creation Date': 'Datum vytoření'
+'Change subscriber information': 'Změnit informace předplatitele'
+'Add new IP address': 'Přidat novou IP adresu'
+'Add new IP Address': 'Přidat novou IP adresu'
+'Accout Name': 'Název účtu'
+'%value% must be greater than %min%': '%hodnota% musí být větší než %min%'
+'%value% is not a valid IP Address': '%hodnota% není platná IP adresa'
+'Regardless of the language': 'Nehledě na jazyk'
+'Individual languages': 'Jednotlivé jazyky'
+'Add sections now': 'Přidat rubriku nyní'
+'Add sections later': 'Přidat rubriku později'
+'Subscription Type': 'Typ předplatného'
+'Paid (payment will be confirmed later)': 'Zaplaceno (platba bude potvrzena později)'
+'Paid (confirm payment now)': 'Zaplaceno (potvrďte nyní)'
+Account: 
+'Left to pay': 'Zbývá zaplatit'
+Active: Aktivovat
+'Are you sure you want to delete the subscription to the publication $1?': 'Určite chcete smazat předplatné k publikaci $1?'
+Trial: Zkušební
+'Are you sure you want to activate the subscription?': 'Určitě chcete aktivovat předplatné?'

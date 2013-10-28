@@ -1,0 +1,26 @@
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
+'Delete anyway': 
+'Reset order': 
+'Order changes will be lost. Are you sure you want to continue?': 
+'Topics order saved.': 
+'Show languages': 
+'Save order': 
+'Click to edit': 
+'Add root topic': 
+'Topic was deleted.': 
+'The topic name is already in use by another topic.': 
+'You must enter a name for the topic.': 'Morate unijeti ime za temu.'
+'You must choose a language for the topic.': 'Morate izabrati jezik za temu.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Tema sadržava podtemu pa ne može biti obrisana.'
+'Add translation:': 'Dodaj prijevod:'
+'Add subtopic:': 'Dodaj podtemu:'
+Top: Vrh
+'You do not have the right to add topics.': 'Nemate ovlasti dodavati teme.'
+'You do not have the right to delete topics.': 'Nemate ovlasti brisati teme.'
+'Are you sure you want to delete the topic $1?': 'Jeste li sigurni da želite obrisati temu $1?'
+'You do not have the right to change topic name.': 'Nemate ovlasti mijenjati ime teme.'
+'The topic $1 could not be deleted.': 'Tema $1 se ne može brisati.'
+'Adding new topic': 'Dodaj novu temu'
+'Deleting topic': 'Brisanje teme'
+'Change topic name': 'Izmjena imena teme'
+'There are $1 articles using the topic.': 'Ostalo je $1 članaka koji koriste temu.'

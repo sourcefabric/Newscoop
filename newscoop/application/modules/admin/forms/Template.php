@@ -12,7 +12,9 @@ use Newscoop\Entity\Template;
 class Admin_Form_Template extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->addElement('hash', 'csrf');
 
         $this->addElement('textarea', 'content', array(
@@ -24,14 +26,14 @@ class Admin_Form_Template extends Zend_Form
         ));
 
         $this->addElement('button', 'geo_filtering', array(
-            'label' => '<span class="ui-icon-polygon"></span>' . getGS('Geo Filtering'),
+            'label' => '<span class="ui-icon-polygon"></span>' . $translator->trans('Geo Filtering', array(), 'themes'),
             'class' => 'geo_filtering_button',
             'ignore' => TRUE,
             'escape' => false,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
             'ignore' => TRUE,
         ));
     }

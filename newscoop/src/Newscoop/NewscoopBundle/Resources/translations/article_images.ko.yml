@@ -1,0 +1,71 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 
+'Slideshow rendition': 
+'Renditions reloaded': 
+'Reload renditions': 
+'Edit images': 
+'Specify image url if you want to load it.': 
+'Items: ': 
+'Attach slideshows': 
+'original size:': 
+'no caption': 
+'Video URL': 
+'Use for all': 
+'Use default': 
+'Slug must be unique': 
+Slug: 
+'Slideshow headline': 
+Slideshow: 
+'Set selected as default image': 
+'Set as default': 
+Saving...: 
+Saved: 
+'Save headline': 
+'Place Images': 
+'No renditions defined.': 
+'No images found.': 
+'No images attached to article.': 
+'No images': 
+'Next: Upload and Edit Metadata': 
+'Next: Place Images': 
+'Media Archive': 
+Location: 
+Items: 
+Item: 
+'Image files': 
+'Image Files: ': 
+Headline: 
+Finish: 
+'Edit Image Data': 
+'Edit $1': 
+'Done editing': 
+Detach: 
+Create: 
+Caption: 
+'Attached images': 
+'Attach & Place': 
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 
+'Add video': 
+'Add caption': 
+'Show all': 
+'The image has been removed from the article.': 
+'Unable to add new image.': 
+'Image number $1 already exists': 
+'You do not have the right to change image information.': 
+'The image number specified is already in use.': 
+'Image $1 updated.': 
+'Image $1 added.': 
+'Edit article': '기사 편집'
+'You do not have the right to attach images to articles.': '기사에 이미지를 첨부할 권한이 없습니다. '
+'You do not have the right to add images.': '이미지를 추가할 권한이 없습니다. '
+'Image information': '이미지 정보'
+'Attach New Image': '새로운 이미지 첨부'
+'Attach Image To Article': '기사에 이미지 첨부'
+'Attach Existing Image': '기존 이미지 첨부 '
+'Add New Image': '새로운 이미지 첨부'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 일자<BR><SAMLL>(년-월-일)</SMALL>
+'You must select an image file to upload.': '업로드할 이미지 파일을 선택하시오.'
+'Change image information': '이미지 정보 수정'
+'You do not have the right to add images': '이미지를 추가할 권한이 없습니다. '

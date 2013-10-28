@@ -3,8 +3,10 @@ define("STATUS_APPROVED","approved");
 define("STATUS_HIDDEN","hidden");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -34,14 +36,14 @@ if (isset($_REQUEST['save_and_close'])) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
 // Fetch article
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS('No such article.'), $BackLink);
+	camp_html_display_error($translator->trans('No such article.', array(), 'articles'), $BackLink);
 	exit;
 }
 
@@ -73,7 +75,7 @@ if (!empty($f_message)) {
 }
 
 if (!$articleObj->userCanModify($g_user)) {
-	camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
+	camp_html_add_msg($translator->trans("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", array(), 'articles'));
 	camp_html_goto_page($BackLink);
 	exit;
 }
@@ -84,7 +86,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	$diffSeconds -= $hours * 3600;
 	$minutes = floor($diffSeconds/60);
 	$lockUser = new User($articleObj->getLockedByUser());
-	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
+	camp_html_add_msg($translator->trans('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', array('$1' => $lockUser->getRealName(), '$2' => $hours, '$3' => $minutes), 'articles'));
 	camp_html_goto_page($BackLink);
 	exit;
 }
@@ -159,7 +161,7 @@ foreach ($articleFields as $dbColumnName => $text) {
 
 $articleObj->setIsLocked(false);
 
-Log::ArticleMessage($articleObj, getGS('Content edited'), $g_user->getUserId(), 37);
+Log::ArticleMessage($articleObj, $translator->trans('Content edited', array(), 'articles'), $g_user->getUserId(), 37);
 
 if ($f_save_button == "save") {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'), false);

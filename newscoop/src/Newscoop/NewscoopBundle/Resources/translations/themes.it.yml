@@ -1,0 +1,87 @@
+'Duplicate assignment': 'Assegnazione duplicata'
+Templates: Template
+'Import theme': 'Importa tema'
+'Import succeded!': 'Importazione completata!'
+'Import failed!': 'Importazione fallita!'
+'Edit template: $1': 'Modifica template: $1'
+'Set new name to': 'Cambia il nome in '
+'Rename file': 'Rinomina il file'
+'Caching templates in:': 'Cache template in:'
+'Caching templates finished': 'Caching dei template completata'
+'Theme name': 'Nome del tema'
+'Theme is assigned and can not be deleted': 'Il tema è assegnato e non può essere eliminato'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Lesportazione del tema non ha avuto successo. Verifica che il server non abbia esaurito lo spazio disco.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Il tema non può essere sganciato perchè è usato da edizioni ($1) di questa pubblicazione'
+zip: zip
+version: versione
+uploaded: caricato
+updated: aggiornato
+'or higher': 'o maggiore'
+moved: spostato
+installed: installato
+deleted: eliminato
+'You must select at least one template to perform an action.': 'Devi selezionare almeno un template su cui eseguire unazione.'
+Upload: Carica
+'Unassign theme': 'Sgancia tema'
+'Unassign successful': 'Sganciamento completato'
+Unassign: Sgancia
+'Theme version': 'Versione tema'
+'Theme settings updated.': 'Impostazioni del tema aggiornate.'
+'Theme settings saved.': 'Opzioni tema salvate.'
+'Theme name / version': 'Nome / versione tema'
+'Theme management': 'Gestione tema'
+'Theme $1': 'Tema $1'
+'The file $1 is empty.': 'Il file $1 è vuoto.'
+'Template object $1 was renamed to $2.': 'Loggetto template $1 è stato rinominato in $2.'
+'Template object $1 was deleted.': 'Loggetto template $1 e stato eliminato.'
+'Template $1 was duplicated into $2.': 'Il template $1 e stato duplicato in $2'
+'Template $1 $2.': 'Template $1 $2.'
+'Something broke': 'Qualcosa e danneggiato'
+'Section page template': 'Template della sezione pagina'
+Saving..: Salvataggio...
+'Saving settings failed.': 'Salvataggio delel impostazioni fallito.'
+'Save All': 'Salva tutto'
+'Required Newscoop version': 'Versione di Newscoop richiesta'
+Replace: Sovrascrivi
+'New template $1 created.': 'Nuovo template $1 creato.'
+'New name': 'Nuovo nome'
+'Name cant be empty': 'Il nome non può essere vuoto'
+'Last modified': 'Ultima modifica'
+'Issue page': 'Pagina edizione'
+'Go to parent': 'Torna su'
+'Go to $1': 'Vai a $1'
+'Geo Filtering': 'Filtro geolocale'
+'Front page template': 'Template prima pagina'
+'File size': 'Dimensione file'
+'File name': 'Nome file'
+'File $1 was replaced.': 'Il file $1 è stato sovrascritto.'
+'Failed unassigning theme': 'Fallito lo sganciamento del tema'
+Export: Esporta
+'Error page template': 'Template pagina di errore'
+'Edit $1': 'Modifica $1'
+'Done uploading': 'Upload completato'
+'Do you want to override $1?': 'Sovrascrivere $1?'
+'Directory is empty': 'Directory vuota'
+'Directory $1 created.': 'Directory $1 creata.'
+Design: Design
+'Delete theme': 'Elimina tema'
+'Current directory:': 'Cartella corrente:'
+'Create folder': 'Crea cartella'
+'Create file': 'Crea file'
+'Copy to available themes': 'Copia ai temi disponibili'
+'Copied successfully': 'Copia completata'
+Compatibility: Compatibilità
+'Click to enlarge': 'Clicca per ingrandire'
+'Choose destination': 'Scegli destinazione'
+'Cant override directory $1.': 'Impossibile sovrascrivere la cartella $1.'
+'Cache Lifetime': 'Validità della cache'
+'Browse for the theme': 'Scegli il tema'
+'Assigned successfully': Assegnato
+'Article page template': 'Template pagina articolo'
+'Article page': 'Pagina articolo'
+'Are you sure you want to unassign this theme?': 'Vuoi davvero sganciare questo tema?'
+'Are you sure you want to delete this theme?': 'Vuoi davvero eliminare questo tema?'
+'Add to publication': 'Aggiungi a pubblicazione'
+'$1 is not writable': 'Non è possibile scrivere in $1'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 file $2'

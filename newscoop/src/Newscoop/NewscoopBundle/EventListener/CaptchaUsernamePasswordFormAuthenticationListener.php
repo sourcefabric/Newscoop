@@ -38,7 +38,7 @@ class CaptchaUsernamePasswordFormAuthenticationListener extends UsernamePassword
     {
         if ($request->request->has('captcha_code', $request->query->has('captcha_code')) && \LoginAttempts::MaxLoginAttemptsExceeded()) {
             if (false /* add recaptcha validation here */) {
-                throw new AuthenticationException(getGS("CAPTCHA code is not valid.  Please try again."));
+                throw new AuthenticationException($translator->trans("CAPTCHA code is not valid.  Please try again.", array(), 'home'));
             }
         }
 

@@ -16,17 +16,14 @@ class Admin_SubscriberController extends Zend_Controller_Action
     private $repository;
 
     public function init()
-    {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('users');
-        camp_load_translation_strings('user_subscriptions');
-
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Subscriber');
         $this->form = new Admin_Form_Subscriber;
         $this->form->setAction('')->setMethod('post');
 
         // set form countries
-        $countries = array('' => getGS('Select country'));
+        $countries = array('' => $translator->trans('Select country', array(), 'user_subscriptions'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
@@ -40,15 +37,16 @@ class Admin_SubscriberController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         try {
             $subscriber = new Subscriber;
             $this->handleForm($this->form, $subscriber);
         } catch (InvalidArgumentException $e) {
             $field = $e->getMessage();
-            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+            $this->form->getElement($field)->addError($translator->trans("That $1 already exists, please choose a different $2.", array('$1' => $field, '$2' => $field), 'user_subscriptions'));
         } catch (PDOException $e) {
-            $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+            $this->form->getElement('username')->addError($translator->trans('That user name already exists, please choose a different login name.', array(), 'user_subscriptions'));
         }
 
         $this->view->form = $this->form;
@@ -58,16 +56,17 @@ class Admin_SubscriberController extends Zend_Controller_Action
     {
         $subscriber = $this->_helper->entity->get(new Subscriber, 'user');
         $this->form->setDefaultsFromEntity($subscriber);
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         try {
             $this->handleForm($this->form, $subscriber);
         } catch (InvalidArgumentException $e) {
             $field = $e->getMessage();
-            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+            $this->form->getElement($field)->addError($translator->trans("That $1 already exists, please choose a different $2.", array('$1' => $field, '$2' => $field), 'user_subscriptions'));
         }
 
         $this->_helper->sidebar(array(
-            'label' => getGS('Subscriptions'),
+            'label' => $translator->trans('Subscriptions'),
             'controller' => 'subscription',
             'action' => 'index',
             'user' => $subscriber->getId(),
@@ -75,7 +74,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
         ));
 
         $this->_helper->sidebar(array(
-            'label' => getGS('Subscription IP Addresses'),
+            'label' => $translator->trans('Subscription IP Addresses', array(), 'user_subscriptions'),
             'controller' => 'subscription-ip',
             'action' => 'index',
             'user' => $subscriber->getId(),
@@ -86,13 +85,14 @@ class Admin_SubscriberController extends Zend_Controller_Action
     }
 
     public function deleteAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscriber = $this->_helper->entity->get(new Subscriber, 'user');
         $this->repository->delete($subscriber);
 
         $this->_helper->entity->getManager()->flush();
 
-        $this->_helper->flashMessenger(getGS('Subscriber deleted.'));
+        $this->_helper->flashMessenger($translator->trans('Subscriber deleted.', array(), 'user_subscriptions'));
         $this->_helper->redirector->gotoSimple('index');
     }
 
@@ -102,13 +102,15 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
         $table->setEntity('Newscoop\Entity\User\Subscriber');
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $table->setCols(array(
-            'name' => getGS('Full Name'),
-            'username' => getGS('Accout Name'),
-            'email' => getGS('E-Mail'),
-            'subscription' => getGS('Subscriptions'),
-            'timeCreated' => getGS('Creation Date'),
-            'delete' => getGS('Delete'),
+            'name' => $translator->trans('Full Name', array(), 'user_subscriptions'),
+            'username' => $translator->trans('Accout Name', array(), 'user_subscriptions'),
+            'email' => $translator->trans('E-Mail', array(), 'user_subscriptions'),
+            'subscription' => $translator->trans('Subscriptions'),
+            'timeCreated' => $translator->trans('Creation Date', array(), 'user_subscriptions'),
+            'delete' => $translator->trans('Delete'),
         ));
 
         $view = $this->view;
@@ -119,7 +121,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-                getGS('Edit subscriber $1', $user->getName()),
+                $translator->trans('Edit subscriber $1', array('$1' => $user->getName()), 'user_subscriptions'),
                 $user->getName()
             );
 
@@ -129,8 +131,8 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-                getGS('Edit subscriptions'),
-                getGS('Edit subscriptions')
+                $translator->trans('Edit subscriptions', array(), 'user_subscriptions'),
+                $translator->trans('Edit subscriptions', array(), 'user_subscriptions')
             );
 
             $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',
@@ -139,8 +141,8 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'user' => $user->getId(),
                     'format' => NULL,
                 )),
-                getGS('Delete subscriber $1', $user->getName()),
-                getGS('Delete')
+                $translator->trans('Delete subscriber $1', array('$1' => $user->getName()), 'user_subscriptions'),
+                $translator->trans('Delete')
             );
 
             return array(
@@ -157,7 +159,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
 
         $this->view->actions = array(
             array(
-                'label' => getGS('Add new subscriber'),
+                'label' => $translator->trans('Add new subscriber'),
                 'module' => 'admin',
                 'controller' => 'subscriber',
                 'action' => 'add',
@@ -169,12 +171,14 @@ class Admin_SubscriberController extends Zend_Controller_Action
     }
 
     private function handleForm(Zend_Form $form, Subscriber $subscriber)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             $this->repository->save($subscriber, $form->getValues());
             $this->_helper->entity->getManager()->flush();
 
-            $this->_helper->flashMessenger(getGS('Subscriber saved.'));
+            $this->_helper->flashMessenger($translator->trans('Subscriber saved.', array(), 'user_subscriptions'));
             $this->_helper->redirector->gotoSimple('edit', 'subscriber', 'admin', array(
                 'user' => $subscriber->getId(),
             ));

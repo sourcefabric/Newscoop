@@ -1,3 +1,6 @@
-<?php $this->placeholder('title')->set(getGS('Add new staff member')); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Add new staff member')); 
+?>
 
 <?php echo $this->form; ?>

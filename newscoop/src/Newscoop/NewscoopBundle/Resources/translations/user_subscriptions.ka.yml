@@ -1,0 +1,67 @@
+third: მესამე
+second: მეორე
+forth: მეოთხე
+first: პირველი
+'You must input a number greater than 0 into the Number of addresses field.': 'თქვენ უნდა მიუთითოთ 0-ზე მაღალი მნიშვნეეობა მისამართის ნომრის ველშ. '
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'თქვენ უნდა მიუთითოთ მნიშვნელობა 0-სა და 255-ს შორის სტარტის IP მისამართის   $1 ველში. '
+'User IP access list management': 'მომხმარებლის IP წვდომის სიის მართვა '
+'The IP address group conflicts with another existing group.': 'IP მისამართების ჯგუფი ეწინააღმდეგება სხვა არსებულ ჯგუფს. '
+'Subscription sections': 'გამოწერების განყოფილებები'
+'No records.': 'ჩანაწერები არ არსებობს. '
+'You have subscription for all available publications': 'თქვენ გაქვთ გამოწერა ყველა არსებულ პუბლიკაციაზე'
+'Subscription type:': 'გამოწერის ტიპი:'
+'Start:': 'დასაწყისი:'
+'Start Date': 'დაწყების თარიღი'
+'Sections:': 'განყოფილებები:'
+'Publication:': 'პუბლიკაციები: '
+'Paid days': 'ფასიანი დღეები'
+'Paid Days:': 'ფასიანი დღეები:'
+Paid: ფასიანი
+'No subscriptions': 'გამოწერები არ არის'
+'Languages:': 'ენები:'
+'Edit all sections': 'ყველა განყოფილების რედაქტირება'
+'Days:': 'დღეები: '
+'Days must be number': 'დღეები უნდა დაინომროს'
+Any: 'ნებისმიერი '
+'Add section': 'განყოფილების დამატება'
+saved: შენახულია
+removed: მოიხსნა
+deleted: წაიშალა
+deactivated: დეაქტივირებულია
+activated: აქტივირებულია
+'Value is required and cant be empty': 'ველი აუცილებელია და ის არ უნდა იყოს ცარიელი'
+'That user name already exists, please choose a different login name.': 'ასეთი მომხმარებელი უკვე არსებობს, შეიყვანეთ სხვა სახელი'
+'That $1 already exists, please choose a different $2.': 'ეგ $1 უკვე არსებობს, გთხოვთ აირჩიოთ სხვა $2'
+'Subscriptions exist for all available publications.': 'გამოწერა არსებობს ყველა არსებული პუბლიკაციისთვის.'
+'Subscription IP Addresses': 'გამოწერის IP მისამართები'
+'Subscription $1': 'გამოწერა $1'
+'Subscriber saved.': 'გამომწერი დამახსოვრებულია'
+'Subscriber management': 'გამომწერის მართვა'
+'Subscriber deleted.': 'გამომწერი წაიშალა'
+'Start IP': 'სასტარტო IP'
+'Select country': 'აირჩიეთ ქვეყანა'
+'Number of addresses': 'მისამართების რაოდენობა'
+'Number of Addressses': 'მისამართების რაოდენობა'
+'No IP Addresses': 'IP მისამართები არ არის'
+'IP Address added allready': 'IP მისამართი უკვე დამატებულია.'
+'IP Address $1': 'IP მისამართი $1'
+'IP Access': 'IP წვდომა'
+'Full Name': სახელი
+'Edit subscriptions': 'გამოწერების რედაქტირება'
+'Edit subscriber $1': '$1 - ამ გამომწერის რედაქტირება'
+E-Mail: იმეილი
+'Delete subscriber $1': '$1 - ამ გამომწერის წაშლა'
+'Creation Date': 'შექმნის თარიღი'
+'Change subscriber information': 'გამომწერის ინფორმაციის შეცვლა'
+'Add new IP address': 'ახალი IP მისამართის დამატება'
+'Add new IP Address': 'ახალი IP მისამართის დამატება'
+'Accout Name': 'მომხმარებლის სახელი'
+'%value% must be greater than %min%': ' %value% უნდა იყოს მეტი ვიდრე %min%'
+'%value% is not a valid IP Address': '%value% არ არის სწორი IP მისამართი'
+'Regardless of the language': 'ენის მიუხედავად'
+'Individual languages': 'ინდივიდუალური ენები'
+'Add sections now': 'სექციის ახლა დამატება'
+'Add sections later': 'სექციის მოგვიანებით დამატება'
+'Subscription Type': 'გამოწერის ტიპი'
+'Paid (payment will be confirmed later)': 'ფასიანი (ანგარიშსწორება მოგვიანებით დადასტურდება)'
+'Paid (confirm payment now)': 'ფასიანი (ანგარიშსწორება ახლა დადასტურება)'

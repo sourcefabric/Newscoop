@@ -129,23 +129,24 @@ class SimplePager
 	 * @return string
 	 */
 	public function render()
-	{
+	{	
+		$translator = \Zend_Registry::get('container')->getService('translator');
 		if ($this->m_renderedStr !== null) {
 			return $this->m_renderedStr;
 		}
 		$this->m_renderedStr = "";
 		if (count($this->m_urls["links"]) > 1) {
 			if (isset($this->m_urls["first"])) {
-    		    $this->m_renderedStr .= "<a href=\"".$this->m_urls["first"]."\">".getGS("First")."</a> | ";
+    		    $this->m_renderedStr .= "<a href=\"".$this->m_urls["first"]."\">".$translator->trans("First", array(), 'api')."</a> | ";
 			}
     		if (isset($this->m_urls["previous_100_pages"])) {
-				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_100_pages"]."\">".getGS("Previous")." 100</a> | ";
+				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_100_pages"]."\">".$translator->trans("Previous")." 100</a> | ";
 			}
 			if (isset($this->m_urls["previous_10_pages"])) {
-				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_10_pages"]."\">".getGS("Previous")." 10</a> | ";
+				$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous_10_pages"]."\">".$translator->trans("Previous")." 10</a> | ";
 			}
 			if (isset($this->m_urls["previous"])) {
-    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous"]."\">".getGS("Previous")."</a> | ";
+    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["previous"]."\">".$translator->trans("Previous")."</a> | ";
 			}
     		foreach ($this->m_urls["links"] as $number => $url) {
 				if ($number == $this->m_selectedPageNumber) {
@@ -155,16 +156,16 @@ class SimplePager
 				}
 			}
 			if (isset($this->m_urls["next"])) {
-			    $this->m_renderedStr .= "<a href=\"".$this->m_urls["next"]."\">".getGS("Next")."</a> | ";
+			    $this->m_renderedStr .= "<a href=\"".$this->m_urls["next"]."\">".$translator->trans("Next")."</a> | ";
 			}
 			if (isset($this->m_urls["next_10_pages"])) {
-				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_10_pages"]."\">".getGS("Next")." 10</a> | ";
+				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_10_pages"]."\">".$translator->trans("Next")." 10</a> | ";
 			}
 			if (isset($this->m_urls["next_100_pages"])) {
-				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_100_pages"]."\">".getGS("Next")." 100</a> | ";
+				$this->m_renderedStr .= "<a href=\"".$this->m_urls["next_100_pages"]."\">".$translator->trans("Next")." 100</a> | ";
 			}
 			if (isset($this->m_urls["last"])) {
-    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["last"]."\">".getGS("Last")."</a>";
+    			$this->m_renderedStr .= "<a href=\"".$this->m_urls["last"]."\">".$translator->trans("Last", array(), 'api')."</a>";
 			}
 		}
 		return $this->m_renderedStr;

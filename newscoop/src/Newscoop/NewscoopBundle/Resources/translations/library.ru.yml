@@ -1,0 +1,73 @@
+'Display articles of filtered types': 
+'Display Articles of Filtered Types': 
+Webcode: Веб-код
+'View article': 'Просмотр статьи'
+Source: Источник
+'Select type': 'Выбрать тип'
+On: Включен
+Off: Выключен
+Title: Заголовок
+'No video playback capabilities, please download the video below': 'Невозможно воспроизвести видео, пожалуйста, скачайте видео ниже по ссылке'
+'Article status set to $1 for $2 articles': 'Статус статьи $1 установлен для $2 статей'
+'Article status not set to $1 for $2 articles': 'Статус статьи $1 не установлен для $2 статей'
+'$1 toggled for $2 articles.': '$1включен для $2 статей.'
+'$1 not toggled for $2 articles.': '$1не включен для $2 статей.'
+'$1 not toggled for $2  articles.': '$1не включен для $2 статей.'
+'$1 articles have not been removed': '$1 статей не были удалены'
+'$1 Article(s) unlocked': '$1 статья(и) разблокированы'
+'$1 Article(s) not unlocked': '$1 статья(и) не разблокированы'
+'$1 Article(s) duplicated': '$1 статья(и) дублированы.'
+'Download file': 'Загрузить файл'
+'You do not have the right to delete articles.': 'У Вас нет прав доступа для удаления статей.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'У Вас нет прав доступа для смены статуса статьи. Созданная и утвержденная статья может быть изменена только авторизованным пользователем.'
+'Use Map': 'Использовать карту'
+'Toggle: On Section Page': 'Маркер На странице рубрики'
+'Toggle: On Front Page': 'Маркер На главной странице'
+'Toggle: Comments': 'Маркер Комментарии'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 минут назад.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.'
+'Status: Submit': 'Статус: Отправить'
+'Status: Set New': 'Статус: Новая'
+'Status: Publish': 'Статус: Утвердить'
+Size: Размер
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
+'Show / hide columns': 'Показать / скрыть колонки'
+'Select some article first.': 'Выберите сначала несколько статей.'
+'Select action': 'Выбрать действие'
+'Save order': 'Сохранить порядок следования.'
+'Reset all filters': 'Переустановить все фильтры'
+'Published before': 'Опубликованы до'
+'Published after': 'Опубликованы после'
+'Publish date': 'Дата опубликования'
+'Publish Schedule': 'Расписание опубликования'
+'Publish Date': 'Дата опубликования'
+'Order updated.': 'Порядок обновлен.'
+'Open in browser': 'Открыть в браузере'
+'No sections found': 'Не выбрана ни одна из рубрик'
+'No records found.': 'Не выбрана ни одна из записей'
+'No publications found': 'Не выбрано ни одно из изданий'
+'No issues found': 'Не выбран ни один из выпусков'
+'No entries to show': 'Нет записей для просмотра'
+Locations: Местонахождения
+'Loading data': 'Загрузка данных'
+'Last modified': 'Последние изменения'
+'Last Modified': 'Последние изменения'
+Last: Последняя
+First: Первая
+'Filter by...': 'Фильтр по...'
+Filter: Фильтр
+Filename: 'Имя файла'
+'Duplicate to another section': 'Дублировать в другую рубрику'
+'Display _MENU_ records': 'Отобразить _MENU_ записи'
+Creator: Создатель
+'Create Date': 'Дата создания'
+'Article status set to $1': 'Статус статьи установлен на $1'
+'Are you sure you want to delete selected articles?': 'Вы уверены, что хотите удалить выбранные файлы?'
+'All Sections': 'Все рубрики'
+'All Publications': 'Все издания'
+'All Issues': 'Все выпуски'
+Added: Добавлена
+'Access denied.': 'Отказано в доступе.'
+'$1 toggled.': 'Переключен на $1.'
+'$1 articles have been removed': '$1 статей были удалены'
+' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'

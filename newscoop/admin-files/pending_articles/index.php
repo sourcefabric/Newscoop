@@ -2,8 +2,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
-
-camp_load_translation_strings('articles');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_publication_id = Input::Get('f_publication_id', 'int', null);
 $f_language_id = Input::Get('f_language_id', 'int', 1);
@@ -14,7 +13,7 @@ if (isset($_SESSION['f_language_selected'])) {
 }
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
-camp_html_content_top(getGS('Pending articles'), NULL);
+camp_html_content_top($translator->trans('Pending articles', array(), 'articles'), NULL);
 
 // set up
 $articlelist = new ArticleList();

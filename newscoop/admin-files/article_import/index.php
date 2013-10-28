@@ -6,6 +6,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $rootDirectory = $ADMIN_DIR;
 
 $Pub = Input::Get('Pub', 'int', 0);
@@ -33,33 +35,33 @@ $issueLanguage = new Language($sLanguage);
 <HEAD>
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
-	<TITLE><?php putGS("Article Import"); ?></TITLE>
+	<TITLE><?php echo $translator->trans("Article Import"); ?></TITLE>
 </HEAD>
 
 <BODY>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" WIDTH="100%" class="page_title_container">
 <TR>
 	<TD class="page_title">
-	    <?php putGS("Article Import"); ?>
+	    <?php echo $translator->trans("Article Import"); ?>
 	</TD>
 	<TD ALIGN=RIGHT>
 		<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="0">
 		<TR>
 			<TD>
 				<A HREF="/<?php echo $ADMIN; ?>/articles/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>&Section=<?php p($Section); ?>" class="breadcrumb">
-				<?php putGS("Articles");  ?></A>
+				<?php echo $translator->trans("Articles");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb" ><?php putGS("Sections");  ?></A>
+				<A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>" class="breadcrumb" ><?php echo $translator->trans("Sections");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb" ><?php putGS("Issues");  ?></A>
+				<A HREF="/<?php echo $ADMIN; ?>/issues/?Pub=<?php p($Pub); ?>" class="breadcrumb" ><?php echo $translator->trans("Issues");  ?></A>
 			</TD>
 			<td class="breadcrumb_separator">&nbsp;</td>
 			<TD>
-				<A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php putGS("Publications");  ?></A>
+				<A HREF="/<?php echo $ADMIN; ?>/pub/" class="breadcrumb"><?php echo $translator->trans("Publications");  ?></A>
 			</TD>
 		</TR>
 		</TABLE>
@@ -69,16 +71,16 @@ $issueLanguage = new Language($sLanguage);
 
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Publication"); ?>:</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php echo $translator->trans("Publication"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($publicationObj->getName()); ?></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Issue"); ?>:</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php echo $translator->trans("Issue"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo $issueObj->getIssueNumber(); ?>. <?php echo htmlspecialchars($issueObj->getName()); ?> (<?php echo htmlspecialchars($issueLanguage->getName()); ?>)</TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Section"); ?>:</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php echo $translator->trans("Section"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo $sectionObj->getSectionNumber(); ?>. <?php echo htmlspecialchars($sectionObj->getName()); ?></TD>
 
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php putGS("Article"); ?>:</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php echo $translator->trans("Article"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php echo htmlspecialchars($articleObj->getTitle()); ?> (<?php echo htmlspecialchars($articleLanguage->getName()); ?>)</TD>
 </TR>
 </TABLE>

@@ -27,8 +27,6 @@ class Admin_FeedbackController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('comments');
-
         // get feedback repository
         $this->feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
 
@@ -47,7 +45,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
      * Action to make the table
      */
     public function tableAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('table', 'json')->initContext();
 
         $view = $this->view;
@@ -55,24 +54,24 @@ class Admin_FeedbackController extends Zend_Controller_Action
         /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->feedbackRepository);
         $table->setOption('oLanguage', array('oPaginate' => array(
-                'sFirst' => getGS('First'),
-                'sLast' => getGS('Last'),
-                'sNext' => getGS('Next'),
-                'sPrevious' => getGS('Previous'),
+                'sFirst' => $translator->trans('First', array(), 'comments'),
+                'sLast' => $translator->trans('Last', array(), 'comments'),
+                'sNext' => $translator->trans('Next'),
+                'sPrevious' => $translator->trans('Previous'),
             ),
-            'sZeroRecords' => getGS('No records found.'),
-            'sSearch' => getGS('Search'),
-            'sInfo' => getGS('Showing _START_ to _END_ of _TOTAL_ entries'),
-            'sEmpty' => getGS('No entries to show'),
-            'sInfoFiltered' => getGS(' - filtering from _MAX_ records'),
-            'sLengthMenu' => getGS('Display _MENU_ records'),
+            'sZeroRecords' => $translator->trans('No records found.', array(), 'comments'),
+            'sSearch' => $translator->trans('Search'),
+            'sInfo' => $translator->trans('Showing _START_ to _END_ of _TOTAL_ entries', array(), 'comments'),
+            'sEmpty' => $translator->trans('No entries to show', array(), 'comments'),
+            'sInfoFiltered' => $translator->trans(' - filtering from _MAX_ records', array(), 'comments'),
+            'sLengthMenu' => $translator->trans('Display _MENU_ records', array(), 'comments'),
             'sInfoEmpty' => '')
         );
         $table->setCols(
             array(
-                'index' => $view->toggleCheckbox(), 'user' => getGS('User'),
-                'message' => getGS('Date') . ' / ' . getGS('Message'),
-                'url' => getGS('Coming from')
+                'index' => $view->toggleCheckbox(), 'user' => $translator->trans('User', array(), 'comments'),
+                'message' => $translator->trans('Date') . ' / ' . $translator->trans('Message', array(), 'comments'),
+                'url' => $translator->trans('Coming from', array(), 'comments')
             ),
             array('index' => false)
         );
@@ -93,7 +92,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                     $article_url = $view->linkArticle($article);
                 }
                 else {
-                    $article_name = getGS('None');
+                    $article_name = $translator->trans('None', array(), 'comments');
                     $article_url = $view->baseUrl('admin/feedback');
                 }
                 
@@ -101,7 +100,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                     $section_name = $section->getName();
                 }
                 else {
-                    $section_name = getGS('None');
+                    $section_name = $translator->trans('None', array(), 'comments');
                 }
                 
                 $attachment = array();
@@ -197,11 +196,12 @@ class Admin_FeedbackController extends Zend_Controller_Action
      * Status action
      */
     public function setStatusAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->getHelper('contextSwitch')->addActionContext('set-status', 'json')->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
-            $this->view->message = getGS('Invalid security token!');
+            $this->view->message = $translator->trans('Invalid security token!');
             return;
         }
 

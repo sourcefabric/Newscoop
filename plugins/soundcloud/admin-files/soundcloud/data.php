@@ -6,25 +6,27 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $trackTypes = array(
-    'original' => getGS('Original'),
-    'remix' => getGS('Remix'),
-    'live' => getGS('Live'),
-    'recording' => getGS('Recording'),
-    'spoken' => getGS('Spoken'),
-    'podcast' => getGS('Podcast'),
-    'demo' => getGS('Demo'),
-    'in progress' => getGS('Work in progress'),
-    'stem' => getGS('Stem'),
-    'loop' => getGS('Loop'),
-    'sound effect' => getGS('Sound Effect'),
-    'sample' => getGS('One Shot Sample'),
-    'other' => getGS('Other'),
+    'original' => $translator->trans('Original', array(), 'plugin_soundcloud'),
+    'remix' => $translator->trans('Remix', array(), 'plugin_soundcloud'),
+    'live' => $translator->trans('Live', array(), 'plugin_soundcloud'),
+    'recording' => $translator->trans('Recording', array(), 'plugin_soundcloud'),
+    'spoken' => $translator->trans('Spoken', array(), 'plugin_soundcloud'),
+    'podcast' => $translator->trans('Podcast', array(), 'plugin_soundcloud'),
+    'demo' => $translator->trans('Demo', array(), 'plugin_soundcloud'),
+    'in progress' => $translator->trans('Work in progress', array(), 'plugin_soundcloud'),
+    'stem' => $translator->trans('Stem', array(), 'plugin_soundcloud'),
+    'loop' => $translator->trans('Loop', array(), 'plugin_soundcloud'),
+    'sound effect' => $translator->trans('Sound Effect', array(), 'plugin_soundcloud'),
+    'sample' => $translator->trans('One Shot Sample', array(), 'plugin_soundcloud'),
+    'other' => $translator->trans('Other'),
 );
 
 $licenseTypes = array(
-    'no-rights-reserved' => getGS('The work is in the public domain'),
-    'all-rights-reserved' => getGS('All rights are reserved'),
+    'no-rights-reserved' => $translator->trans('The work is in the public domain', array(), 'plugin_soundcloud'),
+    'all-rights-reserved' => $translator->trans('All rights are reserved', array(), 'plugin_soundcloud'),
     'cc-by' => 'Creative Commons Attribution',
     'cc-by-nc' => 'Creative Commons Attribution Noncommercial',
     'cc-by-nd' => 'Creative Commons Attribution No Derivative Works',

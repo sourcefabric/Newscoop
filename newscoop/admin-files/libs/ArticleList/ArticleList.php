@@ -56,6 +56,7 @@ class ArticleList extends BaseList
 	{
 		parent::__construct();
 
+		$translator = \Zend_Registry::get('container')->getService('translator');
 		// generate id - unique per page instance
 		if (empty(self::$lastId)) {
 			self::$lastId = __FILE__;
@@ -69,28 +70,28 @@ class ArticleList extends BaseList
 		// column titles
 		$this->cols = array(
             'Number' => NULL,
-            'Language' => getGS('Language'),
-            'Order' => getGS('Order'),
-            'Name' => getGS('Title'),
-            'Section' => getGS('Section'),
-            'Webcode' => getGS('Webcode'),
-            'Type' => getGS('Type'),
-            'Created' => getGS('Created by'),
-            'Author' => getGS('Author'),
-            'Status' => getGS('Status'),
-            'OnFrontPage' => getGS('On Front Page'),
-            'OnSectionPage' => getGS('On Section Page'),
-            'Images' => getGS('Images'),
-            'Topics' => getGS('Topics'),
-            'Comments' => getGS('Comments'),
-            'Reads' => getGS('Reads'),
-            'UseMap' => getGS('Use Map'),
-            'Locations' => getGS('Locations'),
-            'CreateDate' => getGS('Create Date'),
-            'PublishDate' => getGS('Publish Date'),
-            'LastModified' => getGS('Last Modified'),
-		    'Preview' => getGS('Preview'),
-		    'Translate' => getGS('Translate')
+            'Language' => $translator->trans('Language'),
+            'Order' => $translator->trans('Order'),
+            'Name' => $translator->trans('Title', array(), 'api'),
+            'Section' => $translator->trans('Section'),
+            'Webcode' => $translator->trans('Webcode', array(), 'library'),
+            'Type' => $translator->trans('Type'),
+            'Created' => $translator->trans('Created by'),
+            'Author' => $translator->trans('Author'),
+            'Status' => $translator->trans('Status'),
+            'OnFrontPage' => $translator->trans('On Front Page'),
+            'OnSectionPage' => $translator->trans('On Section Page'),
+            'Images' => $translator->trans('Images'),
+            'Topics' => $translator->trans('Topics'),
+            'Comments' => $translator->trans('Comments'),
+            'Reads' => $translator->trans('Reads'),
+            'UseMap' => $translator->trans('Use Map', array(), 'library'),
+            'Locations' => $translator->trans('Locations', array(), 'library'),
+            'CreateDate' => $translator->trans('Create Date', array(), 'library'),
+            'PublishDate' => $translator->trans('Publish Date', array(), 'library'),
+            'LastModified' => $translator->trans('Last Modified', array(), 'articles'),
+		    'Preview' => $translator->trans('Preview'),
+		    'Translate' => $translator->trans('Translate')
 		);
 	}
 
@@ -242,6 +243,7 @@ class ArticleList extends BaseList
 	public function processItem(Article $article)
 	{
 		global $g_user, $Campsite;
+		$translator = \Zend_Registry::get('container')->getService('translator');
 
 		$articleLinkParams = '?f_publication_id=' . $article->getPublicationId()
 		. '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
@@ -251,9 +253,9 @@ class ArticleList extends BaseList
         . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
 		$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
 		$previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
-		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.getGS('Preview').'">'.getGS('Preview').'</a>';
+		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
         $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
-        $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.getGS('Translate').'">'.getGS('Translate').'</a>';
+        $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.$translator->trans('Translate').'">'.$translator->trans('Translate').'</a>';
 
 		$lockInfo = '';
 		$lockHighlight = false;
@@ -261,15 +263,16 @@ class ArticleList extends BaseList
 		if ($article->isLocked() && ($timeDiff['days'] <= 0)) {
 			$lockUser = new User($article->getLockedByUser());
 			if ($timeDiff['hours'] > 0) {
-				$lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-				htmlspecialchars($lockUser->getRealName()),
-				htmlspecialchars($lockUser->getUserName()),
-				$timeDiff['hours'], $timeDiff['minutes']);
+				$lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.', array(
+				'$1' => htmlspecialchars($lockUser->getRealName()),
+				'$2' => htmlspecialchars($lockUser->getUserName()),
+				'$3' => $timeDiff['hours'], 
+				'$4' => $timeDiff['minutes']), 'articles');
 			} else {
-				$lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-				htmlspecialchars($lockUser->getRealName()),
-				htmlspecialchars($lockUser->getUserName()),
-				$timeDiff['minutes']);
+				$lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
+				'$1' => htmlspecialchars($lockUser->getRealName()),
+				'$2' => htmlspecialchars($lockUser->getUserName()),
+				'$3' => $timeDiff['minutes']), 'articles');
 			}
 			if ($article->getLockedByUser() != $g_user->getUserId()) {
 				$lockHighlight = true;
@@ -291,8 +294,8 @@ class ArticleList extends BaseList
 			$tmpAuthor = $articleAuthors[0];
 		}
 
-		$onFrontPage = $article->onFrontPage() ? getGS('Yes') : getGS('No');
-		$onSectionPage = $article->onSectionPage() ? getGS('Yes') : getGS('No');
+		$onFrontPage = $article->onFrontPage() ? $translator->trans('Yes') : $translator->trans('No');
+		$onSectionPage = $article->onSectionPage() ? $translator->trans('Yes') : $translator->trans('No');
 
 		$imagesNo = (int) ArticleImage::GetImagesByArticleNumber($article->getArticleNumber(), true);
 		$topicsNo = (int) ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
@@ -317,7 +320,7 @@ class ArticleList extends BaseList
 		    sprintf('%s <a href="%s" title="%s %s">%s</a>',
 		    $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
 		    $articleLink,
-		    getGS('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
+		    $translator->trans('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
 		    htmlspecialchars($article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
 		    htmlspecialchars($article->getSection()->getName()),
             $article->getWebcode(),
@@ -331,7 +334,7 @@ class ArticleList extends BaseList
 		    $topicsNo,
 		    $commentsNo,
 		    (int) $article->getReads(),
-		    Geo_Map::GetArticleMapId($article) != NULL ? getGS('Yes') : getGS('No'),
+		    Geo_Map::GetArticleMapId($article) != NULL ? $translator->trans('Yes') : $translator->trans('No'),
 		    (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
 		    $article->getCreationDate(),
 		    $article->getPublishDate(),
@@ -363,6 +366,7 @@ class ArticleList extends BaseList
 		require_once $GLOBALS['g_campsiteDir'] . '/classes/Section.php';
 		require_once $GLOBALS['g_campsiteDir'] . '/classes/Topic.php';
 		require_once $GLOBALS['g_campsiteDir'] . '/classes/Author.php';
+		$translator = \Zend_Registry::get('container')->getService('translator');
 
 		foreach ($_REQUEST['args'] as $arg) {
 			$_REQUEST[$arg['name']] = $arg['value'];
@@ -383,7 +387,7 @@ class ArticleList extends BaseList
 		$newIssues = array();
 		$issues = Issue::GetIssues($publication, $language);
 		$issuesNo = is_array($issues) ? sizeof($issues) : 0;
-		$menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
+		$menuIssueTitle = $issuesNo > 0 ? $translator->trans('All Issues', array(), 'library') : $translator->trans('No issues found', array(), 'library');
 		foreach($issues as $issue) {
 			$newIssues[] = array('val' => $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId() , 'name' => $issue->getName());
 		}
@@ -398,6 +402,7 @@ class ArticleList extends BaseList
 
 	public function getFilterSections()
 	{
+		$translator = \Zend_Registry::get('container')->getService('translator');
 		global $ADMIN_DIR, $g_user;
 		require_once $GLOBALS['g_campsiteDir'] . '/classes/Publication.php';
 		require_once $GLOBALS['g_campsiteDir'] . '/classes/Issue.php';
@@ -447,7 +452,7 @@ class ArticleList extends BaseList
 			$newSections[] = array('val' => $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(), 'name' => $section->getName());
 		}
 		$sectionsNo = is_array($newSections) ? sizeof($newSections) : 0;
-		$menuSectionTitle = $sectionsNo > 0 ? getGS('All Sections') : getGS('No sections found');
+		$menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
 		$returns = array();
 		$returns['items'] = $newSections;

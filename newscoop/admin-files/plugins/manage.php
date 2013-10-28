@@ -1,17 +1,16 @@
 <?php
-camp_load_translation_strings("plugins");
-camp_load_translation_strings("api");
-
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission('plugin_manager')) {
-    camp_html_display_error(getGS("You do not have the right to manage plugins."));
+    camp_html_display_error($translator->trans("You do not have the right to manage plugins.", array(), 'plugins'));
     exit;
 }
 
 if (Input::Get('save')) {
 	if (!SecurityToken::isValid()) {
-		camp_html_display_error(getGS('Invalid security token!'));
+		camp_html_display_error($translator->trans('Invalid security token!'));
 		exit;
 	}
 
@@ -67,7 +66,7 @@ if (Input::Get('save')) {
 if (Input::Get('upload_package')) {
     $file = $_FILES['package'];
     if ($Plugin = CampPlugin::extractPackage($file['tmp_name'], $log)) {
-        $success = getGS('The plugin $1 was sucessfully installed.', $Plugin->getName());
+        $success = $translator->trans('The plugin $1 was sucessfully installed.', array('$1' => $Plugin->getName()), 'plugins');
     } else {
         $error = $log;
     }
@@ -79,25 +78,20 @@ if (Input::Get('p_uninstall')) {
     $Plugin->uninstall();
 }
 
-$plugins = CampPlugin::GetEnabled(true);
-foreach ($plugins as $plugin) {
-    camp_load_translation_strings("plugin_".$plugin->getName());
-}
-
 if( count($infos = CampPlugin::GetPluginsInfo()) > 0 ) {
 	// check if update was needed
 	CampPlugin::GetPluginsInfo(false, true);
 	if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
-	    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));
+	    camp_html_add_msg($translator->trans("Some plugins have to be updated. Please press the save button.", array(), 'plugins'));
 	}
 } else {
-	camp_html_add_msg(getGS("You have no installed plugins."));
+	camp_html_add_msg($translator->trans("You have no installed plugins.", array(), 'plugins'));
 }
 
 
 $crumbs = array();
-$crumbs[] = array(getGS("Plugins"), "");
-$crumbs[] = array(getGS("Manage"), "");
+$crumbs[] = array($translator->trans("Plugins"), "");
+$crumbs[] = array($translator->trans("Manage", array(), 'plugins'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 camp_html_display_msgs();
@@ -108,11 +102,11 @@ camp_html_display_msgs();
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
   <tr>
     <td>
-      <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>">
-      <?php putGS('Upload Plugin'); ?>
+      <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  echo $translator->trans('Add new image', array(), 'plugins'); ?>">
+      <?php echo $translator->trans('Upload Plugin', array(), 'plugins'); ?>
       <input type="file" name="package" class="button">
     </td>
-    <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php putGS('Upload') ?>" class="button"></td>
+    <td valign="bottom">&nbsp;<input type="submit" name="upload_package" value="<?php echo $translator->trans('Upload', array(), 'plugins') ?>" class="button"></td>
   </tr>
 </table>
 </FORM>
@@ -143,11 +137,11 @@ if ( isset( $success ) ) {
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">
     <TR class="table_list_header">
-        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Name"); ?></B></TD>
-        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Version"); ?></B></TD>
-        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Description"); ?></B></TD>
-        <TD align="center" VALIGN="TOP"><B><?php  putGS("Enabled"); ?></B></TD>
-        <TD align="center" VALIGN="TOP"><B><?php  putGS("Uninstall"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  echo $translator->trans("Name"); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  echo $translator->trans("Version", array(), 'plugins'); ?></B></TD>
+        <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  echo $translator->trans("Description"); ?></B></TD>
+        <TD align="center" VALIGN="TOP"><B><?php  echo $translator->trans("Enabled", array(), 'plugins'); ?></B></TD>
+        <TD align="center" VALIGN="TOP"><B><?php  echo $translator->trans("Uninstall", array(), 'plugins'); ?></B></TD>
     </TR>
     <?php
     $color=0;
@@ -177,8 +171,8 @@ if ( isset( $success ) ) {
             </TD>
 
             <TD  width="80px" align="center">
-               <a href="/<?php echo $ADMIN; ?>/plugins/manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1&amp;<?php echo SecurityToken::URLParameter(); ?>" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall. All plugin data will be deleted!', $info['name']) ?>')">
-                 <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
+               <a href="/<?php echo $ADMIN; ?>/plugins/manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1&amp;<?php echo SecurityToken::URLParameter(); ?>" onClick="return confirm('<?php echo $translator->trans('Please confirm the plugin $1 uninstall. All plugin data will be deleted!', array('$1' => $info['name']), 'plugins') ?>')">
+                 <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php echo $translator->trans('Delete plugin', array(), 'plugins')?>" TITLE="<?php echo $translator->trans('Delete plugin', array(), 'plugins') ?>">
                </a>
             </TD>
         </TR>
@@ -187,14 +181,14 @@ if ( isset( $success ) ) {
     ?>
     <tr class="table_list_header">
         <td colspan="5" align="center">
-            <input type="submit" name="save" value="<?php putGS('Save') ?>" class="button">
+            <input type="submit" name="save" value="<?php echo $translator->trans('Save') ?>" class="button">
         </td>
     </tr>
 </table>
 </form>
 <?php } else { ?>
     <BLOCKQUOTE><ul>
-    <LI><?php  putGS('No plugins found.'); ?></LI>
+    <LI><?php  echo $translator->trans('No plugins found.', array(), 'plugins'); ?></LI>
     </ul></BLOCKQUOTE>
 <?php } ?>
 <?php camp_html_copyright_notice(); ?>

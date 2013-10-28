@@ -6,9 +6,8 @@ require_once($GLOBALS['g_campsiteDir'] . '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Log.php');
-require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/localizer/Localizer.php");
 
-camp_load_translation_strings('authors');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $first_name = "";
 $last_name = "";
@@ -58,10 +57,10 @@ if ($id > 0) {
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
 <div class="tabs authors ui-tabs ui-widget ui-widget-content ui-corner-all block-shadow author-details">
   <ul>
-    <li><a href="#generalContainer"><?php putGS('General'); ?></a></li>
-    <li><a href="#biographyContainer"><?php putGS('Biography'); ?></a></li>
+    <li><a href="#generalContainer"><?php echo $translator->trans('General', array(), 'authors'); ?></a></li>
+    <li><a href="#biographyContainer"><?php echo $translator->trans('Biography', array(), 'authors'); ?></a></li>
     <?php if ( isset($author) && is_object($author)) { ?>
-    <li><a href="#contentContainer"><?php putGS('Content'); ?></a></li>
+    <li><a href="#contentContainer"><?php echo $translator->trans('Content', array(), 'authors'); ?></a></li>
     <?php } ?>
   </ul>
   <div id="generalContainer">
@@ -69,15 +68,15 @@ if ($id > 0) {
     <fieldset class="frame">
       <ul>
         <li>
-          <label><?php putGS('First name'); ?>:</label>
+          <label><?php echo $translator->trans('First name', array(), 'authors'); ?>:</label>
           <input type="text" name="first_name" class="input_text" style="width: 360px;" size="41" value="<?php echo $first_name; ?>" />
         </li>
         <li>
-          <label><?php putGS('Last name'); ?>:</label>
+          <label><?php echo $translator->trans('Last name', array(), 'authors'); ?>:</label>
           <input type="text" name="last_name" class="input_text" style="width: 360px;" size="41" spellcheck="false" value="<?php echo $last_name; ?>" />
         </li>
         <li>
-          <label><?php putGS('Aliases'); ?>:</label>
+          <label><?php echo $translator->trans('Aliases', array(), 'authors'); ?>:</label>
           <div id="aliases" class="aliasContainer clearfix">
           <?php
           $count = 0;
@@ -101,7 +100,7 @@ if ($id > 0) {
         </li>
         <li>
           <span id="types">
-            <label><?php putGS('Type'); ?>:</label>
+            <label><?php echo $translator->trans('Type'); ?>:</label>
             <select name="type[]" class="input_select2" onchange="" style="width:362px;height:100%" multiple="multiple">
             <?php
             $types = AuthorType::GetAuthorTypes();
@@ -120,27 +119,27 @@ if ($id > 0) {
       </ul>
     </fieldset>
     <fieldset class="frame">
-      <h3><?php putGS('Contacts'); ?></h3>
+      <h3><?php echo $translator->trans('Contacts', array(), 'authors'); ?></h3>
       <ul>
         <li>
-          <label><?php putGS('Skype'); ?>:</label>
+          <label><?php echo $translator->trans('Skype', array(), 'authors'); ?>:</label>
           <input type="text" name="skype" style="width: 360px;" class="input_text" size="41" value="<?php echo $skype; ?>" />
         </li>
         <li>
-          <label><?php putGS('Jabber'); ?>:</label>
+          <label><?php echo $translator->trans('Jabber', array(), 'authors'); ?>:</label>
           <input type="text" name="jabber" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $jabber; ?>" />
         </li>
         <li>
-          <label><?php putGS('AIM'); ?>:</label>
+          <label><?php echo $translator->trans('AIM', array(), 'authors'); ?>:</label>
           <input type="text" name="aim" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $aim; ?>" />
         </li>
         <li>
-          <label><?php putGS('Email'); ?>:</label>
+          <label><?php echo $translator->trans('Email', array(), 'authors'); ?>:</label>
           <input type="text" name="email" style="width: 360px;" class="input_text" size="41" spellcheck="false" value="<?php echo $email; ?>" />
         </li>
         <li>
           <label>&nbsp;</label>
-          <input type="reset" name="reset" id="reset" value="<?php putGS('Reset'); ?>" class="button" onclick="" />
+          <input type="reset" name="reset" id="reset" value="<?php echo $translator->trans('Reset', array(), 'authors'); ?>" class="button" onclick="" />
         </li>
       </ul>
     </fieldset>
@@ -150,7 +149,7 @@ if ($id > 0) {
     <fieldset class="frame">
       <ul>
         <li>
-          <label class="smaller"><?php putGS('Languages'); ?>:</label>
+          <label class="smaller"><?php echo $translator->trans('Languages'); ?>:</label>
           <select name="lang" class="input_select" style="width:160px;" id="lang" onchange="changeBio(<?php echo $id ?>)">
           <?php
           $publications = Issue::GetIssues();
@@ -190,7 +189,7 @@ if ($id > 0) {
           </select>
         </li>
         <li>
-          <label class="smaller"><?php putGS('Translate from'); ?>:</label>
+          <label class="smaller"><?php echo $translator->trans('Translate from', array(), 'authors'); ?>:</label>
           <select name="translate" id="lang_trans" class="input_select" style="width:120px;" onchange="changeTranslation(<?php echo $id ?>)">
           <?php echo $combo ?>
           </select>
@@ -210,12 +209,12 @@ if ($id > 0) {
       </div>
       <ul class="nameList">
         <li>
-          <label><?php putGS('First name'); ?>:</label>
-          <input type="text" name="lang_first_name" id="lang_first_name" maxlength="35" class="input_text" value="<?php echo $lang_first_name; ?>" emsg="<?php putGS('Please enter the first name'); ?>" style="width:170px;" />
+          <label><?php echo $translator->trans('First name', array(), 'authors'); ?>:</label>
+          <input type="text" name="lang_first_name" id="lang_first_name" maxlength="35" class="input_text" value="<?php echo $lang_first_name; ?>" emsg="<?php echo $translator->trans('Please enter the first name', array(), 'authors'); ?>" style="width:170px;" />
         </li>
         <li>
-          <label><?php putGS('Last name'); ?>:</label>
-          <input type="text" name="lang_last_name" id="lang_last_name" maxlength="35" class="input_text" value="<?php echo $lang_last_name; ?>" emsg="<?php putGS('Please enter the last name'); ?>" style="width:170px;" />
+          <label><?php echo $translator->trans('Last name', array(), 'authors'); ?>:</label>
+          <input type="text" name="lang_last_name" id="lang_last_name" maxlength="35" class="input_text" value="<?php echo $lang_last_name; ?>" emsg="<?php echo $translator->trans('Please enter the last name', array(), 'authors'); ?>" style="width:170px;" />
         </li>
         <li>&nbsp;</li>
         <li>
@@ -247,7 +246,7 @@ if ($id > 0) {
     if ($authoringCount > 0) {
     ?>
         <li>
-          <label><?php putGS('Total articles'); ?>:</label> <span><?php echo $authoringCount; ?></span></li>
+          <label><?php echo $translator->trans('Total articles', array(), 'authors'); ?>:</label> <span><?php echo $authoringCount; ?></span></li>
     <?php
         foreach ($authoringList as $authoringItem) {
             $articleUrl = $Campsite['WEBSITE_URL'] . '/' . $ADMIN . '/articles/edit.php';
@@ -266,7 +265,7 @@ if ($id > 0) {
         }
     } else { ?>
         <li>
-          <label><?php putGS('No records found'); ?></label>
+          <label><?php echo $translator->trans('No records found', array(), 'authors'); ?></label>
         </li>
     <?php } ?>
       </ul>
@@ -277,7 +276,7 @@ if ($id > 0) {
   <fieldset class="frame" style="margin-bottom:0;">
     <ul>
       <li>
-        <input type="submit" name="save" id="save" value="<?php putGS('Save All'); ?>" class="save-button right-floated" />
+        <input type="submit" name="save" id="save" value="<?php echo $translator->trans('Save All', array(), 'authors'); ?>" class="save-button right-floated" />
       </li>
     </ul>
   </fieldset>

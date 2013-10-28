@@ -1,4 +1,6 @@
-<?php foreach ($this->groups as $group => $groupName) { ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+foreach ($this->groups as $group => $groupName) { ?>
 <div class="resource-group <?php echo $group; ?>">
     <h2><?php echo $groupName; ?></h2>
 
@@ -9,12 +11,12 @@
     <h3><?php echo $resourceName; ?></h3>
     <ul class="resource <?php echo $resource; ?>">
         <li class="all">
-            <input type="checkbox" id="_<?php echo $resource; ?>_all" class="toggle" /> <label for="_<?php echo $resource; ?>_all"><?php putGS('Check all'); ?></label>
+            <input type="checkbox" id="_<?php echo $resource; ?>_all" class="toggle" /> <label for="_<?php echo $resource; ?>_all"><?php echo $translator->trans('Check all', array(), 'user_types'); ?></label>
         </li>
         <?php foreach ($this->actions[$resource] as $action) { ?>
         <li class="<?php echo $this->acl->isAllowed($this->role, $resource, $action) ? '' : 'deny'; ?>">
             <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($this->role, $resource, $action) ? ' checked="checked"' : ''; ?> />
-            <label for="_<?php echo $resource, '_', $action; ?>"><?php echo isset($this->actionNames[$action]) ? $this->actionNames[$action] : getGS($action); ?></label>
+            <label for="_<?php echo $resource, '_', $action; ?>"><?php echo isset($this->actionNames[$action]) ? $this->actionNames[$action] : $translator->trans($action, array(), 'user_types'); ?></label>
         </li>
         <?php } ?>
     </ul>
@@ -71,10 +73,10 @@ $(function() {
             'action': action
         }, function(data, textStatus, jqXHR) {
             if (data.error) {
-                flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.error, 'error');
+                flashMessage(<?php echo json_encode($translator->trans('Error: ', array(), 'user_types')); ?> + data.error, 'error');
                 input.closest('li').removeClass('deny');
             } else {
-                flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
+                flashMessage(<?php echo json_encode($translator->trans('Permissions updated', array(), 'user_types')); ?>);
             }
         }, 'json');
 

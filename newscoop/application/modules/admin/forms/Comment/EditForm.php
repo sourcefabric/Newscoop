@@ -11,14 +11,15 @@ class Admin_Form_Comment_EditForm extends Form
 {
 
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         /** Call the parent Newscoop\Form init method for basic initialization */
         parent::init();
 
         /** Id of the comment */
         $this->addElement('hidden', 'id',
                 array(
-            'label' => getGS('Comment id'),
+            'label' => $translator->trans('Comment id', array(), 'comments'),
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
@@ -32,7 +33,7 @@ class Admin_Form_Comment_EditForm extends Form
          */
         $this->addElement('text', 'subject',
                 array(
-            'label' => getGS('Subject'),
+            'label' => $translator->trans('Subject'),
             'required' => false,
             'filters' => array(
                 'stringTrim',
@@ -40,14 +41,14 @@ class Admin_Form_Comment_EditForm extends Form
             'validators' => array(
                 array('stringLength', false, array(1, 140)),
             ),
-            'errorMessages' => array(getGS('Subject is not $1 characters long',
-                        '1-140')),
+            'errorMessages' => array($translator->trans('Subject is not $1 characters long', array(
+                        '$1' => '1-140'), 'comments')),
         ));
 
         /** Message input */
         $this->addElement('textarea', 'message',
                 array(
-            'label' => getGS('Comment'),
+            'label' => $translator->trans('Comment'),
             'class' => 'comment',
             'required' => false,
         ));
@@ -55,14 +56,14 @@ class Admin_Form_Comment_EditForm extends Form
         /** Cancel button */
         $this->addElement('reset', 'cancel',
                 array(
-            'label' => getGS('Cancel'),
+            'label' => $translator->trans('Cancel'),
             'class' => 'button edit-cancel'
         ));
 
         /** Save Button */
         $this->addElement('submit', 'save',
                 array(
-            'label' => getGS('Update comment'),
+            'label' => $translator->trans('Update comment', array(), 'comments'),
             'class' => 'save-button-small update'
         ));
 

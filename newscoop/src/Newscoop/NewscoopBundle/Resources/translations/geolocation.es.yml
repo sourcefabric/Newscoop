@@ -1,0 +1,66 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'ícono marcador seleccionado'
+'add location to map': 'añadir locación al mapa'
+'Video source': 'Fuente de video'
+'The point will be removed from all translations of the article.': 'Este punto será removido de todas las traducciones del artículo.'
+'Specify country (optional)': 'Especificar país (opcional)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Ese lugar no pudoencontrase. Revisa su nombre y vuelve a buscar.'
+'Show search results': 'Mostrar resultados de búsqueda'
+'Search for place or coordinate': 'Buscar un lugar o coordenada'
+'Return to edit': 'Regresar a edición'
+'Really delete this point?': '¿Eliminar este punto?'
+'Name and describe this location': 'Nombra y describe esta locación'
+'Map size': 'Tamaño del mapa'
+'Location label': 'Etiqueta de localización'
+'Location description:': 'Descripción de localización'
+'Label url': 'URL de etiqueta'
+'Hide search results': 'Ocultar resultados de búsqueda'
+Geo-filtering: Geo-filtro
+'Fill in youtube ID or link, e.g.': 'Escribir cuenta de Youtube, o hipervínculo, etc.'
+'Fill in vimeo ID or link, e.g': 'Escribir cuenta de Vimeo, o hipervínculo, etc.'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Escribir el código del video, el hipervínculo o nombre de archivo para Youtube, Vimeo o Flash Video'
+'Fill in location label': 'Escribir etiqueta de localización'
+'Fill in local swf flash file name or link, e.g.': 'Escribir el nombre local del archivo swf flash o hipervínculo, etc.'
+'Fill in local flv flash file name or link, e.g.': 'Escribir el nombre local del archivo flv flash o hipervínculo, etc.'
+'Fill in image link, like': 'Colocar una imágen o hipervínculo.'
+'Describe the location...': 'Describe la locación...'
+'Delete location': 'Eliminar locación'
+Coordinates: Coordinadas
+'Change video display size': 'Cambiar el tamaño del visor de video'
+'Change image display size': 'Cambiar el tamaño del visor de imagen'
+'Change icon of this location': 'Cambiar el ícono de esta locación'
+'Center map on location': 'Centrar el mapa en la locación'
+'Advanced editing': 'Edición avanzada'
+'Add an image to this location': 'Añadir una imagen a esta locación'
+'Add a video to this location': 'Añadir un video a esta locación'
+'Are you sure you want to quit without saving your changes?': '¿Desea salir sin guardar sus cambios?'
+'Map preview': 'Previsualización del mapa'
+'Locations updated.': 'Se actualizaron las ubicaciones'
+'Setting the map name helps with map search': 'Configurar el nombre del mapa ayuda con la búsqueda del mapa'
+Longitude: Longitud
+Latitude: Latitud
+Center: Centro
+'Last Saved Map View': 'Última vista almacenada del mapa'
+'List of locations updated': 'Se actualizó la lista de ubicaciones'
+width: ancho
+'show initial map view': 'Mostrar la vista inicial del mapa'
+'problem at point processing, please send error report': 'Error en el procesamiento del punto.  Por favor envíe un reporte de error.'
+'plain text': 'Texto simple'
+'html content': 'Contenido HTML'
+height: alto
+'fill in map name': 'Ingrese el nombre del mapa'
+'You do not have the right to remove maps from articles.': 'No tiene privilegios para eliminar mapas de los artículos'
+'Video file': 'Archivo de video'
+'Video ID': 'ID del video'
+'The map has been removed from the article.': 'Se ha removido el mapa del artículo.'
+'Point no.': 'Punto no.'
+'Point markers': 'Marcadores de punto'
+None: Ninguno
+'Map Search Example': 'Ejemplo de búsqueda en el mapa'
+'Map Preview': 'Previsualización de mapa'
+'Image URL': 'URL de la imagen'
+video: video
+text: texto
+image: imagen
+icon: ícono
+'Setting Map Locations': 'Configurar ubicaciones en el mapa'

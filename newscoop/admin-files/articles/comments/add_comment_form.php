@@ -1,4 +1,6 @@
 <?php
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 // check permissions
 if (!$g_user->hasPermission('CommentEnable')) {
     return;
@@ -10,22 +12,22 @@ if (!$g_user->hasPermission('CommentEnable')) {
     <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
     <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
     <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">
-    <h3><?php putGS('Post a Comment'); ?></h3>
+    <h3><?php echo $translator->trans('Post a Comment', array(), 'article_comments'); ?></h3>
     <fieldset class="plain">
     <ul>
       <li>
-        <label><?php putGS('Author'); ?></label>
+        <label><?php echo $translator->trans('Author'); ?></label>
         <input id="commenter_name" type="text" name="f_comment_nickname" value="<?php p($g_user->getRealName()); ?>" class="input_text" size="41" />
       </li>
       <li>
-        <label><?php putGS('Subject'); ?></label>
+        <label><?php echo $translator->trans('Subject'); ?></label>
         <input id="comment_subject" type="text" name="f_comment_subject" value="" class="input_text" size="41" spellcheck="false" <?php print $spellcheck ?> />
       </li>
       <li>
-        <label><?php putGS('Comment'); ?></label>
+        <label><?php echo $translator->trans('Comment'); ?></label>
         <textarea id="comment_message" name="f_comment_body" class="input_text_area" rows="8" cols="" <?php print $spellcheck ?> style="width:99.5%;"></textarea>
       </li>
-      <li><input type="submit" value="<?php putGS('Submit'); ?>" class="default-button" /></li>
+      <li><input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="default-button" /></li>
     </ul>
     </fieldset>
 </form>
@@ -49,7 +51,7 @@ function addComment() {
 				this.reset();
 			});
 			loadComments();
-			flashMessage('<?php putGS('Comment saved.'); ?>');
+			flashMessage('<?php echo $translator->trans('Comment saved.', array(), 'article_comments'); ?>');
 
 		};
 

@@ -16,8 +16,9 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
 class SubmittedArticlesWidget extends ArticlesWidget
 {
     public function __construct()
-    {
-        $this->title = getGS('Submitted Articles');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Submitted Articles', array(), 'extensions');
     }
 
     public function beforeRender()
@@ -26,11 +27,12 @@ class SubmittedArticlesWidget extends ArticlesWidget
     }
 
     public function render()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if ($this->getUser()->hasPermission('ChangeArticle') || $this->getUser()->hasPermission('Publish')) {
             parent::render();
         } else {
-            echo '<p>', getGS('Access Denied'), '</p>';
+            echo '<p>', $translator->trans('Access Denied', array(), 'extensions'), '</p>';
         }
     }
 }

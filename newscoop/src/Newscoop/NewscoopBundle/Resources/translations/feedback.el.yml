@@ -1,0 +1,29 @@
+'No attachment': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+'Are you sure you want to do it?': 
+Approve: Έγκριση
+Approved.: Εγκρίθηκε.
+at: σε
+Attachment: Συνημμένο
+'Ban/Unban user': 'Αποκλεισμός/Αναίρεση αποκλεισμού χρήστη'
+'Change selected messages status': 'Αλλαγή κατάστασης επιλεγμένων μηνυμάτων'
+Deleted: Διαγραμμένο
+'Full article': 'Πλήρες άρθρο'
+Message: Μήνυμα
+'Message deleted.': 'Το μήνυμα διαγράφηκε.'
+'Messages deleted.': 'Τα μηνύματα διαγράφηκαν.'
+'Messages status change to $1.': 'Η κατάσταση του μηνύματος άλλαξε σε $1.'
+'Message status change to $1.': 'Η κατάσταση μηνύματος άλλαξε σε $1.'
+'Messages updated.': 'Τα μηνύματα ενημερώθηκαν.'
+'Message updated.': 'Το μήνυμα ενημερώθηκε.'
+Processed: Επεξεργασμένα
+Reply: Απάντηση
+'Reply to message': 'Απάντηση στο μήνυμα'
+Star: Αστερίσκος
+Starred: Διακεκριμένα
+'Unable to reach Newscoop. Please check your internet connection.': 'Αδύνατη η πρόσβαση στο Newscoop. Παρακαλούμε ελέγξτε τη σύνδεσή σας.'
+'With document attachment': 'Με σύναψη εγγράφου'
+'With image attachment': 'Με σύναψη εικόνας'
+'With no attachment': 'Χωρίς συνημμένο'
+'Feedback Messages': 'Μηνύματα Feedback'

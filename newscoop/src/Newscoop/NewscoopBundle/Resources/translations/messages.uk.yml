@@ -1,0 +1,259 @@
+Plugins: Плагіни
+'Manage Plugins': 'Керування плагінами'
+Account: 'Обліковий запис'
+'Items per page': 'кількість на сторінку'
+'Add new': 'Додати нове'
+Home: 'На початок'
+Logout: Вийти
+More...: Більше
+Content: Контент
+Languages: Мова
+Countries: Країни
+Themes: 'Теми оформлення'
+Topics: Теми
+Configure: Конфігурація
+'Image Archive': медіаархів
+'Add Article': 'Додати статтю'
+Fields: Поля
+Delete: Видалити
+Type: Тип
+Name: Назва
+Code: Код
+Edit: Редагувати
+Login: Увійти
+Password: Пароль
+Site: Сайт
+Path: шлях
+'Go up': Наверх
+URL: Посилання
+Order: Упорядкування
+Hide: Приховати
+Duplicate: Дублювати
+Subscription: Підписка
+expires: закінчується
+starts: починаеться
+before: до
+after: після
+on: на
+status: статус
+active: активно
+inactive: неактивно
+Subscribers: Підписувачи
+Staff: Персонал
+'Select destination': 'Виберіть локацію'
+'No languages': 'Без мови'
+'---Select language---': 'Виберіть мову'
+'No publications': 'Немає публікацій'
+'---Select publication---': 'Виберіть публікацію'
+'No issues': 'Немає випусків'
+'---Select issue---': 'Виберіть випуск'
+'No sections': 'Немає секції'
+'---Select section---': 'Виберіть секцію'
+Language: Мова
+Country: Країна
+'Account name': 'Им’я акаунту'
+Publication: Публікація
+'Default language': 'Мова за замовчуванням'
+Subscriptions: Підписки
+Issue: Випуск
+Number: Номер
+Section: Секція
+Keywords: 'Ключові слова'
+Topic: Тема
+'URL Name': 'Текст посилання'
+'Left to pay': Сплатити
+Active: Активно
+Trial: Тимчасово
+Next: Наступне
+Previous: Попереднє
+Translate: Перекласти
+View: Переглянути
+'Scheduled Publishing': 'Заплановані публікаці'
+Time: Час
+Action: Дія
+'Schedule a new action': 'Розклад нових дій'
+'Scheduling a new publish action': 'Планування нових дій з публікацією'
+'Delete scheduled publish action': 'Видалити заплановану дію'
+Date/Time: Дата/Час
+'You must select an action.': 'Ви повинні вибрати дію'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Ви не маєте прав для планування випусків або статей для автоматичних публікацій'
+'Front page': 'Головна сторінка'
+'Section page': 'Розділ сторінки'
+'Show on front page': 'Показати на головній'
+'Remove from front page': 'Прибрати з головної'
+'Show on section page': 'Показати на сторінках розділів'
+'Remove from section page': 'Прибрати з сторінок розділів'
+Actions: Дії
+Publishing: Публик
+Show: Показати
+Remove: Видалити
+'Article Types': 'Тип статті'
+'Staff User Types': 'Staff User Types'
+Publications: Публікації
+Issues: Випуски
+Sections: Секції
+Articles: Статті
+Images: Зображення
+Change: Змінити
+'Add new issue': 'Додати новий випуск'
+'Section Template': 'Виберіть шаблон'
+'Article Template': 'Шаблон статей'
+'Default Language': 'Мова за замовчуванням'
+'Paid Period': 'Термін передоплати'
+Preview: Перегляд
+'You must fill in the $1 field.': 'Ви маєте заповнити поле $1'
+Error: Помилка
+'Invalid input: $1': 'Некоректні дані'
+'Language does not exist.': 'Мови не існує'
+'Publication does not exist.': 'Публікації не існує'
+'Issue does not exist.': 'Випуска не існує'
+'You must select a language.': 'Ви маете вибрати мову'
+'Section does not exist.': 'Секції не існує'
+'No articles.': 'Немає статей'
+'Article does not exist.': 'Статті не існує'
+'Image does not exist.': 'Зображення не існує'
+'Access denied': 'Доступ заборонено'
+'Invalid parameters received': 'Передані невірні параметри'
+'Add new article': 'Додати статтю'
+Status: Статус
+Published: Опубліковано
+'Not published': 'Не опубліковано'
+Submitted: Розміщено
+New: Нове
+Article: Стаття
+Publish: Опублікувати
+Unpublish: 'Скасувати публікацію'
+Unlock: Розблокувати
+Uploaded: Завантажено
+YYYY-MM-DD: ГГГГ-ММ-ДД
+Submit: 'Ок(?)'
+Image: Зображення
+Description: Опис
+Photographer: Фотограф
+Place: Місце
+Date: Дата
+Thumbnail: мініатюра
+'In use': 'У використанні'
+'Additional searches': 'Додатковий пошук'
+'Most Recently Added': 'Останні додані'
+'Most Recently Modified': 'Останні змінені'
+'$1 images found': '$1 зображень, знайдених'
+'Reset search conditions': 'Очистити умови пошуку'
+'Image number': 'Номер зображення'
+Users: Користувачі
+Localizer: Локалізатор
+'Adding new translation': 'Додати новий переклад'
+'No more languages.': 'Більше мов не можливо'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'поле $1 може містить лише літери, цифри та символ підкреслення'
+'Add new publication': 'Додати нову публікацію'
+'Upload new template': 'Завантажити новий шаблон'
+'Add new staff member': 'Додати нового стаффера'
+'Add new subscriber': 'Додати нового підписувача'
+'Add new user type': 'Додати новий тип користувачів'
+'Add new article type': 'Додати новий тип статей'
+'Add new country': 'Додати країну'
+'Add new language': 'Додати мову'
+'View logs': 'Переглянути логі'
+'Change your password': 'Змінити пароль'
+'Your Articles': 'Ваші статті'
+'Submitted Articles': 'Розміщені статті'
+Logs: Логи
+'There are $1 article(s) left.': 'Залишилось $1 статей.'
+'There are $1 issues(s) left.': 'Залишилось $1 випускiв'
+'There are $1 section(s) left.': 'Залишилось $1 секцій'
+'There are $1 publication(s) left.': 'Залишилось $1 публікацій'
+'There are $1 countries left.': 'Залишилось $1 країн'
+'Name <SMALL>(click to edit)</SMALL>': Ім’я<SMALL>(редагувати)</SMALL>
+'Add new subscription': 'Додати новий опис'
+'You do not have the right to add subscriptions.': 'Ви не маєте прав на додання опису'
+'Adding subscription': 'Додання опису'
+'Delete subscription': 'Видалення опису'
+'You do not have the right to delete subscriptions.': 'Ви не маєте прав на видалення опису'
+'No such subscription.': 'Немає такого опису'
+Yes: Так
+No: Ні
+Close: Закрити
+'No issues.': 'Немає випусків'
+'Back to Edit Article': 'Назад до редагування статті'
+'No topics': 'Немає тем'
+'You do not have the right to add articles.': 'Ви не маєте прав додавати статті'
+Start: Початок
+Days: Дні
+'The sections could not be added successfully. Some of them were already added !': 'Секція не була додана. Деякі з них були вже додані!'
+'Add another': 'Додати іншу'
+Cancel: Відмінити
+Done: Закінчено
+OK: Добре
+Save: Зберегти
+Search: Пошук
+'Make a selection': Виділити
+'You must input a number greater than 0 into the $1 field.': 'Ви маєте ввести цифри більше 0 у поле $1'
+'You must input a valid date.': 'Введіть коректну дату'
+'Add new field': 'Додати нове поле'
+'Article automatic publishing schedule': 'Розклад автоматичних публікацій'
+'Are you sure you want to delete this scheduled action?': 'Ви впевнені що хочете видалити заплановані дії'
+Unlink: Анлинк
+'Are you sure you want to delete the image $1?': 'Ви впевнені що хочете видалити зображення  $1?'
+'No such issue.': 'Немаэ такого випуску'
+'Are you sure you want to delete the subscription to the publication $1?': 'Ви впевнені що хочете видалил підписку на публікацію $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Не вдалося зберегти зміни в питанні $ 1. Будь ласка, переконайтеся, що посилання випуску $2  не було використано раніше у випуску $3'
+GB: ВБ
+MB: Мб
+KB: Кб
+bytes: байт
+Attach: Прікріпити
+Back: Назад
+File: Файл
+'Save and Close': 'Зберегти та Закрити'
+Add: Додати
+'Select All': 'Вибрати все'
+'Select None': 'Не вибирати'
+'Add Event': 'Додати подію'
+N/A: Н/Д
+'On Front Page': 'На титульну сторінку'
+'On Section Page': 'На сторінку секції'
+'Created by': 'Створено '
+'Creation date': 'Дата створення'
+'Publication List': 'Список публікацій'
+'Issue List': 'Список випусків'
+'Section List': 'Список секцій'
+All: Все
+duplicate: дублювання
+move: переміщення
+Move: Переміщення
+'From:': 'З:'
+'Date:': 'Дата:'
+Hidden: Приховано
+Comments: Коменти
+Comment: Коментар
+Approved: Дозволено
+Subject: Тема
+'IP address:': 'IP-адреса:'
+'Email:': 'Е-пошта:'
+Author: Автор
+'Article name': 'Назва статті'
+'Hide article': 'Приховати статтю'
+'Show article': 'Показати статтю'
+'Article Type Fields': 'Тип полів статті'
+'Article Images': 'Зображення статті'
+'Log Messages': 'Журнал повідомлень'
+'Article Files': 'Файли статті'
+'Article Comments': 'Коментарі статті'
+'Are you sure you want to deactivate the subscription?': 'Ви впевнені що хочете деактивувати підписку?'
+'Are you sure you want to activate the subscription?': 'Ви впевнені що хочете активувати підписку?'
+Other: Інше
+'Time:': 'Час:'
+'No events.': 'Немає подій'
+'Default templates': 'Базовий шабон'
+'System Preferences': 'Системні налаштування'
+'The date must be in the future.': 'Дата має бути більшою за поточну '
+Send: Відправити
+'Thank you.': Д’якуємо
+'Please take a minute to send us an email.': 'Будь-ласка виділить хвилинку та відправте листа'
+(optional): опційно
+'The URL you entered is invalid: $1': 'Введене Вами посилання не коректне:  $1'
+Reads: Читати
+'Publish with issue': 'Опублікувати з випуском'
+'Universal List': 'Універсальний список'
+'Invalid security token!': 'Недійсний маркер безпеки!'
+Authors: Автори

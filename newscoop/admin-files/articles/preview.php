@@ -19,6 +19,8 @@ header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 header("Content-Type: text/html; charset=UTF-8");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -35,7 +37,7 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 $errorStr = "";
 
 if (!$articleObj->exists()) {
-	$errorStr = getGS('There was an error reading request parameters.');
+	$errorStr = $translator->trans('There was an error reading request parameters.', array(), 'articles');
 	camp_html_display_error($errorStr, null, true);
 }
 
@@ -75,7 +77,7 @@ if (!$outputIssueSettings) {
         $outputIssueSettings->setArticlePage(null);
         $outputSettingIssueService->insert($outputIssueSettings);
     } else {
-        $errorStr = getGS('This issue cannot be previewed. Please make sure the publication has a theme assigned.');
+        $errorStr = $translator->trans('This issue cannot be previewed. Please make sure the publication has a theme assigned.', array(), 'articles');
         camp_html_display_error($errorStr, null, true);
     }
 } else {
@@ -98,7 +100,7 @@ $templateId = $articlePage->getPath();
 $templateName = substr($templateId, strlen($themePath));
 
 if (!$templateId) {
-	$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
+	$errorStr = $translator->trans('This article cannot be previewed. Please make sure it has the article template selected.', array(), 'articles');
 	camp_html_display_error($errorStr, null, true);
 }
 
@@ -125,7 +127,7 @@ if ($publicationObj->getUrlTypeId() == 1) {
 
 $selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
 $url .= "&previewLang=$selectedLanguage";
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans("Newscoop", array(), 'articles') . $Campsite['VERSION'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">

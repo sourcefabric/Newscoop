@@ -1,0 +1,61 @@
+'so that default templates can be assigned to the issue.': 
+'Once this is done, the issue can be published': 
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
+'This issue cannot be previewed. Please make sure it has the front template selected.': 
+'Publish all articles:': 
+'Publish all articles': 
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
+default: 
+'The publishing/unpublishing can not be set the same time': 
+'The publishing schedule can not be set in the past': 
+'Please assign at least one theme to the publication': 
+'Issue Theme': 
+'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 
+'The number must be unique for each issue in this publication of the same language.': 
+'The language and URL name must be unique for each issue in this publication.': 
+'Issue created.': 
+'Issue updated': 
+'Could not save the changes to the issue.': 
+'Unpublish on: $1': 
+'There are $1 articles in this issue.': 
+'The issue $1 has been deleted.': 
+Schedule: 
+'Publish on: $1': 
+'Publish Date $1': 
+'Deleted issue': 
+'Delete issue': 
+'Click here to publish this issue': 
+'A total of $1 articles were deleted.': 
+'Name<BR><SMALL>(click to see sections)</SMALL>': 'Nom<BR><SMALL>(cliquer pour voir les sections)</SMALL>'
+'Delete issue $1': 'Supprimer édition $1'
+'You do not have the right to change issues.': 'Vous navez pas le droit de changer des éditions'
+'Are you sure you want to change the issue $1 status from $2 to $3?': 'Etes-vous sûr de vouloir changer le statut de lédition $1 de $2 à $3?'
+'Add new translation': 'Ajouter une nouvelle traduction'
+'You do not have the right to add issues.': 'Vous navez pas le droit dajouter des éditions'
+'The issue $1 has been successfuly added.': 'Lédition $1 a été ajoutée avec succès.'
+'The issue could not be added.': 'Lédition ne pouvait pas être ajoutée.'
+'Change issue details': 'Changer les détails dédition'
+'You do not have the right to change issue details.': 'Vous navez pas le droit de changer les détails dédition.'
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Date de Publication<BR><SMALL>(aaaa-mm-jj)</SMALL>'
+'Front Page Template': 'Template Page dAccueil'
+'You do not have the right to delete issues.': 'Vous navez pas le droit de supprimer des éditions.'
+'Are you sure you want to delete the issue $1?': 'Etes-vous sûr de vouloir supprimer lédition $1?'
+'Use the structure of the previous issue': 'Utiliser la structure de lédition précédente'
+'Copy the entire structure in all languages from the previous issue except for content.': 'Copier la structure entière en toutes langues de lédition précédente à part le contenu. '
+'You may modify it later if you wish.': 'Vous pouvez le modifier plus tard si vous souhaitez. '
+'Create a new structure': 'Créer une nouvelle structure '
+'Create a complete new structure.': 'Créer une nouvelle structure complète. '
+'You must define an issue type for each language and then sections for them.': 'Vous devez définir un type dédition pour chaque langue et ensuite des sections pour eux. '
+'Copy previous issue': 'Copier lédition précédente '
+'No previous issue.': 'Aucune édition précédente.'
+'Copy structure from issue number $1': 'Copier la structure de lédition n° $1'
+'Delete entry': 'Supprimer lentrée'
+'Issue Publishing Schedule': 'Programme de Publication de lédition'
+'Invalid Input: $1': 'Entrée invalide: $1'
+'Issue Number': 'Numéro dEdition'
+'Go To Sections': 'Aller aux Sections'
+'There was an error reading the language parameter.': 'Il y avait une erreur survenue lors de la lecture des paramètres de langue.'
+'There was an error reading the publication parameter.': 'Il y avait une erreur survenue lors de la lecture des paramètres de publication.'
+'There was an error reading the issue parameter.': 'Il y avait une erreur survenue lors de la lecture des paramètres dédition.'
+'There was an error scheduling the $1 action on $2': 'Il y a eu une erreur en planifiant laction $1 pour $2'
+'The action scheduled on $1 could not be deleted.': 'Laction planifiéé pour $1 ne peut être supprimée.'

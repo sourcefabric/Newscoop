@@ -116,21 +116,22 @@ class UserController extends Zend_Controller_Action
     }
 
     public function sendEmailAction()
-    {
+    {   
+        $translator = Zend_Registry::get('container')->getService('translator');
         $to = $this->getUser($this->_getParam('username'));
         if (!$to->getAttribute('email_public')) {
-            $this->view->error = $this->view->translate("User has no public email.");
+            $this->view->error = $translator->trans("User has no public email.");
             return;
         }
 
         $from = $this->_helper->service('user')->getCurrentUser();
         if (!$from) {
-            $this->view->message = $this->view->translate("You have to be logged in to send an email.");
+            $this->view->message = $translator->trans("You have to be logged in to send an email.");
             return;
         }
 
         if ($to->getId() == $from->getId()) {
-            $this->view->message = $this->view->translate("You can't send email to yourself.");
+            $this->view->message = $translator->trans("You can't send email to yourself.");
             return;
         }
 

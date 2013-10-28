@@ -1,4 +1,7 @@
-<?php $this->placeholder('title')->set(getGS('Edit language: $1', $this->escape($this->language->getName()))); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Edit language: $1', array('$1' => $this->escape($this->language->getName())), 'languages')); 
+?>
 
 <?php $this->renderError(); ?>
 

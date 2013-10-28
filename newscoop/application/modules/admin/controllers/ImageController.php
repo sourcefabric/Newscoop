@@ -22,8 +22,6 @@ class Admin_ImageController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('article_images');
-
         $this->renditions = $this->_helper->service('image.rendition')->getRenditions();
         
         $this->_helper->contextSwitch()
@@ -271,7 +269,8 @@ class Admin_ImageController extends Zend_Controller_Action
     }
 
     public function setRenditionAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_helper->layout->disableLayout();
 
         try {
@@ -280,7 +279,7 @@ class Admin_ImageController extends Zend_Controller_Action
             $articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
             $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $articleRendition);
         } catch (\InvalidArgumentException $e) {
-            $this->view->exception= sprintf(getGS('Sorry that image is too small. Image needs to be at least %dx%d.'), $rendition->getWidth(), $rendition->getHeight());
+            $this->view->exception= sprintf($translator->trans('Sorry that image is too small. Image needs to be at least %dx%d.', array(), 'article_images'), $rendition->getWidth(), $rendition->getHeight());
         }
     }
 

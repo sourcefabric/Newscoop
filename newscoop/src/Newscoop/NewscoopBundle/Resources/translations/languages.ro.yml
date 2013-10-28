@@ -1,0 +1,81 @@
+'Language id not specified': 
+'No languages.': 
+'Native Name': 
+'Name taken.': 
+'Language saved.': 
+'Language removed.': 
+'Language not found.': 
+'Language is in use and cannot be removed.': 
+'Language added.': 
+'English language cannot be removed.': 
+'Edit short month names': 
+'Edit short day names': 
+'Edit month names': 
+'Edit language: $1': 
+'Edit day names': 
+'Code Page': 
+'Add new Language': 
+'Add Language': 
+We: 
+Tu: 
+Th: 
+Su: 
+Sep: 
+Sa: 
+'Please enter the translation for week day short names.': 
+'Please enter the translation for month short names.': 
+Oct: 
+Nov: 
+Mo: 
+Mar: 
+Jun: 
+Jul: 
+Jan: 
+Fr: 
+Feb: 
+Dec: 
+Aug: 
+Apr: 
+'No language.': 'Nu există limbi.'
+'Delete language $1': 'Şterge limba $1'
+'You do not have the right to add languages.': 'Nu ai dreptul să adaugi limbi.'
+'Please enter the translation for time units.': 'Introdu traducerea pentru unitatea de timp.'
+'You do not have the right to delete languages.': 'Nu ai dreptul de a şterge limbi.'
+'Are you sure you want to delete the language $1?': 'Eşti sigur că vrei să ştergi limba $1?'
+'Deleting language': 'Se şterge limba'
+'The language $1 could not be deleted.': 'Limba $1 nu poate fi ştearsă.'
+'Edit language': 'Modifică informaţia despre limbă'
+'You do not have the right to edit languages.': 'Nu ai dreptul de a modifica limbile.'
+'Please enter the translation for month names.': 'Introdu traducerile pentru denumirile lunilor anului.'
+'Please enter the translation for week day names.': 'Introdu traducerile pentru denumirile zilelor săptămânii.'
+January: Ianuarie
+February: Februarie
+March: Martie
+April: Aprilie
+May: Mai
+June: Iunie
+July: Iulie
+August: August
+September: Septembrie
+October: Octombrie
+November: Noiembrie
+December: Decembrie
+Monday: Luni
+Tuesday: Marţi
+Wednesday: Miercuri
+Thursday: Joi
+Friday: Vineri
+Saturday: Sâmbătă
+Sunday: Duminică
+'You do not have the right to add new languages.': 'Nu ai dreptul să adaugi limbi noi.'
+'There are $1 issue(s) left.': 'Mai sunt $1 ediţii.'
+'Native name': 'Nume în limba originală'
+'The language $1 has been successfuly added.': 'Limba $1 a fost adaugată cu succes'
+'Please check if a language with the same name does not already exist.': 'Verificaţi dacă nu există o limbă cu acelaşi nume'
+'The language could not be added.': 'Limba nu poate fi adăugată'
+'Delete language': 'Şterge limba'
+'The language $1 has been deleted.': 'Limba $1 a fost ştearsă'
+'Updating language information': 'Modific informaţia despre limbă'
+'Language information has been successfuly updated.': 'Informaţia despre limbă a fost modificată'
+'Language information could not be updated.': 'Informaţia despre limba $1 nu poate fi modificată'
+'A language with the same name already exists.': 'O limba cu acelaşi nume există deja'

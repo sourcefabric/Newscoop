@@ -14,7 +14,7 @@ use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 //@New theme management
 
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 $Language = Input::Get('Language', 'int', 0);
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
@@ -22,17 +22,17 @@ $Issue = Input::Get('Issue', 'int', 0);
 $errorStr = "";
 $languageObj = new Language($Language);
 if (!$languageObj->exists()) {
-	$errorStr = getGS('There was an error reading the language parameter.');
+	$errorStr = $translator->trans('There was an error reading the language parameter.', array(), 'issues');
 }
 if ($errorStr == "") {
 	$publicationObj = new Publication($Pub);
 	if (!$publicationObj->exists())
-	$errorStr = getGS('There was an error reading the publication parameter.');
+	$errorStr = $translator->trans('There was an error reading the publication parameter.', array(), 'issues');
 }
 if ($errorStr == "") {
 	$issueObj = new Issue($Pub, $Language, $Issue);
 	if (!$issueObj->exists())
-	$errorStr = getGS('There was an error reading the issue parameter.');
+	$errorStr = $translator->trans('There was an error reading the issue parameter.', array(), 'issues');
 }
 
 if ($errorStr != "") {
@@ -66,7 +66,7 @@ if (!$outputIssueSettings) {
         $outputIssueSettings->setArticlePage(null);
         $outputSettingIssueService->insert($outputIssueSettings);
     } else {
-        $errorStr = getGS('This issue cannot be previewed. Please make sure the publication has a theme assigned.');
+        $errorStr = $translator->trans('This issue cannot be previewed. Please make sure the publication has a theme assigned.', array(), 'issues');
         camp_html_display_error($errorStr, null, true);
     }
 } else {
@@ -85,7 +85,7 @@ $templateId = $frontPage->getPath();
 $templateName = substr($templateId, strlen($themePath));
 
 if (!$templateId) {
-    $errorStr = getGS('This issue cannot be previewed. Please make sure it has the front template selected.');
+    $errorStr = $translator->trans('This issue cannot be previewed. Please make sure it has the front template selected.', array(), 'issues');
     camp_html_display_error($errorStr, null, true);
 }
 

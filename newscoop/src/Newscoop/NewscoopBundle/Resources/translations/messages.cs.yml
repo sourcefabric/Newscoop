@@ -1,0 +1,267 @@
+Plugins: Plug-iny
+'Manage Plugins': 'Správa plug-inů'
+Account: Účet
+'Items per page': 'Položek na stránku'
+'Add new': 'Přidat nový'
+Home: Domů
+Logout: Odhlásit
+More...: Více...
+Content: Obsah
+Languages: Jazyk
+Countries: Země
+Themes: Šablony
+Topics: Témata
+Configure: Konfiguruj
+'Image Archive': 'Archiv Obrázků'
+'Add Article': 'Přidat článek'
+Fields: Pole
+Delete: Smazat
+Type: Typ
+Name: Název
+Code: Kód
+Edit: Upravit
+Login: 'Přihlásit se'
+Password: Heslo
+Site: Site
+Path: Cesta
+'Go up': Nahoru
+URL: URL
+Order: Řazení
+Hide: Skrýt
+Duplicate: Duplikovat
+Subscription: Předplatné
+expires: vyprší
+starts: začíná
+before: před
+after: po
+on: v
+status: stav
+active: aktivní
+inactive: 'neaktivníNázev '
+Subscribers: Předplatitelé
+Staff: Zaměstnanci
+'Select destination': 'Vyber místo určení'
+'No languages': 'Žádný jazyk'
+'---Select language---': '---Vyber jazyk---'
+'No publications': 'Žádné publikace'
+'---Select publication---': '---Vyber publikaci---'
+'No issues': 'Žádné články'
+'---Select issue---': '---Vyber článek---'
+'No sections': 'Žádné rubriky'
+'---Select section---': '---Vyber rubliku---'
+Language: Jazyk
+Country: Země
+'Account name': 'Jméno účtu'
+Publication: Publikace
+'Default language': 'Výchozí jazyk'
+Subscriptions: Předplatné
+Issue: Vydání
+Number: Číslo
+Section: Oddíl
+Keywords: 'Klíčová slova'
+Topic: Téma
+'URL Name': 'Jméno vydání v URL'
+'Left to pay': 'Zbývá zaplatit'
+Active: Aktivní
+Trial: Zkouška
+Next: Další
+Previous: Předchozí
+Translate: Překlad
+View: Náhled
+'Scheduled Publishing': 'Plánované publikování'
+Time: Čas
+Action: Činnost
+'Schedule a new action': 'Naplánovat činnost'
+'Scheduling a new publish action': 'Název '
+'Delete scheduled publish action': 'Zruš naplánovanou činnost'
+Date/Time: Datum/Čas
+'You must select an action.': 'Musíte zvolit činnost'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Nemáte oprávnění plánovat automatickou publikaci článků nebo vydání'
+'Front page': 'Titulní strana'
+'Section page': 'Titulní strana rubriky'
+'Show on front page': 'Zobrazit na titulní straně'
+'Remove from front page': 'Odstranit z titulní strany'
+'Show on section page': 'Zobrazit na titulní straně rubriky'
+'Remove from section page': 'Odstranit z titulní strany rubriky'
+Actions: Činnosti
+Publishing: Publikování
+Show: Zobraz
+Remove: Odstranit
+'Article Types': 'Typ článku'
+'Staff User Types': 'Role zaměstnanců'
+Publications: Publikace
+Issues: Vydání
+Sections: Rubriky
+Articles: Články
+Images: Obrázky
+Change: Změnit
+'Add new issue': 'Přidat nové vydání'
+'Section Template': 'Šablona titulní strany rubriky'
+'Article Template': 'Šablona článku'
+'Default Language': 'Výchozí jazyk'
+'Paid Period': 'Zaplacené období'
+Preview: Náhled
+'You must fill in the $1 field.': 'Musíte vyplnit pole $1'
+Error: Chyba
+'Invalid input: $1': 'Neplatná hodnota: $1'
+'Language does not exist.': 'Jazyk neexistuje'
+'Publication does not exist.': 'Publikace neexistuje'
+'Issue does not exist.': 'Vydání neexistuje'
+'You must select a language.': 'Vyberte jazyk'
+'Section does not exist.': 'Rubrika neexistuje'
+'No articles.': 'Články neexistují'
+'Article does not exist.': 'Článek neexistuje'
+'Image does not exist.': 'Obrázek neexistuje'
+'Access denied': 'Přístup zamítnut'
+'Invalid parameters received': 'Přijaty neplatné parametry'
+'Add new article': 'Přidat nový článek'
+Status: Status
+Published: Zveřejněno
+'Not published': Nezveřejněno
+Submitted: Podáno
+New: Nový
+Article: Článek
+Publish: Zveřejnit
+Unpublish: Nezveřejňovat
+Unlock: Odemknout
+Uploaded: Nahráno
+YYYY-MM-DD: RRRR-MM-DD
+Submit: Podat
+Image: Obrázek
+Description: Popis
+Photographer: Fotograf
+Place: Místo
+Date: Datum
+Thumbnail: Náhled
+'In use': 'Používá se'
+'Additional searches': 'Doplňkové vyhledávání'
+'Most Recently Added': 'Naposledy přidané'
+'Most Recently Modified': 'Naposledz upravované'
+'$1 images found': 'Nalezeno $1 obrázků'
+'Reset search conditions': 'Obnovení výchozích podmínek hledání'
+'Image number': 'Obrázek č.'
+Users: Uživatelé
+Localizer: Lokalizátor
+'Adding new translation': 'Přidávání nového překladu'
+'No more languages.': 'Žádné další jazyky'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Pole $1 může obsahovat pouye písmena, čísla a podtržítko (znak _ ).'
+'Add new publication': 'Přidat novou publikaci'
+'Upload new template': 'Nahrát novou šablonu'
+'Add new staff member': 'Přidat nového zaměstnance'
+'Add new subscriber': 'Přidat nového předplatitele'
+'Add new user type': 'Přidat typ uživatele'
+'Add new article type': 'Přidat nový typ článku'
+'Add new country': 'Přidat novou zemi'
+'Add new language': 'Přidat nový jazyk'
+'View logs': 'Náhled logu'
+'Change your password': 'Změnit heslo'
+'Your Articles': 'Tvé články'
+'Submitted Articles': 'Podané články'
+Logs: Logy
+'There are $1 article(s) left.': 'Zbývají články $1'
+'There are $1 issues(s) left.': 'Zbývá článek $1'
+'There are $1 section(s) left.': 'Zbývá rubrika $1'
+'There are $1 publication(s) left.': 'Zbývá publikace $1'
+'There are $1 countries left.': 'Zbývají země $1'
+'Name <SMALL>(click to edit)</SMALL>': 'Název (klikněte pro editaci)'
+'Add new subscription': 'Přidat nové předplatné'
+'You do not have the right to add subscriptions.': 'Nemáte právo přidat předplatné'
+'Adding subscription': 'Přidání předplatného'
+'Delete subscription': 'Smazat předplatné'
+'You do not have the right to delete subscriptions.': 'Nemáte právo smazat předplatné'
+'No such subscription.': 'Předplatné neexistuje'
+Yes: Ano
+No: Ne
+Close: Zavřít
+'No issues.': 'Vydání neexistuje'
+'Back to Edit Article': 'Zpět na detaily článku'
+'No topics': 'Žádná témata'
+'You do not have the right to add articles.': 'Nemáte právo přidat článek'
+Start: Začátek
+Days: Dny
+'The sections could not be added successfully. Some of them were already added !': 'Rubriky nebyly úspěšně přidány. Některé již byly přidány! '
+'Add another': 'Přidat další'
+Cancel: Zrušit
+Done: Hotovo
+OK: OK
+Save: Uložit
+Search: Hledej
+'Make a selection': Vyberte
+'You must input a number greater than 0 into the $1 field.': 'Do pole $1 můžete vložit pouze číslo větší než 0.'
+'You must input a valid date.': 'Musíte vložit platné datum'
+'Add new field': 'Přidat nové pole'
+'Article automatic publishing schedule': 'Automatické publikování rozvrhu článků'
+'Are you sure you want to delete this scheduled action?': 'Doopravdy chcete odstranit naplánovanou činnost?'
+Unlink: Rozpojit
+'Are you sure you want to delete the image $1?': 'Doopravdy chcete odstranit obrázek $1?'
+'No such issue.': 'Žádný takový problém.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Doopravdy chcete odstranit předplatné k publikaci $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Není možné uložit změny vydání $1. Prosím ujistěte se, že URL jméno vydání $2 nebylo použito dříve v publikaci $3.'
+GB: GM
+MB: MB
+KB: KB
+bytes: bajtů
+Attach: Přilož
+Back: Zpět
+File: Soubor
+'Save and Close': 'Uložit a Zavřít'
+Add: Přidat
+'Select All': 'Vybrat vše'
+'Select None': 'Zrušit výběr'
+'Add Event': 'Přidej událost'
+N/A: N/A
+'On Front Page': 'Na titulní straně'
+'On Section Page': 'Na titulní straně rubriky'
+'Created by': Vytvořil
+'Creation date': 'Datum vytvoření'
+'Publication List': 'Přehled publikace'
+'Issue List': 'Přehled vydání'
+'Section List': 'Přehled sekce'
+All: Vše
+duplicate: duplikovat
+move: přesunout
+Move: Přesunout
+'From:': Od.
+'Date:': 'Datum:'
+Hidden: Skrytý
+Comments: Komentáře
+Comment: Komentář
+Approved: Schválený
+Subject: Předmět
+'IP address:': 'IP adresa:'
+'Email:': 'Email:'
+Author: Autor
+'Article name': 'Název článku'
+'Hide article': 'Srýt článek'
+'Show article': 'Ukázat článek'
+'Article Type Fields': 'Pole Typu Článku'
+'Article Images': 'Zobrazení článku'
+'Log Messages': 'Zapsat zprávy'
+'Article Files': 'Soubory článku'
+'Article Comments': 'Komentáře k článku'
+'Are you sure you want to deactivate the subscription?': 'Doopravdy chcete deaktivovat předplatné?'
+'Are you sure you want to activate the subscription?': 'Doopravdy chcete aktivovat předplatné?'
+Other: Jiné
+'Time:': 'Čas:'
+'No events.': 'Žádné události.'
+'Default templates': 'Přednastavené šablony'
+'System Preferences': 'Systémové preference'
+'The date must be in the future.': 'Datum musí být budoucí.'
+Send: Odeslat
+'Thank you.': Děkuji.
+'Please take a minute to send us an email.': 'Prosíme, najděte si chvíli a pošlete nám email.'
+(optional): (volitelný)
+'The URL you entered is invalid: $1': 'URL, kterou jste zadali je neplatná: $1'
+Reads: Přečteno
+'Publish with issue': 'Publikovat s vydáním'
+'Universal List': 'Všeobecný přehled'
+'Invalid security token!': 'Neplatný bezpečnostní znak!'
+Authors: Autoři
+Readers: 
+'User name': 'Uživatelské jméno'
+'Schedule a new publish action': 
+'User Types': 'Uživatelské typy'
+'User may add/change user accounts and passwords': 'Uživatel může přidat/změnit uživatelské účty a hesla'
+'User may delete user accounts': 'Uživatel může mazat uživatelské účty'
+'Add new user account': 'Přidat uživatelský účet'
+'Subscription Default Time': 'Předplatné období'

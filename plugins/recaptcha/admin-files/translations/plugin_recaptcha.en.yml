@@ -1,0 +1,14 @@
+'Enable reCAPTCHA for subscriptions': 'Enable reCAPTCHA for subscriptions'
+'Add the {{ recaptcha }} tag to your template file containing the comments/subscription form': 'Add the {{ recaptcha }} tag to your template file containing the comments/subscription form'
+'reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.': 'reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.'
+'reCAPTCHA preferences updated.': 'reCAPTCHA preferences updated.'
+'reCAPTCHA Settings': 'reCAPTCHA Settings'
+reCAPTCHA: reCAPTCHA
+here: here
+'You do not have the right to manage reCAPTCHA.': 'You do not have the right to manage reCAPTCHA.'
+'User may manage reCAPTCHA': 'User may manage reCAPTCHA'
+'To use this plugin you need': 'To use this plugin you need'
+'Enter your reCAPTCHA public key': 'Enter your reCAPTCHA public key'
+'Enter your reCAPTCHA private key': 'Enter your reCAPTCHA private key'
+'Enable reCAPTCHA for comments': 'Enable reCAPTCHA for comments'
+'Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it': 'Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it'

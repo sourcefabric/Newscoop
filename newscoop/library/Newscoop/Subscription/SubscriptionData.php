@@ -48,6 +48,12 @@ class SubscriptionData
     public $userId;
 
     /**
+     * Subscription id
+     * @var int
+     */
+    public $subscriptionId;
+
+    /**
      * Publication Id
      * @var int
      */

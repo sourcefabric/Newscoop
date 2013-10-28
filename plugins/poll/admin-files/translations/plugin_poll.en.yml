@@ -1,0 +1,82 @@
+'Are you sure you want to delete the poll $1?': 'Are you sure you want to delete the poll $1?'
+'click to edit': 'click to edit'
+Polls: Polls
+'You must select a file to upload.': 'You must select a file to upload.'
+'You do not have the right to delete files.': 'You do not have the right to delete files.'
+'You do not have the right to change the article.': 'You do not have the right to change the article.'
+'You do not have the right to change files.': 'You do not have the right to change files.'
+'You do not have the right to add files.': 'You do not have the right to add files.'
+'Unable to add attachment.': 'Unable to add attachment.'
+'There was a problem uploading the file.': 'There was a problem uploading the file.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini'
+'The maximum file upload size was not configured in Campsite.': 'The maximum file upload size was not configured in Campsite.'
+'The file exceeds the allowed max file size.': 'The file exceeds the allowed max file size.'
+'Should this file only be available for this translation, or for all translations?': 'Should this file only be available for this translation, or for all translations?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Should this file only be available for this translation of the article, or for all translations?'
+'Poll Answer $1 does not exist.': 'Poll Answer $1 does not exist.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Please make sure you upgraded the database correctly: run $1 in a shell.'
+'Please enter a description for the file.': 'Please enter a description for the file.'
+'Open in the browser': 'Open in the browser'
+'Only this translation': 'Only this translation'
+'Maximum Upload Size': 'Maximum Upload Size'
+Files: Files
+'File information': 'File information'
+'File Size': 'File Size'
+'File Name': 'File Name'
+'File $1 updated.': 'File $1 updated.'
+'File $1 deleted.': 'File $1 deleted.'
+'File $1 added.': 'File $1 added.'
+'Edit article': 'Edit article'
+Download: Download
+'Do you want this file to open in the users browser, or to automatically download?': 'Do you want this file to open in the users browser, or to automatically download?'
+'Change file information': 'Change file information'
+'Automatically download': 'Automatically download'
+Attachments: Attachments
+'Attachment does not exist.': 'Attachment does not exist.'
+'Attach File to Poll Answer': 'Attach File to Poll Answer'
+'Are you sure you want to remove the file $1 from the poll answer?': 'Are you sure you want to remove the file $1 from the poll answer?'
+'All translations': 'All translations'
+'You need to activate at least 1 answer.': 'You need to activate at least 1 answer.'
+'You must select number of votes per user.': 'You must select number of votes per user.'
+'You must select number of answers.': 'You must select number of answers.'
+'You must select at least one poll to perform an action.': 'You must select at least one poll to perform an action.'
+'You do not have the right to manage polls.': 'You do not have the right to manage polls.'
+'You do not have the right to manage poll.': 'You do not have the right to manage poll.'
+'Votes per unique User': 'Votes per unique User'
+'Votes per single User': 'Votes per single User'
+Votes: Votes
+'Translate Poll': 'Translate Poll'
+Title: Title
+Standard: Standard
+Result: Result
+Reset: Reset
+Question: Question
+'Poll does not exists.': 'Poll does not exists.'
+'Poll List': 'Poll List'
+'Percentage this language': 'Percentage this language'
+'Percentage all languages': 'Percentage all languages'
+'Number of answers': 'Number of answers'
+'No polls.': 'No polls.'
+'No Polls available.': 'No Polls available.'
+'Invalid input': 'Invalid input'
+Extended: Extended
+'Error changing attachment.': 'Error changing attachment.'
+'Error changing attachment': 'Error changing attachment'
+End: End
+'Edit Poll': 'Edit Poll'
+'Duplicate Poll': 'Duplicate Poll'
+'Date end voting': 'Date end voting'
+'Date end': 'Date end'
+'Date begin voting': 'Date begin voting'
+'Date begin': 'Date begin'
+'Copy statistics': 'Copy statistics'
+Copy: Copy
+Begin: Begin
+'Attach poll': 'Attach poll'
+'Attach Polls': 'Attach Polls'
+'Are you sure you want to reset counters on the selected polls?': 'Are you sure you want to reset counters on the selected polls?'
+'Are you sure you want to delete the selected polls?': 'Are you sure you want to delete the selected polls?'
+'Answer $1': 'Answer $1'
+'Add new Poll': 'Add new Poll'
+---Select---: ---Select---
+'$1/$2 polls assigned/unassigned.': '$1/$2 polls assigned/unassigned.'

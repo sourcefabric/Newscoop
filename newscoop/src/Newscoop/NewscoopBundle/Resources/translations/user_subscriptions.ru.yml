@@ -1,0 +1,73 @@
+third: третий
+second: второй
+forth: четвертый
+first: первый
+'You must input a number greater than 0 into the Number of addresses field.': 'Вы должны ввести число больше 0 в поле Количество адресов.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Вы должны ввести число между 0 и 255 в поле Начать IP адрес  $1 '
+'User IP access list management': 'Управление списками пользовательских IP'
+'The IP address group conflicts with another existing group.': 'Группа IP адреса конфликтует с другой существующей группой.'
+'Subscription sections': 'Подписные рубрики'
+'No records.': 'Нет записей.'
+'You have subscription for all available publications': 'Вы подписаны на все доступные публикации'
+'Subscription type:': 'Тип подписки:'
+'Start:': 'Начать:'
+'Start Date': 'Дата начала'
+'Sections:': 'Рубрики:'
+'Publication:': 'Публикации:'
+'Paid days': 'Оплаченные дни'
+'Paid Days:': 'Оплаченные дни:'
+Paid: Оплачено
+'No subscriptions': 'Нет подписок'
+'Languages:': 'Языки:'
+'Edit all sections': 'Редактировать все рубрики:'
+'Days:': 'Дни:'
+'Days must be number': 'Значение дней должно быть обозначено цифрами'
+Any: Любое
+'Add section': 'Добавить рубрику'
+saved: сохранено
+removed: перемещено
+deleted: удалено
+deactivated: деактивировано
+activated: активировано
+'Value is required and cant be empty': 'Значение обязательно для заполнения'
+'That user name already exists, please choose a different login name.': 'Это имя пользователя уже существует, пожалуйста, выберите другой логин.'
+'That $1 already exists, please choose a different $2.': 'Этот $1 уже существует, пожалуйста, выберите другой $2.'
+'Subscriptions exist for all available publications.': 'Есть подписка на все доступные публикации. '
+'Subscription IP Addresses': 'IP адреса подписки'
+'Subscription $1': 'Подписка $1'
+'Subscriber saved.': 'Подписчик сохранен.'
+'Subscriber management': 'Управление подписчиками'
+'Subscriber deleted.': 'Подписчик удален.'
+'Start IP': 'Начать IP'
+'Select country': 'Выбрать страну'
+'Number of addresses': 'Количество адресов'
+'Number of Addressses': 'Количество адресов'
+'No IP Addresses': 'Нет IP адресов'
+'IP Address added allready': 'IP адрес уже добавлен'
+'IP Address $1': 'IP адрес $1'
+'IP Access': 'IP адрес'
+'Full Name': 'Полное имя'
+'Edit subscriptions': 'Редактировать подписки'
+'Edit subscriber $1': 'Редактировать подписчика $1'
+E-Mail: E-mail
+'Delete subscriber $1': 'Удалить подписчика $1'
+'Creation Date': 'Дата создания'
+'Change subscriber information': 'Изменить информацию о подписчике'
+'Add new IP address': 'Добавить новый IP адрес'
+'Add new IP Address': 'Добавит новый IP адрес'
+'Accout Name': 'Название учетной записи'
+'%value% must be greater than %min%': 'значение %value% должно быть больше, чем %min%'
+'%value% is not a valid IP Address': '%value%  не является действительным IP адресом'
+'Regardless of the language': 'Независимо от языков'
+'Individual languages': 'Индивидуальные языки'
+'Add sections now': 'Добавить рубрику сейчас'
+'Add sections later': 'Добавить рубрику позже'
+'Subscription Type': 'Тип подписки'
+'Paid (payment will be confirmed later)': 'Платная (оплата будет подтверждена позже)'
+'Paid (confirm payment now)': 'Платная (подтвердить оплату сейчас)'
+Account: 'Учетная запись'
+'Are you sure you want to activate the subscription?': 'Вы уверены, что хотите активировать подписку?'
+'Are you sure you want to delete the subscription to the publication $1?': 'Вы уверены, что хотите удалить подписку на публикацию $1?'
+'Left to pay': 'Осталось оплатить:ru'
+Active: 'Активно:ru'
+Trial: Пробная

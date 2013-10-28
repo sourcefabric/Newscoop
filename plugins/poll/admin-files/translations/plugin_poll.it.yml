@@ -1,0 +1,82 @@
+'Are you sure you want to delete the poll $1?': 'Confermi di eliminare il sondaggio $1?'
+'click to edit': Modifica
+Polls: Sondaggi
+'You must select a file to upload.': 'Devi selezionare un file da scaricare.'
+'You do not have the right to delete files.': 'Non si dispone dei diritti di eliminare files.'
+'You do not have the right to change the article.': 'Non si dispone dei diritti per cambiare gli articoli.'
+'You do not have the right to change files.': 'Non si dispone dei diritti per cambiare files.'
+'You do not have the right to add files.': 'Non si dispone dei diritti per aggiungere files.'
+'Unable to add attachment.': 'Impossibile aggiungere un allegato.'
+'There was a problem uploading the file.': 'Si e verificato un problema caricando il file.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Il file e stato caricato solo parzialmente. Questo succede quando il tempo di upload e breve in confronto alla dimensione del file. verifica le impostazioni in php.ini'
+'The maximum file upload size was not configured in Campsite.': 'La dimensione massima di upload non e stata configurata in Newscoop.'
+'The file exceeds the allowed max file size.': 'Il file eccede la dimensione massima consentita.'
+'Should this file only be available for this translation, or for all translations?': 'Deve essere disponibile per questa traduzione, o tutte le traduzioni?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Deve essere disponibile per questa traduzione, o tutte le traduzioni?'
+'Poll Answer $1 does not exist.': 'La risposta $1 del sondaggio non esiste.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'verifica che il database sia stato aggiornato: esegui $1 da shell.'
+'Please enter a description for the file.': 'Inserisci una descrizione del file.'
+'Open in the browser': 'Apri nel browser'
+'Only this translation': 'Solo questa traduzione'
+'Maximum Upload Size': 'Dimensione massima di caricamento'
+Files: Files
+'File information': 'Informazioni file'
+'File Size': 'Dimensione file'
+'File Name': 'Nome file'
+'File $1 updated.': 'File $1 aggiornato.'
+'File $1 deleted.': 'File $1 eliminato.'
+'File $1 added.': 'File $1 aggiunto.'
+'Edit article': 'Modifica articolo'
+Download: Download
+'Do you want this file to open in the users browser, or to automatically download?': 'Vuoi che il file sia aperto nel browser, o che sia scaricato automaticamente?'
+'Change file information': 'Cambia informazioni file'
+'Automatically download': 'Scarica automaticamente'
+Attachments: Allegati
+'Attachment does not exist.': 'Lallegato non esiste.'
+'Attach File to Poll Answer': 'Allega file ad una risposta'
+'Are you sure you want to remove the file $1 from the poll answer?': 'Confermi di rimuovere il file $1 dalla risposta del sondaggio?'
+'All translations': 'Tutte le traduzioni'
+'You need to activate at least 1 answer.': 'Devi attivare almeno una risposta'
+'You must select number of votes per user.': 'Devi selezionare il numero di voti epr utente.'
+'You must select number of answers.': 'Devi selezionare il numero di risposte.'
+'You must select at least one poll to perform an action.': 'Devi selezionare almeno un sondaggio per eseguire una azione.'
+'You do not have the right to manage polls.': 'Non si dispone dei diritti per gestire sondaggi.'
+'You do not have the right to manage poll.': 'Non si dispone dei diritti per gestire il sondaggio.'
+'Votes per unique User': 'Voti per utente unico'
+'Votes per single User': 'Voti epr utente singolo'
+Votes: Voti
+'Translate Poll': 'Traduci sondaggio'
+Title: Titolo
+Standard: Standard
+Result: Risultato
+Reset: Resetta
+Question: Domanda
+'Poll does not exists.': 'Il sondaggio non esiste.'
+'Poll List': 'Lista sondaggi'
+'Percentage this language': 'Percentuale in questa lingua'
+'Percentage all languages': 'Percentuale in tutte le lingue'
+'Number of answers': Risposte
+'No polls.': 'Nessun sondaggio'
+'No Polls available.': 'Nessun sodnaggio disponibile.'
+'Invalid input': 'Dato non valido'
+Extended: Esteso
+'Error changing attachment.': 'Errore nella modifica dell-allegato.'
+'Error changing attachment': 'Errore nella modifica dell-allegato.'
+End: Fine
+'Edit Poll': 'Modifica sondaggio'
+'Duplicate Poll': 'Sondaggio duplicato'
+'Date end voting': 'Data fine voto'
+'Date end': 'Data fine'
+'Date begin voting': 'Data inizio voto'
+'Date begin': 'Data inizio'
+'Copy statistics': 'Copia statistiche'
+Copy: Copia
+Begin: Inizia
+'Attach poll': 'Allega sondaggio'
+'Attach Polls': 'Allega sondaggi'
+'Are you sure you want to reset counters on the selected polls?': 'Confermi di resettare i contatori del sondaggio?'
+'Are you sure you want to delete the selected polls?': 'Confermi di eliminare il poll selezionato?'
+'Answer $1': 'Risposta $1'
+'Add new Poll': 'Aggiungi sondaggio'
+---Select---: ---Scegli---
+'$1/$2 polls assigned/unassigned.': '$1/$2 sondaggi sono assegnati/non assegnati.'

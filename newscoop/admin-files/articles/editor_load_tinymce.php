@@ -301,7 +301,9 @@ $().ready(function() {
         gecko_spellcheck : true,
         <?php endif; ?>
 
-        <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
+        <?php
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
         setup : function(ed) {
             ed.onInit.add(function(){
 				ed.controlManager.setDisabled('pasteword', true);
@@ -324,7 +326,7 @@ $().ready(function() {
             });
 
             ed.addButton('campsite-subhead', {
-                title : '<?php putGS("Newscoop Subhead"); ?>',
+                title : '<?php echo $translator->trans("Newscoop Subhead", array(), 'articles'); ?>',
                 image : website_url + '/js/tinymce/themes/advanced/img/campsite_subhead.gif',
                 onclick : function() {
                     CampsiteSubhead(ed);

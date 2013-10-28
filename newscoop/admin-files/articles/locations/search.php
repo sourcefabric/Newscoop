@@ -3,15 +3,14 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 
-camp_load_translation_strings('api');
-camp_load_translation_strings('geolocation');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Expires" content="now" />
-    <title><?php putGS('Map Search Example'); ?></title>
+    <title><?php echo $translator->trans('Map Search Example', array(), 'geolocation'); ?></title>
 
     <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
@@ -35,7 +34,7 @@ camp_load_translation_strings('geolocation');
 <div class="map_mappart_outer_serach">
 <div class="map_mappart_serach">
 <div class="map_mapmenu_serach">
-<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><?php putGS('show initial map view'); ?></a>
+<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><?php echo $translator->trans('show initial map view', array(), 'geolocation'); ?></a>
 </div><!-- end of map_mapmenu -->
 <?php echo Geo_Map::GetMapSearchBody(); ?>
 </div><!-- end of map_mappart -->

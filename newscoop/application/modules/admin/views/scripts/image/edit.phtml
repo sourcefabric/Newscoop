@@ -1,16 +1,19 @@
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); 
+?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
 
 <div id="modal-top">
     <div class="toolbar fixed-top">
     <div class="save-button-bar"></div>
     <h1>
-        <?php putGS('Edit images'); ?>
+        <?php echo $translator->trans('Edit images', array(), 'article_images'); ?>
         <span style="float: right;">
         <a href="<?php echo $this->url(array(
             'action' => 'article',
             'rendition' => null,
-        )); ?>" class="save-button"><?php putGS('Done editing'); ?></a>
+        )); ?>" class="save-button"><?php echo $translator->trans('Done editing', array(), 'article_images'); ?></a>
         </span>
     </h1>
     </div>

@@ -1,0 +1,113 @@
+'You do not have the right to upload SoundCloud tracks.': 'Nemáte oprávnění nahrávat nahrávky do SoundCloud'
+'You do not have the right to update SoundCloud tracks.': 'Nemáte oprávnění akturalizovat nahrávky v SoundCloud'
+'You do not have the right to manage SoundCloud tracks.': 'Nemáte oprávnění řídit nahrávky v SoundCloud'
+'You do not have the right to manage SoundCloud preferences.': 'Nemáte oprávnění řídit preference v SoundCloud'
+'You do not have the right to delete SoundCloud tracks.': 'Nemáte oprávnění smazat nahrávky v SoundCloud'
+'User may upload tracks to SoundCloud': 'Uživatel může nahrát nahrávky do SoundCloud'
+'User may update SoundCloud track data': 'Uživatel může aktualizovat data nahrávky v SoundCloud'
+'User may manage SoundCloud preferences': 'Uživatel může upravovat preference v SoundCloud'
+'User may delete SoundCloud tracks': 'Uživatel může smazat nahrávky v SoundCloud'
+'User may browse SoundCloud tracks': 'Uživatel může procházet nahrávky v SoundCloud '
+'Upload Track to SoundCloud': 'Nahrát nahrávku do SoundCloud'
+'Track has been updated on SoundCloud': 'Nahrávka byla aktualizována v SoundCloud'
+'Track $1 has been uploaded to SoundCloud. Click to close': 'Nahrávka $1 byla nahrána do SoundCloud. Kliknutím zavřete'
+'SoundCloud reports an error:': 'SounCloud oznámil chybu:'
+'SoundCloud preferences updated.': 'Preference SoundCloud aktualizovány'
+'SoundCloud plugin requires php_curl module.': 'SoundCloud plugin vyžaduje php_curl modul '
+'SoundCloud checked successfully.': 'Kontrola SoundCloud uspěšná'
+'SoundCloud Preferences': 'Preference SoundCloud'
+SoundCloud: SoundCloud
+'select range': 'Vyber rozsah'
+'connection error': 'Chyba v připojení'
+'a comma separated list of tags': 'čárkou oddělený seznam tagů'
+'a comma separated list of genres': 'čárkou oddělený seznam žánrů'
+'Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player': 'Youtube, Vimeo, Dailymotion a Viddler videa se objeví v on-site přehrávači'
+'Wrong file format': 'Nesprávný formát souboru'
+'Work in progress': Nedokončeno
+'We support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC files. Please, respect the <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> and only upload tracks with permission from the rights holders.': 'Podporujeme AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC soubory. Prosím, respektujte <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> a nahrávejte pouze nahrávky s povolením vlastníka práv k nahrváce.'
+'Video link': 'Odkaz na video'
+'Uploading... please wait': 'Nahrává se...prosím počkejte'
+'Upload successful': 'Nahrání bylo úspěšné'
+'Upload error!': 'Chyba v nahrávání!'
+'Upload error': 'Chyba v nahrávání'
+Upload: Nahrát
+'Tracks not found': 'Nahrávky nenalezeny'
+Tracks: Nahrávky
+'Track type': 'Typ nahrávek'
+'Track not found': 'Nahrávka nenalezena'
+'Track manager': 'Manager nahrávky'
+'To get preferences you need:': 'Pro získání preferencí potřebujete:'
+Title: Název
+'This track is currently available to everyone': 'Tato nahrávka je nyní dostupná každému'
+'The work is in the public domain': 'Práce je ve veřejné doméně'
+Tags: Tagy
+Streamable: Vysílatelné
+Stem: Kmen
+Spoken: Mluvený
+'Specify the artwork file': 'Specifikujte obrazovou stránku souboru'
+'Sound Effect': 'Zvukový efekt'
+'Social media sharing message': 'Sdílet zprávu se sociálními médii'
+'Showing $1 to $2': 'Ukazuje $1 do $2'
+Settings: Nastavení
+'Set list': 'Nastavit seznam'
+'Select type': 'Vybrat typ'
+'Select license type': 'Vybrat typ licence'
+'Select key': 'Vybrat klíč'
+'Search options': 'Vyhledat možnosti'
+'Search error': 'Vyhledat chybu'
+'Save successful': 'Úspěšně uloženo'
+'Save error': 'Uložit chybu'
+'Save and attach successful': 'Uložení a přidání přílohy proběhlo úspěšně '
+Reset: 'Znovu nastavit'
+Remix: Remix
+'Release/catalogue number': 'Číslo vydání/katalogu'
+'Release date': 'Datum vydání'
+Recording: Nahrávání
+Public: Veřejné
+Processing...: Zpracovává...
+Private: Soukromé
+Podcast: Podcast
+'Please define the track title': 'Prosím, definujte název skladby'
+'Please choose the track file': 'Prosím, vyberte soubor skladby'
+'Please check php settings for file uploading': 'Prosím, zkontrolujte nastavení PHP pronahrávání souboru'
+Play: Přehrát
+Original: Originál
+'Only you have access': 'Pouze vy máte přístup'
+'One Shot Sample': 'One Shot ukázka'
+Ok: Ok
+'No tracks found': 'Nenelazeny žádné skladby'
+'No sets found': 'Nenalezeny žádné soubory'
+'More options': 'Více možností'
+Loop: Smyčka
+Live: Živě
+License: Licence
+Label: Značka
+'Key signature': 'Klíčový podpis'
+'Image file': 'Obrázkový soubor'
+ISRC: ISRC
+Genres: Žánry
+Genre: Žánr
+'Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery': 'Zjistěte, jak prodávat své skladby na jiných platformách snadno pomocí SoundCloud v naší galerii App'
+Filter: Filtr
+'Error during create attachement': 'Chyba během vytváření přílohy'
+'Enter permalink or email address': 'Zadejte emailovou adresu neba trvalý odkaz'
+'Enter password': 'Zadejte heslo'
+'Enter Client secret': 'Zadejte tajemství klienta'
+'Enter Client ID': 'Zadejte Klientovo ID'
+'Edit error': 'Upravit chybu'
+Downlodable: Stažitelný
+Downloadable: Stažitelný
+Demo: Demo
+'Click to make this track private': 'Klikněte, aby se stala skladba soukromou'
+'Click to make this track available to everyone': 'Klikněte, aby byla skladba k dispozici pro všechny'
+'Check connection': 'Zkontrolujte připojení'
+'Buy link': 'Kupte odkaz'
+Bpm: Bpm
+Attention!: Pozor!
+'Attach error': 'Připojit chybu'
+'Are you sure you want to delete the track:': 'Jste si jisti, že chcete vymazat skladbu:'
+'All rights are reserved': 'Všechna práva vymezena'
+'Advanced settings': 'Pokročilé nastavení'
+'Add to set': 'Přidejte k nastavení'
+'A space separated list of tags': 'Prostor oddělující seznam tagů'
+'1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps': 'Regustrujte se na http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps'

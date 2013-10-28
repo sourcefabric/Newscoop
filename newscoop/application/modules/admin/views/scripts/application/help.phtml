@@ -1,20 +1,22 @@
-<?php $this->placeholder('title')->set(getGS('Help')); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Help', array(), 'help')); ?>
 
 <img src="<?php echo $this->baseUrl('/admin-style/images/newscoop_logo_big.png') ?>" style="float:left;">
 
 <dl class="metadata">
-  <dt><?php putGS('Version'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
-  <dt><?php putGS('Release date'); ?>:</dt> <dd><?php echo $this->date; ?></dd>
+  <dt><?php echo $translator->trans('Version', array(), 'help'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
+  <dt><?php echo $translator->trans('Release date', array(), 'help'); ?>:</dt> <dd><?php echo $this->date; ?></dd>
 </dl>
 
 <div class="clear"></div>
 
 <ul class="help">
-  <li><p><?php putGS("Welcome to the Newscoop help page. Whether you're just getting started or you have a specific question, the best place to look is in one of the Newscoop manuals"); ?><br /><a href="http://www.sourcefabric.org/en/products/newscoop_manuals/" target="_blank">http://www.sourcefabric.org/en/products/newscoop_manuals/</a></p></li>
+  <li><p><?php echo $translator->trans("Welcome to the Newscoop help page. Whether you're just getting started or you have a specific question, the best place to look is in one of the Newscoop manuals", array(), 'help'); ?><br /><a href="http://www.sourcefabric.org/en/products/newscoop_manuals/" target="_blank">http://www.sourcefabric.org/en/products/newscoop_manuals/</a></p></li>
 
-  <li><p><?php putGS('Alternatively, you can ask a question in our forums at'); ?> <a href="http://forum.sourcefabric.org/" target="_blank">http://forum.sourcefabric.org</a> <?php putGS('or suggest improvements in our bug tracker at'); ?> <a href="http://dev.sourcefabric.org/" target="_blank">http://dev.sourcefabric.org/</a>.</p></li>
+  <li><p><?php echo $translator->trans('Alternatively, you can ask a question in our forums at', array(), 'help'); ?> <a href="http://forum.sourcefabric.org/" target="_blank">http://forum.sourcefabric.org</a> <?php echo $translator->trans('or suggest improvements in our bug tracker at', array(), 'help'); ?> <a href="http://dev.sourcefabric.org/" target="_blank">http://dev.sourcefabric.org/</a>.</p></li>
 
-  <li><p><?php putGS('To upgrade Newscoop please visit our website'); ?> <a href="http://www.sourcefabric.org/en/products/newscoop_download/" target="_blank">http://www.sourcefabric.org/en/products/newscoop_download/</a>. <?php putGS('Sourcefabric also offers a range of support options, which can include installation, hosting and technical support.'); ?> <?php putGS('Talk to us today'); ?> <a href="http://services.sourcefabric.org/" target="_blank">http://services.sourcefabric.org/</a> <?php putGS('and help us support quality, independent journalism.'); ?></p></li>
+  <li><p><?php echo $translator->trans('To upgrade Newscoop please visit our website', array(), 'help'); ?> <a href="http://www.sourcefabric.org/en/products/newscoop_download/" target="_blank">http://www.sourcefabric.org/en/products/newscoop_download/</a>. <?php echo $translator->trans('Sourcefabric also offers a range of support options, which can include installation, hosting and technical support.', array(), 'help'); ?> <?php echo $translator->trans('Talk to us today', array(), 'help'); ?> <a href="http://services.sourcefabric.org/" target="_blank">http://services.sourcefabric.org/</a> <?php echo $translator->trans('and help us support quality, independent journalism.', array(), 'help'); ?></p></li>
 
-  <li><p><?php putGS('To support us in other ways, visit our Community page'); ?> <a href="http://www.sourcefabric.org/en/community/joinus/" target="_blank">http://www.sourcefabric.org/en/community/joinus/</a>.</p></li>
+  <li><p><?php echo $translator->trans('To support us in other ways, visit our Community page', array(), 'help'); ?> <a href="http://www.sourcefabric.org/en/community/joinus/" target="_blank">http://www.sourcefabric.org/en/community/joinus/</a>.</p></li>
 </ol>

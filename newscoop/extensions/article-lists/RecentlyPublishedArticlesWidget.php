@@ -19,8 +19,9 @@ class RecentlyPublishedArticlesWidget extends ArticlesWidget
     protected $count = 20;
 
     public function __construct()
-    {
-        $this->title = getGS('Recently Published Articles');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Recently Published Articles', array(), 'extensions');
     }
 
     public function beforeRender()

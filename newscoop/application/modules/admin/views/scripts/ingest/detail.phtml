@@ -1,4 +1,7 @@
-<?php $this->placeholder('title')->set($this->escape($this->item->getContentMeta()->getHeadline())); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator'); 
+$this->placeholder('title')->set($this->escape($this->item->getContentMeta()->getHeadline())); 
+?>
 <?php $this->placeholder('bodyId')->set('ingest'); ?>
 
 <div class="detail">
@@ -23,27 +26,27 @@
 </div>
 
 <dl class="meta">
-    <dt><?php putGS('Slug:'); ?></dt>
+    <dt><?php echo $translator->trans('Slug:', array(), 'article_images'); ?></dt>
     <dd><?php echo $this->item->getContentMeta()->getSlugline(); ?></dd>
     <?php if ($this->item->getContentMeta()->getByline()) { ?>
-    <dt><?php putGS('By:'); ?></dt>
+    <dt><?php echo $translator->trans('By:', array(), 'article_images'); ?></dt>
     <dd><?php echo $this->item->getContentMeta()->getByline(); ?></dd>
     <?php } ?>
-    <dt><?php putGS('Urgency:'); ?></dt>
+    <dt><?php echo $translator->trans('Urgency:', array(), 'article_images'); ?></dt>
     <dd><?php echo $this->item->getContentMeta()->getUrgency(); ?></dd>
-    <dt><?php putGS('Status:'); ?></dt>
+    <dt><?php echo $translator->trans('Status:'); ?></dt>
     <dd><?php echo $this->item->getItemMeta()->getPubStatus(); ?></dd>
-    <dt><?php putGS('Provider:'); ?></dt>
+    <dt><?php echo $translator->trans('Provider:'); ?></dt>
     <dd><?php echo $this->item->getItemMeta()->getProvider(); ?></dd>
-    <dt><?php putGS('Created:'); ?></dt>
+    <dt><?php echo $translator->trans('Created:', array(), 'media_archive'); ?></dt>
     <dd><?php echo $this->item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i'); ?></dd>
     <?php if ($this->item->getItemMeta()->getFirstCreated()->getTimestamp() !== $this->item->getItemMeta()->getVersionCreated()->getTimestamp()) { ?>
-    <dt><?php putGS('Updated:'); ?></dt>
+    <dt><?php echo $translator->trans('Updated:'); ?></dt>
     <dd><?php echo $this->item->getItemMeta()->getVersionCreated()->format('Y-m-d H:i'); ?></dd>
     <?php } ?>
-    <dt><?php putGS('Description:'); ?></dt>
+    <dt><?php echo $translator->trans('Description:'); ?></dt>
     <dd><?php echo $this->item->getContentMeta()->getDescription(); ?></dd>
-    <dt><?php putGS('Copyright:'); ?></dt>
+    <dt><?php echo $translator->trans('Copyright:'); ?></dt>
     <dd><?php echo $this->item->getRightsInfo()->first()->getCopyrightNotice(); ?></dd>
 </dl>
 

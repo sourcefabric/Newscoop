@@ -1,10 +1,11 @@
 <?php
-camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 /**
  * Set message
@@ -39,16 +40,16 @@ function setMessage($message, $isError = FALSE)
 }
 
 if (empty($_POST)) {
-    setMessage(getGS('The file exceeds the allowed max file size.'), TRUE);
+    setMessage($translator->trans('The file exceeds the allowed max file size.', array(), 'article_files'), TRUE);
 }
 
 if (!SecurityToken::isValid()) {
     setMessage(SecurityToken::GetToken(), TRUE);
-    setMessage(getGS('Invalid security token!'), TRUE);
+    setMessage($translator->trans('Invalid security token!'), TRUE);
 }
 
 if (!$g_user->hasPermission('AddFile')) {
-    setMessage(getGS('You do not have the right to add files.'), TRUE);
+    setMessage($translator->trans('You do not have the right to add files.', array(), 'article_files'), TRUE);
 }
 
 // We set to unlimit the maximum time to execution whether
@@ -67,7 +68,7 @@ if (!$inArchive) {
 
     $articleObj = new Article($f_language_selected, $f_article_number);
     if (!$articleObj->exists()) {
-        setMessage(getGS("Article does not exist."), TRUE);
+        setMessage($translator->trans("Article does not exist."), TRUE);
     }
 }
 
@@ -84,28 +85,28 @@ if (isset($_FILES["f_file"])) {
 
 		case 1: // UPLOAD_ERR_INI_SIZE
 		case 2: // UPLOAD_ERR_FORM_SIZE
-            setMessage(getGS("The file exceeds the allowed max file size."), TRUE);
+            setMessage($translator->trans("The file exceeds the allowed max file size.", array(), 'article_files'), TRUE);
 			break;
 
 		case 3: // UPLOAD_ERR_PARTIAL
-			setMessage(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), TRUE);
+			setMessage($translator->trans("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", array(), 'article_files'), TRUE);
 			break;
 
 		case 4: // UPLOAD_ERR_NO_FILE
-			setMessage(getGS("You must select a file to upload."), TRUE);
+			setMessage($translator->trans("You must select a file to upload.", array(), 'article_files'), TRUE);
 			break;
 
 		case 6: // UPLOAD_ERR_NO_TMP_DIR
 		case 7: // UPLOAD_ERR_CANT_WRITE
-			setMessage(getGS("There was a problem uploading the file."), TRUE);
+			setMessage($translator->trans("There was a problem uploading the file.", array(), 'article_files'), TRUE);
 			break;
     }
 } else {
-	setMessage(getGS("The file exceeds the allowed max file size."), TRUE);
+	setMessage($translator->trans("The file exceeds the allowed max file size.", array(), 'article_files'), TRUE);
 }
 
 if (!Input::IsValid()) {
-	setMessage(getGS('Invalid input: $1', Input::GetErrorString()), TRUE);
+	setMessage($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), TRUE);
 }
 
 $description = new Translation((int) $f_language_selected);
@@ -136,11 +137,11 @@ if (PEAR::isError($file)) {
 if (!$inArchive) {
     ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
 
-    $logtext = getGS('File #$1 "$2" attached to article',
-        $file->getAttachmentId(), $file->getFileName());
+    $logtext = $translator->trans('File #$1 "$2" attached to article',
+        array('$1' => $file->getAttachmentId(), '$2' => $file->getFileName()), 'article_files');
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 
-    setMessage(getGS('File attached.'));
+    setMessage($translator->trans('File attached.', array(), 'article_files'));
 } else { ?>
 <script type="text/javascript"><!--
     if (opener && !opener.closed && opener.onUpload) {

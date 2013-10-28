@@ -22,19 +22,21 @@ class MediaList extends BaseList
     {
         parent::__construct();
         
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->model = new Attachment;
 
         $this->cols = array(
             'id' => NULL,
-            'file_name' => getGS('Filename'),
-            'mime_type' => getGS('Type'),
-            'size_in_bytes' => getGS('Size'),
-            'content_disposition' => getGS('Open in browser'),
-            'time_created' => getGS('Added'),
-            'last_modified' => getGS('Last modified'),
-            'Source' => getGS('Source'),
-            'Status' => getGS('Status'),
-            'InUse' => getGS('In use'),
+            'file_name' => $translator->trans('Filename', array(), 'library'),
+            'mime_type' => $translator->trans('Type'),
+            'size_in_bytes' => $translator->trans('Size'),
+            'content_disposition' => $translator->trans('Open in browser', array(), 'library'),
+            'time_created' => $translator->trans('Added', array(), 'library'),
+            'last_modified' => $translator->trans('Last modified', array(), 'library'),
+            'Source' => $translator->trans('Source', array(), 'library'),
+            'Status' => $translator->trans('Status'),
+            'InUse' => $translator->trans('In use'),
         );
         
         $this->searchCols = array(
@@ -58,6 +60,7 @@ class MediaList extends BaseList
     {
         global $ADMIN;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // edit link
         $row['file_name'] = sprintf('<a href="/%s/media-archive/edit-attachment.php?f_attachment_id=%d">%s</a>',
             $ADMIN,
@@ -67,7 +70,7 @@ class MediaList extends BaseList
         $row['size_in_bytes'] = parent::FormatFileSize($row['size_in_bytes']);
 
         // yes/no disposition
-        $row['content_disposition'] = empty($row['content_disposition']) ? getGS('Yes') : getGS('No');
+        $row['content_disposition'] = empty($row['content_disposition']) ? $translator->trans('Yes') : $translator->trans('No');
 
         // get in use info
         $object = new Attachment($row['id']);

@@ -20,8 +20,9 @@ class SearchWikipedia extends Widget
     protected $title;
 
     public function __construct()
-    {
-        $this->title = getGS('Wikipedia Search');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Wikipedia Search', array(), 'extensions');
     }
 
     public function render()

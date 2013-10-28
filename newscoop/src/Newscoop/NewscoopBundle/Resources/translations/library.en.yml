@@ -1,0 +1,73 @@
+'Display articles of filtered types': 'Display articles of filtered types'
+'Display Articles of Filtered Types': 'Display Articles of Filtered Types'
+Webcode: Webcode
+'View article': 'View article'
+Source: Source
+'Select type': 'Select type'
+On: On
+Off: Off
+Title: Title
+'No video playback capabilities, please download the video below': 'No video playback capabilities, please download the video below'
+'Article status set to $1 for $2 articles': 'Article status set to $1 for $2 articles'
+'Article status not set to $1 for $2 articles': 'Article status not set to $1 for $2 articles'
+'$1 toggled for $2 articles.': '$1 toggled for $2 articles.'
+'$1 not toggled for $2 articles.': '$1 not toggled for $2 articles.'
+'$1 not toggled for $2  articles.': '$1 not toggled for $2  articles.'
+'$1 articles have not been removed': '$1 articles have not been removed'
+'$1 Article(s) unlocked': '$1 Article(s) unlocked'
+'$1 Article(s) not unlocked': '$1 Article(s) not unlocked'
+'$1 Article(s) duplicated': '$1 Article(s) duplicated'
+'Download file': 'Download file'
+'You do not have the right to delete articles.': 'You do not have the right to delete articles.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.'
+'Use Map': 'Use Map'
+'Toggle: On Section Page': 'Toggle: On Section Page'
+'Toggle: On Front Page': 'Toggle: On Front Page'
+'Toggle: Comments': 'Toggle: Comments'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'The article has been locked by $1 ($2) $3 minute(s) ago.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.'
+'Status: Submit': 'Status: Submit'
+'Status: Set New': 'Status: Set New'
+'Status: Publish': 'Status: Publish'
+Size: Size
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Show / hide columns': 'Show / hide columns'
+'Select some article first.': 'Select some article first.'
+'Select action': 'Select action'
+'Save order': 'Save order'
+'Reset all filters': 'Reset all filters'
+'Published before': 'Published before'
+'Published after': 'Published after'
+'Publish date': 'Publish date'
+'Publish Schedule': 'Publish Schedule'
+'Publish Date': 'Publish Date'
+'Order updated.': 'Order updated.'
+'Open in browser': 'Open in browser'
+'No sections found': 'No sections found'
+'No records found.': 'No records found.'
+'No publications found': 'No publications found'
+'No issues found': 'No issues found'
+'No entries to show': 'No entries to show'
+Locations: Locations
+'Loading data': 'Loading data'
+'Last modified': 'Last modified'
+'Last Modified': 'Last Modified'
+Last: Last
+First: First
+'Filter by...': 'Filter by...'
+Filter: Filter
+Filename: Filename
+'Duplicate to another section': 'Duplicate to another section'
+'Display _MENU_ records': 'Display _MENU_ records'
+Creator: Creator
+'Create Date': 'Create Date'
+'Article status set to $1': 'Article status set to $1'
+'Are you sure you want to delete selected articles?': 'Are you sure you want to delete selected articles?'
+'All Sections': 'All Sections'
+'All Publications': 'All Publications'
+'All Issues': 'All Issues'
+Added: Added
+'Access denied.': 'Access denied.'
+'$1 toggled.': '$1 toggled.'
+'$1 articles have been removed': '$1 articles have been removed'
+' - filtering from _MAX_ records': ' - filtering from _MAX_ records'

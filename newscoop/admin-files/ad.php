@@ -2,9 +2,9 @@
 require_once dirname(__FILE__) . '/../db_connect.php';
 require_once dirname(__FILE__) . '/../classes/Input.php';
 
-camp_load_translation_strings("home");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
-$ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
+$ADReason = Input::Get('ADReason', 'string', $translator->trans('You do not have the right to access this page.', array(), 'home'), true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 ?>
 <p>
@@ -13,7 +13,7 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
 <TR>
 	<TD COLSPAN="2">
-		<B><font color="red"><?php putGS("Error"); ?> </font></B>
+		<B><font color="red"><?php echo $translator->trans("Error"); ?> </font></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -29,7 +29,7 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <TR>
 	<TD COLSPAN="2" align="center">
 		<DIV ALIGN="CENTER">
-            <INPUT id="ok-button" TYPE="button" class="button" NAME="OK" VALUE="<?php putGS('OK'); ?>" />
+            <INPUT id="ok-button" TYPE="button" class="button" NAME="OK" VALUE="<?php echo $translator->trans('OK'); ?>" />
             <script type="text/javascript">
             $(function() {
                 $('#ok-button').click(function() {

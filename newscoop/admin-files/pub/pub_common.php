@@ -1,5 +1,4 @@
 <?PHP
-camp_load_translation_strings("pub");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
@@ -10,11 +9,12 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 function camp_is_publication_conflicting($p_publicationName)
 {
 	global $ADMIN;
+	$translator = \Zend_Registry::get('container')->getService('translator');
 	$publications = Publication::GetPublications($p_publicationName);
 	if (count($publications) > 0) {
 		$pubObj = array_pop($publications);
 		$pubLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=".$pubObj->getPublicationId().'">'. $pubObj->getName() ."</A>";
-		$msg = getGS("The publication name you specified conflicts with publication '$1'.", $pubLink);
+		$msg = $translator->trans("The publication name you specified conflicts with publication $1.", array('$1' => $pubLink), 'pub');
 		camp_html_add_msg($msg);
 	}
 }
@@ -31,6 +31,7 @@ function camp_is_publication_conflicting($p_publicationName)
 function camp_is_alias_conflicting($p_alias)
 {
 	global $ADMIN;
+	$translator = \Zend_Registry::get('container')->getService('translator');
 
 	if (!is_numeric($p_alias)) {
 		// The alias given is a name, which means it doesnt exist yet.
@@ -41,7 +42,7 @@ function camp_is_alias_conflicting($p_alias)
 			$pubId = $alias->getPublicationId();
 			$pubObj = new Publication($pubId);
 			$pubLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=$pubId\">". $pubObj->getName() ."</A>";
-			$msg = getGS("The publication alias you specified conflicts with publication '$1'.", $pubLink);
+			$msg = $translator->trans("The publication alias you specified conflicts with publication '$1'.", array('$1' => $pubLink), 'pub');
 			camp_html_add_msg($msg);
 		}
 	} else {
@@ -54,7 +55,7 @@ function camp_is_alias_conflicting($p_alias)
 			if (count($pubs) > 0) {
 				$pubObj = array_pop($pubs);
 				$pubLink = "<A HREF=\"/$ADMIN/pub/edit.php?Pub=".$pubObj->getPublicationId().'">'. $pubObj->getName() ."</A>";
-				$msg = getGS("The publication alias you specified conflicts with publication '$1'.", $pubLink);
+				$msg = $translator->trans("The publication alias you specified conflicts with publication '$1'.", array('$1' => $pubLink), 'pub');
 				camp_html_add_msg($msg);
 			}
 		}

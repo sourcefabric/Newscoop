@@ -5,12 +5,13 @@
   <title>Newscoop</title>
 </head>
 <body>
-  <h1><?php putGS('An error occurred'); ?></h1>
+  <?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
+  <h1><?php echo $translator->trans('An error occurred', array(), 'bug_reporting'); ?></h1>
   <h2><?php echo $this->message ?></h2>
 
   <?php if (isset($this->exception)): ?>
 
-  <h3><?php putGS('Exception information:'); ?></h3>
+  <h3><?php echo $translator->trans('Exception information:', array(), 'bug_reporting'); ?></h3>
   <p>
   		<b>Type:</b> <?php echo get_class( $this->exception ) ?>
   		<br />
@@ -21,11 +22,11 @@
       <b>File:</b> <?php echo $this->exception->getFile() ?> <b>:</b> <?php echo $this->exception->getLine() ?>
   </p>
 
-  <h3><?php putGS('Stack trace:'); ?></h3>
+  <h3><?php echo $translator->trans('Stack trace:', array(), 'bug_reporting'); ?></h3>
   <pre><?php echo $this->exception->getTraceAsString() ?>
   </pre>
 
-  <h3><?php putGS('Request Parameters:'); ?></h3>
+  <h3><?php echo $translator->trans('Request Parameters:', array(), 'bug_reporting'); ?></h3>
   <pre><?php echo var_export($this->request->getParams(), true) ?>
   </pre>
   <?php endif ?>

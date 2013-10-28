@@ -1,11 +1,9 @@
 <?php
-camp_load_translation_strings('media_archive');
-camp_load_translation_strings('api');
-camp_load_translation_strings('library');
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+$translator = \Zend_Registry::get('container')->getService('translator');
 
-camp_html_content_top(getGS('Media Archive'), NULL);
+camp_html_content_top($translator->trans('Media Archive', array(), 'media_archive'), NULL);
 ?>
 <script>
     var adminUrl = '<?php global $ADMIN; echo($ADMIN); ?>';
@@ -15,25 +13,25 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 
 <div id="archive">
 <ul>
-    <li><a href="#images"><?php putGS('Images'); ?></a></li>
-    <li><a href="#slideshows"><?php putGS('Slideshows'); ?></a></li>
-    <li><a href="#files"><?php putGS('Files'); ?></a></li>
+    <li><a href="#images"><?php echo $translator->trans('Images'); ?></a></li>
+    <li><a href="#slideshows"><?php echo $translator->trans('Slideshows', array(), 'media_archive'); ?></a></li>
+    <li><a href="#files"><?php echo $translator->trans('Files'); ?></a></li>
 </ul>
 
 <div id="images">
     <fieldset class="actions">
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <span class="actions" style="margin-right:20px;">
-        <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>">&nbsp;<?php putGS('Add new image'); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php echo $translator->trans('Add new image', array(), 'media_archive'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php echo $translator->trans('Add new image', array(), 'media_archive'); ?>">&nbsp;<?php echo $translator->trans('Add new image', array(), 'media_archive'); ?></a>
         &nbsp;&nbsp;
-        <a href="/<?php echo $ADMIN; ?>/media-archive/edit.php?f_fix_thumbs=1" title="<?php putGS('Fix all thumbnails'); ?>"><?php putGS('Fix all thumbnails'); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/media-archive/edit.php?f_fix_thumbs=1" title="<?php echo $translator->trans('Fix all thumbnails', array(), 'media_archive'); ?>"><?php echo $translator->trans('Fix all thumbnails', array(), 'media_archive'); ?></a>
     </span>
     <?php } ?>
 
     <?php if ($g_user->hasPermission('DeleteImage')) { ?>
-        <input type="submit" class="button" name="delete" value="<?php putGS('Delete selected'); ?>" />
-        <input type="submit" class="button" name="approve" value="<?php putGS('Approve selected'); ?>" />
-        <input type="submit" class="button" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
+        <input type="submit" class="button" name="delete" value="<?php echo $translator->trans('Delete selected', array(), 'media_archive'); ?>" />
+        <input type="submit" class="button" name="approve" value="<?php echo $translator->trans('Approve selected', array(), 'media_archive'); ?>" />
+        <input type="submit" class="button" name="disapprove" value="<?php echo $translator->trans('Disapprove selected', array(), 'media_archive'); ?>" />
     <?php } ?>
     </fieldset>
 
@@ -60,7 +58,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <fieldset class="actions">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
     <span class="actions" style="margin-right:20px;">
-        <a href="/<?php echo $ADMIN; ?>/media-archive/add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>">&nbsp;<?php putGS('Add new file'); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add_file.php" title="<?php echo $translator->trans('Add new file', array(), 'media_archive'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php echo $translator->trans('Add new file', array(), 'media_archive'); ?>">&nbsp;<?php echo $translator->trans('Add new file', array(), 'media_archive'); ?></a>
     </span>
     <script type="text/javascript"><!--
         $(document).ready(function() {
@@ -74,9 +72,9 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <?php } ?>
 
     <?php if ($g_user->hasPermission('DeleteFile')) { ?>
-        <input type="submit" class="button" name="delete" value="<?php putGS('Delete selected'); ?>" />
-        <input type="submit" class="button" name="approve" value="<?php putGS('Approve selected'); ?>" />
-        <input type="submit" class="button" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
+        <input type="submit" class="button" name="delete" value="<?php echo $translator->trans('Delete selected', array(), 'media_archive'); ?>" />
+        <input type="submit" class="button" name="approve" value="<?php echo $translator->trans('Approve selected', array(), 'media_archive'); ?>" />
+        <input type="submit" class="button" name="disapprove" value="<?php echo $translator->trans('Disapprove selected', array(), 'media_archive'); ?>" />
     <?php } ?>
     </fieldset>
 
@@ -104,7 +102,7 @@ $(document).ready(function() {
 
         // check for items
         if (!items.size()) {
-            alert('<?php putGS('Select some items first.'); ?>');
+            alert('<?php echo $translator->trans('Select some items first.', array(), 'media_archive'); ?>');
             return false;
         }
 
@@ -120,14 +118,14 @@ $(document).ready(function() {
         });
 
         if (!ids.length) { // only used selected, nothing to delete
-            flashMessage("<?php putGS("You can't delete used files."); ?>", 'error');
+            flashMessage("<?php echo $translator->trans("You cant delete used files.", array(), 'media_archive'); ?>", 'error');
             return true;
         }
 
         // confirm
-        if (!used && !confirm('<?php putGS('Are you sure you want to delete selected items?'); ?>')) {
+        if (!used && !confirm('<?php echo $translator->trans('Are you sure you want to delete selected items?', array(), 'media_archive'); ?>')) {
             return false;
-        } else if (used && !confirm("<?php echo getGS("You can't delete used files."), ' ', getGS("Do you wan't to delete unused only?"); ?>")) {
+        } else if (used && !confirm("<?php echo $translator->trans("You cant delete used files.", array(), 'media_archive'), ' ', $translator->trans("Do you want to delete unused only?", array(), 'media_archive'); ?>")) {
             return false; // delete canceled
         }
 
@@ -141,7 +139,7 @@ $(document).ready(function() {
         callServer(callback, [ids], function (json) {
             var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
             tables[smartlistId].fnDraw(true);
-            flashMessage('<?php putGS('Items deleted.'); ?>');
+            flashMessage('<?php echo $translator->trans('Items deleted.', array(), 'media_archive'); ?>');
         });
 
         return false;
@@ -155,7 +153,7 @@ $(document).ready(function() {
 
         // check for items
         if (!items.size()) {
-            alert('<?php putGS('Select some items first.'); ?>');
+            alert('<?php echo $translator->trans('Select some items first.', array(), 'media_archive'); ?>');
             return false;
         }
 
@@ -167,12 +165,12 @@ $(document).ready(function() {
         });
 
         if (!ids.length) { // only used selected, nothing to delete
-            flashMessage("<?php putGS("You can't update used files."); ?>", 'error');
+            flashMessage("<?php echo $translator->trans("You cant update used files.", array(), 'media_archive'); ?>", 'error');
             return true;
         }
 
         // confirm
-        if (!confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
+        if (!confirm('<?php echo $translator->trans('Are you sure you want to update selected items?', array(), 'media_archive'); ?>')) {
             return false;
         }
 
@@ -186,7 +184,7 @@ $(document).ready(function() {
         callServer(callback, [ids], function (json) {
             var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
             tables[smartlistId].fnDraw(true);
-            flashMessage('<?php putGS('Items updated.'); ?>');
+            flashMessage('<?php echo $translator->trans('Items updated.', array(), 'media_archive'); ?>');
         });
 
         return false;
@@ -200,7 +198,7 @@ $(document).ready(function() {
 
         // check for items
         if (!items.size()) {
-            alert('<?php putGS('Select some items first.'); ?>');
+            alert('<?php echo $translator->trans('Select some items first.', array(), 'media_archive'); ?>');
             return false;
         }
 
@@ -216,14 +214,14 @@ $(document).ready(function() {
         });
 
         if (!ids.length) { // only used selected, nothing to delete
-            flashMessage("<?php putGS("You can't update used files."); ?>", 'error');
+            flashMessage("<?php echo $translator->trans("You cant update used files.", array(), 'media_archive'); ?>", 'error');
             return true;
         }
 
         // confirm
-        if (!used && !confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
+        if (!used && !confirm('<?php echo $translator->trans('Are you sure you want to update selected items?', array(), 'media_archive'); ?>')) {
             return false;
-        } else if (used && !confirm("<?php echo getGS("You can't update used files."), ' ', getGS("Do you want to update unused only?"); ?>")) {
+        } else if (used && !confirm("<?php echo $translator->trans("You cant update used files.", array(), 'media_archive'), ' ', $translator->trans("Do you want to update unused only?", array(), 'media_archive'); ?>")) {
             return false; // delete canceled
         }
 
@@ -237,7 +235,7 @@ $(document).ready(function() {
         callServer(callback, [ids], function (json) {
             var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
             tables[smartlistId].fnDraw(true);
-            flashMessage('<?php putGS('Items updated.'); ?>');
+            flashMessage('<?php echo $translator->trans('Items updated.', array(), 'media_archive'); ?>');
         });
 
         return false;
@@ -265,14 +263,14 @@ function edit(field, id) {
     element.data('old', value);
     element.hide();
     if (field == 'date') {
-        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php echo $translator->trans('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php echo $translator->trans('Cancel'); ?></button></td>');
         $('#input_'+field+'_'+id).datepicker({
             dateFormat : 'yy-mm-dd',
             defaultDate: 'value'
         });
     }
     else {
-        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php echo $translator->trans('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php echo $translator->trans('Cancel'); ?></button></td>');
     }
 }
 
@@ -290,7 +288,7 @@ function onUpload()
 {
     var smartlistId = $('table.medialist').attr('id').split('-')[1];
     tables[smartlistId].fnDraw(true);
-    flashMessage('<?php putGS('File uploaded.'); ?>');
+    flashMessage('<?php echo $translator->trans('File uploaded.', array(), 'media_archive'); ?>');
 }
 
 /**

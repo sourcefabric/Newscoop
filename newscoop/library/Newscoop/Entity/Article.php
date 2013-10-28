@@ -432,11 +432,12 @@ class Article
      * @return string
      */
     public function getWorkflowStatus($readable = false)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $readableStatus = array(
-            self::STATUS_PUBLISHED => getGS('published'),
-            self::STATUS_NOT_PUBLISHED => getGS('unpublished'),
-            self::STATUS_SUBMITTED => getGS('submited'),
+            self::STATUS_PUBLISHED => $translator->trans('published'),
+            self::STATUS_NOT_PUBLISHED => $translator->trans('unpublished'),
+            self::STATUS_SUBMITTED => $translator->trans('submitted'),
         );
 
         if ($readable) {

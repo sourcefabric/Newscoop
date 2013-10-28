@@ -1,5 +1,5 @@
 <?php
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 $this->headLink()->appendStylesheet( $this->baseUrl('admin-style/admin_stylesheet_context.css') );
 $this->headStyle()->appendStyle( "
 	.context-block{ width: auto; float: none; height: 440px }
@@ -18,15 +18,15 @@ $this->headStyle()->appendStyle( "
 " );
 $t = array
 (
-	'view-article' => getGS('View article'),
-	'drag-here' => getGS('Drag here to add to list'),
-	'playlist-updated' => getGS('List updated.'),
-    'list-saved' => getGS('List saved'),
-	'list-save-failed' => getGS('Could not save the list'),
-    'delete' => getGS('Delete'),
-    'cancel' => getGS('Cancel'),
-	'please-select-playlist' => getGS('Please select a list'),
-    'item-exists' => getGS('Item already exists in the list')
+	'view-article' => $translator->trans('View article', array(), 'articles'),
+	'drag-here' => $translator->trans('Drag here to add to list', array(), 'articles'),
+	'playlist-updated' => $translator->trans('List updated.', array(), 'articles'),
+    'list-saved' => $translator->trans('List saved', array(), 'articles'),
+	'list-save-failed' => $translator->trans('Could not save the list', array(), 'articles'),
+    'delete' => $translator->trans('Delete'),
+    'cancel' => $translator->trans('Cancel'),
+	'please-select-playlist' => $translator->trans('Please select a list', array(), 'articles'),
+    'item-exists' => $translator->trans('Item already exists in the list', array(), 'articles')
 );
 $dataUrl = $this->url( array
 (
@@ -258,7 +258,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			<div class="select-playlist-bar">
 				<form autocomplete="off">
     				<select id="playlists" style="font-size:14px;padding:2px;border:none;width:250px">
-    					<option style="color: #aaa" value="" selected="selected"><?php echo getGS('Select a list') ?></option>
+    					<option style="color: #aaa" value="" selected="selected"><?php echo $translator->trans('Select a list', array(), 'articles') ?></option>
         	            <?php foreach ($this->playlists as $pl) : ?>
     						<option value="<?php echo $pl->getId() ?>"><?php echo $pl->getName() ?></option>
             	        <?php endforeach; ?>
@@ -269,21 +269,21 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			<div class="save-button-bar">
 
 				<input type="submit" name="add"
-					value="<?php echo getGS('Add to list'); ?>" class="default-button" onclick="popup_add();"
+					value="<?php echo $translator->trans('Add to list', array(), 'articles'); ?>" class="default-button" onclick="popup_add();"
 					id="context_button_save">
 
 				<input type="submit" name="cancel"
-					value="<?php echo getGS('Close'); ?>" class="default-button" onclick="popup_close();"
+					value="<?php echo $translator->trans('Close'); ?>" class="default-button" onclick="popup_close();"
 					id="context_button_close">
 
 				<input type="submit" name="save"
-					value="<?php echo getGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
+					value="<?php echo $translator->trans('Save'); ?>" class="save-button-small" onclick="popup_save();"
 					id="context_button_save">
 			</div>
 		</div>
 		<div class="context-content">
     		<div class="context-block context-list">
-    			<h3><?php echo getGS('Featured Articles'); ?></h3>
+    			<h3><?php echo $translator->trans('Featured Articles', array(), 'articles'); ?></h3>
     			<div class="context-list-results">
     					<form id="context-list-form">
         					<ul id="context_list" style="margin:0; padding: 0; display:block; overflow-y:auto; overflow-x:hidden; padding: 0; width: 100%; height: 100%">

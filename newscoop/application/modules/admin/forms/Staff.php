@@ -26,7 +26,9 @@ class Admin_Form_Staff extends Admin_Form_User
     }
 
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         parent::init();
 
         if (!$this->isAdmin) {
@@ -34,7 +36,7 @@ class Admin_Form_Staff extends Admin_Form_User
         }
 
         $this->addElement('multiCheckbox', 'groups', array(
-            'label' => getGS('User Type'),
+            'label' => $translator->trans('User Type', array(), 'users'),
             'order' => 61, // $this->getEelement('phone')->getOrder() + 1;
         ));
     }

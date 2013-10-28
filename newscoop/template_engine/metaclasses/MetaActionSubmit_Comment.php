@@ -92,6 +92,8 @@ class MetaActionSubmit_Comment extends MetaAction
         $p_context->url->reset_parameter('f_'.$this->m_name);
         \CampRequest::SetVar('f_'.$this->m_name);
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if (!is_null($this->m_error)) {
             return false;
         }
@@ -134,7 +136,7 @@ class MetaActionSubmit_Comment extends MetaAction
 				$userRealName = $this->m_properties['nickname'];
 			}
 			if ($this->m_properties['is_anonymous']) {
-				$userRealName = getGS('Anonymous');
+				$userRealName = $translator->trans('Anonymous', array(), 'comments');
 			}
         }
         else

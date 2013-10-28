@@ -814,7 +814,9 @@ class XR_CcClient {
      *  @return object, created object instance
      */
     public static function &Factory($mdefs, $debug=0, $verbose=FALSE)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
     	if (class_exists('XR_CcClientCore')) {
     		$xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
     		return $xrc;
@@ -838,12 +840,12 @@ class XR_CcClient {
             "}\n";
         $r = eval($e);
         if ($r === FALSE) {
-            $result = new PEAR_Error(getGS("There was a problem trying to execute the XML RPC function."));
+            $result = new PEAR_Error($translator->trans("There was a problem trying to execute the XML RPC function.", array(), 'api'));
         	return $result;
         }
         $xrc = new XR_CcClientCore($mdefs, $debug, $verbose);
         if (is_null($xrc->client)) {
-        	$result = new PEAR_Error(getGS("The Campcaster server configuration is invalid."));
+        	$result = new PEAR_Error($translator->trans("The Campcaster server configuration is invalid.", array(), 'api'));
         	return $result;
         }
         return $xrc;
@@ -916,14 +918,15 @@ class XR_CcClient {
      *      TRUE on success, PEAR_Error on failure
      */
     public function ping($sessid = null)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $resp = $this->xr_loadPref($sessid, 'stationName');
         if (is_string($resp) && $resp == 'Connection refused') {
             $resp = new PEAR_Error('Connection refused');
         }
         if (PEAR::isError($resp)) {
 	        if ($resp->getMessage() == 'Connection refused') {
-    	        return new PEAR_Error(getGS("Communication error: ".$this->client->errstr));
+    	        return new PEAR_Error($translator->trans("Communication error: ".$this->client->errstr, array(), 'api'));
         	}
             if ($resp->getCode() == 805 || $resp->getCode() == 804) {
                 return $resp;

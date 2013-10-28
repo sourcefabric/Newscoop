@@ -12,19 +12,21 @@ class Admin_Form_SlideshowCreate extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('text', 'headline', array(
-            'label' => getGS('Headline'),
+            'label' => $translator->trans('Headline', array(), 'article_images'),
             'required' => true,
         ));
 
         $this->addElement('select', 'rendition', array(
-            'label' => getGS('Slideshow rendition'),
+            'label' => $translator->trans('Slideshow rendition', array(), 'article_images'),
             'required' => true,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Create'),
+            'label' => $translator->trans('Create', array(), 'home'),
             'ignore' => true,
         ));
     }

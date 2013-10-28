@@ -1,0 +1,154 @@
+'Rename user': 
+Campsite: 
+'Image Rendering': 
+'Featured Article Lists': 
+'You have tried to upload an invalid backup file.': 
+'You do not have the right to manage backups.': 
+'Make a new backup': 
+'Are you sure you want to make a new backup?': 
+'Security token expired. Please resubmit the form.': 
+Templates: 
+'Create slideshow': 
+Create: 
+Attach/Detach: 
+'Are you sure you want to delete slideshow?': 
+Support: 
+'Pending articles': 
+'Manage Users': 
+'Manage User Types': 
+'Manage User Points System': 
+Last: 
+First: 
+Feedback: 
+'Edit your password': 
+'Edit user': 
+'Edit permissions': 
+Detail: 
+'Create new user': 
+'Create new account': 
+'Add feed': 
+'Upload of file $1 was not successful.': 
+'The file $1 could not be moved. Check you have enough of disk space.': 
+MiB: 
+'Download was not successful. Check please that the server is not out of disk space.': 
+'try again later': 
+at: 
+'You must at least upload one file.': 
+'Warning: the existing data and themes will be deleted!': 
+'Value is required and cant be empty': 
+Upload: 
+'Update comment': 
+'Time created': 
+Themes: 
+'Stop current upload': 
+'Start uploading queue': 
+'Start upload': 
+Settings: 
+'Select files': 
+Reply: 
+'New comment added': 
+'Manage Authors': 
+Loading..: 
+Filename: 
+'Edit user type': 
+'Edit language': 
+'Drag files here.': 
+'Connection interrupted': 
+Ban: 
+'Are you sure you want to': 
+'Add files to the upload queue and click the start button.': 
+'Add files': 
+'%value% is more than %max% characters long': 
+'%value% is less than %min% characters long': 
+'User name': 
+Newscoop: 
+'Your password has been reset.': 
+'Proceed to login.': 
+'Hi, \n\nfor password recovery, please follow this link: $1': 
+'Go to login': 
+'Back to login.': 
+'Back to login': 
+'An email with instructions on how to recover you password has been sent to your inbox.': 
+'Session expired.': 
+Processing...: 
+Please: 
+'Go to dashboard': 
+'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 
+'Newscoop cache was cleaned up': 
+Dashboard: 
+'Your changes will be saved after login.': 
+'Upload backup file': 
+'The file $1 has been uploaded successfully.': 
+'Media Archive': 
+Widgets: 
+'Widget info': 
+'Widget added to dashboard.': 
+'Remove widget': 
+'Please login to continue.': 
+'Add to dashboard': 
+'Add more widgets': 
+login: 
+'This link is not valid.': 
+'Recover password': 
+'Please enter your email.': 
+'Password recovery is disabled.': 
+'Password recovery': 
+'Password Recovery': 
+'No user is registered with this email.': 
+'Forgot your password?': 
+'Email: incorrect format.': 
+Email: 
+'Bad input parameters.': 
+'There was an error trying to delete the file $1.': 
+'The file $1 was deleted successfully.': 
+Size: 
+'Restore file': 
+Restore: 
+Mb: 
+'Free disk space': 
+'Download file': 
+Download: 
+'Delete file': 
+'Backup list is empty.': 
+'Are you sure you want to restore the file $1?': 
+'Are you sure you want to delete the file $1?': 
+'Import XML': 
+'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 
+'Select the field from which to generate the author': 
+'Invalid or empty field $1. You must select a valid dynamic field.': 
+'Unable to create author $1 for article no. $2 ($3) of type $4.': 
+'There were errors setting the author for articles of type $1 from the field $2.': 
+'The author was set successfuly for articles of type $1 from the field $2.': 
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
+'Error setting the author $1 for article no. $2 ($3) of type $4.': 
+'Clear system cache': 
+'The system was unable to upload the file $1. ': 
+'Please check the file you are trying to upload, it might be corrupted.': 
+'An error occured in session management. Please reload the login page.': 
+'This file is stored on disk as $1.': 
+'The system is unable to write to the directory $1.': 
+'The system was unable to read the file $1.': 
+'The system was unable to delete the directory $1.': 
+'Please check if the user $1 has permission to read this file.': 
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 
+'The system was unable to write to the file $1.': 
+'The system was unable to delete the file $1.': 
+'The system was unable to create the file $1.': 
+'The system was unable to create the directory $1.': 
+'Please check if the user $1 has permission to write to this file.': 
+'Please check if the user $1 has permission to write to the directory $2.': 
+'Type the code shown above:': 
+'Please enter your user name.': 
+'Please enter your password.': 
+'Please enter the code shown in the image.': 
+'CAPTCHA code is not valid.  Please try again.': 
+'Signed in: $1': 'Autenticado como: $1'
+Help: Ajuda
+'Please enter your user name and password': 'Introduza o seu Nome de Utlizador e a sua Palavra-Passe'
+'You do not have the right to access this page.': 'Não tem permissão para aceder a esta página'
+'Login failed': 'A autenticação falhou'
+'Please make sure that you typed the correct user name and password.': 'Certifique-se que introduziu o Nome de Utilizador e a Palavra-Passe correctas.'
+'If your problem persists please contact the site administrator $1': 'Se o problema persistir, contacte o Administrador de Sistema $1.'
+Backup/Restore: 

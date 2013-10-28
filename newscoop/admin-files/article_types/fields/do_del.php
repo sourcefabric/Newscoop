@@ -1,18 +1,18 @@
 <?php
-camp_load_translation_strings("article_type_fields");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('DeleteArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to delete article type fields."));
+	camp_html_display_error($translator->trans("You do not have the right to delete article type fields.", array(), 'article_type_fields'));
 	exit;
 }
 

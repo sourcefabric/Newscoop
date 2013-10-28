@@ -1,0 +1,81 @@
+get: 
+Soundcloud: Soundcloud
+Templates: Шаблони
+'Feedback Messages': 'Повідомлення зворотнього зв’язку'
+'Article Playlists': 'Плейлисти новин'
+'Check all': 'Перевірити все'
+view: перегляд
+undo/redo: 'відміна / повтор'
+underline: підкреслювання
+translate: переклад
+'text direction': 'напрямок тексту'
+'text alignment': 'вирівнювання тексту'
+table: таблиця
+superscript: 'надстроковий текст'
+subscript: 'підстроковий текст'
+subhead: підзаголовок
+strikethrough: закреслений
+statusbar: 'панель статусів'
+'spell checker enabled': 'програма перевірки орфографії активний'
+'source view': 'перегляд первісного виду'
+publish: публікувати
+notify: оповіщення
+moderate: модерування
+manage: керування
+'list number': 'нумерований список'
+'list bullet': список
+link: посилання
+italic: нахилений
+indent: відступ
+image: зображення
+'horizontal rule': 'горизонтальна лінія'
+handle: оброблення
+guest: гість
+'font size': 'розмір шрифта'
+'font face': шрифт
+'font color': 'колір шрифта'
+find/replace: 'знайти / замінити'
+enlarge: збільшити
+enable: увімкнено
+edit: редагувати
+delete: видалити
+copy/cut/paste: 'скопіювати / вирізати / вставити'
+clear: очистити
+'character map': 'мапа символів'
+bold: жирний
+attach: прікріпити
+'any resource': 'будь-який ресурс'
+admin: адмін
+add: додати
+'You cant deny yourself to manage $1': 'Ви не можете заборонити собі керування  $1'
+'You are not allowed to $1 $2.': 'Вам не дозволено $1 $2.'
+'User type saved.': 'Тип користувача збережено.'
+'User type deleted.': 'Тип користувача видалено.'
+'User type added.': 'Тип користувача додано.'
+'User Groups': 'Групи користувачів'
+Themes: Теми
+'That type name already exists, please choose a different name.': 'Така назва типу вже існує, виберіть іншу будь ласка.'
+System: Система
+Structure: Структура
+'Search Indexer': 'Пошуковий індексатор'
+'Rich-Text Editor Preferences': 'налаштування RTF-редактора'
+ReCaptcha: ReCaptcha
+Polls: Опитування
+'Permissions:': 'Права:'
+'Permissions updated': 'Права оновлені'
+Notification: Сповіщення
+Log: ЛОГи
+Layout: Компонування
+Global: Глобальне
+Files: Файли
+'Error: ': 'Помилки:'
+'Edit user type $1': 'Редагувати тип користувача $1'
+Deny: Відмова
+'Delete user type $1': 'Видалити тип користувача $1'
+'Can not delete a user type with assigned users.': 'Неможливо видалити тип користувача якщо він призначений будь-яким користувачам.'
+Cache: Кеш
+Backup: Резерв
+Authoring: Авторинг
+Allow: Дозвіл
+'User types': 'Тип користувачів'
+'No user types.': 'Немає типів користувачів.'

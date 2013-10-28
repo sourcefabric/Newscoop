@@ -5,13 +5,15 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticleType.php");
 
 global $Campsite;
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if ( isset($_POST['f_save']) && !SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('AddArticle')) {
-    camp_html_display_error(getGS("You do not have the right to import XML archives."));
+    camp_html_display_error($translator->trans("You do not have the right to import XML archives.", array(), 'articles'));
     exit;
 }
 
@@ -41,26 +43,26 @@ if ($f_save) {
                 break;
             case 1: // UPLOAD_ERR_INI_SIZE
             case 2: // UPLOAD_ERR_FORM_SIZE
-                camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+                camp_html_display_error($translator->trans("The file exceeds the allowed max file size.", array(), 'articles'), null, true);
                 break;
             case 3: // UPLOAD_ERR_PARTIAL
-                camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
+                camp_html_display_error($translator->trans("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini", array(), 'articles'), null, true);
                 break;
             case 4: // UPLOAD_ERR_NO_FILE
-                camp_html_display_error(getGS("You must select a file to upload."), null, true);
+                camp_html_display_error($translator->trans("You must select a file to upload.", array(), 'articles'), null, true);
                 break;
             case 6: // UPLOAD_ERR_NO_TMP_DIR
             case 7: // UPLOAD_ERR_CANT_WRITE
-                camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
+                camp_html_display_error($translator->trans("There was a problem uploading the file.", array(), 'articles'), null, true);
                 break;
         }
     } else {
-        camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+        camp_html_display_error($translator->trans("The file exceeds the allowed max file size.", array(), 'articles'), null, true);
     }
 }
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $backlink);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $backlink);
     exit;
 }
 
@@ -72,7 +74,7 @@ $isValidXMLFile = false;
 if ($f_save && !empty($_FILES['f_input_file'])) {
     if (file_exists($_FILES['f_input_file']['tmp_name'])) {
         if (!($buffer = @file_get_contents($_FILES['f_input_file']['tmp_name']))) {
-	    camp_html_display_error(getGS("File could not be read."), $backlink);
+	    camp_html_display_error($translator->trans("File could not be read.", array(), 'articles'), $backlink);
 	    exit;
 	}
 
@@ -82,22 +84,22 @@ if ($f_save && !empty($_FILES['f_input_file'])) {
             throw new Exception();
         }
 	} catch (Exception $e) {
-	    camp_html_display_error(getGS("File is not a valid XML file."), $backlink);
+	    camp_html_display_error($translator->trans("File is not a valid XML file.", array(), 'articles'), $backlink);
 	    exit;
     }
 
 	if (!isset($xml->article->name)) {
-	    camp_html_add_msg(getGS("Bad format in XML file."), $backlink);
+	    camp_html_add_msg($translator->trans("Bad format in XML file.", array(), 'articles'), $backlink);
 	}
 
 	$isValidXMLFile = true;
 	@unlink($_FILES['f_input_file']['tmp_name']);
     } else {
-        camp_html_display_error(getGS("File does not exist."), $backlink);
+        camp_html_display_error($translator->trans("File does not exist.", array(), 'articles'), $backlink);
         exit;
     }
 } elseif ($f_save) {
-    camp_html_add_msg(getGS("File could not be uploaded."), $backlink);
+    camp_html_add_msg($translator->trans("File could not be uploaded.", array(), 'articles'), $backlink);
 }
 
 
@@ -105,20 +107,20 @@ if ($isValidXMLFile) {
     if ($f_publication_id > 0) {
         $publicationObj = new Publication($f_publication_id);
         if (!$publicationObj->exists()) {
-            camp_html_display_error(getGS('Publication does not exist.'), $backlink);
+            camp_html_display_error($translator->trans('Publication does not exist.'), $backlink);
             exit;
         }
     	if ($f_issue_number > 0) {
     	    $issueObj = new Issue($f_publication_id, $f_article_language_id, $f_issue_number);
     	    if (!$issueObj->exists()) {
-    	        camp_html_display_error(getGS('Issue does not exist.'), $backlink);
+    	        camp_html_display_error($translator->trans('Issue does not exist.'), $backlink);
                 exit;
     	    }
 
     	    if ($f_section_number > 0) {
     	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_article_language_id, $f_section_number);
                 if (!$sectionObj->exists()) {
-                    camp_html_display_error(getGS('Section does not exist.'), $backlink);
+                    camp_html_display_error($translator->trans('Section does not exist.'), $backlink);
                     exit;
                 }
     	    }
@@ -141,7 +143,7 @@ if ($isValidXMLFile) {
 	    $existingArticle = array_pop($existingArticles);
 	    // Is overwrite articles false? then skip and process next article
 	    if ($f_overwrite_articles == 'N') {
-	        $errorMessages[][] = getGS('Article "<i>$1</i>" already exists, and was not overwritten.<br />',$article->name);
+	        $errorMessages[][] = $translator->trans('Article <i>$1</i> already exists, and was not overwritten.<br />',array('$1' => $article->name), 'articles');
 	        continue;
 	    }
 	}
@@ -156,7 +158,7 @@ if ($isValidXMLFile) {
 
 	// Checks whether article was successfully created
 	if (!$articleObj->exists()) {
-	    camp_html_display_error(getGS('Article could not be created.'), $backlink);
+	    camp_html_display_error($translator->trans('Article could not be created.', array(), 'articles'), $backlink);
 	    exit;
 	}
 	$articleFields['name'] = true;
@@ -223,7 +225,7 @@ if ($isValidXMLFile) {
 	}
     }
 
-    camp_html_add_msg(getGS("$1 articles successfully imported.", $articleCount), "ok");
+    camp_html_add_msg($translator->trans("$1 articles successfully imported.", array('$1' => $articleCount), 'articles'), "ok");
 }
 
 
@@ -251,8 +253,8 @@ if ($f_issue_number > 0) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Actions"), "");
-$crumbs[] = array(getGS("Import XML"), "");
+$crumbs[] = array($translator->trans("Actions"), "");
+$crumbs[] = array($translator->trans("Import XML", array(), 'articles'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -266,7 +268,7 @@ echo camp_html_breadcrumbs($crumbs);
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2">
-    <b><?php putGS("Import XML"); ?></b>
+    <b><?php echo $translator->trans("Import XML", array(), 'articles'); ?></b>
     <hr noshade size="1" color="black">
   </td>
 </tr>
@@ -274,10 +276,10 @@ echo camp_html_breadcrumbs($crumbs);
   <td valign="top">
     <table>
     <tr>
-      <td align="right"><?php putGS("Article Type"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Article Type", array(), 'articles'); ?>:</td>
       <td>
-        <select name="f_article_type" id="f_article_type" class="input_select" alt="select" emsg="<?php putGS('You must select an article type.'); ?>">
-        <option value=""><?php putGS('---Select article type---'); ?></option>
+        <select name="f_article_type" id="f_article_type" class="input_select" alt="select" emsg="<?php echo $translator->trans('You must select an article type.', array(), 'articles'); ?>">
+        <option value=""><?php echo $translator->trans('---Select article type---', array(), 'articles'); ?></option>
         <?php
         foreach ($articleTypes as $article_type) {
             $articleType = new ArticleType($article_type);
@@ -288,10 +290,10 @@ echo camp_html_breadcrumbs($crumbs);
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Language"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Language"); ?>:</td>
       <td>
-        <select name="f_article_language_id" id="f_article_language_id" class="input_select" alt="select" emsg="<?php putGS('You must select an article language.'); ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_article_language_id); ?>) {this.form.submit();}">
-        <option value=""><?php putGS('---Select language---'); ?></option>
+        <select name="f_article_language_id" id="f_article_language_id" class="input_select" alt="select" emsg="<?php echo $translator->trans('You must select an article language.', array(), 'articles'); ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_article_language_id); ?>) {this.form.submit();}">
+        <option value=""><?php echo $translator->trans('---Select language---'); ?></option>
         <?php
         foreach ($allLanguages as $language) {
             camp_html_select_option($language->getLanguageId(), $f_article_language_id, $language->getNativeName());
@@ -301,11 +303,11 @@ echo camp_html_breadcrumbs($crumbs);
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Publication"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Publication"); ?>:</td>
       <td>
         <?php if ($f_article_language_id > 0 && count($allPublications) > 1) { ?>
-        <select name="f_publication_id" id="f_publication_id" class="input_select" alt="select" emsg="<?php putGS('You must select a publication.'); ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_publication_id); ?>) {this.form.submit();}">
-        <option value=""><?php putGS('---Select publication---'); ?></option>
+        <select name="f_publication_id" id="f_publication_id" class="input_select" alt="select" emsg="<?php echo $translator->trans('You must select a publication.', array(), 'articles') ?>" onchange="if (this.options[this.selectedIndex].value != <?php p($f_publication_id); ?>) {this.form.submit();}">
+        <option value=""><?php echo $translator->trans('---Select publication---'); ?></option>
         <?php
         foreach ($allPublications as $publication) {
             camp_html_select_option($publication->getPublicationId(), $f_publication_id, $publication->getName());
@@ -313,16 +315,16 @@ echo camp_html_breadcrumbs($crumbs);
         ?>
         </select>
         <?php } else { ?>
-        <select class="input_select" disabled><option><?php putGS('No publications'); ?></option></select>
+        <select class="input_select" disabled><option><?php echo $translator->trans('No publications'); ?></option></select>
         <?php } ?>
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Issue"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Issue"); ?>:</td>
       <td>
         <?php if (($f_publication_id > 0) && (count($allIssues) >= 1)) { ?>
         <select name="f_issue_number" id="f_issue_number" class="input_select" onchange="if (this.options[this.selectedIndex].value != <?php p($f_issue_number); ?>) { this.form.submit(); }">
-        <option value="0"><?php putGS('---Select issue---'); ?></option>
+        <option value="0"><?php echo $translator->trans('---Select issue---'); ?></option>
         <?php
             foreach ($allIssues as $issue) {
                 camp_html_select_option($issue->getIssueNumber(), $f_issue_number, $issue->getName());
@@ -330,18 +332,18 @@ echo camp_html_breadcrumbs($crumbs);
         ?>
         </select>
         <?php } else { ?>
-        <select class="input_select" disabled><option><?php putGS('No issues'); ?></option></select>
+        <select class="input_select" disabled><option><?php echo $translator->trans('No issues'); ?></option></select>
         <?php } ?>
         &nbsp;
-        (<?php putGS('Optional'); ?>)
+        (<?php echo $translator->trans('Optional', array(), 'articles'); ?>)
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Section"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Section"); ?>:</td>
       <td>
         <?php if (($f_issue_number > 0) && (count($allSections) >= 1)) { ?>
         <select name="f_section_number" id="f_section_number" class="input_select">
-        <option value=""><?php putGS('---Select section---'); ?></option>
+        <option value=""><?php echo $translator->trans('---Select section---'); ?></option>
         <?php
             foreach ($allSections as $section) {
                 camp_html_select_option($section->getSectionNumber(), $f_section_number, $section->getName());
@@ -349,23 +351,23 @@ echo camp_html_breadcrumbs($crumbs);
         ?>
         </select>
         <?php } else { ?>
-        <select class="input_select" disabled><option><?php putGS('No sections'); ?></option></select>
+        <select class="input_select" disabled><option><?php echo $translator->trans('No sections'); ?></option></select>
         <?php } ?>
         &nbsp;
-        (<?php putGS('Optional'); ?>)
+        (<?php echo $translator->trans('Optional', array(), 'articles'); ?>)
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Overwrite articles with matching names"); ?>?:</td>
+      <td align="right"><?php echo $translator->trans("Overwrite articles with matching names", array(), 'articles'); ?>?:</td>
       <td>
-        <input type="radio" name="f_overwrite_articles" value="Y" <?php if ($f_overwrite_articles == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_overwrite_articles" value="N" <?php if ($f_overwrite_articles == 'N' || $f_overwrite_articles == '') p("checked"); ?> /> <?php putGS("No"); ?>
+        <input type="radio" name="f_overwrite_articles" value="Y" <?php if ($f_overwrite_articles == 'Y') p("checked"); ?> /> <?php echo $translator->trans("Yes"); ?>
+        <input type="radio" name="f_overwrite_articles" value="N" <?php if ($f_overwrite_articles == 'N' || $f_overwrite_articles == '') p("checked"); ?> /> <?php echo $translator->trans("No"); ?>
       </td>
     </tr>
     <tr>
-      <td align="right"><?php putGS("Input File"); ?>:</td>
+      <td align="right"><?php echo $translator->trans("Input File", array(), 'articles'); ?>:</td>
       <td>
-        <input type="file" name="f_input_file" id="f_input_file" size="40" class="input_text" alt="file|xml|0" emsg="<?php putGS('You must select a XML input file.'); ?>" />
+        <input type="file" name="f_input_file" id="f_input_file" size="40" class="input_text" alt="file|xml|0" emsg="<?php echo $translator->trans('You must select a XML input file.', array(), 'articles'); ?>" />
       </td>
     </tr>
     </table>
@@ -374,7 +376,7 @@ echo camp_html_breadcrumbs($crumbs);
 <tr>
   <td colspan="2" align="center">
     <hr noshade size="1" color="black">
-    <input type="submit" name="f_save" value="<?php putGS('Save'); ?>" class="button" />
+    <input type="submit" name="f_save" value="<?php echo $translator->trans('Save'); ?>" class="button" />
   </td>
 </tr>
 </table><br />
@@ -383,7 +385,7 @@ echo camp_html_breadcrumbs($crumbs);
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td>
-    <b><?php putGS("Error List"); ?></b>
+    <b><?php echo $translator->trans("Error List", array(), 'articles'); ?></b>
     <hr noshade size="1" color="black">
   </td>
 </tr>

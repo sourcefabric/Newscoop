@@ -154,10 +154,10 @@ services:
         arguments: ["@mailchimp.api.factory", "@preferences"]
     newscoop.plugins.manager:
         class: Newscoop\Services\Plugins\ManagerService
-        arguments: ["@em", "@event_dispatcher"]
+        arguments: ["@em", "@event_dispatcher", "@newscoop.plugins.service", "@logger"]
     newscoop.plugins.service:
         class: Newscoop\Services\Plugins\PluginsService
-        arguments: ["@dispatcher"]
+        arguments: ["@dispatcher", "@em"]
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
     #     class:      Newscoop\Search\ArticleIndexer

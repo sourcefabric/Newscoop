@@ -1,0 +1,100 @@
+'No attachment': 
+at: на
+'With no attachment': 'При відсутності вкладень'
+'With image attachment': 'З зображенням у прікріпленні'
+'With document attachment': 'З документом у прікріпленні.'
+'Unable to reach Newscoop. Please check your internet connection.': 'Неможливо зв’язатись з NEWSCOOP. Будь ласка перевірте ваше інтернет-з’єднання '
+Starred: Зірковий
+Star: Зірка
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 'Відповісти на коментар'
+Reply: Відповідь
+Processed: Оброблено
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 'Повідомлення оновлено.'
+'Messages status change to $1.': 'Статус повідомленнь змінено на $1.'
+'Messages deleted.': 'Повідомлення видалені.'
+'Message updated.': 'Повідомлення оновлено'
+'Message status change to $1.': 'Статус повідомлення змінений на  $1.'
+'Message deleted.': 'Повідомлення видалено.'
+Message: Повідомлення
+Last: 
+'Full article': 'Повна стаття'
+First: 
+'Feedback Messages': 'Повідомлення зворотнього зв’язку'
+'Display _MENU_ records': 
+Deleted: Видалено
+'Change selected messages status': 'Змінити статус вибраних повідомлень'
+Attachment: Прікріплення
+Approved.: Затверджено.
+Approve: Затвердження
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Ви збираєтеся видалити кілька повідомлень.'
+'You are about to permanently delete a message.': 'Ви збираєтеся видалити повідомлення.'
+User: Користувач
+None: Жоден
+'Coming from': 'Виходячи з'
+'Ban/Unban user': 'Дозволити / заборонити користувачу коментувати'
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Забронити коментування можна за ім’ям користувача, е-поштою або ІР-адресою.'
+'You are about to permanently delete multiple comments.': 'Ви збираєтеся остаточно видалити коментарі.'
+'You are about to permanently delete a comment.': 'Ви збираєтеся остаточно видалити коментар.'
+Website: Веб-сейт
+'Value is not $1 characters long': 'Значення не містить $ знаків'
+Username: 'Ім’я користувача'
+'User id': 'ID користувача'
+'User ban settings': 'Налаштування заборони коментування'
+'Update comment': 'Оновити коментарі'
+Unrecommended: 'Не рекомендовано'
+Unrecommend: 'Не рекомендувати'
+'Subject is not $1 characters long': 'Тема не містить $1 знаків.'
+'Sort by Thread order': 'Сортувтаи '
+'Show parent comment': 'Показати первісний коментар'
+'Show commenter details': 'Показати деталі коментатора'
+'Show commenter': 'Показати коментатора'
+'Show comment user details': '??'
+'Show comment user': 'Показати коментарі користувачів'
+'Show comment details': 'Показати деталі коментарів'
+'Select status': 'Вибрати статус'
+'Search Type': 'Тип пошуку'
+'Reply to comment': 'Відповісти на коментар'
+Recommended: Рекомендовано
+Recommend: Рекомендувати
+'Quick edit': 'Швидка відповідь'
+Parent: Джерело/
+ID: ID
+'Go to edit article': 'До редагування статті'
+Forum: Форум
+'For Column': 'Для колонки'
+Email: Е-пошта
+'Edit acceptance criteria': 'Змінити критерії прийнятності'
+E-mail: Е-пошта
+'Delete all comments?': 'Видалити всі коментарі'
+'Date Created': 'Дата створення'
+'Comments updated.': 'Коментарі оновлено.'
+'Comments status change to $1.': 'Змінити статус коменарів на $1.'
+'Comments deleted.': 'Коментар видалено.'
+'Commenter $1 saved.': 'Коментатора $1 збережено.'
+'Commenter $1 deleted.': 'Коментатора $1 видалено.'
+Commenter: Коментар
+'Comment updated.': 'Комент оновлено.'
+'Comment status change to $1.': 'Змінити статус коменаря на $1.'
+'Comment id': 'ІD коментаря'
+'Comment deleted.': 'Коментар видалено.'
+'Comment delete by $1 from the article $2 ($3)': 'Коментар видалено $1 з статті $2 ($3)'
+'Comment Acceptance': 'Прийняття коментаря'
+'Comment $4 by $1 in the article $2 ($3)': 'Коментар $4 на $1 у статті 2 $ ($3)'
+'Comment $1 saved.': 'Коментар $1 збережено.'
+Column: Колонка
+'Change subscriber information': 'Змінити інформацію про підписувача'
+'Ban for commenter $1 saved.': 'Заборона на коментатора $1 збережена.'
+Ban: Заборона
+'Are you sure you want to do it?': 'Ви впевнені що хочете зробити це?'
+'Add rating': 'Додати рейтинг'
+'Add new comment commenter': 'Додати новий коментар коментаря'
+'Add new comment': 'Додати коментар'
+'Add new acceptance criteria': 'Додати новий крітерій прийняття'
+'Acceptance $1 saved.': 'Крітерій $1 збережено.'
+'Acceptance $1 deleted.': 'Прийняття $1 видалено.'

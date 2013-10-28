@@ -1,23 +1,24 @@
 <?php
-camp_load_translation_strings("languages");
 require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/languages.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('DeleteLanguages')) {
-	camp_html_display_error(getGS("You do not have the right to delete languages."));
+	camp_html_display_error($translator->trans("You do not have the right to delete languages.", array(), 'languages'));
 	exit;
 }
 
 $Language = Input::Get('Language', 'int');
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
@@ -31,31 +32,31 @@ $errorMsgs = array();
 $numPublications = $g_ado_db->GetOne("SELECT COUNT(*) FROM Publications WHERE IdDefaultLanguage=$Language");
 if ($numPublications > 0) {
 	$doDelete = false;
-	$errorMsgs[] = getGS('There are $1 publication(s) left.', $numPublications);
+	$errorMsgs[] = $translator->trans('There are $1 publication(s) left.', array('$1' => $numPublications));
 }
 
 $numIssues = $g_ado_db->GetOne("SELECT COUNT(*) FROM Issues WHERE IdLanguage=$Language");
 if ($numIssues > 0) {
     $doDelete = false;
-    $errorMsgs[] = getGS('There are $1 issue(s) left.', $numIssues);
+    $errorMsgs[] = $translator->trans('There are $1 issue(s) left.', array('$1' => $numIssues));
 }
 
 $numSections = $g_ado_db->GetOne("SELECT COUNT(*) FROM Sections WHERE IdLanguage=$Language");
 if ($numSections > 0) {
     $doDelete = false;
-    $errorMsgs[] = getGS('There are $1 section(s) left.', $numSections);
+    $errorMsgs[] = $translator->trans('There are $1 section(s) left.', array('$1' => $numSections));
 }
 
 $numArticles = $g_ado_db->GetOne("SELECT COUNT(*) FROM Articles WHERE IdLanguage=$Language");
 if ($numArticles > 0) {
     $doDelete = false;
-    $errorMsgs[] = getGS('There are $1 article(s) left.', $numArticles);
+    $errorMsgs[] = $translator->trans('There are $1 article(s) left.', array('$1' => $numArticles));
 }
 
 $numCountries = $g_ado_db->GetOne("SELECT COUNT(*) FROM Countries WHERE IdLanguage=$Language");
 if ($numCountries > 0) {
     $doDelete = false;
-    $errorMsgs[] = getGS('There are $1 countries left.', $numCountries);
+    $errorMsgs[] = $translator->trans('There are $1 countries left.', array('$1' => $numCountries));
 }
 
 if ($doDelete) {
@@ -69,9 +70,9 @@ if ($doDelete) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Languages"), "/$ADMIN/languages/");
-$crumbs[] = array(getGS("Deleting language"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Languages"), "/$ADMIN/languages/");
+$crumbs[] = array($translator->trans("Deleting language", array(), 'languages'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -79,14 +80,14 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting language"); ?> </B>
+		<B> <?php  echo $translator->trans("Deleting language", array(), 'languages'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-		<LI><?php  putGS('The language $1 could not be deleted.','<B>'.$languageObj->getNativeName().'</B>'); ?></LI>
+		<LI><?php  echo $translator->trans('The language $1 could not be deleted.', array('$1' => '<B>'.$languageObj->getNativeName().'</B>') 'languages'); ?></LI>
         <?php
         foreach ($errorMsgs as $error) { ?>
             <LI><?php p($error); ?></LI>
@@ -99,7 +100,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
     	<DIV ALIGN="CENTER">
-        	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/'">
+        	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/languages/'">
     	</DIV>
 	</TD>
 </TR>

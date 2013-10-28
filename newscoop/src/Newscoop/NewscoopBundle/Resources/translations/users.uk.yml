@@ -1,0 +1,186 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 'І’мя користувача вже використовується'
+'User with id $1 not found': 'Користувача з ID $1 не знайдено.'
+'User was deleted.': 'Користувач видалений.'
+'User saved': 'Користувач збережений'
+'User id not specified': 'ID користувача не визначено'
+'User $1 created': 'Користувач $1 створений'
+'Send confirm email': 'Відправити листа з підтвердженням'
+'Profile saved.': 'Профіль збережений.'
+Picture: Зображення
+'Password updated': 'Пароль оновлений'
+None: Жоден
+'New confirmation email was sent to user.': 'Новий лист для підтвердження відісланий користувачу.'
+'Email is used already': 'електрона адреса вже використовується'
+'Edit your password': 'Редагувати свій пароль'
+'Edit user $1': 'Редагувати користувача  $1'
+'Edit subscriptions': 'Редагувати підписки'
+'Edit profile': 'Редагувати профіль'
+'Edit permissions': 'Редагувати права'
+'Create new account': 'Створити новий акаунт'
+'Comment ban settings': 'Налаштування коментаря заборони'
+'Ban for user $1 saved.': 'Заборона для користувача $1 збережена'
+'User account is active': 'Акаунт користувача активний.'
+'Allow users profile to be publicly displayed': 'Дозволити відображати публічно профіль користувача'
+'Allow user access to login to site backend': 'Надати доступ до адмінцентру?'
+Templates: Шаблони
+Username: 'Ім’я користувача'
+'Last Name': Прізвище
+'First Name': Ім’я
+Email: Е-пошта
+'You were logged out.': 'Ви вийшли з системи.'
+'Newscoop Subhead': 'Підзаголовок Newscoop '
+Filters: Фільтри
+'Add new Author': 'Додати нового автора'
+'Loading Data': 'Завантаження даних'
+'Delete author type': 'Видалити тип автора'
+'Cannot remove author type.': 'Неможливо видалити тип автора.'
+'Cannot remove author alias.': 'Неможливо видалити псевдонім автора.'
+'Author alias removed.': 'Псевдонім автора видалений.'
+'Are you sure you want to delete this author?': 'Ви впевнені що хочете видалити автора?'
+'Are you sure you want to delete this author alias?': 'Ви впевнені що хочете видалити псевдонім автора?'
+'All Author Types': 'Усі типи авторів'
+'Add author type': 'Додати тип автора'
+'You do not have the permission to change authors.': 'Ви не маєте прав для редагування авторів.'
+'Please fill at least first name and last name.': 'Будь ласка  введіть ім’я та прізвище.'
+'Cannot add author type, this type already exists.': 'Неможливо додати тип автора, такий тип вже існує.'
+'Author type removed.': 'Тип автора видалено.'
+'Author type must be at least three characters long.': 'Тип автора має містити принаймні три літери'
+'Author type added.': 'Тип автора додано.'
+'Are you sure you want to delete this author type?': 'Ви впевнені що хочете видати цей тип автора?'
+'User may change authors': 'Користувачі можуть змінювати типи авторів'
+'Unable to add new image, target directory is not writable.': 'Неможливо додати нове зображення, цільова директорія не сконфігурована для запису.'
+'Author saved.': 'Автора збережено.'
+'Author deleted.': 'Автора видалено.'
+'Enable Firefox spell checking by default': 'Увімкніть перевірку орфографії за замовчуванням у Firefox '
+'User may use the editor status bar': 'Користувач може використовувати редакторську інфо-панель '
+'User may clear up the system cache': 'Користувач може очищувати системний кеш.'
+'Another user is registered with that e-mail address, please choose a different one.': 'Інший користувач зареєстрований цю адресу електронної пошти, будь ласка, виберіть іншу.'
+'There was an error when trying to update the user info.': 'Помилка при спробі оновити інформацію про користувача.'
+'User may moderate comments': 'Користувач може модерувати коментарі'
+'User may enable comments': 'Користувач може вмикати коментарі'
+'User may translate articles': 'Користувач може перекладати статті'
+'User may move articles': 'Користувач може переміщати статті'
+'User may find and replace': 'Корисувач може знаходити та замінювати'
+'User may change system preferences': 'Користувач може змінювати системні налаштування'
+'User may attach topics to articles': 'Користувач може вказувати теми для статей'
+'User may attach images to articles': 'Користувач може прікріпляти зображення до статей'
+'User may add special characters': 'Користувач може додавати спеціальні символи'
+'That user name already exists, please choose a different login name.': 'Ім’я користувача вже існує, будь ласка виберіть інше.'
+'User may delete article attachments': 'Користувач може видаляти прікріплення у статтях'
+'User may change article attachments': 'Користувач може змінювати прікріплення у статтях'
+'User may add article attachments': 'Користувач може додавати прікріплення у статті'
+'You do not have the right to create user accounts.': 'Ви не маєте прав створювати акаунти користувачів'
+'You must select a $1': 'Ви маєте вибрати $1'
+'The password must be at least 6 characters long and both passwords should match.': 'Пароль має містити принаймні шість символів та обидва паролі повинні збігатися.'
+'The user account could not be created.': 'Акаунт користувача не може бути створений.'
+'User account $1 was created successfully.': 'Акаунт користувача  $1 створено.'
+'You do not have the right to change user account permissions.': 'Ви не маєте прав змінювати акаунти користувачів.'
+'You do not have the right to change user account information.': 'Ви не маєете прав змінювати інформацію у акаунтах користувачів.'
+'The password you typed is incorrect.': 'Введений вами пароль не є вірним.'
+'You do not have the right to delete user accounts.': 'Ви не маєте прав видаляти акаунти користувачів.'
+'User account $1 was deleted successfully.': 'Акаунт користувача  $1 видалено.'
+'The IP Group $1 has been created.': 'Група ІР-адрес  $1 була створена.'
+'There was an error creating the IP address group.': 'Помилка при створенні групи ІР-адрес.'
+'The IP address group $1 has been deleted.': 'Група ІР-адресів  $1  видалена.'
+'User $1 information was changed successfully.': 'Інформацію про користувач $1 змінено.'
+'User Type': 'Тип користувача'
+'The IP address group $1:$2 conflicts with another existing group.': 'ІР-адрес групи  $1: $2 конфліктує з іншою існуючою групою.'
+'User may add/change publications': 'Користувач може додавати / змінювати публікації'
+'Invalid value of user type parameter': 'Невірне значення параметру типу користувачів'
+'User may delete publications': 'Користувач може видаляти публікації'
+'User may add/change issues': 'Користувач може додавати / змінювати випуски'
+'User may delete issues': 'Користувач може видаляти випуски'
+'User may add/change sections': 'Користувам може додавати / змінювати розділи'
+'User may delete sections': 'Користувач може видаляти розділи'
+'User may add articles': 'Користувач може додавати статті'
+'User may change articles': 'Користувач може змінювати статті'
+'User may delete articles': 'Користувач може видаляти статті'
+'User may add images': 'Користувач може додавати зображення'
+'User may change images': 'Користувач може змінювати зображення'
+'User may delete images': 'Користувач може видаляти зображення'
+'User may delete templates': 'Користувач може видаляти шаблони'
+'User may add/change staff accounts and passwords': 'Користувач може додавати / змінювати акаунти та паролі співробітників'
+'User may add/change subscribers accounts and passwords': 'Користувач може додавати / змінювати акаунти та паролі підписувачів'
+'User may delete staff accounts': 'Користувач може видаляти акаунти та паролі співробітників'
+'User may manage user subscriptions': 'Користувач може керувати піпискою користувачів'
+'User may manage account types': 'Користувач може керувати типами акаунтів'
+'User may add/change article types': 'Користувач може змінювати типи статей'
+'User may delete article types': 'Користувач може видаляти типи статей'
+'User may manage templates': 'Користувач може керувати шаблонами'
+'User may add/change country entries': 'Користувач може додавати / змінювати записи країн'
+'User may add languages and manage language information': 'Користувач може додавати та керувати інформацією про мови'
+'User may delete languages': 'Користувач може видаляти мови'
+'User may view audit logs': 'Користувач може переглядати логи аудіту'
+'User may delete country entries': 'Користувач може видаляти записи країн'
+'User may manage localizer': 'Користувач може керувати локалайзером'
+'User may publish articles': 'Користувач може публікувати статті'
+'User may manage topics': 'Користувач може керувати темами'
+'User may use bold': 'Користувач може використовувати <b>Ж</b>'
+'User may use italic': 'Користувач може використовувати <i>I</i>'
+'User may use underline': 'Користувач може використовувати <u>U</u>'
+'User may use strikethrough': 'Користувач може використовувати закреслювання'
+'User may change text alignment': 'Користувач може вирівнювання тексту'
+'User may copy, cut, and paste': 'Користувач може копіювати, вирізати та вставляти'
+'User may undo/redo': 'Користувач може використовувати Історію команд'
+'User may change text direction': 'Користувач може змінювати напрямок тексту'
+'User may set indents': 'Користувач може налаштовувати відступи'
+'User may add links': 'Користувач може додавати посилання'
+'User may add subheads': 'Користувач може додавати підзаголовки'
+'User may insert images': 'Користувач може вставляти зображення'
+'User may view the HTML source': 'Користувач може переглядати HTML-код'
+'User may enlarge the editor': 'Користувач може збільшувати окно редагування'
+'User may change the font face': 'Користувач може змінювати шрифти'
+'User may change the font size': 'Користувач може змінювати розмір шрифта'
+'User may create bulleted lists': 'Користувач може створювати марковані списки'
+'User may create numbered lists': 'Користувач може  створювати нумеровані списки'
+'User may insert tables': 'Користувач може вставляти таблиці'
+'User may insert horizontal rules': 'Користувач може вставляти горизонтальну лінію'
+'User may change the font color': 'Користувач може змінювати колір тексту'
+'User may use superscripts': 'Користувач може вставляти надрядковий текст (m.<sup>2</sup>)'
+'User may use subscripts': 'Користувач може вставляти підрядковий текст (m.<sub>2</sub>)'
+'User may backup and restore the site data': 'Користувач може робити резервні копії так відновлати дані з них.'
+Miscellaneous: Різне
+'Staff/Subscribers Management': 'Керування співробітниками / Підписувачами'
+'Editor Basic Settings': 'Редагувати базові налаштування'
+'Editor Advanced Font Settings': 'Редагувати розширені налаштування шрифтів'
+'Editor Table Settings': 'Редагувати налаштування таблиць'
+'Administrative tasks': 'Адміністративні завдання'
+'User will be notified on several events': 'Користувача буде повідомлено про декілька подій'
+'Editor Miscellaneous Settings': 'Редагувати різні налаштування'
+'No such user account.': 'Немає такої акаунту користувача.'

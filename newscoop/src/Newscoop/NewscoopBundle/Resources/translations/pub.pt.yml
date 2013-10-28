@@ -1,0 +1,74 @@
+'Make sure to enter the Moderator Address below': 
+'click to see issues': 
+'Moderator Address': 
+'From Address': 
+'Use CAPTCHA to prevent spam?': 
+'Public allowed to comment?': 
+'Enable spam blocking?': 
+'The subscription settings for $1 could not be added.': 
+'The publication name you specified conflicts with publication $1.': 
+'The publication alias you specified conflicts with publication $1.': 
+'Subscription defaults': 
+'Subscription Settings by Country': 
+'Set subscription settings for a country': 
+'Set subscription settings by country': 
+'Default time periods:': 
+'Country subscription settings updated.': 
+'Country subscription settings deleted.': 
+'Change country subscription settings': 
+'Are you sure you want to delete the subscription settings for $1?': 
+'Publication updated': 
+'Subscriber comments moderated?': 
+'Public comments moderated?': 
+'Comments enabled?': 
+'Comments enabled': 
+'Article comments default to enabled?': 
+'trial subscription': 'Assinatura para demonstração'
+'paid subscription': 'Assinatura paga'
+'time units': 'unidade de tempo'
+'one language': 'um idioma'
+'all languages': 'todos os idiomas'
+'Trial subscriptions': 'Assinatura para demonstração'
+'Time unit cost per one section': 'Custo por unidade de tempo por secção'
+'Paid subscriptions': 'Assinaturas pagas'
+'Default time period': 'Periodo de tempo por defeito'
+'Go To Issues': 'Ir para edições'
+'Delete publication $1': 'Apagar Publicação'
+'No publications.': 'Não existem Publicações'
+'Default Site Alias': 'Alias do Site'
+'URL Type': 'Tipo de Endereço URL'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'País (Carregue para Alterar)'
+'Delete alias $1': 'Apagar $1'
+'Configure publication': 'Configurar Publicação'
+'You do not have the right to edit publication information.': 'Não tem permissão para Alterar Detalhes de Publicação'
+'General attributes': 'Definições Gerais'
+'You do not have the right to change publication information.': 'Não tem permissão para Alterar Detalhes de Publicação'
+'The publication information could not be updated.': 'Os detalhes de Publicação não podem ser alterados'
+'You do not have the right to delete publications.': 'Não tem permissão para Apagar Publicações'
+'Are you sure you want to delete the publication $1?': 'Confirma o apagamento da Publicação $1?'
+'Deleting publication': 'Apagando Publicação'
+'There are $1 subscription(s) left.': 'Existe(m) ainda $1 Assinatura(s)'
+'The publication $1 could not be deleted.': 'A Publicação $1 não pode ser Apagada'
+'The publication could not be added.': 'A Publicação não pode ser Criada'
+'You do not have the right to manage publications.': 'Não tem permissões para gerir Publicações'
+'You must select a country.': 'Tem de escolher um País'
+'Add new alias': 'Adicionar novo Alias'
+'Alias (click to edit)': 'Alias (carregue para editar)'
+'Edit aliases': 'Editar Alias'
+'Publication Aliases': 'Alias de Publicações'
+'Adding new alias': 'Adicionar Alias'
+'The site alias $1 could not be added.': 'O Alias $1 não pode ser adicionado.'
+'Another alias with the same name exists already.': 'Ja existe um alias idêntico.'
+'Edit alias': 'Editar Alias.'
+'Editing alias': 'Editando Alias'
+'The site alias $1 could not be modified.': 'O Alias $1 não pode ser modificado.'
+'Are you sure you want to delete the alias $1?': 'Confirma eliminação do alias $1?'
+'Deleting alias': 'Eliminando Alias'
+'The alias $1 could not be deleted.': 'O Alias $1 não pode ser eliminado.'
+'$1 is the default publication alias, it can not be deleted.': '$1 é o alias principal da publicação e como tal não pode ser eliminado.'
+'You do not have the right to add publications.': 'Nao tem permissões para adicionar publicações.'
+'There are $1 issue(s) left.': 'Existe(m) ainda $1 Edição(ões).'
+'Change publication information': 'Alterar detalhes da Publicação'
+'Time Unit': 'Unidade de Tempo'
+Currency: Moeda
+'Edit languages': 'Editar Idiomas'

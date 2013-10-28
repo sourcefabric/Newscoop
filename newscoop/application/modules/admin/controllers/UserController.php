@@ -27,8 +27,6 @@ class Admin_UserController extends Zend_Controller_Action
      */
     public function init()
     {
-        camp_load_translation_strings('users');
-
         $this->userService = $this->_helper->service('user');
         $this->userTypeService = $this->_helper->service('user_type');
 
@@ -61,7 +59,8 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_UserCriteria();
         $form->groups->addMultiOptions($this->_helper->service('user')->getGroupOptions());
         $form->isValid($this->getRequest()->getParams());
@@ -107,7 +106,7 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->form = $form;
         $this->view->actions = array(
             array(
-                'label' => getGS('Create new account'),
+                'label' => $translator->trans('Create new account', array(), 'users'),
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
@@ -164,10 +163,11 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function createAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
-        $form->author->setMultioptions(array('' => getGS('None')) + $this->_helper->service('author')->getOptions());
+        $form->author->setMultioptions(array('' => $translator->trans('None', array(), 'users')) + $this->_helper->service('author')->getOptions());
         $form->setDefaults(array(
             'is_admin' => $this->_getParam('is_admin', 0),
             'is_public' => $this->_getParam('is_public', 0),
@@ -177,18 +177,18 @@ class Admin_UserController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
                 $user = $this->userService->save($form->getValues());
-                $this->_helper->flashMessenger(getGS("User '$1' created", $user->getUsername()));
+                $this->_helper->flashMessenger($translator->trans("User $1 created", array('$1' => $user->getUsername()), 'users'));
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
                 ));
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
                     case 'username_conflict':
-                        $form->username->addError(getGS('Username is used already'));
+                        $form->username->addError($translator->trans('Username is used already', array(), 'users'));
                         break;
 
                     case 'email_conflict':
-                        $form->email->addError(getGS('Email is used already'));
+                        $form->email->addError($translator->trans('Email is used already', array(), 'users'));
                         break;
                 }
             }
@@ -198,10 +198,11 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
-        $form->author->setMultioptions(array('' => getGS('None')) + $this->_helper->service('author')->getOptions());
+        $form->author->setMultioptions(array('' => $translator->trans('None', array(), 'users')) + $this->_helper->service('author')->getOptions());
 
         $user = $this->getUser();
         $form->setDefaultsFromEntity($user);
@@ -210,18 +211,18 @@ class Admin_UserController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
                 $this->userService->save($form->getValues(), $user);
-                $this->_helper->flashMessenger(getGS("User saved"));
+                $this->_helper->flashMessenger($translator->trans("User saved", array(), 'users'));
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
                 ));
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
                     case 'username_conflict':
-                        $form->username->addError(getGS('Username is used already'));
+                        $form->username->addError($translator->trans('Username is used already', array(), 'users'));
                         break;
 
                     case 'email_conflict':
-                        $form->email->addError(getGS('Email is used already'));
+                        $form->email->addError($translator->trans('Email is used already', array(), 'users'));
                         break;
                 }
             }
@@ -232,7 +233,7 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->image = $this->_helper->service('image')->getSrc('images/' . $user->getImage(), 80, 80, 'crop');
         $this->view->actions = array(
             array(
-                'label' => getGS('Edit permissions'),
+                'label' => $translator->trans('Edit permissions', array(), 'users'),
                 'module' => 'admin',
                 'controller' => 'acl',
                 'action' => 'edit',
@@ -242,7 +243,7 @@ class Admin_UserController extends Zend_Controller_Action
                 ),
             ),
             array(
-                'label' => getGS('Edit subscriptions'),
+                'label' => $translator->trans('Edit subscriptions', array(), 'users'),
                 'module' => 'admin',
                 'controller' => 'subscription',
                 'action' => 'index',
@@ -255,7 +256,8 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function renameAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $user = $this->getUser()->render();
         $form = new Admin_Form_RenameUser();
         $form->setDefaults(array('username', $user->username));
@@ -267,13 +269,13 @@ class Admin_UserController extends Zend_Controller_Action
 
             try {
                 $this->_helper->service('user')->renameUser($values);
-                $this->_helper->flashMessenger->addMessage(getGS("User renamed."));
+                $this->_helper->flashMessenger->addMessage($translator->trans("User renamed.", array(), 'users'));
                 $this->_helper->redirector('rename', 'user', 'admin', array(
                     'user' => $user->id,
                     'filter' => $this->_getParam('filter'),
                 ));
             } catch (InvalidArgumentException $e) {
-                $form->username->addError(getGS("Username is used already"));
+                $form->username->addError($translator->trans("Username is used already", array(), 'users'));
             }
         }
 
@@ -326,7 +328,8 @@ class Admin_UserController extends Zend_Controller_Action
      * @Acl(ignore=true)
      */
     public function editPasswordAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $user = $this->_helper->service('user')->getCurrentUser();
         $form = new Admin_Form_EditPassword();
         $form->setMethod('POST');
@@ -334,7 +337,7 @@ class Admin_UserController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('user')->save($form->getValues(), $user);
-            $this->_helper->flashMessenger(getGS('Password updated'));
+            $this->_helper->flashMessenger($translator->trans('Password updated', array(), 'users'));
             $this->_helper->redirector('edit-password', 'user', 'admin');
         }
 
@@ -347,16 +350,17 @@ class Admin_UserController extends Zend_Controller_Action
      * @return Newscoop\Entity\User
      */
     protected function getUser()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $id = (int) $this->_getParam('user', false);
         if (!$id) {
-            $this->_helper->flashMessenger(array('error', getGS('User id not specified')));
+            $this->_helper->flashMessenger(array('error', $translator->trans('User id not specified', array(), 'users')));
             $this->_helper->redirector('index');
         }
 
         $user = $this->userService->find($id);
         if (empty($user)) {
-            $this->_helper->flashMessenger(array('error', getGS("User with id '$1' not found", $id)));
+            $this->_helper->flashMessenger(array('error', $translator->trans("User with id $1 not found", array('$1' => $id), 'users')));
             $this->_helper->redirector('index');
         }
 
@@ -364,7 +368,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
     
     public function toggleBanAction()
-    {
+    {   
         $parameters = $this->getRequest()->getParams();
         
         $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
@@ -403,7 +407,8 @@ class Admin_UserController extends Zend_Controller_Action
      * @param Newscoop\Entity\User $p_user
      */
     private function handleBanForm(Admin_Form_BanUser $p_form, $p_user, $p_publication)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             if ($p_form->getSubmit()->isChecked()) {
                 $parameters = $p_form->getValues();
@@ -420,7 +425,7 @@ class Admin_UserController extends Zend_Controller_Action
                 $acceptanceRepository->unban($p_publication, $unbanValues);
                 $acceptanceRepository->flush();
                 
-                $this->_helper->flashMessenger(getGS('Ban for user "$1" saved.', $p_user->getName()));
+                $this->_helper->flashMessenger($translator->trans('Ban for user $1 saved.', array('$1' => $p_user->getName()), 'users'));
                 
                 if ($parameters['delete_messages'] == 1) {
 					$feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
@@ -442,9 +447,10 @@ class Admin_UserController extends Zend_Controller_Action
      * @return void
      */
     private function addUserAttributesSubForm(Zend_Form $form, User $user)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subForm = new Zend_Form_SubForm();
-        $subForm->setLegend(getGS('User attributes'));
+        $subForm->setLegend($translator->trans('User attributes', array(), 'users'));
 
         foreach ($user->getRawAttributes() as $key => $val) {
             $subForm->addElement('text', $key, array(

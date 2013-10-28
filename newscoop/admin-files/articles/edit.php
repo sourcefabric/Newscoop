@@ -13,8 +13,7 @@ require_once WWW_DIR . '/classes/GeoMap.php';
 
 global $articleObj, $f_edit_mode;
 
-camp_load_translation_strings("article_comments");
-camp_load_translation_strings("api");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // These are optional, depending on whether you are in a section
 // or whether editing an article that doesnt have a location.
@@ -35,14 +34,14 @@ $f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
     exit;
 }
 
 // Fetch article
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
-    camp_html_display_error(getGS('No such article.'));
+    camp_html_display_error($translator->trans('No such article.', array(), 'articles'));
     exit;
 }
 
@@ -53,7 +52,7 @@ if ($blogService->isBlogger($g_user)) {
     $userIsBlogger = true;
     $userSection = $blogService->getSection($g_user);
     if (empty($userSection) || $userSection->getSectionId() != $articleObj->getSection()->getSectionId()) {
-        camp_html_display_error(getGS("You're not allowed to edit article."));
+        camp_html_display_error($translator->trans("You are not allowed to edit article.", array(), 'articles'));
         exit;
     }
 }
@@ -187,7 +186,7 @@ if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
     camp_html_content_top($title, $topArray);
 } else {
     $crumbs = array();
-    $crumbs[] = array(getGS('Pending Articles'), "/$ADMIN/pending_articles/index.php");
+    $crumbs[] = array($translator->trans('Pending Articles', array(), 'articles'), "/$ADMIN/pending_articles/index.php");
     $crumbs[] = array($title, '');
     echo camp_html_breadcrumbs($crumbs);
 }

@@ -1,14 +1,14 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage polls.', array(), 'plugin_poll'));
     exit;
 }
 
@@ -120,7 +120,7 @@ switch ($f_target) {
     break;
 
     default:
-	   camp_html_display_error(getGS('Invalid input'), 'javascript: window.close()');
+	   camp_html_display_error($translator->trans('Invalid input', array(), 'plugin_poll'), 'javascript: window.close()');
 	   exit;
     break;
 }

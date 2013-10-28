@@ -2,14 +2,16 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to manage publications."));
+	camp_html_display_error($translator->trans("You do not have the right to manage publications.", array(), 'pub'));
 	exit;
 }
 
@@ -18,7 +20,7 @@ $f_alias_id = Input::Get('f_alias_id', 'int');
 $f_name = trim(Input::Get('f_name'));
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -29,7 +31,7 @@ $errorMsgs = array();
 
 if (empty($f_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must fill in the $1 field.', '<B>Name</B>');
+	$errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>Name</B>'));
 }
 
 $alias = new Alias($f_alias_id);
@@ -41,7 +43,7 @@ if ($correct) {
 			$success = $alias->setName($f_name);
 		}
 		else {
-			$errorMsgs[] = getGS('Another alias with the same name exists already.');
+			$errorMsgs[] = $translator->trans('Another alias with the same name exists already.', array(), 'pub');
 			$correct = false;
 		}
 	}
@@ -51,11 +53,11 @@ if ($correct) {
 	camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$f_publication_id&Alias=$f_alias_id");
 	exit;
 } else {
-	$errorMsgs[] = getGS('The site alias $1 could not be modified.', '<B>'.$alias->getName().'</B>');
+	$errorMsgs[] = $translator->trans('The site alias $1 could not be modified.', array('$1' => '<B>'.$alias->getName().'</B>'));
 }
 
-$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$f_publication_id");
-camp_html_content_top(getGS("Editing alias"), array("Pub" => $publicationObj), true, false, $crumbs);
+$crumbs = array($translator->trans("Publication Aliases", array(), 'pub') => "aliases.php?Pub=$f_publication_id");
+camp_html_content_top($translator->trans("Editing alias", array(), 'pub'), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
 
@@ -63,7 +65,7 @@ camp_html_content_top(getGS("Editing alias"), array("Pub" => $publicationObj), t
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Editing alias"); ?> </B>
+		<B> <?php  echo $translator->trans("Editing alias", array(), 'pub'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -81,7 +83,7 @@ camp_html_content_top(getGS("Editing alias"), array("Pub" => $publicationObj), t
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php p($f_publication_id); ?>&Alias=<?php p($f_alias_id); ?>'">
+		<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php p($f_publication_id); ?>&Alias=<?php p($f_alias_id); ?>'">
 	</TD>
 </TR>
 </TABLE>

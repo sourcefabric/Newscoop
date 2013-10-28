@@ -19,9 +19,6 @@ class Admin_UserPointsController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('users');
-
         $this->userPointsService = $this->_helper->service('user_points');
     }
 

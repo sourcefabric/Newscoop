@@ -2281,6 +2281,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $pois = $geo['pois'];
 
         $icons_dir = Geo_Preferences::GetIconsWebDir();
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         $map_name = $map['name'];
         $map_name = str_replace('&', '&amp;', $map_name);
@@ -2291,7 +2292,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             <div class="geomap_info">
               <dl class="geomap_map_name">
                 <dt class="geomap_map_name_label">' .
-                  getGS('Map') . ':
+                  $translator->trans('Map', array(), 'api') . ':
                 </dt>
                 <dd class="geomap_map_name_value">' .
                   $map_name . '
@@ -2319,7 +2320,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                 <div class="geomap_poi_perex">' . $poi_perex . '</div>
                 <div class="geomap_poi_center">
                     <a href="#" onClick="' . $poi['center'] . ' return false;">'
-                        . getGS('Center') . '
+                        . $translator->trans('Center', array(), 'api') . '
                     </a>
                 </div>
                 <div class="geomap_poi_spacer">&nbsp;</div>
@@ -2682,7 +2683,10 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $article_spec = json_encode($article_spec_arr);
 
     $local_strings = array();
-    $local_strings['articles'] = getGS('Articles');
+    $translator = \Zend_Registry::get('container')->getService('translator');
+
+
+    $local_strings['articles'] = $translator->trans('Articles');
     $local_strings_json = json_encode($local_strings);
 
     $tag_string_mid .= "\n";
@@ -2979,7 +2983,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      */
     public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_options, $p_label, $p_offset, $p_limit, $p_rank = 0)
     {
-
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_rank);
         $map = $geo['map'];
         $pois = $geo['pois'];
@@ -2997,7 +3001,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             <div class="geomap_info">
               <dl class="geomap_map_name">
                 <dt class="geomap_map_name_label">' .
-                  getGS('Map') . ':
+                  $translator->trans('Map', array(), 'api') . ':
                 </dt>
                 <dd class="geomap_map_name_value">' .
                   $map_name . '
@@ -3028,7 +3032,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                 <div class="geomap_poi_perex">' . $poi_perex . '</div>
                 <div class="geomap_poi_center">
                     <a href="#" onClick="' . $poi['center'] . ' return false;">'
-                        . getGS('Center') . '
+                        . $translator->trans('Center', array(), 'api') . '
                     </a>
                 </div>
                 <div class="geomap_poi_spacer">&nbsp;</div>
@@ -3119,11 +3123,12 @@ var on_load_proc_filter = function()
         map_obj.style.width = "' . $geo_map_info['width'] . 'px";
         map_obj.style.height = "' . $geo_map_info['height'] . 'px";
 ';
+    $translator = \Zend_Registry::get('container')->getService('translator');
     $loc_strings = json_encode(array(
-        'corners' => getGS('vertices'),
-        'pan_map' => getGS('Pan Map'),
-        'edit_polygon' => getGS('Edit Polygon'),
-        'create_polygon' => getGS('Create Polygon'),
+        'corners' => $translator->trans('vertices', array(), 'api'),
+        'pan_map' => $translator->trans('Pan Map', array(), 'api'),
+        'edit_polygon' => $translator->trans('Edit Polygon', array(), 'api'),
+        'create_polygon' => $translator->trans('Create Polygon', array(), 'api'),
     ));
     $img_dir = $Campsite['ADMIN_STYLE_URL'] . '/images/';
 

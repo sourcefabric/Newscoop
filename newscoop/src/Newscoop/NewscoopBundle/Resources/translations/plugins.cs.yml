@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'Nemáte nainstalované žádné pluginy.'
+'Some plugins have to be updated. Please press the save button.': 'Některé pluginy je třeba aktualizovat. Prosím klikněte na tlačítko uložit.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Prosím potvrďte odinstalaci pluinu $1? Všechna data pluginu budou odstraněna!'
+'You do not have the right to manage plugins.': 'Nemáte oprávnění spravovat pluginy.'
+Version: Verze
+'Upload Plugin': 'Nahrát Plugin'
+Upload: Nahrát
+Uninstall: Odinstalovat
+'The plugin $1 was sucessfully installed.': 'Plugin $1 byl úspěšně nainstalován.'
+'No plugins found.': 'Nebyly nalezeny žádné pluginy.'
+Manage: Spravovat
+Enabled: Zapnuto
+'Delete plugin': 'Odstranit plugin'
+'Add new image': 'Přidat nový obrázek'

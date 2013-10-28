@@ -1,0 +1,14 @@
+'Enable reCAPTCHA for subscriptions': 'Omogući reCAPTCHA za pretplate'
+'Add the {{ recaptcha }} tag to your template file containing the comments/subscription form': 'Dodajte {{ recaptcha }} tag u šablone koji definišu formulare za pretplatu i komentarisanje'
+'reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.': 'reCAPTCHA omogućuje da na jednostavan način koristite CAPTCHA na vašem Newscoop sajtu, kao potpuna zaštita od botova.'
+'reCAPTCHA preferences updated.': 'reCAPTCHA podešavanja izmenjena.'
+'reCAPTCHA Settings': 'reCAPTCHA podešavanja'
+reCAPTCHA: reCAPTCHA
+here: ovde
+'You do not have the right to manage reCAPTCHA.': 'Nemate pravo da podešavate reCAPTCHA'
+'User may manage reCAPTCHA': 'Korisnik može da podešava reCAPTCHA'
+'To use this plugin you need': 'Da biste koristili ovaj plugin morate'
+'Enter your reCAPTCHA public key': 'Unesite svoj reCAPTCHA javni ključ'
+'Enter your reCAPTCHA private key': 'Unesite svoj reCAPTCHA privatni ključ'
+'Enable reCAPTCHA for comments': 'Omogući reCAPTCHA za komentare'
+'Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it': 'Omogući i unesi reCAPTCHA ključ u donjem formularu. Ukoliko još nemate svoj ključ, možete ga kreirati'

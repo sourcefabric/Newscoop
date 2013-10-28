@@ -1,9 +1,12 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="now" />
-<title><?php putGS("Edit Related articles"); ?></title>
+<title><?php echo $translator->trans("Edit Related articles", array(), 'articles');  ?></title>
 <script type="text/javascript">
 
 function relatedListIncidence(articleId) {
@@ -61,7 +64,7 @@ function appendItemToContextList(article_id, article_date, article_title, status
 	            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
 	            '<div class="context-item-header">'+
 	                '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
-	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
+	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo $translator->trans('View article', array(), 'articles');  ?></a>'+
 	            '</div>'+
 	            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
 	            '<div class="context-item-summary">'+article_title+'</div>'+
@@ -135,7 +138,7 @@ function closeArticle() {
 function popup_close() {
 	try {
         if (parent.$.fancybox.reload) {
-            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+            parent.$.fancybox.message = '<?php echo $translator->trans('Locations updated.', array(), 'articles'); ?>';
         }
         parent.$.fancybox.close();
     }
@@ -157,7 +160,7 @@ function popup_save() {
 }
 
 function fnSaveCallback() {
-	var flash = flashMessage('<?php putGS('Related articles list saved'); ?>', null, false);
+	var flash = flashMessage('<?php echo $translator->trans('Related articles list saved', array(), 'articles'); ?>', null, false);
 }
 
 
@@ -171,8 +174,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 
 require_once LIBS_DIR . '/ContextList/ContextList.php';
-
-camp_load_translation_strings('articles');
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
@@ -197,15 +198,15 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 <div id="context-box">
 <div class="toolbar">
 <div class="save-button-bar"><input type="submit" name="cancel"
-	value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();"
+	value="<?php echo $translator->trans('Close'); ?>" class="default-button" onclick="popup_close();"
 	id="context_button_close"> <input type="submit" name="save"
-	value="<?php echo putGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
+	value="<?php echo $translator->trans('Save'); ?>" class="save-button-small" onclick="popup_save();"
 	id="context_button_save"></div>
-<h2><?php echo putGS('Related Articles'); ?></h2>
+<h2><?php echo $translator->trans('Related Articles', array(), 'articles'); ?></h2>
 </div>
 <div class="context-content" style="position:relative">
 <div class="context-block context-search">
-<h3><?php echo putGS('Available Articles'); ?></h3>
+<h3><?php echo $translator->trans('Available Articles', array(), 'articles'); ?></h3>
 <?php
 
 $contextlist = new ContextList();
@@ -242,7 +243,7 @@ $contextlist->render();
                             $(ui.item).find(".view-article").css("display","none");
                             toggleDragZonePlaceHolder();
                             if (relatedListIncidence($(ui.item).attr('id')) > 1) {
-                                alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>');
+                                alert('<?php echo $translator->trans('You already have this item in the Related Articles list!', array(), 'articles'); ?>');
                             	ui.item.remove();
                             }
                          }
@@ -253,7 +254,7 @@ $contextlist->render();
                  </script>
 <div class="context-block context-list">
 
-<h3><?php echo putGS('Related Articles'); ?></h3>
+<h3><?php echo $translator->trans('Related Articles', array(), 'articles'); ?></h3>
 <div class="context-list-results">
 <div class="save-button-bar" style="display: block;"><input
 	type="submit" name="delete-all" value="Delete all"
@@ -261,7 +262,7 @@ $contextlist->render();
 <div style="display: block; float: left">
 <div id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
     <div id="drag-here-to-add-to-list" style="display:none">
-        Drag here to add to list
+        <?php echo $translator->trans('Drag here to add to list', array(), 'articles'); ?>
     </div>
 </div>
 
@@ -272,7 +273,7 @@ $contextlist->render();
 <div class="context-block context-article" style="display: none">
 <div class="save-button-bar"><input type="submit"
 	name="add-this-article" value="Add this article"
-	class="save-button-small" onclick="if(relatedListIncidence($('#preview-article-id').val()) == 0) {appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles()} else { alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>'); };" id="context_button_add"> <input
+	class="save-button-small" onclick="if(relatedListIncidence($('#preview-article-id').val()) == 0) {appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles()} else { alert('<?php echo $translator->trans('You already have this item in the Related Articles list!', array(), 'articles'); ?>'); };" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
 	onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article"></div>
 <div class="context-article-preview" style="overflow-y:auto; height:500px;">

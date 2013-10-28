@@ -12,20 +12,22 @@ use Newscoop\Entity\User;
 class Admin_Form_UserCriteria extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('text', 'q');
 
         $this->addElement('select', 'status', array(
             'multioptions' => array(
-                User::STATUS_ACTIVE => getGS('active'),
-                User::STATUS_INACTIVE => getGS('pending'),
-                User::STATUS_DELETED => getGS('deleted'),
+                User::STATUS_ACTIVE => $translator->trans('active', array(), 'users'),
+                User::STATUS_INACTIVE => $translator->trans('pending', array(), 'users'),
+                User::STATUS_DELETED => $translator->trans('deleted', array(), 'users'),
             ),
         ));
 
         $this->addElement('select', 'groups', array(
             'multioptions' => array(
-                null => getGS('Any group'),
+                null => $translator->trans('Any group', array(), 'users'),
             ),
         ));
     }

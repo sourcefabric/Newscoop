@@ -1,0 +1,155 @@
+'Rename user': 'Nutzer umbenennen '
+Campsite: Newscoop
+'Image Rendering': Bildwiedergabe
+'Featured Article Lists': 'Listen ausgewählter Artikel '
+'You have tried to upload an invalid backup file.': 'Sie haben versucht eine ungültige Backup-Datei hochzuladen. '
+'You do not have the right to manage backups.': 'Sie haben keine Berechtigung, um Backups zu bearbeiten. '
+'Make a new backup': 'Backup erstellen'
+'Are you sure you want to make a new backup?': 'Wollen Sie wirklich ein neues  Backup erstellen? '
+'Security token expired. Please resubmit the form.': 'Sicherheitstoken abgelaufen. Bitte Formular erneut abschicken. '
+Templates: Templates
+'Create slideshow': 'Bildstrecke erstellen'
+Create: Erstellen
+Attach/Detach: Anhängen/Entkoppeln
+'Are you sure you want to delete slideshow?': 'Sind Sie sicher, dass Sie die Bildstrecke löschen wollen?'
+Support: Support
+'Pending articles': 'Artikel in Warteschleife (Pending Articles)'
+'Manage Users': 'Nutzer verwalten'
+'Manage User Types': 'Nutzertypen verwalten'
+'Manage User Points System': 'Nutzer-Punktesystem verwalten'
+Last: Letzter
+First: Erster
+Feedback: Feedback
+'Edit your password': 'Passwort bearbeiten'
+'Edit user': 'Nutzer bearbeiten'
+'Edit permissions': 'Berechtigung bearbeiten'
+Detail: Detail
+'Create new user': 'Neuen Nutzer anlegen'
+'Create new account': 'Neues Benutzerkonto anlegen'
+'Add feed': 'Feed hinzufügen'
+'Upload of file $1 was not successful.': 'Die Datei $1 wurde nicht hochgeladen.'
+'The file $1 could not be moved. Check you have enough of disk space.': 'Die Datei $1 konnte nicht verschoben werden. '
+MiB: MiB
+'Download was not successful. Check please that the server is not out of disk space.': 'Der Download war nicht erfolgreich. Bitte überprüfen Sie, ob genug Platz auf dem Server zur Verfügung steht. '
+'try again later': 'Bitte später wieder versuchen. '
+at: auf
+'You must at least upload one file.': 'Sie müssen mindestens eine Datei hochladen. '
+'Warning: the existing data and themes will be deleted!': 'Achtung: Die vorhandenen Daten und Themen werden gelöscht. '
+'Value is required and cant be empty': 'Der Wert ist erforderlich und kann nicht leer sein. '
+Upload: Upload
+'Update comment': 'Kommentar aktualisieren.'
+'Time created': 'Zeitpunkt angelegt. '
+Themes: Themen
+'Stop current upload': 'Laufenden Upload abbrechen'
+'Start uploading queue': 'Upload Reihenfolge starten '
+'Start upload': 'Upload starten'
+Settings: 'Einstellungen '
+'Select files': 'Dateien auswählen'
+Reply: Antworten
+'New comment added': 'Neuer Kommentar hinzugefügt'
+'Manage Authors': 'Autoren verwalten'
+Loading..: Lade...
+Filename: Dateiname
+'Edit user type': 'Nutzertyp bearbeiten'
+'Edit language': 'Sprache bearbeiten'
+'Drag files here.': 'Dateien hierher ziehen. '
+'Connection interrupted': 'Verbindung unterbrochen'
+Ban: 'Sperren '
+'Are you sure you want to': 'Sind Sie sicher, dass Sie wollen '
+'Add files to the upload queue and click the start button.': 'Fügen Sie Dateien zur Upload-Schlange hinzu und klicken Sie den Start Button. '
+'Add files': 'Datei hinzufügen. '
+'%value% is more than %max% characters long': '%value% ist mehr als  %max% Zeichen lang'
+'%value% is less than %min% characters long': '%value% ist weniger als  %min% Zeichen lang'
+'User name': Benutzername
+Newscoop: Newscoop
+'Your password has been reset.': 'Ihr Passwort wurde zurückgesetzt. '
+'Proceed to login.': 'Weiter zum Login. '
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hallo, \n\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1'
+'Go to login': 'Zum Login'
+'Back to login.': 'Zurück zum Login. '
+'Back to login': 'Zurück zum Login. '
+'An email with instructions on how to recover you password has been sent to your inbox.': 'Eine Email mit Anweisung zum Zurücksetzen Ihres Passworts wurde an Ihre Email Adresse versendet. '
+'Session expired.': 'Session abgelaufen.'
+Processing...: Bearbeite...
+Please: Bitte
+'Go to dashboard': 'Zum Dashboard'
+'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Ihr Browser unterstützt kein Javascript oder Sie haben Javascript nicht aktiviert (das ist wahrscheinlicher). Bitte überpüfen Sie Ihre Einstellungen, um Newscoop nutzen zu können. '
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop hat die Sicherheitseinstellungen aktualisiert. Bitte geben Sie Ihr Passwort erneut ein, um die neuen Einstellungen für Ihren Account zu übernehmen.'
+'Newscoop cache was cleaned up': 'Der Newscoop Cache wurde geleert.'
+Dashboard: Dashboard
+'Your changes will be saved after login.': 'Ihre Änderungen werden nach dem Login übernommen.'
+'Upload backup file': 'Backup-Datei hochladen'
+'The file $1 has been uploaded successfully.': 'Die Datei $1 wurde erfolgreich hochgeladen.'
+'Media Archive': Medienarchiv
+Widgets: Widgets
+'Widget info': 'Widget Info'
+'Widget added to dashboard.': 'Das Widget wurde dem Dashboard hinzugefügt.'
+'Remove widget': 'Widget entfernen'
+'Please login to continue.': 'Bitte loggen Sie sich ein um fortzufahren'
+'Add to dashboard': 'Dem Dashboard hinzufügen'
+'Add more widgets': 'Weitere Widgets hinzufügen'
+login: Login
+'This link is not valid.': 'Ungültiger Link'
+'Recover password': 'Passwort wiederherstellen'
+'Please enter your email.': 'Bitte geben Sie Ihre E-Mail Adresse ein.'
+'Password recovery is disabled.': 'Die Passwortwiederherstellung ist deaktiviert.'
+'Password recovery': Passwortwiederherstellung
+'Password Recovery': Passwortwiederherstellung
+'No user is registered with this email.': 'Unter dieser E-Mail ist kein Nutzer registriert.'
+'Forgot your password?': 'Passwort vergessen?'
+'Email: incorrect format.': 'E-Mail: falsches Format.'
+Email: E-Mail
+'Bad input parameters.': 'Schlechte Eingabeparameter.'
+'There was an error trying to delete the file $1.': 'Fehler beim Löschen der Datei $1.'
+'The file $1 was deleted successfully.': 'Die Datei $1 wurde erfolgreich gelöscht.'
+Size: Größe
+'Restore file': 'Datei wiederherstellen'
+Restore: Wiederherstellen
+Mb: MB
+'Free disk space': 'Freier Speicherplatz'
+'Download file': 'Datei herunterladen'
+Download: Herunterladen
+'Delete file': 'Datei löschen'
+'Backup list is empty.': 'Leere Backupliste'
+'Are you sure you want to restore the file $1?': 'Sind Sie sicher, dass Sie die Datei $1 wiederherstellen möchten?'
+'Are you sure you want to delete the file $1?': 'Sind Sie sicher, dass Sie die Datei $1 löschen möchten?'
+'Import XML': 'XML importieren'
+'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Sie benötigen die Erlaubnis, Ausgaben und Artikel hinzuzufügen/zu verändern, um die Autoren/innen für alle Artikel einzugeben.'
+'Select the field from which to generate the author': 'Wählen Sie ein Feld zur Erstellung von Autor/in.'
+'Invalid or empty field $1. You must select a valid dynamic field.': 'Ungültiges oder leeres Feld $1. Bitte wählen Sie ein gültiges dynamisches Feld.'
+'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Autor/in $1 für Artikelnr. $2 ($3) vom Typ $4 kann nicht erstellt werden.'
+'There were errors setting the author for articles of type $1 from the field $2.': 'Fehler bei der Erstellung von Autor/in für Artikeltyp $1 vom Feld $2.'
+'The author was set successfuly for articles of type $1 from the field $2.': 'Autor/in für den Artikeltyp $1 vom Feld $2 wurde erfolgreich erstellt.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Der Artikel wurde vor $3 Minute(n) von $1 ($2) gesperrt.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Der Artikel wurde vor $3 Stunde(n) und $4 Minute(n) von $1 ($2) gesperrt.'
+'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Fehler bei der Erstellung von Autor/in $1 für die Artikelnr. $2 ($3) vom Typ $4.'
+'Clear system cache': 'System-Cache leeren'
+'The system was unable to upload the file $1. ': 'Das System konnte die Datei $1 nicht hochladen.'
+'Please check the file you are trying to upload, it might be corrupted.': 'Die Datei, die Sie hochladen möchten, könnte beschädigt sein.'
+'An error occured in session management. Please reload the login page.': 'Fehler im Sitzungsmanagement. Bitte aktualisieren Sie die Login-Seite.'
+'This file is stored on disk as $1.': 'Diese Datei ist als $1 gespeichert.'
+'The system is unable to write to the directory $1.': 'Das System konnte nicht auf das Verzeichnis $1 zugreifen.'
+'The system was unable to read the file $1.': 'Das System konnte die Datei $1 nicht lesen.'
+'The system was unable to delete the directory $1.': 'Das System konnte das Verzeichnis $1 nicht löschen.'
+'Please check if the user $1 has permission to read this file.': 'Bitte überprüfen Sie die Zugangsrechte von $.1'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Bitte überprüfen Sie, ob das Verzeichnis leer ist und der Nutzer $1 Zugangsrechte zum Verzeichnis $2 besitzt.'
+'The system was unable to write to the file $1.': 'Das System konnte nicht auf die Datei $1 zugreifen.'
+'The system was unable to delete the file $1.': 'Das System konnte die Datei $1 nicht löschen.'
+'The system was unable to create the file $1.': 'Das System konnte die Datei $1 nicht erstellen.'
+'The system was unable to create the directory $1.': 'Das System konnte das Verzeichnis $1 nicht erstellen.'
+'Please check if the user $1 has permission to write to this file.': 'Bitte überprüfen Sie, ob der Nutzer $1 Zugangsrechte zu dieser Datei besitzt.'
+'Please check if the user $1 has permission to write to the directory $2.': 'Bitte überprüfen Sie, ob der Nutzer $1 Zugangsrechte zum Verzeichnis $2 besitzt.'
+'Type the code shown above:': 'Geben Sie den oben abgebildeten Sicherheitscode ein:'
+'Please enter your user name.': 'Bitte geben Sie Ihren Benutzernamen ein.'
+'Please enter your password.': 'Bitte geben Sie Ihr Passwort ein.'
+'Please enter the code shown in the image.': 'Bitte geben Sie den Sicherheitscode von der Abbildung ein.'
+'CAPTCHA code is not valid.  Please try again.': 'CAPTCHA Code ist ungültig. Bitte erneut versuchen.'
+'Signed in: $1': 'Angemeldet: $1'
+Help: Hilfe
+'Please enter your user name and password': 'Bitte Benutzernamen und Passwort eingeben.'
+'You do not have the right to access this page.': 'Sie haben keine Zugangsrechte für diese Seite.'
+'Login failed': 'Login fehlgeschlagen'
+'Please make sure that you typed the correct user name and password.': 'Bitte prüfen, ob Benutzername und Passwort korrekt eingegeben wurden.'
+'If your problem persists please contact the site administrator $1': 'Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.'
+Backup/Restore: Backup/Wiederherstellung
+Printdesk: Printdesk

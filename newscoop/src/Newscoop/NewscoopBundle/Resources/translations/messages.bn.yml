@@ -1,0 +1,259 @@
+Plugins: প্লাগইন
+'Manage Plugins': 'প্লাগইন ব্যবস্থাপন'
+Account: অ্যাকাউন্ট
+'Items per page': 'প্রতি পাতার আইটেম'
+'Add new': 'নতুন যোগ করুন'
+Home: 'প্রধান পাতা'
+Logout: 'লগ আউট'
+More...: অধিক
+Content: বিষয়বস্তু
+Languages: ভাষা
+Countries: দেশ
+Themes: থিম
+Topics: বিষয়
+Configure: কনফিগার
+'Image Archive': 'ছবি আর্কাইভ'
+'Add Article': 'প্রবন্ধ যোগ করুন'
+Fields: ক্ষেত্র
+Delete: 'মুছে ফেলা'
+Type: ধরন
+Name: নাম
+Code: কোড
+Edit: সম্পাদন
+Login: লগইন
+Password: পাসওয়ার্ড
+Site: সাইট
+Path: পথ
+'Go up': 'উপরে যান'
+URL: URL
+Order: বিন্যাস
+Hide: লুকান
+Duplicate: প্রতিলিপি
+Subscription: সাবস্ক্রিপশন
+expires: মেয়াদ
+starts: আরম্ভ
+before: আগে
+after: পরে
+on: চল
+status: অবস্থা
+active: সক্রিয়
+inactive: নিষ্ক্রিয়
+Subscribers: গ্রাহক
+Staff: কর্মচারিবর্গ
+'Select destination': 'গন্তব্য নির্বাচন'
+'No languages': 'কোন ভাষা নেই'
+'---Select language---': 'ভাষা নির্বাচন'
+'No publications': 'প্রকাশনা নেই'
+'---Select publication---': '--প্রকাশনা নির্বাচন করুন--'
+'No issues': 'কোন বিষয় নেই'
+'---Select issue---': '--বিষয় নির্বাচন করুন--'
+'No sections': 'কোন বিভাগ নেই'
+'---Select section---': '--বিভাগ নির্বাচন করুন--'
+Language: ভাষা
+Country: দেশ
+'Account name': 'অ্যাকাউন্টের নাম'
+Publication: প্রকাশন
+'Default language': 'ডিফল্ট ভাষা'
+Subscriptions: সাবস্ক্রিপশন
+Issue: ইস্যু
+Number: সংখ্যা
+Section: বিভাগ
+Keywords: মূলশব্দ
+Topic: বিষয়
+'URL Name': 'URL-র নাম'
+'Left to pay': 
+Active: 
+Trial: 
+Next: 
+Previous: 
+Translate: 
+View: 
+'Scheduled Publishing': 
+Time: 
+Action: 
+'Schedule a new action': 
+'Scheduling a new publish action': 
+'Delete scheduled publish action': 
+Date/Time: 
+'You must select an action.': 
+'You do not have the right to schedule issues or articles for automatic publishing.': 
+'Front page': 
+'Section page': 
+'Show on front page': 
+'Remove from front page': 
+'Show on section page': 
+'Remove from section page': 
+Actions: 
+Publishing: 
+Show: 
+Remove: 
+'Article Types': 
+'Staff User Types': 
+Publications: 
+Issues: 
+Sections: 
+Articles: 
+Images: 
+Change: 
+'Add new issue': 
+'Section Template': 
+'Article Template': 
+'Default Language': 
+'Paid Period': 
+Preview: 
+'You must fill in the $1 field.': 
+Error: 
+'Invalid input: $1': 
+'Language does not exist.': 
+'Publication does not exist.': 
+'Issue does not exist.': 
+'You must select a language.': 
+'Section does not exist.': 
+'No articles.': 
+'Article does not exist.': 
+'Image does not exist.': 
+'Access denied': 
+'Invalid parameters received': 
+'Add new article': 
+Status: 
+Published: 
+'Not published': 
+Submitted: 
+New: 
+Article: 
+Publish: 
+Unpublish: 
+Unlock: 
+Uploaded: 
+YYYY-MM-DD: 
+Submit: 
+Image: 
+Description: 
+Photographer: 
+Place: 
+Date: 
+Thumbnail: 
+'In use': 
+'Additional searches': 
+'Most Recently Added': 
+'Most Recently Modified': 
+'$1 images found': 
+'Reset search conditions': 
+'Image number': 
+Users: 
+Localizer: 
+'Adding new translation': 
+'No more languages.': 
+'The $1 field may only contain letters, digits and underscore (_) character.': 
+'Add new publication': 
+'Upload new template': 
+'Add new staff member': 
+'Add new subscriber': 
+'Add new user type': 
+'Add new article type': 
+'Add new country': 
+'Add new language': 
+'View logs': 
+'Change your password': 
+'Your Articles': 
+'Submitted Articles': 
+Logs: 
+'There are $1 article(s) left.': 
+'There are $1 issues(s) left.': 
+'There are $1 section(s) left.': 
+'There are $1 publication(s) left.': 
+'There are $1 countries left.': 
+'Name <SMALL>(click to edit)</SMALL>': 
+'Add new subscription': 
+'You do not have the right to add subscriptions.': 
+'Adding subscription': 
+'Delete subscription': 
+'You do not have the right to delete subscriptions.': 
+'No such subscription.': 
+Yes: 
+No: 
+Close: 
+'No issues.': 
+'Back to Edit Article': 
+'No topics': 
+'You do not have the right to add articles.': 
+Start: 
+Days: 
+'The sections could not be added successfully. Some of them were already added !': 
+'Add another': 
+Cancel: 
+Done: 
+OK: 
+Save: 
+Search: 
+'Make a selection': 
+'You must input a number greater than 0 into the $1 field.': 'আপনাকে শূন্য থেকে অধিক নিবেশ কোরতে হবে $1 ফিল্ডে'
+'You must input a valid date.': 'একটি বৈধ তারিখ ইনপুট প্রয়োজন.'
+'Add new field': 'নতুন ক্ষেত্র যোগ করুন'
+'Article automatic publishing schedule': 'প্রবন্ধ স্বয়ংক্রিয় প্রকাশনার সময়সূচী'
+'Are you sure you want to delete this scheduled action?': 'আপনি কি নিশ্চিত যে আপনি এই নির্ধারিত কর্ম মুছে ফেলতে চান?'
+Unlink: 'বিযুক্ত করা'
+'Are you sure you want to delete the image $1?': 'আপনি কি নিশ্চিত আপনি ইমেজ মুছে ফেলতে চান  $1?'
+'No such issue.': 
+'Are you sure you want to delete the subscription to the publication $1?': 'আপনি কি নিশ্চিত যে আপনি প্রকাশন থেকে সাবস্ক্রিপশন মুছে ফেলতে চান $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 
+GB: গিগাবাইট
+MB: মেগাবাইট
+KB: কিলোবাইট
+bytes: বাইট
+Attach: সংযুক্তি
+Back: পূর্বাবস্থায়
+File: ফাইল
+'Save and Close': 'সংরক্ষণ এবং বন্ধ করুন'
+Add: 'যুক্ত করুন'
+'Select All': 'সবগুলি নির্বাচন করুন'
+'Select None': 'কোনটি নির্বাচন করা হয়নি'
+'Add Event': 'ঘটনা যুক্ত করুন'
+N/A: N/A
+'On Front Page': 'প্রথম  পৃষ্ঠায়'
+'On Section Page': 'বিভাগ পৃষ্ঠায়'
+'Created by': 'তৈরি করেছেন'
+'Creation date': 'তৈরির তারিখ'
+'Publication List': 'প্রকাশনা তালিকা'
+'Issue List': 'ইস্যু তালিকা'
+'Section List': 'বিভাগ তালিকা'
+All: সকল
+duplicate: প্রতিলিপি
+move: নাড়ান
+Move: নাড়ান
+'From:': 'থেকে:'
+'Date:': 'তারিখ:'
+Hidden: লুক্কায়িত
+Comments: 'এতগুলি মন্তব্য'
+Comment: মন্তব্য
+Approved: অনুমোদিত
+Subject: প্রসঙ্গ
+'IP address:': 'IP ঠিকানা:'
+'Email:': 'ইমেল:'
+Author: লেখক
+'Article name': 'প্রবন্ধের নাম'
+'Hide article': 'প্রবন্ধ লুকান'
+'Show article': 'প্রবন্ধ দেখুন'
+'Article Type Fields': 'প্রবন্ধের ক্ষেত্রের ধরণ'
+'Article Images': 'প্রবন্ধের ছবি'
+'Log Messages': 'লগ বার্তাগুলি দেখুন'
+'Article Files': 'প্রবন্ধ ফাইল'
+'Article Comments': 'এই নিবন্ধটি এর উপর মন্তব্যসমূহ'
+'Are you sure you want to deactivate the subscription?': 'আপনি কি নিশ্চিত আপনি সাবস্ক্রিপশন নিস্ক্রিয় করতে চান?'
+'Are you sure you want to activate the subscription?': 'আপনি কি নিশ্চিত যে আপনি সাবস্ক্রিপশন সক্রিয় করতে চান?'
+Other: অন্যান্য
+'Time:': 'সময়:'
+'No events.': 'নতুন কোনো কর্মকাণ্ড নেই.'
+'Default templates': 'ডিফল্ট ফর্মা'
+'System Preferences': 'সিস্টেম পছন্দ নির্বাচন করুন'
+'The date must be in the future.': 
+Send: পাঠান
+'Thank you.': 'আপনাকে ধন্যবাদ.'
+'Please take a minute to send us an email.': 'অনুগ্রহ করে আমাদের একটি ইমেল প্রেরণ করুন.'
+(optional): (ঐচ্ছিক)
+'The URL you entered is invalid: $1': 'আপনার লেখা URL টি অবৈধ: $1'
+Reads: পাঠ্য
+'Publish with issue': 'বিষয় প্রকাশ'
+'Universal List': 'ইউনিভার্সাল তালিকা'
+'Invalid security token!': 'অবৈধ নিরাপত্তা টোকেন!'
+Authors: লেখক

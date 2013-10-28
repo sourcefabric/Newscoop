@@ -16,7 +16,6 @@ class Admin_LogController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('logs');
         $this->auditService = $this->_helper->service('audit');
     }
 
@@ -64,18 +63,19 @@ class Admin_LogController extends Zend_Controller_Action
     {
         $form = new Zend_Form;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $resourceTypes = $this->auditService->getResourceTypes();
         $actionTypes = $this->auditService->getActionTypes();
         
         $form->addElement('select', 'resource_type', array(
-            'multioptions' => array('' => getGS('All')) + $resourceTypes,
-            'label' => getGS('Resource Type:'),
+            'multioptions' => array('' => $translator->trans('All')) + $resourceTypes,
+            'label' => $translator->trans('Resource Type:', array(), 'logs'),
             'onChange' => 'this.form.submit();',
         ));
         
         $form->addElement('select', 'action_type', array(
-            'multioptions' => array('' => getGS('All')) + $actionTypes,
-            'label' => getGS('Action Type:'),
+            'multioptions' => array('' => $translator->trans('All')) + $actionTypes,
+            'label' => $translator->trans('Action Type:', array(), 'logs'),
             'onChange' => 'this.form.submit();',
         ));
         

@@ -52,6 +52,8 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 
         \Article::UnlockByUser($zendAuth->getIdentity());
 
+        $request->setLocale($request->request->get('login_language'));
+
         if ($request->get('ajax') === 'true') {
             // close popup with login.
             return new Response("<script type=\"text/javascript\">window.parent.g_security_token = '".\SecurityToken::GetToken()."';window.parent.$(window.parent.document.body).data('loginDialog').dialog('close');window.parent.setSecurityToken(window.parent.g_security_token);</script>");

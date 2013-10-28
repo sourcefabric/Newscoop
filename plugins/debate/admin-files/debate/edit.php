@@ -1,9 +1,9 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 
@@ -47,10 +47,10 @@ if ($debate->exists()) {
 }
 
 if (empty($GLOBALS['_popup'])) {
-    $pageTitle = $debate->exists() ? getGS('Edit Debate') : getGS('Add new Debate');
+    $pageTitle = $debate->exists() ? $translator->trans('Edit Debate', array(), 'plugin_debate') : $translator->trans('Add new Debate', array(), 'plugin_debate');
     echo camp_html_breadcrumbs(array(
-        array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-        array(getGS('Debates'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
+        array($translator->trans('Plugins', array(), 'plugin_debate'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+        array($translator->trans('Debates', array(), 'plugin_debate'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
         array($pageTitle, ''),
     ));
 }
@@ -59,14 +59,14 @@ if (!isset($f_include) || !$f_include) : ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
         <tr>
             <td><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></td>
-            <td><A HREF="index.php"><B><?php  putGS("Debate List"); ?></B></A></td>
+            <td><A HREF="index.php"><B><?php  echo $translator->trans("Debate List", array(), 'plugin_debate'); ?></B></A></td>
         </tr>
     </TABLE>
 <?php else : ?>
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
         <tr>
             <td><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></td>
-            <td><A HREF="<?php p(urldecode($f_from)) ?>"><B><?php  putGS("Attach Debate"); ?></B></A></td>
+            <td><A HREF="<?php p(urldecode($f_from)) ?>"><B><?php  echo $translator->trans("Attach Debate", array(), 'plugin_debate'); ?></B></A></td>
         </tr>
     </TABLE>
 <?php
@@ -93,11 +93,11 @@ camp_html_display_msgs();
     <td valign="top">
         <table>
           <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Language"); ?>:</td>
             <td style="padding-top: 3px;">
                 <?php if (count($allLanguages) > 1) : ?>
-                <SELECT NAME="f_fk_language_id" alt="select" emsg="<?php putGS("You must select a language.")?>" class="input_select">
-                <option value="0"><?php putGS("---Select language---"); ?></option>
+                <SELECT NAME="f_fk_language_id" alt="select" emsg="<?php echo $translator->trans("You must select a language.")?>" class="input_select">
+                <option value="0"><?php echo $translator->trans("---Select language---"); ?></option>
                 <?php
                 foreach ($allLanguages as $tmpLanguage) {
                      camp_html_select_option($tmpLanguage->getLanguageId(), $fk_language_id, $tmpLanguage->getNativeName());
@@ -114,61 +114,61 @@ camp_html_display_msgs();
             </td>
           </tr>
           <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Type"); ?>:</td>
             <td>
                 <SELECT NAME="f_is_extended" class="input_select">
                 <?php if ($debate->getProperty('parent_debate_nr')) : ?>
-                    <option value="0"><?php putGS('Copy') ?></option>
+                    <option value="0"><?php echo $translator->trans('Copy', array(), 'plugin_debate') ?></option>
                 <?php else : ?>
-                    <option value="0"><?php putGS('Standard') ?></option>
-                    <option value="1" <?php isset($is_extended) && $is_extended ? p('selected="selected"') : null ?>><?php putGS('Extended') ?></option>
+                    <option value="0"><?php echo $translator->trans('Standard', array(), 'plugin_debate') ?></option>
+                    <option value="1" <?php isset($is_extended) && $is_extended ? p('selected="selected"') : null ?>><?php echo $translator->trans('Extended', array(), 'plugin_debate') ?></option>
                 <?php endif; ?>
                 </SELECT>
             </td>
           </tr>
           <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Date begin voting"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Date begin voting", array(), 'plugin_debate'); ?>:</td>
             <td>
                 <?php $now = getdate(); ?>
 
                 <input type="text" class="input_text date" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11"
                 	value="<?php if (isset($date_begin)) p($date_begin); else p(strftime('%Y-%m-%d', strtotime("Friday"))); ?>"
-                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>" />
+                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php echo $translator->trans('You must fill in the $1 field.',"'".$translator->trans('Date begin', array(), 'plugin_debate')."'"); ?>" />
 
                	<input type="text" class="input_text time" name="f_time_begin" id="f_time_begin" maxlength="5" size="5"
                		value="<?php if (isset($time_begin)) p($time_begin); else p("12:00"); ?>" />
             </td>
         </tr>
         <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Date end voting"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Date end voting", array(), 'plugin_debate'); ?>:</td>
             <td>
                 <?php $now = getdate(); ?>
 
                 <input type="text" class="input_text date" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11"
                 	value="<?php if (isset($date_end)) p($date_end); else p(strftime('%Y-%m-%d', strtotime("Thursday + 1 week"))); ?>"
-                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>" />
+                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => "'".$translator->trans('Date end', array(), 'plugin_debate')."'")); ?>" />
 
                 <input type="text" class="input_text time" name="f_time_end" id="f_time_end" maxlength="5" size="5"
                 	value="<?php if (isset($time_end)) p($time_end); else p("11:59"); ?>" />
             </td>
         </tr>
         <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Title", array(), 'plugin_debate'); ?>:</td>
             <td>
-            <input type="text" NAME="f_title" id="input-title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php if (isset($title)) echo htmlspecialchars($title); ?>">
+            <input type="text" NAME="f_title" id="input-title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Title', array(), 'plugin_debate'))); ?>" value="<?php if (isset($title)) echo htmlspecialchars($title); ?>">
             </td>
         </tr>
         <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Question"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Question", array(), 'plugin_debate'); ?>:</td>
             <td>
-            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Question')); ?>"><?php if (isset($question)) echo htmlspecialchars($question); ?></TEXTAREA>
+            <TEXTAREA NAME="f_question" class="input_textarea" cols="28" alt="blank" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Question', array(), 'plugin_debate'))); ?>"><?php if (isset($question)) echo htmlspecialchars($question); ?></TEXTAREA>
             </td>
         </tr>
         <tr>
-            <td ALIGN="RIGHT" ><?php  putGS("Votes per unique User"); ?>:</td>
+            <td ALIGN="RIGHT" ><?php  echo $translator->trans("Votes per unique User", array(), 'plugin_debate'); ?>:</td>
             <td style="padding-top: 3px;">
-                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select">
-                <option value="0"><?php putGS("---Select---"); ?></option>
+                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php echo $translator->trans("You must select number of votes per user.", array(), 'plugin_debate')?>" class="input_select">
+                <option value="0"><?php echo $translator->trans("---Select---", array(), 'plugin_debate'); ?></option>
                 <?php
                     for($n=1; $n<=255; $n++) {
                         camp_html_select_option($n, isset($votes_per_user) ? $votes_per_user : 1, $n);
@@ -178,20 +178,20 @@ camp_html_display_msgs();
             </td>
         </tr>
         <tr>
-            <td ALIGN="RIGHT" ><?php putGS("Allow not logged in users") ?>:</td>
+            <td ALIGN="RIGHT" ><?php echo $translator->trans("Allow not logged in users", array(), 'plugin_debate') ?>:</td>
             <td style="padding-top: 3px;">
             	<select name="f_allow_not_logged_in" class="input_select">
-	                <option value="0" <?php if (isset($allow_not_logged_in) && !$allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("No") ?></option>
-	                <option value="1" <?php if (isset($allow_not_logged_in) && $allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("Yes") ?></option>
+	                <option value="0" <?php if (isset($allow_not_logged_in) && !$allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php echo $translator->trans("No") ?></option>
+	                <option value="1" <?php if (isset($allow_not_logged_in) && $allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php echo $translator->trans("Yes") ?></option>
                 </select>
             </td>
         </tr>
 
         <tr>
-            <td ALIGN="RIGHT" ><?php putGS("Results") ?>:</td>
+            <td ALIGN="RIGHT" ><?php echo $translator->trans("Results", array(), 'plugin_debate') ?>:</td>
             <td style="padding-top: 3px;">
             	<select name="f_results_time_unit" class="input_select">
-            		<?php foreach ( array( getGS('Daily'), getGS('Weekly'), getGS('Monthly') ) as $tunit ) : ?>
+            		<?php foreach ( array( $translator->trans('Daily', array(), 'plugin_debate'), $translator->trans('Weekly', array(), 'plugin_debate'), $translator->trans('Monthly', array(), 'plugin_debate') ) as $tunit ) : ?>
             		<option value="<?php echo ($ltunit = strtolower($tunit)) ?>"
             			<?php if (isset($results_time_unit) && $tunit == $results_time_unit) : ?>selected="selected"<?php endif ?> >
             			<?php echo $tunit ?>
@@ -206,10 +206,10 @@ camp_html_display_msgs();
 
         <?php if (!$debate->getProperty('parent_debate_nr')) : ?>
             <tr>
-                <td ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</td>
+                <td ALIGN="RIGHT" ><?php  echo $translator->trans("Number of answers", array(), 'plugin_debate'); ?>:</td>
                 <td style="padding-top: 3px;">
-                    <SELECT NAME="f_nr_of_answers" id="input-nr-answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select"> <!-- onchange="debate_set_nr_of_answers()"-->
-                    <option value="0"><?php putGS("---Select---"); ?></option>
+                    <SELECT NAME="f_nr_of_answers" id="input-nr-answers" alt="select" emsg="<?php echo $translator->trans("You must select number of answers.", array(), 'plugin_debate')?>" class="input_select"> <!-- onchange="debate_set_nr_of_answers()"-->
+                    <option value="0"><?php echo $translator->trans("---Select---", array(), 'plugin_debate'); ?></option>
                     <?php
                         for($n=2; $n<=255; $n++) {
                             camp_html_select_option($n, isset($nr_of_answers) ? $nr_of_answers : null, $n);
@@ -221,10 +221,10 @@ camp_html_display_msgs();
         <?php endif; ?>
 
     		<tr id="answer-row" class="answer-row" style="display:none">
-            	<td align="right"><?php putGS("Answer %s"); ?>:</td>
+            	<td align="right"><?php echo $translator->trans("Answer %s", array(), 'plugin_debate'); ?>:</td>
                 <td>
                 	<input type="text" name="f_answer[%s]" id="answer-tpl-input" size="40" maxlength="255" class="input_text" alt="blank"
-                		emsg-tpl="<?php putGS('You must fill in the $1 field %s.', getGS('Answer')); ?>" value="" disabled="disabled"/>
+                		emsg-tpl="<?php echo $translator->trans('You must fill in the $1 field %s.', array('$1' => $translator->trans('Answer', array(), 'plugin_debate'))); ?>" value="" disabled="disabled"/>
     			</td>
     			<?php if ($debate->exists()) : ?>
     			<td align='center'>
@@ -241,7 +241,7 @@ camp_html_display_msgs();
 <tr>
     <td COLSPAN="2" align="center">
         <HR NOSHADE SIZE="1" COLOR="BLACK">
-        <INPUT TYPE="submit" NAME="save" VALUE="<?php  putGS('Save'); ?>" class="button">
+        <INPUT TYPE="submit" NAME="save" VALUE="<?php  echo $translator->trans('Save'); ?>" class="button">
     </td>
 </tr>
 </TABLE>
@@ -306,13 +306,13 @@ $('#edit-debate-form').submit( function()
     var endTime = $('#f_time_end').val();
     if (!timeOk(startDate, startTime, endDate, endTime)) {
         valid = 0;
-        alert("<?php putGS('End time cannot be set before start time'); ?>");
+        alert("<?php echo $translator->trans('End time cannot be set before start time', array(), 'plugin_debate'); ?>");
         $('#f_date_end').focus();
         return false;
     }
 
     if ($('.answer-row').length < 2) {
-        alert('<?php putGS('Please input at least 2 answers')?>');
+        alert('<?php echo $translator->trans('Please input at least 2 answers', array(), 'plugin_debate')?>');
         return false;
     }
     $(this).find('#answer-tpl-input').remove();

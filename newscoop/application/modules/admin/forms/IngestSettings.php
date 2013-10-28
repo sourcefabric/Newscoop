@@ -12,30 +12,31 @@ class Admin_Form_IngestSettings extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->addElement('hash', 'csrf');
 
         $this->addElement('text', 'article_type', array(
-            'label' => getGS('Article Type'),
+            'label' => $translator->trans('Article Type'),
             'required' => true,
         ));
 
         $this->addElement('select', 'publication', array(
-            'label' => getGS('Publication'),
+            'label' => $translator->trans('Publication'),
             'multioptions' => array(
-                null => getGS('None'),
+                null => $translator->trans('None', array(), 'comments'),
             ),
         ));
 
         $this->addElement('select', 'section', array(
-            'label' => getGS('Section'),
+            'label' => $translator->trans('Section'),
             'multioptions' => array(
-                null => getGS('None'),
+                null => $translator->trans('None', array(), 'comments'),
             ),
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
             'ignore' => true,
         ));
     }

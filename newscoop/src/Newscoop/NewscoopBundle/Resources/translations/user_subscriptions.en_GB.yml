@@ -1,0 +1,67 @@
+third: third
+second: second
+forth: fourth
+first: first
+'You must input a number greater than 0 into the Number of addresses field.': 'You must input a number greater than 0 into the Number of addresses field.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'You must input a number between 0 and 255 into the Start IP address $1 field.'
+'User IP access list management': 'User IP access list management'
+'The IP address group conflicts with another existing group.': 'The IP address group conflicts with another existing group.'
+'Subscription sections': 'Subscription sections'
+'No records.': 'No records.'
+'You have subscription for all available publications': 'You have a subscription for all available publications'
+'Subscription type:': 'Subscription type:'
+'Start:': 'Start:'
+'Start Date': 'Start Date'
+'Sections:': 'Sections:'
+'Publication:': 'Publication:'
+'Paid days': 'Paid days'
+'Paid Days:': 'Paid Days:'
+Paid: Paid
+'No subscriptions': 'No subscriptions'
+'Languages:': 'Languages:'
+'Edit all sections': 'Edit all sections'
+'Days:': 'Days:'
+'Days must be number': 'Days must be number'
+Any: Any
+'Add section': 'Add section'
+saved: saved
+removed: removed
+deleted: deleted
+deactivated: deactivated
+activated: activated
+'Value is required and cant be empty': 'Value is required and cant be empty'
+'That user name already exists, please choose a different login name.': 'That user name already exists, please choose a different login name.'
+'That $1 already exists, please choose a different $2.': 'That $1 already exists, please choose a different $2.'
+'Subscriptions exist for all available publications.': 'Subscriptions exist for all available publications.'
+'Subscription IP Addresses': 'Subscription IP Addresses'
+'Subscription $1': 'Subscription $1'
+'Subscriber saved.': 'Subscriber saved.'
+'Subscriber management': 'Subscriber management'
+'Subscriber deleted.': 'Subscriber deleted.'
+'Start IP': 'Start IP'
+'Select country': 'Select country'
+'Number of addresses': 'Number of addresses'
+'Number of Addressses': 'Number of Addressses'
+'No IP Addresses': 'No IP Addresses'
+'IP Address added allready': 'IP Address added allready'
+'IP Address $1': 'IP Address $1'
+'IP Access': 'IP Access'
+'Full Name': 'Full Name'
+'Edit subscriptions': 'Edit subscriptions'
+'Edit subscriber $1': 'Edit subscriber $1'
+E-Mail: E-Mail
+'Delete subscriber $1': 'Delete subscriber $1'
+'Creation Date': 'Creation Date'
+'Change subscriber information': 'Change subscriber information'
+'Add new IP address': 'Add new IP address'
+'Add new IP Address': 'Add new IP Address'
+'Accout Name': 'Accout Name'
+'%value% must be greater than %min%': '%value% must be greater than %min%'
+'%value% is not a valid IP Address': '%value% is not a valid IP Address'
+'Regardless of the language': 'Regardless of the language'
+'Individual languages': 'Individual languages'
+'Add sections now': 'Add sections now'
+'Add sections later': 'Add sections later'
+'Subscription Type': 'Subscription Type'
+'Paid (payment will be confirmed later)': 'Paid (payment will be confirmed later)'
+'Paid (confirm payment now)': 'Paid (confirm payment now)'

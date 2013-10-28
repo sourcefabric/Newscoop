@@ -25,6 +25,8 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 {
     global $g_ado_db;
 
+    $translator = \Zend_Registry::get('container')->getService('translator');
+
     $p_smarty->loadPlugin('smarty_function_html_options');
 
     if (!isset($p_params['object']) || !isset($p_params['attribute'])) {
@@ -58,15 +60,11 @@ function smarty_function_camp_select($p_params, &$p_smarty)
                 . $p_params['html_code'] . ' /> '
                 .smarty_function_escape_special_chars($p_params['female_name']);
         } elseif ($attribute == 'title') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
-        	if (!isGS('Mr.')) {
-        		camp_load_translation_strings("users", $campsite->language->code);
-        	}
         	if (is_null($fieldValue)) {
                 $fieldValue = $campsite->user->$attribute;
             }
             $selectTag = true;
-            $output = array(getGS('Mr.'), getGS('Mrs.'), getGS('Ms.'), getGS('Dr.'));
+            $output = array($translator->trans('Mr.', array(), 'users'), $translator->trans('Mrs.', array(), 'users'), $translator->trans('Ms.', array(), 'users'), $translator->trans('Dr.', array(), 'users'));
             $values = array('Mr.', 'Mrs.', 'Ms.', 'Dr.');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'country') {
@@ -91,15 +89,11 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $values = array('0-17', '18-24', '25-39', '40-49', '50-65', '65-');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif ($attribute == 'employertype') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
-        	if (!isGS('Corporate')) {
-        		camp_load_translation_strings("users", $campsite->language->code);
-        	}
         	if (is_null($fieldValue)) {
                 $fieldValue = $campsite->user->$attribute;
             }
             $selectTag = true;
-            $output = array(getGS('Corporate'), getGS('Non-Governmental'), getGS('Government Agency'), getGS('Academic'), getGS('Media'), getGS('Other'));
+            $output = array($translator->trans('Corporate', array(), 'users'), $translator->trans('Non-Governmental', array(), 'users'), $translator->trans('Government Agency', array(), 'users'), $translator->trans('Academic', array(), 'users'), $translator->trans('Media', array(), 'users'), $translator->trans('Other', array(), 'users'));
             $values = array('Corporate', 'NGO', 'Government Agency', 'Academic', 'Media', 'Other');
             $html = '<select name="f_user_'.$attribute.'" ' . $p_params['html_code'] . '>';
         } elseif (substr($attribute, 0, 4) == 'pref') {
@@ -165,17 +159,12 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             $html = '<input type="checkbox" name="f_match_all" '
             . $p_params['html_code'] . ' />';
         } elseif ($attribute == 'level') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
-        	if (!isGS('Publication')) {
-        		camp_load_translation_strings("globals", $campsite->language->code);
-        	}
             $html = '<select name="f_search_'.$attribute.'" ' . $p_params['html_code'] . '>'
-                .'<option value="1" selected="selected">' . getGS('Publication') . '</option>'
-                .'<option value="2">' . getGS('Issue') . '</option>'
-                .'<option value="3">' . getGS('Section') . '</option>'
+                .'<option value="1" selected="selected">' . $translator->trans('Publication') . '</option>'
+                .'<option value="2">' . $translator->trans('Issue') . '</option>'
+                .'<option value="3">' . $translator->trans('Section') . '</option>'
                 .'</select>';
         } elseif ($attribute == 'section') {
-        	require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
         	$constraints = array();
             $operator = new Operator('is', 'integer');
             if ($campsite->publication->defined) {
@@ -188,11 +177,9 @@ function smarty_function_camp_select($p_params, &$p_smarty)
             	$constraints[] = new ComparisonOperation('NrIssue', $operator, $campsite->issue->number);
             }
             $sectionsList = Section::GetList($constraints, array('Name'=>'ASC'), 0, 0, $count);
-            if (!isGS('-- ALL SECTIONS --')) {
-            	camp_load_translation_strings("user_subscription_sections", $campsite->language->code);
-            }
+            
             $html = '<select name="f_search_section" ' . $p_params['html_code'] . '>';
-            $html .= '<option value="0" selected="selected">' . getGS('-- ALL SECTIONS --') . '</option>';
+            $html .= '<option value="0" selected="selected">' . $translator->trans('-- ALL SECTIONS --') . '</option>';
             foreach ($sectionsList as $section) {
             	$html .= '<option value="' . $section->getSectionNumber() . '">'
             	      . htmlspecialchars($section->getName()) . '</option>';

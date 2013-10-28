@@ -1,0 +1,87 @@
+'Duplicate assignment': 'Doppelte Zuordnung'
+Templates: Designvorlagen
+'Import theme': 'Designvorlage importieren'
+'Import succeded!': 'Import erfolgreich. '
+'Import failed!': 'Import fehlgeschlagen. '
+'Edit template: $1': 'Designvorlage bearbeiten: $1'
+'Set new name to': 'Neuen Namen einstellen für'
+'Rename file': 'Datei umbenennen'
+'Caching templates in:': 'Templates Caching in: '
+'Caching templates finished': 'Caching des Templates abgeschlossen'
+'Theme name': 'Name der Designvorlage'
+'Theme is assigned and can not be deleted': 'Die Designvorlage ist zugewiesen und kann nicht gelöscht werden'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Der Designvorlagen-Export war nicht erfolgreich. Bitte überprüfen Sie, ob der Server genug Speicherplatz hat. '
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Die Designvorlage kann nicht entkoppelt werden, weil es für die Ausgabe ($1) in dieser Publikation in Gebrauch ist. '
+zip: zip
+version: Version
+uploaded: Hochgeladen
+updated: Aktualisiert
+'or higher': 'oder höher'
+moved: verschoben
+installed: installiert
+deleted: gelöscht
+'You must select at least one template to perform an action.': 'Sie müssen mindestens ein Template auswählen um diese Aktion auszuführen.'
+Upload: Upload
+'Unassign theme': 'Designvorlage entkoppeln'
+'Unassign successful': 'Entkopplung erfolgreich'
+Unassign: Entkoppeln
+'Theme version': 'Designvorlage Version'
+'Theme settings updated.': 'Designvorlagen-Einstellungen aktualisiert'
+'Theme settings saved.': 'Designvorlagen-Einstellungen gespeichert. '
+'Theme name / version': 'Designvorlagen Name / Version'
+'Theme management': Designvorlagen-Verwaltung
+'Theme $1': 'Designvorlage $1'
+'The file $1 is empty.': 'Die Datei $1 ist leer. '
+'Template object $1 was renamed to $2.': 'Template Objekt $1 wurde umbenannt in $2.'
+'Template object $1 was deleted.': 'Template Objekt $1 wurde gelöscht. '
+'Template $1 was duplicated into $2.': 'Template $1 wurde nach $2 dupliziert. '
+'Template $1 $2.': 'Template $1 $2.'
+'Something broke': 'Etwas ist kaputt'
+'Section page template': 'Rubrikenseiten Template'
+Saving..: Speichere...
+'Saving settings failed.': 'Speichern der Einstellungen fehlgeschlagen.'
+'Save All': 'Alle Speichern'
+'Required Newscoop version': 'Erforderliche Newscoop Version'
+Replace: Ersetze
+'New template $1 created.': 'Neues Template $1 angelegt. '
+'New name': 'Neuer Name'
+'Name cant be empty': 'Der Name darf nicht leer sein'
+'Last modified': 'Zuletzt geändert'
+'Issue page': 'Seite der Ausgabe'
+'Go to parent': 'Gehe zu Eltern'
+'Go to $1': 'Gehe zu $1'
+'Geo Filtering': 'Geo Filter'
+'Front page template': 'Startseiten Template'
+'File size': Dateigröße
+'File name': Dateiname
+'File $1 was replaced.': 'Datei  $1 wurde ersetzt. '
+'Failed unassigning theme': 'Entkoppeln der Designvorlage fehlgeschlagen. '
+Export: Exportiere
+'Error page template': 'Fehlerseiten Template'
+'Edit $1': 'Bearbeite $1'
+'Done uploading': 'Upload fertig'
+'Do you want to override $1?': 'Wollen Sie $1 überschreiben?'
+'Directory is empty': 'Verzeichnis ist leer. '
+'Directory $1 created.': 'Verzeichnis $1 erstellt. '
+Design: Design
+'Delete theme': 'Designvorlage löschen'
+'Current directory:': 'Aktuelles Verzeichnis'
+'Create folder': 'Ordner erstellen'
+'Create file': 'Datei erstellen'
+'Copy to available themes': 'In die verfügbaren Designvorlagen kopieren'
+'Copied successfully': 'Erfolgreich kopiert'
+Compatibility: Kompatibilität
+'Click to enlarge': 'Zum Vergrößern klicken. '
+'Choose destination': 'Ziel wählen'
+'Cant override directory $1.': 'Kann das Verzeichnis $1 nicht überschreiben.'
+'Cache Lifetime': 'Cache Laufzeit'
+'Browse for the theme': 'Nach Designvorlage durchsuchen'
+'Assigned successfully': 'Erfolgreich zugewiesen'
+'Article page template': 'Artikelseiten Template'
+'Article page': Artikelseite
+'Are you sure you want to unassign this theme?': 'Sind Sie sicher, dass Sie die Designvorlage entkoppeln wollen?'
+'Are you sure you want to delete this theme?': 'Sind Sie sicher, dass Sie diese Designvorlage löschen wollen?'
+'Add to publication': 'Zur Publikation hinzufügen'
+'$1 is not writable': '$1 ist nicht beschreibbar.'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 Dateien $2'

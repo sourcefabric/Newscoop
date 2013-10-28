@@ -1,0 +1,26 @@
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
+'Delete anyway': 
+'Reset order': 
+'Order changes will be lost. Are you sure you want to continue?': 
+'Topics order saved.': 
+'Show languages': 
+'Save order': 
+'Click to edit': 
+'Add root topic': 
+'Topic was deleted.': 
+'The topic name is already in use by another topic.': 
+'You must enter a name for the topic.': 'Du måste skriva ett namn för temat.'
+'You must choose a language for the topic.': 'Du måste välja ett språk för temat.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Det här temat har underteman, det kan därför inte raderas.'
+'Add translation:': 'Lägg till översättning:'
+'Add subtopic:': 'Lägg till undertema:'
+Top: Topp
+'You do not have the right to add topics.': 'Du har inte rätt att lägga till teman.'
+'You do not have the right to delete topics.': 'Du har inte rätt att radera teman.'
+'Are you sure you want to delete the topic $1?': 'Är du säker att du vill radera temat $1?'
+'You do not have the right to change topic name.': 'Du har inte rätt att ändra temanamn.'
+'The topic $1 could not be deleted.': 'Temat $1 kunde inte raderas.'
+'Adding new topic': 'Lägger till nytt tema'
+'Deleting topic': 'Raderar tema'
+'Change topic name': 'Ändra temanamn'
+'There are $1 articles using the topic.': 'Det finns $1 artiklar som använder temat.'

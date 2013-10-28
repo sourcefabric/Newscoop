@@ -12,11 +12,12 @@ class Admin_Form_Blog extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->addElement('hash', 'csrf');
 
         $this->addElement('text', 'title', array(
-            'label' => getGS('Title'),
+            'label' => $translator->trans('Title', array(), 'api'),
             'required' => TRUE,
             'filters' => array(
                 'stringTrim',
@@ -24,7 +25,7 @@ class Admin_Form_Blog extends Zend_Form
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Create'),
+            'label' => $translator->trans('Create', array(), 'home'),
             'ignore' => true,
         ));
     }

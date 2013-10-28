@@ -1,18 +1,21 @@
-<?php $this->placeholder('title')->set(getGS('Languages')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Languages')); 
+?>
 
 <?php $this->renderActions(); ?>
 
 <?php if (empty($this->languages)) { // no languages
-    $this->renderMessage(getGS('No languages.'));
+    $this->renderMessage($translator->trans('No languages.'));
     return;
 } ?>
 
 <table class="languages">
     <tr>
-        <th><?php putGS('Language'); ?></th>
-        <th><?php putGS('Native name'); ?></th>
-        <th><?php putGS('Code'); ?></th>
-        <th><?php putGS('Delete'); ?></th>
+        <th><?php echo $translator->trans('Language'); ?></th>
+        <th><?php echo $translator->trans('Native name', array(), 'languages'); ?></th>
+        <th><?php echo $translator->trans('Code'); ?></th>
+        <th><?php echo $translator->trans('Delete'); ?></th>
     </tr>
     <?php foreach ($this->languages as $language) { ?>
     <tr>
@@ -21,7 +24,7 @@
         <td class="text"><?php echo $this->escape($language->getCode()); ?></td>
         <td>
           <?php if ($language->getCode() !== 'en') { ?>
-          <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>"><?php putGS('Delete'); ?></a>
+          <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>"><?php echo $translator->trans('Delete'); ?></a>
           <?php } ?>
         </td>
     </tr>

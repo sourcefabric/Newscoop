@@ -1,0 +1,72 @@
+third: 
+second: 
+forth: 
+first: 
+'You must input a number greater than 0 into the Number of addresses field.': 
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 
+'User IP access list management': 
+'The IP address group conflicts with another existing group.': 
+'Subscription sections': 
+'No records.': 
+'You have subscription for all available publications': 
+'Subscription type:': 
+'Start:': 
+'Start Date': 
+'Sections:': 
+'Publication:': 
+'Paid days': 
+'Paid Days:': 
+Paid: 
+'No subscriptions': 
+'Languages:': 
+'Edit all sections': 
+'Days:': 
+'Days must be number': 
+Any: 
+'Add section': 
+saved: снимљено
+removed: уклоњено
+deleted: обрисано
+deactivated: деактивирано
+activated: активирано
+'Value is required and cant be empty': 'Вредност је обавезна и не може бити празна'
+'That user name already exists, please choose a different login name.': 'То корисничко име већ постоји, изаберите неко друго име.'
+'That $1 already exists, please choose a different $2.': 'Тај $1 већ постоји, изаберите други $2.'
+'Subscriptions exist for all available publications.': 'Претплате постоје за све доступне публикације.'
+'Subscription IP Addresses': 'Претплатничке ИП адресе'
+'Subscription $1': 'Претплата $1'
+'Subscriber saved.': 'Претплатник снимљен.'
+'Subscriber management': 'Управљање претплатницима.'
+'Subscriber deleted.': 'Претплатник обрисан.'
+'Start IP': 'Почетни ИП'
+'Select country': 'Изабери државу'
+'Number of addresses': 'Број адреса'
+'Number of Addressses': 'Број адреса'
+'No IP Addresses': 'Нема ИП адреса'
+'IP Address added allready': 'ИП адреса је већ додата'
+'IP Address $1': 'ИП адреса $1'
+'IP Access': 'ИП приступ'
+'Full Name': 'Пуно име'
+'Edit subscriptions': 'Уреди претплате'
+'Edit subscriber $1': 'Уреди претплатника $1'
+E-Mail: Имејл
+'Delete subscriber $1': 'Обриши претплатника $1'
+'Creation Date': 'Датум креирања'
+'Change subscriber information': 'Промени информације о претплатнику'
+'Add new IP address': 'додај нову ИП адресу'
+'Add new IP Address': 'Додај нову ИП адресу'
+'Accout Name': 'Име налога'
+'%value% must be greater than %min%': '%value% мора бити веће од %min%'
+'%value% is not a valid IP Address': '%value% није валидна ИП адреса'
+'Regardless of the language': 'Независно од језика'
+'Individual languages': 'Појединачни језици'
+'Add sections now': 'Додај рубрику сад'
+'Add sections later': 'Додај рубрику касније'
+'Subscription Type': 'Тип претплате'
+'Paid (payment will be confirmed later)': 'Плаћено (уплата ће бити потврђена касније) '
+'Paid (confirm payment now)': 'Плаћено (потврди уплату сад)'
+'Are you sure you want to activate the subscription?': 'Сигурни сте да желите да активирате претплату?'
+'Left to pay': 'Преостало за плаћање'
+Active: Активно
+'Are you sure you want to delete the subscription to the publication $1?': 'Сигурни сте да желите да обришете претплате на публикацију $1?'
+Trial: Пробно

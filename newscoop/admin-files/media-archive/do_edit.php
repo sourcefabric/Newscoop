@@ -1,13 +1,14 @@
 <?php
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -39,6 +40,6 @@ $updateArray = array('Description' => $f_image_description,
 //}
 $imageObj->update($updateArray);
 
-camp_html_add_msg(getGS("Image updated."), "ok");
+camp_html_add_msg($translator->trans("Image updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/edit.php?f_image_id=$f_image_id");
 ?>

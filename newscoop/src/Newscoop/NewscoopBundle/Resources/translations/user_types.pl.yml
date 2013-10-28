@@ -1,0 +1,81 @@
+get: pobierz
+Soundcloud: SoundCloud
+Templates: Szablony
+'Feedback Messages': 'Wiadomości zwrotne'
+'Article Playlists': 'Listy artykułów'
+'Check all': 'Zaznacz wszystkie'
+view: zobacz
+undo/redo: cofnij/dalej
+underline: podkreślenie
+translate: tłumaczenia
+'text direction': 'kierunek tekstu'
+'text alignment': 'pozycjonowanie tekstu'
+table: tabela
+superscript: superscript
+subscript: subscript
+subhead: podrubryka
+strikethrough: przekreślenie
+statusbar: 'pasek statusu'
+'spell checker enabled': 'sprawdzanie pisowni'
+'source view': 'widok źródla'
+publish: publikacja
+notify: powiadomienia
+moderate: moderacja
+manage: zarządzanie
+'list number': 'lista numerowana'
+'list bullet': 'lista nieuporządkowana'
+link: link
+italic: pochylenie
+indent: wcięcie
+image: obraz
+'horizontal rule': 'lista pozioma'
+handle: uchwyt
+guest: gość
+'font size': 'rozmiar czcionki'
+'font face': 'rodzaj czcionki'
+'font color': 'kolor czcionki'
+find/replace: znajdź/zamień
+enlarge: powiększ
+enable: odblokuj
+edit: edytuj
+delete: usuń
+copy/cut/paste: kopiuj/wytnij/wklej
+clear: wyczyść
+'character map': 'lista znaków'
+bold: pogrubienie
+attach: dołacz
+'any resource': 'każdy zasób'
+admin: administrator
+add: dodaj
+'You cant deny yourself to manage $1': 'Nie możesz zabronić sobie zarządzania $1'
+'You are not allowed to $1 $2.': 'Nie masz uprawnień do $1 $2.'
+'User type saved.': 'Rodzaj użytkownika zapisany.'
+'User type deleted.': 'Rodzaj użytkownika usunięty.'
+'User type added.': 'Rodzaj użytkownika dodany.'
+'User Groups': 'Grupy użytkowników'
+Themes: Motywy
+'That type name already exists, please choose a different name.': 'Ta nazwa typu już istnieje, wybierz inną nazwę.'
+System: System
+Structure: Struktura
+'Search Indexer': 'Indeksowanie wyszukiwania'
+'Rich-Text Editor Preferences': 'Ustawienia edytora tekstu'
+ReCaptcha: ReCaptacha
+Polls: Ankiety
+'Permissions:': Uprawnienia
+'Permissions updated': 'Uprawnienia zaktualizowane'
+Notification: Powiadomienia
+Log: Logi
+Layout: Układ
+Global: Globalnie
+Files: Pliki
+'Error: ': Błąd
+'Edit user type $1': 'Edytuj typ użytkownika $1'
+Deny: Zabroń
+'Delete user type $1': 'Usuń typ użytkownika $1'
+'Can not delete a user type with assigned users.': 'Nie można usunąć typu użytkownika z przydzielonymi użytkownikami.'
+Cache: 'Pamięć podręczna'
+Backup: 'Kopia zapasowa'
+Authoring: Tworzenie
+Allow: Zezwól
+'User types': 'Typy użytkowników'
+'No user types.': 'Brak typów użytkowników'

@@ -1,18 +1,17 @@
 <?php
-camp_load_translation_strings("languages");
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/localizer/Localizer.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/TimeUnit.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageLanguages')) {
-	camp_html_display_error(getGS("You do not have the right to add new languages."));
+	camp_html_display_error($translator->trans("You do not have the right to add new languages.", array(), 'issues'));
 	exit;
 }
 
@@ -71,13 +70,13 @@ if (($f_language_name == "") || ($f_native_name == "") || ($f_language_code == "
 }
 $errorMsgs = array();
 if ($f_language_name == "") {
-    camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
+    camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>')));
 }
 if ($f_native_name == "") {
-   	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Native name').'</B>'));
+   	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Native name', array(), 'issues').'</B>')));
 }
 if ($f_language_code == "") {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Code').'</B>'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Code').'</B>')));
 }
 
 if ($editMode) {

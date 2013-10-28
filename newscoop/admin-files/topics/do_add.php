@@ -1,13 +1,15 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageTopics')) {
-	camp_html_display_error(getGS("You do not have the right to add topics."));
+	camp_html_display_error($translator->trans("You do not have the right to add topics.", array(), 'topics'));
 	exit;
 }
 
@@ -24,11 +26,11 @@ $Path = camp_topic_path($topicParent, $f_topic_language_id);
 $errorMsgs = array();
 if (empty($f_topic_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+	$errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>'));
 }
 if ($f_topic_language_id <= 0) {
 	$correct = false;
-	$errorMsgs[] = getGS('You must choose a language for the topic.');
+	$errorMsgs[] = $translator->trans('You must choose a language for the topic.', array(), 'topics');
 }
 
 if (!empty($f_topic_name)) {
@@ -45,22 +47,22 @@ if (!empty($f_topic_name)) {
 	if ($created) {
 		camp_html_goto_page("/$ADMIN/topics/index.php");
 	} else {
-		$errorMsgs[] = getGS('The topic name is already in use by another topic.');
+		$errorMsgs[] = $translator->trans('The topic name is already in use by another topic.', array(), 'topics');
 	}
 } else {
-	$errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+	$errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>'));
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Topics"), "/$ADMIN/topics/");
-$crumbs[] = array(getGS("Adding new topic"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Topics"), "/$ADMIN/topics/");
+$crumbs[] = array($translator->trans("Adding new topic", array(), 'topics'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="1" WIDTH="100%" class="current_location_table">
 <TR>
-	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  putGS("Topic"); ?>:</TD>
+	<TD ALIGN="RIGHT" WIDTH="1%" NOWRAP VALIGN="TOP" class="current_location_title">&nbsp;<?php  echo $translator->trans("Topic"); ?>:</TD>
 	<TD VALIGN="TOP" class="current_location_content"><?php p($Path);?></TD>
 </TR>
 </TABLE>
@@ -68,7 +70,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Adding new topic"); ?> </B>
+		<B> <?php  echo $translator->trans("Adding new topic", array(), 'topics'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -87,7 +89,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
 	</DIV>
 	</TD>
 </TR>

@@ -1,0 +1,75 @@
+'Make sure to enter the Moderator Address below': 
+'click to see issues': 
+'Moderator Address': 
+'From Address': 
+'Use CAPTCHA to prevent spam?': 
+'Public allowed to comment?': 
+'Enable spam blocking?': 
+'The subscription settings for $1 could not be added.': 
+'The publication name you specified conflicts with publication $1.': 
+'The publication alias you specified conflicts with publication $1.': 
+'Subscription defaults': 
+'Subscription Settings by Country': 
+'Set subscription settings for a country': 
+'Set subscription settings by country': 
+'Default time periods:': 
+'Country subscription settings updated.': 
+'Country subscription settings deleted.': 
+'Change country subscription settings': 
+'Are you sure you want to delete the subscription settings for $1?': 
+'Publication updated': 'Publikationen uppdaterad'
+'Subscriber comments moderated?': 
+'Public comments moderated?': 
+'Comments enabled?': 
+'Comments enabled': 
+'Article comments default to enabled?': 
+'trial subscription': provprenumeration
+'paid subscription': 'betald prenumeration'
+'time units': tidsenheter
+'one language': 'ett språk'
+'all languages': 'alla språk'
+'Trial subscriptions': Provprenumerationer
+'Time unit cost per one section': 'Tidsenhetskostnad per sektion'
+'Paid subscriptions': 'Betalda prenumerationer'
+'Default time period': Grundtidsperiod
+'Go To Issues': 'Gå till utgåvor'
+'Delete publication $1': 'Radera publikation $1'
+'No publications.': 'Inga publikationer.'
+'Default Site Alias': 'Förvalt sajtalias'
+'URL Type': URL-typ
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Land<BR><SMALL>(klicka för att ändra)</SMALL>'
+'Delete alias $1': 'Radera alias $1'
+'Configure publication': 'Konfigurera publikation'
+'You do not have the right to edit publication information.': 'Du har inte rätt att redigera publikationsinformation.'
+'General attributes': 'Generella attribut'
+'You do not have the right to change publication information.': 'Du har inte rätt att ändra publikationsinformation.'
+'The publication information could not be updated.': 'Publikationsinformationen kunde inte uppdateras.'
+'You do not have the right to delete publications.': 'Du har inte rätt att radera publikationer.'
+'Are you sure you want to delete the publication $1?': 'Är du säker att du vill radera publikationen $1?'
+'Deleting publication': 'Raderar publikation'
+'There are $1 subscription(s) left.': 'Det finns $1 prenumeration(er) kvar.'
+'The publication $1 could not be deleted.': 'Publikationen $1 kunde inte raderas.'
+'The publication could not be added.': 'Publikationen kunde inte läggas till.'
+'You do not have the right to manage publications.': 'Du har inte rätt att hantera publikationer.'
+'You must select a country.': 'Du måste välja ett land.'
+'Add new alias': 'Lägg till nytt alias'
+'Alias (click to edit)': 'Alias (klicka för att redigera)'
+'Edit aliases': 'Redigera aliasar'
+'Publication Aliases': Publikationsaliasar
+'Adding new alias': 'Lägger till nytt alias'
+'The site alias $1 could not be added.': 'Sajtaliaset $1 kunde inte läggas till.'
+'Another alias with the same name exists already.': 'Ett annat alias med samma namn finns redan.'
+'Edit alias': 'Redigera alias'
+'Editing alias': 'Redigerar alias'
+'The site alias $1 could not be modified.': 'Sajtaliaset $1 kunde inte ändras.'
+'Are you sure you want to delete the alias $1?': 'Är du säker att du vill radera sajtaliaset $1?'
+'Deleting alias': 'Raderar alias'
+'The alias $1 could not be deleted.': 'Aliaset $1 kunde inte raderas.'
+'$1 is the default publication alias, it can not be deleted.': '$1 är grundpublikationsaliaset, det kan inte raderas.'
+'You do not have the right to add publications.': 'Du har inte rätt att lägga till publikationer.'
+'There are $1 issue(s) left.': 'Det finns $1 utgåva(or) kvar.'
+'Time Unit': Tidsenhet
+Currency: Valuta
+'Edit languages': 'Redigera språk'
+'Select the publication': 'Välj publikation'
+'Name<BR><SMALL>(click to select the publication)</SMALL>': 'Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>'

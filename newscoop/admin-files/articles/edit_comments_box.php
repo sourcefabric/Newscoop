@@ -1,10 +1,13 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 			<table width="100%" style="border: 1px solid #EEEEEE;">
 			<tr>
 				<td>
 					<table width="100%" bgcolor="#EEEEEE" cellpadding="3" cellspacing="0">
 					<tr>
 						<td align="left">
-                            <strong><?php putGS("Comments"); ?></strong>
+                            <strong><?php echo $translator->trans("Comments", array(), 'articles'); ?></strong>
 						</td>
 					</tr>
 					</table>
@@ -18,25 +21,25 @@
                 ?>
                     <span class="success_message">
                 <?php
-                        putGS("Online Server: On");
+                       echo $translator->trans("Online Server: On", array(), 'articles');
                     } elseif (isset($connectedToOnlineServer)
                               &&$connectedToOnlineServer == false) {
                 ?>
                     <span class="failure_message">
                 <?php
-                        putGS("Online Server: Off");
+                        echo $translator->trans("Online Server: Off", array(), 'articles');
                     }
                 ?>
                     </span><br />
                 <?php
                 }
                 ?>
-                    <?php putGS("Total:"); ?> <?php p(count($comments)); ?>
+                    <?php echo $translator->trans("Total:", array(), 'articles'); ?> <?php p(count($comments)); ?>
                     <br />
                     <?php if ($f_show_comments) { ?>
-                    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=0"); ?>"><?php putGS("Hide Comments"); ?></a>
+                    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=0"); ?>"><?php echo $translator->trans("Hide Comments", array(), 'articles'); ?></a>
                     <?php } else { ?>
-				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=1"); ?>"><?php putGS("Show Comments"); ?></a>
+				    <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, "edit.php", "", "&f_show_comments=1"); ?>"><?php echo $translator->trans("Show Comments", array(), 'articles'); ?></a>
 				    <?php } ?>
                 </td>
             </tr>

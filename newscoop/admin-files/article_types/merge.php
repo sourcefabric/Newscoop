@@ -1,11 +1,12 @@
 <?php
-camp_load_translation_strings("article_types");
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to merge article types."));
+	camp_html_display_error($translator->trans("You do not have the right to merge article types.", array(), 'article_types'));
 	exit;
 }
 
@@ -15,9 +16,9 @@ $f_src = trim(Input::get('f_src'));
 $f_dest = trim(Input::get('f_dest'));
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-$crumbs[] = array(getGS("Merge article type"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans("Merge article type", array(), 'article_types'), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
 <P>
@@ -25,13 +26,13 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">
-		<b><?php putGS("Merge Article Types: Step $1 of $2", "1", "3"); ?></b>
+		<b><?php echo $translator->trans("Merge Article Types: Step $1 of $2", array('$1' => 1, '$2' => 3), 'article_types'); ?></b>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
-	<TD align="center"><?php putGS("Source Article Type"); ?></td>
-	<TD align="center" style="padding-left: 25px;"><?php putGS("Destination Article Type"); ?></td>
+	<TD align="center"><?php echo $translator->trans("Source Article Type", array(), 'article_types'); ?></td>
+	<TD align="center" style="padding-left: 25px;"><?php echo $translator->trans("Destination Article Type", array(), 'article_types'); ?></td>
 </tr>
 <tr>
 	<td align="center">
@@ -62,7 +63,7 @@ echo camp_html_breadcrumbs($crumbs);
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php  putGS('Go to Step 2'); ?>">
+		<INPUT TYPE="submit" class="button" NAME="Ok" VALUE="<?php echo $translator->trans('Go to Step 2', array(), 'article_types'); ?>">
 	</TD>
 </TR>
 </TABLE>

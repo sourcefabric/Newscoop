@@ -1,0 +1,82 @@
+'Language id not specified': 
+'No languages.': 'Немає мов.'
+'Native Name': 'Місцева назва'
+'Name taken.': 'Набута назва.'
+'Language saved.': 'Мова збережена.'
+'Language removed.': 'Мова видалена.'
+'Language not found.': 'Мова не знайдена.'
+'Language is in use and cannot be removed.': 'Мова використовується та не може бути видалена.'
+'Language added.': 'Мова додана.'
+'English language cannot be removed.': 'Англійську мову видалити неможливо.'
+'Edit short month names': 'Редагувати скорочені назви місяців'
+'Edit short day names': 'Редагувати скорочені назви днів'
+'Edit month names': 'Редагувати назви місяців'
+'Edit language: $1': 'Редагувати мову: $1'
+'Edit day names': 'Редагувати назви днів'
+'Code Page': 'Сторінка коду'
+'Add new Language': 'Додати нову мову'
+'Add Language': 'Додати мову'
+We: Ср
+Tu: Вт
+Th: Чт
+Su: Нд
+Sep: Вер
+Sa: Сб
+'Please enter the translation for week day short names.': 'Будь ласа введіть переклад скорочених назв днів тижня'
+'Please enter the translation for month short names.': 'Будь ласка введіть переклад скорочених назв місяців'
+Oct: Жов
+Nov: Лис
+Mo: Пн
+Mar: Бер
+Jun: Чер
+Jul: Лип
+Jan: Січ
+Fr: Пт
+Feb: Лют
+Dec: Гру
+Aug: Сер
+Apr: Кві
+'No language.': 'Немає мови.'
+'Delete language $1': 'Видалити мову $1'
+'You do not have the right to add languages.': 'Ви не маєте права додавати мови.'
+'Please enter the translation for time units.': 'Будь ласка введіть переклад одиниць часу'
+'You do not have the right to delete languages.': 'Ви не маєте права видаляти мови.'
+'Are you sure you want to delete the language $1?': 'Ви впевнені що хочете видалити мову $1?'
+'Deleting language': 'Видалення мови'
+'The language $1 could not be deleted.': 'Мова $1 не може бути видалена.'
+'Edit language': 'Редагування мови'
+'You do not have the right to edit languages.': 'Ви не маєте прав для редагування мови.'
+'Please enter the translation for month names.': 'Будь ласка введіть переклад для назв місяців'
+'Please enter the translation for week day names.': 'Будь ласка введіть переклад для назв днів тижня.'
+January: Січень
+February: Лютий
+March: Березень
+April: Квітень
+May: Травень
+June: Червен
+July: Липень
+August: Серпень
+September: Вересень
+October: Жовтень
+November: Листопад
+December: Грудень
+Monday: Понеділок
+Tuesday: Вівторок
+Wednesday: Середа
+Thursday: Четвер
+Friday: П’ятниця
+Saturday: Субота
+Sunday: Неділя
+'You do not have the right to add new languages.': 'Ви не маєте прав додавати нові мови.'
+'There are $1 issue(s) left.': ' $1 випуск(ів) залишилось.'
+'Native name': 'Місцева назва.'
+'No such language.': 
+'The language $1 has been successfuly added.': 
+'Please check if a language with the same name does not already exist.': 
+'The language could not be added.': 
+'Delete language': 
+'Updating language information': 
+'Language information has been successfuly updated.': 
+'Language information could not be updated.': 
+'A language with the same name already exists.': 
+'Add another language': 

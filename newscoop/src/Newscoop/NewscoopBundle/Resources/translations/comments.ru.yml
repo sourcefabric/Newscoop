@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.'
+'You are about to permanently delete a message.': 'Вы пришли на страницу, чтобы удалить сообщение.'
+User: Пользователь
+None: Пусто
+'Coming from': Отправлено
+'Ban/Unban user': 'Запретить/разрешить пользователю комментировать'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Запретить комментировать можно по имени пользователя, email или IP адресу.'
+'You are about to permanently delete multiple comments.': 'Вы собираетесь окончательно удалить комментарии.'
+'You are about to permanently delete a comment.': 'Вы собираетесь окончательно удалить комментарий.'
+Website: Web-сайт
+'Value is not $1 characters long': 'Значение не содержит $ знаков'
+Username: 'Имя пользователя'
+'User id': 'id пользователя'
+'User ban settings': 'Настройки запрета на комментарии'
+'Update comment': 'Обновить комментарии'
+Unrecommended: 'Не рекомендовано'
+Unrecommend: 'Не рекомендовать'
+'Subject is not $1 characters long': 'Тема не содержит $1 знаков'
+'Sort by Thread order': 'Сортировать по порядку сообщений'
+'Show parent comment': 'Показать изначальный комментарий'
+'Show commenter details': 'Показать информацию о комментаторе'
+'Show commenter': 'Показать комментатора'
+'Show comment user details': 'Показать данные '
+'Show comment user': 'Показать пользователя комментария'
+'Show comment details': 'Показать информацию о комментарии'
+'Select status': 'Выбрать статус'
+'Search Type': 'Искать тип'
+'Reply to comment': 'Ответить на комментарий'
+Recommended: Рекомендовано
+Recommend: Рекомендовать
+'Quick edit': 'Быстрое редактирование'
+Parent: Источник
+ID: ID
+'Go to edit article': 'Перейти к редактируемой статье'
+Forum: Форум
+'For Column': 'Для колонки'
+Email: Email
+'Edit acceptance criteria': 'Редактировать критерии допустимости'
+E-mail: E-mail
+'Delete all comments?': 'Удалить все комментарии?'
+'Date Created': 'Дата создана'
+'Comments updated.': 'Комментарии обновлены'
+'Comments status change to $1.': 'Статус комментариев изменяется на $1.'
+'Comments deleted.': 'Комментарии удалены.'
+'Commenter $1 saved.': 'Комментатор $1 сохранен.'
+'Commenter $1 deleted.': 'Комментатор $1 удален.'
+Commenter: Комментатор
+'Comment updated.': 'Комментарий обновлен.'
+'Comment status change to $1.': 'Статус комментария изменяется на $1.'
+'Comment id': 'id комментария'
+'Comment deleted.': 'Комментарий удален.'
+'Comment delete by $1 from the article $2 ($3)': 'Комментарий удален пользователем $1 из статьи $2 ($3)'
+'Comment Acceptance': 'Приемлемость комментария'
+'Comment $4 by $1 in the article $2 ($3)': 'Комментарий $4 пользователя $1 в статье $2 ($3)'
+'Comment $1 saved.': 'Комментарий $1 сохранен.'
+Column: Колонка
+'Change subscriber information': 'Изменить информацию о подписчике'
+'Ban for commenter $1 saved.': 'Запрет для комментатора $1 сохранен.'
+Ban: Запретить
+'Are you sure you want to do it?': 'Вы уверены, что хотите это сделать?'
+'Add rating': 'Добавить рейтинг'
+'Add new comment commenter': 'Добавить нового комментатора комментариев'
+'Add new comment': 'Добавить новый комментарий'
+'Add new acceptance criteria': 'Добавить новые критерии допустимости комментария'
+'Acceptance $1 saved.': 'Критерий $1 сохранен.'
+'Acceptance $1 deleted.': 'Критерий $1 удален.'

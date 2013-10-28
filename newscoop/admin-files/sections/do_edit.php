@@ -9,13 +9,15 @@ use Newscoop\Service\IOutputSettingSectionService;
 use Newscoop\Entity\Output\OutputSettingsSection;
 //@New theme management
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageSection')) {
-    camp_html_display_error(getGS("You do not have the right to add sections."));
+    camp_html_display_error($translator->trans("You do not have the right to add sections.", array(), 'sections'));
     exit;
 }
 
@@ -38,7 +40,7 @@ $cArticleTplId = Input::Get('cArticleTplId', 'string', 0);
 $cName = Input::Get('cName');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -47,11 +49,11 @@ $publicationObj = new Publication($Pub);
 $sectionObj = new Section($Pub, $Issue, $Language, $Section);
 
 if (!$publicationObj->exists()) {
-    camp_html_display_error(getGS('Publication does not exist.'));
+    camp_html_display_error($translator->trans('Publication does not exist.'));
     exit;
 }
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('No such issue.'));
+	camp_html_display_error($translator->trans('No such issue.'));
 	exit;
 }
 
@@ -60,15 +62,15 @@ $modified = false;
 
 $errors = array();
 if ($cName == "") {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('Name').'"'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '"'.$translator->trans('Name').'"')));
 }
 if ($cShortName == "")  {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','"'.getGS('URL Name').'"'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '"'.$translator->trans('URL Name', array(), 'sections').'"')));
 }
 $isValidShortName = camp_is_valid_url_name($cShortName);
 
 if (!$isValidShortName) {
-	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', '"' . getGS('URL Name') . '"'));
+	camp_html_add_msg($translator->trans('The $1 field may only contain letters, digits and underscore (_) character.', array('$1' => '"' . $translator->trans('URL Name', array(), 'sections') . '"')));
 }
 
 $editUrl = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=$Section";
@@ -112,13 +114,13 @@ if (!camp_html_has_msgs()) {
 	if ($cSubs == "a") {
 	$numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
 		if ($numSubscriptionsAdded < 0) {
-			$errors[] = getGS('Error updating subscriptions.');
+			$errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
 		}
 	}
 	if ($cSubs == "d") {
 		$numSubscriptionsDeleted = Subscription::DeleteSubscriptionsInSection($Pub, $Section);
 		if ($numSubscriptionsDeleted < 0) {
-			$errors[] = getGS('Error updating subscriptions.');
+			$errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
 		}
 	}
 
@@ -126,15 +128,15 @@ if (!camp_html_has_msgs()) {
 	if (is_object($conflictingSection) && ($conflictingSection->getSectionNumber() != $Section)) {
 		$conflictingSectionLink = "/$ADMIN/sections/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language&Section=".$conflictingSection->getSectionNumber();
 
-		$msg = getGS('The URL name must be unique for all sections in this issue.<br>The URL name you specified ("$1") conflicts with section "$2$3. $4$5"',
-			$cShortName,
-			"<a href='$conflictingSectionLink' class='error_message' style='color:#E30000;'>",
-			$conflictingSection->getSectionNumber(),
-			htmlspecialchars($conflictingSection->getName()),
-			"</a>");
+		$msg = $translator->trans('The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5', array(
+			'$1' => $cShortName,
+			'$2' => "<a href='$conflictingSectionLink' class='error_message' style='color:#E30000;'>",
+			'$3' => $conflictingSection->getSectionNumber(),
+			'$4' => htmlspecialchars($conflictingSection->getName()),
+			'$5' => "</a>"), 'sections');
 		camp_html_add_msg($msg);
 		// placeholder for localization string - we might need this later.
-		// getGS("The section could not be changed.");
+		// $translator->trans("The section could not be changed.");
 	} else {
 		$modified &= $sectionObj->setUrlName($cShortName);
 		//@New theme management
@@ -144,7 +146,7 @@ if (!camp_html_has_msgs()) {
 			$outputSettingSectionService->update($outSetSection);
 		}
 		//@New theme management
-		camp_html_add_msg(getGS("Section updated"), "ok");
+		camp_html_add_msg($translator->trans("Section updated", array(), 'sections'), "ok");
 	}
 }
 camp_html_goto_page($editUrl);

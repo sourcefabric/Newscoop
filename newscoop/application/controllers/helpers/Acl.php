@@ -69,11 +69,13 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
      * @return void
      */
     public function check($resource, $action)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if (!$this->isAllowed($resource, $action)) {
             $redirector = $this->getActionController()->getHelper('redirector');
             $redirector->gotoSimple('deny', 'error', 'admin', array(
-                'message' => getGS('You are not allowed to $1 $2.', $action, $resource),
+                'message' => $translator->trans('You are not allowed to $1 $2.', array('$1' => $action, '$2' => $resource), 'user_types'),
             ));
         }
     }

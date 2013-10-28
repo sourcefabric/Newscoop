@@ -25,6 +25,7 @@ class RatingController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
         $params = $this->getRequest()->getParams();
         
+        $translator = Zend_Registry::get('container')->getService('translator');
         $errors = array();
 
         $auth = Zend_Auth::getInstance();
@@ -41,11 +42,11 @@ class RatingController extends Zend_Controller_Action
                 $ratingRepository->update($rating, array('ratingScore' => $params['f_rating_score']));
                 $ratingRepository->flush();
 
-                $errors[] = $this->view->translate('Your rating has been updated');
+                $errors[] = $translator->trans('Your rating has been updated');
             }
 
         } else {
-            $errors[] = $this->view->translate('You are not logged in.');
+            $errors[] = $translator->trans('You are not logged in.');
         }
 
         if (empty($errors)) {

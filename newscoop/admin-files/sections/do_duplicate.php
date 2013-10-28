@@ -3,17 +3,19 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission("ManageSection")) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));
+	camp_html_display_error($translator->trans("You do not have the right to add sections.", array(), 'sections'));
 	exit;
 }
 if (!$g_user->hasPermission("AddArticle")) {
-	camp_html_display_error(getGS("You do not have the right to add articles."));
+	camp_html_display_error($translator->trans("You do not have the right to add articles."));
 	exit;
 }
 
@@ -33,25 +35,25 @@ else {
 $f_dest_section_name = Input::Get('f_dest_section_new_name', 'string', '', true);
 
 if (!Input::IsValid()) {
-   	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+   	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())));
 	exit;
 }
 
 $srcPublicationObj = new Publication($f_src_publication_id);
 if (!$srcPublicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
+	camp_html_display_error($translator->trans('Publication does not exist.'));
 	exit;
 }
 
 $srcIssueObj = new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$srcIssueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
+	camp_html_display_error($translator->trans('Issue does not exist.'));
 	exit;
 }
 
 $srcSectionObj = new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$srcSectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
+	camp_html_display_error($translator->trans('Section does not exist.'));
 	exit;
 }
 
@@ -77,7 +79,7 @@ if ($correct) {
 		   ."&f_dest_section_number=$f_dest_section_number");
 } else {
 	$topArray = array('Pub' => $srcPublicationObj, 'Issue' => $srcIssueObj, 'Section' => $srcSectionObj);
-	camp_html_content_top(getGS('Duplicating section'), $topArray);
+	camp_html_content_top($translator->trans('Duplicating section', array(), 'sections'), $topArray);
 }
 
 ?>
@@ -85,7 +87,7 @@ if ($correct) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Duplicating section"); ?> </B>
+		<B> <?php  echo $translator->trans("Duplicating section", array(), 'sections'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -94,10 +96,10 @@ if ($correct) {
 		<BLOCKQUOTE>
 		<?php
 			if (!$correct) {
-				echo "<LI>"; putGS('Invalid parameters received'); echo "</LI>\n";
+				echo "<LI>"; echo $translator->trans('Invalid parameters received'); echo "</LI>\n";
 			} else {
 				 ?>
-				<LI><?php  putGS('The section $1 could not be duplicated','<B>'.htmlspecialchars($srcSectionObj->getName()).'</B>'); ?></LI>
+				<LI><?php  echo $translator->trans('The section $1 could not be duplicated', array('$1' => '<B>'.htmlspecialchars($srcSectionObj->getName()).'</B>'), 'sections'); ?></LI>
 		<?php  } ?>
 		</BLOCKQUOTE>
 	</TD>
@@ -105,7 +107,7 @@ if ($correct) {
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-           <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($f_src_publication_id); ?>&Issue=<?php  p($f_src_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
+           <INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/sections/?Pub=<?php  p($f_src_publication_id); ?>&Issue=<?php  p($f_src_issue_number); ?>&Language=<?php  p($f_language_id); ?>'">
 		</DIV>
 	</TD>
 </TR>

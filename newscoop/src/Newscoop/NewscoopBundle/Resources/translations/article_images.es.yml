@@ -1,0 +1,74 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Lo siento, esa imagen es muy pequeña.  Cada imagen debe ser de al menos  %dx%d.'
+'Slideshow rendition': 'Rendición del slideshow'
+'Renditions reloaded': 'Rendiciones recargadas'
+'Reload renditions': 'Recargar rendiciones'
+'Edit images': 'Editar imágenes'
+'Specify image url if you want to load it.': 'Especifique el url de la imagen si desea cargarla.'
+'Items: ': Objetos
+'Attach slideshows': 'Añadir diapositivas'
+'original size:': 'tamaño original'
+'no caption': 'sin leyenda'
+'Video URL': 'URL de video'
+'Use for all': 'Usar en todo'
+'Use default': 'Uso predeterminado'
+'Slug must be unique': 'Enlace amigable (slug) debe ser único.'
+Slug: 'Enlace amigable (slug)'
+'Slideshow headline': 'Encabezado de presentación'
+Slideshow: Presentación
+'Set selected as default image': 'Fijar selección como imagen predeterminada'
+'Set as default': 'Fijar como predeterminado'
+Saving...: Guardando...
+Saved: Guardado
+'Save headline': 'Guardar encabezado'
+'Place Images': 'Colocar imágenes'
+'No renditions defined.': 'No hay rendiciones definidas'
+'No images found.': 'No se hallaron imágenes'
+'No images attached to article.': 'No hay imágenes agregadas al artículo'
+'No images': 'Sin imágenes'
+'Next: Upload and Edit Metadata': 'Siguiente: Cargar o editar metadatos'
+'Next: Place Images': 'Siguiente: Colocar imágenes'
+'Media Archive': 'Archivo multimedia'
+Location: Locación
+Items: Objetos
+Item: Objeto
+'Image files': 'Archivos de imagen'
+'Image Files: ': 'Archivos de imagen:'
+Headline: Encabezado
+Finish: Terminar
+'Edit Image Data': 'Editar datos de imagen'
+'Edit $1': 'Editar $1'
+'Done editing': 'Finalizar edición'
+Detach: Desunir
+Create: Crear
+Caption: Leyenda
+'Attached images': 'Imágenes añadidas'
+'Attach & Place': 'Añadir y colocar'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Agregar url de video (ej. http://vimeo.com/25083275 para Vimeo, http://youtu.be/1XsPVO61e9w para YouTube)'
+'Add video': 'Añadir video'
+'Add caption': 'Añadir leyenda'
+'Show all': 'Mostrar todo'
+'The image has been removed from the article.': 'La imagen ha sido removida del artículo.'
+'Unable to add new image.': 'No es posible añadir nueva imagen. '
+'Image number $1 already exists': 'Imagen número $1 ya existe.'
+'You do not have the right to change image information.': 'No tiene autorización para cambiar la información de la imagen.'
+'The image number specified is already in use.': 'El número de imagen especificado ya está en uso.'
+'Image $1 updated.': 'Se actualizó la imagen $1 '
+'Image $1 added.': 'Se añadió la imagen $1 '
+'Edit article': 'Editar artículo'
+'You do not have the right to attach images to articles.': 'No tiene autorización  para adjuntar imágenes a los artículos'
+'You do not have the right to add images.': 'No tiene autorización para añadir imágenes.'
+'Image information': 'Información de la imagen'
+'Attach New Image': 'Adjuntar nueva imagen'
+'Attach Image To Article': 'Adjuntar imagen al artículo'
+'Attach Existing Image': 'Adjuntar imagen existente'
+'Add New Image': 'Agregar nueva imagen'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: aaaa-mm-dd
+'You must select an image file to upload.': 'Debe seleccionar un archivo de imagen para cargar.'
+'Change image information': 'Cambiar información de imagen'
+'You do not have the right to add images': 'No tiene autorización  para agregar imágenes.'
+'Delete image $1': 'Borrar imagen $1'
+'Click one of the ': 
+'Are you sure you want to delete the image $1?': 

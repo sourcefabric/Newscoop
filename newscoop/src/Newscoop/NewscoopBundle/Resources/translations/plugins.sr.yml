@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'Немате инсталираних плагинова.'
+'Some plugins have to be updated. Please press the save button.': 'Неки плагинови морају бити апдејтовани. Притисни дугме сними.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Потребна је потврда за брисање плагина $1! Сви подаци везани за овај плагин биће обрисани!'
+'You do not have the right to manage plugins.': 'Немате право управљања плагиновима'
+Version: Верзија
+'Upload Plugin': 'Аплоудуј плагин'
+Upload: Аплоуд
+Uninstall: Деинсталирање
+'The plugin $1 was sucessfully installed.': 'Плагин $1 је успешно инсталиран'
+'No plugins found.': 'Није пронађен ниједан плагин.'
+Manage: Управљање
+Enabled: Дозвољен
+'Delete plugin': 'Обриши плагин'
+'Add new image': 'Додај нову слику'

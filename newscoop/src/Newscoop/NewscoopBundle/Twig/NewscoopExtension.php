@@ -56,21 +56,11 @@ class NewscoopExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('loadTranslationStrings', 'camp_load_translation_strings'),
-            new \Twig_SimpleFunction('getGS', array($this, 'getGS')),
             new \Twig_SimpleFunction('strpos', 'strpos'),
             new \Twig_SimpleFunction('getBreadcrumbsArray', array($this, 'getBreadcrumbsArray')),
             new \Twig_SimpleFunction('getReCaptchaImage', array($this, 'getReCaptchaImage')),
             new \Twig_SimpleFunction('getSystemPref', '\SystemPref::Get'),
         );
-    }
-
-    public function getGS()
-    {
-        $args = func_get_args();
-        require_once( __DIR__ . '/../../../../admin-files/localizer/Localizer.php');
-
-        return call_user_func_array('getGS', $args);
     }
 
     public function getBreadcrumbsArray($currentMenuItem) {

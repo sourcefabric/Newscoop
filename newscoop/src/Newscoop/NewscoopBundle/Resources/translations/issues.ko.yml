@@ -1,0 +1,61 @@
+'so that default templates can be assigned to the issue.': 
+'Once this is done, the issue can be published': 
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
+'This issue cannot be previewed. Please make sure it has the front template selected.': 
+'Publish all articles:': 
+'Publish all articles': 
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
+default: 
+'The publishing/unpublishing can not be set the same time': 
+'The publishing schedule can not be set in the past': 
+'Please assign at least one theme to the publication': 
+'Issue Theme': 
+'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 
+'The number must be unique for each issue in this publication of the same language.': 
+'The language and URL name must be unique for each issue in this publication.': 
+'Issue created.': 
+'Issue updated': 
+'Could not save the changes to the issue.': 
+'Unpublish on: $1': 
+'There are $1 articles in this issue.': 
+'The issue $1 has been deleted.': 
+Schedule: 
+'Publish on: $1': 
+'Publish Date $1': 
+'Deleted issue': 
+'Delete issue': 
+'Click here to publish this issue': 
+'A total of $1 articles were deleted.': 
+'Name<BR><SMALL>(click to see sections)</SMALL>': 이름<BR><SMALL>(이슈보려면클릭)</SMALL>
+'Delete issue $1': '이슈  $1  삭제'
+'You do not have the right to change issues.': '이슈를 수정할 권한이 없습니다. '
+'Are you sure you want to change the issue $1 status from $2 to $3?': '이슈 $1 상태를 $2 에서 $3 로 변경합니까?'
+'Add new translation': '새로운 번역 추가'
+'You do not have the right to add issues.': '이슈를 추가할 권한이 없습니다. '
+'The issue $1 has been successfuly added.': '이슈 $1 이 성공적으로 추가되었습니다. '
+'The issue could not be added.': '이슈가 추가될 수 없습니다. '
+'Change issue details': '이슈 내역 수정'
+'You do not have the right to change issue details.': '이슈 내역을 수정할 권한이 없습니다.'
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 출판일자<BR><SMALL>(년-월-일)</SAMLL>
+'Front Page Template': '프론트페이지 템플레이트'
+'You do not have the right to delete issues.': '이슈를 삭제할 권한이 없습니다. '
+'Are you sure you want to delete the issue $1?': '이슈 $1 을 확실히 삭제합니까?'
+'Use the structure of the previous issue': '이전 이슈의 구조를 사용'
+'Copy the entire structure in all languages from the previous issue except for content.': '콘테트제외하고 이전 이슈의 모든 언어의 전체적 구조 복사'
+'You may modify it later if you wish.': '원하면 나중에 수정할 수 있습니다.'
+'Create a new structure': '새로운 구조 생성'
+'Create a complete new structure.': '완전히 새로운 구조 생성'
+'You must define an issue type for each language and then sections for them.': '각기 언어에 대한 이슈 타입을 정의하고, 그다음  섹션을 정의해야 됩니다. '
+'Copy previous issue': '이전 이슈 복사'
+'No previous issue.': '이전 이슈 없슴.'
+'Copy structure from issue number $1': '이슈  nr $1 에서 구조 복사'
+'Delete entry': '엔트리 삭제'
+'Issue Publishing Schedule': '출판 스케쥴 이슈'
+'Invalid Input: $1': '비정상 입력: $1'
+'Issue Number': '이슈 넘버'
+'Go To Sections': '섹션으로 가기'
+'There was an error reading the language parameter.': '언어 파라미터를 읽는중 에러가 있습니다.'
+'There was an error reading the publication parameter.': '출판 파라미터를 읽는중 에러가 있습니다.'
+'There was an error reading the issue parameter.': '이슈 파라미터를 읽는중 에러가 있습니다. '
+'There was an error scheduling the $1 action on $2': '$1 기능을 $2 에 스케듈링하는데 에러가 있습니다. '
+'The action scheduled on $1 could not be deleted.': '$1 에 스케듈링된 기능이 삭제될수 없습니다.'

@@ -2,14 +2,16 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('Publish')) {
-	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
+    camp_html_display_error($translator->trans("You do not have the right to schedule issues or articles for automatic publishing."));
 }
 
 // Get input
@@ -24,7 +26,7 @@ $publish_hour = trim(Input::Get('publish_hour', 'string', ''));
 $publish_min = trim(Input::Get('publish_min', 'string', ''));
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString()) , 'issues'));
 	exit;
 }
 
@@ -96,13 +98,13 @@ if ($created) {
 $issueObj = new Issue($Pub, $Language, $Issue);
 $publicationObj = new Publication($Pub);
 $crumbs = array("Pub" => $publicationObj, "Issue" => $issueObj);
-camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
+camp_html_content_top($translator->trans("Scheduling a new publish action"), $crumbs);
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 	<TR>
 		<TD COLSPAN="2">
-			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
+			<B> <?php echo $translator->trans("Scheduling a new publish action"); ?> </B>
 			<HR NOSHADE SIZE="1" COLOR="BLACK">
 		</TD>
 	</TR>
@@ -110,28 +112,28 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 		<TD COLSPAN="2"><BLOCKQUOTE>
 <?php
 	if ( $publish_date == "" ) {
-	$correct= 0; ?>	<LI><?php putGS('You must fill in the $1 field.','<B>'.getGS('Date').'</B>' ); ?></LI>
+	$correct= 0; ?>	<LI><?php echo $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Date').'</B>')); ?></LI>
 	<?php }
 
     if ( ($publish_hour == "") || ($publish_min == "") ) {
-	$correct= 0; ?>	<LI><?php putGS('You must fill in the $1 field.','<B>'.getGS('Time').'</B>' ); ?></LI>
+	$correct= 0; ?>	<LI><?php echo $translator->trans('You must fill in the $1 field.','<B>'. array('$1' => $translator->trans('Time').'</B>' )); ?></LI>
     <?php }
 
 	if ( ($action != "P") && ($action != "U") ) {
-	$correct= 0; ?>	<LI><?php putGS('You must select an action.'); ?></LI>
+	$correct= 0; ?>	<LI><?php echo $translator->trans('You must select an action.'); ?></LI>
     <?php }
 
 	if ($past_publish) {
-	?>	<LI><?php putGS('The publishing schedule can not be set in the past'); ?></LI>
+	?>	<LI><?php echo $translator->trans('The publishing schedule can not be set in the past', array(), 'issues'); ?></LI>
     <?php }
 
     if ($conflicting_action) {
-	?>	<LI><?php putGS('The publishing/unpublishing can not be set the same time'); ?></LI>
+	?>	<LI><?php echo $translator->trans('The publishing/unpublishing can not be set the same time', array(), 'issues'); ?></LI>
     <?php }
 
 	if ($correct) {
 		if (!$created) { ?>
-			<LI><?php putGS('There was an error scheduling the $1 action on $2', getGS($action_str), $publish_time); ?></LI>
+			<LI><?php echo $translator->trans('There was an error scheduling the $1 action on $2', array('$1' => $translator->trans($action_str), '$2' => $publish_time), 'issues'); ?></LI>
 	       <?php
 		}
     }
@@ -140,7 +142,7 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
 	<TR>
 		<TD COLSPAN="2">
 		<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/issues/edit.php?Pub=<?php p($Pub); ?>&Issue=<?php p($Issue); ?>&Language=<?php p($Language); ?>'">
 		</DIV>
 		</TD>
 	</TR>

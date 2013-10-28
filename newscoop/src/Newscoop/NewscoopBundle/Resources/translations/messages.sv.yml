@@ -1,0 +1,259 @@
+Plugins: 
+'Manage Plugins': 
+Account: Konto
+'Items per page': 'Föremål per sida'
+'Add new': 'Lägg till ny'
+Home: Hem
+Logout: 'Logga ut'
+More...: Mer...
+Content: Innehåll
+Languages: Språk
+Countries: Länder
+Themes: Mallar
+Topics: Teman
+Configure: Inställningar
+'Image Archive': Bildarkiv
+'Add Article': 'Lägg till artikel'
+Fields: Fält
+Delete: Radera
+Type: Typ
+Name: Namn
+Code: Kod
+Edit: Redigera
+Login: Inloggning
+Password: Lösenord
+Site: Sajt
+Path: Sökväg
+'Go up': 'Gå upp'
+URL: URL
+Order: Ordning
+Hide: Göm
+Duplicate: Dubblett
+Subscription: Prenumeration
+expires: förfaller
+starts: börjar
+before: före
+after: efter
+on: på
+status: status
+active: aktiv
+inactive: inaktiv
+Subscribers: Prenumeranter
+Staff: Stab
+'Select destination': 'Välj destination'
+'No languages': 'Inga språk'
+'---Select language---': '---Välj språk---'
+'No publications': 'Inga publikationer'
+'---Select publication---': '---Välj publikation---'
+'No issues': 'Inga artiklar'
+'---Select issue---': '---Välj artikel---'
+'No sections': 'Inga sektioner'
+'---Select section---': '---Välj sektion---'
+Language: Språk
+Country: Land
+'Account name': Kontonamn
+Publication: Publikation
+'Default language': 'Förvalt språk'
+Subscriptions: Prenumerationer
+Issue: Utgåva
+Number: Nummer
+Section: Sektion
+Keywords: Nyckelord
+Topic: Tema
+'URL Name': URL-namn
+'Left to pay': 'Kvar att betala'
+Active: Aktiv
+Trial: Prov
+Next: Nästa
+Previous: Föregående
+Translate: Översätt
+View: Visa
+'Scheduled Publishing': 'Schemalagd publicering'
+Time: Tid
+Action: Händelse
+'Schedule a new action': 'Schemalägg ny händelse'
+'Scheduling a new publish action': 'Schemalägg ny publiceringshändelse'
+'Delete scheduled publish action': 'Radera schemalagd publiceringshändelse'
+Date/Time: Datum/Tid
+'You must select an action.': 'Du måste välja en händelse.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Du har inte rätt att schemalägga utgåvor eller artiklar för automatisk publicering.'
+'Front page': Framsida
+'Section page': Sektionssida
+'Show on front page': 'Visa på framsidan'
+'Remove from front page': 'Ta bort från framsidan'
+'Show on section page': 'Visa på sektionssidan'
+'Remove from section page': 'Ta bort från sektionssidan'
+Actions: Handlingar
+Publishing: Publicering
+Show: Visa
+Remove: 'Ta bort'
+'Article Types': Artikeltyper
+'Staff User Types': Stabsanvändartyper
+Publications: Publikationer
+Issues: Utgåvor
+Sections: Sektioner
+Articles: Artiklar
+Images: Bilder
+Change: Ändra
+'Add new issue': 'Lägg till ny utgåva'
+'Section Template': Sektionsmall
+'Article Template': Artikelmall
+'Default Language': 'Förvalt språk'
+'Paid Period': 'Betald period'
+Preview: Förhandsgranska
+'You must fill in the $1 field.': 'Du måste fylla i fältet $1.'
+Error: Fel
+'Invalid input: $1': 'Felaktig inmatning: $1'
+'Language does not exist.': 'Språket finns inte.'
+'Publication does not exist.': 'Publikationen finns inte.'
+'Issue does not exist.': 'Utgåvan finns inte.'
+'You must select a language.': 'Du måste välja ett språk.'
+'Section does not exist.': 'Sektionen finns inte.'
+'No articles.': 'Inga artiklar.'
+'Article does not exist.': 'Artikeln finns inte.'
+'Image does not exist.': 'Bilden finns inte.'
+'Access denied': 'Åtkomst nekad'
+'Invalid parameters received': 'Felaktiga parametrar mottagna'
+'Add new article': 'Lägg till ny artikel'
+Status: Status
+Published: Publicerad
+'Not published': Opublicerad
+Submitted: Insänd
+New: Ny
+Article: Artikel
+Publish: Publicera
+Unpublish: Avpublicera
+Unlock: 'Lås upp'
+Uploaded: Uppladdad
+YYYY-MM-DD: ÅÅÅÅ-MM-DD
+Submit: Skicka
+Image: Bild
+Description: Beskrivning
+Photographer: Fotograf
+Place: Plats
+Date: Datum
+Thumbnail: Förhandsvisning
+'In use': Används
+'Additional searches': 'Extra sökningar'
+'Most Recently Added': 'Senast tillagda'
+'Most Recently Modified': 'Senast ändrade'
+'$1 images found': '$1 bilder hittades'
+'Reset search conditions': 'Nollställ sökvillkoren'
+'Image number': 'Bild nummer'
+Users: Användare
+Localizer: Översättaren
+'Adding new translation': 'Lägger till ny översättning'
+'No more languages.': 'Inga fler språk'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Fältet $1 får bara innehålla bokstäver, siffror och understreck (_).'
+'Add new publication': 'Lägg till ny publikation'
+'Upload new template': 'Ladda upp ny mall'
+'Add new staff member': 'Lägg till ny stabsmedlem'
+'Add new subscriber': 'Lägg till ny prenumerant'
+'Add new user type': 'Lägg till ny användartyp'
+'Add new article type': 'Lägg till ny artikeltyp'
+'Add new country': 'Lägg till nytt land'
+'Add new language': 'Lägg till nytt språk'
+'View logs': 'Visa Loggar'
+'Change your password': 'Ändra ditt lösenord'
+'Your Articles': 'Dina artiklar'
+'Submitted Articles': 'Insända artiklar'
+Logs: Loggar
+'There are $1 article(s) left.': 'Det finns kvar $1 artikel(ar).'
+'There are $1 issues(s) left.': 'Det finns kvar $1 utgåva(or).'
+'There are $1 section(s) left.': 'Det finns kvar $1 sektion(er).'
+'There are $1 publication(s) left.': 'Det finns kvar $1 publikation(er).'
+'There are $1 countries left.': 'Det finns kvar $1 land/länder.'
+'Name <SMALL>(click to edit)</SMALL>': 'Namn <SMALL>(klicka för att redigera)</SMALL>'
+'Add new subscription': 'Lägg till ny prenumeration'
+'You do not have the right to add subscriptions.': 'Du har inte rätt att lägga till prenumerationer.'
+'Adding subscription': 'Lägger till prenumeration'
+'Delete subscription': 'Radera prenumeration'
+'You do not have the right to delete subscriptions.': 'Du har inte rätt att radera prenumerationer.'
+'No such subscription.': 'Prenumeranten finns inte.'
+Yes: Ja
+No: Nej
+Close: Stäng
+'No issues.': 'Inga utgåvor.'
+'Back to Edit Article': 'Tillbaka till Redigera artikel'
+'No topics': 'Inga teman'
+'You do not have the right to add articles.': 'Du har inte rätt att lägga till artiklar.'
+Start: Start
+Days: Dagar
+'The sections could not be added successfully. Some of them were already added !': 'Sektionerna kunde inte läggas till framgångsrikt. Några fanns redan!'
+'Add another': 'Lägg till en till'
+Cancel: Avbryt
+Done: Klar
+OK: OK
+Save: Spara
+Search: Sök
+'Make a selection': 'Gör ett val'
+'You must input a number greater than 0 into the $1 field.': 'Du måste skriva in ett nummer större än 0 i fältet $1.'
+'You must input a valid date.': 'Du måste skriva ett korrekt datum.'
+'Add new field': 'Lägg till nytt fält'
+'Article automatic publishing schedule': 'Automatiskt artikelpubliceringsschema'
+'Are you sure you want to delete this scheduled action?': 'Är du säker att du vill radera denna schemalagda händelse?'
+Unlink: 'Ta bort länkning'
+'Are you sure you want to delete the image $1?': 'Är du säker att du vill radera bilden $1?'
+'No such issue.': 'Utgåvan finns inte.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Är du säker att du vill radera prenumerationen till publikationen $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Kunde inte spara ändringar till utgåvan $1. Vor god kontrollera att URL-namnet $2 inte har använts tidigare i publikationen $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: byte
+Attach: Bifoga
+Back: Bakåt
+File: Fil
+'Save and Close': 'Spara och stäng'
+Add: 'Lägg till'
+'Select All': 'Markera alla'
+'Select None': 'Avmarkera alla'
+'Add Event': 'Lägg till händelse'
+N/A: 'Ej tillgängligt'
+'On Front Page': 'På framsidan'
+'On Section Page': 'På sektionssidan'
+'Created by': 'Skapad av'
+'Creation date': 'Skapad datum'
+'Publication List': Publikationslista
+'Issue List': Utgåvslista
+'Section List': Sektionslista
+All: Alla
+duplicate: duplicera
+move: flytta
+Move: Flytta
+'From:': 'Från:'
+'Date:': 'Datum:'
+Hidden: Gömd
+Comments: Kommentarer
+Comment: Kommentar
+Approved: Godkänd
+Subject: Ämne
+'IP address:': 'IP-adress:'
+'Email:': 'E-post:'
+Author: Författare
+'Article name': Artikelnamn
+'Hide article': 'Göm artikel'
+'Show article': 'Visa artikel'
+'Article Type Fields': Artikeltypfält
+'Article Images': Artikelbilder
+'Log Messages': Logmeddellanden
+'Article Files': Artikelfiler
+'Article Comments': Artikelkommentarer
+'Are you sure you want to deactivate the subscription?': 'Är du säker att du vill avaktivera prenumerationen?'
+'Are you sure you want to activate the subscription?': 'Är du säker att du vill aktivera prenumerationen?'
+Other: 
+'Time:': 'Tid:'
+'No events.': 'Inga händelser.'
+'Default templates': 
+'System Preferences': Systeminställningar
+'The date must be in the future.': 'Datumet måste vara i framtiden'
+Send: Skicka
+'Thank you.': Tack.
+'Please take a minute to send us an email.': 
+(optional): (frivilligt)
+'The URL you entered is invalid: $1': 'Den URL du skrev in är ogiltig: $1'
+Reads: 
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

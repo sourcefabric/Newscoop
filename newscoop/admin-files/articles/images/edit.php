@@ -1,8 +1,8 @@
 <?php
-camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 $uri = $_SERVER['REQUEST_URI'];
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);
@@ -16,7 +16,7 @@ $f_image_id = Input::Get('f_image_id', 'int', 0);
 $f_image_template_id = Input::Get('f_image_template_id', 'int', 0, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
 	exit;
 }
 
@@ -29,22 +29,22 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 $imageObj = new Image($f_image_id);
 
 if (!$g_user->hasPermission('ChangeImage')) {
-	$title = getGS('Image information');
+	$title = $translator->trans('Image information', array(), 'article_images');
 } else {
-	$title = getGS('Change image information');
+	$title = $translator->trans('Change image information', array(), 'article_images');
 }
 
 // Add extra breadcrumb for image list.
 if ($f_publication_id > 0) {
-	$extraCrumbs = array(getGS("Images") => "");
+	$extraCrumbs = array($translator->trans("Images") => "");
 	$topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 					  'Section' => $sectionObj, 'Article'=>$articleObj);
 	camp_html_content_top($title, $topArray, true, true, $extraCrumbs);
 } else {
 	$crumbs = array();
-	$crumbs[] = array(getGS("Actions"), "");
-	$crumbs[] = array(getGS("Edit article"), camp_html_article_url($articleObj, $f_language_id, "edit.php"));
-	$crumbs[] = array(getGS("Images"), "");
+	$crumbs[] = array($translator->trans("Actions"), "");
+	$crumbs[] = array($translator->trans("Edit article"), camp_html_article_url($articleObj, $f_language_id, "edit.php"));
+	$crumbs[] = array($translator->trans("Images"), "");
 	$crumbs[] = array($title, "");
 	echo camp_html_breadcrumbs($crumbs);
 }
@@ -52,7 +52,7 @@ if ($f_publication_id > 0) {
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
 	<td><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></td>
-	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php putGS("Back to Edit Article"); ?></b></a></td>
+	<td><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>"><b><?php echo $translator->trans("Back to Edit Article"); ?></b></a></td>
 </table>
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
@@ -72,7 +72,7 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Number'); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Number'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('AttachImageToArticle')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php echo $f_image_template_id; ?>" class="input_text" SIZE="32" MAXLENGTH="10">
@@ -83,7 +83,7 @@ if ($f_publication_id > 0) {
 </TR>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
 <TR>
-	<TD ALIGN="RIGHT" ><label for="image_status_checkbox" style="padding-right:0;cursor:pointer"><?php putGS('Approved'); ?>:</label></TD>
+	<TD ALIGN="RIGHT" ><label for="image_status_checkbox" style="padding-right:0;cursor:pointer"><?php echo $translator->trans('Approved'); ?>:</label></TD>
 	<TD>
 		<input type="hidden" name="f_image_status" value="0" />
 		<input id="image_status_checkbox" type="checkbox" name="f_image_status" value="1" <?php echo $imageObj->getStatus() == 'approved' ? 'checked="checked"' : ''; ?> />
@@ -91,7 +91,7 @@ if ($f_publication_id > 0) {
 </TR>
 <?php } ?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Description'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32">
@@ -101,7 +101,7 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Photographer'); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Photographer'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" class="input_text" SIZE="32">
@@ -111,7 +111,7 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Place'); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Place'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" class="input_text" SIZE="32">
@@ -121,14 +121,14 @@ if ($f_publication_id > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Date'); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Date'); ?>:</TD>
 	<TD>
 		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
 		<input type="text" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" class="input_text date" size="11" maxlength="10" />
 		<?php } else {
 			echo htmlspecialchars($imageObj->getDate());
 		} ?>
-		<?php putGS('YYYY-MM-DD'); ?>
+		<?php echo $translator->trans('YYYY-MM-DD'); ?>
 	</TD>
 </TR>
 <?php if ($g_user->hasPermission('ChangeImage') || $g_user->hasPermission('AttachImageToArticle')) { ?>
@@ -143,7 +143,7 @@ if ($f_publication_id > 0) {
     <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_image_id" VALUE="<?php  p($f_image_id); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_orig_image_template_id" VALUE="<?php p($f_image_template_id); ?>">
-	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+	<INPUT TYPE="submit" NAME="Save" VALUE="<?php echo $translator->trans('Save'); ?>" class="button">
 	</DIV>
 	</TD>
 </TR>

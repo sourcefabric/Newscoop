@@ -1,0 +1,228 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 
+'User with id $1 not found': 
+'User was deleted.': 
+'User saved': 
+'User id not specified': 
+'User $1 created': 
+'Send confirm email': 
+'Profile saved.': 
+Picture: 
+'Password updated': 
+None: 
+'New confirmation email was sent to user.': 
+'Email is used already': 
+'Edit your password': 
+'Edit user $1': 
+'Edit subscriptions': 
+'Edit profile': 
+'Edit permissions': 
+'Create new account': 
+'Comment ban settings': 
+'Ban for user $1 saved.': 
+'User account is active': 
+'Allow users profile to be publicly displayed': 
+'Allow user access to login to site backend': 
+Templates: 
+Username: 
+'Last Name': 
+'First Name': 
+Email: 
+'You were logged out.': 
+'Newscoop Subhead': 
+Filters: 
+'Add new Author': 
+'Loading Data': 
+'Delete author type': 
+'Cannot remove author type.': 
+'Cannot remove author alias.': 
+'Author alias removed.': 
+'Are you sure you want to delete this author?': 
+'Are you sure you want to delete this author alias?': 
+'All Author Types': 
+'Add author type': 
+'You do not have the permission to change authors.': 
+'Please fill at least first name and last name.': 
+'Cannot add author type, this type already exists.': 
+'Author type removed.': 
+'Author type must be at least three characters long.': 
+'Author type added.': 
+'Are you sure you want to delete this author type?': 
+'User may change authors': 
+'Unable to add new image, target directory is not writable.': 
+'Author saved.': 
+'Author deleted.': 
+'Enable Firefox spell checking by default': 
+'User may use the editor status bar': 
+'User may clear up the system cache': 
+'Another user is registered with that e-mail address, please choose a different one.': 
+'There was an error when trying to update the user info.': 
+'User may moderate comments': 
+'User may enable comments': 
+'User may translate articles': 'Permissão para traduzir artigos'
+'User may move articles': 'Permissão para mover artigos'
+'User may find and replace': 'Permissão para Procurar e Substituir'
+'User may change system preferences': 'Permissão para alterar definições do sistema'
+'User may attach topics to articles': 'Permissão para adicionar temas a artigos'
+'User may attach images to articles': 'Permissão para adicionar imagens a artigos'
+'User may add special characters': 'Permissão para usar caracteres especiais'
+'That user name already exists, please choose a different login name.': 'Nome já existente, por favor escoha um diferente.'
+'User may delete article attachments': 'Permissão para eliminar anexos de artigos'
+'User may change article attachments': 'Permissão para alterar anexos de artigos'
+'User may add article attachments': 'Permissão para adicionar anexos a artigos'
+'You do not have the right to create user accounts.': 'Não tem permissões para criar utilizadores'
+'You must select a $1': 'Tem de escolher um(a) $1'
+'The password must be at least 6 characters long and both passwords should match.': 'A Palavra-passe tem de ter pelos menos 6 caracteres e ambas as palavras-passe devem coincidir'
+'The user account could not be created.': 'O Utilizador não pode ser criado'
+'User account $1 was created successfully.': 'Utilizador $1 criado com sucesso.'
+'You do not have the right to change user account permissions.': 'Não tem autorização para alterar permissões'
+'You do not have the right to change user account information.': 'Não tem permissão para alterar informações de Utilizador'
+'The password you typed is incorrect.': 'Palavra-passe incorrecta'
+'You do not have the right to delete user accounts.': 'Não tem persmissões para eliminar Utilizadores'
+'User account $1 was deleted successfully.': 'Utilizador $1 foi eliminado'
+'The IP Group $1 has been created.': 'O Grupo de IPs $1 foi criado'
+'There was an error creating the IP address group.': 'Ocorreu um erro na criação do Grupo de IPs'
+'The IP address group $1 has been deleted.': 'Grupo de IPs $1 foi eliminado'
+'User $1 information was changed successfully.': 'Informações do Utilizador $1 alteradas.'
+'User Type': 'Tipo de Utilizador'
+'The IP address group $1:$2 conflicts with another existing group.': 'Existe um conflito entre o Grupo de IPs $1:$2 com um já existente.'
+'User may add/change publications': 'Permissão para Criar/Alterar Publicações'
+'Invalid value of user type parameter': 'Valor inválido no parametro solicitado.'
+'User may delete publications': 'Permissão para Apagar Publicações'
+'User may add/change issues': 'Permissão para Criar/Alterar Edições'
+'User may delete issues': 'Permissão para Apagar Edições'
+'User may add/change sections': 'Permissão para Criar/Alterar Secções'
+'User may delete sections': 'Permissão para Apagar Secções'
+'User may add articles': 'Permissão para Criar Artigos'
+'User may change articles': 'Permissão para Alterar Artigos'
+'User may delete articles': 'Permissão para Apagar Artigos'
+'User may add images': 'Permissão para Adicionar Imagens'
+'User may change images': 'Permissão para Alterar Imagens'
+'User may delete images': 'Permissão para Apagar Imagens'
+'User may delete templates': 'Permissão para Apagar Modelos'
+'User may add/change staff accounts and passwords': 'Permissão para adicionar/alterar Utilizadores Pessoal Editorial (Contas e Palavras-Passe)'
+'User may add/change subscribers accounts and passwords': 'Permissão para adicionar/alterar Assinantes (Contas e Palavras-Passe)'
+'User may delete staff accounts': 'Permissão para eliminar Utilizadores Pessoal Editorial'
+'User may manage user subscriptions': 'Permissão para Gerir Assinaturas'
+'User may manage account types': 'Permissão para Gerir tipos de Utilizadores'
+'User may add/change article types': 'Permissão para Criar/Alterar tipos de Artigos'
+'User may delete article types': 'Permissão para Eliminar tipos de Artigos'
+'User may manage templates': 'Permissão para Gerir Modelos'
+'User may add/change country entries': 'Permissão para Adicionar/Alterar Paises'
+'User may add languages and manage language information': 'Permissão para Criar e Gerir Idiomas'
+'User may delete languages': 'Permissão para Apagar Idiomas'
+'User may view audit logs': 'Permissão para ver Registos de Utilização'
+'User may delete country entries': 'Permissão para Apagar Países'
+'User may manage localizer': 'Permissão para Gerir o Localizador'
+'User may publish articles': 'Permissão para Publicar Artigos'
+'User may manage topics': 'Permissão para Gerir Temas'
+'User may use bold': 'Permissão para usar Negrito'
+'User may use italic': 'Permissão para usar itálico'
+'User may use underline': 'Permissão para usar sublinhado'
+'User may use strikethrough': 'Permissão para usar rasurado'
+'User may change text alignment': 'Permissão para alterar alinhamento do texto'
+'User may copy, cut, and paste': 'Permissão para copiar, cortar e colar'
+'User may undo/redo': 'Permissão para desfazer/refazer'
+'User may change text direction': 'Permissão para alterar direcção do texto'
+'User may set indents': 'Permissão para usar identações'
+'User may add links': 'Permissão para adicionar ligações'
+'User may add subheads': 'Permissão para usar sub-titulos'
+'User may insert images': 'Permissão para adicionar imagens'
+'User may view the HTML source': 'Permissão para ver código HTML'
+'User may enlarge the editor': 'Permissão para alargar a janela do editor'
+'User may change the font face': 'Permissão para alterar a fonte'
+'User may change the font size': 'Permissão para alterar o tamanho da fonte'
+'User may create bulleted lists': 'Permissão para criar listas'
+'User may create numbered lists': 'Permissão para criar listas numeradas'
+'User may insert tables': 'Permissão para inserir tabelas'
+'User may insert horizontal rules': 'Permissão para inserir regras horizontais'
+'User may change the font color': 'Permissão para alterar cor da fonte'
+'User may use superscripts': 'Permissão para usar superior à linha'
+'User may use subscripts': 'Permissão para usar inferior à linha'
+'User may backup and restore the site data': 
+Miscellaneous: Vários
+'Staff/Subscribers Management': 'Manutenção de Pessoal/Assinantes '
+'Editor Basic Settings': 'Definições básicas do Editor'
+'Editor Advanced Font Settings': 'Definições avançadas do Editor'
+'Editor Table Settings': 'Definições de tabelas do Editor'
+'Administrative tasks': 'Tarefas Administrativas'
+'User will be notified on several events': 'Este Utilizador será notificado automáticamente dos acontecimento ocorridos'
+'Editor Miscellaneous Settings': 'Definições várias do Editor'
+'No such user account.': 'Utilizador Desconhecido'
+'User management': 'Gestão de Utilizadores'
+Set: Escolher
+Update: Actualizar
+Rights: Permissões
+'IP Access': 'Acesso por IP'
+'User Name': 'Nome de Utilizador'
+Staff: Staff
+'Adding new user account': 'Adicionando novo utilizador'
+'You must select an user type.': 'Tem de escolher um tipo de Utilizador'
+'The user account $1 has been created.': 'O Utilizador $1 foi criado'
+'Please check if an account with the same user name does not already exist.': 'Verifique se já não existe um utilizador com o mesmo nome.'
+'You do not have the right to change user passwords.': 'Não tem permissões para alterar Palavras-Passe'
+'Changing user password': 'Alterando Palavra-Passe'
+'The password could not be changed.': 'A Palavra-Passe não pode ser alterada'
+'The password has been changed.': 'A Palavra-Passe Não pode ser alterada'
+'Edit user account permissions': 'Alterar Permissões'
+'This user account does not have permissions information.': 'Este Utilizador não tem permissões'
+'Updating user account permissions': 'Actualizando permissões de Utilizador'
+'User account permissions have been successfuly updated.': 'As permissões foram alteradas'
+'User account permissions could not be updated.': 'As permissões não podem ser alteradas'
+'Changing user account information': 'Alterando informações de Utilizador'
+'User account information has been changed.': 'Informação de Utilizador foram alteradas'
+'User account information could not be changed.': 'Informações do Utilizador não podem ser alteradas'
+'Old password': 'Palavra-passe Actual'
+'New password': 'Nova Palavra-passe'
+'Confirm new password': 'Confirme a nova Palavra-passe'
+'Changing your password': 'Alterando Palavra-passe'
+'User $1 changed his password': 'Utilizador $1 alterou a sua Palavra-passe'
+'Delete user account': 'Eliminar Utilizador'
+'Deleting user account': 'Eliminar Utilizadores'
+'The user account $1 could not be deleted.': 'Utilizador $1 não pode ser eliminado'
+'No such user.': 'Utilizador desconhecido'
+'Delete IP Group $1': 'Apagar Grupo de IP $1'
+'IP Access List': 'Lista de Acesso por IP'
+'Adding new IP Group': 'Adicionando Grupo de IPs'
+'The IP Group could not be created.': 'O Grupo de IPs não pode ser criado'
+'Please check if an account with the same IP Group does not already exist.': 'Verifique se já não existe um utilizador com o mesmo Grupo de IPs'
+'Delete IP Group': 'Eliminar Grupo de IPs'
+'You do not have the right to delete IP Groups.': 'Não tem permissões para eliminar Grupos de IPs'
+'No such IP Group.': 'Não existe o Grupo de IPs'
+'Deleting IP Group': 'Eliminando Grupo de IPs'
+'The IP Group could not be deleted.': 'Grupo de IPs não pode ser eliminado'

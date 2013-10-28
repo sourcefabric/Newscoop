@@ -1,9 +1,12 @@
-<?php $this->placeholder('bodyId')->set('ingest'); ?>
+<?php 
+$this->placeholder('bodyId')->set('ingest'); 
+$translator = \Zend_Registry::get('container')->getService('translator'); 
+?>
 <?php $this->placeholder('title')->captureStart(); ?>
 <a href="<?php echo $this->url(array(
     'action' => 'settings',
-)); ?>" class="settings"><?php putGS('Settings'); ?></a>
-<?php putGS('News Desk'); ?>
+)); ?>" class="settings"><?php echo $translator->trans('Settings'); ?></a>
+<?php echo $translator->trans('News Desk'); ?>
 <?php $this->placeholder('title')->captureEnd(); ?>
 
 <div class="controls">

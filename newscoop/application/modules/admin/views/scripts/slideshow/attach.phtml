@@ -1,9 +1,12 @@
-<?php $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); 
+?>
 
 <header>
-    <h1><?php putGS('Attach slideshows'); ?></h1>
+    <h1><?php echo $translator->trans('Attach slideshows', array(), 'article_images'); ?></h1>
     <div id="app">
-        <button id="attach-slideshows-button" class="prime"><?php putGS('Done'); ?></button>
+        <button id="attach-slideshows-button" class="prime"><?php echo $translator->trans('Done'); ?></button>
     </div>
 </header>
 
@@ -19,8 +22,8 @@
             'action' => 'attach',
     ))); ?>">
     <div style="margin-left: 10px;">
-        <input type="text" placeholder="<?php echo(getGS('Search')); ?>" name="q" value="<?php if ($this->q) echo $this->escape($this->q); ?>">
-        <input type="submit" value="<?php echo(getGS('Search')); ?>">
+        <input type="text" placeholder="<?php echo($translator->trans('Search')); ?>" name="q" value="<?php if ($this->q) echo $this->escape($this->q); ?>">
+        <input type="submit" value="<?php echo($translator->trans('Search')); ?>">
     </div>
     </form>
 </section>
@@ -33,7 +36,7 @@
 
 <script type="text/template" id="slideshow-template">
 <h3 class="title"><%= headline.substring(0, 22) %><% if (headline.length > 22) { %>..<% } %></h3>
-<small>(<?php putGS('Items: '); ?><%= itemsCount %>)</small>
+<small>(<?php echo $translator->trans('Items: ', array(), 'article_images'); ?><%= itemsCount %>)</small>
 <div class="preview">
     <% if (!itemsCount) { %>
     <span class="blank"></span>
@@ -129,7 +132,7 @@
     });
 
     var AddSlideshowView = SlideshowView.extend({
-        hint: <?php echo json_encode(getGS('Attach')); ?>,
+        hint: <?php echo json_encode($translator->trans('Attach')); ?>,
 
         action: function() {
             this.model.addToArticle(window.article);
@@ -137,7 +140,7 @@
     });
 
     var RemoveSlideshowView = SlideshowView.extend({
-        hint: <?php echo json_encode(getGS('Detach')); ?>,
+        hint: <?php echo json_encode($translator->trans('Detach', array(), 'article_images')); ?>,
 
         action: function() {
             this.model.removeFromArticle(window.article);

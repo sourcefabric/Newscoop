@@ -1,3 +1,6 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <li id="item-<?php echo $this->item->getId(); ?>"<?php echo $this->current !== null && $this->current->getId() === $this->item->getId() ? ' class="active"' : ''; ?>>
     <a href="<?php echo $this->url(array(
         'module' => 'admin',
@@ -8,7 +11,7 @@
     )); ?>">
         <figure>
             <div><?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 150, 150, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?></div>
-            <figcaption><?php echo $this->item->getCaption() ? $this->escape($this->item->getCaption()) : getGS('no caption'); ?></figcaption>
+            <figcaption><?php echo $this->item->getCaption() ? $this->escape($this->item->getCaption()) : $translator->trans('no caption', array(), 'article_images'); ?></figcaption>
         </figure>
     </a>
     <a href="<?php echo $this->url(array(
@@ -17,5 +20,5 @@
         'action' => 'remove-item',
         'slideshow' => $this->item->getPackageId(),
         'item' => $this->item->getId(),
-    )); ?>" class="remove"><?php putGS('Remove'); ?></a>
+    )); ?>" class="remove"><?php echo $translator->trans('Remove'); ?></a>
 </li>

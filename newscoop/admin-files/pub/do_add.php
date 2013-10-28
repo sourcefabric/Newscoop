@@ -2,14 +2,16 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')  || !SaaS::singleton()->hasPermission("AddPub")) {
-	camp_html_display_error(getGS("You do not have the right to add publications."));
+	camp_html_display_error($translator->trans("You do not have the right to add publications.", array(), 'pub'));
 	exit;
 }
 
@@ -37,18 +39,18 @@ $f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'st
 $f_seo = Input::Get('f_seo', 'array', array(), true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
 $backLink = "/$ADMIN/pub/add.php";
 
 if (empty($f_name)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>')));
 }
 
 if (empty($f_default_alias)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Site').'</B>'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Site').'</B>')));
 }
 
 if (camp_html_has_msgs()) {
@@ -88,11 +90,11 @@ $columns = array('Name' => $f_name,
 $created = $publicationObj->create($columns);
 if ($created) {
 	$alias->setPublicationId($publicationObj->getPublicationId());
- 	camp_html_add_msg("Publication created.", "ok");
+ 	camp_html_add_msg($translator->trans("Publication created.", array(), 'pub'), "ok");
 	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 } else {
 	$alias->delete();
-	camp_html_add_msg(getGS('The publication could not be added.'));
+	camp_html_add_msg($translator->trans('The publication could not be added.', array(), 'pub'));
 	camp_html_goto_page($backLink);
 }
 

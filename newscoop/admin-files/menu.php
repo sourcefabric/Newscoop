@@ -1,10 +1,10 @@
 <?php
-camp_load_translation_strings('home');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 global $ADMIN, $g_user;
 
 // Page title
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans("Newscoop", array(), 'home') . $Campsite['VERSION'];
 
 // locale setting for datepicker
 $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
@@ -20,10 +20,10 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
     var website_url = "<?php echo $Campsite['WEBSITE_URL'];?>";
 
     var localizer = localizer || {};
-    localizer.processing = '<?php putGS('Processing...'); ?>';
-    localizer.session_expired = '<?php putGS('Session expired.'); ?>';
-    localizer.please = '<?php putGS('Please'); ?>';
-    localizer.login = '<?php putGS('login'); ?>';
+    localizer.processing = '<?php echo $translator->trans('Processing...', array(), 'home'); ?>';
+    localizer.session_expired = '<?php echo $translator->trans('Session expired.', array(), 'home'); ?>';
+    localizer.please = '<?php echo $translator->trans('Please', array(), 'home'); ?>';
+    localizer.login = '<?php echo $translator->trans('login', array(), 'home'); ?>';
   //--></script>
 
     <?php include dirname(__FILE__) . '/html_head.php'; ?>
@@ -142,9 +142,9 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <body>
 <div class="meta-bar">
     <ul>
-        <li><a href="/<?php p($ADMIN); ?>/logout"><?php putGS('Logout'); ?></a></li>
-        <li><a href="<?php p($Campsite['site']['help_url']); ?>" target="_blank"><?php putGS('Help'); ?></a></li>
-        <li><?php putGS("Signed in: $1", '<strong>' . $g_user->getFirstName() . '</strong>'); ?></li>
+        <li><a href="/<?php p($ADMIN); ?>/logout"><?php echo $translator->trans('Logout'); ?></a></li>
+        <li><a href="<?php p($Campsite['site']['help_url']); ?>" target="_blank"><?php echo $translator->trans('Help', array(), 'home'); ?></a></li>
+        <li><?php echo $translator->trans("Signed in: $1", array('$1' => '<strong>' . $g_user->getFirstName() . '</strong>'), 'home'); ?></li>
     </ul>
 </div>
 

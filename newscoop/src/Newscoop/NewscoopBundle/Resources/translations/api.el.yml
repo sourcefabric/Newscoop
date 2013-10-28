@@ -1,0 +1,63 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 'Δεν αποτελεί χρώμα'
+'No such field': 'Δεν υφίσταται τέτοιο πεδίο'
+'Color saved': 'Το χρώμα αποθηκεύτηκε'
+'Color not saved': 'Το χρώμα δεν αποθηκεύτηκε'
+'Topic created': 'Το θέμα αποθηκεύτηκε'
+'The topic name is already in use by another topic.': 'Το όνομα του θέματος χρησιμοποιείται ήδη από άλλο θέμα.'
+'Complex Date': 'Σύνθετη Ημερομηνία'
+vertices: κορυφές
+'There was a problem trying to execute the XML RPC function.': 'Παρουσιάστηκε πρόβλημα κατά την εκτέλεση της λειτουργίας XML RPC.'
+'The Campcaster server configuration is invalid.': 'Η διαμόρφωση του διακομιστή Campcaster είναι άκυρη.'
+'Pan Map': 'Πανοραμικός Χάρτης'
+'Open large map': 'Προβολή μεγαλύτερου χάρτη'
+'No news available.': 'Δεν υπάρχουν διαθέσιμα νέα.'
+'Edit Polygon': 'Επεξεργασία Polygon'
+'Create Polygon': 'Δημιουργία Polygon'
+'Communication error: ': 'Σφάλμα επικοινωνίας:'
+'Cant fetch news from $1': 'Η λήψη νέων από $1 είναι αδύνατη'
+Loading...: Φόρτωση...
+Version: Εκδοχή
+License: Άδεια
+Homepage: 'Αρχική σελίδα'
+'Show original map': 'Εμφάνιση αρχικού χάρτη'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Το ανεβασμένο αρχείο δεν περιέχει έγκυρο πρόσθετο του newscoop.'
+Map: Χάρτης
+Center: Κέντρο
+Title: Τίτλος
+'Invalid security token.': 'Μη έγκυρο τεκμήριο ασφαλείας.'
+'Callback $1 is not callable.': 'Η επανάκληση $1 δεν είναι δυνατή.'
+'Article translated to $4 ($5)': 'Το άρθρο μεταφράστηκε σε $4 ($5)'
+'Article status changed from $1 to $2.': 'Η κατάσταση του άρθρου άλλαξε από $1 σε $2.'
+'Article deleted.': 'Το άρθρο διαγράφτηκε.'
+'Article created.': 'Το άρθρο δημιουργήθηκε.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Το άρθρο αντιγράφτηκε στο Άρθρο #$4 (δημοσίευση $5, τεύχος $6, ενότητα $7).'
+'Article URL': 'URL Άρθρου '
+'Article Number': 'Αριθμός Άρθρου'
+'Access denied.': 'Άρνηση πρόσβασης.'
+'Publish with issue': 'Δημοσίευση με τεύχος'
+unknown: άγνωστο
+Switch: Εναλλαγή
+Numeric: Αριθμητικός
+'The uploaded file format is unsupported.': 'Η μορφή του αρχείου που ανέβηκε δεν υποστηρίζεται.'
+'The following fields are mandatory:': 'Τα παρακάτω πεδία είναι υποχρεωτικά:'
+'Missing value for $1': 'Λείπει αξία για $1'
+'Manage Plugins': 'Διαχείριση Προσθέτων'
+'* Marked fields are mandatory.': 'Τα πεδία που επισημάνθηκαν * είναι υποχρεωτικά.'
+'$1 is of type $2': '$1 είναι τύπου $2'
+'Invalid resize width/height.': 'Μη έγκυρη αλλαγή πλάτους/ύψους.'
+'Image type $1 is not supported.': 'Ο τύπος εικόνας $1 δεν υποστηρίζεται.'
+'The file uploaded is not an image.': 'Το αρχείο που ανέβηκε δεν αποτελεί εικόνα.'
+'Could not delete record from the database.': 'Δεν ήταν δυνατή η διαγραφή της εγγραφής από τη βάση δεδομένων.'
+'template path': 'διαδρομή προτύπου'
+'short names': 'σύντομα ονόματα'
+'Unable to fetch image from remote server.': 'Η λήψη εικόνας από τον απομακρυσμένο διακομιστή είναι αδύνατη.'
+Last: Τελευταίο
+First: Πρώτο
+'Single-line Text': 'Κείμενο σε μία γραμμή'
+'Multi-line Text with WYSIWYG': 'Κείμενο πολλαπλών γραμμών με WYSIWYG'
+'URL $1 is invalid or is not an image.': 'Είτε το URL $1 δεν είναι έγκυρο ή δεν είναι εικόνα.'
+'URL $1 is not an image.': 'Το URL $1 δεν είναι εικόνα. '

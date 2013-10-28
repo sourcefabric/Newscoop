@@ -1,0 +1,26 @@
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
+'Delete anyway': 
+'Reset order': 
+'Order changes will be lost. Are you sure you want to continue?': 
+'Topics order saved.': 
+'Show languages': 
+'Save order': 
+'Click to edit': 
+'Add root topic': 
+'Topic was deleted.': 
+'The topic name is already in use by another topic.': 
+'You must enter a name for the topic.': 
+'You must choose a language for the topic.': 
+'This topic has subtopics, therefore it cannot be deleted.': 
+'Add translation:': 
+'Add subtopic:': 
+Top: 
+'You do not have the right to add topics.': 你无权添加主题
+'You do not have the right to delete topics.': 你无权删除主题
+'Are you sure you want to delete the topic $1?': 您确认要删除主题$1？
+'You do not have the right to change topic name.': 你没有权限改变主题名
+'The topic $1 could not be deleted.': $1主题不能被删除
+'Adding new topic': 添加新主题
+'Deleting topic': 删除主题
+'Change topic name': 改变主题名
+'There are $1 articles using the topic.': 有$1篇文章用此主题

@@ -19,12 +19,14 @@
 class HelloWorld extends Widget
 {
     public function __construct()
-    {
-        $this->title = getGS('Hello World!');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Hello World!', array(), 'extensions');
     }
 
     public function render()
-    {
-        echo '<p>', $this->getGS('Hello world!'), '</p>';
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        echo '<p>', $this->$translator->trans('Hello world!', array(), 'extensions'), '</p>';
     }
 }

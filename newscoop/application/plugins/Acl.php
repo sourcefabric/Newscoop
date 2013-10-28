@@ -30,7 +30,9 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
      * @return void
      */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if (!in_array($request->getModuleName(), $this->modules)) {
             return;
         }
@@ -80,9 +82,9 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $request->setModuleName('admin')
             ->setControllerName('error')
             ->setActionName('deny')
-            ->setParam('message', getGS('You are not allowed to $1 $2.',
-                    $action ? $action : getGS('handle'),
-                    $resource ? $resource : getGS('any resource')))
+            ->setParam('message', $translator->trans('You are not allowed to $1 $2.', array(
+                    '$1' => $action ? $action : $translator->trans('handle', array(), 'user_types'),
+                    '$2' => $resource ? $resource : $translator->trans('any resource', array(), 'user_types')), 'user_types'))
             ->setDispatched(false);
     }
 }

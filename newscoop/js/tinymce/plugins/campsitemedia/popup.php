@@ -19,12 +19,12 @@ require_once('config.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
-camp_load_translation_strings("tiny_media_plugin");
+$translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title><?php putGS('Insert media file'); ?></title>
+  <title><?php echo $translator->trans('Insert media file', array(), 'tiny_media_plugin'); ?></title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="css/campsitemedia.css" rel="stylesheet" type="text/css" />
@@ -51,8 +51,8 @@ camp_load_translation_strings("tiny_media_plugin");
   <!--// file attachment properties -->
   <div style="text-align: right;">
     <hr />
-    <button type="button" class="buttons" onclick="CampsiteMediaDialog.insert('');"><?php putGS('Select'); ?></button>
-    <button type="button" class="buttons" onclick="CampsiteMediaDialog.close();"><?php putGS('Cancel'); ?></button>
+    <button type="button" class="buttons" onclick="CampsiteMediaDialog.insert('');"><?php echo $translator->trans('Select', array(), 'tiny_media_plugin'); ?></button>
+    <button type="button" class="buttons" onclick="CampsiteMediaDialog.close();"><?php echo $translator->trans('Cancel'); ?></button>
   </div>
   </form>
 </body>

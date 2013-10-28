@@ -8,10 +8,11 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission('AddFile')) {
     camp_html_goto_page("/$ADMIN/logout.php");
@@ -40,7 +41,7 @@ camp_html_display_msgs();
 
   <div class="plupload-addon-bottom clearfix">
     <div class="buttons">
-      <input type="submit" value="<?php putGS('Save All'); ?>" name="save" class="save-button">
+      <input type="submit" value="<?php echo $translator->trans('Save All', array(), 'media_archive'); ?>" name="save" class="save-button">
     </div>
   </div>
 

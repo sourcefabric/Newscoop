@@ -1,0 +1,77 @@
+'Display newsfeed images': 
+'Mark image': 'Адзначыць выяву'
+'Add selected images to slideshow': 'Дадаць выбраныя выявы ў слайд-шоў'
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'На жаль, гэта выява занадта малая. Памер малюнкаў павінен быць па меншай меры %dx%d.'
+'Slideshow rendition': 'Камплект памераў слайд-шоў'
+'Renditions reloaded': 'Камплект памераў перазагружаны'
+'Reload renditions': 'Паўтарыць загрузку камплекта памераў'
+'Edit images': 'Рэдагаваць выявы'
+'Specify image url if you want to load it.': 'Пазначце URL выявы, калі жадаеце загрузіць яе.'
+'Items: ': 'Пункты:'
+'Attach slideshows': 'Прымацаваць слайд-шоў'
+'original size:': 'першапачатковы памер'
+'no caption': 'без подпісу'
+'Video URL': 'URL відэа'
+'Use for all': 'Выкарыстоўваць для ўсіх'
+'Use default': 'Выкарыстоўваць па змаўчанні'
+'Slug must be unique': 'Кароткае імя павінна быць унікальным'
+Slug: 'Кароткае імя'
+'Slideshow headline': 'Загаловак слайд-шоў'
+Slideshow: Слайд-шоў
+'Set selected as default image': 'Прызначыць абраную выяву па змаўчанні'
+'Set as default': 'Ўсталяваць як значэнне па змаўчанні'
+Saving...: 'Захоўваецца ...'
+Saved: Захаванае
+'Save headline': 'Захаваць загаловак'
+'Place Images': 'Устанавіць выяву'
+'No renditions defined.': 'Адпаведнасці не вызначаныя.'
+'No images found.': 'Выяваў знойдзена: 0'
+'No images attached to article.': 'Да артыкула няма прымацаваных малюнкаў.'
+'No images': 'Няма выяваў'
+'Next: Upload and Edit Metadata': 'Далей: Запампаваць і рэдагаваць мета дадзеныя'
+'Next: Place Images': 'Далей: змясціць выявы.'
+'Media Archive': Медыя-архіў
+Location: Месца
+Items: Пункты
+Item: Пункт
+'Image files': 'Файлы выяваў'
+'Image Files: ': 'Файлы выяваў:'
+Headline: Загаловок
+Finish: Канец
+'Edit Image Data': 'Рэдагаваць дадзеныя гэтай выявы'
+'Edit $1': 'Рэдагаваць $1'
+'Done editing': 'Закончыць рэдагаванне'
+Detach: Адлучыць
+Create: Стварыць
+Caption: Подпіс
+'Attached images': 'Прымацаваныя выявы'
+'Attach & Place': 'Прымацаваць і размясціць'
+'Add video': 'Дадаць відеа'
+'Add caption': 'Дадаць подпіс'
+'Show all': 'Паказаць усе'
+'The image has been removed from the article.': 'Гэта фота было выдаленае з артыкула.'
+'Unable to add new image.': 'Немагчыма дадаць новы графiчны файл.'
+'Image number $1 already exists': 'Графiчны файл з нумарам $1  ужо не існуе.'
+'You do not have the right to change image information.': 'Вы ня маеце права зьмяняць iнфармацыю аб графiчным файле.'
+'The image number specified is already in use.': 'Уведзены нумар графiчнага файлу ўжо выкарыстаны.'
+'Image $1 updated.': 'Графiчны файл $1 абноўлены.'
+'Image $1 added.': 'Графiчны файл $1  даданы.'
+'Edit article': 'Рэдагаваць артыкул'
+'You do not have the right to attach images to articles.': 'Вы ня маеце права дадаваць графiчны файл да артыкулу.'
+'You do not have the right to add images.': 'Вы ня маеце права  дадаваць графiчныя файлы.'
+'Image information': 'Iнфармацыя аб графiчным файле'
+'Attach New Image': 'Дадаць новы графiчны файл'
+'Attach Image To Article': 'Дадаць графiчны файл да артыкула'
+'Attach Existing Image': 'Дадаць iснуючы графiчны файл'
+'Add New Image': 'Дадаць новы графiчны файл'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: ' Дата<BR><SMALL>(гггг-мм-дд)</SMALL> '
+'You must select an image file to upload.': 'Вы павiнны выбраць графiчны файл для загрузкi.'
+'Change image information': 'Змянiць iнфармацыю аб графiчным файле'
+'You do not have the right to add images': 'Вы ня маеце права  дадаваць графiчны файл'
+'Items per page': 'Абектаў на старонцы'
+'The image $1 has been added.': 'Графiчны файл $1 быў пасьпяхова даданы.'
+'View image': 'Прагляд графiчнага файлу'
+Unlink: Адвязаць
+'Back to article details': 'Назад да падрабязнасьцяў артыкулу.'
+'Are you sure you want to delete the image $1?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл $1?'
+'Click one of the ': 

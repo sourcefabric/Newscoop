@@ -6,10 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 echo camp_html_breadcrumbs(array(
-    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array($translator->trans('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
     array('SoundCloud', ''),
-    array(getGS('Track manager'), ''),
+    array($translator->trans('Track manager', array(), 'plugin_soundcloud'), ''),
 ));
 
 $attachement = false;

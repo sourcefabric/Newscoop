@@ -1,0 +1,67 @@
+third: 
+second: 
+forth: 
+first: 
+'You must input a number greater than 0 into the Number of addresses field.': 
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 
+'User IP access list management': 
+'The IP address group conflicts with another existing group.': 
+'Subscription sections': 
+'No records.': 
+'You have subscription for all available publications': 
+'Subscription type:': 
+'Start:': 
+'Start Date': 
+'Sections:': 
+'Publication:': 
+'Paid days': 
+'Paid Days:': 
+Paid: 
+'No subscriptions': 
+'Languages:': 
+'Edit all sections': 
+'Days:': 
+'Days must be number': 
+Any: 
+'Add section': 
+saved: 
+removed: 
+deleted: 
+deactivated: 
+activated: 
+'Value is required and cant be empty': 
+'That user name already exists, please choose a different login name.': 
+'That $1 already exists, please choose a different $2.': 
+'Subscriptions exist for all available publications.': 
+'Subscription IP Addresses': 
+'Subscription $1': 
+'Subscriber saved.': 
+'Subscriber management': 
+'Subscriber deleted.': 
+'Start IP': 
+'Select country': 
+'Number of addresses': 
+'Number of Addressses': 
+'No IP Addresses': 
+'IP Address added allready': 
+'IP Address $1': 
+'IP Access': 
+'Full Name': 
+'Edit subscriptions': 
+'Edit subscriber $1': 
+E-Mail: 
+'Delete subscriber $1': 
+'Creation Date': 
+'Change subscriber information': 
+'Add new IP address': 
+'Add new IP Address': 
+'Accout Name': 
+'%value% must be greater than %min%': 
+'%value% is not a valid IP Address': 
+'Regardless of the language': 
+'Individual languages': 
+'Add sections now': 
+'Add sections later': 
+'Subscription Type': 
+'Paid (payment will be confirmed later)': 
+'Paid (confirm payment now)': 

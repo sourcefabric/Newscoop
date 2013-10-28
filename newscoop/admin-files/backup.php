@@ -1,11 +1,11 @@
 <?php
-camp_load_translation_strings("home");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 require_once(CS_PATH_SITE.DIR_SEP . 'scripts' . DIR_SEP . 'file_processing.php');
 
 // check permission
 if (!$g_user->hasPermission('ManageBackup')) {
-    camp_html_display_error(getGS("You do not have the right to manage backups."));
+    camp_html_display_error($translator->trans("You do not have the right to manage backups.", array(), 'home'));
     exit;
 }
 
@@ -31,7 +31,7 @@ switch ($action) {
         $options = array('--default-dir', '--keep-session');
         include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-backup';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
-        echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
+        echo '<center><a href=# onclick="window.close()">'.$translator->trans('Close').'</a></center>';
         exit(0);
 
     case 'delete':
@@ -40,9 +40,9 @@ switch ($action) {
         }
         $do = unlink($file);
         if($do === true) {
-            camp_html_add_msg(getGS('The file $1 was deleted successfully.', basename($file)), 'ok');
+            camp_html_add_msg($translator->trans('The file $1 was deleted successfully.', array('$1' => basename($file)), 'home'), 'ok');
         } else {
-            camp_html_add_msg(getGS('There was an error trying to delete the file $1.', basename($file)));
+            camp_html_add_msg($translator->trans('There was an error trying to delete the file $1.', array('$1' => basename($file)), 'home'));
         }
         camp_html_goto_page("/$ADMIN/backup.php");
         break;
@@ -64,7 +64,7 @@ switch ($action) {
         );
         include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-restore';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
-        echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
+        echo '<center><a href=# onclick="window.close()">'.$translator->trans('Close').'</a></center>';
         exit(0);
 
     case 'download':
@@ -88,7 +88,7 @@ switch ($action) {
 	        fclose($fp);
 		}
 		catch (Exception $exc) {
-			echo getGS('Download was not successful. Check please that the server is not out of disk space.');
+			echo $translator->trans('Download was not successful. Check please that the server is not out of disk space.', array(), 'home');
 		}
         exit(0);
 
@@ -96,7 +96,7 @@ switch ($action) {
         foreach ($_FILES as $file) {
 			if (UPLOAD_ERR_OK != $file['error']) {
 				$err_msg = camp_upload_errors($file['error']);
-                camp_html_add_msg(getGS('Upload of file $1 was not successful.', $file['name']) . ' ' . $err_msg);
+                camp_html_add_msg($translator->trans('Upload of file $1 was not successful.', array('$1' => $file['name']), 'home') . ' ' . $err_msg);
 				continue;
 			}
 
@@ -107,11 +107,11 @@ switch ($action) {
 				$move_dest = CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name'];
 				try {
 					move_uploaded_file($file['tmp_name'], $move_dest);
-					camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
+					camp_html_add_msg($translator->trans('The file $1 has been uploaded successfully.', array('$1' => $file['name']), 'home'), 'ok');
 				}
 				catch (Exception $exc) {
 					$move_failed = true;
-					camp_html_add_msg(getGS('The file $1 could not be moved. Check you have enough of disk space.', $file['name']));
+					camp_html_add_msg($translator->trans('The file $1 could not be moved. Check you have enough of disk space.', array('$1' => $file['name']), 'home'));
 				}
 				// try to remove the (partially) moved file if the move was not successful
 				if ($move_failed) {
@@ -121,7 +121,7 @@ switch ($action) {
 					catch (Exception $exc) {}
 				}
             } else {
-                camp_html_add_msg(getGS("You have tried to upload an invalid backup file."));
+                camp_html_add_msg($translator->trans("You have tried to upload an invalid backup file.", array(), 'home'));
             }
         }
         $files = getBackupList();
@@ -130,8 +130,8 @@ switch ($action) {
 
 // show breadcrumbs
 $crumbs = array();
-$crumbs[] = array(getGS("Actions"), "");
-$crumbs[] = array(getGS("Backup/Restore"), "");
+$crumbs[] = array($translator->trans("Actions"), "");
+$crumbs[] = array($translator->trans("Backup/Restore", array(), 'home'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 
@@ -144,18 +144,18 @@ echo $breadcrumbs;
 <div class="wrapper mid-sized">
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
     <tr>
-    <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
-        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('MiB');?></b></td>
+    <td valign="bottom"><b><?php echo $translator->trans("Free disk space", array(), 'home') . ': '
+        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . $translator->trans('MiB', array(), 'home');?></b></td>
     <td valign="bottom" style="padding-left: 10px;">
-        <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make a new backup?')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
+        <a href="#" onclick="if (confirm('<?php echo $translator->trans('Are you sure you want to make a new backup?', array(), 'home')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
-        <b><?php putGS("Make a new backup")?></b>
+        <b><?php echo $translator->trans("Make a new backup", array(), 'home')?></b>
         </a>
     </td>
     <td valign="bottom" style="padding-left: 10px;">
         <a href="#" onclick="$('#uploader').show();">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/tol.gif" border="0">
-        <b><?php putGS("Upload backup file")?></b>
+        <b><?php echo $translator->trans("Upload backup file", array(), 'home')?></b>
         </a>
     </td>
     </tr>
@@ -164,7 +164,7 @@ echo $breadcrumbs;
 <div id="uploader" style="display:none">
 <fieldset class="buttons">
 <form method="POST" enctype="multipart/form-data">
-<input type="submit" class="button right-floated" name="save" value="<?php putGS('Save'); ?>" />
+<input type="submit" class="button right-floated" name="save" value="<?php echo $translator->trans('Save'); ?>" />
 <input type="hidden" name="action" value="upload" />
 <input type="file" name="archivefile" size="30">
 
@@ -177,12 +177,12 @@ camp_html_display_msgs();
 ?>
 <table border="0" cellspacing="1" cellpadding="3" class="table_list full-sized">
     <tr class="table_list_header">
-        <td align="left" valign="middle"><b><?php putGS("File"); ?></b></td>
-        <td align="left" valign="middle"><b><?php putGS("Creation date"); ?></b></td>
-        <td align="center" valign="middle"><b><?php echo getGS("Size") . ', ' . GetGS("Mb"); ?></b></td>
-        <td align="center" valign="middle"><b><?php putGS("Download"); ?></b></td>
-        <td align="center" valign="middle"><b><?php putGS("Restore"); ?></b></td>
-        <td align="center" valign="middle"><b><?php putGS("Delete"); ?></b></td>
+        <td align="left" valign="middle"><b><?php echo $translator->trans("File"); ?></b></td>
+        <td align="left" valign="middle"><b><?php echo $translator->trans("Creation date"); ?></b></td>
+        <td align="center" valign="middle"><b><?php echo $translator->trans("Size", array(), 'home') . ', ' . $translator->trans("Mb", array(), 'home'); ?></b></td>
+        <td align="center" valign="middle"><b><?php echo $translator->trans("Download", array(), 'home'); ?></b></td>
+        <td align="center" valign="middle"><b><?php echo $translator->trans("Restore", array(), 'home'); ?></b></td>
+        <td align="center" valign="middle"><b><?php echo $translator->trans("Delete"); ?></b></td>
     </tr>
 <?php
 if ($files) {
@@ -197,24 +197,24 @@ if ($files) {
         }
         print "<tr $tr_class><td>{$file['name']}</td><td align=\"left\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
-            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
+            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.$translator->trans('Download file', array(), 'home').'" title="'.$translator->trans('Download file', array(), 'home').'"></a>';
 ?>
 		<td align="center">
 			<a href="#" onclick="
-				if( confirm( '<?php echo getGS('Warning: the existing data and themes will be deleted!') ?>'
-					+'\n'+'<?php echo getGS('Are you sure you want to restore the file $1?', htmlspecialchars($file['name'])) ?>') )
+				if( confirm( '<?php echo $translator->trans('Warning: the existing data and themes will be deleted!', array(), 'home') ?>'
+					+'\n'+'<?php echo $translator->trans('Are you sure you want to restore the file $1?', array('$1' => htmlspecialchars($file['name'])), 'home') ?>') )
 					window.open('backup.php?action=restore&index=<?php echo $key ?>', 'Backup',
 						'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
-			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/help.png" border="0" alt="<?php echo getGS('Restore file') ?>"
-				title="<?php echo getGS('Restore file') ?>"></a>
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/help.png" border="0" alt="<?php echo $translator->trans('Restore file', array(), 'home') ?>"
+				title="<?php echo $translator->trans('Restore file', array(), 'home') ?>"></a>
 <?php
         print '<td align="center"><a href="backup.php?action=delete&index='.$key.'" onclick="return confirm(\''
-            .getGS('Are you sure you want to delete the file $1?',htmlspecialchars($file['name'])).'\');"><img src="'
-            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" border="0" alt="'.getGS('Delete file').'" title="'.getGS('Delete file').'"></a>';
+            .$translator->trans('Are you sure you want to delete the file $1?',array('$1' => htmlspecialchars($file['name'])), 'home').'\');"><img src="'
+            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" border="0" alt="'.$translator->trans('Delete file', array(), 'home').'" title="'.$translator->trans('Delete file', array(), 'home').'"></a>';
         print '</tr>';
     }
 } else {
-    echo '<tr><td colspan="3">'.getGS('Backup list is empty.').'</td></tr>' ;
+    echo '<tr><td colspan="3">'.$translator->trans('Backup list is empty.', array(), 'home').'</td></tr>' ;
 }
 ?>
 </table>

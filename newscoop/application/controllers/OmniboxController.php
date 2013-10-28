@@ -17,7 +17,6 @@ class OmniboxController extends Zend_Controller_Action
     {
         $this->_helper->layout->disableLayout();
         $this->auth = Zend_Auth::getInstance();
-        $this->view->translate = Zend_Registry::get('Zend_Translate');
     }
 
     public function indexAction()
@@ -30,6 +29,7 @@ class OmniboxController extends Zend_Controller_Action
     {
         $this->getHelper('contextSwitch')->addActionContext('login', 'json')->initContext();
 
+        $translator = Zend_Registry::get('container')->getService('translator');
         $request = $this->getRequest();
         if ($request->isPost()) {
             $params = $request->getParams();
@@ -41,7 +41,7 @@ class OmniboxController extends Zend_Controller_Action
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
                 $this->view->response = 'OK';
             } else {
-                $this->view->response = $this->view->translate('Login failed.');
+                $this->view->response = $translator->trans('Login failed.');
             }
 	}
     }

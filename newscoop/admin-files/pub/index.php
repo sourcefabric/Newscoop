@@ -1,7 +1,8 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SimplePager.php");
-camp_load_translation_strings("api");
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 $PubOffs = camp_session_get('PubOffs', 0);
@@ -17,7 +18,7 @@ $numPublications = Publication::GetNumPublications();
 
 $pager = new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?");
 
-camp_html_content_top(getGS('Publication List'), null);
+camp_html_content_top($translator->trans('Publication List'), null);
 
 if ($g_user->hasPermission("ManagePub") && SaaS::singleton()->hasPermission("AddPub")) { ?>
 <P>
@@ -27,7 +28,7 @@ if ($g_user->hasPermission("ManagePub") && SaaS::singleton()->hasPermission("Add
 		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
 	<TD>
-		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  putGS("Add new publication"); ?></B></A>
+		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><B><?php  echo $translator->trans("Add new publication", array(), 'pub'); ?></B></A>
 	</TD>
 </TR>
 </TABLE>
@@ -43,17 +44,17 @@ if ($g_user->hasPermission("ManagePub") && SaaS::singleton()->hasPermission("Add
 </TABLE>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list">
 <TR class="table_list_header">
-	<td align="center" valign="top"><?php putGS("Number"); ?></td>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Name"); ?><BR><SMALL>(<?php putGS('click to see issues');?>)</SMALL></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Site Alias"); ?></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Default Language"); ?></TD>
+	<td align="center" valign="top"><?php echo $translator->trans("Number"); ?></td>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Name"); ?><BR><SMALL>(<?php echo $translator->trans('click to see issues', array(), 'pub');?>)</SMALL></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Default Site Alias", array(), 'pub'); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Default Language"); ?></TD>
     <?php  if ($g_user->hasPermission("ManagePub")) { ?>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Comments enabled"); ?></TD>
-    <TD ALIGN="center" VALIGN="TOP"><?php  putGS("URL Type"); ?></TD>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Configure"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Comments enabled", array(), 'pub'); ?></TD>
+    <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("URL Type", array(), 'pub'); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Configure"); ?></TD>
     <?php  }
     if ($g_user->hasPermission("DeletePub")) { ?>
-    <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Delete"); ?></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Delete"); ?></TD>
     <?php  } ?>
 </TR>
 <?php
@@ -91,12 +92,12 @@ foreach ($publications as $pub) { ?>
             ?>&nbsp;
         </TD>
         <TD ALIGN="CENTER">
-            <A HREF="/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php p($pub->getPublicationId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  putGS("Configure"); ?>" title="<?php  putGS("Configure"); ?>"  border="0"></A>
+            <A HREF="/<?php p($ADMIN); ?>/pub/edit.php?Pub=<?php p($pub->getPublicationId()); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/configure.png" alt="<?php  echo $translator->trans("Configure"); ?>" title="<?php  echo $translator->trans("Configure"); ?>"  border="0"></A>
         </TD>
         <?php  }
         if ($g_user->hasPermission("DeletePub")) { ?>
         <TD ALIGN="CENTER">
-        <A HREF="/<?php p($ADMIN); ?>/pub/do_del.php?Pub=<?php p($pub->getPublicationId()); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($pub->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" TITLE="<?php  putGS('Delete publication $1',htmlspecialchars($pub->getName())); ?>" ></A>
+        <A HREF="/<?php p($ADMIN); ?>/pub/do_del.php?Pub=<?php p($pub->getPublicationId()); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php echo $translator->trans('Are you sure you want to delete the publication $1?', array('$1' => htmlspecialchars($pub->getName())), 'pub'); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  echo $translator->trans('Delete publication $1', array('$1' => htmlspecialchars($pub->getName())), 'pub'); ?>" TITLE="<?php  echo $translator->trans('Delete publication $1', array('$1' => htmlspecialchars($pub->getName())), 'pub'); ?>" ></A>
         </TD>
         <?php  } ?>
 </TR>
@@ -114,7 +115,7 @@ foreach ($publications as $pub) { ?>
 } else {
 	?>
 	<BLOCKQUOTE>
-	<LI><?php  putGS('No publications.'); ?></LI>
+	<LI><?php  echo $translator->trans('No publications.', array(), 'pub'); ?></LI>
 	</BLOCKQUOTE>
 	<?php
 }

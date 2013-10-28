@@ -16,7 +16,7 @@ class BridgeController extends Controller
     * @Route("/{rest}", requirements={"rest" = ".+"})
     */
     public function indexAction(Request $request)
-    {   
+    {
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 

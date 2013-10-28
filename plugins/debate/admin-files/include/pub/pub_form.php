@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 if (is_object($publicationObj)) :
 ?>
 
@@ -7,14 +7,14 @@ if (is_object($publicationObj)) :
     <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
     <tr width="100%">
         <td>
-            <font size="+1"><b><?php putGS("Debates"); ?></b></font>
+            <font size="+1"><b><?php echo $translator->trans("Debates", array(), 'plugin_debate'); ?></b></font>
         </td>
 
     <?php if ($g_user->hasPermission('plugin_debate_admin')) {  ?>
 
     	<TD align="right">
     		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">
-    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/debate/assign_popup.php?f_debate_item=publication&amp;f_publication_id=" . $publicationObj->getPublicationId() . "&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_debate', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
+    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/debate/assign_popup.php?f_debate_item=publication&amp;f_publication_id=" . $publicationObj->getPublicationId() . "&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_debate', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php echo $translator->trans("Edit"); ?></A>
     	</TD>
     	<?php } ?>
     </TR>

@@ -1,17 +1,18 @@
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <div id="slideshow-controls">
     <a class="ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
         'module' => 'admin',
         'controller' => 'slideshow',
         'action' => 'create',
         'article_number' => $this->articleNumber,
-    )); ?>" id="create-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
+    )); ?>" id="create-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php echo $translator->trans('Create', array(), 'home'); ?></a>
 
     <a class="ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
         'module' => 'admin',
         'controller' => 'slideshow',
         'action' => 'attach',
         'article_number' => $this->articleNumber,
-    )); ?>" id="attach-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach/Detach'); ?></a>
+    )); ?>" id="attach-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php echo $translator->trans('Attach/Detach', array(), 'home'); ?></a>
 </div>
 
 <div class="clear"></div>
@@ -23,7 +24,7 @@
     'controller' => 'slideshow',
     'action' => 'edit',
     'article_number' => $this->articleNumber,
-)); ?>/slideshow/<%= id %>" title="<?php putGS('Edit'); ?> <%= headline %>"><%= headline %></a>
+)); ?>/slideshow/<%= id %>" title="<?php echo $translator->trans('Edit'); ?> <%= headline %>"><%= headline %></a>
 </script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>

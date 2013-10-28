@@ -3,14 +3,16 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/SubscriptionDefaultTime.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Country.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to change publication information."));
+	camp_html_display_error($translator->trans("You do not have the right to change publication information.", array(), 'pub'));
 	exit;
 }
 
@@ -21,7 +23,7 @@ $cPaidTime = Input::Get('cPaidTime', 'int', 0);
 $cTrialTime = Input::Get('cTrialTime', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -30,6 +32,6 @@ $defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
 
 $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);
-camp_html_add_msg(getGS("Country subscription settings updated."), "ok");
+camp_html_add_msg($translator->trans("Country subscription settings updated.", array(), 'pub'), "ok");
 camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$Pub&Language=$Language");
 ?>

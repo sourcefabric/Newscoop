@@ -1,4 +1,4 @@
-<h1><?php putGS('Login'); ?></h1>
+<h1><?php $translator = \Zend_Registry::get('container')->getService('translator'); echo $translator->trans('Login'); ?></h1>
 
 <?php $this->renderError(); ?>
 

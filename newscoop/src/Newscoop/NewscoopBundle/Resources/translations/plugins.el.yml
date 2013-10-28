@@ -1,0 +1,15 @@
+'You have no installed plugins.': 'Δεν έχετε εγκατεστημένες πρόσθετες λειτουργίες.'
+'Some plugins have to be updated. Please press the save button.': 'Κάποιες πρόσθετες λειτουργίες πρέπει να ενημερωθούν. Παρακαλούμε πατήστε το πλήκτρο αποθήκευσης.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Παρακαλούμε επιβεβαιώστε την απεγκατάσταση της πρόσθετης λειτουργίας $1. Όλα τα δεδομένα της λειτουργίας θα διαγραφούν!'
+'You do not have the right to manage plugins.': 'Δεν έχετε το δικαίωμα διαχείρισης πρόσθετων λειτουργιών.'
+Version: Εκδοχή
+'Upload Plugin': 'Ανέβασμα Πρόσθετης Λειτουργίας'
+Upload: Ανέβασμα
+Uninstall: Απεγκατάσταση
+'The plugin $1 was sucessfully installed.': 'Η πρόσθετη λειτουργία $1 εγκαταστάθηκε επιτυχώς.'
+'No plugins found.': 'Δεν βρέθηκαν πρόσθετες λειτουργίες.'
+Manage: Διαχείριση
+Enabled: Ενεργοποιημένο
+'Delete plugin': 'Διαγραφή πρόσθετης λειτουργίας'
+'Add new image': 'Προσθήκη νέας εικόνας'
+'Please confirm the plugin $1 uninstall? All plugin data will be deleted!': 'Παρακαλούμε επιβεβαιώστε το πρόσθετο $1 απεγκατάστασης. Όλα τα δεδομένα πρόσθετων θα διαγραφούν!'

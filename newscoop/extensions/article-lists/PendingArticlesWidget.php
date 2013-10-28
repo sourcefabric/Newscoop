@@ -16,8 +16,9 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
 class PendingArticlesWidget extends ArticlesWidget
 {
     public function __construct()
-    {
-        $this->title = getGS('Pending Articles');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Pending Articles', array(), 'extensions');
     }
 
     public function beforeRender()

@@ -1,3 +1,6 @@
-<?php $this->placeholder('title')->set(getGS('Create new account')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Create new account', array(), 'users')); 
+?>
 
 <?php echo $this->form; ?>

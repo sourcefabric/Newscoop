@@ -1,0 +1,92 @@
+get: dostat
+Soundcloud: SoundCloud
+Templates: Šablony
+'Feedback Messages': 'Feedback zprávy'
+'Article Playlists': 'Seznamy článků'
+'Check all': 'Zkontrolovat vše'
+view: ukázat
+undo/redo: odstranit/předělat
+underline: podtrhnout
+translate: přeložit
+'text direction': 'směr textu'
+'text alignment': 'zarovnání textu'
+table: 'tabulka '
+superscript: 'horní index'
+subscript: 'dolní index'
+subhead: podkapitola
+strikethrough: přeškrtnout
+statusbar: statusbar
+'spell checker enabled': 'kontrola pravopisu povolena'
+'source view': 'zdrojový pohled'
+publish: vydat
+notify: potvrdit
+moderate: upravit
+manage: spravovat
+'list number': 'zobrazit číslo'
+'list bullet': odrážky
+link: odkaz
+italic: kurzíva
+indent: odsadit
+image: obrázek
+'horizontal rule': 'horizontal rule'
+handle: handle
+guest: host
+'font size': 'velikost písma'
+'font face': 'styl písma'
+'font color': 'barva písma'
+find/replace: najít/nahradit
+enlarge: zvětšit
+enable: umožnit
+edit: upravit
+delete: smazat
+copy/cut/paste: kopírovat/vyjmout/vložit
+clear: vymazat
+'character map': 'character map'
+bold: tučně
+attach: připojit
+'any resource': 'jakýkoliv zdroj'
+admin: admin
+add: přidat
+'You cant deny yourself to manage $1': 'Nemůžete sebe odmítnout ze spravování $1'
+'You are not allowed to $1 $2.': 'Nemáte povoleno $1 $2.'
+'User type saved.': 'Typ uživatele uložen.'
+'User type deleted.': 'Typ uživatele vymazán.'
+'User type added.': 'Typ uživatel přidán.'
+'User Groups': 'Uživatelské skupiny'
+Themes: Témata
+'That type name already exists, please choose a different name.': 'Tento název typu již existuje, prosím vyberte jiný název.'
+System: Systém
+Structure: Struktura
+'Search Indexer': 'Vyhledat '
+'Rich-Text Editor Preferences': 'Rich-Text Editor Preferences'
+ReCaptcha: ReCaptcha
+Polls: Ankety
+'Permissions:': 'Povolení:'
+'Permissions updated': 'Povolení aktualizovány'
+Notification: Oznámení
+Log: Log
+Layout: Layout
+Global: Globální
+Files: Soubory
+'Error: ': 'Chyba:'
+'Edit user type $1': 'Upravit typ uživatele $1'
+Deny: Zamítnout
+'Delete user type $1': 'Vymazat typ uživatele $1'
+'Can not delete a user type with assigned users.': 'Nelze vymazat uživatelský typ s přidělenými uživateli.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Povolit
+'User types': 'Typy uživatelů'
+'No user types.': 'Žádné typy uživatelů'
+'You do not have the right to add user types.': 'Nemáte právo přidat typy uživatelů'
+'Adding new user type': 'Přidání nového typu uživatele'
+'The user type $1 has been added.': 'Typ uživatele $1 byl přidán'
+'The user type could not be added.': 'Typ uživatele nemohl být přidán'
+'Please check if an user type with the same name does not already exist.': 'Zkontrolujte, zda již neexistuje typ uživatele se stejným názvem'
+'Deleting user type': 'Mazání typu uživatele'
+'The user type has been deleted.': 'Typ uživatele byl smazán'
+'The user type could not be deleted.': 'Typ uživatele nemohl být smazán'
+'Updating user type permissions': 'Obnovení práva typu uživatele'
+'User type permissions have been successfuly updated.': 'Práva tohoto typu uživatele byla úspěšně obnovena'
+'User type permissions could not be updated.': 'Práva tohoto typu uživatele nemohla být obnovena'

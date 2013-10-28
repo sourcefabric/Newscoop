@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
+'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'
+User: Uživatel
+None: Žádný
+'Coming from': 'Přichází od '
+'Ban/Unban user': 'Zakázat/Obnovit uživatele'
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Zákazy mohou být aplikované na uřivatelské jméno, emailovou nebo IP adresu.'
+'You are about to permanently delete multiple comments.': 'Právě se chystáte permanentně vymazat hromadné komentáře.'
+'You are about to permanently delete a comment.': 'Právě se chystáte permanentně vymazat komentář.'
+Website: 'Webová stránka'
+'Value is not $1 characters long': 'Hodnota není $1 znaků dlouhá'
+Username: 'Uživatelské jméno'
+'User id': 'Uživatelské ID'
+'User ban settings': 'Nastavení zákazu pro uživatele'
+'Update comment': 'Aktualizovat komentář'
+Unrecommended: Nedoproučený
+Unrecommend: Nedoporučeno
+'Subject is not $1 characters long': 'Předmět není $1 charakterů dlouhý'
+'Sort by Thread order': 'Seřadit podle vláken'
+'Show parent comment': 'Ukázat ústřední komentář'
+'Show commenter details': 'Ukázat detail komentátora'
+'Show commenter': 'Ukázat komentátora'
+'Show comment user details': 'Ukázat detail komentátora'
+'Show comment user': 'Ukázat komentujícího uživatel'
+'Show comment details': 'Ukázat detaily komentáře'
+'Select status': 'Vybrat status'
+'Search Type': 'Vyhledat typ'
+'Reply to comment': 'Odpovědět to koment'
+Recommended: Doporučené
+Recommend: Doporučeno
+'Quick edit': 'Rychlá editace '
+Parent: Ústřední
+ID: ID
+'Go to edit article': 'Jděte upravit článek'
+Forum: Fórum
+'For Column': 'Pro odstavec'
+Email: Email
+'Edit acceptance criteria': 'Upravit kritéria pro přijetí'
+E-mail: Email
+'Delete all comments?': 'Vymazat všechny komentáře?'
+'Date Created': 'Datum vytvořeno'
+'Comments updated.': 'Komentáře aktualizované.'
+'Comments status change to $1.': 'Status komentářů změněno na $1.'
+'Comments deleted.': 'Komentáře vymazány.'
+'Commenter $1 saved.': 'Komentátor $1 uložen.'
+'Commenter $1 deleted.': 'Komentátor $1 vymazán.'
+Commenter: Komentátor
+'Comment updated.': 'Komentář aktualizován.'
+'Comment status change to $1.': 'Status komentáře změněn na $1.'
+'Comment id': 'ID komentáře'
+'Comment deleted.': 'Komentář vymazán.'
+'Comment delete by $1 from the article $2 ($3)': 'Komentář vymazán $1 z článku $2 ($3)'
+'Comment Acceptance': 'Přijetí komentáře'
+'Comment $4 by $1 in the article $2 ($3)': 'Komentář $4'
+'Comment $1 saved.': 'Komentář $1 uložen.'
+Column: 'Odstavec '
+'Change subscriber information': 'Změna informací registrovaného'
+'Ban for commenter $1 saved.': 'Zákaz pro komentátora $1 uloženo.'
+Ban: Zakázat
+'Are you sure you want to do it?': 'Jste si jisti, že to chcete udělat?'
+'Add rating': 'Přidat hodnocení'
+'Add new comment commenter': 'Přidat nový komentář'
+'Add new comment': 'Přidat nový komentář'
+'Add new acceptance criteria': 'Přidat nová kritéria pro přijetí'
+'Acceptance $1 saved.': 'Akceptace $1 uložena.'
+'Acceptance $1 deleted.': 'Akceptace $1 vymazána.'

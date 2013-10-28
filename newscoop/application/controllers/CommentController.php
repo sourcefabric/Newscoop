@@ -25,6 +25,7 @@ class CommentController extends Zend_Controller_Action
     {
 		global $_SERVER;
 
+        $translator = Zend_Registry::get('container')->getService('translator');
 		$this->_helper->layout->disableLayout();
 		$parameters = $this->getRequest()->getParams();
         
@@ -43,19 +44,19 @@ class CommentController extends Zend_Controller_Action
 
 			$userIp = getIp();
             if ($acceptanceRepository->checkParamsBanned($user->getName(), $user->getEmail(), $userIp, $article->getPublicationId())) {
-				$errors[] = $this->view->translate('You have been banned from writing comments.');
+				$errors[] = $translator->trans('You have been banned from writing comments.');
 			}
 		}
 		else {
-			$errors[] = $this->view->translate('You are not logged in.');
+			$errors[] = $translator->trans('You are not logged in.');
 		}
 
 		if (!array_key_exists('f_comment_subject', $parameters) || empty($parameters['f_comment_subject'])) {
-			//$errors[] = getGS('The comment subject was not filled in.');
-			$errors[] = $this->view->translate('The comment subject was not filled in.');
+			//$errors[] = $translator->trans('The comment subject was not filled in.');
+			$errors[] = $translator->trans('The comment subject was not filled in.');
 		}
 		if (!array_key_exists('f_comment_content', $parameters) || empty($parameters['f_comment_content'])) {
-			$errors[] = $this->view->translate('The comment content was not filled in.');
+			$errors[] = $translator->trans('The comment content was not filled in.');
 		}
 
 		if (empty($errors)) {
@@ -82,7 +83,7 @@ class CommentController extends Zend_Controller_Action
 		}
 		else {
 			$errors = implode('<br>', $errors);
-			$errors = $this->view->translate('Following errors have been found:') . '<br>' . $errors;
+			$errors = $translator->trans('Following errors have been found:') . '<br>' . $errors;
 			$this->view->response = $errors;
 		}
         

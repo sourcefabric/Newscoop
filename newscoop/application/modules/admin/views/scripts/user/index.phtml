@@ -1,25 +1,28 @@
-<?php $this->placeholder('title')->captureStart(); ?>
-<?php putGS('Users'); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->captureStart(); 
+?>
+<?php echo $translator->trans('Users'); ?>
 <?php $this->placeholder('title')->captureEnd(); ?>
 <?php echo $this->renderActions(); ?>
 <table cellpadding="0" cellspacing="0" border="0" class="display" id="userDataTable" style="max-width:1300px">
     <thead>
         <tr>
-            <th rowspan="2"><?php putGS('Username'); ?></th>
-            <th rowspan="2"><?php putGS('First Name'); ?></th>
-            <th rowspan="2"><?php putGS('Last Name'); ?></th>
-            <th rowspan="2"><?php putGS('Email'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Username', array(), 'users'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('First Name', array(), 'users'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Last Name', array(), 'users'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Email', array(), 'users'); ?></th>
             <th></th>
             <th></th>
-            <th rowspan="2"><?php putGS('Created'); ?></th>
-            <th rowspan="2"><?php putGS('Updated'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Created', array(), 'articles'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Updated'); ?></th>
             <th></th>
-            <th rowspan="2"><?php putGS('Options'); ?></th>
+            <th rowspan="2"><?php echo $translator->trans('Options'); ?></th>
         </tr>
         <tr>
-            <th><?php putGS('Usertype'); ?></th>
-            <th><?php putGS('Status'); ?></th>
-            <th><?php putGS('Verified'); ?></th>
+            <th><?php echo $translator->trans('User Type', array(), 'users'); ?></th>
+            <th><?php echo $translator->trans('Status'); ?></th>
+            <th><?php echo $translator->trans('Verified'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -27,35 +30,35 @@
     </tbody>
     <tfoot>
         <tr>
-            <th><?php putGS('Username'); ?></th>
-            <th><?php putGS('First Name'); ?></th>
-            <th><?php putGS('Last Name'); ?></th>
-            <th><?php putGS('Email'); ?></th>
-            <th><?php putGS('Usertype'); ?></th>
-            <th><?php putGS('Status'); ?></th>
-            <th><?php putGS('Created'); ?></th>
-            <th><?php putGS('Updated'); ?></th>
-            <th><?php putGS('Verified'); ?></th>
-            <th><?php putGS('Options'); ?></th>
+            <th><?php echo $translator->trans('Username', array(), 'users'); ?></th>
+            <th><?php echo $translator->trans('First Name', array(), 'users'); ?></th>
+            <th><?php echo $translator->trans('Last Name', array(), 'users'); ?></th>
+            <th><?php echo $translator->trans('Email', array(), 'users'); ?></th>
+            <th><?php echo $translator->trans('User Type'); ?></th>
+            <th><?php echo $translator->trans('Status'); ?></th>
+            <th><?php echo $translator->trans('Created'); ?></th>
+            <th><?php echo $translator->trans('Updated'); ?></th>
+            <th><?php echo $translator->trans('Verified'); ?></th>
+            <th><?php echo $translator->trans('Options'); ?></th>
         </tr>
     </tfoot>
 </table>
 
 <script type="text/html" id="user-active-template">
 <div class="inline-actions">
-    <a href="#delete" class="delete" title="<?php putGS('delete user'); ?> <%= user.escape('username') %>"><?php putGS('Delete'); ?></a>
+    <a href="#delete" class="delete" title="<?php echo $translator->trans('delete user', array(), 'users'); ?> <%= user.escape('username') %>"><?php echo $translator->trans('Delete'); ?></a>
 </div>
-<a href="<%= user.getLink('edit') %>" class="edit" title="<?php putGS('edit user'); ?> <%= user.escape('username') %>"><%= user.escape('username') %>
-<% if (user.get('is_verified')) { %><abbr title="<?php putGS('Verified profile'); ?>" class="verified">V</abbr><% } %>
+<a href="<%= user.getLink('edit') %>" class="edit" title="<?php echo $translator->trans('edit user', array(), 'users'); ?> <%= user.escape('username') %>"><%= user.escape('username') %>
+<% if (user.get('is_verified')) { %><abbr title="<?php echo $translator->trans('Verified profile', array(), 'users'); ?>" class="verified">V</abbr><% } %>
 </a>
-<a href="mailto:<%= user.get('email') %>" class="mailto" title="<?php putGS('Send email to user:'); ?> <%= user.escape('username') %>"><%= user.get('email') %></a>
+<a href="mailto:<%= user.get('email') %>" class="mailto" title="<?php echo $translator->trans('Send email to user:', array(), 'users'); ?> <%= user.escape('username') %>"><%= user.get('email') %></a>
 <span class="created"><%= user.get('created') %></span>
 </script>
 
 <script type="text/html" id="user-inactive-template">
 <div class="inline-actions">
-    <a href="#token" class="token" title="<?php putGS('send confirmation email'); ?>"><?php putGS('Send confirm email'); ?></a> |
-    <a href="#delete" class="delete" title="<?php putGS('delete user'); ?> <%= user.escape('username') %>"><?php putGS('Delete'); ?></a>
+    <a href="#token" class="token" title="<?php echo $translator->trans('send confirmation email', array(), 'users'); ?>"><?php echo $translator->trans('Send confirm email', array(), 'users'); ?></a> |
+    <a href="#delete" class="delete" title="<?php echo $translator->trans('delete user', array(), 'users'); ?> <%= user.escape('username') %>"><?php echo $translator->trans('Delete'); ?></a>
 </div>
 <a class="edit"><%= user.escape('username') %></a>
 <span class="agent"><abbr title="<%= user.escape('http_user_agent') %>"><%= user.get('http_user_agent') %></abbr></span>
@@ -139,27 +142,27 @@ function fnCreateSelect( aData )
 
 $(function() {
     window.translate = <?php echo json_encode(array(
-        'No users found.' => getGS('No users found.'),
-        'Are you sure you want to {action}?' => getGS('Are you sure you want to {action}?'),
-        'New confirmation email was sent to user.' => getGS('New confirmation email was sent to user.'),
-        'User was deleted.' => getGS('User was deleted.'),
+        'No users found.' => $translator->trans('No users found.', array(), 'users'),
+        'Are you sure you want to {action}?' => $translator->trans('Are you sure you want to {action}?', array(), 'users'),
+        'New confirmation email was sent to user.' => $translator->trans('New confirmation email was sent to user.', array(), 'users'),
+        'User was deleted.' => $translator->trans('User was deleted.', array(), 'users'),
     )); ?>;
 
     $('#userDataTable').hide(); // hide the table so it doesn't look jaggy
     var oTable = $('#userDataTable').dataTable( {
         'oLanguage': {
             'oPaginate': {
-                'sNext': '<?php putGS('Next'); ?>',
-                'sLast': '<?php putGS('Last'); ?>',
-                'sPrevious': '<?php putGS('Previous'); ?>',
-                'sFirst': '<?php putGS('First'); ?>'
+                'sNext': '<?php echo $translator->trans('Next'); ?>',
+                'sLast': '<?php echo $translator->trans('Last', array(), 'api'); ?>',
+                'sPrevious': '<?php echo $translator->trans('Previous'); ?>',
+                'sFirst': '<?php echo $translator->trans('First', array(), 'api'); ?>'
             },
-            'sZeroRecords': '<?php putGS('No records found.'); ?>',
-            'sSearch': '<?php putGS('Search'); ?>:',
-            'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
-            'sEmpty': '<?php putGS('No entries to show'); ?>',
-            'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
-            'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+            'sZeroRecords': '<?php echo $translator->trans('No records found.', array(), 'users'); ?>',
+            'sSearch': '<?php echo $translator->trans('Search'); ?>:',
+            'sInfo': '<?php echo $translator->trans('Showing _START_ to _END_ of _TOTAL_ entries', array(), 'users'); ?>',
+            'sEmpty': '<?php echo $translator->trans('No entries to show', array(), 'users'); ?>',
+            'sInfoFiltered': '<?php echo $translator->trans(' - filtering from _MAX_ records', array(), 'users'); ?>',
+            'sLengthMenu': '<?php echo $translator->trans('Display _MENU_ records', array(), 'users'); ?>',
             'sInfoEmpty': '',
         },
         // "bServerSide": true,
@@ -207,9 +210,9 @@ $(function() {
                             }
                             newUser.push(string);
                             if (key == 've') {
-                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'"><?php putGS('Delete'); ?></a>, <a href="user/rename/user/'+user['id']+'"><?php putGS('Rename'); ?></a>';
+                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'"><?php echo $translator->trans('Delete'); ?></a>, <a href="user/rename/user/'+user['id']+'"><?php echo $translator->trans('Rename', array(), 'templates'); ?></a>';
                                 if (user['ve'] == 'No') {
-                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'"><?php putGS('Confirm'); ?></a>';
+                                    optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'"><?php echo $translator->trans('Confirm'); ?></a>';
                                 }
                                 newUser.push(optionsUrl);
                             }

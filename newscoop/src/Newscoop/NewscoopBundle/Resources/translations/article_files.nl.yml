@@ -1,0 +1,38 @@
+'Files attached.': 
+'File $1 unattached.': 
+'Attach new file': 
+'Attach existing file': 
+'$1 file/s attached to article': 
+'File attached.': 
+'The maximum file upload size was not configured in Newscoop.': 
+'File #$1 $2 unattached': 
+'File #$1 $2 attached to article': 
+'Unable to add attachment.': 
+'There was a problem uploading the file.': 
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 
+'The file exceeds the allowed max file size.': 
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 
+'Maximum Upload Size': 
+'File Size': 
+'File Name': 
+Download: 
+'File $1 updated.': 
+'Edit article': 'Bewerk artikel'
+'You do not have the right to delete file attachments.': 'Je hebt niet de rechten om bestand bijlage te verwijderen.'
+'You must select a file to upload.': 'Je moet een bestand selecteren om te uploaden.'
+'You do not have the right to delete files.': 'Je hebt niet de rechten om bestanden te verwijderen.'
+'You do not have the right to change the article.': 'Je hebt niet de rechten om het artikel te wijzigen.'
+'You do not have the right to change files.': 'Je hebt niet de rechten om bestanden te wijzigen.'
+'You do not have the right to add files.': 'Je hebt niet he rechten om bestanden toe te voegen.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Moet dit bestand alleen beschikbaar zijn voor deze vertaling of voor alle vertalingen?'
+'Please enter a description for the file.': 'Voeg een beschrijving voor dit bestand toe.'
+'Open in the browser': 'Open in de browser.'
+'Only this translation': 'Alleen deze vertaling'
+'File information': 'Bestand informatie'
+'Do you want this file to open in the users browser, or to automatically download?': 'Wil je dat dit bestand opent in de browser of dat het wordt gedownload?'
+'Change file information': 'Bewerk bestand informatie'
+'Automatically download': 'Automatisch downloaden'
+Attachments: Bijlagen
+'Attachment does not exist.': 'Bijlage bestaat niet'
+'Attach File to Article': 'Voeg bestand aan artikel'
+'All translations': 'Alle vertalingen'

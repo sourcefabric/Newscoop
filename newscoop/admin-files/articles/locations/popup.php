@@ -6,9 +6,7 @@ require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/locations/country_c
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 
-camp_load_translation_strings('api');
-camp_load_translation_strings('geolocation');
-camp_load_translation_strings('home');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_language_id = Input::Get('f_language_selected', 'int', 0);
 if (0 == $f_language_id) {
@@ -19,7 +17,7 @@ $f_article_number = Input::Get('f_article_number', 'int', 0);
 $map_article_spec = '' . $f_article_number . '_' . $f_language_id;
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
     exit;
 }
 
@@ -54,7 +52,7 @@ $geo_popups_json .= json_encode($geo_popups_info['json_obj']);
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Expires" content="now" />
-    <title><?php putGS('Setting Map Locations'); ?></title>
+    <title><?php echo $translator->trans('Setting Map Locations', array(), 'geolocation'); ?></title>
 
         <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
@@ -96,34 +94,34 @@ var local_strings_map = {};
 var set_local_strings = function()
 {
 
-    local_strings_map["fill_in_map_name"] = "<?php putGS('fill in map name'); ?>";
-    local_strings_map["point_markers"] = "<?php putGS('Point markers'); ?>";
-    local_strings_map["this_should_not_happen_now"] = "<?php putGS('problem at point processing, please send error report'); ?>";
-    local_strings_map["really_to_delete_the_point"] = "<?php putGS('Really delete this point?'); ?>";
-    local_strings_map["the_removal_is_from_all_languages"] = "<?php putGS('The point will be removed from all translations of the article.'); ?>";
-    local_strings_map["point_number"] = "<?php putGS('Point no.'); ?>";
-    local_strings_map["fill_in_the_point_description"] = "<?php putGS('Describe the location...'); ?>";
-    local_strings_map["edit"] = "<?php putGS('Edit'); ?>";
-    local_strings_map["edit_advanced"] = "<?php putGS('Advanced editing'); ?>";
-    local_strings_map["center"] = "<?php putGS('Center'); ?>";
-    local_strings_map["enable"] = "<?php putGS('Show'); ?>";
-    local_strings_map["disable"] = "<?php putGS('Hide'); ?>";
-    local_strings_map["remove"] = "<?php putGS('Delete location'); ?>";
-    local_strings_map["remove_short"] = "<?php putGS('Delete'); ?>";
-    local_strings_map["coordinates"] = "<?php putGS('Coordinates'); ?>";
-    local_strings_map["longitude"] = "<?php putGS('Longitude'); ?>";
-    local_strings_map["latitude"] = "<?php putGS('Latitude'); ?>";
-    local_strings_map["locations_updated"] = "<?php putGS('List of locations updated'); ?>";
-    local_strings_map["empty_label_show"] = "<?php putGS('Fill in location label'); ?>";
+    local_strings_map["fill_in_map_name"] = "<?php echo $translator->trans('fill in map name', array(), 'geolocation'); ?>";
+    local_strings_map["point_markers"] = "<?php echo $translator->trans('Point markers', array(), 'geolocation'); ?>";
+    local_strings_map["this_should_not_happen_now"] = "<?php echo $translator->trans('problem at point processing, please send error report', array(), 'geolocation'); ?>";
+    local_strings_map["really_to_delete_the_point"] = "<?php echo $translator->trans('Really delete this point?', array(), 'geolocation'); ?>";
+    local_strings_map["the_removal_is_from_all_languages"] = "<?php echo $translator->trans('The point will be removed from all translations of the article.', array(), 'geolocation'); ?>";
+    local_strings_map["point_number"] = "<?php echo $translator->trans('Point no.', array(), 'geolocation'); ?>";
+    local_strings_map["fill_in_the_point_description"] = "<?php echo $translator->trans('Describe the location...', array(), 'geolocation'); ?>";
+    local_strings_map["edit"] = "<?php echo $translator->trans('Edit'); ?>";
+    local_strings_map["edit_advanced"] = "<?php echo $translator->trans('Advanced editing', array(), 'geolocation'); ?>";
+    local_strings_map["center"] = "<?php echo $translator->trans('Center', array(), 'geolocation'); ?>";
+    local_strings_map["enable"] = "<?php echo $translator->trans('Show'); ?>";
+    local_strings_map["disable"] = "<?php echo $translator->trans('Hide'); ?>";
+    local_strings_map["remove"] = "<?php echo $translator->trans('Delete location', array(), 'geolocation'); ?>";
+    local_strings_map["remove_short"] = "<?php echo $translator->trans('Delete'); ?>";
+    local_strings_map["coordinates"] = "<?php echo $translator->trans('Coordinates', array(), 'geolocation'); ?>";
+    local_strings_map["longitude"] = "<?php echo $translator->trans('Longitude', array(), 'geolocation'); ?>";
+    local_strings_map["latitude"] = "<?php echo $translator->trans('Latitude', array(), 'geolocation'); ?>";
+    local_strings_map["locations_updated"] = "<?php echo $translator->trans('List of locations updated', array(), 'geolocation'); ?>";
+    local_strings_map["empty_label_show"] = "<?php echo $translator->trans('Fill in location label', array(), 'geolocation'); ?>";
 
     geo_locations.set_display_strings(local_strings_map);
 
     local_strings_nam = {};
 
     local_strings_nam["cc"] = "+";
-    local_strings_nam["city"] = "<?php putGS('Center map on location'); ?>";
-    local_strings_nam["add_city"] = "<?php putGS('add location to map'); ?>";
-    local_strings_nam["no_city_was_found"] = "<?php putGS('Sorry, that place was not found. Check your spelling or search again.'); ?>";
+    local_strings_nam["city"] = "<?php echo $translator->trans('Center map on location', array(), 'geolocation'); ?>";
+    local_strings_nam["add_city"] = "<?php echo $translator->trans('add location to map', array(), 'geolocation'); ?>";
+    local_strings_nam["no_city_was_found"] = "<?php echo $translator->trans('Sorry, that place was not found. Check your spelling or search again.', array(), 'geolocation'); ?>";
 
     geo_names.set_display_strings(local_strings_nam);
 
@@ -240,13 +238,13 @@ var hideLocation = function()
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").addClass("round-plus");
 
-    $("#showhide_link").attr("title", "<?php putGS('Show search results'); ?>");
+    $("#showhide_link").attr("title", "<?php echo $translator->trans('Show search results', array(), 'geolocation'); ?>");
     $("#showhide_link").removeClass("map_hidden");
     $("#showhide_link").addClass("toggle_link_block");
 
     var showhide_link_label = document.getElementById ? document.getElementById("showhide_link_label") : null;
     if (showhide_link_label) {
-        showhide_link_label.innerHTML = "<?php putGS('Show search results'); ?>";
+        showhide_link_label.innerHTML = "<?php echo $translator->trans('Show search results', array(), 'geolocation'); ?>";
     }
 
 };
@@ -269,13 +267,13 @@ var showLocation = function()
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").removeClass("round-plus");
 
-    $("#showhide_link").attr("title", "<?php putGS('Hide search results'); ?>");
+    $("#showhide_link").attr("title", "<?php echo $translator->trans('Hide search results', array(), 'geolocation'); ?>");
     $("#showhide_link").removeClass("map_hidden");
     $("#showhide_link").addClass("toggle_link_block");
 
     var showhide_link_label = document.getElementById ? document.getElementById("showhide_link_label") : null;
     if (showhide_link_label) {
-        showhide_link_label.innerHTML = "<?php putGS('Hide search results'); ?>";
+        showhide_link_label.innerHTML = "<?php echo $translator->trans('Hide search results', array(), 'geolocation'); ?>";
     }
 
 };
@@ -290,7 +288,7 @@ var init_search = function ()
     }
 };
 
-var map_close_question = "<?php p(getGS('Are you sure you want to quit without saving your changes?')); ?>";
+var map_close_question = "<?php p($translator->trans('Are you sure you want to quit without saving your changes?', array(), 'geolocation')); ?>";
 
 var set_pois_action = function(value)
 {
@@ -352,7 +350,7 @@ on_close_request = function()
 
     try {
         if (parent.$.fancybox.reload) {
-            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+            parent.$.fancybox.message = '<?php echo $translator->trans('Locations updated.', array(), 'geolocation'); ?>';
         }
         parent.$.fancybox.close();
     }
@@ -419,12 +417,12 @@ var map_show_preview = function(forced)
 <div id="map_save_part" class="toolbar clearfix">
 
     <div class="save-button-bar">
-        <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS('Save'); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS('Save'); ?> &amp; <?php putGS('Preview'); ?>" name="preview" />
-        <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS('Close'); ?>" name="close" />
+        <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php echo $translator->trans('Save'); ?>" name="save" />
+        <input id="map_button_preview" type="submit" onClick="try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php echo $translator->trans('Save'); ?> &amp; <?php echo $translator->trans('Preview'); ?>" name="preview" />
+        <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php echo $translator->trans('Close'); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">
-      <a href="#" class="map_name_display inline_editable" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS('Setting the map name helps with map search'); ?>"><?php putGS('fill in map name'); ?></a>
+      <a href="#" class="map_name_display inline_editable" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php echo $translator->trans('Setting the map name helps with map search', array(), 'geolocation'); ?>"><?php echo $translator->trans('fill in map name', array(), 'geolocation'); ?></a>
         <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;" onKeyUp="geo_locations.map_save_name(); geo_locations.map_update_name_state(this.value); return true;">
      </div>
     <!-- end of map_save_part -->
@@ -437,16 +435,16 @@ var map_show_preview = function(forced)
     <fieldset class="plain">
     <ul>
         <li>
-            <label><span class="map_search_label"><?php putGS('Search for place or coordinate'); ?></span></label>
+            <label><span class="map_search_label"><?php echo $translator->trans('Search for place or coordinate', array(), 'geolocation'); ?></span></label>
         </li>
         <li>
         <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text" title="<?php putGS('Based on GeoNames.org and OpenStreetMap.org data'); ?>"><a href="#" title="<?php putGS('Search for place or coordinate'); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
+          <input class="map_geo_cityname input_text" id="search-city" type="text" title="<?php echo $translator->trans('Based on GeoNames.org and OpenStreetMap.org data', array(), 'geolocation'); ?>"><a href="#" title="<?php echo $translator->trans('Search for place or coordinate', array(), 'geolocation'); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
         </form>
         </li>
         <li>
 <select class="input_select map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
-<option value="" selected="true"><?php putGS('Specify country (optional)'); ?></option>
+<option value="" selected="true"><?php echo $translator->trans('Specify country (optional)', array(), 'geolocation'); ?></option>
 <?php
 foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     echo '<option value="' . $cc_value . '">' . $cc_name . '</option>' . "\n";
@@ -461,7 +459,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 
 <a class="toggle_link map_hidden" onclick="showhideLocation(); return false;" title="" id="showhide_link" href="#">
 <span class="ui-icon ui-icon-triangle-2-n-s"></span>
-<span id="showhide_link_label"><?php putGS('Hide search results'); ?></span></a>
+<span id="showhide_link_label"><?php echo $translator->trans('Hide search results', array(), 'geolocation'); ?></span></a>
 <div id="search_results" class="search_results map_hidden">&nbsp;</div>
 <div id="map_sidedescs" class="map_sidedescs">&nbsp;</div>
 </div><!--end of side_info -->
@@ -470,7 +468,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div class="map_mapmenu">
 
 <div class="map_mapinitview">
-      <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS('Last Saved Map View'); ?></a> </div>
+      <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php echo $translator->trans('Last Saved Map View', array(), 'geolocation'); ?></a> </div>
 <!-- end of map initview -->
 <div class="map_resizing">
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-plus"></span></a>
@@ -480,90 +478,90 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
           <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-plus"></span></a>
           <div class="resize-label"><span class="geo_resize_ver ui-icon ui-icon-arrowthick-2-e-w">H</span></div>
           <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-minus"></span></a>
-    <div class="map-resizing-text map_resizing_label"><?php putGS('Map size'); ?>:</div>
+    <div class="map-resizing-text map_resizing_label"><?php echo $translator->trans('Map size', array(), 'geolocation'); ?>:</div>
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">
     <div class="map_editinner">
-        <a onclick="geo_locations.close_edit_window(); geo_locations.preview_edited(); return false;" href="#" class="ui-state-default icon-button button geo_close_edit_window"><span class=""><?php putGS('OK'); ?></span></a>
+        <a onclick="geo_locations.close_edit_window(); geo_locations.preview_edited(); return false;" href="#" class="ui-state-default icon-button button geo_close_edit_window"><span class=""><?php echo $translator->trans('OK'); ?></span></a>
         <div class="map_editpart1">
             <form action="#" onSubmit="return false;">
               <fieldset>
 
                 <div id="edit_tabs_all">
                     <ul>
-                    <li><a href="#edit_basic"><?php putGS('text'); ?></a></li>
-                    <li><a href="#edit_image" id="image_edit_part"><?php putGS('image'); ?></a></li>
-                    <li><a href="#edit_video" id="video_edit_part"><?php putGS('video'); ?></a></li>
-                    <li><a href="#edit_marker"><?php putGS('icon'); ?></a></li>
+                    <li><a href="#edit_basic"><?php echo $translator->trans('text', array(), 'geolocation'); ?></a></li>
+                    <li><a href="#edit_image" id="image_edit_part"><?php echo $translator->trans('image', array(), 'geolocation'); ?></a></li>
+                    <li><a href="#edit_video" id="video_edit_part"><?php echo $translator->trans('video', array(), 'geolocation'); ?></a></li>
+                    <li><a href="#edit_marker"><?php echo $translator->trans('icon', array(), 'geolocation'); ?></a></li>
                 </ul>
                 <div id="edit_basic" class="edit_tabs">
-                    <div class="edit_label_long map_poi_edit_intro"><?php putGS('Name and describe this location'); ?>.</div>
+                    <div class="edit_label_long map_poi_edit_intro"><?php echo $translator->trans('Name and describe this location', array(), 'geolocation'); ?>.</div>
 
                     <ol>
                     <li class="edit_label_top">
-                    <label class="edit_label" for="point_label"><?php putGS('Location label'); ?>:</label>
+                    <label class="edit_label" for="point_label"><?php echo $translator->trans('Location label', array(), 'geolocation'); ?>:</label>
                     <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" onKeyUp="geo_locations.store_point_label(); return true;" />
                     </li>
                     <li id="edit_part_link" class="">
-                    <label class="edit_label" for="point_link"><?php putGS('Label url'); ?>:</label>
+                    <label class="edit_label" for="point_link"><?php echo $translator->trans('Label url', array(), 'geolocation'); ?>:</label>
                     <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" onKeyUp="geo_locations.store_point_property('link', this.value); return true;" />
                     </li>
 
                     <li>
-                    <label class="edit_label" for="point_descr"><?php putGS('Location description:'); ?></label>
+                    <label class="edit_label" for="point_descr"><?php echo $translator->trans('Location description:', array(), 'geolocation'); ?></label>
                     <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;" onKeyUp="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return true;">
-                    <option value="0" selected="true"><?php putGS('plain text'); ?></option>
-                    <option value="1"><?php putGS('html content'); ?></option>
+                    <option value="0" selected="true"><?php echo $translator->trans('plain text', array(), 'geolocation'); ?></option>
+                    <option value="1"><?php echo $translator->trans('html content', array(), 'geolocation'); ?></option>
                     </select>
                     <div id="edit_part_text" class="">
-                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" title="<?php putGS('Describe the location...'); ?>" onChange="geo_locations.store_point_property('text', this.value); return false;" onKeyUp="geo_locations.store_point_property('text', this.value); return true;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}" onBlur="if ('' == this.value) {this.value = local_strings_map['fill_in_the_point_description'];}">
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" title="<?php echo $translator->trans('Describe the location...', array(), 'geolocation'); ?>" onChange="geo_locations.store_point_property('text', this.value); return false;" onKeyUp="geo_locations.store_point_property('text', this.value); return true;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}" onBlur="if ('' == this.value) {this.value = local_strings_map['fill_in_the_point_description'];}">
 </textarea>
                     </div>
                     <div id="edit_part_content" class="map_hidden">
-                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_text" type="text" title="<?php putGS('Describe the location...'); ?>" onChange="geo_locations.store_point_property('content', this.value); return false;"  onKeyUp="geo_locations.store_point_property('content', this.value); return true;">
+                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_text" type="text" title="<?php echo $translator->trans('Describe the location...', array(), 'geolocation'); ?>" onChange="geo_locations.store_point_property('content', this.value); return false;"  onKeyUp="geo_locations.store_point_property('content', this.value); return true;">
 </textarea>
                     </div>
                     </li>
                     </ol>
                         </div>
                         <div id="edit_image" class="edit_tabs">
-                            <div class="edit_label_long map_poi_edit_intro"><?php putGS('Add an image to this location'); ?>.</div>
+                            <div class="edit_label_long map_poi_edit_intro"><?php echo $translator->trans('Add an image to this location', array(), 'geolocation'); ?>.</div>
 <?php
-    $image_desc_other = getGS('Fill in image link, like') . " " . "http://www.example.net/image.png";
+    $image_desc_other = $translator->trans('Fill in image link, like', array(), 'geolocation') . " " . "http://www.example.net/image.png";
 ?>
                     <ol>
                     <li class="edit_label_top">
-                    <label class="edit_label" for="point_image"><?php putGS('Image URL'); ?>:</label>
+                    <label class="edit_label" for="point_image"><?php echo $translator->trans('Image URL', array(), 'geolocation'); ?>:</label>
                     <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_source', this.value); return true;" title="<?php echo $image_desc_other; ?>" />
                     <div class="poi_edit_description" id="geo_image_desc"><?php echo $image_desc_other; ?></div>
                     </li>
 
-                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS('Change image display size'); ?>.</li>
+                    <li class="edit_label_long map_poi_edit_intro_sub"><?php echo $translator->trans('Change image display size', array(), 'geolocation'); ?>.</li>
 
                     <li>
-                    <label class="edit_label" for="point_image_height"><?php putGS('width'); ?>:</label>
+                    <label class="edit_label" for="point_image_height"><?php echo $translator->trans('width', array(), 'geolocation'); ?>:</label>
                     <input id="point_image_width" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_width', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_width', this.value); return true;" />
                     </li>
                     <li>
-                    <label class="edit_label" for="point_image_height"><?php putGS('height'); ?>:</label>
+                    <label class="edit_label" for="point_image_height"><?php echo $translator->trans('height', array(), 'geolocation'); ?>:</label>
                     <input id="point_image_height" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_height', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_height', this.value); return true;" />
                     </li>
                     </ol>
                         </div>
                         <div id="edit_video" class="edit_tabs">
-                            <div class="edit_label_long map_poi_edit_intro"><?php putGS('Add a video to this location'); ?>.</div>
+                            <div class="edit_label_long map_poi_edit_intro"><?php echo $translator->trans('Add a video to this location', array(), 'geolocation'); ?>.</div>
 <?php
-    $video_desc_other = getGS('Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.');
-    $video_desc_youtube = getGS('Fill in youtube ID or link, e.g.') . ' ' . 'http://youtu.be/c9WzlvLn3X0';
-    $video_desc_vimeo = getGS('Fill in vimeo ID or link, e.g') . ' ' . 'http://vimeo.com/21757310';
-    $video_desc_local_swf = getGS('Fill in local swf flash file name or link, e.g.') . ' ' . 'http://www.example.net/video.swf';
-    $video_desc_local_flv = getGS('Fill in local flv flash file name or link, e.g.') . ' ' . 'example.flv';
+    $video_desc_other = $translator->trans('Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.', array(), 'geolocation');
+    $video_desc_youtube = $translator->trans('Fill in youtube ID or link, e.g.', array(), 'geolocation') . ' ' . 'http://youtu.be/c9WzlvLn3X0';
+    $video_desc_vimeo = $translator->trans('Fill in vimeo ID or link, e.g', array(), 'geolocation') . ' ' . 'http://vimeo.com/21757310';
+    $video_desc_local_swf = $translator->trans('Fill in local swf flash file name or link, e.g.', array(), 'geolocation') . ' ' . 'http://www.example.net/video.swf';
+    $video_desc_local_flv = $translator->trans('Fill in local flv flash file name or link, e.g.', array(), 'geolocation') . ' ' . 'example.flv';
 ?>
                     <ol>
                     <li>
-                    <label class="edit_label edit_label_top" for="point_video_type"><?php putGS('Video source'); ?>:</label>
+                    <label class="edit_label edit_label_top" for="point_video_type"><?php echo $translator->trans('Video source', array(), 'geolocation'); ?>:</label>
                     <select class="text poi_video_type_selection" id="point_video_type" name="point_video_type" onChange="geo_locations.store_point_property('video_type', this.options[this.selectedIndex].value); return false;">
-                    <option value="none" selected="true"><?php putGS('None'); ?></option>
+                    <option value="none" selected="true"><?php echo $translator->trans('None', array(), 'geolocation'); ?></option>
                     <option value="youtube">Youtube</option>
                     <option value="vimeo">Vimeo</option>
                     <option value="flash">Flash (sfw)</option>
@@ -572,7 +570,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     </li>
 
                     <li class="edit_label">
-                    <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS('Video ID'); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS('Video file'); ?>:</span></label>
+                    <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php echo $translator->trans('Video ID', array(), 'geolocation'); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php echo $translator->trans('Video file', array(), 'geolocation'); ?>:</span></label>
                     <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_id', this.value); return true;" title="<?php echo $video_desc_other; ?>" />
                     <div id="geo_video_desc_other" class="poi_edit_description"><?php echo $video_desc_other; ?></div>
                     <div id="geo_video_desc_youtube" class="map_hidden poi_edit_description"><?php echo $video_desc_youtube; ?></div>
@@ -581,26 +579,26 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <div id="geo_video_desc_local_flv" class="map_hidden poi_edit_description"><?php echo $video_desc_local_flv; ?></div>
                     </li>
 
-                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS('Change video display size'); ?>.</li>
+                    <li class="edit_label_long map_poi_edit_intro_sub"><?php echo $translator->trans('Change video display size', array(), 'geolocation'); ?>.</li>
 
                     <li>
-                    <label class="edit_label" for="point_video_width"><?php putGS('width'); ?>:</label>
+                    <label class="edit_label" for="point_video_width"><?php echo $translator->trans('width', array(), 'geolocation'); ?>:</label>
                     <input id="point_video_width" name="point_video_width" class="text" type="text" onChange="geo_locations.store_point_property('video_width', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_width', this.value); return true;" />
                     </li>
                     <li>
-                    <label class="edit_label" for="point_video_height"><?php putGS('height'); ?>:</label>
+                    <label class="edit_label" for="point_video_height"><?php echo $translator->trans('height', array(), 'geolocation'); ?>:</label>
                     <input id="point_video_height" name="point_video_height" class="text" type="text" onChange="geo_locations.store_point_property('video_height', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_height', this.value); return true;" />
                     </li>
                     </ol>
                         </div>
                         <div id="edit_marker" class="edit_tabs">
-                            <div class="edit_label_long map_poi_edit_intro_icon"><?php putGS('Change icon of this location'); ?>.</div>
+                            <div class="edit_label_long map_poi_edit_intro_icon"><?php echo $translator->trans('Change icon of this location', array(), 'geolocation'); ?>.</div>
 
                         <div class="edit_marker_icons_all">
                         <ol>
                             <li>
                                 <div id="edit_marker_selected" class="edit_marker_selected">
-                                <?php putGS('selected marker icon'); ?>:&nbsp;
+                                <?php echo $translator->trans('selected marker icon', array(), 'geolocation'); ?>:&nbsp;
                                 <img id="edit_marker_selected_src" src="">
                                 </div>
                             </li>

@@ -7,29 +7,31 @@
 class Admin_Form_Theme_OutputSettings extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this
             ->setAttrib( "autocomplete", "off" )
             ->setAction( '' )
             ->setMethod( Zend_Form::METHOD_POST )
             ->addElement( 'select', 'frontpage', array
             (
-                'label'       => getGS( 'Front page template' ),
+                'label'       => $translator->trans( 'Front page template' , array(), 'themes'),
             	'required'    => true,
             ))
             ->addElement( 'select', 'sectionpage', array
             (
-    			'label'       => getGS( 'Section page template' ),
+    			'label'       => $translator->trans( 'Section page template', array(), 'themes' ),
             	'required'    => true,
             ))
             ->addElement( 'select', 'articlepage', array
             (
-    			'label'       => getGS( 'Article page template' ),
+    			'label'       => $translator->trans( 'Article page template', array(), 'themes' ),
             	'required'    => true,
             ))
             ->addElement( 'select', 'errorpage', array
             (
-    			'label'       => getGS( 'Error page template' ),
+    			'label'       => $translator->trans( 'Error page template', array(), 'themes' ),
             	'required'    => true,
             ))
             ->addElement( 'hidden', 'outputid', array

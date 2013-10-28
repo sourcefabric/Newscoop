@@ -9,15 +9,15 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
-camp_load_translation_strings("media_archive");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('AddFile')) {
-    camp_html_display_error(getGS("You do not have the right to add files."));
+    camp_html_display_error($translator->trans("You do not have the right to add files.", array(), 'media_archive'));
     exit;
 }
 
@@ -34,7 +34,7 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
 }
 
 if ($result != NULL) {
-    camp_html_add_msg(getGS('"$1" files uploaded.', $nrOfFiles), "ok");
+    camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => $nrOfFiles), 'media_archive'), "ok");
     camp_html_goto_page("/$ADMIN/media-archive/multiedit_file.php");
 } else {
     camp_html_add_msg($f_path . DIR_SEP . basename($newFilePath));

@@ -1,0 +1,92 @@
+get: get
+Soundcloud: SoundCloud
+Templates: 'Шаблоны '
+'Feedback Messages': 'Сообщения обратной связи'
+'Article Playlists': 'Плейлисты статьи'
+'Check all': 'Проверить все'
+view: просмотр
+undo/redo: отменить/повторить
+underline: подчеркнуть
+translate: перевести
+'text direction': 'направление текста'
+'text alignment': 'выравнивание текста'
+table: таблица
+superscript: 'верхний индекс'
+subscript: 'нижний индекс'
+subhead: подзаголовок
+strikethrough: перечеркивание
+statusbar: 'строка состояния '
+'spell checker enabled': 'проверка орфографии включена'
+'source view': 'просмотр источника '
+publish: публиковать
+notify: извещать
+moderate: модерировать
+manage: управлять
+'list number': 'нумерованный список'
+'list bullet': 'маркированный список'
+link: ссылка
+italic: курсив
+indent: абзац
+image: изображение
+'horizontal rule': 'горизонтальная линейка'
+handle: 'дескриптор '
+guest: гость
+'font size': 'размер шрифта'
+'font face': 'font face'
+'font color': 'цвет шрифта'
+find/replace: найти/заменить
+enlarge: увеличить
+enable: включить
+edit: редактировать
+delete: удалить
+copy/cut/paste: копировать/вырезать/вставить
+clear: очистить
+'character map': 'карта знаков'
+bold: жирный
+attach: приложить
+'any resource': 'любой источник'
+admin: администратор
+add: добавить
+'You cant deny yourself to manage $1': 'Вы не можете отказаться управлять $1'
+'You are not allowed to $1 $2.': 'Вам не разрешено $1 $2.'
+'User type saved.': 'Тип пользователя сохранен.'
+'User type deleted.': 'Тип пользователя удален.'
+'User type added.': 'Тип пользователя добавлен.'
+'User Groups': 'Группы пользователей'
+Themes: Темы
+'That type name already exists, please choose a different name.': 'Это название типа уже существует, пожалуйста, выберите другое название.'
+System: Система
+Structure: Структура
+'Search Indexer': 'Индексатор поиска'
+'Rich-Text Editor Preferences': 'Права редактора RTF'
+ReCaptcha: ReCaptcha
+Polls: Опросы
+'Permissions:': 'Права доступа:'
+'Permissions updated': 'Права обновлены'
+Notification: Уведомление
+Log: Лог
+Layout: Разметка
+Global: Всеобщий
+Files: Файлы
+'Error: ': 'Ошибка:'
+'Edit user type $1': 'Редактировать тип пользователя $1'
+Deny: Отказать
+'Delete user type $1': 'Удалить тип пользователя  $1'
+'Can not delete a user type with assigned users.': 'Невозможно удалить тип пользователя, если он установлен для пользователей.'
+Cache: Кэш
+Backup: 'Резервная копия'
+Authoring: Авторинг
+Allow: Разрешить
+'User types': 'Типы пользователей'
+'No user types.': 'Нет типов пользователей.'
+'You do not have the right to add user types.': 'Вы не имеете права добавлять типы пользователей.:ru'
+'Adding new user type': 'Добавление нового типа пользователей:ru'
+'The user type $1 has been added.': 'Тип пользователей $1 был добавлен.:ru'
+'The user type could not be added.': 'Не удалось добавить тип пользователей.:ru'
+'Please check if an user type with the same name does not already exist.': 'Пожалуйста проверьте, что тип пользователей с таким названием еще не существует.:ru'
+'Deleting user type': 'Удаление типа пользователей:ru'
+'The user type has been deleted.': 'Тип пользователей был удален.:ru'
+'The user type could not be deleted.': 'Не удалось удалить тип пользователей.:ru'
+'Updating user type permissions': 'Обновление прав типов пользователей:ru'
+'User type permissions have been successfuly updated.': 'Права типов пользователей были успешно обновлены.:ru'
+'User type permissions could not be updated.': 'Не удалось обновить права типов пользователей.:ru'

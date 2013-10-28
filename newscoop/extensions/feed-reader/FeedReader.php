@@ -23,7 +23,8 @@ class FeedReader extends FeedWidget
     protected $count = 5;
 
     public function __construct()
-    {
-        $this->title = getGS('Feed reader');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Feed reader', array(), 'extensions');
     }
 }

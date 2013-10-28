@@ -1,0 +1,94 @@
+'select range': 'izaberite opseg'
+'connection error': 'greška u povezivanju'
+'a comma separated list of tags': 'lista tagova odvojenih zarezima'
+'a comma separated list of genres': 'lista žanrova odvojenih zarezima'
+'Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player': 'Youtube, Vimeo, Dailymotion i Viddler video zapisi će se pojaviti u plejeru na sajtu'
+'Wrong file format': 'Pogrešan format fajla'
+'Work in progress': 'Radovi u toku'
+'We support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC files. Please, respect the <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> and only upload tracks with permission from the rights holders.': 'Podržavamo AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC fajlove. Molimo Vas da poštujete <a href=http://soundcloud.com/community-guidelines target=_blank>smernice za zajednicu</a> i aploudujete samo one zapise za koje imate dozvolu od nosioca prava.'
+'Video link': 'Video link'
+'Uploading... please wait': 'Upload u toku... sačekajte'
+'Upload successful': 'Aploud uspešan'
+'Upload error!': 'Greška pri aploudu!'
+'Upload error': 'Greška pri aploudu'
+Upload: Aploud
+'Tracks not found': 'Zapisi nisu nađeni'
+Tracks: Zapisi
+'Track type': 'Tip zapisa'
+'Track not found': 'Zapis nije pronađen'
+'Track manager': 'Menadžer zapisa'
+'To get preferences you need:': 'Da biste dobili podešavanja morate:'
+Title: Naziv
+'This track is currently available to everyone': 'Ovaj zapis je trenutno dostupan svima'
+'The work is in the public domain': 'Rad je na javnom domenu'
+Tags: Tagovi
+Streamable: 'Može se strimovati'
+Stem: 'Deo grupe'
+Spoken: Govor
+'Specify the artwork file': 'Odredite odgovarajuću sliku'
+'Sound Effect': 'Zvučni efekat'
+'Social media sharing message': 'Poruka za deljenje na društvenim mrežama'
+'Showing $1 to $2': 'Prikazano $1 do $2'
+Settings: Podešavanja
+'Set list': 'Podesi listu'
+'Select type': 'Izaberi tip'
+'Select license type': 'Izaberi tip licence'
+'Select key': 'Izaberi ključ'
+'Search options': 'Opcije pretrage'
+'Search error': 'Greška u pretrazi'
+'Save successful': 'Uspešno sačuvano'
+'Save error': 'Greška pri snimanju'
+'Save and attach successful': 'Uspešno sačuvano i prikačeno'
+Reset: Reset
+Remix: Remix
+'Release/catalogue number': 'Broj izdanja/kataloški broj'
+'Release date': 'Datum izdanja'
+Recording: Snimanje
+Public: Javno
+Processing...: Obrađivanje...
+Private: Privatno
+Podcast: Podkast
+'Please define the track title': 'Definišite naziv zapisa'
+'Please choose the track file': 'Izaberite fajl sa zipsom'
+'Please check php settings for file uploading': 'Proverite php postavke za aploud fajlova'
+Play: Pusti
+Original: Original
+'Only you have access': 'Samo vi imate pristup'
+'One Shot Sample': 'One Shot uzorak'
+Ok: Ok
+'No tracks found': 'Zapisi nisu pronađeni'
+'No sets found': 'Nema pronađenih setova'
+'More options': 'Više opcija'
+Loop: Loop
+Live: Uživo
+License: Licenca
+Label: Etiketa
+'Key signature': Ključ
+'Image file': Slika
+ISRC: ISRC
+Genres: Žanrovi
+Genre: Žanr
+'Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery': 'Pogledajte kako da lako prodate svoje zapise na drugim platformama korišćenjem Soundclouda u našoj bazi aplikacija'
+Filter: Filter
+'Error during create attachement': 'Greška pri kreiranju atačmenta'
+'Enter permalink or email address': 'Unesite stalni link ili email adresu'
+'Enter password': 'Uesite lozinku'
+'Enter Client secret': 'Unesite tajnu'
+'Enter Client ID': 'Unesite klijentov ID'
+'Edit error': 'Greška u uređivanju'
+Downlodable: 'Može se preuzimati'
+Downloadable: 'Može se preuzimati'
+Demo: Demo
+'Click to make this track private': 'Klik na napravite ovaj zapis privatnim'
+'Click to make this track available to everyone': 'Kliknite da napravite ovaj zapis svima dostupnim'
+'Check connection': 'Proveri vezu'
+'Buy link': 'Link za kupovinu'
+Bpm: Bpm
+Attention!: Pažnja!
+'Attach error': 'Greška pri kačenju'
+'Are you sure you want to delete the track:': 'Da li ste sigurni da želite da obrišete zapis:'
+'All rights are reserved': 'Sva prava zadržana'
+'Advanced settings': 'Napredna podešavanja'
+'Add to set': 'Dodaj u set'
+'A space separated list of tags': 'Lista tagova odvojenih razmakom'
+'1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps': '1. Registrujte se na http://soundcloud.com<br>2. Kreirajte novu aplikaciju: http://soundcloud.com/you/apps '

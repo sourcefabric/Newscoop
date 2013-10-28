@@ -1,4 +1,6 @@
 <?php
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 // check permissions
 if (!$g_user->hasPermission('CommentEnable')) {
     return;
@@ -33,11 +35,11 @@ foreach ($hiddens as $name) {
     <div class="frame clearfix">
       <dl class="inline-list" id="comment-${id}">
         <div class="comment_status" style="display:none;">${status}</div>
-        <dt><?php putGS('From'); ?></dt>
+        <dt><?php echo $translator->trans('From', array(), 'article_comments'); ?></dt>
         <dd><a href="mailto:${email}">"${name}" &lt;${email}&gt;</a> (${ip})</dd>
-        <dt><?php putGS('Date'); ?></dt>
+        <dt><?php echo $translator->trans('Date'); ?></dt>
         <dd>${time_created}</dd>
-        <dt><?php putGS('Subject'); ?></dt>
+        <dt><?php echo $translator->trans('Subject'); ?></dt>
         <dd>
             <?php if ($inEditMode && $g_user->hasPermission('CommentEdit')): ?>
                 <input type="text" value="${subject}"></input>
@@ -45,7 +47,7 @@ foreach ($hiddens as $name) {
                 ${subject}
             <?php endif; //inEditMode?>
         </dd>
-        <dt><?php putGS('Comment'); ?></dt>
+        <dt><?php echo $translator->trans('Comment'); ?></dt>
         <dd>
             <?php if ($inEditMode && $g_user->hasPermission('CommentEdit')): ?>
                 <textarea rows="5" cols="60">${message}</textarea>
@@ -54,7 +56,7 @@ foreach ($hiddens as $name) {
             <?php endif; //inEditMode?>
         </dd>
         <?php if (!$inEditMode): ?>
-        <dt><?php putGS('Status'); ?></dt>
+        <dt><?php echo $translator->trans('Status'); ?></dt>
         <dd>
             <span class="comment-state-status comment-state-status-${status}" style="font-size:12px;">&nbsp;</span>
             <span class="comment-recommend-status comment-recommend-status-${recommended_toggle}" style="font-size:12px;">&nbsp;</span>
@@ -68,27 +70,27 @@ foreach ($hiddens as $name) {
             <ul class="action-list clearfix">
               <li>
               <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
-                <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
+                <label class="inline-style left-floated" for="inbox_${id}"><?php echo $translator->trans('New'); ?></label>
               </li>
 
               <li>
               <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
-                <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
+                <label class="inline-style left-floated" for="approved_${id}"><?php echo $translator->trans('Approved'); ?></label>
               </li>
 
               <li>
                 <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
-                <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
+                <label class="inline-style left-floated" for="hidden_${id}"><?php echo $translator->trans('Hidden'); ?></label>
               </li>
 
               <li>
                 <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
-                <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
+                <label class="inline-style left-floated" for="deleted_${id}"><?php echo $translator->trans('Delete'); ?></label>
               </li>
             </ul>
         </dd>
         <?php } else { ?>
-        <dt><?php putGS('Status'); ?></dt>
+        <dt><?php echo $translator->trans('Status'); ?></dt>
         <dd>
             <span class="comment-state-status comment-state-status-${status}" style="font-size:12px;">&nbsp;</span>
             <span class="comment-recommend-status comment-recommend-status-${recommended_toggle}" style="font-size:12px;">&nbsp;</span>
@@ -97,7 +99,7 @@ foreach ($hiddens as $name) {
         <dd class="buttons">
             <?php if ($inEditMode): ?>
             <?php if (($g_user->hasPermission('CommentEdit')) || ($g_user->hasPermission('CommentModerate'))) { ?>
-            <a class="ui-state-default icon-button comment-update"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save comment'); ?></a>
+            <a class="ui-state-default icon-button comment-update"><span class="ui-icon ui-icon-disk"></span><?php echo $translator->trans('Save comment', array(), 'article_comments'); ?></a>
             <?php } ?>
             <?php endif; //inEditMode?>
 
@@ -106,17 +108,17 @@ foreach ($hiddens as $name) {
                 'module' => 'admin',
                 'controller' => 'comment',
                 'action' => 'set-recommended',
-            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php echo $translator->trans('Recommend', array(), 'article_comments'); ?></a>
             <?php } ?>
 
-            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button"><?php putGS('Reply to comment'); ?></a>
+            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button"><?php echo $translator->trans('Reply to comment', array(), 'article_comments'); ?></a>
 
         </dd>
         <?php endif; //inEditMode?>
       </dl>
     </div>
 </fieldset>
-<p style="display:none"><?php putGS('No comments posted.'); ?></p>
+<p style="display:none"><?php echo $translator->trans('No comments posted.', array(), 'article_comments'); ?></p>
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
 
 <script type="text/javascript">
@@ -186,7 +188,7 @@ function loadComments() {
             toggleCommentStatus(comment['id']);
         }
 
-        var getMoreLink = $('<div style="text-align:center;"><fieldset class="get-more-comments"><input type="button" style="pull-right" class="ui-state-default default-button paginate paginate-next" value="<?php putGS('Show more comments'); ?>" /></fieldset></div>');
+        var getMoreLink = $('<div style="text-align:center;"><fieldset class="get-more-comments"><input type="button" style="pull-right" class="ui-state-default default-button paginate paginate-next" value="<?php echo $translator->trans('Show more comments', array(), 'article_comments'); ?>" /></fieldset></div>');
         getMoreLink.find('input')
             .click(function(e){
                 loadComments();
@@ -196,7 +198,7 @@ function loadComments() {
         $('#comment-moderate').append(getMoreLink);
 
         if (data.result.length == 0) {
-            $('fieldset.get-more-comments').html('<p><?php putGS('There are no more comments'); ?></p>');
+            $('fieldset.get-more-comments').html('<p><?php echo $translator->trans('There are no more comments', array(), 'article_comments'); ?></p>');
         }
 
         var referencedComment = $(document.location.hash);
@@ -210,19 +212,19 @@ function loadComments() {
         $('.comment-state-status').each(function() {
             $(this).html("&nbsp;");
             if ($(this).hasClass('comment-state-status-pending')) {
-                $(this).html("<?php putGS("New"); ?>");
+                $(this).html("<?php echo $translator->trans("New"); ?>");
             }
             if ($(this).hasClass('comment-state-status-approved')) {
-                $(this).html("<?php putGS("Approved"); ?>");
+                $(this).html("<?php echo $translator->trans("Approved"); ?>");
             }
             if ($(this).hasClass('comment-state-status-hidden')) {
-                $(this).html("<?php putGS("Hidden"); ?>");
+                $(this).html("<?php echo $translator->trans("Hidden"); ?>");
             }
         });
 
         $('.comment-recommend-status').each(function() {
             if ($(this).hasClass('comment-recommend-status-0')) {
-                $(this).html("<?php putGS("Recommended"); ?>");
+                $(this).html("<?php echo $translator->trans("Recommended", array(), 'article_comments'); ?>");
             }
             else {
                 $(this).html("&nbsp;");
@@ -230,7 +232,7 @@ function loadComments() {
         });
         $('.comment-recommend').each(function() {
              if ($(this).hasClass('status-0')) {
-                 $(this).html("<?php putGS("Unrecommend"); ?>");
+                 $(this).html("<?php echo $translator->trans("Unrecommend", array(), 'article_comments'); ?>");
             }
         }).click(function() {
             var link = $(this);
@@ -239,11 +241,11 @@ function loadComments() {
             }, function(data, textStatus, jqXHR) {
                 if (link.hasClass('status-0')) {
                     link.removeClass('status-0').addClass('status-1');
-                    link.html("<?php putGS("Recommend"); ?>");
+                    link.html("<?php echo $translator->trans("Recommend", array(), 'article_comments'); ?>");
                     var status = 1;
                 } else {
                     link.removeClass('status-1').addClass('status-0');
-                    link.html("<?php putGS("Unrecommend"); ?>");
+                    link.html("<?php echo $translator->trans("Unrecommend", array(), 'article_comments'); ?>");
                     var status = 1;
                 }
 
@@ -270,7 +272,7 @@ var updateStatus = function(button) {
     var call_url = '../comment/set-status/format/json';
 
     var res_handle = function(data) {
-        //flashMessage('<?php putGS('Comments updated.'); ?>');
+        //flashMessage('<?php echo $translator->trans('Comments updated.'); ?>');
         toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
         if ('deleted' == wanted_status) {
             loadComments();
@@ -310,7 +312,7 @@ $('.comment-update').live('click',function(){
     var call_url = '../comment/update-contents/format/json';
 
     var res_handle = function(data) {
-        flashMessage('<?php putGS('Comment updated.'); ?>');
+        flashMessage('<?php echo $translator->trans('Comment updated.', array(), 'article_comments'); ?>');
     };
 
     callServer(call_url, call_data, res_handle, true);

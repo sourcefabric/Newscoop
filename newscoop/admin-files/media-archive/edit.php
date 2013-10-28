@@ -1,16 +1,16 @@
 <?php
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 $f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0, true);
 if ($f_fix_thumbs) {
     //regenerate missing thumbs
-    $returnMessage = getGS('No thumbnails were fixed.');
+    $returnMessage = $translator->trans('No thumbnails were fixed.', array(), 'media_archive');
     $imageObj = new Image();
     $imagesList = $imageObj->GetList(array(), array(), 0, 0, $imagesCount, TRUE);
 
@@ -18,7 +18,7 @@ if ($f_fix_thumbs) {
         $thumbLocation = $image->getThumbnailStorageLocation();
         if (!file_exists($thumbLocation)) {
             if ($image->generateThumbnailFromImage()) {
-            	$returnMessage = getGS('Missing thumbnails fixed.');
+            	$returnMessage = $translator->trans('Missing thumbnails fixed.', array(), 'media_archive');
             }
         }
     }
@@ -78,9 +78,9 @@ if (in_array($imageExtension, $allowedExtensions)) {
 }
 
 if ($g_user->hasPermission('ChangeImage')) {
-	$label_text = getGS('Change image information');
+	$label_text = $translator->trans('Change image information', array(), 'media_archive');
 } else {
-	$label_text = getGS('View image');
+	$label_text = $translator->trans('View image', array(), 'media_archive');
 }
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
@@ -94,18 +94,18 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <tr>
 <?php if ($g_user->hasPermission('AddImage')) { ?>
     <td>
-        <A HREF="/<?php echo $ADMIN; ?>/media-archive/add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  putGS('Add new image'); ?>"></A>
+        <A HREF="/<?php echo $ADMIN; ?>/media-archive/add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0" alt="<?php  echo $translator->trans('Add new image', array(), 'media_archive'); ?>"></A>
     </TD>
     <TD style="padding-left: 3px;">
-        <A HREF="/<?php echo $ADMIN; ?>/media-archive/add.php"><B><?php  putGS('Add new image'); ?></B></A>
+        <A HREF="/<?php echo $ADMIN; ?>/media-archive/add.php"><B><?php  echo $translator->trans('Add new image', array(), 'media_archive'); ?></B></A>
     </TD>
 <?php } ?>
 <?php if ($g_user->hasPermission('DeleteImage') && !$imageObj->inUse()) { ?>
     <td style="padding-left: 15px;">
-        <A HREF="/<?php echo $ADMIN; ?>/media-archive/do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete image $1',htmlspecialchars($imageObj->getDescription())); ?>"></A>
+        <A HREF="/<?php echo $ADMIN; ?>/media-archive/do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php echo $translator->trans("Are you sure you want to delete the image $1?", array('$1' => camp_javascriptspecialchars($imageObj->getDescription()))); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php echo $translator->trans('Delete image $1', array('$1' => htmlspecialchars($imageObj->getDescription())), 'media_archive'); ?>"></A>
     </TD>
     <TD style="padding-left: 3px;">
-        <A HREF="/<?php echo $ADMIN; ?>/media-archive/do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php putGS("Are you sure you want to delete the image \\'$1\\'?", camp_javascriptspecialchars($imageObj->getDescription())); ?>');"><b><?php putGS('Delete'); ?></b></a>
+        <A HREF="/<?php echo $ADMIN; ?>/media-archive/do_del.php?f_image_id=<?php echo $f_image_id; ?>&<?php echo SecurityToken::URLParameter();?>" onclick="return confirm('<?php echo $translator->trans("Are you sure you want to delete the image $1?", array('$1' => camp_javascriptspecialchars($imageObj->getDescription()))); ?>');"><b><?php echo $translator->trans('Delete'); ?></b></a>
     </TD>
 <?php } ?>
 </tr>
@@ -121,12 +121,12 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Change image information"); ?></B>
+		<B><?php  echo $translator->trans("Change image information", array(), 'media_archive'); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Description"); ?>:</TD>
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
     <?php
@@ -139,7 +139,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Photographer"); ?>:</TD>
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_photographer" id="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" class="input_text">
     <?php
@@ -152,7 +152,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Place"); ?>:</TD>
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_place" id="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" class="input_text">
     <?php
@@ -165,7 +165,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Date"); ?>:</TD>
 	<TD align="left">
 	<input type="text" id="f_image_date" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
     <?php
@@ -197,24 +197,24 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
     }
 ?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Status"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Status"); ?>:</TD>
 	<TD align="left">
 	<input type="radio" name="f_image_status" value="approved" <?php if ($imageObj->getStatus() == 'approved') echo('checked'); ?> >Approved
 	<input type="radio" name="f_image_status" value="unapproved" <?php if ($imageObj->getStatus() == 'unapproved') echo('checked'); ?>>Unapproved
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Source"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Source", array(), 'media_archive'); ?>:</TD>
 	<TD align="left">
-	<?php if ($imageObj->getSource() == 'local') putGS('Local'); ?>
-	<?php if ($imageObj->getSource() == 'feedback') putGS('Feedback'); ?>
+	<?php if ($imageObj->getSource() == 'local') echo $translator->trans('Local', array(), 'media_archive'); ?>
+	<?php if ($imageObj->getSource() == 'feedback') echo $translator->trans('Feedback', array(), 'media_archive'); ?>
 	</TD>
 </TR>
 <?php
 if ($imageObj->getLocation() == 'remote') {
 ?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("URL"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("URL"); ?>:</TD>
 	<TD align="left">
 		<?php echo htmlspecialchars($imageObj->getUrl()); ?>
 	</TD>
@@ -223,7 +223,7 @@ if ($imageObj->getLocation() == 'remote') {
 } else {
 ?>
 <TR>
-	<TD ALIGN="RIGHT"><?php  putGS("Image"); ?>:</TD>
+	<TD ALIGN="RIGHT"><?php  echo $translator->trans("Image"); ?>:</TD>
 	<TD align="left">
 		<?php echo basename($imageObj->getImageStorageLocation()); ?>
 	</TD>
@@ -234,7 +234,7 @@ if ($imageObj->getLocation() == 'remote') {
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="HIDDEN" NAME="f_image_id" VALUE="<?php echo $imageObj->getImageId(); ?>">
-	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  echo $translator->trans('Save'); ?>" class="button">
 	</TD>
 </TR>
 </TABLE>
@@ -251,8 +251,8 @@ if (count($articles) > 0) {
 	?>
 	<TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" width="370px" class="table_list">
 	<tr class="table_list_header">
-		<td><?php putGS('Used in articles'); ?>:</td>
-		<td><?php putGS('Language'); ?></td>
+		<td><?php echo $translator->trans('Used in articles', array(), 'media_archive'); ?>:</td>
+		<td><?php echo $translator->trans('Language'); ?></td>
 	</tr>
 	<?php
 	$color = 0;

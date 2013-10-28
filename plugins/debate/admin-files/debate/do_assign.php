@@ -1,14 +1,14 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 
@@ -110,7 +110,7 @@ switch ($f_target) {
         ?>
         <script>
         try {
-        //window.opener.document.forms['article_edit'].f_message.value = "<?php putGS("$1/$2 debates assigned/unassigned.", $p_a, $p_u); ?>";
+        //window.opener.document.forms['article_edit'].f_message.value = "<?php echo $translator->trans("$1/$2 debates assigned/unassigned.", $p_a, $p_u); ?>";
         window.opener.document.forms['article_edit'].onsubmit();
         window.opener.document.forms['article_edit'].submit();
         } catch (e) {}
@@ -120,7 +120,7 @@ switch ($f_target) {
     break;
 
     default:
-	   camp_html_display_error(getGS('Invalid input'), 'javascript: window.close()');
+	   camp_html_display_error($translator->trans('Invalid input'), 'javascript: window.close()');
 	   exit;
     break;
 }

@@ -1,14 +1,14 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    echo "alert('".getGS('Invalid security token!')."');";
+    echo "alert('".$translator->trans('Invalid security token!')."');";
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    echo "alert('".(getGS('You do not have the right to manage polls.'))."');";
+    echo "alert('".($translator->trans('You do not have the right to manage polls.', array(), 'plugin_poll'))."');";
     exit;
 }
 
@@ -33,7 +33,7 @@ switch ($f_poll_item) {
             if ($PollPublication->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_poll').'");';
             }
     break;
 
@@ -42,7 +42,7 @@ switch ($f_poll_item) {
             if ($PollIssue->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_poll').'");';
             }
     break;
 
@@ -51,7 +51,7 @@ switch ($f_poll_item) {
             if ($PollSection->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_poll').'");';
             }
     break;
 
@@ -60,7 +60,7 @@ switch ($f_poll_item) {
             if ($PollArticle->$action()) {
                 echo "poll_nr = '$f_poll_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment', array(), 'plugin_poll').'");';
             }
     break;
 }

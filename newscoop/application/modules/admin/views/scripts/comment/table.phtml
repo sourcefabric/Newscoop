@@ -3,13 +3,14 @@
     $headStyle = $this->headLink();
     $headStyle->appendStylesheet($this->baseUrl('/admin-style/comments.css'));
     $headStyle->offsetSetStylesheet('table','');
+    $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
 
-<?php $this->placeholder('title')->set(getGS('Comments')); ?>
+<?php $this->placeholder('title')->set($translator->trans('Comments')); ?>
 <script>
     function putGS(str) {
         var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
@@ -44,24 +45,24 @@
     ];
 
     serverObj.translateObj = [
-        '<?php putGS('Search'); ?>',
-        '<?php putGS('Comments updated.'); ?>',
-        '<?php putGS('Comments deleted.'); ?>',
-        '<?php putGS('Comments status change to $1.'); ?>',
-        '<?php putGS('Comment updated.'); ?>',
-        '<?php putGS('Comment deleted.'); ?>',
-        '<?php putGS('Comment status change to $1.'); ?>',
-        '<?php putGS('Actions'); ?>',
-        '<?php putGS('Select status'); ?>',
-        '<?php putGS('New'); ?>',
-        '<?php putGS('Approved'); ?>',
-        '<?php putGS('Hidden'); ?>',
-        '<?php putGS('Deleted'); ?>',
-        '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
-        <?php echo json_encode(getGS("You are about to permanently delete a comment.")); ?>,
-        <?php echo json_encode(getGS("You are about to permanently delete multiple comments.")); ?>,
-        <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>,
-        '<?php putGS('Close'); ?>',
+        '<?php echo $translator->trans('Search'); ?>',
+        '<?php echo $translator->trans('Comments updated.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Comments deleted.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Comments status change to $1.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Comment updated.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Comment deleted.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Comment status change to $1.', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Actions'); ?>',
+        '<?php echo $translator->trans('Select status', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('New'); ?>',
+        '<?php echo $translator->trans('Approved', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Hidden'); ?>',
+        '<?php echo $translator->trans('Deleted', array(), 'comments'); ?>',
+        '<?php echo $translator->trans('Unable to reach Newscoop. Please check your internet connection.', array(), 'comments'); ?>',
+        <?php echo json_encode($translator->trans("You are about to permanently delete a comment.", array(), 'comments')); ?>,
+        <?php echo json_encode($translator->trans("You are about to permanently delete multiple comments.", array(), 'comments')); ?>,
+        <?php echo json_encode($translator->trans("Are you sure you want to do it?", array(), 'comments')); ?>,
+        '<?php echo $translator->trans('Close'); ?>',
     ];
 </script>
 <table>
@@ -85,19 +86,19 @@
                             <p>
                                 <p class="{% if (commenter.is.banned.name) %}user-blocked-avatar{% endif %}">
                                     {% if (commenter.username) %}<a href="<?php echo($this->baseUrl('/profile/')); ?>{{commenter.usernameEncoded}}">{{commenter.username}}</a>{% endif %}
-                                    {% if (!commenter.username) %}{{commenter.name}} (<?php echo getGS('Anonymous') ?>){% endif %}
+                                    {% if (!commenter.username) %}{{commenter.name}} (<?php echo $translator->trans('Anonymous', array(), 'comments') ?>){% endif %}
                                 </p>
                                 <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
                                 <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
                                 <p><a href="{{commenter.url}}">{{commenter.url}}</a></p>
-                                <p><a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban/Unban user'); ?></span></a></p>
+                                <p><a href="{{commenter.banurl}}" class="banUser"><span><?php echo $translator->trans('Ban/Unban user', array(), 'comments'); ?></span></a></p>
                             </p>
                         </div>
                     </td>
                     <td class="commentMessage">
                         <div class="dateCommentHolder">
                             <h4>
-                                <span>{{comment.created.date}} <?php putGS('at'); ?> {{comment.created.time}}</span>
+                                <span>{{comment.created.date}} <?php echo $translator->trans('at', array(), 'comments'); ?> {{comment.created.time}}</span>
                                 <span class="commentSubject">{{comment.subject}}</span>
                             </h4><!--
                             <div class="ratingHolder">
@@ -115,17 +116,17 @@
 
                         <div class="dateCommentHolderReply">
                             <fieldset class="content-reply" style="display:none;">
-                                <h3><?php putGS('Reply to comment'); ?></h3>
+                                <h3><?php echo $translator->trans('Reply to comment', array(), 'comments'); ?></h3>
                                 <form action="{{comment.action.reply}}">
                                     <input type="hidden" name="parent" value="{{comment.id}}" />
                                     <?php echo SecurityToken::FormParameter(); ?>
-                                    <label><?php putGS('Subject'); ?></label>
+                                    <label><?php echo $translator->trans('Subject'); ?></label>
                                     <input name="subject" type="text" class="input_text">
-                                    <label><?php putGS('Comment'); ?></label>
+                                    <label><?php echo $translator->trans('Comment'); ?></label>
                                     <textarea name="message" class="input_text_area"></textarea>
                                     <div class="buttonBar">
-                                        <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
-                                        <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
+                                        <input type="button" value="<?php echo $translator->trans('Cancel'); ?>" class="button reply-cancel">
+                                        <input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="button">
                                     </div>
                                 </form>
                             </fieldset>
@@ -136,9 +137,9 @@
                             <p>
                                 <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
                                 <br>
-                                <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
+                                <span>{{thread.forum.name}}; <b><?php echo $translator->trans('Section'); ?></b> {{thread.section.name}}</span>
                             </p>
-                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to edit article'); ?></a> </div>
+                            <a class="goToArticle" href="{{thread.link.edit}}"><?php echo $translator->trans('Go to edit article', array(), 'comments'); ?></a> </div>
                     </td>
                 </tr></tbody>
         </table>
@@ -146,19 +147,19 @@
             <ul>
                 <li>
                     <input type="radio" name="action_comment_{{comment.id}}" class="action new" id="pending_{{comment.id}}" value="pending"/>
-                    <label for="pending_{{comment.id}}"><?php putGS('New'); ?></label>
+                    <label for="pending_{{comment.id}}"><?php echo $translator->trans('New'); ?></label>
                     &nbsp;&nbsp;
                 </li>
                 {% if(can.enable) %}
                 <li>
                     <input type="radio" name="action_comment_{{comment.id}}" class="action approved" id="approved_{{comment.id}}" value="approved"/>
-                    <label for="approved_{{comment.id}}"><?php putGS('Approved'); ?></label>
+                    <label for="approved_{{comment.id}}"><?php echo $translator->trans('Approved', array(), 'comments'); ?></label>
 
                     &nbsp;&nbsp;
                 </li>
                 <li>
                     <input type="radio" name="action_comment_{{comment.id}}" class="action hidden" id="hidden_{{comment.id}}" value="hidden" style="height: auto"/>
-                    <label for="hidden_{{comment.id}}"><?php putGS('Hidden'); ?></label>
+                    <label for="hidden_{{comment.id}}"><?php echo $translator->trans('Hidden'); ?></label>
                     &nbsp;&nbsp;
                 </li>
                 {% endif %}
@@ -166,23 +167,23 @@
 
 
                 {% if(can.edit) %}
-                <li><a href="javascript:;" class="actionButton action-edit"><?php putGS('Quick edit'); ?></a></li>
+                <li><a href="javascript:;" class="actionButton action-edit"><?php echo $translator->trans('Quick edit', array(), 'comments'); ?></a></li>
                 {% endif %}
                 {% if(can.enable) %}
-                <li><a href="javascript:;" class="actionButton action-reply"><?php putGS('Reply'); ?></a></li>
-                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="actionButton action"><?php putGS('Delete'); ?></a></li>
+                <li><a href="javascript:;" class="actionButton action-reply"><?php echo $translator->trans('Reply', array(), 'comments'); ?></a></li>
+                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="actionButton action"><?php echo $translator->trans('Delete'); ?></a></li>
                 
                 {% if(comment.recommended == 0) %}
-                <li><a href="javascript:;" id="recommend_{{comment.id}}" class="actionButton action-recommend"><?php putGS('Recommend'); ?></a></li>
+                <li><a href="javascript:;" id="recommend_{{comment.id}}" class="actionButton action-recommend"><?php echo $translator->trans('Recommend', array(), 'comments'); ?></a></li>
                 {% endif %}
                 
                 {% if(comment.recommended == 1) %}
-                <li><a href="javascript:;" id="unrecommend_{{comment.id}}" class="actionButton action-unrecommend"><?php putGS('Unrecommend'); ?></a></li>
+                <li><a href="javascript:;" id="unrecommend_{{comment.id}}" class="actionButton action-unrecommend"><?php echo $translator->trans('Unrecommend', array(), 'comments'); ?></a></li>
                 {% endif %}
                 
                 {% endif %}
                 <!--
-                <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
+                <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php echo $translator->trans('Add rating', array(), 'comments'); ?></a></li>
                 -->
             </ul>
         </div>
@@ -204,41 +205,41 @@
                 -->
                 <div id="tabs-1">
                     <div id="showComments">
-                        <fieldset><legend><?php putGS('Show'); ?></legend>
+                        <fieldset><legend><?php echo $translator->trans('Show'); ?></legend>
                             <ul class="status_filter">
                                 <li class="published" style="display: none;"><input type="checkbox"
-                                                                                    id="show_published" value="approved"> <label for="show_published"><?php putGS('Published'); ?></label>
+                                                                                    id="show_published" value="approved"> <label for="show_published"><?php echo $translator->trans('Published'); ?></label>
                                 </li>
                                 <li class="new"><input type="checkbox" id="show_new" value="pending"> <label
-                                        for="show_new"><?php putGS('New'); ?></label></li>
+                                        for="show_new"><?php echo $translator->trans('New'); ?></label></li>
                                 <li class="approved"><input type="checkbox" id="show_approved"
-                                                            value="approved"> <label for="show_approved"><?php putGS('Approved'); ?></label>
+                                                            value="approved"> <label for="show_approved"><?php echo $translator->trans('Approved', array(), 'comments'); ?></label>
                                 </li>
                                 <li class="hidden"><input type="checkbox" id="show_hidden"
-                                                          value="hidden"> <label for="show_hidden"><?php putGS('Hidden'); ?></label>
+                                                          value="hidden"> <label for="show_hidden"><?php echo $translator->trans('Hidden'); ?></label>
                                 </li>
                                 <!--
                                 /** @todo change this when the "cron job" like engine is done */
                                 <li class="deleted"><input type="checkbox" id="show_deleted"
-                                                           value="deleted"> <label for="show_deleted"><?php putGS('Deleted'); ?></label>
+                                                           value="deleted"> <label for="show_deleted"><?php echo $translator->trans('Deleted'); ?></label>
                                 </li>
                                 -->
                             </ul><br>
                             <ul class="recommended_filter">
                                 <li class="hidden">
-									<input type="checkbox" id="show_recommended" value="recommended"> 
-									<label for="show_recommended"><?php putGS('Recommended'); ?></label>
+                                    <input type="checkbox" id="show_recommended" value="recommended"> 
+                                    <label for="show_recommended"><?php echo $translator->trans('Recommended', array(), 'comments'); ?></label>
                                 </li>
                                 <li class="hidden">
-									<input type="checkbox" id="show_unrecommended" value="unrecommended"> 
-									<label for="show_unrecommended"><?php putGS('Unrecommended'); ?></label>
+                                    <input type="checkbox" id="show_unrecommended" value="unrecommended"> 
+                                    <label for="show_unrecommended"><?php echo $translator->trans('Unrecommended', array(), 'comments'); ?></label>
                                 </li>
                             </ul>
                         </fieldset>
                     </div>
                         <div id="actionExpand" class="dataTables_actions">
                             <!-- <a href="javascript:;" class="sort_tread"> <span
-                                    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
+                                    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php echo $translator->trans('Sort by Thread order', array(), 'comments'); ?>
                             </a>//--></div>
                         <?php $this->renderDatatable(); ?></div>
                 </div>
@@ -267,4 +268,4 @@
                                                             id="fancybox-left-ico"></span></a><a href="javascript:;"
                                                  id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div>
     </div>
-    <div class="dialogPopup dialog-1" title="<?php putGS('Full article');?>"></div>
+    <div class="dialogPopup dialog-1" title="<?php echo $translator->trans('Full article', array(), 'comments');?>"></div>

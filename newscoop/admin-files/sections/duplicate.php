@@ -2,12 +2,14 @@
 
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission("ManageSection")) {
-	camp_html_display_error(getGS("You do not have the right to add sections."));
+	camp_html_display_error($translator->trans("You do not have the right to add sections.", array(), 'sections'));
 	exit;
 }
 if (!$g_user->hasPermission("AddArticle")) {
-	camp_html_display_error(getGS("You do not have the right to add articles."));
+	camp_html_display_error($translator->trans("You do not have the right to add articles."));
 	exit;
 }
 
@@ -20,25 +22,25 @@ $f_dest_issue_number = Input::Get('f_dest_issue_number', 'string', 0, true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/sections/index.php?Pub=$f_src_publication_id&Issue=$f_src_issue_number&Language=$f_language_id", true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS("Invalid input: $1", Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans("Invalid input: $1", array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
 $publicationObj = new Publication($f_src_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
+	camp_html_display_error($translator->trans('Publication does not exist.'));
 	exit;
 }
 
 $issueObj = new Issue($f_src_publication_id, $f_language_id, $f_src_issue_number);
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
+	camp_html_display_error($translator->trans('Issue does not exist.'));
 	exit;
 }
 
 $sectionObj = new Section($f_src_publication_id, $f_src_issue_number, $f_language_id, $f_src_section_number);
 if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
+	camp_html_display_error($translator->trans('Section does not exist.'));
 	exit;
 }
 
@@ -65,20 +67,20 @@ if ($f_dest_issue_number > 0) {
 }
 
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
-camp_html_content_top(getGS('Duplicate section'), $topArray, true, true);
+camp_html_content_top($translator->trans('Duplicate section', array(), 'sections'), $topArray, true, true);
 ?>
 <script>
 function CustomValidator_DuplicateSection(form) {
     // Verify radio button checked
     if (!form.section_chooser[0].checked && !form.section_chooser[1].checked) {
-        alert("<?php putGS("Please select either '$1' or '$2'.", getGS('Existing Section'), getGS('New Section')); ?>");
+        alert("<?php echo $translator->trans("Please select either $1 or $2.", array('$1' => $translator->trans('Existing Section', array(), 'sections'), '$2' => $translator->trans('New Section', array(), 'sections')), 'sections'); ?>");
         return false;
     }
 
     // Existing section checking
     if (form.section_chooser[0].checked) {
         if (form.destination_section_existing.selectedIndex == 0) {
-            alert('<?php putGS("You must select a section."); ?>');
+            alert('<?php echo $translator->trans("You must select a section.", array(), 'sections'); ?>');
             return false;
         }
     }
@@ -87,13 +89,13 @@ function CustomValidator_DuplicateSection(form) {
         // Verify there is a number for the section
         newSectionNumber = form.destination_section_new_id.value.trim();
         if (form.section_chooser[1].checked && (newSectionNumber == "")) {
-            alert('<?php putGS("You must select a section."); ?>');
+            alert('<?php echo $translator->trans("You must select a section.", array(), 'sections'); ?>');
             return false;
         }
 
         // Verify there is a name for the section
         if (form.section_chooser[1].checked && (form.destination_section_new_name.value.trim() == "")) {
-            alert('<?php putGS("You must specify a name for the section."); ?>');
+            alert('<?php echo $translator->trans("You must specify a name for the section.", array(), 'sections'); ?>');
             return false;
         }
 
@@ -101,7 +103,7 @@ function CustomValidator_DuplicateSection(form) {
         existingSections = [ <?php p(implode(',', DbObjectArray::GetColumn($allSections, 'Number'))); ?> ];
         for (i = 0; i < existingSections.length; i++ ) {
             if (newSectionNumber == existingSections[i]) {
-                alert('<?php putGS("The section number specified already exists, please specify a different value or use the dropdown to find an existing section."); ?>');
+                alert('<?php echo $translator->trans("The section number specified already exists, please specify a different value or use the dropdown to find an existing section.", array(), 'sections'); ?>');
                 return false;
             }
         }
@@ -113,10 +115,10 @@ function CustomValidator_DuplicateSection(form) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  echo $translator->trans("Section List"); ?></B></A></TD>
 
 	<TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/sections/edit.php?Pub=<?php p($f_src_publication_id); ?>&f_issue_number=<?php  p($f_src_issue_number); ?>&f_section_number=<?php p($f_src_section_number); ?>&f_language_id=<?php  p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/edit.php?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Section=<?php p($f_src_section_number); ?>&Language=<?php  p($f_language_id); ?>"><B><?php  putGS("Section"); ?>: <?php p(htmlspecialchars($sectionObj->getName())); ?></B></A></TD>
+	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/edit.php?Pub=<?php p($f_src_publication_id); ?>&Issue=<?php p($f_src_issue_number); ?>&Section=<?php p($f_src_section_number); ?>&Language=<?php  p($f_language_id); ?>"><B><?php  echo $translator->trans("Section"); ?>: <?php p(htmlspecialchars($sectionObj->getName())); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -126,16 +128,16 @@ function CustomValidator_DuplicateSection(form) {
 <td>
 <table BORDER="0" CELLSPACING="0" CELLPADDING="0" ALIGN="CENTER" >
 <TR>
-	<TD colspan="2" style="font-size: 14pt; padding-top: 10px;"><b><?php  putGS("Duplicate Section:"); ?> <?php  p(htmlspecialchars($sectionObj->getName())); ?></b></TD>
+	<TD colspan="2" style="font-size: 14pt; padding-top: 10px;"><b><?php  echo $translator->trans("Duplicate Section:", array(), 'sections'); ?> <?php  p(htmlspecialchars($sectionObj->getName())); ?></b></TD>
 </TR>
 <TR>
 	<td colspan="3">&nbsp;</TD>
 </TR>
 <TR>
-	<td colspan="3" style="padding-left: 20px; font-size: 12pt; font-weight: bold;"><?php  putGS("Select destination section:"); ?></TD>
+	<td colspan="3" style="padding-left: 20px; font-size: 12pt; font-weight: bold;"><?php  echo $translator->trans("Select destination section:", array(), 'sections'); ?></TD>
 </TR>
 <TR>
-	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  putGS('Publication'); ?>: </TD>
+	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  echo $translator->trans('Publication'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT" style="padding-top: 6px;">
 		<?php
 		if (count($allPublications) > 0) {
@@ -149,7 +151,7 @@ function CustomValidator_DuplicateSection(form) {
 		<input type="hidden" name="Language" value="<?php p($f_language_id); ?>">
 		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
 		<SELECT NAME="f_dest_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != '<?php p($f_dest_publication_id); ?>') { this.form.submit();}">
-		<OPTION VALUE="0"><?php  putGS('---Select publication---'); ?></option>
+		<OPTION VALUE="0"><?php  echo $translator->trans('---Select publication---'); ?></option>
 		<?php
 		foreach ($allPublications as $tmpPublication) {
 			camp_html_select_option($tmpPublication->getPublicationId(), $f_dest_publication_id, $tmpPublication->getName());
@@ -161,7 +163,7 @@ function CustomValidator_DuplicateSection(form) {
 		}
 		} else {
 		?>
-			<SELECT class="input_select" DISABLED><OPTION><?php  putGS('No publications'); ?></option></SELECT>
+			<SELECT class="input_select" DISABLED><OPTION><?php  echo $translator->trans('No publications'); ?></option></SELECT>
 		<?php
 		}
 		?>
@@ -169,7 +171,7 @@ function CustomValidator_DuplicateSection(form) {
 </tr>
 
 <tr >
-	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  putGS('Issue'); ?>: </TD>
+	<TD VALIGN="middle" style="padding-left: 20px; padding-top: 6px;"><?php  echo $translator->trans('Issue'); ?>: </TD>
 	<TD valign="middle" ALIGN="LEFT" style="padding-top: 6px;">
 		<?php
 		if (($f_dest_publication_id > 0) && (count($allIssues) > 0)) {
@@ -184,7 +186,7 @@ function CustomValidator_DuplicateSection(form) {
 		<input type="hidden" name="Back" value="<?php p($BackLink); ?>">
 		<input type="hidden" name="f_dest_publication_id" value="<?php p($f_dest_publication_id); ?>">
 		<SELECT NAME="f_dest_issue_number" class="input_select" ONCHANGE="if ((this.selectedIndex != 0) && (this.options[this.selectedIndex].value != <?php p($f_dest_issue_number); ?>)) { this.form.submit(); }">
-		<OPTION VALUE="0"><?php  putGS('---Select issue---'); ?></option>
+		<OPTION VALUE="0"><?php  echo $translator->trans('---Select issue---'); ?></option>
 		<?php
 		foreach ($allIssues as $tmpIssue) {
 			camp_html_select_option($tmpIssue->getIssueNumber(), $f_dest_issue_number, $tmpIssue->getName());
@@ -196,7 +198,7 @@ function CustomValidator_DuplicateSection(form) {
 		}
 		}
 		else {
-			?><SELECT class="input_select" DISABLED><OPTION><?php  putGS('No issues'); ?></SELECT>
+			?><SELECT class="input_select" DISABLED><OPTION><?php  echo $translator->trans('No issues'); ?></SELECT>
 			<?php
 		}
 		?>
@@ -207,7 +209,7 @@ function CustomValidator_DuplicateSection(form) {
 if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number == $f_dest_issue_number)) { ?>
 <tr>
 	<td colspan="2" style="padding-top: 10px; padding-bottom: 7px;">
-			<b><?php putGS("Warning"); echo ':'; putGS("The destination issue is the same as the source issue."); ?></b>
+			<b><?php echo $translator->trans("Warning", array(), 'sections'); echo ':'; echo $translator->trans("The destination issue is the same as the source issue.", array(), 'sections'); ?></b>
 	</td>
 </tr>
 <?php } ?>
@@ -228,7 +230,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	           <input type="radio" name="f_section_chooser" value="existing_section" <?php if ($f_dest_issue_number <= 0) { ?> disabled <?php }?>>
 	       </td>
 	       <td style="padding-top: 8px; padding-bottom: 3px;">
-	           <?php putGS("Existing Section"); ?>:
+	           <?php echo $translator->trans("Existing Section", array(), 'sections'); ?>:
 	       </td>
 	   </tr>
 	   </table>
@@ -236,9 +238,9 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	<td style="padding-top: 12px; padding-bottom: 0px;">
 		<SELECT NAME="f_dest_section_existing" class="input_select" <?php if (($f_dest_issue_number <= 0) || (count($allSections) <= 0)) { ?> disabled <?php } ?> onchange="this.form.f_section_chooser[0].checked = true;">
 		<?php if (($f_dest_issue_number <= 0) || (count($allSections) <= 0)) { ?>
-		<OPTION VALUE="0"><?php  putGS('No sections'); ?></option>
+		<OPTION VALUE="0"><?php  echo $translator->trans('No sections'); ?></option>
 		<?php } else { ?>
-		<OPTION VALUE="0"><?php  putGS('---Select section---'); ?></option>
+		<OPTION VALUE="0"><?php  echo $translator->trans('---Select section---'); ?></option>
 		<?php } ?>
 		<?php
 		foreach ($allSections as $tmpSection) {
@@ -253,7 +255,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	<td style="padding-left: 40px;">
 	   <table cellpadding="0" cellspacing="0">
 	   <tr>
-	       <td style="border-left: 1px solid black; padding-left: 40px;"><b><u><?php putGS("OR"); ?></u></b></td>
+	       <td style="border-left: 1px solid black; padding-left: 40px;"><b><u><?php echo $translator->trans("OR", array(), 'sections'); ?></u></b></td>
 	   </tr>
 	   </table>
 
@@ -268,7 +270,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	           <input type="radio" name="f_section_chooser" value="new_section" <?php if ($f_dest_issue_number <= 0) { ?> disabled <?php }?>>
 	       </td>
 	       <td style="padding-top: 3px; padding-bottom: 5px; padding-right: 10px;">
-	           <?php putGS("New Section"); ?>:
+	           <?php echo $translator->trans("New Section", array(), 'sections'); ?>:
 	       </td>
 	   </tr>
 	   </table>
@@ -276,7 +278,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	<td>
 	   <table cellpadding="0" cellspacing="0">
 	   <tr>
-	       <td style="width: 5em;"><?php putGS("Number"); ?>:</td>
+	       <td style="width: 5em;"><?php echo $translator->trans("Number"); ?>:</td>
 	       <td><input type="text" class="input_text" name="f_dest_section_new_number" size="4" value="<?php echo $f_src_section_number; ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <= 0)) { ?>disabled<?php } ?> onclick="this.form.f_section_chooser[1].checked = true;"></td>
 	   </tr>
 	   </table>
@@ -300,7 +302,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	<td>
         <table cellpadding="0" cellspacing="0">
         <tr>
-           <td style="width: 5em;"><?php putGS("Name"); ?>:</td>
+           <td style="width: 5em;"><?php echo $translator->trans("Name"); ?>:</td>
            <td><input type="text" class="input_text" name="f_dest_section_new_name" size="20" value="<?php echo $sectionObj->getName(); ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <= 0)) { ?>disabled<?php } ?> onclick="this.form.section_chooser[1].checked = true;"></td>
         </tr>
         </table>
@@ -312,7 +314,7 @@ if ( ($f_src_publication_id == $f_dest_publication_id) && ($f_src_issue_number =
 	   <table>
 	   <tr>
 	       <td>
-		      <INPUT TYPE="submit" Name="Duplicate" Value="<?php putGS("Duplicate section"); ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <=0)) { echo 'class="button_disabled"'; } else { echo 'class="button"'; }?> >
+		      <INPUT TYPE="submit" Name="Duplicate" Value="<?php echo $translator->trans("Duplicate section", array(), 'sections'); ?>" <?php if (($f_dest_publication_id <= 0) || ($f_dest_issue_number <=0)) { echo 'class="button_disabled"'; } else { echo 'class="button"'; }?> >
 		   </td>
 
 	   </tr>

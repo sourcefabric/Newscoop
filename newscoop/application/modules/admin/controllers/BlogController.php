@@ -24,8 +24,6 @@ class Admin_BlogController extends Zend_Controller_Action
 
     public function init()
     {
-        camp_load_translation_strings('articles');
-
         $this->blogService = $this->_helper->service('blog');
         $this->user = $this->_helper->service('user')->getCurrentUser();
     }

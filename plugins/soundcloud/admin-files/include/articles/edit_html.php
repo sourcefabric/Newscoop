@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-camp_load_translation_strings("plugin_soundcloud");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
@@ -48,7 +48,7 @@ $(document).ready(function(){
 <div class="articlebox" title="Soundcloud">
 
 <? if (($f_edit_mode == "edit") && $g_user->hasPermission('plugin_soundcloud_browser')): ?>
-    <a id="soundcloud-iframe" custom="yes" class="iframe ui-state-default icon-button right-floated" href="<?= "/$ADMIN/soundcloud/attachement.php?article_id=$f_article_number" ?>"><span class="ui-icon ui-icon-plusthick"></span><? putGS('Attach') ?></a>
+    <a id="soundcloud-iframe" custom="yes" class="iframe ui-state-default icon-button right-floated" href="<?= "/$ADMIN/soundcloud/attachement.php?article_id=$f_article_number" ?>"><span class="ui-icon ui-icon-plusthick"></span><? echo $translator->trans('Attach') ?></a>
     <div class="clear"></div>
 <? endif ?>
 

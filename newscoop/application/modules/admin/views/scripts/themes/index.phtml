@@ -1,3 +1,6 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <div class="actions">
     <ul class="navigation">
         <!-- li><a class="add" href="#" id="create">Create theme</a></li -->
@@ -36,26 +39,26 @@ $(function() {
 });
 </script>
 
-<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Import theme' ) ?>">
+<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo $translator->trans( 'Import theme' , array(), 'themes') ?>">
 	<div class="message-holder">
-		<div class="upload-error" style="display:none"><?php echo getGS( 'Import failed!' ) ?></div>
-		<div class="upload-success" style="display:none"><?php echo getGS( 'Import succeded!' ) ?></div>
+		<div class="upload-error" style="display:none"><?php echo $translator->trans( 'Import failed!' , array(), 'themes') ?></div>
+		<div class="upload-success" style="display:none"><?php echo $translator->trans( 'Import succeded!' , array(), 'themes') ?></div>
 	</div>
 	<?php echo $this->uploadForm->setAttrib( 'target', 'upload-frame' ); ?>
 	<iframe frameborder="0" name="upload-frame" id="upload-frame" width="0" height="0"></iframe>
 </script>
 
-<script id="confirmDeleteTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Delete theme' ) ?>">
+<script id="confirmDeleteTmpl" type="text/x-jQuery-tmpl" title="<?php echo $translator->trans( 'Delete theme' , array(), 'themes') ?>">
 	<div class="message-holder">
 		<div class="delete-message"> </div>
 	</div>
-	<?php echo getGS( 'Are you sure you want to delete this theme?' ) ?>
+	<?php echo $translator->trans( 'Are you sure you want to delete this theme?' , array(), 'themes') ?>
 </script>
 
-<script id="confirmUnassignTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Unassign theme' ) ?>">
+<script id="confirmUnassignTmpl" type="text/x-jQuery-tmpl" title="<?php echo $translator->trans( 'Unassign theme' , array(), 'themes') ?>">
     <div class="message-holder">
         <div class="unassign-message"> </div>
-        <?php echo getGS( 'Are you sure you want to unassign this theme?' ) ?>
+        <?php echo $translator->trans( 'Are you sure you want to unassign this theme?' , array(), 'themes') ?>
     </div>
 </script>
 
@@ -75,25 +78,25 @@ $(function() {
 
 <script id="datatableTmpl_1" type="text/x-jQuery-tmpl">
 	<div class="themesListTabs ui-tabs">
-		<h3>{{title}} <span>// <?php echo getGS( 'version' ) ?> {{version}}</span></h3>
-        <p><i><b><?php echo getGS( 'Design' ) ?>:</b> {{designer}}</i></p>
+		<h3>{{title}} <span>// <?php echo $translator->trans( 'version' , array(), 'themes') ?> {{version}}</span></h3>
+        <p><i><b><?php echo $translator->trans( 'Design' , array(), 'themes') ?>:</b> {{designer}}</i></p>
 		<ul class="imageCtrls ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
             <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
-                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Issue page'); ?>">
-                    <?php putGS( 'Issue page' ) ?>
-					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php echo $translator->trans('Issue page', array(), 'themes'); ?>">
+                    <?php echo $translator->trans( 'Issue page' , array(), 'themes') ?>
+					<span><?php echo $translator->trans( 'Click to enlarge' , array(), 'themes') ?></span>
 				</a>
 			</li>
             <li class="ui-state-default ui-corner-top">
-                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Section page'); ?>">
-					<?php putGS( 'Section page' ); ?>
-					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php echo $translator->trans('Section page', array(), 'themes'); ?>">
+					<?php echo $translator->trans( 'Section page' , array(), 'themes'); ?>
+					<span><?php echo $translator->trans( 'Click to enlarge' , array(), 'themes') ?></span>
 				</a>
 			</li>
         	<li class="ui-state-default ui-corner-top">
-                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Article page'); ?>">
-                    <?php putGS( 'Article page' ) ?>
-					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php echo $translator->trans('Article page', array(), 'themes'); ?>">
+                    <?php echo $translator->trans( 'Article page' , array(), 'themes') ?>
+					<span><?php echo $translator->trans( 'Click to enlarge' , array(), 'themes') ?></span>
 				</a>
 			</li>
     	</ul>
@@ -111,10 +114,10 @@ $(function() {
 	<div class="actionMessage"></div>
 	<ul class="actionDropDown">
     	<li>
-        	<a href="#"><?php echo getGS( 'Actions' ) ?></a>
+        	<a href="#"><?php echo $translator->trans( 'Actions' ) ?></a>
 			<ul class="block-shadow">
 				<li>
-					<a href="#" class="add"><span><?php echo getGS( 'Add to publication' ) ?></span></a>
+					<a href="#" class="add"><span><?php echo $translator->trans( 'Add to publication' , array(), 'themes') ?></span></a>
 					<ul class="block-shadow actions-publications">
 						<?php foreach( $this->publications as $pub ) : ?>
 						<li>
@@ -136,7 +139,7 @@ $(function() {
         		    			'controller' => 'themes',
         		    		    'module'     => 'admin',
         		    		    'theme-id'	 => '{{id}}'
-        		    		), null, null, false )?>"><?php echo getGS( 'Copy to available themes' ); ?></a>
+        		    		), null, null, false )?>"><?php echo $translator->trans( 'Copy to available themes' , array(), 'themes'); ?></a>
         				</li>
 					</ul>
 				</li>
@@ -148,7 +151,7 @@ $(function() {
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="unassign" style="display:none">
-						<?php echo getGS( 'Unassign' ) ?>
+						<?php echo $translator->trans( 'Unassign' , array(), 'themes') ?>
 					</a>
 				</li>
 				<li>
@@ -159,7 +162,7 @@ $(function() {
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="edit">
-						<?php echo getGS( 'Edit' ) ?>
+						<?php echo $translator->trans( 'Edit' ) ?>
 					</a>
 				</li>
 				<li>
@@ -170,7 +173,7 @@ $(function() {
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="download">
-						<?php echo getGS( 'Export' ) ?> (<?php echo getGS( 'zip' ) ?>)
+						<?php echo $translator->trans( 'Export' , array(), 'themes') ?> (<?php echo $translator->trans( 'zip' , array(), 'themes') ?>)
 					</a>
 				</li>
             	<li>
@@ -181,7 +184,7 @@ $(function() {
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="delete">
-						<?php echo getGS( 'Delete' ) ?>
+						<?php echo $translator->trans( 'Delete' ) ?>
 					</a>
 				</li>
 			</ul>

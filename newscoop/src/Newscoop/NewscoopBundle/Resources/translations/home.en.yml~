@@ -1,0 +1,154 @@
+'Rename user': 'Zmień nazwę'
+Campsite: Campsite
+'Image Rendering': 'Przetwarzanie zdjęć'
+'Featured Article Lists': 'Polecane artykuły'
+'You have tried to upload an invalid backup file.': 'Prubujesz wgrac plik który nie jest prawidłową kopią zapasową.'
+'You do not have the right to manage backups.': 'Nie masz uprawnień do zarządzania kopiami zapasowymi.'
+'Make a new backup': 'Utwórz nową kopię bezpieczeństwa'
+'Are you sure you want to make a new backup?': 'Jesteś pewien czy chcesz zrobić nową kopię zapasową?'
+'Security token expired. Please resubmit the form.': 'Klucz bezpieczeństwa wygasł. Wyślij formularz ponownie.'
+Templates: Szablony
+'Create slideshow': 'Utwórz galerię'
+Create: Utwórz
+Attach/Detach: Dodaj/Usuń
+'Are you sure you want to delete slideshow?': 'Jesteś pewien że chcesz usunąć tą galerię?'
+Support: Pomoc
+'Pending articles': 'Oczekujące artykuły'
+'Manage Users': 'Zarządzaj użytkownikami'
+'Manage User Types': 'Zarządzaj typami użytkowników'
+'Manage User Points System': 'Zarządzaj systemem punktów dla uzytkowników'
+Last: Ostatni
+First: Pierwszy
+Feedback: Feedback
+'Edit your password': 'Zmień swoje hasło'
+'Edit user': 'Edytuj użytkownika'
+'Edit permissions': 'Zmień uprawnienia'
+Detail: Szczeguły
+'Create new user': 'Utwórz nowego użytkownika'
+'Create new account': 'Stwórz nowe konto'
+'Add feed': 'Dodaj źródło'
+'Upload of file $1 was not successful.': 'Przesyłanie pliku $1 nie powiodło się.'
+'The file $1 could not be moved. Check you have enough of disk space.': 'Plik $1 nie może być przeniesiony. Upewnij się że masz wystarczającą ilość wolnego miejsca na dysku.'
+MiB: MiB
+'Download was not successful. Check please that the server is not out of disk space.': 'Pobieranie nie powiodło się. Upewnij się czy masz wystarczającą ilość wolnego miejsca na dysku.'
+'try again later': 'spróbuj ponownie później'
+at: w
+'You must at least upload one file.': 'Musisz przesłać przynajmniej jeden plik.'
+'Warning: the existing data and themes will be deleted!': 'Uwaga: istniejące dane i szablony mogą zostać usunięte. '
+'Value is required and cant be empty': 'Wartość jest wymagana i nie może być pusta.'
+Upload: Wgraj
+'Update comment': 'Zmień komentarz'
+'Time created': 'Data utworzenia'
+Themes: Szablony
+'Stop current upload': 'Zatrzymaj aktualne przesyłanie.'
+'Start uploading queue': 'Uruchom kolejkę przesyłania.'
+'Start upload': 'Uruchom przesyłanie.'
+Settings: Ustawienia
+'Select files': 'Wybierz pliki'
+Reply: Odpowiedz
+'New comment added': 'Nowy komentarz został dodany'
+'Manage Authors': 'Zarządzaj autorami'
+Loading..: Ładowanie..
+Filename: 'Nazwa pliku'
+'Edit user type': 'Zmień typ użytkownika'
+'Edit language': 'Zmień jezyk'
+'Drag files here.': 'Przeciągnij pliki tutaj'
+'Connection interrupted': 'Połączenie zostało przerwane'
+Ban: Blokada
+'Are you sure you want to': 'Jesteś pewien że chcesz to zrobić?'
+'Add files to the upload queue and click the start button.': 'Dodaj pliki do kolejki przesyłania i kliknij przycisk rozpoczęcia.'
+'Add files': 'Dodaj pliki'
+'%value% is more than %max% characters long': '%value% ma więcej znaków niż %max%'
+'%value% is less than %min% characters long': '%value% jest krótsze niż wymagane %min% znaków'
+'User name': Login
+Newscoop: Newscoop
+'Your password has been reset.': 'Twoje hasło zostało zresetowane.'
+'Proceed to login.': 'Przejdź do logowania'
+'Hi, nnfor password recovery, please follow this link: $1': 'Cześć, nnaby odzyskać hasło przejdź na tą stronę: $1'
+'Go to login': 'Przejdź do logowania'
+'Back to login.': 'Wróć do logowania'
+'Back to login': 'Wróć do logowania'
+'An email with instructions on how to recover you password has been sent to your inbox.': 'Wiadomość z instrukcjami odzyskiwania hasła został wysłany na twoją skrzynkę email.'
+'Session expired.': 'Sesja wygasła.'
+Processing...: Przetwarzanie...
+Please: Proszę
+'Go to dashboard': 'Idź do panelu'
+'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Twoja przeglądarka nie obsługuje Javascript albo (bardziej prawdopodobne) obsługa Javascript jest nieaktywna. Napraw to zanim zaczniesz pracę z Newscoop.'
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop dokonał aktualizacji zabezpieczeń. Aby zaktulizować swoje konto i skorzystać z nowych zasad bezpieczeństwa, wprowadź swoje hasło.'
+'Newscoop cache was cleaned up': 'Cache Newscoop został usunięty'
+Dashboard: Panel
+'Your changes will be saved after login.': 'Twoje zmiany zostaną zapisane po zalogowaniu.'
+'Upload backup file': 'Wgraj plik kopii zapasowej'
+'The file $1 has been uploaded successfully.': 'Plik $1 został dodany pomyślnie.'
+'Media Archive': 'Archiwum Mediów'
+Widgets: Widgety
+'Widget info': 'Informacje o widgecie'
+'Widget added to dashboard.': 'Widget został dodany do panelu.'
+'Remove widget': 'Usuń widget'
+'Please login to continue.': 'Zaloguj się aby kontynuować'
+'Add to dashboard': 'Dodaj do panelu'
+'Add more widgets': 'Dodaj więcej widgetów'
+login: logowanie
+'This link is not valid.': 'Link jest niepoprawny.'
+'Recover password': 'Odzyskaj hasło'
+'Please enter your email.': 'Podaj adres email.'
+'Password recovery is disabled.': 'Odzyskiwanie haseł jest zablokowane.'
+'Password recovery': 'Odzyskiwanie hasła'
+'Password Recovery': 'Odzyskiwanie Hasła'
+'No user is registered with this email.': 'Brak użytkownika z podanym adresem email.'
+'Forgot your password?': 'Zapomniałeś hasła?'
+'Email: incorrect format.': 'Email: niepoprawny format.'
+Email: Email
+'Bad input parameters.': 'Złe parametry wejściowe.'
+'There was an error trying to delete the file $1.': 'Wystąpił błąd podczas usuwania pliku $1.'
+'The file $1 was deleted successfully.': 'Plik $1 został usunięty pomyślnie.'
+Size: Rozmiar
+'Restore file': 'Przywróć plik'
+Restore: Przywróć
+Mb: Mb
+'Free disk space': 'Wolna przestrzeń dysku'
+'Download file': 'Pobierz plik'
+Download: Pobierz
+'Delete file': 'Usuń plik'
+'Backup list is empty.': 'Lista backuou jest pusta'
+'Are you sure you want to restore the file $1?': 'Czy na pewno chcesz przywrócić plik $1?'
+'Are you sure you want to delete the file $1?': 'Czy na pewno chcesz usunąć plik $1?'
+'Import XML': 'Improtuj XML'
+'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Musisz posiadać uprawnienia do dodawania/zmieniania publikacji aby ustawić autorów dla wszystkich artykułów.'
+'Select the field from which to generate the author': 'Wybierz pole, z którego wygenerować autora'
+'Invalid or empty field $1. You must select a valid dynamic field.': 'Niepoprawne albo puste pole $1. Musisz wybrać porawne pole dynamiczne.'
+'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Nie można utworzyć autora $1 do artykułu numer $2 ($3) typu $4.'
+'There were errors setting the author for articles of type $1 from the field $2.': "Wystąpił\_błąd podczas ustawiania autora dla artykułu typu $1 z pola $2."
+'The author was set successfuly for articles of type $1 from the field $2.': 'Pomyślnie ustawiono autora dla artykułu typu $1 z pola $2.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
+'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Błąd przy tworzeniu autora $1 do artykułu numer $2 ($3) typu $4.'
+'Clear system cache': 'Oczyść cache systemowy'
+'The system was unable to upload the file $1. ': 'System nie mógł dodać pliku $1.'
+'Please check the file you are trying to upload, it might be corrupted.': 'Sprawdź plik, który próbujesz dodać, możliwe że jest uszkodzony.'
+'An error occured in session management. Please reload the login page.': 'Wystąpił błąd przy zarządzaniu sesją. Załaduj stronę logowania ponownie.'
+'This file is stored on disk as $1.': 'Plik jest zachowany na dysku jako $1.'
+'The system is unable to write to the directory $1.': 'Syste nie może zapisywać do folderu $1.'
+'The system was unable to read the file $1.': 'System nie może czytać pliku $1.'
+'The system was unable to delete the directory $1.': 'System nie może skasować folderu $1.'
+'Please check if the user $1 has permission to read this file.': 'Sprawdź czy użytkownik $1 ma prawa aby odczytywać ten plik.'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Spradź czy folder jest pusty a użytkownik $1 ma prawa zapisywać do folderu $2.'
+'The system was unable to write to the file $1.': 'System nie mógł zapisywać pliku $1.'
+'The system was unable to delete the file $1.': 'System nie mógł usunąć pliku $1.'
+'The system was unable to create the file $1.': 'System nie mógł utworzyć pliku $1.'
+'The system was unable to create the directory $1.': 'System nie mógł utworzyć folderu $1.'
+'Please check if the user $1 has permission to write to this file.': 'Sprawdź czy użytkownik $1 ma prawa aby zapisywać do tego pliku.'
+'Please check if the user $1 has permission to write to the directory $2.': 'Sprawdź czy użytkownik $1 ma prawa aby zapisywać do folderu $2.'
+'Type the code shown above:': 'Wprowadź kod podany powyżej:'
+'Please enter your user name.': 'Podaj nazwę użytkownika.'
+'Please enter your password.': 'Podaj swoje hasło.'
+'Please enter the code shown in the image.': 'Podaj kod podany na obrazku.'
+'CAPTCHA code is not valid.  Please try again.': 'Kod CAPTCHA jest nie poprawny. Spróbuj ponownie.'
+'Signed in: $1': 'Zalogowano: $1'
+Help: Pomoc
+'Please enter your user name and password': 'Wprowadź nazwę użytkownika i hasło'
+'You do not have the right to access this page.': 'Nie masz praw do przeglądania tej strony'
+'Login failed': 'Logowanie nie powiodło się'
+'Please make sure that you typed the correct user name and password.': 'Upewnij się, że podana nazwa i hasła są poprawne'
+'If your problem persists please contact the site administrator $1': 'Jeśli problem występuje ponownie skontaktuj się z administratorem $1'
+Backup/Restore: 'Backup / Przywróć'

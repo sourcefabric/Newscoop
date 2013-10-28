@@ -1,3 +1,4 @@
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <table class="datatable" cellspacing="0" cellpadding="0">
 <thead>
 <tr>
@@ -8,7 +9,7 @@
 </thead>
 <tbody>
 <tr>
-    <td class="message" colspan="<?php echo sizeof($this->cols); ?>"><?php putGS('Loading..'); ?></td>
+    <td class="message" colspan="<?php echo sizeof($this->cols); ?>"><?php echo $translator->trans('Loading..', array(), 'api'); ?></td>
 </tr>
 </tbody>
 </table>

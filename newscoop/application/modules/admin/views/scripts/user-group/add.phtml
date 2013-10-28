@@ -1,3 +1,5 @@
-<?php $this->placeholder('title')->set(getGS('Add new user type')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Add new user type')); ?>
 
 <?php echo $this->form; ?>

@@ -1,0 +1,66 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'значок обраних маркерів'
+'add location to map': 'додати локацію на мапу'
+'Video source': 'Джерело відео'
+'The point will be removed from all translations of the article.': 'Місцезнаходження буде видалено з усіх перекладів статті.'
+'Specify country (optional)': 'Вкажіть країну (за бажанням)'
+'Sorry, that place was not found. Check your spelling or search again.': 'На жаль, це місце не було знайдено. Перевірте правопис або виконати пошук знову.'
+'Show search results': 'Показати результати пошуку'
+'Search for place or coordinate': 'Пошук за місцем або координатами'
+'Return to edit': 'Повернутись до редагування'
+'Really delete this point?': 'Дійсно видалити точку?'
+'Name and describe this location': 'Назва та опис локації'
+'Map size': 'Розмір мапи'
+'Location label': 'Етикетка локації'
+'Location description:': 'Опис локації:'
+'Label url': 'етикетка посилання'
+'Hide search results': 'Приховати результати пошуку'
+Geo-filtering: ГЕО-фільтрація
+'Fill in youtube ID or link, e.g.': 'Заповніть YouTube ID або посилання, наприклад,'
+'Fill in vimeo ID or link, e.g': 'Заповніть vimeo ID або посилання, наприклад,'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Введіть YouTube ID, Vimeo ID, посилання або файл, або флеш-відео'
+'Fill in location label': 'Заповніть етикетку локації'
+'Fill in local swf flash file name or link, e.g.': 'Вкажіть Flash файл (SWF) або посилання, наприклад,'
+'Fill in local flv flash file name or link, e.g.': 'Вкажіть Flash video файл (FLV) або посилання, наприклад,'
+'Fill in image link, like': 'Вкажіть посилання на зображення'
+'Describe the location...': 'Опишіть локацію'
+'Delete location': 'Видалити локацію'
+Coordinates: Координати
+'Change video display size': 'Змінити розмір відеоплеера.'
+'Change image display size': 'Змінити розмір зображення.'
+'Change icon of this location': 'Змінити значок локації'
+'Center map on location': 'Центрувати мапу локації'
+'Advanced editing': 'Розширене редагування'
+'Add an image to this location': 'Додати зображення до цієї локації'
+'Add a video to this location': 'Додат відео до цієї локації'
+'Are you sure you want to quit without saving your changes?': 'Ви впевнені що ви хочете вийти без збереження змін?'
+'Map preview': 'Перегляд мапи'
+'Locations updated.': 'Локація оновлена.'
+'Setting the map name helps with map search': 'Встановлення назви мапи полегшує пошук по ній'
+Longitude: Довгота
+Latitude: Широта
+Center: Центр
+'Last Saved Map View': 'Останній збережений вид мапи'
+'List of locations updated': 'Список локації оновлено.'
+width: ширина
+'show initial map view': 'показати первісний вид мапи'
+'problem at point processing, please send error report': 'проблеми з обробкою точки, будь ласка відправте рапорт про помилку'
+'plain text': 'Звичайний текст'
+'html content': 'HTML контент'
+height: висота
+'fill in map name': 'Вкажіть назву мапи'
+'You do not have the right to remove maps from articles.': 'Ви не маєте прав видаляти мапи з статей.'
+'Video file': 'Відео файл'
+'Video ID': 'Відео ID'
+'The map has been removed from the article.': 'Мапа була видалена зі статті.'
+'Point no.': 'Номер точки'
+'Point markers': 'Маркер точки'
+None: Жоден
+'Map Search Example': 'Приклад пошуку по мапі'
+'Map Preview': 'Попередній перегляд мапи'
+'Image URL': 'Посилання на зображення'
+video: відео
+text: текст
+image: зображення
+icon: значок
+'Setting Map Locations': 'Налаштування локації на мапі'

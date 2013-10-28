@@ -1,12 +1,15 @@
-<?php $this->placeholder( 'title' )->set( getGS( 'Featured Article Lists' ) ); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder( 'title' )->set( $translator->trans( 'Featured Article Lists' , array(), 'articles') ); 
+?>
 <div class="actions">
 	<form autocomplete="off">
     <ul class="navigation">
-        <li><a class="add" href="#" id="add-ctrl"><?php echo getGS('Add list') ?></a></li>
-        <!-- li><a class="copy" href="#" id="duplicate-ctrl"><?php echo getGS('Duplicate list') ?></a></li-->
+        <li><a class="add" href="#" id="add-ctrl"><?php echo $translator->trans('Add list', array(), 'articles') ?></a></li>
+        <!-- li><a class="copy" href="#" id="duplicate-ctrl"><?php echo $translator->trans('Duplicate list', array(), 'articles') ?></a></li-->
         <li>
 			<select id="playlists" style="font-size:14px;padding:2px;border:none;">
-            	<option style="color: #aaa" value="" selected="selected"><?php echo getGS('Select a list') ?></option>
+            	<option style="color: #aaa" value="" selected="selected"><?php echo $translator->trans('Select a list', array(), 'articles') ?></option>
                 <?php foreach ($this->playlists as $pl) : ?>
             		<option value="<?php echo $pl->getId() ?>"><?php echo $pl->getName() ?></option>
                 <?php endforeach; ?>
@@ -21,7 +24,7 @@
 
 <?php
 
-$t = array("cancel" => getGS('Cancel'), "delete" => getGS('Delete'));
+$t = array("cancel" => $translator->trans('Cancel'), "delete" => $translator->trans('Delete'));
 
 $js = <<<JS
 

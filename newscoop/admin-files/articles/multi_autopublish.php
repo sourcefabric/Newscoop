@@ -2,8 +2,10 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission("Publish")) {
-	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
+	camp_html_display_error($translator->trans("You do not have the right to schedule issues or articles for automatic publishing.", array(), 'articles'));
 	exit;
 }
 
@@ -29,32 +31,32 @@ foreach ($f_article_code as $code) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
 $publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
+	camp_html_display_error($translator->trans('Publication does not exist.'));
 	exit;
 }
 
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
+	camp_html_display_error($translator->trans('Issue does not exist.'));
 	exit;
 }
 
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
+	camp_html_display_error($translator->trans('Section does not exist.'));
 	exit;
 }
 
-$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
+$crumbs = array($translator->trans("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj);
-camp_html_content_top(getGS("Article automatic publishing schedule"), $topArray, true, false, $crumbs);
+camp_html_content_top($translator->trans("Article automatic publishing schedule"), $topArray, true, false, $crumbs);
 
 ?>
 
@@ -63,12 +65,12 @@ if (count($errorArticles) > 0) {
 	?>
 	<p>
 	<div class="page_title">
-	<?php putGS("The following articles are new; it is not possible to schedule them for automatic publishing"); ?>:
+	<?php echo $translator->trans("The following articles are new, it is not possible to schedule them for automatic publishing", array(), 'articles'); ?>:
 	</div>
 	<p>
 	<table cellpadding="3" cellspacing="0" style="padding-left: 10px;">
 	<tr class="table_list_header">
-		<td><?php putGS("Name"); ?></td>
+		<td><?php echo $translator->trans("Name"); ?></td>
 	</tr>
 	<?php
 	$color = 0;
@@ -98,13 +100,13 @@ if (count($articles) > 0) {
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Schedule a new action"); ?></B>
+		<B><?php  echo $translator->trans("Schedule a new action", array(), 'articles'); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD valign="top" align="right" style="padding-top: 12px;">
-		<?php putGS("Articles"); ?>:
+		<?php echo $translator->trans("Articles"); ?>:
 	</TD>
 	<TD>
 		<table cellpadding="3" cellspacing="2">
@@ -118,7 +120,7 @@ if (count($articles) > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" valign="top" style="padding-top: 12px;"><?php  putGS("Date"); ?>:</TD>
+	<TD ALIGN="RIGHT" valign="top" style="padding-top: 12px;"><?php  echo $translator->trans("Date"); ?>:</TD>
 	<TD>
 		<input type="text" name="f_publish_date" value="" class="input_text date minDate_0" />
         <script type="text/javascript">
@@ -129,48 +131,48 @@ if (count($articles) > 0) {
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Time"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Time"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" NAME="f_publish_hour" SIZE="2" MAXLENGTH="2" VALUE="0" class="input_text"> :
 	<INPUT TYPE="TEXT" NAME="f_publish_minute" SIZE="2" MAXLENGTH="2" VALUE="0" class="input_text">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="CENTER" COLSPAN="2"><b><?php  putGS("Actions"); ?></b></TD>
+	<TD ALIGN="CENTER" COLSPAN="2"><b><?php echo $translator->trans("Actions"); ?></b></TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Publish"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Publish"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_publish_action" class="input_select">
 		<OPTION VALUE=" ">---</OPTION>
-		<OPTION VALUE="P"><?php putGS("Publish"); ?></OPTION>
-		<OPTION VALUE="U"><?php putGS("Unpublish"); ?></OPTION>
+		<OPTION VALUE="P"><?php echo $translator->trans("Publish"); ?></OPTION>
+		<OPTION VALUE="U"><?php echo $translator->trans("Unpublish"); ?></OPTION>
 	</SELECT>
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Front page"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Front page"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_front_page_action" class="input_select">
 		<OPTION VALUE=" ">---</OPTION>
-		<OPTION VALUE="S"><?php putGS("Show on front page"); ?></OPTION>
-		<OPTION VALUE="R"><?php putGS("Remove from front page"); ?></OPTION>
+		<OPTION VALUE="S"><?php echo $translator->trans("Show on front page"); ?></OPTION>
+		<OPTION VALUE="R"><?php echo $translator->trans("Remove from front page"); ?></OPTION>
 	</SELECT>
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Section page"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Section page"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_section_page_action" class="input_select">
 		<OPTION VALUE=" ">---</OPTION>
-		<OPTION VALUE="S"><?php putGS("Show on section page"); ?></OPTION>
-		<OPTION VALUE="R"><?php putGS("Remove from section page"); ?></OPTION>
+		<OPTION VALUE="S"><?php echo $translator->trans("Show on section page"); ?></OPTION>
+		<OPTION VALUE="R"><?php echo $translator->trans("Remove from section page"); ?></OPTION>
 	</SELECT>
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2" align="center">
-		<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
+		<INPUT TYPE="submit" NAME="Save" VALUE="<?php echo $translator->trans('Save'); ?>" class="button">
 	</TD>
 </TR>
 </TABLE>

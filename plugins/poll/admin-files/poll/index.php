@@ -1,9 +1,9 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage polls.', array(), 'plugin_poll'));
     exit;
 }
 
@@ -30,12 +30,12 @@ $allLanguages = Language::GetLanguages();
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 echo camp_html_breadcrumbs(array(
-    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-    array(getGS('Polls'), ''),
+    array($translator->trans('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array($translator->trans('Polls', array(), 'plugin_poll'), ''),
 ));
 
 // DO NOT DELETE!!! Needed for localizer
-// getGS("Polls");
+// $translator->trans("Polls");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 
@@ -258,7 +258,7 @@ if (count($polls)) {
                 </td>
 
                 <td align='center'>
-                    <a href="javascript: if (confirm('<?php echo camp_javascriptspecialchars(getGS('Are you sure you want to delete the poll "$1"?', $poll->getProperty('title'))); ?>')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
+                    <a href="javascript: if (confirm('<?php echo camp_javascriptspecialchars($translator->trans('Are you sure you want to delete the poll $1?', array('$1' => $poll->getProperty('title')), 'plugin_poll')); ?>')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                     </a>
                 </td>

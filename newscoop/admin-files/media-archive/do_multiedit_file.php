@@ -8,7 +8,6 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
@@ -16,8 +15,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 $f_language_id = Input::Get('f_language_id', 'int', 0);
@@ -40,6 +41,6 @@ foreach ($_POST['file'] as $id => $values) {
     $fileObj->update($updateArray);
 }
 
-camp_html_add_msg(getGS("Images updated."), "ok");
+camp_html_add_msg($translator->trans("Images updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 ?>

@@ -1,4 +1,5 @@
       <?php
+      $translator = \Zend_Registry::get('container')->getService('translator');
       function drawCombo($id, $pos) {
           $combo = '<select name="f_article_author_type[]" id="article_author_type' . $pos . '"
               class="input_select aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none">';
@@ -65,7 +66,7 @@
       <div id="authorAutoComplete">
       <ul>
         <li>
-          <label><?php putGS('Authors'); ?></label>
+          <label><?php echo $translator->trans('Authors', array(), 'articles'); ?></label>
           <div id="authorContainer">
           <ul class="tree sortable">
       <?php
@@ -114,7 +115,7 @@
             <li>
               <a class="ui-state-default icon-button left-floated"
                 href="#" onclick="addAuthor();"><span
-                class="ui-icon ui-icon-plusthick"></span><?php putGS('Add another author'); ?></a>
+                class="ui-icon ui-icon-plusthick"></span><?php echo $translator->trans('Add another author', array(), 'articles'); ?></a>
             </li>
           </ul>
         </li>
@@ -123,7 +124,7 @@
       <?php } else { ?>
       <ul>
         <li>
-          <label><?php putGS('Authors'); ?></label>
+          <label><?php echo $translator->trans('Authors', array(), 'articles'); ?></label>
           <?php
           if (!empty($authors)) {
               foreach ((array) $authors as $author) {

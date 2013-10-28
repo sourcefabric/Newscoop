@@ -1,13 +1,15 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/country/country_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('DeleteCountries')) {
-	camp_html_display_error(getGS("You do not have the right to delete countries."));
+	camp_html_display_error($translator->trans("You do not have the right to delete countries.", array(), 'country'));
 	exit;
 }
 
@@ -21,9 +23,9 @@ if ($deleted) {
 	camp_html_goto_page("/$ADMIN/country");
 }
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
-$crumbs[] = array(getGS("Delete country"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Countries"), "/$ADMIN/country/");
+$crumbs[] = array($translator->trans("Delete country", array(), 'country'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -32,21 +34,21 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Delete country"); ?> </B>
+		<B> <?php echo $translator->trans("Delete country", array(), 'country'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-	<LI><?php  putGS('The country $1 could not be deleted.' ,'<B>'.htmlspecialchars($country->getName()).'('.htmlspecialchars($language->getNativeName()).')</B>'); ?></LI>
+	<LI><?php echo $translator->trans('The country $1 could not be deleted.' , array('$1' => '<B>'.htmlspecialchars($country->getName()).'('.htmlspecialchars($language->getNativeName()).')</B>'), 'country'); ?></LI>
 	</BLOCKQUOTE>
 	</TD>
 </TR>
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/country/'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/country/'">
 	</DIV>
 	</TD>
 </TR>

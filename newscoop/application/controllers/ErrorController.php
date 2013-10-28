@@ -9,10 +9,7 @@
  */
 class ErrorController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        camp_load_translation_strings('bug_reporting');
-    }
+    public function init(){}
 
     /**
      * Forward to legacy controller if controller/action not found
@@ -38,7 +35,9 @@ class ErrorController extends Zend_Controller_Action
     }
 
     public function errorAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
             $this->_helper->layout->disableLayout(); // allow debuging
         }
@@ -47,7 +46,7 @@ class ErrorController extends Zend_Controller_Action
         $request = $this->getRequest();
 
         if (!$errors) {
-            $this->view->message = getGS('You have reached the error page');
+            $this->view->message = $translator->trans('You have reached the error page', array(), 'bug_reporting');
             return;
         }
 
@@ -58,13 +57,13 @@ class ErrorController extends Zend_Controller_Action
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $priority = Zend_Log::NOTICE;
-                $this->view->message = getGS('Page not found');
+                $this->view->message = $translator->trans('Page not found', array(), 'bug_reporting');
                 break;
             default:
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $priority = Zend_Log::CRIT;
-                $this->view->message = getGS('Application error');
+                $this->view->message = $translator->trans('Application error', array(), 'bug_reporting');
                 break;
         }
 

@@ -1,0 +1,94 @@
+get: bekommen
+Soundcloud: SoundCloud
+Templates: Templates
+'Feedback Messages': 'Feedback Nachrichten'
+'Article Playlists': 'Liste ausgewählter Artikel'
+'Check all': 'Alle prüfen'
+view: ansehen
+undo/redo: 'rückgängig machen/wiederholen'
+underline: unterstreichen
+translate: übersetzen
+'text direction': Textrichtung
+'text alignment': Textausrichtung
+table: Tabelle
+superscript: hochgestellt
+subscript: tiefgestellt
+subhead: Zwischentitel
+strikethrough: durchgestrichen
+statusbar: Statuszeile
+'spell checker enabled': 'Rechtschreibprüfung aktiviert'
+'source view': Quelltext
+publish: veröffentlichen
+notify: benachrichtigen
+moderate: moderieren
+manage: verwalten
+'list number': 'Aufzählung numerisch'
+'list bullet': Aufzählungspunkt
+link: Link
+italic: kursiv
+indent: einrücken
+image: 'Bild '
+'horizontal rule': Linie
+handle: anfassen
+guest: Gast
+'font size': Schriftgröße
+'font face': Schrifttyp
+'font color': Schriftfarbe
+find/replace: suchen/ersetzen
+enlarge: vergrößern
+enable: aktivieren
+edit: bearbeiten
+delete: löschen
+copy/cut/paste: kopieren/ausschneiden/einfügen
+clear: löschen
+'character map': Zeichentabelle
+bold: fett
+attach: anhängen
+'any resource': 'jede Ressource'
+admin: Admin
+add: hinzufügen
+'You cant deny yourself to manage $1': 'Sie können sich nicht selbst die Verwaltung von $1 verweigern'
+'You are not allowed to $1 $2.': 'Sie haben keine Berechtigung zum $1 $2.'
+'User type saved.': 'Benutzertyp gespeichert. '
+'User type deleted.': 'Benutzertyp gelöscht.'
+'User type added.': 'Benutzertyp hinzugefügt.'
+'User Groups': Benutzergruppen
+Themes: Designvorlage
+'That type name already exists, please choose a different name.': 'Der Typenname existiert bereits, bitte wählen Sie einen anderen Namen. '
+System: System
+Structure: Struktur
+'Search Indexer': Suchindizierung
+'Rich-Text Editor Preferences': 'Rich-Text Editor Präferenzen'
+ReCaptcha: ReCaptcha
+Polls: Umfragen
+'Permissions:': Berechtigungen
+'Permissions updated': 'Berechtigungen aktualisiert'
+Notification: Benachrichtigung
+Log: Log
+Layout: Layout
+Global: Globale
+Files: Dateien
+'Error: ': 'Fehler: '
+'Edit user type $1': 'Benutzertyp $1 bearbeiten'
+Deny: Verweigere
+'Delete user type $1': 'Lösche Benutzertyp  $1'
+'Can not delete a user type with assigned users.': 'Ein Benutzertyp mit zugewiesenen Benutzern kann nicht gelöscht werden.'
+Cache: Cache
+Backup: Backup
+Authoring: Authoring
+Allow: Erlauben
+'User types': Benutzertypen
+'No user types.': 'Keine Benutzertypen'
+unlock: entsperren
+Printdesk: Printdesk
+'You do not have the right to add user types.': 'Keine Berechtigung Benutzertypen hinzuzufügen'
+'Adding new user type': 'Neuer Benutzertyp wird hinzugefügt'
+'The user type $1 has been added.': 'Benutzertyp $1 wurde hinzugefügt'
+'The user type could not be added.': 'Benutzertyp konnte nicht hinzugefügt werden'
+'Please check if an user type with the same name does not already exist.': 'Bitte überprüfen, ob ein Benutzertyp mit demselben Namen bereits existiert'
+'Deleting user type': 'Benutzertyp wird gelöscht'
+'The user type has been deleted.': 'Benutzertyp wurde gelöscht'
+'The user type could not be deleted.': 'Benutzertyp konnte nicht gelöscht werden'
+'Updating user type permissions': 'Benutzertyprechte werden aktualisiert'
+'User type permissions have been successfuly updated.': 'Benutzertyprechte wurden erfolgreich aktualisiert'
+'User type permissions could not be updated.': 'Benutzertyprechte konnten nicht aktualisiert werden'

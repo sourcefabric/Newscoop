@@ -1,0 +1,15 @@
+'The country $1 could not be created.': 
+'Country with code $1 exists already.': 
+'You do not have the right to add countries.': 'Du har inte rätt att lägga till länder.'
+'Delete country': 'Radera land'
+'You do not have the right to delete countries.': 'Du har inte rätt att radera länder.'
+'Are you sure you want to delete the country $1?': 'Är du säker att du vill radera landet $1?'
+'The country $1 could not be deleted.': 'Landet $1 kunde inte raderas.'
+'Edit country name': 'Redigera landsnamn'
+'You do not have the right to change country names.': 'Du har inte rätt att ändra på landsnamn.'
+'Changing country name': 'Ändrar landsnamn'
+'The country name $1 could not be changed': 'Landsnamnet $1 kunde inte ändras'
+'Translate country name': 'Översätt landsnamn'
+'You do not have the right to translate country names.': 'Du har inte rätt att översätta landsnamn'
+'The country name $1 could not be translated': 'Landsnamnet $1 kunde inte översättas'
+'Add New Country': 'Lägg till nytt land'

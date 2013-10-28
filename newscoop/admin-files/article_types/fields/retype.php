@@ -1,13 +1,13 @@
 <?php
-camp_load_translation_strings("article_type_fields");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/Topic.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to reassign a field type."));
+	camp_html_display_error($translator->trans("You do not have the right to reassign a field type.", array(), 'article_type_fields'));
 	exit;
 }
 
@@ -16,11 +16,11 @@ $articleTypeFieldName = Input::Get('f_field_name');
 $articleField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans('Configure'), "");
+$crumbs[] = array($translator->trans('Article Types'), "/$ADMIN/article_types/");
 $crumbs[] = array($articleTypeName, '');
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-$crumbs[] = array(getGS("Reassign a field type"), "");
+$crumbs[] = array($translator->trans("Article type fields", array(), 'article_type_fields'), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
+$crumbs[] = array($translator->trans("Reassign a field type", array(), 'article_type_fields'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
@@ -64,7 +64,7 @@ You cannot reassign this type.
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <TABLE BORDER="" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Type"); ?>:</TD>
 	<TD>
 	<SELECT NAME="f_article_field_type" class="input_select" onchange="UpdateArticleFieldContext()">
         <?php foreach ($options as $k => $v) { ?>
@@ -76,7 +76,7 @@ You cannot reassign this type.
 	</TD>
 </TR>
 <tr style="display: none;" id="topic_list">
-	<td align="right"><?php putGS("Top element"); ?>:</td>
+	<td align="right"><?php echo $translator->trans("Top element", array(), 'article_type_fields'); ?>:</td>
 	<td>
 		<select name="f_root_topic_id" class="input_select">
 <?php
@@ -110,7 +110,7 @@ foreach ($topics as $topicPath) {
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
-	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php  putGS('Save'); ?>">
+	<INPUT TYPE="submit" class="button" NAME="OK" VALUE="<?php echo $translator->trans('Save'); ?>">
 	</DIV>
 	</TD>
 </TR>

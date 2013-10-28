@@ -13,30 +13,30 @@ class Application_Form_Confirm extends Zend_Form
 {
     public function init()
     {
-        camp_load_translation_strings('users');
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->addElement('text', 'first_name', array(
-            'label' => getGS('First Name').'*:',
+            'label' => $translator->trans('First Name', array(), 'users').'*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
         $this->getElement('first_name')->setOrder(1);
 
         $this->addElement('text', 'last_name', array(
-            'label' => getGS('Last Name').'*:',
+            'label' => $translator->trans('Last Name', array(), 'users').'*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
         $this->getElement('last_name')->setOrder(2);
 
         $this->addElement('text', 'username', array(
-            'label' => getGS('Username').'*:',
+            'label' => $translator->trans('Username', array(), 'users').'*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
         $this->getElement('username')->setOrder(3);
 
         $this->addElement('password', 'password', array(
-            'label' => getGS('Password').'*:',
+            'label' => $translator->trans('Password').'*:',
             'required' => true,
             'filters' => array('stringTrim'),
             'validators' => array(
@@ -47,7 +47,7 @@ class Application_Form_Confirm extends Zend_Form
 
         $form = $this;
         $this->addElement('password', 'password_confirm', array(
-            'label' => getGS('Password Confirmation').'*:',
+            'label' => $translator->trans('Password Confirmation', array(), 'users').'*:',
             'required' => true,
             'filters' => array('stringTrim'),
             'validators' => array(
@@ -55,12 +55,12 @@ class Application_Form_Confirm extends Zend_Form
                     return $value == $context['password'];
                 }),
             ),
-            'errorMessages' => array(getGS("Password confirmation does not match your password.")),
+            'errorMessages' => array($translator->trans("Password confirmation does not match your password.", array(), 'users')),
         ));
         $this->getElement('password_confirm')->setOrder(5);
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Login'),
+            'label' => $translator->trans('Login'),
             'ignore' => true,
         ));
         $this->getElement('submit')->setOrder(7);

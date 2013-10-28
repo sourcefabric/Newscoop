@@ -1,0 +1,275 @@
+Plugins: პლაგინები
+'Manage Plugins': 'პლაგინების მართვა'
+Account: ანგარიში
+'Items per page': 'რაოდენობა ყოველ გვერდზე'
+'Add new': დამატება
+Home: მთავარი
+Logout: გასვლა
+More...: მეტი...
+Content: კონტენტი
+Languages: ენები
+Countries: ქვეყნები
+Themes: თემები
+Topics: შაბლონები
+Configure: კონფიგურაცია
+'Image Archive': 'გამოსახულებების არქივი'
+'Add Article': 'სტატიის დამატება'
+Fields: ველები
+Delete: წაშლა
+Type: ტიპი
+Name: სახელი
+Code: კოდი
+Edit: რედაქტირება
+Login: ავტორიზაცია
+Password: პაროლი
+Site: საიტი
+Path: მიმართულება
+'Go up': ზემოთ
+URL: URL
+Order: გამოწერა
+Hide: დამალვა
+Duplicate: დუბლიკატი
+Subscription: გამოწერა
+expires: 'ვადის გასვლა'
+starts: დასაწყისი
+before: მდე
+after: შემდეგ
+on: ზე
+status: სტატუსი
+active: აქტიური
+inactive: არააქტიური
+Subscribers: გამომწერები
+Staff: სტაფი
+'Select destination': 'მონიშნე დანიშნულების ადგილი'
+'No languages': 'ენის გარეშე'
+'---Select language---': 'აირჩიე ენა'
+'No publications': 'პუბლიკაციები არ არის'
+'---Select publication---': 'მონიშნე პუბლიკაცია'
+'No issues': 'სტატიის გარეშე'
+'---Select issue---': 'მონიშნე სტატია'
+'No sections': 'სექციის გარეშე'
+'---Select section---': 'მონიშნე სექცია'
+Language: ენა
+Country: ქვეყანა
+'Account name': 'მომხმარებლის სახელი'
+Publication: პუბლიკაცია
+'Default language': 'ნაგულისხმევი ენა'
+Subscriptions: გამოწერები
+Issue: გამოცემა
+Number: ნომერი
+Section: სექცია
+Keywords: 'საკვანძო სიტყვები'
+Topic: საკითხი
+'URL Name': 'URL-ის სახელი'
+'Left to pay': 'დარჩა გადასახდელი'
+Active: აქტიური
+Trial: საცდელი
+Next: შემდეგი
+Previous: წინა
+Translate: თარგმნა
+View: ნახვა
+'Scheduled Publishing': 'დაგეგმილი გამოქვეყნება'
+Time: დრო
+Action: მოქმედება
+'Schedule a new action': 'ახალი მოქმედების დაგეგმვა'
+'Scheduling a new publish action': 'ახალი გამოსაქვეყნებელი ოპერაციის დაგეგმვა'
+'Delete scheduled publish action': 'დაგეგმილი ოპერაციის გაუქმება'
+Date/Time: თარიღი/დრო
+'You must select an action.': 'თქვენ უნდა მონიშნოთ მოქმედება'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'თქვენ არა გაქვთ უფლება დაგეგმოთ გამოცემის, ან სტატიის ავტომატური გამოქვეყნება'
+'Front page': 'მთავარი გვერდი'
+'Section page': 'სექციის გვერდი'
+'Show on front page': 'ჩვენება მთავარ გვერდზე'
+'Remove from front page': 'მოხსნა მთავარი გვერდიდან'
+'Show on section page': 'ჩვენება სექციის გვერდზე'
+'Remove from section page': 'მოხსნა სექციიდან'
+Actions: მოქმედება
+Publishing: გამოქვეყნება
+Show: ჩვენება
+Remove: მოხსნა
+'Article Types': 'სტატიის ტიპები'
+'Staff User Types': 'სტაფის ტიპები'
+Publications: პუბლიკაციები
+Issues: გამოცემები
+Sections: სექციები
+Articles: სტატიები
+Images: ფოტოები
+Change: ცვლილება
+'Add new issue': 'დაამატე ახალი გამოცემა'
+'Section Template': 'სექციის შაბლონი'
+'Article Template': 'სტატიის შაბლონი'
+'Default Language': 'ნაგულისხმევი ენა'
+'Paid Period': 'გადახდის პერიოდი'
+Preview: გადახედვა
+'You must fill in the $1 field.': 'თქვენ უნდა შეავსოთ $1 ველი'
+Error: შეცდომა
+'Invalid input: $1': 'არასწორადაა შეყვანილი: $1'
+'Language does not exist.': 'ენა არ არსებობს'
+'Publication does not exist.': 'პუბლიკაცია არ არსებობს'
+'Issue does not exist.': 'გამოცემა არ არსებობს'
+'You must select a language.': 'თქვენ უნდა აირჩიოთ ენა'
+'Section does not exist.': 'გამოცემა არ არსებობს'
+'No articles.': 'სტატიები არ არის.'
+'Article does not exist.': 'სტატია არ არსებობს'
+'Image does not exist.': 'ფოტო არ არსებობს'
+'Access denied': 'წვდომა აკრძალულია'
+'Invalid parameters received': 'მიღებულია არასწორი პარამეტრები'
+'Add new article': 'ახალი სტატიის დამატება'
+Status: სტატუსი
+Published: გამოქვეყნებული
+'Not published': გამოუქვეყნებელი
+Submitted: გაგზავნილი
+New: ახალი
+Article: სტატია
+Publish: გამოქვეყნება
+Unpublish: 'გამოქვეყნების გაუქმება'
+Unlock: 'ბლოკის მოხსნა'
+Uploaded: ატვირთული
+YYYY-MM-DD: წელი/თვე/დღე
+Submit: გაგზავნა
+Image: გამოსახულება
+Description: აღწერა
+Photographer: ფოტოგრაფი
+Place: ადგილი
+Date: თარიღი
+Thumbnail: მინიატურა
+'In use': გამოყენებულია
+'Additional searches': 'ძირითადი ძიება'
+'Most Recently Added': 'უკანასკნელი დამატებული'
+'Most Recently Modified': 'უკანასკნელად მოდიფიცირებული'
+'$1 images found': 'ნაპოვნია ფოტო : $1'
+'Reset search conditions': 'ძიების პირობების უგულვებელყოფა'
+'Image number': 'ფოტოს ნომერი'
+Users: მომხმარებლები
+Localizer: ლოკალიზატორი
+'Adding new translation': 'ახალი თარგმანის დამატება'
+'No more languages.': 'სხვა ენა არაა'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'ველი $1 შეიძლება შეიცავდეს მხოლოდ ასოებს, ციფრებს და ქვედა ხაზს'
+'Add new publication': 'გამოცემის დამატება'
+'Upload new template': 'ახალი შაბლონის ატვირთვა'
+'Add new staff member': 'ახალი თანამშრომლის დამატება'
+'Add new subscriber': 'ახალი ხელმომწერის დამატება'
+'Add new user type': 'ახალი მომხმარებლის ტიპის დამატება'
+'Add new article type': 'ახალი სტატიის ტიპის დამატება'
+'Add new country': 'ქვეყნის დამატება'
+'Add new language': 'ენის დამატება'
+'View logs': 'აღრიცხვის ნახვა'
+'Change your password': 'პაროლის შეცვლა'
+'Your Articles': 'თქვენი სტატიები'
+'Submitted Articles': 'წარდგენილი სტატიები'
+Logs: აღრიცხვა
+'There are $1 article(s) left.': 'დარჩა სტატიები: $1'
+'There are $1 issues(s) left.': 'დარჩა გამოცემაა: $1'
+'There are $1 section(s) left.': 'დარჩენილია სექცია: $1'
+'There are $1 publication(s) left.': 'დარჩენილია პუბლიკაცია: $!'
+'There are $1 countries left.': 'დარჩა ქვეყნები: $1'
+'Name <SMALL>(click to edit)</SMALL>': 'სათაური <SMALL>(დააწკაპუნე რედაქტირებას)</SMALL>'
+'Add new subscription': 'გამოწერის დამატება'
+'You do not have the right to add subscriptions.': 'თქვენ არა გაქვთ გამოწერის დამატების უფლება'
+'Adding subscription': 'გამოწერის დამატება'
+'Delete subscription': 'გამოწერის გაუქმება'
+'You do not have the right to delete subscriptions.': 'თქვენ არა გაქვთ გამოწერის გაუქმების უფლება'
+'No such subscription.': 'ასეთი გამოწერა არაა'
+Yes: დიახ
+No: არა
+Close: დახურული
+'No issues.': 'გამოცემა არ არის.'
+'Back to Edit Article': 'უკან დაბრუნება სტატიის რედაქტირებისთვის'
+'No topics': 'თემა არაა'
+'You do not have the right to add articles.': 'თქვენ არა გაქვთ სტატიის დამატების უფლება'
+Start: დაწყება
+Days: დღეები
+'The sections could not be added successfully. Some of them were already added !': 'სექციების დამატების პროცესი  წარუმატებლად დასრულდა. ზოგიერთი მათგანი უკვე დამატებული იყო '
+'Add another': 'დაამატე სხვა'
+Cancel: გაუქმება
+Done: შესრულებულია
+OK: OK
+Save: შენახვა
+Search: ძიება
+'Make a selection': მონიშნე
+'You must input a number greater than 0 into the $1 field.': 'თქვენ უნდა შეიყვანოთ 0 ზე მეტი ციფრი $1 ველში '
+'You must input a valid date.': 'თქვენ უნდა მიუთითოთ რეალური თარიღი.'
+'Add new field': 'ახალი ველის დამატება'
+'Article automatic publishing schedule': 'სტატიის ავტომატურად გამოქვეყნების გრაფიკი'
+'Are you sure you want to delete this scheduled action?': 'დარწმუნებული ხართ, რომ გსურთ ამ დაგეგმილი მოქმედების გაუქმება?'
+Unlink: გაუქმება
+'Are you sure you want to delete the image $1?': 'დარწმუნებული ხართ, რომ გსურთ ფოტო $1 წაშლა?'
+'No such issue.': 'მსგავსი გამოცემა არ არის'
+'Are you sure you want to delete the subscription to the publication $1?': 'დარწმუნებული ხართ, რომ გსურთ პუბლიკაცია $1 გამოწერის გაუქმება?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'გამოცემა $1 ში ცვლილებების შეტანა  შეუძლებელია. გთხოვთ დარწმუნდით, რომ გამოშვების URL– ის სახელი პუბლიკაცია $3 –ში მანამდე გამოყენებული არ იყო '
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: მიმაგრება
+Back: უკან
+File: ფაილი
+'Save and Close': 'შენახვა და დახურვა'
+Add: დამატება
+'Select All': 'მონიშნე ყველა'
+'Select None': 'არაფერია მონიშნული'
+'Add Event': 'მოვლენის დამატება'
+N/A: N/A
+'On Front Page': 'მთავარ გვერდზე'
+'On Section Page': 'სექციის გვერდზე'
+'Created by': 'შექმნილია # მიერ'
+'Creation date': 'შექმნის თარიღი'
+'Publication List': 'პუბლიკაციების სია'
+'Issue List': 'გამოცემების სია'
+'Section List': 'სექციების სია'
+All: ყველა
+duplicate: დუბლირება
+move: გადატანა
+Move: გადატანა
+'From:': დან
+'Date:': წაშლა
+Hidden: დამალული
+Comments: კომენტარები
+Comment: კომენტარი
+Approved: დადასტურებული
+Subject: თემა
+'IP address:': 'IP მისამართი'
+'Email:': 'ელ-ფოსტა:'
+Author: ავტორი
+'Article name': 'სტატიის სათაური'
+'Hide article': 'სტატიის დამალვა'
+'Show article': 'სტატატიის ჩვენება'
+'Article Type Fields': 'სტატიის ტიპის ველები'
+'Article Images': 'სტატიის გამოსახულებები'
+'Log Messages': 'აღრიცხვის შეტყობინებები'
+'Article Files': 'სტატიის ფაილები'
+'Article Comments': 'სტატიის კომენტარები'
+'Are you sure you want to deactivate the subscription?': 'დარწმუნებული ხართ, რომ გსურთ გამოწერის დეაქტივაცია?'
+'Are you sure you want to activate the subscription?': 'დარწმუნებული ხართ, რომ გსურთ გამოწერის აქტივაცია?'
+Other: სხვა
+'Time:': დრო
+'No events.': 'მოვლენა არაა'
+'Default templates': 'ნაგულისხმევი შაბლონები'
+'System Preferences': 'სისტემური პარამეტრები'
+'The date must be in the future.': 'თარიღი უნდა იყოს მომავალ დროში'
+Send: გაგზავნა
+'Thank you.': გმადლობ
+'Please take a minute to send us an email.': 'გთხოვთ გამოგვიგზავნოთ ელ-ფოსტა.'
+(optional): (სურვილისამებრ)
+'The URL you entered is invalid: $1': 'შეყვანილი URL არასწორია: $1'
+Reads: წაკითხვები
+'Publish with issue': 'გამოქვეყნება გამოცემასთან ერთად'
+'Universal List': 'უნივერსალური სია'
+'Invalid security token!': 'არასწორი უსაფრთხოების მარკერი'
+Authors: ავტორები
+'Author:': 'ავტორი:'
+'User name': მომხმარებელი
+'User Types': 'მომხმარებლის ტიპები'
+'Add new user account': 'დაამატე ახალი მომხმარებლის მონაცემის ჩანაწერი'
+'Schedule a new publish action': 'ახალი ოპერაციის დაგეგმვა'
+'Subscription Default Time': 
+'No such language.': 'ასეთი ენა არაა'
+'No such infotype.': 'ასეთი კლასი არაა'
+'No such keyword.': 'ასეთი საკვანძო სიტყვა არ არის'
+'No such country.': 'ასეთი ქვეყანა არ არსებობს'
+'User may add/change user accounts and passwords': 'მომხმარებელს შუძლია დამატება/შეცვლა  მომხმარებლის ჩანაწერის და პაროლის:ru '
+'User may delete user accounts': 'მომხმარებელს შეუძლია მომხმარებლის ჩანაწერის წაშლა'
+'There are $1 issue(s) left.': 'დარჩა $1 ნომერი/ჟურნალი/გამოშვება'
+'There are $1 keyword(s) left.': 'დარჩა $1 საკვანძო სიტყვები: ru'
+'Name<BR><SMALL>(click to edit)</SMALL>': 
+'New field': 'ახალი ველი'

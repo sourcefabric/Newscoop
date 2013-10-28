@@ -9,12 +9,12 @@
  */
 
 require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
-camp_load_translation_strings("library");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
 $success = false;
-$message = getGS('Access denied.'); // default error
+$message = $translator->trans('Access denied.', array(), 'library'); // default error
 $hiperlink = '';
 
 $affectedArticles = 0;
@@ -65,7 +65,7 @@ switch($f_action) {
 case 'delete':
     if (!$g_user->hasPermission('DeleteArticle')) {
         $success = false;
-        $data->error = getGS('You do not have the right to delete articles.');
+        $data->error = $translator->trans('You do not have the right to delete articles.', array(), 'library');
         break;
     }
     $affectedArticles = 0;
@@ -82,15 +82,15 @@ case 'delete':
 
 
 
-    $message = getGS("$1 articles have been removed", $affectedArticles);
-    $errorMessage = getGS("$1 articles have not been removed", $notAffectedArticles);
+    $message = $translator->trans("$1 articles have been removed", array('$1' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("$1 articles have not been removed", array('$1' => $notAffectedArticles), 'library');
 
 
     break;
 case "workflow_publish":
     if (!$g_user->hasPermission('Publish')) {
         $success = false;
-        $data->error = getGS('You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.');
+        $data->error = $translator->trans('You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.', array(), 'library');
         break;
     }
     foreach ($articleCodes as $articleCode) {
@@ -103,8 +103,8 @@ case "workflow_publish":
         }
     }
 
-    $message = getGS("Article status set to '$1' for $2 articles", getGS("Published"), $affectedArticles);
-    $errorMessage = getGS("Article status not set to '$1' for $2 articles", getGS("Published"), $notAffectedArticles);
+    $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("Published"), '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("Article status not set to $1 for $2 articles",  array('$1' => $translator->trans("Published"), '$2' => $notAffectedArticles), 'library');
 
 
     break;
@@ -123,8 +123,8 @@ case 'workflow_submit':
         }
     }
 
-    $message = getGS("Article status set to '$1' for $2 articles", getGS("Submitted"), $affectedArticles);
-    $errorMessage = getGS("Article status not set to '$1' for $2 articles", getGS("Submitted"), $notAffectedArticles);
+    $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("Submitted"), '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("Article status not set to $1 for $2 articles", array('$1' => $translator->trans("Submitted"), '$2' => $notAffectedArticles), 'library');
 
 
     break;
@@ -144,8 +144,8 @@ case 'workflow_new':
 	        }
     }
 
-    $message = getGS("Article status set to '$1' for $2 articles", getGS("New"), $affectedArticles);
-    $errorMessage = getGS("Article status set to '$1' for $2 articles", getGS("New"), $affectedArticles);
+    $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("New"), '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("New"), '$2' => $affectedArticles), 'library');
 
     break;
 case 'switch_onfrontpage':
@@ -163,8 +163,8 @@ case 'switch_onfrontpage':
         }
     }
 
-    $message = getGS("$1 toggled for $2 articles.", "&quot;".getGS("On Front Page")."&quot;", $affectedArticles);
-    $errorMessage = getGS("$1 not toggled for $2 articles.", "&quot;".getGS("On Front Page")."&quot;", $notAffectedArticles);
+    $message = $translator->trans("$1 toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("On Front Page")."&quot;", '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("$1 not toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("On Front Page")."&quot;", '$2' => $notAffectedArticles), 'library');
 
     break;
 case 'switch_onsectionpage':
@@ -186,8 +186,8 @@ case 'switch_onsectionpage':
         }
     }
 
-    $message = getGS("$1 toggled for $2 articles.", "&quot;".getGS("On Section Page")."&quot;", $affectedArticles);
-    $errorMessage = getGS("$1 not toggled for $2  articles.", "&quot;".getGS("On Section Page")."&quot;", $notAffectedArticles);
+    $message = $translator->trans("$1 toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;", '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("$1 not toggled for $2  articles.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;", '$2' => $notAffectedArticles), 'library');
 
 
     break;
@@ -206,8 +206,8 @@ case 'switch_comments':
         }
     }
 
-    $message = getGS("$1 toggled for $2 articles.", "&quot;".getGS("Comments")."&quot;", $affectedArticles);
-    $errorMessage = getGS("$1 not toggled for $2 articles.", "&quot;".getGS("Comments")."&quot;", $notAffectedArticles);
+    $message = $translator->trans("$1 toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("Comments")."&quot;", '$2' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("$1 not toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("Comments")."&quot;", '$2' => $notAffectedArticles), 'library');
 
     break;
 case 'unlock':
@@ -222,8 +222,8 @@ case 'unlock':
         }
     }
 
-    $message = getGS("$1 Article(s) unlocked", $affectedArticles);
-    $errorMessage = getGS("$1 Article(s) not unlocked", $notAffectedArticles);
+    $message = $translator->trans("$1 Article(s) unlocked", array('$1' => $affectedArticles), 'library');
+    $errorMessage = $translator->trans("$1 Article(s) not unlocked", array('$1' => $notAffectedArticles), 'library');
 
     break;
 case 'duplicate':
@@ -239,7 +239,7 @@ case 'duplicate':
         $affectedArticles += 1;
     }
 
-    $message = getGS("$1 Article(s) duplicated", $affectedArticles);
+    $message = $translator->trans("$1 Article(s) duplicated", array('$1' => $affectedArticles), 'library');
 
     break;
 
@@ -274,12 +274,12 @@ case 'publish_schedule':
 if ($f_target == 'art_ofp') {
     $value = ($f_value == 'Yes') ? true : false;
     $success = $articleObj->setOnFrontPage($value);
-    $message = getGS("$1 toggled.", "&quot;".getGS("On Front Page")."&quot;");
+    $message = $translator->trans("$1 toggled.", array('$1' => "&quot;".$translator->trans("On Front Page")."&quot;"), 'library');
 }
 if ($f_target == 'art_osp') {
     $value = ($f_value == 'Yes') ? true : false;
     $success = $articleObj->setOnSectionPage($value);
-    $message = getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;");
+    $message = $translator->trans("$1 toggled.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;"), 'library');
 }
 if ($f_target == 'art_status') {
     if (in_array($f_value, array('Published', 'Submitted', 'New'))) {
@@ -311,7 +311,7 @@ if ($f_target == 'art_status') {
 
         $success = $articleObj->setWorkflowStatus($f_value);
 
-        $message = getGS("Article status set to '$1'", $articleObj->getWorkflowDisplayString($f_value));
+        $message = $translator->trans("Article status set to $1", array('$1' => $articleObj->getWorkflowDisplayString($f_value)), 'library');
     }
 }
 

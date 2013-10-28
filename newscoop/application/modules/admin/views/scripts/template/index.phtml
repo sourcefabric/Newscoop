@@ -1,11 +1,14 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <div class="currentDirectory">
 
-    <strong><?php putGS('Current directory:'); ?></strong>
+    <strong><?php echo $translator->trans('Current directory:', array(), 'themes'); ?></strong>
 
     <?php if (empty($this->path)) : ?>
-        <?php putGS('Templates'); ?>
+        <?php echo $translator->trans('Templates', array(), 'themes'); ?>
     <?php else : ?>
-        <a href="<?php echo $this->url(array( 'path' => NULL )); ?>"><?php putGS('Templates'); ?></a>
+        <a href="<?php echo $this->url(array( 'path' => NULL )); ?>"><?php echo $translator->trans('Templates', array(), 'themes'); ?></a>
         	/
         	<?php echo $this->navigation()->breadcrumbs()
                 ->setContainer($this->nav)
@@ -32,7 +35,7 @@
 
     <?php if ($this->doCache) : ?>
     <span id="template-caching-status" style="float:right; text-align:right; width:680px; color:#BFBFBF">
-    	<?php echo getGS('Caching templates in:') ?>
+    	<?php echo $translator->trans('Caching templates in:', array(), 'themes') ?>
     	<strong></strong>
     </span>
 	<?php endif; ?>
@@ -42,11 +45,11 @@
 <thead>
 <tr>
     <th class="id"><input type="checkbox" name="toggle" class="all" /></th>
-    <th><?php putGS('File name'); ?></th>
-    <th><?php putGS('Type'); ?></th>
-    <th class="size"><?php putGS('File size'); ?></th>
-    <th><?php putGS('Cache Lifetime'); ?></th>
-    <th><?php putGS('Last modified'); ?></th>
+    <th><?php echo $translator->trans('File name', array(), 'themes'); ?></th>
+    <th><?php echo $translator->trans('Type'); ?></th>
+    <th class="size"><?php echo $translator->trans('File size', array(), 'themes'); ?></th>
+    <th><?php echo $translator->trans('Cache Lifetime', array(), 'themes'); ?></th>
+    <th><?php echo $translator->trans('Last modified', array(), 'themes'); ?></th>
     <th></th><!-- size in bytes for sorting -->
     <th></th>
 </tr>
@@ -57,7 +60,7 @@
         'path' => $this->parent,
         'file' => null,
         'next' => null,
-    )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
+    )); ?>" class="upOneLevel" title="<?php echo $translator->trans('Go to parent'); ?>"><?php echo $translator->trans('Go to parent', array(), 'themes'); ?></a></td>
 </tr>
 <?php endif; ?>
 
@@ -71,7 +74,7 @@
         'path' => ltrim($this->path . $this->separator . $folder->name, $this->separator),
         'file' => null,
         'next' => null,
-    )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder->name); ?>"><?php echo $folder->name; ?></a></td>
+    )); ?>" class="folder" title="<?php echo $translator->trans("Go to $1", array('$1' => $folder->name), 'themes'); ?>"><?php echo $folder->name; ?></a></td>
     <td>dir</td>
     <td></td>
     <td></td>
@@ -79,8 +82,8 @@
     <td>-1</td>
 
     <td class="menu"><ul class="actionDropDown">
-        <li><a href="#"><?php putGS('Actions'); ?></a><ul>
-            <li><a href="#delete" class="delete">Delete</a></li>
+        <li><a href="#"><?php echo $translator->trans('Actions'); ?></a><ul>
+            <li><a href="#delete" class="delete"><?php echo $translator->trans('Delete'); ?></a></li>
         </ul></li>
     </ul></td>
 </tr>
@@ -95,7 +98,7 @@
         'path' => $this->path,
         'file' => $file->name,
         'next' => urlencode($this->url()),
-    )); ?>" class="file" title="<?php putGS("Edit '$1'", $file->name); ?>"><?php echo $file->name; ?></a></td>
+    )); ?>" class="file" title="<?php echo $translator->trans("Edit $1", array('$1' => $file->name), 'themes'); ?>"><?php echo $file->name; ?></a></td>
     <td><?php echo $file->type; ?></td>
     <td class="size"><?php echo $this->formatBytes($file->size); ?></td>
     <td><?php echo isset($file->id) ? $file->ttl : ''; ?></td>
@@ -103,7 +106,7 @@
     <td><?php echo $file->size; ?></td>
 
     <td class="menu"><ul class="actionDropDown">
-        <li><a href="#"><?php putGS('Actions'); ?></a><ul>
+        <li><a href="#"><?php echo $translator->trans('Actions'); ?></a><ul>
             <li><a href="#rename" class="rename">Rename</a></li>
             <li><a href="#move" class="duplicate">Move</a></li>
             <li><a href="#copy" class="duplicate">Copy</a></li>
@@ -117,7 +120,7 @@
 
 </form>
 
-<div class="dialogPopup" title="<?php putGS('New name'); ?>">
+<div class="dialogPopup" title="<?php echo $translator->trans('New name', array(), 'themes'); ?>">
     <input type="text" name="name" />
     <?php echo $this->moveForm->name; ?>
 </div>
@@ -147,10 +150,10 @@ $(function() {
 		modal: true,
 		position:'center',
 		buttons: {
-            <?php echo json_encode(getGS('Save')); ?>: function() {
+            <?php echo json_encode($translator->trans('Save')); ?>: function() {
                 var name = $('[name="name"]', $(this)).not(':hidden').val();
                 if (!name.length) {
-                    alert(<?php echo json_encode(getGS("Name can't be empty")); ?>);
+                    alert(<?php echo json_encode($translator->trans("Name cant be empty")); ?>);
                     return;
                 }
 
@@ -158,7 +161,7 @@ $(function() {
                 $('input[name="name"]', form).val(name);
                 form.submit();
 			},
-            <?php echo json_encode(getGS('Cancel')); ?>: function() {
+            <?php echo json_encode($translator->trans('Cancel')); ?>: function() {
 				$(this).dialog("close");
 			}
         }
@@ -194,7 +197,7 @@ $(function() {
             { 'iDataSort': [7], 'aTargets': [4] }
         ],
         'oLanguage': {
-            'sLoadingRecords': <?php echo json_encode(getGS('Directory is empty')); ?>,
+            'sLoadingRecords': <?php echo json_encode($translator->trans('Directory is empty', array(), 'themes')); ?>,
         },
         'sDom': 't',
         'bPaginate': false,
@@ -249,7 +252,7 @@ $(function() {
 
         if (!$('tbody input:checkbox:checked').size()) {
             $(this).val('');
-            alert(<?php echo json_encode(getGS("You must select at least one template to perform an action.")); ?>);
+            alert(<?php echo json_encode($translator->trans("You must select at least one template to perform an action.", array(), 'themes')); ?>);
             return;
         }
 
@@ -271,17 +274,17 @@ $(function() {
             switch (action)
             {
             	case 'move' :
-            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Choose destination')); ?>);
+            		$('#ui-dialog-title-1').html(<?php echo json_encode($translator->trans('Choose destination', array(), 'themes')); ?>);
                     $('.dialogPopup select').show();
                     $('.dialogPopup input').hide();
                    	break;
             	case 'rename' :
-            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Rename file')); ?>);
+            		$('#ui-dialog-title-1').html(<?php echo json_encode($translator->trans('Rename file', array(), 'themes')); ?>);
                     $('.dialogPopup select').hide();
                     $('.dialogPopup input').show().val(fn);
                 	break;
             	default :
-            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Set new name to')); ?>+' '+fn);
+            		$('#ui-dialog-title-1').html(<?php echo json_encode($translator->trans('Set new name to', array(), 'themes')); ?>+' '+fn);
                 	$('.dialogPopup select').hide();
                 	$('.dialogPopup input').show();
                 	break;
@@ -299,7 +302,7 @@ $(function() {
 		var path = cachePathList.shift();
 		if ( typeof path == 'undefined' )
 		{
-			$('#template-caching-status').text('<?php echo getGS('Caching templates finished') ?>');
+			$('#template-caching-status').text('<?php echo $translator->trans('Caching templates finished', array(), 'themes') ?>');
 			return;
 		}
 		$('#template-caching-status strong').text(path);

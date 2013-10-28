@@ -1,0 +1,81 @@
+get: მიღება
+Soundcloud: SoundCloud
+Templates: შაბლონები
+'Feedback Messages': 'შეფასების შეტყობინებები '
+'Article Playlists': 'სტატიების სია'
+'Check all': 'ყველას მონიშვნა'
+view: ჩვენება
+undo/redo: უკუგდება/გამეორება
+underline: ხაზგასმა
+translate: თარგმნა
+'text direction': 'ტექსტის მიმართულება'
+'text alignment': 'ტექსტის გამწკრივება'
+table: ცხრილი
+superscript: 'ზედა ინდექსი '
+subscript: 'ქვედა ინდექსი'
+subhead: ქვეთავი
+strikethrough: ხაზგადასმა
+statusbar: სტატუს-პანელი
+'spell checker enabled': 'ორთოგრაფი ჩართულია'
+'source view': 'წყაროს ნახვა'
+publish: გამოქვეყნება
+notify: შეტყობინება
+moderate: მოდერაცია
+manage: მართვა
+'list number': 'რიცხვებიანი სია'
+'list bullet': 'წერტილებიანი სია'
+link: ბმული
+italic: 'დახრილი (italic)'
+indent: აბზაცი
+image: გამოსახულება
+'horizontal rule': 'ჰორიზონტალური სახაზავი'
+handle: 'სახელური '
+guest: სტუმარი
+'font size': 'შრიფტის ზომა'
+'font face': შრიფტი
+'font color': 'შრიფტის ფერი'
+find/replace: ნახვა/შეცვლა
+enlarge: გადიდება
+enable: ჩართვა
+edit: რედაქტირება
+delete: წაშლა
+copy/cut/paste: კოპირება/ამოჭრა/ჩასმა
+clear: გაწმენდა
+'character map': 'სიმბოლოთა ცხრილი'
+bold: 'მუქი (bold)'
+attach: მიბმა
+'any resource': 'ნებისმიერი რესურსი'
+admin: ადმინი
+add: დამატება
+'You cant deny yourself to manage $1': 'თქვენ არ შეგიძლია საკუთარი თავისთვის $1-ის მართვის გამორთვა'
+'You are not allowed to $1 $2.': 'თქვენ არ გაქვთ ამის უფლება: $1 $2'
+'User type saved.': 'მომხმარებლის ტიპი დამახსოვრდა'
+'User type deleted.': 'მომხმარებლის ტიპი წაიშალა.'
+'User type added.': 'მომხმარებლის ტიპი დაემატა'
+'User Groups': 'მომხმარებელთა ჯგუფი'
+Themes: თემები
+'That type name already exists, please choose a different name.': 'ასეთი ტიპის სახელი უკვე არსებობს, გთხოვთ აირჩიოთ სხვა.'
+System: სისტემა
+Structure: სტრუქტურა
+'Search Indexer': 'ტერმინოლოგიური საძიებელი'
+'Rich-Text Editor Preferences': 'ტექსტის დაფორმატების ველის პარამეტრები'
+ReCaptcha: ReCaptcha
+Polls: გამოკითხვები
+'Permissions:': 'უფლებები:'
+'Permissions updated': 'უფლებები განახლდა'
+Notification: შეტყობინება
+Log: აღრიცხვა
+Layout: გეგმა
+Global: გლობალური
+Files: ფაილები
+'Error: ': 'შეცდომა:'
+'Edit user type $1': '$1 მომხმარებლის ტიპის რედაქტირება'
+Deny: უარყოფა
+'Delete user type $1': '$1 მომხმარებლის ტიპის წაშლა'
+'Can not delete a user type with assigned users.': 'შეუძლებელია მომხმარებლის ტიპის წაშლა, რომელსაც მომხმარებლები აქვს მიბმული.'
+Cache: ქეში
+Backup: 'სარეზერვო ასლი'
+Authoring: 'საავტორო სისტება'
+Allow: 'ნების დართვა'
+'User types': 'მომხმარებლის ტიპი'
+'No user types.': 'მომხმარებლის ტიპები არ არსებობს.'

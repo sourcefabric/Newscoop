@@ -8,15 +8,16 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -31,6 +32,6 @@ foreach ($_POST['image'] as $id => $values) {
     $imageObj->update($updateArray);
 }
 
-camp_html_add_msg(getGS("Images updated."), "ok");
+camp_html_add_msg($translator->trans("Images updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/index.php");
 ?>

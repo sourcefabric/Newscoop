@@ -23,7 +23,6 @@ require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
-camp_load_translation_strings("tiny_media_plugin");
 
 $Campsite['SUBDIR'] = str_replace('/js/tinymce/plugins/campsitemedia', '', $Campsite['SUBDIR']);
 
@@ -72,10 +71,11 @@ function drawFiles($list, &$manager)
 
 function drawNoResults()
 {
+  $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <table width="100%">
   <tr>
-    <td class="noResult"><?php putGS("No Media Files Found"); ?></td>
+    <td class="noResult"><?php echo $translator->trans("No Media Files Found", array(), 'tiny_media_plugin'); ?></td>
   </tr>
 </table>
 <?php

@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+User: 
+None: 
+'Coming from': 
+'Ban/Unban user': 
+Ip: 
+'Bans can be applied to a users name, email address or IP address.': 'Забране могу бити примењене на корисничко име, имејл адресу или ИП адресу'
+'You are about to permanently delete multiple comments.': 'Неповратно ћете избрисати више коментара.'
+'You are about to permanently delete a comment.': 'Неповратно ћете избрисати коментар.'
+Website: 'Веб сајт'
+'Value is not $1 characters long': 'Вредност није дугачка $1 карактера'
+Username: 'Корисничко име'
+'User id': 'Кориснички ид'
+'User ban settings': 'Подешавање забране за корисника'
+'Update comment': 'Измени коментар'
+Unrecommended: Непрепоручен
+Unrecommend: 'Не препоручи'
+'Subject is not $1 characters long': 'Наслов није дугачак $1 карактера'
+'Sort by Thread order': 'Сортирај по редоследу у дискусији'
+'Show parent comment': 'Прикажи матични коментар'
+'Show commenter details': 'Прикажи детаље о коментатору'
+'Show commenter': 'Прикажи коментатора'
+'Show comment user details': 'Прикажи детаље о коментатору'
+'Show comment user': 'Прикажи коментатора'
+'Show comment details': 'Прикажи детаље коментатора'
+'Select status': 'Изабери статус'
+'Search Type': 'Тип претраге'
+'Reply to comment': 'Одговори на коментар'
+Recommended: Препоручени
+Recommend: Препоручи
+'Quick edit': 'Брзо уређивање'
+Parent: Матични
+ID: Ид
+'Go to edit article': 'Иди на уређивање текста'
+Forum: Форум
+'For Column': 'За колону'
+Email: имејл
+'Edit acceptance criteria': 'Уреди критеријум прихватљивости'
+E-mail: Имејл
+'Delete all comments?': 'Обриши све коментаре?'
+'Date Created': 'Датум креирања'
+'Comments updated.': 'Коментари измењени'
+'Comments status change to $1.': 'Промена статуса коментара у $1.'
+'Comments deleted.': 'Коментари обрисани'
+'Commenter $1 saved.': 'Коментатор $1 сачуван.'
+'Commenter $1 deleted.': 'Коментатор $1 обрисан.'
+Commenter: Коментатор
+'Comment updated.': 'Коментатор измењен'
+'Comment status change to $1.': 'Промена статуса коментара у $1.'
+'Comment id': 'Ид коментара'
+'Comment deleted.': 'Коментар избрисан'
+'Comment delete by $1 from the article $2 ($3)': 'Коментар обрисан од стране $1 из текста $2 ($3)'
+'Comment Acceptance': 'Прихватљивост коментара'
+'Comment $4 by $1 in the article $2 ($3)': 'Коментатор $4 од $1 у тексту $2 ($3)'
+'Comment $1 saved.': 'Коментатор $1 снимљен.'
+Column: Колона
+'Change subscriber information': 'Промени информације о претплатнику'
+'Ban for commenter $1 saved.': 'Забрана за коментатора $1 сачувана.'
+Ban: Забрани
+'Are you sure you want to do it?': 'Сигурни сте да желите то да урадите?'
+'Add rating': 'додај рејтинг'
+'Add new comment commenter': 'Додај новог коментатора'
+'Add new comment': 'Додај нови коментар'
+'Add new acceptance criteria': 'Додај нови критеријум прихватљивости'
+'Acceptance $1 saved.': 'Прихватљивост $1 сачувана.'
+'Acceptance $1 deleted.': 'Прихватљивост $1 обрисана.'

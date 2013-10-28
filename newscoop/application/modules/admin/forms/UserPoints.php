@@ -21,6 +21,7 @@ class Admin_Form_UserPoints extends Zend_Form
     public function init()
     {
         //$this->addElement('hash', 'csrf');
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         foreach ($this->entities as $entry) {
 
@@ -37,7 +38,7 @@ class Admin_Form_UserPoints extends Zend_Form
         }
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
             'ignore' => TRUE,
         ));
 

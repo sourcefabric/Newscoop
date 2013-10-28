@@ -2,14 +2,16 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to manage publications."));
+	camp_html_display_error($translator->trans("You do not have the right to manage publications.", array(), 'pub'));
 	exit;
 }
 
@@ -17,7 +19,7 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Alias = Input::Get('Alias', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -32,21 +34,21 @@ if ($publicationObj->getDefaultAliasId() != $Alias) {
 	if ($deleted) {
 		camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$Pub");
 	} else {
-		$errorMsgs[] = getGS('The alias $1 could not be deleted.','<B>'.$aliasObj->getName().'</B>');
+		$errorMsgs[] = $translator->trans('The alias $1 could not be deleted.', array('$1' => '<B>'.$aliasObj->getName().'</B>'), 'pub');
 	}
 } else {
-	$errorMsgs[] = getGS('$1 is the default publication alias, it can not be deleted.', '<B>'.$aliasObj->getName().'</B>');
+	$errorMsgs[] = $translator->trans('$1 is the default publication alias, it can not be deleted.', array('$1' => '<B>'.$aliasObj->getName().'</B>'), 'pub');
 }
 
-$crumbs = array(getGS("Publication Aliases") => "aliases.php?Pub=$Pub");
-camp_html_content_top(getGS("Deleting alias"), array("Pub" => $publicationObj), true, false, $crumbs);
+$crumbs = array($translator->trans("Publication Aliases", array(), 'pub') => "aliases.php?Pub=$Pub");
+camp_html_content_top($translator->trans("Deleting alias", array(), 'pub'), array("Pub" => $publicationObj), true, false, $crumbs);
 
 ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting alias"); ?> </B>
+		<B> <?php  echo $translator->trans("Deleting alias", array(), 'pub'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -65,7 +67,7 @@ camp_html_content_top(getGS("Deleting alias"), array("Pub" => $publicationObj), 
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php p($Pub); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/pub/aliases.php?Pub=<?php p($Pub); ?>'">
 	</DIV>
 	</TD>
 </TR>

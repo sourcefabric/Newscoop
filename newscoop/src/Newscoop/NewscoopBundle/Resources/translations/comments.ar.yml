@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'توشك أن تحذف رسائل متعددة بشكل دائم.'
+'You are about to permanently delete a message.': 'توشك أن تحذف رسالة بشكل دائم.'
+User: المستخدم
+None: 'لا شيء'
+'Coming from': 'قادما من'
+'Ban/Unban user': 'تحريم / إزالة تحريم المستخدم'
+Ip: 'بروتوكول الإنترنت (IP)'
+'Bans can be applied to a users name, email address or IP address.': 'يمكن تطبيق التحريمات على اسم المستخدم، عنوانه البريد الإلكتروني أو عنوانه IP.'
+'You are about to permanently delete multiple comments.': 'توشك أن تحذف تعليقات متعددة بشكل دائم.'
+'You are about to permanently delete a comment.': 'توشك أن تحذف تعليقا بشكل دائم.'
+Website: 'موقع إلكتروني'
+'Value is not $1 characters long': 'ليشت القيمة $1 أحرف'
+Username: 'اسم المستخدم'
+'User id': 'هوية المستخدم'
+'User ban settings': 'إعدادات تحريم المستخدم '
+'Update comment': 'تحديث التعليق'
+Unrecommended: 'تم ازالة التوصية'
+Unrecommend: 'ازالة التوصية'
+'Subject is not $1 characters long': 'ليس الموضوع $1 أحرف'
+'Sort by Thread order': 'الرتب حسب ترتيب المناقشة'
+'Show parent comment': 'اظهار التعليق الاصلي'
+'Show commenter details': 'إظهار تفاصيل المعلق'
+'Show commenter': 'اظهار المعلق'
+'Show comment user details': 'اظهار تفاصيل المستخدم للتعليق'
+'Show comment user': 'اظهار مستخدم التعليق'
+'Show comment details': 'إظهار تفاصيل التعليق'
+'Select status': 'تحديد الحالة'
+'Search Type': 'نوع البحث'
+'Reply to comment': 'الرد على التعليق'
+Recommended: 'تم التوصية'
+Recommend: التوصية
+'Quick edit': 'التعديل السريع'
+Parent: أصل
+ID: هوية
+'Go to edit article': 'الذهاب إلى تعديل المقالة'
+Forum: 'المنتدى للنقاش'
+'For Column': للعمود
+Email: 'بريد إلكتروني'
+'Edit acceptance criteria': 'تعديل معايير القبول'
+E-mail: 'البريد الإلكتروني '
+'Delete all comments?': 'حذف جميع التعليقات؟'
+'Date Created': 'تم انشاء التاريخ'
+'Comments updated.': 'تم تحديث التعليقات'
+'Comments status change to $1.': 'تغيير حالة التعليقات الى $1.'
+'Comments deleted.': 'تم حذف التعليقات'
+'Commenter $1 saved.': 'تم حفظ المعلق $1.'
+'Commenter $1 deleted.': 'تم حذف المعلق $1.'
+Commenter: المعلق
+'Comment updated.': 'تم تحديث التعليق.'
+'Comment status change to $1.': 'تغيير حالة التعليق الى $1.'
+'Comment id': 'رقم التعليق'
+'Comment deleted.': 'تم حذف التعليق.'
+'Comment delete by $1 from the article $2 ($3)': 'تم جذف التعليق من $1 من المقالة $2 ($3)'
+'Comment Acceptance': 'قبول التعليق'
+'Comment $4 by $1 in the article $2 ($3)': 'التعليق $4 من $1 في المقالة $2 ($3)'
+'Comment $1 saved.': 'تم الحفظ التعليق $1.'
+Column: العمود
+'Change subscriber information': 'تغيير معلومات المشترك'
+'Ban for commenter $1 saved.': 'تم حفظ تحريم للمعلق $1.'
+Ban: تحريم
+'Are you sure you want to do it?': 'هل أنت متأكد أنك تريد أن تفعل ذلك؟'
+'Add rating': 'إضافة تقييما'
+'Add new comment commenter': 'إضافة معلقا جديد'
+'Add new comment': 'اضافة تعليقا جديدا'
+'Add new acceptance criteria': 'إضافة معايير القبول الجديدة'
+'Acceptance $1 saved.': 'تم حفظ القبول $1.'
+'Acceptance $1 deleted.': 'تم حذف القبول $1.'

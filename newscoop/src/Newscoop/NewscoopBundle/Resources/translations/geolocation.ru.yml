@@ -1,0 +1,68 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'выбранная пиктограмма маркера'
+'add location to map': 'добавить местоположение на карту '
+'Video source': 'Источник видео'
+'The point will be removed from all translations of the article.': 'Пункт будет удален из всех переводов этой статьи.'
+'Specify country (optional)': 'Определите страну (необязательно)'
+'Sorry, that place was not found. Check your spelling or search again.': 'К сожалению, данное место не найдено. Проверьте правильность написания или повторите поиск.'
+'Show search results': 'Показать результаты поиска'
+'Search for place or coordinate': 'Искать место или координаты'
+'Return to edit': 'Возврат к редактированию'
+'Really delete this point?': 'Удалить этот пункт?'
+'Name and describe this location': 'Назвать и описать местоположение'
+'Map size': 'Размер карты'
+'Location label': 'Ярлык местоположения'
+'Location description:': 'Описание местоположения:'
+'Label url': 'URL местоположения'
+'Hide search results': 'Скрыть результаты поиска'
+Geo-filtering: Гео-фильтр
+'Fill in youtube ID or link, e.g.': 'Введите ID youtube или ссылку, например'
+'Fill in vimeo ID or link, e.g': 'Введите ID vimeo или ссылку, например'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Введите ID видео, ссылку или название файла для Youtube, Vimeo или флеш-видео.'
+'Fill in location label': 'Введите ярлык местоположения'
+'Fill in local swf flash file name or link, e.g.': 'Введите название местного swf флеш-файла или ссылку, например'
+'Fill in local flv flash file name or link, e.g.': 'Введите название местного flv флеш-файла, например'
+'Fill in image link, like': 'Введите ссылку на изображение, как '
+'Describe the location...': 'Опишите местоположение...'
+'Delete location': 'Удалите местоположение'
+Coordinates: Координаты
+'Change video display size': 'Изменить размер видео на экране'
+'Change image display size': 'Изменить размер изображения на экране'
+'Change icon of this location': 'Изменить пиктограмму местоположения'
+'Center map on location': 'Разместить местоположение в центре карты'
+'Advanced editing': 'Расширенное редактирование'
+'Add an image to this location': 'Добавить изображение к данному местоположению'
+'Add a video to this location': 'Добавить видео к данному местоположению'
+'Are you sure you want to quit without saving your changes?': 'Вы уверены, что желаете выйти без сохранения изменений?'
+'Map preview': 'Предварительный просмотр карты'
+'Locations updated.': 'Места событий обновлены'
+'Setting the map name helps with map search': 'Настройка названия карты помогает поиску по карте'
+Longitude: Долгота
+Latitude: Широта
+Center: Центр
+'Last Saved Map View': 'Предварительный просмотр последних обновлений карты'
+'List of locations updated': 'Список мест событий обновлен'
+width: ширина
+'show initial map view': 'показать первоначальный вид карты'
+'problem at point processing, please send error report': 'Случилась проблема в процессе обработки данных, пожалуйста, отправьте отчет об ошибке'
+'plain text': 'простой текст'
+'html content': 'html код'
+height: высота
+'fill in map name': 'заполните имя карты'
+'You do not have the right to remove maps from articles.': 'У Вас нет прав доступа для удаления карт из статей.'
+'Video file': Видеофайл
+'Video ID': 'ID видео'
+'The map has been removed from the article.': 'Эта карта была удалена из статьи.'
+'Point no.': 'Пункт №'
+'Point markers': 'Маркеры пункта'
+None: Ничего
+'Map Search Example': 'Пример поиска карты'
+'Map Preview': 'Предварительный просмотр карты'
+'Image URL': 'URL изображения'
+video: видео
+text: текст
+image: изображение
+icon: пиктограмма
+'Setting Map Locations': 'Настройки карты мест событий '
+city: город
+cc: 'центр города'

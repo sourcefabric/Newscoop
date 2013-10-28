@@ -5,8 +5,9 @@
 class SourcefabricNewsletter extends Widget
 {
     public function __construct()
-    {
-        $this->title = getGS('Sourcefabric.org newsletter subscription');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Sourcefabric.org newsletter subscription', array(), 'extensions');
     }
 
     public function render()

@@ -70,8 +70,6 @@ class LegacyController extends Zend_Controller_Action
             require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/SyntaxError.php');
             set_error_handler('templateErrorHandler');
 
-            // loads translations strings in the proper language for the error messages display
-            camp_load_translation_strings('preview', $previewLang);
         } else {
 	        set_error_handler(create_function('', 'return true;'));
         }

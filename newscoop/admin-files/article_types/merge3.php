@@ -1,13 +1,14 @@
 <?php
-camp_load_translation_strings("article_types");
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to merge article types."));
+	camp_html_display_error($translator->trans("You do not have the right to merge article types.", array(), 'article_types'));
 	exit;
 }
 
@@ -55,9 +56,12 @@ foreach ($f_src_c as $destColumn => $srcColumn) {
 	$srcATF = new ArticleTypeField($f_src, $srcColumn);
 
 	if (!$destATF->isConvertibleFrom($srcATF)) {
-        $errMsgs[] = getGS('Cannot merge a $1 field ($2) into a $3 field ($4).',
-                            getGS($srcATF->getType()), $srcATF->getDisplayName(),
-                            getGS($destATF->getType()), $destATF->getDisplayName());
+        $errMsgs[] = $translator->trans('Cannot merge a $1 field ($2) into a $3 field ($4).', array(
+                '$1' => $translator->trans($srcATF->getType()), 
+                '$2' => $srcATF->getDisplayName(),
+                '$3' => $translator->trans($destATF->getType()), 
+                '$4' => $destATF->getDisplayName()
+            ), 'article_types');
         $ok = false;
 	}
 }
@@ -67,13 +71,13 @@ foreach ($f_src_c as $destColumn => $srcColumn) {
 //
 if ($ok && $f_action == 'Merge') {
 	if (!SecurityToken::isValid()) {
-		camp_html_display_error(getGS('Invalid security token!'));
+		camp_html_display_error($translator->trans('Invalid security token!'));
 		exit;
 	}
 
 	$res = ArticleType::merge($f_src, $f_dest, $f_src_c);
     if (!$res) {
-        $errMsgs[] = getGS("Merge failed.");
+        $errMsgs[] = $translator->trans("Merge failed.", array(), 'article_types');
         $ok = false;
     }
     if ($ok) {
@@ -99,7 +103,7 @@ if ($ok) {
     //
     $articlesArray = $src->getArticlesArray();
     if (!count($articlesArray)) {
-        $errMsgs[] = getGS("No articles.");
+        $errMsgs[] = $translator->trans("No articles.");
         $ok = false;
     }
     if ($ok) {
@@ -113,7 +117,7 @@ if ($ok) {
         $sql = "SELECT * FROM X$f_src WHERE NrArticle=$f_cur_preview";
         $rows = $g_ado_db->GetAll($sql);
         if (!count($rows)) {
-            $errMsgs[] = getGS('There is no article associated with the preview.');
+            $errMsgs[] = $translator->trans('There is no article associated with the preview.', array(), 'article_types');
             $ok = false;
         }
     }
@@ -141,9 +145,9 @@ if ($ok) {
         $getString = substr($getString, 1);
 
         $crumbs = array();
-        $crumbs[] = array(getGS("Configure"), "");
-        $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-        $crumbs[] = array(getGS("Merge article type"), "");
+        $crumbs[] = array($translator->trans("Configure"), "");
+        $crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
+        $crumbs[] = array($translator->trans("Merge article type", array(), 'article_types'), "");
         echo camp_html_breadcrumbs($crumbs);
 
         ?>
@@ -153,13 +157,13 @@ if ($ok) {
         <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
         <TR>
         	<TD COLSPAN="2">
-        		<b><?php putGS("Merge Article Types: Step $1 of $2", "3", "3"); ?></b>
+        		<b><?php echo $translator->trans("Merge Article Types: Step $1 of $2", array('$1' => 3, '$2' => 3), 'article_types'); ?></b>
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
         	</TD>
         </TR>
         <TR>
         	<TD COLSPAN="2">
-        		<b><?php putGS("Merge configuration for merging $1 into $2.", $src->getDisplayName(), $dest->getDisplayName()); ?></b>
+        		<b><?php echo $translator->trans("Merge configuration for merging $1 into $2.", array('$1' => $src->getDisplayName(), '$2' => $dest->getDisplayName()), 'article_types'); ?></b>
         	<BR>
         	<UL>
         	<?php
@@ -168,15 +172,15 @@ if ($ok) {
 
         		if ($srcColumn == 'NULL') {
         			?>
-        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".getGS("NOTHING")."</b>", "<b>". $destColumn ."</b>"); ?> <?php putGS("(Null merge warning.)"); ?></FONT></LI>
+        			<LI><FONT COLOR="TAN"><?php echo $translator->trans("Merge $1 into $2",  array('$1' => "<b>".$translator->trans("NOTHING", array(), 'article_types')."</b>", '$2' => "<b>". $destColumn ."</b>"), 'article_types'); ?> <?php echo $translator->trans("(Null merge warning.)", array(), 'article_types'); ?></FONT></LI>
         			<?php
         		} else if (count($tmp) > 1) {
         			?>
-        			<LI><FONT COLOR="TAN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?> <?php putGS("(Duplicate warning.)"); ?></FONT></LI>
+        			<LI><FONT COLOR="TAN"><?php echo $translator->trans("Merge $1 into $2", array('$1' => "<b>".$srcColumn."</b>", '$2' => "<b>". $destColumn ."</b>"), 'article_types'); ?> <?php echo $translator->trans("(Duplicate warning.)", array(), 'article_types'); ?></FONT></LI>
         			<?php
         		} else {
         			?>
-        			<LI><FONT COLOR="GREEN"><?php putGS("Merge $1 into $2", "<b>".$srcColumn."</b>", "<b>". $destColumn ."</b>"); ?></FONT></LI>
+        			<LI><FONT COLOR="GREEN"><?php echo $translator->trans("Merge $1 into $2", array('$1' => "<b>".$srcColumn."</b>", '$2' => "<b>". $destColumn ."</b>"), 'article_types'); ?></FONT></LI>
         			<?php
         		}
         	}
@@ -184,7 +188,7 @@ if ($ok) {
         	// display the warning in red if the user select NONE
         	foreach ($src->getUserDefinedColumns(null, true, true) as $srcColumn) {
         		if (array_search($srcColumn->getPrintName(), $f_src_c) === false) {
-        			?><LI><FONT COLOR="RED"><?php putGS("(!) Do NOT merge $1", "<B>". $srcColumn->getPrintName() ."</B>"); ?> <?php putGS("(No merge warning.)"); ?></FONT></LI><?php
+        			?><LI><FONT COLOR="RED"><?php echo $translator->trans("(!) Do NOT merge $1", array('$1' => "<B>". $srcColumn->getPrintName() ."</B>"), 'article_types'); ?> <?php echo $translator->trans("(No merge warning.)", array(), 'article_types'); ?></FONT></LI><?php
         		}
         	} ?>
         	</UL>
@@ -193,20 +197,20 @@ if ($ok) {
         </TR>
         <TR>
         	<TD COLSPAN="2">
-        	<B><?php putGS("Preview a sample of the merge configuration."); ?></B> <SMALL><?php putGS("Cycle through your articles to verify that the merge configuration is correct."); ?></SMALL>
+        	<B><?php echo $translator->trans("Preview a sample of the merge configuration.", array(), 'article_types'); ?></B> <SMALL><?php echo $translator->trans("Cycle through your articles to verify that the merge configuration is correct.", array(), 'article_types'); ?></SMALL>
         	</TD>
         </TR>
 
         <TR>
         	<TD COLSPAN="2">
             <?php if ($f_prev_action == 'Orig') { ?>
-                <B><?php putGS("View of original ($1) $2", htmlspecialchars($curPreview->getType()), $curPreview->getTitle()); ?>
+                <B><?php echo $translator->trans("View of original ($1) $2", array('$1' => htmlspecialchars($curPreview->getType()), '$2' => $curPreview->getTitle()), 'article_types'); ?>
                 (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?<?php print $getString; ?>">
-                <?php putGS("To return to the preview click here"); ?></a>)</B>
+                <?php echo $translator->trans("To return to the preview click here", array(), 'article_types'); ?></a>)</B>
             <?php } else { ?>
-            	<B><?php putGS("Preview of $1", wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')); ?>
-            	   (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>"><?php putGS("View the source ($1) version of $2", $src->getDisplayName(), wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')); ?></A>)
-            	<?php putGS("$1 of $2", $curPos + 1, count($articlesArray)); ?>.
+            	<B><?php echo $translator->trans("Preview of $1", array('$1' => wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')), 'article_types'); ?>
+            	   (<A HREF="/<?php print $ADMIN; ?>/article_types/merge3.php?f_action=Orig&<?php print $getString; ?>"><?php echo $translator->trans("View the source ($1) version of $2", array('$1' => $src->getDisplayName(), '$2' => wordwrap(htmlspecialchars($curPreview->getTitle()), 60, '<BR>')), 'article_types'); ?></A>)
+            	<?php echo $translator->trans("$1 of $2", array('$1' => $curPos + 1, '$2' => count($articlesArray)), 'article_types'); ?>.
                 <?php
                 if (isset($articlesArray[$curPos - 1])) {
                     $prevArticle = $articlesArray[$curPos - 1];
@@ -222,7 +226,7 @@ if ($ok) {
                 }
             } // else
             ?>
-            <BR><?php putGS("This is the first translation of $1", $numberOfTranslations); ?>
+            <BR><?php echo $translator->trans("This is the first translation of $1", array('$1' => $numberOfTranslations), 'article_types'); ?>
 
             </TD>
         </TR>
@@ -237,43 +241,43 @@ if ($ok) {
         		<TD style="padding-top: 3px;">
         			<TABLE>
         			<TR>
-        				<TD ALIGN="RIGHT" valign="top" ><b><?php  putGS("Name"); ?>:</b></TD>
+        				<TD ALIGN="RIGHT" valign="top" ><b><?php  echo $translator->trans("Name"); ?>:</b></TD>
         				<TD align="left" valign="top">
         				    <?php print wordwrap(htmlspecialchars($curPreview->getTitle()), 60, "<br>"); ?>
         				</TD>
-        				<TD ALIGN="RIGHT" valign="top"><b><?php  putGS("Created by"); ?>:</b></TD>
+        				<TD ALIGN="RIGHT" valign="top"><b><?php  echo $translator->trans("Created by"); ?>:</b></TD>
         				<TD align="left" valign="top"><?php p(htmlspecialchars($articleCreator->getRealName())); ?></TD>
         				<TD ALIGN="RIGHT" valign="top"></TD>
         				<TD align="left" valign="top" style="padding-top: 0.25em;">
-        				<?php  putGS('Show article on front page'); ?>
+        				<?php  echo $translator->trans('Show article on front page', array(), 'article_types'); ?>
         				</TD>
         			</TR>
         			<TR>
-        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Type"); ?>:</b></TD>
+        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  echo $translator->trans("Type"); ?>:</b></TD>
         				<TD align="left" valign="top">
         					<?php print htmlspecialchars($dest->getDisplayName()); ?>
         				</TD>
-        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php  putGS("Creation date"); ?>:</nobr></b></TD>
+        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><nobr><?php echo $translator->trans("Creation date"); ?>:</nobr></b></TD>
         				<TD align="left" valign="top" nowrap>
         					<?php print $curPreview->getCreationDate(); ?>
         				</TD>
         				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"></TD>
         				<TD align="left" valign="top"  style="padding-top: 0.25em;">
-        				<?php  putGS('Show article on section page'); ?>
+        				<?php echo $translator->trans('Show article on section page', array(), 'article_types'); ?>
         				</TD>
         			</TR>
         			<TR>
-        			    <td align="right" valign="top" nowrap><b><?php putGS("Number"); ?>:</b></td>
+        			    <td align="right" valign="top" nowrap><b><?php echo $translator->trans("Number"); ?>:</b></td>
         			    <td align="left" valign="top"  style="padding-top: 2px; padding-left: 4px;"><?php p($curPreview->getArticleNumber()); ?> <?php if (isset($publicationObj) && $publicationObj->getUrlTypeId() == 2) { ?>
-        &nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$curPreview->getUrlName(); ?>"><?php putGS("Link to public page"); ?></a>)<?php } ?></td>
+        &nbsp;(<a href="/<?php echo $languageObj->getCode()."/".$issueObj->getUrlName()."/".$sectionObj->getUrlName()."/".$curPreview->getUrlName(); ?>"><?php echo $translator->trans("Link to public page", array(), 'article_types'); ?></a>)<?php } ?></td>
 
-        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php  putGS("Publish date"); ?>:</b></TD>
+        				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"><b><?php echo $translator->trans("Publish date", array(), 'article_types'); ?>:</b></TD>
         				<TD align="left" valign="top">
         					<?php print htmlspecialchars($curPreview->getPublishDate()); ?>
         				</TD>
         				<TD ALIGN="RIGHT" valign="top" style="padding-left: 1em;"></TD>
         				<TD align="left" valign="top" style="padding-top: 0.25em;">
-        				<?php putGS('Allow users without subscriptions to view the article'); ?>
+        				<?php echo $translator->trans('Allow users without subscriptions to view the article', array(), 'article_types'); ?>
         				</TD>
         			</TR>
         			</TABLE>
@@ -286,7 +290,7 @@ if ($ok) {
         			<TR>
         				<td align="left" style="padding-right: 5px;">
         				</td>
-        				<TD ALIGN="RIGHT" ><?php  putGS("Keywords"); ?>:</TD>
+        				<TD ALIGN="RIGHT" ><?php echo $translator->trans("Keywords"); ?>:</TD>
         				<TD>
         					<?php print htmlspecialchars($curPreview->getKeywords()); ?>
         				</TD>
@@ -333,7 +337,7 @@ if ($ok) {
         					<span style="padding-left: 4px; padding-right: 4px; padding-top: 1px; padding-bottom: 1px; border: 1px solid #888; margin-right: 5px; background-color: #EEEEEE;">
         					<?php echo htmlspecialchars($text); ?>
         					</span>
-        				<?php putGS('YYYY-MM-DD'); ?>
+        				<?php echo $translator->trans('YYYY-MM-DD'); ?>
         				</TD>
         			</TR>
         			<?php
@@ -426,10 +430,10 @@ if ($ok) {
 
         <TR>
         	<TD>
-        	<INPUT TYPE="CHECKBOX" NAME="f_delete"><?php putGS("Delete the source article type ($1) when finished.", $src->getDisplayName()); ?>
+        	<INPUT TYPE="CHECKBOX" NAME="f_delete"><?php echo $translator->trans("Delete the source article type ($1) when finished.", array('$1' => $src->getDisplayName()), 'article_types'); ?>
         	</TD>
         	<TD>
-        	<b><?php putGS('Clicking "Merge" will merge ($1) article(s).', $src->getNumArticles()); ?></b>
+        	<b><?php echo $translator->trans('Clicking "Merge" will merge ($1) article(s).', array('$1' => $src->getNumArticles()), 'article_types'); ?></b>
         	</TD>
         <TR>
         	<TD COLSPAN="2">
@@ -441,8 +445,8 @@ if ($ok) {
 
         	<INPUT TYPE="HIDDEN" NAME="f_cur_preview" VALUE="<?php $curPreview->getArticleNumber(); ?>">
         	<INPUT TYPE="HIDDEN" NAME="f_action" VALUE="">
-        	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Step2'" VALUE="<?php  putGS('Back to Step 2'); ?>">
-        	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Merge'" VALUE="<?php  putGS('Merge!'); ?>">
+        	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Step2'" VALUE="<?php  echo $translator->trans('Back to Step 2', array(), 'article_types'); ?>">
+        	<INPUT TYPE="submit" class="button" NAME="Ok" ONCLICK="dialog.f_action.value='Merge'" VALUE="<?php  echo $translator->trans('Merge!', array(), 'article_types'); ?>">
         	</DIV>
         	</TD>
         </TR>
@@ -456,9 +460,9 @@ if ($ok) {
 } // end if ok
 if (!$ok) {
     $crumbs = array();
-    $crumbs[] = array(getGS("Configure"), "");
-    $crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
-    $crumbs[] = array(getGS("Merge article type"), "");
+    $crumbs[] = array($translator->trans("Configure"), "");
+    $crumbs[] = array($translator->trans("Article Types"), "/$ADMIN/article_types/");
+    $crumbs[] = array($translator->trans("Merge article type", array(), 'article_types'), "");
 
     echo camp_html_breadcrumbs($crumbs);
 
@@ -467,7 +471,7 @@ if (!$ok) {
     <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
     <TR>
     	<TD COLSPAN="2">
-    		<B> <?php  putGS("Merge article type"); ?> </B>
+    		<B> <?php  echo $translator->trans("Merge article type", array(), 'article_types'); ?> </B>
     		<HR NOSHADE SIZE="1" COLOR="BLACK">
     	</TD>
     </TR>
@@ -485,7 +489,7 @@ if (!$ok) {
     <TR>
     	<TD COLSPAN="2">
     	<DIV ALIGN="CENTER">
-    	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/merge2.php?f_src=<?php echo $f_src; ?>&f_dest=<?php echo $f_dest . $getString ?>'">
+    	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/merge2.php?f_src=<?php echo $f_src; ?>&f_dest=<?php echo $f_dest . $getString ?>'">
     	</DIV>
     	</TD>
     </TR>

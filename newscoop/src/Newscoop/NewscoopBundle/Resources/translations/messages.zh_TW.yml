@@ -1,0 +1,273 @@
+Plugins: 插件
+'Manage Plugins': 管理插件
+Account: 賬戶
+'Items per page': 
+'Add new': 添加
+Home: 首頁
+Logout: 登出
+More...: 更多…
+Content: 內容
+Languages: 語言
+Countries: 國家
+Themes: 模版
+Topics: 主題
+Configure: 設置
+'Image Archive': 
+'Add Article': 添加文章
+Fields: 字段
+Delete: 删除
+Type: 類型
+Name: 名稱
+Code: 編碼
+Edit: 編輯
+Login: 登入
+Password: 密碼
+Site: 地址
+Path: 路徑
+'Go up': 向上
+URL: 網址
+Order: 次序
+Hide: 隱藏
+Duplicate: 複製
+Subscription: 訂閱
+expires: 過期
+starts: 開始
+before: 之前
+after: 之後
+on: 
+status: 狀況
+active: 
+inactive: 
+Subscribers: 訂閱者
+Staff: 職員
+'Select destination': 選擇目的地
+'No languages': 無語言
+'---Select language---': －－選擇語言－－
+'No publications': 無出版物
+'---Select publication---': －－選擇出版物－－
+'No issues': 無文章
+'---Select issue---': －－選擇文章－－
+'No sections': 無區
+'---Select section---': －－選擇區－－
+Language: 語言
+Country: 國家
+'Account name': 用戶名
+Publication: 出版物
+'Default language': 默認語言
+Subscriptions: 訂閱
+Issue: 發行
+Number: 數字
+Section: 區
+Keywords: 關鍵詞
+Topic: 主題
+'URL Name': 網址名稱
+'Left to pay': 
+Active: 
+Trial: 試用
+Next: 下一個
+Previous: 上一個
+Translate: 翻譯
+View: 查看
+'Scheduled Publishing': 已排程的發行
+Time: 時間
+Action: 
+'Schedule a new action': 
+'Scheduling a new publish action': 
+'Delete scheduled publish action': 
+Date/Time: 日期/時間
+'You must select an action.': 
+'You do not have the right to schedule issues or articles for automatic publishing.': 
+'Front page': 
+'Section page': 
+'Show on front page': 
+'Remove from front page': 
+'Show on section page': 
+'Remove from section page': 
+Actions: 
+Publishing: 
+Show: 
+Remove: 
+'Article Types': 文章類型
+'Staff User Types': 
+Publications: 出版物
+Issues: 發行
+Sections: 區
+Articles: 文章
+Images: 圖片
+Change: 更改
+'Add new issue': 添加新論題
+'Section Template': 區模版
+'Article Template': 文章模版
+'Default Language': 默認語言
+'Paid Period': 已付期
+Preview: 預覽
+'You must fill in the $1 field.': 你必須填寫$1字段
+Error: 錯誤
+'Invalid input: $1': '無效的輸入: $1'
+'Language does not exist.': 語言不存在
+'Publication does not exist.': 無此出版物
+'Issue does not exist.': 無此發行
+'You must select a language.': 您必須選擇一種語言
+'Section does not exist.': 無此區
+'No articles.': 無文章
+'Article does not exist.': 無此文章
+'Image does not exist.': 無此圖片
+'Access denied': 拒絕訪問
+'Invalid parameters received': 
+'Add new article': 添加新文章
+Status: 狀態
+Published: 已發布
+'Not published': 未發布
+Submitted: 已提交
+New: 新
+Article: 文章
+Publish: 發布
+Unpublish: 不發布
+Unlock: 解鎖
+Uploaded: 已上載
+YYYY-MM-DD: YYYY-MM-DD
+Submit: 提交
+Image: 圖片
+Description: 描述
+Photographer: 摄影
+Place: 地點
+Date: 日期
+Thumbnail: 縮圖
+'In use': 
+'Additional searches': 
+'Most Recently Added': 
+'Most Recently Modified': 
+'$1 images found': 
+'Reset search conditions': 
+'Image number': 圖片號碼
+Users: 用戶
+Localizer: 
+'Adding new translation': 添加新翻譯
+'No more languages.': 無更多語言
+'The $1 field may only contain letters, digits and underscore (_) character.': 
+'Add new publication': 添加新發布
+'Upload new template': 上載新模版
+'Add new staff member': 
+'Add new subscriber': 添加新的閱讀者
+'Add new user type': 添加新用戶類型
+'Add new article type': 添加新文章類型
+'Add new country': 添加新國家
+'Add new language': 添加新語言
+'View logs': 查看記錄
+'Change your password': 修改你的密碼
+'Your Articles': 你的文章
+'Submitted Articles': 提交文章
+Logs: 記錄
+'There are $1 article(s) left.': 還有$1篇文章
+'There are $1 issues(s) left.': 
+'There are $1 section(s) left.': 還有$1區
+'There are $1 publication(s) left.': 還有$1發布
+'There are $1 countries left.': 還有$1個國家
+'Name <SMALL>(click to edit)</SMALL>': 
+'Add new subscription': 添加新訂閱
+'You do not have the right to add subscriptions.': 
+'Adding subscription': 添加订阅
+'Delete subscription': 移除訂閱
+'You do not have the right to delete subscriptions.': 你沒有添加訂閱的權限
+'No such subscription.': 無此訂閱
+Yes: 是
+No: 否
+Close: 關閉
+'No issues.': 
+'Back to Edit Article': 
+'No topics': 無主題
+'You do not have the right to add articles.': 您無權添加文章
+Start: 開始
+Days: 天
+'The sections could not be added successfully. Some of them were already added !': 區未成功添加，其中一些已經存在
+'Add another': 添加另一個
+Cancel: 取消
+Done: 完成
+OK: OK
+Save: 儲存
+Search: 搜索
+'Make a selection': 
+'You must input a number greater than 0 into the $1 field.': 
+'You must input a valid date.': 
+'Add new field': 添加新字段
+'Article automatic publishing schedule': 
+'Are you sure you want to delete this scheduled action?': 
+Unlink: 
+'Are you sure you want to delete the image $1?': 
+'No such issue.': 
+'Are you sure you want to delete the subscription to the publication $1?': 
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: 
+Back: 
+File: 
+'Save and Close': 
+Add: 添加
+'Select All': 
+'Select None': 
+'Add Event': 
+N/A: 
+'On Front Page': 
+'On Section Page': 
+'Created by': 
+'Creation date': 
+'Publication List': 
+'Issue List': 
+'Section List': 
+All: 
+duplicate: 
+move: 
+Move: 
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': '電郵:'
+Author: 作者
+'Article name': 
+'Hide article': 
+'Show article': 
+'Article Type Fields': 
+'Article Images': 
+'Log Messages': 
+'Article Files': 
+'Article Comments': 
+'Are you sure you want to deactivate the subscription?': 
+'Are you sure you want to activate the subscription?': 
+Other: 其他
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 發送
+'Thank you.': 謝謝
+'Please take a minute to send us an email.': 
+(optional): （選擇性的）
+'The URL you entered is invalid: $1': 
+Reads: 閱讀
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+'User name': 用户名
+'User Types': 用户类型
+'Subscription Default Time': 默认订阅时间
+'No such language.': 无此语言
+'No such infotype.': 无此类型
+'No such keyword.': 无此关键字
+'No such country.': 无此国家
+'User may add/change user accounts and passwords': 用户可添加/删除帐户与密码
+'User may delete user accounts': 用户可删除帐户
+'Add new user account': 添加新帐户
+'There are $1 issue(s) left.': 还有$1个问题
+'There are $1 keyword(s) left.': 还有$1个关键字
+'Name<BR><SMALL>(click to edit)</SMALL>': 名称（点击编辑）
+'New field': 新字段
+Authors: 

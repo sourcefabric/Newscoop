@@ -15,7 +15,8 @@ class SourcefabricFeed extends FeedWidget
     protected $count = 5;
 
     public function __construct()
-    {
-        $this->title = getGS('Sourcefabric.org News reader');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Sourcefabric.org News reader', array(), 'extensions');
     }
 }

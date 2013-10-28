@@ -1,14 +1,14 @@
 <?php
-camp_load_translation_strings("article_images");
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/ArticleImage.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Image.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission("AddImage")) {
-	camp_html_display_error(getGS("You do not have the right to add images" ), null, true);
+	camp_html_display_error($translator->trans("You do not have the right to add images", array(), 'media_archive'), null, true);
 	exit;
 }
 $maxId = Image::GetMaxId();
@@ -20,12 +20,12 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
 	exit;
 }
 
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
-	camp_html_add_msg(getGS("Unable to add new image."));
+	camp_html_add_msg($translator->trans("Unable to add new image.", array(), 'media_archive'));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
 }
 
@@ -60,8 +60,8 @@ camp_html_display_msgs();
 
 <div class="plupload-addon-bottom clearfix">
   <div class="buttons">
-    <input type="submit" value="<?php putGS('Attach'); ?>" name="save" class="save-button">
-    <input type="submit" value="<?php putGS('Attach & Place'); ?>" name="save" class="save-button" onClick="document.getElementById('f_place').value = 1;">
+    <input type="submit" value="<?php echo $translator->trans('Attach'); ?>" name="save" class="save-button">
+    <input type="submit" value="<?php echo $translator->trans('Attach & Place', array(), 'article_images'); ?>" name="save" class="save-button" onClick="document.getElementById('f_place').value = 1;">
   </div>
 </div>
 
@@ -84,6 +84,6 @@ camp_html_display_msgs();
 <?php $this->view->plupload('', array(
     'url' => '../../media-archive/uploader.php',
     'filters' => array(
-        getGS('Image files') => "jpg,gif,png",
+        $translator->trans('Image files', array(), 'article_images') => "jpg,gif,png",
     ),
 )); ?>

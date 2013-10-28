@@ -1,0 +1,275 @@
+Plugins: Плагины
+'Manage Plugins': 'Управление плагинами'
+Account: 'Учетная запись'
+'Items per page': 'Объектов на странице'
+'Add new': Добавить
+Home: Главная
+Logout: Выход
+More...: Далее...
+Content: Содержимое
+Languages: Языки
+Countries: Страны
+Themes: 'Темы (Шаблоны)'
+Topics: Темы
+Configure: Настройки
+'Image Archive': 'Архив изображений'
+'Add Article': 'Добавить статью'
+Fields: Поля
+Delete: Удалить
+Type: Тип
+Name: Заголовок
+Code: Код
+Edit: Правка
+Login: Логин
+Password: Пароль
+Site: Сайт
+Path: Путь
+'Go up': Наверх
+URL: URL
+Order: Порядок
+Hide: Скрыть
+Duplicate: Дублировать
+Subscription: Подписка
+expires: истекает
+starts: начинается
+before: до
+after: после
+on: на
+status: состояние
+active: активно
+inactive: неактивно
+Subscribers: Подписчики
+Staff: Персонал
+'Select destination': 'Выбрать получателя'
+'No languages': 'Нет языков'
+'---Select language---': '---Выберите язык---'
+'No publications': 'Нет изданий'
+'---Select publication---': '---Выберите издание---'
+'No issues': 'Нет статей'
+'---Select issue---': '---Выберите статью---'
+'No sections': 'Нет рубрик'
+'---Select section---': '---Выберите рубрику---'
+Language: Язык
+Country: Страна
+'Account name': 'Учетная запись'
+Publication: Издание
+'Default language': 'Язык по умолчанию'
+Subscriptions: Подписки
+Issue: Выпуск
+Number: Номер
+Section: Рубрика
+Keywords: 'Ключевые слова'
+Topic: Тема
+'URL Name': 'Название URL'
+'Left to pay': 'Осталось оплатить'
+Active: Активно
+Trial: Пробная
+Next: Следующ.
+Previous: Предыдущ.
+Translate: Перевести
+View: Вид
+'Scheduled Publishing': 'Запланированные публикации'
+Time: Время
+Action: Операция
+'Schedule a new action': 'Запланировать новое действие'
+'Scheduling a new publish action': 'Планирование новых операций'
+'Delete scheduled publish action': 'Удалить запланированную операцию'
+Date/Time: Дата/Время
+'You must select an action.': 'Вы должны выбрать операцию.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Вы не имеете права назначать автоматическую публикацию статьи'
+'Front page': 'Титульная страница'
+'Section page': 'Страница рубрики'
+'Show on front page': 'Показать на титульной странице'
+'Remove from front page': 'Удалить с титульной страницы'
+'Show on section page': 'Показать на странице рубрики'
+'Remove from section page': 'Удалить со страницы рубрики'
+Actions: Операции
+Publishing: Публикации
+Show: Показать
+Remove: Удалить
+'Article Types': 'Тип статьи'
+'Staff User Types': 'Пользовательский тип персонала'
+Publications: Издания
+Issues: Выпуски
+Sections: Рубрики
+Articles: Статьи
+Images: Изображения
+Change: Изменить
+'Add new issue': 'Добавить новый выпуск'
+'Section Template': 'Шаблон рубрики'
+'Article Template': 'Шаблон статьи'
+'Default Language': 'Язык по умолчанию'
+'Paid Period': 'Оплаченный период'
+Preview: 'Предварительный просмотр'
+'You must fill in the $1 field.': 'Вы должны заполнить поле $1.'
+Error: Ошибка
+'Invalid input: $1': 'Неправильный ввод: $1'
+'Language does not exist.': 'Язык не существует.'
+'Publication does not exist.': 'Нет такого издания.'
+'Issue does not exist.': 'Выпуск не существует.'
+'You must select a language.': 'Вы должны выбрать язык.'
+'Section does not exist.': 'Нет такой рубрики.'
+'No articles.': 'Статьи отсутствуют.'
+'Article does not exist.': 'Нет такой статьи.'
+'Image does not exist.': 'Такого изображения не существует.'
+'Access denied': 'Доступ запрещен'
+'Invalid parameters received': 'Получены неправильные параметры'
+'Add new article': 'Добавить новую статью'
+Status: Состояние
+Published: Опубликовано
+'Not published': 'Не опубликовано'
+Submitted: Отправлено
+New: Новая
+Article: Статья
+Publish: Опубликовать
+Unpublish: Убрать
+Unlock: Разблокировать
+Uploaded: Загружена
+YYYY-MM-DD: ГГГГ-ММ-ДД
+Submit: Отправить
+Image: Изображение
+Description: Описание
+Photographer: Фотограф
+Place: Место
+Date: Дата
+Thumbnail: Предосмотр
+'In use': Использовано
+'Additional searches': 'Дополнительный поиск'
+'Most Recently Added': 'Недавно добавленные'
+'Most Recently Modified': 'Недавно модифицированные'
+'$1 images found': 'Изображений найдено: $1'
+'Reset search conditions': 'Сбросить условия поиска'
+'Image number': 'Номер изображения'
+Users: Пользователи
+Localizer: Локализатор
+'Adding new translation': 'Добавление нового перевода'
+'No more languages.': 'Больше нет языков.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Поле $1 может содержать только буквы, цифры и символ подчеркивания'
+'Add new publication': 'Добавить новое издание'
+'Upload new template': 'Загрузить новый шаблон'
+'Add new staff member': 'Добавление нового члена персонала'
+'Add new subscriber': 'Добавление нового подписчика'
+'Add new user type': 'Добавить новый тип пользователей'
+'Add new article type': 'Добавить новый тип статей'
+'Add new country': 'Добавить новую страну'
+'Add new language': 'Добавить новый язык'
+'View logs': 'Просмотреть журнал'
+'Change your password': 'Измените Ваш пароль'
+'Your Articles': 'Ваши статьи'
+'Submitted Articles': 'Отправленные статьи'
+Logs: Журнал
+'There are $1 article(s) left.': 'Осталось статей: $1'
+'There are $1 issues(s) left.': 'Осталось выпусков: $1'
+'There are $1 section(s) left.': 'Осталось рубрик: $1'
+'There are $1 publication(s) left.': 'Осталось изданий: $1'
+'There are $1 countries left.': 'Осталось стран: $1'
+'Name <SMALL>(click to edit)</SMALL>': 'Название <SMALL>(щелкните для правки)</SMALL>'
+'Add new subscription': 'Добавить новую подписку'
+'You do not have the right to add subscriptions.': 'Вы не имеете прав добавления подписок'
+'Adding subscription': 'Добавление подписки'
+'Delete subscription': 'Удалить подписку'
+'You do not have the right to delete subscriptions.': 'Вы не имеете прав доступа для  удаления подписок'
+'No such subscription.': 'Нет такой подписки.'
+Yes: Да
+No: Нет
+Close: Закрыть
+'No issues.': 'Нет выпусков.'
+'Back to Edit Article': 'Назад к редактированию статьи'
+'No topics': 'Нет тем'
+'You do not have the right to add articles.': 'Вы не имеете прав доступа к добавлению статей'
+Start: Начало
+Days: Дней
+'The sections could not be added successfully. Some of them were already added !': 'Рубрики не могут быть добавлены. Некоторые из них уже были существуют!'
+'Add another': 'Добавить другую'
+Cancel: Отменить
+Done: Выполнено
+OK: OK
+Save: Сохранить
+Search: Поиск
+'Make a selection': Выделить
+'You must input a number greater than 0 into the $1 field.': 'Вы должны ввести положительное ненулевое число в поле $1'
+'You must input a valid date.': 'Вы должны ввести правильную дату.'
+'Add new field': 'Добавить новый тип:ru'
+'Article automatic publishing schedule': 'Расписание автоматических публикаций статей'
+'Are you sure you want to delete this scheduled action?': 'Вы уверены, что хотите удалить запланированное действие?'
+Unlink: Удалить
+'Are you sure you want to delete the image $1?': 'Вы уверены, что хотите удалить картинку $1?'
+'No such issue.': 'Нет такого выпуска.:ru'
+'Are you sure you want to delete the subscription to the publication $1?': 'Вы уверены, что хотите удалить подписку на издание $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Невозможно сохранить изменения в  выпуске $1, Убедитесь, что название $2 URL выпуска не использовалось ранее в издании $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: байт
+Attach: Приложить
+Back: Назад
+File: Файл
+'Save and Close': 'Сохранить и закрыть'
+Add: Добавить
+'Select All': 'Выбрать все'
+'Select None': 'Отменить выбор'
+'Add Event': 'Добавить событие'
+N/A: недоступно
+'On Front Page': 'На титульной странице'
+'On Section Page': 'На странице рубрики'
+'Created by': Автор
+'Creation date': 'Дата создания'
+'Publication List': 'Список изданий'
+'Issue List': 'Список выпусков'
+'Section List': 'Список рубрик'
+All: Все
+duplicate: дублировать
+move: перенести
+Move: Перенести
+'From:': 'От:'
+'Date:': 'Дата:'
+Hidden: Скрытый
+Comments: Комментарии
+Comment: Комментарий
+Approved: Утвержденный
+Subject: Тема
+'IP address:': 'IP-адрес:'
+'Email:': 'Email:'
+Author: Автор
+'Article name': 'Название статьи'
+'Hide article': 'Скрыть статью'
+'Show article': 'Показать статью'
+'Article Type Fields': 'Поля типов статьи'
+'Article Images': 'Изображения из статьи'
+'Log Messages': 'Сообщения журнала'
+'Article Files': 'Файлы статьи'
+'Article Comments': 'Комментарии к статье'
+'Are you sure you want to deactivate the subscription?': 'Вы уверены, что хотите деактивировать подписчика?'
+'Are you sure you want to activate the subscription?': 'Вы уверены, что хотите активировать подписку?'
+Other: Другое
+'Time:': 'Время:'
+'No events.': 'Нет событий.'
+'Default templates': 'Шаблоны по-умолчанию'
+'System Preferences': 'Системные настройки'
+'The date must be in the future.': 'Дата должна быть в будущем.'
+Send: Отправить
+'Thank you.': Спасибо.
+'Please take a minute to send us an email.': 'Пожалуйста уделите минутку, чтобы послать нам e-mail.'
+(optional): (дополнительно)
+'The URL you entered is invalid: $1': 'Введенный URL неверен: $1'
+Reads: 'Количество просмотров'
+'Publish with issue': 'Опубликовать выпуск'
+'Universal List': 'Универсальный список'
+'Invalid security token!': 'Неверный маркер безопасности!'
+Authors: Авторы
+'Author:': 'Автор:'
+'User name': Пользователь
+'User Types': 'Типы пользователей'
+'Add new user account': 'Добавить новую учетную запись пользователя'
+'Schedule a new publish action': 'Запланировать новую операцию'
+'Subscription Default Time': 'Время подписки по умолчанию:ru'
+'No such language.': 'Нет такого языка.:ru'
+'No such infotype.': 'Нет такого класса:ru'
+'No such keyword.': 'Нет такого ключевого слова.:ru'
+'No such country.': 'Нет такой страны.:ru'
+'User may add/change user accounts and passwords': 'Пользователь может добавлять/изменять учетные записи и пароли:ru'
+'User may delete user accounts': 'Пользователь может удалять учетные записи:ru'
+'There are $1 issue(s) left.': 'Осталось $1 выпуск(ов):ru'
+'There are $1 keyword(s) left.': 'Осталось $1 ключевое(-ых) слов(о):ru'
+'Name<BR><SMALL>(click to edit)</SMALL>': 'Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru'
+'New field': 'Новое поле'

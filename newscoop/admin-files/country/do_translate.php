@@ -1,13 +1,15 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/country/country_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageCountries')) {
-	camp_html_display_error(getGS("You do not have the right to translate country names."));
+	camp_html_display_error($translator->trans("You do not have the right to translate country names.", array(), 'country'));
 	exit;
 }
 
@@ -23,12 +25,12 @@ $created = false;
 
 if (empty($f_country_name)) {
 	$correct = false;
-	$errorMsgs[] = getGS("You must fill in the $1 field.", "<B>".getGS("Name")."</B>");
+	$errorMsgs[] = $translator->trans("You must fill in the $1 field.", array('$1' => "<B>".$translator->trans("Name")."</B>"));
 }
 
 if (!$language->exists()) {
     $correct = false;
-    $errorMsgs[] = getGS('You must select a language.');
+    $errorMsgs[] = $translator->trans('You must select a language.');
 }
 
 if ($correct) {
@@ -37,14 +39,14 @@ if ($correct) {
 	if ($created) {
 	    camp_html_goto_page("/$ADMIN/country/");
 	} else {
-		$errorMsgs[] = getGS('The country name $1 could not be translated','<B>'.$country->getName().'</B>');
+		$errorMsgs[] = $translator->trans('The country name $1 could not be translated', array('$1' => '<B>'.$country->getName().'</B>'), 'country');
 	}
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
-$crumbs[] = array(getGS("Adding new translation"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Countries"), "/$ADMIN/country/");
+$crumbs[] = array($translator->trans("Adding new translation"), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -52,7 +54,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Adding new translation"); ?> </B>
+		<B> <?php echo $translator->trans("Adding new translation"); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -71,7 +73,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/country/'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/country/'">
 	</DIV>
 	</TD>
 </TR>

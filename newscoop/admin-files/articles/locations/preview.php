@@ -5,8 +5,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 
-camp_load_translation_strings('api');
-camp_load_translation_strings('geolocation');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $f_language_id = Input::Get('f_language_selected', 'int', 0);
 if (0 == $f_language_id) {
@@ -21,7 +20,7 @@ $focus_default = true;
 if ('revert' == $f_focus) {$focus_default = false;}
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
     exit;
 }
 ?>
@@ -30,7 +29,7 @@ if (!Input::IsValid()) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Expires" content="now" />
-    <title><?php putGS('Map Preview'); ?></title>
+    <title><?php echo $translator->trans('Map Preview', array(), 'geolocation'); ?></title>
 
     <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
@@ -67,7 +66,7 @@ var map_preview_close = function()
 {
     try {
         if (parent.$.fancybox.reload) {
-            parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
+            parent.$.fancybox.message = '<?php echo $translator->trans('Locations updated.', array(), 'geolocation'); ?>';
         }
         parent.$.fancybox.close();
     }
@@ -111,20 +110,20 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
   $canEdit = $g_user->hasPermission('ChangeArticle');
   if ($canEdit)
   {
-        $edit_str = getGS('Edit');
+        $edit_str = $translator->trans('Edit');
         if ("map" == strtolower($loaded_from)) {
-            $edit_str = getGS('Return to edit');
+            $edit_str = $translator->trans('Return to edit', array(), 'geolocation');
         }
 ?>
         <input id="map_button_edit" type="submit" onClick="map_show_edit(); return false;" class="default-button" value="<?php echo $edit_str; ?>" name="edit" />
 <?php
   }
 ?>
-        <input id="map_button_close" type="submit" onClick="map_preview_close(); return false;" class="default-button" value="<?php putGS('Close'); ?>" name="close" />
+        <input id="map_button_close" type="submit" onClick="map_preview_close(); return false;" class="default-button" value="<?php echo $translator->trans('Close'); ?>" name="close" />
     </div>
     <div id="map_preview_info" class="map_preview_info">
       <?php
-        putGS('Map preview');
+        echo $translator->trans('Map preview', array(), 'geolocation');
       ?>
     </div>
     <!-- end of map_save_part -->
@@ -138,7 +137,7 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
     <?php echo Geo_Map::GetMapTagList($f_article_number, $f_language_id); ?>
   </div>
   <div class="geomap_menu">
-    <a href="#" class="ui-state-default text-button" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><?php putGS('show initial map view'); ?></a>
+    <a href="#" class="ui-state-default text-button" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><?php echo $translator->trans('show initial map view', array(), 'geolocation'); ?></a>
   </div>
   <div class="geomap_map">
     <div class="geomap_menu">

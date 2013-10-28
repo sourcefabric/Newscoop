@@ -1,0 +1,87 @@
+'Duplicate assignment': 'Podwójnie przydzielone'
+Templates: Szablony
+'Import theme': 'Importuj motyw'
+'Import succeded!': 'Import zakończył się sukcesem!'
+'Import failed!': 'Import nie powiódł się.'
+'Edit template: $1': 'Edytuj szablon: $1'
+'Set new name to': 'Ustaw nową nazwę na'
+'Rename file': 'Zmień nazwę pliku'
+'Caching templates in:': 'Zapisz cache szablonów w:'
+'Caching templates finished': 'Zapisywanie cache szablonów zakończone'
+'Theme name': 'Nazwa motywu'
+'Theme is assigned and can not be deleted': 'Motyw jest przydzielony i nie może zostać usunięty'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Eksport motywu nie powiódł się. Sprawdź czy masz wystarczającą ilość wolnego miejsca na dysku.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Motyw nie może zostać wyłączony ponieważ jest używany przez wydanie ($1) w tej publikacji'
+zip: zip
+version: wersja
+uploaded: wgrany
+updated: zaktualizowany
+'or higher': 'lub wiekszy'
+moved: przeniesiony
+installed: zainstalowany
+deleted: usuniety
+'You must select at least one template to perform an action.': 'Musisz wybrać przynajmniej jeden szablon aby wykonać tą akcję.'
+Upload: Wgraj
+'Unassign theme': 'Wyłącz ten motyw'
+'Unassign successful': 'Wyłączanie zakończyło się powodzeniem'
+Unassign: Wyłącz
+'Theme version': 'Wersja motywu'
+'Theme settings updated.': 'Ustawienia motywu zostały zaktualizowane.'
+'Theme settings saved.': 'Ustawienia motywu zostały zapisane.'
+'Theme name / version': 'Nazwa / wersja motywu'
+'Theme management': 'Zarządzanie motywami'
+'Theme $1': 'Motyw $1'
+'The file $1 is empty.': 'Plik $1 jest pusty.'
+'Template object $1 was renamed to $2.': 'Nazwa szblonu $1 została zmieniona na $2'
+'Template object $1 was deleted.': 'Szablon $1 został usunięty.'
+'Template $1 was duplicated into $2.': 'Szablon $1 został skopiowany do $2'
+'Template $1 $2.': 'Szablon $1 $2'
+'Something broke': 'Coś się zepsuło'
+'Section page template': 'Szablon strony sekcji'
+Saving..: Zapisywanie..
+'Saving settings failed.': 'Zapisywanie ustawień nie powiodło się'
+'Save All': 'Zapisz wszystkie'
+'Required Newscoop version': 'Wymagana wersja Newscoopa'
+Replace: Zamień
+'New template $1 created.': 'Utworzony nowy szablon  $1.'
+'New name': 'Nowa nazwa'
+'Name cant be empty': 'Nazwa nie może być pusta'
+'Last modified': 'Ostatnia modyfikacja'
+'Issue page': 'Strona wydania'
+'Go to parent': 'Idź do rodzica'
+'Go to $1': 'idź do $1'
+'Geo Filtering': Geo-filtrowanie
+'Front page template': 'Szablon strony głównej'
+'File size': 'Rozmiar pliku'
+'File name': 'Nazwa pliku'
+'File $1 was replaced.': 'Plik $1 został zamieniony.'
+'Failed unassigning theme': 'Nie udało się wyłaczyć motywu'
+Export: Eksport
+'Error page template': 'Szablon strony błędu'
+'Edit $1': 'Edytuj $1'
+'Done uploading': 'Wgrywanie zakończone'
+'Do you want to override $1?': 'Chcesz nadpisać $1?'
+'Directory is empty': 'Katalog jest pusty'
+'Directory $1 created.': 'Utworzony katalog $1'
+Design: Projekt
+'Delete theme': 'Usuń motyw'
+'Current directory:': 'Aktualny katalog'
+'Create folder': 'Utwórz folder'
+'Create file': 'Utwórz plik'
+'Copy to available themes': 'Skopiuj do dostępnych motywow'
+'Copied successfully': 'Kopiowanie zakończone sukcesem'
+Compatibility: Kompatybilność
+'Click to enlarge': 'Kliknij aby powiększyć'
+'Choose destination': 'Wybierz cel'
+'Cant override directory $1.': 'Nie można nadpisać katalogu $1'
+'Cache Lifetime': 'Długość działania cache'
+'Browse for the theme': 'Przeglądaj szablony'
+'Assigned successfully': 'Włączanie zakończone sukcesem.'
+'Article page template': 'Szablon strony artykułu'
+'Article page': 'Strona artykułu'
+'Are you sure you want to unassign this theme?': 'Jesteś pewien e chcesz wyłączyć ten motyw?'
+'Are you sure you want to delete this theme?': 'Jesteś pewien że chcesz usunąć ten motyw?'
+'Add to publication': 'Dodaj do publikacji'
+'$1 is not writable': 'Brak praw zapisu dla $1'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 pliki $2'

@@ -1,8 +1,11 @@
-<?php $this->placeholder('title')->set(getGS('User types')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('User types', array(), 'user_types')); 
+?>
 
 <?php
 if (empty($this->groups)) {
-    $this->renderMessage(getGS('No user types.'));
+    $this->renderMessage($translator->trans('No user types.', array(), 'user_types'));
     return;
 }
 ?>
@@ -13,11 +16,11 @@ if (empty($this->groups)) {
         <a class="icon delete confirm" href="<?php echo $this->url(array(
             'action' => 'delete',
             'group' => $group->getId(),
-        )); ?>" title="<?php putGS('Delete user type $1', $this->escape($group->getName())); ?>"><?php putGS('Delete'); ?></a>
+        )); ?>" title="<?php echo $translator->trans('Delete user type $1', array('$1' => $this->escape($group->getName())), 'user_types'); ?>"><?php echo $translator->trans('Delete'); ?></a>
         <a class="edit" href="<?php echo $this->url(array(
             'action' => 'edit-access',
             'group' => $group->getId(),
-        )); ?>" title="<?php putGS('Edit user type $1', $this->escape($group->getName())); ?>"><?php echo $this->escape($group->getName()); ?></a>
+        )); ?>" title="<?php echo $translator->trans('Edit user type $1', array('$1' => $this->escape($group->getName())), 'user_type'); ?>"><?php echo $this->escape($group->getName()); ?></a>
     </li>
     <?php } ?>
 </ul>

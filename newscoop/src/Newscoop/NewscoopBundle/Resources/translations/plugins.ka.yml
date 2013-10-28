@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'თქვენ არ დაგიყენებიათ პლაგინები'
+'Some plugins have to be updated. Please press the save button.': 'ზოგიერთი პლაგინი უნდა განახლდეს. დააჭირეთ დამახსოვრებას.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'დაადასტურეთ რომ გსურთ $1 წაშლა. პლაგინის მონაცემები წაიშლება!'
+'You do not have the right to manage plugins.': 'თქვენ არ გაქვთ პლაგინების მართვის უფლება.'
+Version: ვერსია
+'Upload Plugin': 'პლაგინის ატვირთვა'
+Upload: ატვირთვა
+Uninstall: 'ინსტალიაციის გაუქმება'
+'The plugin $1 was sucessfully installed.': '$1 პლაგინი დაყენდა.'
+'No plugins found.': 'პლაგინი არ მოიძებნა'
+Manage: მართვა
+Enabled: ჩაირთო
+'Delete plugin': 'პლაგინის წაშლა'
+'Add new image': 'ახალი სურათის დამატება'

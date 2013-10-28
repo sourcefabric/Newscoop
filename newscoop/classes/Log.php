@@ -80,15 +80,16 @@ class Log extends DatabaseObject {
     {
         ob_start();
 
-        echo getGS('Article'), ': ', $p_article->getTitle();
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        echo $translator->trans('Article'), ': ', $p_article->getTitle();
 
         if (!$p_short) { // add publication, issue, section
             echo ' (';
-            echo getGS('Publication'), ': ', $p_article->getPublicationId();
+            echo $translator->trans('Publication'), ': ', $p_article->getPublicationId();
             echo ', ';
-            echo getGS('Issue'), ': ', $p_article->getIssueNumber();
+            echo $translator->trans('Issue'), ': ', $p_article->getIssueNumber();
             echo ', ';
-            echo getGS('Section'), ': ', $p_article->getSectionNumber();
+            echo $translator->trans('Section'), ': ', $p_article->getSectionNumber();
             echo ")\n";
         }
 
@@ -99,14 +100,14 @@ class Log extends DatabaseObject {
             $p_article->getSectionNumber(),
             $p_article->getArticleNumber());
         if (strpos($url, 'http') !== FALSE) { // no url for deleted
-            echo getGS('Article URL'), ': ', $url, "\n";
+            echo $translator->trans('Article URL', array(), 'api'), ': ', $url, "\n";
         }
 
-        echo getGS('Article Number'), ': ', $p_article->getArticleNumber(), "\n";
-        echo getGS('Language'), ': ', $p_article->getLanguageName(), "\n";
+        echo $translator->trans('Article Number', array(), 'api'), ': ', $p_article->getArticleNumber(), "\n";
+        echo $translator->trans('Language'), ': ', $p_article->getLanguageName(), "\n";
 
         echo "\n";
-        echo getGS('Action') . ': ', $p_text;
+        echo $translator->trans('Action') . ': ', $p_text;
 
         $message = ob_get_clean();
         self::Message($message, $p_userId, $p_eventId);

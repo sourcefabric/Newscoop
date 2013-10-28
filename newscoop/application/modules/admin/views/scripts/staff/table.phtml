@@ -1,4 +1,7 @@
-<?php $this->placeholder('title')->set(getGS('Staff management')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Staff management')); 
+?>
 
 <?php $this->renderActions(); ?>
 

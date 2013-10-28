@@ -3,8 +3,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 
-camp_load_translation_strings('api');
-camp_load_translation_strings('geolocation');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 header('Content-Type: text/html; charset=utf-8');
 echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
@@ -22,7 +21,7 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-filter.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/styles/map-info.css" />
-    <title><?php putGS('Geo-filtering'); ?></title>
+    <title><?php echo $translator->trans('Geo-filtering', array(), 'geolocation'); ?></title>
 
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
@@ -57,7 +56,7 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 <div class="map_mappart_outer_filter">
 
 <div class="map_mappart_filter">
-<a href="#" class="geo_map_show_initial" onClick="<?php echo Geo_Map::GetMapFilterCenter(); ?> return false;"><?php putGS('show initial map view'); ?></a>
+<a href="#" class="geo_map_show_initial" onClick="<?php echo Geo_Map::GetMapFilterCenter(); ?> return false;"><?php echo $translator->trans('show initial map view', array(), 'geolocation'); ?></a>
 <?php echo Geo_Map::GetMapFilterBody(); ?>
 </div><!-- end of map_mappart_filter -->
 

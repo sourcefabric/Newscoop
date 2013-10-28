@@ -1,0 +1,14 @@
+'You have no installed plugins.': 'У вас нет установленных плагинов.'
+'Some plugins have to be updated. Please press the save button.': 'Требуется обновление некоторых плагинов. Пожалуйста, нажмите кнопку Сохранить.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Пожалуйста, подтвердите удаление плагина $1. Все данные плагина будут удалены!'
+'You do not have the right to manage plugins.': 'У Вас нет права доступа для управления плагинами.'
+Version: Версия
+'Upload Plugin': 'Загрузите плагин'
+Upload: Загрузить
+Uninstall: Деинсталлировать
+'The plugin $1 was sucessfully installed.': 'Плагин $1 был успешно инсталлирован.'
+'No plugins found.': 'Не найдено плагинов.'
+Manage: Управлять
+Enabled: Доступен
+'Delete plugin': 'Удалить плагин'
+'Add new image': 'Добавить новое изображение'

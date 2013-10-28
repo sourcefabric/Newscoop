@@ -1,6 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-camp_load_translation_strings("bug_reporting");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 global $Campsite;
 global $ADMIN_DIR;
@@ -27,18 +27,18 @@ global $ADMIN;
             <td align="left">
                 <table border="0" cellspacing="0" cellpadding="3" align="left">
                 <tr>
-                    <td colspan="2"><b><font color="red"><?php putGS("Error Report") ?></font></b>
+                    <td colspan="2"><b><font color="red"><?php echo $translator->trans("Error Report", array(), 'bug_reporting'); ?></font></b>
                         <hr noshade size="1" color="black">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <p><?php
-                            putGS("Newscoop has encountered a problem.");
-                            putGS("We are sorry for the inconvenience.");
+                            echo $translator->trans("Newscoop has encountered a problem.", array(), 'bug_reporting');
+                            echo $translator->trans("We are sorry for the inconvenience.", array(), 'bug_reporting');
                             ?></p>
                         <p><?php
-                           putGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.");
+                           echo $translator->trans("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", array(), 'bug_reporting');
                            ?></p>
                     </td>
                 </tr>
@@ -48,7 +48,7 @@ global $ADMIN;
                 </tr>
                 <tr valign="top">
                     <td colspan="2">
-                    	<?php putGS("What were you trying to do when this happened?") ?> <?php putGS("(optional)"); ?>
+                    	<?php echo $translator->trans("What were you trying to do when this happened?", array(), 'bug_reporting'); ?> <?php echo $translator->trans("(optional)"); ?>
                     </td>
                 </tr>
                 <tr>
@@ -59,7 +59,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Email:");  ?> <?php putGS("(optional)"); ?>
+                    	<?php echo $translator->trans("Email:");  ?> <?php echo $translator->trans("(optional)"); ?>
                     </td>
                     <td><input type="text" class="input_text" name="f_email" value="" size="32" maxlength="255">
                     </td>
@@ -75,7 +75,7 @@ global $ADMIN;
                 ToggleRowVisibility('user_details_hide_link');
                 ToggleRowVisibility('user_details_show_link');">
                 <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] . "/viewmagplus.png"; ?>" id="my_icon" border=
-                "0" align="center"><?php putGS("Show error details"); ?></a>
+                "0" align="center"><?php echo $translator->trans("Show error details", array(), 'bug_reporting'); ?></a>
             </td>
         </tr>
         <tr id="user_details_hide_link" style="display: none;">
@@ -84,7 +84,7 @@ global $ADMIN;
                 "ToggleRowVisibility('user_details_dialog');
                 ToggleRowVisibility('user_details_hide_link');
                 ToggleRowVisibility('user_details_show_link');">
-                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] . "/viewmagminus.png"; ?>" id="my_icon" border="0" align="center"><?php putGS("Hide error details"); ?></a>
+                <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] . "/viewmagminus.png"; ?>" id="my_icon" border="0" align="center"><?php echo $translator->trans("Hide error details", array(), 'bug_reporting'); ?></a>
             </td>
         </tr>
         <tr id="user_details_dialog" style="display: none;">
@@ -93,7 +93,7 @@ global $ADMIN;
                 width="100%">
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Error ID:"); ?>
+                    	<?php echo $translator->trans("Error ID:", array(), 'bug_reporting'); ?>
                     </td>
                     <td>
                     	<?php echo $reporter->getId(); ?>
@@ -101,7 +101,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Software:"); ?>
+                    	<?php echo $translator->trans("Software:", array(), 'bug_reporting'); ?>
                     </td>
                     <td>
                     	<?php echo $reporter->getSoftware();  ?>
@@ -109,7 +109,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Error Message:"); ?>
+                    	<?php echo $translator->trans("Error Message:", array(), 'bug_reporting'); ?>
                     </td>
                     <td>
                     	<?php echo $reporter->getStr(); ?>
@@ -117,7 +117,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Error Number:"); ?>
+                    	<?php echo $translator->trans("Error Number:", array(), 'bug_reporting'); ?>
                     </td>
                     <td>
                     	<?php echo $reporter->getErrorNum(); ?>
@@ -125,7 +125,7 @@ global $ADMIN;
                 </tr>
                 <tr>
                     <td align="left" nowrap>
-                    	<?php putGS("Time:"); ?>
+                    	<?php echo $translator->trans("Time:"); ?>
                     </td>
                     <td>
                     	<?php echo $reporter->getTime(); ?>
@@ -133,7 +133,7 @@ global $ADMIN;
                 </tr>
                 <tr valign="top">
                     <td align="left" nowrap>
-                    	<?php putGS("Backtrace:"); ?>
+                    	<?php echo $translator->trans("Backtrace:", array(), 'bug_reporting'); ?>
                     </td>
                     <td>
                         <div style="overflow: auto; height: 150px;
@@ -153,7 +153,7 @@ global $ADMIN;
                 <tr>
                     <td colspan="2">
                         <div align="center"><input type="submit"
-                        class="button" value="<?php putGS("Send"); ?>"></div>
+                        class="button" value="<?php echo $translator->trans("Send"); ?>"></div>
                     </td>
                 </tr>
                 </table>

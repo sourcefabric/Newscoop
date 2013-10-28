@@ -1,0 +1,57 @@
+'Usage at automatic statistics': 
+'Event Color': 
+'You must input a number greater than $1 and less than $2 into the $3 field.': 
+'You do not have the right to translate article types.': 
+'You do not have the right to reorder article types.': 
+'You do not have the right to reassign article type fields.': 
+'You do not have the right to manage article types.': 
+'You do not have the right to hide article types.': 
+'You do not have the right to delete article types.': 
+'Small ($1 pixels)': 
+'Medium ($1 pixels)': 
+'Large ($1 pixels)': 
+'Hide human-readable field names': 
+'Editor size': 
+'Edit and translate human-readable field names': 
+Custom: 
+'Characters limit': 
+'The template name may only contain letters and the underscore (_) character.': 
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 
+'The property $1 is already in use.': 
+Precision: 
+'Can not convert the field $1 from $2 to type $3.': 
+'Are you sure you want to make $1 a $2 field?': 
+'Is Content': 
+'Back to Article Types List': 'Înapoi la lista tipurilor de articole'
+show: arată
+hide: ascunde
+'You must enter a name for the field.': 'Trebuie să introduci un nume pentru câmp.'
+'You must choose a language for the field.': 'Trebuie să alegi o limbă pentru câmp.'
+'You do not have the right to rename article type fields.': 'Nu ai dreptul să redenumeşti câmpurile tipului de articol.'
+'You do not have the right to reassign a field type.': 'Nu ai dreotul să realoci un tip de câmp.'
+'Translating field': 'Se traduce câmpul'
+'The translation could not be added.': 'Traducerea nu a putut fi adăugată.'
+'The field $1 does not exist.': 'Câmpul $1 nu există.'
+'The $1 field may only contain letters and underscore (_) character.': 'Câmpul $1 poate conţine doar litere sau caracterul underscore (_).'
+'Template Field Name': 'Numele câmpului şablonului'
+Show/Hide: Arată/Ascunde
+'Renaming article type field': 'Se redenumeşte câmpul tipului de articol'
+'Rename field': 'Redenumeşte câmpul'
+'Reassign a field type': 'Realocă un tip de câmp'
+'Display Name': 'Nume public'
+'Are you sure you want to $1 the article type field $2?': 'Eşti sigur că vrei să $1 câmpul tipului de articol $2?'
+'Adding new article type': 'Se adaugă un tip nou de articol'
+'Add translation:': 'Adaugă traducere:'
+'$1 article type field $2': '$1 câmpul tipului de articol $2'
+'$1 article type $2': '$1 tipul de articol $2'
+'Top element': 'Elementul principal'
+'Article type fields': 'Câmpurile tipului de articol'
+'Delete field $1': 'Şterge câmpul $1'
+'Adding new field': 'Adaug câmp nou'
+'You do not have the right to add article type fields.': 'Nu aveţi dreptul să adăugaţi câmpuri ale tipurilor de articole.'
+'The field $1 already exists.': 'Câmpul $1 există deja.'
+'The $1  must not be void and may only contain letters and underscore (_) character.': 'Câmpul $1 nu are voie să fie gol şi trebuie să conţină numai litere.'
+'Invalid field type.': 'Tip de câmp invalid.'
+'You do not have the right to delete article type fields.': 'Nu ai dreptul să ştergi câmpurile tipurilor de articole.'
+'Are you sure you want to delete the field $1?': 'Eşti sigur că vrei să ştergi câmpul $1?'
+'You will also delete all fields with this name from all articles of this type from all publications.': 'Vei şterge şi toate câmpurile cu acest nume, din toate articolele de acest tip, din toate publicaţiile.'

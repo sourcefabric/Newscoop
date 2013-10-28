@@ -7,6 +7,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  * @link http://www.sourcefabric.org
  */
+$translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <div class="table">
 
@@ -23,7 +24,7 @@
 </thead>
 <tbody>
 <?php if ($this->items === NULL) { ?>
-    <tr><td colspan="<?php echo sizeof($this->cols); ?>"><?php putGS('Loading data'); ?></td></tr>
+    <tr><td colspan="<?php echo sizeof($this->cols); ?>"><?php echo $translator->trans('Loading data', array(), 'library'); ?></td></tr>
 <?php } else if (!empty($this->items)) { ?>
     <?php foreach ($this->items as $item) { ?>
     <tr>
@@ -56,17 +57,17 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'aaSorting': [<?php echo $this->getSorting(); ?>],
     'oLanguage': {
         'oPaginate': {
-            'sFirst': '<?php putGS('First'); ?>',
-            'sLast': '<?php putGS('Last'); ?>',
-            'sNext': '<?php putGS('Next'); ?>',
-            'sPrevious': '<?php putGS('Previous'); ?>',
+            'sFirst': '<?php echo $translator->trans('First', array(), 'library'); ?>',
+            'sLast': '<?php echo $translator->trans('Last', array(), 'library'); ?>',
+            'sNext': '<?php echo $translator->trans('Next'); ?>',
+            'sPrevious': '<?php echo $translator->trans('Previous'); ?>',
         },
-        'sZeroRecords': '<?php putGS('No records found.'); ?>',
-        'sSearch': '<?php putGS('Search'); ?>:',
-        'sInfo': '<?php putGS('Showing _START_ to _END_ of _TOTAL_ entries'); ?>',
-        'sEmpty': '<?php putGS('No entries to show'); ?>',
-        'sInfoFiltered': '<?php putGS(' - filtering from _MAX_ records'); ?>',
-        'sLengthMenu': '<?php putGS('Display _MENU_ records'); ?>',
+        'sZeroRecords': '<?php echo $translator->trans('No records found.', array(), 'library'); ?>',
+        'sSearch': '<?php echo $translator->trans('Search'); ?>:',
+        'sInfo': '<?php echo $translator->trans('Showing _START_ to _END_ of _TOTAL_ entries', array(), 'library'); ?>',
+        'sEmpty': '<?php echo $translator->trans('No entries to show', array(), 'library'); ?>',
+        'sInfoFiltered': '<?php echo $translator->trans(' - filtering from _MAX_ records', array(), 'library'); ?>',
+        'sLengthMenu': '<?php echo $translator->trans('Display _MENU_ records', array(), 'library'); ?>',
         'sInfoEmpty': '',
     },
     'aoColumnDefs': [
@@ -82,9 +83,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             'fnRender': function(obj) {
                 var inUse = obj.aData[0];
                 if (obj.aData[<?php echo $this->inUseColumn; ?>]) {
-                    return '<span class="used"><?php putGS('Yes'); ?></span>';
+                    return '<span class="used"><?php echo $translator->trans('Yes'); ?></span>';
                 } else {
-                    return '<span><?php putGS('No'); ?></span>';
+                    return '<span><?php echo $translator->trans('No'); ?></span>';
                 }
             },
             'bSortable': false,
@@ -184,7 +185,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     <?php if ($this->colVis) { ?>
     'oColVis': { // disable Show/hide column
         'aiExclude': [0, 1],
-        'buttonText': '<?php putGS('Show / hide columns'); ?>',
+        'buttonText': '<?php echo $translator->trans('Show / hide columns', array(), 'library'); ?>',
     },
     <?php } ?>
 }).css('position', 'relative').css('width', '100%');

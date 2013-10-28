@@ -1,11 +1,12 @@
 <?php
-camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/topics/topic_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Topic.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission("AttachTopicToArticle")) {
-	$errorStr = getGS('You do not have the right to attach topics to articles.');
+	$errorStr = $translator->trans('You do not have the right to attach topics to articles.', array(), 'article_topics');
 	camp_html_display_error($errorStr, null, true);
 	exit;
 }
@@ -14,7 +15,7 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
 	exit;
 }
 
@@ -31,7 +32,7 @@ foreach ($articleTopics as $topic) {
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
-  <title><?php putGS("Attach Topic To Article"); ?></title>
+  <title><?php echo $translator->trans("Attach Topic To Article", array(), 'article_topics'); ?></title>
 
 <?php include dirname(__FILE__) . '/../../html_head.php' ?>
 </head>
@@ -41,20 +42,20 @@ foreach ($articleTopics as $topic) {
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
 <div class="fixed-top">
-<h1><?php putGS("Attach Topics"); ?></h1>
+<h1><?php echo $translator->trans("Attach Topics", array(), 'article_topics'); ?></h1>
 
 <fieldset class="buttons">
-	<input type="submit" value="<?php putGS("Close"); ?>" class="button right-floated" onclick="parent.$.fancybox.close(); return false;" />
-	<input type="submit" value="<?php putGS("Save and Close"); ?>" class="button right-floated" />
+	<input type="submit" value="<?php echo $translator->trans("Close"); ?>" class="button right-floated" onclick="parent.$.fancybox.close(); return false;" />
+	<input type="submit" value="<?php echo $translator->trans("Save and Close"); ?>" class="button right-floated" />
     <input type="text" name="search" class="autocomplete topics input_text" />
-    <input type="button" class="default-button" value="<?php putGS('Search'); ?>" />
-    <input type="button" class="default-button" value="<?php putGS('Show All'); ?>" id="show_all_topics" style="padding: 3px 0px;"/>
+    <input type="button" class="default-button" value="<?php echo $translator->trans('Search'); ?>" />
+    <input type="button" class="default-button" value="<?php echo $translator->trans('Show All', array(), 'article_topics'); ?>" id="show_all_topics" style="padding: 3px 0px;"/>
     <?php if ($g_user->hasPermission('ManageTopics')) { ?>
-    <input type="button" class="default-button" value="<?php putGS('Add new topic'); ?>" id="add_new_topic" style="padding: 3px 0px;"/>
+    <input type="button" class="default-button" value="<?php echo $translator->trans('Add new topic', array(), 'article_topics'); ?>" id="add_new_topic" style="padding: 3px 0px;"/>
     <div style="width:100%; margin-top:10px;display:none" id="new_topic_holder">
-	    <?php putGS('Select the parent of the topic'); ?>
+	    <?php echo $translator->trans('Select the parent of the topic', array(), 'article_topics'); ?>
 	    <select name="f_topic_parent_id" id="f_topic_parent_id">
-	    <option value="0"><?php putGS('None');?></option>
+	    <option value="0"><?php echo $translator->trans('None', array(), 'article_topics');?></option>
 	    <?php
 	    $level = 0;
 	    
@@ -94,8 +95,8 @@ foreach ($articleTopics as $topic) {
             }
             ?>
         </select>
-	    <input type="text" name="f_topic_name" id="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" style="width: 360px"/>
-	    <input type="button" name="add" value="<?php putGS("Add"); ?>" class="button" id='submit_new_topic'/>
+	    <input type="text" name="f_topic_name" id="f_topic_name" value="" class="input_text" size="20" title="<?php echo $translator->trans('You must enter a name for the topic.', array(), 'article_topics'); ?>" style="width: 360px"/>
+	    <input type="button" name="add" value="<?php echo $translator->trans("Add"); ?>" class="button" id='submit_new_topic'/>
     </div>
     <?php } else { ?>
     <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
@@ -196,7 +197,7 @@ $(document).ready(function() {
 $('#submit_new_topic').click(function(){
     var f_topic_name = $('#f_topic_name').val();
     if (f_topic_name.length == 0) {
-        flashMessage("<?php putGS('You must enter a name for the topic.'); ?>", 'error');
+        flashMessage("<?php echo $translator->trans('You must enter a name for the topic.', array(), 'article_topics'); ?>", 'error');
         $('#f_topic_name').focus();
     } else {
         var f_topic_parent_id = $('#f_topic_parent_id').val();
@@ -222,9 +223,9 @@ $('#submit_new_topic').click(function(){
 
 <?php } else { ?>
 <div class="fixed-top">
-<h1><?php putGS("Attach Topics"); ?></h1>
+<h1><?php echo $translator->trans("Attach Topics", array(), 'article_topics'); ?></h1>
 </div>
-<p><?php putGS('No topics have been created yet.'); ?></p>
+<p><?php echo $translator->trans('No topics have been created yet.', array(), 'article_topics'); ?></p>
 
 <?php } ?>
 

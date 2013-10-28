@@ -12,10 +12,7 @@ use Newscoop\Annotations\Acl;
  */
 class Admin_RenditionController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        camp_load_translation_strings('article_images');
-    }
+    public function init(){}
 
     public function indexAction()
     {
@@ -45,8 +42,9 @@ class Admin_RenditionController extends Zend_Controller_Action
             throw new \Zend_Controller_Action_Exception('POST required', 405);
         }
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_helper->service('image.rendition')->reloadRenditions();
-        $this->_helper->flashMessenger(getGS('Renditions reloaded'));
+        $this->_helper->flashMessenger($translator->trans('Renditions reloaded', array(), 'article_images'));
         $this->_helper->redirector('index', 'rendition', 'admin');
     }
 }

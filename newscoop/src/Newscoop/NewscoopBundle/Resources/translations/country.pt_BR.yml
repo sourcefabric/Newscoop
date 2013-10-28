@@ -1,0 +1,15 @@
+'The country $1 could not be created.': 
+'Country with code $1 exists already.': 
+'You do not have the right to add countries.': 'Não tem permissão para adicionar Paises'
+'Delete country': 'Eliminar Pais'
+'You do not have the right to delete countries.': 'Não tem permissão para eliminar Paises'
+'Are you sure you want to delete the country $1?': 'Deseja eliminar o pais $1?'
+'The country $1 could not be deleted.': 'O Pais $1 não pode ser eliminado.'
+'Edit country name': 'Alterar nome do Pais'
+'You do not have the right to change country names.': 'Não tem permissões para Alterar nome de Paises'
+'Changing country name': 'Alterando Nome de Pais'
+'The country name $1 could not be changed': 'O Nome do Pais $1 não pode ser Alterado'
+'Translate country name': 'Traduzir Nome de Pais'
+'You do not have the right to translate country names.': 'Não tem permissões para Traduzir nomes de Paises'
+'The country name $1 could not be translated': 'O Nome do Pais $1 não pode ser Traduzido'
+'Add New Country': 'Adicionar País.'

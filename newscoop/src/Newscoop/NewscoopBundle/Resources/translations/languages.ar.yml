@@ -1,0 +1,81 @@
+'No languages.': 'لا لغات'
+'Native Name': 'الاسم المحلي'
+'Name taken.': 'اسم مأخوذ.'
+'Language saved.': 'تم حفظ اللغة.'
+'Language removed.': 'تم إزالة اللغة.'
+'Language not found.': 'لم يتم العثور على اللغة.'
+'Language is in use and cannot be removed.': 'اللغة قيد الاستخدام ولا تمكن إزالتها.'
+'Language added.': 'تم إضافة اللغة.'
+'English language cannot be removed.': 'لا يمكن إزالة اللغة الإنجليزية.'
+'Edit short month names': 'تعديل الأسماء القصيرة للشهور'
+'Edit short day names': 'تعديل الأسماء القصيرة للأيام'
+'Edit month names': 'تعديل أسماء الشهور'
+'Edit language: $1': 'تعديل اللغة: $1'
+'Edit day names': 'تعديل أسماء الأيام'
+'Code Page': 'صفحة الرموز'
+'Add new Language': 'إضافة لغة جديدة'
+'Add Language': 'إضافة اللغة'
+We: الأربعاء
+Tu: الثلاثاء
+Th: الخميس
+Su: الأحد
+Sep: 'أيلول (سبتمبر)'
+Sa: السبت
+'Please enter the translation for week day short names.': 'الرجاء إدخال أسماء قصيرة لأيام الأسبوع.'
+'Please enter the translation for month short names.': 'الرجاء إدخال أسماء قصيرة للأشهر.'
+Oct: 'تشرين الأول/أكتوبر'
+Nov: 'تشرين الثاني/نوفمبر'
+Mo: الإثنين
+Mar: آذار/مارس
+Jun: حزيران/يونيو
+Jul: تموز/يوليو
+Jan: 'كانون الثاني/يناير'
+Fr: الجمعة
+Feb: شباط/فبراير
+Dec: 'كانون الأول/ديسمبر'
+Aug: آب/أغسطس
+Apr: نيسان/إبريل
+'No language.': 'لا لغة'
+'Delete language $1': 'حذف اللغة $1'
+'You do not have the right to add languages.': 'ليس لديك الحق في إضافة لغات'
+'Please enter the translation for time units.': 'الرجاء إدخال الترجمة الخاصة بوحدات الوقت'
+'You do not have the right to delete languages.': 'ليس لديك الحق في حذف لغات'
+'Are you sure you want to delete the language $1?': 'هل أنت متأكد أنك تريد حذف اللغة $1 ؟'
+'Deleting language': 'في عملية حذف اللغة'
+'The language $1 could not be deleted.': 'لا يمكن حذف اللغة $1.'
+'Edit language': 'تعديل اللغة'
+'You do not have the right to edit languages.': 'ليس لديك الحق في تعديل اللغات'
+'Please enter the translation for month names.': 'الرجاء إدخال الترجمة الخاصة بأسماء الشهور'
+'Please enter the translation for week day names.': 'الرجاء إدخال الترجمة الخاصة بأسماء أيام الأسبوع'
+January: 'كانون الثاني'
+February: شباط
+March: شباط
+April: نيسان
+May: آذار
+June: حزيران
+July: تموز
+August: آب
+September: أيلول
+October: 'تشرين الأول'
+November: 'تشرين الثاني'
+December: 'كانون الأول'
+Monday: 'يون الاثنين'
+Tuesday: 'يوم الثلاثاء'
+Wednesday: 'يوم الأربعاء'
+Thursday: 'يوم الخميس'
+Friday: 'يوم الجمعة'
+Saturday: 'يوم السبت'
+Sunday: 'يوم الأحد'
+'You do not have the right to add new languages.': 'ليس لديك الحق في إضافة لغات جديدة.'
+'There are $1 issue(s) left.': 'تبقى $1 اصدارات'
+'Native name': 'الاسم المحلي'
+'The language $1 has been successfuly added.': 'تم إضافة اللغة $1 بنجاح'
+'Please check if a language with the same name does not already exist.': 'الرجاء التأكد من عدم وجود لغة تحمل الاسم نفسه'
+'The language could not be added.': 'لم تضف اللغة.'
+'Delete language': 'حذف اللغة'
+'The language $1 has been deleted.': 'تم حذف اللغة $1.'
+'Updating language information': 'في عملية تحديث معلومات اللغة'
+'Language information has been successfuly updated.': 'تم تحديث معلومات اللغة بنجاح'
+'Language information could not be updated.': 'لم تحدث معلومات اللغة.'
+'A language with the same name already exists.': 'توجد لغة تحمل الاسم نفسه.'
+'Add another language': 'إضافة لغة جديدة'

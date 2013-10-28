@@ -82,9 +82,7 @@ class Image extends DatabaseObject
 	{
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         $imageStorageService = Zend_Registry::get('container')->getService('image.update_storage');
         if ($imageStorageService->isDeletable($this->getImageFileName())) {
@@ -124,7 +122,7 @@ class Image extends DatabaseObject
 
 		// Delete the record in the database
 		if (!parent::delete()) {
-			return new PEAR_Error(getGS("Could not delete record from the database."));
+			return new PEAR_Error($translator->trans("Could not delete record from the database.", array(), 'api'));
 		}
 		return true;
 	} // fn delete
@@ -389,10 +387,12 @@ class Image extends DatabaseObject
     public function generateThumbnailFromImage()
     {
         global $Campsite;
+
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // Verify its a valid image file.
         $imageInfo = @getimagesize($this->getImageStorageLocation());
         if ($imageInfo === false) {
-            return new PEAR_Error(getGS("The file uploaded is not an image."));
+            return new PEAR_Error($translator->trans("The file uploaded is not an image.", array(), 'api'));
         }
         $extension = Image::__ImageTypeToExtension($imageInfo[2]);
 
@@ -408,8 +408,8 @@ class Image extends DatabaseObject
 
         	$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
             if (!isset($createMethodName)) {
-                throw new Exception(getGS("Image type $1 is not supported.",
-                                    image_type_to_mime_type($p_imageType)));
+                throw new Exception($translator->trans("Image type $1 is not supported.", array(
+                                    '$1' => image_type_to_mime_type($p_imageType)), 'api'));
             }
 
             $imageHandler = $createMethodName($target);
@@ -543,10 +543,7 @@ class Image extends DatabaseObject
 	                                     $p_isLocalFile = false)
 	{
 		global $Campsite;
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-
+        $translator = \Zend_Registry::get('container')->getService('translator');
 		if (!is_array($p_fileVar)) {
 			return new PEAR_Error("Invalid arguments given to Image::OnImageUpload()");
 		}
@@ -554,7 +551,7 @@ class Image extends DatabaseObject
 		// Verify its a valid image file.
 		$imageInfo = @getimagesize($p_fileVar['tmp_name']);
 		if ($imageInfo === false) {
-			return new PEAR_Error(getGS("The file uploaded is not an image."));
+			return new PEAR_Error($translator->trans("The file uploaded is not an image.", array(), 'api'));
 		}
 		$extension = Image::__ImageTypeToExtension($imageInfo[2]);
 
@@ -625,8 +622,8 @@ class Image extends DatabaseObject
 
     		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
     		if (!isset($createMethodName)) {
-            	throw new Exception(getGS("Image type $1 is not supported.",
-    								image_type_to_mime_type($p_imageType)));
+            	throw new Exception($translator->trans("Image type $1 is not supported.", array(
+    								'$1' => image_type_to_mime_type($p_imageType)), 'api'));
             }
 
             $imageHandler = $createMethodName($target);
@@ -687,7 +684,8 @@ class Image extends DatabaseObject
 	 */
 	public static function SaveImageToFile($p_image, $p_fileName,
 	                                       $p_imageType, $p_addExtension = true)
-	{
+	{  
+        $translator = \Zend_Registry::get('container')->getService('translator');
 		$method = null;
 		switch ($p_imageType) {
            case IMAGETYPE_GIF: $method = 'imagegif'; break;
@@ -697,8 +695,8 @@ class Image extends DatabaseObject
            case IMAGETYPE_XBM: $method = 'imagexbm'; break;
 		} // these are the supported image types
 		if ($method == null) {
-			return new PEAR_Error(getGS("Image type $1 is not supported.",
-								  image_type_to_mime_type($p_imageType)));
+			return new PEAR_Error($translator->trans("Image type $1 is not supported.", array(
+								  '$1' => image_type_to_mime_type($p_imageType)), 'api'));
 		}
 		if (!$method($p_image, $p_fileName)) {
 			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_CREATE_FILE, $p_fileName),
@@ -726,7 +724,8 @@ class Image extends DatabaseObject
 	 */
 	public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
 	                                   $p_keepRatio = true, $type = IMAGETYPE_JPEG)
-	{
+	{   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         if (!isset($p_image) || empty($p_image)) {
             return new PEAR_Error('The image resource handler is not available.');
         }
@@ -735,13 +734,13 @@ class Image extends DatabaseObject
 		$origImageWidth = imagesx($p_image);
 		$origImageHeight = imagesy($p_image);
 		if ($origImageWidth <= 0 || $origImageHeight <= 0) {
-		    return new PEAR_Error(getGS("The file uploaded is not an image."));
+		    return new PEAR_Error($translator->trans("The file uploaded is not an image.", array(), 'api'));
 		}
 
         $p_maxWidth = is_numeric($p_maxWidth) ? (int) $p_maxWidth : 0;
         $p_maxHeight = is_numeric($p_maxHeight) ? (int) $p_maxHeight : 0;
 		if ($p_maxWidth <= 0 || $p_maxHeight <= 0) {
-		    return new PEAR_Error(getGS("Invalid resize width/height."));
+		    return new PEAR_Error($translator->trans("Invalid resize width/height.", array(), 'api'));
 		}
 		if ($p_keepRatio) {
 			$ratioOrig = $origImageWidth / $origImageHeight;
@@ -793,10 +792,8 @@ class Image extends DatabaseObject
 	                                        $p_userId = null, $p_id = null)
 	{
 		global $Campsite;
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-
+		
+        $translator = \Zend_Registry::get('container')->getService('translator');
 		// Check if thumbnail directory is writable.
 		$imageDir = $Campsite['IMAGE_DIRECTORY'];
 		$thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
@@ -810,7 +807,7 @@ class Image extends DatabaseObject
         // fetch headers
         $headers = get_headers($p_url, TRUE);
         if (strpos($headers[0], '200 OK') === FALSE) {
-            return new PEAR_Error(getGS("Unable to fetch image from remote server."));
+            return new PEAR_Error($translator->trans("Unable to fetch image from remote server.", array(), 'api'));
         }
 
         // get type
@@ -818,7 +815,7 @@ class Image extends DatabaseObject
 
         // Check content type
         if (strpos($ContentType, 'image') === FALSE) { // wrong URL
-            return new PEAR_Error(getGS('URL "$1" is invalid or is not an image.', $p_url));
+            return new PEAR_Error($translator->trans('URL $1 is invalid or is not an image.', array('$1' => $p_url), 'api'));
         }
 
     	// check path
@@ -834,7 +831,7 @@ class Image extends DatabaseObject
         $imageInfo = getimagesize($tmpname);
         if ($imageInfo === false) {
         	unlink($tmpname);
-            return new PEAR_Error(getGS('URL "$1" is not an image.', $cURL));
+            return new PEAR_Error($translator->trans('URL $1 is not an image.', array('$1' => $cURL), 'api'));
         }
 
         // content-type = image
@@ -891,8 +888,8 @@ class Image extends DatabaseObject
 
         $createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
     	if (!isset($createMethodName)) {
-            throw new Exception(getGS("Image type $1 is not supported.",
-    							image_type_to_mime_type($ContentType)));
+            throw new Exception($translator->trans("Image type $1 is not supported.", array(
+    							'$1' => image_type_to_mime_type($ContentType)), 'api'));
         }
 
         $imageHandler = $createMethodName($tmpname);

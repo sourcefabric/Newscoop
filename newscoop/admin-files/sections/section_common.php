@@ -1,5 +1,4 @@
 <?php
-camp_load_translation_strings("sections");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');

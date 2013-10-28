@@ -1,0 +1,67 @@
+third: τρίτο
+second: δεύτερο
+forth: τέταρτο
+first: πρώτο
+'You must input a number greater than 0 into the Number of addresses field.': 'Πρέπει να εισάγετε έναν αριθμό μεγαλύτερο από το 0 στο πεδίο Αριθμοί διευθύνσεων.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Πρέπει να εισάγετε ένα αριθμό μεταξύ 0 και 255 στο πεδίο Έναρξη διεύθυνσης ΙΡ $1 .'
+'User IP access list management': 'Διαχείριση λίστας πρόσβασης χρήστη ΙΡ '
+'The IP address group conflicts with another existing group.': 'Η ομάδα διεύθυνσης ΙΡ συγκρούεται με άλλη ήδη υπάρχουσα ομάδα.'
+'Subscription sections': 'Ενότητες συνδρομής'
+'No records.': 'Δεν υπάρχουν μητρώα.'
+'You have subscription for all available publications': 'Εχετε συνδρομή για όλες τις διαθέσιμες δημοσιεύσεις'
+'Subscription type:': 'Τύπος συνδρομής:'
+'Start:': 'Έναρξη:'
+'Start Date': 'Ημερομηνία έναρξης'
+'Sections:': 'Ενότητες:'
+'Publication:': 'Δημοσίευση:'
+'Paid days': 'Πληρωμένες ημέρες'
+'Paid Days:': 'Πληρωμένες Ημέρες:'
+Paid: Πληρωμένες
+'No subscriptions': 'Καμία συνδρομή'
+'Languages:': 'Γλώσσες:'
+'Edit all sections': 'Επεξεργασία όλων των ενοτήτων'
+'Days:': 'Ημέρες:'
+'Days must be number': 'Η ημέρες πρέπει να είναι με αριθμό εγγεγραμμένες'
+Any: Οποιδήποτε
+'Add section': 'Προσθήκη ενότητας'
+saved: αποθηκεύτηκε
+removed: αφαιρέθηκε
+deleted: διαγράφηκε
+deactivated: απενεργοποιήθηκε
+activated: ενεργοποιήθηκε
+'Value is required and cant be empty': 'Η αξία απαιτείται και δεν μπορεί να παραμείνει άδεια'
+'That user name already exists, please choose a different login name.': 'Το όνομα χρήστη υπάρχει ήδη, παρακαλούμε επιλέξτε διαφορετικό όνομα σύνδεσης.'
+'That $1 already exists, please choose a different $2.': '$1 υπάρχει ήδη, παρακαλούμε επιλέξτε διαφορετικό $2. '
+'Subscriptions exist for all available publications.': 'Υπάρχουν συνδρομές για όλες τις διαθέσιμες δημοσιεύσεις.'
+'Subscription IP Addresses': 'Συνδρομή Διευθύνσεων ΙΡ'
+'Subscription $1': 'Συνδρομή  $1'
+'Subscriber saved.': 'Ο συνδρομητής αποθηκεύτηκε.'
+'Subscriber management': 'Διαχείριση συνδρομητή'
+'Subscriber deleted.': 'Ο συνδρομητής διαγράφηκε'
+'Start IP': 'Έναρξη ΙΡ'
+'Select country': 'Επιλογή χώρας'
+'Number of addresses': 'Αριθμός διευθύνσεων'
+'Number of Addressses': 'Αριθμός Διευθύνσεων'
+'No IP Addresses': 'Καμία Διεύθυνση ΙΡ'
+'IP Address added allready': 'Η διεύθυνση ΙΡ έχει ήδη προστεθεί'
+'IP Address $1': 'Διεύθυνση ΙΡ $1'
+'IP Access': 'Πρόσβαση ΙΡ'
+'Full Name': Ονοματεπώνυμο
+'Edit subscriptions': 'Επεξεργασία συνδρομών'
+'Edit subscriber $1': 'Επεξεργασία συνδρομών  $1'
+E-Mail: E-Mail
+'Delete subscriber $1': 'Διαγραφή συνδρομητή $1'
+'Creation Date': 'Ημερομηνίας Δημιουργίας'
+'Change subscriber information': 'Αλλαγή πληροφοριών συνδρομητή'
+'Add new IP address': 'Προσθήκη νέας διεύθυνσης ΙΡ'
+'Add new IP Address': 'Προσθήκη νέας διεύθυνσης ΙΡ'
+'Accout Name': 'Όνομα Λογαριασμού'
+'%value% must be greater than %min%': '%value% πρέπει να είναι μεγαλύτερο από %min%'
+'%value% is not a valid IP Address': ' %value% δεν αποτελεί Διεύθυνση ΙΡ'
+'Regardless of the language': 'Ανεξαρτήτου γλώσσας'
+'Individual languages': 'Ατομικές γλώσσες'
+'Add sections now': 'Προσθήκη κατηγοριών τώρα'
+'Add sections later': 'Προσθήκη κατηγοριών αργότερα'
+'Subscription Type': 'Τύπος Συνδρομής'
+'Paid (payment will be confirmed later)': 'Εξοφλήθηκε (η πληρωμή θα επιβεβαιωθεί αργότερα)'
+'Paid (confirm payment now)': 'Εξοφλήθηκε (επιβεβαίωση πληρωμής τώρα)'

@@ -1,4 +1,6 @@
-<?php $this->placeholder('title')->set(getGS("Edit user '$1'", $this->user->getUsername())); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' => $this->user->getUsername()), 'users')); ?>
 
 <?php $this->renderActions(); ?>
 
@@ -8,7 +10,7 @@
         'module' => 'admin',
         'controller' => 'user',
         'action' => 'profile',
-    )); ?>" class="iframe"><img src="<?php echo $this->url(array('src' => $this->image), 'image', false, false) ?: $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php putGS('Edit profile'); ?></a>
+    )); ?>" class="iframe"><img src="<?php echo $this->url(array('src' => $this->image), 'image', false, false) ?: $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php echo $translator->trans('Edit profile', array(), 'users'); ?></a>
 </div>
 <?php } ?>
 
