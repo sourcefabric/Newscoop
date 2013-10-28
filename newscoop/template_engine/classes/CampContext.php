@@ -29,37 +29,37 @@ final class CampContext
     // Defines the object types
     private static $m_objectTypes = array(
         'language'=>array('class'=>'Language',
-                      'handler'=>'setLanguageHandler'),
+          'handler'=>'setLanguageHandler'),
         'publication'=>array('class'=>'Publication',
-                         'handler'=>'setPublicationHandler'),
+           'handler'=>'setPublicationHandler'),
         'issue'=>array('class'=>'Issue',
-                   'handler'=>'setIssueHandler'),
+         'handler'=>'setIssueHandler'),
         'section'=>array('class'=>'Section',
-                     'handler'=>'setSectionHandler'),
+           'handler'=>'setSectionHandler'),
         'article'=>array('class'=>'Article',
-                     'handler'=>'setArticleHandler'),
+           'handler'=>'setArticleHandler'),
         'image'=>array('class'=>'Image'),
         'attachment'=>array('class'=>'Attachment'),
         'comment'=>array('class'=>'Comment',
-                     'handler'=>'setCommentHandler'),
+           'handler'=>'setCommentHandler'),
         'subtitle'=>array('class'=>'Subtitle',
-                      'handler'=>'setSubtitleHandler'),
+          'handler'=>'setSubtitleHandler'),
         'topic'=>array('class'=>'Topic',
-                   'handler'=>'setTopicHandler'),
+         'handler'=>'setTopicHandler'),
         'user'=>array('class'=>'User'),
         'template'=>array('class'=>'Template'),
         'location'=>array('class'=>'MapLocation'),
         'author'=>array('class'=>'Author'),
         'list_user' => array(
             'class' => 'User',
-        ),
+            ),
         'community_feed' => array(
             'class' => 'CommunityFeed',
-        ),
+            ),
         'user_comment' => array(
             'class' => 'Comment',
-        )
-    );
+            )
+        );
 
 /*    $taggedServices = $container->findTaggedServiceIds(
         'acme_mailer.transport'
@@ -76,85 +76,85 @@ final class CampContext
     // Defines the list objects
     private $m_listObjects = array(
         'languages'=>array('class'=>'Languages', 'list'=>'languages',
-                     'url_id'=>'lang'),
+           'url_id'=>'lang'),
         'issues'=>array('class'=>'Issues', 'list'=>'issues',
-                     'url_id'=>'iss'),
+           'url_id'=>'iss'),
         'sections'=>array('class'=>'Sections', 'list'=>'sections',
-                       'url_id'=>'sec'),
+         'url_id'=>'sec'),
         'articles'=>array('class'=>'Articles', 'list'=>'articles',
-                       'url_id'=>'art'),
+         'url_id'=>'art'),
         'maparticles'=>array('class'=>'MapArticles', 'list'=>'map_articles',
-                       'url_id'=>'mart'),
+         'url_id'=>'mart'),
         'articleauthors'=>array('class'=>'ArticleAuthors',
-                             'list'=>'article_authors',
-                             'url_id'=>'aas'),
+           'list'=>'article_authors',
+           'url_id'=>'aas'),
         'sectionauthors'=>array('class'=>'SectionAuthors',
-                             'list'=>'section_authors',
-                             'url_id'=>'sas'),
+           'list'=>'section_authors',
+           'url_id'=>'sas'),
         'articlelocations'=>array('class'=>'ArticleLocations',
-                            'list'=>'article_locations',
-                            'url_id'=>'alc'),
+            'list'=>'article_locations',
+            'url_id'=>'alc'),
         'maplocations'=>array('class'=>'MapLocations',
-                            'list'=>'map_locations',
-                            'url_id'=>'mlc'),
+            'list'=>'map_locations',
+            'url_id'=>'mlc'),
         'articleimages'=>array('class'=>'ArticleImages',
-                            'list'=>'article_images',
-                            'url_id'=>'aim'),
+            'list'=>'article_images',
+            'url_id'=>'aim'),
         'articleattachments'=>array('class'=>'ArticleAttachments',
-                                 'list'=>'article_attachments',
-                                 'url_id'=>'aat'),
+           'list'=>'article_attachments',
+           'url_id'=>'aat'),
         'articlecomments'=>array('class'=>'ArticleComments',
-                              'list'=>'article_comments',
-                              'url_id'=>'acm'),
+          'list'=>'article_comments',
+          'url_id'=>'acm'),
         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
-                        'url_id'=>'st'),
+            'url_id'=>'st'),
         'articletopics'=>array('class'=>'ArticleTopics',
-                            'list'=>'article_topics', 'url_id'=>'atp'),
+            'list'=>'article_topics', 'url_id'=>'atp'),
         'searchresults'=>array('class'=>'SearchResults',
-                            'list'=>'search_results', 'url_id'=>'src'),
+            'list'=>'search_results', 'url_id'=>'src'),
 
         'searchresultssolr' => array(
             'class' => 'SearchResultsSolr',
             'list' => 'search_solr',
             'url_id' => 'solr'
-        ),
+            ),
 
         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
-                        'url_id'=>'tp'),
+            'url_id'=>'tp'),
         'images'=>array('class'=>'Images', 'list'=>'images', 'url_id'=>'img'),
         'users' => array(
             'class' => 'Users',
             'list' => 'users',
             'url_id' => 'uid',
-        ),
+            ),
         'newscoop\templatelist\users' => array(
 //            'class' => 'Newscoop\TemplateList\UsersList',
             'class' => 'Newscoop\TemplateList\Users',
             'list' => 'users',
             'url_id' => 'uid',
-        ),
+            ),
         'communityfeeds' => array(
             'class' => 'CommunityFeeds',
             'list' => 'community_feeds',
             'url_id' => 'cfid',
-        ),
+            ),
         'boxarticles' => array(
             'class' => 'BoxArticles',
             'list' => 'box_articles',
             'url_id' => 'box',
-        ),
+            ),
         'usercomments' => array(
             'class' => 'UserComments',
             'list' => 'user_comments',
             'url_id' => 'cid',
-        ),
+            ),
         'playlist' => array
         (
             'class' => 'Playlist',
             'list' => 'playlist',
             'url_id' => 'pls'
-        )
-    );
+            )
+        );
 
     /**
      * Stores the context objects.
@@ -222,7 +222,7 @@ final class CampContext
         $this->login_action = (object) array(
             'is_error' => false,
             'error_message' => '',
-        );
+            );
 
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();
@@ -362,30 +362,30 @@ final class CampContext
             // Verify if an object of this type exists
             if (!is_null(CampContext::ObjectType($p_element))) {
                 if (!isset($this->m_objects[$p_element])
-                || is_null($this->m_objects[$p_element])) {
+                    || is_null($this->m_objects[$p_element])) {
                     $this->createObject($p_element);
-                }
-                return $this->m_objects[$p_element];
             }
+            return $this->m_objects[$p_element];
+        }
 
             // Verify if a readonly property with this name exists
-            if (is_array($this->m_readonlyProperties)
+        if (is_array($this->m_readonlyProperties)
             && array_key_exists($p_element, $this->m_readonlyProperties)) {
-                return $this->m_readonlyProperties[$p_element];
-            }
+            return $this->m_readonlyProperties[$p_element];
+    }
 
             // Verify if a property with this name exists
-            if (is_array($this->m_properties)
-            && array_key_exists($p_element, $this->m_properties)) {
-                return $this->m_properties[$p_element];
-            }
+    if (is_array($this->m_properties)
+        && array_key_exists($p_element, $this->m_properties)) {
+        return $this->m_properties[$p_element];
+}
 
             // No object of this type of property with this name exist.
-            $this->trigger_invalid_property_error($p_element);
-        } catch (InvalidObjectException $e) {
-            $this->trigger_invalid_object_error($e->getClassName());
-        }
-        return null;
+$this->trigger_invalid_property_error($p_element);
+} catch (InvalidObjectException $e) {
+    $this->trigger_invalid_object_error($e->getClassName());
+}
+return null;
     } // fn __get
 
 
@@ -436,35 +436,35 @@ final class CampContext
                 }
 
                 if (isset($this->m_objects[$p_element])
-                && !is_null($this->m_objects[$p_element])) {
+                    && !is_null($this->m_objects[$p_element])) {
                     $oldValue = $this->m_objects[$p_element];
-                } else {
-                    $oldValue = new $metaclass;
-                }
-
-                if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
-                    $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
-                    $this->$setHandler($oldValue, $p_value);
-                } else {
-                    $this->m_objects[$p_element] = $p_value;
-                }
-
-                return isset($this->m_objects[$p_element]) ? $this->m_objects[$p_element] : null;
-            } catch (InvalidObjectException $e) {
-                $this->trigger_invalid_object_error($e->getClassName());
-                return null;
+            } else {
+                $oldValue = new $metaclass;
             }
+
+            if (isset(CampContext::$m_objectTypes[$p_element]['handler'])) {
+                $setHandler = CampContext::$m_objectTypes[$p_element]['handler'];
+                $this->$setHandler($oldValue, $p_value);
+            } else {
+                $this->m_objects[$p_element] = $p_value;
+            }
+
+            return isset($this->m_objects[$p_element]) ? $this->m_objects[$p_element] : null;
+        } catch (InvalidObjectException $e) {
+            $this->trigger_invalid_object_error($e->getClassName());
+            return null;
         }
+    }
 
         // Verify if a property with this name exists
-        if (is_array($this->m_properties)
+    if (is_array($this->m_properties)
         && array_key_exists($p_element, $this->m_properties)) {
-            return $this->m_properties[$p_element] = $p_value;
-        }
+        return $this->m_properties[$p_element] = $p_value;
+}
 
         // No object of this type of property with this name exist.
-        $this->trigger_invalid_property_error($p_element);
-        return null;
+$this->trigger_invalid_property_error($p_element);
+return null;
     } // fn __set
 
 
@@ -523,14 +523,14 @@ final class CampContext
     public function getCurrentListName()
     {
         if (!isset($this->m_readonlyProperties['current_list'])
-        || count($this->m_readonlyProperties['lists']) == 0) {
+            || count($this->m_readonlyProperties['lists']) == 0) {
             return null;
-        }
+    }
 
-        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
-        $listName = $this->m_listObjects[$objectName]['list'];
+    $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+    $listName = $this->m_listObjects[$objectName]['list'];
 
-        return 'current_'.$listName.'_list';
+    return 'current_'.$listName.'_list';
     } // fn getCurrentListName
 
 
@@ -679,25 +679,25 @@ final class CampContext
     public function resetCurrentList()
     {
         if (!isset($this->m_readonlyProperties['current_list'])
-        || count($this->m_readonlyProperties['lists']) == 0) {
+            || count($this->m_readonlyProperties['lists']) == 0) {
             return;
-        }
+    }
 
-        $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
+    $this->m_readonlyProperties['prev_list_empty'] = (int)($this->m_readonlyProperties['current_list']->count == 0);
 
-        $this->RestoreProperties();
+    $this->RestoreProperties();
 
-        $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
-        $listName = $this->m_listObjects[$objectName]['list'];
+    $objectName = $this->GetListObjectName(get_class($this->m_readonlyProperties['current_list']));
+    $listName = $this->m_listObjects[$objectName]['list'];
 
-        if (count($this->m_readonlyProperties[$listName.'_lists']) > 0) {
-            array_pop($this->m_readonlyProperties[$listName.'_lists']);
-            $this->m_readonlyProperties['current_'.$listName.'_list'] =
-                end($this->m_readonlyProperties[$listName.'_lists']);
-        }
+    if (count($this->m_readonlyProperties[$listName.'_lists']) > 0) {
+        array_pop($this->m_readonlyProperties[$listName.'_lists']);
+        $this->m_readonlyProperties['current_'.$listName.'_list'] =
+        end($this->m_readonlyProperties[$listName.'_lists']);
+    }
 
-        array_pop($this->m_readonlyProperties['lists']);
-        $this->m_readonlyProperties['current_list'] = end($this->m_readonlyProperties['lists']);
+    array_pop($this->m_readonlyProperties['lists']);
+    $this->m_readonlyProperties['current_list'] = end($this->m_readonlyProperties['lists']);
     } // fn resetCurrentList
 
 
@@ -989,22 +989,22 @@ final class CampContext
         if ($this->article->defined()) {
             $oldArticle = $this->m_objects['article'];
             $newArticle = new MetaArticle($p_newLanguage->number,
-                                          $oldArticle->number);
+              $oldArticle->number);
             $this->setArticleHandler($oldArticle, $newArticle);
         }
         if ($this->section->defined() && !$this->m_objects['article']->defined()) {
             $oldSection = $this->m_objects['section'];
             $newSection = new MetaSection($oldSection->publication->identifier,
-                                          $oldSection->issue->number,
-                                          $p_newLanguage->number,
-                                          $oldSection->number);
+              $oldSection->issue->number,
+              $p_newLanguage->number,
+              $oldSection->number);
             $this->setSectionHandler($oldSection, $newSection);
         }
         if ($this->issue->defined() && !$this->m_objects['section']->defined()) {
             $oldIssue = $this->m_objects['issue'];
             $newIssue = new MetaIssue($oldIssue->publication->identifier,
-                                      $p_newLanguage->number,
-                                      $oldIssue->number);
+              $p_newLanguage->number,
+              $oldIssue->number);
             $this->setIssueHandler($oldIssue, $newIssue);
         }
 
@@ -1019,7 +1019,7 @@ final class CampContext
      * @param MetaPublication $p_newPublication
      */
     private function setPublicationHandler(MetaPublication $p_oldPublication,
-    MetaPublication $p_newPublication)
+        MetaPublication $p_newPublication)
     {
         static $publicationHandlerRunning = false;
         if ($publicationHandlerRunning || $p_newPublication->same_as($p_oldPublication)) {
@@ -1049,27 +1049,27 @@ final class CampContext
         static $issueHandlerRunning = false;
 
         if (!$this->m_readonlyProperties['preview']
-        && !$p_newIssue->is_published && $p_newIssue->defined()) {
+            && !$p_newIssue->is_published && $p_newIssue->defined()) {
             return;
-        }
-
-        if ($issueHandlerRunning || $p_newIssue->same_as($p_oldIssue)) {
-            return;
-        }
-        $issueHandlerRunning = true;
-
-        if ($p_newIssue->defined() && !$this->getPublication()->same_as($p_newIssue->publication)) {
-            $this->setPublicationHandler($this->getPublication(), $p_newIssue->publication);
-        }
-        if ($p_newIssue->defined() && !$this->getLanguage()->same_as($p_newIssue->language)) {
-            $this->setLanguageHandler($this->getLanguage(), $p_newIssue->language);
-        }
-        $this->setSectionHandler($this->getSection(), self::$m_nullMetaSection);
-        $this->m_readonlyProperties['url']->issue = $p_newIssue;
-        $this->m_objects['issue'] = $p_newIssue;
-
-        $issueHandlerRunning = false;
     }
+
+    if ($issueHandlerRunning || $p_newIssue->same_as($p_oldIssue)) {
+        return;
+    }
+    $issueHandlerRunning = true;
+
+    if ($p_newIssue->defined() && !$this->getPublication()->same_as($p_newIssue->publication)) {
+        $this->setPublicationHandler($this->getPublication(), $p_newIssue->publication);
+    }
+    if ($p_newIssue->defined() && !$this->getLanguage()->same_as($p_newIssue->language)) {
+        $this->setLanguageHandler($this->getLanguage(), $p_newIssue->language);
+    }
+    $this->setSectionHandler($this->getSection(), self::$m_nullMetaSection);
+    $this->m_readonlyProperties['url']->issue = $p_newIssue;
+    $this->m_objects['issue'] = $p_newIssue;
+
+    $issueHandlerRunning = false;
+}
 
 
     /**
@@ -1083,24 +1083,24 @@ final class CampContext
         static $sectionHandlerRunning = false;
 
         if (!$this->m_readonlyProperties['preview'] && isset($p_newSection->issue)
-        && !$p_newSection->issue->is_published && $p_newSection->defined()) {
+            && !$p_newSection->issue->is_published && $p_newSection->defined()) {
             return;
-        }
-
-        if ($sectionHandlerRunning || $p_newSection->same_as($p_oldSection)) {
-            return;
-        }
-        $sectionHandlerRunning = true;
-
-        if ($p_newSection->defined() && !$this->getIssue()->same_as($p_newSection->issue)) {
-            $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
-        }
-        $this->setArticleHandler($this->getArticle(), self::$m_nullMetaArticle);
-        $this->m_readonlyProperties['url']->section = $p_newSection;
-        $this->m_objects['section'] = $p_newSection;
-
-        $sectionHandlerRunning = false;
     }
+
+    if ($sectionHandlerRunning || $p_newSection->same_as($p_oldSection)) {
+        return;
+    }
+    $sectionHandlerRunning = true;
+
+    if ($p_newSection->defined() && !$this->getIssue()->same_as($p_newSection->issue)) {
+        $this->setIssueHandler($this->getIssue(), $p_newSection->issue);
+    }
+    $this->setArticleHandler($this->getArticle(), self::$m_nullMetaArticle);
+    $this->m_readonlyProperties['url']->section = $p_newSection;
+    $this->m_objects['section'] = $p_newSection;
+
+    $sectionHandlerRunning = false;
+}
 
 
     /**
@@ -1114,35 +1114,35 @@ final class CampContext
         static $articleHandlerRunning = false;
 
         if (!$this->m_readonlyProperties['preview']
-        && (!$p_newArticle->is_published || !$p_newArticle->issue->is_published)
-        && $p_newArticle->defined()) {
+            && (!$p_newArticle->is_published || !$p_newArticle->issue->is_published)
+            && $p_newArticle->defined()) {
             return;
-        }
-
-        if ($articleHandlerRunning || $p_newArticle->same_as($p_oldArticle)) {
-            return;
-        }
-        $articleHandlerRunning = true;
-
-        if ($p_newArticle->defined() && !$this->getSection()->same_as($p_newArticle->section)) {
-            $this->setSectionHandler($this->getSection(), $p_newArticle->section);
-        }
-        unset($this->m_objects['subtitle']);
-        unset($this->m_objects['image']);
-        unset($this->m_objects['attachment']);
-        unset($this->m_objects['comment']);
-        unset($this->m_objects['location']);
-        $this->m_readonlyProperties['url']->article = $p_newArticle;
-        $formParameters = $this->m_readonlyProperties['url']->form_parameters;
-        foreach ($formParameters as $parameter) {
-            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
-                $this->m_readonlyProperties['url']->reset_parameter($parameter['name']);
-            }
-        }
-        $this->m_objects['article'] = $p_newArticle;
-
-        $articleHandlerRunning = false;
     }
+
+    if ($articleHandlerRunning || $p_newArticle->same_as($p_oldArticle)) {
+        return;
+    }
+    $articleHandlerRunning = true;
+
+    if ($p_newArticle->defined() && !$this->getSection()->same_as($p_newArticle->section)) {
+        $this->setSectionHandler($this->getSection(), $p_newArticle->section);
+    }
+    unset($this->m_objects['subtitle']);
+    unset($this->m_objects['image']);
+    unset($this->m_objects['attachment']);
+    unset($this->m_objects['comment']);
+    unset($this->m_objects['location']);
+    $this->m_readonlyProperties['url']->article = $p_newArticle;
+    $formParameters = $this->m_readonlyProperties['url']->form_parameters;
+    foreach ($formParameters as $parameter) {
+        if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
+            $this->m_readonlyProperties['url']->reset_parameter($parameter['name']);
+        }
+    }
+    $this->m_objects['article'] = $p_newArticle;
+
+    $articleHandlerRunning = false;
+}
 
 
     /**
@@ -1200,7 +1200,7 @@ final class CampContext
     {
         if ($this->userCount === null) {
             $this->userCount = (int) Zend_Registry::get('container')->getService('user')
-                ->getPublicUserCount();
+            ->getPublicUserCount();
         }
 
         return $this->userCount;
