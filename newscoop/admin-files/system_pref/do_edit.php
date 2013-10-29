@@ -28,6 +28,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_editor_image_width = Input::Get('f_editor_image_width', 'int', null, true);
 	$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
 	$f_editor_image_zoom = Input::Get('f_editor_image_zoom');
+    $f_media_richtext_captions = Input::Get("f_media_richtext_captions");
+    $f_media_caption_length = Input::Get("f_media_caption_length");
 	$f_external_subs_management = Input::Get('f_external_subs_management');
 	$f_use_replication = Input::Get('f_use_replication');
 	$f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
@@ -48,6 +50,8 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_editor_image_width = SystemPref::Get("EditorImageResizeWidth");
 	$f_editor_image_height = SystemPref::Get("EditorImageResizeHeight");
 	$f_editor_image_zoom = SystemPref::Get("EditorImageZoom");
+    $f_media_richtext_captions = SystemPref::Get("MediaRichTextCaptions");
+    $f_media_caption_length = SystemPref::Get("MediaCaptionLength");
 	$f_external_subs_management = SystemPref::Get("ExternalSubscriptionManagement");
 	$f_use_replication = SystemPref::Get("UseDBReplication");
 	$f_db_repl_host = SystemPref::Get("DBReplicationHost");
@@ -225,6 +229,15 @@ SystemPref::Set('EditorImageRatio', $f_editor_image_ratio);
 SystemPref::Set('EditorImageResizeWidth', $f_editor_image_width);
 SystemPref::Set('EditorImageResizeHeight', $f_editor_image_height);
 SystemPref::Set('EditorImageZoom', $f_editor_image_zoom);
+
+// Rich text captions for media
+SystemPref::Set('MediaRichTextCaptions', $f_media_richtext_captions);
+if ($f_media_richtext_captions == 'Y') {
+    SystemPref::Set('MediaCaptionLength', $f_media_caption_length);
+} else {
+    // Override and set to 255 chars max
+    SystemPref::Set('MediaCaptionLength', 255);
+}
 
 // External subscription management
 SystemPref::Set('ExternalSubscriptionManagement', $f_external_subs_management);
