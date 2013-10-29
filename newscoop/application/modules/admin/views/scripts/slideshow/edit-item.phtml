@@ -1,7 +1,11 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
+<?php
+    // Load tinymce for richtext editor
+    require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
+?>
 <h1><?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
-<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
+<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="return validateTinyMCEEditors();">
 
 <div class="editarea">
     <div>
@@ -12,7 +16,27 @@
         <?php if ($this->item->isVideo()) { ?>
         <input type="text" name="url" value="<?php echo $this->escape($this->form->url->getValue()); ?>" />
         <?php } ?>
-        <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php putGS('Add caption'); ?>" /><br />
+        <?php
+            $captionLimit = SystemPref::Get('MediaCaptionLength');
+            if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+
+                $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+                $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+                $editorOptions  = array(
+                    'max_chars' => $captionLimit,
+                    'toolbar_length' => 45,
+                );
+
+                editor_load_tinymce('caption', $editorLanguage, $editorOptions);
+                ?>
+                    <textarea name="caption" rows="5" class="image-description"><?php echo $this->form->caption->getValue(); ?></textarea>
+                <?php
+            } else {
+                ?>
+                    <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php putGS('Add caption'); ?>" maxlength="<?php $captionLimit; ?>" /><br />
+                <?php
+            }
+        ?>
         <button class="save-button"><?php putGS('Save'); ?></button>
     </div>
 

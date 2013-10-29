@@ -55,7 +55,7 @@
                     <?php } ?>
                 </div>
                 <strong><?php echo $articleImage->getTemplateId(); ?></strong> <small><?php $image->getStatus() == 'approved' ? putGS('Approved') : putGS('Unapproved'); ?></small><br />
-                <?php echo htmlspecialchars($image->getDescription()); ?><br />
+                <?php echo ($image->getDescription()); ?><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>

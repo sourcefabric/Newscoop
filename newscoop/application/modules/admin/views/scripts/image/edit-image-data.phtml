@@ -2,6 +2,14 @@
 
 <?php $this->placeholder('bodyId')->set('next'); ?>
 
+<?php
+    // Load tinymce for richtext editor
+    require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
+
+    $loadAsRichtext = array();
+    $captionLimit = SystemPref::Get('MediaCaptionLength');
+?>
+
 <div id="modal-top">
     <div class="toolbar fixed-top">
     <div class="save-button-bar"></div>
@@ -21,7 +29,7 @@
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'edit-image-data'
-))); ?>">
+))); ?>" onSubmit="return validateTinyMCEEditors();">
 
 <input type="hidden" name="article_number" value="<?php echo($this->article); ?>">
 <input type="hidden" name="language_id" value="<?php echo($this->languageId); ?>">
@@ -35,15 +43,37 @@
             <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), ' x ', $image->getHeight(); ?></label></figcaption>
         </figure>
         <div class="image-data">
-            <label for="" style="font-size: 11px;"><?php echo(getGS('Description')); ?>: <a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
-            <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea><br/>
-    
+            <label for="" style="font-size: 11px;"><?php
+                echo(getGS('Description'));
+                $captionLimit = SystemPref::Get('MediaCaptionLength');
+                if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+                    echo(getGS(' (max. $1 characters)', $captionLimit));
+                }
+            ?>: <a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
+
+            <?php
+                if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+
+                    $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+                    $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+                    $loadAsRichtext[]   = 'data['.$image->getId().'][description]';
+                    ?>
+                        <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea>
+                    <?php
+                } else {
+                    ?>
+                        <INPUT TYPE="TEXT" name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" VALUE="<?php echo htmlspecialchars($image->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
+                    <?php
+                }
+            ?>
+
             <label for="" style="font-size: 11px;"><?php echo(getGS('Location')); ?>: <a style="float: right;" href="javascript:useForAll('place', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br/>
             <input name="data[<?php echo $image->getId(); ?>][place]" id="image_place_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo $image->getPlace(); ?>" style="float:none; width:380px;"><br/>
-    
+
             <label for="" style="font-size: 11px;"><?php echo(getGS('Photographer')); ?>: <a style="float: right;" href="javascript:useForAll('photographer', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
             <input name="data[<?php echo $image->getId(); ?>][photographer]" id="image_photographer_<?php echo $image->getId(); ?>" class="image-photographer" value="<?php echo $image->getPhotographer(); ?>" style="float:none; width:380px;"><br/>
-            
+
             <input type="hidden" name="data[<?php echo $image->getId(); ?>][date]" id="image_date_<?php echo $image->getId(); ?>" class="image-date" value="<?php echo $image->getDate(); ?>">
         </div>
     </li>
@@ -52,12 +82,41 @@
 
 </form>
 
+<?php
+    // Load tinymce once for all textareas
+    if (count($loadAsRichtext) > 0) {
+
+        $editorOptions  = array(
+            'max_chars' => $captionLimit,
+            'toolbar_length' => 20,
+        );
+
+        editor_load_tinymce(implode(',', $loadAsRichtext), $editorLanguage, $editorOptions);
+    }
+?>
+
 <script>
 function useForAll(field, id) {
-    var className = 'image-' + field;
-    var value = $('#image_' + field + '_' + id).val();
-    
-    $('.' + className).val(value);
+
+    if (field == 'description' && $('#image_' + field + '_' + id).length === 0) {
+        // Using tinyMCE for richttext captions
+        var textareaID      = $('textarea[name="data['+id+'][description]"]').attr('id');
+        var contentToCopy   = tinyMCE.editors[textareaID].getContent();
+
+        var inst;
+        for (inst in tinyMCE.editors) {
+            if (tinyMCE.editors[inst].getContent) {
+                tinyMCE.editors[inst].setContent(contentToCopy);
+            }
+        }
+
+    } else {
+        // Default case
+        var className = 'image-' + field;
+        var value = $('#image_' + field + '_' + id).val();
+
+        $('.' + className).val(value);
+    }
 }
 </script>
 
