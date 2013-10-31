@@ -19,7 +19,7 @@ class Admin_Form_Comment_ReplyForm extends Form
         /** Id of the comment */
         $this->addElement('hidden', 'id',
                 array(
-            'label' => getGS('Comment id'),
+            'label' => $translator->trans('Comment id', array(), 'comments'),
             'required' => true,
             'validators' => array(
                 array('NotEmpty', true),
@@ -33,7 +33,7 @@ class Admin_Form_Comment_ReplyForm extends Form
          */
         $this->addElement('text', 'subject',
                 array(
-            'label' => getGS('Subject'),
+            'label' => $translator->trans('Subject'),
             'required' => false,
             'filters' => array(
                 'stringTrim',
@@ -41,14 +41,14 @@ class Admin_Form_Comment_ReplyForm extends Form
             'validators' => array(
                 array('stringLength', false, array(1, 140)),
             ),
-            'errorMessages' => array(getGS('Subject is not $1 characters long',
-                        '1-140')),
+            'errorMessages' => array($translator->trans('Subject is not $1 characters long', array(
+                        '$1' => '1-140'), 'comments')),
         ));
 
         /** Message input */
         $this->addElement('textarea', 'message',
                 array(
-            'label' => getGS('Comment'),
+            'label' => $translator->trans('Comment'),
             'class' => 'comment',
             'required' => false,
         ));
@@ -56,21 +56,21 @@ class Admin_Form_Comment_ReplyForm extends Form
         /** Cancel button */
         $this->addElement('reset', 'cancel',
                 array(
-            'label' => getGS('Cancel'),
+            'label' => $translator->trans('Cancel'),
             'class' => 'button edit-cancel'
         ));
 
         /** Reply Button */
         $this->addElement('button', 'reply',
                 array(
-            'label' => getGS('Reply'),
+            'label' => $translator->trans('Reply', array(), 'comments'),
             'class' => 'button edit-reply'
         ));
 
         /** Save Button */
         $this->addElement('submit', 'save',
                 array(
-            'label' => getGS('Update comment'),
+            'label' => $translator->trans('Update comment', array(), 'comments'),
             'class' => 'save-button-small update'
         ));
 

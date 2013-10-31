@@ -2,13 +2,15 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/topics/topics_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/ArticleTopic.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ManageTopics')) {
-	camp_html_display_error(getGS("You do not have the right to delete topics."));
+	camp_html_display_error($translator->trans("You do not have the right to delete topics.", array(), 'topics'));
 	exit;
 }
 
@@ -21,12 +23,12 @@ $deleteTopic = new Topic($f_topic_delete_id);
 
 if ($deleteTopic->hasSubtopics()) {
 	$doDelete = false;
-	$errorMsgs[] = getGS('This topic has subtopics, therefore it cannot be deleted.');
+	$errorMsgs[] = $translator->trans('This topic has subtopics, therefore it cannot be deleted.', array(), 'topics');
 }
 $numArticles = count(ArticleTopic::GetArticlesWithTopic($f_topic_delete_id));
 if ($numArticles > 0) {
 	$doDelete = false;
-	$errorMsgs[] = getGS('There are $1 articles using the topic.', $numArticles);
+	$errorMsgs[] = $translator->trans('There are $1 articles using the topic.', array('$1' => $numArticles), 'topics');
 }
 
 if ($f_confirmed == 1) {
@@ -47,18 +49,18 @@ if ($doDelete) {
     ArticleTopic::RemoveTopicFromArticles($deleteTopic->getTopicId());
     $deleted = $deleteTopic->delete($f_topic_language_id);
 	if ($deleted) {
-	    camp_html_add_msg(getGS("Topic was deleted."), "ok");
+	    camp_html_add_msg($translator->trans("Topic was deleted.", array(), 'topics'), "ok");
 		camp_html_goto_page("/$ADMIN/topics/index.php");
 	}
 	else {
-		$errorMsgs[] = getGS('The topic $1 could not be deleted.','<B>'.$deleteTopic->getName($f_topic_language_id).'</B>');
+		$errorMsgs[] = $translator->trans('The topic $1 could not be deleted.', array('$1' => '<B>'.$deleteTopic->getName($f_topic_language_id).'</B>'), 'topics');
 	}
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Topics"), "/$ADMIN/topics/");
-$crumbs[] = array(getGS("Deleting topic"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Topics"), "/$ADMIN/topics/");
+$crumbs[] = array($translator->trans("Deleting topic", array(), 'topics'), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
 
@@ -66,7 +68,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Deleting topic"); ?> </B>
+		<B> <?php  echo $translator->trans("Deleting topic", array(), 'topics'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -81,7 +83,7 @@ echo camp_html_breadcrumbs($crumbs);
                 <?php
             }
             ?>
-            <li><?php putGS("If you continue, topic and all subtopics will be detached from all articles, and deleted."); ?></li>
+            <li><?php echo $translator->trans("If you continue, topic and all subtopics will be detached from all articles, and deleted.", array(), 'topics'); ?></li>
             <?php
         }
     ?>
@@ -92,12 +94,12 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
     <?php
         if ($doDelete == false) {
             ?>
             <?php echo SecurityToken::FormParameter(); ?>
-            <INPUT TYPE="button" class="button" VALUE="<?php putGS('Delete anyway'); ?>" ONCLICK="location.href=location.href + '&f_confirmed=1'">
+            <INPUT TYPE="button" class="button" VALUE="<?php echo $translator->trans('Delete anyway', array(), 'topics'); ?>" ONCLICK="location.href=location.href + '&f_confirmed=1'">
             <?php
         }
     ?>

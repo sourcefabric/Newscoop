@@ -1,12 +1,13 @@
 <?php
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -24,7 +25,7 @@ $uploadFileSpecified = isset($_FILES['f_image_file'])
   					   && isset($_FILES['f_image_file']['name'])
   					   && !empty($_FILES['f_image_file']['name']);
 if (empty($f_image_url) && !$uploadFileSpecified) {
-	camp_html_add_msg(getGS("You must select an image file to upload."));
+	camp_html_add_msg($translator->trans("You must select an image file to upload.", array(), 'media_archive'));
 	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 if (!$g_user->hasPermission('AddImage')) {
@@ -39,13 +40,13 @@ if (!empty($f_image_url)) {
 	if (camp_is_valid_url($f_image_url)) {
 		$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
 	} else {
-		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
+		camp_html_add_msg($translator->trans("The URL you entered is invalid: $1", array('$1' => htmlspecialchars($f_image_url))));
 		camp_html_goto_page("/$ADMIN/media-archive/add.php");
 	}
 } elseif (!empty($_FILES['f_image_file'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
-	camp_html_add_msg(getGS("You must select an image file to upload."));
+	camp_html_add_msg($translator->trans("You must select an image file to upload.", array(), 'media_archive'));
 	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 

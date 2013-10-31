@@ -1,8 +1,9 @@
 <?php
-camp_load_translation_strings("article_files");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once LIBS_DIR . '/MediaList/MediaList.php';
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 $inArchive = !empty($_REQUEST['archive']);
 
@@ -15,7 +16,7 @@ if (!$inArchive) {
     $f_article_number = Input::Get('f_article_number', 'int', 0);
 
     if (!Input::IsValid()) {
-	    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
 	    exit;
     }
 
@@ -23,13 +24,13 @@ if (!$inArchive) {
 }
 
 if (camp_convert_bytes((SystemPref::Get('MaxUploadFileSize'))) == false) {
-	camp_html_add_msg(getGS("The maximum file upload size was not configured in Newscoop."));
-	camp_html_add_msg(getGS("Please make sure you upgraded the database correctly: run $1 in a shell.",
-			$Campsite['BIN_DIR'].'/campsite-create-instance --db_name '.$Campsite['DATABASE_NAME']));
+	camp_html_add_msg($translator->trans("The maximum file upload size was not configured in Newscoop.", array(), 'article_files'));
+	camp_html_add_msg($translator->trans("Please make sure you upgraded the database correctly: run $1 in a shell.", array(
+			'$1' => $Campsite['BIN_DIR'].'/campsite-create-instance --db_name '.$Campsite['DATABASE_NAME']), 'article_files'));
 }
 
 if (!is_writable($Campsite['FILE_DIRECTORY'])) {
-	camp_html_add_msg(getGS("Unable to add attachment."));
+	camp_html_add_msg($translator->trans("Unable to add attachment.", array(), 'article_files'));
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['FILE_DIRECTORY']));
 }
 
@@ -40,7 +41,7 @@ camp_html_display_msgs();
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="expires" content="now" />
-    <title><?php putGS("Attach File to Article"); ?></title>
+    <title><?php echo $translator->trans("Attach File to Article", array(), 'article_files'); ?></title>
 
     <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
     <?php include dirname(__FILE__) . '/../../javascript_common.php'; ?>
@@ -61,8 +62,8 @@ camp_html_display_msgs();
 <?php if (!$inArchive) { ?>
 <div id="tabs">
     <ul>
-        <li><a href="#new-file"><?php putGS('Attach new file'); ?></a></li>
-        <li><a href="#existing-file"><?php putGS('Attach existing file'); ?></a></li>
+        <li><a href="#new-file"><?php echo $translator->trans('Attach new file', array(), 'article_files'); ?></a></li>
+        <li><a href="#existing-file"><?php echo $translator->trans('Attach existing file', array(), 'article_files'); ?></a></li>
     </ul>
 
     <div id="new-file">
@@ -74,40 +75,40 @@ camp_html_display_msgs();
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td colspan="2">
-    <b><?php  putGS("Attach File to Article"); ?></b>
+    <b><?php echo $translator->trans("Attach File to Article", array(), 'article_files'); ?></b>
     <hr noshade size="1" color="black" />
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("File"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("File"); ?>:</td>
   <td>
     <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
     <input type="file" name="f_file" size="32" class="input_file" /><br />
-    <?php putGS("Maximum Upload Size"); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
+    <?php echo $translator->trans("Maximum Upload Size", array(), 'article_files'); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
   </td>
 </tr>
 <tr>
-  <td align="right"><?php putGS("Description"); ?>:</td>
+  <td align="right"><?php echo $translator->trans("Description"); ?>:</td>
   <td>
-    <input type="text" name="f_description" value="" size="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the file."); ?>" />
+    <input type="text" name="f_description" value="" size="32" class="input_text" alt="blank" emsg="<?php echo $translator->trans("Please enter a description for the file.", array(), 'article_files'); ?>" />
   </td>
 </tr>
 <tr>
-  <td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Should this file only be available for this translation of the article, or for all translations?"); ?></td>
+  <td align="left" colspan="2" style="padding-left: 15px;"><?php echo $translator->trans("Should this file only be available for this translation of the article, or for all translations?", array(), 'article_files'); ?></td>
 </tr>
 <tr>
   <td colspan="2" class="indent"  style="padding-left: 30px;">
-    <input type="radio" name="f_language_specific" value="yes"><?php putGS("Only this translation"); ?><br />
-    <input type="radio" name="f_language_specific" value="no" checked /><?php putGS("All translations"); ?>
+    <input type="radio" name="f_language_specific" value="yes"><?php echo $translator->trans("Only this translation", array(), 'article_files'); ?><br />
+    <input type="radio" name="f_language_specific" value="no" checked /><?php echo $translator->trans("All translations", array(), 'article_files'); ?>
   </td>
 </tr>
 <tr>
-  <td align="left" colspan="2" style="padding-left: 15px;"><?php putGS("Do you want this file to open in the user's browser, or to automatically download?"); ?></td>
+  <td align="left" colspan="2" style="padding-left: 15px;"><?php echo $translator->trans("Do you want this file to open in the user's browser, or to automatically download?", array(), 'article_files'); ?></td>
 </tr>
 <tr>
   <td colspan="2" style="padding-left: 30px;">
-    <input type="radio" name="f_content_disposition" value=""><?php putGS("Open in the browser"); ?><br />
-    <input type="radio" name="f_content_disposition" value="attachment" checked /><?php putGS("Automatically download"); ?>
+    <input type="radio" name="f_content_disposition" value=""><?php echo $translator->trans("Open in the browser", array(), 'article_files'); ?><br />
+    <input type="radio" name="f_content_disposition" value="attachment" checked /><?php echo $translator->trans("Automatically download", array(), 'article_files'); ?>
   </td>
 </tr>
 <tr>
@@ -118,10 +119,10 @@ camp_html_display_msgs();
       <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
       <input type="hidden" name="BackLink" value="<?php  p($_SERVER['REQUEST_URI']); ?>" />
       <?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>
-      <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button" />
+      <input type="submit" name="Save" value="<?php echo $translator->trans('Save'); ?>" class="button" />
       &nbsp;&nbsp;
       <?php } ?>
-      <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="parent.$.fancybox.close();" />
+      <input type="button" name="Cancel" value="<?php echo $translator->trans('Cancel'); ?>" class="button" onclick="parent.$.fancybox.close();" />
     </div>
   </td>
 </tr>
@@ -153,7 +154,7 @@ $list->setColVis(FALSE)
 ?>
 
     <div style="margin: 8px 0; text-align:center">
-        <input type="submit" class="button" value="<?php putGS('Attach'); ?>" />
+        <input type="submit" class="button" value="<?php echo $translator->trans('Attach'); ?>" />
     </div>
 
     </form>

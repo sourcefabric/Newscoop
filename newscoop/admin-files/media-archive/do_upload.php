@@ -8,8 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 $nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
 $f_article_edit = isset($_POST['f_article_edit']) ? $_POST['f_article_edit'] : null;
@@ -17,17 +16,17 @@ $f_language_id = isset($_POST['f_language_id']) ? $_POST['f_language_id'] : null
 $f_article_number = isset($_POST['f_article_number']) ? $_POST['f_article_number'] : null;
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('AddImage') && !isset($f_article_edit)) {
-	camp_html_display_error(getGS("You do not have the right to add images."));
+	camp_html_display_error($translator->trans("You do not have the right to add images.", array(), 'media_archive'));
 	exit;
 }
 
 if (empty($f_image_url) && empty($nrOfFiles)) {
-	camp_html_add_msg(getGS("You must select an image file to upload."));
+	camp_html_add_msg($translator->trans("You must select an image file to upload.", array(), 'media_archive'));
     if ($f_article_edit) {
         camp_html_goto_page('/'.$ADMIN.'/image/article-attach/article_number/'.$f_article_number.'/language_id/'.$f_language_id);
     }
@@ -49,7 +48,7 @@ if (!empty($f_image_url)) {
 		$result = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
         $images[] = $result;
 	} else {
-		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
+		camp_html_add_msg($translator->trans("The URL you entered is invalid: $1", array('$1' => htmlspecialchars($f_image_url))), 'media_archive');
 	}
 }
 
@@ -65,7 +64,7 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
 }
 
 if (!empty($images)) {
-    camp_html_add_msg(getGS('"$1" files uploaded.', count($images)), "ok");
+    camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => count($images)), 'media_archive', "ok");
     if ($f_article_edit) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');

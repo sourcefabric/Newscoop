@@ -1,14 +1,13 @@
 <?php
-camp_load_translation_strings("plugin_debate");
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 if (!SecurityToken::isValid()) {
-    echo "alert('".getGS('Invalid security token!')."');";
+    echo "alert('".$translator->trans('Invalid security token!')."');";
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    echo "alert('".(getGS('You do not have the right to manage debates.'))."');";
+    echo "alert('".($translator->trans('You do not have the right to manage debates.'))."');";
     exit;
 }
 
@@ -33,7 +32,7 @@ switch ($f_debate_item) {
             if ($DebatePublication->$action()) {
                 echo "debate_nr = '$f_debate_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_debate').'");';
             }
     break;
 
@@ -42,7 +41,7 @@ switch ($f_debate_item) {
             if ($DebateIssue->$action()) {
                 echo "debate_nr = '$f_debate_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_debate').'");';
             }
     break;
 
@@ -51,7 +50,7 @@ switch ($f_debate_item) {
             if ($DebateSection->$action()) {
                 echo "debate_nr = '$f_debate_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment.').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment.', array(), 'plugin_debate').'");';
             }
     break;
 
@@ -60,7 +59,7 @@ switch ($f_debate_item) {
             if ($DebateArticle->$action()) {
                 echo "debate_nr = '$f_debate_nr'; action = '$f_action';";
             } else {
-                echo 'alert("'.getGS('Error changing attachment').'");';
+                echo 'alert("'.$translator->trans('Error changing attachment', array(), 'plugin_debate').'");';
             }
     break;
 }

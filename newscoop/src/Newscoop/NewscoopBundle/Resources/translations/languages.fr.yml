@@ -1,0 +1,72 @@
+'Language id not specified': 
+'No languages.': 
+'Native Name': 
+'Name taken.': 
+'Language saved.': 
+'Language removed.': 
+'Language not found.': 
+'Language is in use and cannot be removed.': 
+'Language added.': 
+'English language cannot be removed.': 
+'Edit short month names': 
+'Edit short day names': 
+'Edit month names': 
+'Edit language: $1': 
+'Edit day names': 
+'Code Page': 
+'Add new Language': 
+'Add Language': 
+We: 
+Tu: 
+Th: 
+Su: 
+Sep: 
+Sa: 
+'Please enter the translation for week day short names.': 
+'Please enter the translation for month short names.': 
+Oct: 
+Nov: 
+Mo: 
+Mar: 
+Jun: 
+Jul: 
+Jan: 
+Fr: 
+Feb: 
+Dec: 
+Aug: 
+Apr: 
+'No language.': 'Aucune langue.'
+'Delete language $1': 'Supprimer langue $1'
+'You do not have the right to add languages.': 'Vous navez pas le droit dajouter des langues'
+'Please enter the translation for time units.': 'SVP entrer la traduction pour les unités de temps.'
+'You do not have the right to delete languages.': 'Vous navez pas le droit de supprimer des langues. '
+'Are you sure you want to delete the language $1?': 'Etes-vous sûrs que vous voulez supprimer la langue $1 ? '
+'Deleting language': 'Suppression langue'
+'The language $1 could not be deleted.': 'La langue $1 ne pouvait pas être supprimé.'
+'Edit language': 'Editer langue'
+'You do not have the right to edit languages.': 'Vous navez pas le droit déditer des langues. '
+'Please enter the translation for month names.': 'SVP entrer la traduction pour les mois.'
+'Please enter the translation for week day names.': 'SVP entrer la traduction pour les jours de la semaine.'
+January: Janvier
+February: Fevrier
+March: Mars
+April: Avril
+May: Mai
+June: Juin
+July: Juillet
+August: Août
+September: Septembre
+October: Octobre
+November: Novembre
+December: Décembre
+Monday: Lundi
+Tuesday: Mardi
+Wednesday: Mercredi
+Thursday: Jeudi
+Friday: Vendredi
+Saturday: Samedi
+Sunday: Dimanche
+'You do not have the right to add new languages.': 'Vous navez pas le droit dajouter de nouvelles langues.'
+'There are $1 issue(s) left.': 'Il manque $1 édition(s).'
+'Native name': 'Nom dorigine'

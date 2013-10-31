@@ -1,0 +1,63 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 'ليس لون'
+'No such field': 'الحقل غير موجود'
+'Color saved': 'تم حقظ اللون'
+'Color not saved': 'لم يمك حفظ اللون'
+'Topic created': 'تم انشاء الموضوع'
+'The topic name is already in use by another topic.': 'اسم الموضوع فيد الاستخدام من قبل من موضوع آخر.'
+'Complex Date': 'تاريخ معقد'
+vertices: القمم
+'There was a problem trying to execute the XML RPC function.': 'حدثت مشكلة في تنفيذ اجراء XML RPC.'
+'The Campcaster server configuration is invalid.': 'تكوين الخادم Campcaster غير صالح.'
+'Pan Map': 'خريطة الإنتقال'
+'Open large map': 'إفتح خريطة كبيرة'
+'No news available.': 'لا توجد أخبار.'
+'Edit Polygon': 'تعديل مضلع '
+'Create Polygon': 'إنشاء مضلع'
+'Communication error: ': 'خطأ المواصلات:'
+'Cant fetch news from $1': 'غير قادر على الحصول على  أخبار من $1'
+Loading...: 'في عملية تحميل...'
+Version: إصدار
+License: ترخيص
+Homepage: 'الصفحة الرئيسية'
+'Show original map': 'اظهار الخريطة الأصلية'
+'The uploaded archive does not contain an valid newscoop plugin.': 'لا يشمل الأرشيف المرفوع وحدة قابسة صالحة لـ Newscoop.'
+Map: خريطة
+Center: الوسط
+Title: العنوان
+'Invalid security token.': 'الرمز الأمني غير صالح.'
+'Callback $1 is not callable.': 'إعادة النداء $1 غير قابلة للنداء'
+'Article translated to $4 ($5)': 'المقالة مترجمة الى $4 ($5)'
+'Article status changed from $1 to $2.': 'تم تغيير حالة المقالة من $1 الى $2.'
+'Article deleted.': 'تم حذف المقالة.'
+'Article created.': 'تم إنشاء المقالة.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'المقالة منسوخة على المقالة #$4 (منشور $5، اصدار $6، قسم $7).'
+'Article URL': 'عنوان الرابط للمقالة'
+'Article Number': 'رقم المقالة'
+'Access denied.': 'الدخول مورقوض.'
+'Publish with issue': 'النشر بالإصدار'
+unknown: 'غير معروف'
+Switch: تبديل
+Numeric: رقمي
+'The uploaded file format is unsupported.': 'تنسيق الملف المرفوع غير مدعوم.'
+'The following fields are mandatory:': 'الحقول التالية ضرورية:'
+'Missing value for $1': 'قيمة مفقودة لـ $1'
+'Manage Plugins': 'إدارة وحدات قابسة'
+'* Marked fields are mandatory.': 'الحقول التي تحمل العلامة النجمية ضرورية'
+'$1 is of type $2': '$1 من نوع  $2'
+'Invalid resize width/height.': 'إعادة تشكيل حجم العرض/الاتساع غير صالح.'
+'Image type $1 is not supported.': 'نوع الصورة $1 غير مدعوم'
+'The file uploaded is not an image.': 'ليس صورة الملف الذي تم رفعه'
+'Could not delete record from the database.': 'لم يحذف السجل من قاعدة البيانات.'
+'template path': 'مسار القالب'
+'short names': 'أسماء قصيرة'
+'Unable to fetch image from remote server.': 'لم يحصل عليها الصورة من الخادم اللاسلكي'
+Last: الأخير
+First: الأول
+'Single-line Text': 'نص بسطر واحد'
+'Multi-line Text with WYSIWYG': 'نص متعددة الأسطر بـ WYSIWYG'
+'URL $1 is invalid or is not an image.': 'عنوان الرابط $1 غير صحيح أو ليس صورة.'
+'URL $1 is not an image.': 'عنوان الرابط $1 ليس صورة.'

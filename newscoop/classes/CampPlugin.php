@@ -355,12 +355,13 @@ class CampPlugin extends DatabaseObject
     {
         $plugin_name = false;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         require_once('Archive/Tar.php');
         $tar = new Archive_Tar($p_uploaded_package);
 
 
         if (($file_list = $tar->ListContent()) == 0) {
-            $p_log = getGS('The uploaded file format is unsupported.');
+            $p_log = $translator->trans('The uploaded file format is unsupported.', array(), 'api');
             return false;
         } else {
             foreach ($file_list as $v) {
@@ -374,7 +375,7 @@ class CampPlugin extends DatabaseObject
         }
 
         if ($plugin_name === false) {
-            $p_log = getGS('The uploaded archive does not contain an valid newscoop plugin.');
+            $p_log = $translator->trans('The uploaded archive does not contain an valid newscoop plugin.', array(), 'api');
             return false;
         }
 

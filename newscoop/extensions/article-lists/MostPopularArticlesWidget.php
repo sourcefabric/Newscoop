@@ -16,8 +16,9 @@ require_once dirname(__FILE__) . '/ArticlesWidget.php';
 class MostPopularArticlesWidget extends ArticlesWidget
 {
     public function __construct()
-    {
-       $this->title = getGS('Most Popular Articles');
+    {  
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Most Popular Articles', array(), 'extensions');
     }
 
     public function beforeRender()

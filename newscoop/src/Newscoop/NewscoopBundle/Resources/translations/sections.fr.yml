@@ -1,0 +1,55 @@
+default: 
+'before you can configure the section templates.': 
+'You have to assign a theme to the issue': 
+'The section number $1 was already in use.': 
+'Delete all articles written in $1 language from this section': 
+'Delete all articles and all of their translations': 
+'Delete only this section ($1)': 
+'Delete all translations of this section': 
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 
+'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 
+'Section updated': 
+'There are $1 subscriptions which will be affected.': 
+'There are $1 articles in this section.': 
+'Go To Articles': 'Aller aux Articles'
+'Add section to all subscriptions.': 'Ajoutez la section à tous les abonnements.'
+'Delete section from all subscriptions.': 'Supprimez la section de tous les abonnements.'
+'A total of $1 subscriptions were updated.': 'Un total de $1 abonnements a été mis à jour. '
+'Name<BR><SMALL>(click to see articles)</SMALL>': 'Nom<BR><SMALL>(cliquer pour voir les articles)</SMALL>'
+'Delete section $1': 'Supprimer la section $1'
+'Adding new section': 'Ajout nouvelle section'
+'You do not have the right to add sections.': 'Vous navez pas le droit dajouter des sections'
+'The section $1 has been successfuly added.': 'La section $1 a été ajoutée avec succès.'
+'Please check if another section with the same number or URL name does not exist already.': 'SVP verifier si une autre section avec  le même numéro ou nom URL nexiste pas déjà.'
+'Delete section': 'supprimer la section'
+'You do not have the right to delete sections.': 'Vous navez pas le droit de supprimer des sections.'
+'Are you sure you want to delete the section $1?': 'Etes-vous sûr de vouloir supprimer la section $1?'
+'Deleting section': 'Suppression section'
+'The section $1 has been deleted.': 'La section $1 a été modifiée.'
+'Configure section': 'Configurer la section'
+'The section could not be changed.': 'La section ne peut pas être changée.'
+'Duplicate section': 'Dupliquer la section'
+'The destination issue is the same as the source issue.': 'La destination de lédition est la même comme lédition source.'
+'Error updating subscriptions.': 'Erreur en mettant à jour les abonnements.'
+'Duplicating section': 'Duplication de section'
+'The section $1 could not be duplicated': 'La section $1 ne peut pas être dupliquée'
+'Section $1 has been duplicated to $2. $3 of $4': 'Section $1 a été dupliquée à $2. $3 de $4'
+'You do not have the right to modify sections.': 'Vous navez pas le droit de modifier des sections.'
+'A total of $1 articles were deleted.': 'Un total de $1 articles a été supprimé. '
+'Duplicate Section:': 'Dupliquer Section:'
+'Existing Section': 'Section Existante'
+'Go to new section': 'Aller à la nouvelle section'
+'Go to source section': 'Aller à la section source'
+'New Section': 'Nouvelle Section'
+'Please select either $1 or $2.': 'Choisir Sil vous plaît ou bien $1 ou bien $2 . '
+'Select destination section:': 'Choisir la section de destination'
+OR: OU
+'URL Name': 'Nom URL'
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Le numéro de section indiqué existe déjà , spécifier SVP une valeur différente ou employez la liste déroulante pour trouver une section existante. '
+Warning: Avertissement
+'You must select a section.': 'Vous devez choisir une section.'
+'You must specify a name for the section.': 'Vous devez spécifier un nom pour la section. '
+'Please check if another section with the same number does not already exist.': 
+'Short Name': 
+'The section could not be added.': 'La section ne peut pas être ajoutée'
+'Add new section': 'Ajouter nouvelle section'

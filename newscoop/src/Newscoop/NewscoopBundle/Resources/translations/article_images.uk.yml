@@ -1,0 +1,78 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Вибачте, але це зображення замале. Воно повинно бути принаймні %dx%d.'
+'Slideshow rendition': 'Комплект размірів слайдшоу'
+'Renditions reloaded': 'Комплект розмірів перезавантажений'
+'Reload renditions': 'Повторити завантаження комплекту розмірів'
+'Edit images': 'Редагувати зображення'
+'Specify image url if you want to load it.': 'Вкажіть посилання на зображення, якщо хочете його завантажити.'
+'Items: ': 'Пункти:'
+'Attach slideshows': 'Прікріпити слайдшоу'
+'original size:': 'Первиний розмір:'
+'no caption': 'Без підпису'
+'Video URL': 'Посилання відео'
+'Use for all': 'Використати для всіх'
+'Use default': 'Використати за замовчуванням'
+'Slug must be unique': 'Коротке ім’я має бути унікальним'
+Slug: 'Коротке ім’я'
+'Slideshow headline': 'Заголовок слайдшоу'
+Slideshow: Слайдшоу
+'Set selected as default image': 'Призначити вибране зображення за замовчуванням'
+'Set as default': 'Встановити як значення за замовчуванням'
+Saving...: Зберігається...
+Saved: Збережено
+'Save headline': 'Зберегти заголовок'
+'Place Images': 'Розмістити зображення'
+'No renditions defined.': 'Не визначені видачи.'
+'No images found.': 'Зображення не знайдені.'
+'No images attached to article.': 'Немає прікріплених зображень до статті.'
+'No images': 'Немає зображень'
+'Next: Upload and Edit Metadata': 'Далі: Завантажити та редагувати метадані'
+'Next: Place Images': 'Далі: Розмістити зображення'
+'Media Archive': 'Медіа архів'
+Location: Місцезнаходження
+Items: Пункти
+Item: Пункт
+'Image files': 'Графічні файли'
+'Image Files: ': 'Графічні файли:'
+Headline: Тема
+Finish: Завершити
+'Edit Image Data': 'Редагувати дані зображення'
+'Edit $1': 'Редагувати $1'
+'Done editing': 'Завершити редагування'
+Detach: Від’єднати
+Create: Створити
+Caption: Підпис
+'Attached images': 'Прікріплені зображення'
+'Attach & Place': 'Прікріпити та Розташувати'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Додати посилання на відео (наприклад http://vimeo.com/25083275 з Vimeo, http://youtu.be/1XsPVO61e9w з YouTube)'
+'Add video': 'Додати відео'
+'Add caption': 'Додати підпис'
+'Show all': 'Показати все'
+'The image has been removed from the article.': 'Зображення видалені зі статті.'
+'Unable to add new image.': 'Неможливо додати нове зображення.'
+'Image number $1 already exists': 'Зображення номер $1 вже існує'
+'You do not have the right to change image information.': 'Ви не маєте прав змінювати інофрмацію про зображення'
+'The image number specified is already in use.': 'Визначений номер зображення вже використовується.'
+'Image $1 updated.': 'Зображення  $1 оновлене.'
+'Image $1 added.': 'Зображення  $1  додане.'
+'Edit article': 'Редагувати статтю'
+'You do not have the right to attach images to articles.': 'Ви не маєте прав прікріпляти зображення до статей.'
+'You do not have the right to add images.': 'Ви не маєте прав додавати зображення.'
+'Image information': 'Інформація про зображення'
+'Attach New Image': 'Приєднати нове зображення'
+'Attach Image To Article': 'Прікріпити зображення до статті.'
+'Attach Existing Image': 'Прікріпити зображення '
+'Add New Image': 'Додати нове зображення'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(рррр-мм-дд)</SMALL>
+'You must select an image file to upload.': 'Ви маєте вибрати зображення для завантаження.'
+'Change image information': 'Змінити інформацію про зображення'
+'You do not have the right to add images': 'Ви не маєте прав додавати зображення'
+'Items per page': 
+'The image $1 has been added.': 
+'View image': 
+Unlink: 
+'Back to article details': 
+'Are you sure you want to delete the image $1?': 
+'Click one of the ': 

@@ -1,0 +1,67 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 'Ist keine Farbe'
+'No such field': 'Feld existiert nicht'
+'Color saved': 'Farbe gespeichert'
+'Color not saved': 'Farbe nicht gespeichert'
+'Topic created': 'Thema angelegt. '
+'The topic name is already in use by another topic.': 'Der Themenname ist bereits in Verwendung. '
+'Complex Date': 'Komplexes Datum'
+vertices: Eckpunkte
+'There was a problem trying to execute the XML RPC function.': 'Es gab ein Problem beim Versuch die XML RPC Funktion auszuführen. '
+'The Campcaster server configuration is invalid.': 'Die Campcaster Server Konfiguration is ungültig.'
+'Pan Map': 'Karte schieben'
+'Open large map': 'Öffne große Karte'
+'No news available.': 'Keine Nachrichten verfügbar. '
+'Edit Polygon': 'Polygon bearbeiten.'
+'Create Polygon': 'Polygon erstellen'
+'Communication error: ': 'Übertragungsfehler:'
+'Cant fetch news from $1': 'Die Nachrichten von $1 konnten nicht abgerufen werden.'
+Loading...: Lade...
+Version: Version
+License: Lizenz
+Homepage: Dashboard
+'Show original map': 'Ursprüngliche Karte anzeigen'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Das hochgeladene Archiv enthält kein gültiges Newscoop Plugin.'
+Map: Karte
+Center: Zentrieren
+Title: Titel
+'Invalid security token.': 'Ungültiges Sicherheits-Token.'
+'Callback $1 is not callable.': 'Rückfrage $1 ist nicht abrufbar.'
+'Article translated to $4 ($5)': 'Artikel übersetzt nach $4 ($5).'
+'Article status changed from $1 to $2.': 'Artikelstatus von $1 nach $2 geändert.'
+'Article deleted.': 'Artikel gelöscht.'
+'Article created.': 'Artikel erstellt.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Artikel nach Artikel #$4 (Publikation $5, Ausgabe $6, Rubrik $7) kopiert.'
+'Article URL': 'Artikel URL'
+'Article Number': Artikelnummer
+'Access denied.': 'Zugang verweigert'
+'Publish with issue': 'Mit Ausgabe veröffentlichen'
+unknown: unbekannt
+Switch: Schalter
+Numeric: Numerisch
+'The uploaded file format is unsupported.': 'Das hochgeladene Dateiformat wird nicht unterstützt.'
+'The following fields are mandatory:': 'Die folgenden Felder sind Pflichtfelder:'
+'Missing value for $1': 'Fehlender Wert für $1'
+'Manage Plugins': 'Plugins verwalten'
+'* Marked fields are mandatory.': 'Markierte Felder sind Pflichtfelder.'
+'$1 is of type $2': '$1 ist vom Typ $2'
+'Invalid resize width/height.': 'Ungültige Änderung der Breite/Höhe.'
+'Image type $1 is not supported.': 'Bildtyp $1 wird nicht unterstützt.'
+'The file uploaded is not an image.': 'Die hochgeladene Datei ist keine Bilddatei.'
+'Could not delete record from the database.': 'Der Eintrag konnte nicht aus der Datenbank gelöscht werden.'
+'template path': Templatepfad
+'short names': Kurznamen
+'Unable to fetch image from remote server.': 'Das Bild konnte nicht vom Remote Server abgerufen werden.'
+Last: Letzte
+First: Erste
+'Single-line Text': Textzeile
+'Multi-line Text with WYSIWYG': 'Fließtext mit WYSIWYG '
+'URL $1 is invalid or is not an image.': 'URL $1 ist ungültig oder es ist kein Bild.'
+'URL $1 is not an image.': 'Unter URL $1 ist kein Bild verfügbar.'
+'Invalid parameter given to Audioclip::editMetadata()': 'Ungültiger Parameter an Audioclip vergeben::editMetadata()'
+'File $1 does not exist': 'Datei $1 existiert nicht. '
+'Cannot update audioclip metadata on storage server': 'Update der Metadaten zum Audioclip auf dem Storage Server ist fehlgeschlagen. '
+'Cannot update audioclip metadata on Campsite': 'Update der Metadaten zum Audioclip auf Campsite ist fehlgeschlagen. '

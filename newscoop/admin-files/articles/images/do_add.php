@@ -1,5 +1,4 @@
 <?php
-camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
@@ -9,8 +8,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_add_msg(getGS('Invalid security token!'));
+    camp_html_add_msg($translator->trans('Invalid security token!'));
 ?>
 <script type="text/javascript">
 window.close();
@@ -21,7 +22,7 @@ window.opener.location.reload();
 }
 
 if (!$g_user->hasPermission('AddImage')) {
-	camp_html_display_error(getGS('You do not have the right to add images.' ), null, true);
+	camp_html_display_error($translator->trans('You do not have the right to add images.', array(), 'article_images'), null, true);
 	exit;
 }
 
@@ -37,7 +38,7 @@ $f_image_url = Input::Get('f_image_url', 'string', '', true);
 $BackLink = Input::Get('BackLink', 'string', null, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
 	exit;
 }
 
@@ -45,7 +46,7 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 
 // If the template ID is in use, dont add the image.
 if (ArticleImage::TemplateIdInUse($f_article_number, $f_image_template_id)) {
-	camp_html_add_msg(getGS("The image number specified is already in use."));
+	camp_html_add_msg($translator->trans("The image number specified is already in use.", array(), 'article_images'));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 
@@ -58,13 +59,13 @@ if (!empty($f_image_url)) {
 	if (camp_is_valid_url($f_image_url)) {
 		$image = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
 	} else {
-		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
+		camp_html_add_msg($translator->trans("The URL you entered is invalid: '$1'", array('$1' => htmlspecialchars($f_image_url))));
 		camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 	}
 } elseif (!empty($_FILES['f_image_file']) && !empty($_FILES['f_image_file']['name'])) {
 	$image = Image::OnImageUpload($_FILES['f_image_file'], $attributes, $g_user->getUserId());
 } else {
-	camp_html_add_msg(getGS("You must select an image file to upload."));
+	camp_html_add_msg($translator->trans("You must select an image file to upload.", array(), 'article_images'));
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'images/popup.php'));
 }
 
@@ -80,7 +81,7 @@ ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNum
 <script type="text/javascript">
 try {
     parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = "<?php putGS("Image '$1' added.", addslashes($image->getDescription())); ?>";
+    parent.$.fancybox.message = "<?php echo $translator->trans("Image $1 added.", array('$1' => addslashes($image->getDescription()),'article_images'); ?>";
     parent.$.fancybox.close();
 } catch (e) {}
 </script>

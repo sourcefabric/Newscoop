@@ -1,0 +1,82 @@
+'Are you sure you want to delete the debate $1?': 'Wirklich die Umfrage $1 löschen?'
+'click to edit': 'Zum Bearbeiten klicken'
+Debates: Umfragen
+'You must select a file to upload.': 'Sie müssen eine Datei zum Hochladen aussuchen.'
+'You do not have the right to delete files.': 'Keine Berechtigung um Dateien zu löschen.'
+'You do not have the right to change the article.': 'Keine Berechtigung den Artikel zu verändern.'
+'You do not have the right to change files.': 'Keine Berechtigung Dateien zu verändern.'
+'You do not have the right to add files.': 'Keine Berechtigung Dateien hinzuzufügen.'
+'Unable to add attachment.': 'Anhang konnte nicht hinzugefügt werden.'
+'There was a problem uploading the file.': 'Beim Hochladen der Datei ist ein Problem aufgetreten.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Die Datei wurde nur teilweise hochgeladen. Dies passiert wenn die Höchstdauer für das Hochladen der Datei im Vergleich zur Dateigröße zu kurz ist. Die Höchstdauer ist in php.ini festgelegt.'
+'The maximum file upload size was not configured in Campsite.': 'Die maximale Dateigröße zum Hochladen wurde nicht in Newscoop konfiguriert.'
+'The file exceeds the allowed max file size.': 'Die Datei überschreitet die erlaubte maximale Dateigröße.'
+'Should this file only be available for this translation, or for all translations?': 'Soll diese Datei nur für diese oder für alle Übersetzungen zur Verfügung stehen? '
+'Should this file only be available for this translation of the article, or for all translations?': 'Soll diese Datei nur für diese Übersetzung des Artikels oder für alle Übersetzungen zur Verfügung stehen?'
+'Debate Answer $1 does not exist.': 'Umfrage Antwort $1 existiert nicht.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Bitte sicherstellen, dass die Datenbank korrekt aktualisiert wurde. Führen Sie $1 in einer Shell aus.'
+'Please enter a description for the file.': 'Bitte eine Dateibeschreibung eingeben.'
+'Open in the browser': 'Im Browser öffnen'
+'Only this translation': 'Nur diese Übersetzung'
+'Maximum Upload Size': 'Maximale Größe für das Hochladen'
+Files: Dateien
+'File information': Dateiinformation
+'File Size': Dateigröße
+'File Name': Dateiname
+'File $1 updated.': 'Datei $1 aktualisiert.'
+'File $1 deleted.': 'Datei $1 gelöscht.'
+'File $1 added.': 'Datei $1 hinzugefügt.'
+'Edit article': 'Artikel bearbeiten'
+Download: Herunterladen
+'Do you want this file to open in the users browser, or to automatically download?': 'Möchten Sie die Datei im Browser öffnen oder automatisch herunterladen?'
+'Change file information': 'Dateiinformation ändern'
+'Automatically download': 'Automatisch herunterladen'
+Attachments: Anhänge
+'Attachment does not exist.': 'Anhang existiert nicht.'
+'Attach File to Debate Answer': 'datei an Umfrageantwort anhängen'
+'Are you sure you want to remove the file $1 from the debate answer?': 'Wirklich Datei $1 aus der Umfrageantwort entfernen?'
+'All translations': 'Alle Übersetzungen'
+'You need to activate at least 1 answer.': 'Sie müssen mindestens 1 Antwort aktivieren.'
+'You must select number of votes per user.': 'Sie müssen eine Anzahl Stimmen pro User auswählen.'
+'You must select number of answers.': 'Sie müssen eine Anzahl Stimmen auswählen.'
+'You must select at least one debate to perform an action.': 'Sie müssen mindestens eine Umfrage auswählen um eine Aktion auszuführen.'
+'You do not have the right to manage debates.': 'Keine Berechtigung um Umfragen zu verwalten.'
+'You do not have the right to manage debate.': 'Keine Berechtigung um die Umfrage zu verwalten.'
+'Votes per unique User': 'Stimmen pro bestimmtem User'
+'Votes per single User': 'Stimmen pro einzelnem User'
+Votes: Stimmen
+'Translate Debate': 'Umfrage übersetzen'
+Title: Titel
+Standard: Standard
+Result: Ergebnis
+Reset: Zurücksetzen
+Question: Frage
+'Debate does not exists.': 'Umfrage existiert nicht.'
+'Debate List': Umfragenliste
+'Percentage this language': 'Prozentsatz dieser Sprache'
+'Percentage all languages': 'Prozentsatz aller Sprachen'
+'Number of answers': 'Anzahl Antworten'
+'No debates.': 'keine Umfragen'
+'No Debates available.': 'Keine Umfragen verfügbar'
+'Invalid input': 'Ungültige Eingabe'
+Extended: Erweitert
+'Error changing attachment.': 'Fehler beim Ändern des Anhangs.'
+'Error changing attachment': 'Fehler beim Ändern des Anhangs'
+End: Ende
+'Edit Debate': 'Umfrage bearbeiten'
+'Duplicate Debate': 'Umfrage duplizieren'
+'Date end voting': 'Datum Stimmabgabe Ende'
+'Date end': 'Datum Ende'
+'Date begin voting': 'Datum Stimmabgabe starten'
+'Date begin': 'Datum starten'
+'Copy statistics': 'Statistiken kopieren'
+Copy: Kopieren
+Begin: Starten
+'Attach debate': 'Umfrage anhängen'
+'Attach Debates': 'Umfragen anhängen'
+'Are you sure you want to reset counters on the selected debates?': 'Wirklich Zähler der ausgewählten Umfragen zurücksetzen?'
+'Are you sure you want to delete the selected debates?': 'Wirklich ausgewählte Umfrage löschen?'
+'Answer $1': 'Antwort $1'
+'Add new Debate': 'Neue Umfrage hinzufügen'
+---Select---: ---Auswählen---
+'$1/$2 debates assigned/unassigned.': '$1/$2 Umfragen zugewiesen/nicht zugewiesen'

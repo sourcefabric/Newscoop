@@ -14,8 +14,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -25,12 +27,12 @@ $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
 	exit;
 }
 
 if (!$g_user->hasPermission('AttachTopicToArticle')) {
-	camp_html_display_error(getGS("You do not have the right to detach topics from articles."), null, true);
+	camp_html_display_error($translator->trans("You do not have the right to detach topics from articles.", array(), 'article_topics'), null, true);
 	exit;
 }
 
@@ -58,7 +60,7 @@ foreach ($f_topic_ids as $topicIdString) {
 <?php if (!is_null($f_topic_ids)) { ?>
 try {
     parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = '<?php putGS('Topics updated.'); ?>';
+    parent.$.fancybox.message = '<?php echo $translator->trans('Topics updated.', array(), 'article_topics'); ?>';
 } catch (e) {}
 <?php } ?>
 parent.$.fancybox.close();

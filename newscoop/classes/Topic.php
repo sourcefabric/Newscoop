@@ -104,7 +104,8 @@ class Topic extends DatabaseObject {
      */
     
     public static function add($p_values = null)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $return = array();
         $created = false;
         if (!is_array($p_values)) {
@@ -122,7 +123,7 @@ class Topic extends DatabaseObject {
         if ($noName) {
             $return['status'] = 0;
             $return['messageClass'] = 'error';
-            $return['message'] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+            $return['message'] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>'));
         } else {
             $f_topic_parent_id = array_key_exists('f_topic_parent_id', $p_values) ? $p_values['f_topic_parent_id'] : 0;
             $f_topic_language_id = array_key_exists('f_language_selected', $p_values) ? $p_values['f_language_selected'] : 1;
@@ -137,11 +138,11 @@ class Topic extends DatabaseObject {
             if ($created) {
                 $return['status'] = 1;
                 $return['messageClass'] = 'highlight';
-                $return['message'] = getGS('Topic created');
+                $return['message'] = $translator->trans('Topic created', array(), 'api');
             } else {
                 $return['status'] = 0;
                 $return['messageClass'] = 'error';
-                $return['message'] = getGS('The topic name is already in use by another topic.');
+                $return['message'] = $translator->trans('The topic name is already in use by another topic.', array(), 'api');
             }
         }
         return json_encode($return);

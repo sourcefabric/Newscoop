@@ -1,0 +1,286 @@
+Plugins: Plugins
+'Manage Plugins': 'Administrar plugins'
+Account: Cuenta
+'Items per page': 'Items por página'
+'Add new': 'Agregar nuevo'
+Home: Inicio
+Logout: Salir
+More...: Más...
+Content: Contenido
+Languages: Idiomas
+Countries: Países
+Themes: Plantillas
+Topics: Tópicos
+Configure: Configurar
+'Image Archive': 'Archivo de imágenes'
+'Add Article': 'Agregar artículo'
+Fields: Campos
+Delete: Borrar
+Type: Tipo
+Name: Nombre
+Code: Código
+Edit: Editar
+Login: Entrada
+Password: Clave
+Site: Sitio
+Path: Paso
+'Go up': Subir
+URL: URL
+Order: Orden
+Hide: Ocultar
+Duplicate: Duplicar
+Subscription: Suscripción
+expires: Expira
+starts: Inicia
+before: antes
+after: después
+on: encendido
+status: estatus
+active: activo
+inactive: inactivo
+Subscribers: suscriptores
+Staff: Equipo
+'Select destination': 'Seleccionar Destino'
+'No languages': 'Sin idioma'
+'---Select language---': '---Seleccione idioma---'
+'No publications': 'Sin publicaciones'
+'---Select publication---': '---Seleccione publicacion---'
+'No issues': 'Sin artículos'
+'---Select issue---': '---Seleccione artículo---'
+'No sections': 'Sin secciones'
+'---Select section---': '---Seleccione sección---'
+Language: Idioma
+Country: País
+'Account name': 'Nombre de la cuenta'
+Publication: Publicación
+'Default language': 'Idioma inicial'
+Subscriptions: Suscripciones
+Issue: Edición
+Number: Número
+Section: Sección
+Keywords: 'Palabras claves'
+Topic: Tema
+'URL Name': 'Nombre del URL'
+'Left to pay': 'Cuenta por cobrar'
+Active: activo
+Trial: 'de prueba'
+Next: Próximo
+Previous: Previo
+Translate: Traducir
+View: Ver
+'Scheduled Publishing': 'Publicación programada'
+Time: Hora
+Action: Acción
+'Schedule a new action': 'Programar nueva acción'
+'Scheduling a new publish action': 'Programar una nueva acción de publicación'
+'Delete scheduled publish action': 'Eliminar acción de publicación programada'
+Date/Time: Fecha/hora
+'You must select an action.': 'Debe seleccionar una acción.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'No tiene privilegios para programar ediciones o artículos para publicación automática.'
+'Front page': Portada
+'Section page': 'Página de sección'
+'Show on front page': 'Mostrar en portada'
+'Remove from front page': 'Remover de portada'
+'Show on section page': 'Mostrar en página de sección'
+'Remove from section page': 'Eliminar de página de sección'
+Actions: Acciones
+Publishing: Publicar
+Show: Mostrar
+Remove: Eliminar
+'Article Types': 'Tipo Artículo'
+'Staff User Types': 'Tipos de usuario del equipo'
+Publications: Publicaciones
+Issues: Ediciones
+Sections: Secciones
+Articles: Artículos
+Images: Imágenes
+Change: Cambiar
+'Add new issue': 'Agregar nueva edición'
+'Section Template': 'Template de sección'
+'Article Template': 'Template de artículo'
+'Default Language': 'Idioma Inicial'
+'Paid Period': 'Período de Pago'
+Preview: 'Vista previa'
+'You must fill in the $1 field.': 'Debe completar el campo $1'
+Error: Error
+'Invalid input: $1': 'Entrada inválida:  $1'
+'Language does not exist.': 'Este idioma no existe.'
+'Publication does not exist.': 'No existe publicación'
+'Issue does not exist.': 'Esta edición no existe.'
+'You must select a language.': 'Debe seleccionar un idioma'
+'Section does not exist.': 'Esta sección no existe.'
+'No articles.': 'Sin articulos'
+'Article does not exist.': 'Este artículo no existe.'
+'Image does not exist.': 'Esta imagen no existe.'
+'Access denied': 'Acceso denegado'
+'Invalid parameters received': 'Los parametros recibidos son invalidos'
+'Add new article': 'Agregar nuevo articulo'
+Status: Estatus
+Published: Publicado
+'Not published': 'No publicado'
+Submitted: Enviado
+New: Nuevo
+Article: Artículo
+Publish: Publicar
+Unpublish: 'No publicar'
+Unlock: Desbloquear
+Uploaded: Subido
+YYYY-MM-DD: AAAA-MM-DD
+Submit: Enviar
+Image: Imagen
+Description: Descripción
+Photographer: Fotógrafo
+Place: Lugar
+Date: Fecha
+Thumbnail: 'Vista en miniatura'
+'In use': 'En uso'
+'Additional searches': 'Búsquedas adicionales'
+'Most Recently Added': 'Recién agregados'
+'Most Recently Modified': 'Recién modificados'
+'$1 images found': 'Se hallaron $1 imágenes'
+'Reset search conditions': 'Reiniciar las condiciones de búsqueda'
+'Image number': 'Número de imagen'
+Users: Usuarios
+Localizer: Traductor
+'Adding new translation': 'Agregar nueva traducción'
+'No more languages.': 'No más idiomas'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'El campo $1 sólo puede contener letras, dígitos y guión mayor (_).'
+'Add new publication': 'Agregar nueva publicación'
+'Upload new template': 'Subir nuevo template'
+'Add new staff member': 'Agregar nuevo miembro del equipo'
+'Add new subscriber': 'Agregar nuevo suscriptor'
+'Add new user type': 'Agregar nuevo tipo de usuario'
+'Add new article type': 'Agregar nuevo tipo de artículo'
+'Add new country': 'Agregar nuevo país'
+'Add new language': 'Agregar nuevo idioma'
+'View logs': 'Ver historial'
+'Change your password': 'Cambiar su clave'
+'Your Articles': 'Sus artículos'
+'Submitted Articles': 'Artículos enviados'
+Logs: Historial
+'There are $1 article(s) left.': 'Hay $1 articulo(s) pendiente(s)'
+'There are $1 issues(s) left.': 'Quedan $1 suscripciones.'
+'There are $1 section(s) left.': 'Hay $1 seccion(es) pendiente(s)'
+'There are $1 publication(s) left.': 'Hay $1 publicacion(es) pendiente(s)'
+'There are $1 countries left.': 'Hay $1 pais(es) pendiente(s)'
+'Name <SMALL>(click to edit)</SMALL>': 'Nombre <SMALL>(presione para editar)</SMALL>'
+'Add new subscription': 'Agregar nueva suscripción'
+'You do not have the right to add subscriptions.': 'No tiene derecho de acceso para agregar suscripciones'
+'Adding subscription': 'Agregar suscripciones'
+'Delete subscription': 'Borrar suscripción'
+'You do not have the right to delete subscriptions.': 'No tiene derecho a borrar suscripciones'
+'No such subscription.': 'No existe suscripción'
+Yes: Si
+No: No
+Close: Cerrar
+'No issues.': 'Sin edición'
+'Back to Edit Article': 'Volver a Editar el artículo'
+'No topics': 'Sin temas'
+'You do not have the right to add articles.': 'No tiene derechos para agregar artículos'
+Start: Inicio
+Days: Dias
+'The sections could not be added successfully. Some of them were already added !': 'Las secciones no pudieron ser agregadas con éxito. Algunas de ellas fueron ya agregadas!'
+'Add another': 'Agregar otro'
+Cancel: Cancelar
+Done: Hecho
+OK: OK
+Save: Guardar
+Search: Buscar
+'Make a selection': Seleccionar
+'You must input a number greater than 0 into the $1 field.': 'Debe ingresar un número mayor que 0 dentro del campo $1'
+'You must input a valid date.': 'Debe ingresar una fecha válida.'
+'Add new field': 'Agregar nuevo campo'
+'Article automatic publishing schedule': 'Programación de publicación automática del artículo'
+'Are you sure you want to delete this scheduled action?': '¿Está seguro de querer eliminar esta acción programada?'
+Unlink: Desenlazar
+'Are you sure you want to delete the image $1?': '¿Está seguro de querer eliminar la imagen $1?'
+'No such issue.': 'No existe edición'
+'Are you sure you want to delete the subscription to the publication $1?': '¿Está seguro de querer eliminar la suscripción a la publicación $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': '¿No fue posible guardar los cambios realizados a la edición $1.  Por favor asegúrese que el nombre del URL de la edición $2 no fue utilizado antes en la publicación $3. '
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Adjunto
+Back: Regresar
+File: Archivo
+'Save and Close': 'Guardar y cerrar'
+Add: Añadir
+'Select All': 'Seleccionar todo'
+'Select None': 'Nada seleccionado'
+'Add Event': 'Agregar evento'
+N/A: 'No disponible'
+'On Front Page': 'En portada'
+'On Section Page': 'En página de sección'
+'Created by': 'Creador por'
+'Creation date': 'Fecha de creación'
+'Publication List': 'Lista de publicaciones'
+'Issue List': 'Lista de ediciones'
+'Section List': 'Lista de secciones'
+All: Todo
+duplicate: duplicar
+move: mover
+Move: Mover
+'From:': 'De:'
+'Date:': 'Fecha:'
+Hidden: Oculto
+Comments: Comentarios
+Comment: Comentario
+Approved: Aprobado
+Subject: Título
+'IP address:': 'Dirección de IP:'
+'Email:': 'Dirección de correo electrónico:'
+Author: Autor
+'Article name': 'Nombre del artículo'
+'Hide article': 'Artículo oculto'
+'Show article': 'Mostrar artículo'
+'Article Type Fields': 'Campos de tipo de artículo'
+'Article Images': 'Imágenes del artículo'
+'Log Messages': 'Mensajes de log'
+'Article Files': 'Campos del artículo'
+'Article Comments': 'Comentarios del artículo'
+'Are you sure you want to deactivate the subscription?': '¿Está seguro de querer desactivar la suscripción?'
+'Are you sure you want to activate the subscription?': '¿Está seguro de querer activar la suscripción?'
+Other: Otro
+'Time:': 'Hora:'
+'No events.': 'Sin eventos.'
+'Default templates': 'Plantillas por default'
+'System Preferences': 'Preferencias de sistema'
+'The date must be in the future.': 'La fecha debe estar en el futuro.'
+Send: Enviar
+'Thank you.': Gracias
+'Please take a minute to send us an email.': 'Por favor tome un minuto para enviarnos un mensaje de correo.'
+(optional): (opcional)
+'The URL you entered is invalid: $1': 'El URL que ingresó es inválido: $1'
+Reads: Impresiones
+'Publish with issue': 'Publicar con edición'
+'Universal List': 'Lista universal'
+'Invalid security token!': 'Pase de seguridad inválido'
+Authors: Autores
+Blogs: Blogs
+'Administer Blogs': 'Administrar blogs'
+'Moderate Blogs': 'Moderar blogs'
+'Blog Preferences': 'Preferencias de blog'
+Interview: Entrevista
+'Administrate Interviews': 'Administrar entrevistas'
+'Moderate Interviews': 'Moderar entrevistas'
+'Interview Guest': 'Entrevistar invitados'
+Polls: 'Encuesta '
+'Author:': 'Autor:'
+Cuenta: Cuenta
+'Items por página': 'Items por página'
+'No puede crear el archivo $1': 'No puede crear el archivo $1'
+'User name': 'Nombre de usuario'
+'User Types': 'Tipo Usuario'
+'Subscription Default Time': 'Tiempo Subscripción Normal'
+'No such language.': 'No existe idioma'
+'No such infotype.': 'No existe infotype'
+'No such keyword.': 'No existe palabra clave'
+'No such country.': 'No existe país'
+'User may add/change user accounts and passwords': 'Usuario puede agregar/cambiar cuentas y claves'
+'User may delete user accounts': 'Usuario puede borrar cuentas'
+'Add new user account': 'Agregar nueva cuenta de usuario'
+'There are $1 issue(s) left.': 'Hay $1 edicion(es) pendiente(s)'
+'There are $1 keyword(s) left.': 'Hay $1 palabras clave(s) pendiente(s)'
+'Name<BR><SMALL>(click to edit)</SMALL>': Nombre
+'New field': 'Nuevo Campo'

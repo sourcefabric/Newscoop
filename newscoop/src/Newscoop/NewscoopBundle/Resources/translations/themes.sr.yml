@@ -1,0 +1,87 @@
+'Duplicate assignment': 
+Templates: 
+'Import theme': 'Увези тему'
+'Import succeded!': 'Успешан увоз!'
+'Import failed!': 'Увоз није успео!'
+'Edit template: $1': 'Уреди шаблон: $1'
+'Set new name to': 'Постави ново име за'
+'Rename file': 'Преименуј фајл'
+'Caching templates in:': 'Кеширање шаблона у:'
+'Caching templates finished': 'Кеширање шаблона завршено'
+'Theme name': 'НАзив теме'
+'Theme is assigned and can not be deleted': 'Тема је додељена и не може бити избрисана'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Извоз теме није успео. Проверите да ли има довољно простора на серверу'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Тема не може бити уклоњена јер је у употреби за издања ($!) у овој публикацији'
+zip: зип
+version: верзија
+uploaded: аплоудована
+updated: измењена
+'or higher': 'или већа'
+moved: премештена
+installed: инсталирана
+deleted: обрисана
+'You must select at least one template to perform an action.': 'Морате изабрати бар један шаблон да би радња била извршена.'
+Upload: Аплоуд
+'Unassign theme': 'Уклони тему'
+'Unassign successful': 'Уклањање успело'
+Unassign: Уклони
+'Theme version': 'Верзија теме'
+'Theme settings updated.': 'Подешавања теме измењена.'
+'Theme settings saved.': 'Подешавања теме снимљена.'
+'Theme name / version': 'Назив / верзија теме'
+'Theme management': 'Управљање темом'
+'Theme $1': 'Тема $1'
+'The file $1 is empty.': 'Фајл $1је празан.'
+'Template object $1 was renamed to $2.': 'Шаблон $1је преименован у $2.'
+'Template object $1 was deleted.': 'Шаблон $1је обрисан.'
+'Template $1 was duplicated into $2.': 'Шаблон $1је дуплиран у $2.'
+'Template $1 $2.': 'Шаблон $1$2.'
+'Something broke': 'Нешто се покварило'
+'Section page template': 'Шаблон за приказ рубрике'
+Saving..: Снимам...
+'Saving settings failed.': 'Снимање подешавања није успело.'
+'Save All': 'Сними све'
+'Required Newscoop version': 'Захтевана верзија Newscoopa'
+Replace: Замени
+'New template $1 created.': 'Нови шаблон $1креиран.'
+'New name': 'Ново име'
+'Name cant be empty': 'Име не може бити празно'
+'Last modified': 'Последња измена'
+'Issue page': 'Страна издања'
+'Go to parent': 'Иди на матични'
+'Go to $1': 'Иди на $1'
+'Geo Filtering': 'Гео филтрирање'
+'Front page template': 'Шаблон за приказ почетне стране'
+'File size': 'Величина фајла'
+'File name': 'Назив фајла'
+'File $1 was replaced.': 'Фајл $1је замењен'
+'Failed unassigning theme': 'Неуспешно уклањање теме'
+Export: Извоз
+'Error page template': 'Шаблон за приказ стране о грешци'
+'Edit $1': 'Уреди $1'
+'Done uploading': 'Аплоуд завршен'
+'Do you want to override $1?': 'Желите ли да претабате $1?'
+'Directory is empty': 'Директоријум је празан'
+'Directory $1 created.': 'Директоријум $1 креиран.'
+Design: Дизајн
+'Delete theme': 'Обриши тему'
+'Current directory:': 'Тренутни директоријум:'
+'Create folder': 'Креирај фолдер'
+'Create file': 'Креирај фајл'
+'Copy to available themes': 'Копирај у доступне теме'
+'Copied successfully': 'Копирање успело'
+Compatibility: Компатибилност
+'Click to enlarge': 'Клик за увећање'
+'Choose destination': 'Изабери одредиште'
+'Cant override directory $1.': 'Није могуће претабати директоријум $1.'
+'Cache Lifetime': 'Дуготрајност кеша'
+'Browse for the theme': 'Потражи тему'
+'Assigned successfully': 'Успешно додељено'
+'Article page template': 'Шаблон за приказ текста'
+'Article page': 'Текст страна'
+'Are you sure you want to unassign this theme?': 'Да ли сте сигурни да желите да уклоните тему?'
+'Are you sure you want to delete this theme?': 'Да ли сте сигурни да желите да обришете ову тему?'
+'Add to publication': 'Додај у публикацију'
+'$1 is not writable': '$1нема могућност уписа'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 фајлова $2'

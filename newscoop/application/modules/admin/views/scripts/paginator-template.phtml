@@ -1,23 +1,24 @@
 <script type="text/template" id="paginator-template">
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <div class="paginationControl">
     <!-- Previous page link -->
     <% if (prev) { %>
-    <a href="#" class="first"><?php putGS('First'); ?></a> |
-    <a href="#" class="prev">&lt; <?php putGS('Previous'); ?></a> |
+    <a href="#" class="first"><?php echo $translator->trans('First', array(), 'home'); ?></a> |
+    <a href="#" class="prev">&lt; <?php echo $translator->trans('Previous'); ?></a> |
     
     <% } else { %>
-    <span class="disabled"><?php putGS('First'); ?></span> |
-    <span class="disabled">&lt; <?php putGS('Previous'); ?></span> |
+    <span class="disabled"><?php echo $translator->trans('First', array(), 'home'); ?></span> |
+    <span class="disabled">&lt; <?php echo $translator->trans('Previous'); ?></span> |
     <% } %>
  
     <!-- Next page link -->
     <% if (next) { %>
-    <a href="#" class="next"><?php putGS('Next'); ?> &gt; </a> |
-    <a href="#" class="last"><?php putGS('Last'); ?></a>
+    <a href="#" class="next"><?php echo $translator->trans('Next'); ?> &gt; </a> |
+    <a href="#" class="last"><?php echo $translator->trans('Last', array(), 'home'); ?></a>
 
     <% } else { %>
-    <span class="disabled"><?php putGS('Next'); ?> &gt;</span> |
-    <span class="disabled"><?php putGS('Last'); ?></span>
+    <span class="disabled"><?php echo $translator->trans('Next'); ?> &gt;</span> |
+    <span class="disabled"><?php echo $translator->trans('Last', array(), 'home'); ?></span>
     <% } %>
 </div>
 </script>

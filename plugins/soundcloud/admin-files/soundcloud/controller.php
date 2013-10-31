@@ -8,12 +8,13 @@
 
 include 'data.php';
 require_once CS_PATH_PLUGINS.DIR_SEP.'soundcloud'.DIR_SEP.'classes'.DIR_SEP.'soundcloud.api.php';
-camp_load_translation_strings('plugin_soundcloud');
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission('plugin_soundcloud_browser')) {
     jsonOutput(null, array(
-        'title' => getGS('Error'),
-        'text' => getGS('You do not have the right to manage SoundCloud tracks.'),
+        'title' => $translator->trans('Error'),
+        'text' => $translator->trans('You do not have the right to manage SoundCloud tracks.', array(), 'plugin_soundcloud'),
         'type' => 'error',
     ));
     exit;
@@ -36,8 +37,8 @@ $track = Input::Get('track', 'string', null);
 if ($action == 'addtoset') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
-            'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
+            'title' => $translator->trans('Error'),
+            'text' => $translator->trans('You do not have the right to update SoundCloud tracks.', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -52,7 +53,7 @@ if ($action == 'addtoset') {
     }
     if (!$setTracks || !$result = $soundcloud->setUpdate($setTracks)) {
         jsonOutput(null, array(
-            'title' => getGS('SoundCloud reports an error:'),
+            'title' => $translator->trans('SoundCloud reports an error:', array(), 'plugin_soundcloud'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -64,8 +65,8 @@ if ($action == 'addtoset') {
 if ($action == 'removefromset') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
-            'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
+            'title' => $translator->trans('Error'),
+            'text' => $translator->trans('You do not have the right to update SoundCloud tracks.', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -84,7 +85,7 @@ if ($action == 'removefromset') {
     }
     if (!$setTracks || !$result = $soundcloud->setUpdate($setTracks)) {
         jsonOutput(null, array(
-            'title' => getGS('SoundCloud reports an error:'),
+            'title' => $translator->trans('SoundCloud reports an error:', array(), 'plugin_soundcloud'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -112,8 +113,8 @@ if ($action == 'attach') {
     $trackData = $soundcloud->trackLoad($track);
     if (empty($trackData)) {
         jsonOutput(null, array(
-            'title' => getGS('Attach error'),
-            'text' => getGS('Track not found'),
+            'title' => $translator->trans('Attach error', array(), 'plugin_soundcloud'),
+            'text' => $translator->trans('Track not found', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;
@@ -123,8 +124,8 @@ if ($action == 'attach') {
     $soundcloudAttach = new Soundcloud();
     if(!$soundcloudAttach->create((int) $article, (int) $track, $trackData)) {
         jsonOutput(null, array(
-            'title' => getGS('Attach error'),
-            'text' => getGS('Error during create attachement'),
+            'title' => $translator->trans('Attach error', array(), 'plugin_soundcloud'),
+            'text' => $translator->trans('Error during create attachement', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;
@@ -136,8 +137,8 @@ if ($action == 'attach') {
 if ($action == 'delete') {
     if (!$g_user->hasPermission('plugin_soundcloud_delete')) {
         jsonOutput(null, array(
-            'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to delete SoundCloud tracks.'),
+            'title' => $translator->trans('Error'),
+            'text' => $translator->trans('You do not have the right to delete SoundCloud tracks.', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;
@@ -145,7 +146,7 @@ if ($action == 'delete') {
     Soundcloud::deleteAllTracks($track);
     if (!$soundcloud->trackDelete($track)) {
         jsonOutput(null, array(
-            'title' => getGS('SoundCloud reports an error:'),
+            'title' => $translator->trans('SoundCloud reports an error:', array(), 'plugin_soundcloud'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -158,8 +159,8 @@ if ($action == 'save') {
     $attach = false;
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
-            'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
+            'title' => $translator->trans('Error'),
+            'text' => $translator->trans('You do not have the right to update SoundCloud tracks.', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -178,8 +179,8 @@ if ($action == 'save') {
     }
     if (!$track['title']) {
         jsonOutput(null, array(
-            'title' => getGS('Save error'),
-            'text' => getGS('Please define the track title'),
+            'title' => $translator->trans('Save error', array(), 'plugin_soundcloud'),
+            'text' => $translator->trans('Please define the track title', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -198,8 +199,8 @@ if ($action == 'save') {
         $result = $soundcloud->trackUpdate($track);
         if (empty($result['id'])) {
             jsonOutput(null, array(
-                'title' => getGS('Save error'),
-                'text' => getGS('SoundCloud reports an error:') . $soundcloud->error,
+                'title' => $translator->trans('Save error', array(), 'plugin_soundcloud'),
+                'text' => $translator->trans('SoundCloud reports an error:', array(), 'plugin_soundcloud') . $soundcloud->error,
                 'type' => 'error',
             ), null, array(), true);
             exit;
@@ -210,19 +211,19 @@ if ($action == 'save') {
                 $soundcloudAttach = new Soundcloud();
                 if(!$soundcloudAttach->create((int) $article, (int) $track['id'], $result)) {
                     jsonOutput(null, array(
-                        'title' => getGS('Attach error'),
-                        'text' => getGS('Error during create attachement'),
+                        'title' => $translator->trans('Attach error', array(), 'plugin_soundcloud'),
+                        'text' => $translator->trans('Error during create attachement', array(), 'plugin_soundcloud'),
                         'type' => 'error',
                     ), null, array(), true);
                     exit;
                 }
-                $messageTitle = getGS('Save and attach successful');
+                $messageTitle = $translator->trans('Save and attach successful', array(), 'plugin_soundcloud');
             } else {
-                $messageTitle = getGS('Save successful');
+                $messageTitle = $translator->trans('Save successful', array(), 'plugin_soundcloud');
             }
             jsonOutput(null, array (
                 'title' => $messageTitle,
-                'text' => getGS('Track has been updated on SoundCloud'),
+                'text' => $translator->trans('Track has been updated on SoundCloud', array(), 'plugin_soundcloud'),
                 'type' => 'success',
             ), null, array('ok' => true), false);
         }
@@ -270,8 +271,8 @@ if ($action == 'search') {
     $trackList = $soundcloud->trackSearch($trackListParams);
     if (empty($trackList)) {
         jsonOutput(null, array(
-            'title' => getGS('Search error'),
-            'text' => getGS('Tracks not found'),
+            'title' => $translator->trans('Search error', array(), 'plugin_soundcloud'),
+            'text' => $translator->trans('Tracks not found', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;
@@ -293,8 +294,8 @@ if ($action == 'search') {
 if ($action == 'edit') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
-            'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
+            'title' => $translator->trans('Error'),
+            'text' => $translator->trans('You do not have the right to update SoundCloud tracks.', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;
@@ -302,8 +303,8 @@ if ($action == 'edit') {
     $track = $soundcloud->trackLoad($track);
     if (empty($track)) {
         jsonOutput(null, array(
-            'title' => getGS('Edit error'),
-            'text' => getGS('Track not found'),
+            'title' => $translator->trans('Edit error', array(), 'plugin_soundcloud'),
+            'text' => $translator->trans('Track not found', array(), 'plugin_soundcloud'),
             'type' => 'error',
         ));
         exit;

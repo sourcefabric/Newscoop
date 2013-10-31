@@ -1,0 +1,73 @@
+'Display articles of filtered types': 
+'Display Articles of Filtered Types': 
+Webcode: 'Веб код'
+'View article': 'Погледај текст'
+Source: Извор
+'Select type': 'Изабери тип'
+On: На
+Off: Искључено
+Title: Назив
+'No video playback capabilities, please download the video below': 'Без могућности репродукције видеа, молим преузмите видео'
+'Article status set to $1 for $2 articles': 'Статус текста постављен на $1за $2 текстова'
+'Article status not set to $1 for $2 articles': 'Статус текстс није постављен на $1за $2 текстова'
+'$1 toggled for $2 articles.': '$1 промењено за $2 текстова'
+'$1 not toggled for $2 articles.': '$1 није промењено за $2 текстова'
+'$1 not toggled for $2  articles.': '$1 није промењено за $2 текстова.'
+'$1 articles have not been removed': '$1 текстова није уклоњено'
+'$1 Article(s) unlocked': '$1 текст(ова) откључано'
+'$1 Article(s) not unlocked': '$1 текст(ова) није откључано'
+'$1 Article(s) duplicated': '$1 текст(ова) дуплирано'
+'Download file': 'Преузми фајл'
+'You do not have the right to delete articles.': 'Немате право да бришете текст'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Немате право да бришете статус текста. Предат текст може бити измењен само од стране ауторизованих корисника'
+'Use Map': 'Користи мапу'
+'Toggle: On Section Page': 'Измени На страни рубрике'
+'Toggle: On Front Page': 'Измени На почетној страни'
+'Toggle: Comments': 'Измени Коментари'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 минут(а)'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а)'
+'Status: Submit': 'Статус: предат'
+'Status: Set New': 'Статус: нови'
+'Status: Publish': 'Статус: објављен'
+Size: Величина
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+'Show / hide columns': 'Прикажи/сакри колоне'
+'Select some article first.': 'Прво изаберите неке текстове'
+'Select action': 'Изаберите акцију'
+'Save order': 'Сними редослед'
+'Reset all filters': 'Поништи све филтере'
+'Published before': 'Објављено пре'
+'Published after': 'Објављено после'
+'Publish date': 'Датум објављивања'
+'Publish Schedule': 'Распоред објављивања'
+'Publish Date': 'Датум објављивања'
+'Order updated.': 'Редослед измењен'
+'Open in browser': 'Отвори у претраживачу'
+'No sections found': 'Нема рубрика'
+'No records found.': 'Нема записа'
+'No publications found': 'Нема публикација'
+'No issues found': 'Нема издања'
+'No entries to show': 'Нема уноса за приказ'
+Locations: Локације
+'Loading data': Учитавање
+'Last modified': Измењено
+'Last Modified': Измењено
+Last: Последње
+First: Прво
+'Filter by...': 'Филтрирај по...'
+Filter: Филтер
+Filename: 'Име фајла'
+'Duplicate to another section': 'Дуплирај у другу рубрику'
+'Display _MENU_ records': 'Прикажи _MENU_ записе'
+Creator: Направио
+'Create Date': 'Датум прављења'
+'Article status set to $1': 'Статус текста постављен на $1'
+'Are you sure you want to delete selected articles?': 'Да ли сте сигурни да желите да обришете изабране текстове?'
+'All Sections': 'Све рубрике'
+'All Publications': 'АПИ публикације'
+'All Issues': 'Сва издања'
+Added: Додато
+'Access denied.': 'Приступ забрањен'
+'$1 toggled.': '$1 измењен'
+'$1 articles have been removed': '$1 текстова уклоњено'
+' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'

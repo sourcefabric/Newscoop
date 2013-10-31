@@ -1,3 +1,6 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator'); 
+?>
 <dl class="rendition">
     <dt>
         <div class="preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
@@ -8,7 +11,7 @@
                 'action' => 'edit',
                 'rendition' => $this->rendition->getName(),
                 'format' => null,
-            )); ?>" title="<?php echo $this->escape(getGS("Edit $1", $this->rendition->getName())); ?>"><?php echo $this->thumbnail->getImg($this); ?></a>
+            )); ?>" title="<?php echo $this->escape($translator->trans("Edit $1", array('$1' => $this->rendition->getName()), 'article_images')); ?>"><?php echo $this->thumbnail->getImg($this); ?></a>
             <?php } ?>
         </div>
     </dt>
@@ -22,5 +25,5 @@
     'action' => 'remove-rendition',
     'rendition' => $this->rendition->getName(),
     'format' => 'json',
-)); ?>" class="reset"><?php putGS('Use default'); ?></a>
+)); ?>" class="reset"><?php echo $translator->trans('Use default', array(), 'article_images'); ?></a>
 <?php } ?>

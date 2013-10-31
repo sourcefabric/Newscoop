@@ -1,4 +1,5 @@
 <h2><?php echo $this->name; ?></h2>
-<h1><?php putGS('Commenter'); ?></h1>
+<h1><?php $translator = \Zend_Registry::get('container')->getService('translator'); 
+echo $translator->trans('Commenter'); ?></h1>
 
 <?php $this->renderDatatable(); ?>

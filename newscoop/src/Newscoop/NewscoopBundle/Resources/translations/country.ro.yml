@@ -1,0 +1,15 @@
+'The country $1 could not be created.': 
+'Country with code $1 exists already.': 
+'You do not have the right to add countries.': 'Nu ai dreptul să adaugi ţări.'
+'Delete country': 'Şterge ţara'
+'You do not have the right to delete countries.': 'Nu ai dreptul să ştergi ţări.'
+'Are you sure you want to delete the country $1?': 'Eşti sigur că vrei să ştergi ţara $1?'
+'The country $1 could not be deleted.': 'Ţara $1nu a putut fi ştearsă.'
+'Edit country name': 'Modifică numele ţării'
+'You do not have the right to change country names.': 'Nu ai dreptul să schimbi numele ţărilor.'
+'Changing country name': 'Schimbă numele ţării'
+'The country name $1 could not be changed': 'Numele ţării $1 nu a putut fi schimbat'
+'Translate country name': 'Tradu numele ţării'
+'You do not have the right to translate country names.': 'Nu ai dreptul să traduci numele ţărilor.'
+'The country name $1 could not be translated': 'Numele ţării $1 nu a putut fi tradus'
+'Add New Country': 'Adaugă ţară nouă'

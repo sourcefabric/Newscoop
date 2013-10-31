@@ -1,0 +1,228 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 'Benutzer umbenannt. '
+'User attributes': Benutzereigenschaften
+'Rename user $1': 'Benutzer $1 umbenennen'
+'Username is used already': 'Benutzername wird bereits verwendet'
+'User with id $1 not found': 'Benutzer mit ID $1 nicht gefunden'
+'User was deleted.': 'Benutzer wurde gelöscht. '
+'User saved': 'Benutzer gespeichert'
+'User id not specified': 'Benutzer ID nicht spezifiziert '
+'User $1 created': 'Benutzer  $1 angelegt'
+'Send confirm email': 'Sende Bestätigungsemail '
+'Profile saved.': 'Profil gespeichert'
+Picture: Bild
+'Password updated': 'Passwort aktualisiert'
+None: Kein
+'New confirmation email was sent to user.': 'Neue Bestätigungsemail wurde an Benutzer verschickt. '
+'Email is used already': 'Email-Adresse wird bereits verwendet'
+'Edit your password': 'Passwort bearbeiten '
+'Edit user $1': 'Benutzer $1 bearbeiten'
+'Edit subscriptions': 'Abonnements bearbeiten'
+'Edit profile': 'Profil bearbeiten'
+'Edit permissions': 'Berechtigungen bearbeiten'
+'Create new account': 'Neuen Account anlegen'
+'Comment ban settings': 'Kommentar Sperr-Einstellungen'
+'Ban for user $1 saved.': 'Sperre für Benutzer  $1 gespeichert. '
+'User account is active': 'Der Benutzeraccount ist aktiviert. '
+'Allow users profile to be publicly displayed': 'Benutzerprofil darf öffentlich angezeigt werden'
+'Allow user access to login to site backend': 'Dem Benutzer erlauben sich ins Backend einzuloggen'
+Templates: Templates
+Username: Username
+'Last Name': Nachname
+'First Name': Vorname
+Email: Email-Adresse
+'You were logged out.': 'Sie wurden ausgeloggt. '
+'Newscoop Subhead': 'Newscoop Zwischentitel'
+Filters: Filter
+'Add new Author': 'Neue(n) Autor/in hinzufügen'
+'Loading Data': 'Daten laden'
+'Delete author type': 'Autortyp löschen'
+'Cannot remove author type.': 'Autortyp kann nicht gelöscht werden.'
+'Cannot remove author alias.': 'Autor/in Alias kann nicht entfernt werden.'
+'Author alias removed.': 'Autor/in Alias entfernt.'
+'Are you sure you want to delete this author?': 'Wirklich Autor/in löschen?'
+'Are you sure you want to delete this author alias?': 'Wirklich Autor/in Alias löschen?'
+'All Author Types': 'Alle Autorentypen'
+'Add author type': 'Autorentyp hinzufügen'
+'You do not have the permission to change authors.': 'Keine Berechtigung Autoren/innen zu ändern.'
+'Please fill at least first name and last name.': 'Bitte mindestens Vornamen und Nachnamen eintragen.'
+'Cannot add author type, this type already exists.': 'Autorentyp kann nicht hinzugefügt werden, Typ existiert bereits.'
+'Author type removed.': 'Autorentyp entfernt'
+'Author type must be at least three characters long.': 'Autorentyp muss mindestens drei Zeichen lang sein.'
+'Author type added.': 'Autorentyp hinzugefügt.'
+'Are you sure you want to delete this author type?': 'Wirklich Autorentyp löschen?'
+'User may change authors': 'User darf Autoren/innen ändern'
+'Unable to add new image, target directory is not writable.': 'Neues Bild kann nicht hinzugefügt werden, Zielverzeichnis kann nicht verwendet werden.'
+'Author saved.': 'Autor/in gespeichert.'
+'Author deleted.': 'Autor/in gelöscht.'
+'Enable Firefox spell checking by default': 'Firefox Rechtschreibprüfung standardmäßig einstellen'
+'User may use the editor status bar': 'Benutzer darf Editor Statusanzeige nutzen'
+'User may clear up the system cache': 'Benutzer darf den Systemcache leeren'
+'Another user is registered with that e-mail address, please choose a different one.': 'Ein anderer Benutzer ist unter dieser E-Mail Adresse registriert, bitte eine andere wählen.'
+'There was an error when trying to update the user info.': 'Fehler beim Aktualisieren der Benutzerinformationen'
+'User may moderate comments': 'Benutzer darf Kommentare moderieren'
+'User may enable comments': 'Benutzer darf Kommentare aktivieren'
+'User may translate articles': 'Benutzer darf Artikel übersetzen'
+'User may move articles': 'Benutzer darf Artikel verschieben'
+'User may find and replace': 'Benutzer darf suchen und ersetzen'
+'User may change system preferences': 'Benutzer darf Systemeinstellungen ändern'
+'User may attach topics to articles': 'Benutzer darf Themen mit Artikeln verknüpfen'
+'User may attach images to articles': 'Benutzer darf Bilder zu Artikeln hinzufügen'
+'User may add special characters': 'Benutzer darf Sonderzeichen einfügen'
+'That user name already exists, please choose a different login name.': 'Der Benutzername existiert bereits, bitte einen anderen Benutzernamen wählen.'
+'User may delete article attachments': 'Benutzer darf Artikelanhänge löschen'
+'User may change article attachments': 'Benutzerr darf Artikelanhänge verändern'
+'User may add article attachments': 'Benutzer darf Artikelanhänge hinzufügen'
+'You do not have the right to create user accounts.': 'Keine Berechtigung Benutzerkonten zu erstellen'
+'You must select a $1': 'Bitte ein $1 auswählen'
+'The password must be at least 6 characters long and both passwords should match.': 'Das Passwort muss mindestens 6 Stellen lang sein und beide Passwörter müssen übereinstimmen'
+'The user account could not be created.': 'Benutzerkonto konnte nicht erstellt werden.'
+'User account $1 was created successfully.': 'Benutzerkonto $1 wurde erfolgreich erstellt.'
+'You do not have the right to change user account permissions.': 'Keine Berechtigung Benutzerkontogenehmigungen zu ändern.'
+'You do not have the right to change user account information.': 'Keine Berechtigung Benutzerkontoinformation zu ändern.'
+'The password you typed is incorrect.': 'Das eingegebene Passwort ist falsch'
+'You do not have the right to delete user accounts.': 'Keine Berechtigung Benutzerkonten zu löschen'
+'User account $1 was deleted successfully.': 'Benutzerkonto $1 wurde erfolgreich erstellt.'
+'The IP Group $1 has been created.': 'IP-Gruppe $1 wurde erstellt.'
+'There was an error creating the IP address group.': 'Fehler beim Erstellen der IP Adressengruppe.'
+'The IP address group $1 has been deleted.': 'IP-Gruppe $1 wurde gelöscht.'
+'User $1 information was changed successfully.': 'Benutzerinformation für $1 erfolgreich verändert.'
+'User Type': Benutzertyp
+'The IP address group $1:$2 conflicts with another existing group.': 'Konflikt zwischen der IP Adressengruppe $1:$2 und einer anderen Gruppe.'
+'User may add/change publications': 'Benutzer darf Publikationen hinzufügen / ändern'
+'Invalid value of user type parameter': 'Ungültiger Wert für Benutzertyp'
+'User may delete publications': 'Benutzer darf Publikationen löschen'
+'User may add/change issues': 'Benutzer darf Ausgaben hinzufügen / ändern'
+'User may delete issues': 'Benutzer darf Ausgaben löschen'
+'User may add/change sections': 'Benutzer darf Rubriken hinzufügen / ändern'
+'User may delete sections': 'Benutzer darf Rubriken löschen'
+'User may add articles': 'Benutzer darf Artikel hinzufügen'
+'User may change articles': 'Benutzer darf Artikel ändern'
+'User may delete articles': 'Benutzer darf Artikel löschen'
+'User may add images': 'Benutzer darf Bilder hinzufügen'
+'User may change images': 'Benutzer darf Bilder ändern'
+'User may delete images': 'Benutzer darf Bilder löschen'
+'User may delete templates': 'Benutzer darf Templates löschen'
+'User may add/change staff accounts and passwords': 'Benutzer darf Personalkonten und Passwörter hinzufügen und ändern'
+'User may add/change subscribers accounts and passwords': 'Benutzer darf Abonnentenkonten und Passwörter hinzufügen und ändern'
+'User may delete staff accounts': 'Benutzer darf Personalkonten löschen'
+'User may manage user subscriptions': 'Benutzer darf Abonnement verwalten'
+'User may manage account types': 'Benutzer darf Profiltypen verwalten'
+'User may add/change article types': 'Benutzer darf Artikeltypen hinzufügen / ändern'
+'User may delete article types': 'Benutzer darf Artikeltypen löschen'
+'User may manage templates': 'Benutzer darf Templates verwalten'
+'User may add/change country entries': 'Benutzer darf Ländereinstellungen hinzufügen und ändern'
+'User may add languages and manage language information': 'Benutzer darf Sprachen hinzufügen und Sprachinformationen verwalten'
+'User may delete languages': 'Benutzer darf Sprachen löschen'
+'User may view audit logs': 'Benutzer darf Log-Files betrachten'
+'User may delete country entries': 'Benutzer darf Ländereintragungen löschen'
+'User may manage localizer': 'Benutzer darf Interface lokalisieren'
+'User may publish articles': 'Benutzer darf Artikel veröffentlichen'
+'User may manage topics': 'Benutzer darf Themen verwalten'
+'User may use bold': 'Benutzer darf Text fett stellen'
+'User may use italic': 'Benutzer darf Text kursiv stellen'
+'User may use underline': 'Benutzer darf Text unterstreichen'
+'User may use strikethrough': 'Benutzer darf Text durchstreichen'
+'User may change text alignment': 'Benutzer darf Textausrichtung ändern'
+'User may copy, cut, and paste': 'Benutzer darf Text kopieren, ausschneiden und einfügen'
+'User may undo/redo': 'Benutzer darf Aktionen rückgängig machen und wieder herstellen'
+'User may change text direction': 'Benutzer kann Textrichtung ändern'
+'User may set indents': 'Benutzer darf Einschübe vornehmen'
+'User may add links': 'Benutzer darf Links einfügen'
+'User may add subheads': 'Benutzer darf Zwischenüberschriften einfügen'
+'User may insert images': 'Benutzer darf Bilder einfügen'
+'User may view the HTML source': 'Benutzer darf HTML Quellcode einsehen'
+'User may enlarge the editor': 'Benutzer darf den Editor vergrößern'
+'User may change the font face': 'Benutzer darf den Zeichensatz verändern'
+'User may change the font size': 'Benutzer darf die Zeichengröße verändern'
+'User may create bulleted lists': 'Benutzer darf unnummerierte Aufzählungen einrichten'
+'User may create numbered lists': 'Benutzer darf nummerierte Aufzählungen einrichten'
+'User may insert tables': 'Benutzer darf Tabellen einfügen'
+'User may insert horizontal rules': 'Benutzer darf horizontale Linien einfügen'
+'User may change the font color': 'Benutzer darf die Zeichenfarbe verändern'
+'User may use superscripts': 'Benutzer darf Zeichen hochstellen'
+'User may use subscripts': 'Benutzer darf Zeichen in Kleinschrift umwandeln'
+'User may backup and restore the site data': 'Benutzer darf Seitendaten sichern und wiederherstellen'
+Miscellaneous: Verschiedenes
+'Staff/Subscribers Management': 'Personal / Abonnenten verwalten'
+'Editor Basic Settings': 'Editor Voreinstellungen'
+'Editor Advanced Font Settings': 'Editor Einstellungen für Zeichensätze'
+'Editor Table Settings': 'Editor Einstellungen für Tabellen'
+'Administrative tasks': 'Administrator Aufgaben'
+'User will be notified on several events': 'Benutzer wird zu mehreren Anlässen benachrichtigt'
+'Editor Miscellaneous Settings': 'Verschiedene Editor Einstellungen'
+'No such user account.': 'Benutzerkonto nicht vorhanden'
+'User management': 'BenutzerInnen managen'
+Set: Auswählen
+Update: Aktualisieren
+Rights: Berechtigungen
+'IP Access': 'IP Zugang'
+'User Name': Benutzername
+Staff: Personal
+'Adding new user account': 'Neues Benutzerkonto hinzufügen'
+'You must select an user type.': 'Bitte Benutzertyp auswählen'
+'The user account $1 has been created.': 'Benutzerkonto $1 wurde erstellt'
+'Please check if an account with the same user name does not already exist.': 'Bitte überprüfen, ob ein Konto mit demselben Benutzername existiert'
+'You do not have the right to change user passwords.': 'Keine Berechtigung Benutzerpasswörter zu ändern'
+'Changing user password': 'Passwort wird geändert'
+'The password could not be changed.': 'Das Passwort konnte nicht geändert werden'
+'The password has been changed.': 'Passwort wurde geändert'
+'Edit user account permissions': 'Benutzerkontogenehmigung bearbeiten'
+'This user account does not have permissions information.': 'Dieses Benutzerkonto hat keine Genehmigungsinformationen'
+'Updating user account permissions': 'Benutzerkontogenehmigung wird aktualisiert'
+'User account permissions have been successfuly updated.': 'Benutzerkontogenehmigung erfolgreich aktualisiert'
+'User account permissions could not be updated.': 'Benutzerkontogenehmigung konnte nicht aktualisiert werden'
+'Changing user account information': 'Benutzerkontoinformation wird geändert'
+'User account information has been changed.': 'Benutzerkontoinformation geändert'
+'User account information could not be changed.': 'Benutzerkontoinformation konnte nicht geändert werden'
+'Old password': 'Altes Passwort'
+'New password': 'Neues Passwort'
+'Confirm new password': 'Neues Passwort bestätogen'
+'Changing your password': 'Passwort wird geändert'
+'User $1 changed his password': 'BenutzerIn $1 hat Passwort geändert'
+'Delete user account': 'Benutzerkonto löschen'
+'Deleting user account': 'Benutzerkonto wird gelöscht'
+'The user account $1 could not be deleted.': 'Benutzerkonto $1 konnte nicht gelöscht werden'
+'No such user.': 'BenutzerIn existiert nicht'
+'Delete IP Group $1': 'IP-Gruppe $1 löschen'
+'IP Access List': IP-Zugangsliste
+'Adding new IP Group': 'Neue IP-Gruppe wird hinzugeführt'
+'The IP Group could not be created.': 'IP-Gruppe konnte nicht erstellt werden'
+'Please check if an account with the same IP Group does not already exist.': 'Bitte überprüfen, ob bereits ein Konto mit derselben IP-Gruppe existiert'
+'Delete IP Group': 'IP-Gruppe löschen'
+'You do not have the right to delete IP Groups.': 'Keine Berechtigung IP-Gruppen zu löschen'
+'No such IP Group.': 'IP-Gruppe nicht vorhanden'
+'Deleting IP Group': 'IP-Gruppe wird gelöscht'
+'The IP Group could not be deleted.': 'IP-Gruppe konnte nicht gelöscht werden'

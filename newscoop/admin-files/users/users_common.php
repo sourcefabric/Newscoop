@@ -1,5 +1,4 @@
 <?php
-camp_load_translation_strings("users");
 require_once($GLOBALS['g_campsiteDir']. '/classes/IPAccess.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/UserType.php');
@@ -8,12 +7,13 @@ require_once($GLOBALS['g_campsiteDir']. '/db_connect.php');
 function verify_user_type()
 {
 	global $uType;
-
+    $translator = \Zend_Registry::get('container')->getService('translator');
+    
 	if (!isset($uType))
 		read_user_common_parameters();
 
 	if ($uType != "Staff" && $uType != "Subscribers") {
-		camp_html_display_error(getGS('Invalid value of user type parameter'));
+		camp_html_display_error($translator->trans('Invalid value of user type parameter', array(), 'users'));
 		exit(0);
 	}
 	return $uType;

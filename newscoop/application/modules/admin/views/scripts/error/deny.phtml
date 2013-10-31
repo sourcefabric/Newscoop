@@ -1,3 +1,5 @@
-<?php $this->placeholder('title')->set(getGS('Access denied')); ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Access denied')); ?>
 
 <p><?php echo $this->escape($this->message); ?></p>

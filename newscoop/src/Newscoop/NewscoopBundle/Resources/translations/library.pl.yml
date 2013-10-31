@@ -1,0 +1,73 @@
+'Display articles of filtered types': 
+'Display Articles of Filtered Types': 
+Webcode: 'Kod internetowy'
+'View article': 'Zobacz artykuł'
+Source: Źródło
+'Select type': 'Wybierz typ'
+On: Wlączony
+Off: Wyłączony
+Title: Tytuł
+'No video playback capabilities, please download the video below': 'Brak możliwości odtworzenia wideo, możesz pobrać wideo poniżej.'
+'Article status set to $1 for $2 articles': 'Status artykułu dla artykułów $2 ustawiono na $1'
+'Article status not set to $1 for $2 articles': 'Nie ustawiono statusu $1 artykułu dla artykułów $2'
+'$1 toggled for $2 articles.': 'Przełączono $1 dla $2 artykułów.'
+'$1 not toggled for $2 articles.': 'Nie przełączono $1 dla $2 artykułów.'
+'$1 not toggled for $2  articles.': 'Nie przełączono $1 dla $2 artykułów.'
+'$1 articles have not been removed': '$1 artykułów nie zostało usunietych'
+'$1 Article(s) unlocked': 'Odblokowano $1 artykuł(y)'
+'$1 Article(s) not unlocked': 'Nie odblokowano $1 artykuł(ów)'
+'$1 Article(s) duplicated': '$1 powielonych artykuł(ów)'
+'Download file': 'Pobierz plik'
+'You do not have the right to delete articles.': 'Nie masz praw aby usuwać artykuły.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nie masz praw aby zmieniać status artykułu. Po wysłaniu artykuł może być zmieniony tylko przez autoryzowanych użytkowników.'
+'Use Map': 'Użyj mapy'
+'Toggle: On Section Page': 'Pokaż: Na stronie sekcji'
+'Toggle: On Front Page': 'Pokaż: Na stronie głównej'
+'Toggle: Comments': 'Pokaż: Komentarze'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
+'Status: Submit': 'Status: Wysłane'
+'Status: Set New': 'Status: Ustaw Nowy'
+'Status: Publish': 'Status: Opublikowany'
+Size: Rozmiar
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Pokaz _START_ do _END_ ze _TOTAL_ wpisow'
+'Show / hide columns': 'Pokaż / schowaj kolumny'
+'Select some article first.': 'Wybierz jakiś artykuł wpierw.'
+'Select action': 'Wybierz akcję'
+'Save order': 'Zapisz kolejność'
+'Reset all filters': 'Resetuj wszystkie filtry'
+'Published before': 'Opublikowany przed'
+'Published after': 'Opublikowany po'
+'Publish date': 'Data publikacji'
+'Publish Schedule': 'Kolejność publikacji'
+'Publish Date': 'Data publiacji'
+'Order updated.': 'Kolejność zaktualizowana.'
+'Open in browser': 'Otwórz w przeglądarce'
+'No sections found': 'Nie znaleziono sekcji'
+'No records found.': 'Nie znaleziono rekordów.'
+'No publications found': 'Nie znaleziono publikacji'
+'No issues found': 'Nie znaleziono wydań'
+'No entries to show': 'Brak wpisów do pokazania'
+Locations: Lokalizacja
+'Loading data': 'Ładowanie danych '
+'Last modified': 'Ostatnia modyfikacja'
+'Last Modified': 'Ostatnia modyfikacja'
+Last: Ostatnie
+First: Pierwsze
+'Filter by...': Filtruj...
+Filter: Filtrowanie
+Filename: 'Nazwa pliku'
+'Duplicate to another section': 'Duplikuj do innej sekcji'
+'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
+Creator: Twórca
+'Create Date': 'Data utworzenia'
+'Article status set to $1': 'Status artykułu zmieniony na $1'
+'Are you sure you want to delete selected articles?': 'Na pewno chcesz usunąć wybrane artykuły?'
+'All Sections': 'Wszystkie sekcje'
+'All Publications': 'Wszystkie publikacje'
+'All Issues': 'Wszystkie wydania'
+Added: Dodano
+'Access denied.': 'Dostęp zabroniony.'
+'$1 toggled.': 'Właczone $1'
+'$1 articles have been removed': 'Usunięto artykułów: $1'
+' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'

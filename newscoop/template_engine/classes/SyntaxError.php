@@ -22,17 +22,17 @@ define('SYNTAX_ERROR_INVALID_ATTRIBUTE', 'Invalid attribute <em>$1</em> in state
 define('SYNTAX_ERROR_INVALID_TEMPLATE', 'Invalid template <em>$1</em> specified in the <em>$2</em> form');
 
 // Needed for localizer
-//getGS('Unknown error: $1');
-//getGS('Unrecognized tag <em>$1</em>');
-//getGS('Unknown reference <em>$1</em>');
-//getGS('Invalid property <em>$1</em> of object <em>$2</em>');
-//getGS('Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>');
-//getGS('Invalid parameter <em>$1</em> in statement <em>$2</em>');
-//getGS('Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
-//getGS('Missing parameter <em>$1</em> in statement <em>$2</em>');
-//getGS('Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
-//getGS('Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter');
-//getGS('Invalid template <em>$1</em> specified in the <em>$2</em> form');
+//$translator->trans('Unknown error: $1');
+//$translator->trans('Unrecognized tag <em>$1</em>');
+//$translator->trans('Unknown reference <em>$1</em>');
+//$translator->trans('Invalid property <em>$1</em> of object <em>$2</em>');
+//$translator->trans('Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>');
+//$translator->trans('Invalid parameter <em>$1</em> in statement <em>$2</em>');
+//$translator->trans('Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
+//$translator->trans('Missing parameter <em>$1</em> in statement <em>$2</em>');
+//$translator->trans('Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>');
+//$translator->trans('Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter');
+//$translator->trans('Invalid template <em>$1</em> specified in the <em>$2</em> form');
 
 
 class SyntaxError {
@@ -78,20 +78,21 @@ class SyntaxError {
 
 
 	public function getMessage()
-	{
+	{   
+        $translator = \Zend_Registry::get('container')->getService('translator');
 		if (is_null($this->m_errorCode)) {
 			return null;
 		}
 
-		$errorMessage = getGS(SyntaxError::ErrorMessage($this->m_errorCode), $this->m_what);
+		$errorMessage = $translator->trans(SyntaxError::ErrorMessage($this->m_errorCode), array('$1' => $this->m_what), 'preview');
 		if (is_null($errorMessage)) {
 			return null;
 		}
 
 		if (isset($this->m_templateName)) {
-			$message .= getGS('template') . ' ' . $this->m_templateName;
+			$message .= $translator->trans('template', array(), 'preview') . ' ' . $this->m_templateName;
 			if (isset($this->m_line)) {
-				$message .= ', ' . getGS('line') . ' ' . $this->m_line;
+				$message .= ', ' . $translator->trans('line', array(), 'preview') . ' ' . $this->m_line;
 			}
 			$message .= ': ';
 		}

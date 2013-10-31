@@ -1,6 +1,6 @@
 <?php
 
-camp_load_translation_strings('home');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // locale for datepicker
 $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
@@ -43,12 +43,12 @@ if ($locale == 'cz') {
     var popupFlash = false;
 
     var localizer = localizer || {
-        processing: '<?php putGS('Processing...'); ?>',
-        session_expired: '<?php putGS('Session expired.'); ?>',
-        please: '<?php putGS('Please'); ?>',
-        login: '<?php putGS('login'); ?>',
-        connection_interrupted : '<?php putGS('Connection interrupted') ?>',
-        try_again_later : '<?php putGS('try again later') ?>'
+        processing: '<?php echo $translator->trans('Processing...', array(), 'home'); ?>',
+        session_expired: '<?php echo $translator->trans('Session expired.', array(), 'home'); ?>',
+        please: '<?php echo $translator->trans('Please', array(), 'home'); ?>',
+        login: '<?php echo $translator->trans('login', array(), 'home'); ?>',
+        connection_interrupted : '<?php echo $translator->trans('Connection interrupted', array(), 'home') ?>',
+        try_again_later : '<?php echo $translator->trans('try again later', array(), 'home') ?>'
     };
 
     $(function() {

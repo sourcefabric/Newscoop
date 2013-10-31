@@ -455,20 +455,21 @@ class ArticleType {
      * @return bool
      **/
     public static function SetTypeFilter($p_article_type, $p_filter_value)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $p_filter_value = (bool) trim('' . $p_filter_value);
 
         $field = new ArticleTypeField($p_article_type, 'NULL');
 
         if (!$field->exists()) {
-            return getGS('No such article type');
+            return $translator->trans('No such article type', array(), 'api');
         }
 
         $res = $field->setFilter($p_filter_value);
         if (!$res) {
-            return getGS('Filter not saved');
+            return $translator->trans('Filter not saved', array(), 'api');
         }
-        return getGS('Filter saved');
+        return $translator->trans('Filter saved', array(), 'api');
     }
 
 	/**

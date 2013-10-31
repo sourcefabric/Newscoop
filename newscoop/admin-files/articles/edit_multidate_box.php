@@ -1,5 +1,7 @@
-<?php if (empty($userIsBlogger)) { ?>
-<div class="articlebox" title="<?php putGS('Multi date events'); ?>"><div>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+ if (empty($userIsBlogger)) { ?>
+<div class="articlebox" title="<?php echo $translator->trans('Multi date events', array(), 'articles'); ?>"><div>
 <div id="multidate_box">
 <style type="text/css">
 /*
@@ -17,7 +19,7 @@
     <?php if ($inEditMode && $g_user->hasPermission('ChangeArticle')) : ?>
         <a class="iframe ui-state-default icon-button right-floated"
         href="<?php echo camp_html_article_url($articleObj, $f_language_id, "multidate/popup.php", "", ""); ?>">
-        <span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
+        <span class="ui-icon ui-icon-pencil"></span><?php echo $translator->trans('Edit'); ?></a>
     <?php endif; ?>
 </div>
 </div></div>

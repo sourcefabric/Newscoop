@@ -6,20 +6,18 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
-require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/localizer/Localizer.php");
 
-camp_load_translation_strings('users');
-camp_load_translation_strings('authors');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // TODO: permissions
 if (!is_writable($Campsite['IMAGE_DIRECTORY'])) {
-    camp_html_add_msg(getGS('Unable to add new image, target directory is not writable.'));
+    camp_html_add_msg($translator->trans('Unable to add new image, target directory is not writable.', array(), 'users'));
     camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['IMAGE_DIRECTORY']));
     camp_html_goto_page("/$ADMIN/");
     exit;
 }
 if (!$g_user->hasPermission('EditAuthors')) {
-    camp_html_display_error(getGS('You do not have the permission to change authors.'));
+    camp_html_display_error($translator->trans('You do not have the permission to change authors.', array(), 'users'));
     exit;
 }
 
@@ -30,7 +28,7 @@ $del_id = Input::Get('del_id', 'int', -1);
 if ($del_id > -1) {
     $author = new Author($del_id);
     if ($author->delete()) {
-        camp_html_add_msg(getGS('Author deleted.', 'ok'));
+        camp_html_add_msg($translator->trans('Author deleted.', array(), 'users'), 'ok');
     }
 }
 
@@ -39,9 +37,9 @@ $add_author_type = Input::Get('add_author', 'string', null);
 if ($add_author_type !== null) {
     $authorTypeObj = new AuthorType();
     if ($authorTypeObj->create($add_author_type) === true) {
-        camp_html_add_msg(getGS('Author type added.'), 'ok');
+        camp_html_add_msg($translator->trans('Author type added.', array(), 'users'), 'ok');
     } else {
-        camp_html_add_msg(getGS('Cannot add author type, this type already exists.'));
+        camp_html_add_msg($translator->trans('Cannot add author type, this type already exists.', array(), 'users'));
     }
 }
 
@@ -50,9 +48,9 @@ $del_id_type = Input::Get('del_id_type', 'int', -1);
 if ($del_id_type > -1) {
     $authorTypeObj = new AuthorType($del_id_type);
     if ($authorTypeObj->delete()) {
-        camp_html_add_msg(getGS('Author type removed.'), 'ok');
+        camp_html_add_msg($translator->trans('Author type removed.', array(), 'users'), 'ok');
     } else {
-        camp_html_add_msg(getGS('Cannot remove author type.'));
+        camp_html_add_msg($translator->trans('Cannot remove author type.', array(), 'users'));
     }
 }
 
@@ -61,9 +59,9 @@ $del_id_alias = Input::Get('del_id_alias', 'int', -1);
 if ($del_id_alias > -1) {
     $authorAliasObj = new AuthorAlias($del_id_alias);
     if ($authorAliasObj->delete()) {
-        camp_html_add_msg(getGS('Author alias removed.'), 'ok');
+        camp_html_add_msg($translator->trans('Author alias removed.', array(), 'users'), 'ok');
     } else {
-        camp_html_add_msg(getGS('Cannot remove author alias.'));
+        camp_html_add_msg($translator->trans('Cannot remove author alias.', array(), 'users'));
     }
 }
 
@@ -124,9 +122,9 @@ if ($can_save) {
         $author->setAliases($aliases);
     }
 
-    camp_html_add_msg(getGS("Author saved."),"ok");
+    camp_html_add_msg($translator->trans("Author saved.", array(), 'users'),"ok");
 } elseif ($del_id_alias < 1 && $id > -1 && !$can_save) {
-    camp_html_add_msg(getGS("Please fill at least first name and last name."));
+    camp_html_add_msg($translator->trans("Please fill at least first name and last name.", array(), 'users'));
 }
 
 if (!$id || $id == -1) {
@@ -137,8 +135,8 @@ if (!$id || $id == -1) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Authors"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Authors"), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
 ?>
@@ -168,13 +166,13 @@ $(document).ready(function(){
       <fieldset class="plain">
         <div class="search-box">
           <input type="text" id="form_search" onchange="doSearch()" onkeyup="doSearch()" class="input-transparent" size="45" style="width:220px;" />
-          <a href="#" class="filter-button"><?php putGS('Filters'); ?></a>
+          <a href="#" class="filter-button"><?php echo $translator->trans('Filters', array(), 'users'); ?></a>
         </div>
         <div class="container">
           <ul class="check-list padded">
             <li>
               <input type="checkbox" name="all_authors" id="all_authors" class="input_checkbox"  checked="checked" onclick="typeFilter(0)" />
-              <label for="all_authors"><?php putGS('All Author Types'); ?></label>
+              <label for="all_authors"><?php echo $translator->trans('All Author Types', array(), 'users'); ?></label>
             </li>
             <?php
             $types = AuthorType::GetAuthorTypes();
@@ -183,22 +181,22 @@ $(document).ready(function(){
                     <input type="checkbox" name="One" value="' . $type->getName() . '" id="author_' . $type->getId() . '" class="input_checkbox checkbox_filter" onclick="typeFilter(' . $type->getId() . ')" />
                     <label for="One">' . $type->getName() . '</label>';
                 echo '<a href="?del_id_type=' . $type->getId() . '" onclick="return deleteAuthorType(' . $type->getId() . ')" style="float:right"><img
-                  src="' . $Campsite['ADMIN_STYLE_URL'] . '/images/delete.png" border="0" alt="' . getGS('Delete author type') . '" title="' . getGS('Delete author type') . '" /></a>';
+                  src="' . $Campsite['ADMIN_STYLE_URL'] . '/images/delete.png" border="0" alt="' . $translator->trans('Delete author type', array(), 'users') . '" title="' . $translator->trans('Delete author type', array(), 'users') . '" /></a>';
                 echo '</li>';
             }
             ?>
-            <li><?php putGS('Add author type'); ?>:</li>
+            <li><?php echo $translator->trans('Add author type', array(), 'users'); ?>:</li>
             <li>
               <form onsubmit="return addAuthorType()" method="post">
                 <input type="text" style="width: 60%; margin-right: 6px" name="add_author" id="add_author" class="input_text" maxlength="35" />
-                <input type="submit" class="default-button" value="<?php putGS('Add'); ?>" id="save" name="save" />
+                <input type="submit" class="default-button" value="<?php echo $translator->trans('Add'); ?>" id="save" name="save" />
               </form>
             </li>
           </ul>
         </div>
       </fieldset>
       <fieldset class="plain" style="margin-top:16px;">
-        <a onclick="getRow(0)" class="ui-state-default icon-button right-floated" href="#"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Add new Author'); ?></a>
+        <a onclick="getRow(0)" class="ui-state-default icon-button right-floated" href="#"><span class="ui-icon ui-icon-plusthick"></span><?php echo $translator->trans('Add new Author', array(), 'users'); ?></a>
         <div class="clear"></div>
         <div id="gridtable" style="margin-top:8px;"></div>
       </fieldset>
@@ -206,7 +204,7 @@ $(document).ready(function(){
   </div>
   <!--END left column-->
   <!--right column-->
-  <div id="detailtable" class="column-two"><?php putGS('Loading Data'); ?>...</div>
+  <div id="detailtable" class="column-two"><?php echo $translator->trans('Loading Data', array(), 'users'); ?>...</div>
 </div>
 <script type="text/javascript">
 $('.icon-button').hover(
@@ -252,13 +250,13 @@ function addAuthorType() {
     var val= $('#add_author').val();
     val = jQuery.trim(val);
     if (val.length < 3) {
-        alert("<?php echo putGS("Author type must be at least three characters long.") ?>");
+        alert("<?php echo $translator->trans("Author type must be at least three characters long.", array(), 'users') ?>");
         return false;
     }
 }
 
 function deleteAuthorType(id) {
-    if (!confirm('<?php echo getGS('Are you sure you want to delete this author type?'); ?>')) {
+    if (!confirm('<?php echo $translator->trans('Are you sure you want to delete this author type?', array(), 'users'); ?>')) {
         return false;
     }
     $.post('?del_id_type=' + id, function(data) {
@@ -277,7 +275,7 @@ function deleteAuthorType(id) {
 }
 
 function deleteAuthorAlias(id, authorId) {
-    if (!confirm('<?php echo getGS('Are you sure you want to delete this author alias?')?>')) {
+    if (!confirm('<?php echo $translator->trans('Are you sure you want to delete this author alias?', array(), 'users')?>')) {
         return false;
     }
     $.post('?id=' + authorId + '&del_id_alias=' + id, function(data) {
@@ -286,7 +284,7 @@ function deleteAuthorAlias(id, authorId) {
 }
 
 function deleteAuthor(id) {
-    if (!confirm('<?php echo getGS('Are you sure you want to delete this author?')?>')) {
+    if (!confirm('<?php echo $translator->trans('Are you sure you want to delete this author?', array(), 'users')?>')) {
         return false;
     }
 

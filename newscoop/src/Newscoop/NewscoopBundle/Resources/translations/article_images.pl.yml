@@ -1,0 +1,71 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry, te zdjęcie jest za małe. Zdjęcie musi mieć przynajmniej %d na %d'
+'Slideshow rendition': 'Galerie obrazów'
+'Renditions reloaded': 'Obrazy przeładowane'
+'Reload renditions': 'Przeładuj obrazy'
+'Edit images': 'Edytuj zdjecia'
+'Specify image url if you want to load it.': 'Podaj adres url do zdjęcia aby je załadować.'
+'Items: ': Elementy
+'Attach slideshows': 'Dodaj galerie'
+'original size:': 'rozmiar orginalny'
+'no caption': 'Brak podpisu'
+'Video URL': 'Link do wideo'
+'Use for all': 'Zastosuj dla wszystkich'
+'Use default': 'Użyj domyślny'
+'Slug must be unique': 'Slug musi być unikalny'
+Slug: Slug
+'Slideshow headline': 'Nagłówek galerii'
+Slideshow: Galeria
+'Set selected as default image': 'Ustaw wybrany jako domyślny obraz'
+'Set as default': 'Ustaw jako domyślne'
+Saving...: Zapisywanie...
+Saved: Zapisano
+'Save headline': 'Zapisz nagłówek'
+'Place Images': 'Umieść zdjęcia'
+'No renditions defined.': 'Nie masz zdefiniowanych obrazów.'
+'No images found.': 'Nie znaleziono zdjęć.'
+'No images attached to article.': 'Ten artykuł nie ma żadnych zdjęć'
+'No images': 'Brak zdjęć'
+'Next: Upload and Edit Metadata': 'Dalej: Wgraj i edytuj informacje'
+'Next: Place Images': 'Dalej: Umieść zjdęcia'
+'Media Archive': 'Biblioteka Mediów'
+Location: Lokalizacja
+Items: Elementy
+Item: Element
+'Image files': 'Pliki zdjęć'
+'Image Files: ': 'Pliki zdjęć:'
+Headline: Nagłówek
+Finish: Zakończ
+'Edit Image Data': 'Edytuj dane zdjecia'
+'Edit $1': 'Edytuj $1'
+'Done editing': 'Zakończ edycję'
+Detach: Usuń
+Create: Utwórz
+Caption: Podpis
+'Attached images': 'Zalączone zdjęcia'
+'Attach & Place': 'Załącz i umieść'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Dodaj link do wideo (np. http://vimeo.com/25083275 dla Vimeo albo http://youtu.be/1XsPVO61e9w dla YouTube)'
+'Add video': 'Dodaj film'
+'Add caption': 'Dodaj podpis'
+'Show all': 'Pokaż wszystkie'
+'The image has been removed from the article.': 'Zdjęcie zostało usunięte z artykułu.'
+'Unable to add new image.': 'Nie można dodać nowego zdjęcia.'
+'Image number $1 already exists': 'Zdjęcie numer $1 już istnieje'
+'You do not have the right to change image information.': 'Nie masz praw aby zmieniać informacje o zdjęciu.'
+'The image number specified is already in use.': 'Numer zdjęcia jest już w użyciu.'
+'Image $1 updated.': 'Zdjęcie $1 zaktualizowane.'
+'Image $1 added.': 'Zdjęcie $1 dodane.'
+'Edit article': 'Edytuj artykuł'
+'You do not have the right to attach images to articles.': 'Nie masz praw aby załączać zdjęcia do artykułu.'
+'You do not have the right to add images.': 'Nie masz praw aby dodawać zdjęcia'
+'Image information': 'Informacje o zdjęciu'
+'Attach New Image': 'Dodaj nowe zdjęcie'
+'Attach Image To Article': 'Dodaj zdjęcie do artykułu'
+'Attach Existing Image': 'Załącz istniejące zdjęcie'
+'Add New Image': 'Dodaj nowe zdjęcie'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Data <BR><SMALL>(rrrr-mm-dd)</SMALL>'
+'You must select an image file to upload.': 'Musisz wybrać zdjęcie nim je dodasz.'
+'Change image information': 'Zmień informacje o zdjęciu'
+'You do not have the right to add images': 'Nie masz praw aby dodawać zdjęcia'

@@ -1,0 +1,275 @@
+Plugins: Плагіны
+'Manage Plugins': 'Кіраванне плагінамі'
+Account: 'Улiковы запiс'
+'Items per page': 'Абектаў на старонцы'
+'Add new': Дадаць
+Home: Галоўная
+Logout: Выхад
+More...: Далей...
+Content: Зьмест
+Languages: Мовы
+Countries: Краiны
+Themes: Шаблёны
+Topics: Тэмы
+Configure: Наладкі
+'Image Archive': 'Архiў графiчных файлаў'
+'Add Article': 'Дадаць наступны артыкул  '
+Fields: Палi
+Delete: Выдалiць
+Type: Тып
+Name: Загаловак
+Code: Код
+Edit: Праўка
+Login: Лагiн
+Password: Пароль
+Site: Сайт
+Path: Шлях
+'Go up': Угору
+URL: URL
+Order: Парадак
+Hide: Схаваць
+Duplicate: Дубляваць
+Subscription: Падпіска
+expires: мiнае
+starts: пачынаецца
+before: перад
+after: пасьля
+on: на
+status: стан
+active: актыўны
+inactive: неактыўны
+Subscribers: Падпiсчыкi
+Staff: Пэрсанал
+'Select destination': 'Выбераце атрымальнiка'
+'No languages': 'Няма моў'
+'---Select language---': '---Выбераце мову---'
+'No publications': 'Няма выданьняў'
+'---Select publication---': '---Выбераце выданьне---'
+'No issues': 'Няма артыкулаў'
+'---Select issue---': '---Выбераце артыкул---'
+'No sections': 'Няма рубрык'
+'---Select section---': '---Выбераце рубрыку---'
+Language: Мова
+Country: Краiна
+'Account name': 'Улiковы запiс'
+Publication: Выданьне
+'Default language': 'Мова па змаўчаньні'
+Subscriptions: Падпiскі
+Issue: Выпуск
+Number: Нумар
+Section: Рубрыка
+Keywords: 'Ключавыя словы'
+Topic: Тэма
+'URL Name': 'Назва URL'
+'Left to pay': 'Засталося заплацiць'
+Active: Актыўна
+Trial: Пробная
+Next: Наступн.
+Previous: Папярэд.
+Translate: Перакласьцi
+View: Выгляд
+'Scheduled Publishing': 'Заплянаваныя публiкацыi'
+Time: Час
+Action: Апэрацыя
+'Schedule a new action': 'Заплянаваць новае дзеяньне'
+'Scheduling a new publish action': 'Плянаваньне новых апэрацыяў'
+'Delete scheduled publish action': 'Выдаліць заплянаваную апэрацыю'
+Date/Time: Дата/Час
+'You must select an action.': 'Вы павiнны выбраць апэрацыю.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Вы ня маеце права прызначаць аўтаматычную публікацыю артыкула'
+'Front page': 'Тытульная старонка'
+'Section page': 'Старонка рубрыкi'
+'Show on front page': 'Паказаць на тытульнай старонцы'
+'Remove from front page': 'Выдаліць з тытульнай старонкі'
+'Show on section page': 'Паказаць на старонцы рубрыкi'
+'Remove from section page': 'Выдаліць са старонкi рубрыкi'
+Actions: Апэрацыi
+Publishing: Публікацыі
+Show: Паказаць
+Remove: Выдалiць
+'Article Types': 'Тып артыкула'
+'Staff User Types': 'Карыстальнiцкi тып пэрсаналу'
+Publications: Выданьнi
+Issues: Выпускi
+Sections: Рубрыкi
+Articles: Артыкулы
+Images: Выявы
+Change: Зьмянiць
+'Add new issue': 'Дадаць новы выпуск'
+'Section Template': 'Шаблён рубрыкi'
+'Article Template': 'Шаблён артыкула'
+'Default Language': 'Мова па змаўчаньні'
+'Paid Period': 'Аплачаны пэрыяд'
+Preview: 'Папярэднi агляд'
+'You must fill in the $1 field.': 'Вы павiнны запоўніць поле $1.'
+Error: Памылка
+'Invalid input: $1': 'Няправільны ўвод $1'
+'Language does not exist.': 'Такой мовы не iснуе.'
+'Publication does not exist.': 'Няма такога выданьня.'
+'Issue does not exist.': 'Такога выпуску не iснуе.'
+'You must select a language.': 'Вы павiнны выбраць мову.'
+'Section does not exist.': 'Няма такой рубрыцы.'
+'No articles.': 'Артыкулы адсутнічаюць.'
+'Article does not exist.': 'Няма такога артыкула.'
+'Image does not exist.': 'Такой выявы не iснуе.'
+'Access denied': 'Доступ забаронены'
+'Invalid parameters received': 'Атрыманыя няправiльныя парамэтры'
+'Add new article': 'Дадаць новы артыкул'
+Status: Стан
+Published: Апублікавана
+'Not published': 'Не апублікавана'
+Submitted: Адпраўлена
+New: Новая
+Article: артыкул
+Publish: Апублікаваць
+Unpublish: Прыняць
+Unlock: Разблякаваць
+Uploaded: Загружана
+YYYY-MM-DD: 'ГГГГ-ММ-ДД '
+Submit: Адправіць
+Image: Выява
+Description: Апісаньне
+Photographer: Фатограф
+Place: Месца
+Date: Дата
+Thumbnail: 'Папярэдні агляд'
+'In use': Выкарыстана
+'Additional searches': 'Дадатковы пошук'
+'Most Recently Added': 'Нядаўна даданыя '
+'Most Recently Modified': 'Нядаўна мадыфікаваныя'
+'$1 images found': 'Знойдзена выяў: $1'
+'Reset search conditions': 'Скiнуць умовы пошуку'
+'Image number': 'Нумар выявы'
+Users: Карыстальнік
+Localizer: Лякалiзатар
+'Adding new translation': 'Дадаваньне новага перакладу'
+'No more languages.': 'Няма другiх моў.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'У полi $1 павiнны знаходзiцца толькi лiтары, лiчбы цi сымбаль падкрэсьлiваньня '
+'Add new publication': 'Дадаць новае выданьне'
+'Upload new template': 'Загрузiць новы шаблён'
+'Add new staff member': 'Дадаваньне новага пэрсаналу'
+'Add new subscriber': 'Дадаваньне новага падпісчыка'
+'Add new user type': 'Дадаць новы тып карыстальнiка'
+'Add new article type': 'Дадаць новы тып артыкула'
+'Add new country': 'Дадаць новую краiну'
+'Add new language': 'Дадаць новую мову'
+'View logs': 'Прагледзець журнал'
+'Change your password': 'Зьмянiце Ваш пароль'
+'Your Articles': 'Вашы артыкулы'
+'Submitted Articles': 'Адпраўленыя артыкулы'
+Logs: Журнал
+'There are $1 article(s) left.': 'Засталося артыкулаў: $1'
+'There are $1 issues(s) left.': 'Засталося выпускаў: $1'
+'There are $1 section(s) left.': 'Засталося рубрык: $1'
+'There are $1 publication(s) left.': 'Засталося выданьняў: $1'
+'There are $1 countries left.': 'Засталося краiн: $1'
+'Name <SMALL>(click to edit)</SMALL>': 'Назва <SMALL>(нацiсьнiце для праўкi)</SMALL> '
+'Add new subscription': 'Дадаць новую падпіску'
+'You do not have the right to add subscriptions.': 'Вы ня маеце правоў дадаваць падпіскі'
+'Adding subscription': 'Дадаваньне новай падпіскі '
+'Delete subscription': 'Выдалiць падпіску'
+'You do not have the right to delete subscriptions.': 'Вы ня маеце правоў доступу, каб выдаляць падпіскі'
+'No such subscription.': 'Няма такой падпіскі.'
+Yes: Так
+No: Так
+Close: Зачынiць
+'No issues.': 'Няма выпускаў.'
+'Back to Edit Article': 'Назад да рэдагаваньня артыкула'
+'No topics': 'Няма тэмаў'
+'You do not have the right to add articles.': 'Вы ня маеце правоў дадаваць артыкулы'
+Start: Пачатак
+Days: Дзён
+'The sections could not be added successfully. Some of them were already added !': 'Нельга дадаць рубрыкі. Некаторыя зь iх ужо icнуюць!'
+'Add another': 'Дадаць iншую'
+Cancel: Скасаваць
+Done: Выканана
+OK: ОК
+Save: Захаваць
+Search: Пошук
+'Make a selection': Вылучыць
+'You must input a number greater than 0 into the $1 field.': 'Вы павiнны ўвесьцi дадатную ненулявую лiчбу ў поле $1'
+'You must input a valid date.': 'Вы павiнны ўвесьцi правiльную дату.'
+'Add new field': 'Дадаць новы тып:by'
+'Article automatic publishing schedule': 'Расклад аўтаматычных публiкацыяў артыкулаў'
+'Are you sure you want to delete this scheduled action?': 'Цi Вы ўпэўнены, што жадаеце скасаваць заплянаванае дзеяньне?  '
+Unlink: Выдалiць
+'Are you sure you want to delete the image $1?': 'Цi Вы ўпэўнены, што жадаеце выдалiць графiчны файл $1? '
+'No such issue.': 'Няма такога выпуску:by'
+'Are you sure you want to delete the subscription to the publication $1?': 'Цi Вы ўпэўнены, што жадаеце выдалiць падпiску на выданьне $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Немагчыма захаваць зьмены ў выпуску $. Пераканайцеся, што назва $2  URL выпуску не выкарыстоўвалася раней у выданьнi $3. '
+GB: ГБ
+MB: МБ
+KB: КБ
+bytes: байт
+Attach: Прыкласьцi
+Back: Назад
+File: Файл
+'Save and Close': 'Захаваць и зачынiць '
+Add: Дадаць
+'Select All': 'Вылучыць усё'
+'Select None': 'Адмянiць выбар'
+'Add Event': 'Дадаць падзею'
+N/A: недаступна
+'On Front Page': 'На тытульнай старонцы'
+'On Section Page': 'На старонцы рубрыцы'
+'Created by': Аўтар
+'Creation date': 'Дата стварэньня'
+'Publication List': 'Сьпiс выданьняў'
+'Issue List': 'Сьпiс выпускаў'
+'Section List': 'Сьпiс рубрык'
+All: Усе
+duplicate: дубляваць
+move: перанесьцi
+Move: Перанесьцi
+'From:': 'Ад:'
+'Date:': 'Дата:'
+Hidden: Схаваны
+Comments: Камэнтар
+Comment: Камэтары
+Approved: Зацьверджаны
+Subject: Тэма
+'IP address:': 'IP-адрас:'
+'Email:': 'e-mail:'
+Author: Аўтар
+'Article name': 'Назва артыкула'
+'Hide article': 'Захаваць артыкул'
+'Show article': 'Паказаць артыкул'
+'Article Type Fields': 'Палi тыпаў артыкула'
+'Article Images': 'Выява з артыкула'
+'Log Messages': 'Паведамленьне журнала'
+'Article Files': 'Файлы артыкула'
+'Article Comments': 'Камэнтары да артыкула'
+'Are you sure you want to deactivate the subscription?': 'Цi Вы ўпэўнены, што жадаеце дэактывававаць падпiсчыка?'
+'Are you sure you want to activate the subscription?': 'Цi Вы ўпэўнены, што жадаеце актывіваваць падпiску?'
+Other: Iншае
+'Time:': 'Час:'
+'No events.': 'Няма падзеяў.'
+'Default templates': 'Шаблёны па змаўчанню'
+'System Preferences': 'Сыстэмныя наладкі'
+'The date must be in the future.': 'Дата павiнна быць у будучым часе.'
+Send: Адправiць
+'Thank you.': Дзякуй.
+'Please take a minute to send us an email.': 'Калi ласка затрымайцеся на хвілінку, каб адправiць нам e-mail.'
+(optional): (дадаткова)
+'The URL you entered is invalid: $1': 'Уведзены URL няправільны: $1 '
+Reads: 'Колькасьць праглядаў'
+'Publish with issue': 'Апублiкаваць выпуск'
+'Universal List': 'Універсальны спіс'
+'Invalid security token!': 'Няправільны маркер бяспецы!'
+Authors: Аўтары
+'User name': Карыстальнiк
+'User Types': 'Тыпы карыстальнiкаў '
+'Add new user account': 'Дадаць новы ўлiковы запiс карыстальнiка'
+'Schedule a new publish action': 'Заплянаваць новую апэрацыю'
+'Subscription Default Time': 'Тэрмiн падпiскi па змаўчаньні:by'
+'No such language.': 'Няма такой мовы.:by'
+'No such infotype.': 'Няма такой клясы:by'
+'No such keyword.': 'Няма такога ключавога слова.:by'
+'No such country.': 'Няма такой краiны:by'
+'User may add/change user accounts and passwords': 'Карыстальнiк можа дадаваць/зьмяняць улiковыя запiсы i паролi:by'
+'User may delete user accounts': 'Карыстальнiк можа выдаляць улiковыя запiсы:by'
+'There are $1 issue(s) left.': 'Засталося $1 выпуск(аў):by'
+'There are $1 keyword(s) left.': 'Засталося $1 ключавога(-ых) слоў(ва):by'
+'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва<BR><SMALL>(нацiснуць для праўкi)</SMALL>:by'
+'New field': 'Новае поле'
+'Author:': Аўтар

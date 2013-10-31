@@ -12,15 +12,17 @@ class Admin_Form_SlideshowItem extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('hidden', 'coords');
 
         $this->addElement('text', 'url', array(
-            'label' => getGS('URL'),
+            'label' => $translator->trans('URL'),
         ));
 
         $this->addElement('text', 'caption', array(
-            'label' => getGS('Caption'),
+            'label' => $translator->trans('Caption', array(), 'article_images'),
         ));
     }
 

@@ -1,0 +1,77 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'επιλεγμένο εικονίδιο δείκτη'
+'add location to map': 'προσθήκη τοποθεσίας στο χάρτη'
+'Video source': 'Πηγή βίντεο'
+'The point will be removed from all translations of the article.': 'Το σημείο θα αφαιρεθεί από όλες τις μεταφράσεις του άρθρου.'
+'Specify country (optional)': 'Καθορίστε τη χώρα (προαιρετικό)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Η τοποθεσία δεν βρέθηκε. Παρακαλούμε ελέγξτε την ορθογραφία ή προσπαθήστε ξανά.'
+'Show search results': 'Εμφάνιση αποτελεσμάτων αναζήτησης'
+'Search for place or coordinate': 'Αναζήτηση τοποθεσίας ή συντεταγμένων'
+'Return to edit': 'Επιστροφή στην επεξεργασία'
+'Really delete this point?': 'Θέλετε να διαγράψετε το σημείο;'
+'Name and describe this location': 'Όνομα και περιγραφή της τοποθεσίας'
+'Map size': 'Μέγεθος χάρτη'
+'Location label': 'Σήμανση τοποθεσίας'
+'Location description:': 'Περιγραφή τοποθεσίας:'
+'Label url': 'Url σήμανσης'
+'Hide search results': 'Απόκρυψη αποτελεσμάτων αναζήτησης'
+Geo-filtering: Geo-φιλτράρισμα
+'Fill in youtube ID or link, e.g.': 'Συμπληρώστε ταυτότητα ή σύνδεσμο youtube, π.χ'
+'Fill in vimeo ID or link, e.g': 'Συμπληρώστε ταυτότητα ή σύνδεσμο vimeo, π.χ'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Συμπληρώστε ταυτότητα, σύνδεσμο ή όνομα αρχείου του βίντεο, για YouTube, Vimeo, ή flash video.'
+'Fill in location label': 'Συμπληρώστε τη σήμανση τοποθεσίας'
+'Fill in local swf flash file name or link, e.g.': 'Συμπληρώστε το όνομα αρχείου ή τον σύνδεσμο του τοπικού swf flash, π.χ'
+'Fill in local flv flash file name or link, e.g.': 'Συμπληρώστε το όνομα αρχείου ή τον σύνδεσμο του τοπικού flv flash, π.χ'
+'Fill in image link, like': 'Συμπληρώστε τον σύνδεσμο εικόνας, όπως'
+'Describe the location...': 'Περιγράψτε τη τοποθεσία...'
+'Delete location': 'Διαγραφή τοποθεσίας'
+Coordinates: Συντεταγμένες
+'Change video display size': 'Αλλαγή μεγέθους προβολής βίντεο'
+'Change image display size': 'Αλλαγή μεγέθους προβολής εικόνας'
+'Change icon of this location': 'Αλλαγή εικονιδίου της τοποθεσίας'
+'Center map on location': 'Κεντράρισμα χάρτη στη τοποθεσία'
+'Advanced editing': 'Προηγμένη επεξεργασία'
+'Add an image to this location': 'Προσθήκη εικόνας στην τοποθεσία'
+'Add a video to this location': 'Προσθήκη βίντεο στην τοποθεσία'
+'Are you sure you want to quit without saving your changes?': 'Είστε σίγουρος/η ότι θέλετε να παραιτηθείτε χωρίς να αποθηκεύσετε τις αλλαγές σας;'
+'Map preview': 'Προεπισκόπηση χάρτη'
+'Locations updated.': 'Οι τοποθεσίες ενημερώθηκαν.'
+'Setting the map name helps with map search': 'Ρυθμίζοντας το όνομα του χάρτη, βοηθάει στην εύρεση χαρτών'
+Longitude: 'Γεωγραφικό μήκος'
+Latitude: 'Γεωγραφικό πλάτος'
+Center: Κέντρο
+'Last Saved Map View': 'Προβολή Τελευταίως Αποθηκευμένου Χάρτη'
+'List of locations updated': 'Η λίστα τοποθεσιών ανανεώθηκε'
+width: πλάτος
+'show initial map view': 'εμφάνιση αρχικής προβολής χάρτη'
+'problem at point processing, please send error report': 'Πρόβλημα κατά την διαδικασία τοποθέτησης σημείου, παρακαλούμε στείλτε αναφορά σφάλματος'
+'plain text': 'απλό κείμενο'
+'html content': 'περιεχόμενο html'
+height: ύψος
+'fill in map name': 'συμπληρώστε το όνομα χάρτη'
+'You do not have the right to remove maps from articles.': 'Δεν έχετε το δικαίωμα να αφαιρέσετε χάρτες από τα άρθρα.'
+'Video file': 'αρχείο Video'
+'Video ID': 'ID Video'
+'The map has been removed from the article.': 'Ο χάρτης έχει αφαιρεθεί από το άρθρο.'
+'Point no.': 'Αρ. σημείου'
+'Point markers': 'Δείκτες σημείου'
+None: Κανένα
+'Map Search Example': 'Δείγμα Αναζήτησης Χάρτη'
+'Map Preview': 'Προεπισκόπιση Χάρτη'
+'Image URL': 'URL Εικόνας'
+video: video
+text: κείμενο
+image: εικόνα
+icon: εικονίδιο
+'Setting Map Locations': 'Ρύθμιση Τοποθεσιών Χάρτη'
+remove: αφαίρεση
+enable: ενεργοποίηση
+edit: επεξεργασία
+disable: απενεργοποίηση
+'close window': 'κλείσιμο παραθύρου'
+center: κέντρο
+save: αποθήκευση
+'resize article view': 'αλλαγή μεγέθους προβολής άρθρου'
+Find: Εύρεση
+'show article view': 
+'set as the article view': 

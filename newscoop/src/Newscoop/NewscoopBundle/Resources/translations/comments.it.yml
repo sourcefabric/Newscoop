@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Stai per cancellare definitivamente più messaggi.'
+'You are about to permanently delete a message.': 'Stai per cancellare definitivamente un messaggio.'
+User: Utente
+None: Nessuno
+'Coming from': 'Provenienti da'
+'Ban/Unban user': 'Blocca/sblocca utente'
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Possono essere applicati blocchi a nomi utente, ad indirizzi e-mail o ad indirizzi IP.'
+'You are about to permanently delete multiple comments.': 'Stai per eliminare definitivamente alcuni commenti.'
+'You are about to permanently delete a comment.': 'Stai per eliminare definitivamente un commento.'
+Website: 'Sito web'
+'Value is not $1 characters long': 'Il valore non è lungo $1 caratteri'
+Username: 'Nome utente'
+'User id': 'ID Utente'
+'User ban settings': 'Impostazioni blocco utente'
+'Update comment': 'Aggiorna commento'
+Unrecommended: Sconsigliato
+Unrecommend: Sconsiglia
+'Subject is not $1 characters long': 'Loggetto non è lungo $1 caratteri'
+'Sort by Thread order': 'Ordina per discussione'
+'Show parent comment': 'Mostra il commento padre'
+'Show commenter details': 'Mostra i dettagli dellautore del commento'
+'Show commenter': 'Mostra lautore del commento'
+'Show comment user details': 'Mostra i dettagli dellutente del commento'
+'Show comment user': 'Mostra lutente del commento'
+'Show comment details': 'Mostra i dettagli del commento'
+'Select status': 'Scegli stato'
+'Search Type': 'Tipo di ricerca'
+'Reply to comment': 'Rispondi al commento'
+Recommended: Consigliato
+Recommend: Consiglia
+'Quick edit': 'Modifica rapida'
+Parent: Padre
+ID: ID
+'Go to edit article': 'Vai alla modifica articolo'
+Forum: Forum
+'For Column': 'Per colonna'
+Email: E-mail
+'Edit acceptance criteria': 'Modifica i criteri di accettazione'
+E-mail: E-mail
+'Delete all comments?': 'Cancello tutti i commenti?'
+'Date Created': 'Data di creazione'
+'Comments updated.': 'Commenti aggiornati.'
+'Comments status change to $1.': 'Stato dei commenti cambiato in $1.'
+'Comments deleted.': 'Commenti cancellati.'
+'Commenter $1 saved.': 'Autore di commenti $1 salvato.'
+'Commenter $1 deleted.': 'Autore di commenti $1 cancellato.'
+Commenter: 'Autore di commenti'
+'Comment updated.': 'Commento aggiornato.'
+'Comment status change to $1.': 'Stato del commento cambiato in $1.'
+'Comment id': 'ID Commento'
+'Comment deleted.': 'Commento cencellato.'
+'Comment delete by $1 from the article $2 ($3)': 'Cancellazione commento da $1 dallarticolo $2 ($3)'
+'Comment Acceptance': 'Accettazione commento'
+'Comment $4 by $1 in the article $2 ($3)': 'Commento $4 da $1 nellarticolo $2 ($3)'
+'Comment $1 saved.': 'Commento $1 salvato.'
+Column: Colonna
+'Change subscriber information': 'Cambia informazioni iscritto'
+'Ban for commenter $1 saved.': 'Blocco per il commentatore $1 salvato.'
+Ban: Blocco
+'Are you sure you want to do it?': 'Sei sicuro di volerlo fare?'
+'Add rating': 'Aggiungi voto'
+'Add new comment commenter': 'Aggiungi nuovo commentatore al commento'
+'Add new comment': 'Aggiungi un nuovo commento'
+'Add new acceptance criteria': 'Aggiungi nuovo criterio di accettazione'
+'Acceptance $1 saved.': 'Accettazione $1 salvata.'
+'Acceptance $1 deleted.': 'Accettazione $1 cancellata.'

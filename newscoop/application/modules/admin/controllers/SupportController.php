@@ -12,13 +12,11 @@ use Newscoop\Annotations\Acl;
  */
 class Admin_SupportController extends Zend_Controller_Action
 {
-    public function init()
-    {
-        camp_load_translation_strings('support');
-    }
+    public function init(){}
 
     public function indexAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->view->stats = $this->_helper->service('stat')->getAll();
 
         // saving them here to retrieve later, because these are not available when run in cli
@@ -37,7 +35,7 @@ class Admin_SupportController extends Zend_Controller_Action
 
             SystemPref::set('stat_ask_time', $askTime->getTimestamp());
             SystemPref::set('support_send', $values['support_send']);
-            $this->_helper->flashMessenger(getGS('Support settings saved.'));
+            $this->_helper->flashMessenger($translator->trans('Support settings saved.', array(), 'support'));
             if ($this->_getParam('action') === 'popup') {
                 $this->_helper->redirector('index', '');
             } else {

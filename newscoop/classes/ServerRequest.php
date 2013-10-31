@@ -10,7 +10,6 @@
 
 require_once dirname(__FILE__) . '/User.php';
 require_once dirname(__FILE__) . '/SecurityToken.php';
-require_once dirname(__FILE__) . '/../admin-files/localizer/Localizer.php';
 
 /**
  * Server request class
@@ -43,10 +42,11 @@ class ServerRequest
         $this->callback = $callback;
         $this->args = (array) $args;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // check if callable
         if (!is_callable($this->callback, false, $this->callable_name)) {
             throw new InvalidArgumentException(
-                getGS("Callback '$1' is not callable.", $this->callable_name),
+                $translator->trans("Callback $1 is not callable.", array('$1' => $this->callable_name), 'api'),
                 self::ERROR_NOT_CALLABLE
             );
         }
@@ -69,11 +69,12 @@ class ServerRequest
      * @return mixed
      */
     public function execute()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // token check
         if (!$this->checkToken()) {
             throw new InvalidArgumentException(
-                getGS('Invalid security token.'),
+                $translator->trans('Invalid security token.'),
                 self::ERROR_SECURITY_TOKEN
             );
         }
@@ -81,7 +82,7 @@ class ServerRequest
         // authorisation check
         if (!$this->checkPermission()) {
             throw new LogicException(
-                getGS('Access denied.'),
+                $translator->trans('Access denied.', array(), 'api'),
                 self::ERROR_PERMISSION
             );
         }

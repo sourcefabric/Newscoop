@@ -1,0 +1,273 @@
+Plugins: Plugins
+'Manage Plugins': 'Gerenciar plugins'
+Account: Conta
+'Items per page': 'Items por página'
+'Add new': 'Adicionar Novo'
+Home: 'Página Principal'
+Logout: 'Terminar Sessão'
+More...: Mais...
+Content: Conteúdo
+Languages: Idiomas
+Countries: Países
+Themes: Modelos
+Topics: Temas
+Configure: Configurar
+'Image Archive': 'Arquivo de Imagem'
+'Add Article': 'Adicionar Artigo'
+Fields: Campos
+Delete: Eliminar
+Type: Tipo
+Name: Nome
+Code: Código
+Edit: Editar
+Login: 'Entrar em Sessão'
+Password: Palavra-Passe
+Site: Sítio
+Path: Caminho
+'Go up': 'Nivel Acima'
+URL: 'Endereço URL'
+Order: Ordem
+Hide: Esconder
+Duplicate: Duplicar
+Subscription: Assinatura
+expires: expira
+starts: inicio
+before: 'antes de'
+after: após
+on: em
+status: estado
+active: activo
+inactive: inactivo
+Subscribers: Assinantes
+Staff: 'Pessoal Editorial'
+'Select destination': 'Seleccionar destino'
+'No languages': 'Não Existem Idiomas Definidos'
+'---Select language---': '--- Seleccione o Idioma ---'
+'No publications': 'Não Existem Publicações Definidas'
+'---Select publication---': '--- Selecione a Publicação ---'
+'No issues': 'Não Existem Artigos'
+'---Select issue---': '--- Selecione o Artigo ---'
+'No sections': 'Não Existem Secções Definidas'
+'---Select section---': '--- Seleccione a Secção ---'
+Language: Idioma
+Country: País
+'Account name': 'Nome da Conta'
+Publication: Publicação
+'Default language': 'Idioma Padrão'
+Subscriptions: Assinaturas
+Issue: Edição
+Number: Número
+Section: Secção
+Keywords: Palavras-Chave
+Topic: Tema
+'URL Name': 'Nome para o URL'
+'Left to pay': 'Por pagar'
+Active: Activo
+Trial: 'Teste (avaliação)'
+Next: Próximo
+Previous: Anterior
+Translate: Traduzir
+View: Ver
+'Scheduled Publishing': 'Tarefa de publicação agendada'
+Time: Hora
+Action: Acção
+'Schedule a new action': 'Programar tarefa de publicação'
+'Scheduling a new publish action': 'Agendar uma tarefa de publicação'
+'Delete scheduled publish action': 'Eliminar tarefa de publicação'
+Date/Time: Data/Hora
+'You must select an action.': 'Tem de seleccionar uma tarefa de publicação'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Não tem permissões para agendar tarefa de publicação de Edições ou Artigos'
+'Front page': 'Página Principal'
+'Section page': 'Página de Secção'
+'Show on front page': 'Mostrar na Página Principal'
+'Remove from front page': 'Remover da Página Principal'
+'Show on section page': 'Mostrar na Página de Secção'
+'Remove from section page': 'Removar da Página de Secção'
+Actions: Acções
+Publishing: Publicando
+Show: Mostrar
+Remove: Remover
+'Article Types': 'Tipo de Artigos'
+'Staff User Types': 'Tipos de Utilizadores (Pessoal Editorial)'
+Publications: Publicações
+Issues: Edições
+Sections: Secções
+Articles: Artigos
+Images: Imagens
+Change: Alterar
+'Add new issue': 'Criar Edição'
+'Section Template': 'Modelo para Página de Secção'
+'Article Template': 'Modelo para Artigo'
+'Default Language': 'Idioma padrão'
+'Paid Period': 'Pago até'
+Preview: Pré-visualizar
+'You must fill in the $1 field.': 'O campo $1 tem de ser preenchido.'
+Error: Erro
+'Invalid input: $1': 'Valor Inválido: $1'
+'Language does not exist.': 'Idioma inexistente.'
+'Publication does not exist.': 'Publicação inexistente.'
+'Issue does not exist.': 'Edições inexistente.'
+'You must select a language.': 'Seleccione o Idioma.'
+'Section does not exist.': 'Secção inexistente.'
+'No articles.': 'Não existem Artigos'
+'Article does not exist.': 'Artigo inexistente.'
+'Image does not exist.': 'Imagem inexistente.'
+'Access denied': 'Acesso negado'
+'Invalid parameters received': 'O parametro recebido é invalido'
+'Add new article': 'Criar Artigo'
+Status: Estado
+Published: Publicado
+'Not published': 'Não Publicado'
+Submitted: Submetido
+New: Novo
+Article: Artigo
+Publish: Publicar
+Unpublish: 'Retirar da Publicação'
+Unlock: Desbloquear
+Uploaded: Enviado
+YYYY-MM-DD: AAAA-MM-DD
+Submit: 'Submeter à Apreciação'
+Image: 'Imagem '
+Description: Descrição
+Photographer: Fotógrafo
+Place: Local
+Date: Data
+Thumbnail: Miniatura
+'In use': 'Em uso'
+'Additional searches': 'Procura adicional'
+'Most Recently Added': 'Mais recentemente adicionados'
+'Most Recently Modified': 'Mais recentemente modificados'
+'$1 images found': '$1 imagens encontradas'
+'Reset search conditions': 'Limpar condições de busca'
+'Image number': 'Imagem Nº'
+Users: Utilizadores
+Localizer: Localizador
+'Adding new translation': 'Adicionando Tradução'
+'No more languages.': 'Não existem mais Idiomas'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'No Campo $1 só é possivel usar letras, digitos e underscore (_).'
+'Add new publication': 'Criar Publicação'
+'Upload new template': 'Criar Modelo'
+'Add new staff member': 'Adicionar utilizador (Pessoal Editorial)'
+'Add new subscriber': 'Adicionar Assinante'
+'Add new user type': 'Criar Tipo de Utilizador'
+'Add new article type': 'Criar Tipo de Artigo'
+'Add new country': 'Criar País'
+'Add new language': 'Criar Idioma'
+'View logs': 'Ver Registos de Utilização'
+'Change your password': 'Alterar Palavra-Passe'
+'Your Articles': 'Os Meus Artigos'
+'Submitted Articles': 'Artigos Submetidos à Apreciação'
+Logs: Registos
+'There are $1 article(s) left.': 'Existe(m) ainda $1 Artigo(s).'
+'There are $1 issues(s) left.': 'Existe(m) ainda $1 Edição(ões).'
+'There are $1 section(s) left.': 'Existe(m) ainda $1 Secção(ões).'
+'There are $1 publication(s) left.': 'Existe(m) ainda $1 Publicação(ões).'
+'There are $1 countries left.': 'Existe(m) ainda $1 País(es).'
+'Name <SMALL>(click to edit)</SMALL>': 'Nome<SMALL>(carregue para alterar)</SMALL>'
+'Add new subscription': 'Criar Assinatura'
+'You do not have the right to add subscriptions.': 'Não tem permissão para Criar Assinaturas'
+'Adding subscription': 'Criando Assinatura'
+'Delete subscription': 'Apagar Assinatura'
+'You do not have the right to delete subscriptions.': 'Não tem Permissão para Apagar Assinaturas'
+'No such subscription.': 'Assinatura Desconhecida'
+Yes: Sim
+No: Não
+Close: Fechar
+'No issues.': 'Nº Edições'
+'Back to Edit Article': 'Voltar à edição do artigo'
+'No topics': 'Sem Tema'
+'You do not have the right to add articles.': 'Não tem permissões para adicionar Artigos.'
+Start: Inicio
+Days: Dias
+'The sections could not be added successfully. Some of them were already added !': 'As Secções pretendidas não poder ser criadas porque alguma(s) existia(m) anteriormente.'
+'Add another': 'Adicionar outro'
+Cancel: Cancelar
+Done: Terminado
+OK: OK
+Save: Guardar
+Search: Procurar
+'Make a selection': 'Efectuar selecção'
+'You must input a number greater than 0 into the $1 field.': 'Introduza um valor superior a 0 no campo $1.'
+'You must input a valid date.': 'Introduza uma data válida.'
+'Add new field': 'Adicionar campo'
+'Article automatic publishing schedule': 'Publicação programada de artigos.'
+'Are you sure you want to delete this scheduled action?': 'Confirma eliminação de programação agendada?'
+Unlink: 'Desfazer ligação'
+'Are you sure you want to delete the image $1?': 'Confirma eliminação da imagem $1?'
+'No such issue.': 'Edição Desconhecida.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Confirma eliminação da assinatura da publicação $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Não é possivel guardar as alterações à edição $1. Confirma se o nome para o URL $2 não se econtra a ser usado na publicação $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Anexar
+Back: Voltar
+File: Ficheiro
+'Save and Close': 'Guardar e Fechar'
+Add: Adicionar
+'Select All': 'Selecionar todos'
+'Select None': 'Limpar selecção'
+'Add Event': 'Adicionar evento'
+N/A: N/D
+'On Front Page': 'Na página principal'
+'On Section Page': 'Na página de secção'
+'Created by': 'Criado por'
+'Creation date': 'Data da criação'
+'Publication List': 'Lista de Publicações'
+'Issue List': 'Lista de Edições'
+'Section List': 'Lista de Secções'
+All: Todos
+duplicate: duplicar
+move: mover
+Move: Mover
+'From:': 'De:'
+'Date:': 'Data:'
+Hidden: Oculto
+Comments: Comentários
+Comment: Comentário
+Approved: Aprovado
+Subject: Assunto
+'IP address:': 'Endereço IP:'
+'Email:': 'Endereço Electrónico:'
+Author: Autor
+'Article name': 'Nome do Artigo'
+'Hide article': 'Ocultar Artigo'
+'Show article': 'Mostrar Artigo'
+'Article Type Fields': 'Campos de tipo de artigo'
+'Article Images': 'Imagens de artigos'
+'Log Messages': 'Mensagens de Registo'
+'Article Files': 'Ficheiros de Artigos'
+'Article Comments': 'Comentártios do artigo'
+'Are you sure you want to deactivate the subscription?': 'Confirma inactivação da assinatura?'
+'Are you sure you want to activate the subscription?': 'Confirma a activação da Assinatura?'
+Other: Outros
+'Time:': 'Hora:'
+'No events.': 'Sem Eventos.'
+'Default templates': 'Modelos por Defeito'
+'System Preferences': 'Preferências do Sistema'
+'The date must be in the future.': 'A data espeficada tem de ser futura.'
+Send: Enviar
+'Thank you.': Abrigado.
+'Please take a minute to send us an email.': 'Por favor perca um minuto enviando-nos uma mensagem.'
+(optional): (opcional)
+'The URL you entered is invalid: $1': 'O Endereço introduzido é inválido: $1'
+Reads: Leituras
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: Autores
+'User name': 'Nome de Utilizador'
+'User Types': 'Tipo de Utilizadores'
+'Subscription Default Time': 'Tempo padrão para Assinatura'
+'No such language.': 'Idioma Desconhecido'
+'No such infotype.': 'Informação-Tipo Desconhecida.'
+'No such keyword.': 'Palavra-Chave Desconhecida.'
+'No such country.': 'País Desconhecido.'
+'User may add/change user accounts and passwords': 'Permissão para Criar/Alterar Utilizadores e Palavras-Passe'
+'User may delete user accounts': 'Permissão para Apagar Utilizadores'
+'Add new user account': 'Criar Utilizador'
+'There are $1 issue(s) left.': 'Existe(m) ainda $1 Edição(ões).'
+'There are $1 keyword(s) left.': 'Existe(m) ainda $1 Palavra(s)-Chave.'
+'Name<BR><SMALL>(click to edit)</SMALL>': 'Nome <br> (Carregue para Alterar)'
+'New field': 'Novo Campo'

@@ -1,10 +1,10 @@
 <?php
-camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SimplePager.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 $f_order_by = camp_session_get('f_order_by', 'id');
 $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_image_offset = camp_session_get('f_image_offset', 0);
@@ -17,7 +17,7 @@ if ($f_items_per_page < 4) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI'], true);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI'], true);
 	exit;
 }
 
@@ -61,13 +61,13 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 			<td>
 				<select name="f_order_by" class="input_select" onchange="this.form.submit();">
 				<?PHP
-				camp_html_select_option('id', $f_order_by, getGS("Most Recently Added"));
-				camp_html_select_option('last_modified', $f_order_by, getGS("Most Recently Modified"));
-				camp_html_select_option('description', $f_order_by, getGS("Description"));
-				camp_html_select_option('photographer', $f_order_by, getGS("Photographer"));
-				camp_html_select_option('place', $f_order_by, getGS("Place"));
-				camp_html_select_option('date', $f_order_by, getGS("Date"));
-				camp_html_select_option('inuse', $f_order_by, getGS("In use"));
+				camp_html_select_option('id', $f_order_by, $translator->trans("Most Recently Added"));
+				camp_html_select_option('last_modified', $f_order_by, $translator->trans("Most Recently Modified"));
+				camp_html_select_option('description', $f_order_by, $translator->trans("Description"));
+				camp_html_select_option('photographer', $f_order_by, $translator->trans("Photographer"));
+				camp_html_select_option('place', $f_order_by, $translator->trans("Place"));
+				camp_html_select_option('date', $f_order_by, $translator->trans("Date"));
+				camp_html_select_option('inuse', $f_order_by, $translator->trans("In use"));
 				?>
 				</select>
 			</td>
@@ -77,14 +77,14 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 		</tr>
 		</table>
 	</td>
-	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
+	<td><?php echo $translator->trans("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
 </tr>
 <tr>
 	<td colspan="4">
 		<input name="f_source_all" id="f_source_all" value="newsfeed" type="checkbox"
 			<?php if (!$f_source_filter_out) : ?>checked="checked"<?php endif; ?>
 			onclick="console.log(this.checked); document.getElementById('searchform').submit()" />
-	    <label for="f_source_all"><?php echo getGS('Show all') ?></label>
+	    <label for="f_source_all"><?php echo $translator->trans('Show all', array(), 'article_images'); ?></label>
 	</td>
 </tr>
 </table>
@@ -103,25 +103,25 @@ if (count($imageData) > 0) {
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="6" class="table_list">
 <TR class="table_list_header">
     <?php if ($articleObj->userCanModify($g_user)) { ?>
-    <TD ALIGN="center" VALIGN="top" style="padding: 3px;"><B><?php p(getGS("Attach")); ?></B></TD>
+    <TD ALIGN="center" VALIGN="top" style="padding: 3px;"><B><?php p($translator->trans("Attach")); ?></B></TD>
 	<?php } ?>
     <TD ALIGN="LEFT" VALIGN="TOP">
-      <?php  putGS("Thumbnail"); ?>
+      <?php echo $translator->trans("Thumbnail"); ?>
     </TD>
     <TD ALIGN="LEFT" VALIGN="TOP">
-      <?php  putGS("Description"); ?>
+      <?php echo $translator->trans("Description"); ?>
     </TD>
     <TD ALIGN="LEFT" VALIGN="TOP">
-      <?php  putGS("Photographer"); ?>
+      <?php echo $translator->trans("Photographer"); ?>
     </TD>
     <TD ALIGN="LEFT" VALIGN="TOP">
-      <?php  putGS("Place"); ?>
+      <?php echo $translator->trans("Place"); ?>
     </TD>
     <TD ALIGN="LEFT" VALIGN="TOP">
-      <?php  putGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>
+      <?php echo $translator->trans("Date").'<BR><SMALL>(yyyy-mm-dd)</SMALL>'; ?>
     </TD>
     <TD ALIGN="center" VALIGN="top" style="padding: 3px;" nowrap>
-      <?php  putGS("In use"); ?>
+      <?php echo $translator->trans("In use"); ?>
     </TD>
 </TR>
 <?php
@@ -180,7 +180,7 @@ foreach ($imageData as $image) {
 ?>
 <tr>
 	<td colspan="5" nowrap>
-	<?php putGS('$1 images found', $NumImagesFound); ?></TD>
+	<?php echo $translator->trans('$1 images found', array('$1' => $NumImagesFound), 'article_images'); ?></TD>
 </tr>
 </table>
 <table class="action_buttons">

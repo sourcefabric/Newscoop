@@ -2,28 +2,24 @@
 
 require_once dirname(dirname(__FILE__)) . '/db_connect.php';
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php';
-
-camp_load_translation_strings('home');
-camp_load_translation_strings('api');
-camp_load_translation_strings('extensions');
-camp_load_translation_strings('articles');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 echo camp_html_breadcrumbs(array(
-    array(getGS('Dashboard'), $Campsite['WEBSITE_URL'] . '/admin/home.php'),
-    array(getGS('Widgets'), ''),
+    array($translator->trans('Dashboard', array(), 'home'), $Campsite['WEBSITE_URL'] . '/admin/home.php'),
+    array($translator->trans('Widgets', array(), 'home'), ''),
 ));
 ?>
 
 <div class="links">
-    <a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/" title="<?php putGS('Go to dashboard'); ?>"><?php putGS('Go to dashboard'); ?></a>
+    <a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/" title="<?php echo $translator->trans('Go to dashboard', array(), 'home'); ?>"><?php echo $translator->trans('Go to dashboard', array(), 'home'); ?></a>
 </div>
 
 <ul id="widgets">
     <?php foreach (WidgetManager::GetAvailable() as $widget) { ?>
     <li>
         <h3><?php echo $widget->getTitle(); ?></h3>
-        <p><a href="#<?php echo $widget->getExtension()->getId(); ?>" class="add"><?php putGS('Add to dashboard'); ?></a>&nbsp;</p>
-        <p><?php putGS($widget->getDescription()); ?></p>
+        <p><a href="#<?php echo $widget->getExtension()->getId(); ?>" class="add"><?php echo $translator->trans('Add to dashboard', array(), 'home'); ?></a>&nbsp;</p>
+        <p><?php echo $translator->trans($widget->getDescription()); ?></p>
         <?php $widget->renderMeta(); ?>
     </li>
     <?php } ?>
@@ -39,7 +35,7 @@ $(document).ready(function() {
             id,
             'dashboard' + dashboard_id,
             ], function(json) {
-                flashMessage('<?php putGS('Widget added to dashboard.'); ?>');
+                flashMessage('<?php echo $translator->trans('Widget added to dashboard.', array(), 'home'); ?>');
                 a.hide();
                 dashboard_id = dashboard_id + 1;
                 if (dashboard_id > 2) {

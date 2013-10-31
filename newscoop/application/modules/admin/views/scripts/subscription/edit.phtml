@@ -1,7 +1,10 @@
-<?php $this->placeholder('title')->set(getGS('Subscription sections')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Subscription sections', array(), 'user_subscriptions')); 
+?>
 <header>
-    <h1><?php putGS('Subscriptions'); ?></h1>
-    <a class="btn prime" href="<?php echo $this->url(array('controller' => 'subscription', 'action' => 'index', 'subscription' => null, 'user' => $this->subscriber)); ?>"><?php putGS('Done'); ?></a>
+    <h1><?php echo $translator->trans('Subscriptions'); ?></h1>
+    <a class="btn prime" href="<?php echo $this->url(array('controller' => 'subscription', 'action' => 'index', 'subscription' => null, 'user' => $this->subscriber)); ?>"><?php echo $translator->trans('Done'); ?></a>
 </header>
 
 <section>
@@ -10,16 +13,16 @@
 
 
 <script type="text/template" id="table-view-template">
-<a href="#section/new"><?php putGS('Add section'); ?></a> | <a href="#sections"><?php putGS('Edit all sections'); ?></a>
+<a href="#section/new"><?php echo $translator->trans('Add section', array(), 'user_subscriptions'); ?></a> | <a href="#sections"><?php echo $translator->trans('Edit all sections', array(), 'user_subscriptions'); ?></a>
 
 <table id="sections">
 <thead>
     <tr>
-        <th><?php putGS('Section'); ?></th>
-        <th><?php putGS('Language'); ?></th>
-        <th><?php putGS('Start Date'); ?><br /><small>(yyyy-mm-dd)</small></th>
-        <th><?php putGS('Days'); ?></th>
-        <th><?php putGS('Paid days'); ?></th>
+        <th><?php echo $translator->trans('Section'); ?></th>
+        <th><?php echo $translator->trans('Language'); ?></th>
+        <th><?php echo $translator->trans('Start Date', array(), 'user_subscriptions'); ?><br /><small>(yyyy-mm-dd)</small></th>
+        <th><?php echo $translator->trans('Days', array(), 'user_subscriptions'); ?></th>
+        <th><?php echo $translator->trans('Paid days', array(), 'user_subscriptions'); ?></th>
         <th>&nbsp;</th>
     </tr>
 </thead>
@@ -28,48 +31,48 @@
 
 <script type="text/template" id="section-row-template">
 <td><%= section.name %></td>
-<td><%= language ? language.name : <?php echo json_encode(getGS('Any')); ?> %></td>
+<td><%= language ? language.name : <?php echo json_encode($translator->trans('Any', array(), 'user_subscriptions')); ?> %></td>
 <td><input type="text" name="startDate" class="start-date" value="<%= startDate %>" /></td>
 <td><input type="number" name="days" class="days" min="1" value="<%= days %>" /></td>
 <td><input type="number" name="paidDays" class="paid-days" min="0" value="<%= paidDays %>" /></td>
-<td><button class="delete"><?php putGS('Delete'); ?></button></td>
+<td><button class="delete"><?php echo $translator->trans('Delete'); ?></button></td>
 </script>
 
 <script type="text/template" id="edit-view-template">
 <dl class="zend_form">
-    <dt><label for="language_set"><?php putGS('Languages:'); ?></dt>
+    <dt><label for="language_set"><?php echo $translator->trans('Languages:'); ?></dt>
     <dd><select id="language_set" name="language_set">
-        <option value="select"><?php putGS('Individual languages'); ?></option>
-        <option value="all"><?php putGS('Regardless of the language'); ?></option>
+        <option value="select"><?php echo $translator->trans('Individual languages', array(), 'user_subscriptions'); ?></option>
+        <option value="all"><?php echo $translator->trans('Regardless of the language', array(), 'user_subscriptions'); ?></option>
     </select></dd>
     
-    <dt><label for="sections"><?php putGS('Sections:'); ?></dt>
+    <dt><label for="sections"><?php echo $translator->trans('Sections:', array(), 'user_subscriptions'); ?></dt>
     <dd><select id="sections" name="sections" multiple size="5"></select></dd>
 
-    <dt><label for="start"><?php putGS('Start:'); ?></dt>
+    <dt><label for="start"><?php echo $translator->trans('Start:', array(), 'user_subscriptions'); ?></dt>
     <dd><input type="date" id="start" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
 
-    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dt><label for="days"><?php echo $translator->trans('Days:', array(), 'user_subscriptions'); ?></dt>
     <dd><input type="number" min="1" name="days" id="days" /></dd>
 
     <dt></dt>
-    <dd><button class="save"><?php putGS('Save'); ?></button> <button class="cancel"><?php putGS('Cancel'); ?></button></dd>
+    <dd><button class="save"><?php echo $translator->trans('Save'); ?></button> <button class="cancel"><?php echo $translator->trans('Cancel'); ?></button></dd>
 </dl>
 </script>
 
 <script type="text/template" id="edit-all-view-template">
 <dl class="zend_form">
-    <dt><label for="start-date"><?php putGS('Start:'); ?></dt>
+    <dt><label for="start-date"><?php echo $translator->trans('Start:', array(), 'user_subscriptions'); ?></dt>
     <dd><input type="date" id="start-date" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
 
-    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dt><label for="days"><?php echo $translator->trans('Days:', array(), 'user_subscriptions'); ?></dt>
     <dd><input type="number" min="1" name="days" id="days" /></dd>
 
-    <dt><label for="paid-days"><?php putGS('Paid Days:'); ?></dt>
+    <dt><label for="paid-days"><?php echo $translator->trans('Paid Days:', array(), 'user_subscriptions'); ?></dt>
     <dd><input type="number" min="1" name="paidDays" id="paid-days" /></dd>
 
     <dt></dt>
-    <dd><button class="save"><?php putGS('Save'); ?></button> <button class="cancel"><?php putGS('Cancel'); ?></button></dd>
+    <dd><button class="save"><?php echo $translator->trans('Save'); ?></button> <button class="cancel"><?php echo $translator->trans('Cancel'); ?></button></dd>
 </dl>
 </script>
 
@@ -142,7 +145,7 @@
 
         validate: function(attr) {
             if (attr.days < 0) {
-                throw <?php echo json_encode(getGS("Days must be number")); ?>;
+                throw <?php echo json_encode($translator->trans("Days must be number", array(), 'user_subscriptions')); ?>;
             }
         },
 

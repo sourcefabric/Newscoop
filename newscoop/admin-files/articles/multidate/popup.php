@@ -1,9 +1,12 @@
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="now" />
-<title><?php putGS("Multi date events"); ?></title>
+<title><?php echo $translator->trans("Multi date events", array(), 'articles'); ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/fullcalendar.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/timepicker.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/form.css" />
@@ -130,7 +133,7 @@ function timeOk(startDate, startTime, endDate, endTime) {
 function popup_close() {
     try {
         if (parent.$.fancybox.reload) {
-            parent.$.fancybox.message = '<?php putGS('Events updated.'); ?>';
+            parent.$.fancybox.message = '<?php echo $translator->trans('Events updated.', array(), 'articles'); ?>';
         }
         parent.$.fancybox.close();
     }
@@ -160,7 +163,7 @@ function submitSpecificForm() {
 	var valid = 1;
 	if ( $('#start-date-specific').val() == '' ) {
 		valid = 0;
-		alert("<?php echo putGS("Start date can't be empty")?>");
+		alert("<?php echo $translator->trans('Start date can not be empty', array(), 'articles'); ?>");
 		$('#start-date-specific').focus();
 	}
 	var radio = $('input:radio[name=specific-radio]:checked').val();
@@ -168,13 +171,13 @@ function submitSpecificForm() {
 		if ( valid == 1) {
 			if ( $('#start-time-specific').val() == '' ) {
 				valid = 0;
-				alert("<?php echo putGS("Start time can't be empty")?>");
+				alert("<?php echo $translator->trans('Start time can not be empty', array(), 'articles')?>");
 				$('#start-time-specific').focus();
 			}
 		}
 		if (radio == 'start-and-end' && valid == 1) {
 			if ( $('#end-time-specific').val() == '' ) {
-				alert("<?php echo putGS("End time can't be empty")?>");
+				alert("<?php echo $translator->trans('End time can not be empty', array(), 'articles') ?>");
 				valid = 0;
 				$('#end-time-specific').focus();
 			}
@@ -182,7 +185,7 @@ function submitSpecificForm() {
 			if (valid == 1) {
 				if ( !timeOk($('#start-date-specific').val(), $('#start-time-specific').val(), $('#start-date-specific').val(), $('#end-time-specific').val()) ) {
 					valid = 0;
-					alert("<?php echo putGS("End time can't be set before start time")?>");
+					alert("<?php echo $translator->trans('End time can not be set before start time'", array(), 'articles')?>");
 					$('#end-time-specific').focus();
 				}
 			}		
@@ -212,14 +215,14 @@ function submitDaterangeForm() {
 	//start date
 	if ( $('#start-date-daterange').val() == '' ) {
 		valid = 0;
-		alert("<?php echo putGS("Start date can't be empty")?>");
+		alert("<?php echo $translator->trans('Start date can not be empty', array(), 'articles')?>");
 		$('#start-date-daterange').focus();
 	}
 	//start time
 	if ( valid == 1 && needTime) {
 		if ( $('#start-time-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo putGS("Start time can't be empty")?>");
+			alert("<?php echo $translator->trans("Start time can not be empty", array(), 'articles')?>");
 			$('#start-time-daterange').focus();
 		}
 	}
@@ -227,7 +230,7 @@ function submitDaterangeForm() {
 	if (valid == 1 && needDate) {
 		if ( $('#end-date-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo putGS("End date can't be empty")?>");
+			alert("<?php echo $translator->trans("End date can not be empty", array(), 'articles')?>");
 			$('#end-date-daterange').focus();
 		}
 	}
@@ -235,7 +238,7 @@ function submitDaterangeForm() {
 	if ( valid == 1 && needTime) {
 		if ( $('#end-time-daterange').val() == '' ) {
 			valid = 0;
-			alert("<?php echo putGS("End time can't be empty")?>");
+			alert("<?php echo $translator->trans("End time can not be empty", array(), 'articles')?>");
 			$('#end-time-daterange').focus();
 		}
 	}
@@ -247,7 +250,7 @@ function submitDaterangeForm() {
 		
 		if ( !timeOk(auxDate, startTime, auxDate, endTime) ) {
 			valid = 0;
-			alert("<?php echo putGS("End time can't be set before start time")?>");
+			alert("<?php echo $translator->trans("End time can not be set before start time", array(), 'articles')?>");
 			$('#end-time-daterange').focus();
 		}
 	}	
@@ -259,7 +262,7 @@ function submitDaterangeForm() {
 		
 		if ( !timeOk(startDate, auxTime, endDate, auxTime) ) {
 			valid = 0;
-			alert("<?php echo putGS("Last date can't be set before first date")?>");
+			alert("<?php echo $translator->trans("Last date can not be set before first date", array(), 'articles')?>");
 			$('#end-date-daterange').focus();
 		}
 	}	
@@ -357,7 +360,7 @@ function loadSpecificEvent(event) {
 function removeSpecificEvent() {
 	var id = $('#specific-multidate-id').val();
 	if (id.length > 0) {
-	    if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>') ) {
+	    if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event?", array(), 'articles'); ?>') ) {
 	        removeEvent(id);
 	        resetSpecificForm();
 	    }
@@ -367,7 +370,7 @@ function removeSpecificEvent() {
 function removeDaterangeEvent() {
 	var id = $('#daterange-multidate-id').val();
     if (id.length > 0) {
-        if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>' ) ) {
+        if ( confirm('<?php echo $translator->trans("Are you sure you want to clear the event?", array(), 'articles'); ?>' ) ) {
             removeEvent(id);
             resetDaterangeForm();
         }
@@ -537,9 +540,9 @@ window.load_events = function(start, end, callback, url) {
 <div id="multidate-box" class="multidate-box">
 <div class="toolbar">
 	<div class="save-button-bar">
-	    <input type="submit" name="cancel" value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();" id="context_button_close">
+	    <input type="submit" name="cancel" value="<?php echo $translator->trans('Close'); ?>" class="default-button" onclick="popup_close();" id="context_button_close">
 	</div>
-<h2><?php echo putGS('Multi date events'); ?></h2>
+<h2><?php echo $translator->trans('Multi date events', array(), 'articles'); ?></h2>
 </div>
 
 
@@ -551,23 +554,23 @@ window.load_events = function(start, end, callback, url) {
     <input type="hidden" name="date-type" value="specific" />
     <input type="hidden" name="multidateId" id="specific-multidate-id" value="" />
     
-    <div class="date-switch date-specific-switch switch-active border-left" style="margin-left: 10px;"><?php echo putGS('Specific dates'); ?></div>
-	<div class="date-switch date-range-switch" style="margin-left: 4px;"><?php echo putGS('Recurring'); ?></div>
+    <div class="date-switch date-specific-switch switch-active border-left" style="margin-left: 10px;"><?php echo $translator->trans('Specific dates', array(), 'articles'); ?></div>
+	<div class="date-switch date-range-switch" style="margin-left: 4px;"><?php echo $translator->trans('Recurring', array(), 'articles'); ?></div>
 	
-    <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input" style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true' title="<?php echo putGS('Event date'); ?>" /> 
-	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' title="<?php echo putGS('Event start time'); ?>" /> 
-	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: hidden" readonly='true' title="<?php echo putGS('Event end time'); ?>" />
+    <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input" style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true' title="<?php echo $translator->trans('Event date', array(), 'articles'); ?>" /> 
+	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' title="<?php echo $translator->trans('Event start time', array(), 'articles'); ?>" /> 
+	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: hidden" readonly='true' title="<?php echo $translator->trans('Event end time', array(), 'articles'); ?>" />
 	
 	<div class="specific-radio-holder">
-		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><label for="specific-radio-start-only"><?php echo putGS('Start time'); ?></label><br />
-		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><label for="specific-radio-start-and-end"><?php echo putGS('Start & end time'); ?><br /></label>
-		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><label for="specific-radio-all-day"><?php echo putGS('All day'); ?></label>
+		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><label for="specific-radio-start-only"><?php echo $translator->trans('Start time', array(), 'articles'); ?></label><br />
+		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><label for="specific-radio-start-and-end"><?php echo $translator->trans('Start & end time', array(), 'articles'); ?><br /></label>
+		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><label for="specific-radio-all-day"><?php echo $translator->trans('All day', array(), 'articles'); ?></label>
 	</div>
 
     <div><hr style="width: 260px; margin-bottom: 10px;"></div>
 
         <div class="type-holder">
-            <select name="multidatefield" id="multidatefield_specific" title="<?php putGS('Event type'); ?>">
+            <select name="multidatefield" id="multidatefield_specific" title="<?php echo $translator->trans('Event type', array(), 'articles'); ?>">
 <?php
     foreach ($article_type_columns as $one_column_type) {
         if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
@@ -584,14 +587,14 @@ window.load_events = function(start, end, callback, url) {
             </select>
         </div>
         <div class="comment-holder">
-            <textarea name="event-comment" id="event_comment_specific" rows="4" cols="30" title="<?php putGS('Event comment'); ?>"></textarea>
+            <textarea name="event-comment" id="event_comment_specific" rows="4" cols="30" title="<?php echo $translator->trans('Event comment', array(), 'articles'); ?>"></textarea>
         </div>
 
 	<div class="form-action-holder">
 		<input type="button" value="Reset form" onclick="resetSpecificForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
 	</div>
-	<a href="#" onclick="removeSpecificEvent()" class="remove-link" id="remove-specific-link" style="display:none"><?php putGS("Remove event")?></a>
+	<a href="#" onclick="removeSpecificEvent()" class="remove-link" id="remove-specific-link" style="display:none"><?php echo $translator->trans("Remove event", array(), 'articles'); ?></a>
 </form>
 </div>
 
@@ -601,23 +604,23 @@ window.load_events = function(start, end, callback, url) {
     <input type="hidden" name="date-type" value="daterange" />
     <input type="hidden" name="multidateId" id="daterange-multidate-id" value="" />
     
-    <div class="date-switch date-specific-switch switch-active border-left" style="margin-left: 10px; margin-bottom: 10px;"><?php echo putGS('Specific dates'); ?></div>
-    <div class="date-switch date-range-switch" style="margin-left: 4px; margin-bottom: 10px;"><?php echo putGS('Recurring'); ?></div>
+    <div class="date-switch date-specific-switch switch-active border-left" style="margin-left: 10px; margin-bottom: 10px;"><?php echo $translator->trans('Specific dates', array(), 'articles'); ?></div>
+    <div class="date-switch date-range-switch" style="margin-left: 4px; margin-bottom: 10px;"><?php echo $translator->trans('Recurring', array(), 'articles'); ?></div>
     
-    <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true' title="<?php echo putGS('Event first date'); ?>" /> 
-    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" readonly='true' title="<?php echo putGS('Event start time'); ?>" />
+    <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true' title="<?php echo $translator->trans('Event first date', array(), 'articles'); ?>" /> 
+    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" readonly='true' title="<?php echo $translator->trans('Event start time', array(), 'articles'); ?>" />
     
     <div class="repeats-checkbox-holder">
-        <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" / style="margin-top: 12px;"><label for="daterange-all-day"><?php echo putGS('All day'); ?></label>
-        <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input time-input" style="float: right; width: 128px; margin-right: 11px; margin-top: 12px; margin-bottom: 20px;"  readonly='true' title="<?php echo putGS('Event end time'); ?>" />
+        <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" / style="margin-top: 12px;"><label for="daterange-all-day"><?php echo $translator->trans('All day', array(), 'articles'); ?></label>
+        <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input time-input" style="float: right; width: 128px; margin-right: 11px; margin-top: 12px; margin-bottom: 20px;"  readonly='true' title="<?php echo $translator->trans('Event end time', array(), 'articles'); ?>" />
     </div>
 
     <div><hr style="width: 260px; margin-bottom: 10px;"></div>
 
     <select id="repeats-cycle" class="multidate-input" style="margin-left: 12px; margin-top: 10px; width: 260px;" name="repeats-cycle">
-        <option value='daily'><?php echo putGS('Repeats daily'); ?></option>
-        <option value='weekly'><?php echo putGS('Repeats weekly'); ?></option>
-        <option value='monthly'><?php echo putGS('Repeats monthly'); ?></option>
+        <option value='daily'><?php echo $translator->trans('Repeats daily', array(), 'articles'); ?></option>
+        <option value='weekly'><?php echo $translator->trans('Repeats weekly', array(), 'articles'); ?></option>
+        <option value='monthly'><?php echo $translator->trans('Repeats monthly', array(), 'articles'); ?></option>
     </select>
     
     <!-- 
@@ -632,19 +635,19 @@ window.load_events = function(start, end, callback, url) {
     </div>
      -->
 
-    <span style="display:block; margin-left: 16px; margin-top: 20px;"><?php echo putGS('Till'); ?></span> 
-    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 12px;"  readonly='true' title="<?php echo putGS('Event last date'); ?>" /> 
+    <span style="display:block; margin-left: 16px; margin-top: 20px;"><?php echo $translator->trans('Till', array(), 'articles'); ?></span> 
+    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 12px;"  readonly='true' title="<?php echo $translator->trans('Event last date', array(), 'articles'); ?>" /> 
     
      <div class="repeats-checkbox-holder">
-       <?php echo putGS('Ends'); ?>
-       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><label for="cycle-ends-on-set-date"><?php echo putGS('On set date');?></label><br />
-       <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><label for="cycle-ends-never"><?php echo putGS('Never');?></label><br />
+       <?php echo $translator->trans('Ends', array(), 'articles'); ?>
+       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><label for="cycle-ends-on-set-date"><?php echo $translator->trans('On set date', array(), 'articles');?></label><br />
+       <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><label for="cycle-ends-never"><?php echo $translator->trans('Never', array(), 'articles');?></label><br />
     </div>
 
     <div><hr style="width: 260px; margin-bottom: 10px;"></div>
 
         <div class="type-holder">
-            <select name="multidatefield" id="multidatefield_range" title="<?php putGS('Event type'); ?>">
+            <select name="multidatefield" id="multidatefield_range" title="<?php echo $translator->trans('Event type', array(), 'articles'); ?>">
 <?php
     foreach ($article_type_columns as $one_column_type) {
         if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
@@ -661,14 +664,14 @@ window.load_events = function(start, end, callback, url) {
             </select>
         </div>
         <div class="comment-holder">
-            <textarea name="event-comment" id="event_comment_range" rows="4" cols="30" title="<?php putGS('Event comment'); ?>"></textarea>
+            <textarea name="event-comment" id="event_comment_range" rows="4" cols="30" title="<?php echo $translator->trans('Event comment', array(), 'articles'); ?>"></textarea>
         </div>
 
     <div class="form-action-holder">
 		<input type="button" value="Reset form" onclick="resetDaterangeForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
 	</div>
-	<a href="#" onclick="removeDaterangeEvent()" class="remove-link" id="remove-daterange-link" style="display:none"><?php putGS("Remove event")?></a>
+	<a href="#" onclick="removeDaterangeEvent()" class="remove-link" id="remove-daterange-link" style="display:none"><?php echo $translator->trans("Remove event", array(), 'articles'); ?></a>
 </form>
 </div>
 

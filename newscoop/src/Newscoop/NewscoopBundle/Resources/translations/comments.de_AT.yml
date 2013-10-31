@@ -1,0 +1,102 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Sie sind im Begriff mehrere Nachrichten permanent zu löschen. '
+'You are about to permanently delete a message.': 'Sie sind im Begriff eine Nachricht permanent zu löschen. '
+User: Benutzer
+None: Kein
+'Coming from': 'von '
+'Ban/Unban user': 'User sperren / entsperren '
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Sperren können auf einen Benutzernamen, eine Email-Adresse oder eine IP-Adresse angewendet werden. '
+'You are about to permanently delete multiple comments.': 'Sie sind im Begriff mehrere Kommentare permant zu löschen. '
+'You are about to permanently delete a comment.': 'Sie sind im Begriff einen Kommentar permanent zu löschen. '
+Website: Website
+'Value is not $1 characters long': 'Wert ist nicht $1 Zeichen lang. '
+Username: Benutzername
+'User id': 'Benutzer id'
+'User ban settings': 'Benutzer Sperreinstellungen'
+'Update comment': 'Kommentar aktualisieren'
+Unrecommended: 'Empfehlung zurückgenommen. '
+Unrecommend: 'Empfehlung zurücknehmen'
+'Subject is not $1 characters long': 'Thema ist nicht $1 Zeichen lang'
+'Sort by Thread order': 'Nach Themenreihenfolge sortieren'
+'Show parent comment': 'Zeige Elternkommentar'
+'Show commenter details': 'Zeige Kommentatordetails.'
+'Show commenter': 'Zeige Kommentator'
+'Show comment user details': 'Zeige Kommentardetails zum Benutzer'
+'Show comment user': 'Zeige Kommentar Benutzer'
+'Show comment details': 'Zeige Kommentardetails'
+'Select status': 'Status auswählen '
+'Search Type': 'Suche Typ'
+'Reply to comment': 'Auf Kommentar antworten'
+Recommended: Empfohlen
+Recommend: Empfehlen
+'Quick edit': Schnellbearbeitung
+Parent: Eltern
+ID: ID
+'Go to edit article': 'Gehe zur Artikelbearbeitung'
+Forum: Forum
+'For Column': 'Für Spalte'
+Email: Email
+'Edit acceptance criteria': 'Bearbeite Freigabekriterien'
+E-mail: E-Mail
+'Delete all comments?': 'Alle Kommentare löschen?'
+'Date Created': 'Datum erstellt'
+'Comments updated.': 'Kommtare aktualisiert. '
+'Comments status change to $1.': 'Kommentarstatus zu $1 ändern. '
+'Comments deleted.': 'Kommentare gelöscht. '
+'Commenter $1 saved.': 'Kommentator $1 gespeichert. '
+'Commenter $1 deleted.': 'Kommentator $1 gelöscht. '
+Commenter: Kommentator
+'Comment updated.': 'Kommentar aktualisiert. '
+'Comment status change to $1.': 'Kommentarstatus geändert zu $1.'
+'Comment id': 'Kommentar id'
+'Comment deleted.': 'Kommentar gelöscht. '
+'Comment delete by $1 from the article $2 ($3)': 'Kommentar gelöscht von $1 aus dem Artikel $2 ($3)'
+'Comment Acceptance': Kommentarfreigabe
+'Comment $4 by $1 in the article $2 ($3)': 'Kommentar $4 von $1 im Artikel $2 ($3)'
+'Comment $1 saved.': 'Kommentar $1 gespeichert. '
+Column: Spalte
+'Change subscriber information': 'Abonnenteninformation ändern. '
+'Ban for commenter $1 saved.': 'Sperre für Kommentator $1 gespeichert. '
+Ban: Sperre
+'Are you sure you want to do it?': 'Sind Sie sicher, dass Sie das tun wollen? '
+'Add rating': 'Bewertung hinzufügen '
+'Add new comment commenter': 'Neuen Kommentar Kommentator hinzufügen'
+'Add new comment': 'Neuen Kommentar hinzufügen'
+'Add new acceptance criteria': 'Füge neue Freigabekriterien hinzu'
+'Acceptance $1 saved.': 'Freigabe $1 gespeichert. '
+'Acceptance $1 deleted.': 'Freigabe $1 gelöscht. '
+'Unset good comment': 'Guten Kommentar zurücksetzen. '
+'Good comment': 'Guter Kommentar'

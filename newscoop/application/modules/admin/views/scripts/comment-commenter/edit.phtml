@@ -1,3 +1,4 @@
-<h1><?php putGS('Change subscriber information'); ?></h1>
+<h1><?php $translator = \Zend_Registry::get('container')->getService('translator'); 
+echo $translator->trans('Change subscriber information', array(), 'comments'); ?></h1>
 
 <?php echo $this->form; ?>

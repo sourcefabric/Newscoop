@@ -60,15 +60,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             }, error_reporting());
         }
 
-        camp_load_translation_strings("api");
-        $plugins = CampPlugin::GetEnabled(true);
-        foreach ($plugins as $plugin) {
-            camp_load_translation_strings("plugin_".$plugin->getName());
-        }
-
-        // Load common translation strings
-        camp_load_translation_strings('globals');
-
         require_once APPLICATION_PATH . "/../$ADMIN_DIR/init_content.php";
 
         if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
@@ -109,7 +100,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         global $Campsite;
 
-        $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
+        $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans('Newscoop', array(), 'home') . $Campsite['VERSION'];
 
         $view = $this->getResource('view');
         $view->headTitle($title)
@@ -171,26 +162,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $acl->setStorage($storage);
 
         Zend_Registry::set('acl', $acl);
-    }
-
-    /**
-     * Init forms translator
-     */
-    protected function _initForm()
-    {
-        $translate = new Zend_Translate(array(
-            'adapter' => 'array',
-            'disableNotices' => TRUE,
-            'content' => array(
-                "Value is required and can't be empty" => getGS("Value is required and can't be empty"),
-                "'%value%' is less than %min% characters long" => getGS("'%value%' is less than %min% characters long"),
-                "'%value%' is more than %max% characters long" => getGS("'%value%' is more than %max% characters long"),
-                "The two given tokens do not match" => getGS("Security token expired. Please resubmit the form."),
-                "No token was provided to match against" => getGS("Security token expired. Please resubmit the form."),
-            ),
-        ));
-
-        Zend_Form::setDefaultTranslator($translate);
     }
 
     protected function _initNewscoopViewHelpers()

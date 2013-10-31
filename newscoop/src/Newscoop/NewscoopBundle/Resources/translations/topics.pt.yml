@@ -1,0 +1,26 @@
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
+'Delete anyway': 
+'Reset order': 
+'Order changes will be lost. Are you sure you want to continue?': 
+'Topics order saved.': 
+'Show languages': 
+'Save order': 
+'Click to edit': 
+'Add root topic': 
+'Topic was deleted.': 
+'The topic name is already in use by another topic.': 
+'You must enter a name for the topic.': 'Tem de usar um nome para o tema.'
+'You must choose a language for the topic.': 'Tem de escolher um idioma para o tema.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Este tema tem descendentes, assim não é possivel eliminado.'
+'Add translation:': 'Adicionar tradução:'
+'Add subtopic:': 'Adicionar sub-tema:'
+Top: Topo
+'You do not have the right to add topics.': 'Não tem permissões para Adicionar Temas'
+'You do not have the right to delete topics.': 'Não tem permissões para Eliminar Temas'
+'Are you sure you want to delete the topic $1?': 'Eliminar tema $1?'
+'You do not have the right to change topic name.': 'Não tem permissão para Alterar Tema.'
+'The topic $1 could not be deleted.': 'O Tema $1 não pode ser Apagado.'
+'Adding new topic': 'Adicionando Tema'
+'Deleting topic': 'Eliminando Tema'
+'Change topic name': 'Alterar Tema'
+'There are $1 articles using the topic.': 'Existe(m) $1 artigos usando este Tema.'

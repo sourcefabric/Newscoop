@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("article_files");
+$translator = \Zend_Registry::get('container')->getService('translator');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
@@ -10,12 +10,12 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 if (!$g_user->hasPermission('ChangeFile')) {
-	camp_html_display_error(getGS('You do not have the right to change files.' ), null, true);
+	camp_html_display_error($translator->trans('You do not have the right to change files.' ), null, true);
 	exit;
 }
 
@@ -31,7 +31,7 @@ $f_language_specific = Input::Get('f_language_specific');
 $f_content_disposition = Input::Get('f_content_disposition');
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), null, true);
+	camp_html_display_error($translator->trans('Invalid input: $1', Input::GetErrorString()), null, true);
 	exit;
 }
 
@@ -41,14 +41,14 @@ $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 if (!$articleObj->exists()) {
-	camp_html_display_error(getGS("Article does not exist."), null, true);
+	camp_html_display_error($translator->trans("Article does not exist."), null, true);
 	exit;
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($g_user)) {
-	camp_html_display_error(getGS('You do not have the right to change the article.'), null, true);
+	camp_html_display_error($translator->trans('You do not have the right to change the article.', array(), 'plugin_poll'), null, true);
 	exit;
 }
 
@@ -64,7 +64,7 @@ if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
 }
 
 // Go back to article.
-camp_html_add_msg(getGS("File '$1' updated.", $attachmentObj->getFileName()), "ok");
+camp_html_add_msg($translator->trans("File $1 updated.", array('$1' => $attachmentObj->getFileName()), 'plugin_poll'), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 
 ?>

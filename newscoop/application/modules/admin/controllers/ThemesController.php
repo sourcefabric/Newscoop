@@ -154,8 +154,6 @@ class Admin_ThemesController extends Zend_Controller_Action
     public $instId = null;
     public function init()
     {
-        camp_load_translation_strings('themes');
-
         $this->getThemeService();
 
         // TODO move this + callbacks from here to a higher level
@@ -199,7 +197,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $datatableAdapter = new Theme( $this->getThemeService() );
         // really wierd way to bind some filtering logic right here
         // basically this is the column index we are going to look for filtering requests
@@ -214,8 +213,8 @@ class Admin_ThemesController extends Zend_Controller_Action
             ->setCols( array
             (
                 'image'        => '',
-                'name'         => getGS( 'Theme name / version' ),
-                'description'  => getGS( 'Compatibility' ),
+                'name'         => $translator->trans( 'Theme name / version' , array(), 'themes'),
+                'description'  => $translator->trans( 'Compatibility' , array(), 'themes'),
                 'actions'      => ''
             ))
             ->buildColumnDefs()
@@ -276,7 +275,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'media'	=> 'screen',
                 'rel'	=> 'stylesheet'
             ) );
-            $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+            $this->view->placeholder( 'title' )->set( $translator->trans( 'Theme management' , array(), 'themes') );
         }
     }
 
@@ -360,7 +359,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     }
 
     public function advancedThemeSettingsAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->view->themeId = ( $themeId = $this->_request->getParam( 'id' ) );
         $this->view->headLink( array
         (
@@ -373,7 +373,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $params = $this->getRequest()->getParams();
         $this->view->templatesParams = $params;
 
-        $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+        $this->view->placeholder( 'title' )->set( $translator->trans( 'Theme management' , array(), 'themes') );
 
         $themeMngService = $this->getThemeService();
         /* @var $themeMngService Newscoop\Service\Implementation\ThemeManagementServiceLocal */
@@ -391,6 +391,7 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function outputEditAction()
     {
         $thmServ    = $this->getThemeService();
+        $translator = \Zend_Registry::get('container')->getService('translator');
 
         // getting the theme entity
         $themeId    = $this->_request->getParam( 'themeid' );
@@ -445,7 +446,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
                     $this->getThemeService()->assignOutputSetting( $settings, $theme );
 
-                    $msg = getGS( 'Theme settings saved.' ) ;
+                    $msg = $translator->trans( 'Theme settings saved.' , array(), 'themes') ;
                     $this->view->success = $msg;
                     $this->_helper->flashMessenger( $msg );
                 }
@@ -456,7 +457,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
         catch( \Exception $e )
         {
-//            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
+//            $this->_helper->flashMessenger( ( $this->view->error = $translator->trans( 'Saving settings failed.' ) ) );
         }
         $this->view->outputForm = $outputForm;
 
@@ -471,7 +472,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     }
 
     public function articleTypesEditAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $thmServ                = $this->getThemeService();
 
         // getting the theme entity
@@ -573,7 +575,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
 
-        $this->_helper->flashMessenger(getGS('Theme settings updated.'));
+        $this->_helper->flashMessenger($translator->trans('Theme settings updated.', array(), 'themes'));
 
     }
 
@@ -584,6 +586,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function unassignAction()
     {
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $p_forwardedFrom = $this->_request->getParam( 'p_forwardedFrom' );
         if( ( $themeId = $this->_getParam( 'id', null ) ) ) {
             try
@@ -610,20 +613,20 @@ class Admin_ThemesController extends Zend_Controller_Action
                 $this->getThemeService()->removeTheme($themeId);
                 $this->_helper->service('image.rendition')->reloadRenditions();
                 $this->view->status = true;
-                $this->view->response = getGS( "Unassign successful" );
+                $this->view->response = $translator->trans( "Unassign successful" , array(), 'themes');
             }
             catch( RemoveThemeException $e )
             {
                 $this->view->status = false;
-                $this->view->response = getGS("The theme can not be unassigned because it is in use by issues ($1) in this publication", $e->getMessage());
+                $this->view->response = $translator->trans("The theme can not be unassigned because it is in use by issues ($1) in this publication", array('$1' => $e->getMessage()), 'themes');
             }
             catch( Exception $e )
             {
                 $this->view->status = false;
                 if( $e->getCode() == 500) {
-                    $this->view->response = getGS( "Theme is assigned and can not be deleted" );
+                    $this->view->response = $translator->trans( "Theme is assigned and can not be deleted" , array(), 'themes');
                 } else {
-                    $this->view->response = getGS( "Failed unassigning theme" );
+                    $this->view->response = $translator->trans( "Failed unassigning theme" , array(), 'themes');
                 }
 
             }
@@ -650,8 +653,9 @@ class Admin_ThemesController extends Zend_Controller_Action
     }
 
     public function exportAction()
-    {
-        $erro_msg = getGS('Theme export was not successful. Check please that the server is not out of disk space.');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $erro_msg = $translator->trans('Theme export was not successful. Check please that the server is not out of disk space.', array(), 'themes');
 
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -690,7 +694,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     }
 
     function assignToPublicationAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         try
         {
             $theme  = $this->getThemeService()->getById( $this->_request->getParam( 'theme-id' ) );
@@ -698,53 +703,56 @@ class Admin_ThemesController extends Zend_Controller_Action
 
 		    if( $this->getThemeService()->assignTheme( $theme, $pub ) ) {
                 $this->_helper->service('image.rendition')->reloadRenditions();
-		        $this->view->response =  getGS( 'Assigned successfully' );
+		        $this->view->response =  $translator->trans( 'Assigned successfully' , array(), 'themes');
 		    } else {
     		    throw new Exception();
 		    }
         }
         catch( DuplicateNameException $e ) {
-            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignment' ) );
+            $this->view->exception = array( "code" => $e->getCode(), "message" => $translator->trans( 'Duplicate assignment' , array(), 'themes') );
         }
         catch( \Exception $e ) {
-            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
+            $this->view->exception = array( "code" => $e->getCode(), "message" => $translator->trans( 'Something broke' , array(), 'themes') );
         }
     }
 
     function copyToAvailableAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         try {
             $theme = $this->getThemeService()->getById($this->_getParam('theme-id'));
             $this->getThemeService()->copyToUnassigned($theme);
-            $this->view->response = getGS('Copied successfully');
+            $this->view->response = $translator->trans('Copied successfully', array(), 'themes');
         } catch (DuplicateNameException $e) {
             $this->view->exception = array(
                 'code' => $e->getCode(),
-                'message' => getGS('Duplicate assignment'),
+                'message' => $translator->trans('Duplicate assignment', array(), 'themes'),
             );
         } catch(\Exception $e) {
             $this->view->exception = array(
                 'code' => $e->getCode(),
-                'message' => getGS('Something broke')
+                'message' => $translator->trans('Something broke', array(), 'themes')
             );
         }
     }
 
     public function installAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_repository->install( $this->_getParam( 'offset' ) );
         $this->_helper->entity->flushManager();
 
-        $this->_helper->flashMessenger( getGS( 'Theme $1', getGS( 'installed' ) ) );
+        $this->_helper->flashMessenger( $translator->trans( 'Theme $1', array('$1' => $translator->trans('installed' , array(), 'themes')), 'themes') );
         $this->_helper->redirector( 'index' );
     }
 
     public function uninstallAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_repository->uninstall( $this->_getParam( 'id' ) );
         $this->_helper->entity->flushManager();
 
-        $this->_helper->flashMessenger( getGS( 'Theme $1', getGS( 'deleted' ) ) );
+        $this->_helper->flashMessenger( $translator->trans( 'Theme $1', array('$1' => $translator->trans( 'deleted' , array(), 'themes')), 'themes') );
         $this->_helper->redirector( 'index' );
     }
 

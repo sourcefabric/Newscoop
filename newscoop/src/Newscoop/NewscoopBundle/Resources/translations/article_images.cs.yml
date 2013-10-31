@@ -1,0 +1,75 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Obrázek je příliš malý, jeho velikost musí být alespoň %dx%d'
+'Slideshow rendition': 'Ukázat slideshow'
+'Renditions reloaded': 'Formáty znovu nahrány'
+'Reload renditions': 'Znovu nahrané formáty'
+'Edit images': 'Editovat obrázky'
+'Specify image url if you want to load it.': 'Specifikujte URL obrázku, pokud ho chcete nahrát.'
+'Items: ': 'Položky:'
+'Attach slideshows': 'Připojit slideshows'
+'original size:': 'originální velikost:'
+'no caption': 'žádný titulek'
+'Video URL': 'Video URL'
+'Use for all': 'Použít pro všechny'
+'Use default': 'Použít default'
+'Slug must be unique': 'Článek musí být unikátní'
+Slug: Článek
+'Slideshow headline': 'Název slideshow'
+Slideshow: Slideshow
+'Set selected as default image': 'Nastavit vybraný obrázek defaultně'
+'Set as default': 'Nastavit defaultně'
+Saving...: Ukládání...
+Saved: Uloženo
+'Save headline': 'Uložit headline'
+'Place Images': 'Umístit obrázky'
+'No renditions defined.': 'Žádné formáty nejsou definované.'
+'No images found.': 'Obrázky nenalezeny'
+'No images attached to article.': 'Žádné obrázky nevloženy ke článku.'
+'No images': 'Žádné obrázky'
+'Next: Upload and Edit Metadata': 'Další: Nahrát a Editovat Metadata'
+'Next: Place Images': 'Další: Umístit obrázky'
+'Media Archive': 'Archiv Médií'
+Location: Lokace
+Items: Položky
+Item: Položka
+'Image files': 'Soubory obrázků'
+'Image Files: ': 'Soboury obrázků:'
+Headline: Titulek
+Finish: Hotovo
+'Edit Image Data': 'Editovat data obrázku'
+'Edit $1': 'Editovat $1'
+'Done editing': 'Editace dokončení'
+Detach: Odpojit
+Create: Vytvořit
+Caption: Popisek
+'Attached images': 'Připojené obrázky'
+'Attach & Place': 'Připojit & Umístit'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Přidat URL videa (např.  http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)'
+'Add video': 'Přidat video'
+'Add caption': 'Přidat popisek'
+'Show all': 'Ukázat vše'
+'The image has been removed from the article.': 'Obrázek byl ze článku odstraněn.'
+'Unable to add new image.': 'Nezdařilo se přidat nový obrázek.'
+'Image number $1 already exists': 'Číslo obrázku $1 již existuje.'
+'You do not have the right to change image information.': 'Nemáte oprávnění měnit informace o obrázku.'
+'The image number specified is already in use.': 'Zvolené číslo obrázku se již používá.'
+'Image $1 updated.': 'Obrázek  $1 aktualizován.'
+'Image $1 added.': 'Obrázek  $1 přidán.'
+'Edit article': 'Upravit článek'
+'You do not have the right to attach images to articles.': 'Nemáte oprávnění přikládat obrázky k článkům.'
+'You do not have the right to add images.': 'Nemáte oprávnění přidávat  obrázky.'
+'Image information': 'Informace o obrázku'
+'Attach New Image': 'Přiložit nový obrázek'
+'Attach Image To Article': 'Přiložit obrázek k článku'
+'Attach Existing Image': 'Přiložit wxistující obrázek'
+'Add New Image': 'Přidat obrázek'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Datum <BR><SMALL>(rrrr-mm-dd)</SMALL>'
+'You must select an image file to upload.': 'Zvolte obrázkový soubor k nahrání.'
+'Change image information': 'Změnit informace obrázku'
+'You do not have the right to add images': 'Nemáte právo přidavat obrázky'
+'Items per page': 
+'Delete image $1': 'Stazat obrázek $1'
+'Click one of the ': 
+'Are you sure you want to delete the image $1?': 

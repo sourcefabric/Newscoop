@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+$translator = \Zend_Registry::get('container')->getService('translator');
 global $publicationObj;
 
 if (is_object($publicationObj)) {
@@ -9,14 +9,14 @@ if (is_object($publicationObj)) {
     <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
     <tr width="100%">
         <td>
-            <font size="+1"><b><?php putGS("Polls"); ?></b></font>
+            <font size="+1"><b><?php echo $translator->trans("Polls", array(), 'plugin_poll'); ?></b></font>
         </td>
 
     <?php if ($g_user->hasPermission('plugin_poll')) {  ?>
 
     	<TD align="right">
     		<IMG src="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/configure.png" border="0">
-    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=publication&amp;f_publication_id=" . $publicationObj->getPublicationId() . "&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php putGS("Edit"); ?></A>
+    		<A href="javascript: void(0);" onclick="window.open('<?php p("/$ADMIN/poll/assign_popup.php?f_poll_item=publication&amp;f_publication_id=" . $publicationObj->getPublicationId() . "&f_language_id={$publicationObj->getLanguageId()}"); ?>', 'assign_poll', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=800, height=600, top=200, left=100');"><?php echo $translator->trans("Edit"); ?></A>
     	</TD>
     	<?php } ?>
     </TR>

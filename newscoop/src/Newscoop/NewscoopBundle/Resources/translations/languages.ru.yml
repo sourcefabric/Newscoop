@@ -1,0 +1,82 @@
+'Language id not specified': 'ID языка не определен'
+'No languages.': 'Нет языков.'
+'Native Name': 'Местное название'
+'Name taken.': 'Приобретенное название.'
+'Language saved.': 'Язык сохранен.'
+'Language removed.': 'Язык удален.'
+'Language not found.': 'Язык не найден.'
+'Language is in use and cannot be removed.': 'Язык используется и не может быть удален.'
+'Language added.': 'Язык добавлен.'
+'English language cannot be removed.': 'Английский язык удалить невозможно.'
+'Edit short month names': 'Редактировать сокращенные названия месяцев'
+'Edit short day names': 'Редактировать сокращенные названия дней'
+'Edit month names': 'Редактировать названия месяцев'
+'Edit language: $1': 'Редактировать язык: $1'
+'Edit day names': 'Редактировать названия дней'
+'Code Page': 'Страница кода'
+'Add new Language': 'Добавить новый язык'
+'Add Language': 'Добавить язык'
+We: Ср
+Tu: Вт
+Th: Чт
+Su: Вс
+Sep: Сен
+Sa: Сб
+'Please enter the translation for week day short names.': 'Пожалуйста введите перевод сокращений для дней недели.'
+'Please enter the translation for month short names.': 'Пожалуйста введите перевод сокращений для месяцев.'
+Oct: Окт
+Nov: Ноя
+Mo: Пн
+Mar: Мрт
+Jun: Июн
+Jul: Июл
+Jan: Янв
+Fr: Пт
+Feb: Фев
+Dec: Дек
+Aug: Авг
+Apr: Апр
+'No language.': 'Нет языка.'
+'Delete language $1': 'Удалить язык $1'
+'You do not have the right to add languages.': 'Вы не имеете прав доступа для добавления языков.'
+'Please enter the translation for time units.': 'Пожалуйста, введите перевод для единиц времени.'
+'You do not have the right to delete languages.': 'Вы не имеете прав доступа для удаления языков.'
+'Are you sure you want to delete the language $1?': 'Вы уверены, что хотите удалить язык $1?'
+'Deleting language': 'Удаление языка'
+'The language $1 could not be deleted.': 'Язык $1 не может быть удален.'
+'Edit language': 'Редактировать язык'
+'You do not have the right to edit languages.': 'Вы не имеете прав доступа для редактирования языка.'
+'Please enter the translation for month names.': 'Пожалуйста, введите перевод для названий месяцев.'
+'Please enter the translation for week day names.': 'Пожалуйста, введите перевод для названия дней недели.'
+January: Январь
+February: Февраль
+March: Март
+April: Апрель
+May: Май
+June: Июнь
+July: Июль
+August: Август
+September: Сентябрь
+October: Октябрь
+November: Ноябрь
+December: Декабрь
+Monday: Понедельник
+Tuesday: Вторник
+Wednesday: Среда
+Thursday: Четверг
+Friday: Пятница
+Saturday: Суббота
+Sunday: Воскресенье
+'You do not have the right to add new languages.': 'В не имеете прав доступа для добавления новых языков.'
+'There are $1 issue(s) left.': 'Осталось выпусков: $1'
+'Native name': 'Исходное имя'
+'No such language.': 'Нет такого языка.'
+'The language $1 has been successfuly added.': 'Язык $1 был успешно добавлен.'
+'Please check if a language with the same name does not already exist.': 'Пожалуйста проверьте, что язык с таким названием еще не существует.'
+'The language could not be added.': 'Не удалось добавить язык.'
+'Delete language': 'Удалить язык'
+'Updating language information': 'Обновление информации о языке'
+'Language information has been successfuly updated.': 'Информация о языке успешно обновлена.'
+'Language information could not be updated.': 'Не удалось обновить информацию о языке.'
+'A language with the same name already exists.': 'Язык с таким названием уже существует.'
+'Add another language': 'Добавление другого языка'

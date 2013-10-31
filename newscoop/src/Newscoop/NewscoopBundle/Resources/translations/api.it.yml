@@ -1,0 +1,63 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 'Non è un colore'
+'No such field': 'Campo non trovato'
+'Color saved': 'Colore salvato'
+'Color not saved': 'Colore non salvato'
+'Topic created': 'Argomento creato'
+'The topic name is already in use by another topic.': 'Questo nome è già usato per un altro argomento.'
+'Complex Date': 'Data complessa'
+vertices: vertici
+'There was a problem trying to execute the XML RPC function.': 'Cè stato un problema eseguendo la funzione XML RPC.'
+'The Campcaster server configuration is invalid.': 'La configurazione del server Campcaster non è valida.'
+'Pan Map': 'Scorri mappa'
+'Open large map': 'Apri mappa ingrandita'
+'No news available.': 'Nessuna notizia disponibile.'
+'Edit Polygon': 'Modifica poligono'
+'Create Polygon': 'Crea poligono'
+'Communication error: ': 'Errore di comunicazione:'
+'Cant fetch news from $1': 'Non posso acquisire notizie da $1'
+Loading...: Caricamento...
+Version: Versione
+License: Licenza
+Homepage: Homepage
+'Show original map': 'Mostra mappa originale'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Larchivio caricato non contiene un plugin di Newscoop valido.'
+Map: Mappa
+Center: Centro
+Title: Titolo
+'Invalid security token.': 'Token di sicurezza non valido.'
+'Callback $1 is not callable.': 'Il riferimento $1 non è richiamabile.'
+'Article translated to $4 ($5)': 'Articolo tradotto in $4 ($5)'
+'Article status changed from $1 to $2.': 'Stato dellarticolo cambiato da $1 a $2.'
+'Article deleted.': 'Articolo eliminato.'
+'Article created.': 'Articolo creato.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Articolo copiato nellarticolo n. $4 (pubblicazione $5, edizione $6, sezione $7)'
+'Article URL': 'URL articolo'
+'Article Number': 'Numero articolo'
+'Access denied.': 'Accesso negato.'
+'Publish with issue': 'Pubblica con ledizione'
+unknown: sconosciuto
+Switch: Opzione
+Numeric: Numerico
+'The uploaded file format is unsupported.': 'Il formato del file caricato non è supportato.'
+'The following fields are mandatory:': 'I seguenti campi sono obbligatori:'
+'Missing value for $1': 'Valore mancante per $1'
+'Manage Plugins': 'Gestisci plugin'
+'* Marked fields are mandatory.': 'I valori indicati con (*) sono obbligatori.'
+'$1 is of type $2': '$1 è di tipo $2'
+'Invalid resize width/height.': 'Larghezza/altezza di ridimensionamento non valide.'
+'Image type $1 is not supported.': 'Il tipo immagine $1 non è supportato.'
+'The file uploaded is not an image.': 'Il file caricato non è una immagine.'
+'Could not delete record from the database.': 'Impossibile eliminare la voce dal database.'
+'template path': 'percorso template'
+'short names': 'nome breve'
+'Unable to fetch image from remote server.': 'Impossibile recuperare limmagine dal server remoto.'
+Last: Ultimo
+First: Primo
+'Single-line Text': 'Linea di testo'
+'Multi-line Text with WYSIWYG': 'Area di testo con WYSIWYG'
+'URL $1 is invalid or is not an image.': 'LURL $1 non è valido o non è una immagine.'
+'URL $1 is not an image.': 'LURL $1 non è una immagine.'

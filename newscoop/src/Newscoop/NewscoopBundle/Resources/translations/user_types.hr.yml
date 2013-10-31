@@ -1,0 +1,92 @@
+get: 
+Soundcloud: SoundCloud
+Templates: 
+'Feedback Messages': 
+'Article Playlists': 
+'Check all': 
+view: 
+undo/redo: 
+underline: 
+translate: 
+'text direction': 
+'text alignment': 
+table: 
+superscript: 
+subscript: 
+subhead: 
+strikethrough: 
+statusbar: 
+'spell checker enabled': 
+'source view': 
+publish: 
+notify: 
+moderate: 
+manage: 
+'list number': 
+'list bullet': 
+link: 
+italic: 
+indent: 
+image: 
+'horizontal rule': 
+handle: 
+guest: 
+'font size': 
+'font face': 
+'font color': 
+find/replace: 
+enlarge: 
+enable: 
+edit: 
+delete: 
+copy/cut/paste: 
+clear: 
+'character map': 
+bold: 
+attach: 
+'any resource': 
+admin: 
+add: 
+'You cant deny yourself to manage $1': 
+'You are not allowed to $1 $2.': 
+'User type saved.': 
+'User type deleted.': 
+'User type added.': 
+'User Groups': 
+Themes: 
+'That type name already exists, please choose a different name.': 
+System: 
+Structure: 
+'Search Indexer': 
+'Rich-Text Editor Preferences': 
+ReCaptcha: 
+Polls: 
+'Permissions:': 
+'Permissions updated': 
+Notification: 
+Log: 
+Layout: 
+Global: 
+Files: 
+'Error: ': 
+'Edit user type $1': 
+Deny: 
+'Delete user type $1': 
+'Can not delete a user type with assigned users.': 
+Cache: 
+Backup: 
+Authoring: 
+Allow: 
+'User types': 'Vrste korisnika'
+'No user types.': 'Nema te vrste korisnika.'
+'You do not have the right to add user types.': 'Nemate ovlasti dodavati vrste korisnika'
+'Adding new user type': 'Dodavanje nove vrste korisnika'
+'The user type $1 has been added.': 'Vrsta korisnika $1 je dodana'
+'The user type could not be added.': 'Vrsta korisnika ne može se dodati'
+'Please check if an user type with the same name does not already exist.': 'Molim provjerite da li već postoji ta vrsta korisnika.'
+'Deleting user type': 'Brisanje vrste korisnika'
+'The user type has been deleted.': 'Vrsta korisnika je obrisana.'
+'The user type could not be deleted.': 'Vrsta korisnika ne može se obrisati.'
+'Updating user type permissions': 'Ažuriranje dozvola za vrstu korisnika'
+'User type permissions have been successfuly updated.': 'Dozvole za vrstu korisnika su uspješno ažurirane'
+'User type permissions could not be updated.': 'Dozvole za vrstu korisnika ne mogu se ažurirati '

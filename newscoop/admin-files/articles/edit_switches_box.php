@@ -1,22 +1,24 @@
-<?php if (empty($userIsBlogger)) { ?>
-<div class="articlebox" title="<?php putGS('Switches'); ?>"><div>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+if (empty($userIsBlogger)) { ?>
+<div class="articlebox" title="<?php echo $translator->trans('Switches', array(), 'articles'); ?>"><div>
 <form id="article-switches" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
 
     <ul class="check-list padded">
       <li><input type="checkbox" name="f_on_front_page" id="f_on_front_page"
         class="input_checkbox" <?php if ($articleObj->onFrontPage()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights ) { ?>disabled<?php } ?> />
-        <label for="f_on_front_page"><?php putGS('Show article on front page'); ?></label>
+        <label for="f_on_front_page"><?php echo $translator->trans('Show article on front page'); ?></label>
       </li>
       <li><input type="checkbox" name="f_on_section_page" id="f_on_section_page"
         class="input_checkbox" <?php if ($articleObj->onSectionPage()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
-        <label for="f_on_section_page"><?php putGS('Show article on section page'); ?></label>
+        <label for="f_on_section_page"><?php echo $translator->trans('Show article on section page'); ?></label>
       </li>
       <li><input type="checkbox" name="f_rating_enabled" id="f_rating_enabled"
         class="input_checkbox" <?php if ($articleObj->ratingEnabled()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> />
-        <label for="f_rating_enabled"><?php putGS('Enable Rating'); ?></label>
+        <label for="f_rating_enabled"><?php echo $translator->trans('Enable Rating', array(), 'articles'); ?></label>
       </li>
       <li><input type="checkbox" name="f_is_public" id="f_is_public"
-        class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php putGS('Visible to non-subscribers'); ?></label> </li>
+        class="input_checkbox" <?php if ($articleObj->isPublic()) { ?> checked<?php } ?> <?php if ($inViewMode || !$publishRights) { ?>disabled<?php } ?> /> <label for="f_is_public"><?php echo $translator->trans('Visible to non-subscribers', array(), 'articles'); ?></label> </li>
     <?php
     foreach ($dbColumns as $dbColumn) {
         // Custom switches
@@ -34,7 +36,7 @@
     if ($inEditMode) {
     ?>
       <li>
-        <input type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php putGS('Save'); ?>" />
+        <input type="submit" class="default-button right-floated clear-margin next-to-field" value="<?php echo $translator->trans('Save'); ?>" />
       </li>
     <?php } ?>
     </ul>
@@ -68,7 +70,7 @@
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     <?php echo $f_language_selected; ?>,
                     $(this).attr('name'), val], function(json) {
-                	   flashMessage('<?php putGS('Switches saved.'); ?>');
+                	   flashMessage('<?php echo $translator->trans('Switches saved.', array(), 'articles'); ?>');
                     });
             });
 
@@ -80,7 +82,7 @@
                     <?php echo $f_language_selected; ?>,
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     Number(vals[method].is(':checked'))], function(json) {
-                        flashMessage('<?php putGS('Switches saved.'); ?>');
+                        flashMessage('<?php echo $translator->trans('Switches saved.', array(), 'articles'); ?>');
                     });
             }
 

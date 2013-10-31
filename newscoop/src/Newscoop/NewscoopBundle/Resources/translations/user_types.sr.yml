@@ -1,0 +1,92 @@
+get: 
+Soundcloud: SoundCloud
+Templates: 
+'Feedback Messages': 'Поруке са повратном информацијом'
+'Article Playlists': 'Плејлисте текстова'
+'Check all': 'Означи све'
+view: погледај
+undo/redo: undo/redo
+underline: подвучено
+translate: преведи
+'text direction': 'орјентација текста'
+'text alignment': 'поравнавање текста'
+table: табела
+superscript: 'текст у експоненту'
+subscript: 'текст у индексу'
+subhead: поднаслов
+strikethrough: прецртано
+statusbar: 'статусна линија'
+'spell checker enabled': 'провера правописа омогућена'
+'source view': 'преглед извора'
+publish: објави
+notify: обавести
+moderate: уређуј
+manage: управљај
+'list number': 'бројевна листа'
+'list bullet': 'листа ставки'
+link: линк
+italic: италик
+indent: увлачење
+image: слика
+'horizontal rule': 'водоравни лењир'
+handle: руковање
+guest: гост
+'font size': 'величина писма'
+'font face': 'врста писма'
+'font color': 'боја писма'
+find/replace: пронађи/замени
+enlarge: увећај
+enable: омогући
+edit: уреди
+delete: обриши
+copy/cut/paste: копирај/исеци/залепи
+clear: очисти
+'character map': 'мапа карактера'
+bold: црно
+attach: прикачи
+'any resource': 'било који ресурс'
+admin: админ
+add: додај
+'You cant deny yourself to manage $1': 'Не можете оспорити себи управљање $1'
+'You are not allowed to $1 $2.': 'Немате право да $1 $2.'
+'User type saved.': 'Тип корисника сачуван.'
+'User type deleted.': 'Тип корисника обрисан'
+'User type added.': 'Тип корисника додат.'
+'User Groups': 'Групе корисника'
+Themes: Теме
+'That type name already exists, please choose a different name.': 'Такво име типа већ постоји, изаберите неко друго'
+System: систем
+Structure: Структура
+'Search Indexer': 'Индексер претраге'
+'Rich-Text Editor Preferences': 'Подешавање едитора текста'
+ReCaptcha: РиКепчаReCaptcha
+Polls: Анкете
+'Permissions:': 'Права:'
+'Permissions updated': 'Права измењена'
+Notification: Обавештења
+Log: Лог
+Layout: Изглед
+Global: Глобално
+Files: Фајлови
+'Error: ': 'Грешка:'
+'Edit user type $1': 'Уреди тип корисника $1'
+Deny: Оспори
+'Delete user type $1': 'Обриши тип корисника $1'
+'Can not delete a user type with assigned users.': 'Није могуће обрисати тип корисника са додељеним корисницима.'
+Cache: Кеш
+Backup: Бекап
+Authoring: Ауторизовање
+Allow: Дозволи
+'User types': 'Типови корисника'
+'No user types.': 'Нема типова корисника'
+'You do not have the right to add user types.': 'Немате право да додајете типове корисника'
+'Adding new user type': 'Додавање новог типа корисника'
+'The user type $1 has been added.': 'Тип корисника $1 је додат'
+'The user type could not be added.': 'Тип корисника не може бити додат'
+'Please check if an user type with the same name does not already exist.': 'Проверите да ли тип корисника под истим именом већ непостоји'
+'Deleting user type': 'Брисање типа корисника'
+'The user type has been deleted.': 'Тип корисника је обрисан'
+'The user type could not be deleted.': 'Тип корисника не може бити обрисан'
+'Updating user type permissions': 'Мењање права додељених типу корисника'
+'User type permissions have been successfuly updated.': 'Права додељена типу корисника успешно су измењена'
+'User type permissions could not be updated.': 'Права додељена типу корисника не могу бити измењена'

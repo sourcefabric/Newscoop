@@ -1,0 +1,15 @@
+'The country $1 could not be created.': 
+'Country with code $1 exists already.': 
+'You do not have the right to add countries.': 'Nemate ovlasti dodavati zemlje.'
+'Delete country': 'Izbriši zemlju.'
+'You do not have the right to delete countries.': 'Nemate ovlasti brisati zemlje.'
+'Are you sure you want to delete the country $1?': 'Jeste li sigurni da želite obrisati zemlju $1?'
+'The country $1 could not be deleted.': 'Zemlja $1 ne može se obrisati.'
+'Edit country name': 'Uredite ime zemlje'
+'You do not have the right to change country names.': 'Nemate ovlasti mijenjati imena zemalja.'
+'Changing country name': 'Mijenjanje imena zemlje'
+'The country name $1 could not be changed': 'Ime zemlje $1 ne može se promijeniti'
+'Translate country name': 'Prevedi ime zemlje'
+'You do not have the right to translate country names.': 'Nemate ovlasti prevoditi imena zemalja.'
+'The country name $1 could not be translated': 'Ime zemlje $1 ne može se prevesti.'
+'Add New Country': 'Dodaj novu zemlju'

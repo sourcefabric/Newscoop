@@ -23,10 +23,8 @@ class Admin_StaffController extends Zend_Controller_Action
      * @return void
      */
     public function init()
-    {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('users');
-
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
 
         $this->form = new Admin_Form_Staff($this->_helper->acl->isAllowed('user', 'manage'));
@@ -42,7 +40,7 @@ class Admin_StaffController extends Zend_Controller_Action
         }
 
         // set form countries
-        $countries = array('' => getGS('Select country'));
+        $countries = array('' => $translator->trans('Select country', array(), 'user_subscriptions'));
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
@@ -55,15 +53,16 @@ class Admin_StaffController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         try {
             $staff = new Staff();
             $this->handleForm($this->form, $staff);
         } catch (PDOException $e) {
-            $this->form->getElement('username')->addError(getGS('That user name already exists, please choose a different login name.'));
+            $this->form->getElement('username')->addError($translator->trans('That user name already exists, please choose a different login name.', array(), 'users'));
         } catch (InvalidArgumentException $e) {
             $field = $e->getMessage();
-            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+            $this->form->getElement($field)->addError($translator->trans("That $1 already exists, please choose a different $2.", array('$1' => $field, '$2' => $field), 'user_subscriptions'));
         }
 
         $this->view->form = $this->form;
@@ -75,7 +74,7 @@ class Admin_StaffController extends Zend_Controller_Action
     public function editAction()
     {
         $staff = $this->_helper->entity->get(new Staff, 'user');
-
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // check permission
         $auth = Zend_Auth::getInstance();
         if ($staff->getId() != $auth->getIdentity()) { // check if user != current
@@ -87,14 +86,14 @@ class Admin_StaffController extends Zend_Controller_Action
             $this->handleForm($this->form, $staff);
         } catch (InvalidArgumentException $e) {
             $field = $e->getMessage();
-            $this->form->getElement($field)->addError(getGS("That $1 already exists, please choose a different $2.", $field, $field));
+            $this->form->getElement($field)->addError($translator->trans("That $1 already exists, please choose a different $2.", array('$1' => $field, '$2' => $field), 'user_subscriptions'));
         }
 
         $this->view->form = $this->form;
 
         $this->view->actions = array(
             array(
-                'label' => getGS('Permissions'),
+                'label' => $translator->trans('Permissions', array(), 'user_types'),
                 'module' => 'admin',
                 'controller' => 'staff',
                 'action' => 'edit-access',
@@ -126,7 +125,8 @@ class Admin_StaffController extends Zend_Controller_Action
      * @Acl(action="delete")
      */
     public function deleteAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->_helper->acl->check('user', 'delete');
 
         $staff = $this->_helper->entity->get(new Staff, 'user');
@@ -137,27 +137,28 @@ class Admin_StaffController extends Zend_Controller_Action
 
             $this->_helper->entity->getManager()->flush();
 
-            $this->_helper->flashMessenger(getGS('Staff member deleted.'));
+            $this->_helper->flashMessenger($translator->trans('Staff member deleted.'));
             $this->_helper->redirector->gotoSimple('index');
         }
         else {
-            $this->_helper->flashMessenger(getGS('Self-delete is not permitted.')); // should be translateable
+            $this->_helper->flashMessenger($translator->trans('Self-delete is not permitted.')); // should be translateable
             $this->_helper->redirector->gotoSimple('index');
         }
     }
 
     public function tableAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $table = $this->getHelper('datatable');
 
         $table->setEntity('Newscoop\Entity\User\Staff');
 
         $table->setCols(array(
-            'name' => getGS('Full Name'),
-            'username' => getGS('Accout Name'),
-            'email' => getGS('E-Mail'),
-            'timeCreated' => getGS('Creation Date'),
-            getGS('Delete'),
+            'name' => $translator->trans('Full Name', array(), 'user_subscriptions'),
+            'username' => $translator->trans('Accout Name', array(), 'user_subscriptions'),
+            'email' => $translator->trans('E-Mail', array(), 'user_subscriptions'),
+            'timeCreated' => $translator->trans('Creation Date', array(), 'user_subscriptions'),
+            $translator->trans('Delete'),
         ));
 
         $view = $this->view;
@@ -168,7 +169,7 @@ class Admin_StaffController extends Zend_Controller_Action
                     'user' => $staff->getId(),
                     'format' => NULL,
                 )),
-                getGS('Edit staff member $1', $staff->getName()),
+                $translator->trans('Edit staff member $1', array('$1' => $staff->getName())),
                 $staff->getName()
             );
 
@@ -178,8 +179,8 @@ class Admin_StaffController extends Zend_Controller_Action
                     'user' => $staff->getId(),
                     'format' => NULL,
                 )),
-                getGS('Delete staff member $1', $staff->getName()),
-                getGS('Delete')
+                $translator->trans('Delete staff member $1', array('$1' => $staff->getName())),
+                $translator->trans('Delete')
             );
 
             return array(
@@ -195,7 +196,7 @@ class Admin_StaffController extends Zend_Controller_Action
 
         $this->view->actions = array(
             array(
-                'label' => getGS('Add new staff member'),
+                'label' => $translator->trans('Add new staff member'),
                 'module' => 'admin',
                 'controller' => 'staff',
                 'action' => 'add',
@@ -207,7 +208,9 @@ class Admin_StaffController extends Zend_Controller_Action
     }
 
     private function handleForm(Zend_Form $form, Staff $staff)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if ($this->_request->isPost() && $form->isValid($this->_request->getPost())) {
             try {
                 $this->repository->save($staff, $form->getValues());
@@ -216,19 +219,19 @@ class Admin_StaffController extends Zend_Controller_Action
             } catch (\PDOException $e) {
                 $this->_helper->flashMessenger(array(
                 	'error',
-                    getGS("Could not save user '$1'. Please make sure it doesn't already exist", $this->_request->getPost('username')))
+                    $translator->trans('Could not save user $1. Please make sure it does not already exist', array('$1' => $this->_request->getPost('username'))))
                 );
                 $this->_helper->redirector->gotoSimple('add', 'staff', 'admin');
             } catch (\InvalidArgumentException $e) {
                 if ($e->getMessage() == 'email') {
                     $this->_helper->flashMessenger(array(
                         'error',
-                        getGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", $this->_request->getPost('email')))
+                        $translator->trans('Could not save user with e-mail address $1. Please make sure it does not already exist', array('$1' => $this->_request->getPost('email'))))
                     );
                 }
                 $this->_helper->redirector->gotoSimple('add', 'staff', 'admin');
             } catch (\Exception $e) {
-                $this->_helper->flashMessenger(array('error', getGS("Changing user type would prevent you to manage users. Aborted.")));
+                $this->_helper->flashMessenger(array('error', $translator->trans("Changing user type would prevent you to manage users. Aborted.")));
                 $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(
                     'user' => $staff->getId(),
                 ));
@@ -239,7 +242,7 @@ class Admin_StaffController extends Zend_Controller_Action
                 WidgetManager::SetDefaultWidgets($staff->getId());
             }
 
-            $this->_helper->flashMessenger(getGS('Staff member saved.'));
+            $this->_helper->flashMessenger($translator->trans('Staff member saved.'));
             $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(
                 'user' => $staff->getId(),
             ));

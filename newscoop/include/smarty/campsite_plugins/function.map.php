@@ -4,7 +4,6 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'] . '/admin-files/localizer/Localizer.php');
 require_once($GLOBALS['g_campsiteDir'] . '/admin-files/lib_campsite.php');
 
 /**
@@ -26,11 +25,11 @@ function smarty_function_map($p_params, &$p_smarty)
 {
     // the strings are translated via Geo_Preferences::TemplateGeoStrings()
     // if you change some of the strings, put them there too
-    camp_load_translation_strings('api');
+    $translator = \Zend_Registry::get('container')->getService('translator');
 
     // Default text for the reset link
-    define('DEFAULT_RESET_TEXT', getGS('Show original map'));
-    define('DEFAULT_OPEN_TEXT', getGS('Open large map'));
+    define('DEFAULT_RESET_TEXT', $translator->trans('Show original map', array(), 'api'));
+    define('DEFAULT_OPEN_TEXT', $translator->trans('Open large map', array(), 'api'));
 
     // get the context variable
     $campsite = $p_smarty->getTemplateVars('gimme');
@@ -290,7 +289,7 @@ function smarty_function_map($p_params, &$p_smarty)
         . $mapHeader . '
         <div class="geomap_container">';
     if ($showLocationsList == TRUE) {
-        $local = array('map' => getGS('Map'), 'center' => getGS('Center'));
+        $local = array('map' => $translator->trans('Map', array(), 'api'), 'center' => $translator->trans('Center', array(), 'api'));
         $mapLocationsList = MetaMap::GetMapTagList($article, $language, $local);
         $html .= '
             <div class="geomap_locations">'

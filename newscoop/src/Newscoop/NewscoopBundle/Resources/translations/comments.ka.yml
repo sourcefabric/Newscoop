@@ -1,0 +1,104 @@
+'No attachment': 
+at: -ზე
+'With no attachment': 'დანართის გარეშე'
+'With image attachment': 'თანდართულია გამოსახულება'
+'With document attachment': 'თანდართულია დოკუმენტი'
+'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ გადაამოწმოთ ინტერნეტთან კავშირი.'
+Starred: 'ვარსკვლავით აღნიშნული'
+Star: ვარსკვლავი
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
+'Reply to message': 'შეტყობინებაზე პასუხის გაცემა'
+Reply: 'პასუხის გაცემა'
+Processed: დამუშავებულია
+'No records found.': 'ჩანაწერები ნაპოვნი არ არის.'
+'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
+'Messages updated.': 'შეტყობინებები განახლებულია. '
+'Messages status change to $1.': 'შეტყობინებების სტატუსი იცვლება $1ზე.'
+'Messages deleted.': 'შეტყობინებები წაშლილია '
+'Message updated.': 'შეტყობინება განახლებულია'
+'Message status change to $1.': 'შეტყობინების სტატუსი იცვლება $1ზე.'
+'Message deleted.': 'შეტყობინება წაშლილია. '
+Message: შეტყობინება
+Last: ბოლო
+'Full article': 'მთლიანი სტატია'
+First: პირველი
+'Feedback Messages': 'შეფასების შეტყობინებები'
+'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
+Deleted: წაიშალა
+'Change selected messages status': 'არჩეული შეტყობინების სტატუსის შეცვლა'
+Attachment: დანართი
+Approved.: დადასტურებული.
+Approve: დადასტურება
+Anonymous: ანონიმური
+' - filtering from _MAX_ records': '-ფილტრაცია_MAX_ ჩანაწერებიდან'
+'You are about to permanently delete multiple messages.': 'თქვენ ახლა სამუდამოდ წაშლით რიგ შეტყობინებებს. '
+'You are about to permanently delete a message.': 'თქვენ ახლა სამუდამოდ წაშლით შეტყობინებას. '
+User: მომხმარებელი
+None: არცერთი
+'Coming from': 'შეტყობინების წარმომავლობა '
+'Ban/Unban user': 'მომხმარებლისთვის ბანის დადება/მოხსნა'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'ბანის დადება შესაძლებელია მომხმარებლის სახელზე, ელ-ფოსტის მისამართსა და IP მისამართზე.'
+'You are about to permanently delete multiple comments.': 'კომენტარები სამუდამოდ წაიშლება.'
+'You are about to permanently delete a comment.': 'კომენტარი სამუდამოდ წაიშლება.'
+Website: ვებგვერდი
+'Value is not $1 characters long': 'ველი არ შეიცავს $1 სიმბოლოს'
+Username: 'მომხმარებლის სახელი'
+'User id': 'მომხმარებლის ID'
+'User ban settings': 'მომხმარებლის ბანის პარამეტრები'
+'Update comment': 'კომენტარის განახლება'
+Unrecommended: არარეკომენდირებული
+Unrecommend: 'რეკომენდაციის უკუგდება'
+'Subject is not $1 characters long': 'სათაური არ შეიცავს $1 სიმბოლოს.'
+'Sort by Thread order': 'ხაზის მიხედვით დაწყობა.'
+'Show parent comment': 'მშობელი კომენტარის ჩვენება'
+'Show commenter details': 'კომენტარის ავტორის დეტალები'
+'Show commenter': 'კომენტარის ავტორის ჩვენება'
+'Show comment user details': 'კომენტარის მომხმარებლის დეტალების ჩვენება'
+'Show comment user': 'კომენტარის მომხმარებლის ჩვენება'
+'Show comment details': 'კომენტარის დეტალების ჩვენება'
+'Select status': 'აირჩიეთ სტატუსი'
+'Search Type': 'ძიების ტიპი'
+'Reply to comment': 'კომენტარზე პასუხის გაცემა'
+Recommended: რეკომენდირებული
+Recommend: 'რეკომენდაციის გაწევა'
+'Quick edit': 'სწრაფი რედაქტირება'
+Parent: საწყისი
+ID: ID
+'Go to edit article': 'სტატიის რედაქტირებაზე გადასვლა'
+Forum: ფორუმი
+'For Column': სვეტისთვის
+Email: იმეილი
+'Edit acceptance criteria': 'დადასტურების კრიტერიუმების რედაქტირება'
+E-mail: ელ-ფოსტა
+'Delete all comments?': 'გსურთ წაშალოთ ყველა კომენტარი? '
+'Date Created': 'შექმნის თარიღი'
+'Comments updated.': 'კომენტარები განახლდა.'
+'Comments status change to $1.': 'კომენტარების სტატუსი შეიცვალა: $1'
+'Comments deleted.': 'კომენტარები წაიშალა'
+'Commenter $1 saved.': 'კომენტატორი $1 შეინახა.'
+'Commenter $1 deleted.': 'კომენტატორი $1 წაიშალა.'
+Commenter: კომენტატორი
+'Comment updated.': 'კომენტარის განახლება.'
+'Comment status change to $1.': 'კომენტარის სტატუსი შეიცვალა: $1'
+'Comment id': 'კომენტარის id'
+'Comment deleted.': 'კომენტარი წაიშალა.'
+'Comment delete by $1 from the article $2 ($3)': '$2 ($3) სტატიის კომენტარი წაიშალა $1-ის მიერ'
+'Comment Acceptance': 'კომენტარის დადასტურება'
+'Comment $4 by $1 in the article $2 ($3)': '$2 ($3) სტატიის კომენტარი $4 $1-ის მიერ'
+'Comment $1 saved.': 'კომენტარი $1 დამახსოვრებულია.'
+Column: სვეტი
+'Change subscriber information': 'გამომწერის ინფორმაციის შეცვლა'
+'Ban for commenter $1 saved.': '$1 კომენტატორს ბანი დაედო.'
+Ban: ბანი
+'Are you sure you want to do it?': 'დაადასტურეთ, რომ გსურთ ამის გაკეთება.'
+'Add rating': 'რეიტინგის დამატება'
+'Add new comment commenter': 'ახალი კომენტარის ავტორის დამატება'
+'Add new comment': 'ახალი კომენტარის დამატება'
+'Add new acceptance criteria': 'ახალი დადასტურების კრიტერიუმის დამატება'
+'Acceptance $1 saved.': '$1 დადასტურება დამახსოვრდა.'
+'Acceptance $1 deleted.': '$1 დადასტურება წაშლილია.'
+'Delete commenter comments?': 'წაიშალოს ამ კომენტატორის კომენტარები?'
+'Comment updated by $1 to the article $2 ($3)': '$2 ($3) სტატიის კომენტარი განახლდა $1-ის მიერ'
+'Comment added by $1 to the article $2 ($3)': '$2 ($3) სტატიის კომენტარი დაემატა $1-ის მიერ'
+'Comment ban settings': 'კომენტარის ბანის პარამეტრები'

@@ -2,13 +2,15 @@
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!');
     exit;
 }
 
 if (!$g_user->hasPermission("Publish")) {
-	camp_html_display_error(getGS("You do not have the right to schedule issues or articles for automatic publishing."));
+	camp_html_display_error($translator->trans("You do not have the right to schedule issues or articles for automatic publishing.", array(), 'articles'));
 	exit;
 }
 
@@ -38,7 +40,7 @@ if ($f_mode == "multi") {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $BackLink);
 	exit;
 }
 
@@ -58,38 +60,38 @@ foreach ($f_article_code as $code) {
 
 $publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_display_error(getGS('Publication does not exist.'));
+	camp_html_display_error($translator->trans('Publication does not exist.'));
 	exit;
 }
 
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 if (!$issueObj->exists()) {
-	camp_html_display_error(getGS('Issue does not exist.'));
+	camp_html_display_error($translator->trans('Issue does not exist.'));
 	exit;
 }
 
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 if (!$sectionObj->exists()) {
-	camp_html_display_error(getGS('Section does not exist.'));
+	camp_html_display_error($translator->trans('Section does not exist.'));
 	exit;
 }
 
 if ($f_publish_date == "") {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Date').'</B>' ));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Date').'</B>')));
 }
 
 if ( ($f_publish_hour == "") || ($f_publish_minute == "") ) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Time').'</B>' ));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.',array('$1' => '<B>'.$translator->trans('Time').'</B>')));
 }
 
 if ( ($f_publish_action != "P") && ($f_publish_action != "U")
 	 && ($f_front_page_action != "S") && ($f_front_page_action != "R")
 	 && ($f_section_page_action != "S") && ($f_section_page_action != "R") ) {
-	camp_html_add_msg(getGS('You must select an action.'));
+	camp_html_add_msg($translator->trans('You must select an action.');
 }
 
 if ( (count($articles) == 0) && (count($errorArticles) > 0) ) {
-	camp_html_add_msg(getGS("The article is new; it is not possible to schedule it for automatic publishing."));
+	camp_html_add_msg($translator->trans("The article is new; it is not possible to schedule it for automatic publishing.", array(), 'articles'));
 }
 
 
@@ -112,7 +114,7 @@ foreach ($articles as $tmpArticle) {
 			    <script type="text/javascript">
 			    try {
 			        parent.$.fancybox.reload = true;
-			        parent.$.fancybox.message = '<?php putGS('You can not schedule opposing events at the same time'); ?>';
+			        parent.$.fancybox.message = '<?php echo $translator->trans('You can not schedule opposing events at the same time', array(), 'articles'); ?>';
 			        parent.$.fancybox.close();
 			    } catch (e) {
 			    }
@@ -138,7 +140,7 @@ foreach ($articles as $tmpArticle) {
 	if ($f_section_page_action == "S" || $f_section_page_action == "R") {
 		$articlePublishObj->setSectionPageAction($f_section_page_action);
 	}
-	Log::ArticleMessage($tmpArticle, getGS('Scheduled action added'), $g_user->getUserId(), 37);
+	Log::ArticleMessage($tmpArticle, $translator->trans('Scheduled action added', array(), 'articles'), $g_user->getUserId(), 37);
 }
 
 
@@ -146,14 +148,14 @@ if ($f_mode == "multi") {
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);
 	$argsStr = camp_implode_keys_and_values($args, "=", "&");
-	camp_html_add_msg(getGS("Scheduled action added."), "ok");
+	camp_html_add_msg($translator->trans("Scheduled action added.", array(), 'articles'), "ok");
 	camp_html_goto_page("/$ADMIN/articles/index.php?".$argsStr);
 } else {
 	?>
 	<script type="text/javascript">
     try {
         parent.$.fancybox.reload = true;
-        parent.$.fancybox.message = '<?php putGS('Actions updated.'); ?>';
+        parent.$.fancybox.message = '<?php echo $translator->trans('Actions updated.', array(), 'articles'); ?>';
         parent.$.fancybox.close();
     } catch (e) {
     }

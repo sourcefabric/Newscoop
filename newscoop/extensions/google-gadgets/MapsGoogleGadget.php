@@ -22,8 +22,9 @@ class MapsGoogleGadget extends GoogleGadget
     protected $location = 'Praha, Salvatorska 10';
 
     public function __construct()
-    {
-       $this->title = getGS('Maps search');
+    {   
+       $translator = \Zend_Registry::get('container')->getService('translator');
+       $this->title = $translator->trans('Maps search', array(), 'extensions');
     }
 
     /**

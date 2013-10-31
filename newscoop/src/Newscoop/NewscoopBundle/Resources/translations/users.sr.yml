@@ -1,0 +1,229 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 
+'User with id $1 not found': 
+'User was deleted.': 
+'User saved': 
+'User id not specified': 
+'User $1 created': 
+'Send confirm email': 
+'Profile saved.': 
+Picture: 
+'Password updated': 
+None: 
+'New confirmation email was sent to user.': 
+'Email is used already': 
+'Edit your password': 
+'Edit user $1': 
+'Edit subscriptions': 
+'Edit profile': 
+'Edit permissions': 
+'Create new account': 
+'Comment ban settings': 
+'Ban for user $1 saved.': 
+'User account is active': 
+'Allow users profile to be publicly displayed': 
+'Allow user access to login to site backend': 
+Templates: 
+Username: 'Корисничко име'
+'Last Name': Презиме
+'First Name': Име
+Email: Имејл
+'You were logged out.': 'Сада сте одјављени'
+'Newscoop Subhead': 'Newscoop поднаслов'
+Filters: Филтери
+'Add new Author': 'Додај новог аутора'
+'Loading Data': 'Учитавање података'
+'Delete author type': 'Обриши тип аутора'
+'Cannot remove author type.': 'Није могуће уклонити тип аутора'
+'Cannot remove author alias.': 'Није могуће уконити ауторов алиас'
+'Author alias removed.': 'Ауторов алиас је уклоњен'
+'Are you sure you want to delete this author?': 'Да ли сте сигурни да желите да обришете овог аутора?'
+'Are you sure you want to delete this author alias?': 'Да ли сте сигурни да желите да обришете алиас овог аутора?'
+'All Author Types': 'Сви типови аутора'
+'Add author type': 'Додај тип аутора'
+'You do not have the permission to change authors.': 'Немате право да мењате ауторе'
+'Please fill at least first name and last name.': 'Молимо унесите барем име и презиме'
+'Cannot add author type, this type already exists.': 'Није могуће додати тип аутора, пошто већ постоји'
+'Author type removed.': 'тип аутора уклоњен'
+'Author type must be at least three characters long.': 'Назив типа аутора мора биити бар три карактера дуг'
+'Author type added.': 'Тип аутора додат'
+'Are you sure you want to delete this author type?': 'Да ли сте сигурни да желите да обришете овај тип аутора?'
+'User may change authors': 'Корисник може да мења ауторе'
+'Unable to add new image, target directory is not writable.': 'Није могуће додати нову слику, циљани директоријум нема право уписа'
+'Author saved.': 'Аутор снимљен'
+'Author deleted.': 'Аутор обрисан'
+'Enable Firefox spell checking by default': 'Омогући Фајерфокс проверу исправности уноса текста'
+'User may use the editor status bar': 'Корисник може да користи статус бар едитора'
+'User may clear up the system cache': 'Корисник може да брише системски кеш'
+'Another user is registered with that e-mail address, please choose a different one.': 'Други корисник је већ регистрован са том имејл адресом, молимо изаберите другу'
+'There was an error when trying to update the user info.': 'Дошло је до грешке при покушају измене података о информацијама'
+'User may moderate comments': 'Корисник може да модерише коментаре'
+'User may enable comments': 'Корисник може да одобрава коментаре'
+'User may translate articles': 'Корисник може да преводи текстове'
+'User may move articles': 'Корисник може да премешта текстове'
+'User may find and replace': 'Корисник може да користи опцију тражи/замени'
+'User may change system preferences': 'Корисник може да мења системске поставке'
+'User may attach topics to articles': 'Корисник може да додаје теме текстовима'
+'User may attach images to articles': 'Корисник може да качи слике уз текстове'
+'User may add special characters': 'Корисник може да додаје специјалне знакове'
+'That user name already exists, please choose a different login name.': 'Корисничко име већ постоји, смислите нешто друго.'
+'User may delete article attachments': 'Корисник може да брише атачменте уз чланке.'
+'User may change article attachments': 'Корисник може да мења атачменте уз чланке'
+'User may add article attachments': 'Корисник може да додаје атачменте уз чланке'
+'You do not have the right to create user accounts.': 'Немате право да креирате корисничке налоге'
+'You must select a $1': 'Морате изабрати $1'
+'The password must be at least 6 characters long and both passwords should match.': 'Лозинка мора бити дугачка најмање 6 карактера и обе лозинке се морају поклапати'
+'The user account could not be created.': 'Кориснички налог не може бити креиран'
+'User account $1 was created successfully.': 'Кориснички налог $1 је успешно направљен.'
+'You do not have the right to change user account permissions.': 'Немате право да мењате додељена права за корисничке налоге'
+'You do not have the right to change user account information.': 'Немате право да мењате податке за кориснички налог '
+'The password you typed is incorrect.': 'Лозинка коју сте унели је неисправна'
+'You do not have the right to delete user accounts.': 'Немате право да бришете корисничке налоге'
+'User account $1 was deleted successfully.': 'Кориснички налог $1 је успешно обрисан.'
+'The IP Group $1 has been created.': 'Група заснована на IP адреси је креирана'
+'There was an error creating the IP address group.': 'Дошло је до грешке при креирању групе засноване на ИП адреси.'
+'The IP address group $1 has been deleted.': 'Група заснована на IP адреси $1 је обрисана'
+'User $1 information was changed successfully.': 'Подаци о кориснику $1 су успешно промењени.'
+'User Type': 'Тип корисника'
+'The IP address group $1:$2 conflicts with another existing group.': 'ИП адресна група $1:$2 се сукобљава са другом, већ постојећом групом.'
+'User may add/change publications': 'Корисник може да додаје/мења публикације'
+'Invalid value of user type parameter': 'Погрешна вредност параметра за тип корисника'
+'User may delete publications': 'Корисник може да брише публикације'
+'User may add/change issues': 'Корисник може да додаје/мења издања'
+'User may delete issues': 'Корисник може да брише издања'
+'User may add/change sections': 'Корисник може да додаје/мења рубрике'
+'User may delete sections': 'Корисник може да брише рубрике'
+'User may add articles': 'Корисник може да додаје текстове'
+'User may change articles': 'Корисник може да мења текстове'
+'User may delete articles': 'Корисник може да брише текстове'
+'User may add images': 'Корисник може да додаје слике'
+'User may change images': 'Корисник може да мења слике'
+'User may delete images': 'Корисник може да брише слике'
+'User may delete templates': 'Корисник може да брише шаблоне'
+'User may add/change staff accounts and passwords': 'Корисник може да додаје/мења сарадничке налоге и лозинке'
+'User may add/change subscribers accounts and passwords': 'Корисник може да додаје/мења претплатничке налоге и лозинке'
+'User may delete staff accounts': 'Корисник може да брише сарадничке налоге'
+'User may manage user subscriptions': 'Корисник може да администрира претплатама'
+'User may manage account types': 'Корисник може да администрира типовима налога'
+'User may add/change article types': 'Корисник може да додаје/мења типове текстова'
+'User may delete article types': 'Корисник може да брише типове текстова'
+'User may manage templates': 'Корисник може да управља шаблонима'
+'User may add/change country entries': 'Корисник може да додаје/мења податке о државама'
+'User may add languages and manage language information': 'Корисник може да додаје језике и управља информацијама о језику'
+'User may delete languages': 'Корисник може да брише језике'
+'User may view audit logs': 'Корисник има приступ логовима'
+'User may delete country entries': 'Корисник може да брише податке о државама'
+'User may manage localizer': 'Корисник има приступ лакализатору'
+'User may publish articles': 'Корисник може да објављује текстове'
+'User may manage topics': 'Корисник може да управља темама'
+'User may use bold': 'Корисник може да користи масна слова (болд)'
+'User may use italic': 'Корисник може да користи курзив (италик)'
+'User may use underline': 'Корисник може да користи подвучена слова'
+'User may use strikethrough': 'Корисник може да користи прецртана слова'
+'User may change text alignment': 'Корисник може да мења равнање текста'
+'User may copy, cut, and paste': 'Корисник може да корсити копирање, лепљење и сечење'
+'User may undo/redo': 'Корисник може да користи undo/redo'
+'User may change text direction': 'Корисник може да мења правац текста'
+'User may set indents': 'Корисник може да подешава увлачења'
+'User may add links': 'Корисник може да додаје линкове'
+'User may add subheads': 'Корисник може да додаје међунаслове'
+'User may insert images': 'Корисник може да убацује слике'
+'User may view the HTML source': 'Корисник има право прегледа ХТМЛ кода'
+'User may enlarge the editor': 'Корисник може да повећава едитор'
+'User may change the font face': 'Корисник може да мења фонтове'
+'User may change the font size': 'Корисник може да мења величину текста'
+'User may create bulleted lists': 'Корисник може да прави листе без редних бројева (bullet)'
+'User may create numbered lists': 'Корисник може да прави листе са редним бројевима'
+'User may insert tables': 'Корисник може да додаје табеле'
+'User may insert horizontal rules': 'Корисник може да додаје хоризонталне линије'
+'User may change the font color': 'Корисник може да мења боју слова'
+'User may use superscripts': 'Корисник може да користи текст у експоненту'
+'User may use subscripts': 'Корисник може да корсити имениоцу'
+'User may backup and restore the site data': 'Корисник може бекаповати и враћати податке о сајту'
+Miscellaneous: Разно
+'Staff/Subscribers Management': 'Управљање сарадничким/претплатничким налозима'
+'Editor Basic Settings': 'Основна подешавања едитора'
+'Editor Advanced Font Settings': 'Напредно подешавање особина фонта у едитору'
+'Editor Table Settings': 'Подешавање особина табела у едитору'
+'Administrative tasks': 'Администраторски послови'
+'User will be notified on several events': 'Корисник ће бити обавештен о одређеним системским активностима'
+'Editor Miscellaneous Settings': 'Подешавање разних особина у едитору'
+'No such user account.': 'Нема таквог корисничког налога'
+'User Name': 'Корисничко име'
+'User management': 'Администрација корисницима'
+Set: Постави
+Update: Измени
+Rights: Права
+'IP Access': 'IP приступ'
+Staff: Особље
+'Adding new user account': 'Додавање новог корисничког налога'
+'You must select an user type.': 'Морате изабрати тип корисника'
+'The user account $1 has been created.': 'Креиран је кориснички налог за $1 '
+'Please check if an account with the same user name does not already exist.': 'Проверите да ли налог под тим корисничким именом већ не постоји'
+'You do not have the right to change user passwords.': 'Немате право да мењате корисничке лозинке'
+'Changing user password': 'Мењање корисничке лозинке'
+'The password could not be changed.': 'Лозинка не може бити промењена'
+'The password has been changed.': 'Лозинка је промењена'
+'Edit user account permissions': 'Прикажи додељена права за кориснички налог'
+'This user account does not have permissions information.': 'Овај кориснички налог нема информација о додељеним правима'
+'Updating user account permissions': 'Измена додељених права за кориснички налог'
+'User account permissions have been successfuly updated.': 'Додељена права за кориснички налог успешно су измењена'
+'User account permissions could not be updated.': 'Додељена права за кориснички налог не могу бити измењена'
+'Changing user account information': 'Мењање података за кориснички налог'
+'User account information has been changed.': 'Подаци за кориснички налог су промењени'
+'User account information could not be changed.': 'Подаци за кориснички налог не могу бити промењени'
+'Old password': 'Стара лозинка'
+'New password': 'Нова лозинка'
+'Confirm new password': 'Потврди нову лозинку'
+'Changing your password': 'Мењање ваше лозинке'
+'User $1 changed his password': 'Корисник $1 је променио лозинку'
+'Delete user account': 'Обриши кориснички налог'
+'Deleting user account': 'Брисање корисничког налога'
+'The user account $1 could not be deleted.': 'Кориснички налог $1 не може бити обрисан'
+'No such user.': 'Нема таквог корисника'
+'Delete IP Group $1': 'Обриши IP групу $1'
+'IP Access List': 'Листа приступа на основу IP адреса'
+'Adding new IP Group': 'Додавање нове групе засноване на IP адреси'
+'The IP Group could not be created.': 'IP група не може бити креирана'
+'Please check if an account with the same IP Group does not already exist.': 'Проверите да ли налог са истом IP групом већ не постоји'
+'Delete IP Group': 'Обриши IP групу'
+'You do not have the right to delete IP Groups.': 'Немате право да бришете IP групе'
+'No such IP Group.': 'Нема такве IP групе'
+'Deleting IP Group': 'Брисање IP групе'
+'The IP Group could not be deleted.': 'IP група не може бити обрисана'
+'No IP Group.': 'Нема ИП групе.'

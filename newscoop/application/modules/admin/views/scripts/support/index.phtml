@@ -1,11 +1,13 @@
-<?php $this->placeholder('title')->set(getGS('Support Feedback')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+$this->placeholder('title')->set($translator->trans('Support Feedback', array(), 'support')); ?>
 
 <dl class="zend_form">
     <p>
-    <?php echo(getGS('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.')); ?>
+    <?php echo($translator->trans('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.', array(), 'support')); ?>
     <br><br>
-    <a id="feedback_show" href="#"><?php echo(getGS('Show feedback data to be sent')); ?></a>
-    <a id="feedback_hide" href="#" style="display: none;"><?php echo(getGS('Hide feedback data')); ?></a>
+    <a id="feedback_show" href="#"><?php echo($translator->trans('Show feedback data to be sent', array(), 'support')); ?></a>
+    <a id="feedback_hide" href="#" style="display: none;"><?php echo($translator->trans('Hide feedback data', array(), 'support')); ?></a>
     <br>
     
     <div id="feedback_container" style="display: none;">
@@ -25,23 +27,23 @@
     </p>
     
     <?php if (empty($this->action)) { ?>
-    <b><?php echo(getGS('Current status: ')); ?></b>
+    <b><?php echo($translator->trans('Current status: ', array(), 'support')); ?></b>
         <?php
         if ($this->support_send) {
-            echo(getGS('You are sending daily statistics.'));
+            echo($translator->trans('You are sending daily statistics.', array(), 'support'));
         } else {
-            echo(getGS('You are NOT sending daily statistics.'));
+            echo($translator->trans('You are NOT sending daily statistics.', array(), 'support'));
         } ?>
     <?php } ?>
 
-    <p><i><?php putGS('By clicking on "Yes, help Newscoop" button, I agree to $1', '<a target="_blank" href="http://www.sourcefabric.org/en/about/policy/">Sourcefabric\'s privacy policy</a>'); ?></i></p>
+    <p><i><?php echo $translator->trans('By clicking on Yes, help Newscoop button, I agree to $1', array('$1' => '<a target="_blank" href="http://www.sourcefabric.org/en/about/policy/">Sourcefabric\'s privacy policy</a>'), 'support'); ?></i></p>
     
     <form method="post" id="support_send_form" action="<?php echo $this->url(array('controller' => 'support', 'action' => $this->action), 'default'); ?>">
         <input type="hidden" id="stat_ask_time" name="stat_ask_time" value="7 days" />
         <input type="hidden" id="support_send" name="support_send" value="<?php echo($this->support_send); ?>">
-        <input type="button" style="font-size: 12px; float: right;" class="save-button yes" value="<?php echo $this->escape(getGS('Yes, help Newscoop')); ?>">
-        <input type="button" style="font-size: 12px; float: right;" class="save-button never" value="<?php echo $this->escape(getGS("Don't remind me")); ?>">
-        <input type="button" style="font-size: 12px; float: right;" class="save-button" value="<?php echo $this->escape(getGS('Remind me in 1 week')); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button yes" value="<?php echo $this->escape($translator->trans('Yes, help Newscoop', array(), 'support')); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button never" value="<?php echo $this->escape($translator->trans("Don't remind me", array(), 'support')); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button" value="<?php echo $this->escape($translator->trans('Remind me in 1 week', array(), 'support')); ?>">
         <div style="clear: both;"></div>
     </form>
 

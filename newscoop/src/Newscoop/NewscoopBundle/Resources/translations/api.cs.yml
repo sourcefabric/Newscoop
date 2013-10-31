@@ -1,0 +1,63 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 'To není barva'
+'No such field': 'Žádné takové pole'
+'Color saved': 'Barva uložena'
+'Color not saved': 'Barva neuložena'
+'Topic created': 'Námět vytvořen'
+'The topic name is already in use by another topic.': 'Název námětu je již užíván u jiného námětu.'
+'Complex Date': 'Komplexní datum'
+vertices: vrchol
+'There was a problem trying to execute the XML RPC function.': 'Vyskytl se problém při pokusu o provedení XML RPC funkce.'
+'The Campcaster server configuration is invalid.': 'Campcaster konfigurace serveru je neplatná.'
+'Pan Map': 'Pan Mapa'
+'Open large map': 'Otevřená velká mapa'
+'No news available.': 'Žádné novinky k dispozici.'
+'Edit Polygon': 'Upravit Polygon'
+'Create Polygon': 'Vytvořit Polygon'
+'Communication error: ': 'Komunikační eror:'
+'Cant fetch news from $1': 'Není možné získat zprávy z $1 '
+Loading...: 'Nahrává se...'
+Version: Verze
+License: Licence
+Homepage: 'Domovská stránka'
+'Show original map': 'Ukázat původní rozdělení'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Nahraný archiv neobsahuje platný plugin Newscoopu.'
+Map: Rozdělení
+Center: Střed
+Title: Název
+'Invalid security token.': 'Neplatný bezpečnostní symbol.'
+'Callback $1 is not callable.': 'Volání $1 není možné.'
+'Article translated to $4 ($5)': 'Článek přeložen do $4 ($5)'
+'Article status changed from $1 to $2.': 'Status článku změněn z $1 na $2.'
+'Article deleted.': 'Článek smazán.'
+'Article created.': 'Článek vytvořen.'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Článek kopírován do článku #$4 (publikace $5, vydání $6, sekce $7).'
+'Article URL': 'Článek URL'
+'Article Number': 'Číslo Článku'
+'Access denied.': 'Přístup byl odepřen.'
+'Publish with issue': 'Publikovat s vydáním'
+unknown: neznámý
+Switch: Přepnout
+Numeric: Číselný
+'The uploaded file format is unsupported.': 'Formát nahraného souboru není podporován.'
+'The following fields are mandatory:': 'Následující pole jsou povinné:'
+'Missing value for $1': 'Chybí hodnota pro $1'
+'Manage Plugins': 'Spravovat Pluginy'
+'* Marked fields are mandatory.': '* Označená pole jsou povinná.'
+'$1 is of type $2': '$1 je typu $2'
+'Invalid resize width/height.': 'Neplatná změna velikosti šířka/výška.'
+'Image type $1 is not supported.': 'Typ obrázku $1 není podporován.'
+'The file uploaded is not an image.': 'Nahraný soubor není obrázek.'
+'Could not delete record from the database.': 'Nezdařilo se odstranit záznam z databáze.'
+'template path': 'cesta šablony'
+'short names': 'krátká jména'
+'Unable to fetch image from remote server.': 'Nezdařilo se načíst obrázek ze vzdáleného serveru.'
+Last: Poslední
+First: První
+'Single-line Text': 'Jednořádkový text'
+'Multi-line Text with WYSIWYG': 'Více řádkový text WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 není platné, nebo se nejedná o obrázek.'
+'URL $1 is not an image.': 'URL $1 není obrázek'

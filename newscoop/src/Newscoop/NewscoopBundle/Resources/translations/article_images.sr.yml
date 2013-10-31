@@ -1,0 +1,76 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 
+'Slideshow rendition': 
+'Renditions reloaded': 
+'Reload renditions': 
+'Edit images': 
+'Specify image url if you want to load it.': 
+'Items: ': 
+'Attach slideshows': 
+'original size:': 
+'no caption': 
+'Video URL': 
+'Use for all': 
+'Use default': 
+'Slug must be unique': 
+Slug: 
+'Slideshow headline': 
+Slideshow: 
+'Set selected as default image': 
+'Set as default': 
+Saving...: 
+Saved: 
+'Save headline': 
+'Place Images': 
+'No renditions defined.': 
+'No images found.': 
+'No images attached to article.': 
+'No images': 
+'Next: Upload and Edit Metadata': 
+'Next: Place Images': 
+'Media Archive': 
+Location: 
+Items: 
+Item: 
+'Image files': 
+'Image Files: ': 
+Headline: 
+Finish: 
+'Edit Image Data': 
+'Edit $1': 
+'Done editing': 
+Detach: 
+Create: 
+Caption: 
+'Attached images': 
+'Attach & Place': 
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 
+'Add video': 
+'Add caption': 
+'Show all': 'Прикажи све'
+'The image has been removed from the article.': 'Слика је уклоњена из текста'
+'Unable to add new image.': 'Није могуће додати нову слику.'
+'Image number $1 already exists': 'Слика број $1 већ постоји'
+'You do not have the right to change image information.': 'Немате право мењања података о сликама.'
+'The image number specified is already in use.': 'Број слике који сте унели је већ у употреби.'
+'Image $1 updated.': 'Слика $1 је измењена.'
+'Image $1 added.': 'Слика $1 је додата.'
+'Edit article': 'Уреди текст'
+'You do not have the right to attach images to articles.': 'Немате право да качите слике уз текстове.'
+'You do not have the right to add images.': 'Немате право да додајете слике.'
+'Image information': 'Подаци о слици'
+'Attach New Image': 'Прикачи нову слику'
+'Attach Image To Article': 'Прикачи слику уз текст'
+'Attach Existing Image': 'Прикачи постојећу слику'
+'Add New Image': 'Додај нову слику'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Датум<br><small>(гггг-мм-дд)</small>
+'You must select an image file to upload.': 'Морате изабрати слику коју желите да аплоудујете.'
+'Change image information': 'Промени податке о слици'
+'You do not have the right to add images': 'Немате право да додајете слике'
+'Are you sure you want to remove the image $1 from the article?': 'Да ли сте сигурни да желите да уконите слику $1 из текста?'
+'Delete image $1': 'Избриши слику $1'
+'Click one of the ': 'Кликните на један од понуђених додај сликулинкова'
+'Are you sure you want to delete the image $1?': 'Да ли сте сигурни да желите да обришете слику $1?'
+'Unlink image $1': 'Уклони везу слике $1'

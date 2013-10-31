@@ -1,8 +1,10 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -27,7 +29,7 @@ if (sizeof($f_article_codes) == 0) {
 }
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())));
 	exit;
 }
 
@@ -39,13 +41,13 @@ if ($f_article_offset < 0) {
 switch ($f_article_list_action) {
 case "delete":
 	if (!$g_user->hasPermission('DeleteArticle')) {
-		camp_html_display_error(getGS("You do not have the right to delete articles."));
+		camp_html_display_error($translator->trans("You do not have the right to delete articles.", array(), 'articles'));
 		exit;
 	}
 	break;
 case "publish":
 	if (!$g_user->hasPermission('Publish')) {
-		$errorStr = getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
+		$errorStr = $translator->trans("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", array(), 'articles');
 		camp_html_display_error($errorStr, $BackLink);
 		exit;
 	}
@@ -53,7 +55,7 @@ case "publish":
 case "copy":
 case "copy_interactive":
 	if (!$g_user->hasPermission('AddArticle')) {
-		$errorStr = getGS("You do not have the right to add articles.");
+		$errorStr = $translator->trans("You do not have the right to add articles.");
 		camp_html_display_error($errorStr, $BackLink);
 		exit;
 	}
@@ -80,7 +82,7 @@ case "workflow_new":
 			$articleObj->setWorkflowStatus('N');
 		}
 	}
-	camp_html_add_msg(getGS("Article status set to '$1'", getGS("New")), "ok");
+	camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $translator->trans("New")), 'articles'), "ok");
 	break;
 case "workflow_submit":
 	foreach ($articleCodes as $articleCode) {
@@ -90,7 +92,7 @@ case "workflow_submit":
 			$articleObj->setWorkflowStatus('S');
 		}
 	}
-	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Submitted")), "ok");
+	camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $translator->trans("Submitted")), 'articles'), "ok");
 	break;
 case "workflow_publish":
 	foreach ($articleCodes as $articleCode) {
@@ -102,7 +104,7 @@ case "workflow_publish":
                 'article' => $articleObj
             )));
 	}
-	camp_html_add_msg(getGS("Article status set to '$1'", getGS("Published")), "ok");
+	camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $translator->trans("Published")), 'articles'), "ok");
 	break;
 case "delete":
 	foreach ($articleCodes as $articleCode) {
@@ -113,7 +115,7 @@ case "delete":
 	    && (count($articleCodes) + $f_article_offset) == $f_total_articles) {
 		$f_article_offset -= $ArticlesPerPage;
 	}
-	camp_html_add_msg(getGS("Article(s) deleted."), "ok");
+	camp_html_add_msg($translator->trans("Article(s) deleted.", array(), 'articles'), "ok");
 	break;
 case "toggle_front_page":
 	foreach ($articleCodes as $articleCode) {
@@ -122,7 +124,7 @@ case "toggle_front_page":
 			$articleObj->setOnFrontPage(!$articleObj->onFrontPage());
 		}
 	}
-	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("On Front Page")."&quot;"), "ok");
+	camp_html_add_msg($translator->trans("$1 toggled.", array('$1' => "&quot;".$translator->trans("On Front Page")."&quot;"), 'articles'), "ok");
 	break;
 case "toggle_section_page":
 	foreach ($articleCodes as $articleCode) {
@@ -131,7 +133,7 @@ case "toggle_section_page":
 			$articleObj->setOnSectionPage(!$articleObj->onSectionPage());
 		}
 	}
-	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("On Section Page")."&quot;"), "ok");
+	camp_html_add_msg($translator->trans("$1 toggled.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;"), 'articles'), "ok");
 	break;
 case "toggle_comments":
 	foreach ($articleCodes as $articleCode) {
@@ -140,7 +142,7 @@ case "toggle_comments":
 			$articleObj->setCommentsEnabled(!$articleObj->commentsEnabled());
 		}
 	}
-	camp_html_add_msg(getGS("$1 toggled.", "&quot;".getGS("Comments")."&quot;"), "ok");
+	camp_html_add_msg($translator->trans("$1 toggled.", array('$1' => "&quot;".$translator->trans("Comments")."&quot;"), 'articles'), "ok");
 	break;
 case "copy":
 	foreach ($groupedArticleCodes as $articleNumber => $languageArray) {
@@ -158,7 +160,7 @@ case "copy":
                 'orginal_article_number' => $articleNumber
             )));
 
-		camp_html_add_msg(getGS("Article(s) duplicated."), "ok");
+		camp_html_add_msg($translator->trans("Article(s) duplicated.", array(), 'articles'), "ok");
 	}
 	camp_session_set($offsetVarName, 0);
 	break;
@@ -191,10 +193,10 @@ case "unlock":
 			$articleObj->setIsLocked(false);
 		}
 	}
-	camp_html_add_msg(getGS("Article(s) unlocked."), "ok");
+	camp_html_add_msg($translator->trans("Article(s) unlocked.", array(), 'articles'), "ok");
 	break;
 case "context_box_update":
-	camp_html_add_msg(getGS("Context Box updated"), "ok");
+	camp_html_add_msg($translator->trans("Context Box updated", array(), 'articles'), "ok");
 	break;
 case "schedule_publish":
 	$args = $_REQUEST;

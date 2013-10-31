@@ -1,3 +1,3 @@
-<h1><?php putGS('Add new acceptance criteria'); ?></h1>
+<h1><?php $translator = \Zend_Registry::get('container')->getService('translator'); echo $translator->trans('Add new acceptance criteria', array(), 'comments'); ?></h1>
 
 <?php echo $this->form; ?>

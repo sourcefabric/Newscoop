@@ -1,3 +1,4 @@
-<h1><?php putGS('Add new comment commenter'); ?></h1>
+<h1><?php $translator = \Zend_Registry::get('container')->getService('translator'); 
+echo $translator->trans('Add new comment commenter', array(), 'comments'); ?></h1>
 
 <?php echo $this->form; ?>

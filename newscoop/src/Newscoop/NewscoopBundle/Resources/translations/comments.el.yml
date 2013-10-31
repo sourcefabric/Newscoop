@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Πρόκειτε να διαγράψετε οριστικά πολλά μηνύματα.'
+'You are about to permanently delete a message.': 'Πρόκειτε να διαγράψετε οριστικά ένα μήνυμα.'
+User: Χρήστης
+None: Κανένα
+'Coming from': 'Προερχόμενο από'
+'Ban/Unban user': 'Αποκλεισμός/Αναίρεση αποκλεισμού χρήστη'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Απαγορεύσεις μπορούν να εφαρμοστούν σε ονόματα χρηστών, διευθύνσεις email ή διευθύνσεις ΙΡ.'
+'You are about to permanently delete multiple comments.': 'Πρόκειται να διαγράψετε οριστικά πολλαπλά σχόλια.'
+'You are about to permanently delete a comment.': 'Πρόκειται να διαγράψετε οριστικά ένα σχόλιο.'
+Website: Ιστοσελίδα
+'Value is not $1 characters long': 'Η αξία δεν είναι $1 χαρακτήρων'
+Username: 'Όνομα χρήστη'
+'User id': 'Ταυτότητα χρήστη'
+'User ban settings': 'Ρυθμίσεις αποκλεισμού χρήστη'
+'Update comment': 'Ενημέρωση σχολίου'
+Unrecommended: 'Δεν συνιστάται'
+Unrecommend: 'Δεν συνιστάται'
+'Subject is not $1 characters long': 'Το θέμα δεν είναι $1 χαρακτήρων'
+'Sort by Thread order': 'Ταξινόμηση με διάταξη Θέματος'
+'Show parent comment': 'Εμφάνιση γονικού σχολίου'
+'Show commenter details': 'Εμφάνιση λεπτομερειών σχολιαστή'
+'Show commenter': 'Προβολή σχολιαστή'
+'Show comment user details': 'Εμφάνιση λεπτομερειών σχολίου χρήστη'
+'Show comment user': 'Εμφάνιση σχολίου χρήστη'
+'Show comment details': 'Εμφάνιση λεπτομερειών σχολίου'
+'Select status': 'Επιλέξτε κατάσταση'
+'Search Type': 'Αναζήτηση Τύπου'
+'Reply to comment': 'Απάντηση σε σχόλιο'
+Recommended: Προτινόμενο
+Recommend: Συνιστάται
+'Quick edit': 'Γρήγορη επεξεργασία'
+Parent: Γονικό
+ID: Ταυτότητα
+'Go to edit article': 'Πηγαίνετε στην επεξεργασία άρθρου'
+Forum: Φόρουμ
+'For Column': 'Για Στήλη'
+Email: Email
+'Edit acceptance criteria': 'Επεξεργασία κριτηρίων αποδοχής'
+E-mail: E-mail
+'Delete all comments?': 'Διαγραφή όλων των σχολίων;'
+'Date Created': 'Η ημερομηνία δημιουργήθηκε'
+'Comments updated.': 'Τα σχόλια ενημερώθηκαν.'
+'Comments status change to $1.': ' Η κατάσταση σχολίων άλλαξε σε $1.'
+'Comments deleted.': 'Τα σχόλια διαγράφηκαν.'
+'Commenter $1 saved.': 'Ο σχολιαστής $1  αποθηκεύτηκε.'
+'Commenter $1 deleted.': 'Ο σχολιαστής $1 διαγράφηκε.'
+Commenter: Σχολιαστής
+'Comment updated.': 'Το σχόλιο ενημερώθηκε.'
+'Comment status change to $1.': ' Η κατάσταση σχολίου άλλαξε σε $1.'
+'Comment id': 'Ταυτότητα σχολίου'
+'Comment deleted.': 'Το σχόλιο διαγράφηκε.'
+'Comment delete by $1 from the article $2 ($3)': 'Το σχόλιο διαγράφηκε από $1 από το άρθρο $2 ($3) '
+'Comment Acceptance': 'Αποδοχή Σχολίου'
+'Comment $4 by $1 in the article $2 ($3)': 'Σχόλιο $4 από $1 στο άρθρο $2 ($3)'
+'Comment $1 saved.': 'Το σχόλιο $1 αποθηκεύτηκε.'
+Column: Στήλη
+'Change subscriber information': 'Αλλαγή πληροφοριών συνδρομητή'
+'Ban for commenter $1 saved.': 'Ο αποκλεισμός του χρήστη $1 αποθηκεύτηκε.'
+Ban: Απαγόρευση
+'Are you sure you want to do it?': 'Είστε σίγουρος/η ότι θέλετε να το κάνετε;'
+'Add rating': 'Προσθήκη αξιολόγησης'
+'Add new comment commenter': 'Προσθήκη νέου σχολιαστή σχολίου'
+'Add new comment': 'Προσθήκη νέου σχολίου'
+'Add new acceptance criteria': 'Προσθήκη νέων κριτηρίων αποδοχής'
+'Acceptance $1 saved.': 'Η αποδοχή $1 αποθηκεύτηκε.'
+'Acceptance $1 deleted.': 'Η αποδοχή $1 διαγράφηκε.'

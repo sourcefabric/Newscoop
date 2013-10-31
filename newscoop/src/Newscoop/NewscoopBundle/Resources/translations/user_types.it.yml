@@ -1,0 +1,81 @@
+get: 
+Soundcloud: SoundCloud
+Templates: Template
+'Feedback Messages': 'Messaggi di feedback'
+'Article Playlists': 'Vetrine di articoli'
+'Check all': 'Seleziona tutto'
+view: visualizza
+undo/redo: annulla/ripristina
+underline: sottolinea
+translate: traduci
+'text direction': 'direzione testo'
+'text alignment': 'allineamento testo'
+table: tabella
+superscript: apice
+subscript: pedice
+subhead: sottotitolo
+strikethrough: barrato
+statusbar: 'barra di stato'
+'spell checker enabled': 'controllo ortografia attivo'
+'source view': sorgente
+publish: pubblica
+notify: notifica
+moderate: modera
+manage: gestisci
+'list number': 'elenco numerato'
+'list bullet': 'elenco puntato'
+link: link
+italic: italico
+indent: indenta
+image: immagine
+'horizontal rule': 'linea orizzontale'
+handle: gestisci
+guest: ospite
+'font size': 'dimensione font'
+'font face': 'tipo font'
+'font color': 'colore font'
+find/replace: trova/sostituisci
+enlarge: ingrandisci
+enable: abilita
+edit: modifica
+delete: elimina
+copy/cut/paste: copia/taglia/incolla
+clear: pulisci
+'character map': 'mappa caratteri'
+bold: grassetto
+attach: allega
+'any resource': 'qualsiasi risorsa'
+admin: amministra
+add: aggiungi
+'You cant deny yourself to manage $1': 'Non puoi impedire a te stesso di gestire $1'
+'You are not allowed to $1 $2.': 'Non hai il permesso di $1 $2.'
+'User type saved.': 'Tipo utente salvato.'
+'User type deleted.': 'Tipo utente eliminato.'
+'User type added.': 'Tipo utente aggiunto.'
+'User Groups': 'Gruppo utenti'
+Themes: Temi
+'That type name already exists, please choose a different name.': 'Il nome del tipo utente esiste già. Per favore usane un altro.'
+System: Sistema
+Structure: Struttura
+'Search Indexer': 'Indice di ricerca'
+'Rich-Text Editor Preferences': 'Preferenze delleditor'
+ReCaptcha: ReCAPTCHA
+Polls: Sondaggi
+'Permissions:': 'Permessi:'
+'Permissions updated': 'Permessi aggiornati'
+Notification: Notifiche
+Log: Log
+Layout: Layout
+Global: Globale
+Files: File
+'Error: ': 'Errore:'
+'Edit user type $1': 'Modifica tipo utente $1'
+Deny: Nega
+'Delete user type $1': 'Elimina tipo utente $1'
+'Can not delete a user type with assigned users.': 'Impossibile eliminare un tipo utente se ha utenti assegnati.'
+Cache: Cache
+Backup: Backup
+Authoring: Creazione
+Allow: Permetti
+'User types': 'Tipi utente'
+'No user types.': 'Nessun tipo utente.'

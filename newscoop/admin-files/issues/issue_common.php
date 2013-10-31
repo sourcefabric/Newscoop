@@ -1,5 +1,4 @@
 <?PHP
-camp_load_translation_strings("issues");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
@@ -23,6 +22,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 function camp_is_issue_conflicting($p_publicationId, $p_issueNumber, $p_languageId, $p_urlName, $p_isExistingIssue)
 {
 	global $ADMIN;
+	$translator = \Zend_Registry::get('container')->getService('translator');
 	// The tricky part - language ID and URL name must be unique.
 	$conflictingIssues = Issue::GetIssues($p_publicationId, $p_languageId, null, $p_urlName, null, false, null, true);
 	$conflictingIssue = array_pop($conflictingIssues);
@@ -39,12 +39,12 @@ function camp_is_issue_conflicting($p_publicationId, $p_issueNumber, $p_language
 			."&Issue=".$conflictingIssue->getIssueNumber()
 			."&Language=".$conflictingIssue->getLanguageId();
 
-		$errMsg = getGS('The language and URL name must be unique for each issue in this publication.')."<br>".getGS('The values you are trying to set conflict with issue "$1$2. $3 ($4)$5".',
-			"<a href='$conflictingIssueLink'>",
-			$conflictingIssue->getIssueNumber(),
-			$conflictingIssue->getName(),
-			$conflictingIssue->getLanguageName(),
-			'</a>');
+		$errMsg = $translator->trans('The language and URL name must be unique for each issue in this publication.', array(), 'issues')."<br>".$translator->trans('The values you are trying to set conflict with issue $1$2. $3 ($4)$5.', array(
+			'$1' => "<a href='$conflictingIssueLink'>",
+			'$2' => $conflictingIssue->getIssueNumber(),
+			'$3' => $conflictingIssue->getName(),
+			'$4' => $conflictingIssue->getLanguageName(),
+			'$5' => '</a>'), 'issues');
 		return $errMsg;
 	}
 	return "";

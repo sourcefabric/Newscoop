@@ -1,0 +1,14 @@
+'Enable reCAPTCHA for subscriptions': 'reCAPTCHA-ს ჩართვა გამოწერებისთვის'
+'Add the {{ recaptcha }} tag to your template file containing the comments/subscription form': 'მიანიჭეთ  {{ recaptcha }} იარლიყი თქვენს შაბლონურ ფაილს, რომელიც კომენტარების/ გამოწერების ფორმას შეიცავს'
+'reCAPTCHA provides a simple way to place a CAPTCHA on your Newscoop website, helping you stop bots from abusing it.': 'reCAPTCHA გეხმარებათ CAPTCHA კოდების გამოყენებაში რათა დაიცვათ თქვენი ვებგვერდი ბოტებისგან.'
+'reCAPTCHA preferences updated.': 'reCAPTCHA თვისებები განახლდა.'
+'reCAPTCHA Settings': 'reCAPTCHA პარამეტრები'
+reCAPTCHA: reCAPTCHA
+here: აქ
+'You do not have the right to manage reCAPTCHA.': 'თქვენ არ გაქვთ reCAPTCHA-ს მართვის უფლება'
+'User may manage reCAPTCHA': 'მომხმარებელს შეუძლია reCAPTCHA-ს მართვა'
+'To use this plugin you need': 'ამ პლაგინის გამოსაყენებლად თქვენ გჭირდება'
+'Enter your reCAPTCHA public key': 'შეიყვანეთ თქვენი საჯარო reCAPTCHA გასაღები'
+'Enter your reCAPTCHA private key': 'შეიყვანეთ თქვენი პირადი reCAPTCHA გასაღები'
+'Enable reCAPTCHA for comments': 'reCAPTCHA-ს ჩართვა კომენტარებისთვის.'
+'Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it': 'ჩართეთ და შეიყვანეთ reCAPTCHA გასაღები. თუკი ეს გასაღები ჯერ არ გაქვთ, თქვენ შეგიძლია შექმნათ იგი'

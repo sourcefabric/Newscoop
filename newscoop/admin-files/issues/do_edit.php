@@ -10,15 +10,16 @@ use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 //@New theme management
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
-	camp_html_display_error(getGS('You do not have the right to change issue details.'));
+	camp_html_display_error($translator->trans('You do not have the right to change issue details.', array(), 'issues'));
 	exit;
 }
 
@@ -39,7 +40,7 @@ $f_article_template_id = Input::Get('f_article_template_id', 'string');
 $f_url_name = trim(Input::Get('f_url_name'));
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString()), 'issues'));
 	exit;
 }
 $publicationObj = new Publication($f_publication_id);
@@ -47,16 +48,16 @@ $issueObj = new Issue($f_publication_id, $f_current_language_id, $f_issue_number
 
 $backLink = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_current_language_id";
 if ($f_new_language_id == 0) {
-	camp_html_add_msg(getGS('You must select a language.'));
+	camp_html_add_msg($translator->trans('You must select a language.'));
 }
 if (empty($f_issue_name)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.', "'".getGS('Name')."'"));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => "'".$translator->trans('Name')."'")));
 }
 if (empty($f_url_name)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.', "'".getGS('URL Name')."'"));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => "'".$translator->trans('URL Name')."'")));
 }
 if (!camp_is_valid_url_name($f_url_name)) {
-	camp_html_add_msg(getGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"));
+	camp_html_add_msg($translator->trans('The $1 field may only contain letters, digits and underscore (_) character.', array('$1' => "'" . $translator->trans('URL Name') . "'")));
 }
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
@@ -108,7 +109,7 @@ if($f_article_template_id != null && $f_article_template_id != '0'){
 if ($changed) {
         
 } else {
-	$errMsg = getGS("Could not save the changes to the issue.");
+	$errMsg = $translator->trans("Could not save the changes to the issue.", array(), 'issues');
 	camp_html_add_msg($errMsg);
 	exit;
 }
@@ -134,7 +135,7 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
     }
 	//@New theme management
 	$link = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId();
-	camp_html_add_msg(getGS('Issue updated'), "ok");
+	camp_html_add_msg($translator->trans('Issue updated', array(), 'issues'), "ok");
 	camp_html_goto_page($link);
 }
 

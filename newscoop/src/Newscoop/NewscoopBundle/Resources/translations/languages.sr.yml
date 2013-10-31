@@ -1,0 +1,82 @@
+'Language id not specified': 
+'No languages.': 'Нема језика.'
+'Native Name': 'Изворно име'
+'Name taken.': 'Име је већ у употреби'
+'Language saved.': 'Језик снимљен.'
+'Language removed.': 'Језик уклоњен.'
+'Language not found.': 'Језик није пронађен.'
+'Language is in use and cannot be removed.': 'Језик је у употреби и не може бити уклоњен.'
+'Language added.': 'Језик додат.'
+'English language cannot be removed.': 'Енглески језик не може бити уклоњен.'
+'Edit short month names': 'Уреди скраћена имена месеци'
+'Edit short day names': 'Уреди скраћена имена дана'
+'Edit month names': 'Уреди имена месеци'
+'Edit language: $1': 'Уреди језик: $1'
+'Edit day names': 'Уреди имена дана'
+'Code Page': 'Кодна страна'
+'Add new Language': 'Додај нови језик'
+'Add Language': 'Додај језик'
+We: ср
+Tu: ут
+Th: че
+Su: не
+Sep: сеп
+Sa: су
+'Please enter the translation for week day short names.': 'Молимо унесите преводе за скраћенице имена дана у недељи'
+'Please enter the translation for month short names.': 'Молимо унесите преводе за скраћенице имена месеци'
+Oct: окт
+Nov: нов
+Mo: по
+Mar: мар
+Jun: јун
+Jul: јул
+Jan: јан
+Fr: пе
+Feb: феб
+Dec: дец
+Aug: авг
+Apr: апр
+'No language.': 'Нема језика'
+'Delete language $1': 'Обриши језик $1'
+'You do not have the right to add languages.': 'Немате право да додајете језике'
+'Please enter the translation for time units.': 'Унеситпревод временских јединица'
+'You do not have the right to delete languages.': 'Немате право да бришете језике'
+'Are you sure you want to delete the language $1?': 'Сигурни сте да желите да обришете језик $1?'
+'Deleting language': 'Брисање језика'
+'The language $1 could not be deleted.': 'Језик $1 не може бити обрисан'
+'Edit language': 'Уреди језик'
+'You do not have the right to edit languages.': 'Немате право да уређујете језике'
+'Please enter the translation for month names.': 'Унеси преводе за имена месеци'
+'Please enter the translation for week day names.': 'Унеси преводе за имена дана'
+January: јануар
+February: фебруар
+March: март
+April: април
+May: мај
+June: јун
+July: јул
+August: август
+September: септембар
+October: октобар
+November: новембар
+December: децембар
+Monday: понедељак
+Tuesday: уторак
+Wednesday: среда
+Thursday: четвртак
+Friday: петак
+Saturday: субота
+Sunday: недеља
+'You do not have the right to add new languages.': 'Немате право да додајете нове језике.'
+'There are $1 issue(s) left.': 'Преостало је  $1издања.'
+'Native name': 'Изворно име'
+'The language $1 has been successfuly added.': 'Језик $1 успешно је додат'
+'Please check if a language with the same name does not already exist.': 'Проверите да ли језик са истим именом већ не постоји'
+'The language could not be added.': 'Језик не може бити додат'
+'Delete language': 'Обриши језик'
+'The language $1 has been deleted.': 'Језик $1 је додат'
+'Updating language information': 'Мењање података о језику'
+'Language information has been successfuly updated.': 'Подаци о језику су успешно промењени'
+'Language information could not be updated.': 'Подаци о језику не могу бити измењени'
+'A language with the same name already exists.': 'Језик под тим именом већ постоји'
+'Add another language': 'Додај нови језик'

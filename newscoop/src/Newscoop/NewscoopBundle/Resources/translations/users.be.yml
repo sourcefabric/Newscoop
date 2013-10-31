@@ -1,0 +1,205 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 
+'User with id $1 not found': 
+'User was deleted.': 
+'User saved': 
+'User id not specified': 
+'User $1 created': 
+'Send confirm email': 
+'Profile saved.': 
+Picture: 
+'Password updated': 
+None: 
+'New confirmation email was sent to user.': 
+'Email is used already': 
+'Edit your password': 
+'Edit user $1': 
+'Edit subscriptions': 
+'Edit profile': 
+'Edit permissions': 
+'Create new account': 
+'Comment ban settings': 
+'Ban for user $1 saved.': 
+'User account is active': 
+'Allow users profile to be publicly displayed': 
+'Allow user access to login to site backend': 
+Templates: 
+Username: 
+'Last Name': 
+'First Name': 
+Email: 
+'You were logged out.': 
+'Newscoop Subhead': 
+Filters: Фільтры
+'Add new Author': 'Дадаць новага аўтара'
+'Loading Data': 'Загрузка звестак'
+'Delete author type': 'Выдаліць тып аўтара'
+'Cannot remove author type.': 'Гэты тып аўтара не можа быць выдалены.'
+'Cannot remove author alias.': 'Гэты псэўданім аўтара не можа быць выдалены.'
+'Author alias removed.': 'Аліяс аўтара быў выдалены.'
+'Are you sure you want to delete this author?': 'Вы ўпэўненыя, што жадаеце выдаліць гэтага аўтара?'
+'Are you sure you want to delete this author alias?': 'Вы ўпэўненыя, што жадаеце выдаліць псэўданім гэтага аўтара?'
+'All Author Types': 'Усе тыпы аўтараў'
+'Add author type': 'Дадаць тып аўтара'
+'You do not have the permission to change authors.': 'У Вас няма правоў доступу для змены інфармацыі аб аўтарах.'
+'Please fill at least first name and last name.': 'Калі ласка, увядзіце імя і прозвішча.'
+'Cannot add author type, this type already exists.': 'Немагчыма дадаць такі тып аўтара, ён ужо існуе.'
+'Author type removed.': 'Гэты тып аўтара выдалены.'
+'Author type must be at least three characters long.': 'Тып аўтара павінен быць як мінімум на 3 сімвала больш.'
+'Author type added.': 'Дададзены новы тып аўтара.'
+'Are you sure you want to delete this author type?': 'Вы ўпэўненыя, што жадаеце выдаліць гэты тып аўтара?'
+'User may change authors': 'Карыстальнік можа змяняць інфармацыю пра аўтараў'
+'Unable to add new image, target directory is not writable.': 'Немагчыма дадаць малюнак, мэтавы каталог недаступны для запісу.'
+'Author saved.': 'Інфармацыя пра аўтара захаваная.'
+'Author deleted.': 'Аўтар выдалены.'
+'Enable Firefox spell checking by default': 'Уключыць праверку правапісу ў Firefox па-змоўчванні'
+'User may use the editor status bar': 'Карыстач можа карыстацца радком стану рэдактара'
+'User may clear up the system cache': 'Карыстач можа чысціць сістэму кэшавання'
+'Another user is registered with that e-mail address, please choose a different one.': 'Іншы карыстач зарэгістраваўся пад гэтым электронным адрасам, калі ласка, увядзіце іншы.'
+'There was an error when trying to update the user info.': 'Адбылася памылка пры спробе абнаўлення інфармацыі аб карыстачу.'
+'User may moderate comments': 'Карыстальнiк можа мадэраваць камэнтары'
+'User may enable comments': 'Карыстальнiк можа дазваляць камэнтары'
+'User may translate articles': 'Карыстальнiк можа перакладаць артыкулы'
+'User may move articles': 'Карыстальнiк можа перамяшчаць артыкулы'
+'User may find and replace': 'Карыстальнiк можа выконваць пошук i замену'
+'User may change system preferences': 'Карыстальнiк можа зьмяняць наладкі сыстэмы'
+'User may attach topics to articles': 'Карыстальнiк можа прымацоўваць тэмы да артыкулаў'
+'User may attach images to articles': 'Карыстальнiк можа прымацоўваць графiчныя файлы да артыкулаў'
+'User may add special characters': 'Карыстальнiк можа дадаваць спэцыяльныя сымбалі'
+'That user name already exists, please choose a different login name.': 'Гэтае iмя карыстальнiка ўжо iснуе, калi ласка выбераце iншае iмя.'
+'User may delete article attachments': 'Карыстальнiк можа выдаляць дадаткі да артыкулаў.'
+'User may change article attachments': 'Карыстальнiк можа зьмяняць дадаткі да артыкулаў.'
+'User may add article attachments': 'Карыстальнiк можа дадаваць дадаткі да артыкулаў.'
+'You do not have the right to create user accounts.': 'Вы ня маеце права доступу для стварэньня ўліковых запiсаў карыстальнiкаў.'
+'You must select a $1': 'Вы павiнны вызначыць $1'
+'The password must be at least 6 characters long and both passwords should match.': 'Пароль павiнен складацца ня меней, чым з 6 сiмвалаў.'
+'The user account could not be created.': 'Немагчамы стварыць улiковы запic карыстальнiка.'
+'User account $1 was created successfully.': 'Улiковы запic карыстальнiка $1 быў пасьпяхова створаны.'
+'You do not have the right to change user account permissions.': 'Вы ня маеце права доступу для зьмяненьня правоў улiковага запicу карыстальнiка.'
+'You do not have the right to change user account information.': 'Вы ня маеце права доступу для зьмяненьня iнфармацыi аб улiковым запicе карыстальнiка.'
+'The password you typed is incorrect.': 'Вы ўвялі няправільны пароль.'
+'You do not have the right to delete user accounts.': 'Вы ня маеце права доступу для выдаленьня ўлiковых запicаў карыстальнiкаў.'
+'User account $1 was deleted successfully.': 'Улiковы запic карыстальнiка $1 пасьпяхова выдалены.'
+'The IP Group $1 has been created.': 'IP-група $1 была створаная'
+'There was an error creating the IP address group.': 'Памылка стварэньня групы IP адрасоў.'
+'The IP address group $1 has been deleted.': 'Група IP адрасоў $1 была выдаленая.'
+'User $1 information was changed successfully.': 'Iнфармацыя карыстальнiка $1 была пасьпяхова зьмененая.'
+'User Type': 'Тып карыстальнiка'
+'The IP address group $1:$2 conflicts with another existing group.': 'Група IP-адрасоў канфлiктуе'
+'User may add/change publications': 'Карыстальнiк можа дадаваць/зьмяняць выданьнi'
+'Invalid value of user type parameter': 'Няправiльнае значэньне тыпу карыстальнiка'
+'User may delete publications': 'Карыстальнiк можа выдаляць выданьнi'
+'User may add/change issues': 'Карыстальнiк можа дадаваць/зьмяняць выпускi'
+'User may delete issues': 'Карыстальнiк можа выдаляць выпускi'
+'User may add/change sections': 'Карыстальнiк можа дадаваць/зьмяняць рубрыкi'
+'User may delete sections': 'Карыстальнiк можа выдаляць рубрыкi'
+'User may add articles': 'Карыстальнiк можа дадаваць артыкулы'
+'User may change articles': 'Карыстальнiк можа зьмяняць артыкулы'
+'User may delete articles': 'Карыстальнiк можа выдаляць артыкулы'
+'User may add images': 'Карыстальнiк можа дадаваць графiчныя файлы'
+'User may change images': 'Карыстальнiк можа зьмяняць графiчныя файлы'
+'User may delete images': 'Карыстальнiк можа выдаляць графiчныя файлы'
+'User may delete templates': 'Карыстальнiк можа выдаляць шаблёны'
+'User may add/change staff accounts and passwords': 'Карыстальнiк можа дадаваць/выдаляць улiковыя запicы i паролi пэрсаналу.'
+'User may add/change subscribers accounts and passwords': 'Карыстальнiк можа дадаваць/выдаляць улiковыя запicы i паролi падпiсчыкаў'
+'User may delete staff accounts': 'Карыстальнiк можа выдаляць улiковыя запicы пэрсаналу.'
+'User may manage user subscriptions': 'Карыстальнiк можа кiраваць карыстальнiцкiмi падпiскамі'
+'User may manage account types': 'Карыстальнiк можа кiраваць тыпамi ўлiковых запicаў'
+'User may add/change article types': 'Карыстальнiк можа дадаваць/зьмяняць тыпы артыкулаў'
+'User may delete article types': 'Карыстальнiк можа выдаляць тыпы артыкулаў'
+'User may manage templates': 'Карыстальнiк можа кiраваць шаблёнамi'
+'User may add/change country entries': 'Карыстальнiкi могуць выдаляць/зьмяняць запicы аб краiнах'
+'User may add languages and manage language information': 'Карыстальнiк можа дадаваць мовы i кiраваць iнформацыяй аб мовах'
+'User may delete languages': 'Карыстальнiк можа выдаляць мовы'
+'User may view audit logs': 'Карыстальнiк можа праглядаць журнал справаздачнасьцi'
+'User may delete country entries': 'Карыстальнiк можа выдаляць запiсы аб краiнах'
+'User may manage localizer': 'Карыстальнiк можа кiраваць лякалізатарам'
+'User may publish articles': 'Карыстальнiк можа публікаваць артыкулы'
+'User may manage topics': 'Карыстальнiк можа кiраваць тэмамi'
+'User may use bold': 'Карыстальнiк можа выкарыстоўваць тып шрыфту Bold'
+'User may use italic': 'Карыстальнiк можа выкарыстоўваць тып шрыфту Italic'
+'User may use underline': 'Карыстальнiк можа вылучаць тэкст падкрэсьлiваньнем'
+'User may use strikethrough': 'Карыстальнiк можа вылучаць тэкст перакрэсьлiваньнем '
+'User may change text alignment': 'Карыстальнiк можа зьмяняць выроўніваньне тэксту'
+'User may copy, cut, and paste': 'Карыстальнiк можа капіяваць, вырэзваць i ўстаўляць'
+'User may undo/redo': 'Карыстальнiк можа адмяняць дзеяньнi'
+'User may change text direction': 'Карыстальнiк можа зьмяняць напрамак тэксту'
+'User may set indents': 'Карыстальнiк можа ўсталёўваць водступы'
+'User may add links': 'Карыстальнiк можа дадаваць спасылкi'
+'User may add subheads': 'Карыстальнiк можа дадаваць падзагалоўкі'
+'User may insert images': 'Карыстальнiк можа ўстаўляць графiчыя файлы'
+'User may view the HTML source': 'Карыстальнiк можа глядзець HTML-код'
+'User may enlarge the editor': 'Карыстальнiк можа расшыраць рэдактар'
+'User may change the font face': 'Карыстальнiк можа зьмяняць шрыфт'
+'User may change the font size': 'Карыстальнiк можа змяняць памер шрыфту'
+'User may create bulleted lists': 'Карыстальнiк можа ствараць ненумараваны сьпiс'
+'User may create numbered lists': 'Карыстальнiк можа ствараць нумараваны сьпiс'
+'User may insert tables': 'Карыстальнiк можа ўстаўляць таблицы'
+'User may insert horizontal rules': 'Карыстальнiк можа ўстаўляць гарызантальныя лініі'
+'User may change the font color': 'Карыстальнiк можа зьмяняць колер шрыфту'
+'User may use superscripts': 'Карыстальнiк можа выкарыстоўваць верхнi шрыфт'
+'User may use subscripts': 'Карыстальнiк можа выкарыстовываць ніжні шрыфт'
+'User may backup and restore the site data': 'Карыстальнік можа кіраваць рэзервным капіраваннем'
+Miscellaneous: Рознае
+'Staff/Subscribers Management': 'Кiраваньне пэрсаналам/падпiсчыкамі'
+'Editor Basic Settings': 'Асноўныя наладкі рэдактара'
+'Editor Advanced Font Settings': 'Расшыраныя наладкі шрыфтоў рэдактару'
+'Editor Table Settings': 'Наладкі таблiц'
+'Administrative tasks': 'Адміністрацыйныя заданьнi'
+'User will be notified on several events': 'Карыстальнiк будзе апавяшчацца аб некаторых падзеях'
+'Editor Miscellaneous Settings': 'Iншыя наладкі рэдактара'
+'No such user account.': 'Няма такога ўлiковага запicу карыстальнiка.'
+'User may restart the template engine': 'Карыстальнiк можа перазагрузiць рухавік шаблёнаў'
+'User Name': 'Iмя карыстальнiка'
+' management': 
+'You do not have the right to change user passwords.': 'Вы ня маеце права доступу для зьмяненьня пароляў.'
+'The password could not be changed.': 'Немагчыма зьмянiць пароль карыстальнiка.'
+'The password has been changed.': 'Пароль быў зьменены.'
+'Edit user account permissions': 'Рэдагаваць права ўлiковага запiсу карыстальнiка'
+'Old password': 'Стары пароль'
+'New password': 'Новы пароль'
+'Confirm new password': 'Пацьвердзiце новы пароль'
+'Changing your password': 'Зьмяненьне Вашага паролю.'
+'User $1 changed his password': 'Карыстальнiк $1 зьмянiў свой пароль'
+'Delete user account': 'Выдалiць улiковы запiс карыстальнiка'
+'IP Access List': 'Сьпiс IP-доступу '
+'Delete IP Group': 'Выдалiць групу IP-адрасоў'
+'You do not have the right to delete IP Groups.': 'Вы ня маеце права доступу для выдаленьня групы IP-адрасоў'
+'No such IP Group.': 'Няма такой групы IP-адрасоў'
+'User management': 'Кiраваньне карыстальнiкамi:by'
+Staff: 'Пэрсанал:by'

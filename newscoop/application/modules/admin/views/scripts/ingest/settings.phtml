@@ -1,18 +1,21 @@
-<?php $this->placeholder('bodyId')->set('ingest'); ?>
-<?php $this->placeholder('title')->set(getGS('Settings')); ?>
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator'); 
+$this->placeholder('bodyId')->set('ingest'); 
+?>
+<?php $this->placeholder('title')->set($translator->trans('Settings')); ?>
 
 <h3>Feeds</h3>
 
 <ul class="feeds">
     <?php foreach ($this->feeds as $feed) { ?>
-    <li><?php echo $feed->getName(); ?> <?php if ($feed->getUpdated()) { ?>(<?php putGS('Updated:'); ?> <?php $this->renderDate($feed->getUpdated()); ?>)<?php } ?></li>
+    <li><?php echo $feed->getName(); ?> <?php if ($feed->getUpdated()) { ?>(<?php echo $translator->trans('Updated:'); ?> <?php $this->renderDate($feed->getUpdated()); ?>)<?php } ?></li>
     <?php } ?>
 </ul>
 
 <div class="actions">
     <a href="<?php echo $this->url(array(
         'action' => 'add-feed',
-    )); ?>" class="add"><?php putGS('Add feed'); ?></a>
+    )); ?>" class="add"><?php echo $translator->trans('Add feed'); ?></a>
 </div>
 
 <h3>Output settings</h3>

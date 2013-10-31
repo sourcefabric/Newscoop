@@ -1,19 +1,19 @@
 <?php
-camp_load_translation_strings("article_type_fields");
-camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to rename article type fields."));
+	camp_html_display_error($translator->trans("You do not have the right to rename article type fields.", array(), 'article_type_fields'));
 	exit;
 }
 
@@ -30,19 +30,19 @@ $created = false;
 $errorMsgs = array();
 if (empty($f_name)) {
     $correct = false;
-    $errorMsgs[] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+    $errorMsgs[] = $translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>'));
 } else {
 	$valid = ArticleType::IsValidFieldName($f_name);
 	if (!$valid) {
 		$correct = false;
-		$errorMsgs[] = getGS('The $1 field may only contain letters and underscore (_) character.', '<B>' . getGS('Name') . '</B>');
+		$errorMsgs[] = $translator->trans('The $1 field may only contain letters and underscore (_) character.', array('$1' => '<B>'.$translator->trans('Name').'</B>'), 'article_type_fields');
     }
 
     if ($correct) {
     	$old_articleTypeField = new ArticleTypeField($articleTypeName, $f_oldName);
     	if (!$old_articleTypeField->exists()) {
 		    $correct = false;
-		    $errorMsgs[] = getGS('The field $1 does not exist.', '<B>'.htmlspecialchars($f_oldName).'</B>');
+		    $errorMsgs[] = $translator->trans('The field $1 does not exist.', array('$1' => '<B>'.htmlspecialchars($f_oldName).'</B>'), 'article_type_fields');
 		}
     }
 
@@ -50,7 +50,7 @@ if (empty($f_name)) {
 		$articleTypeField = new ArticleTypeField($articleTypeName, $f_name);
 		if ($articleTypeField->exists()) {
 			$correct = false;
-			$errorMsgs[] = getGS('The field $1 already exists.', '<B>'. htmlspecialchars($f_name). '</B>');
+			$errorMsgs[] = $translator->trans('The field $1 already exists.', array('$1' => '<B>'.htmlspecialchars($f_name). '</B>'), 'article_type_fields');
 		}
 	}
 
@@ -58,7 +58,7 @@ if (empty($f_name)) {
 		$article = new MetaArticle();
 		if ($article->has_property($f_name) || method_exists($article, $f_name)) {
 			$correct = false;
-			$errorMsgs[] = getGS("The property '$1' is already in use.", $f_name);
+			$errorMsgs[] = $translator->trans("The property $1 is already in use.", array('$1' => $f_name), 'article_type_fields');
 		}
 	}
 
@@ -69,11 +69,11 @@ if (empty($f_name)) {
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Article Types"), "/$ADMIN/article_types/");
+$crumbs[] = array($translator->trans('Configure'), "");
+$crumbs[] = array($translator->trans('Article Types'), "/$ADMIN/article_types/");
 $crumbs[] = array($articleTypeName, '');
-$crumbs[] = array(getGS("Article type fields"), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
-$crumbs[] = array(getGS("Renaming article type field"), "");
+$crumbs[] = array($translator->trans("Article type fields", array(), 'article_type_fields'), "/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
+$crumbs[] = array($translator->trans("Renaming article type field", array(), 'article_type_fields'), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
@@ -82,7 +82,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>
 	<TD COLSPAN="2">
-		<B> <?php  putGS("Renaming article type field"); ?> </B>
+		<B> <?php  echo $translator->trans("Renaming article type field", array(), 'article_type_fields'); ?> </B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -100,7 +100,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/rename.php?f_article_type=<?php print $articleTypeName; ?>&f_field_name=<?php p($f_oldName); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/rename.php?f_article_type=<?php print $articleTypeName; ?>&f_field_name=<?php p($f_oldName); ?>'">
 	</DIV>
 	</TD>
 </TR>

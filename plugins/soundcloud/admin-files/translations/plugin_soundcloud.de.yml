@@ -1,0 +1,113 @@
+'You do not have the right to upload SoundCloud tracks.': 'Keine Berechtigung SoundCloud Tracks hochzuladen. '
+'You do not have the right to update SoundCloud tracks.': 'Keine Berechtigung SoundCloud Tracks hochzuladen. '
+'You do not have the right to manage SoundCloud tracks.': 'Keine Berechtigung SoundCloud Tracks zu verwalten. '
+'You do not have the right to manage SoundCloud preferences.': 'Keine Berechtigung SoundCloud Präferenzen zu verwalten. '
+'You do not have the right to delete SoundCloud tracks.': 'Keine Berechtigung SoundCloud Tracks zu löschen. '
+'User may upload tracks to SoundCloud': 'Benutzer darf SoundCloud tracks hochladen'
+'User may update SoundCloud track data': 'Benutzer darf SoundCloud tracks hochladen'
+'User may manage SoundCloud preferences': 'Benutzer darf SoundCloud Präferenzen verwalten'
+'User may delete SoundCloud tracks': 'Benutzer darf SoundCloud Tracks löschen'
+'User may browse SoundCloud tracks': 'Benutzer darf SoundCloud Tracks durchsuchen'
+'Upload Track to SoundCloud': 'Track zu SoundCloud hochladen'
+'Track has been updated on SoundCloud': 'Track wurde auf SoundCloud aktualisiert'
+'Track $1 has been uploaded to SoundCloud. Click to close': 'Track $1 wurde zu SoundCloud hochgeladen. Zum Schliessen klicken'
+'SoundCloud reports an error:': 'SoundCloud meldet einen Fehler:'
+'SoundCloud preferences updated.': 'SoundCloud Präferenzen aktualisiert. '
+'SoundCloud plugin requires php_curl module.': 'SoundCloud Plugin erfordert das php_curl Modul. '
+'SoundCloud checked successfully.': 'SoundCloud Check war erfolgreich. '
+'SoundCloud Preferences': 'SoundCloud Präferenzen'
+SoundCloud: 'SoundCloud '
+'select range': 'Bereich auswählen'
+'connection error': Verbindungsfehler
+'a comma separated list of tags': 'durch Komma getrennte Liste von Tags'
+'a comma separated list of genres': 'durch Komma getrennte Liste von Genres'
+'Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player': 'Youtube, Vimeo, Dailymotion und Viddler Videos werden in einem eingebetteten Player erscheinen'
+'Wrong file format': 'Falsches Dateiformat'
+'Work in progress': 'Work in progress'
+'We support AIFF, WAVE, FLAC, OGG, MP2, MP3, AAC files. Please, respect the <a href=http://soundcloud.com/community-guidelines target=_blank>community guidelines</a> and only upload tracks with permission from the rights holders.': 'Wir unterstützen AIFF, WAVE, FLAC, OGG, MP2, MP3 und AAC Dateien. Bitte respektieren Sie die <a href=http://soundcloud.com/community-guidelines target=_blank>Community Richtlinien</a> und laden Sie nur nur Tracks hoch, bei denen Sie von den Rechteinhabern die Erlaubnis besitzen. '
+'Video link': Videolink
+'Uploading... please wait': 'Lade hoch... bitte warten. '
+'Upload successful': 'Upload erfolgreich'
+'Upload error!': Uploadfehler!
+'Upload error': Uploadfehler
+Upload: Upload
+'Tracks not found': 'Tracks nicht gefunden'
+Tracks: Tracks
+'Track type': Tracktyp
+'Track not found': 'Track nicht gefunden'
+'Track manager': Trackmanager
+'To get preferences you need:': 'Um Präferenzen zu erhalten brauchen Sie: '
+Title: Titel
+'This track is currently available to everyone': 'Dieser Track steht aktuell allen zur Verfügung'
+'The work is in the public domain': 'Diese Arbeit ist gemeinfrei. '
+Tags: Tags
+Streamable: 'Bereit zum Streamen'
+Stem: Stem
+Spoken: Spoken
+'Specify the artwork file': 'Spezifizieren Sie das Bildmaterial'
+'Sound Effect': 'Sound Effect'
+'Social media sharing message': 'Social Media Sharing Nachricht'
+'Showing $1 to $2': 'Zeige $1 bis  $2'
+Settings: Einstellungen
+'Set list': Setliste
+'Select type': 'Typ auswählen'
+'Select license type': 'Lizenztyp auswählen'
+'Select key': 'Schlüssel wählen'
+'Search options': Suchoptionen
+'Search error': 'Fehler bei der Suche'
+'Save successful': 'Speichern erfolgreich'
+'Save error': 'Fehler beim Speichern'
+'Save and attach successful': 'Speichern und Anhängen erfolgreich'
+Reset: Zurücksetzen
+Remix: Remix
+'Release/catalogue number': Release-/Katalognummer
+'Release date': Veröffentlichungsdatum
+Recording: Recording
+Public: Öffentlich
+Processing...: 'In Bearbeitung...'
+Private: Privat
+Podcast: Podcast
+'Please define the track title': 'Bitte definieren Sie den Titel des Tracks'
+'Please choose the track file': 'Bitte wählen Sie die Trackdatei'
+'Please check php settings for file uploading': 'Bitte überprüfen Sie die PHP-Einstellungen für den Upload'
+Play: Abspielen
+Original: Originalversion
+'Only you have access': 'Nur Sie haben Zugang'
+'One Shot Sample': 'One Shot Sample'
+Ok: Ok
+'No tracks found': 'Keine Tracks gefunden'
+'No sets found': 'Keine Sets gefunden'
+'More options': 'Mehr Optionen'
+Loop: Loop
+Live: Live
+License: 'Lizenz '
+Label: Label
+'Key signature': Schlüsselsignatur
+'Image file': Bilddatei
+ISRC: ISRC
+Genres: Genres
+Genre: Genre
+'Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery': 'Finden Sie heraus, wie Sie Ihre Tracks auf anderen Plattformen verkaufen können.'
+Filter: Filter
+'Error during create attachement': 'Fehler beim Erstellen des Anhangs'
+'Enter permalink or email address': 'Geben Sie den Permalink oder eine Email-Adresse ein'
+'Enter password': 'Passwort eingeben'
+'Enter Client secret': 'Client secret eingeben'
+'Enter Client ID': 'Kunden ID eingeben'
+'Edit error': Bearbeitungsfehler
+Downlodable: Herunterladbar
+Downloadable: Herunterladbar
+Demo: Demo
+'Click to make this track private': 'Klicken um diesen Track privat zu machen'
+'Click to make this track available to everyone': 'Klicken um diesen Track für alle verfügbar zu machen'
+'Check connection': 'Überprüfe Verbindung'
+'Buy link': 'Link kaufen '
+Bpm: Bpm
+Attention!: Achtung!
+'Attach error': 'Fehler beim Anhängen'
+'Are you sure you want to delete the track:': 'Sind Sie sicher, dass Sie diesen Track löschen möchten: '
+'All rights are reserved': 'Alle Rechte vorbehalten'
+'Advanced settings': 'Erweiterte Einstellungen'
+'Add to set': 'Zum Set hinzufügen'
+'A space separated list of tags': 'Eine mit Leerzeichen getrennte Liste von Tags. '
+'1. Register on http://soundcloud.com<br>2. Create new application: http://soundcloud.com/you/apps': '1. Registrieren Sie sich bei http://soundcloud.com<br>2. Erstellen Sie eine neue Anwendung: http://soundcloud.com/you/apps'

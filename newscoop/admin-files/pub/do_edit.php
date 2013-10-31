@@ -5,14 +5,16 @@ require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('ManagePub')) {
-	camp_html_display_error(getGS("You do not have the right to change publication information."));
+	camp_html_display_error($translator->trans("You do not have the right to change publication information.", array(), 'pub'));
 	exit;
 }
 
@@ -61,7 +63,7 @@ $f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'st
 $f_seo = Input::Get('f_seo', 'array', array(), true);
 
 if (!Input::IsValid()) {
-    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -69,15 +71,15 @@ $backLink = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 $errorMsgs = array();
 $updated = false;
 if (empty($f_name)) {
-    camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
+    camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Name').'</B>')));
 }
 if (empty($f_default_alias)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Site').'</B>'));
+	camp_html_add_msg($translator->trans('You must fill in the $1 field.', array('$1' => '<B>'.$translator->trans('Site').'</B>')));
 }
 
 $publicationObj = new Publication($f_publication_id);
 if (!$publicationObj->exists()) {
-	camp_html_add_msg(getGS('Publication does not exist.'));
+	camp_html_add_msg($translator->trans('Publication does not exist.'));
 }
 
 if ($f_default_alias != $publicationObj->getDefaultAliasId()) {
@@ -117,9 +119,9 @@ $columns = array('Name' => $f_name,
 
 $updated = $publicationObj->update($columns);
 if ($updated) {
-	camp_html_add_msg(getGS("Publication updated"), "ok");
+	camp_html_add_msg($translator->trans("Publication updated", array(), 'pub'), "ok");
 } else {
-	$errorMsg = getGS('The publication information could not be updated.');
+	$errorMsg = $translator->trans('The publication information could not be updated.', array(), 'pub');
 	camp_html_add_msg($errorMsg);
 }
 camp_html_goto_page($backLink);

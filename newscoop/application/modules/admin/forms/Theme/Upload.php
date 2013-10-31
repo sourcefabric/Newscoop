@@ -7,12 +7,14 @@
 class Admin_Form_Theme_Upload extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->setAction( '' )
             ->setMethod( Zend_Form::METHOD_POST )
             ->addElement( 'file', 'browse', array
             (
-                'label'       => getGS( 'Browse for the theme' ),
+                'label'       => $translator->trans( 'Browse for the theme' , array(), 'themes'),
             	'required'    => true,
             ))
             ->addElement( 'submit', 'submit-button', array

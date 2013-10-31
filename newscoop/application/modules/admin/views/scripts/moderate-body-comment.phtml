@@ -1,8 +1,9 @@
-<?php putGS('New comment added');?>
+<?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
+<?php echo $translator->trans('New comment added', array(), 'home');?>
 
-<?php putGS('Time created');?>
+<?php echo $translator->trans('Time created', array(), 'home');?>
 <?php echo $this->comment->getTimeCreated()->format('H:i:s');?>
-<?php putGS('Subject');?>:
+<?php echo $translator->trans('Subject');?>:
 <?php echo $this->comment->getSubject(); ?>
-<?php putGS('Comment');?>
+<?php echo $translator->trans('Comment');?>
 <?php echo $this->comment->getMessage(); ?>

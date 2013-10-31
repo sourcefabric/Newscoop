@@ -1,0 +1,68 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'абраная піктаграма маркера'
+'add location to map': 'дадаць месцазнаходжанне на мапу'
+'Video source': 'Крыніца відэа'
+'The point will be removed from all translations of the article.': 'Пункт будзе выдалены з усіх перакладаў гэтага артыкула.'
+'Specify country (optional)': 'Вызначце краіну (неабавязкова)'
+'Sorry, that place was not found. Check your spelling or search again.': 'На жаль, дадзенае месца не знойдзенае. Праверце напісаньне, альбо паўторыце пошук.'
+'Show search results': 'Паказаць вынікі пошуку'
+'Search for place or coordinate': 'Шукаць месца альбо каардынаты'
+'Return to edit': 'Вяртанне да рэдагавання'
+'Really delete this point?': 'Выдаліць гэты пункт?'
+'Name and describe this location': 'Назваць і апісаць месцазнаходжанне'
+'Map size': 'Памер карты'
+'Location label': 'Цэтлік месцазнаходжання'
+'Location description:': 'Апісанне месцазнаходжання:'
+'Label url': 'URL месцазнаходжання'
+'Hide search results': 'Схаваць вынікі пошуку'
+Geo-filtering: Геа-фільтр
+'Fill in youtube ID or link, e.g.': 'Увядзіце ID youtube альбо спасылку, напрыклад'
+'Fill in vimeo ID or link, e.g': 'Увядзіце ID vimeo альбо спасылку, напрыклад'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Увядзіце ID відэа, спасылку або назву файла для Youtube, Vimeo альбо флэш-відэа.'
+'Fill in location label': 'Увядзіце цэтлік месцазнаходжання'
+'Fill in local swf flash file name or link, e.g.': 'Увядзіце назву мясцовага swf флэш-файла альбо спасылку, напрыклад'
+'Fill in local flv flash file name or link, e.g.': 'Увядзіце назву мясцовага flv флэш-файла, напрыклад'
+'Fill in image link, like': 'Увядзіце спасылку на выяву, як'
+'Describe the location...': 'Апішыце месцазнаходжанне ...'
+'Delete location': 'Выдаліце месцазнаходжанне'
+Coordinates: Каардынаты
+'Change video display size': 'Змяніць памер відэа на экране'
+'Change image display size': 'Змяніць памер выявы на экране'
+'Change icon of this location': 'Змяніць піктаграму месцазнаходжання'
+'Center map on location': 'Размясціць месцазнаходжанне ў цэнтры мапы'
+'Advanced editing': 'Пашыранае рэдагаванне'
+'Add an image to this location': 'Дадаць выяву да месцазнаходжання'
+'Add a video to this location': 'Дадаць відэа да дадзенага месцазнаходжання'
+'Are you sure you want to quit without saving your changes?': 'Вы ўпэўненыя, што жадаеце выйсці без захавання змяненняў?'
+'Map preview': 'Папярэдні прагляд карты'
+'Locations updated.': 'Месцы падзей былі абноўленыя'
+'Setting the map name helps with map search': 'Налада назвы карты спрыяе пошуку па карце'
+Longitude: Даўжыня
+Latitude: Шырыня
+Center: Цэнтр
+'Last Saved Map View': 'Папярэдні прагляд апошніх аднаўленьняў карты'
+'List of locations updated': 'Спіс месцаў падзей быў адноўлены'
+width: шырыня
+'show initial map view': 'паказаць першапачатковы выгляд карты'
+'problem at point processing, please send error report': 'Здарылася праблема ў працэсе апрацоўкі звестак, калі ласка, адпраўце паведамленне пра памылку'
+'plain text': 'просты тэкст'
+'html content': 'html код'
+height: вышыня
+'fill in map name': 'запоўніце імя карты'
+'You do not have the right to remove maps from articles.': 'У Вас няма дазволу для выдалення карт з артыкулаў.'
+'Video file': Відэафайл
+'Video ID': 'ID відэа'
+'The map has been removed from the article.': 'Гэтая карта была выдаленая з артыкула.'
+'Point no.': 'Пункт №'
+'Point markers': 'Маркеры пункта'
+None: Ничога
+'Map Search Example': 'Прыклад пошуку карты'
+'Map Preview': 'Папярэдні прагляд карты'
+'Image URL': 'URL выяаы'
+video: відэа
+text: тэкст
+image: выява
+icon: піктаграма
+'Setting Map Locations': 'Налады карты месцаў падзей'
+city: горад
+cc: 'цэнтр горада'

@@ -1,9 +1,9 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage polls.', array(), 'plugin_poll'));
     exit;
 }
 
@@ -25,17 +25,17 @@ foreach($poll->getTranslations() as $translation) {
 }
 
 echo camp_html_breadcrumbs(array(
-    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
-    array(getGS('Result'), ''),
+    array($translator->trans('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array($translator->trans('Polls', array(), 'plugin_poll'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
+    array($translator->trans('Result', array(), 'plugin_poll'), ''),
 ));
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
+    <TD><A HREF="index.php"><B><?php  echo $translator->trans("Poll List", array(), 'plugin_poll'); ?></B></A></TD>
     <TD style="padding-left: 20px;"><A HREF="edit.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="edit.php" ><B><?php  putGS("Add new Poll"); ?></B></A></TD>
+    <TD><A HREF="edit.php" ><B><?php  echo $translator->trans("Add new Poll", array(), 'plugin_poll'); ?></B></A></TD>
 </tr>
 </TABLE>
 <p>
@@ -45,10 +45,10 @@ foreach ($display as $translation) {
     ?>
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
         <TR class="table_list_header">
-            <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Votes"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage this language"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage all languages"); ?></TD>
+            <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Title", array(), 'plugin_poll'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Votes", array(), 'plugin_poll'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Percentage this language", array(), 'plugin_poll'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Percentage all languages", array(), 'plugin_poll'); ?></TD>
         </TR>
         <tr>
             <th><?php p($translation->getProperty('title')); ?> (<?php p($translation->getLanguageName()); ?>)</th>

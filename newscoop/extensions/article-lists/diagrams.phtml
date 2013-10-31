@@ -1,4 +1,6 @@
-<?php $view = $GLOBALS['controller']->view; ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+$view = $GLOBALS['controller']->view; ?>
 <script type="text/javascript" src="<?php echo $view->baseUrl('/js/newscoop_rest_api.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $view->baseUrl('/js/raphael-min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $view->baseUrl('/js/morris.min.js'); ?>"></script>
@@ -39,9 +41,9 @@
 </script>
 
 <div class="ui-widget-content" style="padding-left: 8px; padding-top: 8px; border: none">
-  <h3><?php echo getGs('Latest 20 articles by popularity'); ?></h3>
+  <h3><?php echo $translator->trans('Latest 20 articles by popularity', array(), 'extensions'); ?></h3>
   <div class="diagrams">
     <div id="article_reads_graph" style="float:left; margin-right: 10px; width: 55%; height: 320px;"></div>
-    <div class="data" style="float:left; width: 43%; font-size: 13px;"><?php echo getGs('Loading...'); ?></div>
+    <div class="data" style="float:left; width: 43%; font-size: 13px;"><?php echo $translator->trans('Loading...'); ?></div>
   <div>
 </div> 

@@ -1,0 +1,72 @@
+'Language id not specified': 'Η ταυτότητα γλώσσας δεν διευκρινήστηκε'
+'No languages.': 'Δεν υπάρχουν γλώσσες.'
+'Native Name': 'Εγγενές Όνομα'
+'Name taken.': 'Μη διαθέσιμο όνομα.'
+'Language saved.': 'Η γλωσσα αποθηκεύτηκε.'
+'Language removed.': 'Η γλώσσα αφαιρέθηκε.'
+'Language not found.': 'Η γλώσσα δεν βρέθηκε.'
+'Language is in use and cannot be removed.': 'Η γλώσσα χρησιμοποιείται και δεν μπορεί να διαγραφεί.'
+'Language added.': 'Η γλώσσα προστέθηκε.'
+'English language cannot be removed.': 'Η αγγλική γλώσσα δεν είναι δυνατόν να αφαιρεθεί.'
+'Edit short month names': 'Επεξεργασία συντομογραφίας μηνών'
+'Edit short day names': 'Επεξεργασία συντομογραφίας ημερών'
+'Edit month names': 'Επεξεργασία ονομάτων μηνών'
+'Edit language: $1': 'Επεξεργασία γλώσσας: $1'
+'Edit day names': 'Επεξεργασία ονομάτων ημερών'
+'Code Page': 'Κωδικός Σελίδας'
+'Add new Language': 'Προσθήκη νέας Γλώσσας'
+'Add Language': 'Προσθήκη Γλώσσας'
+We: Τε
+Tu: Τρ
+Th: Πέ
+Su: Κυ
+Sep: Σεπτ
+Sa: Σά
+'Please enter the translation for week day short names.': 'Παρακαλούμε εισάγετε την μετάφραση της συντομογραφίας των ημερών της εβδομάδας.'
+'Please enter the translation for month short names.': 'Παρακαλούμε εισάγετε την μετάφραση της συντομογραφίας των μηνών.'
+Oct: Οκτ
+Nov: Νοέμ
+Mo: Δε
+Mar: Μάρ
+Jun: Ιούν
+Jul: Ιούλ
+Jan: Ιάν
+Fr: Πα
+Feb: Φεβ
+Dec: Δεκ
+Aug: Αύγ
+Apr: Απρ
+'No language.': 'Καμία γλώσσα.'
+'Delete language $1': 'Διαγραφή γλώσσας $1'
+'You do not have the right to add languages.': 'Δεν έχετε το δικαίωμα να προσθέσετε γλώσσες.'
+'Please enter the translation for time units.': 'Παρακαλούμε εισάγετε την μετάφραση των μονάδων χρόνου.'
+'You do not have the right to delete languages.': 'Δεν έχετε το δικαίωμα να διαγράψετε γλώσσες.'
+'Are you sure you want to delete the language $1?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε τη γλώσσα $1;'
+'Deleting language': 'Διαγραφή γλώσσας'
+'The language $1 could not be deleted.': 'Η γλώσσα $1 δεν μπόρεσε να διαγραφεί.'
+'Edit language': 'Επεξεργασία γλώσσας'
+'You do not have the right to edit languages.': 'Δεν έχετε το δικαίωμα να επεξεργαστείτε γλώσσες.'
+'Please enter the translation for month names.': 'Παρακαλούμε εισάγετε την μετάφραση για τα ονόματα μηνών.'
+'Please enter the translation for week day names.': 'Παρακαλούμε εισάγετε την μετάφραση για τα ονόματα των ημερών της εβδομάδας.'
+January: Ιανουάριος
+February: Φεβρουάριος
+March: Μάρτιος
+April: Απρίλιος
+May: Μάιος
+June: Ιούνιος
+July: Ιούλιος
+August: Αύγουστος
+September: Σεπτέμβριος
+October: Οκτώβριος
+November: Νοέμβριος
+December: Δεκέμβριος
+Monday: Δευτέρα
+Tuesday: Τρίτη
+Wednesday: Τετάρτη
+Thursday: Πέμπτη
+Friday: Παρασκευή
+Saturday: Σάββατο
+Sunday: Κυριακή
+'You do not have the right to add new languages.': 'Δεν έχετε το δικαίωμα να προσθέσετε νέες γλώσσες.'
+'There are $1 issue(s) left.': 'Απομένουν τεύχη $1.'
+'Native name': 'Γηγενές όνομα'

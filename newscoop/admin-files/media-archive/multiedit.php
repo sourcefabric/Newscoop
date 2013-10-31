@@ -8,10 +8,11 @@
  * @link http://www.sourcefabric.org
  */
 
-camp_load_translation_strings("media_archive");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
+
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission('AddImage')) {
 	camp_html_goto_page("/$ADMIN/logout.php");
@@ -23,14 +24,14 @@ $imageSearch->run();
 $imageData = $imageSearch->getImages();
 
 if (empty($imageData)) {
-    camp_html_add_msg(getGS('No images for multi editing.'), 'ok');
+    camp_html_add_msg($translator->trans('No images for multi editing.', array(), 'media_archive'), 'ok');
     camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
 
 $crumbs = array();
-$crumbs[] = array(getGS('Content'), "");
-$crumbs[] = array(getGS('Media Archive'), "/$ADMIN/media-archive/index.php");
-$crumbs[] = array(getGS('Edit images'), "");
+$crumbs[] = array($translator->trans('Content'), "");
+$crumbs[] = array($translator->trans('Media Archive', array(), 'media_archive'), "/$ADMIN/media-archive/index.php");
+$crumbs[] = array($translator->trans('Edit images', array(), 'media_archive'), "");
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 
 echo $breadcrumbs;
@@ -121,26 +122,26 @@ camp_html_display_msgs();
     <li>
         <div><img src="<?php echo $image['thumbnail_url']; ?>" border="0"></div>
 		<fieldset>
-		    <legend><?php  putGS("Change image information"); ?></legend>
+		    <legend><?php  echo $translator->trans("Change image information", array(), 'media_archive'); ?></legend>
 
 		    <dl>
-		        <dt><?php  putGS("Description"); ?>:</dt>
+		        <dt><?php  echo $translator->trans("Description"); ?>:</dt>
 		        <dd><input type="text" name="image[<?php echo $image['id']; ?>][f_description]" value="<?php echo htmlspecialchars($image['description']); ?>" size="32" class="input_text"></dd>
 		    </dl>
 		    <dl>
-		        <dt><?php  putGS("Photographer"); ?>:</dt>
+		        <dt><?php  echo $translator->trans("Photographer"); ?>:</dt>
                 <dd>
                     <input type="text" name="image[<?php echo $image['id']; ?>][f_photographer]" value="<?php echo htmlspecialchars($image['photographer']);?>" size="32" class="input_text copy">
                 </dd>
 		    </dl>
 		    <dl>
-		        <dt><?php  putGS("Place"); ?>:</dt>
+		        <dt><?php  echo $translator->trans("Place"); ?>:</dt>
                 <dd>
                     <input type="text" name="image[<?php echo $image['id']; ?>][f_place]" value="<?php echo htmlspecialchars($image['place']); ?>" size="32" class="input_text copy">
                 </dd>
 		    </dl>
 		    <dl>
-		        <dt><?php  putGS("Date"); ?>:</dt>
+		        <dt><?php  echo $translator->trans("Date"); ?>:</dt>
                 <dd>
                     <input type="text" name="image[<?php echo $image['id']; ?>][f_date]" value="<?php echo htmlspecialchars($image['date']); ?>" size="11" maxlength="10" class="input_text copy datepicker">
                 </dd>
@@ -153,7 +154,7 @@ camp_html_display_msgs();
 </fieldset>
 
 <fieldset class="plain" style="margin-top: 13px">
-    <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="save-button" />
+    <input type="submit" name="Save" value="<?php  echo $translator->trans('Save'); ?>" class="save-button" />
 </fieldset>
 
 </form>
@@ -183,7 +184,7 @@ $('input.copy').each(function() {
     var field = match[2];
 
     var elem = '<br /><a class="copy-to-all" href="javascript:copyToAll(\'' + field + '\',' + id + ');">';
-    elem += '<?php putGS('Use for all'); ?>';
+    elem += '<?php echo $translator->trans('Use for all', array(), 'media_archive'); ?>';
     elem += '</a>';
     $(this).after(elem);
 });

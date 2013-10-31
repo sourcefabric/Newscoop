@@ -1,14 +1,13 @@
 <?php
-camp_load_translation_strings("plugin_debate");
-
+$translator = \Zend_Registry::get('container')->getService('translator');
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 

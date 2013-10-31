@@ -1,0 +1,13 @@
+line: радок
+template: шаблон
+'Unknown error: $1': $1
+'Unrecognized tag <em>$1</em>': 'Неапазнаны тэг <em>$1</em>'
+'Unknown reference <em>$1</em>': 'Невядомы зварот <em>$1</em>'
+'Invalid property <em>$1</em> of object <em>$2</em>': 'Несапраўдная ўласцівасць <em>$1</em> абекта <em>$2</em>'
+'Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>': 'Няслушнае значэнне <em>$1</em> уласцівасці <em>$2</em> абекта <em>$3</em>'
+'Invalid parameter <em>$1</em> in statement <em>$2</em>': 'Няслушнае значэнне <em>$1</em> у сцвярджэнні <em>$2</em>'
+'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Няслушнае значэнне <em>$1</em> параметру <em>$2</em> у выразе <em>$3</em>'
+'Missing parameter <em>$1</em> in statement <em>$2</em>': 'Прапушчаны параметр <em>$1</em> у выразе <em>$2</em>'
+'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Няслушны аператар <em>$1</em> параметру <em>$2</em> у выразе <em>$3</em>'
+'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': 'Няслушны  атрыбут <em>$1</em> у выразе <em>$2</em>, параметр <em>$3</em>'
+'Invalid template <em>$1</em> specified in the <em>$2</em> form': 'Няслушны шаблон <em>$1</em> паказаны ў форме <em>$2</em>'

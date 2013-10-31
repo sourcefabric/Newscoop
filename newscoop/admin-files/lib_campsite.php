@@ -1,7 +1,5 @@
 <?php
 
-require_once('localizer/Localizer.php');
-
 /**
  * Compute the difference between two string times.
  *
@@ -169,15 +167,17 @@ function p($p_string = null)
  * @return string
  */
 function camp_format_bytes($p_bytes)
-{
+{   
+    $translator = \Zend_Registry::get('container')->getService('translator');
+
 	if ( ($p_bytes / 1073741824) > 1) {
-		return round($p_bytes/1073741824, 1).' '.getGS('GB');
+		return round($p_bytes/1073741824, 1).' '.$translator->trans('GB');
 	} else if ( ($p_bytes / 1048576) > 1) {
-		return round($p_bytes/1048576, 1).' '.getGS('MB');
+		return round($p_bytes/1048576, 1).' '.$translator->trans('MB');
 	} else if ( ($p_bytes / 1024) > 1) {
-		return round($p_bytes/1024, 1).' '.getGS('KB');
+		return round($p_bytes/1024, 1).' '.$translator->trans('KB');
 	} else {
-		return round($p_bytes, 1).' '.getGS('bytes');
+		return round($p_bytes, 1).' '.$translator->trans('bytes');
 	}
 } // fn camp_format_bytes
 
@@ -223,26 +223,6 @@ function camp_mime_content_type($p_file)
 {
 	return exec(trim('file -bi ' . escapeshellarg($p_file)));
 } // fn camp_mime_content_type
-
-
-/**
- * Load the language files for the given prefix.
- *
- * @param string $p_prefix
- * @return void
- */
-function camp_load_translation_strings($p_prefix, $p_langCode = null)
-{
-    $langCode = null;
-    if (!is_null($p_langCode)) {
-        $langCode = $p_langCode;
-    } elseif (isset($_REQUEST['TOL_Language'])) {
-        $langCode = $_REQUEST['TOL_Language'];
-    } elseif (isset($_COOKIE['TOL_Language'])) {
-        $langCode = $_COOKIE['TOL_Language'];
-    }
-    Localizer::LoadLanguageFiles($p_prefix, $langCode);
-} // fn camp_load_translation_strings
 
 
 /**
@@ -380,43 +360,41 @@ function camp_dump($p_object)
 function camp_get_error_message($p_errorCode, $p_arg1 = null, $p_arg2 = null)
 {
 	global $Campsite;
-	if (function_exists("camp_load_translation_strings")) {
-		camp_load_translation_strings("home");
-	}
+    $translator = \Zend_Registry::get('container')->getService('translator');
 
 	switch ($p_errorCode) {
 	case CAMP_ERROR_CREATE_FILE:
-		return getGS("The system was unable to create the file '$1'.", basename($p_arg1))
-			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return $translator->trans("The system was unable to create the file $1.", array('$1' => basename($p_arg1)), 'home')
+			.(!is_null($p_arg2) ? ' '.$translator->trans("This file is stored on disk as $1.", array('$1' => $p_arg2), 'home') : '')
+			.' '.$translator->trans("Please check if the user $1 has permission to write to the directory $2.", array('$1' => $Campsite['APACHE_USER'], '$2' => dirname($p_arg1)), 'home');
 		break;
 	case CAMP_ERROR_WRITE_FILE:
-		return getGS("The system was unable to write to the file '$1'.", basename($p_arg1))
-			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-			.' '.getGS("Please check if the user '$1' has permission to write to this file.", $Campsite['APACHE_USER']);
+		return $translator->trans("The system was unable to write to the file $1.", array('$1' => basename($p_arg1)), 'home')
+			.(!is_null($p_arg2) ? ' '.$translator->trans("This file is stored on disk as $1.", array('$1' => $p_arg2), 'home') : '')
+			.' '.$translator->trans("Please check if the user $1 has permission to write to this file.", array('$1' => $Campsite['APACHE_USER']), 'home');
 		break;
 	case CAMP_ERROR_READ_FILE:
-		return getGS("The system was unable to read the file '$1'.", basename($p_arg1))
-			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-			.' '.getGS("Please check if the user '$1' has permission to read this file.", $Campsite['APACHE_USER']);
+		return $translator->trans("The system was unable to read the file $1.", array('$1' => basename($p_arg1)), 'home')
+			.(!is_null($p_arg2) ? ' '.$translator->trans("This file is stored on disk as $1.", array('$1' => $p_arg2), 'home') : '')
+			.' '.$translator->trans("Please check if the user $1 has permission to read this file.", array('$1' => $Campsite['APACHE_USER']), 'home');
 		break;
 	case CAMP_ERROR_DELETE_FILE:
-		return getGS("The system was unable to delete the file '$1'.", basename($p_arg1))
-			.(!is_null($p_arg2) ? ' '.getGS("This file is stored on disk as '$1'.", $p_arg2) : '')
-			.' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return $translator->trans("The system was unable to delete the file $1.", array('$1' => basename($p_arg1)), 'home')
+			.(!is_null($p_arg2) ? ' '.$translator->trans("This file is stored on disk as $1.", array('$1' => $p_arg2), 'home') : '')
+			.' '.$translator->trans("Please check if the user $1 has permission to write to the directory $2.", array('$1' => $Campsite['APACHE_USER'], '$2' => dirname($p_arg1)), 'home');
 		break;
     case CAMP_ERROR_UPLOAD_FILE:
-        return getGS("The system was unable to upload the file '$1'. ", basename($p_arg1))
-            .getGS('Please check the file you are trying to upload, it might be corrupted.');
+        return $translator->trans("The system was unable to upload the file $1. ", array('$1' => basename($p_arg1)), 'home')
+            .$translator->trans('Please check the file you are trying to upload, it might be corrupted.', array(), 'home');
         break;
 	case CAMP_ERROR_MKDIR:
-		return getGS("The system was unable to create the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return $translator->trans("The system was unable to create the directory $1.", array('$1' => $p_arg1), 'home').' '.$translator->trans("Please check if the user $1 has permission to write to the directory $2.", array('$1' => $Campsite['APACHE_USER'], '$2' => dirname($p_arg1)), 'home');
 		break;
 	case CAMP_ERROR_RMDIR:
-		return getGS("The system was unable to delete the directory '$1'.", $p_arg1).' '.getGS("Please check if the directory is empty and the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], dirname($p_arg1));
+		return $translator->trans("The system was unable to delete the directory $1.", array('$1' => $p_arg1), 'home').' '.$translator->trans("Please check if the directory is empty and the user $1 has permission to write to the directory $2.", array('$1' => $Campsite['APACHE_USER'], '$2' => dirname($p_arg1)), 'home');
 		break;
 	case CAMP_ERROR_WRITE_DIR:
-		return getGS("The system is unable to write to the directory '$1'.", $p_arg1).' '.getGS("Please check if the user '$1' has permission to write to the directory '$2'.", $Campsite['APACHE_USER'], $p_arg1);
+		return $translator->trans("The system is unable to write to the directory $1.", array('$1' => $p_arg1), 'home').' '.$translator->trans("Please check if the user $1 has permission to write to the directory $2.", array('$1' => $Campsite['APACHE_USER'], '$2' => $p_arg1), 'home');
 		break;
 	}
 	return "";
@@ -510,20 +488,21 @@ function htmlspecialchars_array($p_input, $p_decode_keys=false)
 function camp_set_article_row_decoration(&$p_articleObj, &$p_lockInfo, &$p_rowClass, &$p_color) {
     global $g_user;
     $p_lockInfo = '';
+    $translator = \Zend_Registry::get('container')->getService('translator');
 
     $timeDiff = camp_time_diff_str($p_articleObj->getLockTime());
     if ($p_articleObj->isLocked() && ($timeDiff['days'] <= 0)) {
         $lockUserObj = new User($p_articleObj->getLockedByUser());
         if ($timeDiff['hours'] > 0) {
-            $p_lockInfo = getGS('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.',
-            htmlspecialchars($lockUserObj->getRealName()),
-            htmlspecialchars($lockUserObj->getUserName()),
-            $timeDiff['hours'], $timeDiff['minutes']);
+            $p_lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.', array(
+                '$1' => htmlspecialchars($lockUserObj->getRealName()),
+                '$2' => htmlspecialchars($lockUserObj->getUserName()),
+                '$3' => $timeDiff['hours'], $timeDiff['minutes']), 'home');
         } else {
-            $p_lockInfo = getGS('The article has been locked by $1 ($2) $3 minute(s) ago.',
-            htmlspecialchars($lockUserObj->getRealName()),
-            htmlspecialchars($lockUserObj->getUserName()),
-            $timeDiff['minutes']);
+            $p_lockInfo = $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
+                '$1' => htmlspecialchars($lockUserObj->getRealName()),
+                '$2' => htmlspecialchars($lockUserObj->getUserName()),
+                '$3' => $timeDiff['minutes']), 'home');
         }
     }
 
@@ -618,6 +597,7 @@ function camp_get_calendar_field($p_fieldName, $p_defaultValue = null,
 
 function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
 {
+    $translator = \Zend_Registry::get('container')->getService('translator');
 	$p_errors = array();
 	$articles = Article::GetArticlesOfType($p_sourceField->getArticleType());
 	foreach ($articles as $article) {
@@ -629,16 +609,16 @@ function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
 		$author = new Author($authorName);
 		if (!$author->exists()) {
 			if (!$author->create()) {
-				$p_errors[] = getGS('Unable to create author "$1" for article no. $2 ("$3") of type $4.',
-				                    $author->getName(), $article->getArticleNumber(),
-				                    $article->getName(), $article->getType());
+				$p_errors[] = $translator->trans('Unable to create author $1 for article no. $2 ($3) of type $4.', array(
+				                    '$1' => $author->getName(), '$2' => $article->getArticleNumber(),
+				                    '$3' => $article->getName(), '$4' => $article->getType()), 'home');
 				continue;
 			}
 		}
 		if (!$article->setAuthorId($author->getId())) {
-			$p_errors[] = getGS('Error setting the author "$1" for article no. $2 ("$3") of type $4.',
-                                $author->getName(), $article->getArticleNumber(),
-                                $article->getName(), $article->getType());
+			$p_errors[] = $translator->trans('Error setting the author $1 for article no. $2 ($3) of type $4.', array(
+                                '$1' => $author->getName(), '$2' => $article->getArticleNumber(),
+                                '$3' => $article->getName(), '$4' => $article->getType()), 'home');
 			continue;
 		}
 	}

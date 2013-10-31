@@ -1,7 +1,7 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 ?>
@@ -120,7 +120,7 @@ switch ($f_debate_item) {
     break;
 
     default:
-	   camp_html_display_error(getGS('Invalid input'), 'javascript: window.close()');
+	   camp_html_display_error($translator->trans('Invalid input'), 'javascript: window.close()');
 	   exit;
     break;
 }
@@ -129,11 +129,11 @@ switch ($f_debate_item) {
 <table style="margin-top: 10px; margin-left: 15px; margin-right: 15px;" cellpadding="0" cellspacing="0">
     <TR>
     	<TD style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-left: 1px solid #8baed1; border-bottom: 1px solid #8baed1;">
-    		<B><?php putGS("Attach Debates"); ?></B>
+    		<B><?php echo $translator->trans("Attach Debates", array(), 'plugin_debate'); ?></B>
     	</TD>
     	<TD style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-bottom: 1px solid #8baed1;" align="right">
     	   <a href=""><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0"></a>
-    	   <a href="assign_popup.php?f_include=edit.php&amp;f_language_id=<?php p($f_language_id) ?>&amp;f_no_menu=1&amp;f_from=<?php p(urlencode($_SERVER['REQUEST_URI'])) ?>"><b><?php putGS('Add new Debate');; ?></b></a>
+    	   <a href="assign_popup.php?f_include=edit.php&amp;f_language_id=<?php p($f_language_id) ?>&amp;f_no_menu=1&amp;f_from=<?php p(urlencode($_SERVER['REQUEST_URI'])) ?>"><b><?php echo $translator->trans('Add new Debate');; ?></b></a>
         </TD>
     </TR>
 
@@ -186,14 +186,14 @@ switch ($f_debate_item) {
                     <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_assigned=<?php p($f_debate_item) ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></a>
                 </TD>
                 <TD ALIGN="LEFT" VALIGN="TOP" width="800">
-                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byname"><?php  putGS("Name"); ?></a>
+                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byname"><?php  echo $translator->trans("Name", array(), 'plugin_debate'); ?></a>
                     &nbsp;<SMALL>(click to edit)</SMALL>
                 </TD>
                 <TD ALIGN="center" VALIGN="TOP" width="30">
-                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=bybegin"><?php  putGS("Begin"); ?></a>
+                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=bybegin"><?php  echo $translator->trans("Begin", array(), 'plugin_debate'); ?></a>
                 </TD>
                 <TD ALIGN="center" VALIGN="TOP" width="30">
-                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byend"><?php  putGS("End"); ?></a>
+                    <A href="?<?php p($param_string) ?>&amp;f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byend"><?php  echo $translator->trans("End", array(), 'plugin_debate'); ?></a>
                 </TD>
             </TR>
             <?php
@@ -259,7 +259,7 @@ switch ($f_debate_item) {
                 }
 
             } else {?>
-                <tr><TD><LI><?php  putGS('No Debates available.'); ?></LI></TD></TR>
+                <tr><TD><LI><?php  echo $translator->trans('No Debates available.', array(), 'plugin_debate'); ?></LI></TD></TR>
                 <?php
         }
         ?>
@@ -268,7 +268,7 @@ switch ($f_debate_item) {
     </TR>
     <TR>
     	<TD style="padding: 3px; background-color: #EEE; border-bottom: 1px solid #8baed1; border-left: 1px solid #8baed1; border-right: 1px solid #8baed1;" align="center" colspan="2">
-    	   <input type="button" class="button" value="<?php putGS('Close') ?>" onClick="debate_popup_close()">
+    	   <input type="button" class="button" value="<?php echo $translator->trans('Close') ?>" onClick="debate_popup_close()">
         </TD>
     </TR>
 </TABLE>

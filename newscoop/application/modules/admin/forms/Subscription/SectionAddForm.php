@@ -8,37 +8,38 @@
 class Admin_Form_Subscription_SectionAddForm extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->addElement('select', 'language', array(
-            'label' => getGS('Language'),
+            'label' => $translator->trans('Language'),
             'multioptions' => array(
-                'select' => getGS('Individual languages'),
-                'all' => getGS('Regardless of the language'),
+                'select' => $translator->trans('Individual languages'),
+                'all' => $translator->trans('Regardless of the language'),
             ),
         ));
 
         $this->addElement('multiselect', 'sections_select', array(
-            'label' => getGS('Sections'),
+            'label' => $translator->trans('Sections'),
             // multioptions from controller
         ));
 
         $this->addElement('multiselect', 'sections_all', array(
-            'label' => getGS('Sections'),
+            'label' => $translator->trans('Sections'),
         ));
 
         $this->addElement('text', 'start_date', array(
-            'label' => getGS('Start'),
+            'label' => $translator->trans('Start'),
             'required' => true,
             'class' => 'date',
         ));
 
         $this->addElement('text', 'days', array(
-            'label' => getGS('Days'),
+            'label' => $translator->trans('Days'),
             'required' => true,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
         ));
     }
 }

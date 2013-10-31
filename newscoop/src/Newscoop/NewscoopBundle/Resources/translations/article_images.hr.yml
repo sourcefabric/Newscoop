@@ -1,0 +1,75 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 
+'Slideshow rendition': 
+'Renditions reloaded': 
+'Reload renditions': 
+'Edit images': 
+'Specify image url if you want to load it.': 
+'Items: ': 
+'Attach slideshows': 
+'original size:': 
+'no caption': 
+'Video URL': 
+'Use for all': 
+'Use default': 
+'Slug must be unique': 
+Slug: 
+'Slideshow headline': 
+Slideshow: 
+'Set selected as default image': 
+'Set as default': 
+Saving...: 
+Saved: 
+'Save headline': 
+'Place Images': 
+'No renditions defined.': 
+'No images found.': 
+'No images attached to article.': 
+'No images': 
+'Next: Upload and Edit Metadata': 
+'Next: Place Images': 
+'Media Archive': 
+Location: 
+Items: 
+Item: 
+'Image files': 
+'Image Files: ': 
+Headline: 
+Finish: 
+'Edit Image Data': 
+'Edit $1': 
+'Done editing': 
+Detach: 
+Create: 
+Caption: 
+'Attached images': 
+'Attach & Place': 
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 
+'Add video': 
+'Add caption': 
+'Show all': 
+'The image has been removed from the article.': 
+'Unable to add new image.': 
+'Image number $1 already exists': 
+'You do not have the right to change image information.': 
+'The image number specified is already in use.': 
+'Image $1 updated.': 
+'Image $1 added.': 
+'Edit article': 'Uredi članak'
+'You do not have the right to attach images to articles.': 'Nemate prava dodavati slike u članak.'
+'You do not have the right to add images.': 'Nemate ovlasti dodavati slike.'
+'Image information': 'Podaci o slici'
+'Attach New Image': 'Priloži novu sliku'
+'Attach Image To Article': 'Priloži sliku uz članak'
+'Attach Existing Image': 'Priloži postojeću sliku'
+'Add New Image': 'Dodaj novu sliku'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Datum <br><small>(gggg-mm-dd)</small>'
+'You must select an image file to upload.': 'Morate označiti sliku koju želite postaviti.'
+'Change image information': 'Promijenite podatke o slici'
+'You do not have the right to add images': 'Nemate ovlasti dodavati slike'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nemate ovlasti mijenjati ovaj članak. Možete uređivati samo vlastite članke, a jednom predani članci mogu biti mijenjani samo od strane ovlaštenog korisnika.'
+'Delete image $1': 'Izbriši sliku $1:'
+'Click one of the ': 'Kliknite na jednu od'
+'Are you sure you want to delete the image $1?': 'Jeste li sigurni da želite obrisati sliku$1?'

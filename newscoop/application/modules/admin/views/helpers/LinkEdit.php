@@ -20,10 +20,11 @@ class Admin_View_Helper_LinkEdit extends Zend_View_Helper_Abstract
      * @return void
      */
     public function linkEdit( $p_url, $p_params = null)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $params = array_merge(array(
-            'name'  => getGS('Edit'),
-            'title' => getGS('Edit'),
+            'name'  => $translator->trans('Edit'),
+            'title' => $translator->trans('Edit'),
             'class' => array('edit','confirm'),
             'attributes' => array()
         ),is_null($p_params)? array():$p_params);

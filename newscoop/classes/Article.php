@@ -275,6 +275,7 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $this->m_data['Number'] = $this->__generateArticleNumber();
         $this->m_data['ArticleOrder'] = $this->m_data['Number'];
 
@@ -333,10 +334,7 @@ class Article extends DatabaseObject {
             $this->m_data['IdLanguage']);
         $articleData->create();
 
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
-        Log::ArticleMessage($this, getGS('Article created.'), null, 31, TRUE);
+        Log::ArticleMessage($this, $translator->trans('Article created.', array(), 'api'), null, 31, TRUE);
     } // fn create
 
     /**
@@ -385,6 +383,7 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $copyArticles = array();
         if ($p_copyTranslations) {
             // Get all translations for this article
@@ -422,10 +421,6 @@ class Article extends DatabaseObject {
             Geo_Map::OnArticleCopy($map_artilce_src, $map_artilce_dest, $map_translations, $map_user_id);
         }
 
-        // Load translation file for log message.
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
         $articleOrder = null;
         $logtext = '';
         $newArticles = array();
@@ -496,9 +491,9 @@ class Article extends DatabaseObject {
 
             $newArticles[] = $articleCopy;
             $languageObj = new Language($copyMe->getLanguageId());
-            $logtext .= getGS('Article copied to Article #$4 (publication $5, issue $6, section $7).',
-                $articleCopy->getArticleNumber(), $articleCopy->getPublicationId(),
-                $articleCopy->getIssueNumber(), $articleCopy->getSectionNumber());
+            $logtext .= $translator->trans('Article copied to Article #$4 (publication $5, issue $6, section $7).', array(
+                '$4' => $articleCopy->getArticleNumber(), '$5' => $articleCopy->getPublicationId(),
+                '$6' => $articleCopy->getIssueNumber(), '$7' =>$articleCopy->getSectionNumber()), 'api');
         }
 
         Log::ArticleMessage($copyMe, $logtext, null, 155);
@@ -562,7 +557,8 @@ class Article extends DatabaseObject {
     public function getUniqueName($p_currentName)
     {
         global $g_ado_db;
-        $origNewName = $p_currentName . " (".getGS("Duplicate");
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $origNewName = $p_currentName . " (".$translator->trans("Duplicate");
         $newName = $origNewName .") 1";
 
         $query = 'SELECT `Name` FROM `Articles` WHERE `Name` LIKE "'.substr($newName, 0, -1).'%" ORDER BY `Name` DESC LIMIT 1;';
@@ -602,7 +598,8 @@ class Article extends DatabaseObject {
      * @return Article
      */
     public function createTranslation($p_languageId, $p_userId, $p_name)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         // Construct the duplicate article object.
         $articleCopy = new Article();
         $articleCopy->m_data['IdPublication'] = $this->m_data['IdPublication'];
@@ -645,11 +642,8 @@ class Article extends DatabaseObject {
         $origArticleData = $this->getArticleData();
         $origArticleData->copyToExistingRecord($articleCopy->getArticleNumber(), $p_languageId);
 
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
-        $logtext = getGS('Article translated to "$4" ($5)',
-            $articleCopy->getTitle(), $articleCopy->getLanguageName());
+        $logtext = $translator->trans('Article translated to $4 ($5)', array(
+            '$4' => $articleCopy->getTitle(), '$5' => $articleCopy->getLanguageName()), 'api');
         Log::ArticleMessage($this, $logtext, null, 31);
 
         // geo-map processing
@@ -678,6 +672,7 @@ class Article extends DatabaseObject {
         // Delete scheduled publishing
         ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
+         $translator = \Zend_Registry::get('container')->getService('translator');
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
         $em = Zend_Registry::get('container')->getService('em');
@@ -738,10 +733,7 @@ class Article extends DatabaseObject {
         $deleted = parent::delete();
 
         if ($deleted) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            Log::ArticleMessage($tmpObj, getGS('Article deleted.'), null, 32);
+            Log::ArticleMessage($tmpObj, $translator->trans('Article deleted.', array(), 'api'), null, 32);
         }
         $this->m_cacheUpdate = true;
         return $deleted;
@@ -1406,7 +1398,9 @@ class Article extends DatabaseObject {
      * @return string
      */
     public function getWorkflowDisplayString($p_value = null)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         if (is_null($p_value)) {
             $p_value = $this->m_data['Published'];
         }
@@ -1415,13 +1409,13 @@ class Article extends DatabaseObject {
         }
         switch ($p_value) {
         case 'Y':
-            return getGS("Published");
+            return $translator->trans("Published");
         case 'M':
-            return getGS('Publish with issue');
+            return $translator->trans('Publish with issue');
         case 'S':
-            return getGS("Submitted");
+            return $translator->trans("Submitted");
         case 'N':
-            return getGS("New");
+            return $translator->trans("New");
         }
     } // fn getWorkflowDisplayString
 
@@ -1439,6 +1433,7 @@ class Article extends DatabaseObject {
     {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $p_value = strtoupper($p_value);
         if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N') && ($p_value != 'M')) {
             return false;
@@ -1494,11 +1489,8 @@ class Article extends DatabaseObject {
 
         CampCache::singleton()->clear('user');
 
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
-        $logtext = getGS('Article status changed from $1 to $2.',
-            $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value));
+        $logtext = $translator->trans('Article status changed from $1 to $2.', array(
+            '$1' => $this->getWorkflowDisplayString($oldStatus), '$2' => $this->getWorkflowDisplayString($p_value)), 'api');
         Log::ArticleMessage($this, $logtext, null, 35);
         return true;
     } // fn setWorkflowStatus

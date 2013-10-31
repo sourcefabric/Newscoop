@@ -1,0 +1,261 @@
+Account: Račun
+'Items per page': 'Stavki po strani'
+'Add new': 'Dodaj novi'
+Home: Početna
+Logout: Odjava
+More...: Više...
+Content: Sadržej
+Languages: Jezici
+Countries: Zemlje
+Themes: Predlošci
+Topics: Teme
+Configure: Podešavanje
+'Image Archive': 'Arhiva slika'
+'Add Article': 'Dodaj članak'
+Fields: Polja
+Delete: Briši
+Type: Vrsta
+Name: Ime
+Code: Kod
+Edit: Uredi
+Login: Prijava
+Password: Lozinka
+Site: '<i>Site</i>'
+Path: Putanja
+'Go up': Gore
+URL: URL
+Order: Redosljed
+Hide: Sakrij
+Duplicate: Udvostruči
+Subscription: Pretplata
+expires: istječe
+starts: počinje
+before: prije
+after: poslije
+on: u
+status: status
+active: aktivna
+inactive: neaktivna
+Subscribers: Pretplatnici
+Staff: Suradnici
+'Select destination': 'Označi odredište'
+'No languages': 'Nema jezika'
+'---Select language---': '---Označi jezik---'
+'No publications': 'Nema publikacija'
+'---Select publication---': '---Označi publikaciju---'
+'No issues': 'Nema članaka'
+'---Select issue---': '---Označi članak---'
+'No sections': 'Nema rubrika'
+'---Select section---': '---Označi rubriku'
+Language: Jezik
+Country: Zemlja
+'Account name': 'Ime računa'
+Publication: Publikacija
+'Default language': 'Uobičajeni jezik'
+Subscriptions: Pretplata
+Issue: Izdanje
+Number: Broj
+Section: Rubrika
+Keywords: 'Ključne riječi'
+Topic: Tema
+'URL Name': 'Ime URL-a'
+'Left to pay': 'Ostalo za platiti'
+Active: Aktivna
+Trial: Proba
+Next: Naprijed
+Previous: Nazad
+Translate: Prevedi
+View: Prikaz
+'Scheduled Publishing': 'Automatsko objavljivanje'
+Time: Vrijeme
+Action: Akcija
+'Schedule a new action': 'Zakaži novu radnju'
+'Scheduling a new publish action': 'Zakazivanje nove radnje objavljivanja'
+'Delete scheduled publish action': 'Obriši zakazanu radnju objavljivanja'
+Date/Time: Datum/Vrijeme
+'You must select an action.': 'Morate označiti radnju.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Nemate ovlasti zakazivanja izdanja i članaka za automatsko objavljivanje.'
+'Front page': Naslovnica
+'Section page': 'Stranica rubrike'
+'Show on front page': 'Prikaži na naslovnici'
+'Remove from front page': 'Ukloni sa  naslovnice'
+'Show on section page': 'Prikaži na stranici rubrike'
+'Remove from section page': 'Odstrani sa stranice rubrike'
+Actions: Radnje
+Publishing: Objavljivanje
+Show: Prikaži
+Remove: Ukloni
+'Article Types': 'Vrste članaka'
+'Staff User Types': 'Vrste suradnika'
+Publications: Publikacije
+Issues: Izdanja
+Sections: Rubrike
+Articles: Članci
+Images: Slike
+Change: Izmijeni
+'Add new issue': 'Dodaj novo izdanje'
+'Section Template': 'Predložak rubrike'
+'Article Template': 'Predložak članka'
+'Default Language': 'Uobičajeni jezik'
+'Paid Period': 'Plaćeni period'
+Preview: Pregled
+'You must fill in the $1 field.': 'Morate popuniti $1 polje.'
+Error: Greška
+'Invalid input: $1': 'Pogrešan unos: $1'
+'Language does not exist.': 'Nema tog jezika.'
+'Publication does not exist.': 'Nema te publikacije.'
+'Issue does not exist.': 'Nema tog izdanja.'
+'You must select a language.': 'Morate izabrati jezik.'
+'Section does not exist.': 'Nema te rubrike.'
+'No articles.': 'Nema članaka.'
+'Article does not exist.': 'Nema tog članka.'
+'Image does not exist.': 'Nema te slike.'
+'Access denied': 'Zabranjen pristup'
+'Invalid parameters received': 'Primljeni pogrešni parametri'
+'Add new article': 'Dodaj novi članak'
+Status: Status
+Published: Objavljen
+'Not published': 'Nije objavljen'
+Submitted: Predan
+New: Novi
+Article: Članak
+Publish: Objavi
+Unpublish: Povuci
+Unlock: Otključaj
+Uploaded: Postavljen
+YYYY-MM-DD: GGGG-MM-DD
+Submit: Predaj
+Image: Slika
+Description: Opis
+Photographer: Fotograf
+Place: Mjesto
+Date: Datum
+Thumbnail: Sličica
+'In use': 'U upotrebi'
+'Additional searches': 'Dodatne pretrage'
+'Most Recently Added': 'Zadnji dodaci'
+'Most Recently Modified': 'Zadnje promijene'
+'$1 images found': 'Pronađeno je $1 slika/e'
+'Reset search conditions': 'Poništi uvjete pretraživanja'
+'Image number': 'Broj slike'
+Users: Korisnici
+Localizer: Lokalizator
+'Adding new translation': 'Dodavanje novog prijevoda'
+'No more languages.': 'Nema više jezika.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Ime polja $1 može sadržavati samo slova, brojeve i znak podvlake (_).'
+'Add new publication': 'Dodaj novu publikaciju'
+'Upload new template': 'Postavi novi predložak'
+'Add new staff member': 'Dodaj novog suradnika'
+'Add new subscriber': 'Dodaj novog pretplatnika'
+'Add new user type': 'Dodaj novu vrstu korisnika'
+'Add new article type': 'Dodaj novi vrstu članka'
+'Add new country': 'Dodaj novu zemlju'
+'Add new language': 'Dodaj novi jezik'
+'View logs': 'Pogledaj logove'
+'Change your password': 'Promijeni lozinku'
+'Your Articles': 'Tvoji članci'
+'Submitted Articles': 'Predani članci'
+Logs: Logovi
+'There are $1 article(s) left.': 'Ostao(lo) je još $1 članak(a).'
+'There are $1 issues(s) left.': 'Ostalo je još $1 izdanja(e).'
+'There are $1 section(s) left.': 'Ostala(o) je još $1 rubrika(e).'
+'There are $1 publication(s) left.': 'Ostala(o) je još $1 publikacija(e).'
+'There are $1 countries left.': 'Ostala(le) je (su) još $1 zemlja(e).'
+'Name <SMALL>(click to edit)</SMALL>': 'Ime<br><small>(kliknite za uređivanje)</small>'
+'Add new subscription': 'Dodaj novu pretplatu'
+'You do not have the right to add subscriptions.': 'Nemate ovlasti dodavati nove pretplate.'
+'Adding subscription': 'Dodavanje pretplate'
+'Delete subscription': 'Izbriši pretplatu'
+'You do not have the right to delete subscriptions.': 'Nemate ovlasti brisati pretplate.'
+'No such subscription.': 'Nema te pretplate.'
+Yes: Da
+No: Ne
+Close: Zatvori
+'No issues.': 'Nema izdanja.'
+'Back to Edit Article': 'Vratite se na uređivanje članka'
+'No topics': 'Nema tema'
+'You do not have the right to add articles.': 'Nemate ovlasti dodavati članak.'
+Start: Početak
+Days: Dani
+'The sections could not be added successfully. Some of them were already added !': 'Rubrike se ne mogu uspješno dodati. Neke od njih su već dodane!'
+'Add another': 'Dodaj slijedeći'
+Cancel: Odustani
+Done: Gotovo
+OK: OK
+Save: Spremi
+Search: Traži
+'Make a selection': Selektiraj
+'You must input a number greater than 0 into the $1 field.': 'Morate unijeti broj veći od nula u polje $1.'
+'You must input a valid date.': 'Morate unijeti ispravan datum.'
+'Add new field': 'Dodaj novo polje'
+'Article automatic publishing schedule': 'Raspored automatskog objavljivanja članka'
+'Are you sure you want to delete this scheduled action?': 'Sigurno želite obrisati raspored?'
+Unlink: 'Prekini link'
+'Are you sure you want to delete the image $1?': 'Sigurno želite obrisati sliku $1?'
+'No such issue.': 'Nema tog izdanja.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Sigurno želite obrisati pretplatu na publikaciju $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nemoguće je spremiti promjene u izdanju $1. Provjerite da li URL ime izdanja $2 nije upotrebljeno u publikaciji $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Zakači
+Back: Nazad
+File: Datoteka
+'Save and Close': 'Spremi i zatvori'
+Add: Dodaj
+'Select All': 'Označi sve'
+'Select None': 'Poništi selekciju'
+'Add Event': 'Dodaj akciju'
+N/A: N/A
+'On Front Page': 'Na naslovnici'
+'On Section Page': 'Na stranici rubrike'
+'Created by': Kreirao
+'Creation date': 'Datum kreiranja'
+'Publication List': 'Lista publikacija'
+'Issue List': 'Lista izdanja'
+'Section List': 'Lista rubrika'
+All: Sve
+duplicate: udvostruči
+move: premjesti
+Move: Premjesti
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': 
+Author: 
+'Article name': 
+'Hide article': 
+'Show article': 
+'Article Type Fields': 'Polja tipova članka'
+'Article Images': 'Slike članaka'
+'Log Messages': 'Log poruka'
+'Article Files': 'Datoteke članaka'
+'Article Comments': 
+'Are you sure you want to deactivate the subscription?': 'Sigurno želite prekinuti pretplatu?'
+'Are you sure you want to activate the subscription?': 'Sigurno želite aktivirati pretplatu?'
+Other: 
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 
+'Thank you.': 
+'Please take a minute to send us an email.': 
+(optional): 
+'The URL you entered is invalid: $1': 
+Reads: 
+Plugins: 
+'Add new umember': 'Dodaj novog suradnika'
+'Your articles': 'Vaši članci'
+'Submitted articles': 'Predani članci'
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

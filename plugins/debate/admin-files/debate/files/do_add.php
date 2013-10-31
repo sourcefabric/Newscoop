@@ -1,18 +1,18 @@
 <?php
-camp_load_translation_strings("article_files");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 if (!$g_user->hasPermission('AddFile')) {
-	camp_html_display_error(getGS('You do not have the right to add files.'), null, true);
+	camp_html_display_error($translator->trans('You do not have the right to add files.', array(), 'article_files'), null, true);
 	exit;
 }
 
@@ -38,27 +38,27 @@ if (isset($_FILES["f_file"])) {
 			break;
 		case 1: // UPLOAD_ERR_INI_SIZE
 		case 2: // UPLOAD_ERR_FORM_SIZE
-			camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+			camp_html_display_error($translator->trans("The file exceeds the allowed max file size.", array(), 'article_files'), null, true);
 			break;
 		case 3: // UPLOAD_ERR_PARTIAL
-			camp_html_display_error(getGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'"), null, true);
+			camp_html_display_error($translator->trans("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini", array(), 'article_files'), null, true);
 			break;
 		case 4: // UPLOAD_ERR_NO_FILE
-			camp_html_display_error(getGS("You must select a file to upload."), null, true);
+			camp_html_display_error($translator->trans("You must select a file to upload.", array(), 'article_files'), null, true);
 			break;
 		case 6: // UPLOAD_ERR_NO_TMP_DIR
 		case 7: // UPLOAD_ERR_CANT_WRITE
-			camp_html_display_error(getGS("There was a problem uploading the file."), null, true);
+			camp_html_display_error($translator->trans("There was a problem uploading the file.", array(), 'article_files'), null, true);
 			break;
 	}
 } else {
-	camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
+	camp_html_display_error($translator->trans("The file exceeds the allowed max file size.", array(), 'article_files'), null, true);
 }
 
 $DebateAnswer = new DebateAnswer($f_fk_language_id, $f_debate_nr, $f_debateanswer_nr);
 
 if (!$DebateAnswer->exists()) {
-	camp_html_display_error(getGS("Debate Answer $1 does not exist.", $f_debateanswer_nr), null, true);
+	camp_html_display_error($translator->trans("Debate Answer $1 does not exist.", array('$1' => $f_debateanswer_nr)), null, true);
 	exit;
 }
 
@@ -91,7 +91,7 @@ $DebateAnswerAttachment = new DebateAnswerAttachment($f_debate_nr, $f_debateansw
 $DebateAnswerAttachment->create();
 
 // Go back to upload screen.
-camp_html_add_msg(getGS("File '$1' added.", $file->getFileName()), "ok");
+camp_html_add_msg($translator->trans("File $1 added.", array('$1' => $file->getFileName()), 'plugin_debate'), "ok");
 ?>
 <script>
 location.href="popup.php?f_debate_nr=<?php p($f_debate_nr) ?>&f_debateanswer_nr=<?php p($f_debateanswer_nr) ?>&f_fk_language_id=<?php p($f_fk_language_id) ?>";

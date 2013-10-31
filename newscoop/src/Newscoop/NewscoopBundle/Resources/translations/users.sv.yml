@@ -1,0 +1,186 @@
+'Password confirmation does not match your password.': 
+'Password Confirmation': 
+Website: 
+Twitter: 
+'Save profile': 
+'Profile image': 
+Organisation: 
+'Last Name Public': 
+Google+: 
+Geolocation: 
+Gender: 
+'First Name Public': 
+Facebook: 
+'Date of birth': 
+'Allow sending emails': 
+'About me': 
+'User with email %s is registered already.': 
+'Username is used. Please use another one.': 
+Continue: 
+'Accepting terms of use': 
+'send confirmation email': 
+'edit user': 
+'delete user': 
+'Verified profile': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Send email to user:': 
+'No users found.': 
+'No records found.': 
+'No entries to show': 
+'Display _MENU_ records': 
+'Are you sure you want to {action}?': 
+'Active Logins': 
+' - filtering from _MAX_ records': 
+'User renamed.': 
+'User attributes': 
+'Rename user $1': 
+'Username is used already': 
+'User with id $1 not found': 
+'User was deleted.': 
+'User saved': 
+'User id not specified': 
+'User $1 created': 
+'Send confirm email': 
+'Profile saved.': 
+Picture: 
+'Password updated': 
+None: 
+'New confirmation email was sent to user.': 
+'Email is used already': 
+'Edit your password': 
+'Edit user $1': 
+'Edit subscriptions': 
+'Edit profile': 
+'Edit permissions': 
+'Create new account': 
+'Comment ban settings': 
+'Ban for user $1 saved.': 
+'User account is active': 
+'Allow users profile to be publicly displayed': 
+'Allow user access to login to site backend': 
+Templates: 
+Username: 
+'Last Name': 
+'First Name': 
+Email: 
+'You were logged out.': 
+'Newscoop Subhead': 
+Filters: 
+'Add new Author': 
+'Loading Data': 
+'Delete author type': 
+'Cannot remove author type.': 
+'Cannot remove author alias.': 
+'Author alias removed.': 
+'Are you sure you want to delete this author?': 
+'Are you sure you want to delete this author alias?': 
+'All Author Types': 
+'Add author type': 
+'You do not have the permission to change authors.': 
+'Please fill at least first name and last name.': 
+'Cannot add author type, this type already exists.': 
+'Author type removed.': 
+'Author type must be at least three characters long.': 
+'Author type added.': 
+'Are you sure you want to delete this author type?': 
+'User may change authors': 
+'Unable to add new image, target directory is not writable.': 
+'Author saved.': 
+'Author deleted.': 
+'Enable Firefox spell checking by default': 
+'User may use the editor status bar': 
+'User may clear up the system cache': 
+'Another user is registered with that e-mail address, please choose a different one.': 
+'There was an error when trying to update the user info.': 
+'User may moderate comments': 
+'User may enable comments': 
+'User may translate articles': 'Användaren får översätta artiklar'
+'User may move articles': 'Användaren får flytta artiklar'
+'User may find and replace': 'Användaren får söka och ersätta'
+'User may change system preferences': 'Användaren får ändra systeminställningar'
+'User may attach topics to articles': 'Användaren får lägga till teman till artiklar'
+'User may attach images to articles': 'Användaren får bifoga bilder till artiklar'
+'User may add special characters': 'Användaren får lägga till specialtecken'
+'That user name already exists, please choose a different login name.': 'Användarnamnet finns redan, var god välj ett annat användarnamn.'
+'User may delete article attachments': 'Användaren får radera artikelbilagor'
+'User may change article attachments': 'Användaren får ändra på artikelbilagor'
+'User may add article attachments': 'Användaren får lägga till artikelbilagor'
+'You do not have the right to create user accounts.': 'Du har itne rätt att skapa användarkonton.'
+'You must select a $1': 'Du måste välja en $1'
+'The password must be at least 6 characters long and both passwords should match.': 'Lösenordet måste vara minst 6 tecken långt och båda lösenorden måste stämma överens.'
+'The user account could not be created.': 'Användarkontot kunde inte skapas.'
+'User account $1 was created successfully.': 'Användarkontot $1 skapades framgångsrikt.'
+'You do not have the right to change user account permissions.': 'du har inte rätt att ändra användarkontorättigheter.'
+'You do not have the right to change user account information.': 'Du har inte rätt att ändra användarkontoinformation.'
+'The password you typed is incorrect.': 'Lösenordet du skrev är felaktigt.'
+'You do not have the right to delete user accounts.': 'Du har inte rätt att radera användarkonton.'
+'User account $1 was deleted successfully.': 'Användarkontot $1 raderades framgångsrikt.'
+'The IP Group $1 has been created.': 'IP-gruppen $1 har skapats.'
+'There was an error creating the IP address group.': 'Ett fel uppstod när IP-adressgruppen skapades.'
+'The IP address group $1 has been deleted.': 'IP-adressgruppen $1 har raderats.'
+'User $1 information was changed successfully.': 'Användaren $1s information ändrades framgångsrikt.'
+'User Type': Användartyp
+'The IP address group $1:$2 conflicts with another existing group.': 'IP-adressgruppen $1:$2 krockar med en annan existerande grupp.'
+'User may add/change publications': 'Användaren får lägga till/ändra publikationer'
+'Invalid value of user type parameter': 'Felaktigt värde på användartypparametern.'
+'User may delete publications': 'Användaren får radera publikationer'
+'User may add/change issues': 'Användaren får lägga till/ändra utgåvor'
+'User may delete issues': 'Användaren får radera utgåvor'
+'User may add/change sections': 'Användaren får lägga till/ändra sektioner'
+'User may delete sections': 'Användaren får radera sektioner'
+'User may add articles': 'Användaren får lägga till artiklar'
+'User may change articles': 'Användaren får ändra artiklar'
+'User may delete articles': 'Användaren får radera artiklar'
+'User may add images': 'Användaren får lägga till bilder'
+'User may change images': 'Användaren får ändra bilder'
+'User may delete images': 'Användaren får radera bilder'
+'User may delete templates': 'Användaren får radera mallar'
+'User may add/change staff accounts and passwords': 'Användaren får lägga till/ändra stabskonton och lösenord'
+'User may add/change subscribers accounts and passwords': 'Användaren får lägga till/ändra prenumerantkonton och lösenord'
+'User may delete staff accounts': 'Användaren får radera stabskonton'
+'User may manage user subscriptions': 'Användaren får hantera prenumerantanvändare'
+'User may manage account types': 'Användaren får hantera kontotyper'
+'User may add/change article types': 'Användaren får lägga till/ändra artikeltyper'
+'User may delete article types': 'Användaren får radera artikeltyper'
+'User may manage templates': 'Användaren får hantera mallar'
+'User may add/change country entries': 'Användaren får lägga till/ändra landsposter'
+'User may add languages and manage language information': 'Användaren får lägga till språk och hantera språkinformation'
+'User may delete languages': 'Användaren får radera språk'
+'User may view audit logs': 'Användaren får visa loggar'
+'User may delete country entries': 'Användaren får radera landsposter'
+'User may manage localizer': 'Användaren får hantera översättaren'
+'User may publish articles': 'Användaren får publicera artiklar'
+'User may manage topics': 'Användaren får hantera teman'
+'User may use bold': 'Användaren får använda fet stil'
+'User may use italic': 'Användaren får använda kursiv stil'
+'User may use underline': 'Användaren får göra understrykningar'
+'User may use strikethrough': 'Användaren får göra överstrykningar'
+'User may change text alignment': 'Användaren får ändra textflöde'
+'User may copy, cut, and paste': 'Användaren får kopiera och klistra in'
+'User may undo/redo': 'Användaren får ångra/göra om'
+'User may change text direction': 'Användaren får ändra textriktning'
+'User may set indents': 'Användaren får sätta inskjutning'
+'User may add links': 'Användaren får lägga till länkar'
+'User may add subheads': 'Användaren får lägga in mellanrubriker'
+'User may insert images': 'Användaren får lägga in bilder'
+'User may view the HTML source': 'Användaren får visa HTML-källkoden'
+'User may enlarge the editor': 'Användaren får förstora redigeraren'
+'User may change the font face': 'Användaren får ändra typsnitt'
+'User may change the font size': 'Användaren får ändra textstorlek'
+'User may create bulleted lists': 'Användaren får skapa punktlistor'
+'User may create numbered lists': 'Användaren får skapa numrerade listor'
+'User may insert tables': 'Användaren får lägga in tabeller'
+'User may insert horizontal rules': 'Användaren får lägga in horisontala streck'
+'User may change the font color': 'Användaren får ändra textfärg'
+'User may use superscripts': 'Användaren får använda övertexter'
+'User may use subscripts': 'Användaren får använda undertexter'
+'User may backup and restore the site data': 
+Miscellaneous: Blandat
+'Staff/Subscribers Management': Stab/Prenumeranthantering
+'Editor Basic Settings': 'Textredigerare grundläggande inställningar'
+'Editor Advanced Font Settings': 'Textredigerare avancerade typsnittsinställningar inställningar'
+'Editor Table Settings': 'Textredigerare tabellinställningar'
+'Administrative tasks': 'Administrativa sysslor'
+'User will be notified on several events': 'Användaren meddelas vid flera händelser'
+'Editor Miscellaneous Settings': 'Textredigerare blandade inställningar'
+'No such user account.': 'Användarkontot finns inte.'

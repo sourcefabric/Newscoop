@@ -60,13 +60,14 @@ class UrlType extends DatabaseObject {
 	 * @return string
 	 */
 	public function getName()
-	{
+	{	
+		$translator = \Zend_Registry::get('container')->getService('translator');
 		$name = $this->m_data['Name'];
 		switch ($name) {
 			case "short names":
-				return getGS("short names");
+				return $translator->trans("short names", array(), 'api');
 			case "template path":
-				return getGS("template path");
+				return $translator->trans("template path", array(), 'api');
 			default:
 				return "";
 		}

@@ -1,6 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-camp_load_translation_strings('bug_reporting');
+$translator = \Zend_Registry::get('container')->getService('translator');
 global $ADMIN_DIR;
 global $Campsite;
 
@@ -12,20 +12,20 @@ global $Campsite;
 <?php
 if (isset($sendWasAttempted) && $sendWasAttempted){
     echo "<b>";
-    putGS("We are sorry, but there was a problem sending your bug report." );
+    echo $translator->trans("We are sorry, but there was a problem sending your bug report.", array(), 'bug_reporting');
     echo "</b>";
 } else {
     echo '<font size="+2"><b>';
-    putGS("Newscoop has encountered a problem.");
+    echo $translator->trans("Newscoop has encountered a problem.", array(), 'bug_reporting');
     echo "</b></font>";
     echo '<hr noshade size="1" color="black">';
 }
 ?>
 <p>
 <?php
-    putGS("Please take a minute to send us an email.");
+    echo $translator->trans("Please take a minute to send us an email.");
     echo "<br><br>";
-    putGS("Simply copy and paste the error report below and send it to:");
+    echo $translator->trans("Simply copy and paste the error report below and send it to:", array(), 'bug_reporting');
     echo (" <b>");
     echo $Campsite["SUPPORT_EMAIL"];
     echo ("</b>");
@@ -33,7 +33,7 @@ if (isset($sendWasAttempted) && $sendWasAttempted){
 </p>
 <p>
     <?php
-    putGS("Thank you.");
+    echo $translator->trans("Thank you.");
     ?>
 </p>
 <br />
@@ -41,16 +41,16 @@ if (isset($sendWasAttempted) && $sendWasAttempted){
 </tr>
 
 <tr>
-    <td colspan="2"><b><?php putGS("Error Report") ?></b>
+    <td colspan="2"><b><?php echo $translator->trans("Error Report", array(), 'bug_reporting'); ?></b>
     <hr noshade size="1" color="black"><br /></td>
 </tr>
 <?php if (isset($sendWasAttempted) && $sendWasAttempted) { ?>
 	<tr>
-	    <td nowrap><?php putGS("Email:") ?></td>
+	    <td nowrap><?php echo $translator->trans("Email:"); ?></td>
 	    <td><?php echo htmlspecialchars($reporter->getEmail()); ?></td>
 	</tr>
 	<tr>
-	    <td nowrap><?php putGS("Description:") ?></td>
+	    <td nowrap><?php echo $translator->trans("Description:", array(), 'bug_reporting'); ?></td>
 	    <td><?php echo htmlspecialchars($reporter->getDescription()); ?></td>
 	</tr>
 	<tr>
@@ -59,19 +59,19 @@ if (isset($sendWasAttempted) && $sendWasAttempted){
 	</tr>
 <?php } ?>
 <tr>
-    <td nowrap><?php putGS("Error ID:") ?></td>
+    <td nowrap><?php echo $translator->trans("Error ID:", array(), 'bug_reporting'); ?></td>
     <td><?php echo $reporter->getId(); ?></td>
 </tr>
 <tr>
-    <td nowrap><?php putGS("Error String:") ?></td>
+    <td nowrap><?php echo $translator->trans("Error String:", array(), 'bug_reporting'); ?></td>
     <td><?php echo $reporter->getStr(); ?></td>
 </tr>
 <tr>
-    <td nowrap><?php putGS("Time:") ?></td>
+    <td nowrap><?php echo $translator->trans("Time:"); ?></td>
     <td><?php echo $reporter->getTime(); ?></td>
 </tr>
 <tr align="left">
-    <td valign="top" nowrap><?php putGS("Backtrace:") ?></td>
+    <td valign="top" nowrap><?php echo $translator->trans("Backtrace:", array(), 'bug_reporting'); ?></td>
     <td>
 <pre>
 <?php echo $reporter->getBacktraceString(); ?>

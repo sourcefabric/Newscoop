@@ -1,0 +1,92 @@
+get: Obtener
+Soundcloud: SoundCloud
+Templates: Plantillas
+'Feedback Messages': 'Mensajes de retroalimentación'
+'Article Playlists': 'Lista de reproducción de artículos'
+'Check all': 'Seleccionar todos'
+view: ver
+undo/redo: deshacer/rehacer
+underline: subrayar
+translate: traducir
+'text direction': 'dirección de texto'
+'text alignment': 'alineación de texto'
+table: tabla
+superscript: superíndice
+subscript: subíndice
+subhead: subencabezado
+strikethrough: tachar
+statusbar: 'barra de estado'
+'spell checker enabled': 'revisión ortográfica habilitada'
+'source view': 'vista de fuentes'
+publish: publicar
+notify: notificar
+moderate: moderar
+manage: administrar
+'list number': 'número de lista'
+'list bullet': 'lista de viñetas'
+link: vínculo
+italic: cursiva
+indent: sangría
+image: imagen
+'horizontal rule': 'regla horizontal'
+handle: mover
+guest: invitado
+'font size': 'tamaño de fuente'
+'font face': 'tipo de fuente'
+'font color': 'color de fuente'
+find/replace: encontrar/reemplazar
+enlarge: agrandar
+enable: habilitar
+edit: editar
+delete: eliminar
+copy/cut/paste: copiar/cortar/pegar
+clear: limpiar
+'character map': 'mapa de caracteres'
+bold: negrilla
+attach: añadir
+'any resource': 'cualquier recurso'
+admin: administrador
+add: agregar
+'You cant deny yourself to manage $1': 'No puede negarse a administrar $1'
+'You are not allowed to $1 $2.': 'No puede negarse a $1 $2.'
+'User type saved.': 'Tipo de usuario guardado.'
+'User type deleted.': 'Tipo de usuario eliminado.'
+'User type added.': 'Tipo de usuario agregado.'
+'User Groups': 'Grupos de usuario'
+Themes: Temas
+'That type name already exists, please choose a different name.': 'Ese tipo ya existe. Por favor escoja otro.'
+System: Sistema
+Structure: Estructura
+'Search Indexer': 'Buscar índice'
+'Rich-Text Editor Preferences': 'Preferencias de editor de texto'
+ReCaptcha: ReCaptcha
+Polls: Encuestas
+'Permissions:': Permisos
+'Permissions updated': 'Permisos actualizados'
+Notification: Notificación
+Log: Bitácora
+Layout: Formato
+Global: Global
+Files: Archivos
+'Error: ': 'Error:'
+'Edit user type $1': 'Editar tipo de usuario $1'
+Deny: Negar
+'Delete user type $1': 'Eliminar tipo de usuario $1'
+'Can not delete a user type with assigned users.': 'No puede eliminarse un tipo de usuairo con usuarios asignado'
+Cache: Cache
+Backup: Copia
+Authoring: Autoría
+Allow: Permitir
+'User types': 'Tipo de usuario'
+'No user types.': 'Sin tipo de usuario'
+'You do not have the right to add user types.': 'No tiene derecho a agregar tipo de usuario'
+'Adding new user type': 'Agregando nuevo tipo de usuario'
+'The user type $1 has been added.': 'El tipo de usuario $1 ha sido agregado.'
+'The user type could not be added.': 'El tipo de usuario no pudo ser agregado'
+'Please check if an user type with the same name does not already exist.': 'Favor revise si un tipo de usuario con el mismo nombre no existe ya'
+'Deleting user type': 'Borrando tipo de usuario'
+'The user type has been deleted.': 'El tipo de usuario ha sido borrado'
+'The user type could not be deleted.': 'El tipo de usuario no pudo ser borrado'
+'Updating user type permissions': 'Actualizando permisos de tipo de usuario'
+'User type permissions have been successfuly updated.': 'Permisos de tipo de usuario han sido actualizado con éxito'
+'User type permissions could not be updated.': 'Permisos de tipo de usuario no pudo ser actualizado'

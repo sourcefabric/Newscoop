@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+User: 
+None: 
+'Coming from': 
+'Ban/Unban user': 
+Ip: 
+'Bans can be applied to a users name, email address or IP address.': 
+'You are about to permanently delete multiple comments.': 
+'You are about to permanently delete a comment.': 
+Website: 
+'Value is not $1 characters long': 
+Username: 'Kullanıcı adı'
+'User id': 
+'User ban settings': 
+'Update comment': 
+Unrecommended: 
+Unrecommend: 
+'Subject is not $1 characters long': 
+'Sort by Thread order': 
+'Show parent comment': 
+'Show commenter details': 
+'Show commenter': 
+'Show comment user details': 
+'Show comment user': 
+'Show comment details': 
+'Select status': 
+'Search Type': 
+'Reply to comment': 
+Recommended: 
+Recommend: 
+'Quick edit': 
+Parent: 
+ID: 
+'Go to edit article': 
+Forum: 
+'For Column': 
+Email: 
+'Edit acceptance criteria': 
+E-mail: 
+'Delete all comments?': 
+'Date Created': 
+'Comments updated.': 
+'Comments status change to $1.': 
+'Comments deleted.': 
+'Commenter $1 saved.': 
+'Commenter $1 deleted.': 
+Commenter: 
+'Comment updated.': 
+'Comment status change to $1.': 
+'Comment id': 
+'Comment deleted.': 
+'Comment delete by $1 from the article $2 ($3)': 
+'Comment Acceptance': 
+'Comment $4 by $1 in the article $2 ($3)': 
+'Comment $1 saved.': 
+Column: 
+'Change subscriber information': 
+'Ban for commenter $1 saved.': 
+Ban: 
+'Are you sure you want to do it?': 
+'Add rating': 
+'Add new comment commenter': 
+'Add new comment': 
+'Add new acceptance criteria': 
+'Acceptance $1 saved.': 
+'Acceptance $1 deleted.': 

@@ -5,18 +5,14 @@ require_once dirname(dirname(__FILE__)) . '/classes/Input.php';
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetContext.php';
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php';
 
-camp_load_translation_strings('home');
-camp_load_translation_strings('articles');
-camp_load_translation_strings('api');
-camp_load_translation_strings('extensions');
-camp_load_translation_strings('globals');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // install default widgets for admin
 WidgetManager::SetDefaultWidgetsAll();
 
 // add title
 echo camp_html_breadcrumbs(array(
-    array(getGS('Dashboard'), ''),
+    array($translator->trans('Dashboard', array(), 'home'), ''),
 ));
 
 if (!SystemPref::get('stat_ask_time')) SystemPref::set('stat_ask_time', 0);
@@ -49,7 +45,7 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
     // Clear template cache storage
     if (CampTemplateCache::factory()) CampTemplateCache::factory()->clean();
 
-    $actionMsg = getGS('Newscoop cache was cleaned up');
+    $actionMsg = $translator->trans('Newscoop cache was cleaned up', array(), 'home');
     $res = 'OK';
 }
 
@@ -69,7 +65,7 @@ $(function() {
 
 <?php camp_html_display_msgs("0.25em", "0.25em"); ?>
 
-<div class="links"><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php putGS('Add more widgets'); ?>"><?php putGS('Add more widgets'); ?></a></div>
+<div class="links"><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/widgets.php" title="<?php echo $translator->trans('Add more widgets', array(), 'home'); ?>"><?php echo $translator->trans('Add more widgets', array(), 'home'); ?></a></div>
 
 <div id="dashboard">
 
@@ -122,8 +118,8 @@ $(document).ready(function() {
     
     $('.context').widgets({
         localizer: {
-            remove: '<?php putGS('Remove widget'); ?>',
-            info: '<?php putGS('Widget info'); ?>',
+            remove: '<?php echo $translator->trans('Remove widget', array(), 'home'); ?>',
+            info: '<?php echo $translator->trans('Widget info', array(), 'home'); ?>',
         }
     });
 });

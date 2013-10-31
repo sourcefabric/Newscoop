@@ -1,4 +1,7 @@
-<?php echo $this->paginator; ?>
+<?php
+$translator = \Zend_Registry::get('container')->getService('translator');
+echo $this->paginator; 
+?>
 
 <?php if (!empty($this->images)) { ?>
 <ul class="thumbnails archive images">
@@ -13,5 +16,5 @@
 </ul>
 
 <?php } else { ?>
-<div class="info"><?php putGS('No images'); ?></div>
+<div class="info"><?php echo $translator->trans('No images', array(), 'article_images'); ?></div>
 <?php } ?>

@@ -15,6 +15,9 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
  * @param string $p_token
  * @return void
  */
+
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 function send_token($p_email, $p_token)
 {
     global $Campsite;
@@ -26,7 +29,7 @@ function send_token($p_email, $p_token)
         $p_email);
 
     // email message
-    $message = getGS("Hi, \n\nfor password recovery, please follow this link: $1", $link);
+    $message = $translator->trans("Hi, \n\nfor password recovery, please follow this link: $1", array('$1' => $link), 'home');
 
     // get from email
     $from = SystemPref::Get('PasswordRecoveryFrom');
@@ -43,7 +46,7 @@ function send_token($p_email, $p_token)
 
     // send mail
     mail($p_email,
-        '=?UTF-8?B?' . base64_encode(getGS('Password recovery')) . '?=',
+        '=?UTF-8?B?' . base64_encode($translator->trans('Password recovery', array(), 'home')) . '?=',
         trim(html_entity_decode(strip_tags($message), ENT_QUOTES, 'UTF-8')),
         implode("\r\n", $headers));
 }
@@ -55,11 +58,8 @@ if (isset($_REQUEST['TOL_Language'])) {
     $defaultLanguage = $_COOKIE['TOL_Language'];
 }
 
-// Load the language files.
-camp_load_translation_strings("globals");
-camp_load_translation_strings("home");
 $sent = false;
-$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
+$siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans("Newscoop", array(), 'home') . $Campsite['VERSION'];
 $disabled=false;
 if (SystemPref::Get("PasswordRecovery")=='N') {
     $disabled = true;
@@ -67,7 +67,7 @@ if (SystemPref::Get("PasswordRecovery")=='N') {
 if (Input::Get("f_post_sent", "int",0)==1) {
     $email = Input::Get("f_email");
     if (stristr($email, "@") == false) { // || stristr($email, ".")==false)
-        $errors[] = getGS("Email: incorrect format.");
+        $errors[] = $translator->trans("Email: incorrect format.", array(), 'home');
     }
 
     if (!isset($errors)) {
@@ -80,7 +80,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
             $sent = true;
         }
         else {
-            $errors[] = getGS("No user is registered with this email.");
+            $errors[] = $translator->trans("No user is registered with this email.", array(), 'home');
         }
     }
 }
@@ -90,7 +90,7 @@ if (Input::Get("f_post_sent", "int",0)==1) {
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title><?php p($siteTitle.' - ').putGS("Password Recovery"); ?></title>
+  <title><?php p($siteTitle.' - ').$translator->trans("Password Recovery", array(), 'home'); ?></title>
 
   <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
   <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
@@ -104,10 +104,10 @@ if (Input::Get("f_post_sent", "int",0)==1) {
   <input type="hidden" name="f_post_sent" value="1" />
   <div class="login_box">
     <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
-    <h2><?php putGS("Password Recovery"); ?></h2>
+    <h2><?php echo $translator->trans("Password Recovery", array(), 'home'); ?></h2>
     <noscript>
     <?php
-    putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');
+    echo $translator->trans('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.', array(), 'home');
     ?>
     </noscript>
     <?php
@@ -127,26 +127,26 @@ if (Input::Get("f_post_sent", "int",0)==1) {
     <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
     <tr>
       <td align="right">
-        <strong><?php putGS("Email"); ?>:</strong>
+        <strong><?php echo $translator->trans("Email"); ?>:</strong>
       </td>
       <td>
-        <input type="text" name="f_email" size="100" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your email."); ?>" />
+        <input type="text" name="f_email" size="100" class="input_text" alt="blank" style="width:250px;" emsg="<?php echo $translator->trans("Please enter your email.", array(), 'home'); ?>" />
       </td>
     </tr>
     <tr class="buttonBlock2">
-    <td><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Back to login.'); ?></a></td>
+    <td><a href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php echo $translator->trans('Back to login.', array(), 'home'); ?></a></td>
       <td>
-        <input type="submit" class="button" name="Login" value="<?php  putGS('Recover password'); ?>" />
+        <input type="submit" class="button" name="Login" value="<?php  echo $translator->trans('Recover password', array(), 'home'); ?>" />
       </td>
     </tr>
     </table>
 
     <?php } else if ($disabled) { ?>
-    <p><?php putGS('Password recovery is disabled.'); ?></p>
-    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Back to login'); ?></a>
+    <p><?php echo $translator->trans('Password recovery is disabled.', array(), 'home'); ?></p>
+    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php echo $translator->trans('Back to login', array(), 'home'); ?></a>
     <?php } else { ?>
-    <p><?php putGS('An email with instructions on how to recover you password has been sent to your inbox.'); ?></p>
-    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php putGS('Proceed to login.'); ?></a>
+    <p><?php echo $translator->trans('An email with instructions on how to recover you password has been sent to your inbox.', array(), 'home'); ?></p>
+    <a class="goto" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/login"><?php echo $translator->trans('Proceed to login.', array(), 'home'); ?></a>
     <?php } ?>
     </div>
   </div>

@@ -1,0 +1,67 @@
+third: третій
+second: другий
+forth: четвертий
+first: п’ятий
+'You must input a number greater than 0 into the Number of addresses field.': 'Ви маєте ввести номер більший за 0 у поле кількості адрес.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Ви маєте ввести цифру між 0 та 255 у поле статичний ІР-адрес.'
+'User IP access list management': 'Керування списком ІР-адрес користувача'
+'The IP address group conflicts with another existing group.': 'Група ІР-адрес конфліктує з іншою існуючою групою.'
+'Subscription sections': 'Розділи підписки'
+'No records.': 'Немає записів'
+'You have subscription for all available publications': 'Ви маєте підписку на всі доступні публікації'
+'Subscription type:': 'Тип підписки:'
+'Start:': 'Початок:'
+'Start Date': 'Дата початку'
+'Sections:': 'Розділ:'
+'Publication:': Публікації
+'Paid days': 'Платних днів'
+'Paid Days:': 'Платних днів:'
+Paid: Плата
+'No subscriptions': 'Немає підписок'
+'Languages:': 'Мови:'
+'Edit all sections': 'Редагувати всі розділи'
+'Days:': 'Дні:'
+'Days must be number': 'День має бути цифрою'
+Any: Будь-який
+'Add section': 'Додати розділ'
+saved: сбережено
+removed: прибрано
+deleted: видалено
+deactivated: деактивовано
+activated: активовано
+'Value is required and cant be empty': 'Значення обов’язкове та не може бути незаповненим'
+'That user name already exists, please choose a different login name.': 'Цей користувач вже існує, будь ласка виберіть інший логін'
+'That $1 already exists, please choose a different $2.': '$1 вже існує, будь ласка виберіть інше $2.'
+'Subscriptions exist for all available publications.': 'Підписки існують для всіх публікацій.'
+'Subscription IP Addresses': 'ІР-Адреси підписок'
+'Subscription $1': 'Підписка $1'
+'Subscriber saved.': 'Підписувача збережено.'
+'Subscriber management': 'Керування підписувачем'
+'Subscriber deleted.': 'Підписувача видалено.'
+'Start IP': 'ІР початку'
+'Select country': 'Виберіть країну'
+'Number of addresses': 'Кількість адрес'
+'Number of Addressses': 'Кількість адрес'
+'No IP Addresses': 'Немає ІР адрес'
+'IP Address added allready': 'ІР адреси вже додані'
+'IP Address $1': 'ІР адрес $1'
+'IP Access': 'ІР Доступ'
+'Full Name': 'Повне Ім’я'
+'Edit subscriptions': 'Редагувати підписки'
+'Edit subscriber $1': 'Редагувати підписувача $1'
+E-Mail: Е-пошта
+'Delete subscriber $1': 'Видалити підписувача  $1'
+'Creation Date': 'Дата створення'
+'Change subscriber information': 'Змінити інформацію про підписувача'
+'Add new IP address': 'Додати нову ІР адресу'
+'Add new IP Address': 'Додати нову ІР Адресу'
+'Accout Name': 'Ім’я акаунту'
+'%value% must be greater than %min%': ' %value% має бути більш ніж %min%'
+'%value% is not a valid IP Address': ' %value% не є ІР Адресою'
+'Regardless of the language': 'Незалежно від мови'
+'Individual languages': 'Окремі мови'
+'Add sections now': 'Додати розділ зараз'
+'Add sections later': 'Додати розділ пізніше'
+'Subscription Type': 'Тип підписки'
+'Paid (payment will be confirmed later)': 'Плата (оплата може бути підтвердженою пізніше)'
+'Paid (confirm payment now)': 'Плата ( підтвердити зараз)'

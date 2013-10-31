@@ -12,14 +12,16 @@ class Admin_Form_SlideshowVideoItem extends Zend_Form
     /**
      */
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('text', 'url', array(
-            'label' => getGS('URL'),
+            'label' => $translator->trans('URL'),
             'required' => true,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Add video'),
+            'label' => $translator->trans('Add video', array(), 'article_images'),
             'ignore' => true,
         ));
     }

@@ -2,8 +2,7 @@
 /**
  * @package Newscoop
  */
-require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/localizer/Localizer.php");
-camp_load_translation_strings('authors');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 ini_set("display_errors","2");
 error_reporting(E_ALL);
@@ -21,9 +20,9 @@ function l_getType($types)
 <table style="width: 100%; margin: 0pt;" id="gridx" cellpadding="0" cellspacing="0" class="datatable">
 <thead>
 <tr>
-  <th><?php putGS('Author'); ?></th>
-  <th><?php putGS('Type'); ?></th>
-  <th><?php putGS('Delete'); ?></th>
+  <th><?php echo $translator->trans('Author'); ?></th>
+  <th><?php echo $translator->trans('Type'); ?></th>
+  <th><?php echo $translator->trans('Delete'); ?></th>
 </tr>
 </thead>
 <tbody>
@@ -39,7 +38,7 @@ foreach($authors as $author) {
   <td align="right" class="last" id="row_0">
     <a href="" onclick="return deleteAuthor(<?php echo $author->getId() ?>);"><img
       src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0"
-      alt="<?php echo getGS('Delete author'); ?>" title="<?php echo getGS('Delete author'); ?>" /></a>
+      alt="<?php echo $translator->trans('Delete author', array(), 'authors'); ?>" title="<?php echo $translator->trans('Delete author', array(), 'authors'); ?>" /></a>
   </td>
 </tr>
 <?php

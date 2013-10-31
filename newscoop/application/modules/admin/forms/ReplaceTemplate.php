@@ -10,17 +10,19 @@
 class Admin_Form_ReplaceTemplate extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+
         $this->addElement('file', 'file', array(
             'required' => TRUE
         ));
 
         $this->addElement('reset', 'reset', array(
-            'label' => getGS('Cancel')
+            'label' => $translator->trans('Cancel')
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => getGS('Replace'),
+            'label' => $translator->trans('Replace', array(), 'themes'),
             'ignore' => TRUE
         ));
     }

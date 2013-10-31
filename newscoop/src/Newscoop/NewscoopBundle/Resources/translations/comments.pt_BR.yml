@@ -1,0 +1,100 @@
+'No attachment': 
+at: no
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possível acessar Newscoop. Por favor verifique a sua conexão.'
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: Responder
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 'Artigo inteiro'
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: Removido
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 
+'You are about to permanently delete a message.': 
+User: 
+None: 
+'Coming from': 
+'Ban/Unban user': 
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Proibições podem ser aplicadas no nome do usuário, endereço de email, ou endereço IP'
+'You are about to permanently delete multiple comments.': 'Você vai apagar comentários múltiplos para sempre.'
+'You are about to permanently delete a comment.': 'Você vai apagar o comentário para sempre.'
+Website: Website
+'Value is not $1 characters long': 'Valor não tem $1 de caracteres'
+Username: 'Nome de usuário'
+'User id': 'ID do usuário'
+'User ban settings': 'Preferências para proibição de usuários'
+'Update comment': 'Atualizar comentário'
+Unrecommended: 'Não recomendado'
+Unrecommend: 'Não recomendar'
+'Subject is not $1 characters long': 'Assunto não tem $1 caracteres'
+'Sort by Thread order': 'Classificar pela ordem dos tópicos'
+'Show parent comment': 'Mostrar o comentário matriz'
+'Show commenter details': 'Mostrar dados do autor do comentário'
+'Show commenter': 'Mostrar o autor do comentário'
+'Show comment user details': 
+'Show comment user': 
+'Show comment details': 'Mostrar dados do comentário'
+'Select status': 'Selecionar status'
+'Search Type': 'Tipo de busca'
+'Reply to comment': 'Responder ao comentário'
+Recommended: Recomendado
+Recommend: Recomendar
+'Quick edit': 'Edição rápida'
+Parent: Matriz
+ID: ID
+'Go to edit article': 'Ir para edição do artigo'
+Forum: Forum
+'For Column': 'Para a coluna'
+Email: Email
+'Edit acceptance criteria': 'Editar critérios de aceitação'
+E-mail: E-mail
+'Delete all comments?': 'Remover todos os comentários?'
+'Date Created': 'Data de criação'
+'Comments updated.': 'Comentários atualizados'
+'Comments status change to $1.': 'Status dos comentários foi modificado para $1.'
+'Comments deleted.': 'Comentários removidos'
+'Commenter $1 saved.': 'Autor do comentário $1 foi salvo.'
+'Commenter $1 deleted.': 'Autor do comentário $1 foi apagado.'
+Commenter: 'Autor do comentário'
+'Comment updated.': 'Comentário atualizado'
+'Comment status change to $1.': 'Status do comentário modificado para $1.'
+'Comment id': 'ID do comentário'
+'Comment deleted.': 'Comentário removido.'
+'Comment delete by $1 from the article $2 ($3)': '$1 apagou o comentário do artigo $2 ($3)'
+'Comment Acceptance': 'Aceitação do comentário'
+'Comment $4 by $1 in the article $2 ($3)': 'Comentário $4 feito por $1 no artigo $2 ($3)'
+'Comment $1 saved.': 'Comentário $1 foi salvo.'
+Column: Coluna
+'Change subscriber information': 'Modificar dados do assinante'
+'Ban for commenter $1 saved.': 'Proibição para autor do comentário $1 foi salva.'
+Ban: Banir
+'Are you sure you want to do it?': 'Tem certeza que quer fazer isso?'
+'Add rating': 'Dar nota'
+'Add new comment commenter': 
+'Add new comment': 'Adicionar novo comentários'
+'Add new acceptance criteria': 'Adicionar novos critérios de aceitação'
+'Acceptance $1 saved.': 
+'Acceptance $1 deleted.': 

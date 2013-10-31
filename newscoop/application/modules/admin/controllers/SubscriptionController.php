@@ -16,10 +16,6 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 {
     public function init()
     {
-        camp_load_translation_strings('api');
-        camp_load_translation_strings('users');
-        camp_load_translation_strings('user_subscriptions');
-
         $currency = new Zend_Currency('en_US');
         Zend_Registry::set('Zend_Currency', $currency);
 
@@ -62,12 +58,13 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
 
         $publications = $this->_helper->entity->getRepository('Newscoop\Entity\Publication')->getSubscriberOptions($subscriber);
         if (empty($publications)) {
-            $this->_helper->flashMessenger(getGS('Subscriptions exist for all available publications.'));
+            $this->_helper->flashMessenger($translator->trans('Subscriptions exist for all available publications.', array(), 'user_subscriptions'));
             $this->redirect();
         }
 
@@ -84,7 +81,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
             $repository->save($subscription, $subscriber, $form->getValues());
             $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
+            $this->_helper->flashMessenger($translator->trans('Subscription $1', array('$1' => $translator->trans('saved', array(), 'user_subscriptions')), 'user_subscriptions'));
             $this->redirect();
         }
 
@@ -92,7 +89,8 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     }
 
     public function _editAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
 
         $form = $this->getToPayForm();
@@ -108,7 +106,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
             $subscription->setToPay($values['to_pay']);
             $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Subscription $1', getGS('saved')));
+            $this->_helper->flashMessenger($translator->trans('Subscription $1', array('$1' => $translator->trans('saved', array(), 'user_subscriptions')), 'user_subscriptions'));
             $this->redirect();
         }
 
@@ -116,25 +114,27 @@ class Admin_SubscriptionController extends Zend_Controller_Action
     }
 
     public function toggleAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $em = $this->_helper->entity->getManager();
 
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $subscription->setActive(!$subscription->isActive());
         $em->flush();
 
-        $this->_helper->flashMessenger(getGS('Subscription $1', $subscription->isActive() ? getGS('activated') : getGS('deactivated')));
+        $this->_helper->flashMessenger($translator->trans('Subscription $1', array('$1' => $subscription->isActive() ? $translator->trans('activated', array(), 'user_subscriptions') : $translator->trans('deactivated', array(), 'user_subscriptions')), 'user_subscriptions'));
         $this->redirect();
     }
 
     public function deleteAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
         $this->_helper->entity->getRepository($subscription)
             ->delete($subscription);
         $this->_helper->entity->flushManager();
 
-        $this->_helper->flashMessenger(getGS('Subscription $1', getGS('removed')));
+        $this->_helper->flashMessenger($translator->trans('Subscription $1', array('$1' => $translator->trans('removed', array(), 'user_subscriptions')), 'user_subscriptions'));
         $this->redirect();
     }
 
@@ -144,7 +144,8 @@ class Admin_SubscriptionController extends Zend_Controller_Action
      * @return array
      */
     private function getLanguages()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
         $publications = $repository->findAll();
 
@@ -168,16 +169,17 @@ class Admin_SubscriptionController extends Zend_Controller_Action
      * @return Zend_Form
      */
     private function getToPayForm()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Zend_Form;
 
         $form->addElement('text', 'to_pay', array(
-            'label' => getGS('Left to pay'),
+            'label' => $translator->trans('Left to pay'),
             'required' => true,
         ));
 
         $form->addElement('submit', 'submit', array(
-            'label' => getGS('Save'),
+            'label' => $translator->trans('Save'),
         ));
 
         return $form;

@@ -3,21 +3,23 @@
 class Admin_Form_Theme extends Zend_Form
 {
     public function init()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        
         $this->addElement('text', 'name', array(
-            'label' => getGS('Theme name'),
+            'label' => $translator->trans('Theme name', array(), 'themes'),
             'required' => True,
         ));
 
         $this->addElement('text', 'required-version', array(
-            'label' => getGS('Required Newscoop version'),
-            'description' => getGS( 'or higher' ),
+            'label' => $translator->trans('Required Newscoop version', array(), 'themes'),
+            'description' => $translator->trans( 'or higher' , array(), 'themes'),
             'class' => 'small',
             'readonly' => True,
         ));
 
         $this->addElement('text', 'theme-version', array(
-            'label' => getGS( 'Theme version' ),
+            'label' => $translator->trans( 'Theme version' , array(), 'themes'),
             'class' => 'small',
             'readonly' => True,
         ));

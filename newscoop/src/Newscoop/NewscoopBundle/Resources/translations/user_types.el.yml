@@ -1,0 +1,81 @@
+get: λήψη
+Soundcloud: SoundCloud
+Templates: Πρότυπα
+'Feedback Messages': 'Μηνύματα Feedback'
+'Article Playlists': 'Λίστες Αναπαραγωγής Άρθρου'
+'Check all': 'Έλεγχος όλων'
+view: προβολή
+undo/redo: undo/redo
+underline: υπογράμμιση
+translate: μετάφραση
+'text direction': 'κετεύθυνση κειμένου'
+'text alignment': 'στοίχιση κειμένου'
+table: πίνακας
+superscript: εκθέτης
+subscript: δείκτης
+subhead: υπότιτλος
+strikethrough: διαγράμμιση
+statusbar: statusbar
+'spell checker enabled': 'ο αυτόματος διορθωτης είναι ενεργοποιημένος'
+'source view': 'προβολή πηγής'
+publish: σημοσίευση
+notify: κοινοποίηση
+moderate: χειρισμός
+manage: διαχείριση
+'list number': 'list number'
+'list bullet': ' list bullet'
+link: σύνδεσμος
+italic: italic
+indent: indent
+image: εικόνα
+'horizontal rule': 'οριζόντιος κανόνας'
+handle: χειρισμός
+guest: επισκέπτης
+'font size': 'μέγεθος γραμματοσειράς'
+'font face': γραμματοσειρά
+'font color': 'χρώμα  γραμματοσειράς'
+find/replace: εύρεση/αντικατάσταση
+enlarge: μεγέθυνση
+enable: ενεργοποίηση
+edit: επεξεργασία
+delete: διαγραφή
+copy/cut/paste: αντιγραφή/αποκοπή/επικόλληση
+clear: εκκαθάριση
+'character map': 'χάρτης χαρακτήρα'
+bold: bold
+attach: σύναψη
+'any resource': 'οποιοσδήποτε πόρος'
+admin: admin
+add: προσθήκη
+'You cant deny yourself to manage $1': 'Δεν μπορείτε να αρνηθείτε στον εαυτό σας να διαχειρίζεται $1'
+'You are not allowed to $1 $2.': 'Δεν έχετε δικαίωμα να $1 $2.'
+'User type saved.': 'Ο τύπος χρήστη αποθηκεύτηκε.'
+'User type deleted.': 'Ο τύπος χρήστη διαγράφηκε.'
+'User type added.': 'Ο τύπος χρήστη προστέθηκε.'
+'User Groups': 'Ομάδες Χρηστών'
+Themes: Θέματα
+'That type name already exists, please choose a different name.': 'Το όνομα τύπου υπάρχει ήδη, παρακαλούμε επιλέξτε διαφορετικό όνομα.'
+System: Σύστημα
+Structure: Δομή
+'Search Indexer': 'Αναζήτηση Indexer'
+'Rich-Text Editor Preferences': 'Προτιμήσεις Πλούσιου-Επεξεργαστή Κειμένου'
+ReCaptcha: ReCaptcha
+Polls: Δημοσκοπήσεις
+'Permissions:': 'Δικαιώματα:'
+'Permissions updated': 'Τα δικαιώματα ενημερώθηκαν'
+Notification: Ειδοποίηση
+Log: Σύνδεση
+Layout: Layout
+Global: Παγκόσμιο
+Files: Αρχεία
+'Error: ': 'Σφάλμα:'
+'Edit user type $1': 'Επεξεργασία τύπου χρήστη $1'
+Deny: Απόρριψη
+'Delete user type $1': 'Διαγραφή τύπου χρήστη $1'
+'Can not delete a user type with assigned users.': 'Δεν μπορεί να διαγραφεί τύπος χρήστη με εκχωρημένους χρήστες.'
+Cache: Cache
+Backup: 'Αντίγραφο Ασφαλείας'
+Authoring: Σύνταξη
+Allow: Παραχώρηση
+'User types': 'Τύποι Χρήστη'
+'No user types.': 'Κανένας τύπος χρήστη.'

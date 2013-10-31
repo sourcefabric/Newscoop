@@ -1,0 +1,74 @@
+'Make sure to enter the Moderator Address below': 
+'click to see issues': 
+'Moderator Address': 
+'From Address': 
+'Use CAPTCHA to prevent spam?': 
+'Public allowed to comment?': 
+'Enable spam blocking?': 
+'The subscription settings for $1 could not be added.': 
+'The publication name you specified conflicts with publication $1.': 
+'The publication alias you specified conflicts with publication $1.': 
+'Subscription defaults': 
+'Subscription Settings by Country': 
+'Set subscription settings for a country': 
+'Set subscription settings by country': 
+'Default time periods:': 
+'Country subscription settings updated.': 
+'Country subscription settings deleted.': 
+'Change country subscription settings': 
+'Are you sure you want to delete the subscription settings for $1?': 
+'Publication updated': 
+'Subscriber comments moderated?': 
+'Public comments moderated?': 
+'Comments enabled?': 
+'Comments enabled': 
+'Article comments default to enabled?': 
+'trial subscription': 'probna pretplata'
+'paid subscription': 'plaćena pretplata'
+'time units': 'vremenska jedinica'
+'one language': 'jedan jezik'
+'all languages': 'svi jezici'
+'Trial subscriptions': 'Probne pretplate'
+'Time unit cost per one section': 'Cijena za vremensku jedinici za rubriku'
+'Paid subscriptions': 'Plaćene pretplate'
+'Default time period': 'Podrazumijevani vremenski period'
+'Go To Issues': 'Idi na izdanje'
+'Delete publication $1': 'Izbiši publikaciju $1'
+'No publications.': 'Nema publikacija.'
+'Default Site Alias': 'Podrazumijevana kratica za sajt'
+'URL Type': 'Tip URL-a'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Zemlja<br><small>(kliknite za uređivanje)</small>'
+'Delete alias $1': 'Izbriši alias $1'
+'Configure publication': 'Podesi publikaciju'
+'You do not have the right to edit publication information.': 'Nemate ovlasti uređivati podatke o publikacijama.'
+'General attributes': 'Općenita svojstva'
+'You do not have the right to change publication information.': 'Nemate ovlasti mijenjati podatke o publikacijama.'
+'The publication information could not be updated.': 'Podaci o publikaciji ne mogu biti ažurirani.'
+'You do not have the right to delete publications.': 'Nemate ovlasti brisati publikacije.'
+'Are you sure you want to delete the publication $1?': 'Jeste li sigurni da želite brisati publikaciju $1?'
+'Deleting publication': 'Brisanje publikacije'
+'There are $1 subscription(s) left.': 'Ostala(lo) je još $1 pretplata.'
+'The publication $1 could not be deleted.': 'Publikacija $1 ne može biti obrisana.'
+'The publication could not be added.': 'Publikacija ne može biti dodana.'
+'You do not have the right to manage publications.': 'Nemate ovlasti upravljati publikacijama.'
+'You must select a country.': 'Morate označiti zemlju.'
+'Add new alias': 'Dodaj novu kraticu'
+'Alias (click to edit)': 'Kratica (klikni za izmjenu)'
+'Edit aliases': 'Uredi kratice'
+'Publication Aliases': 'Kratice publikacija'
+'Adding new alias': 'Dodaj novu kraticu'
+'The site alias $1 could not be added.': 'Kratica na sajt $1 ne može se dodati.'
+'Another alias with the same name exists already.': 'Druga kratica s istim imenom već postoji.'
+'Edit alias': 'Uredi kraticu'
+'Editing alias': 'Uređivanje kratica'
+'The site alias $1 could not be modified.': 'Kratica na sajt $1 ne može se mijenjati.'
+'Are you sure you want to delete the alias $1?': 'Sigurno želite obrisati kraticu $1?'
+'Deleting alias': 'Brisanje kratice'
+'The alias $1 could not be deleted.': 'Kratica $1 ne može se obrisati.'
+'$1 is the default publication alias, it can not be deleted.': '$1 je podrazumijevana kratica na publikaciju i ne može se obrisati.'
+'You do not have the right to add publications.': 'Nemate prava dodavati publikacije.'
+'There are $1 issue(s) left.': 'Preostalo je $1 izdanja.'
+'Change publication information': 'Izmjeni podatke o publikaciji'
+'Time Unit': 'Vremenska jedinica'
+Currency: Valuta
+'Edit languages': 'Uredi jezike'

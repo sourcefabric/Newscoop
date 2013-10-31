@@ -17,8 +17,9 @@ require_once LIBS_DIR . '/ImageList/ImageList.php';
 class ImageListWidget extends Widget
 {
     public function __construct()
-    {
-        $this->title = getGS('Images');
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $this->title = $translator->trans('Images');
     }
 
     public function render()

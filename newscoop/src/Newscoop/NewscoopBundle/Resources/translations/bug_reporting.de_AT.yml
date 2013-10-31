@@ -1,0 +1,23 @@
+'You have reached the error page': 'Sie sind auf der Fehlerseite angekommen'
+'Stack trace:': 'Stacktrace: '
+'Request Parameters:': 'Parameter anfordern: '
+'Page not found': 'Seite nicht gefunden'
+'Exception information:': 'Ausnahme Information:'
+'Application error': Anwendungsfehler
+'An error occurred': 'Es ist ein Fehler aufgetreten. '
+'Newscoop has encountered a problem.': 'Newscoop ist auf ein Problem gestoßen.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'Um dem Newscoop Team bei der Bearbeitung zu helfen, nehmen Sie sich bitte einen Moment Zeit um das Problem zu schildern.'
+'What were you trying to do when this happened?': 'Was wollten Sie gerade machen, als das Problem auftrat?'
+'Description:': 'Beschreibung:'
+'We are sorry for the inconvenience.': 'Wir entschuldigen uns für die Unannehmlichkeiten.'
+'Show error details': 'Fehlerdetails anzeigen'
+'Hide error details': 'Fehlerdetails verbergen'
+'Error Report': Fehlermeldung
+'Backtrace:': Zurückverfolgen
+'Error ID:': 'Fehler ID:'
+'Error Message:': 'Fehlernachricht:'
+'Error Number:': 'Fehlernummer:'
+'Error String:': 'Fehlereintrag:'
+'Software:': 'Software:'
+'We are sorry, but there was a problem sending your bug report.': 'Leider ist ein Problem bei der Übermittlung der Fehlermeldung aufgetreten.'
+'Simply copy and paste the error report below and send it to:': 'Einfach die Fehlermeldung unten kopieren und einfügen und senden an:'

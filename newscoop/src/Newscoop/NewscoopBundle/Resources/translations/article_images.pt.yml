@@ -1,0 +1,75 @@
+'Display newsfeed images': 
+'Mark image': 
+'Add selected images to slideshow': 
+'Sorry that image is too small. Image needs to be at least %dx%d.': 
+'Slideshow rendition': 
+'Renditions reloaded': 
+'Reload renditions': 
+'Edit images': 
+'Specify image url if you want to load it.': 
+'Items: ': 
+'Attach slideshows': 
+'original size:': 
+'no caption': 
+'Video URL': 
+'Use for all': 
+'Use default': 
+'Slug must be unique': 
+Slug: 
+'Slideshow headline': 
+Slideshow: 
+'Set selected as default image': 
+'Set as default': 
+Saving...: 
+Saved: 
+'Save headline': 
+'Place Images': 
+'No renditions defined.': 
+'No images found.': 
+'No images attached to article.': 
+'No images': 
+'Next: Upload and Edit Metadata': 
+'Next: Place Images': 
+'Media Archive': 
+Location: 
+Items: 
+Item: 
+'Image files': 
+'Image Files: ': 
+Headline: 
+Finish: 
+'Edit Image Data': 
+'Edit $1': 
+'Done editing': 
+Detach: 
+Create: 
+Caption: 
+'Attached images': 
+'Attach & Place': 
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 
+'Add video': 
+'Add caption': 
+'Show all': 
+'The image has been removed from the article.': 
+'Unable to add new image.': 
+'Image number $1 already exists': 
+'You do not have the right to change image information.': 
+'The image number specified is already in use.': 
+'Image $1 updated.': 
+'Image $1 added.': 
+'Edit article': 'Editar Artigo'
+'You do not have the right to attach images to articles.': 'Não tem permissão para anexar imagens a artigos.'
+'You do not have the right to add images.': 'Nao tem permissões para adicionar imagens.'
+'Image information': 'Informações da Imagem'
+'Attach New Image': 'Anexar nova imagem'
+'Attach Image To Article': 'Anexar imagem ao artigo'
+'Attach Existing Image': 'Anexar imagem do arquivo'
+'Add New Image': 'Adicionar Imagem'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Data (aaaa-mm-dd)'
+'You must select an image file to upload.': 'Selecione uma imagem para transferir'
+'Change image information': 'Alterar informações da imagem'
+'You do not have the right to add images': 'Não tem permissões para adicionar imagens'
+'Items per page': 'Items por página'
+'Delete image $1': 'Apagar imagem'
+'Click one of the ': 
+'Are you sure you want to delete the image $1?': 

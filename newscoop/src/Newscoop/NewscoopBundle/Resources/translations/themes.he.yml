@@ -1,0 +1,14 @@
+'Duplicate assignment': 
+Templates: 
+'Import theme': 
+'Import succeded!': 
+'Import failed!': 
+'Edit template: $1': 
+'Set new name to': 
+'Rename file': 
+'Caching templates in:': 
+'Caching templates finished': 
+'Theme name': 
+'Theme is assigned and can not be deleted': 
+'Theme export was not successful. Check please that the server is not out of disk space.': 
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 

@@ -1,0 +1,63 @@
+'No such article type': 
+'Multi-line Text': 
+'Filter saved': 
+'Filter not saved': 
+'Not a color': 
+'No such field': 
+'Color saved': 
+'Color not saved': 
+'Topic created': 'Топик креиран'
+'The topic name is already in use by another topic.': 'Име за топик је већ у употреби'
+'Complex Date': 'Сложен датум'
+vertices: чворови
+'There was a problem trying to execute the XML RPC function.': 'Дошло је до проблема при покушају извршења XML RPC функције'
+'The Campcaster server configuration is invalid.': 'Подешавања Кемпкастер сервера су неисправна'
+'Pan Map': 'Померај мапу'
+'Open large map': 'Отвори велику мапу'
+'No news available.': 'Нема доступних вести'
+'Edit Polygon': 'Уреди полигон'
+'Create Polygon': 'Направи полигон'
+'Communication error: ': 'Грешка у комуникацији'
+'Cant fetch news from $1': 'Није могуће преузети вести са $1'
+Loading...: Учитавање...
+Version: Верзија
+License: Лиценца
+Homepage: 'Почетна страна'
+'Show original map': 'Прикажи оригиналну мапу'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Архива аплоуда не садржи исправан Newscoop плагин'
+Map: Мапа
+Center: Центар
+Title: Наслов
+'Invalid security token.': 'Погрешан сигурносни токен'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Текст је преведен у $4 ($5)'
+'Article status changed from $1 to $2.': 'Статус текста је промењен из $1 у $2'
+'Article deleted.': 'Текст је обрисан'
+'Article created.': 'Текст је направљен'
+'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Текст је копиран у текст #$4 (публикација $5, издање $6, рубрика $7).'
+'Article URL': 'УРЛ текста'
+'Article Number': 'Број текста'
+'Access denied.': 'Приступ забрањен'
+'Publish with issue': 'Објави заједно са издањем'
+unknown: непознато
+Switch: Прекидач
+Numeric: 'Бројчана вредност'
+'The uploaded file format is unsupported.': 'Формат аплоудованог фајла није подржан.'
+'The following fields are mandatory:': 'Следећа поља су обавезна:'
+'Missing value for $1': 'Недостаје вредност за $1'
+'Manage Plugins': 'Управљање плагиновима'
+'* Marked fields are mandatory.': 'Поља означена са * су обавезна'
+'$1 is of type $2': '$1 је за тип $2'
+'Invalid resize width/height.': 'Неисправне вредности за промену димензија ширина/висина'
+'Image type $1 is not supported.': 'Тип слике $1 није подржан'
+'The file uploaded is not an image.': 'Аплоудовани фајл није слика.'
+'Could not delete record from the database.': 'Није могуће обрисати запис из базе.'
+'template path': 'Шаблонска путања'
+'short names': 'скраћени називи'
+'Unable to fetch image from remote server.': 'Није могуће покупити слику са удаљеног сервера.'
+Last: Последњи
+First: Први
+'Single-line Text': текст
+'Multi-line Text with WYSIWYG': 'Сложен текст'
+'URL $1 is invalid or is not an image.': 'УРЛ $1је неисправан или није слика'
+'URL $1 is not an image.': 'УРЛ $1 није слика.'

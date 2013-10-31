@@ -680,11 +680,12 @@ public static function GetIconsWebDir($p_htmlDir = '', $p_websiteUrl = '')
      * @return array
      */
 public static function TemplateGeoStrings()
-{
-    $show_original_map = getGS('Show original map');
-    $open_large_map = getGS('Open large map');
-    $map = getGS('Map');
-    $center = getGS('Center');
+{   
+    $translator = \Zend_Registry::get('container')->getService('translator');
+    $show_original_map = $translator->trans('Show original map', array(), 'api');
+    $open_large_map = $translator->trans('Open large map', array(), 'api');
+    $map = $translator->trans('Map', array(), 'api');
+    $center = $translator->trans('Center', array(), 'api');
 
     return array('show_original_map' => $show_original_map, 'open_large_map' => $open_large_map, 'map' => $map, 'center' => $center);
 

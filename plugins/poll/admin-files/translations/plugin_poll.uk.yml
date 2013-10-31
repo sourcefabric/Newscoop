@@ -1,0 +1,82 @@
+'Are you sure you want to delete the poll $1?': 'Ви впевнені що хочете видалити опитування $1?'
+'click to edit': Редагувати
+Polls: Опитування
+'You must select a file to upload.': 'Ви маєте вибрати файл для завантаження.'
+'You do not have the right to delete files.': 'Ви не маєте прав видаляти файли.'
+'You do not have the right to change the article.': 'Ви не маєте прав змінювати статті.'
+'You do not have the right to change files.': 'Ви не маєте прав змінювати файли.'
+'You do not have the right to add files.': 'Ви не маєте прав додавати файли.'
+'Unable to add attachment.': 'Неможливо додати прікріплення'
+'There was a problem uploading the file.': 'Проблема із завантаженням файлу.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Файл був завантажений лише частково. Це часто зустрічається, коли максимальний час, відведений на завантаження менший на відміну від розміру файлу ви намагаєтеся ввести. Максимальний час входу, зазначено у php.ini'
+'The maximum file upload size was not configured in Campsite.': 'Максимальний розмір завантажуваного файлу не визначений у налаштуваннях.'
+'The file exceeds the allowed max file size.': 'Файл перевищує допустимий максимально дозволений розмір.'
+'Should this file only be available for this translation, or for all translations?': 'Цей файл тільки для цього перекладу чи для всіх?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Цей файл тільки для цього перекладу статті чи для всіх?'
+'Poll Answer $1 does not exist.': 'Відповіді $1 у опитуванні не існує.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Будь ласка, переконайтеся, що ви оновили бази даних правильно: виконайте $1 в оболонці.'
+'Please enter a description for the file.': 'Введіть опис файла.'
+'Open in the browser': 'Відкрити у браузері'
+'Only this translation': 'Тільки цей переклад'
+'Maximum Upload Size': 'Максимальний розмір завантажень'
+Files: Файли
+'File information': 'Інформація про файли'
+'File Size': 'Розмір файлу'
+'File Name': 'Ім’я файлу'
+'File $1 updated.': 'Файл $1 оновлено.'
+'File $1 deleted.': 'Файл  $1 видалено.'
+'File $1 added.': 'Файл  $1 додано.'
+'Edit article': 'Редагувати статтю'
+Download: Завантажити
+'Do you want this file to open in the users browser, or to automatically download?': 'Ви хочете щоб цей файл відкривався у браузері чи автоматично завантажувався?'
+'Change file information': 'Змінити інформацію про файл'
+'Automatically download': 'Автоматичне завантаження'
+Attachments: Прікріплення
+'Attachment does not exist.': 'Пркріплень немає.'
+'Attach File to Poll Answer': 'Прікріпити файл до відповіді опитування'
+'All translations': 'Всі переклади'
+'You need to activate at least 1 answer.': 'Принаймні ви маєте активувати хоча б одну відповідь.'
+'You must select number of votes per user.': 'Ви маєте вибрати кількість голосів для кожного користувача.'
+'You must select number of answers.': 'Ви маєте вибрати кількість відповідей.'
+'You must select at least one poll to perform an action.': 'Ви маєте вибрати принаймні одне опитування щоб виконати дію.'
+'You do not have the right to manage polls.': 'Ви не маєте прав керувати опитуваннями.'
+'You do not have the right to manage poll.': 'Ви не маєте прав керувати опитуванням.'
+'Votes per unique User': 'Голосів на унікального користувача'
+'Votes per single User': 'Голосів на одного користувача'
+Votes: Голоси
+'Translate Poll': 'Перекласти опитування'
+Title: Заголовок
+Standard: Стандарт
+Result: Результати
+Reset: Скинути
+Question: Питання
+'Poll does not exists.': 'Опитування не існує.'
+'Poll List': 'Список опитувань'
+'Percentage this language': 'Відсоток цією мовою'
+'Percentage all languages': 'Відсоток всіма мовами'
+'Number of answers': 'Кількість відповідей'
+'No polls.': 'Немає опитувань.'
+'No Polls available.': 'Немає доступних опитувань'
+'Invalid input': 'Невірне введення'
+Extended: Розширений
+'Error changing attachment.': 'Помилка зміни прикріплення.'
+'Error changing attachment': 'Помилка зміни прикріплення.'
+End: Кінець
+'Edit Poll': 'Редагувати опитування'
+'Duplicate Poll': 'Дублювати опитування'
+'Date end voting': 'Дата закінчення голосування'
+'Date end': 'Дата закінчення'
+'Date begin voting': 'Дата початку голосування'
+'Date begin': 'Дата початку'
+'Copy statistics': 'Скопіювати статистику'
+Copy: Копіювати
+Begin: Почати
+'Attach poll': 'Приєднати опитування'
+'Attach Polls': 'Приєднати декілька опитувань'
+'Are you sure you want to reset counters on the selected polls?': 'Ви впевнені що хочете скинути країни у вибраному опитуванні?'
+'Are you sure you want to delete the selected polls?': 'Ви впевнені що хочете видалити вибрані опитування?'
+'Answer $1': Відповідь
+'Add new Poll': 'Додати нове опитування'
+---Select---: --Виберіть--
+'$1/$2 polls assigned/unassigned.': '$1/$2 опитуванть призначено / непризначено.'
+'Are you sure you want to remove the file $1 from the poll answer?': 'Ви впевнені що хочете видалити файл $1 з відповіді опитування?'

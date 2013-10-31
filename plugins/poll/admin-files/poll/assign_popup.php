@@ -1,9 +1,8 @@
 <?php
-camp_load_translation_strings("plugin_poll");
-camp_load_translation_strings('home');
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!$g_user->hasPermission("plugin_poll")) {
-	camp_html_display_error(getGS("You do not have the right to manage poll."));
+	camp_html_display_error($translator->trans("You do not have the right to manage poll.", array(), 'plugin_poll'));
 	exit;
 }
 
@@ -24,7 +23,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <html>
 <head>
     <meta charset="utf-8" />
-	<title><?php putGS("Attach poll"); ?></title>
+	<title><?php echo $translator->trans("Attach poll", array(), 'plugin_poll'); ?></title>
 
 	<meta http-equiv="Expires" content="now" />
 

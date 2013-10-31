@@ -9,7 +9,6 @@
  */
 
 require_once dirname(__FILE__) . '/IWidget.php';
-require_once dirname(__FILE__) . '/../../admin-files/localizer/Localizer.php';
  
 /**
  * Widget interace
@@ -83,17 +82,6 @@ abstract class Widget implements IWidget
     final public function isFullscreen()
     {
         return $this->getView() == self::FULLSCREEN_VIEW;
-    }
-
-    /**
-     * Allow widgets to be translatable
-     * @param string $translateString
-     * @return string
-     */
-    final public function getGS($translateString)
-    {
-        $args = func_get_args();
-        return call_user_func_array('getGS', $args);
     }
 
     /**

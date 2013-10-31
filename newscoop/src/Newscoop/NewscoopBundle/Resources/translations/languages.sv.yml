@@ -1,0 +1,72 @@
+'Language id not specified': 
+'No languages.': 
+'Native Name': 
+'Name taken.': 
+'Language saved.': 
+'Language removed.': 
+'Language not found.': 
+'Language is in use and cannot be removed.': 
+'Language added.': 
+'English language cannot be removed.': 
+'Edit short month names': 
+'Edit short day names': 
+'Edit month names': 
+'Edit language: $1': 
+'Edit day names': 
+'Code Page': 
+'Add new Language': 
+'Add Language': 
+We: 
+Tu: 
+Th: 
+Su: 
+Sep: 
+Sa: 
+'Please enter the translation for week day short names.': 
+'Please enter the translation for month short names.': 
+Oct: 
+Nov: 
+Mo: 
+Mar: 
+Jun: 
+Jul: 
+Jan: 
+Fr: 
+Feb: 
+Dec: 
+Aug: 
+Apr: 
+'No language.': 'Inget språk.'
+'Delete language $1': 'Radera språk $1'
+'You do not have the right to add languages.': 'Du har inte rätt att lägga till språk.'
+'Please enter the translation for time units.': 'Var god skriv in översättningar för tidsenheter.'
+'You do not have the right to delete languages.': 'Du har inte rätt att radera språk.'
+'Are you sure you want to delete the language $1?': 'Är du säker att du vill radera språket $1?'
+'Deleting language': 'Raderar språk'
+'The language $1 could not be deleted.': 'Språket $1 kunde inte raderas.'
+'Edit language': 'Redigera språk'
+'You do not have the right to edit languages.': 'Du har inte rätt att redigera språk.'
+'Please enter the translation for month names.': 'Var god skriv in översättningar för månadsnamn.'
+'Please enter the translation for week day names.': 'Var god skriv in översättningar för dagars namn.'
+January: Januari
+February: Februari
+March: Mars
+April: April
+May: Maj
+June: Juni
+July: Juli
+August: Augusti
+September: September
+October: Oktober
+November: November
+December: December
+Monday: Måndag
+Tuesday: Tisdag
+Wednesday: Onsdag
+Thursday: Torsdag
+Friday: Fredag
+Saturday: Lördag
+Sunday: Söndag
+'You do not have the right to add new languages.': 'Du har inte rätt att lägga till nya språk.'
+'There are $1 issue(s) left.': 'Det finns $1 utgåva(or) kvar.'
+'Native name': 'Inhemskt namn'

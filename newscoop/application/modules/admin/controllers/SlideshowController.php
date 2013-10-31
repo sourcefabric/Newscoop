@@ -16,8 +16,6 @@ class Admin_SlideshowController extends Zend_Controller_Action
 {
     public function init()
     {
-        camp_load_translation_strings('article_images');
-
         $this->_helper->contextSwitch()
             ->addActionContext('add-item', 'json')
             ->addActionContext('set-order', 'json')
@@ -64,7 +62,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
         $form = new Admin_Form_Slideshow();
         $form->setDefaultsFromEntity($slideshow);
@@ -76,7 +75,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getCode()) {
                     case PackageService::CODE_UNIQUE_SLUG:
-                        $form->slug->addError(getGS('Slug must be unique'));
+                        $form->slug->addError($translator->trans('Slug must be unique', array(), 'article_images'));
                         break;
                 }
             }
@@ -88,7 +87,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
     }
 
     public function addItemAction()
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $slideshow = $this->getSlideshow();
         $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
         try {
@@ -98,7 +98,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             ));
         } catch (\InvalidArgumentException $e) {
             $this->_helper->json(array(
-                'error_message' => sprintf(getGS('Sorry that image is too small. Image needs to be at least %dx%d.'), $slideshow->getRendition()->getWidth(), $slideshow->getRendition()->getHeight()),
+                'error_message' => sprintf($translator->trans('Sorry that image is too small. Image needs to be at least %dx%d.', array(), 'article_images'), $slideshow->getRendition()->getWidth(), $slideshow->getRendition()->getHeight()),
             ));
         }
     }

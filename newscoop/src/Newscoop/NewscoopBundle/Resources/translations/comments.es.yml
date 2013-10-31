@@ -1,0 +1,100 @@
+'No attachment': 
+at: 
+'With no attachment': 
+'With image attachment': 
+'With document attachment': 
+'Unable to reach Newscoop. Please check your internet connection.': 
+Starred: 
+Star: 
+'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Reply to message': 
+Reply: 
+Processed: 
+'No records found.': 
+'No entries to show': 
+'Messages updated.': 
+'Messages status change to $1.': 
+'Messages deleted.': 
+'Message updated.': 
+'Message status change to $1.': 
+'Message deleted.': 
+Message: 
+Last: 
+'Full article': 
+First: 
+'Feedback Messages': 
+'Display _MENU_ records': 
+Deleted: 
+'Change selected messages status': 
+Attachment: 
+Approved.: 
+Approve: 
+Anonymous: 
+' - filtering from _MAX_ records': 
+'You are about to permanently delete multiple messages.': 'Está a punto de eliminar múltiples mensajes de forma permanente.'
+'You are about to permanently delete a message.': 'Está a punto de eliminar un mensaje de forma permanente.'
+User: Usuario
+None: Ninguno
+'Coming from': Origen
+'Ban/Unban user': 'Bloquear/desbloquear usuario'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Las restricciones aplican a nombres de usuario, cuentas de correo y direcciones de IP.'
+'You are about to permanently delete multiple comments.': 'Está a punto de eliminar permanentemente múltiples comentarios.'
+'You are about to permanently delete a comment.': 'Está a punto de eliminar permanentemente un comentario.'
+Website: 'Sitio Web'
+'Value is not $1 characters long': 'El valor no alcanza los $1 caracteres'
+Username: 'Nombre de usuario'
+'User id': 'Identificación de usuario'
+'User ban settings': 'Configuración de restricciones de usuario'
+'Update comment': 'Actualizar comentario'
+Unrecommended: 'No recomendado'
+Unrecommend: 'No recomendar'
+'Subject is not $1 characters long': 'El asunto no alcanza los $1 caracteres'
+'Sort by Thread order': 'Ordenar por conversación'
+'Show parent comment': 'Mostrar comentario raíz'
+'Show commenter details': 'Mostrar detalles del comentarista'
+'Show commenter': 'Mostrar al comentarista'
+'Show comment user details': 'Mostrar detalles de usuario del comentario'
+'Show comment user': 'Mostrar usuario del comentario'
+'Show comment details': 'Mostrar detalles del comentario'
+'Select status': 'Seleccionar estado'
+'Search Type': 'Buscar tipo'
+'Reply to comment': 'Responder al comentario'
+Recommended: Recomendado
+Recommend: Recomendar
+'Quick edit': 'Edición rápida'
+Parent: Raíz
+ID: Identificación
+'Go to edit article': 'Ir a edición de artículo'
+Forum: Foro
+'For Column': 'Para columna'
+Email: 'Correo electrónico'
+'Edit acceptance criteria': 'Editar criterios de aceptación'
+E-mail: 'Correo electrónico'
+'Delete all comments?': '¿Eliminar todos los comentarios?'
+'Date Created': 'Fecha de creación'
+'Comments updated.': 'Comentarios actualizados'
+'Comments status change to $1.': 'Estado de los comentarios cambió a $1'
+'Comments deleted.': 'Comentarios eliminados'
+'Commenter $1 saved.': 'Comentarista $1 guardado'
+'Commenter $1 deleted.': 'Comentarista $1 eliminado'
+Commenter: Comentarista
+'Comment updated.': 'Comentarista actualizado'
+'Comment status change to $1.': 'Estado de comentario cambión a $1.'
+'Comment id': 'Identificación de comentario'
+'Comment deleted.': 'Comentario eliminado'
+'Comment delete by $1 from the article $2 ($3)': 'Comentario eliminado por $1 desde el artículo $2 ($3)'
+'Comment Acceptance': 'Aceptación de comentarios'
+'Comment $4 by $1 in the article $2 ($3)': 'Comentario $4 por $1 en el artículo  $2 ($3)'
+'Comment $1 saved.': 'Comentario $1 guardado'
+Column: Columna
+'Change subscriber information': 'Cambiar información de subscriptor'
+'Ban for commenter $1 saved.': 'Restricción para comentarista $1 guardada'
+Ban: Restricción
+'Are you sure you want to do it?': '¿Está seguro de que quiere hacerlo?'
+'Add rating': 'Añadir calificación'
+'Add new comment commenter': 'Añadir nuevo comentarista'
+'Add new comment': 'Añadir nuevo comentario'
+'Add new acceptance criteria': 'Añadir nuevo criterio de aceptación'
+'Acceptance $1 saved.': 'Aceptación $1 guardada'
+'Acceptance $1 deleted.': 'Aceptación $1 eliminada'

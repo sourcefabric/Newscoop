@@ -1,8 +1,10 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/country/country_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
+
 if (!$g_user->hasPermission('ManageCountries')) {
-	camp_html_display_error(getGS("You do not have the right to translate country names."));
+	camp_html_display_error($translator->trans("You do not have the right to translate country names.", array(), 'country'));
 	exit;
 }
 
@@ -14,9 +16,9 @@ $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $countryTranslations = Country::GetCountries(null, $f_country_code);
 
 $crumbs = array();
-$crumbs[] = array(getGS("Configure"), "");
-$crumbs[] = array(getGS("Countries"), "/$ADMIN/country/");
-$crumbs[] = array(getGS("Translate country name"), "");
+$crumbs[] = array($translator->trans("Configure"), "");
+$crumbs[] = array($translator->trans("Countries"), "/$ADMIN/country/");
+$crumbs[] = array($translator->trans("Translate country name", array(), 'country'), "");
 echo camp_html_breadcrumbs($crumbs);
 
 ?>
@@ -26,12 +28,12 @@ echo camp_html_breadcrumbs($crumbs);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Translate country name"); ?></B>
+		<B><?php echo $translator->trans("Translate country name", array(), 'country'); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Country"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Country"); ?>:</TD>
 	<TD>
 	<?php
 	$names = array();
@@ -41,13 +43,13 @@ echo camp_html_breadcrumbs($crumbs);
 	echo implode(", ", $names);
 	?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Name"); ?>:</TD>
 	<TD>
 	<INPUT TYPE="TEXT" class="input_text" NAME="f_country_name" SIZE="32" >
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php echo $translator->trans("Language"); ?>:</TD>
 	<TD>
 		<SELECT NAME="f_country_new_language" class="input_select">
 		<?php
@@ -66,8 +68,8 @@ echo camp_html_breadcrumbs($crumbs);
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_country_code" VALUE="<?php print $f_country_code; ?>">
 	<INPUT TYPE="HIDDEN" NAME="f_country_orig_language" VALUE="<?php  print $f_country_language; ?>">
-	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
-	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
+	<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  echo $translator->trans('Save'); ?>">
+	<!--<INPUT TYPE="button" class="button" NAME="Cancel" VALUE="<?php  echo $translator->trans('Cancel'); ?>" ONCLICK="location.href='/admin/country/'">-->
 	</DIV>
 	</TD>
 </TR>

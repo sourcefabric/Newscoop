@@ -1,9 +1,10 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error(getGS('Invalid security token!'));
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -18,19 +19,19 @@ $f_action = Input::Get('f_action', 'string', null, true);
 $f_action_workflow = Input::Get('f_action_workflow', 'string', null, true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()));
+	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())));
 	exit;
 }
 
 if (is_null($f_action) && is_null($f_action_workflow)) {
-	camp_html_display_error(getGS('No action specified'));
+	camp_html_display_error($translator->trans('No action specified', array(), 'articles'));
 	exit;
 }
 
 $articleObj = new Article($f_language_selected, $f_article_number);
 if (!$articleObj->exists()) {
 	$BackLink = "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
-	camp_html_display_error(getGS('Article does not exist.'), $BackLink);
+	camp_html_display_error($translator->trans('Article does not exist.'), $BackLink);
 	exit;
 }
 
@@ -39,9 +40,9 @@ switch ($f_action) {
 		// If the user does not have permission to change the article
 		// or they didnt create the article, give them the boot.
 		if (!$articleObj->userCanModify($g_user)) {
-			camp_html_add_msg(getGS("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users."));
+			camp_html_add_msg($translator->trans("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", array(), 'articles'));
 		} else {
-			camp_html_add_msg(getGS("Article unlocked."), "ok");
+			camp_html_add_msg($translator->trans("Article unlocked.", array(), 'articles'), "ok");
 			$articleObj->setIsLocked(false);
 
 			\Zend_Registry::get('container')->getService('dispatcher')
@@ -53,7 +54,7 @@ switch ($f_action) {
 		exit;
 	case "delete":
 		if (!$g_user->hasPermission('DeleteArticle')) {
-			camp_html_add_msg(getGS("You do not have the right to delete articles."));
+			camp_html_add_msg($translator->trans("You do not have the right to delete articles.", array(), 'articles'));
 			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		} else {
 			$articleObj->delete();
@@ -67,7 +68,7 @@ switch ($f_action) {
 			} else {
 				$url = "/$ADMIN/home.php";
 			}
-			camp_html_add_msg(getGS("Article deleted."), "ok");
+			camp_html_add_msg($translator->trans("Article deleted.", array(), 'articles'), "ok");
 			camp_html_goto_page($url);
 		}
 		exit;
@@ -125,7 +126,7 @@ if (!is_null($f_action_workflow)) {
 		}
 
 		if (!$access) {
-			camp_html_add_msg(getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users."));
+			camp_html_add_msg($translator->trans("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", array(), 'articles'));
 			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		}
 
@@ -146,7 +147,7 @@ if (!is_null($f_action_workflow)) {
 		}
 
 		$articleObj->setWorkflowStatus($f_action_workflow);
-		camp_html_add_msg(getGS("Article status set to '$1'", $articleObj->getWorkflowDisplayString()), "ok");
+		camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $articleObj->getWorkflowDisplayString()), 'articles'), "ok");
 	}
 	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");
 	camp_html_goto_page($url);

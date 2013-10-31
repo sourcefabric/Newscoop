@@ -1,6 +1,8 @@
 <div class="ingest">
 <div class="widget"><div class="w">
-
+<?php 
+$translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <ul class="entries">
     <?php foreach ($this->entries as $entry) { ?>
     <li>
@@ -11,12 +13,12 @@
             'action' => 'publish',
             'entry' => $entry->getId(),
             'return' => 'index',
-        )); ?>" title="<?php putGS("Publish '$1'", $entry->getTitle()); ?>" class="publish">Publish</a>
+        )); ?>" title="<?php echo $translator->trans("Publish $1", $entry->getTitle()); ?>" class="publish">Publish</a>
         <a href="<?php echo $this->url(array(
             'controller' => 'ingest',
             'action' => 'prepare',
             'entry' => $entry->getId(),
-        )); ?>" title="<?php putGS("Prepare '$1' for publishing", $entry->getTitle()); ?>" class="prepare">Prepare</a>
+        )); ?>" title="<?php echo $translator->trans("Prepare $1 for publishing", $entry->getTitle()); ?>" class="prepare">Prepare</a>
         <?php } else { ?>
         <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:i:s'); ?></em>
         <?php } ?>
@@ -30,7 +32,7 @@
     <li><a href="<?php echo $this->url(array(
         'controller' => 'ingest',
         'action' => 'index',
-    )); ?>"><?php putGS('Go to News Desk'); ?></a></li>
+    )); ?>"><?php echo $translator->trans('Go to News Desk'); ?></a></li>
 </ul>
 
 </div></div></div>

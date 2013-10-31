@@ -1,9 +1,9 @@
 <?php
-camp_load_translation_strings("plugin_debate");
+$translator = \Zend_Registry::get('container')->getService('translator');
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    camp_html_display_error($translator->trans('You do not have the right to manage debates.', array(), 'plugin_debate'));
     exit;
 }
 
@@ -25,9 +25,9 @@ foreach($debate->getTranslations() as $translation) {
 }
 
 echo camp_html_breadcrumbs(array(
-    array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-    array(getGS('Debates'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
-    array(getGS('Result'), ''),
+    array($translator->trans('Plugins', array(), 'plugin_debate'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
+    array($translator->trans('Debates', array(), 'plugin_debate'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
+    array($translator->trans('Result', array(), 'plugin_debate'), ''),
 ));
 ?>
 
@@ -92,19 +92,19 @@ echo camp_html_breadcrumbs(array(
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Debate List"); ?></B></A></TD>
+    <TD><A HREF="index.php"><B><?php  echo $translator->trans("Debate List", array(), 'plugin_debate'); ?></B></A></TD>
     <TD style="padding-left: 20px;"><A HREF="edit.php" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-    <TD><A HREF="edit.php" ><B><?php  putGS("Add new Debate"); ?></B></A></TD>
+    <TD><A HREF="edit.php" ><B><?php  echo $translator->trans("Add new Debate", array(), 'plugin_debate'); ?></B></A></TD>
 </tr>
 </TABLE>
 <p>
 <?php foreach ($display as $translation) : $color = 0; ?>
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;">
         <TR class="table_list_header">
-            <TD ALIGN="LEFT" VALIGN="TOP"><?php  putGS("Title"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Votes"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage this language"); ?></TD>
-            <TD ALIGN="center" VALIGN="TOP"><?php  putGS("Percentage all languages"); ?></TD>
+            <TD ALIGN="LEFT" VALIGN="TOP"><?php  echo $translator->trans("Title", array(), 'plugin_debate'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Votes", array(), 'plugin_debate'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Percentage this language", array(), 'plugin_debate'); ?></TD>
+            <TD ALIGN="center" VALIGN="TOP"><?php  echo $translator->trans("Percentage all languages", array(), 'plugin_debate'); ?></TD>
         </TR>
         <tr>
             <th><?php p($translation->getProperty('title')); ?> (<?php p($translation->getLanguageName()); ?>)</th>
@@ -159,9 +159,9 @@ echo camp_html_breadcrumbs(array(
     	<?php
     	    switch($debate->getProperty('results_time_unit'))
     	    {
-    	        case 'daily' : putGS('Day'); $dformat = '%e.%m.%y'; break;
-    	        case 'weekly' : putGS('Week'); $dformat = '%W-%y'; break;
-    	        case 'monthly' : putGS('Month'); $dformat = '%b-%y'; break;
+    	        case 'daily' : echo $translator->trans('Day', array(), 'plugin_debate'); $dformat = '%e.%m.%y'; break;
+    	        case 'weekly' : echo $translator->trans('Week', array(), 'plugin_debate'); $dformat = '%W-%y'; break;
+    	        case 'monthly' : echo $translator->trans('Month', array(), 'plugin_debate'); $dformat = '%b-%y'; break;
     	    }
     	?>
     	</div>

@@ -1,0 +1,87 @@
+'Duplicate assignment': 
+Templates: Templates
+'Import theme': 'Importar o tema'
+'Import succeded!': 'Importação completada!'
+'Import failed!': 'Importação fracassou!'
+'Edit template: $1': 'Editar template: $1'
+'Set new name to': 'Dar novo nome para'
+'Rename file': 'Mudar o nome do arquivo'
+'Caching templates in:': 
+'Caching templates finished': 
+'Theme name': 'Nome do tema'
+'Theme is assigned and can not be deleted': 'O tema foi designado e não pode ser apagado'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Exportação do tema fracassou. Por favor verifique se o servidor tem bastante espaço livre.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 
+zip: 
+version: versão
+uploaded: 'Upload completado'
+updated: atualizado
+'or higher': 'ou mais'
+moved: movido
+installed: instalado
+deleted: removido
+'You must select at least one template to perform an action.': 'Tem que selecionar pelo menos um template para realizar uma ação.'
+Upload: Upload
+'Unassign theme': 
+'Unassign successful': 
+Unassign: 
+'Theme version': 'Versão do tema'
+'Theme settings updated.': 'Preferências do tema foram atualizadas.'
+'Theme settings saved.': 'Preferências do tema foram '
+'Theme name / version': 'Nome / versão do tema'
+'Theme management': 'Gerenciamento do tema'
+'Theme $1': 'Tema $1'
+'The file $1 is empty.': 'Arquivo $1 está vazio.'
+'Template object $1 was renamed to $2.': 'Objeto do template $1 foi renomeado para $2.'
+'Template object $1 was deleted.': 'Objeto do template $1 foi apagado.'
+'Template $1 was duplicated into $2.': 'Template $1 foi duplicado para $2.'
+'Template $1 $2.': ' Template $1 $2.'
+'Something broke': 'Algo quebrou'
+'Section page template': 'Template da página da seção'
+Saving..: Salvando...
+'Saving settings failed.': 'Falha ao salvar configurações.'
+'Save All': 'Salvar tudo'
+'Required Newscoop version': 'Versão do Newscoop necessária'
+Replace: Substituir
+'New template $1 created.': 'Novo template  $1 foi criado.'
+'New name': 'Nome novo'
+'Name cant be empty': 'Nome não pode ficar vazio'
+'Last modified': 'Última modificação'
+'Issue page': 'Página da edição'
+'Go to parent': 
+'Go to $1': 'Ir para $1'
+'Geo Filtering': Geofiltragem
+'Front page template': 'Template da página principal'
+'File size': 'Tamanho do arquivo'
+'File name': 'Nome do arquivo'
+'File $1 was replaced.': 'Arquivo $1 foi substituido.'
+'Failed unassigning theme': 
+Export: Exportar
+'Error page template': 'Erro no template da página'
+'Edit $1': 'Editar $1'
+'Done uploading': 'Upload terminado'
+'Do you want to override $1?': 'Quer substituir $1?'
+'Directory is empty': 'O diretório está vazio'
+'Directory $1 created.': 'Diretório $1 foi criado.'
+Design: Design
+'Delete theme': 'Apagar o tema'
+'Current directory:': 'Diretório atual:'
+'Create folder': 'Criar pasta'
+'Create file': 'Criar arquivo'
+'Copy to available themes': 'Copiar para temas disponíveis'
+'Copied successfully': Copiado
+Compatibility: Compatibilidade
+'Click to enlarge': 'Clicar para ampliar'
+'Choose destination': 'Escolher destino'
+'Cant override directory $1.': 'Não é possível substituir diretório $1.'
+'Cache Lifetime': 'Duração do cache'
+'Browse for the theme': 'Navegar para o tema'
+'Assigned successfully': 
+'Article page template': 'Template da página do artigo'
+'Article page': 'Página do artigo'
+'Are you sure you want to unassign this theme?': 
+'Are you sure you want to delete this theme?': 'Tem certeza que quer apagar este tema?'
+'Add to publication': 'Adicionar a publicação'
+'$1 is not writable': 
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 arquivos $2'

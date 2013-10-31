@@ -1,0 +1,66 @@
+'Based on GeoNames.org and OpenStreetMap.org data': 
+'selected marker icon': 'ausgewähltes Markierungssymbol'
+'add location to map': 'Ort der Karte hinzufügen'
+'Video source': Videoquelle
+'The point will be removed from all translations of the article.': 'Der Standort wird aus allen Übersetzungen des Artikels entfernt. '
+'Specify country (optional)': 'Land festlegen (optional)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Der Ort wurde nicht gefunden. Überprüfen Sie die Schreibweise oder suchen Sie erneut. '
+'Show search results': 'Suchergebnisse anzeigen'
+'Search for place or coordinate': 'Nach Ort oder Koordinaten suchen'
+'Return to edit': 'Zur Bearbeitung zurückkehren'
+'Really delete this point?': 'Diesen Standort wirklich löschen?'
+'Name and describe this location': 'Benennen und beschreiben Sie diesen Ort'
+'Map size': Kartengröße
+'Location label': Ortsbezeichnung
+'Location description:': 'Ortsbeschreibung: '
+'Label url': 'Bezeichnung url'
+'Hide search results': 'Suchergebnisse verbergen'
+Geo-filtering: Geofilter
+'Fill in youtube ID or link, e.g.': 'Bitte Youtube-ID oder Link eingeben, z.B. '
+'Fill in vimeo ID or link, e.g': 'Bitte Vimeo-ID oder Link eingeben, z.B. '
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Bitte Video-ID, Link oder Dateinamen für YouTube, Vimeo oder Flash-Video eingeben. '
+'Fill in location label': 'Bitte Ortsbezeichnung eingeben'
+'Fill in local swf flash file name or link, e.g.': 'Bitte geben Sie den Namen der lokalen Flash-Datein oder den Link ein, z.B. '
+'Fill in local flv flash file name or link, e.g.': 'Bitte geben Sie den Namen oder den Link zur lokalen Flash-Datei ein, z.B. '
+'Fill in image link, like': 'Bitte Bildlink eingeben, wie '
+'Describe the location...': 'Beschreiben Sie den Ort...'
+'Delete location': 'Ort löschen'
+Coordinates: Koordinaten
+'Change video display size': 'Anzeigegröße des Videos ändern'
+'Change image display size': 'Anzeigegröße des Bildes ändern'
+'Change icon of this location': 'Symbol zum Ort ändern'
+'Center map on location': 'Karte zum Ort zentrieren'
+'Advanced editing': 'Erweiterte Bearbeitung'
+'Add an image to this location': 'Diesem Ort ein Bild hinzufügen'
+'Add a video to this location': 'Diesem Ort ein Video hinzufügen'
+'Are you sure you want to quit without saving your changes?': 'Wirklich verlassen ohne Änderungen zu speichern?'
+'Map preview': 'Vorschau Karte'
+'Locations updated.': 'Standorte aktualisiert.'
+'Setting the map name helps with map search': 'Einen Kartennamen festlegen um die Kartensuche zu vereinfachen.'
+Longitude: Längengrad
+Latitude: Breitengrad
+Center: Zentrum
+'Last Saved Map View': 'Zuletzt gespeicherte Kartenansicht'
+'List of locations updated': 'Liste der Standorte aktualisiert'
+width: Breite
+'show initial map view': 'Erste Kartenansicht anzeigen'
+'problem at point processing, please send error report': 'Problem beim Bearbeiten der Standpunkte, bitte Fehlermeldung senden.'
+'plain text': 'Einfacher Text '
+'html content': 'HTML Inhalt'
+height: Höhe
+'fill in map name': 'Kartenname eintragen'
+'You do not have the right to remove maps from articles.': 'Keine Berechtigung um Karten aus Artikeln zu entfernen'
+'Video file': Videodatei
+'Video ID': 'Video ID'
+'The map has been removed from the article.': 'Die Karte wurde aus dem Artikel entfernt.'
+'Point no.': Standpunktnummer
+'Point markers': Standpunktmarkierungen
+None: Keine
+'Map Search Example': 'Kartensuche Beispiel'
+'Map Preview': Kartenvorschau
+'Image URL': 'Bild URL'
+video: 'Video '
+text: Text
+image: Bild
+icon: Symbol
+'Setting Map Locations': 'Kartenstandorte festlegen'

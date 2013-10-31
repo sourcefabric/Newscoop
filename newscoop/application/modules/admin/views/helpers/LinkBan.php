@@ -20,10 +20,11 @@ class Admin_View_Helper_LinkBan extends Zend_View_Helper_Abstract
      * @return void
      */
     public function linkBan( $p_url, $p_params = null)
-    {
+    {   
+        $translator = \Zend_Registry::get('container')->getService('translator');
         $params = array_merge(array(
-            'name'  => getGS('Ban'),
-            'title' => getGS('Ban'),
+            'name'  => $translator->trans('Ban', array(), 'home'),
+            'title' => $translator->trans('Ban', array(), 'home'),
             'class' => array('ban','confirm'),
             'attributes' => array()
         ),is_null($p_params)? array():$p_params);

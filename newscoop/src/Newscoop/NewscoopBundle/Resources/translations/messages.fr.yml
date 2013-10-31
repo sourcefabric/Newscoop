@@ -1,0 +1,258 @@
+Account: Compte
+'Items per page': 'Articles par page'
+'Add new': Nouveau
+Home: Accueil
+Logout: Deconnecter
+More...: Plus...
+Content: Contenu
+Languages: Langues
+Countries: Pays
+Themes: Templates
+Topics: Sujets
+Configure: Configurer
+'Image Archive': 'Archive dimage'
+'Add Article': 'Nouvel Article'
+Fields: Champs
+Delete: Supprimer
+Type: Type
+Name: Nom
+Code: Code
+Edit: Editer
+Login: Connexion
+Password: 'Mot de passe'
+Site: Site
+Path: Chemin
+'Go up': Monter
+URL: URL
+Order: Ordre
+Hide: Cacher
+Duplicate: Dupliquer
+Subscription: Abonnement
+expires: expire
+starts: Commence
+before: avant
+after: après
+on: sur
+status: statut
+active: actif
+inactive: inactif
+Subscribers: Abonnés
+Staff: Staff
+'Select destination': 'choisir destination'
+'No languages': 'Aucune langue'
+'---Select language---': '---choisir langue---'
+'No publications': 'Aucune publication'
+'---Select publication---': '---Choisir publication---'
+'No issues': 'Aucun article'
+'---Select issue---': '---Choisir article---'
+'No sections': 'Aucune section'
+'---Select section---': '---Choisir section---'
+Language: Langue
+Country: Pays
+'Account name': 'Nom de Compte'
+Publication: Publication
+'Default language': 'Langage par défaut'
+Subscriptions: Abonnements
+Issue: Edition
+Number: Numero
+Section: Section
+Keywords: 'Mots clés'
+Topic: Sujet
+'URL Name': 'Nom URL'
+'Left to pay': 'Reste à payer'
+Active: Actif
+Trial: Essai
+Next: Suivant
+Previous: Précédent
+Translate: Traduire
+View: Afficher
+'Scheduled Publishing': 'Publication planifiée'
+Time: Heure
+Action: Action
+'Schedule a new action': 'Planifier une nouvelle action'
+'Scheduling a new publish action': 'Planifier une nouvelle action de publication'
+'Delete scheduled publish action': 'Supprimer une action planifiée de publication'
+Date/Time: Date/Heure
+'You must select an action.': 'Vous devez choisir une action'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Vous navez pas la permission de planifier des éditions ou articles  pour publication automatique.'
+'Front page': 'Page daccueil'
+'Section page': 'Page de Section'
+'Show on front page': 'Afficher sur la page daccueil'
+'Remove from front page': 'Enlever de la page daccueil'
+'Show on section page': 'Afficher sur la page de section'
+'Remove from section page': 'Enlever de la page de section'
+Actions: Actions
+Publishing: Publication
+Show: Afficher
+Remove: Enlever
+'Article Types': 'Types darticles'
+'Staff User Types': 'Types Utilsateur Staff'
+Publications: Publications
+Issues: Editions
+Sections: Sections
+Articles: Articles
+Images: Images
+Change: Modifier
+'Add new issue': 'Ajouter nouvelle édition'
+'Section Template': 'Template de Section'
+'Article Template': 'Template dArticle'
+'Default Language': 'Langage par Défaut'
+'Paid Period': 'Période payée'
+Preview: Visualiser
+'You must fill in the $1 field.': 'Vous devez remplir le champ $1.'
+Error: Erreur
+'Invalid input: $1': 'Entrée invalide: $1'
+'Language does not exist.': 'La langue nexiste pas.'
+'Publication does not exist.': 'La publication nexiste pas.'
+'Issue does not exist.': 'Lédition nexiste pas.'
+'You must select a language.': 'Vous devez choisir une langue'
+'Section does not exist.': 'La section nexiste pas'
+'No articles.': 'Aucun article.'
+'Article does not exist.': 'Larticle nexiste pas'
+'Image does not exist.': 'Limage nexiste pas'
+'Access denied': 'Accès refusé'
+'Invalid parameters received': 'Paramètres reçus incorrects'
+'Add new article': 'Nouvel article'
+Status: Statut
+Published: Publié
+'Not published': 'Non publié'
+Submitted: Soumis
+New: Nouveau
+Article: Article
+Publish: Publier
+Unpublish: Dépublier
+Unlock: Ouvrir
+Uploaded: Téléchargé
+YYYY-MM-DD: (AAAA-MM-JJ)
+Submit: Soumettre
+Image: Image
+Description: Description
+Photographer: Photographe
+Place: 'Place '
+Date: Date
+Thumbnail: Miniature
+'In use': 'En utilisation'
+'Additional searches': 'Recherches Complémentaires'
+'Most Recently Added': 'Plus Récemment Ajoutés'
+'Most Recently Modified': 'Plus Récemment Modifiés'
+'$1 images found': '$1 images trouvées'
+'Reset search conditions': 'Reinitialiser les conditions de recherche'
+'Image number': 'Numero dimage'
+Users: Utilisateurs
+Localizer: Traducteur
+'Adding new translation': 'Ajout nouvelle traduction'
+'No more languages.': 'Plus de langues.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Le champ $1 peut contenir seulement des lettres, des chiffres et caractère souligné (_). '
+'Add new publication': 'Ajouter nouvelle publication'
+'Upload new template': 'Télécharger un nouveau template'
+'Add new staff member': 'Ajouter un nouveau membre de staff'
+'Add new subscriber': 'Ajouter nouvel abonné'
+'Add new user type': 'Ajouter nouveau type utlisateur'
+'Add new article type': 'Ajouter nouveau type darticle'
+'Add new country': 'Ajouter nouveau pays'
+'Add new language': 'Ajouter Nouvelle langue'
+'View logs': 'Voir le fichier log'
+'Change your password': 'Changer votre mot de passe'
+'Your Articles': 'Vos articles'
+'Submitted Articles': 'Articles Soumis'
+Logs: Logs
+'There are $1 article(s) left.': 'Il manque $1 article(s).'
+'There are $1 issues(s) left.': 'Il manque $1 édition(s).'
+'There are $1 section(s) left.': 'Il manque $1 section(s).'
+'There are $1 publication(s) left.': 'Il manque $1 publication(s).'
+'There are $1 countries left.': 'Il manque $1 pays.'
+'Name <SMALL>(click to edit)</SMALL>': 'Nom <SMALL>(cliquer pour éditer)</SMALL>'
+'Add new subscription': 'Nouvel abonnement'
+'You do not have the right to add subscriptions.': 'Vous navez pas les droit dajouter des abonnements'
+'Adding subscription': 'Ajout dabonnement'
+'Delete subscription': 'Supprimer abonnement'
+'You do not have the right to delete subscriptions.': 'Vous navez pas le droit de supprimer des abonnements'
+'No such subscription.': 'Pas un tel abonnement.'
+Yes: Oui
+No: Non
+Close: Fermer
+'No issues.': 'Aucune édition.'
+'Back to Edit Article': 'Retour pour Editer lArticle'
+'No topics': 'Aucun sujet'
+'You do not have the right to add articles.': 'Vous navez pas le droit dajouter des articles.'
+Start: Début
+Days: Jours
+'The sections could not be added successfully. Some of them were already added !': 'Les sections ne pouvaient pas être ajoutées avec succès. Certaines dentre ellles ont déjà été ajoutées!'
+'Add another': 'Ajouter un autre'
+Cancel: Annuler
+Done: Fait
+OK: OK
+Save: Sauvegarder
+Search: Recherche
+'Make a selection': 'Faire un choix'
+'You must input a number greater than 0 into the $1 field.': 'Vous devez entrer un nombre plus grand que 0 dans le champ $1.'
+'You must input a valid date.': 'Vous devez entrer une date valable.'
+'Add new field': 'Ajouter un nouveau champ'
+'Article automatic publishing schedule': 'Programme de publication automatique darticles'
+'Are you sure you want to delete this scheduled action?': 'Etes-vous sûr de vouloir supprimer cette action prévue?'
+Unlink: 'Supprimer lien'
+'Are you sure you want to delete the image $1?': 'Etes-vous sûr de vouloir supprimer limage $1?'
+'No such issue.': 'Pas une telle édition.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Etes-vous sûr de vouloir supprimer labonnement à la publication $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Ne pouvait pas sauvegarder les changements de lédition $1. SVP assurez-vous  que le nom de lURL dédition $2 na pas été employé auparavant dans la publication $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: bytes
+Attach: Attacher
+Back: Retour
+File: Fichier
+'Save and Close': 'Sauvegarder et Fermer'
+Add: Ajouter
+'Select All': 'Sélectionner tout'
+'Select None': 'Ne rien Sélectionnner'
+'Add Event': 'Ajouter Evénement'
+N/A: N/A
+'On Front Page': 'Sur la Page dAccueil'
+'On Section Page': 'Sur la Page Section'
+'Created by': 'Créé par'
+'Creation date': 'Date de Création'
+'Publication List': 'Liste des publications'
+'Issue List': 'Liste dédition'
+'Section List': 'Liste des Sections'
+All: Tous
+duplicate: duplicate
+move: Déplacer
+Move: Déplacer
+'From:': 
+'Date:': 
+Hidden: 
+Comments: 
+Comment: 
+Approved: 
+Subject: 
+'IP address:': 
+'Email:': 
+Author: 
+'Article name': 
+'Hide article': 
+'Show article': 
+'Article Type Fields': 'Champs de Type dArticle'
+'Article Images': 'Images dArticle '
+'Log Messages': 'Messages Log'
+'Article Files': 'Fichiers d Article'
+'Article Comments': 
+'Are you sure you want to deactivate the subscription?': 'Etes-vous sûr de vouloir désactiver labonnement?'
+'Are you sure you want to activate the subscription?': 'Etes-vous sûr de vouloir activer labonnement?'
+Other: 
+'Time:': 
+'No events.': 
+'Default templates': 
+'System Preferences': 
+'The date must be in the future.': 
+Send: 
+'Thank you.': 
+'Please take a minute to send us an email.': 
+(optional): 
+'The URL you entered is invalid: $1': 
+Reads: 
+Plugins: 
+'Publish with issue': 
+'Universal List': 
+'Invalid security token!': 
+Authors: 

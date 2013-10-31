@@ -1,11 +1,13 @@
+<?php
+  $translator = \Zend_Registry::get('container')->getService('translator');
+?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
-
 <script type="text/javascript">
 // Print last modified date
 var dateTime = '<?php if ($savedToday) { p(date("H:i:s", $lastModified)); } else { p(date("Y-m-d H:i", $lastModified)); } ?>';
 var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
-document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
-document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
+document.getElementById('info-text').innerHTML = '<?php echo $translator->trans('Saved', array(), 'articles'); ?> ' + ' ' + dateTime;
+document.getElementById('date-last-modified').innerHTML = '<?php echo $translator->trans('Last modified', array(), 'articles'); ?> ' + ': ' + fullDate;
 
 /**
  * Close window after timeout
@@ -137,7 +139,7 @@ $('form#article-main').submit(function() {
     window.save_had_problems = false;
     var form = $(this);
     if (!articleChanged()) {
-        flashMessage('<?php putGS('Article saved.'); ?>');
+        flashMessage('<?php echo $translator->trans('Article saved.', array(), 'articles'); ?>');
         if(save_and_close) {
             close(1);
         }
@@ -155,7 +157,7 @@ $('form#article-main').submit(function() {
                 url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
                 data: form.serialize(),
                 success: function(data, status, p) {
-                    flashMessage('<?php putGS('Article saved.'); ?>');
+                    flashMessage('<?php echo $translator->trans('Article saved.', array(), 'articles'); ?>');
                     toggleComments();
                     if(save_and_close) {
                         close(1);
@@ -164,7 +166,7 @@ $('form#article-main').submit(function() {
                 error: function (rq, status, error) {
                     window.save_had_problems = true;
                     if (status == 0 || status == -1) {
-                        flashMessage('<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>', 'error');
+                        flashMessage('<?php echo $translator->trans('Unable to reach Newscoop. Please check your internet connection.', array(), 'articles'); ?>', 'error');
                     }
                 }
             });
@@ -424,7 +426,7 @@ function articleChanged()
     return true;
 };
 
-window.article_confirm_question = '<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>';
+window.article_confirm_question = '<?php echo $translator->trans('Your work has not been saved. Do you want to continue and lose your changes?', array(), 'articles'); ?>';
 
 /**
  * Check for unsaved changes in main/boxes forms
@@ -437,7 +439,7 @@ function checkChanged()
         <?php
             if ( count($articleEvents) ) {
                 ?>
-                return confirm('<?php putGS('Please be aware that all scheduled publishing events for this article will be deleted when you set this article to "New" state. Please confirm the state change.'); ?>');
+                return confirm('<?php echo $translator->trans('Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.', array(), 'articles'); ?>');
                 <?php
             }
         ?>

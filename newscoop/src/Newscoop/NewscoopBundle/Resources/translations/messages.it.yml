@@ -1,0 +1,259 @@
+Plugins: Plugin
+'Manage Plugins': 'Gestisci plugin'
+Account: Account
+'Items per page': 'Elementi per pagina'
+'Add new': Aggiungi
+Home: Home
+Logout: Esci
+More...: Continua...
+Content: Contenuto
+Languages: Lingue
+Countries: Nazioni
+Themes: Temi
+Topics: Argomenti
+Configure: Configura
+'Image Archive': 'Archivio immagini'
+'Add Article': 'Aggiungi articolo'
+Fields: Campi
+Delete: Elimina
+Type: Tipo
+Name: Nome
+Code: Codice
+Edit: Modifica
+Login: Login
+Password: Password
+Site: Sito
+Path: Percorso
+'Go up': 'Torna su'
+URL: URL
+Order: Ordine
+Hide: Nascondi
+Duplicate: Duplica
+Subscription: Iscrizione
+expires: scade
+starts: inizia
+before: prima
+after: dopo
+on: nel
+status: stato
+active: attivo
+inactive: inattivo
+Subscribers: Iscritti
+Staff: Staff
+'Select destination': 'Seleziona destinazione'
+'No languages': 'Nessuna lingua'
+'---Select language---': '---Seleziona lingua---'
+'No publications': 'Nessuna pubblicazione'
+'---Select publication---': '---Seleziona pubblicazione---'
+'No issues': 'Nessun articolo'
+'---Select issue---': '---Seleziona articolo---'
+'No sections': 'Nessuna sezione'
+'---Select section---': '---Seleziona sezione---'
+Language: Lingua
+Country: Nazione
+'Account name': 'Nome account'
+Publication: Pubblicazione
+'Default language': 'Lingua predefinita'
+Subscriptions: Iscrizioni
+Issue: Edizione
+Number: Numero
+Section: Sezione
+Keywords: 'Parole chiave'
+Topic: Argomento
+'URL Name': 'Nome URL'
+'Left to pay': 'Da pagare'
+Active: Attivo
+Trial: Prova
+Next: Successivo
+Previous: Precedente
+Translate: Traduci
+View: Vista
+'Scheduled Publishing': 'Pubblicazione programmata'
+Time: Orario
+Action: Azione
+'Schedule a new action': 'Programma una nuova azione'
+'Scheduling a new publish action': 'Programmo la nuova azione'
+'Delete scheduled publish action': 'Elimina lazione programmata'
+Date/Time: Data/Ora
+'You must select an action.': 'Devi selezionare unazione.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'Non hai il permesso di programmare la pubblicazione automatica di edizioni o articoli.'
+'Front page': 'Prima pagina'
+'Section page': 'Pagina della sezione'
+'Show on front page': 'Mostra in prima pagina'
+'Remove from front page': 'Rimuovi dalla prima pagina'
+'Show on section page': 'Mostra nella pagina della sezione'
+'Remove from section page': 'Rimuovi dalla pagina della sezione'
+Actions: Azioni
+Publishing: Pubblicazione
+Show: Mostra
+Remove: Rimuovi
+'Article Types': 'Tipi di articolo'
+'Staff User Types': 'Ruoli staff'
+Publications: Pubblicazioni
+Issues: Edizioni
+Sections: Sezioni
+Articles: Articoli
+Images: Immagini
+Change: Cambia
+'Add new issue': 'Aggiungi edizione'
+'Section Template': 'Template sezione'
+'Article Template': 'Template articolo'
+'Default Language': 'Lingua predefinita'
+'Paid Period': 'Periodo pagato'
+Preview: Anteprima
+'You must fill in the $1 field.': 'Devi riempire il campo $1.'
+Error: Errore
+'Invalid input: $1': 'Valore non valido: $1'
+'Language does not exist.': 'La lingua non esiste.'
+'Publication does not exist.': 'La pubblicazione non esiste.'
+'Issue does not exist.': 'Ledizione non esiste.'
+'You must select a language.': 'Devi selezionare una lingua.'
+'Section does not exist.': 'La sezione non esiste.'
+'No articles.': 'Nessun articolo.'
+'Article does not exist.': 'Larticolo non esiste.'
+'Image does not exist.': 'Limmagine non esiste.'
+'Access denied': 'Accesso negato'
+'Invalid parameters received': 'Parametro non valido'
+'Add new article': 'Aggiungi articolo'
+Status: Stato
+Published: Pubblicato
+'Not published': 'Non pubblicato'
+Submitted: Inoltrato
+New: Nuovo
+Article: Articolo
+Publish: Pubblica
+Unpublish: Rimuovi
+Unlock: Sblocca
+Uploaded: Caricato
+YYYY-MM-DD: AAAA-MM-GG
+Submit: Salva
+Image: Immagine
+Description: Descrizione
+Photographer: Fotografo
+Place: Località
+Date: Data
+Thumbnail: Miniatura
+'In use': 'In uso'
+'Additional searches': 'Ricerche aggiuntive'
+'Most Recently Added': 'Aggiunte recenti'
+'Most Recently Modified': 'Modifiche recenti'
+'$1 images found': 'Trovate $1 immagini'
+'Reset search conditions': 'Reset condizioni di ricerca'
+'Image number': 'Numero immagine'
+Users: Utenti
+Localizer: Localizzazioni
+'Adding new translation': 'Aggiungi traduzione'
+'No more languages.': 'Non ci sono altre lingue.'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'Il campo $1 può contenere solo lettere, numeri e il trattino basso ( _ ).'
+'Add new publication': 'Aggiungi pubblicazione'
+'Upload new template': 'Aggiungi template'
+'Add new staff member': 'Aggiungi membro dello staff'
+'Add new subscriber': 'Aggiungi iscritto'
+'Add new user type': 'Aggiungi tipo utente'
+'Add new article type': 'Aggiungi tipo articolo'
+'Add new country': 'Aggiungi nazione'
+'Add new language': 'Aggiungi lingua'
+'View logs': 'Mostra eventi'
+'Change your password': 'Cambia password'
+'Your Articles': Articoli
+'Submitted Articles': 'Articoli inviati'
+Logs: 'Registro eventi'
+'There are $1 article(s) left.': 'Rimangono ancora $1 articoli.'
+'There are $1 issues(s) left.': 'Rimangono ancora $1 edizioni.'
+'There are $1 section(s) left.': 'Rimangono ancora $1 sezioni.'
+'There are $1 publication(s) left.': 'Rimangono ancora $1 pubblicazioni.'
+'There are $1 countries left.': 'Rimangono $1 nazioni rimanenti.'
+'Name <SMALL>(click to edit)</SMALL>': 'Nome <SMALL>(clicca per modificare)</SMALL>'
+'Add new subscription': 'Aggiungi iscrizione'
+'You do not have the right to add subscriptions.': 'Non hai il permesso di aggiungere iscrizioni.'
+'Adding subscription': 'Aggiungi iscrizione'
+'Delete subscription': 'Elimina iscrizione'
+'You do not have the right to delete subscriptions.': 'Non hai il permesso di eliminare iscrizioni.'
+'No such subscription.': 'Iscrizione non presente'
+Yes: Si
+No: No
+Close: Chiudi
+'No issues.': 'Nessuna edizione'
+'Back to Edit Article': 'Torna alla modifica articolo'
+'No topics': 'Nessun argomento'
+'You do not have the right to add articles.': 'Non hai il permesso di aggiungere articoli.'
+Start: Inizia
+Days: Giorni
+'The sections could not be added successfully. Some of them were already added !': 'Non è stato possibile aggiungere le sezioni, perchè alcune di esse erano già presenti.'
+'Add another': 'Aggiungi ancora'
+Cancel: Annulla
+Done: Fatto
+OK: Ok
+Save: Salva
+Search: Cerca
+'Make a selection': Seleziona
+'You must input a number greater than 0 into the $1 field.': 'Devi inserire un numero più grande di 0 nel campo $1.'
+'You must input a valid date.': 'Devi inserire una data valida.'
+'Add new field': 'Aggiungi un campo'
+'Article automatic publishing schedule': 'Programmazione della pubblicazione automatica degli articoli'
+'Are you sure you want to delete this scheduled action?': 'Vuoi davvero cancellare questa azione programmata?'
+Unlink: Sgancia
+'Are you sure you want to delete the image $1?': 'Vuoi davvero eliminare limmagine $1?'
+'No such issue.': 'Edizione non presente.'
+'Are you sure you want to delete the subscription to the publication $1?': 'Vuoi davvero eliminare liscrizione alla pubblicazione $1?'
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Impossibile  salvare i cambiamenti per ledizione $1. Assicurati che il nome URL delledizione $2 non sia stato già utilizzato nella pubblicazione $3.'
+GB: GB
+MB: MB
+KB: KB
+bytes: byte
+Attach: Allega
+Back: Indietro
+File: File
+'Save and Close': 'Salva e chiudi'
+Add: Aggiungi
+'Select All': 'Seleziona tutti'
+'Select None': 'Deseleziona tutti'
+'Add Event': 'Aggiungi evento'
+N/A: N/D
+'On Front Page': 'In prima pagina'
+'On Section Page': 'Nella pagina di sezione'
+'Created by': 'Creato da'
+'Creation date': 'Data creazione'
+'Publication List': 'Lista pubblicazioni'
+'Issue List': 'Lista edizioni'
+'Section List': 'Lista sezioni'
+All: Tutti
+duplicate: duplica
+move: sposta
+Move: Sposta
+'From:': 'Da:'
+'Date:': 'Data:'
+Hidden: Nascosto
+Comments: Commenti
+Comment: Commento
+Approved: Approvato
+Subject: Oggetto
+'IP address:': 'Indirizzo IP:'
+'Email:': 'Email:'
+Author: Autore
+'Article name': 'Nome articolo'
+'Hide article': 'Nascondi articolo'
+'Show article': 'Mostra articolo'
+'Article Type Fields': 'Campi del tipo articolo'
+'Article Images': 'Immagini articolo'
+'Log Messages': 'Registro messaggi'
+'Article Files': 'Allegati articolo'
+'Article Comments': 'Commenti articolo'
+'Are you sure you want to deactivate the subscription?': 'Vuoi davvero disattivare liscrizione?'
+'Are you sure you want to activate the subscription?': 'Vuoi davvero attivare liscrizione?'
+Other: Altro
+'Time:': 'Ora:'
+'No events.': 'Nessun evento.'
+'Default templates': 'Template predefinito'
+'System Preferences': 'Preferenze di sistema'
+'The date must be in the future.': 'La data deve essere nel futuro.'
+Send: Invia
+'Thank you.': Grazie.
+'Please take a minute to send us an email.': 'Prenditi un minuto di tempo per mandarci una email.'
+(optional): (opzionale)
+'The URL you entered is invalid: $1': 'Lindirizzo URL inserito non è valido: $1'
+Reads: Letture
+'Publish with issue': 'Pubblica con ledizione'
+'Universal List': 'Lista completa'
+'Invalid security token!': 'Token di sicurezza non valido!'
+Authors: Autori
