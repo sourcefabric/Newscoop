@@ -10,7 +10,6 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     templating:      { engines: ['twig', 'smarty', 'php'] }
-    default_locale: "en"
     trusted_proxies: ~
     session:
         storage_id: session.storage.php_bridge
@@ -83,7 +82,7 @@ sensio_framework_extra:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
+    # bundles:        [ ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

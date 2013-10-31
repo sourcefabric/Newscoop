@@ -1,0 +1,18 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+	{% if checkPassed %}All tests passed! <a href="{{ url('prepare') }}" type="button" class="btn btn-success">Next</a>{% else %} Flease fix you issues and refresh that page {% endif %}
+	<h4>Requirements:</h4>
+	<ul>
+	{% for req in requirements %}
+		<li>{% if req.isFulfilled() %}<span class="label label-success">OK</span>{% else %} {% if req.isOptional() %}<span class="label label-warning">WARNING</span>{% else %}<span class="label label-danger">ERROR</span>{% endif %}{% endif %} {{ req.getTestMessage() }}</li>
+	{% endfor %}
+	</ul>
+
+	<h4>Recommendations</h4>
+	<ul>
+	{% for req in recommendations %}
+		<li>{% if req.isFulfilled() %}<span class="label label-success">OK</span>{% else %} {% if req.isOptional() %}<span class="label label-warning">WARNING</span>{% else %}<span class="label label-danger">ERROR</span>{% endif %}{% endif %} {{ req.getTestMessage() }}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}

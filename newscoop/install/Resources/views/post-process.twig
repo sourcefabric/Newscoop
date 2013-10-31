@@ -1,0 +1,23 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+Cron jobs
+
+Autopublish: Modifies the status of issues and articles scheduled for certain actions.
+
+Events Notifier: Sends emails to administrative users containing the latest events that took place in Newscoop.
+
+Indexer: Indexes the article content (update the search engine database).
+
+Statistics: Updates Web site statistics.
+
+Subscriptions Notifier: Sends emails to subscribers alerting them when their subscription ends.
+
+
+You can read more on this in the Newscoop manual.
+
+{% for key, message in app.session.getFlashBag() %}
+	<div class="alert alert-{{ key }}">{{ message.0|raw }}</div>
+{% endfor %}
+
+{% endblock %}

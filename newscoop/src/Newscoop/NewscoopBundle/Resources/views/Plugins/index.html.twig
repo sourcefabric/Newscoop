@@ -1,0 +1,59 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+
+{% block admin_title %}Plugins management{% endblock %}
+{% block admin_page_title_content %}Plugins manager{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('/js/select2-3.4.1/select2.css') }}" />
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/js/select2-3.4.1/select2.js') }}"></script>
+{% endblock %}
+
+
+{% block admin_content %}
+<div class="plugins-search">
+    <div style="width: 600px;" class="search-for-plugins"></div>
+</div>
+
+<script type="text/javascript">
+    function pluginFormat(item) { 
+        var markup = "<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p></div>";
+        return markup;
+    };
+    function pluginFormatSelection(item) { return item.name; }
+    var initData = null;
+    $(".search-for-plugins").select2({
+        placeholder: "Search for plugins",
+        minimumInputLength: null,
+        id: function(item){return {id: item.name};},
+        cache: true,
+        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+            url: "/admin/plugins/getPackagesFromPackagist",
+            dataType: 'json',
+            data: function (term, page) {
+                return {
+                    q: term, // search term
+                };
+            },
+            results: function (data, page) {
+                return {results: data.results};
+            }
+        },
+        initSelection: function(element, callback) {
+            var value=$(element).val();
+            var initData = null;
+            $.ajax("/admin/plugins/getPackagesFromPackagist", {
+                data: {},
+                dataType: "json"
+            }).done(function(data) { initData = data; callback(data.results); });
+        },
+        formatResult: pluginFormat, 
+        formatSelection: pluginFormatSelection,
+        dropdownCssClass: "bigdrop", 
+        escapeMarkup: function (m) { return m; } 
+    });
+</script>
+
+{% endblock %}
