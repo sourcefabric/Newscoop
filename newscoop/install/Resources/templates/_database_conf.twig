@@ -1,0 +1,16 @@
+<?php
+global $Campsite;
+
+$Campsite['DATABASE_NAME'] = '{{ database_name }}';
+$Campsite['DATABASE_SERVER_ADDRESS'] = '{{ database_server_host }}';
+$Campsite['DATABASE_SERVER_PORT'] = '{{ database_server_port }}';
+$Campsite['DATABASE_USER'] = '{{ database_user }}';
+$Campsite['DATABASE_PASSWORD'] = '{{ database_password }}';
+
+/** Database settings **/
+$Campsite['db']['type'] = 'mysql';
+$Campsite['db']['host'] = $Campsite['DATABASE_SERVER_ADDRESS'];
+$Campsite['db']['port'] = $Campsite['DATABASE_SERVER_PORT'];
+$Campsite['db']['name'] = $Campsite['DATABASE_NAME'];
+$Campsite['db']['user'] = $Campsite['DATABASE_USER'];
+$Campsite['db']['pass'] = $Campsite['DATABASE_PASSWORD'];

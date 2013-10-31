@@ -89,7 +89,7 @@ services:
         arguments:  ["@image"]
     image.rendition:
         class:      Newscoop\Image\RenditionService
-        arguments:  ["%rendition%", "@em", "@image"]
+        arguments:  ["@em", "@image"]
     image.search:
         class:      Newscoop\Image\ImageSearchService
         arguments:  ["@em"]

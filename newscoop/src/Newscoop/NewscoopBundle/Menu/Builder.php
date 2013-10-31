@@ -803,7 +803,7 @@ class Builder
         return $menu;
     }
 
-    private function addChild($menu, $name, $element) {
+    protected function addChild($menu, $name, $element) {
         if(array_key_exists('resource', $element) && array_key_exists('privilege', $element)) {
             if (!$this->hasPermission($element['resource'], $element['privilege'])) {
                 return false;

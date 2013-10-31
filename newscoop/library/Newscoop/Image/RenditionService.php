@@ -37,9 +37,8 @@ class RenditionService
      * @param Doctrine\ORM\EntityManager $orm
      * @param Newscoop\Image\ImageService $imageService
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
+    public function __construct(\Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
-        $this->config = array_merge($this->config, $config);
         $this->orm = $orm;
         $this->imageService = $imageService;
     }
