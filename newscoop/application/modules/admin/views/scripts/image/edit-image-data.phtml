@@ -88,10 +88,10 @@
 
         $editorOptions  = array(
             'max_chars' => $captionLimit,
-            'toolbar_length' => 20,
+            'toolbar_length' => 19,
         );
 
-        editor_load_tinymce(implode(',', $loadAsRichtext), $editorLanguage, $editorOptions);
+        editor_load_tinymce(implode(',', $loadAsRichtext), $this->currentUser, $editorLanguage, $editorOptions);
     }
 ?>
 

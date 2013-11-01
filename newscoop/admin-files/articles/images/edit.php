@@ -109,7 +109,7 @@ if ($f_publication_id > 0) {
 			        $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
 			        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
 
-			        editor_load_tinymce('f_image_description', $editorLanguage, array('max_chars' => $captionLimit));
+			        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, array('max_chars' => $captionLimit));
 					?>
 			            <textarea name="f_image_description" id="f_image_description" rows="8" cols="70"><?php echo($imageObj->getDescription()); ?></textarea>
 					<?php

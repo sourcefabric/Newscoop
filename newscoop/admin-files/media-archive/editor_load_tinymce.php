@@ -3,10 +3,11 @@
  * @param array p_dbColumns
  * @param object p_user The User object
  * @param int p_editorLanguage The current or selected language
+ * @param array options Override tinyMCE options
  *
  * @return void
  */
-function editor_load_tinymce($p_dbColumns, $p_editorLanguage, $options=array())
+function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=array())
 {
         global $Campsite;
 
@@ -39,8 +40,6 @@ function editor_load_tinymce($p_dbColumns, $p_editorLanguage, $options=array())
          ******************************************************************/
         $plugins = array();
         $plugins[] = 'paste';
-        $plugins[] = 'searchreplace';
-        $plugins[] = 'fullscreen';
         $plugins_list = implode(",", $plugins);
         $statusbar_location = "none";
 
@@ -50,48 +49,44 @@ function editor_load_tinymce($p_dbColumns, $p_editorLanguage, $options=array())
          * will be done in step 4.
          ******************************************************************/
         $toolbar1 = array();
-        $toolbar1[] = "bold";
-        $toolbar1[] = "italic";
-        $toolbar1[] = "underline";
-        $toolbar1[] = "strikethrough";
-        $toolbar1[] = "|";
-        $toolbar1[] = "outdent";
-        $toolbar1[] = "indent";
-        $toolbar1[] = "blockquote";
-        $toolbar1[] = "|";
-        $toolbar1[] = "copy";
-        $toolbar1[] = "cut";
-        $toolbar1[] = "paste";
-        $toolbar1[] = "pastetext";
-        $toolbar1[] = "pasteword";
-        $toolbar1[] = "|";
-        $toolbar1[] = "undo";
-        $toolbar1[] = "redo";
-        $toolbar1[] = "|";
-        $toolbar1[] = "ltr";
-        $toolbar1[] = "rtl";
-        $toolbar1[] = "charmap";
-        $toolbar1[] = "|";
-        $toolbar1[] = "campsiteinternallink";
-        $toolbar1[] = "link";
-        $toolbar1[] = "anchor";
-        $toolbar1[] = "campsite-subhead";
-        $toolbar1[] = "campsiteimage";
-        $toolbar1[] = "media";
-        $toolbar1[] = "code";
-        $toolbar1[] = "fullscreen";
-        $toolbar1[] = "hr";
-        $toolbar1[] = "forecolor";
-        $toolbar1[] = "backcolor";
-        $toolbar1[] = "sub";
-        $toolbar1[] = "sup";
-        $toolbar1[] = "|";
-        $toolbar1[] = "search";
-        $toolbar1[] = "replace";
-        $toolbar1[] = "|";
-        $toolbar1[] = "bullist";
-        $toolbar1[] = "numlist";
-        $toolbar1[] = "|";
+        if ($p_user->hasPermission('EditorBold')) {
+            $toolbar1[] = "bold";
+        }
+        if ($p_user->hasPermission('EditorItalic')) {
+            $toolbar1[] = "italic";
+        }
+        if ($p_user->hasPermission('EditorUnderline')) {
+            $toolbar1[] = "underline";
+        }
+        if ($p_user->hasPermission('EditorStrikethrough')) {
+            $toolbar1[] = "strikethrough";
+        }
+        if ($p_user->hasPermission('EditorCopyCutPaste')) {
+            $toolbar1[] = "|";
+            $toolbar1[] = "cut";
+            $toolbar1[] = "copy";
+            $toolbar1[] = "paste";
+            $toolbar1[] = "pastetext";
+            $toolbar1[] = "pasteword";
+        }
+        if ($p_user->hasPermission('EditorUndoRedo')) {
+            $toolbar1[] = "|";
+            $toolbar1[] = "undo";
+            $toolbar1[] = "redo";
+        }
+        if ($p_user->hasPermission('EditorLink')) {
+            $toolbar1[] = "|";
+            $toolbar1[] = "link";
+            $toolbar1[] = "anchor";
+        }
+        if ($p_user->hasPermission('EditorCharacterMap')) {
+            $toolbar1[] = "|";
+            $toolbar1[] = "charmap";
+        }
+        if ($p_user->hasPermission('EditorSourceView')) {
+            $toolbar1[] = "|";
+            $toolbar1[] = "code";
+        }
 
         $toolbar2 = array();
         $toolbar3 = array();
@@ -103,10 +98,6 @@ function editor_load_tinymce($p_dbColumns, $p_editorLanguage, $options=array())
         if (count($toolbar2) > $toolbarlength) {
             $toolbar3   = array_splice($toolbar2, $toolbarlength);
         }
-
-        // Always push these elements to the last bar, but check if that is bar2 or bar3
-        $lastBar = (count($toolbar3) > 0 || count($toolbar2) == $toolbarlength) ? 'toolbar3' : 'toolbar2';
-        array_push($$lastBar, "styleselect", "formatselect", "fontselect");
 
         $theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
         $theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';

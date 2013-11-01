@@ -135,7 +135,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 
         $iptcDescriptionCode = "tinyMCE.editors['f_image_description'].setContent('". addcslashes($iptcDescription, "'")."');";
 
-        editor_load_tinymce('f_image_description', $editorLanguage, array('max_chars' => $captionLimit));
+        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, array('max_chars' => $captionLimit));
 ?>
 <TR>
         <TD ALIGN="RIGHT" style="width:115px;"><?php

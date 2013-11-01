@@ -27,7 +27,7 @@
                     'toolbar_length' => 45,
                 );
 
-                editor_load_tinymce('caption', $editorLanguage, $editorOptions);
+                editor_load_tinymce('caption', $this->currentUser, $editorLanguage, $editorOptions);
                 ?>
                     <textarea name="caption" rows="5" class="image-description"><?php echo $this->form->caption->getValue(); ?></textarea>
                 <?php
