@@ -110,16 +110,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
 <!-- TinyMCE -->
 <script type="text/javascript" src="/js/tinymce/tiny_mce.js"></script>
 <script type="text/javascript">
-    function CampsiteSubhead(ed) {
-        element = ed.dom.getParent(ed.selection.getNode(), 'span');
-        if (element && ed.dom.getAttrib(element, 'class') == 'campsite_subhead') {
-            return false;
-        } else {
-            html = ed.selection.getContent({format : 'text'});
-        ed.selection.setContent('<span class="campsite_subhead">' + html + '</span>');
-        }
-    } // fn CampsiteSubhead
- 
+
     var tinyMceOptions = {
         // General options
         language : "<?php p($p_editorLanguage); ?>",
@@ -183,8 +174,6 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
     };
 
     $.extend(tinyMceOptions, <?php echo $optionsAsJson; ?>);
-
-    console.log(tinyMceOptions);
  
     // Default skin
     tinyMCE.init(tinyMceOptions);
@@ -233,24 +222,6 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
     <?php
         }
     ?>
-
-    function campsitemedia(field_name, url, type, win)
-    {
-        topDoc = window.top.document;
-        articleNo = (topDoc.getElementById('f_article_number')) ? topDoc.getElementById('f_article_number').value : 0;
-        langId = (topDoc.getElementById('f_language_selected')) ? topDoc.getElementById('f_language_selected').value : 1;
-     
-        tinyMCE.activeEditor.windowManager.open({
-            url: "/js/tinymce/plugins/campsitemedia/popup.php?article_id="+articleNo+'&language_selected='+langId,
-            width: 580,
-            height: 320,
-            inline : "yes",
-            close_previous : "no"
-        },{
-            window : win,
-            input : field_name
-        });
-    }
 
 </script>
 <!-- /TinyMCE -->
