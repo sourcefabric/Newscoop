@@ -399,10 +399,10 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 </tr>
 <tr id="richtext_captions" style="display: <?php (SystemPref::Get("MediaRichTextCaptions") == 'Y') ? p("") : p("none") ?>;">
     <td align="left">
-        <?php putGS("Limit characters for image captions to:"); ?>
+        <?php putGS("Character limit for image captions"); ?>:
     </td>
     <td>
-        <input type="text" name="f_media_caption_length" value="<?php echo SystemPref::Get("MediaCaptionLength"); ?>" class="input_text" alt="number|0|0|bok" size="8" emsg="<?php echo putGs('Specify a numeric value');?>" /><?php echo putGS('characters (use 0 for no limit)'); ?>
+        <input type="text" name="f_media_caption_length" value="<?php echo SystemPref::Get("MediaCaptionLength"); ?>" class="input_text" alt="number|0|0|bok" size="8" emsg="<?php echo putGS("Please enter a number for the '$1' field.", getGS("Character limit for image captions")); ?>" /><?php echo putGS('characters (use 0 for no limit)'); ?>
     </td>
 </tr>
 

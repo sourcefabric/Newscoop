@@ -1,4 +1,5 @@
 <?php 
+regGS(" (max. $1 characters)", "");
 regGS("Display newsfeed images", "ახალი ამბების გამოსახულებების ჩვენება");
 regGS("Mark image", "გამოსახულების მონიშვნა");
 regGS("Add selected images to slideshow", "დაუმატეთ მონიშნული გამოსახულებები სლაიდშოუს");

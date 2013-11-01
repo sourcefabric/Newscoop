@@ -216,7 +216,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
         }
 
         if (!valid) {
-            alert('An image caption is too long. The maximum amount of characters is '+tinyMceOptions.max_chars+'.');
+            alert('<?php echo putGs("An image caption is too long. The character limit is $1."); ?>'.replace('$1', tinyMceOptions.max_chars));
             // Focus first instance
             tinymce.execCommand('mceFocus', false, invalidInstances[0]);
         }
