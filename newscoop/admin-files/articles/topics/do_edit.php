@@ -21,6 +21,7 @@ if (!SecurityToken::isValid()) {
     exit;
 }
 
+$f_search = Input::Get('search', 'text', '');
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), true);
@@ -53,6 +54,32 @@ foreach ($f_topic_ids as $topicIdString) {
         ArticleTopic::AddTopicToArticle($topicIdString, $f_article_number);
     }
 }
+
+// add new topic 
+if ($f_search) { 
+    $topic = new Topic();
+    $em = \Zend_Registry::get('container')->getService('em');
+    $tmpTopic = $em->getRepository('Newscoop\Entity\Topic')
+        ->findOneBy(array(
+            'name' => $f_search, 
+            'language' => $f_language_selected
+    ));
+
+    if (!$tmpTopic) { 
+        $topic->create(array(
+            'parent_id' => 0,
+            'names'=>array($f_language_selected=>$f_search)
+        ));
+
+        $tmpTopic = $em->getRepository('Newscoop\Entity\Topic')
+            ->findOneBy(array(
+                'name' => $f_search, 
+                'language' => $f_language_selected
+        ));
+    }
+    ArticleTopic::AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
+}
+
 
 ?>
 

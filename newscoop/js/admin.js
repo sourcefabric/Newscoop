@@ -105,6 +105,7 @@ $(function() {
 
         // search
         var re = new RegExp($(this).val(), "i");
+        var value = $(this).val();
         $('ul.tree > li').each(function() {
             var li = $(this);
             $(elem, li).each(function() {
@@ -112,6 +113,10 @@ $(function() {
                     li.addClass('match');
                     $(this).addClass('match');
                     $(this).parentsUntil('ul.tree').addClass('match');
+                    // only check if topic text matches value exactly
+                    if ($(this).text() == value) {
+                        $('#' + $(this).attr('for')).attr('checked', 'checked');
+                    }
                 }
             });
         });
