@@ -29,7 +29,7 @@ class UserTopicService
      * @param Doctrine\ORM\EntityManager $em
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
      */
-    public function __construct(EntityManager $em, EventDispatcher $dispatcher = null)
+    public function __construct(EntityManager $em, $dispatcher = null)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
