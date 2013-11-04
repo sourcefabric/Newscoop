@@ -5,5 +5,5 @@
 '$1 file/s attached to article': 
 'File attached.': 
 'The maximum file upload size was not configured in Newscoop.': 
-'File #$1 $2 unattached': 
-'File #$1 $2 attached to article': 
+'File $1 $2 unattached': 
+'File $1 $2 attached to article': 
