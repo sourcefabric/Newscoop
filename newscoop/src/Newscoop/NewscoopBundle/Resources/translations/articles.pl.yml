@@ -53,7 +53,7 @@ Files: Pliki
 'Select section:': 'Wybierz sekcję:'
 'Add another author': 'Dodaj kolejnego autora'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 minut(y) temu.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 godziny i #4 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
 'Switches saved.': 'Przełączniki zapisane.'
 'Keywords saved.': 'Słowa kluczowe zapisane.'
 'Comment settings': 'Ustawienia komentarzy.'

@@ -42,7 +42,7 @@ Show/Hide: Pokaż/Schowaj
 'Are you sure you want to $1 the article type field $2?': 'Na pewno chcesz $1 pole typu artykułu $2?'
 'Adding new article type': 'Dodawanie nowego typu artykułu'
 'Add translation:': 'Dodaj tłumaczenie:'
-'$1 article type field $2': '#1 typ pola artykułu $2'
+'$1 article type field $2': '$1 typ pola artykułu $2'
 '$1 article type $2': '$1 typ artykulu $2'
 'Top element': 'Główny element'
 'Article type fields': 'Typy pola artykułów'

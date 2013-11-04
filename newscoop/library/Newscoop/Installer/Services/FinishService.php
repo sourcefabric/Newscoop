@@ -192,7 +192,7 @@ class FinishService
         $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
 
         if (file_exists($this->newscoopDir.'/conf/installation.php')) {
-            $this->filesystemremove($this->newscoopDir.'/conf/installation.php');
+            $this->filesystem->remove($this->newscoopDir.'/conf/installation.php');
         }
     }
 

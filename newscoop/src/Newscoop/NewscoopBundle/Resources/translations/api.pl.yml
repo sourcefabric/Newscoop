@@ -34,7 +34,7 @@ Title: Tytuł
 'Article status changed from $1 to $2.': 'Status artykułu zmieniony z $1 na $2.'
 'Article deleted.': 'Artykuł usunięty.'
 'Article created.': 'Artykuł utworzony.'
-'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Artykuł skopiowany do Artykułu #$4 (publikacja $5, wydanie $6, sekcja $7).'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Artykuł skopiowany do Artykułu $4 (publikacja $5, wydanie $6, sekcja $7).'
 'Article URL': 'URL artykułu'
 'Article Number': 'Numer artykułu'
 'Access denied.': 'Dostęp zabroniony.'

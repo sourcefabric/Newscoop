@@ -34,7 +34,7 @@ Title: Τίτλος
 'Article status changed from $1 to $2.': 'Η κατάσταση του άρθρου άλλαξε από $1 σε $2.'
 'Article deleted.': 'Το άρθρο διαγράφτηκε.'
 'Article created.': 'Το άρθρο δημιουργήθηκε.'
-'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Το άρθρο αντιγράφτηκε στο Άρθρο #$4 (δημοσίευση $5, τεύχος $6, ενότητα $7).'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Το άρθρο αντιγράφτηκε στο Άρθρο $4 (δημοσίευση $5, τεύχος $6, ενότητα $7).'
 'Article URL': 'URL Άρθρου '
 'Article Number': 'Αριθμός Άρθρου'
 'Access denied.': 'Άρνηση πρόσβασης.'
