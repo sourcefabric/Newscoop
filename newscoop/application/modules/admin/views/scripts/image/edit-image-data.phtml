@@ -63,7 +63,7 @@
                     <?php
                 } else {
                     ?>
-                        <INPUT TYPE="TEXT" name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" VALUE="<?php echo htmlspecialchars($image->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
+                        <input name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" VALUE="<?php echo htmlspecialchars($image->getDescription()); ?>" maxlength="<?php echo $captionLimit; ?>" style="float:none; width:380px;">
                     <?php
                 }
             ?>

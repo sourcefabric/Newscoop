@@ -73,9 +73,17 @@ class ImageList extends BaseList
             $ADMIN,
             $row['Id'],
             $Campsite['THUMBNAIL_BASE_URL'] . $row['ThumbnailFileName'],
-            $row['Description']);
+            htmlspecialchars($row['Description']));
 
-        $row['Description'] = DataTransformer::truncate(strip_tags($row['Description']), 100);
+        if (SystemPref::Get('MediaRichTextCaptions') == 'Y') {
+            // Only truncate when using rich text captions, looks better and
+            // inline edit functionality is disabled for rich text captions
+            $row['Description'] = DataTransformer::truncate(strip_tags($row['Description']), 100);
+        } else {
+            // Don't truncate, since it would break the inline edit functionality
+            $row['Description'] = strip_tags($row['Description']);
+        }
+
 
         // create link for desc
         /*
