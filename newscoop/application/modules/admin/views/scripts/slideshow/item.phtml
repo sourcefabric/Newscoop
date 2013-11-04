@@ -8,7 +8,7 @@
     )); ?>">
         <figure>
             <div><?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 150, 150, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?></div>
-            <figcaption><?php echo $this->item->getCaption() ? $this->escape($this->item->getCaption()) : getGS('no caption'); ?></figcaption>
+            <figcaption><?php echo $this->item->getCaption() ? strip_tags($this->item->getCaption()) : getGS('no caption'); ?></figcaption>
         </figure>
     </a>
     <a href="<?php echo $this->url(array(
