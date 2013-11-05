@@ -27,7 +27,7 @@ final class CampHTMLDocument
     /**
      * @var string
      */
-    private $m_generator = 'Campsite 3.0';
+    private $m_generator = 'Newscoop 4.3';
 
     /**
      * @var string
@@ -273,42 +273,20 @@ final class CampHTMLDocument
      */
     public function render($p_params)
     {
-        $siteinfo = array();
         $context = $p_params['context'];
         $template = $p_params['template'];
-
-        $siteinfo['info_message'] = isset($p_params['info_message']) ? $p_params['info_message'] : null;
-        $siteinfo['error_message'] = isset($p_params['error_message']) ? $p_params['error_message'] : null;
-        $siteinfo['templates_path'] = isset($p_params['templates_dir'])
-                            ? $p_params['templates_dir'] : CS_TEMPLATES_DIR;
-        $siteinfo['title'] = $this->getTitle();
-        $siteinfo['content_type'] = $this->getMetaTag('Content-Type', true);
-        $siteinfo['generator'] = $this->getGenerator();
-        $siteinfo['keywords'] = $this->getMetaTag('keywords');
-        $siteinfo['description'] = $this->getMetaTag('description');
+        $templates_path = isset($p_params['templates_dir']) ? $p_params['templates_dir'] : CS_TEMPLATES_DIR;
 
         $tpl = CampTemplate::singleton();
         $tpl->template_dir = array_unique($tpl->template_dir);
 
-        array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
+        array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $templates_path);
         if (!$template) {
-            $siteinfo['error_message'] = "No template set for display.";
-        } elseif (!$this->templateExists($template, $tpl)) {
-            $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
-        }
-        if (!is_null($siteinfo['error_message'])) {
-            $siteinfo['templates_path'] = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
             $template = '_campsite_error.tpl';
-            array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
-        }
-
-        $subdir = $this->m_config->getSetting('SUBDIR');
-        if (!empty($subdir)) {
-            $siteinfo['templates_path'] = substr($subdir, 1) . '/' . $siteinfo['templates_path'];
+            array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR);
         }
 
         $tpl->assign('gimme', $context);
-        $tpl->assign('siteinfo', $siteinfo);
 
         // on template caching add additional info
         if (SystemPref::Get('TemplateCacheHandler')) {
