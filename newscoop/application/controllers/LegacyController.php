@@ -60,8 +60,6 @@ class LegacyController extends Zend_Controller_Action
         // initiates the context
         $campsite->init();
 
-        new CampContext();
-
         // dispatches campsite
         $campsite->dispatch();
 
