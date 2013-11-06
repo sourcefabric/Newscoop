@@ -16,12 +16,10 @@ use Newscoop\Entity\User;
 
 class FinishService
 {
-	private $logger;
     private $newscoopDir;
     private $filesystem;
 
-	public function __construct($logger){
-		$this->logger = $logger;
+	public function __construct(){
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
 	}
