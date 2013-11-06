@@ -108,6 +108,11 @@ knp_paginator:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
 
+knp_menu:
+    twig:
+        template: NewscoopNewscoopBundle:Menu:knp_menu.html.twig
+    default_renderer: twig
+
 newscoop_gimme:
     allow_origin:
         - "*"
