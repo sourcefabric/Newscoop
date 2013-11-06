@@ -35,7 +35,7 @@
 
     <div class="footer">
     {{block footer}}
-    &copy; 2011 Sourcefabric o.p.s.
+    &copy; {{ $smarty.now|camp_date_format:"%Y" }} Sourcefabric o.p.s.
     {{/block}}
     </div>
 </body>
