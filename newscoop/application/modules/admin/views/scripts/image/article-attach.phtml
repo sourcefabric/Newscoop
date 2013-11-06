@@ -329,17 +329,8 @@ on_input_search = function() {
 
     var search_url = $("#search-form").attr('action');
     search_url = search_url.replace(/\/search\/[^\/]*/i, "");
-
     search_url = search_url.replace(/\/page\/[\d]*/i, "/page/1");
-
-    var lang_part_spec = "/language_id/";
-    var lang_part_start = search_url.lastIndexOf(lang_part_spec);
-    var lang_part_end = search_url.indexOf("/", lang_part_start + lang_part_spec.length);
-
-    var search_url_start = search_url.substr(0, lang_part_end);
-    var search_url_end = search_url.substr(lang_part_end);
-
-    search_url = search_url_start;
+    search_url = search_url.replace(/#media-archive/i, "");
 
     var query_raw = '' + $("#search_input").val();
 
@@ -347,9 +338,7 @@ on_input_search = function() {
         var query_enc = encodeURIComponent(query_raw);
         search_url += "/search/" + query_enc;
     }
-    search_url += search_url_end;
-
-    search_url = search_url.replace(/#media-archive/i, "");
+    
     search_url += "#media-archive";
 
     $("#search-form").attr('action', search_url);
