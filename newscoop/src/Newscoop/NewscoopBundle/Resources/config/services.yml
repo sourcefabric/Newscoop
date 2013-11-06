@@ -36,6 +36,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    newscoop_newscoop.twig.include_as_verbatim_extension:
+        class: Newscoop\NewscoopBundle\Twig\IncludeAsVerbatimExtension
+        tags:
+            - { name: twig.extension }
+
     newscoop_newscoop.password_encoder:
         class: Newscoop\NewscoopBundle\Security\Encoder\NewscoopPasswordEncoder
 
