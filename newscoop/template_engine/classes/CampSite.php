@@ -43,7 +43,7 @@ final class CampSite extends CampSystem
         }
 
         // gets the context
-        CampTemplate::singleton()->context();
+        CampTemplate::singleton()->refreshContext();
     }// fn initContext
 
     /**
@@ -226,10 +226,6 @@ final class CampSite extends CampSystem
     public static function GetURIInstance()
     {
         static $uriInstance = null;
-
-        if (!is_null($uriInstance)) {
-            return clone($uriInstance);
-        }
 
         $alias = new Alias($_SERVER['HTTP_HOST']);
         if ($alias->exists()) {
