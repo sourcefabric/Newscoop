@@ -44,7 +44,7 @@ $app['debug'] = true;
 $app['bootstrap_service'] = $app->share(function () use ($app) {return new Services\BootstrapService($app['monolog']);});
 $app['database_service'] = $app->share(function () use ($app) {return new Services\DatabaseService($app['monolog']);});
 $app['demosite_service'] = $app->share(function () use ($app) {return new Services\DemositeService($app['monolog']);});
-$app['finish_service'] = $app->share(function () use ($app) {return new Services\FinishService($app['monolog']);});
+$app['finish_service'] = $app->share(function () use ($app) {return new Services\FinishService();});
 
 $app['dispatcher']->addListener('newscoop.installer.bootstrap', $app['bootstrap_service']->makeDirectoriesWritable());
 
@@ -255,6 +255,8 @@ $app->get('/demo-site', function (Request $request) use($app) {
 	            	$app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
 	            	$app['demosite_service']->copyTemplate($data['demo_template']);
 	            	$app['demosite_service']->installEmptyTheme();
+
+	            	// install plugins
 	            }
 
 	            return $app->redirect($app['url_generator']->generate('post-process'));

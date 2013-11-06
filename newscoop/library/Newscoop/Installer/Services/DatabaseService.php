@@ -143,6 +143,31 @@ class DatabaseService
         }
 	}
 
+	public function importDB($sqlFile, $connection)
+    {
+        if(!($sqlFile = file_get_contents($sqlFile))) {
+            return false;
+        }
+
+        $queries = $this->splitSQL($sqlFile);
+
+        $errors = 0;
+        foreach($queries as $query) {
+            $query = trim($query);
+            if (!empty($query) && $query{0} != '#') {
+            	try {
+					$connection->executeQuery($query);
+				} catch (\Exception $e) {
+					$errors++;
+                    $this->errorQueries[] = $query;
+                    $this->logger->addDebug('Error with query "'.$query.'"');
+				}
+            }
+        }
+
+        return $errors;
+    }
+
 	private function withMysqlAllIsOk($mysql_client_command)
 	{
 	    if (!file_exists($mysql_client_command)) {
@@ -182,31 +207,6 @@ class DatabaseService
         }
 
         return file_put_contents($target, $this->renderTwigTemplate($template, $parameters));
-    }
-
-	private function importDB($sqlFile, $connection)
-    {
-        if(!($sqlFile = file_get_contents($sqlFile))) {
-            return false;
-        }
-
-        $queries = $this->splitSQL($sqlFile);
-
-        $errors = 0;
-        foreach($queries as $query) {
-            $query = trim($query);
-            if (!empty($query) && $query{0} != '#') {
-            	try {
-					$connection->executeQuery($query);
-				} catch (\Exception $e) {
-					$errors++;
-                    $this->errorQueries[] = $query;
-                    $this->logger->addDebug('Error with query "'.$query.'"');
-				}
-            }
-        }
-
-        return $errors;
     }
 
     private function splitSQL($sqlFile)

@@ -1,4 +1,7 @@
 <?php
+
+require_once $GLOBALS['g_campsiteDir'] . '/classes/LiveUserMock.php';
+
 $info = array(
     'name' => 'poll',
     'version' => '0.3.1',
@@ -20,7 +23,7 @@ $info = array(
      * getGS('User may manage Polls');
      *
      */
-    	'plugin_poll' => 'User may manage Polls'
+        'plugin_poll' => 'User may manage Polls'
     ),
     'no_menu_scripts' => array(
         '/poll/assign_popup.php',
@@ -62,17 +65,16 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
 
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_poll', 'has_implied' => 1));
 
-        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
-        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
 
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', $error_queries);
-
-        unset($GLOBALS['g_db']);
+        $installerDatabaseService = new \Newscoop\Installer\Services\DatabaseService($container->get('logger'));
+        $installerDatabaseService->importDB(CS_PATH_PLUGINS.DIR_SEP.'poll/install/sql/plugin_poll.sql', $databaseConnection);
     }
 
     function plugin_poll_uninstall()
     {
-        global $LiveUserAdmin, $g_ado_db;
+        global $LiveUserAdmin;
 
         foreach (array('plugin_poll') as $right_def_name) {
             $filter = array(
@@ -85,13 +87,16 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
             }
         }
 
-        $g_ado_db->execute('DROP TABLE plugin_poll');
-        $g_ado_db->execute('DROP TABLE plugin_poll_answer');
-        $g_ado_db->execute('DROP TABLE plugin_poll_article');
-        $g_ado_db->execute('DROP TABLE plugin_poll_issue');
-        $g_ado_db->execute('DROP TABLE plugin_poll_publication');
-        $g_ado_db->execute('DROP TABLE plugin_poll_section');
-        $g_ado_db->execute('DROP TABLE plugin_pollanswer_attachment');
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
+
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll');
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll_answer');
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll_article');
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll_issue');
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll_publication');
+        $databaseConnection->executeQuery('DROP TABLE plugin_poll_section');
+        $databaseConnection->executeQuery('DROP TABLE plugin_pollanswer_attachment');
     }
 
     function plugin_poll_init(&$p_context)
@@ -125,12 +130,10 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
 
     function plugin_poll_update()
     {
-        require_once $GLOBALS['g_campsiteDir'] . '/install/classes/CampInstallationBase.php';
-        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
 
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'poll'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
-
-        unset($GLOBALS['g_db']);
+        $installerDatabaseService = new \Newscoop\Installer\Services\DatabaseService($container->get('logger'));
+        $installerDatabaseService->importDB(CS_PATH_PLUGINS.DIR_SEP.'poll'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $databaseConnection);
     }
 }
-?>
