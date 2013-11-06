@@ -170,8 +170,6 @@ $app->get('/prepare', function (Request $request) use ($app) {
             $app['session']->set('db_data', $data);
 
             return $app->redirect($app['url_generator']->generate('process'));
-        } else {
-        	// print_r($form->getErrors());die;
         }
     }
 
@@ -255,8 +253,6 @@ $app->get('/demo-site', function (Request $request) use($app) {
 	            	$app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
 	            	$app['demosite_service']->copyTemplate($data['demo_template']);
 	            	$app['demosite_service']->installEmptyTheme();
-
-	            	// install plugins
 	            }
 
 	            return $app->redirect($app['url_generator']->generate('post-process'));
