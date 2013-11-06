@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if (!file_exists(__DIR__ . '/../vendor')) {
+if (!file_exists(__DIR__ . '/../vendor') && !file_exists(__DIR__.'/../vendor/autoload.php')) {
 	echo "Welcome in Newscoop Installer.<br/><br/>";
     echo "Looks like you forget about our vendors. Please install all dependencies with Composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install --no-dev</pre>";
@@ -66,10 +66,6 @@ $app->before(function (Request $request) use ($app) {
     }
 }, Silex\Application::EARLY_EVENT);
 
-/*$app->error(function (\Exception $e, $code) {
-    return new Response('We are sorry, but something went terribly wrong.');
-});*/
-
 $app->get('/', function (Silex\Application $app) {
 	$app['dispatcher']->dispatch('newscoop.installer.bootstrap', new GenericEvent());
 
@@ -96,10 +92,26 @@ $app->get('/', function (Silex\Application $app) {
 	));
 });
 
-$app->get('/license', function (Silex\Application $app) {
-	$app['dispatcher']->dispatch('newscoop.installer.prepare', new GenericEvent());
+$app->get('/license', function (Request $request) use ($app) {
+	$form = $app['form.factory']->createNamedBuilder('license', 'form', array())
+	    ->add('accept_terms', 'choice', array(
+		    'choices'   => array('accept_terms'   => 'I accept license terms'),
+		    'multiple'  => true,
+		    'expanded'  => true,
+		    'required' => true,
+		    'constraints' => array(new Assert\NotBlank())
+		))
+	    ->getForm();
 
-	return $app['twig']->render('license.twig', array());
+    if ('POST' == $request->getMethod()) {
+        $form->bind($request);
+
+        if ($form->isValid()) {
+        	return $app->redirect($app['url_generator']->generate('prepare'));
+    	}
+    }
+
+	return $app['twig']->render('license.twig', array('form' => $form->createView()));
 })
 ->assert('_method', 'POST|GET')
 ->bind('license');
@@ -146,10 +158,8 @@ $app->get('/prepare', function (Request $request) use ($app) {
 
 			$tables = $app['db']->fetchAll('SHOW TABLES', array());
 			if (count($tables) == 0 || $data['override_database'][0]) {
-				if ($app['database_service']->fillNewscoopDatabase($app['db']) === false) {
-					$errorQueries = $app['database_service']->errorQueries;
-				}
-
+				$app['database_service']->fillNewscoopDatabase($app['db']);
+				$app['database_service']->loadGeoData($app['db']);
 				$app['database_service']->saveDatabaseConfiguration($app['db']);
 				
 			} else {

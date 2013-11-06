@@ -93,7 +93,72 @@ class DatabaseService
 		$errors = $this->importDB($sqlFile, $connection);
 		
         $connection->executeQuery('UPDATE Aliases SET Name=?', array($host));
-	}		
+	}
+
+	public function loadGeoData($connection)
+	{
+		$which_output = '';
+        $which_ret = '';
+        @exec('which mysql', $which_output, $which_ret);
+
+        if (is_array($which_output) && (isset($which_output[0]))) {
+            $mysql_client_command = $which_output[0];
+
+            if (!$this->withMysqlAllIsOk($mysql_client_command)) {
+            	return false;
+            }
+
+		    $last_dir = getcwd();
+		    $work_dir = __DIR__ . '/../../../../install/Resources/sql';
+		    chdir($work_dir);
+
+		    $db_host = $connection->getHost();
+		    $db_port = $connection->getPort();
+		    $db_user = $connection->getUsername();
+		    $db_pass = $connection->getPassword();
+		    $db_name = $connection->getDatabase();
+
+		    $access_params = '';
+		    $access_params .= ' -h ' . escapeshellarg($db_host);
+		    if (!empty($db_port)) {
+		        $access_params .= ' -P ' . escapeshellarg('' . $db_port);
+		    }
+		    $access_params .= ' -u ' . escapeshellarg($db_user);
+		    if (!empty($db_pass)) {
+		        $access_params .= ' -p' . escapeshellarg($db_pass);
+		    }
+		    $access_params .= ' -D ' . escapeshellarg($db_name);
+		    
+		    $cmd_string = escapeshellcmd($mysql_client_command) . $access_params . ' --local-infile=1 < ' . 'geonames.sql';
+		    $cmd_output = array();
+		    $cmd_retval = 0;
+		    exec($cmd_string, $cmd_output, $cmd_retval);
+
+		    chdir($last_dir);
+		    if (!empty($cmd_retval)) {
+		        return false;
+		    }
+
+		    return true;
+        }
+	}
+
+	private function withMysqlAllIsOk($mysql_client_command)
+	{
+	    if (!file_exists($mysql_client_command)) {
+	        return false;
+	    }
+
+	    if ((!is_file($mysql_client_command)) && (!is_link($mysql_client_command))) {
+	        return false;
+	    }
+
+	    if (!is_executable($mysql_client_command)) {
+	        return false;
+	    }
+
+	    return true;
+	}
 
 	protected function renderTwigTemplate($template, $parameters)
     {
