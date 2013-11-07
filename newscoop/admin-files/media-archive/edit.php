@@ -142,7 +142,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
             putGS('Description');
             $captionLimit = SystemPref::Get('MediaCaptionLength');
             if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
-                putGS(' (max. $1 characters)', $captionLimit);
+                echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
             }
         ?>:</TD>
         <TD align="left" style="width:590px">

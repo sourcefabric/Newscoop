@@ -96,7 +96,7 @@ if ($f_publication_id > 0) {
         putGS('Description');
         $captionLimit = SystemPref::Get('MediaCaptionLength');
         if ($g_user->hasPermission('ChangeImage') && SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
-            putGS(' (max. $1 characters)', $captionLimit);
+            echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
         }
     ?>:</TD>
 	<TD align="left" style="width:610px">
