@@ -47,7 +47,7 @@
                 echo(getGS('Description'));
                 $captionLimit = SystemPref::Get('MediaCaptionLength');
                 if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
-                    echo(getGS(' (max. $1 characters)', $captionLimit));
+                    echo('&nbsp;'.getGS('(max. $1 characters)', $captionLimit));
                 }
             ?>: <a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
 
