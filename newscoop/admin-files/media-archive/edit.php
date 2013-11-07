@@ -5,6 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/media-archive/editor_load_tinymce.php");
 
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 $f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0, true);
@@ -116,7 +117,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px; max-width: 800px">
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
-<FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data">
+<FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="return validateTinyMCEEditors();">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
@@ -125,19 +126,57 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
+<?php
+    $captionLimit = SystemPref::Get('MediaCaptionLength');
+    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+
+        $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+        $iptcDescriptionCode = "tinyMCE.editors['f_image_description'].setContent('". addcslashes($iptcDescription, "'")."');";
+
+        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, array('max_chars' => $captionLimit));
+?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
-	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
-    <?php
-        if (!empty($iptcDescription)) {
-            ?>
-            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_description').value='<?php echo($iptcDescription); ?>';">IPTC</a></small>
+        <TD ALIGN="RIGHT" style="width:115px;"><?php
+            putGS('Description');
+            $captionLimit = SystemPref::Get('MediaCaptionLength');
+            if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+                echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
+            }
+        ?>:</TD>
+        <TD align="left" style="width:590px">
             <?php
-        }
-    ?>
-	</TD>
+                if (!empty($iptcDescription)) {
+                    ?>
+                    <small><a style="float:right;" href="javascript:void(0);" onClick="<?php echo $iptcDescriptionCode; ?>">IPTC</a></small><br>
+                    <?php
+                }
+            ?>
+            <textarea name="f_image_description" id="f_image_description" rows="8" cols="70"><?php echo($imageObj->getDescription()); ?></textarea>
+        </TD>
 </TR>
+<?php
+    } else {
+
+        $iptcDescriptionCode = "document.getElementById('f_image_description').value='". addcslashes($iptcDescription, "'") ."'";
+?>
+<TR>
+        <TD ALIGN="RIGHT" ><?php putGS('Description'); ?>:</TD>
+        <TD align="left">
+            <INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
+            <?php
+                if (!empty($iptcDescription)) {
+                    ?>
+                    <small><a style="float:right;" href="javascript:void(0);" onClick="<?php echo $iptcDescriptionCode; ?>">IPTC</a></small>
+                    <?php
+                }
+            ?>
+        </TD>
+</TR>
+<?php
+    }
+?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD align="left">
@@ -185,14 +224,14 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <?php
     if (!empty($iptcDescription) || !empty($iptcPhotographer) || !empty($iptcPlace) || !empty($iptcDate)) {
         ?>
-        
+
         <TR>
             <TD ALIGN="RIGHT" ></TD>
             <TD align="left">
-            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($iptcDate); ?>';document.getElementById('f_image_place').value='<?php echo($iptcPlace); ?>';document.getElementById('f_image_photographer').value='<?php echo($iptcPhotographer); ?>';document.getElementById('f_image_description').value='<?php echo($iptcDescription); ?>';">Import all IPTC</a></small>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($iptcDate); ?>';document.getElementById('f_image_place').value='<?php echo($iptcPlace); ?>';document.getElementById('f_image_photographer').value='<?php echo($iptcPhotographer); ?>';<?php echo $iptcDescriptionCode ?>">Import all IPTC</a></small>
             </TD>
         </TR>
-        
+
         <?php
     }
 ?>

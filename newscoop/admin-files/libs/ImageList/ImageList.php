@@ -73,7 +73,17 @@ class ImageList extends BaseList
             $ADMIN,
             $row['Id'],
             $Campsite['THUMBNAIL_BASE_URL'] . $row['ThumbnailFileName'],
-            $row['Description']);
+            htmlspecialchars($row['Description']));
+
+        if (SystemPref::Get('MediaRichTextCaptions') == 'Y') {
+            // Only truncate when using rich text captions, looks better and
+            // inline edit functionality is disabled for rich text captions
+            $row['Description'] = DataTransformer::truncate(strip_tags($row['Description']), 100);
+        } else {
+            // Don't truncate, since it would break the inline edit functionality
+            $row['Description'] = strip_tags($row['Description']);
+        }
+
 
         // create link for desc
         /*
@@ -87,17 +97,17 @@ class ImageList extends BaseList
             <span style='display: inline;' id='description_view_".$row['Id']."' onClick='edit(\"description\",".$row['Id'].");'>".$row['Description']."</span>
             <span style='display: none;' id='description_edit_".$row['Id']."'><input id='description_input_".$row['Id']."'><br><button onClick='save(\"description\",".$row['Id'].");'>save</button><button onClick='view(\"description\",".$row['Id'].");'>cancel</button></span>
         ";
-        
+
         $row['Photographer'] = "
             <span style='display: inline;' id='photographer_view_".$row['Id']."' onClick='edit(\"photographer\",".$row['Id'].");'>".$row['Photographer']."</span>
             <span style='display: none;' id='photographer_edit_".$row['Id']."'><input id='photographer_input_".$row['Id']."'><br><button onClick='save(\"photographer\",".$row['Id'].");'>save</button><button onClick='view(\"photographer\",".$row['Id'].");'>cancel</button></span>
         ";
-        
+
         $row['Place'] = "
             <span style='display: inline;' id='place_view_".$row['Id']."' onClick='edit(\"place\",".$row['Id'].");'>".$row['Place']."</span>
             <span style='display: none;' id='place_edit_".$row['Id']."'><input id='place_input_".$row['Id']."'><br><button onClick='save(\"place\",".$row['Id'].");'>save</button><button onClick='view(\"place\",".$row['Id'].");'>cancel</button></span>
         ";
-        
+
         $row['Date'] = "
             <span style='display: inline;' id='date_view_".$row['Id']."' onClick='edit(\"date\",".$row['Id'].");'>".$row['Date']."</span>
             <span style='display: none;' id='date_edit_".$row['Id']."'><input id='date_input_".$row['Id']."'><br><button onClick='save(\"date\",".$row['Id'].");'>save</button><button onClick='view(\"date\",".$row['Id'].");'>cancel</button></span>

@@ -1,4 +1,9 @@
 <?php 
+regGS("characters (use 0 for no limit)", "characters (use 0 for no limit)");
+regGS("Please enter a number for the '$1' field.", "Please enter a number for the '$1' field.");
+regGS("Image caption settings", "Image caption settings");
+regGS("Enable rich text for image captions?", "Enable rich text for image captions?");
+regGS("Character limit for image captions", "Character limit for image captions");
 regGS("town names with wildcards, and lat/lon coordinates", "town names with wildcards, and lat/lon coordinates");
 regGS("addresses: street (number), town", "addresses: street (number), town");
 regGS("Use MapQuest Nominatim Search:", "Use MapQuest Nominatim Search:");

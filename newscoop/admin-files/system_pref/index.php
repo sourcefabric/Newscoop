@@ -88,7 +88,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <select name="f_time_zone" class="input_select">
         <?php
-        
+
         $timeZoneCities = array(
             0 => 'London, Lisbon, Casablanca',
             1 => 'Brussels, Copenhagen, Madrid, Paris',
@@ -116,7 +116,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
             -11 => 'Midway Island, Samoa',
             -12 => 'Eniwetok, Kwajalein',
         );
-        
+
         $timeZone = SystemPref::Get('TimeZone');
         camp_html_select_option('', $timeZone, getGS('disabled'));
         for ($k = -12; $k < 13; $k++) {
@@ -377,6 +377,32 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <input type="radio" name="f_editor_image_zoom" value="Y" <?php if (SystemPref::Get("EditorImageZoom") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
         <input type="radio" name="f_editor_image_zoom" value="N" <?php if (SystemPref::Get("EditorImageZoom") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
+    <td colspan="2" align="left">
+        <strong><?php putGS("Image caption settings"); ?></strong>
+    </td>
+</tr>
+<tr>
+    <td align="left">
+        <?php putGS("Enable rich text for image captions?"); ?>
+    </td>
+    <td>
+        <input type="radio" name="f_media_richtext_captions" onclick="ShowElement('richtext_captions');" value="Y" <?php if (SystemPref::Get("MediaRichTextCaptions") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_media_richtext_captions" onclick="HideElement('richtext_captions');" value="N" <?php if (SystemPref::Get("MediaRichTextCaptions") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+    </td>
+</tr>
+<tr id="richtext_captions" style="display: <?php (SystemPref::Get("MediaRichTextCaptions") == 'Y') ? p("") : p("none") ?>;">
+    <td align="left">
+        <?php putGS("Character limit for image captions"); ?>:
+    </td>
+    <td>
+        <input type="text" name="f_media_caption_length" value="<?php echo SystemPref::Get("MediaCaptionLength"); ?>" class="input_text" alt="number|0|0|bok" size="8" emsg="<?php echo putGS("Please enter a number for the '$1' field.", getGS("Character limit for image captions")); ?>" /><?php echo putGS('characters (use 0 for no limit)'); ?>
     </td>
 </tr>
 

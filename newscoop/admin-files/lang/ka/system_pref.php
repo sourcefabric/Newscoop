@@ -1,4 +1,9 @@
 <?php 
+regGS("characters (use 0 for no limit)", "");
+regGS("Please enter a number for the '$1' field.", "");
+regGS("Image caption settings", "");
+regGS("Enable rich text for image captions?", "");
+regGS("Character limit for image captions", "");
 regGS("town names with wildcards, and lat/lon coordinates", "ქალაქების სახელები ჩანაცვლების სიმბოლოებით, და გრძ/გან კოორდინატები");
 regGS("addresses: street (number), town", "მისამართები: ქუჩა (ნომერი), ქალაქი");
 regGS("Use MapQuest Nominatim Search:", "გამოიყენებთ MapQuest Nominatim ძიება:");

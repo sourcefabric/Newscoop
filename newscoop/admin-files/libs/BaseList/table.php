@@ -106,19 +106,25 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     ],
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
-            
+
         }).each(function() {
             <?php if ($this->type == 'image') { ?>
                 // set 'row_' + id as row id
                 var id = $(this).find('.id').find('input').val();
                 $(this).attr('id', 'row_' + id);
+                <?php
+                    if (SystemPref::Get('MediaRichTextCaptions') == 'N') {
+                ?>
                 $($(this).children()[2]).addClass('description');
+                <?php
+                    }
+                ?>
                 $($(this).children()[3]).addClass('photographer');
                 $($(this).children()[4]).addClass('place');
                 $($(this).children()[5]).addClass('date');
             <?php } ?>
         });
-        
+
         $('#table-<?php echo $this->id; ?> tbody tr td').click(function(event) {
             <?php if ($this->type == 'image') { ?>
                 var id = $(this).parent().find('.id').find('input').val();

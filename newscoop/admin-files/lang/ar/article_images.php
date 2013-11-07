@@ -1,4 +1,5 @@
 <?php 
+regGS("(max. $1 characters)", "");
 regGS("Display newsfeed images", "");
 regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "آسف أن تلك الصورة صغيرة جدا ومن اللازم أنها تكون على الأقل %dx%d‫.‬");
 regGS("Slideshow rendition", "تقديم عرض الشرائح");

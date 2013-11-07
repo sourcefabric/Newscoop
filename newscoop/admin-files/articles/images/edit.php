@@ -2,6 +2,7 @@
 camp_load_translation_strings("article_images");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/media-archive/editor_load_tinymce.php");
 
 $uri = $_SERVER['REQUEST_URI'];
 
@@ -62,7 +63,7 @@ if ($f_publication_id > 0) {
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
 </div>
 <p>
-<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_edit.php" >
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_edit.php" onSubmit="return validateTinyMCEEditors();">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>
@@ -91,13 +92,36 @@ if ($f_publication_id > 0) {
 </TR>
 <?php } ?>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
-	<TD>
-		<?php if ($g_user->hasPermission('ChangeImage')) { ?>
-		<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" class="input_text" SIZE="32">
-		<?php } else {
-			echo htmlspecialchars($imageObj->getDescription());
-		} ?>
+	<TD ALIGN="RIGHT" style="width:120px;"><?php
+        putGS('Description');
+        $captionLimit = SystemPref::Get('MediaCaptionLength');
+        if ($g_user->hasPermission('ChangeImage') && SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+            echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
+        }
+    ?>:</TD>
+	<TD align="left" style="width:610px">
+		<?php
+			if ($g_user->hasPermission('ChangeImage')) {
+
+				$captionLimit = SystemPref::Get('MediaCaptionLength');
+			    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+
+			        $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+			        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+			        editor_load_tinymce('f_image_description', $g_user, $editorLanguage, array('max_chars' => $captionLimit));
+					?>
+			            <textarea name="f_image_description" id="f_image_description" rows="8" cols="70"><?php echo($imageObj->getDescription()); ?></textarea>
+					<?php
+		    	} else {
+					?>
+			            <INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text" maxlength="<?php echo $captionLimit; ?>">
+					<?php
+				}
+		    } else {
+				echo htmlspecialchars($imageObj->getDescription());
+			}
+		?>
 	</TD>
 </TR>
 <TR>
