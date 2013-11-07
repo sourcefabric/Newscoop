@@ -8,7 +8,7 @@
 
 if (!file_exists(__DIR__ . '/../vendor')) {
     echo "Missing dependency! Please install all dependencies with composer.";
-    echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install</pre>";
+    echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install  --no-dev</pre>";
     die;
 }
 

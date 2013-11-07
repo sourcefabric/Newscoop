@@ -1,4 +1,5 @@
 <?php
+require_once $GLOBALS['g_campsiteDir'] . '/classes/LiveUserMock.php';
 
 $info = array(
     'name' => 'recaptcha',
@@ -54,7 +55,7 @@ if (!defined('PLUGIN_RECAPTCHA_FUNCTIONS')) {
 
     function plugin_recaptcha_uninstall()
     {
-        global $LiveUserAdmin, $g_ado_db;
+        global $LiveUserAdmin;
 
         foreach (array('plugin_recaptcha_admin') as $right_def_name) {
             $filter = array(

@@ -1,5 +1,8 @@
 <?php
+require_once $GLOBALS['g_campsiteDir'] . '/classes/LiveUserMock.php';
+
 use Newscoop\Entity\Acl\Rule;
+
 $info = array(
     'name' => 'debate',
     'version' => '0.0.1',
@@ -21,7 +24,7 @@ $info = array(
      * getGS('User may manage Debates');
      *
      */
-    	'plugin_debate_admin' => 'User may manage Debates'
+        'plugin_debate_admin' => 'User may manage Debates'
     ),
     'no_menu_scripts' => array(
         '/debate/assign_popup.php',
@@ -66,19 +69,17 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
     {
         global $LiveUserAdmin;
 
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
+
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_debate_admin', 'has_implied' => 1));
 
-        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
-        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        $installerDatabaseService = new \Newscoop\Installer\Services\DatabaseService($container->get('logger'));
+        $installerDatabaseService->importDB(CS_PATH_PLUGINS.DIR_SEP.'debate/install/sql/plugin_debate.sql', $databaseConnection);
 
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'debate/install/sql/plugin_debate.sql', $error_queries);
-        unset($GLOBALS['g_db']);
-
-        global $g_ado_db;
-        $res = $g_ado_db->execute("SELECT * FROM `liveuser_groups` WHERE `group_define_name` = 'Administrator'");
-        $row = $res->FetchRow();
-        if ($row) {
-            $g_ado_db->execute("
+        $stmt = $databaseConnection->executeQuery("SELECT * FROM `liveuser_groups` WHERE `group_define_name` = 'Administrator'");
+        if ($row = $stmt->fetch())  {
+            $databaseConnection->executeQuery("
                 INSERT IGNORE INTO `acl_rule`(`action`, `resource`, `role_id`, `type`)
                 VALUES('admin', 'plugin-debate', '{$row['role_id']}', 'allow')
             ");
@@ -87,7 +88,10 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
 
     function plugin_debate_uninstall()
     {
-        global $LiveUserAdmin, $g_ado_db;
+        global $LiveUserAdmin;
+
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
 
         foreach (array('plugin_debate') as $right_def_name) {
             $filter = array(
@@ -100,13 +104,13 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
             }
         }
 
-        $g_ado_db->execute('DROP TABLE plugin_debate');
-        $g_ado_db->execute('DROP TABLE plugin_debate_answer');
-        $g_ado_db->execute('DROP TABLE plugin_debate_article');
-        $g_ado_db->execute('DROP TABLE plugin_debate_issue');
-        $g_ado_db->execute('DROP TABLE plugin_debate_publication');
-        $g_ado_db->execute('DROP TABLE plugin_debate_section');
-        $g_ado_db->execute('DROP TABLE plugin_debateanswer_attachment');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate_answer');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate_article');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate_issue');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate_publication');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debate_section');
+        $databaseConnection->executeQuery('DROP TABLE plugin_debateanswer_attachment');
     }
 
     /**
@@ -118,11 +122,6 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
         $debate_language_id = Input::Get("f_debate_language_id" ,"int");
         $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->identifier);
         $url = $p_context->url;
-        /* @var $url MetaURL */
-
-        //if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
-        //    $p_context->url->set_parameter('f_debate_ajax_request', 1);
-        //}
 
         // reset the context urlparameters
         foreach (array('f_debate', 'f_debate_nr', 'f_debate_language_id', 'f_debate_ajax_request') as $param)
@@ -145,12 +144,10 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
 
     function plugin_debate_update()
     {
-        require_once $GLOBALS['g_campsiteDir'] . '/install/classes/CampInstallationBase.php';
-        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
 
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'debate'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $error_queries);
-
-        unset($GLOBALS['g_db']);
+        $installerDatabaseService = new \Newscoop\Installer\Services\DatabaseService($container->get('logger'));
+        $installerDatabaseService->importDB(CS_PATH_PLUGINS.DIR_SEP.'debate'.DIR_SEP.'install'.DIR_SEP.'sql'.DIR_SEP.'update.sql', $databaseConnection);
     }
 }
-?>

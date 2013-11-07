@@ -92,15 +92,15 @@ if (!defined('PLUGIN_SOUNDCLOUD_FUNCTIONS')) {
         $Admin->setPermission('plugin_soundcloud_update', true);
         $Admin->setPermission('plugin_soundcloud_delete', true);
 
-        require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
-        $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
-        $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'soundcloud/install/sql/plugin_soundcloud.sql', $error_queries);
-        unset($GLOBALS['g_db']);
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
+        $installerDatabaseService = new \Newscoop\Installer\Services\DatabaseService($container->get('logger'));
+        $installerDatabaseService->importDB(CS_PATH_PLUGINS.DIR_SEP.'soundcloud/install/sql/plugin_soundcloud.sql', $databaseConnection);
     }
 
     function plugin_soundcloud_uninstall()
     {
-        global $LiveUserAdmin, $g_ado_db;
+        global $LiveUserAdmin;
 
         $aRights = array(
             'plugin_soundcloud_preferences',
@@ -120,7 +120,10 @@ if (!defined('PLUGIN_SOUNDCLOUD_FUNCTIONS')) {
             }
         }
 
-        $g_ado_db->execute('DROP TABLE plugin_soundcloud');
+        $container = \Zend_Registry::get('container');
+        $databaseConnection = $container->get('database_connection');
+
+        $databaseConnection->executeQuery('DROP TABLE plugin_soundcloud');
     }
 
     function plugin_soundcloud_update()
@@ -131,5 +134,3 @@ if (!defined('PLUGIN_SOUNDCLOUD_FUNCTIONS')) {
     {
     }
 }
-
-?>

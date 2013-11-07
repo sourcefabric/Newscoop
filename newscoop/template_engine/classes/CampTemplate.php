@@ -88,11 +88,8 @@ final class CampTemplate extends Smarty
             APPLICATION_PATH . '/../themes/unassigned/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
         ));
-
-        if (isset($GLOBALS['controller'])) {
-            $this->assign('view', $GLOBALS['controller']->view);
-        }
-
+        
+        $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
     }
@@ -155,11 +152,16 @@ final class CampTemplate extends Smarty
     public function context()
     {
         if (!isset($this->m_context)) {
-            $this->m_context = new CampContext();
-            $this->m_preview = $this->m_context->preview;
+            $this->refreshContext();
         }
 
         return $this->m_context;
+    }
+
+    public function refreshContext()
+    {
+        $this->m_context = new CampContext();
+        $this->m_preview = $this->m_context->preview;
     }
 
     /**
