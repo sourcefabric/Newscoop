@@ -37,6 +37,9 @@ $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
 $allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
 $imagePathParts = explode('.', $imageObj->getImageFileName());
 $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
+$iptcDate = null;
+$iptcPlace = null;
+$iptcPhotographer = null;
 
 if (in_array($imageExtension, $allowedExtensions)) {
     $exif = @exif_read_data($imageObj->getImageStorageLocation());
@@ -57,21 +60,21 @@ if (in_array($imageExtension, $allowedExtensions)) {
         $iptcDate = date('Y-m-d', strtotime($iptcDate));
     }
     if (isset($iptc['2#080'])) {
-        $iptcPhotographer = $iptc['2#080'][0];
+        $iptcPhotographer = strip_tags($iptc['2#080'][0]);
     }
     if (isset($iptc['2#120'])) {
-        $iptcDescription = $iptc['2#120'][0];
+        $iptcDescription = strip_tags($iptc['2#120'][0]);
     }
     if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
         $iptcPlace = array();
         if (isset($iptc['2#101'])) {
-            $iptcPlace[] = $iptc['2#101'][0];
+            $iptcPlace[] = strip_tags($iptc['2#101'][0]);
         }
         if (isset($iptc['2#090'])) {
-            $iptcPlace[] = $iptc['2#090'][0];
+            $iptcPlace[] = strip_tags($iptc['2#090'][0]);
         }
         if (isset($iptc['2#092'])) {
-            $iptcPlace[] = $iptc['2#092'][0];
+            $iptcPlace[] = strip_tags($iptc['2#092'][0]);
         }
         $iptcPlace = implode(', ', $iptcPlace);
     }

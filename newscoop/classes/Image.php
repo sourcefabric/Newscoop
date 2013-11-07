@@ -184,7 +184,7 @@ class Image extends DatabaseObject
 	 */
 	public function getDescription()
 	{
-		return $this->m_data['Description'];
+		return strip_tags($this->m_data['Description']);
 	} // fn getDescription
 
 
@@ -193,7 +193,7 @@ class Image extends DatabaseObject
 	 */
 	public function getPhotographer()
 	{
-		return $this->m_data['Photographer'];
+		return strip_tags($this->m_data['Photographer']);
 	} // fn getPhotographer
 
 
@@ -202,7 +202,7 @@ class Image extends DatabaseObject
 	 */
 	public function getPlace()
 	{
-		return $this->m_data['Place'];
+		return strip_tags($this->m_data['Place']);
 	} // fn getPlace
 
 
@@ -220,7 +220,7 @@ class Image extends DatabaseObject
 	 */
 	public function getLocation()
 	{
-		return $this->m_data['Location'];
+		return strip_tags($this->m_data['Location']);
 	} // fn getLocation
 
 
