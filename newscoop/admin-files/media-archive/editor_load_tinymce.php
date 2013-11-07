@@ -1,4 +1,5 @@
 <?php
+camp_load_translation_strings("media_archive");
 /**
  * @param array p_dbColumns
  * @param object p_user The User object
