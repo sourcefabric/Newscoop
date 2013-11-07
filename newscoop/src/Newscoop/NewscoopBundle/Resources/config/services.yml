@@ -56,6 +56,11 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
         arguments:  ['@em']
 
+    newscoop_newscoop.listener.no_cache_listener:
+        class: Newscoop\NewscoopBundle\EventListener\NoCacheListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onResponse }
+
     newscoop_newscoop.translation_listener:
         class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
         arguments:  ['@translator']
