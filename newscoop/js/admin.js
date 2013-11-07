@@ -51,6 +51,7 @@ $(function() {
     $('input[name=search].topics').each(function() {
         var input = $(this);
         input.autocomplete({
+            minLength: 3,
             source: function(request, response) {
                 if (terms.length == 0) { // populate terms
                     $('ul.tree.sortable strong').each(function() {

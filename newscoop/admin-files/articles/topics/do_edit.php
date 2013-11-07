@@ -57,30 +57,19 @@ foreach ($f_topic_ids as $topicIdString) {
 
 // add new topic 
 if ($f_search) { 
-    $topic = new Topic();
+    $topicService = \Zend_Registry::get('container')->getService('topic');
     $em = \Zend_Registry::get('container')->getService('em');
-    $tmpTopic = $em->getRepository('Newscoop\Entity\Topic')
-        ->findOneBy(array(
-            'name' => $f_search, 
-            'language' => $f_language_selected
-    ));
-
+    $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     if (!$tmpTopic) { 
-        $topic->create(array(
+        $topicService->create(array(
             'parent_id' => 0,
             'names'=>array($f_language_selected=>$f_search)
         ));
 
-        $tmpTopic = $em->getRepository('Newscoop\Entity\Topic')
-            ->findOneBy(array(
-                'name' => $f_search, 
-                'language' => $f_language_selected
-        ));
+        $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     }
-    ArticleTopic::AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
+    $topicService->AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number, $em);
 }
-
-
 ?>
 
 <script type="text/javascript">
