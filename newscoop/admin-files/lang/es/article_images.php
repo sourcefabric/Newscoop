@@ -1,5 +1,5 @@
 <?php 
-regGS(" (max. $1 characters)", "");
+regGS(" (max. $1 characters)", "(max $1 de caracteres)");
 regGS("Display newsfeed images", "");
 regGS("Mark image", "");
 regGS("Add selected images to slideshow", "");
