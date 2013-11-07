@@ -196,7 +196,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
         var invalidInstances = [];
 
         for (inst in tinyMCE.editors) {
-            // Check if entry is valid tinyMCE instance and skyip numeric instances
+            // Check if entry is valid tinyMCE instance and skip numeric instances
             if (tinyMCE.editors[inst].getContent && isNaN(inst)) {
                 if (!tinyMCECharsValid(tinyMCE.editors[inst], tinyMceOptions.max_chars)) {
                     valid = false;
