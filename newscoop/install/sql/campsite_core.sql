@@ -774,7 +774,7 @@ DROP TABLE IF EXISTS `Images`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Images` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Description` varchar(255) NOT NULL DEFAULT '',
+  `Description` text NOT NULL DEFAULT '',
   `Photographer` varchar(255) NOT NULL DEFAULT '',
   `Place` varchar(255) NOT NULL DEFAULT '',
   `Caption` varchar(255) NOT NULL DEFAULT '',
@@ -3176,7 +3176,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
   `package_id` int(11) DEFAULT NULL,
   `image_id` int(11) DEFAULT NULL,
   `offset` int(11) NOT NULL,
-  `caption` varchar(255) DEFAULT NULL,
+  `caption` text DEFAULT NULL,
   `coords` varchar(255) DEFAULT NULL,
   `video_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
