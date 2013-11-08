@@ -62,12 +62,12 @@ if ($f_search) {
     if (!$tmpTopic) { 
         $topicService->create(array(
             'parent_id' => 0,
-            'names'=>array($f_language_selected => $f_search)
+            'names' => array($f_language_selected => $f_search)
         ));
 
         $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     }
-    $topicService->AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
+    $topicService->addTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
 }
 ?>
 

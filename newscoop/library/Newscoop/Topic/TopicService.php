@@ -41,52 +41,52 @@ class TopicService
      * - node_right
      * - names - array of topic translations of the form: language_id => name
      *
-     * @param array $p_values
+     * @param  array   $values
      * @return boolean
      */
-    public function create($p_values = null, $p_allNamesRequired = false)
+    public function create($values = null, $allNamesRequired = false)
     {
-        if ((!isset($p_values['names'])) || (!is_array($p_values['names']))) {
+        if ((!isset($values['names'])) || (!is_array($values['names']))) {
             return false;
         }
 
-        $names_available = array();
-        $names_occupied = array();
-        foreach ($p_values['names'] as $check_lang_id => $check_topic_name) {
-            $check_name_obj = $this->getTopic($check_topic_name, $check_lang_id, $this->em);
+        $namesAvailable = array();
+        $namesOccupied = array();
+        foreach ($values['names'] as $checkLangId => $checkTopicName) {
+            $checkNameObj = $this->getTopic($checkTopicName, $checkLangId);
 
-            if ($check_name_obj) {
-                $names_occupied[$check_lang_id] = $check_topic_name;
+            if ($checkNameObj) {
+                $namesOccupied[$checkLangId] = $checkTopicName;
             }
             else {
-                $names_available[$check_lang_id] = $check_topic_name;
+                $namesAvailable[$checkLangId] = $checkTopicName;
             }
-            unset($check_name_obj);
+            unset($checkNameObj);
         }
 
-        if (empty($names_available)) {
+        if (empty($namesAvailable)) {
             return false;
         }
 
-        if ($p_allNamesRequired) {
-            if (!empty($names_occupied)) {
+        if ($allNamesRequired) {
+            if (!empty($namesOccupied)) {
                 return false;
             }
         }
 
-        $p_values['names'] = $names_available;
+        $values['names'] = $namesAvailable;
         $parentLeft = 0;
         $this->updateTopicNodes($parentLeft);
         $lastTopicId = $this->insertNodes($parentLeft);
-        $some_name_set = false;
-        $some_name_not_set = false;
+        $someNameSet = false;
+        $someNameNotSet = false;
         $success = false;
         if (is_numeric($lastTopicId)) {
             $success = true; 
         }
 
         if ($success) {
-            foreach ($p_values['names'] as $languageId => $name) {
+            foreach ($values['names'] as $languageId => $name) {
                 try {
                     $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneBy(array(
                         'id' => $languageId
@@ -94,18 +94,18 @@ class TopicService
                     $newTopic = new Topic($lastTopicId, $language, $name);
                     $this->em->persist($newTopic);
                     $this->em->flush();
-                    $some_name_set = true;
+                    $someNameSet = true;
                 } catch (\Exception $exception) {
-                    $some_name_not_set = true;
+                    $someNameNotSet = true;
                 }
             }
 
-            if ($p_allNamesRequired && $some_name_not_set) {
+            if ($allNamesRequired && $someNameNotSet) {
                 $this->deleteTopicNames($lastTopicId);
                 $success = false;
             }
 
-            if (!$some_name_set) {
+            if (!$someNameSet) {
                 $success = false;
             }
 
@@ -124,33 +124,31 @@ class TopicService
     /**
      * Link a topic to an article.
      *
-     * @param  Newscoop\Entity\Topic   $topic   Topic
-     * @param  Newscoop\Entity\Article $article Article
+     * @param  int $topicId   Topic id
+     * @param  int $articleId Article id
      *
      * @return void
      */
-    public function AddTopicToArticle($topic, $article)
+    public function addTopicToArticle($topicId, $articleId)
     {
         try
         {   
             $articleTopic = new ArticleTopic();
             $topicObj = $this->em->getRepository('Newscoop\Entity\Topic')
                 ->findOneBy(array(
-                    'id' => $topic,
+                    'id' => $topicId,
             ));
 
             $articleObj = $this->em->getRepository('Newscoop\Entity\Article')
                 ->findOneBy(array(
-                    'number' => $article,
+                    'number' => $articleId,
             ));
             
             $articleTopic->setTopic($topicObj);
             $articleTopic->setArticle($articleObj);
             $this->em->persist($articleTopic);
             $this->em->flush();
-        }
-        catch(\Exception $e)
-        {
+        } catch(\Exception $e) {
             throw new \Exception('Fatal error occured. Try again!');
         }
     }
@@ -185,26 +183,26 @@ class TopicService
      * Get topic
      *
      * @param  $p_idOrName    Topic Id or Name
-     * @param  $check_lang_id Topic language
+     * @param  $checkLangId Topic language
      *
      * @return object
      */
-    public function getTopic($check_topic_name, $check_lang_id) 
+    public function getTopic($checkTopicName, $checkLangId) 
     {
-        $check_name_obj = null;
-        if (is_numeric($check_topic_name) && $check_lang_id > 0) {
-            $check_name_obj = $this->em->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
-                'id' => $check_topic_name,
-                'language' =>  $check_lang_id
+        $checkNameObj = null;
+        if (is_numeric($checkTopicName) && $checkLangId > 0) {
+            $checkNameObj = $this->em->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
+                'id' => $checkTopicName,
+                'language' =>  $checkLangId
             ));
-        } elseif (!empty($check_topic_name) && $check_lang_id > 0) {
-            $check_name_obj = $this->em->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
-                'name' => $check_topic_name,
-                'language' =>  $check_lang_id
+        } elseif (!empty($checkTopicName) && $checkLangId > 0) {
+            $checkNameObj = $this->em->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
+                'name' => $checkTopicName,
+                'language' =>  $checkLangId
             ));
         }
 
-        return $check_name_obj;
+        return $checkNameObj;
     }
 
     /**
