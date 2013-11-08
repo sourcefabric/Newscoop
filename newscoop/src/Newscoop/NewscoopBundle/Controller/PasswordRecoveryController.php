@@ -166,29 +166,30 @@ class PasswordRecoveryController extends Controller
         $translator = $this->container->get('translator');
 
         $link = sprintf('%s/admin/password-check-token?token=%s&email=%s',
-            $_SERVER['SERVER_NAME'],
+            $this->getRequest()->getHost(),
             $token,
             $email);
-
-        $message = $translator->trans("Hi, \n\nfor password recovery, please follow this link: $1", array('$1' => $link), 'home');
-
+        
         $from = \SystemPref::Get('PasswordRecoveryFrom');
         if (empty($from)) {
-            $from = 'no-reply@' . $_SERVER['SERVER_NAME'];
+            $from = 'no-reply@' . $this->getRequest()->getHost();
         }
 
-        $headers = array(
-            'MIME-Version: 1.0',
-            'Content-type: text/plain; charset=UTF-8',
-            "From: $from",
-        );
         try {
-            mail($email,
-                '=?UTF-8?B?' . base64_encode($translator->trans('Password recovery', array(), 'home')) . '?=',
-                trim(html_entity_decode(strip_tags($message), ENT_QUOTES, 'UTF-8')),
-                implode("\r\n", $headers));
+            $message = \Swift_Message::newInstance()
+            ->setSubject($translator->trans('Password recovery', array(), 'home'))
+            ->setFrom($from)
+            ->setTo($email)
+            ->setBody(
+                $this->renderView(
+                    'NewscoopNewscoopBundle:PasswordRecovery:email.txt.twig',
+                    array('link' => $link)
+                )
+            );
+
+            $this->container->get('mailer')->send($message);
         } catch (\Exception $exception) {
-            throw new Exception("Error sending email.", 1); 
+            throw new \Exception("Error sending email.", 1); 
         }
     }
 

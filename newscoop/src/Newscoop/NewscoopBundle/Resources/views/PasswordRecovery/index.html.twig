@@ -49,7 +49,7 @@
             {{ form_rest(form) }}
         </table>
         {% elseif disabled %}
-            <h4><center>{{ 'Password recovery is disabled.'|trans }}</center></h4>
+            <h4><center>{{ 'Password recovery is disabled.'|trans({}, 'home') }}</center></h4>
             <a class="goto" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login'|trans({},'home') }}</a>
         {% else %}
             <h4 class="recovery_success"><center>{{ 'An email with instructions on how to recover you password has been sent to your inbox.'|trans({},'home') }}</center></h4>
