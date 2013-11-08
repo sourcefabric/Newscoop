@@ -14,7 +14,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected function _initNewscoop()
     {
-        global $ADMIN_DIR, $ADMIN, $g_user, $prefix, $Campsite;
+        global $ADMIN, $g_user, $prefix, $Campsite;
 
         defined('WWW_DIR')
             || define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
@@ -41,7 +41,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         // detect extended login/logout files
         $prefix = file_exists(CS_PATH_SITE . DIR_SEP . 'admin-files' . DIR_SEP . 'ext_login.php') ? '/ext_' : '/';
 
-        require_once CS_PATH_SITE . DIR_SEP . $ADMIN_DIR . DIR_SEP . 'camp_html.php';
+        require_once CS_PATH_SITE .'/admin-files/camp_html.php';
         require_once CS_PATH_CLASSES . DIR_SEP . 'SecurityToken.php';
 
         // load if possible before setting camp_report_bug error handler
@@ -54,13 +54,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
                 error_log(sprintf('Newscoop error: %s in %s:%d', $p_string, $p_file, $p_line));
 
-                global $ADMIN_DIR, $Campsite;
-                require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
+                global $Campsite;
+                require_once $Campsite['HTML_DIR'] . "/admin-files/bugreporter/bug_handler_main.php";
                 camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
             }, error_reporting());
         }
 
-        require_once APPLICATION_PATH . "/../$ADMIN_DIR/init_content.php";
+        require_once APPLICATION_PATH . "/../admin-files/init_content.php";
 
         if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
             CampCache::singleton()->clear('user');
