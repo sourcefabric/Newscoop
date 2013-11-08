@@ -58,17 +58,16 @@ foreach ($f_topic_ids as $topicIdString) {
 // add new topic 
 if ($f_search) { 
     $topicService = \Zend_Registry::get('container')->getService('topic');
-    $em = \Zend_Registry::get('container')->getService('em');
     $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     if (!$tmpTopic) { 
         $topicService->create(array(
             'parent_id' => 0,
-            'names'=>array($f_language_selected=>$f_search)
+            'names'=>array($f_language_selected => $f_search)
         ));
 
         $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     }
-    $topicService->AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number, $em);
+    $topicService->AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
 }
 ?>
 

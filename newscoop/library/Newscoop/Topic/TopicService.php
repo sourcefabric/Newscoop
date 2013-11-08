@@ -158,8 +158,8 @@ class TopicService
     /**
      * Get topic by id or name
      *
-     * @param  int|null $p_idOrName          Topic Id or Name
-     * @param  int|string|null $f_language_selected Topic language
+     * @param  int|string|null $p_idOrName          Topic Id or Name
+     * @param  int|null        $f_language_selected Topic language
      *
      * @return object
      */
@@ -184,8 +184,8 @@ class TopicService
     /**
      * Get topic
      *
-     * @param $p_idOrName    Topic Id or Name
-     * @param $check_lang_id Topic language
+     * @param  $p_idOrName    Topic Id or Name
+     * @param  $check_lang_id Topic language
      *
      * @return object
      */
@@ -210,7 +210,7 @@ class TopicService
     /**
      * Insert Topic nodes
      *
-     * @param int       $parentLeft Parent topic
+     * @param  int      $parentLeft Parent topic
      *
      * @return int|bool
      */
@@ -232,7 +232,7 @@ class TopicService
     /**
      * Delete topic name by given topic id
      *
-     * @param int   $topicId Topic id
+     * @param  int  $topicId Topic id
      *
      * @return void
      */
@@ -248,7 +248,7 @@ class TopicService
     /**
      * Update topic nodes by given topic id
      *
-     * @param int   $parentLeft Parent topic
+     * @param  int  $parentLeft Parent topic
      *
      * @return void
      */
@@ -273,7 +273,7 @@ class TopicService
     /**
      * Delete topic nodes by parent topic
      *
-     * @param int   $parentLeft Parent Topic
+     * @param  int  $parentLeft Parent Topic
      *
      * @return void
      */
@@ -298,7 +298,7 @@ class TopicService
     /**
      * Delete topic nodes by given topic id
      *
-     * @param int   $topicId Topic id
+     * @param  int  $topicId Topic id
      *
      * @return void
      */
