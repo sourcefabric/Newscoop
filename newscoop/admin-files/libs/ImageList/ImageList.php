@@ -8,6 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
+use Newscoop\Services\StringTransformer;
+
 require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
 
 /**
@@ -78,7 +80,7 @@ class ImageList extends BaseList
         if (SystemPref::Get('MediaRichTextCaptions') == 'Y') {
             // Only truncate when using rich text captions, looks better and
             // inline edit functionality is disabled for rich text captions
-            $row['Description'] = DataTransformer::truncate(strip_tags($row['Description']), 100);
+            $row['Description'] = StringTransformer::truncate(strip_tags($row['Description']), 100);
         } else {
             // Don't truncate, since it would break the inline edit functionality
             $row['Description'] = strip_tags($row['Description']);
