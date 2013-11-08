@@ -8,6 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
+use Newscoop\Services\StringTransformer;
+
 require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
 
 /**

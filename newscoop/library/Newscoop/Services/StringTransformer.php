@@ -1,4 +1,7 @@
 <?php
+
+namespace Newscoop\Services;
+
 /**
  * Transform strings
  */
