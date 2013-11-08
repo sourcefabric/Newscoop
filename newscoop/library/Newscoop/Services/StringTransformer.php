@@ -1,8 +1,8 @@
 <?php
 /**
- * Transform data
+ * Transform strings
  */
-class DataTransformer {
+class StringTransformer {
 
     /**
      * Truncates string at first non-word character and adds three dots.
