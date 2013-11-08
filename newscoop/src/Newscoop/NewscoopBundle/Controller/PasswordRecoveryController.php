@@ -177,15 +177,15 @@ class PasswordRecoveryController extends Controller
 
         try {
             $message = \Swift_Message::newInstance()
-            ->setSubject($translator->trans('Password recovery', array(), 'home'))
-            ->setFrom($from)
-            ->setTo($email)
-            ->setBody(
-                $this->renderView(
-                    'NewscoopNewscoopBundle:PasswordRecovery:email.txt.twig',
-                    array('link' => $link)
-                )
-            );
+                ->setSubject($translator->trans('Password recovery', array(), 'home'))
+                ->setFrom($from)
+                ->setTo($email)
+                ->setBody(
+                    $this->renderView(
+                        'NewscoopNewscoopBundle:PasswordRecovery:email.txt.twig',
+                        array('link' => $link)
+                    )
+                );
 
             $this->container->get('mailer')->send($message);
         } catch (\Exception $exception) {
