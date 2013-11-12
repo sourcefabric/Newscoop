@@ -13,9 +13,14 @@
 
 
 {% block admin_content %}
-<div class="plugins-search">
+<div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
     <div style="width: 600px;" class="search-for-plugins"></div>
 </div>
+
+<div class="choosen-plugin-info" style="float:left">
+
+</div>
+<div class="clear:both"></div>
 
 <script type="text/javascript">
     function pluginFormat(item) { 
@@ -29,12 +34,12 @@
         minimumInputLength: null,
         id: function(item){return {id: item.name};},
         cache: true,
-        ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+        ajax: {
             url: "/admin/plugins/getPackagesFromPackagist",
             dataType: 'json',
             data: function (term, page) {
                 return {
-                    q: term, // search term
+                    q: term,
                 };
             },
             results: function (data, page) {
@@ -42,7 +47,7 @@
             }
         },
         initSelection: function(element, callback) {
-            var value=$(element).val();
+            var value = $(element).val();
             var initData = null;
             $.ajax("/admin/plugins/getPackagesFromPackagist", {
                 data: {},
