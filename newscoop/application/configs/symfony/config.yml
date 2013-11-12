@@ -12,7 +12,7 @@ framework:
     templating:      { engines: ['twig', 'smarty', 'php'] }
     trusted_proxies: ~
     session:
-        storage_id: session.storage.php_bridge
+        storage_id: newscoop_newscoop.session.storage
         handler_id: ~
     fragments: ~
     http_method_override: true
