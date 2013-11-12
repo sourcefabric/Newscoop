@@ -17,20 +17,20 @@ use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
  */
 class Storage extends PhpBridgeSessionStorage
 {
-	/**
-	 * @param array  														   $options
-	 * @param AbstractProxy|NativeSessionHandler|\SessionHandlerInterface|null $handler
+    /**
+     * @param array  														   $options
+     * @param AbstractProxy|NativeSessionHandler|\SessionHandlerInterface|null $handler
      * @param MetadataBag                                                      $metaBag MetadataBag
-	 */
+    */
     public function __construct(array $options = array(), $handler = null, MetadataBag $metaBag = null)
     {
-    	$seconds = \SystemPref::Get('SiteSessionLifeTime');
+        $seconds = \SystemPref::Get('SiteSessionLifeTime');
         
-		$options['cookie_lifetime'] = $seconds;
-		$options['gc_maxlifetime'] = $seconds;
+        $options['cookie_lifetime'] = $seconds;
+        $options['gc_maxlifetime'] = $seconds;
 
-		$this->setMetadataBag($metaBag);
-		$this->setOptions($options);
+        $this->setMetadataBag($metaBag);
+        $this->setOptions($options);
         $this->setSaveHandler($handler);
     }
 }
