@@ -83,7 +83,7 @@ newscoopDatatables =
 			$(this).children("ul").css("display","block");
 		}, function()
 		{
-			$(this).childer("ul").css("display","none");
+			$(this).children("ul").css("display","none");
 		});
 
 		try
