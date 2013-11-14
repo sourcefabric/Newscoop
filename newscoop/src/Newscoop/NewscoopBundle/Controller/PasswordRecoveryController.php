@@ -28,31 +28,31 @@ class PasswordRecoveryController extends Controller
         $sent = false;
         $error = '';
         $disabled = false;
+        $form = $this->container->get('form.factory')->create(new PasswordRecoveryType(), array(), array());
+
         if (\SystemPref::Get("PasswordRecovery") == 'N') {
             $disabled = true;
-        }
+        } else {
+            if ($request->isMethod('POST')) {
+                $form->handleRequest($request);
+                if ($form->isValid()) {
+                    $data = $form->getData();
+                    $user = $this->container->get('user')->findOneBy(array(
+                        'email' => $data['email'],
+                        'is_admin' => true
+                    ));
 
-        $form = $this->container->get('form.factory')->create(new PasswordRecoveryType(), array(), array());
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $user = $this->container->get('user')->findOneBy(array(
-                    'email' => $data['email'],
-                    'is_admin' => true
-                ));
-
-                if ($user != null && is_numeric($user->getId()) && $user->getId() > 0) {
-                    try {
-                        $token = $this->setPasswordResetToken($user);
-                        $this->sendToken($data['email'], $token);
-                        $sent = true;
-                    } catch (\Exception $exception) {
-                        $error = $translator->trans("Fatal error occured. Please try again later.", array(), 'home');
+                    if ($user != null && is_numeric($user->getId()) && $user->getId() > 0) {
+                        try {
+                            $token = $this->setPasswordResetToken($user);
+                            $this->sendToken($data['email'], $token);
+                            $sent = true;
+                        } catch (\Exception $exception) {
+                            $error = $translator->trans("Fatal error occured. Please try again later.", array(), 'home');
+                        }
+                    } else {
+                        $error = $translator->trans("No user is registered with this email.", array(), 'home');
                     }
-                } else {
-                    $error = $translator->trans("No user is registered with this email.", array(), 'home');
                 }
             }
         }
@@ -84,38 +84,39 @@ class PasswordRecoveryController extends Controller
             $error = $translator->trans('Password recovery is disabled.', array(), 'home');
         } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
             $noPassword = true;
+            $user = $this->container->get('user')->findOneBy(array(
+                'email' => $email,
+                'is_admin' => true
+            ));
+
+            if ($user != null) {
+                $tokenGenerated = (int) substr($token, -10);
+                if ($user->getResetToken() == $token && (time() - $tokenGenerated < 48 * 3600)) { // valid for 48 hours
+                    if ($request->isMethod('POST')) {
+                        $form->handleRequest($request);
+                        if ($form->isValid()) {
+                            $data = $form->getData();
+                            $newPassword = $data['password'];
+                            if (strlen($newPassword) >= 6) {
+                                $this->setPassword($user, $newPassword);
+                                $success = true;
+                                $noPassword = false;
+                            } else {
+                                $error = $translator->trans('Your new password must have at least 6 characters.', array(), 'home');
+                            }
+                        }
+                    }
+                } else {
+                    $noPassword = false;
+                    $error = $translator->trans('This link is not valid.', array(), 'home');
+                }
+            } else {
+                $noPassword = false;
+                $error = $translator->trans('Bad input parameters.', array(), 'home');
+            }
         } else {
             $noPassword = false;
             $error = $translator->trans('Bad input parameters.', array(), 'home');
-        }
-
-        if ($request->isMethod('POST')) {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $user = $this->container->get('user')->findOneBy(array(
-                    'email' => $email,
-                    'resetToken' => $token,
-                    'is_admin' => true
-                ));
-                $newPassword = $data['password'];
-                if ($user != null) {
-                    $tokenGenerated = (int) substr($token, -10);
-                    if ($user->getResetToken() == $token && (time() - $tokenGenerated < 48 * 3600)) { // valid for 48 hours
-                        if (strlen($newPassword) >= 6) {
-                            $this->setPassword($user, $newPassword);
-                            $success = true;
-                            $noPassword = false;
-                        } else {
-                            $error = $translator->trans('Your new password must have at least 6 characters.', array(), 'home');
-                        }
-                    } else {
-                        $error = $translator->trans('This link is not valid.', array(), 'home');
-                    }
-                } else {
-                    $error = $translator->trans('Bad input parameters.', array(), 'home');
-                }
-            }
         }
 
         return array(
@@ -165,10 +166,10 @@ class PasswordRecoveryController extends Controller
     {
         $translator = $this->container->get('translator');
 
-        $link = sprintf('%s/admin/password-check-token?token=%s&email=%s',
-            $this->getRequest()->getHost(),
-            $token,
-            $email);
+        $link = $this->container->get('router')->generate('newscoop_newscoop_passwordrecovery_checktoken', array(
+            'token' => $token, 
+            'email' => $email
+        ), true);
         
         $from = \SystemPref::Get('PasswordRecoveryFrom');
         if (empty($from)) {

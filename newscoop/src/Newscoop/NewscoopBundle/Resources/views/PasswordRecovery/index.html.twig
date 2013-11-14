@@ -6,8 +6,9 @@
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet.css" />
   <style type="text/css" media="screen">
-  .recovery_errors {color: #FF2200;}
-  .recovery_success {color: #5cb85c;}
+  .recovery-alert {font-size: 12px;padding: 0 5px;}
+  .recovery-errors {color: #FF2200;}
+  .recovery-success {color: #5cb85c;}
   </style>
   <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/campsite.js"></script>
   <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.config.js"></script>
@@ -27,7 +28,7 @@
         <div class="login_error">
             {{ form_errors(form) }}
             {% if error %}
-                <h4 class="recovery_errors">{{ error }}</h4>
+                <h4 class="recovery-alert recovery-errors">{{ error }}</h4>
             {% endif %}
         </div>
         {% if sent == false and disabled == false %}
@@ -49,11 +50,11 @@
             {{ form_rest(form) }}
         </table>
         {% elseif disabled %}
-            <h4><center>{{ 'Password recovery is disabled.'|trans({}, 'home') }}</center></h4>
+            <h4 class="alert recovery-errors"><center>{{ 'Password recovery is disabled.'|trans({}, 'home') }}</center></h4>
             <a class="goto" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login'|trans({},'home') }}</a>
         {% else %}
-            <h4 class="recovery_success"><center>{{ 'An email with instructions on how to recover you password has been sent to your inbox.'|trans({},'home') }}</center></h4>
-            <a class="goto" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Proceed to login.'|trans({},'home') }}</a>
+            <h4 class="alert recovery-success"><center>{{ 'An email with instructions on how to recover you password has been sent to your inbox.'|trans({},'home') }}</center></h4>
+            <a class="goto recovery-alert" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Proceed to login.'|trans({},'home') }}</a>
         {% endif %}
     </div>
 </form>

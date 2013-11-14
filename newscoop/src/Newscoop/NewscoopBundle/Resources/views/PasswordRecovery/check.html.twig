@@ -6,8 +6,9 @@
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet_new.css" />
   <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet.css" />
   <style type="text/css" media="screen">
-  .recovery_errors {color: #FF2200;}
-  .recovery_success {color: #5cb85c;}
+  .recovery-alert {font-size: 12px;padding: 0 5px;}
+  .recovery-errors {color: #FF2200;}
+  .recovery-success {color: #5cb85c;}
   </style>
   <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/campsite.js"></script>
   <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.config.js"></script>
@@ -29,18 +30,17 @@
         <div class="login_error">
             {{ form_errors(form) }}
             {% if error %}
-                <h4 class="recovery_errors">{{ error }}</h4>
+                <h4 class="recovery-alert recovery-errors">{{ error }}</h4>
             {% endif %}
         </div>
         {% if success %}
-            <h4 class="recovery_success">{{ 'Your password has been reset.'|trans({},'home') }}</h4>
-            <a href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login.'|trans({},'home') }}</a>
+            <h4 class="recovery-alert recovery-success">{{ 'Your password has been reset.'|trans({},'home') }}</h4>
         {% endif %}
         {% if noPassword %}
             <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
                 <tr>
                   <td align="right">
-                    <strong>{{ "Password"|trans }}:</strong>
+                    <strong>{{ 'New password'|trans({},'users') }}:</strong>
                 </td>
                 <td>
                     {{ form_widget(form.password, {'attr' : {'class' : 'input_text', 'style' : 'width: 250px'}}) }}
@@ -55,6 +55,7 @@
             {{ form_rest(form) }}
             </table>
         {% endif %}
+        <a class="goto recovery-alert" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login'|trans({},'home') }}</a>
     </div>
 </form>
 <div class="footer">
