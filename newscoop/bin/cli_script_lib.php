@@ -197,7 +197,7 @@ function camp_copy_files($p_src, $p_dest, $p_msg = "")
     if ($p_msg == "") {
         $p_msg = "Unable to copy file/dir $p_src to $p_dest.";
     }
-    $command = "cp -R $p_src $p_dest";
+    $command = "cp -RL $p_src $p_dest";
     camp_exec_command($command, $p_msg);
 } // fn camp_copy_files
 
@@ -257,7 +257,7 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
     $source_dir = dirname($p_sourceFile);
     $currentDir = getcwd();
     chdir($source_dir);
-    $cmd = "tar czf " . escapeshellarg($output_file_name) . " $fileStr 2>&1 >/dev/null";
+    $cmd = "tar czhf " . escapeshellarg($output_file_name) . " $fileStr 2>&1 >/dev/null";
     @exec($cmd, $p_output, $result);
 	// remove false tar.gz file if partially created
 	if ($result) {
