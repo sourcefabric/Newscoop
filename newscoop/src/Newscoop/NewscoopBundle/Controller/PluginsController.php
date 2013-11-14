@@ -30,8 +30,6 @@ class PluginsController extends Controller
         $pluginService = $this->container->get('newscoop.plugins.service');
         $allAvailablePlugins = $pluginService->getAllAvailablePlugins();
 
-        // search https://packagist.org/search.json?type=%22newscoop-plugi%22
-
         return array(
             'allAvailablePlugins' => $allAvailablePlugins
         );
@@ -60,49 +58,33 @@ class PluginsController extends Controller
        return $response->setData($packages);
     }
 
-    /**
-     * @Route("/admin/plugins/getStream")
-     */
-    public function streamedAction()
-    {
-        $response = new StreamedResponse();
-        $response->setCallback(function () {
-            $process = new Process('cd /var/www/newscoop/newscoop/ && php application/console plugins:update newscoop/articles-calendar-plugin');
-            $process->start();
-            $process->wait(function ($type, $buffer) {
-                if (Process::ERR === $type) {
-                    echo 'ERR > '.$buffer;
-                } else {
-                    echo 'OUT > '.$buffer;
-                }
-            });
-            ob_flush();
-            flush();
-        });
-
-        return $response;
-    }
 
     /**
-     * @Route("/admin/plugins/getStreamTest")
+     * @Route("/admin/plugins/getStream/{action}/{name}", requirements={"name" = ".+"})
      */
-    public function someFunctionInsideController()
+    public function getStreamAction($action, $name)
     {
         $response = new Response();
-        $response->headers->set('Content-Encoding', 'chunked');
         $response->headers->set('Transfer-Encoding', 'chunked');
-        $response->headers->set('Content-Type', 'multipart/x-mixed-replace;');
-        $response->headers->set('Connection', 'keep-alive');
         $response->sendHeaders();
+
         flush();
         ob_flush();
-        putenv("COMPOSER_HOME=/var/www/newscoop/newscoop/");
-        $process = new Process('php /var/www/newscoop/newscoop/application/console plugins:update newscoop/articles-calendar-plugin');
+        $this->dump_chunk('<pre>');
+
+        @apache_setenv('no-gzip', 1);
+        @ini_set('zlib.output_compression', 0);
+        @ini_set('implicit_flush', 1);
+
+        $newscoopDir = __DIR__ . '/../../../../';
+        putenv("COMPOSER_HOME=".$newscoopDir);
+        $process = new Process('php '.$newscoopDir.'application/console plugins:'. $action .' '. $name);
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) {
             $this->dump_chunk($buffer);
         });
-        return new Response();
+        $this->dump_chunk('</pre>');
+        die();
     }
 
     private function dump_chunk($chunk) {

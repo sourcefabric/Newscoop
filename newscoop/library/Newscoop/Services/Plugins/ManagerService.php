@@ -75,6 +75,7 @@ class ManagerService
     public function installPlugin($pluginName, $version, $output = null, $notify = true)
     {
         $this->installComposer();
+        $this->prepareCacheDir();
 
         $pluginMeta = explode('/', $pluginName);
         if(count($pluginMeta) !== 2) {
@@ -148,6 +149,7 @@ class ManagerService
     public function removePlugin($pluginName, $output, $notify = true)
     {
         $this->installComposer();
+        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -217,6 +219,7 @@ class ManagerService
     public function updatePlugin($pluginName, $version, $output, $notify = true)
     {
         $this->installComposer();
+        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -310,8 +313,8 @@ class ManagerService
     }
 
     private function clearCache($output)
-    {
-        $process = new Process('cd '.$this->newsoopDir.' && rm -rf cache/prod/* && php application/console cache:clear --env=prod');
+    {   
+        $process = new Process('cd '.$this->newsoopDir.' rm -rf cache/*');
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
@@ -369,5 +372,13 @@ class ManagerService
         $plugins = $this->findAvaiablePlugins();
 
         file_put_contents($this->pluginsDir . '/avaiable_plugins.json', json_encode($plugins));
+    }
+
+    private function prepareCacheDir()
+    {
+        if (!file_exists($this->newsoopDir.'/cache/plugins')) {
+            $filesystem = new Filesystem();
+            $filesystem->mkdir($this->newsoopDir.'/cache/plugins');
+        }
     }
 }

@@ -39,6 +39,8 @@ class SystemPref implements ArrayAccess
 			return;
 		}
 
+        $g_ado_db = Zend_Registry::get('container')->getService('doctrine.adodb');
+
 		$Campsite['system_preferences'] = array();
 		// Fetch the user's permissions.
 		$queryStr = 'SELECT varname, value FROM SystemPreferences';

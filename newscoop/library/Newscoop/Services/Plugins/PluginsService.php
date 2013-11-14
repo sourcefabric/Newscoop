@@ -87,4 +87,13 @@ class PluginsService
 
         return $content;
     }
+
+    public function isEnabled($pluginName)
+    {
+        if ($this->avaiablePlugins) {
+            // search for plugin on list
+        } else {
+            // get plugin from db anc check if it's enabled
+        }
+    }
 }
