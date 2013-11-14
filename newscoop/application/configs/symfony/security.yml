@@ -22,11 +22,11 @@ security:
             security: false
 
         password_recovery:
-            pattern: ^/admin/password_recovery.php
+            pattern: ^/admin/password-recovery
             security: false
 
         password_check_token:
-            pattern: ^/admin/password_check_token.php
+            pattern: ^/admin/password-check-token
             security: false
 
         admin_area:

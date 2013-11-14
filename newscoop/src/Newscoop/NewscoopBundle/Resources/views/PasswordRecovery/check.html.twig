@@ -1,0 +1,68 @@
+<html lang="{{ localeFromCookie }}" dir="ltr">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'Password Recovery'|trans({},'home') }}{% endblock %}</title>
+  <link rel="shortcut icon" href="{{ Newscoop['ADMIN_IMAGE_BASE_URL'] }}/7773658c3ccbf03954b4dacb029b2229.ico" />
+  <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet_new.css" />
+  <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet.css" />
+  <style type="text/css" media="screen">
+  .recovery-alert {font-size: 12px;padding: 0 5px;}
+  .recovery-errors {color: #FF2200;}
+  .recovery-success {color: #5cb85c;}
+  </style>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/campsite.js"></script>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.config.js"></script>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.core.js"></script>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.lang-enUS.js"></script>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.validators.js"></script>
+  <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/crypt.js"></script>
+</head>
+<body>
+<form name="check_token_form" action="{{ path('newscoop_newscoop_passwordrecovery_checktoken') }}" method="post" {{ form_enctype(form) }}>
+    <input type="hidden" name="email" value="{{ email }}" />
+    <input type="hidden" name="token" value="{{ token }}" />
+    <div class="login_box">
+        <div class="logobox"><img src="{{ Newscoop['ADMIN_IMAGE_BASE_URL'] }}/sign_big.gif" border="0" alt="" /></div>
+        <h2>{{ "Password Recovery"|trans({},'home') }}</h2>
+        <noscript>
+            {{ 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.'|trans({},'home') }}
+        </noscript>
+        <div class="login_error">
+            {{ form_errors(form) }}
+            {% if error %}
+                <h4 class="recovery-alert recovery-errors">{{ error }}</h4>
+            {% endif %}
+        </div>
+        {% if success %}
+            <h4 class="recovery-alert recovery-success">{{ 'Your password has been reset.'|trans({},'home') }}</h4>
+        {% endif %}
+        {% if noPassword %}
+            <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
+                <tr>
+                  <td align="right">
+                    <strong>{{ 'New password'|trans({},'users') }}:</strong>
+                </td>
+                <td>
+                    {{ form_widget(form.password, {'attr' : {'class' : 'input_text', 'style' : 'width: 250px'}}) }}
+                </td>
+            </tr>
+            <tr class="buttonBlock2">
+                <td></td>
+                <td>
+                    <input type="submit" class="button" name="Login" value="{{ 'Recover password'|trans({},'home') }}" />
+                </td>
+            </tr>
+            {{ form_rest(form) }}
+            </table>
+        {% endif %}
+        <a class="goto recovery-alert" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login'|trans({},'home') }}</a>
+    </div>
+</form>
+<div class="footer">
+    <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists. 
+    <br />
+    &copy; {{ NewscoopVersion.getCopyrightYear() }} 
+    <a href="{{ NewscoopVersion.getWebURL() }}" target="_blank">{{ NewscoopVersion.getOrganization() }}</a> {{ NewscoopVersion.getPackage() }} is distributed under {{ NewscoopVersion.getLicense() }}   
+</div>
+</body>
+</html>
