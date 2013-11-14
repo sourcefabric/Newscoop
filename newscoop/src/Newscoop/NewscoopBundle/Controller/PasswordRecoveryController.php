@@ -184,7 +184,7 @@ class PasswordRecoveryController extends Controller
                 ->setBody(
                     $this->renderView(
                         'NewscoopNewscoopBundle:PasswordRecovery:email.txt.twig',
-                        array('link' => $link)
+                        array('link' => urldecode($link))
                     )
                 );
 
