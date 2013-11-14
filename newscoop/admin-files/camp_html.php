@@ -6,6 +6,7 @@
 /**
  * includes
  */
+$ADMIN_DIR = "admin-files";
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
 
 /**
