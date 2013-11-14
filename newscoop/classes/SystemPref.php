@@ -149,8 +149,6 @@ class SystemPref implements ArrayAccess
         	return false;
         }
 
-        chmod($cacheFileName, 0600);
-
         $buffer = "<?php\n\$GLOBALS['Campsite']['system_preferences'] = array(\n";
         $preferences = array();
         foreach ($Campsite['system_preferences'] as $key=>$value) {
