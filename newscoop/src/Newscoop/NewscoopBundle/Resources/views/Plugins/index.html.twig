@@ -4,6 +4,7 @@
 {% block admin_page_title_content %}Plugins manager{% endblock %}
 
 {% block admin_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('admin-style/table.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('/js/select2-3.4.1/select2.css') }}" />
 {% endblock %}
 
@@ -13,18 +14,52 @@
 
 
 {% block admin_content %}
-<div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
-    <div style="width: 600px;" class="search-for-plugins"></div>
-</div>
+<fieldset class="filters">
+    <legend>Install new plugins</legend>
 
-<div class="choosen-plugin-info" style="float:left">
+    <div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
+        <div style="width: 600px;" class="search-for-plugins"></div>
+    </div>
 
+    <div class="choosen-plugin-info" style="float:left; margin-bottom: 50px;"></div>
+</fieldset>
+<div class="clear:both;"></div>
+
+
+<div id="manage-plugins" style="padding: 10px 10px 30px 10px;">
+    <table cellpadding="0" cellspacing="0" border="0" class="display" style="width: 100%" id="pluginsTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Enabled</th>
+                <th>Version</th>
+                <th>License</th>
+                <th>Installed At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for plugin in allAvailablePlugins %}
+            <tr id="{{ plugin.id }}">
+                <td>{{ plugin.name }}</td>
+                <td style="width: 25%;">{{ plugin.description }}</td>
+                <td style="text-align: center; width: 50px;"><input type="checkbox" {% if plugin.enabled %}checked="true"{% endif %} value="1"/></td>
+                <td style="text-align: center">{{ plugin.version }}</td>
+                <td>{{ plugin.license }}</td>
+                <td style="width: 14%;">{{ plugin.installedAt|date('Y-m-d H:i:s') }}</td>
+                <td style="width: 14%;">{% if plugin.updatedAt %}{{ plugin.updatedAt|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
+                <td style="width: 12%; text-align: center;"><a href="#" class="get-stream" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">Update</a> | <a href="#" class="get-stream" data-href="/admin/plugins/getStream/remove/{{ plugin.name }}">Remove</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-<div class="clear:both"></div>
 
 <script type="text/javascript">
     function pluginFormat(item) { 
-        var markup = "<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p></div>";
+        var markup = "<div><h5>"+item.name+"</h5><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p></div>";
         return markup;
     };
     function pluginFormatSelection(item) { return item.name; }
@@ -58,7 +93,42 @@
         formatSelection: pluginFormatSelection,
         dropdownCssClass: "bigdrop", 
         escapeMarkup: function (m) { return m; } 
+    })
+    .on("select2-selecting", function(e) {
+        var item = e.object;
+        $('.choosen-plugin-info').html("<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p><a class=\"get-stream\" data-href=\"/admin/plugins/getStream/install/"+item.name+"\" data-plugin-name=\""+item.name+"\" href=\"#\">Install this plugin</a></div>");
     });
+
+    $('.get-stream').live('click', function() {
+        // make here fancybox with iframe.
+        var NWin = window.open($(this).data('href'), '', 'height=400,width=800');
+        if (window.focus) {
+            NWin.focus();
+        }
+
+        return false;
+    });
+
+    $('#subscriptionsTable').css('font-size', '13px');
+    $('#pluginsTable').dataTable({
+        "aoColumns" : [
+            null,
+            { sWidth: '25%' },
+            { sWidth: '50px' },
+            null,
+            null,
+            { sWidth: '14%' },
+            { sWidth: '14%' },
+            { sWidth: '12%' },
+        ],
+        "bProcessing": true,
+        "bAutoWidth": false,
+        "bPaging": true,
+        "sDom": 'RCf<"clear">rtilp',
+        "bJQueryUI": true,
+        "sPaginationType": "full_numbers",
+    }).fnAdjustColumnSizing();
+
 </script>
 
 {% endblock %}
