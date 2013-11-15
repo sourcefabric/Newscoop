@@ -97,22 +97,19 @@ class ManagerService
             throw new \Exception("Error with installing plugin", 1);
         }
 
-        $this->saveAvaiablePluginsToCacheFile();
-
-        $this->clearCache($output);
-
         $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/add_'.str_replace('/', '-', $pluginName).'_package.json';
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
-
             $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/composer.json');
-
             $this->em->getRepository('Newscoop\Entity\Plugin')->addPlugin($pluginMeta, $pluginDetails);
 
             // clear cache files
             $filesystem = new Filesystem();
             $filesystem->remove($cachedPluginMeta);
         }
+
+        $this->saveAvaiablePluginsToCacheFile();
+        $this->clearCache($output);
 
         if ($notify) {
             $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' install');
@@ -132,11 +129,12 @@ class ManagerService
         }
     }
 
-    public function dispatchEventForPlugin($pluginName, $eventName, $output) {
-        $output->writeln('<info>Notify '.$pluginName.' plugin listeners with '.$eventName.' event</info>');
+    public function dispatchEventForPlugin($pluginName, $eventName, $output)
+    {
         $this->dispatcher->dispatch('plugin.'.$eventName, new GenericEvent($this, array(
             'plugin_name' => $pluginName
         )));
+        $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
 
         $this->dispatcher->dispatch(
             'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)), 
@@ -144,12 +142,12 @@ class ManagerService
                 'plugin_name' => $pluginName
             ))
         );
+        $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
     }
 
     public function removePlugin($pluginName, $output, $notify = true)
     {
         $this->installComposer();
-        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -164,17 +162,7 @@ class ManagerService
             if ($package == $pluginName) {
 
                 if ($notify) {
-                    $output->writeln('<info>Notify '.$pluginName.' plugin listeners</info>');
-                    $this->dispatcher->dispatch('plugin.remove', new GenericEvent($this, array(
-                        'plugin_name' => $pluginName
-                    )));
-
-                    $this->dispatcher->dispatch(
-                        'plugin.remove.'.str_replace('-', '_', str_replace('/', '_', $pluginName)), 
-                        new GenericEvent($this, array(
-                            'plugin_name' => $pluginName
-                        ))
-                    );
+                    $this->dispatchEventForPlugin($pluginName, 'remove', $output);
                 }
 
                 $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
@@ -212,14 +200,12 @@ class ManagerService
         }
 
         $this->saveAvaiablePluginsToCacheFile();
-
         $this->clearCache($output);
     }
 
     public function updatePlugin($pluginName, $version, $output, $notify = true)
     {
         $this->installComposer();
-        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -246,20 +232,7 @@ class ManagerService
         $this->clearCache($output);
 
         if ($notify) {
-            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update --env=prod');
-
-            $process->setTimeout(3600);
-            $process->run(function ($type, $buffer) use ($output) {
-                if ('err' === $type) {
-                    $output->write('<error>'.$buffer.'</error>');
-                } else {
-                    $output->write('<info>'.$buffer.'</info>');
-                }
-            });
-
-            if (!$process->isSuccessful()) {
-                throw new \Exception("Error with dispatching update event", 1);
-            }
+            $this->dispatchEventForPlugin($pluginName, 'update', $output);
         }
 
         $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/update_'.str_replace('/', '-', $pluginName).'_package.json';
@@ -294,7 +267,7 @@ class ManagerService
 
     public function upgrade()
     {
-        //add and install all plugins from avaiable_plugins.json after newscoop upgrade
+        //add and install all plugins from database (don't notify plugins about that) after newscoop upgrade
     }
 
     public function getInstalledPlugins()
@@ -314,7 +287,8 @@ class ManagerService
 
     private function clearCache($output)
     {   
-        $process = new Process('cd '.$this->newsoopDir.' rm -rf cache/*');
+        $output->writeln('<info>remove '.realpath($this->newsoopDir.'cache/').'/*</info>');
+        $process = new Process('rm -rf '.realpath($this->newsoopDir.'cache/').'/*');
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
@@ -327,6 +301,8 @@ class ManagerService
         if ($process->isSuccessful()) {
             $output->writeln('<info>Cache cleared</info>');
         }
+
+        $this->prepareCacheDir();
     }
 
     public function installComposer()
