@@ -10,6 +10,9 @@ namespace Newscoop\NewscoopBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\NewscoopBundle\Entity\SystemPreferences;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ExpressionBuilder;
 
 /**
  * System preferences service
@@ -18,6 +21,8 @@ class SystemPreferencesService
 {
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
+
+    private $preferences;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -80,13 +85,10 @@ class SystemPreferencesService
      */
     public function __get($property)
     {   
-        $currentProperty = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')
-            ->findOneBy(array(
-                'option' => $property
-        ));
+        $currentProperty = $this->findOneBy($property);
 
-        if ($currentProperty) {
-            return $currentProperty->getValue();
+        if (!$currentProperty->isEmpty()) {
+            return $currentProperty->first()->getValue();
         } else {
             return null;
         }
@@ -125,5 +127,38 @@ class SystemPreferencesService
     public function collectStatisticsAuto()
     {   
         return ($this->CollectStatistics == 'Y');
+    }
+
+    /**
+     * Get all available preferences
+     *
+     * @return array
+     */
+    public function getAllPreferences()
+    {   
+        if ($this->preferences) {
+            return $this->preferences;
+        }
+
+        return $this->preferences = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')->findAll();
+    }
+
+    /**
+     * Find one preference by matching criteria from object
+     * Works like caching
+     *
+     * @param  string $property Property name
+     *
+     * @return ArrayCollection
+     */
+    public function findOneBy($property)
+    {
+        $eb = new ExpressionBuilder();
+        $expr = $eb->eq('option', $property);
+        $criteria = new Criteria($expr);
+
+        $preferences = new ArrayCollection($this->getAllPreferences());
+        
+        return $preferences->matching($criteria);
     }
 }

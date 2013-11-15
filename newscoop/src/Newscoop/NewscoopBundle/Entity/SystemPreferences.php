@@ -9,7 +9,6 @@
 namespace Newscoop\NewscoopBundle\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
-use Newscoop\NewscoopBundle\ORM\Point;
 
 /**
  * System Preferences entity
@@ -31,7 +30,7 @@ class SystemPreferences
      * @ORM\Column(type="string", length=100, name="varname")
      * @var string
      */
-    private $option;
+    public $option;
 
     /**
      * @ORM\Column(type="string", length=100, name="value", nullable=true)

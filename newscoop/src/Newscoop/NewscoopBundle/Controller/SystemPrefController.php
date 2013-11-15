@@ -25,7 +25,7 @@ class SystemPrefController extends Controller
     {   
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
-        
+
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
             ->select('count(a)')
@@ -239,7 +239,7 @@ class SystemPrefController extends Controller
                     $this->cronManagement($data['external_cron_management']);
                 }
                 // General Settings
-                $this->generalSettings($data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
+                $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
                     $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
                 //Mailchimp
                 $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
@@ -520,6 +520,7 @@ class SystemPrefController extends Controller
     /**
      * Sets general options
      *
+     * @param string $siteOnline                Website status
      * @param string $title                     Website title
      * @param string $meta_keywords             Website meta keywords
      * @param string $meta_description          Website meta description
@@ -535,10 +536,11 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery, 
+    private function generalSettings($siteOnline, $title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery, 
         $emailFrom, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
 
         $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->SiteOnline = strip_tags($siteOnline);
         $preferencesService->SiteTitle = strip_tags($title);
         $preferencesService->SiteMetaKeywords = strip_tags($meta_keywords);
         $preferencesService->SiteMetaDescription = strip_tags($meta_description);
