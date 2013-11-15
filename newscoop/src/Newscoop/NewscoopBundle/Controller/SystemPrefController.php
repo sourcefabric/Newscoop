@@ -24,6 +24,8 @@ class SystemPrefController extends Controller
     public function indexAction(Request $request)
     {   
         $em = $this->container->get('em');
+        $preferencesService = $this->container->get('system_preferences_service');
+
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
             ->select('count(a)')
@@ -42,16 +44,15 @@ class SystemPrefController extends Controller
             $hasManagePermission = true;
         }
 
-
-        $max_upload_filesize = \SystemPref::Get("MaxUploadFileSize");
+        $max_upload_filesize = $preferencesService->MaxUploadFileSize;
         if(empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
-            \SystemPref::Set("MaxUploadFileSize", ini_get('upload_max_filesize'));
+            $preferencesService->MaxUploadFileSize = ini_get('upload_max_filesize');
         }
 
         $currentUser = $this->get('user')->getCurrentUser();
         $translator = $this->get('translator');
 
-        $sp_session_lifetime = 0 + \SystemPref::Get('SiteSessionLifeTime');
+        $sp_session_lifetime = 0 + $preferencesService->SiteSessionLifeTime;
         $php_ini_max_seconds = 0;
         $php_ini_gc_works = ini_get('session.gc_probability');
 
@@ -65,7 +66,7 @@ class SystemPrefController extends Controller
         }
 
         $upload_min_filesize = min(ini_get('post_max_size'), ini_get('upload_max_filesize'));
-        $mysql_client_command_path = \SystemPref::Get('MysqlClientCommandPath');
+        $mysql_client_command_path = $preferencesService->MysqlClientCommandPath;
 
         if (!$locations || !$cities) {
             $mysql_client_command_path_def = '/usr/bin/mysql';
@@ -74,12 +75,12 @@ class SystemPrefController extends Controller
             }
         }
 
-        $geo_preferred_lang = \SystemPref::Get('GeoSearchPreferredLanguage');
+        $geo_preferred_lang = $preferencesService->GeoSearchPreferredLanguage;
         if (empty($geo_preferred_lang)) {
             $geo_preferred_lang = 'en';
         }
 
-        $default_marker_source = \SystemPref::Get('MapMarkerSourceDefault');
+        $default_marker_source = $preferencesService->MapMarkerSourceDefault;
 
         $marker_icons = \Geo_Preferences::GetIconsFiles();
         if (0 < count($marker_icons)) {
@@ -90,67 +91,67 @@ class SystemPrefController extends Controller
         }
 
         $form = $this->container->get('form.factory')->create(new PreferencesType(), array(
-            'siteonline' => \SystemPref::Get("SiteOnline"),
-            'title' => \SystemPref::Get('SiteTitle'),
-            'meta_keywords' => \SystemPref::Get('SiteMetaKeywords'),
-            'meta_description' => \SystemPref::Get('SiteMetaDescription'),
-            'timezone' => \SystemPref::Get('TimeZone'),
-            'cache_engine' => \SystemPref::Get('DBCacheEngine'),
-            'cache_template' => \SystemPref::Get('TemplateCacheHandler'),
-            'cache_image' => \SystemPref::Get('ImagecacheLifetime'),
-            'allow_recovery' => \SystemPref::Get('PasswordRecovery'),
-            'secret_key' => \SystemPref::Get('SiteSecretKey'),
+            'siteonline' => $preferencesService->SiteOnline,
+            'title' => $preferencesService->SiteTitle,
+            'meta_keywords' => $preferencesService->SiteMetaKeywords,
+            'meta_description' => $preferencesService->SiteMetaDescription,
+            'timezone' => $preferencesService->TimeZone,
+            'cache_engine' => $preferencesService->DBCacheEngine,
+            'cache_template' => $preferencesService->TemplateCacheHandler,
+            'cache_image' => $preferencesService->ImagecacheLifetime,
+            'allow_recovery' => $preferencesService->PasswordRecovery,
+            'secret_key' => $preferencesService->SiteSecretKey,
             'session_lifetime' => $sp_session_lifetime,
-            'separator' => \SystemPref::Get("KeywordSeparator"),
-            'captcha' => \SystemPref::Get("LoginFailedAttemptsNum"),
-            'max_upload_size' => \SystemPref::Get("MaxUploadFileSize"),
-            'automatic_collection' => \SystemPref::Get('CollectStatistics'),
-            'smtp_host' => \SystemPref::Get('SMTPHost'),
-            'smtp_port' => \SystemPref::Get('SMTPPort'),
-            'email_from' => \SystemPref::Get('EmailFromAddress'),
-            'image_ratio' => \SystemPref::Get('EditorImageRatio'),
-            'image_width' => (int)\SystemPref::Get('EditorImageResizeWidth'),     
-            'image_height' => (int)\SystemPref::Get('EditorImageResizeHeight'),
-            'zoom' => \SystemPref::Get('EditorImageZoom'),
-            'use_replication_host' => \SystemPref::Get("DBReplicationHost"),
-            'use_replication_user' => \SystemPref::Get("DBReplicationUser"),
-            'use_replication_password' => \SystemPref::Get("DBReplicationPass"),
-            'use_replication' => \SystemPref::Get("UseDBReplication"),
-            'use_replication_port' => \SystemPref::Get("DBReplicationPort"),
-            'template_filter' => \SystemPref::Get("TemplateFilter"),
-            'external_cron_management' => \SystemPref::Get('ExternalCronManagement'),
+            'separator' => $preferencesService->KeywordSeparator,
+            'captcha' => $preferencesService->LoginFailedAttemptsNum,
+            'max_upload_size' => $preferencesService->MaxUploadFileSize,
+            'automatic_collection' => $preferencesService->CollectStatistics,
+            'smtp_host' => $preferencesService->SMTPHost,
+            'smtp_port' => $preferencesService->SMTPPort,
+            'email_from' => $preferencesService->EmailFromAddress,
+            'image_ratio' => $preferencesService->EditorImageRatio,
+            'image_width' => (int)$preferencesService->EditorImageResizeWidth,     
+            'image_height' => (int)$preferencesService->EditorImageResizeHeight,
+            'zoom' => $preferencesService->EditorImageZoom,
+            'use_replication_host' => $preferencesService->DBReplicationHost,
+            'use_replication_user' => $preferencesService->DBReplicationUser,
+            'use_replication_password' => $preferencesService->DBReplicationPass,
+            'use_replication' => $preferencesService->UseDBReplication,
+            'use_replication_port' => $preferencesService->DBReplicationPort,
+            'template_filter' => $preferencesService->TemplateFilter,
+            'external_cron_management' => $preferencesService->ExternalCronManagement,
             'mysql_client_command_path' => $mysql_client_command_path,
-            'center_latitude_default' => (float)\SystemPref::Get('MapCenterLatitudeDefault'),
-            'center_longitude_default' => (float)\SystemPref::Get('MapCenterLongitudeDefault'),
-            'map_display_resolution_default' => (int)\SystemPref::Get('MapDisplayResolutionDefault'),
-            'map_view_width_default' => \SystemPref::Get('MapViewWidthDefault'),
-            'map_view_height_default' => \SystemPref::Get('MapViewHeightDefault'),
-            'map_auto_focus_default' => \SystemPref::Get('MapAutoFocusDefault') == '0' ? false : true,
-            'map_auto_focus_max_zoom' => \SystemPref::Get('MapAutoFocusMaxZoom'),
-            'map_auto_focus_border' => \SystemPref::Get('MapAutoFocusBorder'),
-            'map_auto_cSS_file' => \SystemPref::Get("MapAutoCSSFile"),
-            'map_provider_available_google_v3' => \SystemPref::Get('MapProviderAvailableGoogleV3') == '0' ? false : true,
-            'map_provider_available_map_quest' => \SystemPref::Get('MapProviderAvailableMapQuest') == '0' ? false : true,
-            'map_provider_available_oSM' => \SystemPref::Get('MapProviderAvailableOSM') == '0' ? false : true,
-            'map_provider_default' => \SystemPref::Get('MapProviderDefault'),
-            'geo_search_local_geonames' => \SystemPref::Get('GeoSearchLocalGeonames') == '0' ? false : true,
-            'geo_search_mapquest_nominatim' => \SystemPref::Get('GeoSearchMapquestNominatim') == '0' ? false : true,
+            'center_latitude_default' => (float)$preferencesService->MapCenterLatitudeDefault,
+            'center_longitude_default' => (float)$preferencesService->MapCenterLongitudeDefault,
+            'map_display_resolution_default' => (int)$preferencesService->MapDisplayResolutionDefault,
+            'map_view_width_default' => $preferencesService->MapViewWidthDefault,
+            'map_view_height_default' => $preferencesService->MapViewHeightDefault,
+            'map_auto_focus_default' => $preferencesService->MapAutoFocusDefault == '0' ? false : true,
+            'map_auto_focus_max_zoom' => $preferencesService->MapAutoFocusMaxZoom,
+            'map_auto_focus_border' => $preferencesService->MapAutoFocusBorder,
+            'map_auto_cSS_file' => $preferencesService->MapAutoCSSFile,
+            'map_provider_available_google_v3' => $preferencesService->MapProviderAvailableGoogleV3 == '0' ? false : true,
+            'map_provider_available_map_quest' => $preferencesService->MapProviderAvailableMapQuest == '0' ? false : true,
+            'map_provider_available_oSM' => $preferencesService->MapProviderAvailableOSM == '0' ? false : true,
+            'map_provider_default' => $preferencesService->MapProviderDefault,
+            'geo_search_local_geonames' => $preferencesService->GeoSearchLocalGeonames == '0' ? false : true,
+            'geo_search_mapquest_nominatim' => $preferencesService->GeoSearchMapquestNominatim == '0' ? false : true,
             'geo_search_preferred_language' => $geo_preferred_lang,
-            'map_marker_directory' => \SystemPref::Get('MapMarkerDirectory'),
-            'map_popup_width_min' => \SystemPref::Get('MapPopupWidthMin'),
-            'map_popup_height_min' => \SystemPref::Get('MapPopupHeightMin'),
-            'map_video_width_you_tube' => \SystemPref::Get('MapVideoWidthYouTube'),
-            'map_video_height_you_tube' => \SystemPref::Get('MapVideoHeightYouTube'),
-            'map_video_width_vimeo' => \SystemPref::Get('MapVideoWidthVimeo'),
-            'map_video_height_vimeo' => \SystemPref::Get('MapVideoHeightVimeo'),
-            'map_video_width_flash' => \SystemPref::Get('MapVideoWidthFlash'),
-            'map_video_height_flash' => \SystemPref::Get('MapVideoHeightFlash'),
-            'geo_flash_server' => \SystemPref::Get('FlashServer'),
-            'geo_flash_directory' => \SystemPref::Get('FlashDirectory'),
-            'facebook_appid' => \SystemPref::Get('facebook_appid'),
-            'facebook_appsecret' => \SystemPref::Get('facebook_appsecret'),
-            'mailchimp_apikey' => \SystemPref::Get('mailchimp_apikey'),
-            'mailchimp_listid' => \SystemPref::Get('mailchimp_listid'),
+            'map_marker_directory' => $preferencesService->MapMarkerDirectory,
+            'map_popup_width_min' => $preferencesService->MapPopupWidthMin,
+            'map_popup_height_min' => $preferencesService->MapPopupHeightMin,
+            'map_video_width_you_tube' => $preferencesService->MapVideoWidthYouTube,
+            'map_video_height_you_tube' => $preferencesService->MapVideoHeightYouTube,
+            'map_video_width_vimeo' => $preferencesService->MapVideoWidthVimeo,
+            'map_video_height_vimeo' => $preferencesService->MapVideoHeightVimeo,
+            'map_video_width_flash' => $preferencesService->MapVideoWidthFlash,
+            'map_video_height_flash' => $preferencesService->MapVideoHeightFlash,
+            'geo_flash_server' => $preferencesService->FlashServer,
+            'geo_flash_directory' => $preferencesService->FlashDirectory,
+            'facebook_appid' => $preferencesService->facebook_appid,
+            'facebook_appsecret' => $preferencesService->facebook_appsecret,
+            'mailchimp_apikey' => $preferencesService->mailchimp_apikey,
+            'mailchimp_listid' => $preferencesService->mailchimp_listid,
         )
         , array());
 
@@ -165,8 +166,8 @@ class SystemPrefController extends Controller
                 $data = $form->getData();
                 $geoLocation = array(
                     'map_display_resolution_default' => $data['map_display_resolution_default'],
-                    'map_view_width_default' => $hasManagePermission ? $data['map_view_width_default'] : \SystemPref::Get('MapViewWidthDefault'),
-                    'map_view_height_default' => $hasManagePermission ? $data['map_view_height_default'] : \SystemPref::Get('MapViewHeightDefault'),
+                    'map_view_width_default' => $hasManagePermission ? $data['map_view_width_default'] : $preferencesService->MapViewWidthDefault,
+                    'map_view_height_default' => $hasManagePermission ? $data['map_view_height_default'] : $preferencesService->MapViewHeightDefault,
                     'map_auto_cSS_file' => strip_tags($data['map_auto_cSS_file']),
                     'map_auto_focus_default' => $data['map_auto_focus_default'] ? '1' : '0',
                     'map_auto_focus_max_zoom' => $data['map_auto_focus_max_zoom'],
@@ -178,18 +179,18 @@ class SystemPrefController extends Controller
                     'geo_search_local_geonames' => $data['geo_search_local_geonames'] ? '1' : '0',
                     'geo_search_mapquest_nominatim' => $data['geo_search_mapquest_nominatim'] ? '1' : '0',
                     'geo_search_preferred_language' => $data['geo_search_preferred_language'],
-                    'map_marker_directory' => $hasManagePermission ? strip_tags($data['map_marker_directory']) : \SystemPref::Get('MapMarkerDirectory'),
+                    'map_marker_directory' => $hasManagePermission ? strip_tags($data['map_marker_directory']) : $preferencesService->MapMarkerDirectory,
                     'map_marker_source_default' => strip_tags($data['map_marker_source_default']),
-                    'map_popup_width_min' => $hasManagePermission ? $data['map_popup_width_min'] : \SystemPref::Get('MapPopupWidthMin'),
-                    'map_popup_height_min' => $hasManagePermission ? $data['map_popup_height_min'] : \SystemPref::Get('MapPopupHeightMin'),
-                    'map_video_width_you_tube' => $hasManagePermission ? $data['map_video_width_you_tube'] : \SystemPref::Get('MapVideoWidthYouTube'),
-                    'map_video_height_you_tube' => $hasManagePermission ? $data['map_video_height_you_tube'] : \SystemPref::Get('MapVideoHeightYouTube'),
-                    'map_video_width_vimeo' => $hasManagePermission ? $data['map_video_width_vimeo'] : \SystemPref::Get('MapVideoWidthVimeo'),
-                    'map_video_height_vimeo' => $hasManagePermission ? $data['map_video_height_vimeo'] : \SystemPref::Get('MapVideoHeightVimeo'),
-                    'map_video_width_flash' => $hasManagePermission ? $data['map_video_width_flash'] : \SystemPref::Get('MapVideoWidthFlash'),
-                    'map_video_height_flash' => $hasManagePermission ? $data['map_video_height_flash'] : \SystemPref::Get('MapVideoHeightFlash'),
-                    'flash_server' => $hasManagePermission ? strip_tags($data['geo_flash_server']) : \SystemPref::Get('FlashServer'),
-                    'flash_directory' => $hasManagePermission ? strip_tags($data['geo_flash_directory']) : \SystemPref::Get('FlashDirectory'),
+                    'map_popup_width_min' => $hasManagePermission ? $data['map_popup_width_min'] : $preferencesService->MapPopupWidthMin,
+                    'map_popup_height_min' => $hasManagePermission ? $data['map_popup_height_min'] : $preferencesService->MapPopupHeightMin,
+                    'map_video_width_you_tube' => $hasManagePermission ? $data['map_video_width_you_tube'] : $preferencesService->MapVideoWidthYouTube,
+                    'map_video_height_you_tube' => $hasManagePermission ? $data['map_video_height_you_tube'] : $preferencesService->MapVideoHeightYouTube,
+                    'map_video_width_vimeo' => $hasManagePermission ? $data['map_video_width_vimeo'] : $preferencesService->MapVideoWidthVimeo,
+                    'map_video_height_vimeo' => $hasManagePermission ? $data['map_video_height_vimeo'] : $preferencesService->MapVideoHeightVimeo,
+                    'map_video_width_flash' => $hasManagePermission ? $data['map_video_width_flash'] : $preferencesService->MapVideoWidthFlash,
+                    'map_video_height_flash' => $hasManagePermission ? $data['map_video_height_flash'] : $preferencesService->MapVideoHeightFlash,
+                    'flash_server' => $hasManagePermission ? strip_tags($data['geo_flash_server']) : $preferencesService->FlashServer,
+                    'flash_directory' => $hasManagePermission ? strip_tags($data['geo_flash_directory']) : $preferencesService->FlashDirectory,
                 );
                 // Max Upload File Size
                 $uploadSettings = $this->maxUpload($data['max_upload_size'], $translator);
@@ -257,7 +258,7 @@ class SystemPrefController extends Controller
             'hasManagePermission' => $hasManagePermission,
             'mysql_client_command_path' => $mysql_client_command_path,
             'map_marker_source_default' => $default_marker_source,
-            'map_marker_source_selected' => \SystemPref::Get('MapMarkerSourceDefault'),
+            'map_marker_source_selected' => $preferencesService->MapMarkerSourceDefault,
         );
     }
 
@@ -270,11 +271,11 @@ class SystemPrefController extends Controller
      * @return void|RedirectResponse
      */
     private function databaseCache($cache_engine, $translator) {
+        $preferencesService = $this->container->get('system_preferences_service');
 
-        if (\SystemPref::Get('DBCacheEngine') != $cache_engine) {
-
+        if ($preferencesService->DBCacheEngine != $cache_engine) {
             if (!$cache_engine || \CampCache::IsSupported($cache_engine)) {
-                \SystemPref::Set('DBCacheEngine', $cache_engine);
+                $preferencesService->DBCacheEngine = $cache_engine;
                 \CampCache::singleton()->clear('user');
                 \CampCache::singleton()->clear();
             } else {
@@ -296,11 +297,13 @@ class SystemPrefController extends Controller
      * @return void|RedirectResponse
      */
     private function templateCache($cache_template, $translator) {
-        if (\SystemPref::Get('TemplateCacheHandler') !=  $cache_template && $cache_template) {
+        $preferencesService = $this->container->get('system_preferences_service');
+
+        if ($preferencesService->TemplateCacheHandler !=  $cache_template && $cache_template) {
             $handler = \CampTemplateCache::factory($cache_template);
 
             if ($handler && \CampTemplateCache::factory($cache_template)->isSupported()) {
-                \SystemPref::Set('TemplateCacheHandler', $cache_template);
+                $preferencesService->TemplateCacheHandler = $cache_template;
                 \CampTemplateCache::factory($cache_template)->clean();
             } else {
                 $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
@@ -310,7 +313,7 @@ class SystemPrefController extends Controller
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
             }
         } else {
-            \SystemPref::Set('TemplateCacheHandler', $cache_template);
+            $preferencesService->TemplateCacheHandler = $cache_template;
         }
     }
 
@@ -327,13 +330,15 @@ class SystemPrefController extends Controller
      * @return void|RedirectResponse
      */
     private function useReplication($user, $host, $password, $use_replication, $port, $translator) {
+        $preferencesService = $this->container->get('system_preferences_service');
+
         if ($use_replication == 'Y') {
             // Database Replication Host, User and Password
             if (!empty($host) && !empty($user)) {
-                \SystemPref::Set("DBReplicationHost", strip_tags($host));
-                \SystemPref::Set("DBReplicationUser", strip_tags($user));
-                \SystemPref::Set("DBReplicationPass", strip_tags($password));
-                \SystemPref::Set("UseDBReplication", $use_replication);
+                $preferencesService->DBReplicationHost = strip_tags($host);
+                $preferencesService->DBReplicationUser = strip_tags($user);
+                $preferencesService->DBReplicationPass = strip_tags($password);
+                $preferencesService->UseDBReplication = $use_replication;
             } else {
                 $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.replication', array(), 'system_pref'));
 
@@ -344,9 +349,9 @@ class SystemPrefController extends Controller
                 $port = 3306;
             }
 
-            \SystemPref::Set("DBReplicationPort", $port);
+            $preferencesService->DBReplicationPort = $port;
         } else {
-            \SystemPref::Set("UseDBReplication", 'N');
+            $preferencesService->UseDBReplication = 'N';
         }
     }
 
@@ -358,15 +363,18 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function cronManagement($cron) {
+
+        $preferencesService = $this->container->get('system_preferences_service');
+
         if ($cron != 'Y' && $cron != 'N') {
-            $cron = \SystemPref::Get('ExternalCronManagement');
+            $cron = $preferencesService->ExternalCronManagement;
         }
 
         if ($cron == 'N' && !is_readable(CS_INSTALL_DIR.DIR_SEP.'cron_jobs'.DIR_SEP.'all_at_once')) {
             $cron = 'Y';
         }
 
-        \SystemPref::Set('ExternalCronManagement', $cron);
+        $preferencesService->ExternalCronManagement = $cron;
     }
 
     /**
@@ -379,10 +387,11 @@ class SystemPrefController extends Controller
      */
     private function maxUpload($max_size, $translator) {
         $max_upload_filesize_bytes = trim($max_size);
+        $preferencesService = $this->container->get('system_preferences_service');
 
         if ($max_upload_filesize_bytes > 0 &&
             $max_upload_filesize_bytes <= min(trim(ini_get('post_max_size')), trim(ini_get('upload_max_filesize')))) {
-            \SystemPref::Set("MaxUploadFileSize", strip_tags($max_size));
+            $preferencesService->MaxUploadFileSize = strip_tags($max_size);
         } else {
             $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.maxupload', array(), 'system_pref'));
 
@@ -401,6 +410,9 @@ class SystemPrefController extends Controller
      * @return void|RedirectResponse
      */
     private function geolocation($latitude, $longitude, $geoLocation, $translator) {
+
+        $preferencesService = $this->container->get('system_preferences_service');
+
         if ($latitude > 90 || $latitude < -90 || 
             $longitude > 180 || $longitude < -180) {
 
@@ -408,16 +420,15 @@ class SystemPrefController extends Controller
 
             return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
         } else {
-            \SystemPref::Set('MapCenterLatitudeDefault', $latitude);
-            \SystemPref::Set('MapCenterLongitudeDefault', $longitude);
+            $preferencesService->MapCenterLatitudeDefault = $latitude;
+            $preferencesService->MapCenterLongitudeDefault = $longitude;
         }
 
         foreach ($geoLocation as $key => $value) {
             $name = '';
             foreach (explode('_', $key) as $part) {
                 $name .= ucfirst($part);
-         
-            \SystemPref::Set($name, $value);
+                $preferencesService->$name = $value;
             }
         }
     }
@@ -431,8 +442,9 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function mailchimp($apiKey, $listId) {
-        \SystemPref::Set('mailchimp_apikey', strip_tags($apiKey));
-        \SystemPref::Set('mailchimp_listid', strip_tags($listId));            
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->mailchimp_apikey = strip_tags($apiKey);
+        $preferencesService->mailchimp_listid = strip_tags($listId);            
     }
 
     /**
@@ -444,19 +456,21 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function facebook($appId, $secret) {
-        \SystemPref::Set('facebook_appid', strip_tags($appId));
-        \SystemPref::Set('facebook_appsecret', strip_tags($secret));
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->facebook_appid = strip_tags($appId);
+        $preferencesService->facebook_appsecret = strip_tags($secret);
     }
 
     /**
      * Sets automatic statistics collection options
      *
-     * @param string $automatic_collection Values 1 or 0
+     * @param string $automatic_collection Values Y or N
      *
      * @return void
      */
     private function collectStats($automatic_collection){
-        \SystemPref::Set('CollectStatistics', $automatic_collection);
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->CollectStatistics = $automatic_collection;
     }
 
     /**
@@ -468,8 +482,9 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function smtpConfiguration($host, $port) {
-        \SystemPref::Set('SMTPHost', strip_tags($host));
-        \SystemPref::Set('SMTPPort', $port);
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->SMTPHost = strip_tags($host);
+        $preferencesService->SMTPPort = $port;
     }
 
     /**
@@ -483,10 +498,11 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function imageResizing($ratio, $image_width, $image_height, $zoom) {
-        \SystemPref::Set('EditorImageRatio', $ratio);
-        \SystemPref::Set('EditorImageResizeWidth', $image_width);
-        \SystemPref::Set('EditorImageResizeHeight', $image_height);
-        \SystemPref::Set('EditorImageZoom', $zoom);
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->EditorImageRatio = $ratio;
+        $preferencesService->EditorImageResizeWidth = $image_width;
+        $preferencesService->EditorImageResizeHeight = $image_height;
+        $preferencesService->EditorImageZoom = $zoom;
     }
 
     /**
@@ -497,7 +513,8 @@ class SystemPrefController extends Controller
      * @return void
      */
     private function templateFilter($template_filter) {
-        \SystemPref::Set("TemplateFilter", strip_tags($template_filter));
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->TemplateFilter = strip_tags($template_filter);
     }
 
     /**
@@ -520,19 +537,21 @@ class SystemPrefController extends Controller
      */
     private function generalSettings($title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery, 
         $emailFrom, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
-        \SystemPref::Set('SiteTitle', strip_tags($title));
-        \SystemPref::Set('SiteMetaKeywords', strip_tags($meta_keywords));
-        \SystemPref::Set('SiteMetaDescription', strip_tags($meta_description));
-        \SystemPref::Set('TimeZone', (string)$timezone);
-        \SystemPref::Set('ImagecacheLifetime', $cache_image);
-        \SystemPref::Set('PasswordRecovery', $allow_recovery);
-        \SystemPref::Set('EmailFromAddress', $emailFrom);
-        \SystemPref::Set('SiteSecretKey', strip_tags($secret_key));
-        \SystemPref::Set('SiteSessionLifeTime', $session_lifetime);
-        \SystemPref::Set("KeywordSeparator", strip_tags($separator));
-        \SystemPref::Set("LoginFailedAttemptsNum", $captcha);
+
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->SiteTitle = strip_tags($title);
+        $preferencesService->SiteMetaKeywords = strip_tags($meta_keywords);
+        $preferencesService->SiteMetaDescription = strip_tags($meta_description);
+        $preferencesService->TimeZone = (string)$timezone;
+        $preferencesService->ImagecacheLifetime = $cache_image;
+        $preferencesService->PasswordRecovery = $allow_recovery;
+        $preferencesService->EmailFromAddress = $emailFrom;
+        $preferencesService->SiteSecretKey = strip_tags($secret_key);
+        $preferencesService->SiteSessionLifeTime = $session_lifetime;
+        $preferencesService->KeywordSeparator = strip_tags($separator);
+        $preferencesService->LoginFailedAttemptsNum = $captcha;
         if (strip_tags($mysql_client_command_path)) {
-            \SystemPref::Set('MysqlClientCommandPath', strip_tags($mysql_client_command_path));
+            $preferencesService->MysqlClientCommandPath = strip_tags($mysql_client_command_path);
         }
     }            
 }
