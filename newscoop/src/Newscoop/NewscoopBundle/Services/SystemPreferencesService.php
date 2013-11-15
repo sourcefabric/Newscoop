@@ -27,7 +27,16 @@ class SystemPreferencesService
         $this->em = $em;
     }
 
-    public function __set($property, $value) {
+    /**
+     * Magic function to set given value for given property
+     *
+     * @param  $property Given property
+     * @param  $value    Value for given property
+     *
+     * @return void
+     */
+    public function __set($property, $value) 
+    {
         if (empty($property) || !is_string($property)) {
             return;
         }
@@ -52,9 +61,23 @@ class SystemPreferencesService
             $preference->execute();
 
             $this->$property = $value;
+        } else {
+            $newProperty = new SystemPreferences();
+            $newProperty->setOption($property);
+            $newProperty->setValue($value);
+            $newProperty->setCreatedAt(new \DateTime('now'));
+            $this->em->persist($newProperty);
+            $this->em->flush();
         }
     }
 
+    /**
+     * Magic function to get property value
+     *
+     * @param  $property Given property
+     *
+     * @return string|null
+     */
     public function __get($property)
     {   
         $currentProperty = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')
@@ -67,6 +90,31 @@ class SystemPreferencesService
         } else {
             return null;
         }
+    }
+
+    /**
+     * Set given value for given property
+     * 
+     * @param  $property Given property
+     * @param  $value    Value for given property
+     *
+     * @return void
+     */
+    public function set($property, $value)
+    {
+        $this->$property = $value;
+    }
+
+    /**
+     * Get value for given property
+     *
+     * @param  $property Given property
+     *
+     * @return string
+     */
+    public function get($property)
+    {
+        return $this->$property;
     }
 
     /**

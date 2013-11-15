@@ -70,6 +70,32 @@ class SystemPreferences
     }
 
     /**
+     * Set value
+     *
+     * @param  string $value
+     * @return string
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        
+        return $this;
+    }
+
+    /**
+     * Set option
+     *
+     * @param  string $option
+     * @return string
+     */
+    public function setOption($option)
+    {
+        $this->option = $option;
+        
+        return $this;
+    }
+
+    /**
      * Set create date
      *
      * @param datetime $created_at

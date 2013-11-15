@@ -25,7 +25,7 @@ class SystemPrefController extends Controller
     {   
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
-
+        
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
             ->select('count(a)')
