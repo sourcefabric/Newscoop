@@ -170,9 +170,6 @@ function fnSaveCallback() {
 <?php
 $f_context_box = 1;
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/html_head.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-
-
 require_once LIBS_DIR . '/ContextList/ContextList.php';
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);

@@ -1,5 +1,4 @@
 <?php
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 
 $translator = \Zend_Registry::get('container')->getService('translator');

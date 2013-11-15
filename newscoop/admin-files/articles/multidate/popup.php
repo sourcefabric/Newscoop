@@ -36,7 +36,6 @@ div.comment-holder textarea {
 <?php
 $f_multidate_box = 1;
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/html_head.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 
 
