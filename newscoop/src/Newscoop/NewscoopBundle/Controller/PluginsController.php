@@ -66,16 +66,15 @@ class PluginsController extends Controller
      */
     public function getStreamAction($action, $name)
     {
+        @apache_setenv('no-gzip', 1);
+        @ini_set('implicit_flush', 1);
+
         $response = new Response();
-        $response->headers->set('Transfer-Encoding', 'chunked');
         $response->sendHeaders();
 
         flush();
         ob_flush();
         $this->dump_chunk('<pre>');
-
-        @apache_setenv('no-gzip', 1);
-        @ini_set('implicit_flush', 1);
 
         $newscoopDir = __DIR__ . '/../../../../';
         putenv("COMPOSER_HOME=".$newscoopDir);
