@@ -191,11 +191,6 @@ final class CampContext
             'list' => 'users',
             'url_id' => 'uid',
         ),
-        'communityfeeds' => array(
-            'class' => 'CommunityFeeds',
-            'list' => 'community_feeds',
-            'url_id' => 'cfid',
-        ),
         'boxarticles' => array(
             'class' => 'BoxArticles',
             'list' => 'box_articles',
