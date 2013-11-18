@@ -120,16 +120,6 @@ class SystemPreferencesService
     }
 
     /**
-     * Return whether statistics collecting was set on.
-     *
-     * @return bool
-     */
-    public function collectStatisticsAuto()
-    {   
-        return ($this->CollectStatistics == 'Y');
-    }
-
-    /**
      * Get all available preferences
      *
      * @return array
