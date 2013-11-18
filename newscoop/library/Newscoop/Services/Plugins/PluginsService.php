@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
 use Newscoop\EventDispatcher\Events\PluginHooksEvent;
-use Newscoop\EventDispatcher\Events\ListObjectsEvent;
+use Newscoop\EventDispatcher\Events\CollectObjectsDataEvent;
 
 /**
  * Plugins Service
@@ -100,14 +100,18 @@ class PluginsService
      */
     public function collectListObjects($subject = null, $options = array())
     {
-        $listObjects = array();
-        $listObjectsRegistration = $this->dispatcher->dispatch('newscoop.listobjects.register', new ListObjectsEvent($subject, $options));
+        $collectedData = array('listObjects' => array(), 'objectTypes' => array());
+        $listObjectsRegistration = $this->dispatcher->dispatch('newscoop.listobjects.register', new CollectObjectsDataEvent($subject, $options));
 
-        foreach ($listObjectsRegistration->getObjects() as $key => $object) {
-            $listObjects[$key] = $object;
+        foreach ($listObjectsRegistration->getListObjects() as $key => $object) {
+            $collectedData['listObjects'][$key] = $object;
         }
 
-        return $listObjects;
+        foreach ($listObjectsRegistration->getObjectTypes() as $key => $object) {
+            $collectedData['objectTypes'][$key] = $object;
+        }
+
+        return $collectedData;
     }
 
     public function isEnabled($pluginName)
