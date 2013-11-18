@@ -1,6 +1,7 @@
 <p></p>
 <?php 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 ?>
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -19,22 +20,22 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 <tr>
   <td><?php echo $translator->trans('Enter Client ID', array(), 'plugin_soundcloud'); ?>:</td>
   <td><input type="text" name="f_soundcloud_client_id" class="input_text" size="50"
-    value="<?php p(SystemPref::Get('PLUGIN_SOUNDCLOUD_CLIENT_ID')); ?>" /></td>
+    value="<?php p($preferencesService->get('PLUGIN_SOUNDCLOUD_CLIENT_ID')); ?>" /></td>
 </tr>
 <tr>
   <td><?php echo $translator->trans('Enter Client secret', array(), 'plugin_soundcloud'); ?>:</td>
   <td><input type="text" name="f_soundcloud_client_secret" class="input_text" size="50"
-    value="<?php p(SystemPref::Get('PLUGIN_SOUNDCLOUD_CLIENT_SECRET')); ?>" /></td>
+    value="<?php p($preferencesService->get('PLUGIN_SOUNDCLOUD_CLIENT_SECRET')); ?>" /></td>
 </tr>
 <tr>
   <td><?php echo $translator->trans('Enter permalink or email address', array(), 'plugin_soundcloud'); ?>:</td>
   <td><input type="text" name="f_soundcloud_username" class="input_text" size="50"
-    value="<?php p(SystemPref::Get('PLUGIN_SOUNDCLOUD_USERNAME')); ?>" /></td>
+    value="<?php p($preferencesService->get('PLUGIN_SOUNDCLOUD_USERNAME')); ?>" /></td>
 </tr>
 <tr>
   <td><?php echo $translator->trans('Enter password', array(), 'plugin_soundcloud'); ?>:</td>
   <td><input type="text" name="f_soundcloud_password" class="input_text" size="50"
-    value="<?php p(SystemPref::Get('PLUGIN_SOUNDCLOUD_PASSWORD')); ?>" /></td>
+    value="<?php p($preferencesService->get('PLUGIN_SOUNDCLOUD_PASSWORD')); ?>" /></td>
 </tr>
 <tr>
   <td colspan="2" align="center" style="padding-top: 10px;">

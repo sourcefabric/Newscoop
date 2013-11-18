@@ -4,11 +4,6 @@
  */
 
 /**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-
-/**
  * @package Campsite
  */
 final class MetaSubtitle {
@@ -262,10 +257,11 @@ final class MetaSubtitle {
         unset($imageObj);
 
         $imageOptions = '';
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
         'height'=>'EditorImageResizeHeight');
         foreach (array('ratio', 'width', 'height') as $imageOption) {
-        	$defaultOption = (int)SystemPref::Get($defaultOptions[$imageOption]);
+        	$defaultOption = (int)$preferencesService->get($defaultOptions[$imageOption]);
         	if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
         		$imageOptions .= " $imageOption " . (int)$detailsArray[$imageOption];
         	} elseif ($imageOption != 'ratio' && $defaultOption > 0) {
@@ -277,7 +273,7 @@ final class MetaSubtitle {
         $imageOptions = trim($imageOptions);
 
         $imgZoomLink = '';
-        if (SystemPref::Get("EditorImageZoom") == 'Y' && strlen($imageOptions) > 0) {
+        if ($preferencesService->EditorImageZoom == 'Y' && strlen($imageOptions) > 0) {
         	$uri->uri_parameter = "image";
             $imgZoomLink = '<a href="' . $uri->uri . '" class="photoViewer" ';
             if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {

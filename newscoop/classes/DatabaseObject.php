@@ -6,7 +6,6 @@
 require_once 'PEAR.php';
 require_once dirname(__FILE__) . '/../include/campsite_constants.php';
 require_once dirname(__FILE__) . '/DbObjectArray.php';
-require_once dirname(__FILE__) . '/SystemPref.php';
 require_once dirname(__FILE__) . '/CampCache.php';
 require_once dirname(__FILE__) . '/Exceptions.php';
 
@@ -93,11 +92,13 @@ class DatabaseObject
 	 *
 	 */
 	public function DatabaseObject($p_columnNames = null)
-	{
+	{	
+		$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
 		if (is_null(self::$m_useCache)) {
-			self::$m_useCache = (SystemPref::Get('SiteCacheEnabled') == 'Y') ? true : false;
+			self::$m_useCache = ($preferencesService->SiteCacheEnabled == 'Y') ? true : false;
 			if (self::$m_useCache) {
-				self::$m_cacheEngine = SystemPref::Get('CacheEngine');
+				self::$m_cacheEngine = $preferencesService->CacheEngine;
 			}
 		}
 	    if (!is_null($p_columnNames)) {

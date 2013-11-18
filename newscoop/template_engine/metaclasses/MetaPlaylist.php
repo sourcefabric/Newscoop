@@ -3,10 +3,6 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  * @package Campsite

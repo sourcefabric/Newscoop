@@ -1,6 +1,6 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
-
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 // User role depend on path to this file.
 if (strpos($call_script, '/recaptcha/admin/') !== false && $g_user->hasPermission('plugin_recaptcha_admin')) {
     $is_admin = true;
@@ -23,10 +23,10 @@ if (Input::Get('save')) {
     $f_recaptcha_public_key = Input::Get('f_recaptcha_public_key', 'string');
     $f_recaptcha_private_key = Input::Get('f_recaptcha_private_key', 'string');
 
-    SystemPref::Set('PLUGIN_RECAPTCHA_ENABLED', $f_recaptcha_enabled);
-    SystemPref::Set('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED', $f_recaptcha_subscriptions_enabled);
-    SystemPref::Set('PLUGIN_RECAPTCHA_PUBLIC_KEY', $f_recaptcha_public_key);
-    SystemPref::Set('PLUGIN_RECAPTCHA_PRIVATE_KEY', $f_recaptcha_private_key);
+    $preferencesService->set('PLUGIN_RECAPTCHA_ENABLED', $f_recaptcha_enabled);
+    $preferencesService->set('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED', $f_recaptcha_subscriptions_enabled);
+    $preferencesService->set('PLUGIN_RECAPTCHA_PUBLIC_KEY', $f_recaptcha_public_key);
+    $preferencesService->set('PLUGIN_RECAPTCHA_PRIVATE_KEY', $f_recaptcha_private_key);
 
     camp_html_add_msg($translator->trans('reCAPTCHA preferences updated.', array(), 'plugin_recaptcha'), 'ok');
 }
@@ -61,21 +61,21 @@ camp_html_display_msgs();
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td align="left"><?php echo $translator->trans('Enable reCAPTCHA for comments', array(), 'plugin_recaptcha'); ?></td>
-  <td><input type="checkbox" name="f_recaptcha_enabled" value="Y" <?php if (SystemPref::Get('PLUGIN_RECAPTCHA_ENABLED') == 'Y') p('checked'); ?> /></td>
+  <td><input type="checkbox" name="f_recaptcha_enabled" value="Y" <?php if ($preferencesService->PLUGIN_RECAPTCHA_ENABLED == 'Y') p('checked'); ?> /></td>
 </tr>
 <tr>
   <td align="left"><?php echo $translator->trans('Enable reCAPTCHA for subscriptions', array(), 'plugin_recaptcha'); ?></td>
-  <td><input type="checkbox" name="f_recaptcha_subscriptions_enabled" value="Y" <?php if (SystemPref::Get('PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED') == 'Y') p('checked'); ?> /></td>
+  <td><input type="checkbox" name="f_recaptcha_subscriptions_enabled" value="Y" <?php if ($preferencesService->PLUGIN_RECAPTCHA_SUBSCRIPTIONS_ENABLED == 'Y') p('checked'); ?> /></td>
 </tr>
 <tr>
   <td><?php echo $translator->trans('Enter your reCAPTCHA public key', array(), 'plugin_recaptcha'); ?>:</td>
   <td><input type="text" name="f_recaptcha_public_key" class="input_text" size="40"
-    value="<?php p(SystemPref::Get('PLUGIN_RECAPTCHA_PUBLIC_KEY')); ?>" /></td>
+    value="<?php p($preferencesService->PLUGIN_RECAPTCHA_PUBLIC_KEY); ?>" /></td>
 </tr>
 <tr>
   <td><?php echo $translator->trans('Enter your reCAPTCHA private key', array(), 'plugin_recaptcha'); ?>:</td>
   <td><input type="text" name="f_recaptcha_private_key" class="input_text" size="40"
-    value="<?php p(SystemPref::Get('PLUGIN_RECAPTCHA_PRIVATE_KEY')); ?>" /></td>
+    value="<?php p($preferencesService->PLUGIN_RECAPTCHA_PRIVATE_KEY); ?>" /></td>
 </tr>
 <tr>
   <td colspan="2" align="center" style="padding-top: 10px;">

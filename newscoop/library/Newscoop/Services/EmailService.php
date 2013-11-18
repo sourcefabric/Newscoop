@@ -42,14 +42,15 @@ class EmailService
      * @return void
      */
     public function sendConfirmationToken(User $user)
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $message = $this->view->action('confirm', 'email', 'default', array(
             'user' => $user->getId(),
             'token' => $this->tokenService->generateToken($user, 'email.confirm'),
             'format' => null,
         ));
 
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), \SystemPref::Get('EmailFromAddress'));
+        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
     }
 
     /**
@@ -59,14 +60,15 @@ class EmailService
      * @return void
      */
     public function sendPasswordRestoreToken(User $user)
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $message = $this->view->action('password-restore', 'email', 'default', array(
             'user' => $user->getId(),
             'token' => $this->tokenService->generateToken($user, 'password.restore'),
             'format' => null,
         ));
 
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), \SystemPref::Get('EmailFromAddress'));
+        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
     }
 
     /**
@@ -85,6 +87,7 @@ class EmailService
             return;
         }
 
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $this->view = $GLOBALS['controller']->view;
         $uri = \CampSite::GetURIInstance();
 
@@ -102,7 +105,7 @@ class EmailService
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($this->view->placeholder(self::PLACEHOLDER_SUBJECT));
         $mail->setBodyHtml($message);
-        $mail->setFrom($user ? $user->getEmail() : \SystemPref::Get('EmailFromAddress'));
+        $mail->setFrom($user ? $user->getEmail() : $preferencesService->EmailFromAddress);
 
         foreach ($emails as $email) {
             $mail->addTo($email);
@@ -134,11 +137,12 @@ class EmailService
      * @return void
      */
     private function send($subject, $message, $tos, $from = null)
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $mail = new \Zend_Mail(self::CHARSET);
         $mail->setSubject($subject);
         $mail->setBodyText($message);
-        $mail->setFrom(isset($from) ? $from : \SystemPref::Get('EmailFromAddress'));
+        $mail->setFrom(isset($from) ? $from : $preferencesService->EmailFromAddress);
 
         foreach ((array) $tos as $to) {
             $mail->addTo($to);

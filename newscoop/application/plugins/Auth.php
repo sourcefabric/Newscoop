@@ -72,7 +72,8 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     {
         $auth = Zend_Auth::getInstance();
         $session = new Zend_Session_Namespace($auth->getStorage()->getNamespace());
-        $seconds = SystemPref::Get('SiteSessionLifeTime');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $seconds = $preferencesService->SiteSessionLifeTime;
 
         $gc_works = ini_get('session.gc_probability');
         if (!empty($gc_works)) {
