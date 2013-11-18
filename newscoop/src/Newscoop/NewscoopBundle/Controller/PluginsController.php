@@ -43,7 +43,9 @@ class PluginsController extends Controller
         $response = new JsonResponse();
         $query = $request->get('q', '');
 
-        $browser = new \Buzz\Browser(new \Buzz\Client\Curl());
+        $client = new \Buzz\Client\Curl();
+        $client->setTimeout(3600);
+        $browser = new \Buzz\Browser($client);
         $packagistResponse =  $browser->get('https://packagist.org/search.json?type=newscoop-plugi&q='.$query);
         $packages = json_decode($packagistResponse->getContent(), true);
         $results = $packages['results'];
@@ -64,30 +66,29 @@ class PluginsController extends Controller
      */
     public function getStreamAction($action, $name)
     {
+        @apache_setenv('no-gzip', 1);
+        @ini_set('implicit_flush', 1);
+
         $response = new Response();
-        $response->headers->set('Transfer-Encoding', 'chunked');
         $response->sendHeaders();
 
         flush();
         ob_flush();
         $this->dump_chunk('<pre>');
 
-        @apache_setenv('no-gzip', 1);
-        @ini_set('zlib.output_compression', 0);
-        @ini_set('implicit_flush', 1);
-
         $newscoopDir = __DIR__ . '/../../../../';
         putenv("COMPOSER_HOME=".$newscoopDir);
         $process = new Process('php '.$newscoopDir.'application/console plugins:'. $action .' '. $name);
         $process->setTimeout(3600);
-        $process->run(function ($type, $buffer) {
-            $this->dump_chunk($buffer);
+        $CI = $this;
+        $process->run(function ($type, $buffer) use($CI) {
+            $CI->dump_chunk($buffer);
         });
         $this->dump_chunk('</pre>');
         die();
     }
 
-    private function dump_chunk($chunk) {
+    public function dump_chunk($chunk) {
        echo $chunk;
        echo "\r\n";
        flush();

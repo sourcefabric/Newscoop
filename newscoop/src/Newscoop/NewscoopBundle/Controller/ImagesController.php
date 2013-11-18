@@ -36,5 +36,6 @@ class ImagesController extends Controller
         }
 
         $showImage = new \CampGetImage($imageId, $imageRatio, $imageResizeWidth, $imageResizeHeight, $imageCrop, $resizeCrop);
+        die();
     }
 }

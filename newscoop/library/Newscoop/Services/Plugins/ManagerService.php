@@ -113,7 +113,6 @@ class ManagerService
 
         if ($notify) {
             $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' install');
-
             $process->setTimeout(3600);
             $process->run(function ($type, $buffer) use ($output) {
                 if ('err' === $type) {
@@ -162,7 +161,19 @@ class ManagerService
             if ($package == $pluginName) {
 
                 if ($notify) {
-                    $this->dispatchEventForPlugin($pluginName, 'remove', $output);
+                    $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' remove');
+                    $process->setTimeout(3600);
+                    $process->run(function ($type, $buffer) use ($output) {
+                        if ('err' === $type) {
+                            $output->write('<error>'.$buffer.'</error>');
+                        } else {
+                            $output->write('<info>'.$buffer.'</info>');
+                        }
+                    });
+
+                    if (!$process->isSuccessful()) {
+                        throw new \Exception("Error with dispatching remove event", 1);
+                    }
                 }
 
                 $output->writeln('<info>Remove "'.$pluginName.'" from composer.json file</info>');
@@ -232,7 +243,19 @@ class ManagerService
         $this->clearCache($output);
 
         if ($notify) {
-            $this->dispatchEventForPlugin($pluginName, 'update', $output);
+            $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update');
+            $process->setTimeout(3600);
+            $process->run(function ($type, $buffer) use ($output) {
+                if ('err' === $type) {
+                    $output->write('<error>'.$buffer.'</error>');
+                } else {
+                    $output->write('<info>'.$buffer.'</info>');
+                }
+            });
+
+            if (!$process->isSuccessful()) {
+                throw new \Exception("Error with dispatching update event", 1);
+            }
         }
 
         $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/update_'.str_replace('/', '-', $pluginName).'_package.json';
@@ -355,6 +378,8 @@ class ManagerService
         if (!file_exists($this->newsoopDir.'/cache/plugins')) {
             $filesystem = new Filesystem();
             $filesystem->mkdir($this->newsoopDir.'/cache/plugins');
+            $filesystem->mkdir($this->newsoopDir.'/cache/prod');
+            $filesystem->mkdir($this->newsoopDir.'/cache/dev');
         }
     }
 }
