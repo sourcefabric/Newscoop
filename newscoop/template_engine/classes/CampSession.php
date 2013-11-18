@@ -45,9 +45,6 @@ final class CampSession
      */
     private function __construct()
     {
-        // makes sure session will use files to store its data
-        @ini_set('session.save_handler', 'files');
-
         $this->start();
 
         $this->setStatus(ACTIVE);
