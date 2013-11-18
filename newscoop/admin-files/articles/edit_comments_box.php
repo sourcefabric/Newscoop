@@ -1,5 +1,6 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 ?>
 			<table width="100%" style="border: 1px solid #EEEEEE;">
 			<tr>
@@ -16,7 +17,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
             <tr>
 				<td align="left" width="100%" style="padding-left: 8px;">
                 <?php
-                if (SystemPref::Get("UseDBReplication") == 'Y') {
+                if ($preferencesService->UseDBReplication == 'Y') {
                     if ($connectedToOnlineServer) {
                 ?>
                     <span class="success_message">

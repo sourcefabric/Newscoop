@@ -17,20 +17,20 @@ require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');
 // sets the PEAR local directory
 set_include_path(CS_PATH_SITE.'/library'.PATH_SEPARATOR.CS_PATH_PEAR_LOCAL.PATH_SEPARATOR.get_include_path());
 
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSession.php');
 
 
 /** System settings **/
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 $Campsite['campsite']['url_default_type'] = 2;
-$Campsite['campsite']['secret_key'] = SystemPref::Get('SiteSecretKey');
-$Campsite['campsite']['session_lifetime'] = SystemPref::Get('SiteSessionLifeTime');
+$Campsite['campsite']['secret_key'] = $preferencesService->SiteSecretKey;
+$Campsite['campsite']['session_lifetime'] = $preferencesService->SiteSessionLifeTime;
 
 /** General settings **/
-$Campsite['site']['online'] = SystemPref::Get('SiteOnline');
-$Campsite['site']['title'] = SystemPref::Get('SiteTitle');
-$Campsite['site']['keywords'] = SystemPref::Get('SiteMetaKeywords');
-$Campsite['site']['description'] = SystemPref::Get('SiteMetaDescription');
+$Campsite['site']['online'] = $preferencesService->SiteOnline;
+$Campsite['site']['title'] = $preferencesService->SiteTitle;
+$Campsite['site']['keywords'] = $preferencesService->SiteMetaKeywords;
+$Campsite['site']['description'] = $preferencesService->SiteMetaDescription;
 $Campsite['site']['charset'] = 'utf-8';
 $Campsite['site']['help_url'] = 'http://www.sourcefabric.org/en/products/newscoop_support/';
 $Campsite['site']['about_url'] = 'http://www.sourcefabric.org/en/about/page/';
@@ -62,8 +62,8 @@ $Campsite['xmlrpc_storage']['path'] = '/mma/xmlrpc/';
 $Campsite['xmlrpc_storage']['file'] = 'xrLocStor.php';
 
 /** Mailer settings **/
-$Campsite['smtp']['host'] = SystemPref::Get('SMTPHost');
-$Campsite['smtp']['port'] = SystemPref::Get('SMTPPort');
+$Campsite['smtp']['host'] = $preferencesService->SMTPHost;
+$Campsite['smtp']['port'] = $preferencesService->SMTPPort;
 $Campsite['smtp']['default_host'] = 'localhost';
 $Campsite['smtp']['default_port'] = 25;
 

@@ -7,8 +7,8 @@
 
 namespace Newscoop\MailChimp;
 
-use ArrayAccess;
 use Rezzza\MailChimp\MCAPI;
+use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
 
 /**
  */
@@ -20,12 +20,12 @@ class ApiFactory
     private $apikey;
 
     /**
-     * @param MCAPI $api
-     * @param array $config
+     * @param MCAPI                    $api
+     * @param SystemPreferencesService $service
      */
-    public function __construct(ArrayAccess $config)
+    public function __construct(SystemPreferencesService $service)
     {
-        $this->apikey = $config['mailchimp_apikey'];
+        $this->apikey = $service->get('mailchimp_apikey');
     }
 
     /**

@@ -13,6 +13,7 @@ class EmailController extends Zend_Controller_Action
     {
         $uri = CampSite::GetURIInstance();
         $themePath = $uri->getThemePath();
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         $this->view = new Newscoop\SmartyView();
         $this->view
@@ -30,7 +31,7 @@ class EmailController extends Zend_Controller_Action
             ->disableLayout();
 
         $this->view->publication = $this->getRequest()->getServer('SERVER_NAME', 'localhost');
-        $this->view->site = \SystemPref::Get('SiteTitle');
+        $this->view->site = $preferencesService->SiteTitle;
 
         $this->_helper->contextSwitch()
             ->addActionContext('comment-notify', 'xml')

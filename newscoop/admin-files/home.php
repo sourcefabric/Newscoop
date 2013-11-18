@@ -6,6 +6,7 @@ require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetContext.php'
 require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php';
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
 // install default widgets for admin
 WidgetManager::SetDefaultWidgetsAll();
@@ -15,15 +16,15 @@ echo camp_html_breadcrumbs(array(
     array($translator->trans('Dashboard', array(), 'home'), ''),
 ));
 
-if (!SystemPref::get('stat_ask_time')) SystemPref::set('stat_ask_time', 0);
+if (!$preferencesService->stat_ask_time) $preferencesService->stat_ask_time = '0';
 
-if (!SystemPref::get('installation_id')) {
+if (!$preferencesService->installation_id) {
     $installationId = sha1($_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'].mt_rand());
-    SystemPref::set('installation_id', $installationId);
+    $preferencesService->installation_id = $installationId;
 }
 
 $request_only = false;
-if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') <= time() && empty($_SESSION['statDisplayed'])) {
+if (!$preferencesService->support_send && (int) $preferencesService->stat_ask_time <= time() && empty($_SESSION['statDisplayed'])) {
     $statUrl = $Campsite['WEBSITE_URL'].'/admin/support/popup';
     $request_only = true;
     ?><a style="display: none;" id="dummy_stat_link" href="<?php echo($statUrl); ?>"></a><?php
@@ -36,7 +37,6 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
     // Clear cache engine's cache
     CampCache::singleton()->clear('user');
     CampCache::singleton()->clear();
-    SystemPref::DeleteSystemPrefsFromCache();
 
     // Clear compiled templates
     require_once dirname(dirname(__FILE__)) . '/template_engine/classes/CampTemplate.php';

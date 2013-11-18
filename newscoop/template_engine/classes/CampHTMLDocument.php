@@ -309,9 +309,10 @@ final class CampHTMLDocument
 
         $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         // on template caching add additional info
-        if (SystemPref::Get('TemplateCacheHandler')) {
+        if ($preferencesService->TemplateCacheHandler) {
             $uri = CampSite::GetURIInstance();
             $tpl->campsiteVector = $uri->getCampsiteVector();
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));

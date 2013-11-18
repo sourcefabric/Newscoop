@@ -59,7 +59,7 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('strpos', 'strpos'),
             new \Twig_SimpleFunction('getBreadcrumbsArray', array($this, 'getBreadcrumbsArray')),
             new \Twig_SimpleFunction('getReCaptchaImage', array($this, 'getReCaptchaImage')),
-            new \Twig_SimpleFunction('getSystemPref', '\SystemPref::Get'),
+            new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
         );
     }
 

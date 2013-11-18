@@ -62,7 +62,9 @@ class AuthController extends Zend_Controller_Action
     }
 
     public function socialAction()
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
         $config = array(
 		    'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))), 
 		    'debug_mode' => false,
@@ -70,8 +72,8 @@ class AuthController extends Zend_Controller_Action
 			    'Facebook' => array(
 				    'enabled' => true,
                     'keys'    => array(
-                        'id' => SystemPref::Get('facebook_appid'),
-                        'secret' => SystemPref::Get('facebook_appsecret'),
+                        'id' => $preferencesService->facebook_appid,
+                        'secret' => $preferencesService->facebook_appsecret,
                     ), 
                 ),
             ),

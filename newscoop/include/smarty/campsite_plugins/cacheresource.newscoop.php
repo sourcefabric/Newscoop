@@ -5,7 +5,8 @@ class Smarty_CacheResource_Newscoop {
     function __construct(&$smarty)
     {
         $this->smarty = $smarty;
-        $this->cacheClass = 'TemplateCacheHandler_' . SystemPref::Get('TemplateCacheHandler');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $this->cacheClass = 'TemplateCacheHandler_' . $preferencesService->TemplateCacheHandler;
     }
 
     public static function content($template, $content = null)

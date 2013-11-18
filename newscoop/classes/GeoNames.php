@@ -42,15 +42,16 @@ class Geo_Names extends DatabaseObject
     {
         $loc_found = array();
         $rem_found = array();
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
-        if (SystemPref::Get('GeoSearchLocalGeonames')) {
+        if ($preferencesService->GeoSearchLocalGeonames) {
             $loc_found = $this->FindCitiesByNameLocal($cityName, $countryCode);
         }
         if (!is_array($loc_found)) {
             $loc_found = array();
         }
 
-        if (SystemPref::Get('GeoSearchMapquestNominatim')) {
+        if ($preferencesService->GeoSearchMapquestNominatim) {
             $rem_found = $this->FindCitiesByNameRemote($cityName, $countryCode);
         }
         if (!is_array($rem_found)) {
@@ -166,6 +167,7 @@ class Geo_Names extends DatabaseObject
 
         $request_url = 'http://open.mapquestapi.com/nominatim/v1/search.php?format=json&q=';
         //$request_url = 'http://nominatim.openstreetmap.org/search?format=json&q=';
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         $streetAddress = trim($streetAddress);
         if (empty($streetAddress)) {
@@ -179,7 +181,7 @@ class Geo_Names extends DatabaseObject
             $request_url .=  '&countrycodes=' . urlencode($countryCode);
         }
 
-        $geo_preferred_lang = SystemPref::Get('GeoSearchPreferredLanguage');
+        $geo_preferred_lang = $preferencesService->GeoSearchPreferredLanguage;
         if (empty($geo_preferred_lang)) {
             $geo_preferred_lang = 'en';
         }

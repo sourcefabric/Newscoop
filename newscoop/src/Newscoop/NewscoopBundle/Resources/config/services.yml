@@ -67,6 +67,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
+    system_preferences_service:
+        class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
+        arguments:  ['@em']
+
     newscoop_newscoop.translation_template_listener:
         class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
         arguments:  ['@translator']

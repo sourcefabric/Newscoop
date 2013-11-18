@@ -1569,9 +1569,9 @@ class Article extends DatabaseObject {
      */
     public function getKeywords()
     {
-        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $keywords = $this->m_data['Keywords'];
-        $keywordSeparator = SystemPref::Get("KeywordSeparator");
+        $keywordSeparator = $preferencesService->KeywordSeparator;
         return str_replace(",", $keywordSeparator, $keywords);
     } // fn getKeywords
 
@@ -1594,8 +1594,8 @@ class Article extends DatabaseObject {
      */
     public function setKeywords($p_value)
     {
-        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-        $keywordsSeparator = SystemPref::Get('KeywordSeparator');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $keywordsSeparator = $preferencesService->KeywordSeparator;
         $p_value = str_replace($keywordsSeparator, ",", $p_value);
         CampCache::singleton()->clear('user');
 

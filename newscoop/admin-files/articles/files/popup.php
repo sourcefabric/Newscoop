@@ -1,9 +1,9 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
 $inArchive = !empty($_REQUEST['archive']);
 
@@ -23,7 +23,7 @@ if (!$inArchive) {
     $articleObj = new Article($f_language_selected, $f_article_number);
 }
 
-if (camp_convert_bytes((SystemPref::Get('MaxUploadFileSize'))) == false) {
+if (camp_convert_bytes(($preferencesService->MaxUploadFileSize)) == false) {
 	camp_html_add_msg($translator->trans("The maximum file upload size was not configured in Newscoop.", array(), 'article_files'));
 	camp_html_add_msg($translator->trans("Please make sure you upgraded the database correctly: run $1 in a shell.", array(
 			'$1' => $Campsite['BIN_DIR'].'/campsite-create-instance --db_name '.$Campsite['DATABASE_NAME']), 'article_files'));
@@ -82,9 +82,9 @@ camp_html_display_msgs();
 <tr>
   <td align="right"><?php echo $translator->trans("File"); ?>:</td>
   <td>
-    <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes(SystemPref::Get('MaxUploadFileSize')))); ?>" />
+    <input type="hidden" name="MAX_FILE_SIZE" value="<?php p(intval(camp_convert_bytes($preferencesService->MaxUploadFileSize))); ?>" />
     <input type="file" name="f_file" size="32" class="input_file" /><br />
-    <?php echo $translator->trans("Maximum Upload Size", array(), 'article_files'); p(" = " . SystemPref::Get('MaxUploadFileSize')); ?>
+    <?php echo $translator->trans("Maximum Upload Size", array(), 'article_files'); p(" = " . $preferencesService->MaxUploadFileSize); ?>
   </td>
 </tr>
 <tr>
