@@ -3,7 +3,6 @@
  * @package Campsite
  */
 
-require_once dirname(__FILE__) . '/SystemPref.php';
 
 /**
  * @package Campsite
@@ -16,8 +15,9 @@ class Geo_Preferences extends DatabaseObject {
      * @return string
      */
 public static function GetMapProviderDefault()
-{
-    $map_prov_default = SystemPref::Get('MapProviderDefault');
+{   
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+    $map_prov_default = $preferencesService->MapProviderDefault;
     if (!$map_prov_default) {$map_prov_default = 'googlev3';}
     else {$map_prov_default = strtolower($map_prov_default);}
 
@@ -25,7 +25,7 @@ public static function GetMapProviderDefault()
 
     $provider_available = true;
 
-    $one_prov_usage = SystemPref::Get('MapProviderAvailable' . ucfirst($sys_pref_names[$map_prov_default]));
+    $one_prov_usage = $preferencesService->MapProviderAvailable . ucfirst($sys_pref_names[$map_prov_default]);
     if (!$one_prov_usage) {$provider_available = false;}
     if (in_array(strtolower($one_prov_usage), array('0', 'false', 'no'))) {$provider_available = false;}
 
@@ -33,7 +33,7 @@ public static function GetMapProviderDefault()
     {
         foreach ($sys_pref_names as $one_provider => $one_prov_name)
         {
-            $one_prov_usage = SystemPref::Get('MapProviderAvailable' . ucfirst($sys_pref_names[$one_prov_name]));
+            $one_prov_usage = $preferencesService->MapProviderAvailable . ucfirst($sys_pref_names[$one_prov_name]);
 
             if (!$one_prov_usage) {continue;}
             if (in_array(strtolower($one_prov_usage), array('0', 'false', 'no'))) {continue;}
@@ -64,19 +64,20 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
 
 
-    $map_width = SystemPref::Get('MapViewWidthDefault');
+    $map_width = $preferencesService->MapViewWidthDefault;
     if (!$map_width) {$map_width = 600;}
-    $map_height = SystemPref::Get('MapViewHeightDefault');
+    $map_height = $preferencesService->MapViewHeightDefault;
     if (!$map_height) {$map_height = 400;}
 
-    $map_view_long = SystemPref::Get('MapCenterLongitudeDefault');
-    $map_view_lat = SystemPref::Get('MapCenterLatitudeDefault');
-    $map_view_resol = SystemPref::Get('MapDisplayResolutionDefault');
+    $map_view_long = $preferencesService->MapCenterLongitudeDefault;
+    $map_view_lat = $preferencesService->MapCenterLatitudeDefault;
+    $map_view_resol = $preferencesService->MapDisplayResolutionDefault;
 
     if (!$map_view_long) {$map_view_long = '14.424133';}
     if (!$map_view_lat) {$map_view_lat = '50.089926';}
@@ -95,7 +96,7 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
     }
     else
     {
-        $map_prov_default = SystemPref::Get('MapProviderDefault');
+        $map_prov_default = $preferencesService->MapProviderDefault;
         if (!$map_prov_default) {$map_prov_default = '';}
         else {$map_prov_default = strtolower($map_prov_default);}
     }
@@ -126,7 +127,7 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
 
         if (!$use_single_provider)
         {
-            $one_prov_usage = SystemPref::Get('MapProviderAvailable' . ucfirst($sys_pref_names[$one_prov_name]));
+            $one_prov_usage = $preferencesService->MapProviderAvailable . ucfirst($sys_pref_names[$one_prov_name]);
 
             if (!$one_prov_usage) {continue;}
             if (in_array(strtolower($one_prov_usage), array('0', 'false', 'no'))) {continue;}
@@ -233,6 +234,7 @@ public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
@@ -241,7 +243,7 @@ public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
 
     $use_icons = array();
 
-    $icons_subpath = SystemPref::Get('MapMarkerDirectory');
+    $icons_subpath = $preferencesService->MapMarkerDirectory;
     if (!$icons_subpath)
     {
         $icons_subpath = '/js/geocoding/markers';
@@ -255,7 +257,7 @@ public static function GetIconsInfo($p_htmlDir, $p_websiteUrl)
         return $no_arr;
     }
 
-    $icons_default_name = SystemPref::Get('MapMarkerSourceDefault');
+    $icons_default_name = $preferencesService->MapMarkerSourceDefault;
     if (!$icons_default_name) {$icons_default_name = '';}
 
     $img_suffixes = array('png', 'gif', 'jpg', 'jpe', 'jpeg', 'svg', 'pbm', 'bmp', 'xpm', 'xbm', 'tif', 'tiff');
@@ -418,14 +420,15 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
 
-    $popup_width = SystemPref::Get('MapPopupWidthMin');
+    $popup_width = $preferencesService->MapPopupWidthMin;
     if (!$popup_width) {$popup_width = 300;}
 
-    $popup_height = SystemPref::Get('MapPopupHeightMin');
+    $popup_height = $preferencesService->MapPopupHeightMin;
     if (!$popup_height) {$popup_height = 200;}
 
     $size_info = array('width' => $popup_width, 'height' => $popup_height);
@@ -441,8 +444,8 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
     {
         if ('' == $one_video_label) {continue;}
 
-        $video_width = SystemPref::Get('MapVideoWidth' . ucfirst($one_video_label));
-        $video_height = SystemPref::Get('MapVideoHeight' . ucfirst($one_video_label));
+        $video_width = $preferencesService->MapVideoWidth . ucfirst($one_video_label);
+        $video_height = $preferencesService->MapVideoHeight . ucfirst($one_video_label);
 
         if ((!$video_width) && ('' == $video_width)) {continue;}
         if ((!$video_height) && ('' == $video_height)) {continue;}
@@ -461,8 +464,8 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
     $flash_server = '';
     $flash_directory = '';
     {
-        $flash_server_setting = SystemPref::Get('FlashServer');
-        $flash_directory_setting = SystemPref::Get('FlashDirectory');
+        $flash_server_setting = $preferencesService->FlashServer;
+        $flash_directory_setting = $preferencesService->FlashDirectory;
 
         // if not a flash server set, use the cs server
         if ((!$flash_server_setting) || ('' == $flash_server_setting))
@@ -532,6 +535,7 @@ public static function GetIconsFiles($p_htmlDir = '', $p_websiteUrl = '')
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
@@ -540,7 +544,7 @@ public static function GetIconsFiles($p_htmlDir = '', $p_websiteUrl = '')
 
     $use_icons = array();
 
-    $icons_subpath = SystemPref::Get('MapMarkerDirectory');
+    $icons_subpath = $preferencesService->MapMarkerDirectory;
     if (!$icons_subpath)
     {
         $icons_subpath = '/js/geocoding/markers';
@@ -594,15 +598,16 @@ public static function GetIconsFiles($p_htmlDir = '', $p_websiteUrl = '')
      * @return array
      */
 public static function GetFocusInfo($p_htmlDir = '', $p_websiteUrl = '')
-{
-    $focus_default = SystemPref::Get('MapAutoFocusDefault');
+{   
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+    $focus_default = $preferencesService->MapAutoFocusDefault;
     if (!$focus_default) {$focus_default = false;}
     else {$focus_default = true;}
 
-    $focus_maxzoom = SystemPref::Get('MapAutoFocusMaxZoom');
+    $focus_maxzoom = $preferencesService->MapAutoFocusMaxZoom;
     if (!$focus_maxzoom) {$focus_maxzoom = 18;}
 
-    $focus_border = SystemPref::Get('MapAutoFocusBorder');
+    $focus_border = $preferencesService->MapAutoFocusBorder;
     if (!$focus_border) {$focus_border = 100;}
 
     $res_focus_info = array('auto_focus' => $focus_default, 'max_zoom' => $focus_maxzoom, 'border' => $focus_border);
@@ -623,13 +628,14 @@ public static function GetIncludeCSS($p_htmlDir = '', $p_websiteUrl = '')
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
 
     $css_files = array();
 
-    $css_map_file = SystemPref::Get('MapAutoCSSFile');
+    $css_map_file = $preferencesService->MapAutoCSSFile;
     if ($css_map_file)
     {
         $css_map_file = '' . $css_map_file;
@@ -657,11 +663,12 @@ public static function GetIconsWebDir($p_htmlDir = '', $p_websiteUrl = '')
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
 
-    $icons_subpath = SystemPref::Get('MapMarkerDirectory');
+    $icons_subpath = $preferencesService->MapMarkerDirectory;
     if (!$icons_subpath)
     {
         $icons_subpath = '/javascript/geocoding/markers';

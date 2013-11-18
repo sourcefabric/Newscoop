@@ -14,18 +14,20 @@ class SoundcloudAPI
     public function SoundcloudAPI()
     {
         self::_checkCURL();
-        $this->_token = SystemPref::Get('PLUGIN_SOUNDCLOUD_ACCESS_TOKEN');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $this->_token = $preferencesService->get('PLUGIN_SOUNDCLOUD_ACCESS_TOKEN');
     }
 
     public function login()
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $ch = curl_init();
         $url = 'https://api.soundcloud.com/oauth2/token';
-        $data = 'client_id=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_CLIENT_ID')
-              . '&client_secret=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_CLIENT_SECRET')
+        $data = 'client_id=' . $preferencesService->get('PLUGIN_SOUNDCLOUD_CLIENT_ID')
+              . '&client_secret=' . $preferencesService->get('PLUGIN_SOUNDCLOUD_CLIENT_SECRET')
               . '&grant_type=password'
-              . '&username=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_USERNAME')
-              . '&password=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_PASSWORD')
+              . '&username=' . $preferencesService->get('PLUGIN_SOUNDCLOUD_USERNAME')
+              . '&password=' . $preferencesService->get('PLUGIN_SOUNDCLOUD_PASSWORD')
               . '&scope=non-expiring';
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -38,10 +40,10 @@ class SoundcloudAPI
         curl_close($ch);
         $aToken = @json_decode($result, true);
         if (empty($aToken['error']) && !empty($aToken['access_token'])) {
-            SystemPref::Set('PLUGIN_SOUNDCLOUD_ACCESS_TOKEN', $aToken['access_token']);
+            $preferencesService->set('PLUGIN_SOUNDCLOUD_ACCESS_TOKEN', $aToken['access_token']);
             $this->_token = $aToken['access_token'];
             $this->error = null;
-            $userid = SystemPref::Get('PLUGIN_SOUNDCLOUD_USER_ID');
+            $userid = $preferencesService->get('PLUGIN_SOUNDCLOUD_USER_ID');
             if (empty($userid)) {
                 $this->profile();
             }
@@ -63,8 +65,10 @@ class SoundcloudAPI
                 $search .= $key . '=' . urlencode($value) . '&';
             }
         }
+
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $ch = curl_init();
-        $id = SystemPref::Get('PLUGIN_SOUNDCLOUD_USER_ID');
+        $id = $preferencesService->get('PLUGIN_SOUNDCLOUD_USER_ID');
         //$url = "https://api.soundcloud.com/tracks.json?" . $search;
         $url = "https://api.soundcloud.com/users/$id/tracks.json?" . $search;
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -148,11 +152,12 @@ class SoundcloudAPI
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $result = curl_exec($ch);
         curl_close($ch);
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
-            SystemPref::Set('PLUGIN_SOUNDCLOUD_USER_ID', $aResult['id']);
+            $preferencesService->set('PLUGIN_SOUNDCLOUD_USER_ID', $aResult['id']);
             return $aResult;
         } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
@@ -224,12 +229,14 @@ class SoundcloudAPI
     }
 
     function setList()
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
         if (!$this->_token && !$this->login()) {
             return array();
         }
         $ch = curl_init();
-        $id = SystemPref::Get('PLUGIN_SOUNDCLOUD_USER_ID');
+        $id = $preferencesService->get('PLUGIN_SOUNDCLOUD_USER_ID');
         $url = "https://api.soundcloud.com/users/$id/playlists.json?";
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $this->_token));

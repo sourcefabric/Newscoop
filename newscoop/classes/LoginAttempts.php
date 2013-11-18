@@ -7,7 +7,6 @@
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 class LoginAttempts {
 
@@ -51,7 +50,8 @@ class LoginAttempts {
 	{
 		global $g_ado_db;
 		$userIp = getenv('REMOTE_ADDR');
-		$maxFailuresAllowed = SystemPref::Get('LoginFailedAttemptsNum');
+		$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+		$maxFailuresAllowed = $preferencesService->LoginFailedAttemptsNum;
 		if (is_null($maxFailuresAllowed)) {
 			$maxFailuresAllowed = 3;
 		}

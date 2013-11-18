@@ -25,12 +25,13 @@ class PasswordRecoveryController extends Controller
     public function indexAction(Request $request)
     {
         $translator = $this->container->get('translator');
+        $preferencesService = $this->container->get('system_preferences_service');
         $sent = false;
         $error = '';
         $disabled = false;
         $form = $this->container->get('form.factory')->create(new PasswordRecoveryType(), array(), array());
 
-        if (\SystemPref::Get("PasswordRecovery") == 'N') {
+        if ($preferencesService->get("PasswordRecovery") == 'N') {
             $disabled = true;
         } else {
             if ($request->isMethod('POST')) {
@@ -72,6 +73,7 @@ class PasswordRecoveryController extends Controller
     public function checkTokenAction(Request $request)
     {   
         $translator = $this->container->get('translator');
+        $preferencesService = $this->container->get('system_preferences_service');
         $email = $request->get('email');
         $token = $request->get('token');
         $noPassword = false;
@@ -79,7 +81,7 @@ class PasswordRecoveryController extends Controller
         $error = '';
         $form = $this->container->get('form.factory')->create(new PasswordCheckType(), array(), array());
 
-        if (\SystemPref::Get("PasswordRecovery") == 'N') {
+        if ($preferencesService->get("PasswordRecovery") == 'N') {
             $noPassword = false;
             $error = $translator->trans('Password recovery is disabled.', array(), 'home');
         } elseif (!stristr($email, "@") == false && strlen($token) > 4) {
@@ -165,13 +167,14 @@ class PasswordRecoveryController extends Controller
     public function sendToken($email, $token)
     {
         $translator = $this->container->get('translator');
+        $preferencesService = $this->container->get('system_preferences_service');
 
         $link = $this->container->get('router')->generate('newscoop_newscoop_passwordrecovery_checktoken', array(
             'token' => $token, 
             'email' => $email
         ), true);
         
-        $from = \SystemPref::Get('PasswordRecoveryFrom');
+        $from = $preferencesService->get('PasswordRecoveryFrom');
         if (empty($from)) {
             $from = 'no-reply@' . $this->getRequest()->getHost();
         }

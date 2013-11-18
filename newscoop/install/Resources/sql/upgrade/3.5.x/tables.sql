@@ -318,17 +318,6 @@ CREATE TABLE IF NOT EXISTS `user_attribute` (
   PRIMARY KEY (`user_id`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `community_ticker_event`;
-CREATE TABLE IF NOT EXISTS `community_ticker_event` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `event` varchar(80) NOT NULL,
-  `params` text,
-  `created` datetime NOT NULL,
-  `user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 DROP TABLE IF EXISTS `user_points_index`;
 CREATE TABLE IF NOT EXISTS `user_points_index` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,

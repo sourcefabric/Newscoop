@@ -195,13 +195,14 @@ class WidgetManager
      * @return void
      */
     public static function SetDefaultWidgetsAll()
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         // do only once
-        if (SystemPref::Get(self::SETTING) != NULL) {
+        if ($preferencesService->get(self::SETTING) != NULL) {
             return;
         }
 
-        SystemPref::Set(self::SETTING, time());
+        $preferencesService->set(self::SETTING, time());
 
         // set widgets per user
         $users = (array) $GLOBALS['controller']->getHelper('service')->getService('user')->findBy(array(

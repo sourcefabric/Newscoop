@@ -23,8 +23,10 @@ class Storage extends PhpBridgeSessionStorage
      * @param MetadataBag                                                      $metaBag MetadataBag
     */
     public function __construct(array $options = array(), $handler = null, MetadataBag $metaBag = null)
-    {
-        $seconds = \SystemPref::Get('SiteSessionLifeTime');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
+        $seconds = $preferencesService->SiteSessionLifeTime;
         
         $options['cookie_lifetime'] = $seconds;
         $options['gc_maxlifetime'] = $seconds;

@@ -34,18 +34,19 @@ EOT
      * @see Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
-    {
-        $supportSend = \SystemPref::get('support_send');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $supportSend = $preferencesService->support_send;
         if ($supportSend) {
             $stats = $this->getApplication()->getKernel()->getContainer()->getService('stat')->getAll();
             
             $statsUrl = 'http://stat.sourcefabric.org';
             $parameters = array('p' => 'newscoop');
             $parameters['installation_id'] = $stats['installationId'];
-            $parameters['server'] = \SystemPref::get('support_stats_server');
-            $parameters['ip_address'] = \SystemPref::get('support_stats_ip_address');
+            $parameters['server'] = $preferencesService->support_stats_server;
+            $parameters['ip_address'] = $preferencesService->support_stats_ip_address;
             $parameters['ram_used'] = $stats['ramUsed'];
-            $parameters['ram_total'] = \SystemPref::get('support_stats_ram_total');
+            $parameters['ram_total'] = $preferencesService->support_stats_ram_total;
             $parameters['version'] = $stats['version'];
             $parameters['install_method'] = $stats['installMethod'];
             $parameters['publications'] = $stats['publications'];

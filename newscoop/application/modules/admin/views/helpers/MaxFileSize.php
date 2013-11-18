@@ -16,8 +16,9 @@ class Admin_View_Helper_MaxFileSize extends Zend_View_Helper_Abstract
      * @return string
      */
     public function maxFileSize()
-    {
-        $maxFileSize = SystemPref::Get('MaxUploadFileSize');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $maxFileSize = $preferencesService->MaxUploadFileSize;
         if (!$maxFileSize) {
             $maxFileSize = ini_get('upload_max_filesize');
         }

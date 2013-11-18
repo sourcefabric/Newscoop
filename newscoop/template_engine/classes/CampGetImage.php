@@ -100,7 +100,8 @@ class CampGetImage
     public function __construct($p_imageId, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0, $p_imageCrop = null, $p_resizeCrop = null)
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
-        $this->m_ttl = SystemPref::Get('ImagecacheLifetime');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $this->m_ttl = $preferencesService->ImagecacheLifetime;
 
         if (empty($p_imageId) || !is_numeric($p_imageId)) {
             $this->ExitError('Invalid parameters');

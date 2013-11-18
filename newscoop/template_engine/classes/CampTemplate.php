@@ -44,7 +44,8 @@ final class CampTemplate extends Smarty
         $this->use_sub_dirs = $config->getSetting('smarty.use_subdirs');
 
         // cache settings
-        $cacheHandler = SystemPref::Get('TemplateCacheHandler');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $cacheHandler = $preferencesService->TemplateCacheHandler;
         $auth = Zend_Auth::getInstance();
         if ($cacheHandler) {
             $this->caching = 1;

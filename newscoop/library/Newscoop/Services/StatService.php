@@ -34,8 +34,6 @@ class StatService
     
     public function getAll()
     {
-        require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-        
         $stats = array();
         $stats['installationId'] = $this->getInstallationId();
         $stats['server'] = $this->getServer();
@@ -63,8 +61,10 @@ class StatService
     }
     
     public function getInstallationId()
-    {
-        return(\SystemPref::get('installation_id'));
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        
+        return($preferencesService->installation_id);
     }
     
     public function getServer()

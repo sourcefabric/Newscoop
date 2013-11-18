@@ -133,16 +133,6 @@ final class CampContext
             'list' => 'users',
             'url_id' => 'uid',
         ),
-        'newscoop\communitytickerbundle\templatelist\communityfeeds' => array(
-            'class' => 'Newscoop\CommunityTickerBundle\TemplateList\CommunityFeeds',
-            'list' => 'community_ticker',
-            'url_id' => 'ctid',
-        ),
-        'communityfeeds' => array(
-            'class' => 'CommunityFeeds',
-            'list' => 'community_feeds',
-            'url_id' => 'cfid',
-        ),
         'boxarticles' => array(
             'class' => 'BoxArticles',
             'list' => 'box_articles',

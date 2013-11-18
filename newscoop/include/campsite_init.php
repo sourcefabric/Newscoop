@@ -32,7 +32,8 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampSite.php');
 require_once($GLOBALS['g_campsiteDir'].'/admin-files/lib_campsite.php');
 
 // set timezone
-$timeZone = SystemPref::Get('TimeZone');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+$timeZone = $preferencesService->TimeZone;
 if (!empty($timeZone)) {
     $g_ado_db->Execute("SET SESSION time_zone = '" . $timeZone . ":00'");
     $timeZone[0] = $timeZone[0] == '-' ? '+' : '-';
