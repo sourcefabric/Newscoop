@@ -144,6 +144,9 @@ services:
     search.indexer.article:
         class: Newscoop\Search\ArticleIndexer
         arguments: ["@em", "@search.index"]
+    preferences:
+        class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
+        arguments: ["@em"]
     mailchimp.api.factory:
         class: Newscoop\MailChimp\ApiFactory
         arguments: ["@preferences"]
