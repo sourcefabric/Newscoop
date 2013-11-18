@@ -62,7 +62,7 @@ class Builder
         $this->preparePrivileges();
 
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'navigation');
+        $menu->setChildrenAttribute('class', 'nav navbar-nav');
 
         // change menu for blogger
         $blogService = $this->container->get('blog');
@@ -75,23 +75,31 @@ class Builder
             return $menu;
         }
 
-        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin'), 'attributes' => array(
-            'data-menu' => 'not-menu'
-        )));
+        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
 
-        $menu->addChild($translator->trans('Content'), array('uri' => '#'));
+        $menu->addChild($translator->trans('Content'), array('uri' => '#'))
+            ->setAttribute('dropdown', true)
+            ->setLinkAttribute('data-toggle', 'dropdown');
+
         $this->prepareContentMenu($menu[$translator->trans('Content')]);
 
-        $menu->addChild($translator->trans('Actions'), array('uri' => '#'));
+        $menu->addChild($translator->trans('Actions'), array('uri' => '#'))
+            ->setAttribute('dropdown', true)
+            ->setLinkAttribute('data-toggle', 'dropdown');
+
         $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
 
         if ($this->showConfigureMenu) {
-            $menu->addChild($translator->trans('Configure'), array('uri' => '#'));
+            $menu->addChild($translator->trans('Configure'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
             $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
         }
 
         if ($this->showUserMenu) {
-            $menu->addChild($translator->trans('Users'), array('uri' => '#'));
+            $menu->addChild($translator->trans('Users'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
             $this->prepareUsersMenu($menu[$translator->trans('Users')]);
         }
 
@@ -140,7 +148,7 @@ class Builder
 
     private function decorateMenu($menu) {
         foreach ($menu as $key => $value) {
-            $value->setLinkAttribute('class', 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
+            //$value->setLinkAttribute('class', '');
         }
 
         return $menu;
@@ -728,7 +736,9 @@ class Builder
             return;
         }
 
-        $menu->addChild($translator->trans('Plugins'), array('uri' => '#'));
+        $menu->addChild($translator->trans('Plugins'), array('uri' => '#'))
+            ->setAttribute('dropdown', true)
+            ->setLinkAttribute('data-toggle', 'dropdown');
 
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'), array('zend_route' => array(
