@@ -39,7 +39,7 @@ class RenditionsHandler
         }
         
         foreach ($renditions as $renditionName => $rendition) {
-            if (!$articleRenditions->offsetExists($rendition, true)) {
+            if (!$articleRenditions->offsetExists($rendition)) {
                 continue;
             }
 

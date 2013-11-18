@@ -9,7 +9,6 @@
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  * @package Campsite
@@ -158,8 +157,9 @@ class TopicName extends DatabaseObject {
     public static function GetTopicInfoByPref($p_prefName, $p_languageId = null)
     {
 		//global $g_ado_db;
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
-        $topic_name_str = SystemPref::Get($p_prefName);
+        $topic_name_str = $preferencesService->get($p_prefName);
         if (empty($topic_name_str)) {
             return null;
         }

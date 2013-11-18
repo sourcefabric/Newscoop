@@ -26,9 +26,11 @@ $smarty->smarty->loadPlugin('smarty_shared_make_timestamp');
  *     null in case a non-valid format was passed
  */
 function smarty_modifier_teaser($p_input, $p_length=null)
-{
+{   
+    $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
     if (empty($length)) {
-        $length = is_null(SystemPref::Get('teaser_length')) ? 100 : SystemPref::Get('teaser_length');
+        $length = is_null($preferencesService->teaser_length) ? 100 : $preferencesService->teaser_length;
     }
     $pattern = '/<!-- *break *-->/i';
 

@@ -17,12 +17,13 @@ class Admin_SupportController extends Zend_Controller_Action
     public function indexAction()
     {   
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $this->view->stats = $this->_helper->service('stat')->getAll();
 
         // saving them here to retrieve later, because these are not available when run in cli
-        SystemPref::set('support_stats_server', $this->view->stats['server']);
-        SystemPref::set('support_stats_ip_address', $this->view->stats['ipAddress']);
-        SystemPref::set('support_stats_ram_total', $this->view->stats['ramTotal']);
+        $preferencesService->set('support_stats_server', $this->view->stats['server']);
+        $preferencesService->set('support_stats_ip_address', $this->view->stats['ipAddress']);
+        $preferencesService->set('support_stats_ram_total', $this->view->stats['ramTotal']);
 
         if ($this->getRequest()->isPost() && $this->_getParam('support_send') !== null) {
             $values = $this->getRequest()->getPost();
@@ -33,8 +34,8 @@ class Admin_SupportController extends Zend_Controller_Action
                 $askTime = new DateTime('7 days');
             }
 
-            SystemPref::set('stat_ask_time', $askTime->getTimestamp());
-            SystemPref::set('support_send', $values['support_send']);
+            $preferencesService->set('stat_ask_time', $askTime->getTimestamp());
+            $preferencesService->set('support_send', $values['support_send']);
             $this->_helper->flashMessenger($translator->trans('Support settings saved.', array(), 'support'));
             if ($this->_getParam('action') === 'popup') {
                 $this->_helper->redirector('index', '');
@@ -43,7 +44,7 @@ class Admin_SupportController extends Zend_Controller_Action
             }
         }
 
-        $this->view->support_send = SystemPref::get('support_send');
+        $this->view->support_send = $preferencesService->get('support_send');
     }
 
     public function popupAction()

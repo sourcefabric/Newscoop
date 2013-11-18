@@ -3,7 +3,6 @@
  * @package Campsite
  */
 
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  * A simple class for Database Replication.
@@ -41,6 +40,8 @@ class DbReplication {
 		global $Campsite;
 		global $g_ado_db;
 
+		$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
 		if ($host == 'local') {
 			if (isset($g_ado_db)
 				&& $g_ado_db->host == $Campsite['DATABASE_SERVER_ADDRESS']) {
@@ -62,11 +63,10 @@ class DbReplication {
 		$g_ado_db_tmp = $g_ado_db;
 
        	$this->m_rDbName = $Campsite['DATABASE_NAME'];
-		$this->m_rDbHost = SystemPref::Get('DBReplicationHost')
-                           . ':'
-                           . SystemPref::Get('DBReplicationPort');
-		$this->m_rDbUser = SystemPref::Get('DBReplicationUser');
-		$this->m_rDbPass = SystemPref::Get('DBReplicationPass');
+		$this->m_rDbHost = $preferencesService->DBReplicationHost
+                           . $preferencesService->DBReplicationPort;
+		$this->m_rDbUser = $preferencesService->DBReplicationUser;
+		$this->m_rDbPass = $preferencesService->DBReplicationPass;
 
 		if (isset($g_ado_db) && $g_ado_db->host == $this->m_rDbHost) {
 			return true;

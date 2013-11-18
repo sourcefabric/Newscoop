@@ -8,6 +8,7 @@
 
 require_once CS_PATH_PLUGINS.DIR_SEP.'soundcloud'.DIR_SEP.'classes'.DIR_SEP.'soundcloud.api.php';
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
 if (!$g_user->hasPermission('plugin_soundcloud_preferences')) {
     camp_html_display_error($translator->trans('You do not have the right to manage SoundCloud preferences.', array(), 'plugin_soundcloud'));
@@ -25,11 +26,11 @@ if (Input::Get('save') || Input::Get('check')) {
     $f_soundcloud_username = Input::Get('f_soundcloud_username', 'string');
     $f_soundcloud_password = Input::Get('f_soundcloud_password', 'string');
 
-    SystemPref::Set('PLUGIN_SOUNDCLOUD_CLIENT_ID', $f_soundcloud_client_id);
-    SystemPref::Set('PLUGIN_SOUNDCLOUD_CLIENT_SECRET', $f_soundcloud_client_secret);
-    SystemPref::Set('PLUGIN_SOUNDCLOUD_USERNAME', $f_soundcloud_username);
-    SystemPref::Set('PLUGIN_SOUNDCLOUD_PASSWORD', $f_soundcloud_password);
-    SystemPref::Set('PLUGIN_SOUNDCLOUD_USER_ID', '');
+    $preferencesService->set('PLUGIN_SOUNDCLOUD_CLIENT_ID', $f_soundcloud_client_id);
+    $preferencesService->set('PLUGIN_SOUNDCLOUD_CLIENT_SECRET', $f_soundcloud_client_secret);
+    $preferencesService->set('PLUGIN_SOUNDCLOUD_USERNAME', $f_soundcloud_username);
+    $preferencesService->set('PLUGIN_SOUNDCLOUD_PASSWORD', $f_soundcloud_password);
+    $preferencesService->set('PLUGIN_SOUNDCLOUD_USER_ID', '');
 
     if (Input::Get('check')) {
         $soundcloud = new SoundcloudAPI();

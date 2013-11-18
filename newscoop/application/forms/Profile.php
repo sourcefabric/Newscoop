@@ -136,8 +136,9 @@ class Application_Form_Profile extends Zend_Form
      * @return int
      */
     public function getMaxFileSize()
-    {
-        $maxFileSize = SystemPref::Get("MaxProfileImageFileSize");
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $maxFileSize = $preferencesService->MaxProfileImageFileSize;
         if (!$maxFileSize) {
             $maxFileSize = ini_get('upload_max_filesize');
         }

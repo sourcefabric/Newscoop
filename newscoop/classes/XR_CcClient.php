@@ -3,10 +3,6 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  *  Array with methods description
@@ -779,12 +775,13 @@ class XR_CcClient {
         $this->mdefs = $mdefs;
         $this->debug = $debug;
         $this->verbose = $verbose;
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         $serverPath = "http://"
-            . SystemPref::Get('CampcasterHostName') . ":"
-            . SystemPref::Get('CampcasterHostPort')
-            . SystemPref::Get('CampcasterXRPCPath')
-            . SystemPref::Get('CampcasterXRPCFile');
+            . $preferencesService->CampcasterHostName . ":"
+            . $preferencesService->CampcasterHostPort
+            . $preferencesService->CampcasterXRPCPath
+            . $preferencesService->CampcasterXRPCFile;
 
         if($this->verbose) echo "serverPath: $serverPath\n";
         $url = parse_url($serverPath);

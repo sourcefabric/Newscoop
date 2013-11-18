@@ -5,7 +5,6 @@
 
 require_once(__DIR__ . '/../conf/install_conf.php');
 require_once('cache/CacheEngine.php');
-require_once('SystemPref.php');
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");
@@ -66,11 +65,11 @@ final class CampCache
             return;
         }
 
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $this->m_cacheEngine = CacheEngine::Factory($p_cacheEngine);
         if (is_null($this->m_cacheEngine) || !$this->m_cacheEngine->isSupported()) {
             self::$m_enabled = false;
-            SystemPref::Set('DBCacheEngine', '');
-            CampSession::singleton()->setData('system_preferences', null, 'default', true);
+            $preferencesService->DBCacheEngine = '';
             return;
         } else {
             self::$m_enabled = true;
@@ -101,7 +100,8 @@ final class CampCache
     public static function singleton()
     {
         if (is_null(self::$m_instance)) {
-            self::$m_instance = new CampCache(SystemPref::Get('DBCacheEngine'));
+            $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+            self::$m_instance = new CampCache($preferencesService->DBCacheEngine);
         }
         return self::$m_instance;
     } // fn singleton
@@ -200,9 +200,7 @@ final class CampCache
         if (!self::$m_enabled) {
             return false;
         }
-        if ($p_key == SystemPref::CACHE_KEY_SYSTEM_PREF) {
-        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
-        }
+
         return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
 
@@ -222,7 +220,7 @@ final class CampCache
         if (!self::$m_enabled) {
             return false;
         }
-        CampSession::singleton()->setData(SystemPref::SESSION_KEY_CACHE_ENGINE, null, 'default', true);
+
         if ($p_type == 'user') {
             return $this->m_cacheEngine->clearValues();
         } else {

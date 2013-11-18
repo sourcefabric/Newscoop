@@ -10,9 +10,10 @@ class CampTemplateCache
     public static function factory($p_handlerName = null, $p_path = null)
     {
         static $handlers;
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
         if (!$p_handlerName) {
-            $p_handlerName = SystemPref::Get('TemplateCacheHandler');
+            $p_handlerName = $preferencesService->TemplateCacheHandler;
         }
         if (!$p_handlerName) {
             return null;

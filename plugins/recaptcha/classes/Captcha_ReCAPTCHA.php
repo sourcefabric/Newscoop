@@ -12,16 +12,20 @@ class Captcha_ReCAPTCHA extends Captcha
      * @return string
      */
     private function _getPrivateKey()
-    {
-        return SystemPref::Get('PLUGIN_RECAPTCHA_PRIVATE_KEY');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
+        return $preferencesService->PLUGIN_RECAPTCHA_PRIVATE_KEY;
     }
 
     /**
      * @return string
      */
     public function getPublicKey()
-    {
-        return SystemPref::Get('PLUGIN_RECAPTCHA_PUBLIC_KEY');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
+        return $preferencesService->PLUGIN_RECAPTCHA_PUBLIC_KEY;
     }
 
     /**
@@ -29,12 +33,14 @@ class Captcha_ReCAPTCHA extends Captcha
      * @return boolean
      */
     public function isEnabled($form = '')
-    {
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+
         if (!empty($form)) {
             $form = strtoupper($form . '_');
         }
 
-        return (SystemPref::Get("PLUGIN_RECAPTCHA_{$form}ENABLED") == 'Y') ? TRUE : FALSE;
+        return ($preferencesService->get("PLUGIN_RECAPTCHA_{$form}ENABLED") == 'Y') ? TRUE : FALSE;
     }
 
     /**
@@ -52,8 +58,9 @@ class Captcha_ReCAPTCHA extends Captcha
      * @return boolean
      */
     public function validate()
-    {
-        $privateKey = SystemPref::Get('PLUGIN_RECAPTCHA_PRIVATE_KEY');
+    {   
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $privateKey = $preferencesService->PLUGIN_RECAPTCHA_PRIVATE_KEY;
         $resp = recaptcha_check_answer($privateKey,
             $_SERVER['REMOTE_ADDR'],
             $_POST['recaptcha_challenge_field'],

@@ -175,7 +175,8 @@ final class MetaArticleBodyField {
 
                 // statistics shall be only gathered if the site admin set it on (and not for editor previews)
                 $context = CampTemplate::singleton()->context();
-                if ((SystemPref::CollectStatisticsAuto()) && (!$context->preview)) {
+                $preferencesService = $this->container->get('system_preferences_service');
+                if (($preferencesService->CollectStatistics == 'Y') && (!$context->preview)) {
                     $stat_web_url = $Campsite['WEBSITE_URL'];
                     if ('/' != $stat_web_url[strlen($stat_web_url)-1]) {
                         $stat_web_url .= '/';

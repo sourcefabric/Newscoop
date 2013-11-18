@@ -533,7 +533,7 @@ class Template extends DatabaseObject {
      * @param array $p_sqlOptions
      * @param boolean $p_update
      * @param boolean $p_useFilter
-     *		filter templates matching setting in SystemPrefs
+     *		filter templates matching setting in SystemPreferences
      * @param boolean $p_strict
      *      if true, retrieves only template (tpl) files
      *
@@ -671,9 +671,10 @@ class Template extends DatabaseObject {
      * @return string
      */
     static public function GetTemplateFilterRegex($p_sql = false) {
-         $filters = array();
+        $filters = array();
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
 
-        if ($filterStr = SystemPref::Get('TemplateFilter')) {
+        if ($filterStr = $preferencesService->TemplateFilter) {
           foreach (explode(',', $filterStr) as $filter) {
 
 
