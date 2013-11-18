@@ -36,6 +36,11 @@ services:
         tags:
             - { name: twig.extension }
 
+    newscoop_newscoop.twig.include_as_verbatim_extension:
+        class: Newscoop\NewscoopBundle\Twig\IncludeAsVerbatimExtension
+        tags:
+            - { name: twig.extension }
+
     newscoop_newscoop.password_encoder:
         class: Newscoop\NewscoopBundle\Security\Encoder\NewscoopPasswordEncoder
 
@@ -50,6 +55,11 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
         arguments:  ['@em']
+
+    newscoop_newscoop.listener.no_cache_listener:
+        class: Newscoop\NewscoopBundle\EventListener\NoCacheListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onResponse }
 
     newscoop_newscoop.translation_listener:
         class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
@@ -66,6 +76,9 @@ services:
         arguments:  ['@translator']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+    newscoop_newscoop.session.storage:
+        class:     %newscoop_newscoop.session.storage.class%
+        arguments: [%session.storage.options%]
 
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
@@ -76,3 +89,4 @@ parameters:
     security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
+    newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"

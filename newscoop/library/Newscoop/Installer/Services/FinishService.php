@@ -16,18 +16,17 @@ use Newscoop\Entity\User;
 
 class FinishService
 {
-	private $logger;
     private $newscoopDir;
     private $filesystem;
 
-	public function __construct($logger){
-		$this->logger = $logger;
+	public function __construct(){
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
 	}
 
 	public function generateProxies()
 	{
+        exec('rm -rf '.$this->newscoopDir.'/cache/prod', $output = array(), $code);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
@@ -192,7 +191,7 @@ class FinishService
         $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
 
         if (file_exists($this->newscoopDir.'/conf/installation.php')) {
-            $this->filesystemremove($this->newscoopDir.'/conf/installation.php');
+            $this->filesystem->remove($this->newscoopDir.'/conf/installation.php');
         }
     }
 

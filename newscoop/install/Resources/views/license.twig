@@ -1,0 +1,15 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+
+{% for key, message in app.session.getFlashBag() %}
+	<div class="alert alert-{{ key }}">{{ message.0|raw }}</div>
+{% endfor %}
+
+<form role="form" action="#" method="post">
+    {{ form_widget(form) }}
+
+    <input type="submit" name="submit" />
+</form>
+
+{% endblock %}

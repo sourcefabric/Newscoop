@@ -28,6 +28,9 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
         \Article::UnlockByUser((int) $zendAuth->getIdentity());
         $zendAuth->clearIdentity();
 
+        $session = $request->getSession();
+        $session->set('NO_CACHE', false);
+
         return parent::onLogoutSuccess($request);
     }
 }

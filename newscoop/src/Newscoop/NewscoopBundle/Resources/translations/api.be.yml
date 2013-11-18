@@ -34,7 +34,7 @@ Title: Загаловак
 'Article status changed from $1 to $2.': 'Статут артыкула зменены з $1 на $2.'
 'Article deleted.': 'Артыкул выдалены.'
 'Article created.': 'Артыкул створаны.'
-'Article copied to Article #$4 (publication $5, issue $6, section $7).': 'Артыкул скапіраваны ў артыкул Article # $ 4 (выданне $5, выпуск $6, рубрыка $7)'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Артыкул скапіраваны ў артыкул Article  $ 4 (выданне $5, выпуск $6, рубрыка $7)'
 'Article URL': 'URL артыкула'
 'Article Number': 'Нумар артыкула'
 'Access denied.': 'Адмоўлена ў доступе.'

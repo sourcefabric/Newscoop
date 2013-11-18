@@ -78,5 +78,5 @@ Currency: ვალუტა
 'The site alias for publication $1 has been modified to $2.': 'გვერდის ფსევდონიმი $1 პუბლიკაციისთვის მოიდიფიცირდა $2-სთვის.'
 'The site alias $1 has been added to publication $2.': 'გვერდის ფსევდონიმი $1 დაემატა $2 პუბლიკაციას.'
 'The alias $1 has been deleted from publication $2.': 'გვერდის ფსევდონიმი $1 წაიშალა $2 პუბლიკაციიდან.'
-'Subscription default time for $1:$2 deleted': 'გამოწერის საწყისი დრო #$1#-სთვის:$2 წაიშალა'
-'Default subscription time for $1:$2 changed': 'გამოწერის საწყისი დრო #$1#-სთვის:$2 შეიცვალა'
+'Subscription default time for $1:$2 deleted': 'გამოწერის საწყისი დრო $1-სთვის:$2 წაიშალა'
+'Default subscription time for $1:$2 changed': 'გამოწერის საწყისი დრო $1-სთვის:$2 შეიცვალა'

@@ -1,7 +1,7 @@
 {% extends "layout.twig" %}
 
 {% block content %}
-	{% if checkPassed %}All tests passed! <a href="{{ url('prepare') }}" type="button" class="btn btn-success">Next</a>{% else %} Flease fix you issues and refresh that page {% endif %}
+	{% if checkPassed %}All tests passed! <a href="{{ url('license') }}" type="button" class="btn btn-success">Next</a>{% else %} Flease fix you issues and refresh that page {% endif %}
 	<h4>Requirements:</h4>
 	<ul>
 	{% for req in requirements %}

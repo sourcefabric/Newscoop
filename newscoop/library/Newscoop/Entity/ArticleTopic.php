@@ -20,14 +20,14 @@ class ArticleTopic
 {
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Article")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
      */
     private $article;
 
     /**
      * @ORM\Id()
-     * @ORM\ManyToOne(targetEntity="Topic")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
      * @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
      */
     private $topic;
@@ -43,6 +43,18 @@ class ArticleTopic
     }
 
     /**
+     * Set article
+     *
+     * @param integer $article
+     */
+    public function setArticle($article)
+    {
+        $this->article = $article;
+        
+        return $this;
+    }
+
+    /**
      * Get Topic
      *
      * @return Newscoop\Entity\TopicNames
@@ -50,6 +62,18 @@ class ArticleTopic
     public function getTopic()
     {
         return $this->topic;
+    }
+
+    /**
+     * Set Topic
+     *
+     * @param integer $topic
+     */
+    public function setTopic($topic)
+    {
+        $this->topic = $topic;
+        
+        return $this;
     }
 }
 

@@ -64,7 +64,7 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
 }
 
 if (!empty($images)) {
-    camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => count($images)), 'media_archive', "ok");
+    camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => count($images)), 'media_archive', "ok"));
     if ($f_article_edit) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');

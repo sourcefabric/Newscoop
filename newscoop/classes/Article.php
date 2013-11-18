@@ -491,7 +491,7 @@ class Article extends DatabaseObject {
 
             $newArticles[] = $articleCopy;
             $languageObj = new Language($copyMe->getLanguageId());
-            $logtext .= $translator->trans('Article copied to Article #$4 (publication $5, issue $6, section $7).', array(
+            $logtext .= $translator->trans('Article copied to Article $4 (publication $5, issue $6, section $7).', array(
                 '$4' => $articleCopy->getArticleNumber(), '$5' => $articleCopy->getPublicationId(),
                 '$6' => $articleCopy->getIssueNumber(), '$7' =>$articleCopy->getSectionNumber()), 'api');
         }
