@@ -193,6 +193,10 @@ class FinishService
         if (file_exists($this->newscoopDir.'/conf/installation.php')) {
             $this->filesystem->remove($this->newscoopDir.'/conf/installation.php');
         }
+
+        if (file_exists($this->newscoopDir.'/conf/upgrading.php')) {
+            $this->filesystem->remove($this->newscoopDir.'/conf/upgrading.php');
+        }
     }
 
 }

@@ -14,6 +14,7 @@ use Doctrine\Common\Collections\ExpressionBuilder;
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
 use Newscoop\EventDispatcher\Events\PluginHooksEvent;
+use Newscoop\EventDispatcher\Events\CollectObjectsDataEvent;
 
 /**
  * Plugins Service
@@ -70,6 +71,7 @@ class PluginsService
 
     /**
      * Dispatch hook event and render collected Response objects
+     * 
      * @param  string $eventName
      * @param  mixed $subject
      * @param  array $options
@@ -86,5 +88,38 @@ class PluginsService
         }
 
         return $content;
+    }
+
+    /**
+     * Dispatch event for list objects registration
+     * 
+     * @param  mixed $subject
+     * @param  array $options
+     * 
+     * @return string
+     */
+    public function collectListObjects($subject = null, $options = array())
+    {
+        $collectedData = array('listObjects' => array(), 'objectTypes' => array());
+        $listObjectsRegistration = $this->dispatcher->dispatch('newscoop.listobjects.register', new CollectObjectsDataEvent($subject, $options));
+
+        foreach ($listObjectsRegistration->getListObjects() as $key => $object) {
+            $collectedData['listObjects'][$key] = $object;
+        }
+
+        foreach ($listObjectsRegistration->getObjectTypes() as $key => $object) {
+            $collectedData['objectTypes'][$key] = $object;
+        }
+
+        return $collectedData;
+    }
+
+    public function isEnabled($pluginName)
+    {
+        if ($this->avaiablePlugins) {
+            // search for plugin on list
+        } else {
+            // get plugin from db anc check if it's enabled
+        }
     }
 }

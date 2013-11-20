@@ -11,6 +11,9 @@ $container = $kernel->getContainer();
 // Retrieve Doctrine Container resource
 $em = Zend_Registry::get('container')->getService('em');
 
+global $g_ado_db;
+$g_ado_db = Zend_Registry::get('container')->getService('doctrine.adodb');
+
 // Console
 $cli = new \Symfony\Component\Console\Application(
     'Doctrine Command Line Interface',
