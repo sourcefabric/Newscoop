@@ -126,6 +126,8 @@ class ManagerService
                 throw new \Exception("Error with dispatching install event", 1);
             }
         }
+
+        $output->writeln('<info>Plugin '.$pluginName.' is installed!</info>');
     }
 
     public function dispatchEventForPlugin($pluginName, $eventName, $output)
@@ -212,17 +214,14 @@ class ManagerService
 
         $this->saveAvaiablePluginsToCacheFile();
         $this->clearCache($output);
+
+        $output->writeln('<info>Plugin '.$pluginName.' is removed!</info>');
     }
 
     public function updatePlugin($pluginName, $version, $output, $notify = true)
     {
         $this->installComposer();
 
-        /*if (!$this->isInstalled($pluginName)) {
-            $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
-
-            return;
-        }*/
         $output->writeln('<info>Update "'.$pluginName.'"</info>');sleep(10);
         $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar update --prefer-dist --no-dev ' . $pluginName);
         $process->setTimeout(3600);
@@ -270,6 +269,8 @@ class ManagerService
             $filesystem = new Filesystem();
             $filesystem->remove($cachedPluginMeta);
         }
+
+        $output->writeln('<info>Plugin '.$pluginName.' is updated!</info>');
     }
 
     public function enablePlugin(Plugin $plugin)
