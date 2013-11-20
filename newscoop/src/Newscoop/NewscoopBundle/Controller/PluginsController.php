@@ -28,7 +28,13 @@ class PluginsController extends Controller
         $em = $this->container->get('em');
 
         $pluginService = $this->container->get('newscoop.plugins.service');
-        $allAvailablePlugins = $pluginService->getAllAvailablePlugins();
+        $allAvailablePlugins = array();
+
+        foreach ($pluginService->getAllAvailablePlugins() as $key => $value) {
+            if (strpos($value->getName(), '/') !== false) {
+                $allAvailablePlugins[] = $value;
+            }
+        }
 
         return array(
             'allAvailablePlugins' => $allAvailablePlugins
@@ -52,9 +58,23 @@ class PluginsController extends Controller
         $this->aasort($results, 'downloads');
 
         $cleanResults = array();
-        foreach ($results as $package) {
-            $cleanResults[] = $package;
+        $pluginService = $this->container->get('newscoop.plugins.service');
+        foreach ($results as $resultKey => $package) {
+            $installed = false;
+            foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
+                if ($package['name'] == $plugin->getName()) {
+                    $installed = true;
+                    $packages['total'] = $packages['total']-1;
+                }
+            }
+            
+            if (!$installed) {
+                $cleanResults[] = $package;
+            }
         }
+
+
+
         $packages['results'] = $cleanResults;
 
        return $response->setData($packages);

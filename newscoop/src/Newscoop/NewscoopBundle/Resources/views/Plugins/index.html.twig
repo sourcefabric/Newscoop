@@ -50,7 +50,7 @@
                 <td>{{ plugin.license }}</td>
                 <td style="width: 14%;">{{ plugin.installedAt|date('Y-m-d H:i:s') }}</td>
                 <td style="width: 14%;">{% if plugin.updatedAt %}{{ plugin.updatedAt|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
-                <td style="width: 12%; text-align: center;"><a href="#" class="get-stream" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">Update</a> | <a href="#" class="get-stream" data-href="/admin/plugins/getStream/remove/{{ plugin.name }}">Remove</a></td>
+                <td style="width: 12%; text-align: center;"><a href="/admin/plugins/getStream/update/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">Update</a> | <a href="/admin/plugins/getStream/remove/{{ plugin.name }}" class="get-stream iframe" data-href="">Remove</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -96,17 +96,17 @@
     })
     .on("select2-selecting", function(e) {
         var item = e.object;
-        $('.choosen-plugin-info').html("<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p><a class=\"get-stream\" data-href=\"/admin/plugins/getStream/install/"+item.name+"\" data-plugin-name=\""+item.name+"\" href=\"#\">Install this plugin</a></div>");
-    });
+        $('.choosen-plugin-info').html("<div><h2>"+item.name+"</h2><p>"+item.description+"</p><p>downloads:"+item.downloads+", favers:"+item.favers+"</p><a class=\"get-stream iframe\" data-href=\"/admin/plugins/getStream/install/"+item.name+"\" data-plugin-name=\""+item.name+"\" href=\"/admin/plugins/getStream/install/"+item.name+"\">Install this plugin</a></div>");
 
-    $('.get-stream').live('click', function() {
-        // make here fancybox with iframe.
-        var NWin = window.open($(this).data('href'), '', 'height=400,width=800');
-        if (window.focus) {
-            NWin.focus();
-        }
-
-        return false;
+        $('a.iframe').each(function() {
+            $(this).fancybox({
+                hideOnContentClick: false,
+                width: 800,
+                height: 500,
+                onStart: function() {},
+                onClosed: function(url, params) {}
+            });
+        });
     });
 
     $('#subscriptionsTable').css('font-size', '13px');
@@ -128,6 +128,16 @@
         "bJQueryUI": true,
         "sPaginationType": "full_numbers",
     }).fnAdjustColumnSizing();
+
+    $('a.iframe').each(function() {
+        $(this).fancybox({
+            hideOnContentClick: false,
+            width: 800,
+            height: 500,
+            onStart: function() {},
+            onClosed: function(url, params) {}
+        });
+    });
 
 </script>
 

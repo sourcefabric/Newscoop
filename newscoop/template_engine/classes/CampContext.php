@@ -297,17 +297,17 @@ final class CampContext
 
         // Register new plugins system list objects
         $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
-        $this->m_listObjects += $pluginsService->collectListObjects();
+        $collectedData = $pluginsService->collectListObjects();
+        $this->m_listObjects = array_merge($collectedData['listObjects'], $this->m_listObjects);
+        CampContext::$m_objectTypes = array_merge($collectedData['objectTypes'], CampContext::$m_objectTypes);
 
         $this->m_properties['htmlencoding'] = false;
         $this->m_properties['subs_by_type'] = null;
 
         $this->m_readonlyProperties['version'] = $Campsite['VERSION'];
-
         $this->m_readonlyProperties['current_list'] = null;
         $this->m_readonlyProperties['lists'] = array();
         $this->m_readonlyProperties['prev_list_empty'] = null;
-
         $this->m_readonlyProperties['default_url'] = new MetaURL();
         $this->m_readonlyProperties['url'] = new MetaURL();
         if (!$this->m_readonlyProperties['default_url']->is_valid) {
@@ -1243,6 +1243,13 @@ final class CampContext
     {
         // Verify if an object of this type exists
         if (array_key_exists($p_property, CampContext::$m_objectTypes)) {
+            if (
+                strpos(CampContext::$m_objectTypes[$p_property]['class'], '\\') !== false &&
+                class_exists(CampContext::$m_objectTypes[$p_property]['class'])
+            ) {
+                return $p_property;
+            }
+        
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];
         }
         return null;
