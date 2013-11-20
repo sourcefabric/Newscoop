@@ -7,15 +7,16 @@
 
 namespace Newscoop\Services\Plugins;
 
+use Composer\Package\PackageInterface\PackageInterface;
 use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Plugin;
 use Newscoop\EventDispatcher\EventDispatcher;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Newscoop\Entity\Plugin;
-use Symfony\Component\Process\Process;
+use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Composer\Package\PackageInterface\PackageInterface;
-use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\Process\Process;
 
 /**
  * Plugins Manager Service
@@ -72,7 +73,15 @@ class ManagerService
         $this->pluginsDir = $this->newsoopDir . 'plugins';
     }
 
-    public function installPlugin($pluginName, $version, $output = null, $notify = true)
+    /**
+     * Install plugin inside Newscoop - it's a wrapper for all tasks connected with plugin installation
+     * 
+     * @param  string           $pluginName 
+     * @param  string           $version    
+     * @param  OutputInterface  $output     
+     * @param  boolean          $notify     
+     */
+    public function installPlugin($pluginName, $version, $output, $notify = true)
     {
         $this->installComposer();
         $this->prepareCacheDir();
@@ -130,11 +139,19 @@ class ManagerService
         $output->writeln('<info>Plugin '.$pluginName.' is installed!</info>');
     }
 
+    /**
+     * Dispatch events for plugins
+     * @param  [type] $pluginName [description]
+     * @param  [type] $eventName  [description]
+     * @param  [type] $output     [description]
+     * @return [type]             [description]
+     */
     public function dispatchEventForPlugin($pluginName, $eventName, $output)
     {
         $this->dispatcher->dispatch('plugin.'.$eventName, new GenericEvent($this, array(
             'plugin_name' => $pluginName
         )));
+
         $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
 
         $this->dispatcher->dispatch(
@@ -143,10 +160,18 @@ class ManagerService
                 'plugin_name' => $pluginName
             ))
         );
+
         $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
     }
 
-    public function removePlugin($pluginName, $output, $notify = true)
+    /**
+     * Remove plugin from newscoop (composer+database+cleaning)
+     * 
+     * @param  string          $pluginName 
+     * @param  OutputInterface $output     
+     * @param  boolean         $notify     
+     */
+    public function removePlugin($pluginName, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
 
@@ -218,7 +243,15 @@ class ManagerService
         $output->writeln('<info>Plugin '.$pluginName.' is removed!</info>');
     }
 
-    public function updatePlugin($pluginName, $version, $output, $notify = true)
+    /**
+     * Update installed plugin
+     * 
+     * @param  string          $pluginName 
+     * @param  string          $version    
+     * @param  OutputInterface $output     
+     * @param  boolean         $notify     
+     */
+    public function updatePlugin($pluginName, $version, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
 
@@ -273,6 +306,11 @@ class ManagerService
         $output->writeln('<info>Plugin '.$pluginName.' is updated!</info>');
     }
 
+    /**
+     * Enable plugin
+     * 
+     * @param  Plugin $plugin 
+     */
     public function enablePlugin(Plugin $plugin)
     {
         $this->dispatcher->dispatch('plugin.enable', new GenericEvent($this, array(
@@ -281,6 +319,10 @@ class ManagerService
         )));
     }
 
+    /**
+     * Disable plugin
+     * @param  Plugin $plugin 
+     */
     public function disablePlugin(Plugin $plugin)
     {
         $this->dispatcher->dispatch('plugin.disable', new GenericEvent($this, array(
@@ -289,11 +331,18 @@ class ManagerService
         )));
     }
 
+    /**
+     * Reinstall plugins after Newscoop upgrade (re-add them to composer)
+     */
     public function upgrade()
     {
         //add and install all plugins from database (don't notify plugins about that) after newscoop upgrade
     }
 
+    /**
+     * Get installed plugins
+     * @return array Array with installed plugins info
+     */
     public function getInstalledPlugins()
     {
         $cachedAvailablePlugins = $this->pluginsDir . '/avaiable_plugins.json';
@@ -304,11 +353,23 @@ class ManagerService
         return $plugins = json_decode(file_get_contents($cachedAvailablePlugins));
     }
 
+    /**
+     * Check if plugin is installed
+     * TODO
+     * 
+     * @param  string  $pluginName
+     * @return boolean
+     */
     public function isInstalled($pluginName)
     {
         $installedPlugins = $this->getInstalledPlugins();
     }
 
+    /**
+     * Clear cache after plugin installation
+     * 
+     * @param  OutputInterface $output
+     */
     private function clearCache($output)
     {   
         $output->writeln('<info>remove '.realpath($this->newsoopDir.'cache/').'/*</info>');
@@ -329,6 +390,9 @@ class ManagerService
         $this->prepareCacheDir();
     }
 
+    /**
+     * Install composer
+     */
     public function installComposer()
     {
         $filesystem = new Filesystem();
@@ -343,6 +407,10 @@ class ManagerService
         }
     }
 
+    /**
+     * Find avaiable plugins
+     * @return array array('plugin/name' => \Class\Name)
+     */
     public function findAvaiablePlugins()
     {
         $plugins = array();
