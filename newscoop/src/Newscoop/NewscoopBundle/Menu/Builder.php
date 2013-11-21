@@ -71,7 +71,6 @@ class Builder
                 'data-menu' => 'not-menu'
             )));
 
-            $menu = $this->decorateMenu($menu);
             return $menu;
         }
 
@@ -113,8 +112,6 @@ class Builder
             $this->container->get('router')
         ));
 
-        $menu = $this->decorateMenu($menu);
-
         return $menu;
     }
 
@@ -144,14 +141,6 @@ class Builder
         }
 
         return $current;
-    }
-
-    private function decorateMenu($menu) {
-        foreach ($menu as $key => $value) {
-            //$value->setLinkAttribute('class', '');
-        }
-
-        return $menu;
     }
 
     private function prepareContentMenu($menu) {
@@ -218,7 +207,9 @@ class Builder
         $publicationService = $this->container->get('content.publication');
         foreach ($publicationService->findAll() as $publication) {
             $pubId = $publication->getId();
-            $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"));
+            $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
+                ->setAttribute('rightdrop', true)
+                ->setLinkAttribute('data-toggle', 'rightdrop');
 
             // add content/publication/issue
             foreach ($publication->getIssues() as $issue) {
@@ -229,7 +220,8 @@ class Builder
                     $menu[$publication->getName()], 
                     $issueName, 
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
-                ));
+                ))->setAttribute('rightdrop', true)
+                ->setLinkAttribute('data-toggle', 'rightdrop');
 
                 // add content/publication/issue/section
                     foreach ($issue->getSections() as $section) {
@@ -246,16 +238,16 @@ class Builder
                             $menu[$publication->getName()][$issueName],
                             $translator->trans('More...'), 
                             array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
-                        ));
+                        ))->setAttribute('divider_prepend', true);;
                     }
-            }
-                
+            }  
+
             if (count($publication->getIssues()) > 0) {
                 $this->addChild(
                     $menu[$publication->getName()],
                     $translator->trans('More...'), 
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
-                ));
+                ))->setAttribute('divider_prepend', true);
             }
         }    
     }

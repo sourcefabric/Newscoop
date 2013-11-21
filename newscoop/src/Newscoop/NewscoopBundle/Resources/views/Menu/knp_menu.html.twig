@@ -5,11 +5,12 @@
 {% if item.displayed %}
     {%- set attributes = item.attributes %}
     {%- set is_dropdown = attributes.dropdown|default(false) %}
+    {%- set is_rightdrop = attributes.rightdrop|default(false) %}
     {%- set divider_prepend = attributes.divider_prepend|default(false) %}
     {%- set divider_append = attributes.divider_append|default(false) %}
  
 {# unset bootstrap specific attributes #}
-    {%- set attributes = attributes|merge({'dropdown': null, 'divider_prepend': null, 'divider_append': null }) %}
+    {%- set attributes = attributes|merge({'dropdown': null, 'rightdrop': null, 'divider_prepend': null, 'divider_append': null }) %}
  
     {%- if divider_prepend %}
         {{ block('dividerElement') }}
@@ -38,6 +39,12 @@
         {%- set classes = classes|merge(['dropdown']) %}
         {%- set childrenClasses = childrenClasses|merge(['dropdown-menu']) %}
     {%- endif %}
+
+{# adding classes for rightdrop #}
+    {%- if is_rightdrop %}
+        {%- set classes = classes|merge(['rightdrop']) %}
+        {%- set childrenClasses = childrenClasses|merge(['dropdown-menu']) %}
+    {%- endif %}
  
 {# putting classes together #}
     {%- if classes is not empty %}
@@ -49,6 +56,8 @@
     <li{{ macros.attributes(attributes) }}>
         {%- if is_dropdown %}
             {{ block('dropdownElement') }}
+        {%- elseif is_rightdrop %}
+            {{ block('rightdropElement') }}
         {%- elseif item.uri is not empty and (not item.current or options.currentAsLink) %}
             {{ block('linkElement') }}
         {%- else %}
@@ -79,6 +88,15 @@
     {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
     {%- set attributes = attributes|merge({'data-toggle': 'dropdown'}) %}
     <a href="#"{{ macros.attributes(attributes) }}>{{ block('label') }} <b class="caret"></b></a>
+{% endblock %}
+
+{% block rightdropElement %}
+    {%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+    {%- set classes = classes|merge(['rightdrop-toggle']) %}
+    {%- set attributes = item.linkAttributes %}
+    {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- set attributes = attributes|merge({'data-toggle': 'rightdrop'}) %}
+    <a href="#"{{ macros.attributes(attributes) }}>{{ block('label') }} <b class="caret-right"></b></a>
 {% endblock %}
  
 {% block label %}{{ item.label|trans }}{% endblock %}
