@@ -380,6 +380,13 @@ class Language
         return $this->code;
     }
 
+    /**
+     * Set RFC3066bis
+     *
+     * @param string $RFC3066bis Language code
+     *
+     * @return self
+     */
     public function setRFC3066bis($RFC3066bis)
     {
         $this->RFC3066bis = (string) $RFC3066bis;
@@ -387,6 +394,11 @@ class Language
         return  $this;
     }
 
+    /**
+     * Get RFC3066bis
+     *
+     * @return string
+     */
     public function getRFC3066bis()
     {
         return $this->RFC3066bis;
