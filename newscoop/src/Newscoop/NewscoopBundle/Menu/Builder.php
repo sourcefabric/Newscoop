@@ -55,14 +55,19 @@ class Builder
         $this->container = $container;
     }
 
-    public function mainMenu()
+    public function mainMenu($modern = false)
     {   
         $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
 
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'nav navbar-nav');
+
+        if ($modern) {
+            $menu->setChildrenAttribute('class', 'nav navbar-nav');
+        } else {
+            $menu->setChildrenAttribute('class', 'navigation');
+        }
 
         // change menu for blogger
         $blogService = $this->container->get('blog');
@@ -71,37 +76,58 @@ class Builder
                 'data-menu' => 'not-menu'
             )));
 
+            if (!$modern) {
+                $menu = $this->decorateMenu($menu);
+            }
+
             return $menu;
         }
 
         $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
 
-        $menu->addChild($translator->trans('Content'), array('uri' => '#'))
-            ->setAttribute('dropdown', true)
-            ->setLinkAttribute('data-toggle', 'dropdown');
-
-        $this->prepareContentMenu($menu[$translator->trans('Content')]);
-
-        $menu->addChild($translator->trans('Actions'), array('uri' => '#'))
-            ->setAttribute('dropdown', true)
-            ->setLinkAttribute('data-toggle', 'dropdown');
-
-        $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
-
-        if ($this->showConfigureMenu) {
-            $menu->addChild($translator->trans('Configure'), array('uri' => '#'))
+        if ($modern) {
+            $menu->addChild($translator->trans('Content'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
-            $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
-        }
 
-        if ($this->showUserMenu) {
-            $menu->addChild($translator->trans('Users'), array('uri' => '#'))
+            $this->prepareContentMenu($menu[$translator->trans('Content')]);
+
+            $menu->addChild($translator->trans('Actions'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
-            $this->prepareUsersMenu($menu[$translator->trans('Users')]);
-        }
 
+            $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
+
+            if ($this->showConfigureMenu) {
+                $menu->addChild($translator->trans('Configure'), array('uri' => '#'))
+                    ->setAttribute('dropdown', true)
+                    ->setLinkAttribute('data-toggle', 'dropdown');
+                $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
+            }
+
+            if ($this->showUserMenu) {
+                $menu->addChild($translator->trans('Users'), array('uri' => '#'))
+                    ->setAttribute('dropdown', true)
+                    ->setLinkAttribute('data-toggle', 'dropdown');
+                $this->prepareUsersMenu($menu[$translator->trans('Users')]);
+            }
+        } else {
+            $menu->addChild($translator->trans('Content'), array('uri' => '#'));
+            $this->prepareContentMenu($menu[$translator->trans('Content')]);
+
+            $menu->addChild($translator->trans('Actions'), array('uri' => '#'));
+            $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
+
+            if ($this->showConfigureMenu) {
+                $menu->addChild($translator->trans('Configure'), array('uri' => '#'));
+                $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
+            }
+
+            if ($this->showUserMenu) {
+                $menu->addChild($translator->trans('Users'), array('uri' => '#'));
+                $this->prepareUsersMenu($menu[$translator->trans('Users')]);
+            }
+        }
 
         $this->preparePluginsMenu($menu);
 
@@ -111,6 +137,10 @@ class Builder
             $menu, 
             $this->container->get('router')
         ));
+
+        if (!$modern) {
+            $menu = $this->decorateMenu($menu);
+        }
 
         return $menu;
     }
@@ -141,6 +171,14 @@ class Builder
         }
 
         return $current;
+    }
+
+    private function decorateMenu($menu) {
+        foreach ($menu as $key => $value) {
+            $value->setLinkAttribute('class', 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
+        }
+
+        return $menu;
     }
 
     private function prepareContentMenu($menu) {
