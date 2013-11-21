@@ -54,6 +54,12 @@ class Language
     private $code;
 
     /**
+     * @ORM\Column(name="RFC3066bis")
+     * @var string
+     */
+    private $RFC3066bis;
+
+    /**
      * @ORM\Column(name="Month1", nullable=True)
      * @var string
      */
@@ -372,6 +378,30 @@ class Language
     public function getCode()
     {
         return $this->code;
+    }
+
+    /**
+     * Set RFC3066bis
+     *
+     * @param string $RFC3066bis Language code
+     *
+     * @return self
+     */
+    public function setRFC3066bis($RFC3066bis)
+    {
+        $this->RFC3066bis = (string) $RFC3066bis;
+
+        return  $this;
+    }
+
+    /**
+     * Get RFC3066bis
+     *
+     * @return string
+     */
+    public function getRFC3066bis()
+    {
+        return $this->RFC3066bis;
     }
 
     public function setMonth1($month)
