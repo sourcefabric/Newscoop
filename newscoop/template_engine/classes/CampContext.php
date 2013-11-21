@@ -81,9 +81,6 @@ final class CampContext
         'list_user' => array(
             'class' => 'User',
         ),
-        'community_feed' => array(
-            'class' => 'CommunityFeed',
-        ),
         'user_comment' => array(
             'class' => 'Comment',
         )
@@ -418,6 +415,7 @@ final class CampContext
 
             // Verify if an object of this type exists
             if (!is_null(CampContext::ObjectType($p_element))) {
+
                 if (!isset($this->m_objects[$p_element])
                 || is_null($this->m_objects[$p_element])) {
                     $this->createObject($p_element);
@@ -469,6 +467,8 @@ final class CampContext
 
                 if (file_exists($classFullPath)) {
                     require_once($classFullPath);
+                } else if (class_exists(CampContext::$m_objectTypes[$p_element]['class'])) {
+                    $className = CampContext::ObjectType($p_element);
                 } else {
                     $pluginImplementsClassFullPath = false;
 
@@ -823,8 +823,6 @@ final class CampContext
      */
     private function createObject($p_objectType)
     {
-        global $_SERVER;
-
         $p_objectType = CampContext::TranslateProperty($p_objectType);
 
         $classFullPath = $GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/'
@@ -832,6 +830,8 @@ final class CampContext
 
         if (file_exists($classFullPath)) {
             require_once($classFullPath);
+        } else if (class_exists(CampContext::$m_objectTypes[$p_objectType]['class'])) {
+            $className = CampContext::ObjectType($p_objectType);
         } else {
             $pluginImplementsClassFullPath = false;
 
@@ -850,7 +850,7 @@ final class CampContext
         }
 
         $className = CampContext::ObjectType($p_objectType);
-        $this->m_objects[$p_objectType] = new $className;
+        $this->m_objects[$p_objectType] = new $className();
 
         return $this->m_objects[$p_objectType];
     } // fn createObject
@@ -1241,13 +1241,15 @@ final class CampContext
      */
     protected static function ObjectType($p_property)
     {
+
         // Verify if an object of this type exists
         if (array_key_exists($p_property, CampContext::$m_objectTypes)) {
             if (
                 strpos(CampContext::$m_objectTypes[$p_property]['class'], '\\') !== false &&
                 class_exists(CampContext::$m_objectTypes[$p_property]['class'])
             ) {
-                return $p_property;
+
+                return CampContext::$m_objectTypes[$p_property]['class'];
             }
         
             return 'Meta'.CampContext::$m_objectTypes[$p_property]['class'];

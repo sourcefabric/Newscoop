@@ -55,14 +55,19 @@ class Builder
         $this->container = $container;
     }
 
-    public function mainMenu()
+    public function mainMenu($modern = false)
     {   
         $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
 
         $menu = $this->factory->createItem('root');
-        $menu->setChildrenAttribute('class', 'navigation');
+
+        if ($modern) {
+            $menu->setChildrenAttribute('class', 'nav navbar-nav');
+        } else {
+            $menu->setChildrenAttribute('class', 'navigation');
+        }
 
         // change menu for blogger
         $blogService = $this->container->get('blog');
@@ -71,30 +76,58 @@ class Builder
                 'data-menu' => 'not-menu'
             )));
 
-            $menu = $this->decorateMenu($menu);
+            if (!$modern) {
+                $menu = $this->decorateMenu($menu);
+            }
+
             return $menu;
         }
 
-        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin'), 'attributes' => array(
-            'data-menu' => 'not-menu'
-        )));
+        $menu->addChild($translator->trans('Dashboard', array(), 'home'), array('uri' => $this->generateZendRoute('admin')));
 
-        $menu->addChild($translator->trans('Content'), array('uri' => '#'));
-        $this->prepareContentMenu($menu[$translator->trans('Content')]);
+        if ($modern) {
+            $menu->addChild($translator->trans('Content'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
 
-        $menu->addChild($translator->trans('Actions'), array('uri' => '#'));
-        $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
+            $this->prepareContentMenu($menu[$translator->trans('Content')]);
 
-        if ($this->showConfigureMenu) {
-            $menu->addChild($translator->trans('Configure'), array('uri' => '#'));
-            $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
+            $menu->addChild($translator->trans('Actions'), array('uri' => '#'))
+                ->setAttribute('dropdown', true)
+                ->setLinkAttribute('data-toggle', 'dropdown');
+
+            $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
+
+            if ($this->showConfigureMenu) {
+                $menu->addChild($translator->trans('Configure'), array('uri' => '#'))
+                    ->setAttribute('dropdown', true)
+                    ->setLinkAttribute('data-toggle', 'dropdown');
+                $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
+            }
+
+            if ($this->showUserMenu) {
+                $menu->addChild($translator->trans('Users'), array('uri' => '#'))
+                    ->setAttribute('dropdown', true)
+                    ->setLinkAttribute('data-toggle', 'dropdown');
+                $this->prepareUsersMenu($menu[$translator->trans('Users')]);
+            }
+        } else {
+            $menu->addChild($translator->trans('Content'), array('uri' => '#'));
+            $this->prepareContentMenu($menu[$translator->trans('Content')]);
+
+            $menu->addChild($translator->trans('Actions'), array('uri' => '#'));
+            $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
+
+            if ($this->showConfigureMenu) {
+                $menu->addChild($translator->trans('Configure'), array('uri' => '#'));
+                $this->prepareConfigureMenu($menu[$translator->trans('Configure')]);
+            }
+
+            if ($this->showUserMenu) {
+                $menu->addChild($translator->trans('Users'), array('uri' => '#'));
+                $this->prepareUsersMenu($menu[$translator->trans('Users')]);
+            }
         }
-
-        if ($this->showUserMenu) {
-            $menu->addChild($translator->trans('Users'), array('uri' => '#'));
-            $this->prepareUsersMenu($menu[$translator->trans('Users')]);
-        }
-
 
         $this->preparePluginsMenu($menu);
 
@@ -105,7 +138,9 @@ class Builder
             $this->container->get('router')
         ));
 
-        $menu = $this->decorateMenu($menu);
+        if (!$modern) {
+            $menu = $this->decorateMenu($menu);
+        }
 
         return $menu;
     }
@@ -210,7 +245,9 @@ class Builder
         $publicationService = $this->container->get('content.publication');
         foreach ($publicationService->findAll() as $publication) {
             $pubId = $publication->getId();
-            $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"));
+            $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
+                ->setAttribute('rightdrop', true)
+                ->setLinkAttribute('data-toggle', 'rightdrop');
 
             // add content/publication/issue
             foreach ($publication->getIssues() as $issue) {
@@ -221,7 +258,8 @@ class Builder
                     $menu[$publication->getName()], 
                     $issueName, 
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
-                ));
+                ))->setAttribute('rightdrop', true)
+                ->setLinkAttribute('data-toggle', 'rightdrop');
 
                 // add content/publication/issue/section
                     foreach ($issue->getSections() as $section) {
@@ -238,16 +276,16 @@ class Builder
                             $menu[$publication->getName()][$issueName],
                             $translator->trans('More...'), 
                             array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
-                        ));
+                        ))->setAttribute('divider_prepend', true);;
                     }
-            }
-                
+            }  
+
             if (count($publication->getIssues()) > 0) {
                 $this->addChild(
                     $menu[$publication->getName()],
                     $translator->trans('More...'), 
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
-                ));
+                ))->setAttribute('divider_prepend', true);
             }
         }    
     }
@@ -728,7 +766,9 @@ class Builder
             return;
         }
 
-        $menu->addChild($translator->trans('Plugins'), array('uri' => '#'));
+        $menu->addChild($translator->trans('Plugins'), array('uri' => '#'))
+            ->setAttribute('dropdown', true)
+            ->setLinkAttribute('data-toggle', 'dropdown');
 
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'), array('zend_route' => array(
