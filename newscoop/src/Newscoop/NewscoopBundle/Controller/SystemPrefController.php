@@ -152,6 +152,9 @@ class SystemPrefController extends Controller
             'facebook_appsecret' => $preferencesService->facebook_appsecret,
             'mailchimp_apikey' => $preferencesService->mailchimp_apikey,
             'mailchimp_listid' => $preferencesService->mailchimp_listid,
+            'recaptchaPublicKey' => $preferencesService->RecaptchaPublicKey,
+            'recaptchaPrivateKey' => $preferencesService->RecaptchaPrivateKey,
+            'recaptchaSecure' => $preferencesService->RecaptchaSecure,
         )
         , array());
 
@@ -245,6 +248,8 @@ class SystemPrefController extends Controller
                 $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
                 //Facebook
                 $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
+                //ReCaptcha
+                $this->recaptcha($data['recaptchaPublicKey'], $data['recaptchaPrivateKey'], $data['recaptchaSecure']);
                 $this->get('session')->getFlashBag()->add('success', $translator->trans('newscoop.preferences.success.saved', array(), 'system_pref'));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -459,6 +464,22 @@ class SystemPrefController extends Controller
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->facebook_appid = strip_tags($appId);
         $preferencesService->facebook_appsecret = strip_tags($secret);
+    }
+
+    /**
+     * Sets recaptcha options
+     *
+     * @param string $publicKey  ReCaptcha public key
+     * @param string $privateKey ReCaptcha private key
+     * @param string $secure     Secure ReCaptcha
+     *
+     * @return void
+     */
+    private function recaptcha($publicKey, $privateKey, $secure) {
+        $preferencesService = $this->container->get('system_preferences_service');
+        $preferencesService->RecaptchaPublicKey = strip_tags($publicKey);
+        $preferencesService->RecaptchaPrivateKey = strip_tags($privateKey);
+        $preferencesService->RecaptchaSecure = strip_tags($secure);
     }
 
     /**

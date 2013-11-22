@@ -38,6 +38,7 @@
             <li><a href="#geolocation_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.geolocation'|trans }}</a></li>
             <li><a href="#mailchimp_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.mailchimp'|trans }}</a></li>
             <li><a href="#facebook_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.fb'|trans }}</a></li>
+            <li><a href="#recaptcha_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.recaptcha'|trans }}</a></li>
             {% if hasManagePermission %}
                 <li><a href="#other_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.other'|trans }}</a></li>
             {% endif %}
@@ -480,6 +481,29 @@
                     </dl>
                 </div>
             {% endif %}
+            <div class="tab-pane" id="recaptcha_settings">
+                <h3>{{ 'newscoop.preferences.menu.recaptcha'|trans }}</h3>
+                <dl>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.recaptchapublickey'|trans }} <small id="recaptchapublickey">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.recaptchaPublicKey, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.recaptchaprivatekey'|trans }} <small id="recaptchaprivatekey">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.recaptchaPrivateKey, {'attr' : {'class' : 'input_text' }}) }}
+                    </dd>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.recaptchasecure'|trans }} <small id="recaptchasecure">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.recaptchaSecure) }}
+                    </dd>
+                </dl>
+            </div>
             <div class="save-button-bar">
                 <button type="submit" class="save-button">{{ 'newscoop.btn.save'|trans }}</button>
             </div>
@@ -523,6 +547,9 @@
     popover($('#cron'), '{{ 'newscoop.preferences.popover.cron'|trans }}');
     popover($('#video'), '{{ 'newscoop.preferences.popover.video'|trans }}');
     popover($('#emailfrom'), '{{ 'newscoop.preferences.popover.emailfrom'|trans }}');
+    popover($('#recaptchaprivatekey'), '{{ 'newscoop.preferences.popover.recaptcha.privatekey'|trans }}');
+    popover($('#recaptchapublickey'), '{{ 'newscoop.preferences.popover.recaptcha.publickey'|trans }}');
+    popover($('#recaptchasecure'), '{{ 'newscoop.preferences.popover.recaptcha.secure'|trans }}');
 
 //--></script>
 {% endblock %}

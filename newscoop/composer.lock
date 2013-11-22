@@ -876,6 +876,48 @@
             "time": "2013-10-29 08:25:52"
         },
         {
+            "name": "excelwebzone/recaptcha-bundle",
+            "version": "dev-master",
+            "target-dir": "EWZ/Bundle/RecaptchaBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
+                "reference": "4e89f571e785e6d529ff90d5b2d24dc4d971f3c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
+                "reference": "4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "EWZ\\Bundle\\RecaptchaBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael H. Arieli",
+                    "email": "excelwebzone@gmail.com",
+                    "homepage": "http://excelwebzone.com/"
+                }
+            ],
+            "description": "This bundle provides easy reCAPTCHA form field integration",
+            "homepage": "https://github.com/excelwebzone/EWZRecaptchaBundle",
+            "keywords": [
+                "recaptcha"
+            ],
+            "time": "2013-10-17 02:28:14"
+        },
+        {
             "name": "friendsofsymfony/jsrouting-bundle",
             "version": "dev-master",
             "target-dir": "FOS/JsRoutingBundle",
@@ -3339,7 +3381,8 @@
         "knplabs/knp-menu-bundle": 20,
         "knplabs/knp-menu": 20,
         "raulfraile/ladybug-bundle": 20,
-        "knplabs/packagist-api": 20
+        "knplabs/packagist-api": 20,
+        "excelwebzone/recaptcha-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

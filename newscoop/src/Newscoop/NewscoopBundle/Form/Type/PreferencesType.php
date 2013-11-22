@@ -417,6 +417,26 @@ class PreferencesType extends AbstractType
             'attr' => array('maxlength' => 200, 'size' => 40),
             'error_bubbling' => true,
             'required' => false
+        ))
+        ->add('recaptchaPublicKey', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('recaptchaPrivateKey', null, array(
+            'attr' => array('maxlength' => 200, 'size' => 40),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('recaptchaSecure', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
         ));
     }
 
