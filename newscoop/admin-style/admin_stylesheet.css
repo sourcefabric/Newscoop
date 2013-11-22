@@ -1075,6 +1075,9 @@ fieldset > legend {
 	font-size:12px;
 	line-height:140%;
 	color:#696969;
+	margin-bottom: 0px;
+    width: auto;
+    border-bottom: none;
 }
 ul.tree.sortable .item fieldset .input_text {
 	width: auto;

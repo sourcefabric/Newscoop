@@ -141,18 +141,19 @@ class ManagerService
 
     /**
      * Dispatch events for plugins
-     * @param  [type] $pluginName [description]
-     * @param  [type] $eventName  [description]
-     * @param  [type] $output     [description]
-     * @return [type]             [description]
+     * @param  string $pluginName 
+     * @param  string $eventName  
+     * @param  mixed $output                  
      */
-    public function dispatchEventForPlugin($pluginName, $eventName, $output)
+    public function dispatchEventForPlugin($pluginName, $eventName, $output = null)
     {
         $this->dispatcher->dispatch('plugin.'.$eventName, new GenericEvent($this, array(
             'plugin_name' => $pluginName
         )));
 
-        $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
+        if ($output) {
+            $output->writeln('<info>We just fired: "plugin.'.$eventName.'" event</info>');
+        }
 
         $this->dispatcher->dispatch(
             'plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)), 
@@ -161,7 +162,9 @@ class ManagerService
             ))
         );
 
-        $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
+        if ($output) {
+            $output->writeln('<info>We just fired: "plugin.'.$eventName.'.'.str_replace('-', '_', str_replace('/', '_', $pluginName)).'" event</info>');
+        }
     }
 
     /**

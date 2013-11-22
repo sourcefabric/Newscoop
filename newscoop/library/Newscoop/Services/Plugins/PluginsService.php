@@ -69,6 +69,17 @@ class PluginsService
         return $avaiablePlugins->matching($criteria);
     }
 
+    public function getPluginByCriteria($criteria, $id)
+    {
+        $eb = new ExpressionBuilder();
+        $expr = $eb->eq($criteria, intval($id));
+        $criteria = new Criteria($expr);
+
+        $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
+        
+        return $avaiablePlugins->matching($criteria);
+    }
+
     /**
      * Dispatch hook event and render collected Response objects
      * 
@@ -116,10 +127,24 @@ class PluginsService
 
     public function isEnabled($pluginName)
     {
-        if ($this->avaiablePlugins) {
-            // search for plugin on list
-        } else {
-            // get plugin from db anc check if it's enabled
+        $plugin = $pluginService->getPluginByCriteria('name', $pluginName)->first();
+        if ($plugin) {
+            if ($plugin->getEnabled()) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public function getPluginsDir()
+    {
+        $pluginsDir = __DIR__ . '/../../../../plugins';
+
+        if (file_exists($pluginsDir)) {
+            return realpath($pluginsDir);
+        }
+
+        return $pluginsDir;
     }
 }
