@@ -42,7 +42,7 @@ select {
 
 .meta-bar {
 	background:#007fb3;
-	height:24px;
+	height:23px;
 	color:#fff;
 	border-bottom:1px solid #939393;
 	text-align:right;
@@ -56,7 +56,7 @@ select {
 }
 
 .meta-bar ul li {
-	margin:0;
+	margin:2px 0 0 0;
 	padding:0 9px;
 	float: right;
 }
@@ -70,14 +70,14 @@ select {
 
 .main-menu-bar {
 	background:#3b3b3b;
-	height:30px;
+	height:36px;
 	text-align:left;
 	padding:5px 0 0 0;
 }
 /* Breadcrumbs */
 
 .breadcrumb-bar {
-	min-height:23px;
+	min-height:21px;
 	text-align:left;
 	padding:7px 0 0 16px;
 	border-bottom:1px solid #cccccc;
@@ -86,6 +86,7 @@ select {
     -moz-box-shadow: 0 0px 4px rgba(0,0,0,.15);
     -webkit-box-shadow: 0 0px 4px rgba(0,0,0,.15);
     box-shadow: 0 0px 4px rgba(0,0,0,.15);
+    margin-top: 1px;
 }
 
 .breadcrumb-bar.zend {
