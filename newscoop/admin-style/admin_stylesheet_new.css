@@ -779,3 +779,6 @@ td.name .ui-icon {
     font-weight: normal;
     background-color: #F4FBFF;
 }
+.admin-font-size {
+    font-size: 10px;
+}
