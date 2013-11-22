@@ -22,6 +22,7 @@ newscoop:
       media: "Ustawienia wideo"
       cache: "Ustawienia cache"
       other: "Inne ustawienia"
+      recaptcha: "Ustawienia reCAPTCHA"
     label:
       title: "Preferencje systemowe"
       header: "Ustawienia"
@@ -96,6 +97,10 @@ newscoop:
       yesoption: "Tak"
       nooption: "Nie"
       geosearch: "Użyj wyszukiwania lokalnego GeoNames:"
+      recaptchapublickey: "Klucz publiczny"
+      recaptchaprivatekey: "Klucz prywatny"
+      recaptchasecure: "Zabezpieczone url-e dla reCAPTCHA?"
+      recaptchaenable: "Zablokować reCAPTCHA?"
     popover:
       cacheengine: "Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop."
       cacheimage: "Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności."
@@ -111,3 +116,8 @@ newscoop:
       cron: "Oznacza korzystanie z własnych harmonogramów cron-a dla zadań automatycznych, zamiast harmonogramu zawartego w Newscoop."
       video: "Domyślna szerokość i wysokość zarówno zewnętrznie, jak i lokalnie obsługiwanych plików wideo można ustawić w tej sekcji, aby upewnić się, że filmy są wyświetlane poprawnie w publikacjach szablonów stron."
       emailfrom: "Adres e-mail używany do powiadomień z systemu."
+      recaptcha:
+        publickey: "Klucz używany w kodzie JavaScript aby uruchomic reCAPTCHA."
+        privatekey: "Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu."
+        secure: "Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak."
+        enable: "Pozwala na latwe włączenie bądź wyłączenie reCAPTCHA w Newscoopie."

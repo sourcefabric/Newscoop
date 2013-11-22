@@ -22,6 +22,7 @@ newscoop:
       media: "Video Settings"
       cache: "Cache Settings"
       other: "Other Settings"
+      recaptcha: "reCAPTCHA Settings"
     label:
       title: "System Preferences"
       header: "Preferences"
@@ -92,6 +93,10 @@ newscoop:
       mailchimplist: "List Unique Id:"
       appid: "App ID:"
       fbsecret: "App Secret:"
+      recaptchapublickey: "Public key"
+      recaptchaprivatekey: "Private key"
+      recaptchasecure: "Secure url for reCAPTCHA?"
+      recaptchaenable: "Disable reCAPTCHA?"
       disabled: "disabled"
       yesoption: "Yes"
       nooption: "No"
@@ -111,3 +116,8 @@ newscoop:
       cron: "Means to use the servers own cron scheduler for automated tasks, rather than the scheduler included in Newscoop."
       video: "The default width and height of both externally and locally hosted video files can be set in this section, to make sure that the videos are displayed correctly in your publications page templates."
       emailfrom: "The email address used for notifications from the system."
+      recaptcha:
+        publickey: "Use this in the JavaScript code that is served to your users."
+        privatekey: "Use this when communicating between your server and reCAPTCHA server. Be sure to keep it a secret."
+        secure: "If you use secure url for reCAPTCHA choose Yes option."
+        enable: "You can easily disable or enable reCAPTCHA."
