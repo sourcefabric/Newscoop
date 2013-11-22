@@ -1,6 +1,6 @@
 
 -- Update languages, by code since that is already unique and more practical then ID
-UPDATE `Languages` SET `RFC3066bis` = "en-GB" WHERE `Code` = "en";
+UPDATE `Languages` SET `RFC3066bis` = "en-US" WHERE `Code` = "en";
 UPDATE `Languages` SET `RFC3066bis` = "de-DE" WHERE `Code` = "de";
 UPDATE `Languages` SET `RFC3066bis` = "pt-PT" WHERE `Code` = "pt";
 UPDATE `Languages` SET `RFC3066bis` = "fr-FR" WHERE `Code` = "fr";
@@ -14,8 +14,8 @@ UPDATE `Languages` SET `RFC3066bis` = "sr-Cyrl-SR" WHERE `Code` = "sr";
 UPDATE `Languages` SET `RFC3066bis` = "ru-RU" WHERE `Code` = "ru";
 UPDATE `Languages` SET `RFC3066bis` = "sv-SE" WHERE `Code` = "sv";
 UPDATE `Languages` SET `RFC3066bis` = "zh-Hans" WHERE `Code` = "zh";
-UPDATE `Languages` SET `RFC3066bis` = "ar" WHERE `Code` = "ar";
-UPDATE `Languages` SET `RFC3066bis` = "ko-KP" WHERE `Code` = "ko";
+UPDATE `Languages` SET `RFC3066bis` = "ar-YE" WHERE `Code` = "ar";
+UPDATE `Languages` SET `RFC3066bis` = "ko-KR" WHERE `Code` = "ko";
 UPDATE `Languages` SET `RFC3066bis` = "nl-NL" WHERE `Code` = "nl";
 UPDATE `Languages` SET `RFC3066bis` = "be-BY" WHERE `Code` = "be";
 UPDATE `Languages` SET `RFC3066bis` = "ka-GE" WHERE `Code` = "ka";
