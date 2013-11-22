@@ -26,7 +26,7 @@ class FinishService
 
 	public function generateProxies()
 	{
-        exec('rm -rf '.$this->newscoopDir.'/cache/prod', $output = array(), $code);
+        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output = array(), $code);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
