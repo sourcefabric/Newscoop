@@ -100,7 +100,6 @@ newscoop:
       recaptchapublickey: "Klucz publiczny"
       recaptchaprivatekey: "Klucz prywatny"
       recaptchasecure: "Zabezpieczone url-e dla reCAPTCHA?"
-      recaptchaenable: "Zablokować reCAPTCHA?"
     popover:
       cacheengine: "Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop."
       cacheimage: "Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności."
@@ -120,4 +119,3 @@ newscoop:
         publickey: "Klucz używany w kodzie JavaScript aby uruchomic reCAPTCHA."
         privatekey: "Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu."
         secure: "Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak."
-        enable: "Pozwala na latwe włączenie bądź wyłączenie reCAPTCHA w Newscoopie."

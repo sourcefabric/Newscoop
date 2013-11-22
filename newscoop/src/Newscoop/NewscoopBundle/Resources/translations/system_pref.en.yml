@@ -96,7 +96,6 @@ newscoop:
       recaptchapublickey: "Public key"
       recaptchaprivatekey: "Private key"
       recaptchasecure: "Secure url for reCAPTCHA?"
-      recaptchaenable: "Disable reCAPTCHA?"
       disabled: "disabled"
       yesoption: "Yes"
       nooption: "No"
@@ -120,4 +119,3 @@ newscoop:
         publickey: "Use this in the JavaScript code that is served to your users."
         privatekey: "Use this when communicating between your server and reCAPTCHA server. Be sure to keep it a secret."
         secure: "If you use secure url for reCAPTCHA choose Yes option."
-        enable: "You can easily disable or enable reCAPTCHA."

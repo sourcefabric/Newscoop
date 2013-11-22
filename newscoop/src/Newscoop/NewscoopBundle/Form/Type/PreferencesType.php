@@ -437,16 +437,6 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
-        ))
-        ->add('recaptchaEnabled', 'choice', array(
-            'choices'   => array(
-                'Y' => 'newscoop.preferences.label.yesoption', 
-                'N' => 'newscoop.preferences.label.nooption'
-            ),
-            'error_bubbling' => true,
-            'multiple' => false,
-            'expanded' => true,
-            'required' => true,
         ));
     }
 

@@ -502,12 +502,6 @@
                     <dd>
                         {{ form_widget(form.recaptchaSecure) }}
                     </dd>
-                    <dt>
-                        <label>{{ 'newscoop.preferences.label.recaptchaenable'|trans }} <small id="recaptchaenable">(?)</small></label>
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.recaptchaEnabled) }}
-                    </dd>
                 </dl>
             </div>
             <div class="save-button-bar">
@@ -556,7 +550,6 @@
     popover($('#recaptchaprivatekey'), '{{ 'newscoop.preferences.popover.recaptcha.privatekey'|trans }}');
     popover($('#recaptchapublickey'), '{{ 'newscoop.preferences.popover.recaptcha.publickey'|trans }}');
     popover($('#recaptchasecure'), '{{ 'newscoop.preferences.popover.recaptcha.secure'|trans }}');
-    popover($('#recaptchaenable'), '{{ 'newscoop.preferences.popover.recaptcha.enable'|trans }}');
 
 //--></script>
 {% endblock %}

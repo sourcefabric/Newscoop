@@ -155,7 +155,6 @@ class SystemPrefController extends Controller
             'recaptchaPublicKey' => $preferencesService->RecaptchaPublicKey,
             'recaptchaPrivateKey' => $preferencesService->RecaptchaPrivateKey,
             'recaptchaSecure' => $preferencesService->RecaptchaSecure,
-            'recaptchaEnabled' => $preferencesService->RecaptchaEnabled,
         )
         , array());
 
@@ -250,7 +249,7 @@ class SystemPrefController extends Controller
                 //Facebook
                 $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
                 //ReCaptcha
-                $this->recaptcha($data['recaptchaPublicKey'], $data['recaptchaPrivateKey'], $data['recaptchaSecure'], $data['recaptchaEnabled']);
+                $this->recaptcha($data['recaptchaPublicKey'], $data['recaptchaPrivateKey'], $data['recaptchaSecure']);
                 $this->get('session')->getFlashBag()->add('success', $translator->trans('newscoop.preferences.success.saved', array(), 'system_pref'));
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
@@ -473,16 +472,14 @@ class SystemPrefController extends Controller
      * @param string $publicKey  ReCaptcha public key
      * @param string $privateKey ReCaptcha private key
      * @param string $secure     Secure ReCaptcha
-     * @param string $enable     Enable ReCaptcha
      *
      * @return void
      */
-    private function recaptcha($publicKey, $privateKey, $secure, $enable) {
+    private function recaptcha($publicKey, $privateKey, $secure) {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->RecaptchaPublicKey = strip_tags($publicKey);
         $preferencesService->RecaptchaPrivateKey = strip_tags($privateKey);
         $preferencesService->RecaptchaSecure = strip_tags($secure);
-        $preferencesService->RecaptchaEnabled = strip_tags($enable);
     }
 
     /**
