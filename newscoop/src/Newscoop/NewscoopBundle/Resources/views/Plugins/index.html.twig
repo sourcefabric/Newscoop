@@ -1,60 +1,135 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "plugins_manager" %}
 
 {% block admin_title %}Plugins management{% endblock %}
 {% block admin_page_title_content %}Plugins manager{% endblock %}
 
 {% block admin_stylesheets %}
-<link rel="stylesheet" type="text/css" href="{{ asset('admin-style/table.css') }}" />
 <link rel="stylesheet" type="text/css" href="{{ asset('/js/select2-3.4.1/select2.css') }}" />
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/DT_bootstrap.css">
+<style type="text/css">
+.tabs-left > .nav-tabs {min-height: 150px;}
+li:after {content: none;}
+</style>
 {% endblock %}
 
 {% block admin_scripts %}
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/DT_bootstrap.js"></script>
 <script src="{{ asset('/js/select2-3.4.1/select2.js') }}"></script>
 {% endblock %}
 
-
 {% block admin_content %}
-<fieldset class="filters">
-    <legend>Install new plugins</legend>
 
-    <div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
-        <div style="width: 600px;" class="search-for-plugins"></div>
+{% for key, message in app.session.flashbag.get('error') %}
+    <script type="text/javascript">
+        flashMessage('{{ message|raw }}', 'error', true);
+    </script>
+{% endfor %}
+
+{% for key, message in app.session.flashbag.get('success') %}
+    <script type="text/javascript">
+        flashMessage('{{ message|raw }}');
+    </script>
+{% endfor %}
+
+<div class="system_pref">
+    <div class="tabbable tabs-left"> 
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#public_plugins" data-toggle="tab">{{ 'newscoop.plugins_manager.public_plugins'|trans }}</a></li>
+            <li><a href="#private_plugins" data-toggle="tab">{{ 'newscoop.plugins_manager.private_plugins'|trans }}</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="public_plugins">
+                <fieldset class="filters">
+                    <legend>{{ 'newscoop.plugins_manager.install.public'|trans }}</legend>
+
+                    <div class="plugins-search" style="width: 600px;margin-right: 20px;float: left;">
+                        <div style="width: 600px;" class="search-for-plugins"></div>
+                    </div>
+
+                    <div class="choosen-plugin-info" style="float:left; margin-bottom: 50px;"></div>
+                </fieldset>
+                <div class="clear:both;"></div>
+
+
+                <div id="manage-plugins" style="padding: 10px 10px 30px 10px; border: 1px solid #ccc; background-color: #FFF;">
+                    <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered" id="pluginsTable">
+                        <thead>
+                            <tr>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.name'|trans }}</th>
+                                <th style="width: 25%;">{{ 'newscoop.plugins_manager.installed_table.description'|trans }}</th>
+                                <th style="width: 30%;">{{ 'newscoop.plugins_manager.installed_table.enabled'|trans }}</th>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.version'|trans }}</th>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.license'|trans }}</th>
+                                <th style="width: 14%;">{{ 'newscoop.plugins_manager.installed_table.installed_at'|trans }}</th>
+                                <th style="width: 14%;">{{ 'newscoop.plugins_manager.installed_table.updated_at'|trans }}</th>
+                                <th style="width: 15%;">{{ 'newscoop.plugins_manager.installed_table.actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for plugin in allAvailablePlugins %}
+                            <tr id="{{ plugin.id }}">
+                                <td>{{ plugin.name }}</td>
+                                <td style="width: 25%;">{{ plugin.description }}</td>
+                                <td style="text-align: center; width: 50px;"><input type="checkbox" {% if plugin.enabled %}checked="true"{% endif %} value="1" class="change-status" data-plugin-id="{{ plugin.id }}"/></td>
+                                <td style="text-align: center">{{ plugin.version }}</td>
+                                <td>{{ plugin.license }}</td>
+                                <td style="width: 14%;">{{ plugin.installedAt|date('Y-m-d H:i:s') }}</td>
+                                <td style="width: 14%;">{% if plugin.updatedAt %}{{ plugin.updatedAt|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
+                                <td style="width: 12%; text-align: center;"><a href="/admin/plugins/getStream/update/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.update_plugin'|trans }}</a> | <a href="/admin/plugins/getStream/remove/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/remove/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.remove_plugin'|trans }}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane" id="private_plugins">
+                <fieldset class="filters">
+                    <legend>{{ 'newscoop.plugins_manager.upload.private'|trans }}</legend>
+
+                    <form method="post" role="form" action="" enctype="multipart/form-data">
+                        <div class="form-group">
+                            {{ form_label(form.package) }}
+                            {{ form_widget(form.package) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.upload) }}
+                            {{ form_widget(form.upload) }}
+                        </div>
+                        {{ form_widget(form) }}
+                    </form>
+                    <!-- class="form-inline" -->
+                </fieldset>
+
+                <div class="uploaded-plugins" style="margin-bottom: 50px; padding: 10px 10px 30px 10px; border: 1px solid #ccc; background-color: #FFF;">
+                    <table cellpadding="0" cellspacing="0" border="0" class="datatable table table-striped table-bordered" style="width: 100%" id="privatePluginsTable">
+                        <thead>
+                            <tr>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.name'|trans }}</th>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.description'|trans }}</th>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.version'|trans }}</th>
+                                <th>{{ 'newscoop.plugins_manager.installed_table.license'|trans }}</th>
+                                <th style="text-align: center;">{{ 'newscoop.plugins_manager.installed_table.actions'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for plugin in privatePackages %}
+                            <tr>
+                                <td style="width: 20%;">{{ plugin.name }}</td>
+                                <td style="width: 35%;">{{ plugin.description }}</td>
+                                <td>{{ plugin.license }}</td>
+                                <td>{{ plugin.version }}</td>
+                                <td style="text-align: center;">{% if not plugin.installed %}<a href="/admin/plugins/getStream/install/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.install_plugin'|trans }}</a>{% else %}{{ 'newscoop.plugins_manager.installed_table.plugin_installed'|trans }}{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="choosen-plugin-info" style="float:left; margin-bottom: 50px;"></div>
-</fieldset>
-<div class="clear:both;"></div>
-
-
-<div id="manage-plugins" style="padding: 10px 10px 30px 10px;">
-    <table cellpadding="0" cellspacing="0" border="0" class="display" style="width: 100%" id="pluginsTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Enabled</th>
-                <th>Version</th>
-                <th>License</th>
-                <th>Installed At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for plugin in allAvailablePlugins %}
-            <tr id="{{ plugin.id }}">
-                <td>{{ plugin.name }}</td>
-                <td style="width: 25%;">{{ plugin.description }}</td>
-                <td style="text-align: center; width: 50px;"><input type="checkbox" {% if plugin.enabled %}checked="true"{% endif %} value="1"/></td>
-                <td style="text-align: center">{{ plugin.version }}</td>
-                <td>{{ plugin.license }}</td>
-                <td style="width: 14%;">{{ plugin.installedAt|date('Y-m-d H:i:s') }}</td>
-                <td style="width: 14%;">{% if plugin.updatedAt %}{{ plugin.updatedAt|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
-                <td style="width: 12%; text-align: center;"><a href="/admin/plugins/getStream/update/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">Update</a> | <a href="/admin/plugins/getStream/remove/{{ plugin.name }}" class="get-stream iframe" data-href="">Remove</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </div>
 
 <script type="text/javascript">
@@ -65,7 +140,7 @@
     function pluginFormatSelection(item) { return item.name; }
     var initData = null;
     $(".search-for-plugins").select2({
-        placeholder: "Search for plugins",
+        placeholder: '{{ 'newscoop.plugins_manager.search_for_plugins'|trans }}',
         minimumInputLength: null,
         id: function(item){return {id: item.name};},
         cache: true,
@@ -84,10 +159,12 @@
         initSelection: function(element, callback) {
             var value = $(element).val();
             var initData = null;
-            $.ajax("/admin/plugins/getPackagesFromPackagist", {
-                data: {},
-                dataType: "json"
-            }).done(function(data) { initData = data; callback(data.results); });
+            callServer('ping', [], function(json) {
+                $.ajax("/admin/plugins/getPackagesFromPackagist", {
+                    data: {},
+                    dataType: "json"
+                }).done(function(data) { initData = data; callback(data.results); });
+            }); // /ping
         },
         formatResult: pluginFormat, 
         formatSelection: pluginFormatSelection,
@@ -109,25 +186,91 @@
         });
     });
 
+    $('.change-status').change(function(){
+        var checked = $(this).attr('checked');
+        var pluginId = $(this).data('pluginId');
+        var status = 'disable';
+        if (checked) {
+            status = 'enable';
+        }
+
+        callServer('ping', [], function(json) {
+            $.ajax("/admin/plugins/chnageStatus/"+status+"/"+pluginId, {
+                data: {},
+                dataType: "json"
+            }).done(function(data) { 
+                console.table(data.results);
+            });
+        }); // /ping
+    })
+
     $('#subscriptionsTable').css('font-size', '13px');
     $('#pluginsTable').dataTable({
         "aoColumns" : [
             null,
             { sWidth: '25%' },
-            { sWidth: '50px' },
+            { sWidth: '30px' },
             null,
             null,
             { sWidth: '14%' },
             { sWidth: '14%' },
-            { sWidth: '12%' },
+            { sWidth: '15%' },
         ],
-        "bProcessing": true,
+        'oLanguage': {
+            'oPaginate': {
+                'sFirst': '{{ 'newscoop.datatable.label.first'|trans }}',
+                'sNext': '{{ 'newscoop.datatable.label.next'|trans }}',
+                'sPrevious': '{{ 'newscoop.datatable.label.previous'|trans }}',
+                'sLast': '{{ 'newscoop.datatable.label.last'|trans }}',
+            },
+            'sZeroRecords': '{{ 'newscoop.datatable.label.norecords'|trans }}',
+            'sSearch': '',
+            'sInfo': '{{ 'newscoop.datatable.table.info'|trans }}',
+            'sEmpty': '{{ 'newscoop.datatable.table.noentries'|trans }}',
+            'sInfoFiltered': '{{ 'newscoop.datatable.table.filtering'|trans }}',
+            'sLengthMenu': '{{ 'newscoop.datatable.table.menu'|trans }}',
+            'sInfoEmpty': '',
+        },
         "bAutoWidth": false,
         "bPaging": true,
-        "sDom": 'RCf<"clear">rtilp',
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
     }).fnAdjustColumnSizing();
+
+    $('#privatePluginsTable').css('font-size', '13px');
+    $('#privatePluginsTable').dataTable({
+        "aoColumns" : [
+            { sWidth: '20%' },
+            { sWidth: '35%' },
+            null,
+            null,
+            null,
+        ],
+        'oLanguage': {
+            'oPaginate': {
+                'sFirst': '{{ 'newscoop.datatable.label.first'|trans }}',
+                'sNext': '{{ 'newscoop.datatable.label.next'|trans }}',
+                'sPrevious': '{{ 'newscoop.datatable.label.previous'|trans }}',
+                'sLast': '{{ 'newscoop.datatable.label.last'|trans }}',
+            },
+            'sZeroRecords': '{{ 'newscoop.datatable.label.norecords'|trans }}',
+            'sSearch': '',
+            'sInfo': '{{ 'newscoop.datatable.table.info'|trans }}',
+            'sEmpty': '{{ 'newscoop.datatable.table.noentries'|trans }}',
+            'sInfoFiltered': '{{ 'newscoop.datatable.table.filtering'|trans }}',
+            'sLengthMenu': '{{ 'newscoop.datatable.table.menu'|trans }}',
+            'sInfoEmpty': '',
+        },
+        "bAutoWidth": false,
+        "bPaging": true,
+    }).fnAdjustColumnSizing();
+
+    $('.datatable').each(function(){
+        var datatable = $(this);
+        var search_input = datatable.closest('.dataTables_wrapper').find('div[id$=_filter] input');
+        search_input.attr('placeholder', '{{ 'newscoop.datatable.label.search'|trans }}');
+        search_input.addClass('form-control input-sm');
+        var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
+        length_sel.addClass('form-control input-sm');
+    });
 
     $('a.iframe').each(function() {
         $(this).fancybox({

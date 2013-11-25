@@ -1,0 +1,33 @@
+
+-- Update languages, by code since that is already unique and more practical then ID
+UPDATE `Languages` SET `RFC3066bis` = "en-GB" WHERE `Code` = "en";
+UPDATE `Languages` SET `RFC3066bis` = "de-DE" WHERE `Code` = "de";
+UPDATE `Languages` SET `RFC3066bis` = "pt-PT" WHERE `Code` = "pt";
+UPDATE `Languages` SET `RFC3066bis` = "fr-FR" WHERE `Code` = "fr";
+UPDATE `Languages` SET `RFC3066bis` = "es-ES" WHERE `Code` = "es";
+UPDATE `Languages` SET `RFC3066bis` = "ro-RO" WHERE `Code` = "ro";
+UPDATE `Languages` SET `RFC3066bis` = "hr-HR" WHERE `Code` = "hr";
+UPDATE `Languages` SET `RFC3066bis` = "cs-CZ" WHERE `Code` = "cs";
+UPDATE `Languages` SET `RFC3066bis` = "it-IT" WHERE `Code` = "it";
+UPDATE `Languages` SET `RFC3066bis` = "sr-Latn-SR" WHERE `Code` = "sh";
+UPDATE `Languages` SET `RFC3066bis` = "sr-Cyrl-SR" WHERE `Code` = "sr";
+UPDATE `Languages` SET `RFC3066bis` = "ru-RU" WHERE `Code` = "ru";
+UPDATE `Languages` SET `RFC3066bis` = "sv-SE" WHERE `Code` = "sv";
+UPDATE `Languages` SET `RFC3066bis` = "zh-Hans" WHERE `Code` = "zh";
+UPDATE `Languages` SET `RFC3066bis` = "ar" WHERE `Code` = "ar";
+UPDATE `Languages` SET `RFC3066bis` = "ko-KP" WHERE `Code` = "ko";
+UPDATE `Languages` SET `RFC3066bis` = "nl-NL" WHERE `Code` = "nl";
+UPDATE `Languages` SET `RFC3066bis` = "be-BY" WHERE `Code` = "be";
+UPDATE `Languages` SET `RFC3066bis` = "ka-GE" WHERE `Code` = "ka";
+UPDATE `Languages` SET `RFC3066bis` = "zh-Hant" WHERE `Code` = "zh_TW";
+UPDATE `Languages` SET `RFC3066bis` = "pl-PL" WHERE `Code` = "pl";
+UPDATE `Languages` SET `RFC3066bis` = "el-GR" WHERE `Code` = "el";
+UPDATE `Languages` SET `RFC3066bis` = "he-IL" WHERE `Code` = "he";
+UPDATE `Languages` SET `RFC3066bis` = "bn-BD" WHERE `Code` = "bn";
+UPDATE `Languages` SET `RFC3066bis` = "pt-BR" WHERE `Code` = "pt_BR";
+UPDATE `Languages` SET `RFC3066bis` = "sq-AL" WHERE `Code` = "sq";
+UPDATE `Languages` SET `RFC3066bis` = "tr-TR" WHERE `Code` = "tr";
+UPDATE `Languages` SET `RFC3066bis` = "uk-UA" WHERE `Code` = "uk";
+UPDATE `Languages` SET `RFC3066bis` = "en-GB" WHERE `Code` = "en_GB";
+UPDATE `Languages` SET `RFC3066bis` = "ku-TR" WHERE `Code` = "ku";
+UPDATE `Languages` SET `RFC3066bis` = "de-AT" WHERE `Code` = "de_AT";

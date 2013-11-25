@@ -20,7 +20,7 @@ class Language extends DatabaseObject {
 	var $m_keyColumnNames = array('Id');
 	var $m_keyIsAutoIncrement = true;
 	var $m_columnNames = array('Id', 'Name', 'CodePage', 'OrigName',
-	    'Code', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
+	    'Code', 'RFC3066bis', 'Month1', 'Month2', 'Month3', 'Month4', 'Month5',
 	    'Month6', 'Month7', 'Month8', 'Month9', 'Month10', 'Month11',
 	    'Month12', 'WDay1', 'WDay2', 'WDay3', 'WDay4', 'WDay5', 'WDay6',
 	    'WDay7', 'ShortMonth1', 'ShortMonth2', 'ShortMonth3', 'ShortMonth4',
@@ -149,6 +149,17 @@ class Language extends DatabaseObject {
 	{
 		return $this->m_data['Code'];
 	} // fn getCode
+
+
+    /**
+     * Get language and regional string for this language, based on
+     * RFC3066bis standard.
+     * @return string
+     */
+    public function getRFC3066bis()
+    {
+        return $this->m_data['RFC3066bis'];
+    } // fn getRFC3066bis
 
 
 	/**
