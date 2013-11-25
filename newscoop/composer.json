@@ -44,7 +44,8 @@
         "willdurand\/expose-translation-bundle":"0.3.0",
         "recaptcha\/php5":"v1.0.0",
         "knplabs\/packagist-api":"0.1.*@dev",
-        "symfony/twig-bridge": "~2.3"
+        "symfony/twig-bridge": "~2.3",
+        "excelwebzone/recaptcha-bundle": "dev-master"
     },
     "require-dev":{
         "phpunit\/phpunit":"3.7.*"

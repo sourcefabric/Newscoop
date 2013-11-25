@@ -90,7 +90,7 @@ class Builder
                 ->setAttribute('dropdown', true)
                 ->setLinkAttribute('data-toggle', 'dropdown');
 
-            $this->prepareContentMenu($menu[$translator->trans('Content')]);
+            $this->prepareContentMenu($menu[$translator->trans('Content')], $modern);
 
             $menu->addChild($translator->trans('Actions'), array('uri' => '#'))
                 ->setAttribute('dropdown', true)
@@ -113,7 +113,7 @@ class Builder
             }
         } else {
             $menu->addChild($translator->trans('Content'), array('uri' => '#'));
-            $this->prepareContentMenu($menu[$translator->trans('Content')]);
+            $this->prepareContentMenu($menu[$translator->trans('Content')], $modern);
 
             $menu->addChild($translator->trans('Actions'), array('uri' => '#'));
             $this->prepareActionsMenu($menu[$translator->trans('Actions')]);
@@ -181,7 +181,7 @@ class Builder
         return $menu;
     }
 
-    private function prepareContentMenu($menu) {
+    private function prepareContentMenu($menu, $modern) {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Publications'), array('zend_route' => array(
@@ -272,20 +272,38 @@ class Builder
                         ));
                     }
                     if (count($issue->getSections()) > 0) {
-                        $this->addChild(
-                            $menu[$publication->getName()][$issueName],
-                            $translator->trans('More...'), 
-                            array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
-                        ))->setAttribute('divider_prepend', true);;
+                        if (!$modern) {
+                            $this->addChild($menu[$publication->getName()][$issueName], null, array())->setAttribute('class', 'divider');
+                            $this->addChild(
+                                $menu[$publication->getName()][$issueName],
+                                $translator->trans('More...'), 
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
+                            ));
+                        } else {
+                            $this->addChild(
+                                $menu[$publication->getName()][$issueName],
+                                $translator->trans('More...'), 
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
+                            ))->setAttribute('divider_prepend', true);
+                        }
                     }
             }  
 
             if (count($publication->getIssues()) > 0) {
-                $this->addChild(
-                    $menu[$publication->getName()],
-                    $translator->trans('More...'), 
-                    array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
-                ))->setAttribute('divider_prepend', true);
+                if (!$modern) {
+                    $this->addChild($menu[$publication->getName()], null, array())->setAttribute('class', 'divider');
+                    $this->addChild(
+                        $menu[$publication->getName()],
+                        $translator->trans('More...'), 
+                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
+                    ));
+                } else {
+                    $this->addChild(
+                        $menu[$publication->getName()],
+                        $translator->trans('More...'), 
+                        array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
+                    ))->setAttribute('divider_prepend', true);
+                }
             }
         }    
     }
@@ -807,7 +825,8 @@ class Builder
 
                     $this->addChild($menu[$translator->trans('Plugins')], $translator->trans($info['menu']['label']), array(
                         'uri' => $uri
-                    ));
+                    ))->setAttribute('rightdrop', true)
+                    ->setLinkAttribute('data-toggle', 'rightdrop');
                 }
 
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
