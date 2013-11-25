@@ -123,8 +123,9 @@ bazinga_expose_translation:
 
 ewz_recaptcha:
     public_key:   
-    private_key:  
-    locale_key:   kernel.default_locale
+    private_key:
+    enabled: true  
+    locale_key: kernel.default_locale
 
 parameters:
     smarty.class: "CampTemplate"
