@@ -99,3 +99,4 @@ parameters:
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"
+    ewz_recaptcha.form.type.class: "Newscoop\\NewscoopBundle\\Form\\Type\\RecaptchaType"

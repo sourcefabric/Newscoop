@@ -282,6 +282,21 @@ class Admin_CommentController extends Zend_Controller_Action
             $comments = array($comments);
         }
 
+        foreach ($comments as $commentId) {
+            if (!$recommended) {
+                continue;
+            }
+
+            $comment = $this->commentRepository->find($commentId);
+            $this->_helper->service->getService('dispatcher')
+                ->dispatch('comment.recommended', new GenericEvent($this, array(
+                    'id' => $comment->getId(),
+                    'subject' => $comment->getSubject(),
+                    'article' => $comment->getThread()->getName(),
+                    'commenter' => $comment->getCommenterName(),
+                )));
+        }
+
         try {
             $this->commentRepository->setRecommended($comments, $recommended);
             $this->commentRepository->flush();

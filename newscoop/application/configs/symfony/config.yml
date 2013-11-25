@@ -121,6 +121,12 @@ smarty:
 bazinga_expose_translation:
     locale_fallback: "en"
 
+ewz_recaptcha:
+    public_key:   
+    private_key:
+    enabled: true  
+    locale_key: kernel.default_locale
+
 parameters:
     smarty.class: "CampTemplate"
     templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
