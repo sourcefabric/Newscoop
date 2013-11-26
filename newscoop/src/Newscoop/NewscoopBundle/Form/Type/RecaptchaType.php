@@ -26,5 +26,6 @@ class RecaptchaType extends BaseRecaptcha
         $preferensService = $container->get('system_preferences_service');
         $this->publicKey = $preferensService->get('RecaptchaPublicKey');
         $this->secure = $preferensService->get('RecaptchaSecure') == 'Y' ? true : false;
+        $this->enabled = $container->getParameter('ewz_recaptcha.enabled');
     }
 }

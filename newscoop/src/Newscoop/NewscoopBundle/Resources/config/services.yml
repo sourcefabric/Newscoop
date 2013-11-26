@@ -89,12 +89,6 @@ services:
         class:     %newscoop_newscoop.session.storage.class%
         arguments: [%session.storage.options%]
 
-    newscoop_newscoop_recaptcha.form.type:
-        class: %newscoop_newscoop_recaptcha.form.type.class%
-        tags:
-            - { name: form.type, alias: newscoop_recaptcha }
-        arguments:  ["@service_container"]
-
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
     smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"
@@ -105,4 +99,4 @@ parameters:
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"
-    newscoop_newscoop_recaptcha.form.type.class: "Newscoop\\NewscoopBundle\\Form\\Type\\RecaptchaType"
+    ewz_recaptcha.form.type.class: "Newscoop\\NewscoopBundle\\Form\\Type\\RecaptchaType"
