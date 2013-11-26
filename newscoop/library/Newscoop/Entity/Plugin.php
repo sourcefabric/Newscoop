@@ -21,7 +21,7 @@ class Plugin
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(length=256, name="Name")
@@ -39,7 +39,7 @@ class Plugin
      * @ORM\Column(name="type", type="integer")
      * @var int
      */
-    private $type;
+    protected $type;
 
     /**
      * @var string to code mapper for type
@@ -50,7 +50,7 @@ class Plugin
      * @ORM\Column(name="installed_with", type="integer")
      * @var int
      */
-    private $installedWith;
+    protected $installedWith;
 
     /**
      * @var string to code mapper for installedWith
@@ -91,13 +91,13 @@ class Plugin
      * @ORM\Column(type="datetime", name="installed_at")
      * @var string
      */
-    private $installedAt;
+    protected $installedAt;
 
     /**
      * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      * @var string
      */
-    private $updatedAt;
+    protected $updatedAt;
 
     public function __construct() {
         $this->setInstalledAt(new \DateTime());
