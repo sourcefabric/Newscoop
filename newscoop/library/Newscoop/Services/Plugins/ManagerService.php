@@ -337,9 +337,53 @@ class ManagerService
     /**
      * Reinstall plugins after Newscoop upgrade (re-add them to composer)
      */
-    public function upgrade()
+    public function upgrade(OutputInterface $output)
     {
-        //add and install all plugins from database (don't notify plugins about that) after newscoop upgrade
+        $this->clearCache($output);
+
+        $allPlugins = $this->pluginsService->getAllAvailablePlugins();
+        $require = array();
+        $update = array();
+        foreach ($allPlugins as $key => $value) {
+            // work only with modern packages
+            if (strpos($value->getName(), '/') !== false) {
+                $require[] = $value->getName() . ' ' . $value->getVersion();
+                $update[] = $value->getName();
+
+                $details = json_decode($value->getDetails(), true);
+                if (array_key_exists('targetDir', $details)) {
+                    $filesystem = new Filesystem();
+                    if (!is_writable($this->pluginsDir.$details['targetDir'].'/')) {
+                        throw new Exception("Plugins directory must be writable: ".$this->pluginsDir, 1);
+                        
+                    }
+
+                    $filesystem->remove($this->pluginsDir.$details['targetDir'].'/');
+                }
+            }
+        }
+
+        $require = implode(' ', $require);
+        $update = implode(' ', $update);
+
+        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require ' . $require.' --no-update && php composer.phar update ' . $update.' --no-dev');
+        $output->writeln('<info>require ' . $require.' --no-update</info>');
+        $output->writeln('<info>update ' . $update.' --no-dev</info>');
+        $process->setTimeout(3600);
+        $process->run(function ($type, $buffer) use ($output) {
+            if ('err' === $type) {
+                $output->write('<error>'.$buffer.'</error>');
+            } else {
+                $output->write('<info>'.$buffer.'</info>');
+            }
+        });
+
+        if (!$process->isSuccessful()) {
+            throw new \Exception("Error with reverting plugins", 1);
+        }
+
+        $this->saveAvaiablePluginsToCacheFile();
+        $this->clearCache($output);
     }
 
     /**

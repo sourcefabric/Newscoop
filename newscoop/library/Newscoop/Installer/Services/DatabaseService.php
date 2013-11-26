@@ -46,8 +46,6 @@ class DatabaseService
             return false;
         }
 
-        // TODO: load geonames
-
         $db_versions = array_map('basename', glob(__DIR__ . '/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
         if (!empty($db_versions)) {
             usort($db_versions, array($this, 'camp_version_compare'));
