@@ -626,6 +626,7 @@ CREATE TABLE `Languages` (
   `CodePage` varchar(140) NOT NULL DEFAULT '',
   `OrigName` varchar(140) NOT NULL DEFAULT '',
   `Code` varchar(21) NOT NULL DEFAULT '',
+  `RFC3066bis` varchar(255) NOT NULL DEFAULT '',
   `Month1` varchar(140) NOT NULL DEFAULT '',
   `Month2` varchar(140) NOT NULL DEFAULT '',
   `Month3` varchar(140) NOT NULL DEFAULT '',
@@ -860,18 +861,18 @@ CREATE TABLE `ObjectTypes` (
 DROP TABLE IF EXISTS `Plugins`;
 
 CREATE TABLE Plugins (
-  Id INT AUTO_INCREMENT NOT NULL, 
-  Name VARCHAR(256) NOT NULL, 
-  Details LONGTEXT NOT NULL, 
-  type INT NOT NULL, 
-  installed_with INT NOT NULL, 
-  Description LONGTEXT NOT NULL, 
-  Version VARCHAR(256) NOT NULL, 
-  author VARCHAR(256) NOT NULL, 
-  license VARCHAR(256) NOT NULL, 
-  Enabled TINYINT(1) NOT NULL, 
-  installed_at DATETIME NOT NULL, 
-  updated_at DATETIME DEFAULT NULL, 
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(256) NOT NULL,
+  Details LONGTEXT NOT NULL,
+  type INT NOT NULL,
+  installed_with INT NOT NULL,
+  Description LONGTEXT NOT NULL,
+  Version VARCHAR(256) NOT NULL,
+  author VARCHAR(256) NOT NULL,
+  license VARCHAR(256) NOT NULL,
+  Enabled TINYINT(1) NOT NULL,
+  installed_at DATETIME NOT NULL,
+  updated_at DATETIME DEFAULT NULL,
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
@@ -1063,17 +1064,17 @@ CREATE TABLE `SubsSections` (
 
 DROP TABLE IF EXISTS `Subscriptions`;
 CREATE TABLE Subscriptions (
-  Id INT AUTO_INCREMENT NOT NULL, 
-  ToPay NUMERIC(10, 0) NOT NULL, 
-  Type VARCHAR(255) NOT NULL, 
-  Currency VARCHAR(255) NOT NULL, 
-  Active VARCHAR(255) NOT NULL, 
-  IdUser INT DEFAULT NULL, 
-  IdSubscription INT DEFAULT NULL, 
-  IdPublication INT DEFAULT NULL, 
-  INDEX IDX_B709C1F4F9C28DE1 (IdUser), 
-  INDEX IDX_B709C1F4303CB8FA (IdSubscription), 
-  INDEX IDX_B709C1F45C1FD3F4 (IdPublication), 
+  Id INT AUTO_INCREMENT NOT NULL,
+  ToPay NUMERIC(10, 0) NOT NULL,
+  Type VARCHAR(255) NOT NULL,
+  Currency VARCHAR(255) NOT NULL,
+  Active VARCHAR(255) NOT NULL,
+  IdUser INT DEFAULT NULL,
+  IdSubscription INT DEFAULT NULL,
+  IdPublication INT DEFAULT NULL,
+  INDEX IDX_B709C1F4F9C28DE1 (IdUser),
+  INDEX IDX_B709C1F4303CB8FA (IdSubscription),
+  INDEX IDX_B709C1F45C1FD3F4 (IdPublication),
   PRIMARY KEY(Id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
@@ -1085,16 +1086,16 @@ DROP TABLE IF EXISTS `SubscriptionArticle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE SubscriptionArticle (
-  id INT AUTO_INCREMENT NOT NULL, 
-  article_number INT NOT NULL, 
-  language_id INT DEFAULT NULL, 
-  StartDate DATE NOT NULL, 
-  Days INT NOT NULL, 
-  PaidDays INT NOT NULL, 
-  NoticeSent VARCHAR(255) NOT NULL, 
-  IdSubscription INT DEFAULT NULL, 
-  INDEX IDX_DBC6BEEA303CB8FA (IdSubscription), 
-  INDEX IDX_DBC6BEEAFC5788D482F1BAF4 (article_number, language_id), 
+  id INT AUTO_INCREMENT NOT NULL,
+  article_number INT NOT NULL,
+  language_id INT DEFAULT NULL,
+  StartDate DATE NOT NULL,
+  Days INT NOT NULL,
+  PaidDays INT NOT NULL,
+  NoticeSent VARCHAR(255) NOT NULL,
+  IdSubscription INT DEFAULT NULL,
+  INDEX IDX_DBC6BEEA303CB8FA (IdSubscription),
+  INDEX IDX_DBC6BEEAFC5788D482F1BAF4 (article_number, language_id),
   INDEX IDX_DBC6BEEA82F1BAF4 (language_id), PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
@@ -1106,16 +1107,16 @@ DROP TABLE IF EXISTS `SubscriptionIssue`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE SubscriptionIssue (
-  id INT AUTO_INCREMENT NOT NULL, 
-  issue_number INT NOT NULL, 
-  language_id INT DEFAULT NULL, 
-  StartDate DATE NOT NULL, 
-  Days INT NOT NULL, 
-  PaidDays INT NOT NULL, 
-  NoticeSent VARCHAR(255) NOT NULL, 
-  IdSubscription INT DEFAULT NULL, 
-  INDEX IDX_DBC6BGGA303CB8FA (IdSubscription), 
-  INDEX IDX_DBC6BGGAFC5788D482F1BAF4 (issue_number, language_id), 
+  id INT AUTO_INCREMENT NOT NULL,
+  issue_number INT NOT NULL,
+  language_id INT DEFAULT NULL,
+  StartDate DATE NOT NULL,
+  Days INT NOT NULL,
+  PaidDays INT NOT NULL,
+  NoticeSent VARCHAR(255) NOT NULL,
+  IdSubscription INT DEFAULT NULL,
+  INDEX IDX_DBC6BGGA303CB8FA (IdSubscription),
+  INDEX IDX_DBC6BGGAFC5788D482F1BAF4 (issue_number, language_id),
   INDEX IDX_DBC6BGGA82F1BAF4 (language_id), PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
