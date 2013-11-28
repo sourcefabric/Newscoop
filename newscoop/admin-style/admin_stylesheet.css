@@ -42,7 +42,7 @@ select {
 
 .meta-bar {
 	background:#007fb3;
-	height:23px;
+	height:22px;
 	color:#fff;
 	border-bottom:1px solid #939393;
 	text-align:right;
@@ -51,7 +51,7 @@ select {
 
 .meta-bar ul {
 	margin:0 7px 0 0;
-	padding:5px 0 0 0;
+	padding:3px 0 0 0;
 	list-style-type:none;
 }
 

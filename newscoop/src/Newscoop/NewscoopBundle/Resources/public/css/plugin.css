@@ -9,6 +9,11 @@
 
 .meta-bar {
 	font-size: 11px;
+	height: 23px;
+}
+
+.meta-bar ul {
+	padding: 2px 0 0 0;
 }
 
 .meta-bar ul li {
