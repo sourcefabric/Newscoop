@@ -175,7 +175,7 @@ class Builder
 
     private function decorateMenu($menu) {
         foreach ($menu as $key => $value) {
-            $value->setLinkAttribute('class', 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
+            $value->setLinkAttribute('class', 'fg-button fg-button-menu ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
 
         return $menu;
