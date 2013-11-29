@@ -28,7 +28,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     public function clean($tpl_file = null)
     {
         $cache_content = $smrty_obj = null;
-        self::handler('clean', $smarty_obj, $cache_content, $tpl_file);
+        self::handler('clean', $cache_content, $tpl_file);
     }
 
     /**
@@ -91,16 +91,18 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         return self::$m_description;
     }
 
-    static function handler($action, &$smarty_obj, &$cache_content, $tpl_file = null, $cache_id = null,
+    static function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
         $compile_id = null, $exp_time = 0)
     {
         global $g_ado_db;
         static $cacheParams = array();
         $exp_time += time();
 
+        $uri = CampSite::GetURIInstance();
+        $campsiteVector = $uri->getCampsiteVector();
+
         $return = false;
         if ($action != 'clean') {
-            $campsiteVector = $smarty_obj->campsiteVector;
             if (!isset($campsiteVector['params'])) {
                 $campsiteVector['params'] = null;
             }
