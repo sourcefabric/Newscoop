@@ -64,18 +64,16 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function fetchTimestamp($id, $tpl_name, $cache_id, $compile_id)
     {
-        $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($tpl_name, '/'));
-        $cache_lifetime = (int)$templateObj->getCacheLifetime();
-
+        $uri = CampSite::GetURIInstance();
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
         self::content($tpl_name, $cache_content);
-        self::lifetime($tpl_name, $cache_lifetime);
+        self::lifetime($tpl_name, $uri->getCacheLifetime());
 
         if (!$expired) {
             return null;
         } else {
-            return $expired - $cache_lifetime;
+            return $expired - $uri->getCacheLifetime();
         }
     }
 
