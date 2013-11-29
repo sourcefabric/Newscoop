@@ -174,6 +174,11 @@ abstract class CampURI
     protected $m_config = null;
 
     /**
+     * @var array
+     */
+    protected $m_campsiteVector = array();
+
+    /**
      * Class constructor
      *
      * @param string $p_uri
@@ -626,15 +631,27 @@ abstract class CampURI
 // fn getURLParameters
 
     /**
+    * Sets campsite params
+    * @return array
+    */
+    public function setCampsiteVector($campsiteVector = array())
+    {
+        $this->m_campsiteVector = $campsiteVector;
+    }
+
+    /**
      * Returns campsite params: language, publication, issue, section, article.
      *
      * @return array
      */
     public function getCampsiteVector()
     {
-        return array('language' => $this->language->number,
-            'publication' => $this->publication->identifier, 'issue' => $this->issue->number,
-            'section' => $this->section->number, 'article' => $this->article->number);
+        if (count($this->m_campsiteVector) == 0) {
+            $this->setCampsiteVector(array('language' => $this->language->number,
+                'publication' => $this->publication->identifier, 'issue' => $this->issue->number,
+                'section' => $this->section->number, 'article' => $this->article->number));
+        }
+        return $this->m_campsiteVector;
     }
 
     public function getThemePath()

@@ -47,11 +47,6 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime)
     {
-        /*
-        ob_start();
-        eval("?>" . $cache_content);
-        return ob_get_clean();
-        */
         return ${"?>".self::content($tpl_name)};
     }
 

@@ -26,6 +26,7 @@ function smarty_function_render($p_params, &$p_smarty)
     }
 
     $smarty = CampTemplate::singleton();
+    $uri = CampSite::GetURIInstance();
     $cache_lifetimeBak = $smarty->cache_lifetime;
     $campsiteVectorBak = $smarty->campsiteVector;
     $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
@@ -46,6 +47,8 @@ function smarty_function_render($p_params, &$p_smarty)
             $campsiteVector['params'] = $p_params['params'];
         }
         $smarty->campsiteVector = $campsiteVector;
+        $uri->setCampsiteVector($campsiteVector);
+
         if (empty($p_params['cache'])) {
             $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
             $smarty->cache_lifetime = (int)$template->getCacheLifetime();
@@ -57,6 +60,7 @@ function smarty_function_render($p_params, &$p_smarty)
     $smarty->display($p_params['file']);
     $smarty->cache_lifetime = $cache_lifetimeBak;
     $smarty->campsiteVector = $campsiteVectorBak;
+    $uri->setCampsiteVector($campsiteVectorBak);
 
 } // fn smarty_function_render
 
