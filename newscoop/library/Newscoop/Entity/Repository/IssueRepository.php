@@ -7,8 +7,8 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Publication;
+use Doctrine\ORM\EntityRepository;
+use Newscoop\Entity\Publication;
 
 /**
  * Issie repository
@@ -23,10 +23,8 @@ class IssueRepository extends EntityRepository
      *
      * @return \Newscoop\Entity\Issue|null
      */
-    public function getLatestByPublication(
-        \Newscoop\Entity\Publication $publication,
-        $workflowStatus = 'Y'
-    ) {
+    public function getLatestByPublication(Publication $publication, $workflowStatus = 'Y')
+    {
         $issue  = $this->getEntityManager()
             ->getRepository('\Newscoop\Entity\Issue')
             ->findOneBy(array(
