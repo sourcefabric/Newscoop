@@ -20,7 +20,6 @@ class ApiFactory
     private $apikey;
 
     /**
-     * @param MCAPI                    $api
      * @param SystemPreferencesService $service
      */
     public function __construct(SystemPreferencesService $service)
