@@ -34,7 +34,7 @@ class ArticleType
 
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
-     * (at) OneToMany( targetEntity="Newscoop\Entity\ArticleTypeField", mappedBy="feed" )
+     * (at) OneToMany( targetEntity="Newscoop\Entity\ArticleTypeField", mappedBy="articleType" )
      * @todo hack
      */
     private $articleTypeFields;
