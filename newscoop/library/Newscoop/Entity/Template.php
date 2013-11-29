@@ -42,7 +42,6 @@ class Template
     public function __construct($key)
     {
         $this->key = (string) $key;
-        $this->cache_lifetime = 0;
     }
 
     /**
