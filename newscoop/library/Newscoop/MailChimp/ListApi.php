@@ -7,7 +7,7 @@
 
 namespace Newscoop\MailChimp;
 
-use ArrayAccess;
+use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
 
 /**
  */
@@ -24,13 +24,13 @@ class ListApi
     private $listId;
 
     /**
-     * @param MCAPI $api
-     * @param array $config
+     * @param MCAPI                    $api
+     * @param SystemPreferencesService $service
      */
-    public function __construct(ApiFactory $apiFactory, ArrayAccess $config)
+    public function __construct(ApiFactory $apiFactory, SystemPreferencesService $service)
     {
         $this->api = $apiFactory->createApi();
-        $this->listId = $config['mailchimp_listid'];
+        $this->listId = $service->get('mailchimp_listid');
     }
 
     /**
