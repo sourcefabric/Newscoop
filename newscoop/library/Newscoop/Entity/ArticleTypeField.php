@@ -164,5 +164,149 @@ class ArticleTypeField
         $this->type = $val;
         return $this;
     }
+
+    /**
+     * Getter for fieldWeight
+     *
+     * @return int
+     */
+    public function getFieldWeight()
+    {
+        return $this->fieldWeight;
+    }
+
+    /**
+     * Setter for fieldWeight
+     *
+     * @param int $fieldWeight Value to set
+     *
+     * @return self
+     */
+    public function setFieldWeight($fieldWeight)
+    {
+        $this->fieldWeight = $fieldWeight;
+
+        return $this;
+    }
+
+    /**
+     * Getter for isHidden
+     *
+     * @return int
+     */
+    public function getIsHidden()
+    {
+        return $this->isHidden;
+    }
+
+    /**
+     * Setter for isHidden
+     *
+     * @param int $isHidden Value to set
+     *
+     * @return self
+     */
+    public function setIsHidden($isHidden)
+    {
+        $this->isHidden = $isHidden;
+
+        return $this;
+    }
+
+    /**
+     * Getter for commentsEnabled
+     *
+     * @return int
+     */
+    public function getCommentsEnabled()
+    {
+        return $this->commentsEnabled;
+    }
+
+    /**
+     * Setter for commentsEnabled
+     *
+     * @param int $commentsEnabled Value to set
+     *
+     * @return self
+     */
+    public function setCommentsEnabled($commentsEnabled)
+    {
+        $this->commentsEnabled = $commentsEnabled;
+
+        return $this;
+    }
+
+    /**
+     * Getter for phraseId
+     *
+     * @return int
+     */
+    public function getPhraseId()
+    {
+        return $this->phraseId;
+    }
+
+    /**
+     * Setter for phraseId
+     *
+     * @param int $phraseId Value to set
+     *
+     * @return self
+     */
+    public function setPhraseId($phraseId)
+    {
+        $this->phraseId = $phraseId;
+
+        return $this;
+    }
+
+    /**
+     * Getter for fieldTypeParam
+     *
+     * @return string
+     */
+    public function getFieldTypeParam()
+    {
+        return $this->fieldTypeParam;
+    }
+
+    /**
+     * Setter for fieldTypeParam
+     *
+     * @param string $fieldTypeParam Value to set
+     *
+     * @return self
+     */
+    public function setFieldTypeParam($fieldTypeParam)
+    {
+        $this->fieldTypeParam = $fieldTypeParam;
+
+        return $this;
+    }
+
+    /**
+     * Getter for isContentField
+     *
+     * @return int
+     */
+    public function getIsContentField()
+    {
+        return $this->isContentField;
+    }
+
+    /**
+     * Setter for isContentField
+     *
+     * @param int $isContentField Value to set
+     *
+     * @return self
+     */
+    public function setIsContentField($isContentField)
+    {
+        $this->isContentField = $isContentField;
+
+        return $this;
+    }
 }
 

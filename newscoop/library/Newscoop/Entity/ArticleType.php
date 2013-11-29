@@ -32,6 +32,13 @@ class ArticleType
      */
     private $fieldName = 'NULL';
 
+    /**
+     * @var Doctrine\Common\Collections\ArrayCollection
+     * (at) OneToMany( targetEntity="Newscoop\Entity\ArticleTypeField", mappedBy="articleType" )
+     * @todo hack
+     */
+    private $articleTypeFields;
+
 	/**
 	 * Provides the name of the article type, must be a user frendly name used for displaying it on the UI.
 	 *
@@ -59,8 +66,37 @@ class ArticleType
 		return $this;
 	}
 
+    /**
+     * Getter for articleTypeFields
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getArticleTypeFields()
+    {
+        return $this->articleTypeFields;
+    }
+
+    /**
+     * Setter for articleTypeFields
+     *
+     * @param Doctrine\Common\Collections\ArrayCollection $articleTypeFields
+     *        Value to set
+     *
+     * @return self
+     */
+    public function setArticleTypeFields(
+        \Doctrine\Common\Collections\ArrayCollection $articleTypeFields
+    )
+    {
+        $this->articleTypeFields = $articleTypeFields;
+
+        return $this;
+    }
+
+
 	/**
 	 * Used for update and stuff
+     *
 	 * @return string
 	 */
 	public function __toString()

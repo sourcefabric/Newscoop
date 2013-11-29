@@ -25,7 +25,7 @@ class Article
     const STATUS_PUBLISHED = 'Y';
     const STATUS_NOT_PUBLISHED = 'N';
     const STATUS_SUBMITTED = 'S';
-    
+
     /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
@@ -54,7 +54,7 @@ class Article
      * @var Newscoop\Entity\Section
      */
     private $section;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
@@ -73,18 +73,6 @@ class Article
      * @var object
      */
     private $articleAuthors;
-
-    /**
-     * @ORM\Column(name="NrSection", nullable=True)
-     * @var int
-     */
-    private $sectionId;
-
-    /**
-     * @ORM\Column(name="NrIssue", nullable=True)
-     * @var int
-     */
-    private $issueId;
 
     /**
      * @ORM\Id
@@ -133,19 +121,19 @@ class Article
      * @var string
      */
     private $comments_link;
-    
+
     /**
      * @ORM\Column(name="Type", nullable=True)
      * @var string
      */
     private $type;
-    
+
     /**
      * @ORM\Column(type="datetime", name="PublishDate", nullable=true)
      * @var DateTime
      */
     private $published;
-    
+
     /**
      * @ORM\Column(name="Published", nullable=true)
      * @var string
@@ -386,23 +374,27 @@ class Article
     }
 
     /**
-     * Get section
+     * Getter for issue
      *
-     * @return Newscoop\Entity\Section
+     * @return \Newscoop\Entity\Issue
      */
-    public function getSection()
+    public function getIssue()
     {
-        return $this->section;
+        return $this->issue;
     }
 
     /**
-     * Get section id
+     * Setter for issue
      *
-     * @return int
+     * @param \Newscoop\Entity\Issue $issue Value to set
+     *
+     * @return self
      */
-    public function getSectionId()
+    public function setIssue(\Newscoop\Entity\Issue $issue)
     {
-        return $this->sectionId;
+        $this->issue = $issue;
+
+        return $this;
     }
 
     /**
@@ -412,7 +404,41 @@ class Article
      */
     public function getIssueId()
     {
-        return $this->issueId;
+        return $this->issue->getId();
+    }
+
+    /**
+     * Get section
+     *
+     * @return \Newscoop\Entity\Section
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * Setter for section
+     *
+     * @param Newscoop\Entity\Section $section
+     *
+     * @return self
+     */
+    public function setSection(\Newscoop\Entity\Section $section)
+    {
+        $this->section = $section;
+
+        return $this;
+    }
+
+    /**
+     * Get section id
+     *
+     * @return int
+     */
+    public function getSectionId()
+    {
+        return $this->section->getId();
     }
 
     /**
@@ -424,15 +450,17 @@ class Article
     public function setWorkflowStatus($workflowStatus)
     {
         $this->workflowStatus = (string) $workflowStatus;
+
+        return $this;
     }
-    
+
     /**
      * Get workflowStatus
      *
      * @return string
      */
     public function getWorkflowStatus($readable = false)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $readableStatus = array(
             self::STATUS_PUBLISHED => $translator->trans('published'),
@@ -443,7 +471,7 @@ class Article
         if ($readable) {
             return $readableStatus[$this->workflowStatus];
         }
-        
+
         return $this->workflowStatus;
     }
 
@@ -563,7 +591,7 @@ class Article
         if ($this->data === null) {
             $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
         }
-        
+
         return $this->data->setProperty('F'.$field, $value);
     }
 
@@ -574,7 +602,29 @@ class Article
      */
     public function commentsEnabled()
     {
+        return $this->getCommentsEnabled();
+    }
+
+    /**
+     * Get whether commenting is enabled
+     *
+     * @return int
+     */
+    public function getCommentsEnabled()
+    {
         return (int) $this->comments_enabled;
+    }
+
+    /**
+     * Set commenting en/disabled
+     *
+     * @param int $comments_enabled
+     */
+    public function setCommentsEnabled($comments_enabled)
+    {
+        $this->comments_enabled = (int) $comments_enabled;
+
+        return $this;
     }
 
     /**
@@ -584,7 +634,7 @@ class Article
     public function setCommentsLink($link) {
         $this->comments_link = $link;
     }
-    
+
     /**
      * Get type
      *
@@ -594,7 +644,7 @@ class Article
     {
         return $this->type;
     }
-    
+
     /**
      * Get publishDate
      *
@@ -614,7 +664,7 @@ class Article
     {
         return $this->workflowStatus === self::STATUS_PUBLISHED;
     }
-    
+
     /**
      * Set creator
      *
@@ -740,7 +790,7 @@ class Article
         if (count($this->packages) == 0) {
             return null;
         }
-        
+
         return $this->packages;
     }
 
