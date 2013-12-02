@@ -2434,49 +2434,6 @@
             "time": "2013-06-17 03:37:20"
         },
         {
-            "name": "rezzza/mailchimp",
-            "version": "dev-master",
-            "target-dir": "Rezzza/MailChimp",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rezzza/mailchimp.git",
-                "reference": "1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rezzza/mailchimp/zipball/1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d",
-                "reference": "1e7e6fb09768078d50fa9f37aa1ef4fbc9d1d35d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.0.0"
-            },
-            "type": "mailchimp-api",
-            "autoload": {
-                "psr-0": {
-                    "Rezzza\\MailChimp\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Sébastien HOUZÉ",
-                    "email": "s@verylastroom.com"
-                }
-            ],
-            "description": "MailChimp PHP API Wrapper 1.3.*",
-            "homepage": "http://apidocs.mailchimp.com/api/downloads/#php",
-            "keywords": [
-                "api",
-                "mailchimp",
-                "newsletter"
-            ],
-            "time": "2012-12-03 18:00:04"
-        },
-        {
             "name": "sensio/distribution-bundle",
             "version": "dev-master",
             "target-dir": "Sensio/Bundle/DistributionBundle",
@@ -3375,7 +3332,6 @@
         "friendsofsymfony/rest-bundle": 20,
         "behat/common-contexts": 20,
         "guzzle/guzzle": 20,
-        "rezzza/mailchimp": 20,
         "hybridauth/hybridauth": 20,
         "noiselabs/smarty-bundle": 20,
         "knplabs/knp-menu-bundle": 20,
