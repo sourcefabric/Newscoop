@@ -22,13 +22,13 @@ class Section
     const NAME = __CLASS__;
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      * @var int
      */
     protected $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
@@ -81,7 +81,31 @@ class Section
      * @var string
      */
     private $articlesLink;
-    
+
+    /**
+     * Getter for id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Setter for id
+     *
+     * @param int $id Value to set
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
     /**
      * Set link to topic articles resource
      * @param string $articlesLink Link to topic articles resource
@@ -203,14 +227,24 @@ class Section
     {
         return $this->issue;
     }
-    
+
     /**
-     * Get id
+     * Get name of section with language
      *
-     * @return int
+     * @return string
      */
-    public function getId()
+    public function getNameAndLanguage()
     {
-        return (int) $this->id;
+        return $this->getName() .' ('.$this->getLanguageName().')';
+    }
+
+    /**
+     * String representation of this object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getNameAndLanguage();
     }
 }
