@@ -50,9 +50,6 @@ class DashboardController extends Zend_Controller_Action
         $form->setDefaults((array) $this->user->getView());
 
         $translator = \Zend_Registry::get('container')->getService('translator');
-        $listView = $this->_helper->service('mailchimp.list')->getListView();
-        $memberView = $this->_helper->service('mailchimp.list')->getMemberView($this->user->getEmail());
-        $this->_helper->newsletter->initForm($form, $listView, $memberView);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -64,7 +61,6 @@ class DashboardController extends Zend_Controller_Action
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
                 $this->service->save($values, $this->user);
-                $this->_helper->service('mailchimp.list')->subscribe($this->user->getEmail(), $values['newsletter']);
                 $this->_helper->flashMessenger->addMessage($translator->trans('Profile saved.', array(), 'users'));
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
@@ -82,7 +78,6 @@ class DashboardController extends Zend_Controller_Action
 
         $this->view->user = new MetaUser($this->user);
         $this->view->form = $form;
-        $this->view->newsletter = $listView;
     }
 
     public function saveTopicsAction()

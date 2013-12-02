@@ -150,8 +150,6 @@ class SystemPrefController extends Controller
             'geo_flash_directory' => $preferencesService->FlashDirectory,
             'facebook_appid' => $preferencesService->facebook_appid,
             'facebook_appsecret' => $preferencesService->facebook_appsecret,
-            'mailchimp_apikey' => $preferencesService->mailchimp_apikey,
-            'mailchimp_listid' => $preferencesService->mailchimp_listid,
             'recaptchaPublicKey' => $preferencesService->RecaptchaPublicKey,
             'recaptchaPrivateKey' => $preferencesService->RecaptchaPrivateKey,
             'recaptchaSecure' => $preferencesService->RecaptchaSecure,
@@ -244,8 +242,6 @@ class SystemPrefController extends Controller
                 // General Settings
                 $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
                     $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
-                //Mailchimp
-                $this->mailchimp($data['mailchimp_apikey'], $data['mailchimp_listid']);
                 //Facebook
                 $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
                 //ReCaptcha
@@ -436,20 +432,6 @@ class SystemPrefController extends Controller
                 $preferencesService->$name = $value;
             }
         }
-    }
-
-    /**
-     * Sets mailchimp options
-     *
-     * @param string $apiKey Mailchimp API key
-     * @param string $listId Mailchimp List ID
-     *
-     * @return void
-     */
-    private function mailchimp($apiKey, $listId) {
-        $preferencesService = $this->container->get('system_preferences_service');
-        $preferencesService->mailchimp_apikey = strip_tags($apiKey);
-        $preferencesService->mailchimp_listid = strip_tags($listId);            
     }
 
     /**

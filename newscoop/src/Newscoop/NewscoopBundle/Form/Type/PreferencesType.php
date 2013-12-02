@@ -408,16 +408,6 @@ class PreferencesType extends AbstractType
             'error_bubbling' => true,
             'required' => false
         ))
-        ->add('mailchimp_apikey', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
-        ))
-        ->add('mailchimp_listid', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
-        ))
         ->add('recaptchaPublicKey', null, array(
             'attr' => array('maxlength' => 200, 'size' => 40),
             'error_bubbling' => true,

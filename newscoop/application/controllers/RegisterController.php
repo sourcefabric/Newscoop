@@ -99,9 +99,6 @@ class RegisterController extends Zend_Controller_Action
             $form->removeElement('password_confirm');
         }
 
-        $listView = $this->_helper->service('mailchimp.list')->getListView();
-        $this->_helper->newsletter->initForm($form, $listView);
-
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
@@ -111,7 +108,6 @@ class RegisterController extends Zend_Controller_Action
                     'user' => $user,
                 )));
                 $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
-                $this->_helper->service('mailchimp.list')->subscribe($user->getEmail(), $values['newsletter']);
 
                 $auth = \Zend_Auth::getInstance();
                 if ($auth->hasIdentity()) {
@@ -129,7 +125,6 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
-        $this->view->newsletter = $listView;
     }
 
     public function generateUsernameAction()
