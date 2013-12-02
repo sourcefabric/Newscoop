@@ -53,6 +53,8 @@ class ShortURL
 	                              $p_issueNo = null, $p_sectionNo = null,
 	                              $p_articleNo = null)
 	{
+		$translator = \Zend_Registry::get('container')->getService('translator');
+
 		$languageObj = new Language($p_languageId);
 		if (!$languageObj->exists()) {
 			return new PEAR_Error($translator->trans('Language does not exist.'));
@@ -74,6 +76,10 @@ class ShortURL
 		}
 		if (!is_null($p_articleNo)) {
 			$articleObj = new Article($p_languageId, $p_articleNo);
+
+			// echo '$p_articleNo: '.$p_articleNo.'<br>';
+			// echo '<pre>$articleObj:'. nl2br(print_r($articleObj, true)).'</pre><hr>'; exit;
+
 			if (!$articleObj->exists()) {
 				return new PEAR_Error($translator->trans('Article does not exist.'));
 			}
