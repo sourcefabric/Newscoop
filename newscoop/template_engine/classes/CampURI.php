@@ -179,11 +179,6 @@ abstract class CampURI
     protected $m_campsiteVector = array();
 
     /**
-     * @var int
-     */
-    protected $m_cacheLifetime = 0;
-
-    /**
      * Class constructor
      *
      * @param string $p_uri
@@ -656,23 +651,6 @@ abstract class CampURI
                 'section' => $this->section->number, 'article' => $this->article->number));
         }
         return $this->m_campsiteVector;
-    }
-
-    /**
-    * Sets tpl cache lifetime
-    */
-    public function setCacheLifetime($cacheLifetime = 0)
-    {
-        $this->m_cacheLifetime = $cacheLifetime;
-    }
-
-    /**
-    * Sets tpl cache lifetime
-    * @return int
-    */
-    public function getCacheLifetime()
-    {
-        return $this->m_cacheLifetime;
     }
 
     public function getThemePath()
