@@ -9,7 +9,6 @@
 class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
 {
     private static $cache_content = array();
-    private static $cache_lifetime = array();
     private $cacheClass;
 
     public function __construct()
@@ -24,14 +23,6 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
             self::$cache_content[$tpl_name] = $content;
         }
         return self::$cache_content[$tpl_name];
-    }
-
-    public static function lifetime($tpl_name, $timestamp = null)
-    {
-        if (!isset(self::$cache_lifetime[$tpl_name])) {
-            self::$cache_lifetime[$tpl_name] = $timestamp;
-        }
-        return self::$cache_lifetime[$tpl_name];
     }
 
     /**
@@ -68,12 +59,13 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
         self::content($tpl_name, $cache_content);
-        self::lifetime($tpl_name, $uri->getCacheLifetime());
+
+        $template = new Template($uri->getThemePath() . $tpl_name);
 
         if (!$expired) {
             return null;
         } else {
-            return $expired - $uri->getCacheLifetime();
+            return $expired - (int)$template->getCacheLifetime();
         }
     }
 
@@ -91,7 +83,7 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
     protected function save($id, $tpl_name, $cache_id, $compile_id, $exp_time, $content)
     {
         $handler = $this->cacheClass;
-        return $handler::handler('write', $content, $tpl_name, null, null, self::lifetime($tpl_name));
+        return $handler::handler('write', $content, $tpl_name, null, null, $exp_time);
     }
 
     /**

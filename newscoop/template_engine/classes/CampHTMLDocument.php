@@ -316,7 +316,6 @@ final class CampHTMLDocument
             $uri = CampSite::GetURIInstance();
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
             $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
-            $uri->setCacheLifetime((int)$templateObj->getCacheLifetime());
         }
 
         try {
