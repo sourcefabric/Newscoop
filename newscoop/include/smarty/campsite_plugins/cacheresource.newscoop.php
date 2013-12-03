@@ -25,18 +25,22 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      * @param  string  $compile_id compile id
      * @param  string  $content    cached content
      * @param  integer $mtime      cache modification timestamp (epoch)
+     * @param  integer $cacheLifetime cache lifetime in seconds
      * @return void
      */
-    protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime)
+    protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime, $cacheLifetime = 0)
     {
         $uri = CampSite::GetURIInstance();
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
+        if ($cacheLifetime == 0) {
         $template = new Template($uri->getThemePath() . $tpl_name);
+            $cacheLifetime = (int)$template->getCacheLifetime();
+        }
 
         if ($expired != false) {
             $content = $cache_content;
-            $mtime = $expired - (int)$template->getCacheLifetime();
+            $mtime = $expired - $cacheLifetime;
         }
     }
 
@@ -91,5 +95,26 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
             $content,
             $_template->smarty->campsiteVector
         );
+    }
+
+    /**
+     * populate Cached Object with timestamp and exists from Resource
+     *
+     * @param  Smarty_Template_Cached $source cached object
+     * @return void
+     */
+    public function populateTimestamp(Smarty_Template_Cached $cached)
+    {
+        $mtime = $this->fetchTimestamp($cached->filepath, $cached->source->name, $cached->cache_id, $cached->compile_id, $cached->source->smarty->cache_lifetime);
+        if ($mtime !== null) {
+            $cached->timestamp = $mtime;
+            $cached->exists = !!$cached->timestamp;
+
+            return;
+        }
+        $timestamp = null;
+        $this->fetch($cached->filepath, $cached->source->name, $cached->cache_id, $cached->compile_id, $cached->content, $timestamp, $cached->source->smarty->cache_lifetime);
+        $cached->timestamp = isset($timestamp) ? $timestamp : false;
+        $cached->exists = !!$cached->timestamp;
     }
 }
