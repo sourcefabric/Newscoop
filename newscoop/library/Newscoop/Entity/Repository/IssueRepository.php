@@ -16,21 +16,19 @@ use Newscoop\Entity\Publication;
 class IssueRepository extends EntityRepository
 {
     /**
-     * Retrieve the latest issue for a publication
+     * Retrieve the latest issue. Optional an array for filtering can be
+     * specified. Think of parameters: Publication, Languages, published or not,
+     * etc.
      *
-     * @param  NewscoopEntityPublication $publication    Publication
-     * @param  string                    $workflowStatus Published (Y) or not (N)
+     * @param array $parameters Array containing filter options
      *
      * @return \Newscoop\Entity\Issue|null
      */
-    public function getLatestByPublication(Publication $publication, $workflowStatus = 'Y')
+    public function getLatestBy(Array $parameters = array())
     {
         $issue  = $this->getEntityManager()
             ->getRepository('\Newscoop\Entity\Issue')
-            ->findOneBy(array(
-                'publication' => $publication->getId(),
-                'workflowStatus' => 'Y'
-            ), array(
+            ->findOneBy($parameters, array(
                 'id' => 'DESC'
             ));
 
