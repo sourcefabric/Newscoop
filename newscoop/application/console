@@ -51,6 +51,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
     new \Newscoop\Tools\Console\Command\UpdatePluginCommand(),
     new \Newscoop\Tools\Console\Command\DispatchEventForPluginCommand(),
+    new \Newscoop\Tools\Console\Command\UpgradePluginsCommand(),
     new \Newscoop\Tools\Console\Command\ReloadRenditionsCommand(),
 ));
 
