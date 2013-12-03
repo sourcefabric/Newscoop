@@ -4,6 +4,12 @@ Copyright (C) 2002-2009 Media Development Loan Fund
 Newscoop Credits (by Version Number)
 
 -----------------------------------------
+Newscoop 4.2.1 Credits
+-----------------------------------------
+
+- Newscoop Team https://wiki.sourcefabric.org/display/CS/Developers+Team
+
+-----------------------------------------
 Newscoop 4.2 Credits
 -----------------------------------------
 
