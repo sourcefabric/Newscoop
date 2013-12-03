@@ -8,21 +8,12 @@
 
 class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
 {
-    private static $cache_content = array();
     private $cacheClass;
 
     public function __construct()
     {
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $this->cacheClass = 'TemplateCacheHandler_' . $preferencesService->TemplateCacheHandler;
-    }
-
-    public static function content($tpl_name, $content = null)
-    {
-        if (!isset(self::$cache_content[$tpl_name])) {
-            self::$cache_content[$tpl_name] = $content;
-        }
-        return self::$cache_content[$tpl_name];
     }
 
     /**
@@ -38,34 +29,14 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function fetch($id, $tpl_name, $cache_id, $compile_id, &$content, &$mtime)
     {
-        return ${"?>".self::content($tpl_name)};
-    }
-
-    /**
-     * Fetch cached content's modification timestamp from data source
-     *
-     * {@internal implementing this method is optional.
-     *  Only implement it if modification times can be accessed faster than loading the complete cached content.}}
-     *
-     * @param  string          $id         unique cache content identifier
-     * @param  string          $tpl_name   template name
-     * @param  string          $cache_id   cache id
-     * @param  string          $compile_id compile id
-     * @return integer|boolean timestamp (epoch) the template was modified, or false if not found
-     */
-    protected function fetchTimestamp($id, $tpl_name, $cache_id, $compile_id)
-    {
         $uri = CampSite::GetURIInstance();
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
-        self::content($tpl_name, $cache_content);
-
         $template = new Template($uri->getThemePath() . $tpl_name);
 
-        if (!$expired) {
-            return null;
-        } else {
-            return $expired - (int)$template->getCacheLifetime();
+        if ($expired != false) {
+            $content = $cache_content;
+            $mtime = $expired - (int)$template->getCacheLifetime();
         }
     }
 
@@ -78,9 +49,10 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      * @param  string       $compile_id compile id
      * @param  integer|null $exp_time   seconds till expiration or null
      * @param  string       $content    content to cache
+     * @param  array        $campsiteVector Newscoop's CampsiteVector for defining which page is being cached
      * @return boolean      success
      */
-    protected function save($id, $tpl_name, $cache_id, $compile_id, $exp_time, $content)
+    protected function save($id, $tpl_name, $cache_id, $compile_id, $exp_time, $content, $campsiteVector = array())
     {
         $handler = $this->cacheClass;
         return $handler::handler('write', $content, $tpl_name, null, null, $exp_time);
@@ -97,9 +69,27 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
      */
     protected function delete($tpl_name, $cache_id, $compile_id, $exp_time)
     {
-        unset(self::$cache_content[$tpl_name]);
         $handler = $this->cacheClass;
         return $handler::handler('clean', null, $tpl_name, null, null, null);
     }
 
+    /**
+     * Write the rendered template output to cache
+     *
+     * @param  Smarty_Internal_Template $_template template object
+     * @param  string                   $content   content to cache
+     * @return boolean                  success
+     */
+    public function writeCachedContent(Smarty_Internal_Template $_template, $content)
+    {
+        return $this->save(
+            $_template->cached->filepath,
+            $_template->source->name,
+            $_template->cache_id,
+            $_template->compile_id,
+            $_template->properties['cache_lifetime'],
+            $content,
+            $_template->smarty->campsiteVector
+        );
+    }
 }
