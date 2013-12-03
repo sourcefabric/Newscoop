@@ -1,15 +1,13 @@
 4.2.1 (December 05, 2013)
- New Features
- ------------
+  Improvements
+ -------------
+ - allways check if subscription is active
+ - better errors reporting in development mode
  - build_solr_fq (Smarty function to build the Solr FQ query)
  - new NO_CACHE cookie when a user logs in
  - list_section_authors smarty block
  - add aim, skype and jabber to $gimme->author properties
  - implemented rich text captions for all caption screens
-
-  Improvements
- - allways check if subscription is active
- - better errors reporting in development mode
 
   Bug fixes
  ------------
