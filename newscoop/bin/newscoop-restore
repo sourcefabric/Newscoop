@@ -369,17 +369,17 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
-$fileSrcDir = "$tempDirName/files";
+$fileSrcDir = "$tempDirName/public/files";
 $imagesSrcDir = "$tempDirName/images";
 $configDestDir = $ETC_DIR;
-$filesDestDir = $CAMPSITE_DIR.'/files';
+$filesDestDir = $CAMPSITE_DIR.'/public/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates'; // keep for gimme template upgrade
 $themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 $themesDestDir = $CAMPSITE_DIR.'/'.$themesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
-$pdfDir = $CAMPSITE_DIR.'/pdf';
+$pdfDir = $CAMPSITE_DIR.'/public/pdf';
 
 $destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir,
     $compiledTemplatesDir, $pdfDir);
@@ -464,14 +464,14 @@ echo "done.\n";
 echo " * Restoring images...";
 flush_output($flush);
 if (is_dir($imagesSrcDir)) {
-	camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
+    camp_copy_files($imagesSrcDir, $CAMPSITE_DIR);
 }
 echo "done.\n";
 
 echo " * Restoring file attachments...";
 flush_output($flush);
 if (is_dir($fileSrcDir)) {
-	camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
+    camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 }
 echo "done.\n";
 flush_output($flush);
@@ -566,23 +566,23 @@ echo "done.\n";
 //if( $res === 0 )
 //{
 
-	if ($convertToUTF) {
-	    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
-	
-	    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
-	    if (camp_backup_database($destDbName, $dumpFile, $output,
-	    array("--default-character-set=$fromCharset")) != 0) {
-	        camp_exit_with_error("Unable to backup the database $destDbName\n"
-	        . implode("\n", $output));
-	    }
-	    $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
-	    camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
-	    camp_restore_database($outDumpFile);
-	    unlink($dumpFile);
-	    unlink($outDumpFile);
-	
-	    echo "   done.\n";
-	}
+    if ($convertToUTF) {
+        echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
+    
+        $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
+        if (camp_backup_database($destDbName, $dumpFile, $output,
+        array("--default-character-set=$fromCharset")) != 0) {
+            camp_exit_with_error("Unable to backup the database $destDbName\n"
+            . implode("\n", $output));
+        }
+        $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
+        camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
+        camp_restore_database($outDumpFile);
+        unlink($dumpFile);
+        unlink($outDumpFile);
+    
+        echo "   done.\n";
+    }
 //}
 
 // upgrade plugins
