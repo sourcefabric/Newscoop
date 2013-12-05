@@ -72,14 +72,6 @@ class ArticleType
         return $this;
     }
 
-    /**
-     * Used for update and stuff
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getName();
-    }
 
     /**
      * Provides article type phraseId.
