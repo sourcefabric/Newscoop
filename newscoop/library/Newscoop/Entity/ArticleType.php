@@ -15,6 +15,7 @@ use Newscoop\Utils\Validation;
  * Issue entity
  * @ORM\Entity
  * @ORM\Table(name="ArticleTypeMetadata")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTypeRepository")
  */
 class ArticleType
 {
@@ -32,40 +33,66 @@ class ArticleType
      */
     private $fieldName = 'NULL';
 
-	/**
-	 * Provides the name of the article type, must be a user frendly name used for displaying it on the UI.
-	 *
-	 * @return string
-	 *		The name of the theme.
-	 */
+    /**
+     * @ORM\Column(type="integer", name="fk_phrase_id", nullable=True)
+     * @var int
+     */
+    private $phraseId;
+
+    /**
+     * Provides the name of the article type.
+     *
+     * @return string
+     *      The name of the theme.
+     */
     public function getName()
     {
         return $this->name;
     }
 
-	/**
-	 * Set the name of the article type, must be a user frendly name used for displaying it on the UI.
-	 *
-	 * @param string $name
-	 *		The name of the article type, must not be null or empty.
-	 *
-	 * @return Newscoop\Entity\ArticleType
-	 *		This object for chaining purposes.
-	 */
-	public function setName($name)
-	{
-		Validation::notEmpty($name, 'name');
-		$this->name = $name;
-		return $this;
-	}
+    /**
+     * Set the name of the article type
+     *
+     * @param string $name
+     *      The name of the article type, must not be null or empty.
+     *
+     * @return Newscoop\Entity\ArticleType
+     *      This object for chaining purposes.
+     */
+    public function setName($name)
+    {
+        Validation::notEmpty($name, 'name');
+        $this->name = $name;
+        return $this;
+    }
 
-	/**
-	 * Used for update and stuff
-	 * @return string
-	 */
-	public function __toString()
-	{
-	    return $this->getName();
-	}
+    /**
+     * Used for update and stuff
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Provides article type phraseId.
+     *
+     * @return integer
+     */
+    public function getPhraseId()
+    {
+        return $this->phraseId;
+    }
+
+    /**
+     * Set article type phraseId.
+     */
+    public function setPhraseId($phraseId)
+    {
+        $this->phraseId = $phraseId;
+
+        return $this;
+    }
 }
 

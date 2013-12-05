@@ -37,3 +37,7 @@ NewscoopGimmeBundleArticlesList:
     resource: "@NewscoopGimmeBundle/Controller/ArticlesListController.php"
     prefix:   /
     type:     annotation
+NewscoopGimmeBundleArticleTypes:
+    resource: "@NewscoopGimmeBundle/Controller/ArticleTypesController.php"
+    prefix:   /
+    type:     annotation
