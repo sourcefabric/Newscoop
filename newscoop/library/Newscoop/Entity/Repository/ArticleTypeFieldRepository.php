@@ -23,6 +23,5 @@ class ArticleTypeFieldRepository extends EntityRepository
             ->setParameter(1, $type->getName());
 
         return $qb->getQuery();
-
     }
 }

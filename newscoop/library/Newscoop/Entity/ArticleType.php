@@ -39,7 +39,6 @@ class ArticleType
      */
     private $phraseId;
 
-
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
      * (at) OneToMany( targetEntity="Newscoop\Entity\ArticleTypeField", mappedBy="articleType" )
@@ -126,7 +125,6 @@ class ArticleType
 
         return $this;
     }
-
 
 	/**
 	 * Used for update and stuff
