@@ -29,8 +29,8 @@ class ArticleType {
 	 * @var ArticleTypeField
 	 */
 	private $m_metadata = null;
-	private $m_dbColumns = null;
-	private $m_publicFields = null;
+	private $m_dbColumns = array();
+	private $m_publicFields = array();
 
 	/**
 	 * An article type is a dynamic table that is created for an article
@@ -51,9 +51,6 @@ class ArticleType {
         	foreach ($this->m_dbColumns as $columnMetaData) {
         		$this->m_columnNames[] = $columnMetaData->getName();
         	}
-        } else {
-        	$this->m_dbColumns = array();
-        	$this->m_publicFields = array();
         }
 	} // constructor
 
@@ -282,7 +279,7 @@ class ArticleType {
 	public function getUserDefinedColumns($p_fieldName = null, $p_selectHidden = true, $p_skipCache = false)
 	{
 		if (is_null($p_fieldName)) {
-			if ($p_skipCache || is_null($this->m_dbColumns)) {
+			if ($p_skipCache || empty($this->m_dbColumns)) {
 				$this->m_dbColumns = ArticleTypeField::FetchFields(null, $this->m_name, 'NULL',
 				false, false, true, true, $p_skipCache);
 				$this->m_publicFields = array();
@@ -455,7 +452,7 @@ class ArticleType {
      * @return bool
      **/
     public static function SetTypeFilter($p_article_type, $p_filter_value)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $p_filter_value = (bool) trim('' . $p_filter_value);
 

@@ -150,4 +150,57 @@ class LanguageRepository extends EntityRepository
 
         return false;
     }
+
+    /**
+     * Tries to find Language entity by string. String should be in correct
+     * RFC3066bis standard.
+     *
+     * @param  string $languageString Language string
+     * @param  string $languageHints  Array contianing hint to language objects
+     *                                if the language is not found on the
+     *                                specified locale string
+     *
+     * @return \Newscoop\Entity\Language|null Returns found entity or null
+     */
+    public function findByRFC3066bis($languageString, $firstResultOnly=true)
+    {
+        if (count(explode('-', $languageString)) < 2) {
+            throw new \Exception('Language string in correct according to RFC3066bis standard.', 1);
+        }
+
+        $queryBuilder = $this->getEntityManager()
+            ->getRepository('\Newscoop\Entity\Language')
+            ->createQueryBuilder('L');
+
+        $localeArray    = \Locale::parseLocale($languageString);
+
+        if (array_key_exists('language', $localeArray) && array_key_exists('region', $localeArray) && array_key_exists('script', $localeArray)) {
+            $queryBuilder
+                ->where('L.RFC3066bis = :longLocale')
+                ->orWhere('L.RFC3066bis = :shortLocale')
+                ->setParameter('longLocale', $localeArray['language'].'-'.$localeArray['script'].'-'.$localeArray['region'])
+                ->setParameter('shortLocale', $localeArray['language'].'-'.$localeArray['region']);
+
+        } elseif (array_key_exists('language', $localeArray) && array_key_exists('script', $localeArray)) {
+            $queryBuilder
+                ->where('L.RFC3066bis = :strictLocale')
+                ->orWhere('L.RFC3066bis LIKE :nonStrictLocale')
+                ->setParameter('strictLocale', $localeArray['language'].'-'.$localeArray['script'])
+                ->setParameter('nonStrictLocale', $localeArray['language'].'-'.$localeArray['script'].'%');
+
+        } elseif (array_key_exists('language', $localeArray) && array_key_exists('region', $localeArray)) {
+            $queryBuilder
+                ->where('L.RFC3066bis = :strictLocale')
+                ->orWhere('L.RFC3066bis LIKE :nonStrictLocale')
+                ->setParameter('strictLocale', $localeArray['language'].'-'.$localeArray['region'])
+                ->setParameter('nonStrictLocale', $localeArray['language'].'-%'.$localeArray['region']);
+
+        } else {
+            throw new \Exception('Parsed RFC3066bis string did not match expected results.', 1);
+        }
+
+        $foundLanguages = $queryBuilder->getQuery()->getResult();
+
+        return ($firstResultOnly) ? $foundLanguages[0] : $foundLanguages;
+    }
 }

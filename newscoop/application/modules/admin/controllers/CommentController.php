@@ -339,13 +339,6 @@ class Admin_CommentController extends Zend_Controller_Action
         try {
             $comment = $this->commentRepository->save($comment, $values);
             $this->commentRepository->flush();
-            $this->_helper->service->getService('dispatcher')
-                ->dispatch('comment.new', new GenericEvent($this, array(
-                    'id' => $comment->getId(),
-                    'subject' => $comment->getSubject(),
-                    'article' => $comment->getThread()->getName(),
-                    'commenter' => $comment->getCommenterName(),
-                )));
         } catch (Exception $e) {
             $this->view->status = $e->getCode();
             $this->view->message = $e->getMessage();
