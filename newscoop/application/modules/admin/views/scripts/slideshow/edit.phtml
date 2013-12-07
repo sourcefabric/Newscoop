@@ -101,22 +101,30 @@ $(function() {
     $('#select-image').tabs();
 
     $('#add-sellected-to-gallery').click(function(){
-        var count = $('.thumbnails li figure input:checkbox[name=checked-images[]]:checked').length;
+        var images = [];
         $('.thumbnails li figure input:checkbox[name=checked-images[]]:checked').each(function(index, element){
-            var imageId = $(element).val();
+            images.push($(element).val());
+        });
+
+         // ping for connection
+        callServer('ping', [], function(json) {
+            flashMessage('<?php echo $translator->trans('Processing...', array(), 'home'); ?>');
             $.post("<?php echo $this->url(array(
                 'module' => 'admin',
                 'controller' => 'slideshow',
-                'action' => 'add-item',
+                'action' => 'add-multiple-items',
                 'format' => 'json',
             )); ?>", {
-                image: imageId,
+                images: images
             }, function() {
-                if((count-1) == index) {
-                    window.location.reload();
-                }
+                window.location.reload();
             });
-        });
+        }); // /ping
+    })
+
+    $('#select-all-images').click(function(e){
+        $('.thumbnails li figure input:checkbox[name=checked-images[]]').attr('checked', true);
+        e.preventDefault();
     })
 });
 </script>
@@ -142,6 +150,7 @@ $(function() {
         </ul>
         <div class="inline">
             <button id="add-sellected-to-gallery"><?php echo $translator->trans('Add selected images to slideshow', array(), 'article_images'); ?></button>
+            <button id="select-all-images"><?php echo $translator->trans('Select all images', array(), 'article_images'); ?></button>
         </div>
     </div>
     <?php } ?>
