@@ -101,22 +101,22 @@ class DebateVote extends DatabaseObject
             $added = "'".strftime( "%Y-%m-%d %H:%M:%S", strtotime($values['added']))."'";
         }
         $queryStr = "REPLACE INTO `".$this->m_dbTableName."`
-        	SET `fk_debate_nr` = '$debateNr', `fk_answer_nr` = '$answerNr', `fk_user_id` = '$userId', `added` = $added";
+            SET `fk_debate_nr` = '$debateNr', `fk_answer_nr` = '$answerNr', `fk_user_id` = '$userId', `added` = $added";
 
         global $g_ado_db;
-        $g_ado_db->Execute($queryStr);
-		$success = ($g_ado_db->Affected_Rows() > 0);
-		$this->m_exists = $success;
-		$this->m_data[$this->m_keyColumnNames[0]] = $g_ado_db->Insert_ID();
+        $g_ado_db->executeUpdate($queryStr);
+        $success = ($g_ado_db->affected_rows() > 0);
+        $this->m_exists = $success;
+        $this->m_data[$this->m_keyColumnNames[0]] = $g_ado_db->Insert_ID();
 
-		self::dispatchEvent("{$this->getResourceName()}.create", $this, array(
+        self::dispatchEvent("{$this->getResourceName()}.create", $this, array(
             'id' => $this->getKey(),
             'diff' => $this->m_data,
             'title' => method_exists($this, 'getName') ? $this->getName() : '',
         ));
 
-		$this->resetCache();
-		return $success;
+        $this->resetCache();
+        return $success;
     }
 
     /**
@@ -194,13 +194,13 @@ class DebateVote extends DatabaseObject
         $debate = new Debate($p_fk_debate_lang, $p_fk_debate_nr);
         $tunit = strtolower($debate->getProperty('results_time_unit'));
         $query = "
-        	SELECT
-				`fk_debate_nr`,
+            SELECT
+                `fk_debate_nr`,
                 COUNT(`id_vote`) as `vote_cnt`,
                 `fk_answer_nr`,
                 %s `dg`,
                 UNIX_TIMESTAMP(DATE(`added`)) `time`
-			FROM `plugin_debate_vote`
+            FROM `plugin_debate_vote`
             WHERE `fk_debate_nr` = '$p_fk_debate_nr' %s %s
             GROUP BY `dg`, `fk_answer_nr`
             ORDER BY `dg` ASC, `fk_answer_nr` ASC";
@@ -260,7 +260,7 @@ class DebateVote extends DatabaseObject
     public function getUserVotes($p_debate_nr, $p_user_id)
     {
         $query = "SELECT * FROM plugin_debate_vote
-        	WHERE `fk_user_id` = '$p_user_id' AND `fk_debate_nr` = '$p_debate_nr'";
+            WHERE `fk_user_id` = '$p_user_id' AND `fk_debate_nr` = '$p_debate_nr'";
         global $g_ado_db;
         $sqlr = $g_ado_db->execute($query);
         $return = array();
@@ -334,7 +334,7 @@ class DebateVote extends DatabaseObject
 
         // sets the columns to be fetched
         $tmpDebateAnswer = new DebateAnswer();
-		$columnNames = $tmpDebateAnswer->getColumnNames(true);
+        $columnNames = $tmpDebateAnswer->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $selectClauseObj->addColumn($columnName);
         }
