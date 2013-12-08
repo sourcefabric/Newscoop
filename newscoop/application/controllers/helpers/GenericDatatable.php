@@ -186,7 +186,7 @@ class Action_Helper_GenericDatatable extends ADatatable
             }
         }
         
-        $this->setBody( 'mDataProp', $p_values );
+        $this->setBody( 'mData', $p_values );
         $this->_hasDataMap = true;
         
         return $this;

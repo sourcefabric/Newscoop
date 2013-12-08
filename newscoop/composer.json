@@ -40,7 +40,6 @@
         "knplabs\/knp-paginator-bundle":"v2.3.2",
         "jms\/serializer-bundle":"0.12.0",
         "guzzle\/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
-        "rezzza\/mailchimp":"dev-master",
         "hybridauth\/hybridauth":"dev-master",
         "noiselabs\/smarty-bundle":"dev-master",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
