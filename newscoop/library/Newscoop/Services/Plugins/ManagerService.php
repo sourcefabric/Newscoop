@@ -493,9 +493,8 @@ class ManagerService
 
     private function prepareCacheDir()
     {
-        if (!file_exists($this->newsoopDir.'/plugins/cache')) {
+        if (!file_exists($this->newsoopDir.'/cache/prod')) {
             $filesystem = new Filesystem();
-            $filesystem->mkdir($this->newsoopDir.'/plugins/cache');
             $filesystem->mkdir($this->newsoopDir.'/cache/prod');
             $filesystem->mkdir($this->newsoopDir.'/cache/dev');
         }
