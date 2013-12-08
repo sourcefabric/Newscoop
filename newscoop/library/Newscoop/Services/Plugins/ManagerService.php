@@ -177,6 +177,7 @@ class ManagerService
     public function removePlugin($pluginName, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
+        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -276,6 +277,7 @@ class ManagerService
         $this->saveAvaiablePluginsToCacheFile();
 
         $this->clearCache($output);
+        $this->prepareCacheDir();
 
         if ($notify) {
             $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update');
