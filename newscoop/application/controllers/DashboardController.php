@@ -48,18 +48,15 @@ class DashboardController extends Zend_Controller_Action
         $form = $this->_helper->form('profile');
         $form->setMethod('POST');
         $form->setDefaults((array) $this->user->getView());
-
-        $translator = \Zend_Registry::get('container')->getService('translator');
-
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
-
             try {
                 if (!empty($values['image'])) {
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
+                //TODO add event to subscribe for newsletter
                 $this->service->save($values, $this->user);
                 $this->_helper->flashMessenger->addMessage($translator->trans('Profile saved.', array(), 'users'));
                 $this->_helper->redirector('index');

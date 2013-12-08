@@ -266,7 +266,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      */
     public function setDataProp(array $p_values = array())
     {
-        $this->setBody('mDataProp', $p_values);
+        $this->setBody('mData', $p_values);
         // return this for chaining mechanism
         return $this;
     }
