@@ -34,8 +34,8 @@ class ContextBoxArticle extends DatabaseObject
     	Global $g_ado_db;
         $queryStr = 'DELETE FROM context_articles'
                     .' WHERE fk_context_id=' . intval($p_context_id);
-        $g_ado_db->Execute($queryStr);
-        $wasDeleted = ($g_ado_db->Affected_Rows());
+        $g_ado_db->executeUpdate($queryStr);
+        $wasDeleted = ($g_ado_db->affected_rows());
         return $wasDeleted;
     }
 

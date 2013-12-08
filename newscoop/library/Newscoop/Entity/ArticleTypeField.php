@@ -14,6 +14,7 @@ use Doctrine\ORM\Collections\ArrayCollection;
  * Issue entity
  * @ORM\Entity
  * @ORM\Table(name="ArticleTypeMetadata")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleTypeFieldRepository")
  *
  * @todo check for performance issues
  */
@@ -97,18 +98,16 @@ class ArticleTypeField
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setArticleType( ArticleType $type )
+    public function setArticleType(ArticleType $type)
     {
-        $this->articleType =
-        //$this->typeHack =
-            $type;
+        $this->articleType = $type;
         return $this;
     }
 
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setArticleTypeHack( ArticleType $type )
+    public function setArticleTypeHack(ArticleType $type)
     {
         $this->typeHack = $type;
         return $this;
@@ -117,7 +116,7 @@ class ArticleTypeField
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setName( $name )
+    public function setName($name)
     {
         $this->name = $name;
         return $this;
@@ -142,7 +141,7 @@ class ArticleTypeField
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setLength( $val )
+    public function setLength($val)
     {
         $this->length = $val;
         return $this;
@@ -159,7 +158,7 @@ class ArticleTypeField
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setType( $val )
+    public function setType($val)
     {
         $this->type = $val;
         return $this;
