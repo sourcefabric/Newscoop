@@ -40,7 +40,6 @@
         "knplabs\/knp-paginator-bundle":"v2.3.2",
         "jms\/serializer-bundle":"0.12.0",
         "guzzle\/guzzle":"dev-master#f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
-        "rezzza\/mailchimp":"dev-master",
         "hybridauth\/hybridauth":"dev-master",
         "noiselabs\/smarty-bundle":"dev-master",
         "knplabs\/knp-menu-bundle":"2.0.*@dev",
@@ -51,7 +50,8 @@
         "recaptcha\/php5":"v1.0.0",
         "knplabs/packagist-api": "v1.1",
         "symfony/twig-bridge": "~2.3",
-        "excelwebzone/recaptcha-bundle": "2.0.*@dev"
+        "excelwebzone/recaptcha-bundle": "2.0.*@dev",
+        "newscoop/plugins-installer": "v0.2"
     },
     "require-dev":{
         "phpunit\/phpunit":"3.7.*"

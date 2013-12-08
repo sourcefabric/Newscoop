@@ -147,12 +147,6 @@ services:
     preferences:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
         arguments: ["@em"]
-    mailchimp.api.factory:
-        class: Newscoop\MailChimp\ApiFactory
-        arguments: ["@preferences"]
-    mailchimp.list:
-        class: Newscoop\MailChimp\ListApi
-        arguments: ["@mailchimp.api.factory", "@preferences"]
     newscoop.plugins.manager:
         class: Newscoop\Services\Plugins\ManagerService
         arguments: ["@em", "@event_dispatcher", "@newscoop.plugins.service", "@logger"]
