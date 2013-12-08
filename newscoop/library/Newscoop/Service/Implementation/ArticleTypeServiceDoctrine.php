@@ -72,7 +72,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     public function findAllTypes()
     {
         $query = $this->getManager()->getRepository('Newscoop\Entity\ArticleType')->getAllTypes();
-        return $qb->getQuery()->getResult();
+        return $query->getResult();
     }
 
     public function findFields(ArticleType $type)
