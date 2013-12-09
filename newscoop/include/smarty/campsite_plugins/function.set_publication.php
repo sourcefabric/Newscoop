@@ -36,6 +36,15 @@ function smarty_function_set_publication($p_params, &$p_smarty)
 	    	$campsite->publication->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
         	return false;
         }
+    } elseif (isset($p_params['alias'])) {
+        $aliasObj = new Alias($p_params['alias']);
+
+        if (!$aliasObj->exists()) {
+            $campsite->publication->trigger_invalid_value_error($attrName, $attrValue, $p_smarty);
+            return false;
+        }
+
+        $publicationId = $aliasObj->getPublicationId();
     } else {
     	$property = array_shift(array_keys($p_params));
         CampTemplate::singleton()->trigger_error("invalid parameter '$property' in set_publication");

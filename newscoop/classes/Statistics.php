@@ -137,15 +137,7 @@ class Statistics {
         $db_pwd = $dbAccess['pass'];
         $db_name = $dbAccess['name'];
 
-        // taking info on session name and its value
-        include_once __DIR__ . '/../application.php';
-        $config = $application->getOption('session');
-
         $session_name = session_name();
-        if (isset($config['name'])) {
-            $session_name = $config['name'];
-        }
-
         if(session_id() == '') {
             session_start($session_name);
             $session_id = session_id();

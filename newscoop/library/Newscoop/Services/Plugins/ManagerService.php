@@ -106,7 +106,7 @@ class ManagerService
             throw new \Exception("Error with installing plugin", 1);
         }
 
-        $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/add_'.str_replace('/', '-', $pluginName).'_package.json';
+        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/add_'.str_replace('/', '-', $pluginName).'_package.json';
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
             $pluginDetails = file_get_contents($this->pluginsDir.'/'.$pluginMeta['targetDir'].'/composer.json');
@@ -177,6 +177,7 @@ class ManagerService
     public function removePlugin($pluginName, OutputInterface $output, $notify = true)
     {
         $this->installComposer();
+        $this->prepareCacheDir();
 
         /*if (!$this->isInstalled($pluginName)) {
             $output->writeln('<info>Plugin "'.$pluginName.'" is not installed yet</info>');
@@ -227,7 +228,7 @@ class ManagerService
             }
         }
 
-        $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/uninstall_'.str_replace('/', '-', $pluginName).'_package.json';
+        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/uninstall_'.str_replace('/', '-', $pluginName).'_package.json';
 
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
@@ -276,6 +277,7 @@ class ManagerService
         $this->saveAvaiablePluginsToCacheFile();
 
         $this->clearCache($output);
+        $this->prepareCacheDir();
 
         if ($notify) {
             $process = new Process('cd ' . $this->newsoopDir . ' && php application/console plugins:dispatch ' . $pluginName.' update');
@@ -293,7 +295,7 @@ class ManagerService
             }
         }
 
-        $cachedPluginMeta = $this->newsoopDir.'/cache/plugins/update_'.str_replace('/', '-', $pluginName).'_package.json';
+        $cachedPluginMeta = $this->newsoopDir.'/plugins/cache/update_'.str_replace('/', '-', $pluginName).'_package.json';
 
         if (file_exists($cachedPluginMeta)) {
             $pluginMeta = json_decode(file_get_contents($cachedPluginMeta), true);
@@ -491,9 +493,8 @@ class ManagerService
 
     private function prepareCacheDir()
     {
-        if (!file_exists($this->newsoopDir.'/cache/plugins')) {
+        if (!file_exists($this->newsoopDir.'/cache/prod')) {
             $filesystem = new Filesystem();
-            $filesystem->mkdir($this->newsoopDir.'/cache/plugins');
             $filesystem->mkdir($this->newsoopDir.'/cache/prod');
             $filesystem->mkdir($this->newsoopDir.'/cache/dev');
         }

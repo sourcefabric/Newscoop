@@ -280,27 +280,27 @@ table.table
  
   table.table thead .sorting
   {
-    background: url('./DataTables-1.9.4/media/images/sort_both.png') no-repeat center right;
+    background: url('../images/sort_both.png') no-repeat center right;
   }
  
   table.table thead .sorting_asc
   {
-    background: url('./DataTables-1.9.4/media/images/sort_asc.png') no-repeat center right;
+    background: url('../images/sort_asc.png') no-repeat center right;
   }
  
   table.table thead .sorting_desc
   {
-    background: url('./DataTables-1.9.4/media/images/sort_desc.png') no-repeat center right;
+    background: url('../images/sort_desc.png') no-repeat center right;
   }
  
   table.table thead .sorting_asc_disabled
   {
-    background: url('./DataTables-1.9.4/media/images/sort_asc_disabled.png') no-repeat center right;
+    background: url('../images/sort_asc_disabled.png') no-repeat center right;
   }
  
   table.table thead .sorting_desc_disabled
   {
-    background: url('./DataTables-1.9.4/media/images/sort_desc_disabled.png') no-repeat center right;
+    background: url('../images/sort_desc_disabled.png') no-repeat center right;
   }
  
   table.table thead .sorting,

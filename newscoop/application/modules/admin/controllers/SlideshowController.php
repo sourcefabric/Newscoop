@@ -18,6 +18,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
     {
         $this->_helper->contextSwitch()
             ->addActionContext('add-item', 'json')
+            ->addActionContext('add-multiple-items', 'json')
             ->addActionContext('set-order', 'json')
             ->addActionContext('remove-item', 'json')
             ->addActionContext('index', 'json')
@@ -101,6 +102,23 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 'error_message' => sprintf($translator->trans('Sorry that image is too small. Image needs to be at least %dx%d.', array(), 'article_images'), $slideshow->getRendition()->getWidth(), $slideshow->getRendition()->getHeight()),
             ));
         }
+    }
+
+    public function addMultipleItemsAction()
+    {
+        $translator = \Zend_Registry::get('container')->getService('translator');
+        $slideshow = $this->getSlideshow();
+
+        $items = array();
+        foreach($this->_getParam('images') as $key => $value) {
+            $image = $this->_helper->service('image')->find($value);
+            try {
+                $item = $this->_helper->service('package')->addItem($slideshow, $image);
+                $items[] = $this->view->slideshowItem($item);
+            } catch (\InvalidArgumentException $e) {}
+        }
+        
+        $this->_helper->json($items);
     }
 
     public function addVideoItemAction()

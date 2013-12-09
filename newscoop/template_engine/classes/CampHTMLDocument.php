@@ -314,9 +314,9 @@ final class CampHTMLDocument
         // on template caching add additional info
         if ($preferencesService->TemplateCacheHandler) {
             $uri = CampSite::GetURIInstance();
+            $tpl->campsiteVector = $uri->getCampsiteVector();
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
             $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
-            $uri->setCacheLifetime((int)$templateObj->getCacheLifetime());
         }
 
         try {
