@@ -161,7 +161,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     private $author;
 
     /**
-     * @Column(type="datetime", nullable=True)
+     * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
     private $indexed;

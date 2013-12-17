@@ -6,13 +6,29 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-if (!file_exists(__DIR__ . '/vendor') && !file_exists(__DIR__.'/../vendor/autoload.php')) {
+if (!file_exists(__DIR__ . '/vendor') && !file_exists(__DIR__.'/vendor/autoload.php')) {
     echo "Welcome in Newscoop Upgrade.<br/><br/>";
     echo "Looks like you forget about our vendors. Please install all dependencies with Composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install --no-dev</pre>";
     echo "After that please refresh that page. Thanks!";
     die;
 }
+
+if (!file_exists(__DIR__.'/conf/database_conf.php')) {
+    echo "Welcome in Newscoop Upgrade.<br/><br/>";
+    echo "Looks like you want upgrade not installed yet Newscoop instance.<br/>";
+    echo "Please install Newscoop first and upgrade it with next release!<br/>";
+    die;
+}
+
+if (!is_writable(__DIR__.'/log')) {
+    echo "Welcome in Newscoop Upgrade.<br/><br/>";
+    echo "Looks like your log directory isn't writable - please fix it.<br/><br/>";
+    echo "In linux systems it can be done with <pre>sudo chmod -R 777 ".__DIR__."/log</pre>";
+    echo "After that please refresh that page. Thanks!";
+    die;
+}
+
 
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/conf/database_conf.php';

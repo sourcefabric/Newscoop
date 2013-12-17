@@ -31,7 +31,7 @@ class Author
     private $first_name;
 
     /**
-     * @OneToOne(targetEntity="Newscoop\Entity\User", mappedBy="author")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User", mappedBy="author")
      * @var Newscoop\Entity\User
      */
     private $user;
