@@ -79,6 +79,12 @@ class LocalImage implements ImageInterface
      * @var string
      */
     private $photographer;
+
+    /**
+     * @ORM\Column(nullable=True, name="photographer_url")
+     * @var string
+     */
+    private $photographerUrl;
     
     /**
      * @ORM\Column(nullable=True, name="Place")
@@ -309,6 +315,27 @@ class LocalImage implements ImageInterface
     public function getPhotographer()
     {
         return $this->photographer;
+    }
+
+    /**
+     * Set photographer url
+     *
+     * @param string $url
+     * @return void
+     */
+    public function setPhotographerUrl($url)
+    {
+        $this->photographerUrl = (string) $url;
+    }
+
+    /**
+     * Get photographer url
+     *
+     * @return string
+     */
+    public function getPhotographerUrl()
+    {
+        return $this->photographerUrl;
     }
     
     /**

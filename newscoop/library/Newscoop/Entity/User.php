@@ -155,10 +155,16 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $subscriber;
 
     /**
-     * @ORM\OneToOne(targetEntity="Author")
+     * @ORM\OneToOne(targetEntity="Author", inversedBy="user")
      * @var Newscoop\Entity\Author
      */
-    protected $author;
+    private $author;
+
+    /**
+     * @Column(type="datetime", nullable=True)
+     * @var DateTime
+     */
+    private $indexed;
 
     /**
      * @param string $email

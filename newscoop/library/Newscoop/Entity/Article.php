@@ -540,6 +540,17 @@ class Article
     }
 
     /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->name = $title;
+        return $this;
+    }
+
+    /**
      * Get date
      *
      * @return string

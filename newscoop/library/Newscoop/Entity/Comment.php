@@ -178,6 +178,12 @@ class Comment
     private $recommended = 0;
 
     /**
+     * @ORM\Column(type="datetime", nullable=True)
+     * @var DateTime
+     */
+    private $indexed;
+
+    /**
      * Set id
      *
      * @param int $p_id
@@ -738,4 +744,24 @@ class Comment
         return $return;
     }
 
+    /**
+     * Set indexed
+     *
+     * @param DateTime $indexed
+     * @return void
+     */
+    public function setIndexed(\DateTime $indexed = null)
+    {
+        $this->indexed = $indexed;
+    }
+
+    /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
 }

@@ -17,6 +17,14 @@ use Doctrine\ORM\Mapping AS ORM;
 class ArticleImage implements ImageInterface
 {
     /**
+     * @ORM\Id()
+     * @ORM\Column(type="integer") 
+     * @ORM\GeneratedValue()
+     * @var int
+     */
+    private $id;
+
+    /**
      * @ORM\Id 
      * @ORM\Column(type="integer", name="NrArticle")
      * @var int
