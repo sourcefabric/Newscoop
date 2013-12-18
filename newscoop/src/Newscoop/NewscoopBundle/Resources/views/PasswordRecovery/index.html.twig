@@ -50,10 +50,10 @@
             {{ form_rest(form) }}
         </table>
         {% elseif disabled %}
-            <h4 class="alert recovery-errors"><center>{{ 'Password recovery is disabled.'|trans({}, 'home') }}</center></h4>
+            <h4 class="recovery-alert recovery-errors"><center>{{ 'Password recovery is disabled.'|trans({}, 'home') }}</center></h4>
             <a class="goto" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Back to login'|trans({},'home') }}</a>
         {% else %}
-            <h4 class="alert recovery-success"><center>{{ 'An email with instructions on how to recover you password has been sent to your inbox.'|trans({},'home') }}</center></h4>
+            <h4 class="recovery-alert recovery-success"><center>{{ 'An email with instructions on how to recover you password has been sent to your inbox.'|trans({},'home') }}</center></h4>
             <a class="goto recovery-alert" href="{{ Newscoop['WEBSITE_URL'] }}/admin/login">{{ 'Proceed to login.'|trans({},'home') }}</a>
         {% endif %}
     </div>

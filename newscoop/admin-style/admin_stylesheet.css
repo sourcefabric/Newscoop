@@ -32,7 +32,7 @@ select {
 }
 
 /* Clearfix */
-.clearfix:after, .poi_coors:after, .map_mapedit .ui-widget-content:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
+.clearfix:after, li:after, .poi_coors:after, .map_mapedit .ui-widget-content:after { content: "."; display: block;	height: 0; clear: both;  visibility: hidden;}
 .clearfix, li, .poi_coors, .map_mapedit .ui-widget-content {	display: inline-block; }
 * html .clearfix, * html li, * html .poi_coors, * html .map_mapedit .ui-widget-content { height: 1%;}
 .clearfix, li, .poi_coors, .map_mapedit .ui-widget-content {	display: block;	}
