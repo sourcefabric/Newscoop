@@ -221,3 +221,7 @@
 		left: 0px;
 	}
 }
+
+ul.pagination li:after {
+	display: none;
+}
