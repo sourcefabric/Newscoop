@@ -825,8 +825,7 @@ class Builder
 
                     $this->addChild($menu[$translator->trans('Plugins')], $translator->trans($info['menu']['label']), array(
                         'uri' => $uri
-                    ))->setAttribute('rightdrop', true)
-                    ->setLinkAttribute('data-toggle', 'rightdrop');
+                    ))->setLinkAttribute('data-toggle', 'rightdrop');
                 }
 
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
