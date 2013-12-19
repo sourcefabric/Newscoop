@@ -183,11 +183,6 @@ final class CampContext
             'list' => 'users',
             'url_id' => 'uid',
         ),
-        'newscoop\templatelist\users' => array(
-            'class' => 'Newscoop\TemplateList\UsersList',
-            'list' => 'users',
-            'url_id' => 'uid',
-        ),
         'boxarticles' => array(
             'class' => 'BoxArticles',
             'list' => 'box_articles',
