@@ -48,18 +48,18 @@ class DatabaseService
 
         $db_versions = array_map('basename', glob(__DIR__ . '/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
         if (!empty($db_versions)) {
-            usort($db_versions, array($this, 'camp_version_compare'));
+            usort($db_versions, array($this, 'versionCompare'));
             $db_last_version = array_pop($db_versions);
             $db_last_version_dir = __DIR__ . '/../../../../install/Resources/sql/upgrade/'.$db_last_version.'/';
             $db_last_roll = '';
-            $db_rolls = $this->camp_search_db_rolls($db_last_version_dir, '');
+            $db_rolls = $this->searchDbRolls($db_last_version_dir, '');
             if (!empty($db_rolls)) {
                 $db_last_roll_info = array_slice($db_rolls, -1, 1, true);
                 $db_last_roll_info_keys = array_keys($db_last_roll_info);
                 $db_last_roll = $db_last_roll_info_keys[0];
             }
 
-            $this->camp_save_database_version($connection, $db_last_version, $db_last_roll);
+            $this->saveDatabaseVersion($connection, $db_last_version, $db_last_roll);
             $this->logger->addInfo('Last db version:"'.$db_last_version.'", last db roll: "'.$db_last_roll.'"');
         }
 
@@ -141,10 +141,14 @@ class DatabaseService
         }
 	}
 
-	public function importDB($sqlFile, $connection)
+	public function importDB($sqlFilePath, $connection, $logger = null)
     {
-        if(!($sqlFile = file_get_contents($sqlFile))) {
+        if(!($sqlFile = file_get_contents($sqlFilePath))) {
             return false;
+        }
+
+        if ($logger == null) {
+        	$logger = $this->logger;
         }
 
         $queries = $this->splitSQL($sqlFile);
@@ -152,19 +156,78 @@ class DatabaseService
         $errors = 0;
         foreach($queries as $query) {
             $query = trim($query);
-            if (!empty($query) && $query{0} != '#') {
-            	try {
-					$connection->executeQuery($query);
-				} catch (\Exception $e) {
-					$errors++;
-                    $this->errorQueries[] = $query;
-                    $this->logger->addDebug('Error with query "'.$query.'"');
+            if (!empty($query) && $query{0} != '#' && (0 !== strpos($query, "--"))) {
+            	if (0 !== strpos(strtolower($query), "system")) {
+	            	try {
+						$connection->executeQuery($query);
+					} catch (\Exception $e) {
+						$errors++;
+	                    $this->errorQueries[] = $query;
+	                    $logger->addError('Error with query "'.$query.'"');
+
+	                    continue;
+					}
 				}
-            }
-        }
+
+	            // if it started via the system command
+	            $command_parts = array();
+	            foreach (explode(" ", $query) as $query_part) {
+	                $query_part = trim($query_part);
+	                if ("" != $query_part) {
+	                    $command_parts[] = $query_part;
+	                }
+	            }
+
+	            $command_script = "";
+	            $command_known = false;
+	            if (3 == count($command_parts)) {
+	                if ("php" == strtolower($command_parts[1])) {
+	                    $command_known = true;
+	                    $command_script = trim($command_parts[2], ";");
+	                }print_r($command_parts);
+	            }
+	            if (!$command_known) {
+	                $errors++;
+	                $errorQueries[] = $query;
+	                $logger->addError('Error with query "'.$query.'"');
+
+	                continue;
+	            }
+
+	            $command_path = dirname($sqlFilePath);
+	            $command_path = $this->combinePaths($command_path, $command_script);
+
+	            require_once($command_path);
+	        }
+	    }
 
         return $errors;
     }
+
+    /**
+	 * Puts together two paths, usually an absolute one (directory), plus a relative one (filename)
+	 * @param $dirFirst
+	 * @param $dirSecond
+	 * @return string
+	 */
+	private function combinePaths($dirFirst, $dirSecond)
+	{
+	    if (0 === strpos(strtolower($dirSecond), "/")) {
+	        return $dirSecond;
+	    }
+
+	    if (0 === strpos(strtolower($dirSecond), "./")) {
+	        $dirSecond = substr($dirSecond, 2);
+	        return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
+	    }
+
+	    while (0 === strpos(strtolower($dirSecond), "../")) {
+	        $dirFirst = dirname($dirFirst);
+	        $dirSecond = substr($dirSecond, 3);
+	    }
+
+	    return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
+	}
 
 	private function withMysqlAllIsOk($mysql_client_command)
 	{
@@ -251,7 +314,7 @@ class DatabaseService
 	 * @param $p_version2
 	 * @return int
 	 */
-	private function camp_version_compare($p_version1, $p_version2)
+	public function versionCompare($p_version1, $p_version2)
 	{
 	    $version1 = "" . $p_version1;
 	    $version2 = "" . $p_version2;
@@ -275,7 +338,7 @@ class DatabaseService
 	    return 0;
 	}
 
-	private function camp_search_db_rolls($roll_base_dir, $last_db_roll)
+	public function searchDbRolls($roll_base_dir, $last_db_roll)
 	{
 	    $rolls = array(); // roll_name => roll_path
 
@@ -314,7 +377,7 @@ class DatabaseService
 	    return $rolls;
 	}
 
-	private function camp_save_database_version($connection, $version, $roll)
+	public function saveDatabaseVersion($connection, $version, $roll)
 	{
 	    $version = str_replace(array('"', '\''), array('_', '_'), $version);
 	    $roll = str_replace(array('"', '\''), array('_', '_'), $roll);

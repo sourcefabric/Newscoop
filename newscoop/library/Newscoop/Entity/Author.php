@@ -31,6 +31,12 @@ class Author
     private $first_name;
 
     /**
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User", mappedBy="author")
+     * @var Newscoop\Entity\User
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="string", length=80, nullable=True)
      * @var string
      */

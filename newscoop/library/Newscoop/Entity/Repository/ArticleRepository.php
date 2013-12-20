@@ -85,11 +85,11 @@ class ArticleRepository extends DatatableSource
             ->setParameter('number', $number);
 
         if ($language) {
-            $languageId = $em->getRepository('Newscoop\Entity\Language')
+            $languageObject = $em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($language);
 
             $queryBuilder->andWhere('a.language = :languageId')
-                ->setParameter('languageId', $languageId->getId());
+                ->setParameter('languageId', $languageObject->getId());
         }
 
         $query = $queryBuilder->getQuery();

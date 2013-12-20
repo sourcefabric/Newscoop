@@ -15,7 +15,6 @@ framework:
         storage_id: newscoop_newscoop.session.storage
         handler_id: ~
     fragments: ~
-    http_method_override: true
     translator: { fallback: en }
 
 doctrine:

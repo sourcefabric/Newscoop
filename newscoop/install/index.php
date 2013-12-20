@@ -67,6 +67,8 @@ $app->before(function (Request $request) use ($app) {
 }, Silex\Application::EARLY_EVENT);
 
 $app->get('/', function (Silex\Application $app) {
+	// TODO: check if newscoop is isntalled and show info that you can't install newscoop on already installed instance.
+	
 	$app['dispatcher']->dispatch('newscoop.installer.bootstrap', new GenericEvent());
 
 	$directories = $app['bootstrap_service']->checkDirectories();

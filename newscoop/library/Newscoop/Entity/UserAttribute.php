@@ -34,7 +34,7 @@ class UserAttribute
     private $attribute;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=True)
+     * @ORM\Column(type="string", length=300, nullable=True)
      * @var string
      */
     private $value;
