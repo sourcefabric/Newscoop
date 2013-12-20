@@ -163,8 +163,7 @@ abstract class BaseList
 
         $this->objectsList = $this->prepareList($this->criteria);
         $this->totalCount = $this->objectsList->count();
-
-        $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->getLength());
+        $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->maxResults);
         $this->storeInCache();
 
         return $this->objectsList;
