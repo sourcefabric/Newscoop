@@ -423,6 +423,7 @@ class PreferencesType extends AbstractType
                 'Y' => 'newscoop.preferences.label.yesoption', 
                 'N' => 'newscoop.preferences.label.nooption'
             ),
+            'data' => 'N',
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
