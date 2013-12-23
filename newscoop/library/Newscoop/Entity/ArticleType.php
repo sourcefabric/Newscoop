@@ -94,6 +94,16 @@ class ArticleType
     }
 
     /**
+     * Getter for fieldName
+     *
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return $this->fieldName;
+    }
+
+    /**
      * Getter for articleTypeFields
      *
      * @return \Doctrine\Common\Collections\ArrayCollection
