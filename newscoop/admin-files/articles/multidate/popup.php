@@ -184,7 +184,7 @@ function submitSpecificForm() {
 			if (valid == 1) {
 				if ( !timeOk($('#start-date-specific').val(), $('#start-time-specific').val(), $('#start-date-specific').val(), $('#end-time-specific').val()) ) {
 					valid = 0;
-					alert("<?php echo $translator->trans('End time can not be set before start time'", array(), 'articles')?>");
+					alert("<?php echo $translator->trans('End time can not be set before start time', array(), 'articles')?>");
 					$('#end-time-specific').focus();
 				}
 			}		
