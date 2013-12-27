@@ -272,8 +272,9 @@ if (isset($_REQUEST["action_button"])) {
                     $newEvent->setRecurring($event->getRecurring());
                     $newEvent->setFieldName($event->getFieldName());
                     $em->persist($newEvent);
-                    $em->flush();
                 }
+
+                $em->flush();
 
                 \Zend_Registry::get('container')->getService('dispatcher')
                   ->dispatch('article.duplicate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(

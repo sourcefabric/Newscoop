@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error($translator->trans('Invalid security token!');
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
