@@ -6,7 +6,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
@@ -122,7 +121,6 @@ class GenerateWebcodeCommand extends Console\Command\Command
      */
     private function encode($articleNumber)
     {
-
         if (!is_numeric($articleNumber)) {
             return false;
         }
