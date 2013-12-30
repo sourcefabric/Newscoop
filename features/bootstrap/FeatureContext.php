@@ -22,13 +22,13 @@ class FeatureContext extends BehatContext
     {
         $this->useContext(
             'api',
-            new Behat\CommonContexts\WebApiContext('http://newscoop.dev/api/', new \Buzz\Browser(new \Buzz\Client\Curl()))
+            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\Curl()))
         );
 
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
-        $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', 'http://newscoop.dev/api/');
+        $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', $parameters['base_url']);
         $this->browser->addListener(new PublicationListener(array(
-            'publication' => 'newscoop.dev'
+            'publication' => $parameters['publication']
         )));
     }
 
