@@ -25,15 +25,15 @@ class UpgradeService
 
     public function getDBVersion()
     {
-
         $version = $this->connection->fetchAll('SELECT ver_value FROM Versions WHERE ver_name = "last_db_version"');
         $version = $version[0]['ver_value'];
         $roll = $this->connection->fetchAll('SELECT ver_value FROM Versions WHERE ver_name = "last_db_roll"');
         $roll = $roll[0]['ver_value'];
 
-        if ($res !== 0) {
-            $dbVersion = '[unknown]';
+        if (!$version) {
+            $version = '[unknown]';
         }
+
         $dbInfo = $version;
         if (!in_array($roll, array('', '.'))) {
             $dbInfo .= ', roll ' . $roll;
