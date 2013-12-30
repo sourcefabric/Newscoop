@@ -32,7 +32,7 @@ $crumbs[] = array($translator->trans("Languages"), "/$ADMIN/languages");
 if ($editMode) {
     $crumbs[] = array($translator->trans("Edit language", array(), 'languages'), "");
 } else {
-    $crumbs[] = array(g$translator->trans("Add new language", array(), 'languages'), "");
+    $crumbs[] = array($translator->trans("Add new language", array(), 'languages'), "");
 }
 $breadcrumbs = camp_html_breadcrumbs($crumbs);
 echo $breadcrumbs;
