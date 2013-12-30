@@ -53,6 +53,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\DispatchEventForPluginCommand(),
     new \Newscoop\Tools\Console\Command\UpgradePluginsCommand(),
     new \Newscoop\Tools\Console\Command\ReloadRenditionsCommand(),
+    new \Newscoop\Tools\Console\Command\GenerateWebcodeCommand(),
 ));
 
 $cli->run($input);
