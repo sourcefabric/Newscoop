@@ -467,7 +467,7 @@ class Builder
     }
 
     private function prepareConfigureMenu($menu) 
-    {   
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('System Preferences'), array('zend_route' => array(
@@ -486,7 +486,7 @@ class Builder
             )
         ));
 
-        if($status) {
+        if ($status) {
             $menu[$translator->trans('Templates', array(), 'home')]->setDisplay(false);
         }
 
@@ -561,7 +561,7 @@ class Builder
             $menu[$translator->trans('Themes', array(), 'home')][$translator->trans('Settings', array(), 'home')][$translator->trans('Edit')]->setDisplay(false);
         }
 
-        if($this->user->hasPermission('DeleteArticleTypes')) {
+        if ($this->user->hasPermission('DeleteArticleTypes')) {
             $this->addChild($menu, $translator->trans('Article Types'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'article_types',
@@ -617,7 +617,7 @@ class Builder
             $menu[$translator->trans('Languages')][$translator->trans('Add new language')]->setDisplay(false);
         }
 
-        if($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
+        if ($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
             $this->addChild($menu, $translator->trans('Countries'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
@@ -626,7 +626,7 @@ class Builder
             ));
         }
 
-        if($this->user->hasPermission('ViewLogs')) {
+        if ($this->user->hasPermission('ViewLogs')) {
             $this->addChild($menu, $translator->trans('Logs'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'log',
@@ -653,10 +653,16 @@ class Builder
                 'action' => null
             )
         ));
+
+        $this->addChild(
+            $menu,
+            $translator->trans('api.configure.menu', array(), 'api'),
+            array('uri' => $this->container->get('router')->generate('configure_api'))
+        );
     }
 
-    private function prepareUsersMenu($menu) 
-    {   
+    private function prepareUsersMenu($menu)
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Manage Users', array(), 'home'), array('zend_route' => array(

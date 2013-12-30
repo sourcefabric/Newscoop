@@ -21,7 +21,7 @@ AddType video/webm .webm
     RewriteCond %{REQUEST_URI} /+images/+cache
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule . index.php [L]
-        
+
     RewriteRule ^bundles/(.*)$ public/bundles/$1
 
     RewriteCond %{REQUEST_URI} !\.php$

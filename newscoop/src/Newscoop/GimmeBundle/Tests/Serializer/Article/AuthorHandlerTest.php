@@ -16,7 +16,7 @@ use JMS\SerializerBundle\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\SerializerBundle\Serializer\Naming\CamelCaseNamingStrategy;
 
 class AuthorHandlerTest extends ContainerAwareUnitTestCase
-{   
+{
     private $article;
     private $authorHandler;
     private $ymlSerializationVisitor;
@@ -32,10 +32,10 @@ class AuthorHandlerTest extends ContainerAwareUnitTestCase
     }
 
     public function testSerialize ()
-    {   
+    {
         $visited = true;
         $authorHandlerResult = $this->authorHandler->serialize(
-            $this->ymlSerializationVisitor, 
+            $this->ymlSerializationVisitor,
             $this->article,
             get_class($this->article),
             $visited
@@ -45,10 +45,10 @@ class AuthorHandlerTest extends ContainerAwareUnitTestCase
     }
 
     public function testfailOnWrongClass ()
-    {   
+    {
         $visited = true;
         $authorHandlerResult = $this->authorHandler->serialize(
-            $this->ymlSerializationVisitor, 
+            $this->ymlSerializationVisitor,
             new \stdClass(),
             get_class(new \stdClass()),
             $visited

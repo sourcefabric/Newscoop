@@ -34,7 +34,7 @@ class PaginationListener
     private $paginatorService;
 
     /**
-     * Construct PaginationListener object   
+     * Construct PaginationListener object
      * @param PaginatorService $paginatorService PaginationService object
      */
     public function __construct(PaginatorService $paginatorService)
