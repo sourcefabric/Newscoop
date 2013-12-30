@@ -18,8 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Generates webcode for articles based on their numbers
  */
 class GenerateWebcodeCommand extends Console\Command\Command
-{   
-    static $map = array(
+{
+    private static $map = array(
         0 => 'A',
         1 => 'B',
         2 => 'C',
@@ -65,10 +65,9 @@ class GenerateWebcodeCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $em = $this->getApplication()->getKernel()->getContainer()->getService('em');
-        $number = (int)$input->getArgument('number');
+        $number = (int) $input->getArgument('number');
 
         try {
-
             $output->writeln('<info>Generating webcodes. Please wait! It can take up to few minutes, depends on database size.</info>');
             ini_set('memory_limit', '-1');
 
@@ -88,7 +87,6 @@ class GenerateWebcodeCommand extends Console\Command\Command
 
             $em->flush();
             $output->writeln('<info>Webcodes generated successfully!</info>');
-
         } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
         }
@@ -101,8 +99,8 @@ class GenerateWebcodeCommand extends Console\Command\Command
      *
      * @return array
      */
-    private function base26($articleNumber) {
-
+    private function base26($articleNumber) 
+    {
         $base26Array = array();
         $num = $articleNumber;
         $index = 0;
@@ -111,6 +109,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
             $num = floor($num / 26);
             $index ++;
         }
+
         return array_reverse($base26Array);
     }
 
@@ -130,7 +129,8 @@ class GenerateWebcodeCommand extends Console\Command\Command
 
         $cleanCode = $this->base26($articleNumber);
         $letterCode = '';
-        foreach($cleanCode as $no) {
+
+        foreach ($cleanCode as $no) {
             $letterCode .= self::$map[$no];
         }
 
@@ -145,9 +145,9 @@ class GenerateWebcodeCommand extends Console\Command\Command
     /**
      * Updates article webcode
      *
-     * @param EntityManager $em             Entity Manager
-     * @param string        $webcode        Article webcode
-     * @param int           $articleNumber  Article number
+     * @param EntityManager $em            Entity Manager
+     * @param string        $webcode       Article webcode
+     * @param int           $articleNumber Article number
      *
      * @return void
      */
