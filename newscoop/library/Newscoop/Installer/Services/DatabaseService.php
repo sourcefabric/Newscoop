@@ -9,16 +9,29 @@
 namespace Newscoop\Installer\Services;
 
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Connection;
 
+/**
+ * Service with functions related to database jobs
+ */
 class DatabaseService
 {
     private $logger;
     public $errorQueries = array();
 
-    public function __construct($logger){
+    /**
+     * @param object $logger
+     */
+    public function __construct($logger)
+    {
         $this->logger = $logger;
     }
 
+    /**
+     * Create Newscoop Database
+     *
+     * @param Connection $connection
+     */
     public function createNewscoopDatabase($connection)
     {
         $params = $connection->getParams();
@@ -36,6 +49,13 @@ class DatabaseService
         $this->logger->addInfo('Database '.$name.' created');
     }
 
+    /**
+     * Fill database with default data and run all not applied upgrades
+     *
+     * @param Connection $connection
+     *
+     * @return boolean
+     */
     public function fillNewscoopDatabase($connection)
     {
         // import database from sql file
@@ -46,26 +66,30 @@ class DatabaseService
             return false;
         }
 
-        $db_versions = array_map('basename', glob(__DIR__ . '/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
-        if (!empty($db_versions)) {
-            usort($db_versions, array($this, 'versionCompare'));
-            $db_last_version = array_pop($db_versions);
-            $db_last_version_dir = __DIR__ . '/../../../../install/Resources/sql/upgrade/'.$db_last_version.'/';
-            $db_last_roll = '';
-            $db_rolls = $this->searchDbRolls($db_last_version_dir, '');
-            if (!empty($db_rolls)) {
-                $db_last_roll_info = array_slice($db_rolls, -1, 1, true);
-                $db_last_roll_info_keys = array_keys($db_last_roll_info);
-                $db_last_roll = $db_last_roll_info_keys[0];
+        $dbVersions = array_map('basename', glob(__DIR__ . '/../../../../install/Resources/sql/upgrade/[2-9].[0-9]*'));
+        if (!empty($dbVersions)) {
+            usort($dbVersions, array($this, 'versionCompare'));
+            $dbLastVersion = array_pop($dbVersions);
+            $dbLastVersionDir = __DIR__ . '/../../../../install/Resources/sql/upgrade/'.$dbLastVersion.'/';
+            $dbLastRoll = '';
+            $dbRolls = $this->searchDbRolls($dbLastVersionDir, '');
+            if (!empty($dbRolls)) {
+                $dbLastRollInfo = array_slice($dbRolls, -1, 1, true);
+                $dbLastRollInfoKeys = array_keys($dbLastRollInfo);
+                $dbLastRoll = $dbLastRollInfoKeys[0];
             }
 
-            $this->saveDatabaseVersion($connection, $db_last_version, $db_last_roll);
-            $this->logger->addInfo('Last db version:"'.$db_last_version.'", last db roll: "'.$db_last_roll.'"');
+            $this->saveDatabaseVersion($connection, $dbLastVersion, $dbLastRoll);
+            $this->logger->addInfo('Last db version:"'.$dbLastVersion.'", last db roll: "'.$dbLastRoll.'"');
         }
 
         return true;
     }
 
+    /**
+     * Save database configuration to file
+     * @param Connection $connection
+     */
     public function saveDatabaseConfiguration($connection)
     {
         $this->renderFile('_database_conf.twig', __DIR__ . '/../../../../conf/database_conf.php', array(
@@ -79,6 +103,12 @@ class DatabaseService
         $this->renderFile('_configuration.twig', __DIR__ . '/../../../../conf/configuration.php', array());
     }
 
+    /**
+     * Fill database with sample data
+     *
+     * @param Connection $connection
+     * @param string     $host
+     */
     public function installSampleData($connection, $host)
     {
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
@@ -93,6 +123,13 @@ class DatabaseService
         $connection->executeQuery('UPDATE Aliases SET Name=?', array($host));
     }
 
+    /**
+     * Fill datatabase with geodata
+     *
+     * @param Connection $connection
+     *
+     * @return boolean
+     */
     public function loadGeoData($connection)
     {
         $which_output = '';
@@ -141,9 +178,17 @@ class DatabaseService
         }
     }
 
+    /**
+     * Import sql file to databas
+     * @param string     $sqlFilePath
+     * @param Connection $connection
+     * @param mixed      $logger
+     *
+     * @return integer
+     */
     public function importDB($sqlFilePath, $connection, $logger = null)
     {
-        if(!($sqlFile = file_get_contents($sqlFilePath))) {
+        if (!($sqlFile = file_get_contents($sqlFilePath))) {
             return false;
         }
 
@@ -154,7 +199,7 @@ class DatabaseService
         $queries = $this->splitSQL($sqlFile);
 
         $errors = 0;
-        foreach($queries as $query) {
+        foreach ($queries as $query) {
             $query = trim($query);
             if (!empty($query) && $query{0} != '#' && (0 !== strpos($query, "--"))) {
                 if (0 !== strpos(strtolower($query), "system")) {
@@ -184,7 +229,7 @@ class DatabaseService
                     if ("php" == strtolower($command_parts[1])) {
                         $command_known = true;
                         $command_script = trim($command_parts[2], ";");
-                    }print_r($command_parts);
+                    }
                 }
                 if (!$command_known) {
                     $errors++;
@@ -206,8 +251,10 @@ class DatabaseService
 
     /**
      * Puts together two paths, usually an absolute one (directory), plus a relative one (filename)
-     * @param $dirFirst
-     * @param $dirSecond
+     *
+     * @param string $dirFirst
+     * @param string $dirSecond
+     *
      * @return string
      */
     private function combinePaths($dirFirst, $dirSecond)
@@ -218,6 +265,7 @@ class DatabaseService
 
         if (0 === strpos(strtolower($dirSecond), "./")) {
             $dirSecond = substr($dirSecond, 2);
+
             return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
         }
 
@@ -229,27 +277,41 @@ class DatabaseService
         return $dirFirst . DIRECTORY_SEPARATOR . $dirSecond;
     }
 
-    private function withMysqlAllIsOk($mysql_client_command)
+    /**
+     * Check if current mysql instance is ok for Newscoop
+     * @param string $mysql_client_command
+     *
+     * @return boolean
+     */
+    private function withMysqlAllIsOk($mysqlClientCommand)
     {
-        if (!file_exists($mysql_client_command)) {
+        if (!file_exists($mysqlClientCommand)) {
             return false;
         }
 
-        if ((!is_file($mysql_client_command)) && (!is_link($mysql_client_command))) {
+        if ((!is_file($mysqlClientCommand)) && (!is_link($mysqlClientCommand))) {
             return false;
         }
 
-        if (!is_executable($mysql_client_command)) {
+        if (!is_executable($mysqlClientCommand)) {
             return false;
         }
 
         return true;
     }
 
+    /**
+     * render Twig template
+     *
+     * @param string $template
+     * @param array  $parameters
+     *
+     * @return string
+     */
     protected function renderTwigTemplate($template, $parameters)
     {
         $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/'), 
+            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/'),
             array(
                 'debug'            => true,
                 'cache'            => false,
@@ -261,6 +323,14 @@ class DatabaseService
         return $twig->render($template, $parameters);
     }
 
+    /**
+     * Save TWIG template to file
+     * @param string $template
+     * @param string $target
+     * @param array  $parameters
+     *
+     * @return boolean
+     */
     protected function renderFile($template, $target, $parameters)
     {
         if (!is_dir(dirname($target))) {
@@ -270,6 +340,13 @@ class DatabaseService
         return file_put_contents($target, $this->renderTwigTemplate($template, $parameters));
     }
 
+    /**
+     * Split big sql to array fo queries
+     *
+     * @param string $sqlFile
+     *
+     * @return array
+     */
     private function splitSQL($sqlFile)
     {
         $sqlFile = trim($sqlFile);
@@ -308,10 +385,11 @@ class DatabaseService
     }
 
     /**
-     * Compares versions of Newscoop for upgrades
-     * 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
-     * @param $p_version1
-     * @param $p_version2
+     * Compares versions of Newscoop for upgrades 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
+     *
+     * @param string $p_version1
+     * @param string $p_version2
+     *
      * @return int
      */
     public function versionCompare($p_version1, $p_version2)
@@ -338,6 +416,14 @@ class DatabaseService
         return 0;
     }
 
+    /**
+     * Search for db roll in rols directory
+     *
+     * @param string $roll_base_dir
+     * @param string $last_db_roll
+     *
+     * @return array
+     */
     public function searchDbRolls($roll_base_dir, $last_db_roll)
     {
         $rolls = array(); // roll_name => roll_path
@@ -377,6 +463,15 @@ class DatabaseService
         return $rolls;
     }
 
+    /**
+     * Sava new database version in Versions table
+     *
+     * @param Connection $connection
+     * @param string     $version
+     * @param string     $roll
+     *
+     * @return boolean
+     */
     public function saveDatabaseVersion($connection, $version, $roll)
     {
         $version = str_replace(array('"', '\''), array('_', '_'), $version);

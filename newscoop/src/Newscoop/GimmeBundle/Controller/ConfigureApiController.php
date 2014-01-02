@@ -15,9 +15,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Newscoop\GimmeBundle\Entity\Client;
+use Newscoop\GimmeBundle\Entity\PublicApiResource;
 use Newscoop\GimmeBundle\Form\Type\PublicResourcesType;
 use Newscoop\GimmeBundle\Form\Type\ClientType;
-use Newscoop\GimmeBundle\Entity\PublicApiResource;
+use Symfony\Component\Form\Form;
 
 /**
  * Configure Newscop REST API
@@ -33,7 +35,6 @@ class ConfigureApiController extends Controller
      *
      * @return array
      */
-
     public function configureAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -97,9 +98,9 @@ class ConfigureApiController extends Controller
     /**
      * Remove client (handle form submission)
      *
-     * @param Request $request [description]
+     * @param Request $request
      *
-     * @return [type]           [description]
+     * @return mixed
      */
     private function removeClient(Request $request)
     {
@@ -174,6 +175,11 @@ class ConfigureApiController extends Controller
         }
     }
 
+    /**
+     * Get form
+     *
+     * @return Form
+     */
     private function getPublicResourcesForm()
     {
         $em = $this->getDoctrine()->getManager();
@@ -206,6 +212,13 @@ class ConfigureApiController extends Controller
         return $form;
     }
 
+    /**
+     * Get form
+     *
+     * @param Client $client
+     *
+     * @return Form
+     */
     private function getClientForm($client = null)
     {
         if ($client == null) {
@@ -221,6 +234,11 @@ class ConfigureApiController extends Controller
         return $form;
     }
 
+    /**
+     * Get form
+     *
+     * @return Form
+     */
     private function getRemoveClientForm()
     {
         $form = $this->get('form.factory')->createNamedBuilder('removeClient', 'form', null, array())
