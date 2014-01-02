@@ -409,7 +409,7 @@ class SymfonyRequirements extends RequirementCollection
                 'Then run "<strong>php composer.phar install</strong>" to install them.'
         );
 
-        $baseDir = basename(__DIR__);
+        $baseDir = realpath(__DIR__.'/../');
 
         $this->addRequirement(
             is_writable(__DIR__.'/../cache'),
@@ -424,6 +424,12 @@ class SymfonyRequirements extends RequirementCollection
         );
 
         $this->addRequirement(
+            is_writable(__DIR__.'/../conf/'),
+            "conf/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/conf/</strong>\" directory so that the web server can write into it."
+        );
+
+        $this->addRequirement(
             is_writable(__DIR__.'/../library/Proxy'),
             "library/Proxy/ directory must be writable",
             "Change the permissions of the \"<strong>$baseDir/library/Proxy/</strong>\" directory so that the web server can write into it."
@@ -433,6 +439,24 @@ class SymfonyRequirements extends RequirementCollection
             is_writable(__DIR__.'/../themes'),
             "themes/ directory must be writable",
             "Change the permissions of the \"<strong>$baseDir/themes/</strong>\" directory so that the web server can write into it."
+        );
+
+        $this->addRequirement(
+            is_writable(__DIR__.'/../plugins'),
+            "plugins/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/plugins/</strong>\" directory so that the web server can write into it."
+        );
+
+        $this->addRequirement(
+            is_writable(__DIR__.'/../public/files/'),
+            "public/files/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/public/files/</strong>\" directory so that the web server can write into it."
+        );
+
+        $this->addRequirement(
+            is_writable(__DIR__.'/../images/'),
+            "images/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/images/</strong>\" directory so that the web server can write into it."
         );
 
         $this->addPhpIniRequirement(

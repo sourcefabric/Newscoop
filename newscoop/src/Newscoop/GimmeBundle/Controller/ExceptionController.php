@@ -29,7 +29,7 @@ class ExceptionController extends FOSExceptionController
      */
     public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
     {
-        $pos = strpos($request->server->get('REQUEST_URI'), '/api');
+        $pos = strpos($request->server->get('REQUEST_URI'), '/api/');
 
         if ($pos === false) {
             return;

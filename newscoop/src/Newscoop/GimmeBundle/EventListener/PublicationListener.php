@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  * Run publication resolver on request
  */
 class PublicationListener
-{   
+{
     /**
      * Publication service
      * @var PublicationService
@@ -30,7 +30,7 @@ class PublicationListener
     {
         $this->publicationService = $publicationService;
     }
-    
+
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();

@@ -25,6 +25,11 @@ services:
         arguments:  ["@newscoop.publication_service"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+    newscoop.gimme.listener.public_resources:
+        class: Newscoop\GimmeBundle\EventListener\PublicResourcesListener
+        arguments:  ["@em", "@fos_oauth_server.server", "@security.context"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
     newscoop.gimme.listener.format_json:
         class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
         tags:
@@ -36,8 +41,9 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
     newscoop.gimme.listener.override_method:
         class: Newscoop\GimmeBundle\EventListener\OverrideMethodListener
+        arguments: ["@em"]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 34 }
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 1025 }
     newscoop.gimme.serializer.article_author_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\AuthorHandler
         arguments: ["@router"]
