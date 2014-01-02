@@ -109,14 +109,14 @@ if (!Input::IsValid()) {
 	setMessage($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), TRUE);
 }
 
-$description = new Translation((int) $f_language_selected);
-$description->create($f_description);
-
 $attributes = array();
-$attributes['fk_description_id'] = $description->getPhraseId();
 $attributes['fk_user_id'] = $g_user->getUserId();
 if ($f_language_specific == "yes") {
 	$attributes['fk_language_id'] = $f_language_selected;
+} else {
+    $description = new Translation(0);
+    $description->create($f_description);
+    $attributes['fk_description_id'] = $description->getPhraseId();
 }
 if ($f_content_disposition == "attachment") {
 	$attributes['content_disposition'] = "attachment";
