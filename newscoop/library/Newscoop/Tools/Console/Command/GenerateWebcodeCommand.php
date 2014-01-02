@@ -18,35 +18,6 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateWebcodeCommand extends Console\Command\Command
 {
-    private static $map = array(
-        0 => 'A',
-        1 => 'B',
-        2 => 'C',
-        3 => 'D',
-        4 => 'E',
-        5 => 'F',
-        6 => 'G',
-        7 => 'H',
-        8 => 'I',
-        9 => 'J',
-        10 => 'K',
-        11 => 'L',
-        12 => 'M',
-        13 => 'N',
-        14 => 'O',
-        15 => 'P',
-        16 => 'Q',
-        17 => 'R',
-        18 => 'S',
-        19 => 'T',
-        20 => 'U',
-        21 => 'V',
-        22 => 'W',
-        23 => 'X',
-        24 => 'Y',
-        25 => 'Z'
-    );
-
     /**
      * @see Console\Command\Command
      */
@@ -72,6 +43,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
 
             $articles = $em->getRepository('Newscoop\Entity\Article')
                 ->createQueryBuilder('a')
+                ->where('a.number = 68')
                 ->getQuery()
                 ->getResult();
 
@@ -98,7 +70,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
      *
      * @return array
      */
-    private function base26($articleNumber) 
+    private function base26($articleNumber)
     {
         $base26Array = array();
         $num = $articleNumber;
@@ -125,16 +97,17 @@ class GenerateWebcodeCommand extends Console\Command\Command
             return false;
         }
 
+        $map = explode(",", strtoupper(implode(",", range("A", "Z"))));
         $cleanCode = $this->base26($articleNumber);
         $letterCode = '';
 
         foreach ($cleanCode as $no) {
-            $letterCode .= self::$map[$no];
+            $letterCode .= $map[$no];
         }
 
         $returnCode = $letterCode;
         for ($i = 0; $i < (5 - strlen($letterCode)); $i ++) {
-            $returnCode = self::$map[0] . $returnCode;
+            $returnCode = $map[0] . $returnCode;
         }
 
         return strtolower($returnCode);
@@ -149,7 +122,7 @@ class GenerateWebcodeCommand extends Console\Command\Command
      *
      * @return void
      */
-    private function updateArticleWebcode($em, $webcode, $articleNumber) 
+    private function updateArticleWebcode($em, $webcode, $articleNumber)
     {
         $queryBuilder = $em->createQueryBuilder();
         $query = $queryBuilder->update('Newscoop\Entity\Article', 'a')
