@@ -9,9 +9,7 @@
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
     "version":"4.1",
     "license":"GPL-3.0",
-    "authors":[
-        
-    ],
+    "authors":[],
     "repositories": [
         {
             "type": "artifact",
@@ -34,7 +32,7 @@
         "incenteev\/composer-parameter-handler":"~2.0",
         "bombayworks\/zendframework1":"1.11.*",
         "friendsofsymfony\/rest-bundle":"0.13.*@dev",
-        "behat\/behat":">=2.4.0",
+        "behat\/behat":"2.5.1",
         "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
         "kriswallsmith\/buzz":">=0.7",
         "knplabs\/knp-paginator-bundle":"v2.3.2",
@@ -51,6 +49,7 @@
         "knplabs/packagist-api": "v1.1",
         "symfony/twig-bridge": "~2.3",
         "excelwebzone/recaptcha-bundle": "2.0.*@dev",
+        "friendsofsymfony/oauth-server-bundle": "1.4.0",
         "newscoop/plugins-installer": "v0.2"
     },
     "require-dev":{
@@ -88,7 +87,8 @@
     },
     "minimum-stability":"dev",
     "config":{
-        "bin-dir":"vendor\/bin"
+        "bin-dir":"vendor\/bin",
+        "process-timeout": 3600
     },
     "extra":{
         "symfony-app-dir":"application",

@@ -12,7 +12,7 @@ use Newscoop\GimmeBundle\Tests\ContainerAwareUnitTestCase;
 use Newscoop\Gimme\Pagination;
 
 class PaginationTest extends ContainerAwareUnitTestCase
-{   
+{
     private $pagination;
 
     protected function setUp()

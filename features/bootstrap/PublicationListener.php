@@ -33,7 +33,7 @@ class PublicationListener implements ListenerInterface
 
     /**
      * PreSend event
-     * @param  RequestInterface $request Request object
+     * @param RequestInterface $request Request object
      */
     public function preSend(RequestInterface $request)
     {

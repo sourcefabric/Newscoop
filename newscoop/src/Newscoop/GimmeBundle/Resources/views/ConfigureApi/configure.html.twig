@@ -1,0 +1,205 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "api" %}
+
+{% form_theme publicResourcesForm _self %}
+{% form_theme clientForm _self %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div {{ block('widget_container_attributes') }}>
+    {% for child in form %}
+        <li class="form-control">
+            {{ form_widget(child) }}
+            {{ form_label(child) }}
+        </li>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+{% block admin_title %}{{ 'api.configure.title'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'api.configure.title_content'|trans }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopgimme/css/jquery.dynatable.css">
+<style type="text/css">
+    .form-control {
+        margin: 0px 0px 10px 0px;
+    }
+    .form-control input {
+        margin-right: 10px;
+    }
+
+    .dynatable-container {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .dynatable-container th {
+        background: #007fb3;
+    }
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopgimme/js/jquery.dynatable.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+{% if form_errors(publicResourcesForm) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(publicResourcesForm) }}
+    </div>
+{% endif %}
+
+{% if form_errors(clientForm) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(clientForm) }}
+    </div>
+{% endif %}
+
+{% if form_errors(removeClientForm) %}
+    <div class="alerts alert-danger">
+        {{ form_errors(removeClientForm) }}
+    </div>
+{% endif %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alerts alert-danger">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alerts alert-success">
+            {{ flashMessage }}
+        </div>
+{% endfor %}
+
+<div class="row">
+    <div class="col-md-10" style="background-color: #fff;border: 1px solid #9d9d9d;float: none;margin: 30px 30px;padding: 20px 20px 50px 20px;-moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);-webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);box-shadow: 0 2px 2px rgba(0,0,0,.10);">
+        <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#public_resources" data-toggle="tab">{{ 'api.configure.tabs.resources'|trans }}</a></li>
+                <li><a href="#clients" data-toggle="tab">{{ 'api.configure.tabs.clients'|trans }}</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="public_resources">
+                    <p>{{ 'api.configure.resources.info'|trans }}</p>
+                    {{ form_start(publicResourcesForm) }}
+                        {{ form_errors(publicResourcesForm) }}
+
+                        <div class="form-group">
+                            {{ form_row(publicResourcesForm.routes) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(publicResourcesForm.save, {attr: {class: 'btn btn-success pull-right'}}) }}
+                        </div>
+                        <div class="clearfix"></div>
+                    {{ form_end(publicResourcesForm) }}
+                </div>
+                <div class="tab-pane" id="clients">
+                    <button type="button" class="btn btn-success js-show-client-form">
+                        <span class="glyphicon glyphicon-plus-sign"></span> {{ 'api.configure.resources.add_button'|trans }}
+                    </button>
+
+                    <div style="display:none; padding: 10px; border: 1px solid #CCC; margin: 10px 0px;" class="client-form">
+                    {{ form_start(clientForm) }}
+                        {{ form_errors(clientForm) }}
+
+                        <div class="row" style="height: 105px;">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="form_row">
+                                        {{ form_label(clientForm.name) }}
+                                        {{ form_errors(clientForm.name) }}
+                                        {{ form_widget(clientForm.name, {'attr': {'class': 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ form_label(clientForm.publication) }}
+                                    {{ form_errors(clientForm.publication) }}
+                                    {{ form_widget(clientForm.publication, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    {{ form_label(clientForm.redirectUris) }}
+                                    {{ form_errors(clientForm.redirectUris) }}
+                                    {{ form_widget(clientForm.redirectUris, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-md-offset-8">
+                                <div class="form-group">
+                                    {{ form_row(clientForm.save, {attr: {class: 'btn btn-success pull-right'}}) }}
+                                </div>
+                            </div>
+                        </div>
+                    {{ form_end(clientForm) }}
+                    </div>
+                    <div style="margin-bottom: 15px;"></div>
+                    <div class="dynatable-container">
+                      <table id="clients-table" class="table table-bordered table-hover" style="word-wrap: break-word;table-layout: fixed;">
+                        <thead>
+                          <tr>
+                            <th>{{ 'api.configure.clients.table.name'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.id'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.secret'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.redirect'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.publication'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.actions'|trans }}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in clients %}
+                          <tr>
+                            <td>{{ client.name }}</td>
+                            <td>{{ client.getPublicId() }}</td>
+                            <td>{{ client.secret }}</td>
+                            <td>{{ client.getRedirectUrisString() }}</td>
+                            <td>{{ client.publication.name }}</td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-xs js-remove-client" data-form-id="{{ client.getPublicId() }}">
+                                    <span class="glyphicon glyphicon-remove"></span> {{ 'api.configure.clients.table.actions_buttons.remove'|trans }}
+                                </button>
+                            </td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {{ form(removeClientForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.js-show-client-form').click(function(){
+        $('.client-form').show();
+    });
+
+    $('#clients-table').dynatable({
+        inputs: {
+          paginationClass: 'pagination',
+          paginationActiveClass: 'current',
+          paginationDisabledClass: 'unavailable',
+          paginationPrev: '&laquo;',
+          paginationNext: '&raquo;'
+        }
+    });
+
+    $('.js-remove-client').click(function(){
+        if (confirm('{{ 'api.configure.clients.actions.remove.confirm'|trans }}')) {
+            var form_id = $(this).data('formId');
+            $('#removeClient_client_id').val(form_id);
+            $('#removeClient').parent().submit();
+        }
+    });
+</script>
+{% endblock %}

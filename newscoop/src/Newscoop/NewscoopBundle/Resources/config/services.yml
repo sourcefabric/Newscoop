@@ -26,7 +26,7 @@ services:
         class: Knp\Menu\MenuItem # the service definition requires setting the class
         factory_service: newscoop_newscoop.menu_builder
         factory_method: mainMenu
-        arguments: 
+        arguments:
             - true
         tags:
             - { name: knp_menu.menu, alias: main_modern } # The alias is what is used to retrieve the menu
@@ -40,7 +40,7 @@ services:
 
     newscoop_newscoop.twig.newscoop_extension:
         class: Newscoop\NewscoopBundle\Twig\NewscoopExtension
-        arguments: 
+        arguments:
             - @service_container
         tags:
             - { name: twig.extension }
@@ -85,6 +85,7 @@ services:
         arguments:  ['@translator']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.session.storage:
         class:     %newscoop_newscoop.session.storage.class%
         arguments: [%session.storage.options%]

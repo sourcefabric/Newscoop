@@ -1,7 +1,5 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface;
-use Behat\Behat\Context\TranslatedContextInterface;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
@@ -22,7 +20,8 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-        $this->useContext('api',
+        $this->useContext(
+            'api',
             new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\Curl()))
         );
 
@@ -124,6 +123,7 @@ class FeatureContext extends BehatContext
                 if (!in_array($key, $itemKeys)) {
                     continue;
                 }
+
                 return true;
             }
         }
@@ -177,6 +177,7 @@ class FeatureContext extends BehatContext
                 if (!array_key_exists($key, $response['items'][0])) {
                     throw new \Exception('Key '.$key.' don\'t exist');
                 }
+
                 return true;
             }
         }
@@ -186,3 +187,4 @@ class FeatureContext extends BehatContext
 
 
 }
+
