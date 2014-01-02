@@ -62,8 +62,8 @@ First: First
 'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
 'URL $1 is not an image.': 'URL $1 is not an image.'
 client:
-  added: : 'Client was added'
-  notfound: : 'Client not found'
+  added: 'Client was added'
+  notfound: 'Client not found'
   removed: 'Client was removed'
 publicresources: 
   updated: 'Public resources was updated'
