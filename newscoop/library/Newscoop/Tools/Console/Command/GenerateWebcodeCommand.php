@@ -43,12 +43,12 @@ class GenerateWebcodeCommand extends Console\Command\Command
 
             $articles = $em->getRepository('Newscoop\Entity\Article')
                 ->createQueryBuilder('a')
-                ->where('a.number = 68')
                 ->getQuery()
                 ->getResult();
 
             foreach ($articles as $key => $article) {
                 if ($article->getNumber() > $number && $number) {
+                    $this->clearWebcode($em, $article->getNumber());
                     $webcode = $this->encode($article->getNumber());
                     $webcodeEntity = new \Newscoop\Entity\Webcode($webcode, $article);
                     $em->persist($webcodeEntity);
@@ -131,5 +131,29 @@ class GenerateWebcodeCommand extends Console\Command\Command
             ->setParameter('number', $articleNumber)
             ->getQuery();
         $query->execute();
+    }
+
+    /**
+     * Clears old webcode
+     *
+     * @param EntityManager $em            Entity Manager
+     * @param string        $articleNumber Article
+     *
+     * @return void
+     */
+    private function clearWebcode($em, $articleNumber)
+    {
+        $webcode = $em->getRepository('Newscoop\Entity\Webcode')
+                ->createQueryBuilder('w')
+                ->leftJoin('w.article', 'a')
+                ->where('a.number = :number')
+                ->setParameter('number', $articleNumber)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+        if ($webcode) {
+            $em->remove($webcode);
+            $em->flush();
+        }
     }
 }
