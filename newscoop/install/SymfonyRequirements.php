@@ -419,8 +419,8 @@ class SymfonyRequirements extends RequirementCollection
 
         $this->addRequirement(
             is_writable(__DIR__.'/../log'),
-            "logs/ directory must be writable",
-            "Change the permissions of the \"<strong>$baseDir/logs/</strong>\" directory so that the web server can write into it."
+            "log/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/log/</strong>\" directory so that the web server can write into it."
         );
 
         $this->addRequirement(

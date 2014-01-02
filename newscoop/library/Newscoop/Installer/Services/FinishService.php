@@ -19,13 +19,14 @@ class FinishService
     private $newscoopDir;
     private $filesystem;
 
-	public function __construct(){
+    public function __construct()
+    {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
-	}
+    }
 
-	public function generateProxies()
-	{
+    public function generateProxies()
+    {
         exec('rm -rf '.$this->newscoopDir.'/cache/*', $output = array(), $code);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
@@ -42,7 +43,7 @@ class FinishService
         }
 
         exec('rm -rf '.$this->newscoopDir.'/cache/*', $output = array(), $code);
-	}
+    }
 
     public function reloadRenditions()
     {
@@ -113,7 +114,7 @@ class FinishService
         $isFileWritable = is_writable($cronJobsTempDir);
         $error = false;
         $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/cron_jobs/'), 
+            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/cron_jobs/'),
             array('debug' => true, 'cache' => false, 'strict_variables' => true,'autoescape' => false)
         );
 
@@ -186,7 +187,6 @@ class FinishService
         $stmt->bindValue(1, $password);
         $stmt->bindValue(2, $config['user_email']);
         $stmt->execute();
-        
 
         $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
 
@@ -198,5 +198,4 @@ class FinishService
             $this->filesystem->remove($this->newscoopDir.'/conf/upgrading.php');
         }
     }
-
 }
