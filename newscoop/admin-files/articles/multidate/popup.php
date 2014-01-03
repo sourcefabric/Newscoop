@@ -284,7 +284,6 @@ function popup_save() {
 }
 
 function reset_specific_start_time() {
-    //$('#specific-radio-start-only').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
     $('#end-time-specific').css('visibility', 'hidden');
 }
