@@ -2424,8 +2424,7 @@ DROP TABLE IF EXISTS `liveuser_userrights`;
 -- Table structure for table `liveuser_users`
 --
 
-DROP TABLE IF EXISTS `liveuser_users`;
-CREATE TABLE `liveuser_users` (
+CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeyId` int(10) unsigned DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
@@ -2473,16 +2472,18 @@ CREATE TABLE `liveuser_users` (
   `role_id` int(10) DEFAULT NULL,
   `last_name` varchar(80) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `is_admin` boolean NOT NULL DEFAULT '0',
-  `is_public` boolean NOT NULL DEFAULT '0',
+  `is_admin` tinyint(1) NOT NULL DEFAULT '0',
+  `is_public` tinyint(1) NOT NULL DEFAULT '0',
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
+  `indexed` datetime NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
-  KEY `author_id` (`author_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `author_id` (`author_id`),
+  KEY `indexed` (`indexed`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `liveuser_users`

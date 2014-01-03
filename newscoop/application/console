@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 /**
@@ -55,6 +56,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\ReloadRenditionsCommand(),
     new \Newscoop\Tools\Console\Command\GenerateWebcodeCommand(),
     new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
+    new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
 ));
 
 $cli->run($input);

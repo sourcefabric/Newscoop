@@ -24,12 +24,25 @@ class FeatureContext extends BehatContext
             'api',
             new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\Curl()))
         );
-
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
+
+        $url = str_replace('api/', '', $parameters['base_url']).'oauth/v2/token?client_id=1_svdg45ew371vtsdgd29fgvwe5v&grant_type=client_credentials&client_secret=h48fgsmv0due4nexjsy40jdf3sswwr';
+        $this->browser->call($url, 'GET', array());
+        $token = json_decode($this->browser->getLastResponse()->getContent(), true);
+
         $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', $parameters['base_url']);
         $this->browser->addListener(new PublicationListener(array(
-            'publication' => $parameters['publication']
+            'publication' => $parameters['publication'],
+            'access_token' => $token['access_token']
         )));
+    }
+
+    /**
+     * @Given /^current access_token$/
+     */
+    public function currentAccessToken()
+    {
+        throw new PendingException();
     }
 
     /**
@@ -184,7 +197,4 @@ class FeatureContext extends BehatContext
 
         throw new \Exception('Response is wrong');
     }
-
-
 }
-
