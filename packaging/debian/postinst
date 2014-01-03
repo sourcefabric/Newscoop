@@ -145,9 +145,6 @@ case "$1" in
     dpkg-statoverride --list $datadir/log &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/log
 
-    dpkg-statoverride --list $datadir/pdf &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/pdf
-
     dpkg-statoverride --list $datadir/plugins &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
 
