@@ -94,8 +94,8 @@ done
 mv newscoop/ChangeLog newscoop/changelog
 cp -vi newscoop/htaccess newscoop/.htaccess
 
-### fixes for 4.2.0 ###
-if test "${UPSTREAMVERSION}" == "4.2.0"; then
+### fixes for 4.2.1 ###
+if test "${UPSTREAMVERSION}" == "4.2.1"; then
 
 sed -i "1s:sh:bash:" newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/build_tarball.sh
 
