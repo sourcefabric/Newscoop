@@ -1,0 +1,31 @@
+.plugin-container {
+    padding: 10px 10px 30px 10px;
+    border: 1px solid #ccc;
+    background-color: #FFF;
+    font-size: 12px;
+}
+
+.hidden {
+    display: block!important;
+    visibility: visible!important;
+}
+
+.ban-btn {
+    margin-top: 3px;
+}
+
+#commentsTable_filter_input {
+    float: left;
+    margin-left: -570px;
+}
+
+.pagination-wrapper {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: 4px;
+}

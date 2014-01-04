@@ -1,0 +1,145 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "new_comments" %}
+
+{% block admin_title %}{{ parent() }} - {{ 'comments.label.comments'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
+<link rel="stylesheet" type="text/css" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/DT_bootstrap.css">
+{% endblock %}
+
+{% block admin_scripts %}
+<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/DT_bootstrap.js"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="plugin-container">
+    <div id="showComments">
+        <fieldset class="filters">
+            <legend>Show</legend>
+            <ul class="list-inline">
+                <li class="new">
+                    <input type="checkbox" id="show_new" value="pending"> <label for="show_new">New</label>
+                </li>
+                <li class="approved">
+                    <input type="checkbox" id="show_approved" value="approved"> <label for="show_approved">Approved</label>
+                </li>
+                <li class="hidden">
+                    <input type="checkbox" id="show_hidden" value="hidden"> <label for="show_hidden">Hidden</label>
+                </li>
+                <li class="hidden">
+                    <input type="checkbox" id="show_recommended" value="recommended"> <label for="show_recommended">Recommended</label>
+                </li>
+                <li class="hidden">
+                    <input type="checkbox" id="show_unrecommended" value="unrecommended"> <label for="show_unrecommended">Unrecommended</label>
+                </li>
+                <li><button class="btn btn-default btn-sm" type="button">Filter</button></li>
+            </ul>
+        </fieldset>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="commentsTable">
+            <thead>
+                <tr>
+                  <th><input class="toggle-checkbox" type="checkbox"></th>
+                  <th>Author</th>
+                  <th>Date / Comment</th>
+                  <th>Article</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% set counter = 1 %}
+                {% for row in pagination %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ counter }}.</span>
+                    </td>
+                    <td>
+                        <div class="commentUserHolder">
+                            <div>
+                                <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=wavatar&amp;r=g">
+                            </div>
+                            <p></p>
+                            <p>
+                            {% if row.comment.commenter.user is empty %}
+                                {{ row.comment.commenter.name }} ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
+                            {% else %}
+                                <a href="/profile/{{ row.comment.commenter.name }}">{{ row.comment.commenter.name }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
+                            {% endif %}
+                            <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
+                            <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
+                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Ban/Unban user</a>
+                            <p></p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="dateCommentHolder">
+                            <h4>
+                                <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
+                                <span class="commentSubject">
+                                    {% if row.comment.subject|length > 25 %}
+                                    {{ row.comment.subject|slice(0, 25) }} ...
+                                {% else %}
+                                    {{ row.comment.subject }}
+                                {% endif %}
+                                </span>
+                            </h4>
+                            <p class="commentBody">
+                                {% if row.comment.message|length > 200 %}
+                                    {{ row.comment.message|slice(0, 400) }} ...
+                                {% else %}
+                                    {{ row.comment.message }}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="commentArticleHolder">
+                            <p>
+                                <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
+                                <span>{{ row.comment.thread.publication.name }} - <b>Section</b> {{ row.comment.thread.section.name }}</span>
+                            </p>
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">Go to edit article</a> 
+                        </div>
+                    </td>
+                </tr>
+                {% set counter = counter + 1 %}
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination-wrapper">
+            <ul class="pagination pagination-sm">
+            {{ knp_pagination_render(pagination) }}
+            </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('#commentsTable').dataTable({
+        "aoColumnDefs": [
+            { 'bSortable': false, 'aTargets': [ 0 ] }
+        ],
+        "aoColumns" : [
+            { sWidth: '10px' },
+            { sWidth: '30%' },
+            { sWidth: '40%' },
+            null,
+        ],
+        'oLanguage': {
+            'sZeroRecords': '{{ 'comments.datatable.label.norecords'|trans }}',
+            'sSearch': '',
+            'sInfo': '{{ 'comments.datatable.table.info'|trans }}',
+            'sEmpty': '{{ 'comments.datatable.table.noentries'|trans }}',
+            'sInfoFiltered': '{{ 'comments.datatable.table.filtering'|trans }}',
+            'sLengthMenu': '{{ 'comments.datatable.table.menu'|trans }}',
+            'sInfoEmpty': '',
+        },
+        "bAutoWidth": false,
+        "bPaginate": false,
+    }).fnAdjustColumnSizing();
+
+    $('#commentsTable_info').append('{{ totalComments }} entries');
+</script>
+{% endblock %}

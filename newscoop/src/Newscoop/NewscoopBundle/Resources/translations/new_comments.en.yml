@@ -1,0 +1,21 @@
+comments:
+  label:
+    comments: "Comments management"
+    banned: "Banned"
+    anonymous: "Anonymous"
+    at: at
+  datatable:
+    table:
+      info: "Showing _START_ to _END_ of "
+      noentries: "No entries to show"
+      filtering: " - filtering from "
+      menu: "Display _MENU_ records"
+    label:
+      search: "Search"
+      filter: "Filter"
+      processing: "Processing..."
+      last: "Last"
+      next: "Next"
+      first: "First"
+      previous: "Previous"
+      norecords: "No records found."
