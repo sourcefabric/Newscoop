@@ -25,21 +25,68 @@ class CommentsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->container->get('em');
-        $comments = $em->getRepository('Newscoop\Entity\Comment')
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c')
-            ->getQuery()
-            ->getResult();
+            ->orderBy('c.time_created', 'desc');
 
-        $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $defaultValues = array(
+            'new' => false,
+            'approved' => false,
+            'hidden' => false,
+            'recommended' => false,
+            'unrecommended' => false,
+        );
 
+        $filterForm = $this->createFormBuilder()
+            ->add('new', 'checkbox', array(
+                'required'  => false,
+            ))
+            ->add('approved', 'checkbox', array(
+                'required'  => false,
+            ))
+            ->add('hidden', 'checkbox', array(
+                'required'  => false,
+            ))
+            ->add('recommended', 'checkbox', array(
+                'required'  => false,
+            ))
+            ->add('unrecommended', 'checkbox', array(
+                'required'  => false,
+            ))
+            ->add('filterButton', 'submit')
+            ->getForm();
+
+        $filterForm->handleRequest($request);
+
+        //if ($filterForm->isValid()) {
+            $data = $filterForm->getData();
+
+            if ($data['new']) {
+                $queryBuilder
+                    ->where('c.status = :status')
+                    ->setParameter('status', 'approved');
+            }
+
+            if ($data['recommended']) {
+                $queryBuilder
+                    ->where('c.recommended = :status')
+                    ->setParameter('status', $data['recommended']);
+            }
+        //}
+
+        $comments = $queryBuilder->getQuery()->getResult();
+        $counter = 1;
         $commentsArray = array();
         foreach ($comments as $comment) {
             $commentsArray[] = array(
                 'banned' => $this->isBanned($em, $comment->getCommenter(), null),
                 'avatarHash' => md5($comment->getCommenter()->getEmail()),
                 'issueNumber' => $comment->getThread()->getSection()->getIssue()->getNumber(),
-                'comment' => $comment
+                'comment' => $comment,
+                'index' => $counter,
             );
+
+            $counter++;
         }
 
         $paginator = $this->get('knp_paginator');
@@ -53,7 +100,8 @@ class CommentsController extends Controller
 
         return array(
             'pagination' => $pagination,
-            'totalComments' => count($comments)
+            'filterForm' => $filterForm->createView(),
+            'defaultValues' => $defaultValues
         );
     }
 

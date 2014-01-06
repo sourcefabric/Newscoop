@@ -17,27 +17,30 @@
 {% block admin_content %}
 <div class="plugin-container">
     <div id="showComments">
+        <form method="post" action="">
         <fieldset class="filters">
             <legend>Show</legend>
             <ul class="list-inline">
                 <li class="new">
-                    <input type="checkbox" id="show_new" value="pending"> <label for="show_new">New</label>
+                    {{ form_widget(filterForm.new, { checked : defaultValues.new }) }} {{ form_label(filterForm.new) }}
                 </li>
                 <li class="approved">
-                    <input type="checkbox" id="show_approved" value="approved"> <label for="show_approved">Approved</label>
+                    {{ form_widget(filterForm.approved) }} {{ form_label(filterForm.approved) }}
                 </li>
                 <li class="hidden">
-                    <input type="checkbox" id="show_hidden" value="hidden"> <label for="show_hidden">Hidden</label>
+                    {{ form_widget(filterForm.hidden) }} {{ form_label(filterForm.hidden) }}
                 </li>
                 <li class="hidden">
-                    <input type="checkbox" id="show_recommended" value="recommended"> <label for="show_recommended">Recommended</label>
+                   {{ form_widget(filterForm.recommended) }} {{ form_label(filterForm.recommended) }}
                 </li>
                 <li class="hidden">
-                    <input type="checkbox" id="show_unrecommended" value="unrecommended"> <label for="show_unrecommended">Unrecommended</label>
+                    {{ form_widget(filterForm.unrecommended) }} {{ form_label(filterForm.unrecommended) }}
                 </li>
-                <li><button class="btn btn-default btn-sm" type="button">Filter</button></li>
+                <li>{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-xs'} }) }}</li>
+                {{ form_rest(filterForm) }}
             </ul>
         </fieldset>
+        </form>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered" id="commentsTable">
@@ -50,11 +53,11 @@
               </tr>
             </thead>
             <tbody>
-                {% set counter = 1 %}
+                {% if pagination.getTotalItemCount > 0 %}
                 {% for row in pagination %}
                 <tr>
-                    <td>
-                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ counter }}.</span>
+                    <td style="width: 3%;">
+                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}. {{ row.comment.status }}</span>
                     </td>
                     <td>
                         <div class="commentUserHolder">
@@ -74,21 +77,21 @@
                             <p></p>
                         </div>
                     </td>
-                    <td>
+                    <td style="width: 40%;">
                         <div class="dateCommentHolder">
                             <h4>
                                 <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
                                 <span class="commentSubject">
-                                    {% if row.comment.subject|length > 25 %}
-                                    {{ row.comment.subject|slice(0, 25) }} ...
+                                    {% if row.comment.subject|length > 50 %}
+                                    {{ row.comment.subject|slice(0, 50) }}...
                                 {% else %}
                                     {{ row.comment.subject }}
                                 {% endif %}
                                 </span>
                             </h4>
                             <p class="commentBody">
-                                {% if row.comment.message|length > 200 %}
-                                    {{ row.comment.message|slice(0, 400) }} ...
+                                {% if row.comment.message|length > 400 %}
+                                    {{ row.comment.message|slice(0, 400) }}...
                                 {% else %}
                                     {{ row.comment.message }}
                                 {% endif %}
@@ -105,10 +108,23 @@
                         </div>
                     </td>
                 </tr>
-                {% set counter = counter + 1 %}
                 {% endfor %}
+                {% else %}
+                <tr><td colspan="7">{{ 'comments.label.noentries'|trans }}</td></tr>
+                {% endif %}
             </tbody>
         </table>
+        {% if pagination.getTotalItemCount > 0 %}
+        <div class="row">
+            <div class="col-xs-3 col-sm-4 col-md-5">
+                <div class="dataTables_info" id="commentsTable_info">
+                    {{ 'comments.label.showing'|trans }} 
+                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                </div>
+            </div>
+            <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
+        </div>
+        {% endif %}
         <div class="pagination-wrapper">
             <ul class="pagination pagination-sm">
             {{ knp_pagination_render(pagination) }}
@@ -116,30 +132,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-$('#commentsTable').dataTable({
-        "aoColumnDefs": [
-            { 'bSortable': false, 'aTargets': [ 0 ] }
-        ],
-        "aoColumns" : [
-            { sWidth: '10px' },
-            { sWidth: '30%' },
-            { sWidth: '40%' },
-            null,
-        ],
-        'oLanguage': {
-            'sZeroRecords': '{{ 'comments.datatable.label.norecords'|trans }}',
-            'sSearch': '',
-            'sInfo': '{{ 'comments.datatable.table.info'|trans }}',
-            'sEmpty': '{{ 'comments.datatable.table.noentries'|trans }}',
-            'sInfoFiltered': '{{ 'comments.datatable.table.filtering'|trans }}',
-            'sLengthMenu': '{{ 'comments.datatable.table.menu'|trans }}',
-            'sInfoEmpty': '',
-        },
-        "bAutoWidth": false,
-        "bPaginate": false,
-    }).fnAdjustColumnSizing();
-
-    $('#commentsTable_info').append('{{ totalComments }} entries');
-</script>
 {% endblock %}

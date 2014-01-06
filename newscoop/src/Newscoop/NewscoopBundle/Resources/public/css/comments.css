@@ -29,3 +29,7 @@
     margin: 0;
     border-radius: 4px;
 }
+
+div.table-responsive {
+    padding: 20px 30px;
+}
