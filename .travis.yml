@@ -18,6 +18,6 @@ before_script:
   - sudo php upgrade.php
   - ./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test
   - cd ..
-  - sudo php newscoop/install/fixer.php
+  - sudo php newscoop/scripts/fixer.php
 
 script: newscoop/vendor/bin/behat

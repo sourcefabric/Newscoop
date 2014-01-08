@@ -36,7 +36,7 @@ if (count($missingReq) > 0) {
     }
     echo "</pre>";
     echo "You can try fix common problem with our fixer.php script, just run <br/>";
-    echo "<pre>sudo php ". __DIR__."/fixer.php</pre>";
+    echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
 
     echo "After that please refresh that page. Thanks!";
     die;
