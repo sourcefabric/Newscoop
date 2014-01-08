@@ -558,9 +558,40 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
+     * Get group names
+     *
+     * @return array
+     */
+    public function getGroupNames()
+    {
+        return $this->groups->map(function ($group) {
+            return $group->getName();
+        })->toArray();
+    }
+
+    /**
+     * Test if user has group
+     *
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function hasGroup($name)
+    {
+        foreach ($this->groups as $group) {
+            if ($group->getName() === $name) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Add user type
      *
      * @param Newscoop\Entity\User\Group $type
+     *
      * @return Newscoop\Entity\User
      */
     public function addUserType(Group $type)
