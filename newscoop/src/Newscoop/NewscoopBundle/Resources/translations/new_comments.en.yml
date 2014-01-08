@@ -9,3 +9,16 @@ comments:
     of: "of"
     to: "to"
     entries: "entries"
+  msg:
+    deleted: "Comment deleted."
+    commentinarticle: "Comment $4 by $1 in the article $2 ($3)"
+    status:
+      new: "Comment status change to new"
+      approved: "Comment status change to approved"
+      hidden: "Comment status change to hidden"
+    error:
+      reach: "Unable to reach Newscoop. Please check your internet connection."
+      deletefromarticle: "Comment delete by $1 from the article $2 ($3)"
+      statuschange: "Error changing comment status"
+    sure: "You are about to permanently delete a comment."
+    surequestion: "Are you sure you want to do it?"

@@ -43,7 +43,7 @@
         </form>
     </div>
     <div class="table-responsive">
-        <table class="table table-bordered" id="commentsTable">
+        <table class="table" id="commentsTable">
             <thead>
                 <tr>
                   <th><input class="toggle-checkbox" type="checkbox"></th>
@@ -56,8 +56,8 @@
                 {% if pagination.getTotalItemCount > 0 %}
                 {% for row in pagination %}
                 <tr>
-                    <td style="width: 3%;">
-                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}. {{ row.comment.status }}</span>
+                    <td style="width: 3%; ">
+                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}.</span>
                     </td>
                     <td>
                         <div class="commentUserHolder">
@@ -97,6 +97,21 @@
                                 {% endif %}
                             </p>
                         </div>
+                        <div class="dateCommentHolderReply">
+                            <fieldset class="content-reply_{{ row.comment.id }}" style="display:none;">
+                                <h3>Reply to comment</h3>
+                                <form action="{{ path('newscoop_newscoop_comments_reply', { id: row.comment.id }) }}">
+                                    <label>Subject</label>
+                                    <input name="subject" type="text" class="form-control input-sm">
+                                    <label>Comment</label>
+                                    <textarea name="message" class="form-control input-sm"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="Cancel" id="{{ row.comment.id }}" class="btn btn-default btn-sm reply-cancel">
+                                        <input type="submit" value="Submit" class="btn btn-default btn-sm">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
                     </td>
                     <td>
                         <div class="commentArticleHolder">
@@ -105,6 +120,31 @@
                                 <span>{{ row.comment.thread.publication.name }} - <b>Section</b> {{ row.comment.thread.section.name }}</span>
                             </p>
                             <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">Go to edit article</a> 
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" style="border-top: none;"></td>
+                    <td colspan="6" style="border: none; padding: 0 0 5px 0">
+                        <div class="commentBtns" style="visibility: visible;">
+                            <ul>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action new" id="comment_buttons_form_buttons_0" value="pending" data="pending_{{ row.comment.id }}" {% if row.comment.status == 'pending' %}checked {% endif %}>
+                                    <label for="pending_{{ row.comment.id }}">New</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action approved" data="approved_{{ row.comment.id }}" value="approved" {% if row.comment.status == 'approved' %}checked {% endif %}>
+                                    <label for="approved_{{ row.comment.id }}">Approved</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
+                                    <label for="hidden_{{ row.comment.id }}">Hidden</label>
+                                </li>
+                                <li><a href="javascript:;" id="{{ row.comment.id }}" class="actionButton action-reply">Reply</a></li>
+                                <li><a href="javascript:;" id="deleted_{{ row.comment.id }}" class="actionButton action">Delete</a></li>
+                                <li><a href="javascript:;" id="unrecommend_{{ row.comment.id }}" class="actionButton action-unrecommend">Unrecommend</a>
+                                </li>
+                            </ul>
                         </div>
                     </td>
                 </tr>
@@ -118,7 +158,7 @@
         <div class="row">
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
-                    {{ 'comments.label.showing'|trans }} 
+                    {{ 'comments.label.showing'|trans }}
                     {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
                 </div>
             </div>
@@ -132,4 +172,81 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('.commentBtns ul li input').live('click', function () {
+        var el = $(this);
+        var id = el.attr('data');
+        var ids = [id.match(/\d+/)[0]];
+        var status = id.match(/[^_]+/)[0];
+
+        if (status == 'deleted' && !confirm('{{ 'comments.msg.sure'|trans }}' + '\n' + '{{ 'comments.msg.sure'|trans }}')) {
+            return false;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '{{ path('newscoop_newscoop_comments_setstatus') }}',
+            data: {
+                "comment": ids,
+                "status": status
+            },
+            success: function (data) {
+                if ('deleted' == status) {
+                    flashMessage('{{ 'comments.msg.deleted'|trans }}');
+                } else if (status == 'pending') {
+                    flashMessage('{{ 'comments.msg.status.new'|trans }}');
+                } else if (status == 'approved') {
+                    flashMessage('{{ 'comments.msg.status.approved'|trans }}');
+                } else if (status == 'hidden') {
+                    flashMessage('{{ 'comments.msg.status.hidden'|trans }}');
+                }
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                }
+            }
+        });
+
+    });
+
+    $('.action-reply').live('click', function () {
+        var el = $(this);
+        $('.content-reply_'+el.attr('id')).hide();
+        $('.content-reply_'+el.attr('id')).toggle("fast");
+    });
+
+    $('.dateCommentHolderReply form').live('submit', function () {
+        var that = this;
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.status) {
+                    flashMessage('Comment updated.');
+                    location.href = '{{ path('newscoop_newscoop_comments_index') }}';
+                } else {
+                    flashMessage('Error sending reply', "error");
+                }
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                }
+            }
+        });
+        return false;
+    });
+
+    $('.dateCommentHolderReply .reply-cancel').live('click', function () {
+        var el = $(this);
+        var form = $('.content-reply_'+el.attr('id')+' form');
+        $(form).each(function () {
+            this.reset();
+        });
+        $('.content-reply_'+el.attr('id')).slideDown("fast");
+        $('.content-reply_'+el.attr('id')).hide();
+    });
+</script>
 {% endblock %}

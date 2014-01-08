@@ -33,3 +33,37 @@
 div.table-responsive {
     padding: 20px 30px;
 }
+
+#commentsTable thead > tr > th {
+    border: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr > td:first-child {
+    border-right: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr:last-child > td:first-child {
+    border-top: none;
+}
+
+#commentsTable tbody > tr:last-child {
+    border-bottom: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr > td:last-child {
+    border-right: 1px solid #ddd;
+}
+
+.dateCommentHolderReply h3 {
+    padding: 0;
+    margin-top: 0;
+}
+
+.reply-cancel {
+    margin-right: 5px;
+}
