@@ -337,4 +337,16 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     {
         return $this->m_dbObject->isActive();
     }
+
+    /**
+     * Test if user is a given type
+     *
+     * @param string $type
+     * 
+     * @return bool
+     */
+    public function is($name)
+    {
+        return $this->m_dbObject->hasGroup($name);
+    }
 }
