@@ -29,12 +29,15 @@ foreach ($requirements as $req) {
 
 if (count($missingReq) > 0) {
     echo "Welcome in Newscoop Installer.<br/><br/>";
-    echo "Before we will show You real installer wee need to fix some requirements.<br />Please read all messages and try to fix them:<br />";
+    echo "Before we will show You real installer we need to fix some requirements.<br />Please read all messages and try to fix them:<br />";
     echo "<pre>";
     foreach ($missingReq as $value) {
         echo $value.' <br />';
     }
     echo "</pre>";
+    echo "You can try fix common problem with our fixer.php script, just run <br/>";
+    echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
+
     echo "After that please refresh that page. Thanks!";
     die;
 }
@@ -63,25 +66,33 @@ $app->register(new Silex\Provider\TranslationServiceProvider(), array(
 
 $app['debug'] = true;
 
-$app['bootstrap_service'] = $app->share(function () use ($app) {return new Services\BootstrapService($app['monolog']);});
-$app['database_service'] = $app->share(function () use ($app) {return new Services\DatabaseService($app['monolog']);});
-$app['demosite_service'] = $app->share(function () use ($app) {return new Services\DemositeService($app['monolog']);});
-$app['finish_service'] = $app->share(function () use ($app) {return new Services\FinishService();});
+$app['bootstrap_service'] = $app->share(function () use ($app) {
+    return new Services\BootstrapService($app['monolog']);
+});
+$app['database_service'] = $app->share(function () use ($app) {
+    return new Services\DatabaseService($app['monolog']);
+});
+$app['demosite_service'] = $app->share(function () use ($app) {
+    return new Services\DemositeService($app['monolog']);
+});
+$app['finish_service'] = $app->share(function () use ($app) {
+    return new Services\FinishService();
+});
 
 $app['dispatcher']->addListener('newscoop.installer.bootstrap', $app['bootstrap_service']->makeDirectoriesWritable());
 
 $app->before(function (Request $request) use ($app) {
     if ($request->request->has('db_config') || $app['session']->has('db_data')) {
-        $request_db_config = $request->request->get('db_config');
-        $session_db_data = $app['session']->get('db_data');
+        $requestDbConfig = $request->request->get('db_config');
+        $sessionDbData = $app['session']->get('db_data');
         $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
             'db.options' => array(
                 'driver'    => 'pdo_mysql',
-                'host'      => $request_db_config['server_name'] ? : $session_db_data['server_name'],
-                'dbname'    => $request_db_config['database_name'] ? : $session_db_data['database_name'],
-                'user'      => $request_db_config['user_name'] ? : $session_db_data['user_name'],
-                'password'  => $request_db_config['user_password'] ? : $session_db_data['user_password'],
-                'port'      => $request_db_config['server_port'] ? : $session_db_data['server_port'],
+                'host'      => $requestDbConfig['server_name'] ? : $sessionDbData['server_name'],
+                'dbname'    => $requestDbConfig['database_name'] ? : $sessionDbData['database_name'],
+                'user'      => $requestDbConfig['user_name'] ? : $sessionDbData['user_name'],
+                'password'  => $requestDbConfig['user_password'] ? : $sessionDbData['user_password'],
+                'port'      => $requestDbConfig['server_port'] ? : $sessionDbData['server_port'],
                 'charset'   => 'utf8',
             )
         ));
@@ -196,19 +207,23 @@ $app->get('/prepare', function (Request $request) use ($app) {
 ->assert('_method', 'POST|GET')
 ->bind('prepare');
 
-$app->get('/process', function (Request $request) use($app) {
+$app->get('/process', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.process', new GenericEvent());
 
     $form = $app['form.factory']->createNamedBuilder('main_config', 'form', array())
         ->add('site_title', null, array('constraints' => array(new Assert\NotBlank())))
-        ->add('recheck_user_password', 'repeated', array(
-            'type' => 'password',
-            'invalid_message' => 'The password fields must match.',
-            'options' => array('attr' => array('class' => 'password-field')),
-            'required' => true,
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repeat Password'),
-            'constraints' => array(new Assert\NotBlank()))
+        ->add(
+            'recheck_user_password',
+            'repeated',
+            array(
+                'type' => 'password',
+                'invalid_message' => 'The password fields must match.',
+                'options' => array('attr' => array('class' => 'password-field')),
+                'required' => true,
+                'first_options'  => array('label' => 'Password'),
+                'second_options' => array('label' => 'Repeat Password'),
+                'constraints' => array(new Assert\NotBlank())
+            )
         )
         ->add('user_email', null, array('constraints' => array(new Assert\Email())))
         ->getForm();
@@ -229,66 +244,43 @@ $app->get('/process', function (Request $request) use($app) {
 ->assert('_method', 'POST|GET')
 ->bind('process');
 
-$app->get('/demo-site', function (Request $request) use($app) {
+$app->get('/demo-site', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
-        $sampleTemplates = array(
-            'set_quetzal' => array(
-                'name' => 'Quetzal',
-                'description' => 'Quetzal<br/>Theme for Newscoop Version 4'
-            ),
-            'set_rockstar' => array(
-                'name' => 'Rockstar',
-                'description' => 'Rockstar<br/>Theme for Newscoop Version 4'
-            ),
-            'set_the_new_custodian' => array(
-                'name' => 'The New Custodian',
-                'description' => 'The New Custodian<br/>Theme for Newscoop Version 4'
-            ),
-        );
+    $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
+        ->add('demo_template', 'choice', array(
+            'choices'   => array(
+                array('no'   => 'No thanks')
+            )+array_map(function ($template, $key) {
+                return array($key => $template['name']);
+            }, $app['database_service']->sampleTemplates, array_keys($app['database_service']->sampleTemplates)),
+            'expanded'  => true,
+        ))
+        ->getForm();
 
-        $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array(
-                'server_name' => 'localhost',
-                'database_name' => 'newscoop',
-                'server_port' => '3306'
-            ))
-            ->add('demo_template', 'choice', array(
-                'choices'   => array(
-                    array('no'   => 'No thanks')
-                )+array_map(function($template, $key) {
-                    return array($key => $template['name']);
-                }, $sampleTemplates, array_keys($sampleTemplates)), 
-                'expanded'  => true, 
-            ))
-            ->getForm();
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                if ($data['demo_template'] != 'no') {
-                    $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                    $app['demosite_service']->copyTemplate($data['demo_template']);
-                    $app['demosite_service']->installEmptyTheme();
-                }
-
-                return $app->redirect($app['url_generator']->generate('post-process'));
+    if ('POST' == $request->getMethod()) {
+        $form->bind($request);
+        if ($form->isValid()) {
+            $data = $form->getData();
+            if ($data['demo_template'] != 'no') {
+                $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
+                $app['demosite_service']->copyTemplate($data['demo_template']);
+                $app['demosite_service']->installEmptyTheme();
             }
+
+            return $app->redirect($app['url_generator']->generate('post-process'));
         }
+    }
 
     return $app['twig']->render('demo.twig', array('form' => $form->createView()));
 })
 ->assert('_method', 'POST|GET')
 ->bind('demo-site');
 
-$app->get('/post-process', function (Request $request) use($app) {
-
-    $app['finish_service']->saveCronjobs($app['db']);
+$app->get('/post-process', function (Request $request) use ($app) {
+    $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
     $app['finish_service']->reloadRenditions();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
-
 
     return $app['twig']->render('post-process.twig', array());
 })

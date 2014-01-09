@@ -5,7 +5,21 @@ php:
 notifications:
   email: false
 before_script:
-  - "cp -r dependencies/include/* newscoop/include/"
+  - sudo apt-get update > /dev/null
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
+  - echo "$(curl -fsSL https://gist.github.com/ahilles107/8255528/raw/3136fccf390dd885ee30ebd73e37df5f0979a152/travis_newscoop.dev)" | sed -e "s,PATH,`pwd`/newscoop,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
+  - echo "127.0.0.1 newscoop.dev" | sudo tee -a /etc/hosts
+  - sudo a2enmod rewrite
+  - sudo service apache2 restart
+  - mysql -e 'create database newscoop;' -uroot
   - cd newscoop/
-  - composer self-update
-  - composer install --no-dev
+  - composer install --prefer-dist
+  - ./application/console newscoop:install --fix --database_name newscoop --database_user root
+  - sudo php upgrade.php
+  - ./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test
+  - cd ..
+  - sudo php newscoop/scripts/fixer.php
+
+script:
+  - newscoop/vendor/bin/behat
+  - newscoop/vendor/bin/phpspec run --format pretty

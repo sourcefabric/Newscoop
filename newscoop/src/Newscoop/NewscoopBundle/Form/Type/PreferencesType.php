@@ -266,16 +266,6 @@ class PreferencesType extends AbstractType
             'error_bubbling' => true,
             'required' => true
         ))
-        ->add('external_cron_management', 'choice', array(
-            'choices'   => array(
-                'Y' => 'newscoop.preferences.label.yesoption', 
-                'N' => 'newscoop.preferences.label.nooption'
-            ),
-            'error_bubbling' => true,
-            'multiple' => false,
-            'expanded' => true,
-            'required' => true,
-        ))
         ->add('mysql_client_command_path', 'text', array(
             'attr' => array('maxlength' => 200, 'size' => 40),
             'error_bubbling' => true,

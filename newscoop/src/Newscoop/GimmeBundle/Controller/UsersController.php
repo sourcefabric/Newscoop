@@ -29,10 +29,6 @@ class UsersController extends FOSRestController
         $users = $em->getRepository('Newscoop\Entity\User')
             ->getActiveUsers();
 
-        if (!$users) {
-            throw new NotFoundHttpException('Result was not found.');
-        }
-
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $users = $paginator->paginate($users, array(
             'distinct' => false

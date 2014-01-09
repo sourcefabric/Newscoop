@@ -82,14 +82,7 @@ class LegacyController extends Zend_Controller_Action
     }
 
     public function postDispatch()
-    {
-        // run internal cron scheduler
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-
-        if ($preferencesService->ExternalCronManagement == 'N') {
-            camp_cron();
-        }
-    }
+    {}
 
     private function upgrade()
     {
