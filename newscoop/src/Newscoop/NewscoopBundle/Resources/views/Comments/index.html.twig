@@ -54,7 +54,7 @@
             </thead>
             <tbody>
                 {% if pagination.getTotalItemCount > 0 %}
-                {% for row in pagination %}
+                {% for row in commentsArray %}
                 <tr>
                     <td style="width: 3%; ">
                         <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}.</span>

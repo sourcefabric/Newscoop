@@ -66,7 +66,7 @@ class CommentsController extends Controller
 
         $filterForm->handleRequest($request);
 
-        //if ($filterForm->isValid()) {
+        if ($filterForm->isValid()) {
             $data = $filterForm->getData();
 
             if ($data['new']) {
@@ -80,12 +80,20 @@ class CommentsController extends Controller
                     ->where('c.recommended = :status')
                     ->setParameter('status', $data['recommended']);
             }
-        //}
+        }
 
-        $comments = $queryBuilder->getQuery()->getResult();
+        $comments = $queryBuilder->getQuery();
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $comments,
+            $this->get('request')->query->get('knp_page', 1),
+            10
+        );
+
         $counter = 1;
         $commentsArray = array();
-        foreach ($comments as $comment) {
+        foreach ($pagination as $comment) {
             $commentsArray[] = array(
                 'banned' => $commentService->isBanned($comment->getCommenter()),
                 'avatarHash' => md5($comment->getCommenter()->getEmail()),
@@ -97,17 +105,11 @@ class CommentsController extends Controller
             $counter++;
         }
 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $commentsArray,
-            $this->get('request')->query->get('knp_page', 1),
-            10
-        );
-
         $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 
         return array(
             'pagination' => $pagination,
+            'commentsArray' => $commentsArray,
             'filterForm' => $filterForm->createView(),
             'defaultValues' => $defaultValues,
             'buttonsForm' => $buttonsForm->createView(),
