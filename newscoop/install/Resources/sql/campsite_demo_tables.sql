@@ -1739,7 +1739,7 @@ CREATE TABLE `liveuser_rights` (
 DROP TABLE IF EXISTS `liveuser_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users` (
+CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeyId` int(10) unsigned DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
@@ -1793,10 +1793,12 @@ CREATE TABLE `liveuser_users` (
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
+  `indexed` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
-  KEY `author_id` (`author_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+  KEY `author_id` (`author_id`),
+  KEY `indexed` (`indexed`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

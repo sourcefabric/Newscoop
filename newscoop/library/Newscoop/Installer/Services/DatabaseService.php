@@ -18,6 +18,20 @@ class DatabaseService
 {
     private $logger;
     public $errorQueries = array();
+    public $sampleTemplates = array(
+        'set_quetzal' => array(
+            'name' => 'Quetzal',
+            'description' => 'Quetzal<br/>Theme for Newscoop Version 4'
+        ),
+        'set_rockstar' => array(
+            'name' => 'Rockstar',
+            'description' => 'Rockstar<br/>Theme for Newscoop Version 4'
+        ),
+        'set_the_new_custodian' => array(
+            'name' => 'The New Custodian',
+            'description' => 'The New Custodian<br/>Theme for Newscoop Version 4'
+        ),
+    );
 
     /**
      * @param object $logger

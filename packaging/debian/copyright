@@ -127,10 +127,6 @@ Files: ./newscoop/js/tapmodo-Jcrop-5e58bc9/build/
 Copyright: 2008-2011 Kelly Hallman <khallman@gmail.com>
 License: Expat
 
-Files: ./newscoop/classes/Cron.php
-Copyright: 2002 Klaus P. Pieper <klaus_p.pieper@t-online.de>
-License: GPL-2+
-
 Files: ./newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/
 Copyright: 2003 Bitstream, Inc.
 License: other

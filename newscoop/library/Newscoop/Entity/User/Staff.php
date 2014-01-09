@@ -10,12 +10,10 @@ namespace Newscoop\Entity\User;
 use DateTime;
 use Zend_Registry;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Acl\Role;
-
-
 
 /**
  * Staff entity
@@ -28,7 +26,7 @@ class Staff extends User implements \Zend_Acl_Role_Interface
      * @ORM\JoinTable(name="liveuser_groupusers",
      *      joinColumns={@ORM\JoinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
-     *      )
+     * )
      */
     protected $groups;
 
@@ -38,8 +36,6 @@ class Staff extends User implements \Zend_Acl_Role_Interface
      */
     protected $role;
 
-    /**
-     */
     public function __construct()
     {
         parent::__construct();
@@ -61,11 +57,13 @@ class Staff extends User implements \Zend_Acl_Role_Interface
      * Set role
      *
      * @param Newscoop\Entity\Acl\Role $role
+     * 
      * @return Newscoop\Entity\User
      */
     public function setRole(Role $role)
     {
         $this->role = $role;
+
         return $this;
     }
 
@@ -95,12 +93,12 @@ class Staff extends User implements \Zend_Acl_Role_Interface
      * @param string $permission
      * @return bool
      */
-    public function hasPermission($permission)
+    public function hasPermission($permission, $resource = null, $action = null)
     {
         $acl = Zend_Registry::get('acl')->getAcl($this);
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);
-            if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
+            if ($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
 				return \SaaS::singleton()->hasPermission($permission);
             } else {
             	return FALSE;
