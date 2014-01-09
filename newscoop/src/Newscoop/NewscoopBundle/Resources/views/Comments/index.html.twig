@@ -140,9 +140,9 @@
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
                                     <label for="hidden_{{ row.comment.id }}">Hidden</label>
                                 </li>
-                                <li><a href="javascript:;" id="{{ row.comment.id }}" class="actionButton action-reply">Reply</a></li>
-                                <li><a href="javascript:;" id="deleted_{{ row.comment.id }}" class="actionButton action">Delete</a></li>
-                                <li><a href="javascript:;" id="unrecommend_{{ row.comment.id }}" class="actionButton action-unrecommend">Unrecommend</a>
+                                <li><a href="javascript:;" id="{{ row.comment.id }}" class="actionButton action-reply btn btn-default btn-xs">Reply</a></li>
+                                <li><a href="javascript:;" id="deleted_{{ row.comment.id }}" class="actionButton action btn btn-default btn-xs">Delete</a></li>
+                                <li><a href="javascript:;" id="unrecommend_{{ row.comment.id }}" class="actionButton action-unrecommend btn btn-default btn-xs">Unrecommend</a>
                                 </li>
                             </ul>
                         </div>

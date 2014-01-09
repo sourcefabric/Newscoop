@@ -41,10 +41,6 @@ class CommentsController extends Controller
             'unrecommended' => false,
         );
 
-        $buttonsForm = $this->container->get('form.factory')->create(new CommentButtonsType(), array(
-            'buttons' => 'pending'
-        ), array());
-
         $filterForm = $this->createFormBuilder()
             ->add('new', 'checkbox', array(
                 'required'  => false,
@@ -112,7 +108,6 @@ class CommentsController extends Controller
             'commentsArray' => $commentsArray,
             'filterForm' => $filterForm->createView(),
             'defaultValues' => $defaultValues,
-            'buttonsForm' => $buttonsForm->createView(),
         );
     }
 
