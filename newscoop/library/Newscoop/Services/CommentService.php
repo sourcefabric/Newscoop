@@ -9,6 +9,7 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Newscoop\Entity\Comment;
 
 /**
  * User service
@@ -191,5 +192,84 @@ class CommentService
     private function getRepository()
     {
         return $this->em->getRepository('Newscoop\Entity\Comment');
+    }
+
+    /**
+     * Get comments statistics for articles
+     *
+     * @param mixed $ids
+     * @return array
+     */
+    public function getArticleStats($ids)
+    {
+        $ids = (array) $ids;
+        if (empty($ids)) {
+            return array();
+        }
+
+        $stats = array();
+        foreach ($ids as $id) {
+            $stats[$id] = array(
+                'normal' => 0,
+                'recommended' => 0,
+            );
+        }
+
+        foreach (array('normal' => false, 'recommended' => true) as $key => $recommended) {
+            $rows = $this->getCommentCounts($ids, $recommended);
+            foreach ($rows as $row) {
+                $stats[(int) $row['article_num']][$key] = (int) $row[1];
+            }
+        }
+
+        $ce_rows =  $this->getCommentsEnabled($ids);
+        foreach ($ce_rows as $row) {
+            $stats[(int) $row['number']]['comments_enabled'] = (bool) $row['comments_enabled'];
+        }
+
+        return $stats;
+    }
+
+    /**
+     * Get article comments_enabled
+     *
+     * @param array $ids
+     */
+    private function getCommentsEnabled(array $ids)
+    {
+        return $this->em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a.comments_enabled, a.number')
+            ->where('a.number IN (:ids)')
+            ->setParameter('ids', array_values($ids))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get articles comment counts
+     *
+     * @param array $ids
+     * @return array
+     */
+    private function getCommentCounts(array $ids, $recommended = false)
+    {
+        $qb = $this->getRepository()
+            ->createQueryBuilder('c')
+            ->select('COUNT(c), c.article_num')
+            ->andWhere('c.article_num IN (:ids)')
+            ->andWhere('c.status = :status');
+
+        if ($recommended) {
+            $qb->andWhere('c.recommended = 1');
+        } else {
+            $qb->andWhere('c.recommended <> 1');
+        }
+
+        return $qb->groupBy('c.article_num')
+            ->setParameter('ids', array_values($ids))
+            ->setParameter('status', Comment::STATUS_APPROVED)
+            ->getQuery()
+            ->getResult();
     }
 }
