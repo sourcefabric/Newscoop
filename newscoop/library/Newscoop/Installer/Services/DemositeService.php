@@ -16,7 +16,7 @@ use Newscoop\Service\IPublicationService;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 
 /**
- * Semosite service
+ * Demosite service
  */
 class DemositeService
 {

@@ -97,7 +97,7 @@ class FinishService
     }
 
     /**
-     * Save newscoop cronjobs in user crinjob file
+     * Save newscoop cronjobs in user cronjob file
      *
      * @return bolean
      */
