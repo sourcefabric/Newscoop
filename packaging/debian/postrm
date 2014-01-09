@@ -19,7 +19,7 @@ fi
 
 package_name="newscoop"
 datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/4.1"
+configdir="/etc/newscoop/4.2"
 
 webserver="apache2"
 php="php5"
@@ -57,20 +57,51 @@ case "$1" in
     fi
 
     # Permissions
+    dpkg-statoverride --list $datadir/backup &>/dev/null || \
+    dpkg-statoverride --remove $datadir/backup || true
+
+    dpkg-statoverride --list $datadir/cache &>/dev/null || \
+    dpkg-statoverride --remove $datadir/cache || true
+
     dpkg-statoverride --list $datadir/conf &>/dev/null && \
     dpkg-statoverride --remove $datadir/conf || true
+
+    dpkg-statoverride --list $datadir/files &>/dev/null || \
+    dpkg-statoverride --remove $datadir/files || true
+
+    dpkg-statoverride --list $datadir/images &>/dev/null || \
+    dpkg-statoverride --remove $datadir/images || true
+
+    dpkg-statoverride --list $datadir/images/thumbnails &>/dev/null || \
+    dpkg-statoverride --remove $datadir/images/thumbnails || true
+
     dpkg-statoverride --list $datadir/install/cron_jobs &>/dev/null && \
     dpkg-statoverride --remove $datadir/install/cron_jobs || true
-    dpkg-statoverride --list $datadir/images &>/dev/null && \
-    dpkg-statoverride --remove $datadir/images || true
-    dpkg-statoverride --list $datadir/themes &>/dev/null && \
-    dpkg-statoverride --remove $datadir/themes || true
-    #dpkg-statoverride --list $datadir/templates_cache &>/dev/null && \
-    #dpkg-statoverride --remove $datadir/templates_cache || true
+
+    dpkg-statoverride --list $datadir/library/Proxy &>/dev/null || \
+    dpkg-statoverride --remove $datadir/library/Proxy || true
+
+    dpkg-statoverride --list $datadir/log &>/dev/null || \
+    dpkg-statoverride --remove $datadir/log || true
+
     dpkg-statoverride --list $datadir/plugins &>/dev/null && \
     dpkg-statoverride --remove $datadir/plugins || true
-    dpkg-statoverride --list $datadir/backup &>/dev/null && \
-    dpkg-statoverride --remove $datadir/backup || true
+
+    dpkg-statoverride --list $datadir/public/bundles &>/dev/null || \
+    dpkg-statoverride --remove $datadir/public/bundles || true
+
+    dpkg-statoverride --list $datadir/public/pdf &>/dev/null || \
+    dpkg-statoverride --remove $datadir/public/pdf || true
+
+    dpkg-statoverride --list $datadir/public/videos &>/dev/null || 
+    dpkg-statoverride --remove $datadir/public/videos || true
+
+    dpkg-statoverride --list $datadir/themes &>/dev/null && \
+    dpkg-statoverride --remove $datadir/themes || true
+
+    dpkg-statoverride --list $datadir/.htaccess &>/dev/null || \
+    dpkg-statoverride --remove $datadir/.htaccess || true
+
     dpkg-statoverride --list $datadir &>/dev/null && \
     dpkg-statoverride --remove $datadir || true
 

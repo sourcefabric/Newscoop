@@ -99,8 +99,111 @@ if test "${UPSTREAMVERSION}" == "4.2.1"; then
 
 sed -i "1s:sh:bash:" newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/build_tarball.sh
 
-rm -r newscoop/vendor/smarty/smarty/.svn/
-rm newscoop/vendor/smarty/smarty/documentation/entities/.cvsignore
+rm -rf newscoop/vendor/behat/behat/.git/
+rm -rf newscoop/vendor/behat/common-contexts/.git/
+rm -rf newscoop/vendor/behat/gherkin/.git/
+rm -rf newscoop/vendor/doctrine/cache/.git/
+rm -rf newscoop/vendor/doctrine/collections/.git/
+rm -rf newscoop/vendor/doctrine/dbal/.git/
+rm -rf newscoop/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/.git/
+rm -rf newscoop/vendor/doctrine/inflector/.git/
+rm -rf newscoop/vendor/doctrine/lexer/.git/
+rm -rf newscoop/vendor/doctrine/orm/.git/
+rm -rf newscoop/vendor/friendsofsymfony/rest/FOS/Rest/.git/
+rm -rf newscoop/vendor/guzzle/guzzle/.git/
+rm -rf newscoop/vendor/hybridauth/hybridauth/.git/
+rm -rf newscoop/vendor/jdorn/sql-formatter/.git/
+rm -rf newscoop/vendor/jms/aop-bundle/JMS/AopBundle/.git/
+rm -rf newscoop/vendor/jms/cg/.git/
+rm -rf newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/.git/
+rm -rf newscoop/vendor/jms/metadata/.git/
+rm -rf newscoop/vendor/jms/parser-lib/.git/
+rm -rf newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/.git/
+rm -rf newscoop/vendor/jms/serializer-bundle/JMS/SerializerBundle/.git/
+rm -rf newscoop/vendor/kriswallsmith/buzz/.git/
+rm -rf newscoop/vendor/monolog/monolog/.git/
+rm -rf newscoop/vendor/noiselabs/smarty-bundle/NoiseLabs/Bundle/SmartyBundle/.git/
+rm -rf newscoop/vendor/phpcollection/phpcollection/.git/
+rm -rf newscoop/vendor/phpoption/phpoption/.git/
+rm -rf newscoop/vendor/rezzza/mailchimp/Rezzza/MailChimp/.git/
+rm -rf newscoop/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/.git/
+rm -rf newscoop/vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/.git/
+rm -rf newscoop/vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/.git/
+rm -rf newscoop/vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/.git/
+rm -rf newscoop/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/.git/
+rm -rf newscoop/vendor/symfony/symfony/.git/
+rm -rf newscoop/vendor/twig/twig/.git/
+
+rm newscoop/vendor/behat/behat/.gitignore
+rm newscoop/vendor/behat/common-contexts/.gitignore
+rm newscoop/vendor/behat/gherkin/.gitignore
+rm newscoop/vendor/doctrine/annotations/.gitignore
+rm newscoop/vendor/doctrine/common/.gitignore
+rm newscoop/vendor/doctrine/common/tests/.gitignore
+rm newscoop/vendor/doctrine/dbal/.gitignore
+rm newscoop/vendor/doctrine/dbal/tests/.gitignore
+rm newscoop/vendor/doctrine/doctrine-bundle/Doctrine/Bundle/DoctrineBundle/.gitignore
+rm newscoop/vendor/doctrine/orm/.gitignore
+rm newscoop/vendor/doctrine/orm/tests/.gitignore
+rm newscoop/vendor/friendsofsymfony/rest-bundle/FOS/RestBundle/.gitignore
+rm newscoop/vendor/friendsofsymfony/rest/FOS/Rest/.gitignore
+rm newscoop/vendor/guzzle/guzzle/.gitignore
+rm newscoop/vendor/jdorn/sql-formatter/.gitignore
+rm newscoop/vendor/jms/cg/.gitignore
+rm newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/.gitignore
+rm newscoop/vendor/jms/metadata/.gitignore
+rm newscoop/vendor/jms/parser-lib/.gitignore
+rm newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/.gitignore
+rm newscoop/vendor/jms/serializer-bundle/JMS/SerializerBundle/.gitignore
+rm newscoop/vendor/jms/serializer/.gitignore
+rm newscoop/vendor/knplabs/knp-components/.gitignore
+rm newscoop/vendor/knplabs/knp-paginator-bundle/Knp/Bundle/PaginatorBundle/.gitignore
+rm newscoop/vendor/kriswallsmith/buzz/.gitignore
+rm newscoop/vendor/monolog/monolog/.gitignore
+rm newscoop/vendor/noiselabs/smarty-bundle/NoiseLabs/Bundle/SmartyBundle/.gitignore
+rm newscoop/vendor/phpcollection/phpcollection/.gitignore
+rm newscoop/vendor/phpoption/phpoption/.gitignore
+rm newscoop/vendor/psr/log/.gitignore
+rm newscoop/vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/.gitignore
+rm newscoop/vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/.gitignore
+rm newscoop/vendor/sensio/generator-bundle/Sensio/Bundle/GeneratorBundle/.gitignore
+rm newscoop/vendor/swiftmailer/swiftmailer/.gitignore
+rm newscoop/vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/.gitignore
+rm newscoop/vendor/symfony/swiftmailer-bundle/Symfony/Bundle/SwiftmailerBundle/.gitignore
+rm newscoop/vendor/symfony/symfony/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Bridge/Doctrine/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Bridge/Monolog/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Bridge/Propel1/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Bridge/Twig/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Bundle/WebProfilerBundle/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/BrowserKit/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/ClassLoader/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Config/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Console/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/CssSelector/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/DependencyInjection/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/DomCrawler/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/EventDispatcher/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Filesystem/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Finder/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Form/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/HttpFoundation/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/HttpKernel/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Locale/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/OptionsResolver/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Process/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/PropertyAccess/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Routing/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Security/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Serializer/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Stopwatch/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Templating/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Translation/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Validator/.gitignore
+rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Yaml/.gitignore
+rm newscoop/vendor/twig/twig/.gitignore
+rm newscoop/vendor/twig/twig/ext/twig/.gitignore
+
 rm newscoop/vendor/symfony/symfony/src/Symfony/Component/Console/Resources/bin/hiddeninput.exe
 
 rm newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/.DS_Store
@@ -117,6 +220,7 @@ rm newscoop/themes/unassigned/set_rockstar/pictures/.DS_Store
 chmod +x newscoop/bin/post-install.sh
 chmod +x newscoop/vendor/doctrine/dbal/bin/doctrine-dbal
 chmod +x newscoop/vendor/knplabs/knp-components/bin/vendors.php
+chmod +x newscoop/vendor/doctrine/orm/bin/doctrine
 
 chmod -x newscoop/plugins/debate/template_engine/classes/DebateIssue.php
 chmod -x newscoop/application/console
@@ -128,7 +232,6 @@ chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/ui
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/AlbumEntry.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/App/FeedEntryParent.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-4.jpg
-chmod -x newscoop/vendor/smarty/smarty/documentation/fr/bookinfo.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/AlbumQuery.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/article-comments.tpl
@@ -139,7 +242,6 @@ chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/exten
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Security/Util/SeedProviderInterface.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/archive.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/rating/star_highlight.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsr
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoFeed.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-morenews.tpl
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/fancy_shadow_sw.png
@@ -208,7 +310,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Config/Writer/J
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/_html-head.tpl
 chmod -x newscoop/admin-files/lang/uk/languages.php
 chmod -x newscoop/admin-files/lang/uk/extensions.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/en/make_chm_index.html
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/extensions/recorder/test/sample.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x50.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/Bundle/TestBundle/Controller/AutomaticallyInjectedController.php
@@ -275,10 +376,8 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/_html-foot.tpl
 chmod -x newscoop/application.php
 chmod -x newscoop/index.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsa
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-2.jpg
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xd2.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOlat1
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/js/libs/jquery.jcarousel.min.js
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/section.jpg
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/function.pollanswer_edit.php
@@ -382,7 +481,6 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/user-content.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x8a.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_s.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOpub
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Geo/Extension/GeoRssWhere.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/CommentEntry.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Security/Util/String.php
@@ -434,7 +532,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Entr
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Docs/Query.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x65.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x5c.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOcyr2
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x64.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x57.php
 chmod -x newscoop/vendor/symfony/symfony/src/Symfony/Component/Security/Tests/Core/Util/StringUtilsTest.php
@@ -447,7 +544,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictu
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/nav-arrows-disabled.png
 chmod -x newscoop/UPGRADE.md
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/fancy_title_main.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/livedocs.ent
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_sw.png
 chmod -x newscoop/admin-files/lang/pl/issues.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-topstory.tpl
@@ -488,7 +584,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x98.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x13.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/map-info.css
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/vendor/jquery-1.9.1.min.js
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/designers/language-basic-syntax/language-syntax-variables.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaDescription.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/auth_index.tpl
 chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debate_votes.php
@@ -521,7 +616,6 @@ chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debates.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc3.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/App/Feed.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_js/plugins.js
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsc
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancybox.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x32.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Id.php
@@ -543,13 +637,10 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xa2.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/UserQuery.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-morestories.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/main.css
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsb
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/doc/random_number_generator.rst
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x69.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk1
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x5e.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Extension/Make.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/make_chm_index.html
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaCredit.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Extension/Iso.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb8.php
@@ -557,7 +648,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x1e.php
 chmod -x newscoop/admin-files/lang/uk/bug_reporting.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/ui-lightness/images/ui-bg_glass_65_ffffff_1x400.png
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/ui-lightness/images/ui-icons_ef8c08_256x240.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOcyr1
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x7a.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x51.php
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/simpletest.org/integration.php
@@ -570,7 +660,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Ex
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/AutomaticControllerInjectionsTest.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_e.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc9.php
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/SimpleArrayType.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoQuery.php
 chmod -x newscoop/admin-files/lang/pl/languages.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/doctrine.rst
@@ -586,7 +675,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Ext
 chmod -x newscoop/library/Newscoop/Router/RouterFactory.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-highlights.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/rating/star_empty.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamso
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_poll_answers.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/icons/audio.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Weight.php
@@ -610,12 +698,10 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/article-aside.tpl
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/thumb-1.jpg
 chmod -x newscoop/template_engine/metaclasses/MetaTopic.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/make_chm_index.html
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Thumbnail.php
 chmod -x newscoop/admin-files/lang/pl/bug_reporting.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Geo/Entry.php
 chmod -x newscoop/install/classes/CampTemplate.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/de/bookinfo.xml
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x93.php
 chmod -x newscoop/admin-files/lang/uk/media_archive.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x61.php
@@ -639,7 +725,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Exte
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/icon_search_white.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Captcha/Exception.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xba.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/ru/bookinfo.xml
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-morenews.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x0c.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/arrow-bullet.png
@@ -664,7 +749,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x99.php
 chmod -x newscoop/admin-files/lang/uk/articles.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/body-bgr-test.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xd7.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk2
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/icons/video.png
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-1.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_title_main.png
@@ -742,7 +826,6 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/application/Bootstrap.php
 chmod -x newscoop/admin-files/articles/get.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_600x400.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk3
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_pollanswer_attachments.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/handheld.css
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancy_shadow_se.png
@@ -794,25 +877,20 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Health/Qu
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_loading.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x6f.php
 chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.debate_form.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/catalog
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOtech
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/vendor/bootstrap-datepicker.js
 chmod -x newscoop/src/Newscoop/GimmeBundle/Resources/config/serializer/newscoop/Article.yml
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/livedocs.ent
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/libs/modernizr-1.7.min.js
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/YouTube/Extension/Private.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure/Query.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x89.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Service/Amazon/Exception.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/issue.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/bookinfo.xml
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x33.php
 chmod -x newscoop/admin-files/libs/ContextList/ContextList.php
 chmod -x newscoop/admin-files/lang/uk/sections.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/style.css
 chmod -x newscoop/install/classes/CampInstallationView.php
 chmod -x newscoop/library/Newscoop/Entity/Repository/ArticleRepository.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/bookinfo.xml
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/usage.rst
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/ui-lightness/images/ui-bg_highlight-soft_75_ffe45c_1x100.png
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/EventListener/SecureRandomSchemaListener.php
@@ -831,7 +909,6 @@ chmod -x newscoop/admin-files/lang/uk/authors.php
 chmod -x newscoop/admin-files/lang/uk/api.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/config/security_secure_random.xml
 chmod -x newscoop/admin-files/lang/pl/media_archive.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOdia
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/simpletest.org/test/package/one_section_changelogged.xml
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/img/small-slider-arrows.png
 chmod -x newscoop/plugins/debate/classes/DebateAnswer.php
@@ -858,22 +935,18 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Command/InitSecureRandomCommand.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/blank.gif
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-3.jpg
-chmod -x newscoop/vendor/smarty/smarty/documentation/scripts/revcheck.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/doc/expressions.rst
 chmod -x newscoop/library/Newscoop/Entity/Article.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/search.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISObox
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/layout.tpl
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/NumPhotosRemaining.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/relative_date.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_js/libs/bootstrap-transition.js
 chmod -x newscoop/admin-files/lang/pl/templates.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/en/bookinfo.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaCopyright.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_title_left.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x8b.php
 chmod -x newscoop/admin-files/libs/ArticleList/do_action.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk4
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xf9.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/CHANGELOG.md
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Feed.php
@@ -910,7 +983,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/asset
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Feed.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/front.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_150x100.tpl
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/JsonArrayType.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb6.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9d.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/register_index.tpl
@@ -938,7 +1010,6 @@ chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/im
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-morestories.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x88.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/glyphicons-halflings-white.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOnum
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Docs/DocumentListFeed.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x91.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Config/Json.php
@@ -959,7 +1030,6 @@ chmod -x newscoop/admin-files/lang/pl/universal_list.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancybox-y.png
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancybox.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Cloud/QueueService/Adapter/WindowsAzure.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOlat2
 chmod -x newscoop/application/controllers/ImageController.php
 chmod -x newscoop/admin-files/articles/add_move.php
 chmod -x newscoop/admin-files/lang/pl/article_images.php
@@ -1015,12 +1085,9 @@ chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resou
 chmod -x newscoop/admin-files/lang/pl/plugins.php
 chmod -x newscoop/admin-files/localizer/Localizer.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/sidebar-community-feed.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsn
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/auth_password-restore-finish.tpl
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/blank.gif
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9b.php
-
-
 chmod -x newscoop/plugins/debate/template_engine/classes/DebateIssue.php
 chmod -x newscoop/application/console
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/img/rating/star_full.png
@@ -1031,7 +1098,6 @@ chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/ui
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/AlbumEntry.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/App/FeedEntryParent.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-4.jpg
-chmod -x newscoop/vendor/smarty/smarty/documentation/fr/bookinfo.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/AlbumQuery.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/article-comments.tpl
@@ -1042,7 +1108,6 @@ chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/exten
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Security/Util/SeedProviderInterface.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/archive.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/rating/star_highlight.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsr
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoFeed.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-morenews.tpl
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/fancy_shadow_sw.png
@@ -1111,7 +1176,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Config/Writer/J
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/_html-head.tpl
 chmod -x newscoop/admin-files/lang/uk/languages.php
 chmod -x newscoop/admin-files/lang/uk/extensions.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/en/make_chm_index.html
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/extensions/recorder/test/sample.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x50.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/Bundle/TestBundle/Controller/AutomaticallyInjectedController.php
@@ -1178,10 +1242,8 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/_html-foot.tpl
 chmod -x newscoop/application.php
 chmod -x newscoop/index.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsa
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-2.jpg
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xd2.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOlat1
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/js/libs/jquery.jcarousel.min.js
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/section.jpg
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/function.pollanswer_edit.php
@@ -1285,7 +1347,6 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/user-content.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x8a.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_s.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOpub
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Geo/Extension/GeoRssWhere.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/CommentEntry.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Security/Util/String.php
@@ -1337,7 +1398,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Entr
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Docs/Query.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x65.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x5c.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOcyr2
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x64.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x57.php
 chmod -x newscoop/vendor/symfony/symfony/src/Symfony/Component/Security/Tests/Core/Util/StringUtilsTest.php
@@ -1350,7 +1410,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictu
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/nav-arrows-disabled.png
 chmod -x newscoop/UPGRADE.md
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/fancy_title_main.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/livedocs.ent
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_sw.png
 chmod -x newscoop/admin-files/lang/pl/issues.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-topstory.tpl
@@ -1391,7 +1450,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x98.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x13.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/map-info.css
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/vendor/jquery-1.9.1.min.js
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/designers/language-basic-syntax/language-syntax-variables.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaDescription.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/auth_index.tpl
 chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debate_votes.php
@@ -1424,7 +1482,6 @@ chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.list_debates.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc3.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/App/Feed.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_js/plugins.js
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsc
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancybox.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x32.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Id.php
@@ -1446,13 +1503,10 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xa2.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/UserQuery.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/front-morestories.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/main.css
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsb
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/doc/random_number_generator.rst
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x69.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk1
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x5e.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Extension/Make.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/make_chm_index.html
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaCredit.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Extension/Iso.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb8.php
@@ -1460,7 +1514,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x1e.php
 chmod -x newscoop/admin-files/lang/uk/bug_reporting.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/ui-lightness/images/ui-bg_glass_65_ffffff_1x400.png
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/ui-lightness/images/ui-icons_ef8c08_256x240.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOcyr1
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x7a.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x51.php
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/simpletest.org/integration.php
@@ -1473,7 +1526,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Ex
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Tests/Functional/AutomaticControllerInjectionsTest.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_shadow_e.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xc9.php
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/SimpleArrayType.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/PhotoQuery.php
 chmod -x newscoop/admin-files/lang/pl/languages.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/doctrine.rst
@@ -1489,7 +1541,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Ext
 chmod -x newscoop/library/Newscoop/Router/RouterFactory.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-highlights.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/rating/star_empty.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamso
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_poll_answers.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/icons/audio.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Weight.php
@@ -1513,12 +1564,10 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/article-aside.tpl
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/thumb-1.jpg
 chmod -x newscoop/template_engine/metaclasses/MetaTopic.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/make_chm_index.html
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/Thumbnail.php
 chmod -x newscoop/admin-files/lang/pl/bug_reporting.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Geo/Entry.php
 chmod -x newscoop/install/classes/CampTemplate.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/de/bookinfo.xml
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x93.php
 chmod -x newscoop/admin-files/lang/uk/media_archive.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x61.php
@@ -1542,7 +1591,6 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Exte
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/icon_search_white.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Captcha/Exception.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xba.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/ru/bookinfo.xml
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-morenews.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x0c.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/arrow-bullet.png
@@ -1567,7 +1615,6 @@ chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x99.php
 chmod -x newscoop/admin-files/lang/uk/articles.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_img/body-bgr-test.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xd7.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk2
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/icons/video.png
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-1.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_title_main.png
@@ -1645,7 +1692,6 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/application/Bootstrap.php
 chmod -x newscoop/admin-files/articles/get.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_600x400.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk3
 chmod -x newscoop/plugins/poll/smarty_camp_plugins/block.list_pollanswer_attachments.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/handheld.css
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancy_shadow_se.png
@@ -1697,25 +1743,20 @@ chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Health/Qu
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_loading.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x6f.php
 chmod -x newscoop/plugins/debate/smarty_camp_plugins/block.debate_form.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/catalog
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOtech
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/vendor/bootstrap-datepicker.js
 chmod -x newscoop/src/Newscoop/GimmeBundle/Resources/config/serializer/newscoop/Article.yml
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/livedocs.ent
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_js/libs/modernizr-1.7.min.js
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/YouTube/Extension/Private.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Cloud/DocumentService/Adapter/WindowsAzure/Query.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x89.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Service/Amazon/Exception.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/issue.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/es/bookinfo.xml
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x33.php
 chmod -x newscoop/admin-files/libs/ContextList/ContextList.php
 chmod -x newscoop/admin-files/lang/uk/sections.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/style.css
 chmod -x newscoop/install/classes/CampInstallationView.php
 chmod -x newscoop/library/Newscoop/Entity/Repository/ArticleRepository.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/pt_BR/bookinfo.xml
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/Resources/doc/usage.rst
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/ui-lightness/images/ui-bg_highlight-soft_75_ffe45c_1x100.png
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/EventListener/SecureRandomSchemaListener.php
@@ -1734,7 +1775,6 @@ chmod -x newscoop/admin-files/lang/uk/authors.php
 chmod -x newscoop/admin-files/lang/uk/api.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/config/security_secure_random.xml
 chmod -x newscoop/admin-files/lang/pl/media_archive.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOdia
 chmod -x newscoop/vendor/swiftmailer/swiftmailer/test-suite/lib/simpletest/packages/simpletest.org/test/package/one_section_changelogged.xml
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/img/small-slider-arrows.png
 chmod -x newscoop/plugins/debate/classes/DebateAnswer.php
@@ -1761,22 +1801,18 @@ chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_n
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Command/InitSecureRandomCommand.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_css/fancybox/blank.gif
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/pictures/article-img-grid-3-3.jpg
-chmod -x newscoop/vendor/smarty/smarty/documentation/scripts/revcheck.php
 chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resources/doc/expressions.rst
 chmod -x newscoop/library/Newscoop/Entity/Article.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/search.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISObox
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/layout.tpl
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Photos/Extension/NumPhotosRemaining.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/_tpl/relative_date.tpl
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_js/libs/bootstrap-transition.js
 chmod -x newscoop/admin-files/lang/pl/templates.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/en/bookinfo.xml
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Extension/MediaCopyright.php
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_css/fancybox/fancy_title_left.png
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x8b.php
 chmod -x newscoop/admin-files/libs/ArticleList/do_action.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOgrk4
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xf9.php
 chmod -x newscoop/vendor/jms/di-extra-bundle/JMS/DiExtraBundle/CHANGELOG.md
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Media/Feed.php
@@ -1813,7 +1849,6 @@ chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/asset
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Exif/Feed.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/themethumbs/front.jpg
 chmod -x newscoop/install/sample_templates/the_new_custodian/templates/set_the_new_custodian/_tpl/img/img_150x100.tpl
-chmod -x newscoop/vendor/doctrine/dbal/lib/Doctrine/DBAL/Types/JsonArrayType.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/xb6.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9d.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/register_index.tpl
@@ -1841,7 +1876,6 @@ chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/im
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/front-morestories.tpl
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x88.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_img/glyphicons-halflings-white.png
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOnum
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Gdata/Docs/DocumentListFeed.php
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x91.php
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Config/Json.php
@@ -1862,7 +1896,6 @@ chmod -x newscoop/admin-files/lang/pl/universal_list.php
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancybox-y.png
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/fancybox.png
 chmod -x newscoop/vendor/bombayworks/zendframework1/library/Zend/Cloud/QueueService/Adapter/WindowsAzure.php
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOlat2
 chmod -x newscoop/application/controllers/ImageController.php
 chmod -x newscoop/admin-files/articles/add_move.php
 chmod -x newscoop/admin-files/lang/pl/article_images.php
@@ -1918,7 +1951,6 @@ chmod -x newscoop/vendor/jms/security-extra-bundle/JMS/SecurityExtraBundle/Resou
 chmod -x newscoop/admin-files/lang/pl/plugins.php
 chmod -x newscoop/admin-files/localizer/Localizer.php
 chmod -x newscoop/install/sample_templates/quetzal/templates/set_quetzal/_tpl/sidebar-community-feed.tpl
-chmod -x newscoop/vendor/smarty/smarty/documentation/entities/ISO/ISOamsn
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/auth_password-restore-finish.tpl
 chmod -x newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/fancybox/blank.gif
 chmod -x newscoop/vendor/behat/behat/src/Behat/Behat/Util/data/x9b.php

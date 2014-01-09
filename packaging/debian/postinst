@@ -148,11 +148,17 @@ case "$1" in
     dpkg-statoverride --list $datadir/plugins &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
 
+    dpkg-statoverride --list $datadir/public/bundles &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/public/bundles
+
+    dpkg-statoverride --list $datadir/public/pdf &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/public/pdf
+
+    dpkg-statoverride --list $datadir/public/videos &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/public/videos
+
     dpkg-statoverride --list $datadir/themes &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
-
-    dpkg-statoverride --list $datadir/videos &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/videos
 
     dpkg-statoverride --list $datadir/.htaccess &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0644 $datadir/.htaccess
