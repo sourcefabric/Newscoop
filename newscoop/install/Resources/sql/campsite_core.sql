@@ -2478,7 +2478,7 @@ CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
-  `indexed` datetime NOT NULL,
+  `indexed` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
   KEY `author_id` (`author_id`),
