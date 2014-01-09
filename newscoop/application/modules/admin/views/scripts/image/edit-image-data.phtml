@@ -8,6 +8,7 @@
 
     $loadAsRichtext = array();
     $captionLimit = SystemPref::Get('MediaCaptionLength');
+    $captionOn = SystemPref::Get('MediaRichTextCaptions');
 ?>
 
 <div id="modal-top">
@@ -29,7 +30,7 @@
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'edit-image-data'
-))); ?>" onSubmit="return validateTinyMCEEditors();">
+))); ?>" onSubmit="<?php echo $captionOn == 'N' ? 'return true;' : 'return validateTinyMCEEditors();' ?>">
 
 <input type="hidden" name="article_number" value="<?php echo($this->article); ?>">
 <input type="hidden" name="language_id" value="<?php echo($this->languageId); ?>">
