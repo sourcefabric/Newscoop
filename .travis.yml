@@ -20,4 +20,6 @@ before_script:
   - cd ..
   - sudo php newscoop/scripts/fixer.php
 
-script: newscoop/vendor/bin/behat
+script:
+  - newscoop/vendor/bin/behat
+  - newscoop/vendor/bin/phpspec run --format pretty
