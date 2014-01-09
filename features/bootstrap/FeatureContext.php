@@ -38,14 +38,6 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^current access_token$/
-     */
-    public function currentAccessToken()
-    {
-        throw new PendingException();
-    }
-
-    /**
      * @Given /^response should have "([^"]*)" with elements$/
      */
     public function responseShouldHaveWithElements($key)
