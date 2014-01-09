@@ -196,19 +196,23 @@ $app->get('/prepare', function (Request $request) use ($app) {
 ->assert('_method', 'POST|GET')
 ->bind('prepare');
 
-$app->get('/process', function (Request $request) use($app) {
+$app->get('/process', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.process', new GenericEvent());
 
     $form = $app['form.factory']->createNamedBuilder('main_config', 'form', array())
         ->add('site_title', null, array('constraints' => array(new Assert\NotBlank())))
-        ->add('recheck_user_password', 'repeated', array(
-            'type' => 'password',
-            'invalid_message' => 'The password fields must match.',
-            'options' => array('attr' => array('class' => 'password-field')),
-            'required' => true,
-            'first_options'  => array('label' => 'Password'),
-            'second_options' => array('label' => 'Repeat Password'),
-            'constraints' => array(new Assert\NotBlank()))
+        ->add(
+            'recheck_user_password',
+            'repeated',
+            array(
+                'type' => 'password',
+                'invalid_message' => 'The password fields must match.',
+                'options' => array('attr' => array('class' => 'password-field')),
+                'required' => true,
+                'first_options'  => array('label' => 'Password'),
+                'second_options' => array('label' => 'Repeat Password'),
+                'constraints' => array(new Assert\NotBlank())
+            )
         )
         ->add('user_email', null, array('constraints' => array(new Assert\Email())))
         ->getForm();
@@ -229,7 +233,7 @@ $app->get('/process', function (Request $request) use($app) {
 ->assert('_method', 'POST|GET')
 ->bind('process');
 
-$app->get('/demo-site', function (Request $request) use($app) {
+$app->get('/demo-site', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
         $sampleTemplates = array(
             'set_quetzal' => array(
@@ -256,8 +260,8 @@ $app->get('/demo-site', function (Request $request) use($app) {
                     array('no'   => 'No thanks')
                 )+array_map(function($template, $key) {
                     return array($key => $template['name']);
-                }, $sampleTemplates, array_keys($sampleTemplates)), 
-                'expanded'  => true, 
+                }, $sampleTemplates, array_keys($sampleTemplates)),
+                'expanded'  => true,
             ))
             ->getForm();
 
@@ -282,7 +286,7 @@ $app->get('/demo-site', function (Request $request) use($app) {
 ->assert('_method', 'POST|GET')
 ->bind('demo-site');
 
-$app->get('/post-process', function (Request $request) use($app) {
+$app->get('/post-process', function (Request $request) use ($app) {
 
     $app['finish_service']->saveCronjobs($app['db']);
     $app['finish_service']->generateProxies();

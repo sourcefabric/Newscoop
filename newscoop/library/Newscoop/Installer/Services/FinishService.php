@@ -19,7 +19,8 @@ class FinishService
     private $newscoopDir;
     private $filesystem;
 
-	public function __construct(){
+	public function __construct()
+    {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
 	}
@@ -113,7 +114,7 @@ class FinishService
         $isFileWritable = is_writable($cronJobsTempDir);
         $error = false;
         $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/cron_jobs/'), 
+            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/cron_jobs/'),
             array('debug' => true, 'cache' => false, 'strict_variables' => true,'autoescape' => false)
         );
 

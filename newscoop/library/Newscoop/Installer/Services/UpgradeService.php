@@ -17,7 +17,8 @@ class UpgradeService
     private $monolog;
 
 
-	public function __construct($connection, $logger){
+	public function __construct($connection, $logger)
+    {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->connection = $connection;
         $this->logger = $logger;

@@ -31,6 +31,7 @@ AddType video/webm .webm
     RewriteCond %{REQUEST_URI} !\.ico$
     RewriteCond %{REQUEST_URI} !/+admin
     RewriteCond %{REQUEST_URI} !/+install
+    RewriteCond %{REQUEST_URI} !/+robots.txt$
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+js
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+css
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+images
