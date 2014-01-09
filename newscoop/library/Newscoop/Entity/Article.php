@@ -9,6 +9,7 @@ namespace Newscoop\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
@@ -284,10 +285,34 @@ class Article
      *      inverseJoinColumns={
      *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
      *      }
-     *  )
+     * )
      * @var Doctrine\Common\Collections\Collection
      */
     private $authors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Attachment")
+     * @ORM\JoinTable(name="ArticleAttachments",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    private $attachments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Image\LocalImage")
+     * @ORM\JoinTable(name="ArticleImages",
+     *      joinColumns={@ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="IdImage", referencedColumnName="Id")}
+     * )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    private $images;
 
     /**
      * @var ArticleData
@@ -303,8 +328,10 @@ class Article
         $this->number = (int) $number;
         $this->language = $language;
         $this->updated = new DateTime();
-        $this->authors = new ArrayCollection();
+        $this->authors = new Collection();
         $this->topics = new ArrayCollection();
+        $this->attachments = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -546,7 +573,7 @@ class Article
      */
     public function getDate()
     {
-        return $this->updated;
+        return $this->getUpdated();
     }
 
     /**
@@ -646,13 +673,62 @@ class Article
     }
 
     /**
+     * Getter for updated
+     *
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Setter for updated
+     *
+     * @param DateTime $updated Value to set
+     *
+     * @return self
+     */
+    public function setUpdated(DateTime $updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+
+    /**
      * Get publishDate
      *
      * @return string
      */
     public function getPublishDate()
     {
+        return $this->getPublished();
+    }
+
+    /**
+     * Get published
+     *
+     * @return string
+     */
+    public function getPublished()
+    {
         return $this->published;
+    }
+
+    /**
+     * Set published
+     *
+     * @param Datetime|null $published
+     *
+     * @return string
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
     }
 
     /**
@@ -687,6 +763,41 @@ class Article
     {
         return $this->creator;
     }
+
+    /**
+     * Legacy getter for commentsLocked
+     *
+     * @return int
+     */
+    public function commentsLocked()
+    {
+        return $this->getCommentsLocked();
+    }
+
+    /**
+     * Getter for commentsLocked
+     *
+     * @return int
+     */
+    public function getCommentsLocked()
+    {
+        return $this->commentsLocked;
+    }
+
+    /**
+     * Setter for commentsLocked
+     *
+     * @param int $commentsLocked Value to set
+     *
+     * @return self
+     */
+    public function setCommentsLocked($commentsLocked)
+    {
+        $this->commentsLocked = $commentsLocked;
+
+        return $this;
+    }
+
 
     /**
      * Set webcode
@@ -944,6 +1055,64 @@ class Article
         foreach ($fields as $key => $val) {
             $this->setFieldValue($key, $val);
         }
+    }
+
+    /**
+     * Getter for attachments
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getAttachments()
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * Setter for attachments
+     *
+     * @param Doctrine\Common\Collections\ArrayCollection|null $attachments Value to set
+     *
+     * @return self
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+
+        return $this;
+    }
+
+    /**
+     * Getter for images
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get article first image
+     *
+     * @return Newscoop\Image\LocalImage
+     */
+    public function getFirstImage()
+    {
+        return ($this->getImages()->isEmpty()) ? null : $this->getImages()->first();
+    }
+
+    /**
+     * Setter for images
+     *
+     * @param Doctrine\Common\Collections\ArrayCollection $images Value to set
+     *
+     * @return self
+     */
+    public function setImages(\Doctrine\Common\Collections\ArrayCollection $images)
+    {
+        $this->images = $images;
+
+        return $this;
     }
 
     /**
