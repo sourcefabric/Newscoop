@@ -26,9 +26,9 @@ class UserCriteria extends Criteria
     public $is_public = true;
 
     /**
-     * @var array
+     * @var string
      */
-    public $orderBy = array('username' => 'asc');
+    public $created;
 
     /**
      * @var boolean
