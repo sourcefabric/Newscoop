@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 /**
@@ -39,14 +40,6 @@ $kernel->boot();
 $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
 
-$g_ado_db = $container->getService('doctrine.adodb');
-
-if (!$g_ado_db->isConnected(true)) {
-    throw new \Exception("Container is missing", 1);
-}
-
-$cli->setCatchExceptions(false);
-
 $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
@@ -61,6 +54,9 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\DispatchEventForPluginCommand(),
     new \Newscoop\Tools\Console\Command\UpgradePluginsCommand(),
     new \Newscoop\Tools\Console\Command\ReloadRenditionsCommand(),
+    new \Newscoop\Tools\Console\Command\GenerateWebcodeCommand(),
+    new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
+    new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
 ));
 
 $cli->run($input);

@@ -101,7 +101,7 @@
                 <?php echo wordwrap($file->getFileName(), "25", "<br />", true); ?>
                 <?php } ?>
 
-                <span class="info"><?php echo htmlspecialchars($file->getDescription($f_language_selected)), ', ', camp_format_bytes($file->getSizeInBytes()); ?></span>
+                <span class="info"><?php echo !$file->getLanguageId() ? htmlspecialchars($file->getDescription(0)) : htmlspecialchars($file->getDescription($f_language_selected)) , ', ', camp_format_bytes($file->getSizeInBytes()); ?></span>
                 <a class="link icon-link" href="<?php p($downloadUrl); ?>"><span class="icon ui-icon-arrowthickstop-1-s"></span><?php echo $translator->trans('Download', array(), 'articles'); ?></a>
 
                 <?php if ($inEditMode && $g_user->hasPermission('DeleteFile')) { ?>

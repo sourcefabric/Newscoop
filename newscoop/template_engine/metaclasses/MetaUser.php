@@ -73,7 +73,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     {
         return $this->m_dbObject->getEmail();
     }
-    
+
     protected function getSubscriber()
     {
         return $this->m_dbObject->getSubscriber();
@@ -310,7 +310,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if ($this->m_dbObject->getAuthorId()) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -342,11 +342,39 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      * Test if user is a given type
      *
      * @param string $type
-     * 
+     *
      * @return bool
      */
     public function is($name)
     {
         return $this->m_dbObject->hasGroup($name);
+    }
+
+    /**
+     * Gets user attribute
+     *
+     * @param string $attribute User attribute
+     *
+     * @return string
+     */
+    public function getAttribute($attribute)
+    {
+        return $this->m_dbObject->getAttribute($attribute);
+    }
+
+    /**
+     * Checks user attribute
+     *
+     * @param string $attribute User attribute
+     *
+     * @return bool
+     */
+    public function hasAttribute($attribute)
+    {
+        if ($this->m_dbObject->getAttribute($attribute)) {
+            return true;
+        }
+
+        return false;
     }
 }

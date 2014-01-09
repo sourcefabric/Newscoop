@@ -15,6 +15,9 @@ use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\IPublicationService;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 
+/**
+ * Demosite service
+ */
 class DemositeService
 {
     private $logger;
@@ -22,6 +25,9 @@ class DemositeService
     private $installDir;
     private $filesystem;
 
+    /**
+     * @param object $logger
+     */
     public function __construct($logger)
     {
         $this->logger = $logger;
@@ -31,6 +37,11 @@ class DemositeService
         $this->filesystem = new Filesystem();
     }
 
+    /**
+     * Copy templates
+     *
+     * @param string $templateName Choosen template name
+     */
     public function copyTemplate($templateName)
     {
         // copies template files to corresponding directory
@@ -52,6 +63,9 @@ class DemositeService
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
     }
 
+    /**
+     * Install empty theme
+     */
     public function installEmptyTheme()
     {
         $emptyDir = $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED.'/empty/';

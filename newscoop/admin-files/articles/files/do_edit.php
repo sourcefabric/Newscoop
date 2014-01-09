@@ -54,10 +54,11 @@ if (!$articleObj->userCanModify($g_user)) {
 }
 
 $attachmentObj = new Attachment($f_attachment_id);
-$attachmentObj->setDescription($f_language_selected, $f_description);
 if ($f_language_specific == "yes") {
+	$attachmentObj->setDescription($f_language_selected, $f_description);
 	$attachmentObj->setLanguageId($f_language_selected);
 } else {
+	$attachmentObj->setDescription(0, $f_description);
 	$attachmentObj->setLanguageId(null);
 }
 if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
