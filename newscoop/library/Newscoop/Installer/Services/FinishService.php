@@ -16,17 +16,26 @@ use Newscoop\Entity\User;
 use Crontab\Crontab;
 use Crontab\Job;
 
+/**
+ * Finish Newscoop installation tasks
+ */
 class FinishService
 {
     private $newscoopDir;
     private $filesystem;
 
+    /**
+     * Construct
+     */
     public function __construct()
     {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
     }
 
+    /**
+     * Generate proxies for entities
+     */
     public function generateProxies()
     {
         exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
@@ -47,6 +56,9 @@ class FinishService
         exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
     }
 
+    /**
+     * Reload themes reditions in datbase
+     */
     public function reloadRenditions()
     {
         $phpFinder = new PhpExecutableFinder();
@@ -64,6 +76,9 @@ class FinishService
         }
     }
 
+    /**
+     * Install bundle assets
+     */
     public function installAssets()
     {
         $phpFinder = new PhpExecutableFinder();
@@ -81,7 +96,12 @@ class FinishService
         }
     }
 
-    public function saveCronjobs($connection, $user = null)
+    /**
+     * Save newscoop cronjobs in user crinjob file
+     *
+     * @return bolean
+     */
+    public function saveCronjobs()
     {
         $binDirectory = realpath($this->newscoopDir.'/bin');
 
@@ -121,6 +141,12 @@ class FinishService
         return true;
     }
 
+    /**
+     * Save instance config (to files and database)
+     * 
+     * @param array      $config
+     * @param Connection $connection
+     */
     public function saveInstanceConfig($config, $connection)
     {
         // Set site title

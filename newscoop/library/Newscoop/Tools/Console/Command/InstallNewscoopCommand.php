@@ -142,7 +142,7 @@ class InstallNewscoopCommand extends Console\Command\Command
             $output->writeln('<info>Template installed successfully.<info>');
         }
 
-        $finishService->saveCronjobs($connection);
+        $finishService->saveCronjobs();
         $output->writeln('<info>Cronjobs are saved.<info>');
         $finishService->generateProxies();
         $finishService->reloadRenditions();

@@ -277,7 +277,7 @@ $app->get('/demo-site', function (Request $request) use ($app) {
 ->bind('demo-site');
 
 $app->get('/post-process', function (Request $request) use ($app) {
-    $app['finish_service']->saveCronjobs($app['db']);
+    $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
     $app['finish_service']->reloadRenditions();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
