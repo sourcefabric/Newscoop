@@ -30,16 +30,13 @@ class CommentsController extends Controller
         $em = $this->container->get('em');
         $commentService = $this->container->get('newscoop_newscoop.comments_service');
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
-            ->createQueryBuilder('c')
+            ->createQueryBuilder('c');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->isNotNull('c.article_num'))
             ->orderBy('c.time_created', 'desc');
 
-        $defaultValues = array(
-            'new' => false,
-            'approved' => false,
-            'hidden' => false,
-            'recommended' => false,
-            'unrecommended' => false,
-        );
+        $session = $request->getSession();
 
         $filterForm = $this->createFormBuilder()
             ->add('new', 'checkbox', array(
@@ -60,23 +57,52 @@ class CommentsController extends Controller
             ->add('filterButton', 'submit')
             ->getForm();
 
+        $statusMap = array(
+            'approved' => 0,
+            'new' => 1,
+            'hidden' => 2,
+        );
+
         $filterForm->handleRequest($request);
 
         if ($filterForm->isValid()) {
             $data = $filterForm->getData();
-
+            $session->set('filterNew', null);
             if ($data['new']) {
-                $queryBuilder
-                    ->where('c.status = :status')
-                    ->setParameter('status', 'approved');
+                $commentService->checkFilter($statusMap['new'], $queryBuilder);
+                $session->set('filterNew', $statusMap['new']);
             }
 
+            $session->set('filterRecommended', null);
             if ($data['recommended']) {
-                $queryBuilder
-                    ->where('c.recommended = :status')
-                    ->setParameter('status', $data['recommended']);
+                $commentService->checkFilterRecommended($data['recommended'], $queryBuilder);
+                $session->set('filterRecommended', $data['recommended']);
+            }
+
+            $session->set('filterUnrecommended', null);
+            if ($data['unrecommended']) {
+                $commentService->checkFilterRecommended($data['unrecommended'], $queryBuilder);
+                $session->set('filterUnrecommended', $data['unrecommended']);
+            }
+
+            $session->set('filterHidden', null);
+            if ($data['hidden']) {
+                $commentService->checkFilter($statusMap['hidden'], $queryBuilder);
+                $session->set('filterHidden', $statusMap['hidden']);
+            }
+
+            $session->set('filterApproved', null);
+            if ($data['approved']) {
+                $commentService->checkFilter($statusMap['approved'], $queryBuilder);
+                $session->set('filterApproved', $statusMap['approved']);
             }
         }
+
+        $commentService->checkFilter($session->get('filterNew'), $queryBuilder);
+        $commentService->checkFilter($session->get('filterHidden'), $queryBuilder);
+        $commentService->checkFilter($session->get('filterApproved'), $queryBuilder);
+        $commentService->checkFilterRecommended($session->get('filterRecommended'), $queryBuilder);
+        $commentService->checkFilterRecommended($session->get('filterUnrecommended'), $queryBuilder);
 
         $comments = $queryBuilder->getQuery();
 
@@ -107,14 +133,14 @@ class CommentsController extends Controller
             'pagination' => $pagination,
             'commentsArray' => $commentsArray,
             'filterForm' => $filterForm->createView(),
-            'defaultValues' => $defaultValues,
+            //'defaultValues' => $defaultValues,
         );
     }
 
     /**
      * @Route("/admin/comments/set-status")
      */
-    public function setStatusAction(Request $request) 
+    public function setStatusAction(Request $request)
     {
         $translator = $this->container->get('translator');
         $user = $this->container->get('user');
@@ -147,7 +173,7 @@ class CommentsController extends Controller
                 $em->getRepository('Newscoop\Entity\Comment')->setStatus($comments, $status);
                 $em->flush();
             } catch (\Exception $e) {
-                return;
+                return new JsonResponse(array('message' => $e->getMessage()));
             }
 
             return new JsonResponse(array('message' => $msg));

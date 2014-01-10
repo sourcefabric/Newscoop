@@ -7,11 +7,10 @@
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
-<link rel="stylesheet" type="text/css" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/DT_bootstrap.css">
 {% endblock %}
 
 {% block admin_scripts %}
-<script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/DT_bootstrap.js"></script>
+
 {% endblock %}
 
 {% block admin_content %}
@@ -22,19 +21,19 @@
             <legend>Show</legend>
             <ul class="list-inline">
                 <li class="new">
-                    {{ form_widget(filterForm.new, { checked : defaultValues.new }) }} {{ form_label(filterForm.new) }}
+                    {{ form_widget(filterForm.new, { checked : app.session.get('filterNew') ? true : false }) }} {{ form_label(filterForm.new) }}
                 </li>
                 <li class="approved">
-                    {{ form_widget(filterForm.approved) }} {{ form_label(filterForm.approved) }}
+                    {{ form_widget(filterForm.approved, { checked : app.session.get('filterApproved') ? true : false }) }} {{ form_label(filterForm.approved) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.hidden) }} {{ form_label(filterForm.hidden) }}
+                    {{ form_widget(filterForm.hidden, { checked : app.session.get('filterHidden') ? true : false }) }} {{ form_label(filterForm.hidden) }}
                 </li>
                 <li class="hidden">
-                   {{ form_widget(filterForm.recommended) }} {{ form_label(filterForm.recommended) }}
+                   {{ form_widget(filterForm.recommended, { checked : app.session.get('filterRecommended') ? true : false }) }} {{ form_label(filterForm.recommended) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.unrecommended) }} {{ form_label(filterForm.unrecommended) }}
+                    {{ form_widget(filterForm.unrecommended, { checked : app.session.get('filterUnrecommended') ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
                 </li>
                 <li>{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-xs'} }) }}</li>
                 {{ form_rest(filterForm) }}
@@ -42,6 +41,12 @@
         </fieldset>
         </form>
     </div>
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control input-sm" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default btn-sm">Submit</button>
+    </form>
     <div class="table-responsive">
         <table class="table" id="commentsTable">
             <thead>

@@ -67,3 +67,12 @@ div.table-responsive {
 .reply-cancel {
     margin-right: 5px;
 }
+
+div.form-group input {
+    width: 500px;
+}
+
+form.navbar-form.navbar-left {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
