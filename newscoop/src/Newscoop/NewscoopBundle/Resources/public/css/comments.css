@@ -93,3 +93,20 @@ form.navbar-form.navbar-left {
 #hoverBtns td:first-child {
     border-top: none;
 }
+
+fieldset.filters {
+    height: 75px;
+}
+
+fieldset ul {
+    height: 30px;
+}
+
+#showComments fieldset ul li {
+    height: 30px;
+    padding-top: 2px;
+}
+
+#showComments fieldset ul li#filterBtn {
+    margin-top: -2px;
+}

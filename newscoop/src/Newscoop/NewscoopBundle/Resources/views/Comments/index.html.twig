@@ -35,7 +35,7 @@
                 <li class="hidden">
                     {{ form_widget(filterForm.unrecommended, { checked : app.session.get('filterUnrecommended') ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
                 </li>
-                <li>{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-xs'} }) }}</li>
+                <li id="filterBtn">{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-sm'} }) }}</li>
                 {{ form_rest(filterForm) }}
             </ul>
         </fieldset>
