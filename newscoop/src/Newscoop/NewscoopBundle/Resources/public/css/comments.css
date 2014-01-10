@@ -76,3 +76,20 @@ form.navbar-form.navbar-left {
     margin-left: 15px;
     margin-bottom: 20px;
 }
+
+.commentBtns ul {
+    height: 30px;
+}
+
+#hoverBtns {
+    height: 35px;
+}
+
+#hoverBtns td:last-child {
+    border: none;
+    padding: 0 0 5px 0;
+}
+
+#hoverBtns td:first-child {
+    border-top: none;
+}

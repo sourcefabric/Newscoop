@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
 
 /**
@@ -188,7 +189,6 @@ class CommentsController extends Controller
     public function replyAction(Request $request, $id)
     {
         $em = $this->container->get('em');
-
         $values = $request->request->all();
         $comment = new Comment();
 
@@ -215,17 +215,36 @@ class CommentsController extends Controller
     }
 
     /**
-     * @Route("/admin/comments/delete/{id}", options={"expose"=true})
+     * @Route("/admin/comments/set-recommended/{comments}/{recommended}", options={"expose"=true})
      */
-    public function deleteCommentAction(Request $request, $id)
+    public function setRecommendedAction(Request $request, $comments, $recommended)
     {
         if ($request->isMethod('POST')) {
+            $em = $this->container->get('em');
+            if (!is_array($comments)) {
+                $comments = array($comments);
+            }
+
+            foreach ($comments as $commentId) {
+                if (!$recommended) {
+                    continue;
+                }
+
+                $comment = $em->getRepository('Newscoop\Entity\Comment')->find($commentId);
+
+                $this->container->get('dispatcher')->dispatch('comment.recommended', new GenericEvent($this, array(
+                    'id' => $comment->getId(),
+                    'subject' => $comment->getSubject(),
+                    'article' => $comment->getThread()->getName(),
+                    'commenter' => $comment->getCommenterName(),
+                )));
+            }
+
             try {
-                $em = $this->container->get('em');
-                $em->getRepository('Newscoop\Entity\Comment')->deleteArticle($id);
+                $em->getRepository('Newscoop\Entity\Comment')->setRecommended($comments, $recommended);
                 $em->flush();
             } catch (\Exception $e) {
-                return new JsonResponse(array('status' => false));
+                return new JsonResponse(array('status' => $e->getMessage()));
             }
 
             return new JsonResponse(array('status' => true));

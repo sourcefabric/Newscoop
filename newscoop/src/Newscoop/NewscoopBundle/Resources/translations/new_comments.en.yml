@@ -9,6 +9,13 @@ comments:
     of: "of"
     to: "to"
     entries: "entries"
+  btn:
+    cancel: "Cancel"
+    submit: "Submit"
+    unrecommend: "Unrecommend"
+    recommend: "Recommend"
+    delete: "Delete"
+    reply: "Reply"
   msg:
     deleted: "Comment deleted."
     commentinarticle: "Comment $4 by $1 in the article $2 ($3)"
@@ -23,3 +30,4 @@ comments:
       delete: "Could not delete this comment"
     sure: "You are about to permanently delete a comment."
     surequestion: "Are you sure you want to do it?"
+    updated: "Comment updated."

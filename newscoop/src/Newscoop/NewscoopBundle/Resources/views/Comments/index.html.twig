@@ -5,8 +5,8 @@
 {% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
 
 {% block admin_stylesheets %}
-<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 {% endblock %}
 
 {% block admin_scripts %}
@@ -111,8 +111,8 @@
                                     <label>Comment</label>
                                     <textarea name="message" class="form-control input-sm"></textarea>
                                     <div class="buttonBar">
-                                        <input type="button" value="Cancel" id="{{ row.comment.id }}" class="btn btn-default btn-sm reply-cancel">
-                                        <input type="submit" value="Submit" class="btn btn-default btn-sm">
+                                        <input type="button" value="{{ 'comments.btn.cancel'|trans }}" id="{{ row.comment.id }}" class="btn btn-default btn-sm reply-cancel">
+                                        <input type="submit" value="{{ 'comments.btn.submit'|trans }}" class="btn btn-default btn-sm">
                                     </div>
                                 </form>
                             </fieldset>
@@ -128,10 +128,10 @@
                         </div>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="1" style="border-top: none;"></td>
-                    <td colspan="6" style="border: none; padding: 0 0 5px 0">
-                        <div class="commentBtns" style="visibility: visible;">
+                <tr id="hoverBtns">
+                    <td colspan="1"></td>
+                    <td colspan="6">
+                        <div class="commentBtns" style="display: none; visibility: visible;">
                             <ul>
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action new" id="comment_buttons_form_buttons_0" value="pending" data="pending_{{ row.comment.id }}" {% if row.comment.status == 'pending' %}checked {% endif %}>
@@ -145,9 +145,16 @@
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
                                     <label for="hidden_{{ row.comment.id }}">Hidden</label>
                                 </li>
-                                <li><a href="javascript:;" id="{{ row.comment.id }}" class="actionButton action-reply btn btn-default btn-xs">Reply</a></li>
-                                <li><a href="javascript:;" data="deleted_{{ row.comment.id }}" class="actionButton action btn btn-default btn-xs">Delete</a></li>
-                                <li><a href="javascript:;" id="unrecommend_{{ row.comment.id }}" class="actionButton action-unrecommend btn btn-default btn-xs">Unrecommend</a>
+                                <li><button type="button" id="{{ row.comment.id }}" class="action-reply btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span> {{ 'comments.btn.reply'| trans }}</button>
+                                </li>
+                                <li><button type="button" data="deleted_{{ row.comment.id }}" class=" action btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'comments.btn.delete'| trans }}</button>
+                                </li>
+                                <li>
+                                    {% if row.comment.recommended == 1 %}
+                                        <button type="button" id="unrecommend_{{ row.comment.id }}" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>
+                                    {% else %}
+                                    <button type="button" id="recommend_{{ row.comment.id }}" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>
+                                    {% endif %}
                                 </li>
                             </ul>
                         </div>
@@ -176,8 +183,15 @@
             </ul>
         </div>
     </div>
+    <div class="dialogPopup dialog-1" title="Full article"></div>
 </div>
 <script type="text/javascript">
+    $("#hoverBtns td:last-child").hover(function() {
+        $(this).children('div').show();
+    }, function() {
+        $(this).children('div').hide()
+    });
+
     $('.commentBtns .action').live('click', function () {
         var el = $(this);
         var id = el.attr('data');
@@ -229,7 +243,7 @@
             data: $(this).serialize(),
             success: function (data) {
                 if (data.status) {
-                    flashMessage('Comment updated.');
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
                     location.href = Routing.generate('newscoop_newscoop_comments_index');
                 } else {
                     flashMessage('Error sending reply', "error");
@@ -250,8 +264,88 @@
         $(form).each(function () {
             this.reset();
         });
-        $('.content-reply_'+el.attr('id')).slideDown("fast");
         $('.content-reply_'+el.attr('id')).hide();
+    });
+
+    $('.commentBtns .action-recommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('recommend_', '')];
+        var li = $(this).parent();
+
+        $.ajax({
+            type: 'POST',
+            url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 1 }),
+            success: function (data) {
+                flashMessage('{{ 'comments.msg.updated'|trans }}');
+                li.empty();
+                li.append('<button type="button" id="unrecommend_'+ids+'" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>');
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                }
+            }
+        });
+    });
+
+    $('.commentBtns .action-unrecommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('unrecommend_', '')];
+        var li = $(this).parent();
+
+        $.ajax({
+            type: 'POST',
+            url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 0 }),
+            success: function (data) {
+                flashMessage('{{ 'comments.msg.updated'|trans }}');
+                li.empty();
+                li.append('<button type="button" id="recommend_'+ids+'" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>');
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                }
+            }
+        });
+    });
+
+    // Dialog
+    var buttons = {};
+    buttons['Close'] = function () {
+        $(this).dialog("close");
+    };
+
+    $('.dialogPopup').dialog({
+        autoOpen: false,
+        width: 600,
+        height: 560,
+        position: 'right',
+        buttons: buttons
+    });
+    // Dialog Link
+    $('.articleLink').live('click', function () {
+        var that = this;
+
+        $.ajax({
+            type: 'GET',
+            url: $(this).attr('href'),
+            success: function (data) {
+                data = $.parseJSON(data);
+                var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                for (i in data) {
+                    content += '<h4>' + i + '</h4>';
+                    content += '<p>' + data[i] + '</p>';
+                }
+                $('.dialogPopup').html(content);
+                $('.dialogPopup').dialog('open');
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                }
+            }
+        });
+        return false;
     });
 </script>
 {% endblock %}
