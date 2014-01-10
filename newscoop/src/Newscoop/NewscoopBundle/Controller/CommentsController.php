@@ -13,7 +13,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Newscoop\NewscoopBundle\Form\Type\CommentButtonsType;
 use Newscoop\Entity\Comment;
 
 /**
@@ -22,7 +21,7 @@ use Newscoop\Entity\Comment;
 class CommentsController extends Controller
 {
     /**
-     * @Route("/admin/comments")
+     * @Route("/admin/comments", options={"expose"=true})
      * @Template()
      */
     public function indexAction(Request $request)
@@ -33,7 +32,11 @@ class CommentsController extends Controller
             ->createQueryBuilder('c');
 
         $queryBuilder
+            ->select('c', 'cm.name', 't.name')
+            ->leftJoin('c.commenter', 'cm')
+            ->leftJoin('c.thread', 't')
             ->where($queryBuilder->expr()->isNotNull('c.article_num'))
+            ->andWhere('c.status != 3') //3 - deleted
             ->orderBy('c.time_created', 'desc');
 
         $session = $request->getSession();
@@ -55,7 +58,7 @@ class CommentsController extends Controller
                 'required'  => false,
             ))
             ->add('filterButton', 'submit')
-            ->getForm();
+        ->getForm();
 
         $statusMap = array(
             'approved' => 0,
@@ -117,10 +120,10 @@ class CommentsController extends Controller
         $commentsArray = array();
         foreach ($pagination as $comment) {
             $commentsArray[] = array(
-                'banned' => $commentService->isBanned($comment->getCommenter()),
-                'avatarHash' => md5($comment->getCommenter()->getEmail()),
-                'issueNumber' => $comment->getThread()->getSection()->getIssue()->getNumber(),
-                'comment' => $comment,
+                'banned' => $commentService->isBanned($comment[0]->getCommenter()),
+                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
+                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
+                'comment' => $comment[0],
                 'index' => $counter,
             );
 
@@ -133,12 +136,11 @@ class CommentsController extends Controller
             'pagination' => $pagination,
             'commentsArray' => $commentsArray,
             'filterForm' => $filterForm->createView(),
-            //'defaultValues' => $defaultValues,
         );
     }
 
     /**
-     * @Route("/admin/comments/set-status")
+     * @Route("/admin/comments/set-status", options={"expose"=true})
      */
     public function setStatusAction(Request $request)
     {
@@ -162,7 +164,7 @@ class CommentsController extends Controller
                 foreach ($comments as $id) {
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
                     if ($status == "deleted") {
-                        $msg = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser->getName(),
+                        $msg = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
                                     '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'new_comments');
                     } else {
                         $msg = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
@@ -181,11 +183,10 @@ class CommentsController extends Controller
     }
 
     /**
-     * @Route("/admin/comments/reply/{id}")
+     * @Route("/admin/comments/reply/{id}", options={"expose"=true})
      */
     public function replyAction(Request $request, $id)
     {
-        $translator = $this->container->get('translator');
         $em = $this->container->get('em');
 
         $values = $request->request->all();
@@ -210,6 +211,24 @@ class CommentsController extends Controller
             return new JsonResponse(array(
                 'status' => true
             ));
+        }
+    }
+
+    /**
+     * @Route("/admin/comments/delete/{id}", options={"expose"=true})
+     */
+    public function deleteCommentAction(Request $request, $id)
+    {
+        if ($request->isMethod('POST')) {
+            try {
+                $em = $this->container->get('em');
+                $em->getRepository('Newscoop\Entity\Comment')->deleteArticle($id);
+                $em->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => false));
+            }
+
+            return new JsonResponse(array('status' => true));
         }
     }
 }

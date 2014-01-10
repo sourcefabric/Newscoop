@@ -36,8 +36,9 @@ class CommentService
     public function getAllReplies($commentId)
     {
         if (!is_array($commentId)) {
-            $directReplies = $this->em->getDirectReplies($commentId);
+            $directReplies = $this->em->getRepository('Newscoop\Entity\Comment')->getDirectReplies($commentId);
             if (count($directReplies)) {
+                var_dump(array_merge(array($commentId), $this->getAllReplies($directReplies)));die;
                 return array_merge(array($commentId), $this->getAllReplies($directReplies));
             } else {
                 return array($commentId);

@@ -20,5 +20,6 @@ comments:
       reach: "Unable to reach Newscoop. Please check your internet connection."
       deletefromarticle: "Comment delete by $1 from the article $2 ($3)"
       statuschange: "Error changing comment status"
+      delete: "Could not delete this comment"
     sure: "You are about to permanently delete a comment."
     surequestion: "Are you sure you want to do it?"
