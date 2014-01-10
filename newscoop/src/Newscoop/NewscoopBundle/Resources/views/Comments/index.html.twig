@@ -18,7 +18,7 @@
     <div id="showComments">
         <form method="post" action="">
         <fieldset class="filters">
-            <legend>Show</legend>
+            <legend>{{ 'comments.label.show'|trans }}</legend>
             <ul class="list-inline">
                 <li class="new">
                     {{ form_widget(filterForm.new, { checked : app.session.get('filterNew') ? true : false }) }} {{ form_label(filterForm.new) }}
@@ -43,18 +43,18 @@
     </div>
     <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
-            <input type="text" class="form-control input-sm" placeholder="Search">
+            <input type="text" class="form-control input-sm" placeholder="{{ 'comments.label.search'|trans }}">
         </div>
-        <button type="submit" class="btn btn-default btn-sm">Submit</button>
+        <button type="submit" class="btn btn-default btn-sm">{{ 'comments.btn.submit'|trans }}</button>
     </form>
     <div class="table-responsive">
         <table class="table" id="commentsTable">
             <thead>
                 <tr>
                   <th><input class="toggle-checkbox" type="checkbox"></th>
-                  <th >{{ knp_pagination_sortable(pagination, 'Author', 'cm.name') }}</th>
-                  <th>{{ knp_pagination_sortable(pagination, 'Date / Comment', 'c.time_created') }}</th>
-                  <th>{{ knp_pagination_sortable(pagination, 'Article', 't.name') }}</th>
+                  <th >{{ knp_pagination_sortable(pagination, 'comments.label.author'|trans, 'cm.name') }}</th>
+                  <th>{{ knp_pagination_sortable(pagination, 'comments.label.date'|trans, 'c.time_created') }}</th>
+                  <th>{{ knp_pagination_sortable(pagination, 'comments.label.article'|trans, 't.name') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +78,7 @@
                             {% endif %}
                             <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
                             <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
-                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> Ban/Unban user</a>
+                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
                             <p></p>
                         </div>
                     </td>
@@ -104,11 +104,11 @@
                         </div>
                         <div class="dateCommentHolderReply">
                             <fieldset class="content-reply_{{ row.comment.id }}" style="display:none;">
-                                <h3>Reply to comment</h3>
+                                <h3>{{ 'comments.label.replyto'|trans }}</h3>
                                 <form action="{{ path('newscoop_newscoop_comments_reply', { id: row.comment.id }) }}">
-                                    <label>Subject</label>
+                                    <label>{{ 'comments.label.subject'|trans }}</label>
                                     <input name="subject" type="text" class="form-control input-sm">
-                                    <label>Comment</label>
+                                    <label>{{ 'comments.label.comment'|trans }}</label>
                                     <textarea name="message" class="form-control input-sm"></textarea>
                                     <div class="buttonBar">
                                         <input type="button" value="{{ 'comments.btn.cancel'|trans }}" id="{{ row.comment.id }}" class="btn btn-default btn-sm reply-cancel">
@@ -122,9 +122,9 @@
                         <div class="commentArticleHolder">
                             <p>
                                 <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
-                                <span>{{ row.comment.thread.publication.name }} - <b>Section</b> {{ row.comment.thread.section.name }}</span>
+                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.comment.thread.section.name }}</span>
                             </p>
-                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">Go to edit article</a> 
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a> 
                         </div>
                     </td>
                 </tr>
@@ -135,15 +135,15 @@
                             <ul>
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action new" id="comment_buttons_form_buttons_0" value="pending" data="pending_{{ row.comment.id }}" {% if row.comment.status == 'pending' %}checked {% endif %}>
-                                    <label for="pending_{{ row.comment.id }}">New</label>
+                                    <label for="pending_{{ row.comment.id }}">{{ 'comments.label.new'|trans }}</label>
                                 </li>
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action approved" data="approved_{{ row.comment.id }}" value="approved" {% if row.comment.status == 'approved' %}checked {% endif %}>
-                                    <label for="approved_{{ row.comment.id }}">Approved</label>
+                                    <label for="approved_{{ row.comment.id }}">{{ 'comments.label.approved'|trans }}</label>
                                 </li>
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
-                                    <label for="hidden_{{ row.comment.id }}">Hidden</label>
+                                    <label for="hidden_{{ row.comment.id }}">{{ 'comments.label.hidden'|trans }}</label>
                                 </li>
                                 <li><button type="button" id="{{ row.comment.id }}" class="action-reply btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span> {{ 'comments.btn.reply'| trans }}</button>
                                 </li>
@@ -183,7 +183,7 @@
             </ul>
         </div>
     </div>
-    <div class="dialogPopup dialog-1" title="Full article"></div>
+    <div class="dialogPopup dialog-1" title="{{ 'comments.label.fullarticle'|trans }}"></div>
 </div>
 <script type="text/javascript">
     $("#hoverBtns td:last-child").hover(function() {
@@ -246,7 +246,7 @@
                     flashMessage('{{ 'comments.msg.updated'|trans }}');
                     location.href = Routing.generate('newscoop_newscoop_comments_index');
                 } else {
-                    flashMessage('Error sending reply', "error");
+                    flashMessage('{{ 'comments.msg.error.reply'|trans }}', "error");
                 }
             },
             error: function (rq, status, error) {
@@ -341,7 +341,7 @@
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
                 }
             }
         });

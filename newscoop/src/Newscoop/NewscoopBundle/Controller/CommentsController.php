@@ -28,6 +28,7 @@ class CommentsController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->container->get('em');
+        $translator = $this->container->get('translator');
         $commentService = $this->container->get('newscoop_newscoop.comments_service');
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
@@ -44,18 +45,23 @@ class CommentsController extends Controller
 
         $filterForm = $this->createFormBuilder()
             ->add('new', 'checkbox', array(
+                'label' => $translator->trans('comments.label.new', array(), 'new_comments'),
                 'required'  => false,
             ))
             ->add('approved', 'checkbox', array(
+                'label' => $translator->trans('comments.label.approved', array(), 'new_comments'),
                 'required'  => false,
             ))
             ->add('hidden', 'checkbox', array(
+                'label' => $translator->trans('comments.label.hidden', array(), 'new_comments'),
                 'required'  => false,
             ))
             ->add('recommended', 'checkbox', array(
+                'label' => $translator->trans('comments.label.recommended', array(), 'new_comments'),
                 'required'  => false,
             ))
             ->add('unrecommended', 'checkbox', array(
+                'label' => $translator->trans('comments.label.unrecommended', array(), 'new_comments'),
                 'required'  => false,
             ))
             ->add('filterButton', 'submit')
