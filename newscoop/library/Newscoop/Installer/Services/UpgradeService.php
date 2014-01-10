@@ -10,19 +10,31 @@ namespace Newscoop\Installer\Services;
 
 use Newscoop\Installer\Services;
 
+/**
+ * Upgrade service
+ */
 class UpgradeService
 {
     private $newscoopDir;
     private $connection;
     private $monolog;
 
-
-	public function __construct($connection, $logger){
+    /**
+     * @param Connection $connection
+     * @param object     $logger
+     */
+    public function __construct($connection, $logger)
+    {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->connection = $connection;
         $this->logger = $logger;
-	}
+    }
 
+    /**
+     * Get info about instance database versions
+     *
+     * @return array Database verions
+     */
     public function getDBVersion()
     {
         $version = $this->connection->fetchAll('SELECT ver_value FROM Versions WHERE ver_name = "last_db_version"');
@@ -46,6 +58,15 @@ class UpgradeService
         );
     }
 
+    /**
+     * Upgrade database
+     *
+     * @param array   $versionsArray
+     * @param boolean $silent
+     * @param boolean $showRolls
+     *
+     * @return boolean
+     */
     public function upgradeDatabase($versionsArray, $silent = false, $showRolls = false)
     {
         $databaseService = new Services\DatabaseService($this->monolog);
@@ -54,12 +75,15 @@ class UpgradeService
         if ($lockFile === false) {
             return "Unable to create single process lock control!";
         }
-        if (!flock($lockFile, LOCK_EX | LOCK_NB)) { // do an exclusive lock
+        if (!flock($lockFile, LOCK_EX | LOCK_NB)) { 
+            // do an exclusive lock
             return "The upgrade process is already running.";
         }
 
-        $last_db_version = $versionsArray['version']; // keeping the last imported version throughout the upgrade process
-        $last_db_roll = $versionsArray['roll']; // keeping the last imported roll throughout the upgrade process
+        // keeping the last imported version throughout the upgrade process
+        $last_db_version = $versionsArray['version'];
+        // keeping the last imported roll throughout the upgrade process
+        $last_db_roll = $versionsArray['roll'];
 
         $first = true;
         $skipped = array();

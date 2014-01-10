@@ -34,6 +34,7 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         throw new \RuntimeException("Not in article context.");
     }
 
+    $imageService = Zend_Registry::get('container')->getService('image');
     $articleRenditions = $article->getRenditions();
     $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
     if ($articleRendition === null) {
@@ -44,9 +45,9 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
 
     if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
         $preview = $articleRendition->getRendition()->getPreview($params['width'], $params['height']);
-        $thumbnail = $preview->getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
+        $thumbnail = $preview->getThumbnail($articleRendition->getImage(), $imageService);
     } else {
-        $thumbnail = $articleRendition->getRendition()->getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
+        $thumbnail = $articleRendition->getRendition()->getThumbnail($articleRendition->getImage(), $imageService);
     }
 
     $smarty->assign('image', (object) array(
@@ -55,5 +56,6 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         'height' => $thumbnail->height,
         'caption' => $articleRendition->getImage()->getCaption(),
         'photographer' => $articleRendition->getImage()->getPhotographer(),
+        'original_url' => $articleRendition->getImage()->getPath(),
     ));
 }

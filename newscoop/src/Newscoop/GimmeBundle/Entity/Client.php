@@ -45,7 +45,7 @@ class Client extends BaseClient
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the value of id.
      *
@@ -69,7 +69,7 @@ class Client extends BaseClient
     {
         return $this->name;
     }
-    
+
     /**
      * Sets the value of name.
      *
@@ -93,7 +93,7 @@ class Client extends BaseClient
     {
         return $this->publication;
     }
-    
+
     /**
      * Sets the value of publication.
      *
