@@ -67,7 +67,7 @@
                     <td>
                         <div class="commentUserHolder">
                             <div>
-                                <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=wavatar&amp;r=g">
+                                <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
                             </div>
                             <p></p>
                             <p>
@@ -83,7 +83,7 @@
                         </div>
                     </td>
                     <td style="width: 40%;">
-                        <div class="dateCommentHolder">
+                        <div class="dateCommentHolder" id="comment-section_{{ row.comment.id }}">
                             <h4>
                                 <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
                                 <span class="commentSubject">
@@ -117,6 +117,21 @@
                                 </form>
                             </fieldset>
                         </div>
+                        <div class="dateCommentHolderEdit">
+                            <fieldset class="content-edit_{{ row.comment.id }}" style="display:none; margin-top: -30px;">
+                                <h3>{{ 'comments.label.editcomment'|trans }}</h3>
+                                <form action="{{ path('newscoop_newscoop_comments_update', { id: row.comment.id }) }}">
+                                    <label>{{ 'comments.label.subject'|trans }}</label>
+                                    <input name="subject" type="text" class="form-control input-sm">
+                                    <label>{{ 'comments.label.comment'|trans }}</label>
+                                    <textarea name="message" class="form-control input-sm"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="{{ 'comments.btn.cancel'|trans }}" id="{{ row.comment.id }}" class="btn btn-default btn-sm edit-cancel">
+                                        <input type="submit" value="{{ 'comments.btn.submit'|trans }}" class="btn btn-default btn-sm">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
                     </td>
                     <td>
                         <div class="commentArticleHolder">
@@ -144,6 +159,8 @@
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
                                     <label for="hidden_{{ row.comment.id }}">{{ 'comments.label.hidden'|trans }}</label>
+                                </li>
+                                <li><button type="button" id="{{ row.comment.id }}" class="action-edit btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> {{ 'comments.btn.edit'| trans }}</button>
                                 </li>
                                 <li><button type="button" id="{{ row.comment.id }}" class="action-reply btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span> {{ 'comments.btn.reply'| trans }}</button>
                                 </li>
@@ -232,6 +249,15 @@
     $('.action-reply').live('click', function () {
         var el = $(this);
         $('.content-reply_'+el.attr('id')).hide();
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        editDiv.hide();
+        var subject = editDiv.find("input[name=subject]").val();
+        var message = editDiv.find("textarea[name=message]").val();
+        if (subject || message) {
+            $('#comment-section_'+el.attr('id')).find('.commentSubject').text(subject);
+            $('#comment-section_'+el.attr('id')).find('.commentBody').text(message);
+        }
+
         $('.content-reply_'+el.attr('id')).toggle("fast");
     });
 
@@ -245,8 +271,10 @@
                 if (data.status) {
                     flashMessage('{{ 'comments.msg.updated'|trans }}');
                     location.href = Routing.generate('newscoop_newscoop_comments_index');
+                } else if (!status.data) {
+                    flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
                 } else {
-                    flashMessage('{{ 'comments.msg.error.reply'|trans }}', "error");
+                    flashMessage(data.status, "error");
                 }
             },
             error: function (rq, status, error) {
@@ -255,6 +283,7 @@
                 }
             }
         });
+
         return false;
     });
 
@@ -264,7 +293,69 @@
         $(form).each(function () {
             this.reset();
         });
+
+        $('.content-reply_'+el.attr('id')).slideToggle("slow");
+    });
+
+    $('.action-edit').live('click', function () {
+        var el = $(this);
+        var subject = $('#comment-section_'+el.attr('id')).find('.commentSubject');
+        var message = $('#comment-section_'+el.attr('id')).find('.commentBody');
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        editDiv.hide();
+        editDiv.find("input[name=subject]").val($.trim(subject.text()));
+        editDiv.find("textarea[name=message]").val($.trim(message.text()));
+        subject.empty();
+        message.empty();
         $('.content-reply_'+el.attr('id')).hide();
+        editDiv.toggle("fast");
+    });
+
+    $('.dateCommentHolderEdit form').live('submit', function () {
+        var that = this;
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                if (data.status) {
+                    var divSubject = $('#comment-section_'+data.comment).find('.commentSubject');
+                    var divMessage = $('#comment-section_'+data.comment).find('.commentBody');
+                    divSubject.empty();
+                    divSubject.text(data.subject);
+                    divMessage.empty();
+                    divMessage.text(data.message);
+                    $('.content-edit_'+data.comment).slideToggle("slow");
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
+                } else if (!data.status) {
+                    flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
+                } else {
+                    flashMessage(data.status, "error");
+                }
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                }
+            }
+        });
+
+        return false;
+    });
+
+    $('.dateCommentHolderEdit .edit-cancel').live('click', function () {
+        var el = $(this);
+        var form = $('.content-edit_'+el.attr('id')+' form');
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        var subject = editDiv.find("input[name=subject]").val();
+        var message = editDiv.find("textarea[name=message]").val();
+        $(form).each(function () {
+            this.reset();
+        });
+
+        $('#comment-section_'+el.attr('id')).find('.commentSubject').text(subject);
+        $('#comment-section_'+el.attr('id')).find('.commentBody').text(message);
+        $('.content-edit_'+el.attr('id')).slideToggle("slow");
     });
 
     $('.commentBtns .action-recommend').live('click', function () {
@@ -282,7 +373,7 @@
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
                 }
             }
         });
@@ -303,7 +394,7 @@
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
                 }
             }
         });
@@ -311,7 +402,7 @@
 
     // Dialog
     var buttons = {};
-    buttons['Close'] = function () {
+    buttons['{{ 'comments.btn.close'|trans }}'] = function () {
         $(this).dialog("close");
     };
 

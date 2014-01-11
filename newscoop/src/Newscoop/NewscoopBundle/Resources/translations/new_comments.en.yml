@@ -24,8 +24,9 @@ comments:
     article: "Article"
     search: "Search"
     show: "Show"
-    recommended: "recommended"
+    recommended: "Recommended"
     unrecommended: "Unrecommended"
+    editcomment: "Quick comment edit"
   btn:
     cancel: "Cancel"
     submit: "Submit"
@@ -33,6 +34,8 @@ comments:
     recommend: "Recommend"
     delete: "Delete"
     reply: "Reply"
+    edit: "Quick edit"
+    close: "Close"
   msg:
     deleted: "Comment deleted."
     commentinarticle: "Comment $4 by $1 in the article $2 ($3)"
@@ -45,7 +48,7 @@ comments:
       deletefromarticle: "Comment delete by $1 from the article $2 ($3)"
       statuschange: "Error changing comment status"
       delete: "Could not delete this comment"
-      reply: "Error sending reply"
+      update: "Fields cannot be empty"
     sure: "You are about to permanently delete a comment."
     surequestion: "Are you sure you want to do it?"
     updated: "Comment updated."

@@ -68,6 +68,10 @@ div.table-responsive {
     margin-right: 5px;
 }
 
+.edit-cancel {
+    margin-right: 5px;
+}
+
 div.form-group input {
     width: 500px;
 }

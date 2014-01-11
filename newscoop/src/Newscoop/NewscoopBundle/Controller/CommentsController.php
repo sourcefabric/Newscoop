@@ -194,11 +194,15 @@ class CommentsController extends Controller
      */
     public function replyAction(Request $request, $id)
     {
-        $em = $this->container->get('em');
-        $values = $request->request->all();
-        $comment = new Comment();
-
         if ($request->isMethod('POST')) {
+            $em = $this->container->get('em');
+            $values = $request->request->all();
+            $comment = new Comment();
+
+            if (!$values['subject'] || !$values['message']) {
+                return new JsonResponse(array('status' => false));
+            }
+
             $values['parent'] = $id;
             $values['user'] = $this->container->get('user')->getCurrentUser();
             $values['time_created'] = new \DateTime();
@@ -210,7 +214,7 @@ class CommentsController extends Controller
                 $em->flush();
             } catch (\Exception $e) {
                 return new JsonResponse(array(
-                    'status' => false
+                    'status' => $e->getMessage()
                 ));
             }
 
@@ -254,6 +258,35 @@ class CommentsController extends Controller
             }
 
             return new JsonResponse(array('status' => true));
+        }
+    }
+
+    /**
+     * @Route("/admin/comments/update/{id}", options={"expose"=true})
+     */
+    public function updateAction(Request $request, $id)
+    {
+        if ($request->isMethod('POST')) {
+            $em = $this->container->get('em');
+            $values = $request->request->all();
+            if (!$values['subject'] || !$values['message']) {
+                return new JsonResponse(array('status' => false));
+            }
+
+            try {
+                $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
+                $em->getRepository('Newscoop\Entity\Comment')->update($comment, $values);
+                $em->flush();
+            } catch (\Exception $e) {
+                return new JsonResponse(array('status' => $e->getMessage()));
+            }
+
+            return new JsonResponse(array(
+                'status' => true,
+                'comment' => $id,
+                'subject' => $values['subject'],
+                'message' => $values['message']
+            ));
         }
     }
 }
