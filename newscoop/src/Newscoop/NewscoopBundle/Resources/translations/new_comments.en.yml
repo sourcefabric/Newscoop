@@ -27,6 +27,10 @@ comments:
     recommended: "Recommended"
     unrecommended: "Unrecommended"
     editcomment: "Quick comment edit"
+    actions: "Actions"
+    selectstatus: "Select status"
+    deleted: "Deleted"
+    alert: "Alert"
   btn:
     cancel: "Cancel"
     submit: "Submit"
@@ -36,13 +40,16 @@ comments:
     reply: "Reply"
     edit: "Quick edit"
     close: "Close"
+    okay: "Ok"
   msg:
     deleted: "Comment deleted."
     commentinarticle: "Comment $4 by $1 in the article $2 ($3)"
     status:
-      new: "Comment status change to new"
-      approved: "Comment status change to approved"
-      hidden: "Comment status change to hidden"
+      new: "new"
+      approved: "approved"
+      hidden: "hidden"
+      single: "Comment status change to"
+      all: "Comments status change to"
     error:
       reach: "Unable to reach Newscoop. Please check your internet connection."
       deletefromarticle: "Comment delete by $1 from the article $2 ($3)"
@@ -50,5 +57,7 @@ comments:
       delete: "Could not delete this comment"
       update: "Fields cannot be empty"
     sure: "You are about to permanently delete a comment."
+    suremultiple: "You are about to permanently delete comments."
+    first: "Please, select comment/comments first!"
     surequestion: "Are you sure you want to do it?"
     updated: "Comment updated."

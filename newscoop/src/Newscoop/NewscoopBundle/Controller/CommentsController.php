@@ -185,7 +185,11 @@ class CommentsController extends Controller
                 return new JsonResponse(array('message' => $e->getMessage()));
             }
 
-            return new JsonResponse(array('message' => $msg));
+            return new JsonResponse(array(
+                'message' => $msg,
+                'comments' => $comments,
+                'status' => $status
+            ));
         }
     }
 

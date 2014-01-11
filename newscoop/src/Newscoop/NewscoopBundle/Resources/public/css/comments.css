@@ -114,3 +114,23 @@ fieldset ul {
 #showComments fieldset ul li#filterBtn {
     margin-top: -2px;
 }
+
+div.table-responsive {
+    padding: 0 30px 20px 30px;
+}
+
+.status-actions {
+    margin: 15px 30px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    height: 85px;
+}
+
+#paging {
+    margin-left: 15px;
+}
+
+.modal-body {
+    font-size: 14px;
+    color: #a94442;
+}

@@ -9,9 +9,7 @@
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 {% endblock %}
 
-{% block admin_scripts %}
-
-{% endblock %}
+{% block admin_scripts %}{% endblock %}
 
 {% block admin_content %}
 <div class="plugin-container">
@@ -41,12 +39,33 @@
         </fieldset>
         </form>
     </div>
-    <form class="navbar-form navbar-left" role="search">
+    <form class="navbar-form navbar-left" role="search" style="width: 100%;">
         <div class="form-group">
             <input type="text" class="form-control input-sm" placeholder="{{ 'comments.label.search'|trans }}">
         </div>
         <button type="submit" class="btn btn-default btn-sm">{{ 'comments.btn.submit'|trans }}</button>
     </form>
+    <div id="actionExtender">
+        <fieldset class="status-actions">
+            <legend>{{ 'comments.label.actions'|trans }}</legend>
+            <select style="width: 300px" class="form-control input-sm actions">
+                <option value="">{{ 'comments.label.selectstatus'|trans }}</option>
+                <option value="pending">{{ 'comments.label.new'|trans }}</option>
+                <option value="approved">{{ 'comments.label.approved'|trans }}</option>
+                <option value="hidden">{{ 'comments.label.hidden'|trans }}</option>
+                <option value="deleted">{{ 'comments.label.deleted'|trans }}</option>
+            </select>
+        </fieldset>
+    </div>
+    <div class="row" id="paging">
+            <div class="col-xs-3 col-sm-4 col-md-5">
+                <div class="dataTables_info" id="commentsTable_info">
+                    {{ 'comments.label.showing'|trans }}
+                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                </div>
+            </div>
+            <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
+    </div>
     <div class="table-responsive">
         <table class="table" id="commentsTable">
             <thead>
@@ -202,7 +221,44 @@
     </div>
     <div class="dialogPopup dialog-1" title="{{ 'comments.label.fullarticle'|trans }}"></div>
 </div>
+
+<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">{{ 'comments.label.alert'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+        <b>{{ 'comments.msg.first'|trans }}</b>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'comments.btn.close'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script type="text/javascript">
+    function changeCommentStatus(status, value) {
+        if (status == 'approved') {
+            $('input[data=approved_'+value+']').prop('checked', true);
+            $('input[data=hidden_'+value+']').prop('checked', false);
+            $('input[data=pending_'+value+']').prop('checked', false);
+        }
+
+        if (status == 'hidden') {
+            $('input[data=approved_'+value+']').prop('checked', false);
+            $('input[data=hidden_'+value+']').prop('checked', true);
+            $('input[data=pending_'+value+']').prop('checked', false);
+        }
+
+        if (status == 'pending') {
+            $('input[data=approved_'+value+']').prop('checked', false);
+            $('input[data=hidden_'+value+']').prop('checked', false);
+            $('input[data=pending_'+value+']').prop('checked', true);
+        }
+    };
+
     $("#hoverBtns td:last-child").hover(function() {
         $(this).children('div').show();
     }, function() {
@@ -228,14 +284,14 @@
             },
             success: function (data) {
                 if ('deleted' == status) {
-                    flashMessage('{{ 'comments.msg.deleted'|trans }}');
+                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.deleted'|trans }}');
                     location.href = Routing.generate('newscoop_newscoop_comments_index');
                 } else if (status == 'pending') {
-                    flashMessage('{{ 'comments.msg.status.new'|trans }}');
+                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
                 } else if (status == 'approved') {
-                    flashMessage('{{ 'comments.msg.status.approved'|trans }}');
+                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
                 } else if (status == 'hidden') {
-                    flashMessage('{{ 'comments.msg.status.hidden'|trans }}');
+                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
                 }
             },
             error: function (rq, status, error) {
@@ -398,6 +454,64 @@
                 }
             }
         });
+    });
+
+    $('.toggle-checkbox').click(function() {
+        $(this).parents('table').find('.table-checkbox').prop('checked', this.checked);
+    });
+
+    $('.actions').change(function () {
+        action = $(this);
+        var status = action.val();
+        if (status != '') {
+            ids = [];
+            $('.table-checkbox:checked').each(function () {
+                ids[ids.length] = $(this).val();
+            });
+            action.val('');
+            if (!ids.length) {
+                $('#modalAlert').modal();
+                return false;
+            }
+            var translationComment = '{{ 'comments.msg.status.single'|trans }}';
+            if (ids.length != 1) {
+                if (status == 'deleted' && !confirm('{{ 'comments.msg.suremultiple'|trans }}' + '\n' + '{{ 'comments.msg.surequestion'|trans }}')) {
+                    return false;
+                }
+
+                translationComment = '{{ 'comments.msg.status.all'|trans }}';
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setstatus'),
+                data: {
+                    "comment": ids,
+                    "status": status
+                },
+                success: function (data) {
+                    $.each(data.comments, function(index, value) {
+                        changeCommentStatus(data.status, value);
+                    });
+
+                    if ('deleted' == status) {
+                        flashMessage(translationComment+' {{ 'comments.msg.deleted'|trans }}');
+                        location.href = Routing.generate('newscoop_newscoop_comments_index');
+                    } else if (status == 'pending') {
+                        flashMessage(translationComment+' {{ 'comments.msg.status.new'|trans }}');
+                    } else if (status == 'approved') {
+                        flashMessage(translationComment+' {{ 'comments.msg.status.approved'|trans }}');
+                    } else if (status == 'hidden') {
+                        flashMessage(translationComment+' {{ 'comments.msg.status.hidden'|trans }}');
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
+                }
+            });
+        }
     });
 
     // Dialog
