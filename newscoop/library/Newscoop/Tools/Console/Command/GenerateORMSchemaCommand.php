@@ -32,7 +32,7 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         $this
             ->setName('newscoop:generateOrmSchema')
             ->setDescription('Generates SQL for an ORM Entity')
-            ->addArgument('entity', null, InputArgument::REQUIRED, 'Entity');
+            ->addArgument('entity', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'Single or Multiple Entities');
     }
 
     /**
@@ -43,9 +43,9 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
 
-        $classMetaData = array(
-            $em->getClassMetadata($input->getArgument('entity'))
-        );
+        foreach ($input->getArgument('entity') as $entity) {
+            $classMetaData[] = $em->getClassMetadata($entity);   
+        }
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
         $schema = $tool->getCreateSchemaSql($classMetaData, true);
