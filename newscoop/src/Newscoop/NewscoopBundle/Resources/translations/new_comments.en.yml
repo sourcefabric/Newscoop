@@ -41,6 +41,7 @@ comments:
     edit: "Quick edit"
     close: "Close"
     okay: "Ok"
+    filter: "Filter"
   msg:
     deleted: "Comment deleted."
     commentinarticle: "Comment $4 by $1 in the article $2 ($3)"

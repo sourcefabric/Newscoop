@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
+use Newscoop\NewscoopBundle\Form\Type\CommentsFilterType;
 
 /**
  * Comments controller.
@@ -42,78 +43,96 @@ class CommentsController extends Controller
             ->orderBy('c.time_created', 'desc');
 
         $session = $request->getSession();
-
-        $filterForm = $this->createFormBuilder()
-            ->add('new', 'checkbox', array(
-                'label' => $translator->trans('comments.label.new', array(), 'new_comments'),
-                'required'  => false,
-            ))
-            ->add('approved', 'checkbox', array(
-                'label' => $translator->trans('comments.label.approved', array(), 'new_comments'),
-                'required'  => false,
-            ))
-            ->add('hidden', 'checkbox', array(
-                'label' => $translator->trans('comments.label.hidden', array(), 'new_comments'),
-                'required'  => false,
-            ))
-            ->add('recommended', 'checkbox', array(
-                'label' => $translator->trans('comments.label.recommended', array(), 'new_comments'),
-                'required'  => false,
-            ))
-            ->add('unrecommended', 'checkbox', array(
-                'label' => $translator->trans('comments.label.unrecommended', array(), 'new_comments'),
-                'required'  => false,
-            ))
-            ->add('filterButton', 'submit')
-        ->getForm();
-
+        $filterForm = $this->container->get('form.factory')->create(new CommentsFilterType(), array(), array());
         $statusMap = array(
             'approved' => 0,
             'new' => 1,
             'hidden' => 2,
         );
 
+        //$session->set('commentsFilters', array());
         $filterForm->handleRequest($request);
-
+        $filtersArray = array();
         if ($filterForm->isValid()) {
             $data = $filterForm->getData();
-            $session->set('filterNew', null);
+            $session->set('commentsFilters', null);
             if ($data['new']) {
-                $commentService->checkFilter($statusMap['new'], $queryBuilder);
-                $session->set('filterNew', $statusMap['new']);
+                //$commentService->checkFilter($statusMap['new'], $queryBuilder);
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('c.status', $statusMap['new']));
+                $filtersArray['filterNew'] = $statusMap['new'];
             }
 
-            $session->set('filterRecommended', null);
+            //$session->set('filterRecommended', null);
             if ($data['recommended']) {
-                $commentService->checkFilterRecommended($data['recommended'], $queryBuilder);
-                $session->set('filterRecommended', $data['recommended']);
+                //$commentService->checkFilterRecommended($data['recommended'], $queryBuilder);
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('c.recommended', $data['recommended']));
+                $filtersArray['filterRecommended'] = $data['recommended'];
             }
 
-            $session->set('filterUnrecommended', null);
+           // $session->set('filterUnrecommended', null);
             if ($data['unrecommended']) {
-                $commentService->checkFilterRecommended($data['unrecommended'], $queryBuilder);
-                $session->set('filterUnrecommended', $data['unrecommended']);
+                //$commentService->checkFilterRecommended($data['unrecommended'], $queryBuilder);
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('c.recommended', $data['unrecommended']));
+                $filtersArray['filterUnrecommended'] = $data['unrecommended'];
             }
 
-            $session->set('filterHidden', null);
+            //$session->set('filterHidden', null);
             if ($data['hidden']) {
-                $commentService->checkFilter($statusMap['hidden'], $queryBuilder);
-                $session->set('filterHidden', $statusMap['hidden']);
+                //$commentService->checkFilter($statusMap['hidden'], $queryBuilder);
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('c.status', $statusMap['hidden']));
+                $filtersArray['filterHidden'] = $statusMap['hidden'];
             }
 
-            $session->set('filterApproved', null);
+            //$session->set('filterApproved', null);
             if ($data['approved']) {
-                $commentService->checkFilter($statusMap['approved'], $queryBuilder);
-                $session->set('filterApproved', $statusMap['approved']);
+                //$commentService->checkFilter($statusMap['approved'], $queryBuilder);
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('c.status', $statusMap['approved']));
+                $filtersArray['filterApproved'] = $statusMap['approved'];
+            }
+
+            if ($data['recommended'] && $data['unrecommended']) {
+                $queryBuilder->andWhere($queryBuilder->expr()->orX(
+                    $queryBuilder->expr()->eq('c.recommended', $data['unrecommended']),
+                    $queryBuilder->expr()->eq('c.recommended', $data['recommended'])
+                ));
             }
         }
+try {
+        if (array_key_exists('filterNew', $session->get('commentsFilters'))) {
+            //$commentService->checkFilter($session->get('commentsFilters')['filterNew'], $queryBuilder);
+            $queryBuilder->orWhere($queryBuilder->expr()->eq('c.status', $session->get('commentsFilters')['filterNew']));
+        }
+        //$commentService->checkFilter(null, $queryBuilder);
+        if (array_key_exists('filterHidden', $session->get('commentsFilters'))) {
+            //$commentService->checkFilter($session->get('commentsFilters')['filterHidden'], $queryBuilder);
+            $queryBuilder->orWhere($queryBuilder->expr()->eq('c.status', $session->get('commentsFilters')['filterHidden']));
+        }
+       // $commentService->checkFilter(null, $queryBuilder);
+        if (array_key_exists('filterApproved', $session->get('commentsFilters'))) {
+            //var_dump($session->get('commentsFilters')['filterApproved']);
+            //$commentService->checkFilter($session->get('commentsFilters')['filterApproved'], $queryBuilder);
+            $queryBuilder->orWhere($queryBuilder->expr()->eq('c.status', $session->get('commentsFilters')['filterApproved']));
+        }
+        if (array_key_exists('filterRecommended', $session->get('commentsFilters'))) {
+            //$commentService->checkFilterRecommended($session->get('commentsFilters')['filterRecommended'], $queryBuilder);
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('c.recommended', $session->get('commentsFilters')['filterRecommended']));
+        }
+        if (array_key_exists('filterUnrecommended', $session->get('commentsFilters'))) {
+            //$commentService->checkFilterRecommended($session->get('commentsFilters')['filterUnrecommended'], $queryBuilder);
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('c.recommended', $session->get('commentsFilters')['filterUnrecommended']));
+        }
 
-        $commentService->checkFilter($session->get('filterNew'), $queryBuilder);
-        $commentService->checkFilter($session->get('filterHidden'), $queryBuilder);
-        $commentService->checkFilter($session->get('filterApproved'), $queryBuilder);
-        $commentService->checkFilterRecommended($session->get('filterRecommended'), $queryBuilder);
-        $commentService->checkFilterRecommended($session->get('filterUnrecommended'), $queryBuilder);
+        if (array_key_exists('filterUnrecommended', $session->get('commentsFilters')) && array_key_exists('filterRecommended', $filtersArray)) {
+            //$commentService->checkFilterRecommended($session->get('commentsFilters')['filterUnrecommended'], $queryBuilder);
+            $queryBuilder->andWhere($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->eq('c.recommended', $session->get('commentsFilters')['filterRecommended']),
+                $queryBuilder->expr()->eq('c.recommended', $session->get('commentsFilters')['filterUnrecommended'])
+            ));
+        }
+    }catch(\Exception $e) {
 
+    }
+        $session->set('commentsFilters', $filtersArray);
         $comments = $queryBuilder->getQuery();
 
         $paginator = $this->get('knp_paginator');
@@ -171,10 +190,10 @@ class CommentsController extends Controller
                 foreach ($comments as $id) {
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
                     if ($status == "deleted") {
-                        $msg = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
+                        $message = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
                                     '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'new_comments');
                     } else {
-                        $msg = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
+                        $message = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
                                     '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status), 'new_comments');
                     }
                 }
@@ -186,7 +205,7 @@ class CommentsController extends Controller
             }
 
             return new JsonResponse(array(
-                'message' => $msg,
+                'message' => $message,
                 'comments' => $comments,
                 'status' => $status
             ));

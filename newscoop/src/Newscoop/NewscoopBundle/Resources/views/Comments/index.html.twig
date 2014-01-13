@@ -18,20 +18,21 @@
         <fieldset class="filters">
             <legend>{{ 'comments.label.show'|trans }}</legend>
             <ul class="list-inline">
+                {% set filter = app.session.get('commentsFilters') %}
                 <li class="new">
-                    {{ form_widget(filterForm.new, { checked : app.session.get('filterNew') ? true : false }) }} {{ form_label(filterForm.new) }}
+                    {{ form_widget(filterForm.new, { checked : filter['filterNew'] is defined ? true : false }) }} {{ form_label(filterForm.new) }}
                 </li>
                 <li class="approved">
-                    {{ form_widget(filterForm.approved, { checked : app.session.get('filterApproved') ? true : false }) }} {{ form_label(filterForm.approved) }}
+                    {{ form_widget(filterForm.approved, { checked : filter['filterApproved'] is defined ? true : false }) }} {{ form_label(filterForm.approved) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.hidden, { checked : app.session.get('filterHidden') ? true : false }) }} {{ form_label(filterForm.hidden) }}
+                    {{ form_widget(filterForm.hidden, { checked : filter['filterHidden'] is defined ? true : false }) }} {{ form_label(filterForm.hidden) }}
                 </li>
                 <li class="hidden">
-                   {{ form_widget(filterForm.recommended, { checked : app.session.get('filterRecommended') ? true : false }) }} {{ form_label(filterForm.recommended) }}
+                   {{ form_widget(filterForm.recommended, { checked : filter['filterRecommended'] is defined ? true : false }) }} {{ form_label(filterForm.recommended) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.unrecommended, { checked : app.session.get('filterUnrecommended') ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
+                    {{ form_widget(filterForm.unrecommended, { checked : filter['filterUnrecommended'] is defined ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
                 </li>
                 <li id="filterBtn">{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-sm'} }) }}</li>
                 {{ form_rest(filterForm) }}
@@ -222,15 +223,15 @@
     <div class="dialogPopup dialog-1" title="{{ 'comments.label.fullarticle'|trans }}"></div>
 </div>
 
-<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="modalAlertLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">{{ 'comments.label.alert'|trans }}</h4>
+        <h4 class="modal-title" id="modalAlertLabel">{{ 'comments.label.alert'|trans }}</h4>
       </div>
       <div class="modal-body">
-        <b>{{ 'comments.msg.first'|trans }}</b>
+        {{ 'comments.msg.first'|trans }}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'comments.btn.close'|trans }}</button>
