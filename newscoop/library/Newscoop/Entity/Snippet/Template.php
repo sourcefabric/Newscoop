@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping AS ORM;
 /**
  * Snippet Template entity
  * @ORM\Entity
- * @ORM\Table(name="SnippetTemplate")
+ * @ORM\Table(name="SnippetTemplates")
  */
 class Template
 {

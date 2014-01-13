@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping AS ORM;
 /**
  * Snippet entity
  * @ORM\Entity
- * @ORM\Table(name="Snippet")
+ * @ORM\Table(name="Snippets")
  */
 class Snippet
 {
@@ -27,7 +27,7 @@ class Snippet
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template")
-     * @ORM\JoinColumn(name="IdSnippetTemplate", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\Template
      */
     private $template;
