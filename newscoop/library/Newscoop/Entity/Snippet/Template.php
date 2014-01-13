@@ -31,13 +31,13 @@ class Template
     protected $id;
 
     /**
-     * @ORM\Column(name="Name")
+     * @ORM\Column(name="Name", type="string")
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(name="Template")
+     * @ORM\Column(name="Template", type="text")
      * @var text
      */
     private $template;

@@ -38,13 +38,13 @@ class Snippet
     private $template;
 
     /**
-     * @ORM\Column(name="Name")
+     * @ORM\Column(name="Name", type="string")
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(name="Snippet")
+     * @ORM\Column(name="Snippet", type="text")
      * @var text
      */
     private $snippet;
