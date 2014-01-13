@@ -27,25 +27,22 @@ function smarty_block_debate_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 
     if (isset($p_content)) {
 
-	    // gets the context variable
-	    $campsite = $p_smarty->getTemplateVars('gimme');
-	    $html = '';
+        // gets the context variable
+        $campsite = $p_smarty->getTemplateVars('gimme');
+        $html = '';
 
-	    if (isset($p_params['template'])) {
-	        $template = new MetaTemplate($p_params['template']);
-	        if (!$template->defined()) {
-	            $template = null;
-	        }
-	    }
-	    $templateId = is_null($template) ? $campsite->template->identifier : $template->identifier;
-	    if (!isset($p_params['submit_button'])) {
-	        $p_params['submit_button'] = 'Submit';
-	    }
-	    if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
-	        $p_params['html_code'] = '';
-	    }
-	    if ($p_params['ajax'] == true && !Input::Get('f_debate_ajax_request')) {
-	       $html .=
+        if (isset($p_params['template'])) {
+            $template = new Template($p_params['template']);
+        }
+        $templateId = is_null($template) ? $campsite->template->identifier : $template->getTemplateId();
+        if (!isset($p_params['submit_button'])) {
+            $p_params['submit_button'] = 'Submit';
+        }
+        if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
+            $p_params['html_code'] = '';
+        }
+        if ($p_params['ajax'] == true && !Input::Get('f_debate_ajax_request')) {
+           $html .=
 '
 <script language="javascript" src="/js/jquery/jquery.min.js"></script>
 <script language="javascript"><!--
@@ -64,15 +61,15 @@ function debate_'.$campsite->debate->identifier.'_vote()
 }
 //--></script>
 ';
-	       $html .= '<div id="debate_'.$campsite->debate->identifier.'_div">';
+           $html .= '<div id="debate_'.$campsite->debate->identifier.'_div">';
 
-	       $mode_tag = "<input type=\"hidden\" name=\"f_debate_mode\" value=\"ajax\" />\n";
-	    } else {
-	       $mode_tag = "<input type=\"hidden\" name=\"f_debate_mode\" value=\"standard\" />\n";
-	    }
+           $mode_tag = "<input type=\"hidden\" name=\"f_debate_mode\" value=\"ajax\" />\n";
+        } else {
+           $mode_tag = "<input type=\"hidden\" name=\"f_debate_mode\" value=\"standard\" />\n";
+        }
 
         $url = $campsite->url;
-        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
+        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->getName());
 
         $html .= "<form name=\"debate\" id=\"debate_{$campsite->debate->identifier}_form\" action=\"" . $url->uri . "\" method=\"post\">\n";
 
@@ -89,21 +86,21 @@ function debate_'.$campsite->debate->identifier.'_vote()
         $html .= $p_content;
 
         if (strlen($p_params['submit_button']) && $campsite->debate->is_votable) {
-	        $html .= "<div align=\"center\">\n.
-	        		 <input type=\"submit\" name=\"f_debate\" value=\"".
-	        		 smarty_function_escape_special_chars($p_params['submit_button']).
-	            	 "\" ".
-	            	 $p_params['html_code']." />\n".
-	            	 "</div>\n";
+            $html .= "<div align=\"center\">\n.
+                     <input type=\"submit\" name=\"f_debate\" value=\"".
+                     smarty_function_escape_special_chars($p_params['submit_button']).
+                     "\" ".
+                     $p_params['html_code']." />\n".
+                     "</div>\n";
         }
 
         $html .= "</form>\n";
 
-	    if ($p_params['div'] == true && !Input::Get('f_debate_ajax_request')) {
-	       $html .= '</div>';
-	    }
+        if ($p_params['div'] == true && !Input::Get('f_debate_ajax_request')) {
+           $html .= '</div>';
+        }
 
         return $html;
-	}
+    }
 } // fn smarty_block_debate_form
 
