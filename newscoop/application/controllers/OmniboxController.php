@@ -51,8 +51,6 @@ class OmniboxController extends Zend_Controller_Action
                 $this->view->response = $translator->trans('Login failed.');
             }
        }
-
-       $this->view->thumbnail = $this->view->preview->getThumbnail($image, Zend_Registry::get('container')->getService('image'));
     }
 
 	public function logoutAction()
