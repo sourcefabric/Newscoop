@@ -32,6 +32,7 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         $this
             ->setName('newscoop:generateOrmSchema')
             ->setDescription('Generates SQL for an ORM Entity')
+            ->addOption('alter', null, InputOption::VALUE_NONE, 'If set, the task will output ALTER SQL')
             ->addArgument('entity', InputArgument::IS_ARRAY | InputArgument::REQUIRED, 'Single or Multiple Entities');
     }
 
@@ -51,8 +52,13 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
         $em->getProxyFactory()->generateProxyClasses($entityMetaClasses, __DIR__ . '/../../../../../library/Proxy/');
-        $tool->updateSchema($entityMetaClasses, true);
-        $schema = $tool->getCreateSchemaSql($entityMetaClasses, true);
+
+        if ($input->getOption('alter')) {
+            $schema = $tool->getUpdateSchemaSql($entityMetaClasses, true);
+        } else {
+            $schema = $tool->getCreateSchemaSql($entityMetaClasses, true);
+        }
+
         $output->writeln($schema);
     }
 }
