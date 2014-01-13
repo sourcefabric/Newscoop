@@ -51,12 +51,12 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         }
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $em->getProxyFactory()->generateProxyClasses($entityMetaClasses, __DIR__ . '/../../../../../library/Proxy/');
+        // $em->getProxyFactory()->generateProxyClasses($entityMetaClasses, __DIR__ . '/../../../../../library/Proxy/');
 
         if ($input->getOption('alter')) {
-            $schema = $tool->getUpdateSchemaSql($entityMetaClasses, true);
+            $schema = $tool->getUpdateSchemaSql($entityMetaClasses);
         } else {
-            $schema = $tool->getCreateSchemaSql($entityMetaClasses, true);
+            $schema = $tool->getCreateSchemaSql($entityMetaClasses);
         }
 
         $output->writeln($schema);
