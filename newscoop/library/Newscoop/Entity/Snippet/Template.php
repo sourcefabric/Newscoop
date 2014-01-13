@@ -23,7 +23,7 @@ class Template
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\Column(name="Name", type="string")

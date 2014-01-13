@@ -43,12 +43,16 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
 
+        $entityMetaClasses = array();
+
         foreach ($input->getArgument('entity') as $entity) {
-            $classMetaData[] = $em->getClassMetadata($entity);   
+            $entityMetaClasses[] = $em->getClassMetadata($entity);   
         }
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $schema = $tool->getCreateSchemaSql($classMetaData, true);
+        $em->getProxyFactory()->generateProxyClasses($entityMetaClasses, __DIR__ . '/../../../../../library/Proxy/');
+        $tool->updateSchema($entityMetaClasses, true);
+        $schema = $tool->getCreateSchemaSql($entityMetaClasses, true);
         $output->writeln($schema);
     }
 }

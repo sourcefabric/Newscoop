@@ -23,7 +23,7 @@ class Snippet
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    protected $id;
+    private $id;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template")
