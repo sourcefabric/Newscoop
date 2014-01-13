@@ -38,6 +38,24 @@ class Template
     private $template;
 
     /**
+     * @ORM\Column(name="Favourite", type="boolean")
+     * @var boolean
+     */
+    private $favourite;
+
+    /**
+     * @ORM\Column(name="IconInactive", type="text")
+     * @var text base64 encoded image
+     */
+    private $iconInactive;
+
+    /**
+     * @ORM\Column(name="IconActive", type="text")
+     * @var text base64 encoded image
+     */
+    private $iconActive;
+
+    /**
      * Getter for id
      *
      * @return int
@@ -108,5 +126,76 @@ class Template
     
         return $this;
     }
+
+    /**
+     * Getter for favourite
+     *
+     * @return boolean
+     */
+    public function getFavourite()
+    {
+        return $this->favourite;
+    }
     
+    /**
+     * Setter for favourite
+     *
+     * @param boolean $favourite
+     *
+     * @return Newscoop\Entity\Snippet\Template
+     */
+    public function setFavourite($favourite)
+    {
+        $this->favourite = $favourite;
+    
+        return $this;
+    }
+    
+    /**
+     * Getter for iconInactive
+     *
+     * @return text base64 encoded image
+     */
+    public function getIconInactive()
+    {
+        return $this->iconInactive;
+    }
+    
+    /**
+     * Setter for iconInactive
+     *
+     * @param text base64 encoded image $iconInactive
+     *
+     * @return Newscoop\Entity\Snippet\Template
+     */
+    public function setIconInactive($iconInactive)
+    {
+        $this->iconInactive = $iconInactive;
+    
+        return $this;
+    }
+
+    /**
+     * Getter for iconActive
+     *
+     * @return text base64 encoded image
+     */
+    public function getIconActive()
+    {
+        return $this->iconActive;
+    }
+    
+    /**
+     * Setter for iconActive
+     *
+     * @param text base64 encoded image $iconInactive
+     *
+     * @return Newscoop\Entity\Snippet\Template
+     */
+    public function setIconActive($iconActive)
+    {
+        $this->iconActive = $iconActive;
+    
+        return $this;
+    }
 }
