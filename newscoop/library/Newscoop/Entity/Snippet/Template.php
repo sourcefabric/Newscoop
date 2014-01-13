@@ -18,11 +18,6 @@ use Doctrine\ORM\Mapping AS ORM;
 class Template
 {
     /**
-     * Provides the class name as a constant.
-     */
-    const NAME = __CLASS__;
-
-    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="Id", type="integer")
