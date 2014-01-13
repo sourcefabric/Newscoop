@@ -301,7 +301,7 @@ class Article
      *  )
      * @var Newscoop\Entity\Snippet
      */
-    private $snippet;
+    private $snippets;
 
     /**
      * @var ArticleData
