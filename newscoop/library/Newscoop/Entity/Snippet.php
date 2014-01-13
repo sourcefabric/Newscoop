@@ -3,7 +3,7 @@
  * @package Newscoop
  * @copyright 2014 Sourcefabric o.p.s.
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity;
@@ -25,7 +25,7 @@ class Snippet
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="Id", type="integer")
      * @var int
      */
     protected $id;
