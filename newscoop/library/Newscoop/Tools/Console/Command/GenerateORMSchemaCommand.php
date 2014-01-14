@@ -39,7 +39,7 @@ class GenerateORMSchemaCommand extends Console\Command\Command
     /**
      * @see Console\Command\Command
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getApplication()->getKernel()->getContainer();
         $em = $container->getService('em');
@@ -51,7 +51,6 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         }
         
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        // $em->getProxyFactory()->generateProxyClasses($entityMetaClasses, __DIR__ . '/../../../../../library/Proxy/');
 
         if ($input->getOption('alter')) {
             $schema = $tool->getUpdateSchemaSql($entityMetaClasses);
