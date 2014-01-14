@@ -94,9 +94,9 @@ class ContextBoxArticle extends DatabaseObject
             $sql = 'SELECT fk_article_no FROM context_articles'
                 . ' WHERE fk_context_id = ' . $params['context_box']
                 . ' ORDER BY id';
-            if ($p_limit > 0) {
-                $sql .= ' LIMIT ' . $p_limit;
-            }
+        }
+        if ($p_limit > 0) {
+            $sql .= ' LIMIT ' . $p_limit;
         }
 
         $returnArray = array();
