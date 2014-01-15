@@ -246,49 +246,7 @@ $app->get('/process', function (Request $request) use ($app) {
 
 $app->get('/demo-site', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
-<<<<<<< HEAD
-        $sampleTemplates = array(
-            'set_quetzal' => array(
-                'name' => 'Quetzal',
-                'description' => 'Quetzal<br/>Theme for Newscoop Version 4'
-            ),
-            'set_rockstar' => array(
-                'name' => 'Rockstar',
-                'description' => 'Rockstar<br/>Theme for Newscoop Version 4'
-            ),
-            'set_the_new_custodian' => array(
-                'name' => 'The New Custodian',
-                'description' => 'The New Custodian<br/>Theme for Newscoop Version 4'
-            ),
-        );
 
-        $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array(
-                'server_name' => 'localhost',
-                'database_name' => 'newscoop',
-                'server_port' => '3306'
-            ))
-            ->add('demo_template', 'choice', array(
-                'choices'   => array(
-                    array('no'   => 'No thanks')
-                )+array_map(function($template, $key) {
-                    return array($key => $template['name']);
-                }, $sampleTemplates, array_keys($sampleTemplates)),
-                'expanded'  => true,
-            ))
-            ->getForm();
-
-        if ('POST' == $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-
-                if ($data['demo_template'] != 'no') {
-                    $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                    $app['demosite_service']->copyTemplate($data['demo_template']);
-                    $app['demosite_service']->installEmptyTheme();
-                }
-=======
     $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
         ->add('demo_template', 'choice', array(
             'choices'   => array(
@@ -299,7 +257,6 @@ $app->get('/demo-site', function (Request $request) use ($app) {
             'expanded'  => true,
         ))
         ->getForm();
->>>>>>> ccb06cc6df5a9791a7009c70f8fb606a94df2594
 
     if ('POST' == $request->getMethod()) {
         $form->bind($request);
@@ -321,12 +278,7 @@ $app->get('/demo-site', function (Request $request) use ($app) {
 ->bind('demo-site');
 
 $app->get('/post-process', function (Request $request) use ($app) {
-<<<<<<< HEAD
-
-    $app['finish_service']->saveCronjobs($app['db']);
-=======
     $app['finish_service']->saveCronjobs();
->>>>>>> ccb06cc6df5a9791a7009c70f8fb606a94df2594
     $app['finish_service']->generateProxies();
     $app['finish_service']->reloadRenditions();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);

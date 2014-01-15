@@ -1,0 +1,69 @@
+Newscoop\Image\LocalImage:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: id
+        location:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: location
+        basename:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: basename
+        thumbnailPath:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: thumbnailPath
+        url:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: url
+        description:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: description
+        width:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: width
+        height:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: height
+        photographer:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: photographer
+        photographerUrl:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: photographerUrl
+        place:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: place

@@ -77,6 +77,9 @@ jms_serializer:
             Newscoop_Package:
                 namespace_prefix: Newscoop\Package
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Image:
+                namespace_prefix: Newscoop\Image
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
 # SensioExtraBundle Configuration

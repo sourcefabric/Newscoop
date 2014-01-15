@@ -27,7 +27,7 @@ final class MetaImage extends MetaDbObject {
         $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
         $this->m_properties['last_update'] = 'LastModified';
-        $this->m_properties['caption'] = 'Caption';
+        $this->m_properties['caption'] = 'Description';
 
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';

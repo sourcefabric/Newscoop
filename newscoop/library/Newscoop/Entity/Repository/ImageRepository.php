@@ -34,6 +34,24 @@ class ImageRepository extends EntityRepository
         return $query->getResult();
     }
 
+    public function getImages()
+    {
+        $query = $this->createQueryBuilder('i')
+            ->getQuery();
+
+        return $query;
+    }
+
+    public function getImage($number)
+    {
+        $query = $this->createQueryBuilder('i')
+            ->andWhere('i.id = :number')
+            ->setParameter('number', $number)
+            ->getQuery();
+
+        return $query;
+    }
+
     /**
      * Get count of references for given file
      *

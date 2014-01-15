@@ -133,8 +133,13 @@ parameters:
         type: "bloginfo"
         article_type: "blog"
     image:
+        image_path: "%application_path%/../images/"
+        image_prefix: "cms-image-"
+        thumbnail_path: "%application_path%/../images/thumbnails/"
+        thumbnail_prefix: "cms-thumb-"
+        thumbnail_max_size: "64"
         cache_url: "images/cache"
-        cache_path: "%application_path%/../images/cache"
+        cache_path: "%application_path%/../images/cache/"
     search:
         solr_server: "http://localhost:8983/solr"
     subscriptions.service.class: "Newscoop\Services\SubscriptionService"

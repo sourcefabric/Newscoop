@@ -30,9 +30,9 @@ class FormatJsonResponseListener
             return;
         }
 
+        $response = $event->getResponse();
         $responseData = $event->getResponse()->getContent();
-        $formatedJson = Json::indent($responseData);
-        $newResponse = new Response($formatedJson);
-        $event->setResponse($newResponse);
+        $response->setContent(Json::indent($responseData));
+        $event->setResponse($response);
     }
 }

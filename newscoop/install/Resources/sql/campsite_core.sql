@@ -777,7 +777,6 @@ CREATE TABLE `Images` (
   `Description` varchar(255) NOT NULL DEFAULT '',
   `Photographer` varchar(255) NOT NULL DEFAULT '',
   `Place` varchar(255) NOT NULL DEFAULT '',
-  `Caption` varchar(255) NOT NULL DEFAULT '',
   `Date` date NOT NULL DEFAULT '0000-00-00',
   `ContentType` varchar(64) NOT NULL DEFAULT '',
   `Location` enum('local','remote') NOT NULL DEFAULT 'local',
@@ -796,7 +795,6 @@ CREATE TABLE `Images` (
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),
   FULLTEXT KEY `Place` (`Place`),
-  FULLTEXT KEY `Caption` (`Caption`),
   INDEX (`is_updated_storage`, `Location`, `ImageFileName`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
