@@ -17,8 +17,6 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\Connection;
 
-define("DIR_SEP", DIRECTORY_SEPARATOR);
-
 /**
  * Install newscoop with command line
  */
