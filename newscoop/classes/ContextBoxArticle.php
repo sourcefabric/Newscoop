@@ -89,7 +89,8 @@ class ContextBoxArticle extends DatabaseObject
                 . ' WHERE b.id = (SELECT c.fk_context_id '
                 . '     FROM Articles a, context_articles c '
                 . '     WHERE c.fk_article_no = ' . $params['article']
-                . '     AND a.Number = c.fk_article_no ORDER BY id LIMIT 1)';
+                . '     AND a.Number = c.fk_article_no)'
+                . ' ORDER BY a0.PublishDate DESC';
         } else {
             $sql = 'SELECT fk_article_no FROM context_articles'
                 . ' WHERE fk_context_id = ' . $params['context_box']
@@ -114,15 +115,15 @@ class ContextBoxArticle extends DatabaseObject
 
     public static function OnArticleCopy($origArticle, $destArticle)
     {
-     
+
         global $g_ado_db;
-     
+
         $contextBox = new ContextBox(null, $destArticle);
         $sql = 'SELECT ca.fk_article_no as article_number
            FROM context_boxes cb, context_articles ca
            WHERE cb.id = ca.fk_context_id AND cb.fk_article_no = ' . $origArticle;
         $rows = $g_ado_db->GetAll($sql);
-     
+
         foreach ($rows as $row) {
             $sql = 'INSERT IGNORE INTO context_articles (fk_context_id, fk_article_no) '
                 . 'VALUES (' . $contextBox->getId() . ', ' . $row['article_number'] . ')';
