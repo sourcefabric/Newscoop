@@ -124,7 +124,7 @@ class CommentService extends BaseService
                 $queryBuilder->expr()->like('c.subject', $queryBuilder->expr()->literal('%'.$phrase.'%')),
                 $queryBuilder->expr()->like('cm.name', $queryBuilder->expr()->literal('%'.$phrase.'%')),
                 $queryBuilder->expr()->like('cm.email', $queryBuilder->expr()->literal('%'.$phrase.'%')),
-                $queryBuilder->expr()->like('t.name', $queryBuilder->expr()->literal('%'.$$phrase.'%'))
+                $queryBuilder->expr()->like('t.name', $queryBuilder->expr()->literal('%'.$phrase.'%'))
             ))
             ->andWhere('c.status != 3')
             ->orderBy('c.time_created', 'desc');
