@@ -260,6 +260,16 @@ class FeatureContext extends BehatContext
 
         $this->browser->submit($url, $this->fields, $method);
         $this->fields = array();
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
     }
 
     /**
@@ -287,5 +297,15 @@ class FeatureContext extends BehatContext
         }
 
         $this->browser->call($url, $method);
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
     }
 }
