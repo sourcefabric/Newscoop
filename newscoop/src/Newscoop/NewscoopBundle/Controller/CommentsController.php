@@ -48,6 +48,7 @@ class CommentsController extends Controller
 
         $session = $request->getSession();
         $pageNumber = $this->get('request')->query->get('knp_page', 1);
+        $displayPerPage = 20;
 
         $filters = new ParameterBag();
         $filterForm = $this->container->get('form.factory')->create(new CommentsFilterType(), array(), array());
@@ -61,7 +62,7 @@ class CommentsController extends Controller
                 if ($searchForm->isValid()) {
                     $data = $searchForm->getData();
                     $comments = $commentService->searchByPhrase($data['search'])->getQuery();
-                    $pagination = $paginator->paginate($comments, $pageNumber, 10);
+                    $pagination = $paginator->paginate($comments, $pageNumber, $displayPerPage);
                     $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 
                     return array(
@@ -175,7 +176,7 @@ class CommentsController extends Controller
         }
 
         $comments = $queryBuilder->getQuery();
-        $pagination = $paginator->paginate($comments, $pageNumber, 10);
+        $pagination = $paginator->paginate($comments, $pageNumber, $displayPerPage);
         $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 
         return array(

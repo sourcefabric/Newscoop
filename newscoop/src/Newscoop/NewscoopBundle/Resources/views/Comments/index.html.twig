@@ -321,12 +321,12 @@
     });
 
     $('.dateCommentHolderReply form').live('submit', function () {
-        var that = this;
+        var that = $(this);
         callServer('ping', [], function(json) {
             $.ajax({
                 type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: that.attr('action'),
+                data: that.serialize(),
                 success: function (data) {
                     if (data.status) {
                         flashMessage('{{ 'comments.msg.updated'|trans }}');
@@ -373,12 +373,12 @@
     });
 
     $('.dateCommentHolderEdit form').live('submit', function () {
-        var that = this;
+        var that = $(this);
         callServer('ping', [], function(json) {
             $.ajax({
                 type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(),
+                url: that.attr('action'),
+                data: that.serialize(),
                 success: function (data) {
                     if (data.status) {
                         var divSubject = $('#comment-section_'+data.comment).find('.commentSubject');
@@ -542,12 +542,11 @@
     });
     // Dialog Link
     $('.articleLink').live('click', function () {
-        var that = this;
-
+        var that = $(this);
         callServer('ping', [], function(json) {
             $.ajax({
                 type: 'GET',
-                url: $(this).attr('href'),
+                url: that.attr('href'),
                 success: function (data) {
                     data = $.parseJSON(data);
                     var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
