@@ -60,24 +60,7 @@ class CommentsController extends Controller
             if ($request->isMethod('POST')) {
                 if ($searchForm->isValid()) {
                     $data = $searchForm->getData();
-                    $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
-                        ->createQueryBuilder('c');
-
-                    $queryBuilder
-                        ->select('c', 'cm.name', 't.name')
-                        ->leftJoin('c.commenter', 'cm')
-                        ->leftJoin('c.thread', 't')
-                        ->where($queryBuilder->expr()->orX(
-                            $queryBuilder->expr()->like('c.message', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
-                            $queryBuilder->expr()->like('c.subject', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
-                            $queryBuilder->expr()->like('cm.name', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
-                            $queryBuilder->expr()->like('cm.email', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
-                            $queryBuilder->expr()->like('t.name', $queryBuilder->expr()->literal('%'.$data['search'].'%'))
-                        ))
-                        ->andWhere('c.status != 3')
-                        ->orderBy('c.time_created', 'desc');
-
-                    $comments = $queryBuilder->getQuery();
+                    $comments = $commentService->searchByPhrase($data['search'])->getQuery();
                     $pagination = $paginator->paginate($comments, $pageNumber, 10);
                     $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 

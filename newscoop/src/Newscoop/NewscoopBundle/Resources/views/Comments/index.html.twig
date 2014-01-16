@@ -20,7 +20,7 @@
             <ul class="list-inline">
                 {% set filter = app.session.get('commentsFilters') %}
                 <li class="new">
-                    {{ form_widget(filterForm.new, { checked : filter.get('filterNew') ? true : false }) }} {{ form_label(filterForm.new) }}
+                    {{ form_widget(filterForm.pending, { checked : filter.get('filterPending') ? true : false }) }} {{ form_label(filterForm.pending) }}
                 </li>
                 <li class="approved">
                     {{ form_widget(filterForm.approved, { checked : filter.get('filterApproved') ? true : false }) }} {{ form_label(filterForm.approved) }}
@@ -276,31 +276,32 @@
         if (status == 'deleted' && !confirm('{{ 'comments.msg.sure'|trans }}' + '\n' + '{{ 'comments.msg.surequestion'|trans }}')) {
             return false;
         }
-
-        $.ajax({
-            type: 'POST',
-            url: Routing.generate('newscoop_newscoop_comments_setstatus'),
-            data: {
-                "comment": ids,
-                "status": status
-            },
-            success: function (data) {
-                if ('deleted' == status) {
-                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.deleted'|trans }}');
-                    location.href = Routing.generate('newscoop_newscoop_comments_index');
-                } else if (status == 'pending') {
-                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
-                } else if (status == 'approved') {
-                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
-                } else if (status == 'hidden') {
-                    flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setstatus'),
+                data: {
+                    "comment": ids,
+                    "status": status
+                },
+                success: function (data) {
+                    if ('deleted' == status) {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.deleted'|trans }}');
+                        location.href = Routing.generate('newscoop_newscoop_comments_index');
+                    } else if (status == 'pending') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
+                    } else if (status == 'approved') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
+                    } else if (status == 'hidden') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
                 }
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
-                }
-            }
+            });
         });
     });
 
@@ -321,25 +322,27 @@
 
     $('.dateCommentHolderReply form').live('submit', function () {
         var that = this;
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function (data) {
-                if (data.status) {
-                    flashMessage('{{ 'comments.msg.updated'|trans }}');
-                    location.href = Routing.generate('newscoop_newscoop_comments_index');
-                } else if (!status.data) {
-                    flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
-                } else {
-                    flashMessage(data.status, "error");
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.status) {
+                        flashMessage('{{ 'comments.msg.updated'|trans }}');
+                        location.href = Routing.generate('newscoop_newscoop_comments_index');
+                    } else if (!status.data) {
+                        flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
+                    } else {
+                        flashMessage(data.status, "error");
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
                 }
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
-                }
-            }
+            });
         });
 
         return false;
@@ -371,31 +374,33 @@
 
     $('.dateCommentHolderEdit form').live('submit', function () {
         var that = this;
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function (data) {
-                if (data.status) {
-                    var divSubject = $('#comment-section_'+data.comment).find('.commentSubject');
-                    var divMessage = $('#comment-section_'+data.comment).find('.commentBody');
-                    divSubject.empty();
-                    divSubject.text(data.subject);
-                    divMessage.empty();
-                    divMessage.text(data.message);
-                    $('.content-edit_'+data.comment).slideToggle("slow");
-                    flashMessage('{{ 'comments.msg.updated'|trans }}');
-                } else if (!data.status) {
-                    flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
-                } else {
-                    flashMessage(data.status, "error");
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function (data) {
+                    if (data.status) {
+                        var divSubject = $('#comment-section_'+data.comment).find('.commentSubject');
+                        var divMessage = $('#comment-section_'+data.comment).find('.commentBody');
+                        divSubject.empty();
+                        divSubject.text(data.subject);
+                        divMessage.empty();
+                        divMessage.text(data.message);
+                        $('.content-edit_'+data.comment).slideToggle("slow");
+                        flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    } else if (!data.status) {
+                        flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
+                    } else {
+                        flashMessage(data.status, "error");
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
                 }
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
-                }
-            }
+            });
         });
 
         return false;
@@ -421,19 +426,21 @@
         var ids = [el.attr('id').replace('recommend_', '')];
         var li = $(this).parent();
 
-        $.ajax({
-            type: 'POST',
-            url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 1 }),
-            success: function (data) {
-                flashMessage('{{ 'comments.msg.updated'|trans }}');
-                li.empty();
-                li.append('<button type="button" id="unrecommend_'+ids+'" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>');
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 1 }),
+                success: function (data) {
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    li.empty();
+                    li.append('<button type="button" id="unrecommend_'+ids+'" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+                    }
                 }
-            }
+            });
         });
     });
 
@@ -442,19 +449,21 @@
         var ids = [el.attr('id').replace('unrecommend_', '')];
         var li = $(this).parent();
 
-        $.ajax({
-            type: 'POST',
-            url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 0 }),
-            success: function (data) {
-                flashMessage('{{ 'comments.msg.updated'|trans }}');
-                li.empty();
-                li.append('<button type="button" id="recommend_'+ids+'" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>');
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 0 }),
+                success: function (data) {
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    li.empty();
+                    li.append('<button type="button" id="recommend_'+ids+'" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+                    }
                 }
-            }
+            });
         });
     });
 
@@ -484,34 +493,36 @@
                 translationComment = '{{ 'comments.msg.status.all'|trans }}';
             }
 
-            $.ajax({
-                type: 'POST',
-                url: Routing.generate('newscoop_newscoop_comments_setstatus'),
-                data: {
-                    "comment": ids,
-                    "status": status
-                },
-                success: function (data) {
-                    $.each(data.comments, function(index, value) {
-                        changeCommentStatus(data.status, value);
-                    });
+            callServer('ping', [], function(json) {
+                $.ajax({
+                    type: 'POST',
+                    url: Routing.generate('newscoop_newscoop_comments_setstatus'),
+                    data: {
+                        "comment": ids,
+                        "status": status
+                    },
+                    success: function (data) {
+                        $.each(data.comments, function(index, value) {
+                            changeCommentStatus(data.status, value);
+                        });
 
-                    if ('deleted' == status) {
-                        flashMessage(translationComment+' {{ 'comments.msg.deleted'|trans }}');
-                        location.href = Routing.generate('newscoop_newscoop_comments_index');
-                    } else if (status == 'pending') {
-                        flashMessage(translationComment+' {{ 'comments.msg.status.new'|trans }}');
-                    } else if (status == 'approved') {
-                        flashMessage(translationComment+' {{ 'comments.msg.status.approved'|trans }}');
-                    } else if (status == 'hidden') {
-                        flashMessage(translationComment+' {{ 'comments.msg.status.hidden'|trans }}');
+                        if ('deleted' == status) {
+                            flashMessage(translationComment+' {{ 'comments.msg.deleted'|trans }}');
+                            location.href = Routing.generate('newscoop_newscoop_comments_index');
+                        } else if (status == 'pending') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.new'|trans }}');
+                        } else if (status == 'approved') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.approved'|trans }}');
+                        } else if (status == 'hidden') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.hidden'|trans }}');
+                        }
+                    },
+                    error: function (rq, status, error) {
+                        if (status == 0 || status == -1) {
+                            flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                        }
                     }
-                },
-                error: function (rq, status, error) {
-                    if (status == 0 || status == -1) {
-                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
-                    }
-                }
+                });
             });
         }
     });
@@ -533,25 +544,28 @@
     $('.articleLink').live('click', function () {
         var that = this;
 
-        $.ajax({
-            type: 'GET',
-            url: $(this).attr('href'),
-            success: function (data) {
-                data = $.parseJSON(data);
-                var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
-                for (i in data) {
-                    content += '<h4>' + i + '</h4>';
-                    content += '<p>' + data[i] + '</p>';
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'GET',
+                url: $(this).attr('href'),
+                success: function (data) {
+                    data = $.parseJSON(data);
+                    var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                    for (i in data) {
+                        content += '<h4>' + i + '</h4>';
+                        content += '<p>' + data[i] + '</p>';
+                    }
+                    $('.dialogPopup').html(content);
+                    $('.dialogPopup').dialog('open');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
                 }
-                $('.dialogPopup').html(content);
-                $('.dialogPopup').dialog('open');
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
-                }
-            }
+            });
         });
+
         return false;
     });
 </script>

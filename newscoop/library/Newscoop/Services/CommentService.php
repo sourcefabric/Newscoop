@@ -16,7 +16,7 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
 class CommentService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

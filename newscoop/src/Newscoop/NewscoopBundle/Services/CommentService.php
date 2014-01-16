@@ -9,23 +9,13 @@
 namespace Newscoop\NewscoopBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Newscoop\Services\CommentService as BaseService;
 
 /**
  * Comments service
  */
-class CommentService
+class CommentService extends BaseService
 {
-    /** @var Doctrine\ORM\EntityManager */
-    protected $em;
-
-    /**
-     * @param Doctrine\ORM\EntityManager $em
-     */
-    public function __construct(EntityManager $em)
-    {
-        $this->em = $em;
-    }
-
     /**
     * Gets all replies to a comment.
     *
@@ -78,9 +68,9 @@ class CommentService
             'ip' => $commenter->getIp()
         ));
 
-        $query = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getQuery()->getResult();
 
-        if ($query) {
+        if ($result) {
             return true;
         }
 
@@ -99,16 +89,11 @@ class CommentService
      */
     public function buildFilterQuery($filters, $query, $sessionParameter, $queryBuilder)
     {
-        $statusMap = array(
-            'approved' => 0,
-            'new' => 1,
-            'hidden' => 2,
-        );
-
+        $statusMap = \Newscoop\Entity\Comment::$status_enum;
         foreach ($filters as $key => $value) {
             if ($value) {
-                $query->add($queryBuilder->expr()->eq('c.status', $statusMap[$key]));
-                $sessionParameter->set('filter'.ucfirst($key), $statusMap[$key]);
+                $query->add($queryBuilder->expr()->eq('c.status', array_search($key, $statusMap)));
+                $sessionParameter->set('filter'.ucfirst($key), array_search($key, $statusMap));
                 if ($key == 'approved') {
                     $sessionParameter->set('filter'.ucfirst($key), true);
                 }
@@ -116,6 +101,35 @@ class CommentService
         }
 
         return $query;
+    }
+
+    /**
+     * Searchs comments by given phrase
+     *
+     * @param string $phrase Phrase
+     *
+     * @return Doctrine\ORM\QueryBuilder
+     */
+    public function searchByPhrase($phrase)
+    {
+        $queryBuilder = $this->em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c');
+
+        $queryBuilder
+            ->select('c', 'cm.name', 't.name')
+            ->leftJoin('c.commenter', 'cm')
+            ->leftJoin('c.thread', 't')
+            ->where($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->like('c.message', $queryBuilder->expr()->literal('%'.$phrase.'%')),
+                $queryBuilder->expr()->like('c.subject', $queryBuilder->expr()->literal('%'.$phrase.'%')),
+                $queryBuilder->expr()->like('cm.name', $queryBuilder->expr()->literal('%'.$phrase.'%')),
+                $queryBuilder->expr()->like('cm.email', $queryBuilder->expr()->literal('%'.$phrase.'%')),
+                $queryBuilder->expr()->like('t.name', $queryBuilder->expr()->literal('%'.$$phrase.'%'))
+            ))
+            ->andWhere('c.status != 3')
+            ->orderBy('c.time_created', 'desc');
+
+        return $queryBuilder;
     }
 
     /**
