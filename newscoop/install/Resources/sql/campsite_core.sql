@@ -770,34 +770,34 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `Images`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Images` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Description` varchar(255) NOT NULL DEFAULT '',
-  `Photographer` varchar(255) NOT NULL DEFAULT '',
-  `Place` varchar(255) NOT NULL DEFAULT '',
-  `Date` date NOT NULL DEFAULT '0000-00-00',
-  `ContentType` varchar(64) NOT NULL DEFAULT '',
-  `Location` enum('local','remote') NOT NULL DEFAULT 'local',
-  `URL` varchar(255) NOT NULL DEFAULT '',
-  `ThumbnailFileName` varchar(50) NOT NULL DEFAULT '',
-  `ImageFileName` varchar(50) NOT NULL DEFAULT '',
-  `UploadedByUser` int(11) DEFAULT NULL,
-  `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `Source` enum('local','feedback','newsfeed') not null default 'local',
-  `Status` enum('unapproved','approved') not null default 'approved',
-  `width` int(5) DEFAULT NULL,
-  `height` int(5) DEFAULT NULL,
-  `is_updated_storage` TINYINT( 1 ) NOT NULL DEFAULT  '0',
-  PRIMARY KEY (`Id`),
-  FULLTEXT KEY `Description` (`Description`),
-  FULLTEXT KEY `Photographer` (`Photographer`),
-  FULLTEXT KEY `Place` (`Place`),
-  INDEX (`is_updated_storage`, `Location`, `ImageFileName`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE Images (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Location VARCHAR(255) NOT NULL,
+  ImageFileName VARCHAR(80) DEFAULT NULL,
+  ThumbnailFileName VARCHAR(80) DEFAULT NULL,
+  TimeCreated DATETIME DEFAULT NULL,
+  LastModified DATETIME DEFAULT NULL,
+  URL VARCHAR(255) DEFAULT NULL,
+  Description VARCHAR(255) DEFAULT NULL,
+  width INT DEFAULT NULL,
+  height INT DEFAULT NULL,
+  Photographer VARCHAR(255) DEFAULT NULL,
+  photographer_url VARCHAR(255) DEFAULT NULL,
+  Place VARCHAR(255) DEFAULT NULL,
+  Date VARCHAR(255) DEFAULT NULL,
+  ContentType VARCHAR(255) NOT NULL,
+  is_updated_storage INT NOT NULL,
+  Source VARCHAR(255) DEFAULT NULL,
+  Status VARCHAR(255) NOT NULL,
+  UploadedByUser INT DEFAULT NULL,
+  INDEX IDX_E7B3BB5C447C15B9 (UploadedByUser),
+  INDEX is_updated_storage (is_updated_storage),
+  INDEX Description (Description),
+  INDEX Photographer (Photographer),
+  INDEX Place (Place),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `Images`
