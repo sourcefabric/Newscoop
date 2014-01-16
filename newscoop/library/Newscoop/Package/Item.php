@@ -8,7 +8,7 @@
 namespace Newscoop\Package;
 
 use Newscoop\Image\LocalImage;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Package\ItemRepository")

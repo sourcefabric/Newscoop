@@ -22,7 +22,6 @@ class Image extends DatabaseObject
 		'Description',
 		'Photographer',
 		'Place',
-		'Caption',
 		'Date',
 		'ContentType',
 		'Location',
@@ -1099,7 +1098,7 @@ class Image extends DatabaseObject
 
     	switch (strtolower($p_param->getLeftOperand())) {
     		case 'search':
-    			$comparisonOperation['left'] = 'Images.Description, Images.Photographer, Images.Place, Images.Caption';
+    			$comparisonOperation['left'] = 'Images.Description, Images.Photographer, Images.Place';
     			break;
     		case 'description':
     			$comparisonOperation['left'] = 'Images.Description';
@@ -1109,9 +1108,6 @@ class Image extends DatabaseObject
     			break;
     		case 'place':
     			$comparisonOperation['left'] = 'Images.Place';
-    			break;
-    		case 'caption':
-    			$comparisonOperation['left'] = 'Images.Caption';
     			break;
     		case 'date':
     			$comparisonOperation['left'] = 'Images.Date';

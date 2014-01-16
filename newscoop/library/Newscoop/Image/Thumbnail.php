@@ -47,7 +47,11 @@ class Thumbnail
      */
     public function getImg(\Zend_View $view)
     {
-        return sprintf('<img src="%s" width="%d" height="%d" alt="" />',
-            $view->url(array('src' => $this->src), 'image', true, false), $this->width, $this->height);
+        return sprintf(
+            '<img src="%s" width="%d" height="%d" alt="" />',
+            $view->url(array('src' => $this->src), 'image', true, false),
+            $this->width,
+            $this->height
+        );
     }
 }
