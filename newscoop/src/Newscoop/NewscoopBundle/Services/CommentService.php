@@ -141,4 +141,30 @@ class CommentService
 
         return $query;
     }
+
+    /**
+     * Creates comments array for paginator
+     *
+     * @param Knp\Bundle\PaginatorBundle $pagination Pagination
+     *
+     * @return array
+     */
+    public function createCommentsArray($pagination)
+    {
+        $counter = 1;
+        $commentsArray = array();
+        foreach ($pagination as $comment) {
+            $commentsArray[] = array(
+                'banned' => $this->isBanned($comment[0]->getCommenter()),
+                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
+                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
+                'comment' => $comment[0],
+                'index' => $counter,
+            );
+
+            $counter++;
+        }
+
+        return $commentsArray;
+    }
 }

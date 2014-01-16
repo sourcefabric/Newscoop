@@ -40,11 +40,12 @@
         </fieldset>
         </form>
     </div>
-    <form class="navbar-form navbar-left" role="search" style="width: 100%;">
+    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
         <div class="form-group">
-            <input type="text" class="form-control input-sm" placeholder="{{ 'comments.label.search'|trans }}">
+            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
         </div>
-        <button type="submit" class="btn btn-default btn-sm">{{ 'comments.btn.submit'|trans }}</button>
+        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
+        {{ form_rest(searchForm) }}
     </form>
     <div id="actionExtender">
         <fieldset class="status-actions">

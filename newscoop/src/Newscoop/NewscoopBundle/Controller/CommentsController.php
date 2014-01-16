@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
 use Newscoop\NewscoopBundle\Form\Type\CommentsFilterType;
+use Newscoop\NewscoopBundle\Form\Type\CommentSearchType;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
@@ -25,12 +26,14 @@ class CommentsController extends Controller
 {
     /**
      * @Route("/admin/comments", options={"expose"=true})
+     * @Route("/admin/comments/search", name="newscoop_newscoop_comments_search",  options={"expose"=true})
      * @Template()
      */
     public function indexAction(Request $request)
     {
         $em = $this->container->get('em');
         $translator = $this->container->get('translator');
+        $paginator = $this->get('knp_paginator');
         $commentService = $this->container->get('newscoop_newscoop.comments_service');
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
@@ -48,10 +51,47 @@ class CommentsController extends Controller
 
         $filters = new ParameterBag();
         $filterForm = $this->container->get('form.factory')->create(new CommentsFilterType(), array(), array());
-        $filterForm->handleRequest($request);
+        $searchForm = $this->container->get('form.factory')->create(new CommentSearchType(), array(), array());
         $or = $queryBuilder->expr()->orX();
         $and = $queryBuilder->expr()->andX();
-        $filtersArray = array();
+
+        if ($request->get('_route') === "newscoop_newscoop_comments_search") {
+            $searchForm->handleRequest($request);
+            if ($request->isMethod('POST')) {
+                if ($searchForm->isValid()) {
+                    $data = $searchForm->getData();
+                    $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+                        ->createQueryBuilder('c');
+
+                    $queryBuilder
+                        ->select('c', 'cm.name', 't.name')
+                        ->leftJoin('c.commenter', 'cm')
+                        ->leftJoin('c.thread', 't')
+                        ->where($queryBuilder->expr()->orX(
+                            $queryBuilder->expr()->like('c.message', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
+                            $queryBuilder->expr()->like('c.subject', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
+                            $queryBuilder->expr()->like('cm.name', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
+                            $queryBuilder->expr()->like('cm.email', $queryBuilder->expr()->literal('%'.$data['search'].'%')),
+                            $queryBuilder->expr()->like('t.name', $queryBuilder->expr()->literal('%'.$data['search'].'%'))
+                        ))
+                        ->andWhere('c.status != 3')
+                        ->orderBy('c.time_created', 'desc');
+
+                    $comments = $queryBuilder->getQuery();
+                    $pagination = $paginator->paginate($comments, $pageNumber, 10);
+                    $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
+
+                    return array(
+                        'pagination' => $pagination,
+                        'commentsArray' => $commentService->createCommentsArray($pagination),
+                        'filterForm' => $filterForm->createView(),
+                        'searchForm' => $searchForm->createView()
+                    );
+                }
+            }
+        }
+
+        $filterForm->handleRequest($request);
         if ($filterForm->isValid()) {
             $data = $filterForm->getData();
             $pageNumber = 1;
@@ -152,33 +192,14 @@ class CommentsController extends Controller
         }
 
         $comments = $queryBuilder->getQuery();
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $comments,
-            $pageNumber,
-            10
-        );
-
-        $counter = 1;
-        $commentsArray = array();
-        foreach ($pagination as $comment) {
-            $commentsArray[] = array(
-                'banned' => $commentService->isBanned($comment[0]->getCommenter()),
-                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
-                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
-                'comment' => $comment[0],
-                'index' => $counter,
-            );
-
-            $counter++;
-        }
-
+        $pagination = $paginator->paginate($comments, $pageNumber, 10);
         $pagination->setTemplate('NewscoopNewscoopBundle:Pagination:pagination_bootstrap3.html.twig');
 
         return array(
             'pagination' => $pagination,
-            'commentsArray' => $commentsArray,
+            'commentsArray' => $commentService->createCommentsArray($pagination),
             'filterForm' => $filterForm->createView(),
+            'searchForm' => $searchForm->createView()
         );
     }
 

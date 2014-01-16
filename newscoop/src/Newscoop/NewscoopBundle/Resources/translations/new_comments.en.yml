@@ -31,6 +31,7 @@ comments:
     selectstatus: "Select status"
     deleted: "Deleted"
     alert: "Alert"
+    searchholder: "Search... (e.g. name, email, subject, comment, article title)"
   btn:
     cancel: "Cancel"
     submit: "Submit"
