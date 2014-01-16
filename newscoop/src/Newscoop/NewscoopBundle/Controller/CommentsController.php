@@ -33,6 +33,7 @@ class CommentsController extends Controller
     {
         $em = $this->container->get('em');
         $translator = $this->container->get('translator');
+        $imageService = $this->container->get('image');
         $paginator = $this->get('knp_paginator');
         $commentService = $this->container->get('newscoop_newscoop.comments_service');
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
@@ -67,7 +68,7 @@ class CommentsController extends Controller
 
                     return array(
                         'pagination' => $pagination,
-                        'commentsArray' => $commentService->createCommentsArray($pagination),
+                        'commentsArray' => $commentService->createCommentsArray($pagination, $imageService),
                         'filterForm' => $filterForm->createView(),
                         'searchForm' => $searchForm->createView()
                     );
@@ -181,7 +182,7 @@ class CommentsController extends Controller
 
         return array(
             'pagination' => $pagination,
-            'commentsArray' => $commentService->createCommentsArray($pagination),
+            'commentsArray' => $commentService->createCommentsArray($pagination, $imageService),
             'filterForm' => $filterForm->createView(),
             'searchForm' => $searchForm->createView()
         );

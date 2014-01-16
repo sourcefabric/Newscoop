@@ -28,7 +28,6 @@ class CommentSearchType extends AbstractType
         $resolver->setDefaults(array(
             'translation_domain' => 'new_comments',
         ));
-
     }
 
     public function getName()

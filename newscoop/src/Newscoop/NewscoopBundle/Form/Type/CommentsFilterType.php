@@ -47,7 +47,6 @@ class CommentsFilterType extends AbstractType
             'translation_domain' => 'new_comments',
             'csrf_protection' => false
         ));
-
     }
 
     public function getName()

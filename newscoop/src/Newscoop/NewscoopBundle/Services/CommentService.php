@@ -159,11 +159,12 @@ class CommentService extends BaseService
     /**
      * Creates comments array for paginator
      *
-     * @param Knp\Bundle\PaginatorBundle $pagination Pagination
+     * @param Knp\Bundle\PaginatorBundle     $pagination   Pagination
+     * @param Newscoop\Services\ImageService $imageService Image service
      *
      * @return array
      */
-    public function createCommentsArray($pagination)
+    public function createCommentsArray($pagination, $imageService)
     {
         $counter = 1;
         $commentsArray = array();
@@ -171,6 +172,7 @@ class CommentService extends BaseService
             $commentsArray[] = array(
                 'banned' => $this->isBanned($comment[0]->getCommenter()),
                 'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
+                'avatar' =>  $comment[0]->getCommenter()->getUser() ? new \MetaUser($comment[0]->getCommenter()->getUser()) : null,
                 'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
                 'comment' => $comment[0],
                 'index' => $counter,

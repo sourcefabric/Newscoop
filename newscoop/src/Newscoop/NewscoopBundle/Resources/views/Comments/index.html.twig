@@ -88,7 +88,11 @@
                     <td>
                         <div class="commentUserHolder">
                             <div>
-                                <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
+                                {% if row.avatar is empty %}
+                                    <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
+                                {% else %}
+                                    <img src="{{ row.avatar.image(50, 50, 'crop') }}">
+                                {% endif %}
                             </div>
                             <p></p>
                             <p>
