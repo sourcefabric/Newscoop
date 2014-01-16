@@ -723,24 +723,24 @@ UNLOCK TABLES;
 -- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` (`id`, `fk_comment_commenter_id`, `fk_forum_id`, `fk_thread_id`, `fk_language_id`, `fk_parent_id`, `subject`, `message`, `thread_order`, `thread_level`, `status`, `ip`, `likes`, `dislikes`, `time_created`, `time_updated`, `recommended`, `indexed`) VALUES
-(1, 1, 2, 68, 1, NULL, 'Advertisers target online demographic', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 09:28:14', '2010-12-30 09:38:36', 0, '0000-00-00 00:00:00'),
-(2, 2, 2, 68, 1, 1, 'Somethnig', 'Something''s got me started', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 09:28:14', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(3, 3, 2, 68, 1, 1, 'Not ok', 'Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.', 2, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 09:29:51', '1970-01-01 00:00:00', 1, '0000-00-00 00:00:00'),
-(4, 4, 2, 68, 1, 1, 'Site comment', 'Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit duo, people!', 3, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 09:38:36', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(24, 18, 2, 64, 1, NULL, 'I approve', 'I approve this choice, and I do congratulate. Cheers!', 1, 0, 0, '127.0.0.1', 0, 0, '2013-05-02 10:11:13', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-(7, 1, 2, 86, 1, NULL, 'Online security risks exposed', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 12:24:44', '2010-12-30 12:24:44', 1, '0000-00-00 00:00:00'),
-(8, 6, 2, 86, 1, 7, 'Site comment', 'Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 12:24:44', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(9, 1, 2, 87, 1, NULL, 'New horizons for the browser', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 12:26:02', '2011-01-04 14:44:03', 0, '0000-00-00 00:00:00'),
-(10, 4, 2, 87, 1, 9, 'Site comment', 'Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 12:26:02', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(11, 7, 2, 87, 1, 10, 'Site comment', 'I agree and support.', 2, 2, 0, '79.101.185.177', 0, 0, '2010-12-30 12:26:37', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(12, 1, 2, 77, 1, NULL, 'New Cannes winner a taste of paradise', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 12:28:12', '2010-12-30 12:28:12', 0, '0000-00-00 00:00:00'),
-(13, 8, 2, 77, 1, 12, 'Site comment', 'Knows not where he''s going to, but nevertheless...', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 12:28:12', '1970-01-01 00:00:00', 1, '0000-00-00 00:00:00'),
-(14, 1, 2, 76, 1, NULL, 'Berlin Film Festival unveils 2011 line-up', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 12:31:35', '2010-12-30 12:31:35', 1, '0000-00-00 00:00:00'),
-(15, 9, 2, 76, 1, 14, 'Site comment', 'Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 12:31:35', '1970-01-01 00:00:00', 1, '0000-00-00 00:00:00'),
-(16, 10, 2, 87, 1, 9, 'Site comment', 'Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!', 3, 1, 0, '94.189.197.96', 0, 0, '2011-01-04 14:44:03', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
-(25, 19, 2, 64, 1, NULL, '', 'Congratulations to the person!', 2, 0, 0, '127.0.0.1', 0, 0, '2013-05-02 10:13:28', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
-(23, 17, 2, 83, 1, NULL, '', 'Hey I strongly disagree', 1, 0, 0, '127.0.0.1', 0, 0, '2013-04-24 15:43:54', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
+INSERT INTO `comment` VALUES
+(1, NULL, 68, 'Advertisers target online demographic', '', '0', '0', '0', '79.101.185.177', '2010-12-30 09:28:14', '2010-12-30 09:38:36', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(2, 1, 68, 'Somethnig', 'Something''s got me started', '1', '1', '0', '79.101.185.177', '2010-12-30 09:28:14', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 2, 2, 1),
+(3, 1, 68, 'Not ok', 'Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.', '1', '2', '0', '79.101.185.177', '2010-12-30 09:29:51', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 3, 2, 1),
+(4, 1, 68, 'Site comment', 'Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit d', '1', '3', '0', '79.101.185.177', '2010-12-30 09:38:36', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 4, 2, 1),
+(7, NULL, 86, 'Online security risks exposed', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:24:44', '2010-12-30 12:24:44', '0', '0', '1', '0000-00-00 00:00:00', 1, 2, 1),
+(8, 7, 86, 'Site comment', 'Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.', '1', '1', '0', '79.101.185.177', '2010-12-30 12:24:44', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 6, 2, 1),
+(9, NULL, 87, 'New horizons for the browser', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:26:02', '2011-01-04 14:44:03', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(10, 9, 87, 'Site comment', 'Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)', '1', '1', '0', '79.101.185.177', '2010-12-30 12:26:02', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 4, 2, 1),
+(11, 10, 87, 'Site comment', 'I agree and support.', '2', '2', '0', '79.101.185.177', '2010-12-30 12:26:37', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 7, 2, 1),
+(12, NULL, 77, 'New Cannes winner a taste of paradise', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:28:12', '2010-12-30 12:28:12', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(13, 12, 77, 'Site comment', 'Knows not where he''s going to, but nevertheless...', '1', '1', '0', '79.101.185.177', '2010-12-30 12:28:12', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 8, 2, 1),
+(14, NULL, 76, 'Berlin Film Festival unveils 2011 line-up', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:31:35', '2010-12-30 12:31:35', '0', '0', '1', '0000-00-00 00:00:00', 1, 2, 1),
+(15, 14, 76, 'Site comment', 'Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.', '1', '1', '0', '79.101.185.177', '2010-12-30 12:31:35', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 9, 2, 1),
+(16, 9, 87, 'Site comment', 'Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!', '1', '3', '0', '94.189.197.96', '2011-01-04 14:44:03', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 10, 2, 1),
+(23, NULL, 83, '', 'Hey I strongly disagree', '0', '1', '0', '127.0.0.1', '2013-04-24 15:43:54', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 17, 2, 1),
+(24, NULL, 64, 'I approve', 'I approve this choice, and I do congratulate. Cheers!', '0', '1', '0', '127.0.0.1', '2013-05-02 10:11:13', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 18, 2, 1),
+(25, NULL, 64, '', 'Congratulations to the person!', '0', '2', '0', '127.0.0.1', '2013-05-02 10:13:28', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 19, 2, 1);
 
 --
 -- Dumping data for table `comment_acceptance`
