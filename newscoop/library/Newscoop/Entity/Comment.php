@@ -148,13 +148,13 @@ class Comment
     private $ip;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $time_created;
 
     /*
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
     private $time_updated;

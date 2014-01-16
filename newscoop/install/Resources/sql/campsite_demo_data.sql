@@ -723,12 +723,6 @@ UNLOCK TABLES;
 -- Dumping data for table `comment`
 --
 
-LOCK TABLES `comment` WRITE;
-
---
--- Zrzut danych tabeli `comment`
---
-
 INSERT INTO `comment` (`id`, `fk_comment_commenter_id`, `fk_forum_id`, `fk_thread_id`, `fk_language_id`, `fk_parent_id`, `subject`, `message`, `thread_order`, `thread_level`, `status`, `ip`, `likes`, `dislikes`, `time_created`, `time_updated`, `recommended`, `indexed`) VALUES
 (1, 1, 2, 68, 1, NULL, 'Advertisers target online demographic', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 09:28:14', '2010-12-30 09:38:36', 0, '0000-00-00 00:00:00'),
 (2, 2, 2, 68, 1, 1, 'Somethnig', 'Something''s got me started', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 09:28:14', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
@@ -747,8 +741,6 @@ INSERT INTO `comment` (`id`, `fk_comment_commenter_id`, `fk_forum_id`, `fk_threa
 (16, 10, 2, 87, 1, 9, 'Site comment', 'Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!', 3, 1, 0, '94.189.197.96', 0, 0, '2011-01-04 14:44:03', '1970-01-01 00:00:00', 0, '0000-00-00 00:00:00'),
 (25, 19, 2, 64, 1, NULL, '', 'Congratulations to the person!', 2, 0, 0, '127.0.0.1', 0, 0, '2013-05-02 10:13:28', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00'),
 (23, 17, 2, 83, 1, NULL, '', 'Hey I strongly disagree', 1, 0, 0, '127.0.0.1', 0, 0, '2013-04-24 15:43:54', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');
-
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `comment_acceptance`
