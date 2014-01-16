@@ -2094,33 +2094,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
-  `fk_forum_id` int(10) unsigned NOT NULL,
-  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned DEFAULT '0',
-  `fk_parent_id` int(10) unsigned DEFAULT NULL,
-  `subject` varchar(140) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(39) NOT NULL DEFAULT '',
-  `likes` tinyint(3) unsigned DEFAULT '0',
-  `dislikes` tinyint(3) unsigned DEFAULT '0',
-  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `recommended` tinyint(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `comments_users` (`fk_comment_commenter_id`),
-  KEY `publication` (`fk_forum_id`),
-  KEY `article` (`fk_thread_id`),
-  KEY `parent` (`fk_parent_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 CREATE TABLE comment (
   id INT AUTO_INCREMENT NOT NULL,
