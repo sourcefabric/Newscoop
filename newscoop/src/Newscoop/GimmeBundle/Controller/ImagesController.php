@@ -13,7 +13,6 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Newscoop\Entity\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\GimmeBundle\Form\Type\ImageType;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,21 +72,6 @@ class ImagesController extends FOSRestController
      * @Route("/images.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
-     *
-     * @ApiDoc(
-     *  description="Returns a collection of Object",
-     *  requirements={
-     *      {
-     *          "name"="image",
-     *          "dataType"="file",
-     *          "requirement"="\d+",
-     *          "description"="image to upload"
-     *      }
-     *  },
-     *  parameters={
-     *      {"name"="categoryId", "dataType"="integer", "required"=true, "description"="category id"}
-     *  }
-     * )
      *
      * @return Form
      */
