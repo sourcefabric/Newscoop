@@ -243,8 +243,8 @@ class FeatureContext extends BehatContext
     /**
      * Sends HTTP request to specific URL with form data from PyString.
      *
-     * @param string       $method request method
-     * @param string       $url    relative url
+     * @param string $method request method
+     * @param string $url    relative url
      *
      * @When /^I send a "([^"]*)" request to "([^"]+)" with custom form data$/
      */
@@ -278,7 +278,6 @@ class FeatureContext extends BehatContext
     public function responseShouldHaveHeader($name)
     {
         $headers = $this->browser->getLastResponse()->getHeaders();
-
         if (array_key_exists($name, $headers)) {
             return true;
         }

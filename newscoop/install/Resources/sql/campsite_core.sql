@@ -96,18 +96,16 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `ArticleImages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ArticleImages` (
-  `NrArticle` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdImage` int(10) unsigned NOT NULL DEFAULT '0',
-  `Number` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_default` int(1) DEFAULT NULL,
-  PRIMARY KEY (`NrArticle`,`IdImage`),
-  UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
-  KEY `IdImage` (`IdImage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE ArticleImages (
+  id INT AUTO_INCREMENT NOT NULL,
+  NrArticle INT NOT NULL,
+  Number INT DEFAULT NULL,
+  is_default TINYINT(1) DEFAULT NULL,
+  IdImage INT DEFAULT NULL,
+  INDEX IDX_A9426E241D447EDE (IdImage),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Dumping data for table `ArticleImages`
