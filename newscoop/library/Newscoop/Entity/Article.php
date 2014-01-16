@@ -731,11 +731,7 @@ class Article
      */
     public function getWebcode()
     {
-        if (!$this->webcode) {
-            return null;
-        }
-
-        return (string) $this->webcode;
+        return $this->webcode->getWebcode();
     }
 
     /**
