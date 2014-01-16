@@ -705,4 +705,18 @@ class LocalImage implements ImageInterface
     {
         return $this->basename;
     }
+
+    /**
+     * Sets the value of url.
+     *
+     * @param string $url the url
+     *
+     * @return self
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
     }
+}

@@ -40,15 +40,13 @@ class PublicationListener implements ListenerInterface
         $url = $request->getUrl();
         $pos = strpos($url, '?');
 
-        if ('GET' === $request->getMethod()) {
-            if ($pos !== false) {
-                $url .= '&'.utf8_encode(http_build_query($this->params, '', '&'));
-            } else {
-                $url .= '?'.utf8_encode(http_build_query($this->params, '', '&'));
-            }
-
-            $request->fromUrl(new Url($url));
+        if ($pos !== false) {
+            $url .= '&'.utf8_encode(http_build_query($this->params, '', '&'));
+        } else {
+            $url .= '?'.utf8_encode(http_build_query($this->params, '', '&'));
         }
+
+        $request->fromUrl(new Url($url));
     }
 
     public function postSend(RequestInterface $request, MessageInterface $response)

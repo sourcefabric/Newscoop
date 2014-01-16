@@ -16,7 +16,6 @@ use Symfony\Component\Filesystem\Exception\IOException;
  */
 class BootstrapService
 {
-
     public $mustBeWritable;
     public $basePath;
     private $filesystem;

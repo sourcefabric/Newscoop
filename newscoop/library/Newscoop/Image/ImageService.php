@@ -235,7 +235,8 @@ class ImageService
             'created' => new \DateTime(),
             'updated' => new \DateTime(),
             'status' => 'unapproved',
-            'source' => 'local'
+            'source' => 'local',
+            'url' => ''
         ), $attributes);
 
         $image->setDescription($attributes['description']);
@@ -248,6 +249,7 @@ class ImageService
         $image->setCreated($attributes['created']);
         $image->setUpdated($attributes['created']);
         $image->setSource($attributes['source']);
+        $image->setUrl($attributes['url']);
 
         if ($image->getUser() && $image->getUser()->isAdmin() == true) {
             $image->setStatus('approved');
