@@ -1508,6 +1508,7 @@ CREATE TABLE comment (
   status VARCHAR(2) NOT NULL,
   ip VARCHAR(39) NOT NULL,
   time_created DATETIME NOT NULL,
+  time_updated DATETIME NOT NULL,
   likes VARCHAR(4) NOT NULL,
   dislikes VARCHAR(4) NOT NULL,
   recommended VARCHAR(1) NOT NULL,
