@@ -20,19 +20,19 @@
             <ul class="list-inline">
                 {% set filter = app.session.get('commentsFilters') %}
                 <li class="new">
-                    {{ form_widget(filterForm.new, { checked : filter['filterNew'] is defined ? true : false }) }} {{ form_label(filterForm.new) }}
+                    {{ form_widget(filterForm.new, { checked : filter.get('filterNew') ? true : false }) }} {{ form_label(filterForm.new) }}
                 </li>
                 <li class="approved">
-                    {{ form_widget(filterForm.approved, { checked : filter['filterApproved'] is defined ? true : false }) }} {{ form_label(filterForm.approved) }}
+                    {{ form_widget(filterForm.approved, { checked : filter.get('filterApproved') ? true : false }) }} {{ form_label(filterForm.approved) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.hidden, { checked : filter['filterHidden'] is defined ? true : false }) }} {{ form_label(filterForm.hidden) }}
+                    {{ form_widget(filterForm.hidden, { checked : filter.get('filterHidden') ? true : false }) }} {{ form_label(filterForm.hidden) }}
                 </li>
                 <li class="hidden">
-                   {{ form_widget(filterForm.recommended, { checked : filter['filterRecommended'] is defined ? true : false }) }} {{ form_label(filterForm.recommended) }}
+                   {{ form_widget(filterForm.recommended, { checked : filter.get('filterRecommended') ? true : false }) }} {{ form_label(filterForm.recommended) }}
                 </li>
                 <li class="hidden">
-                    {{ form_widget(filterForm.unrecommended, { checked : filter['filterUnrecommended'] is defined ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
+                    {{ form_widget(filterForm.unrecommended, { checked : filter.get('filterUnrecommended') ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
                 </li>
                 <li id="filterBtn">{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-sm'} }) }}</li>
                 {{ form_rest(filterForm) }}

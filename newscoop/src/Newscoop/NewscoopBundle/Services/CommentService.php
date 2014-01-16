@@ -38,7 +38,6 @@ class CommentService
         if (!is_array($commentId)) {
             $directReplies = $this->em->getRepository('Newscoop\Entity\Comment')->getDirectReplies($commentId);
             if (count($directReplies)) {
-                var_dump(array_merge(array($commentId), $this->getAllReplies($directReplies)));die;
                 return array_merge(array($commentId), $this->getAllReplies($directReplies));
             } else {
                 return array($commentId);
@@ -89,34 +88,57 @@ class CommentService
     }
 
     /**
-     * Checks filtered status
+     * Creates query for given form filters
      *
-     * @param string                    $filter       Selected comment filter
-     * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     * @param array                                         $filters          Filters
+     * @param Doctrine\ORM\Query\Expr                       $query            Query operator
+     * @param Symfony\Component\HttpFoundation\ParameterBag $sessionParameter Query operator
+     * @param Doctrine\ORM\QueryBuilder                     $queryBuilder     Query builder
      *
-     * @return void
+     * @return Doctrine\ORM\Query\Expr
      */
-    public function checkFilter($filter, $queryBuilder)
+    public function buildFilterQuery($filters, $query, $sessionParameter, $queryBuilder)
     {
-        if ($filter) {
-            $queryBuilder->andWhere('c.status = ?1')
-                ->setParameter(1, $filter);
+        $statusMap = array(
+            'approved' => 0,
+            'new' => 1,
+            'hidden' => 2,
+        );
+
+        foreach ($filters as $key => $value) {
+            if ($value) {
+                $query->add($queryBuilder->expr()->eq('c.status', $statusMap[$key]));
+                $sessionParameter->set('filter'.ucfirst($key), $statusMap[$key]);
+                if ($key == 'approved') {
+                    $sessionParameter->set('filter'.ucfirst($key), true);
+                }
+            }
         }
+
+        return $query;
     }
 
     /**
-     * Checks recommend/unrecommend status
+     * Creates query for given filters in stored in session
      *
-     * @param string                    $filter       Selected comment filter
+     * @param array                     $sessionData  Filters
+     * @param Doctrine\ORM\Query\Expr   $query        Query operator
      * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
      *
-     * @return void
+     * @return Doctrine\ORM\Query\Expr
      */
-    public function checkFilterRecommended($filter, $queryBuilder)
+    public function buildSessionFilters($sessionData, $query, $queryBuilder)
     {
-        if ($filter) {
-            $queryBuilder->andWhere('c.recommended = ?1')
-                ->setParameter(1, $filter);
+        foreach ($sessionData as $key => $value) {
+            if ($key) {
+                if ($key == 'filterApproved') {
+                    $query->add($queryBuilder->expr()->eq('c.status', 0));
+                } else {
+                    $query->add($queryBuilder->expr()->eq('c.status', $value));
+                }
+            }
         }
+
+        return $query;
     }
 }
