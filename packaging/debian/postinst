@@ -189,6 +189,28 @@ case "$1" in
 #       # TODO: save db-account to newscoop-config.
 #   fi
 
+    # symlinks for sample data package
+
+    if [ ! -h /var/lib/newscoop/install/sample_data/files ] && [ -d /usr/share/newscoop-sample-data/files/ ]; then
+       ln -s /usr/share/newscoop-sample-data/files/ /var/lib/newscoop/install/sample_data/files
+    fi
+
+    if [ ! -h /var/lib/newscoop/install/sample_data/images ] && [ -d /usr/share/newscoop-sample-data/images/ ]; then
+       ln -s /usr/share/newscoop-sample-data/images/ /var/lib/newscoop/install/sample_data/images
+    fi
+
+    if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_data.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_data.sql ]; then
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_data.sql  /var/lib/newscoop/install/sql/campsite_demo_data.sql
+    fi
+
+    if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_prepare.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_prepare.sql ]; then
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_prepare.sql  /var/lib/newscoop/install/sql/campsite_demo_prepare.sql
+    fi
+
+    if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_tables.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_tables.sql ]; then
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_tables.sql  /var/lib/newscoop/install/sql/campsite_demo_tables.sql
+    fi
+
     servers="apache2"
     . /usr/share/wwwconfig-common/restart.sh
     echo $error >&2

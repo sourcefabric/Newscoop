@@ -94,6 +94,13 @@ done
 mv newscoop/ChangeLog newscoop/changelog
 cp -vi newscoop/htaccess newscoop/.htaccess
 
+# remove sample data now in separate package
+rm -r newscoop/install/sample_data/files/
+rm -r newscoop/install/sample_data/images/
+rm newscoop/install/sql/campsite_demo_data.sql
+rm newscoop/install/sql/campsite_demo_prepare.sql
+rm newscoop/install/sql/campsite_demo_tables.sql
+
 ### fixes for 4.2.1 ###
 if test "${UPSTREAMVERSION}" == "4.2.1"; then
 
