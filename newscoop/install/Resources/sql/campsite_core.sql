@@ -2094,33 +2094,34 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
-  `fk_forum_id` int(10) unsigned NOT NULL,
-  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned DEFAULT '0',
-  `fk_parent_id` int(10) unsigned DEFAULT NULL,
-  `subject` varchar(140) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(39) NOT NULL DEFAULT '',
-  `likes` tinyint(3) unsigned DEFAULT '0',
-  `dislikes` tinyint(3) unsigned DEFAULT '0',
-  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `recommended` tinyint(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `comments_users` (`fk_comment_commenter_id`),
-  KEY `publication` (`fk_forum_id`),
-  KEY `article` (`fk_thread_id`),
-  KEY `parent` (`fk_parent_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE comment (
+  id INT AUTO_INCREMENT NOT NULL,
+  fk_parent_id INT DEFAULT NULL,
+  fk_thread_id INT NOT NULL,
+  subject VARCHAR(140) NOT NULL,
+  message VARCHAR(255) NOT NULL,
+  thread_level VARCHAR(4) NOT NULL,
+  thread_order VARCHAR(4) NOT NULL,
+  status VARCHAR(2) NOT NULL,
+  ip VARCHAR(39) NOT NULL,
+  time_created DATETIME NOT NULL,
+  likes VARCHAR(4) NOT NULL,
+  dislikes VARCHAR(4) NOT NULL,
+  recommended VARCHAR(1) NOT NULL,
+  indexed DATETIME DEFAULT NULL,
+  fk_comment_commenter_id INT DEFAULT NULL,
+  fk_forum_id INT DEFAULT NULL,
+  fk_language_id INT DEFAULT NULL,
+  INDEX IDX_9474526C8A5657F3 (fk_comment_commenter_id),
+  INDEX IDX_9474526C1BE4F90E (fk_forum_id),
+  INDEX IDX_9474526C13231DE0 (fk_parent_id),
+  INDEX IDX_9474526C83C99789 (fk_thread_id),
+  INDEX IDX_9474526CEB0716C0 (fk_language_id),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE comment ADD CONSTRAINT FK_9474526C13231DE0 FOREIGN KEY (fk_parent_id) REFERENCES comment (id) ON DELETE SET NULL;
 
 --
 -- Dumping data for table `comment`
