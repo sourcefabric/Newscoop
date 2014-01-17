@@ -200,15 +200,25 @@ case "$1" in
     fi
 
     if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_data.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_data.sql ]; then
-       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_data.sql  /var/lib/newscoop/install/sql/campsite_demo_data.sql
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_data.sql /var/lib/newscoop/install/sql/campsite_demo_data.sql
     fi
 
     if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_prepare.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_prepare.sql ]; then
-       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_prepare.sql  /var/lib/newscoop/install/sql/campsite_demo_prepare.sql
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_prepare.sql /var/lib/newscoop/install/sql/campsite_demo_prepare.sql
     fi
 
     if [ ! -h /var/lib/newscoop/install/sql/campsite_demo_tables.sql ] && [ -e /usr/share/newscoop-sample-data/sql/campsite_demo_tables.sql ]; then
-       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_tables.sql  /var/lib/newscoop/install/sql/campsite_demo_tables.sql
+       ln -s /usr/share/newscoop-sample-data/sql/campsite_demo_tables.sql /var/lib/newscoop/install/sql/campsite_demo_tables.sql
+    fi
+
+    # symlinks for geonames.org data package
+
+    if [ ! -h /var/lib/newscoop/install/sql/CityLocations.csv ] && [ -e /usr/share/geonames-city-data/CityLocations.csv ]; then
+       ln -s /usr/share/geonames-city-data/CityLocations.csv /var/lib/newscoop/install/sql/CityLocations.csv
+    fi
+
+    if [ ! -h /var/lib/newscoop/install/sql/CityNames.csv ] && [ -e /usr/share/geonames-city-data/CityNames.csv ]; then
+       ln -s /usr/share/geonames-city-data/CityNames.csv /var/lib/newscoop/install/sql/CityNames.csv
     fi
 
     servers="apache2"

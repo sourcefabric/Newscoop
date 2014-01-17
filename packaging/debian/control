@@ -20,7 +20,7 @@ Depends: apache2 | httpd,
  wwwconfig-common,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
-Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite, newscoop-sample-data
+Suggests: mysql-server | virtual-mysql-server,  default-mta | mail-transport-agent, flite, geonames-city-data, newscoop-sample-data
 Description: Open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 

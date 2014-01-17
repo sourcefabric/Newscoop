@@ -101,6 +101,10 @@ rm newscoop/install/sql/campsite_demo_data.sql
 rm newscoop/install/sql/campsite_demo_prepare.sql
 rm newscoop/install/sql/campsite_demo_tables.sql
 
+# remove geonames.org data now in separate package
+rm newscoop/install/sql/CityLocations.csv
+rm newscoop/install/sql/CityNames.csv
+
 ### fixes for 4.2.1 ###
 if test "${UPSTREAMVERSION}" == "4.2.1"; then
 
