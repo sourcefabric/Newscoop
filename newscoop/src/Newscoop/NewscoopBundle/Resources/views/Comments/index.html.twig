@@ -88,10 +88,14 @@
                     <td>
                         <div class="commentUserHolder">
                             <div>
-                                {% if row.avatar is empty %}
+                                {% if row.user is empty %}
                                     <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
                                 {% else %}
-                                    <img src="{{ row.avatar.image(50, 50, 'crop') }}">
+                                    {% if row.user.image(50, 50, 'crop') is empty %}
+                                     <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
+                                    {% else %}
+                                     <img src="{{ row.user.image(50, 50, 'crop') }}">
+                                    {% endif %}
                                 {% endif %}
                             </div>
                             <p></p>

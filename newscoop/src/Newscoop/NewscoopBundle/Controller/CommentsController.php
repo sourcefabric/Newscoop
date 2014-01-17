@@ -35,7 +35,7 @@ class CommentsController extends Controller
         $translator = $this->container->get('translator');
         $imageService = $this->container->get('image');
         $paginator = $this->get('knp_paginator');
-        $commentService = $this->container->get('newscoop_newscoop.comments_service');
+        $commentService = $this->container->get('comment');
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
 
@@ -196,7 +196,7 @@ class CommentsController extends Controller
         $translator = $this->container->get('translator');
         $user = $this->container->get('user');
         $em = $this->container->get('em');
-        $commentService = $this->container->get('newscoop_newscoop.comments_service');
+        $commentService = $this->container->get('comment');
         $status = $request->request->get('status');
         $comments = $request->request->get('comment');
 
