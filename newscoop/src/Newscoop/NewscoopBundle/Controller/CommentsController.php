@@ -68,7 +68,7 @@ class CommentsController extends Controller
 
                     return array(
                         'pagination' => $pagination,
-                        'commentsArray' => $commentService->createCommentsArray($pagination, $imageService),
+                        'commentsArray' => $this->createCommentsArray($pagination, $imageService),
                         'filterForm' => $filterForm->createView(),
                         'searchForm' => $searchForm->createView()
                     );
@@ -103,7 +103,7 @@ class CommentsController extends Controller
                 }
                 unset($data['recommended']);
                 unset($data['unrecommended']);
-                $queryBuilder->andWhere($commentService->buildFilterQuery($data, $or, $filters, $queryBuilder));
+                $queryBuilder->andWhere($this->buildFilterQuery($data, $or, $filters, $queryBuilder));
             } else {
                 if ($data['recommended'] && $data['unrecommended']) {
                     $queryBuilder->andWhere($queryBuilder->expr()->orX(
@@ -127,7 +127,7 @@ class CommentsController extends Controller
 
                 unset($data['recommended']);
                 unset($data['unrecommended']);
-                $queryBuilder->andWhere($commentService->buildFilterQuery($data, $and, $filters, $queryBuilder));
+                $queryBuilder->andWhere($this->buildFilterQuery($data, $and, $filters, $queryBuilder));
             }
 
             $session->set('commentsFilters', $filters);
@@ -150,7 +150,7 @@ class CommentsController extends Controller
                         }
                     }
 
-                    $queryBuilder->andWhere($commentService->buildSessionFilters($session->get('commentsFilters'), $or, $queryBuilder));
+                    $queryBuilder->andWhere($this->buildSessionFilters($session->get('commentsFilters'), $or, $queryBuilder));
                 } else {
                     if ($session->get('commentsFilters')->get('filterRecommended') && $session->get('commentsFilters')->get('filterUnrecommended')) {
                         $queryBuilder->andWhere($queryBuilder->expr()->orX(
@@ -167,7 +167,7 @@ class CommentsController extends Controller
                         }
                     }
 
-                    $queryBuilder->andWhere($commentService->buildSessionFilters($session->get('commentsFilters'), $and, $queryBuilder));
+                    $queryBuilder->andWhere($this->buildSessionFilters($session->get('commentsFilters'), $and, $queryBuilder));
                 }
             }
         }
@@ -182,7 +182,7 @@ class CommentsController extends Controller
 
         return array(
             'pagination' => $pagination,
-            'commentsArray' => $commentService->createCommentsArray($pagination, $imageService),
+            'commentsArray' => $this->createCommentsArray($pagination, $imageService),
             'filterForm' => $filterForm->createView(),
             'searchForm' => $searchForm->createView()
         );
@@ -334,5 +334,83 @@ class CommentsController extends Controller
                 'message' => $values['message']
             ));
         }
+    }
+
+    /**
+     * Creates query for given form filters
+     *
+     * @param array                                         $filters          Filters
+     * @param Doctrine\ORM\Query\Expr                       $query            Query operator
+     * @param Symfony\Component\HttpFoundation\ParameterBag $sessionParameter Query operator
+     * @param Doctrine\ORM\QueryBuilder                     $queryBuilder     Query builder
+     *
+     * @return Doctrine\ORM\Query\Expr
+     */
+    private function buildFilterQuery($filters, $query, $sessionParameter, $queryBuilder)
+    {
+        $statusMap = \Newscoop\Entity\Comment::$status_enum;
+        foreach ($filters as $key => $value) {
+            if ($value) {
+                $query->add($queryBuilder->expr()->eq('c.status', array_search($key, $statusMap)));
+                $sessionParameter->set('filter'.ucfirst($key), array_search($key, $statusMap));
+                if ($key == 'approved') {
+                    $sessionParameter->set('filter'.ucfirst($key), true);
+                }
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * Creates query for given filters in stored in session
+     *
+     * @param array                     $sessionData  Filters
+     * @param Doctrine\ORM\Query\Expr   $query        Query operator
+     * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
+     *
+     * @return Doctrine\ORM\Query\Expr
+     */
+    private function buildSessionFilters($sessionData, $query, $queryBuilder)
+    {
+        foreach ($sessionData as $key => $value) {
+            if ($key) {
+                if ($key == 'filterApproved') {
+                    $query->add($queryBuilder->expr()->eq('c.status', 0));
+                } else {
+                    $query->add($queryBuilder->expr()->eq('c.status', $value));
+                }
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * Creates comments array for paginator
+     *
+     * @param Knp\Bundle\PaginatorBundle     $pagination   Pagination
+     * @param Newscoop\Services\ImageService $imageService Image service
+     *
+     * @return array
+     */
+    private function createCommentsArray($pagination, $imageService)
+    {
+        $counter = 1;
+        $commentsArray = array();
+        foreach ($pagination as $comment) {
+            $commentsArray[] = array(
+                'banned' => $this->isBanned($comment[0]->getCommenter()),
+                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
+                'user' =>  $comment[0]->getCommenter()->getUser() ? new \MetaUser($comment[0]->getCommenter()->getUser()) : null,
+                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
+                'comment' => $comment[0],
+                'index' => $counter,
+            );
+
+            $counter++;
+        }
+
+        return $commentsArray;
     }
 }

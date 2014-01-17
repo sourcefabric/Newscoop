@@ -191,23 +191,23 @@ class CommentService
     *
     * @return array
     */
-    public function getAllReplies($commentId)
+    public function getAllReplies($commentId, $commentRepository)
     {
         if (!is_array($commentId)) {
-            $directReplies = $this->em->getRepository('Newscoop\Entity\Comment')->getDirectReplies($commentId);
+            $directReplies = $commentRepository->getDirectReplies($commentId);
             if (count($directReplies)) {
-                return array_merge(array($commentId), $this->getAllReplies($directReplies));
+                return array_merge(array($commentId), $this->getAllReplies($directReplies, $commentRepository));
             } else {
                 return array($commentId);
             }
         } else {
             if (count($commentId) > 1) {
                 return array_merge(
-                    $this->getAllReplies(array_pop($commentId)),
-                    $this->getAllReplies($commentId)
+                    $this->getAllReplies(array_pop($commentId), $commentRepository),
+                    $this->getAllReplies($commentId, $commentRepository)
                 );
             } else {
-                return $this->getAllReplies(array_pop($commentId));
+                return $this->getAllReplies(array_pop($commentId), $commentRepository);
             }
         }
     }
@@ -215,7 +215,7 @@ class CommentService
     /**
      * Checks if a commenter is banned
      *
-     * @param Newcoop\Entity\Commenter $commenter Commenter
+     * @param Newscoop\Entity\Comment\Commenter $commenter Commenter
      *
      * @return bool
      */
@@ -246,32 +246,6 @@ class CommentService
     }
 
     /**
-     * Creates query for given form filters
-     *
-     * @param array                                         $filters          Filters
-     * @param Doctrine\ORM\Query\Expr                       $query            Query operator
-     * @param Symfony\Component\HttpFoundation\ParameterBag $sessionParameter Query operator
-     * @param Doctrine\ORM\QueryBuilder                     $queryBuilder     Query builder
-     *
-     * @return Doctrine\ORM\Query\Expr
-     */
-    public function buildFilterQuery($filters, $query, $sessionParameter, $queryBuilder)
-    {
-        $statusMap = \Newscoop\Entity\Comment::$status_enum;
-        foreach ($filters as $key => $value) {
-            if ($value) {
-                $query->add($queryBuilder->expr()->eq('c.status', array_search($key, $statusMap)));
-                $sessionParameter->set('filter'.ucfirst($key), array_search($key, $statusMap));
-                if ($key == 'approved') {
-                    $sessionParameter->set('filter'.ucfirst($key), true);
-                }
-            }
-        }
-
-        return $query;
-    }
-
-    /**
      * Searchs comments by given phrase
      *
      * @param string $phrase Phrase
@@ -298,58 +272,6 @@ class CommentService
             ->orderBy('c.time_created', 'desc');
 
         return $queryBuilder;
-    }
-
-    /**
-     * Creates query for given filters in stored in session
-     *
-     * @param array                     $sessionData  Filters
-     * @param Doctrine\ORM\Query\Expr   $query        Query operator
-     * @param Doctrine\ORM\QueryBuilder $queryBuilder Query builder
-     *
-     * @return Doctrine\ORM\Query\Expr
-     */
-    public function buildSessionFilters($sessionData, $query, $queryBuilder)
-    {
-        foreach ($sessionData as $key => $value) {
-            if ($key) {
-                if ($key == 'filterApproved') {
-                    $query->add($queryBuilder->expr()->eq('c.status', 0));
-                } else {
-                    $query->add($queryBuilder->expr()->eq('c.status', $value));
-                }
-            }
-        }
-
-        return $query;
-    }
-
-    /**
-     * Creates comments array for paginator
-     *
-     * @param Knp\Bundle\PaginatorBundle     $pagination   Pagination
-     * @param Newscoop\Services\ImageService $imageService Image service
-     *
-     * @return array
-     */
-    public function createCommentsArray($pagination, $imageService)
-    {
-        $counter = 1;
-        $commentsArray = array();
-        foreach ($pagination as $comment) {
-            $commentsArray[] = array(
-                'banned' => $this->isBanned($comment[0]->getCommenter()),
-                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
-                'user' =>  $comment[0]->getCommenter()->getUser() ? new \MetaUser($comment[0]->getCommenter()->getUser()) : null,
-                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
-                'comment' => $comment[0],
-                'index' => $counter,
-            );
-
-            $counter++;
-        }
-
-        return $commentsArray;
     }
 
     /**
