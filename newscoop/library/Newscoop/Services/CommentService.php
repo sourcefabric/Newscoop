@@ -179,15 +179,14 @@ class CommentService
         $qb->setFirstResult($p_start);
         $qb->setMaxResults($p_limit);
 
-        //echo $qb->getQuery()->getSql();
-
         return $qb->getQuery()->getResult();
     }
 
     /**
     * Gets all replies to a comment.
     *
-    * @param int|array $commentId Comment id
+    * @param int|array                             $commentId         Comment id
+    * @param Newscoop\Repository\CommentRepository $commentRepository Comment repos
     *
     * @return array
     */

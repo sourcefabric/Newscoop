@@ -197,6 +197,7 @@ class CommentsController extends Controller
         $user = $this->container->get('user');
         $em = $this->container->get('em');
         $commentService = $this->container->get('comment');
+        $commentsRepository = $em->getRepository('Newscoop\Repository\CommentRepository');
         $status = $request->request->get('status');
         $comments = $request->request->get('comment');
 
@@ -206,7 +207,7 @@ class CommentsController extends Controller
             }
 
             if ($status == "deleted") {
-                $comments = array_unique(array_merge($comments, $commentService->getAllReplies($comments)));
+                $comments = array_unique(array_merge($comments, $commentService->getAllReplies($comments, $commentsRepository)));
             }
 
             try {
@@ -214,10 +215,10 @@ class CommentsController extends Controller
                     $comment = $em->getRepository('Newscoop\Entity\Comment')->find($id);
                     if ($status == "deleted") {
                         $message = $translator->trans('comments.msg.error.deletefromarticle', array('$1' => $user->getCurrentUser()->getName(),
-                                    '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'new_comments');
+                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode()), 'new_comments');
                     } else {
                         $message = $translator->trans('comments.msg.commentinarticle', array('$1' => $user->getCurrentUser()->getName(),
-                                    '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status), 'new_comments');
+                            '$2' => $comment->getThread()->getName(), '$3' => $comment->getLanguage()->getCode(), '$4' => $status), 'new_comments');
                     }
                 }
 
@@ -396,15 +397,36 @@ class CommentsController extends Controller
      */
     private function createCommentsArray($pagination, $imageService)
     {
+        $em = $this->container->get('em');
         $counter = 1;
+        $commentService = $this->container->get('comment');
         $commentsArray = array();
+
+        $commentIds = array();
+        foreach ($pagination as $key => $value) {
+            $commentIds[] = $value[0]->getId();
+        }
+
+        $qb = $em->createQueryBuilder();
+        $comments = $qb
+            ->from('Newscoop\Entity\Comment', 'c', 'c.id')
+            ->select('c', 't', 'i', 'cc', 'u')
+            ->leftJoin('c.thread', 't')
+            ->leftJoin('t.issue', 'i')
+            ->leftJoin('c.commenter', 'cc')
+            ->leftJoin('cc.user', 'u')
+            ->where($qb->expr()->in('c.id', $commentIds))
+            ->getQuery()
+            ->getResult();
+
         foreach ($pagination as $comment) {
+            $comment = $comment[0];
             $commentsArray[] = array(
-                'banned' => $this->isBanned($comment[0]->getCommenter()),
-                'avatarHash' => md5($comment[0]->getCommenter()->getEmail()),
-                'user' =>  $comment[0]->getCommenter()->getUser() ? new \MetaUser($comment[0]->getCommenter()->getUser()) : null,
-                'issueNumber' => $comment[0]->getThread()->getSection()->getIssue()->getNumber(),
-                'comment' => $comment[0],
+                'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
+                'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
+                'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
+                'issueNumber' => $comments[$comment->getId()]->getThread()->getIssue()->getNumber(),
+                'comment' => $comment,
                 'index' => $counter,
             );
 
