@@ -40,10 +40,15 @@ class OmniboxController extends Zend_Controller_Action
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
                 $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
+                $metaUser = new \MetaUser($user);
+                $width = array_key_exists("imageWidth", $params) ? $params['imageWidth'] : 80;
+                $height = array_key_exists("imageHeight", $params) ? $params['imageHeight'] : 80;
+                $specification = array_key_exists("imageSpecification", $params) ? $params['imageSpecification'] : 'fit';
+
                 $this->view->userData = array(
                     'realName' => $user->getRealName(),
                     'username' => $user->getUsername(),
-                    'avatar' => $user->getImage()
+                    'avatar' => $metaUser->image($width, $height, $specification)
                 );
 
                 $this->view->response = 'OK';
