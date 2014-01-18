@@ -193,14 +193,11 @@ class Builder
             'privilege' => 'manage',
         ));
 
-        $this->addChild($menu, $translator->trans('Comments'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'comment',
-                'action' => 'index',
-            ),
-            'resource' => 'comment',
-            'privilege' => 'moderate',
-        ));
+        $this->addChild(
+            $menu,
+            $translator->trans('comments.label.menu', array(), 'new_comments'),
+            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_comments_index'))
+        );
 
         $this->addChild($menu, $translator->trans('Feedback', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',

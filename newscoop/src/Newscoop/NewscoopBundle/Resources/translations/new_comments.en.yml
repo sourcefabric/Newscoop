@@ -1,6 +1,7 @@
 comments:
   label:
     comments: "Comments management"
+    menu: "Comments"
     banned: "Banned"
     anonymous: "Anonymous"
     at: at
