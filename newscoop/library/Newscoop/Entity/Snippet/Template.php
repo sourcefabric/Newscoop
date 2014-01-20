@@ -32,6 +32,12 @@ class Template
     private $name;
 
     /**
+     * @ORM\Column(name="Controller", type="string")
+     * @var string
+     */
+    private $controller;
+
+    /**
      * @ORM\Column(name="Template", type="text")
      * @var text
      */
@@ -102,6 +108,31 @@ class Template
     
         return $this;
     }
+
+    /**
+     * Getter for Controller
+     *
+     * @return string
+     */
+    public function getController()
+    {
+        return $this->controller;
+    }
+    
+    /**
+     * Setter for controller
+     *
+     * @param string $controller Value to set
+     *
+     * @return Newscoop\Entity\Snippet\Template
+     */
+    public function setController($controller)
+    {
+        $this->controller = $controller;
+    
+        return $this;
+    }
+    
     
     /**
      * Getter for template
