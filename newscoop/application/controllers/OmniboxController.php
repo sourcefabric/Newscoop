@@ -39,11 +39,18 @@ class OmniboxController extends Zend_Controller_Action
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
+                $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
+                $this->view->userData = array(
+                    'realName' => $user->getRealName(),
+                    'username' => $user->getUsername(),
+                    'avatar' => $user->getImage()
+                );
+
                 $this->view->response = 'OK';
             } else {
                 $this->view->response = $translator->trans('Login failed.');
             }
-	}
+       }
     }
 
 	public function logoutAction()

@@ -57,6 +57,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\GenerateWebcodeCommand(),
     new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
     new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
+    new \Newscoop\Tools\Console\Command\GenerateORMSchemaCommand(),
 ));
 
 $cli->run($input);

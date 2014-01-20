@@ -290,6 +290,20 @@ class Article
     private $authors;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\JoinTable(name="ArticleSnippets",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Snippet
+     */
+    private $snippets;
+
+    /**
      * @var ArticleData
      */
     private $data;
