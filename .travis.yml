@@ -6,8 +6,8 @@ notifications:
   email: false
 before_script:
   - sudo apt-get update > /dev/null
-  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
-  - echo "$(curl -fsSL https://gist.github.com/ahilles107/8255528/raw/3136fccf390dd885ee30ebd73e37df5f0979a152/travis_newscoop.dev)" | sed -e "s,PATH,`pwd`/newscoop,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
+  - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl php5-gd
+  - echo "$(curl -fsSL https://gist.github.com/ahilles107/8255528/raw/fa949a791fe882323a34decd3b0caf130b6d52d6/travis_newscoop.dev)" | sed -e "s,PATH,`pwd`/newscoop,g" | sudo tee /etc/apache2/sites-available/default > /dev/null
   - echo "127.0.0.1 newscoop.dev" | sudo tee -a /etc/hosts
   - sudo a2enmod rewrite
   - sudo service apache2 restart

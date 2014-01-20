@@ -75,7 +75,7 @@ class UpgradeService
         if ($lockFile === false) {
             return "Unable to create single process lock control!";
         }
-        if (!flock($lockFile, LOCK_EX | LOCK_NB)) { 
+        if (!flock($lockFile, LOCK_EX | LOCK_NB)) {
             // do an exclusive lock
             return "The upgrade process is already running.";
         }

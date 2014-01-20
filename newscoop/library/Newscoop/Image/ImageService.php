@@ -6,6 +6,16 @@
  */
 
 namespace Newscoop\Image;
+
+use Imagine\Image\Box;
+use Imagine\Gd\Imagine;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Newscoop\Image\ImageInterface as NewscoopImageInterface;
+use Newscoop\Image\LocalImage;
+use Newscoop\Entity\User;
+
 /**
  * Image Service
  */
@@ -26,12 +36,13 @@ class ImageService
      */
     private $supportedTypes = array(
         'image/jpeg',
+        'image/jpg',
         'image/png',
         'image/gif',
     );
 
     /**
-     * @param array $config
+     * @param array                      $config
      * @param Doctrine\ORM\EntityManager $orm
      */
     public function __construct(array $config, \Doctrine\ORM\EntityManager $orm)
@@ -41,12 +52,115 @@ class ImageService
     }
 
     /**
+     * Upload image and create entity
+     *
+     * @param UploadedFile   $file
+     * @param array          $attributes
+     * @param ImageInterface $image
+     *
+     * @return LocalImage
+     */
+    public function upload(UploadedFile $file, array $attributes, ImageInterface $image = null)
+    {
+        $filesystem = new Filesystem();
+        $imagine = new Imagine();
+
+        $mimeType = $file->getClientMimeType();
+        if (!in_array($mimeType, $this->supportedTypes)) {
+            throw new \InvalidArgumentException('Unsupported image type '.$mimeType.'.');
+        }
+
+        if (!file_exists($this->config['image_path']) || !is_writable($this->config['image_path'])) {
+            throw new FileException('Directory '.$this->config['image_path'].' is not writable');
+        }
+
+        if (!file_exists($this->config['thumbnail_path']) || !is_writable($this->config['thumbnail_path'])) {
+            throw new FileException('Directory '.$this->config['thumbnail_path'].' is not writable');
+        }
+
+        $attributes = array_merge(array(
+            'content_type' => $mimeType,
+        ), $attributes);
+
+        if (!is_null($image)) {
+            if (file_exists($image->getPath())) {
+                $filesystem->remove($image->getPath());
+            }
+
+            if (file_exists($image->getThumbnailPath())) {
+                unlink($this->config['thumbnail_path'] . $image->getThumbnailPath(true));
+            }
+        } else {
+            $image = new LocalImage($file->getClientOriginalName());
+            $this->orm->persist($image);
+        }
+
+        list($width, $height) = getimagesize($file->getRealPath());
+        $image->setWidth($width);
+        $image->setHeight($height);
+
+        $this->fillImage($image, $attributes);
+        $this->orm->flush();
+
+        $imagePath = $this->generateImagePath($image->getId(), $file->getClientOriginalExtension());
+        $thumbnailPath = $this->generateThumbnailPath($image->getId(), $file->getClientOriginalExtension());
+
+        $image->setBasename($this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
+        $image->setThumbnailPath($this->generateThumbnailPath($image->getId(), $file->getClientOriginalExtension(), true));
+        $this->orm->flush();
+
+        try {
+            $file->move($this->config['image_path'], $this->generateImagePath($image->getId(), $file->getClientOriginalExtension(), true));
+            $filesystem->chmod($imagePath, 0644);
+
+            $imagine->open($imagePath)
+                ->resize(new Box($this->config['thumbnail_max_size'], $this->config['thumbnail_max_size']))
+                ->save($thumbnailPath, array());
+            $filesystem->chmod($thumbnailPath, 0644);
+        } catch (\Exceptiom $e) {
+            $filesystem->remove($imagePath);
+            $filesystem->remove($thumbnailPath);
+            $this->orm->remove($image);
+
+            throw new \Exception($e->getMessage(), $e->getCode());
+        }
+
+        return $image;
+    }
+
+    /**
+     * Remove image (files and entity)
+     *
+     * @param LocalImage $image
+     *
+     * @return boolean
+     */
+    public function remove(LocalImage $image)
+    {
+        $filesystem = new Filesystem();
+
+        if (file_exists($image->getPath())) {
+            $filesystem->remove($image->getPath());
+        }
+
+        if (file_exists($image->getThumbnailPath())) {
+            unlink($this->config['thumbnail_path'] . $image->getThumbnailPath(true));
+        }
+
+        $this->orm->remove($image);
+        $this->orm->flush();
+
+        return true;
+    }
+
+    /**
      * Get image src
      *
      * @param string $image
-     * @param int $width
-     * @param int $height
+     * @param int    $width
+     * @param int    $height
      * @param string $specs
+     *
      * @return string
      */
     public function getSrc($image, $width, $height, $specs = 'fit')
@@ -62,6 +176,7 @@ class ImageService
      * Generate image for given src
      *
      * @param string $src
+     *
      * @return void
      */
     public function generateFromSrc($src)
@@ -90,31 +205,94 @@ class ImageService
     }
 
     /**
-     * Save image
+     * Generate file path for thumbnail
      *
-     * @param array $info
+     * @param int     $imageId
+     * @param string  $extension
+     * @param boolean $olnyFileName
+     *
      * @return string
      */
-    public function save(array $info)
+    private function generateThumbnailPath($imageId, $extension, $olnyFileName = false)
     {
-        if (!in_array($info['type'], $this->supportedTypes)) {
-            throw new \InvalidArgumentException("Unsupported image type '$info[type]'.");
+        if ($olnyFileName) {
+            return $this->config['thumbnail_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
         }
 
-        $name = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
-        if (!file_exists(APPLICATION_PATH . "/../images/$name")) {
-            rename($info['tmp_name'], APPLICATION_PATH . "/../images/$name");
+        return $this->config['thumbnail_path'] . $this->config['thumbnail_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
+    }
+
+    /**
+     * Generate file path for image
+     *
+     * @param int     $imageId
+     * @param string  $extension
+     * @param boolean $olnyFileName
+     *
+     * @return string
+     */
+    private function generateImagePath($imageId, $extension, $olnyFileName = false)
+    {
+        if ($olnyFileName) {
+            return $this->config['image_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
         }
 
-        return $name;
+        return $this->config['image_path'] . $this->config['image_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
+    }
+
+    /**
+     * Fill image with custom/default arttributes
+     *
+     * @param LocalImage $image
+     * @param array      $attributes
+     *
+     * @return LocalImage
+     */
+    private function fillImage($image, $attributes)
+    {
+        $attributes = array_merge(array(
+            'description' => '',
+            'photographer' => '',
+            'photographer_url' => '',
+            'place' => '',
+            'date' => date('Y-m-d'),
+            'content_type' => 'image/jeg',
+            'user' => null,
+            'created' => new \DateTime(),
+            'updated' => new \DateTime(),
+            'status' => 'unapproved',
+            'source' => 'local',
+            'url' => ''
+        ), $attributes);
+
+        $image->setDescription($attributes['description']);
+        $image->setPhotographer($attributes['photographer']);
+        $image->setPhotographerUrl($attributes['photographer_url']);
+        $image->setPlace($attributes['place']);
+        $image->setDate($attributes['date']);
+        $image->setContentType($attributes['content_type']);
+        $image->setUser($attributes['user']);
+        $image->setCreated($attributes['created']);
+        $image->setUpdated($attributes['created']);
+        $image->setSource($attributes['source']);
+        $image->setUrl($attributes['url']);
+
+        if ($image->getUser() && $image->getUser()->isAdmin() == true) {
+            $image->setStatus('approved');
+        } else {
+            $image->setStatus($attributes['status']);
+        }
+
+        return $image;
     }
 
     /**
      * Add article image
      *
-     * @param int $articleNumber
+     * @param int                       $articleNumber
      * @param Newscoop\Image\LocalImage $image
-     * @param bool $defaultImage
+     * @param bool                      $defaultImage
+     *
      * @return Newscoop\Image\ArticleImage
      */
     public function addArticleImage($articleNumber, LocalImage $image, $defaultImage = false)
@@ -124,9 +302,14 @@ class ImageService
             $this->orm->flush($image);
         }
 
-        $articleImage = new ArticleImage($articleNumber, $image, $defaultImage || $this->getArticleImagesCount($articleNumber) === 0);
+        $articleImage = new ArticleImage(
+            $articleNumber,
+            $image,
+            $defaultImage || $this->getArticleImagesCount($articleNumber) === 0
+        );
         $this->orm->persist($articleImage);
         $this->orm->flush($articleImage);
+
         return $articleImage;
     }
 
@@ -135,6 +318,7 @@ class ImageService
      *
      * @param int $articleNumber
      * @param int $imageId
+     *
      * @return Newscoop\Image\ArticleImage
      */
     public function getArticleImage($articleNumber, $imageId)
@@ -150,6 +334,7 @@ class ImageService
      * Find images by article
      *
      * @param int $articleNumber
+     *
      * @return array
      */
     public function findByArticle($articleNumber)
@@ -161,7 +346,7 @@ class ImageService
                 'articleNumber' => (int) $articleNumber,
             ), array('number' => 'asc'));
 
-        $hasDefault = array_reduce($images, function($hasDefault, $image) {
+        $hasDefault = array_reduce($images, function ($hasDefault, $image) {
             return $hasDefault || $image->isDefault();
         }, false);
 
@@ -175,8 +360,9 @@ class ImageService
     /**
      * Set default article image
      *
-     * @param int $articleNumber
+     * @param int            $articleNumber
      * @param ImageInterface $image
+     *
      * @return void
      */
     public function setDefaultArticleImage($articleNumber, ArticleImage $image)
@@ -194,6 +380,7 @@ class ImageService
      * Get default article image
      *
      * @param int $articleNumber
+     *
      * @return Newscoop\Image\ArticleImage
      */
     public function getDefaultArticleImage($articleNumber)
@@ -205,10 +392,13 @@ class ImageService
             ));
 
         if ($image === null) {
-            $image = array_pop($this->orm->getRepository('Newscoop\Image\ArticleImage')
-                ->findBy(array(
-                    'articleNumber' => (int) $articleNumber,
-                ), array('number' => 'asc'), 1));
+            $image = array_pop(
+                $this->orm->getRepository('Newscoop\Image\ArticleImage')->findBy(
+                    array('articleNumber' => (int) $articleNumber),
+                    array('number' => 'asc'),
+                    1
+                )
+            );
 
             if ($image !== null) {
                 $image->setIsDefault(true);
@@ -222,8 +412,9 @@ class ImageService
     /**
      * Get thumbnail for given image and rendition
      *
-     * @param Newscoop\Image\Rendition $rendition
+     * @param Newscoop\Image\Rendition      $rendition
      * @param Newscoop\Image\ImageInterface $image
+     *
      * @return Newscoop\Image\Thumbnail
      */
     public function getThumbnail(Rendition $rendition, ImageInterface $image)
@@ -235,6 +426,7 @@ class ImageService
      * Get count of article images
      *
      * @param int $articleNumber
+     *
      * @return int
      */
     public function getArticleImagesCount($articleNumber)
@@ -254,6 +446,7 @@ class ImageService
      * Find image
      *
      * @param int $id
+     *
      * @return Newscoop\Image\LocalImage
      */
     public function find($id)
@@ -267,8 +460,9 @@ class ImageService
      *
      * @param array $criteria
      * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param int   $limit
+     * @param int   $offset
+     *
      * @return array
      */
     public function findBy(array $criteria, $orderBy = null, $limit = 25, $offset = 0)
@@ -281,6 +475,7 @@ class ImageService
      * Get count of images for a set of criteria
      *
      * @param array $criteria
+     *
      * @return int
      */
     public function getCountBy(array $criteria)
@@ -290,13 +485,13 @@ class ImageService
             ->select('COUNT(i)');
 
         if (isset($criteria['source']) && is_array($criteria['source']) && (!empty($criteria['source']))) {
-            $source_cases = array();
-            foreach ($criteria['source'] as $one_source) {
-                $source_cases[] = $qb->expr()->literal($one_source);
+            $sourceCases = array();
+            foreach ($criteria['source'] as $oneSource) {
+                $sourceCases[] = $qb->expr()->literal($oneSource);
             }
 
             $qb->andwhere('i.source IN (:source)');
-            $qb->setParameter('source', $source_cases);
+            $qb->setParameter('source', $sourceCases);
         }
 
         return (int) $qb->getQuery()
@@ -307,6 +502,7 @@ class ImageService
      * Encode path
      *
      * @param string $path
+     *
      * @return string
      */
     private function encodePath($path)
@@ -318,6 +514,7 @@ class ImageService
      * Decode path
      *
      * @param string $path
+     *
      * @return string
      */
     private function decodePath($path)
@@ -327,6 +524,8 @@ class ImageService
 
     /**
      * Update schema if needed
+     *
+     * @param integer $articleNumber
      *
      * @return void
      */

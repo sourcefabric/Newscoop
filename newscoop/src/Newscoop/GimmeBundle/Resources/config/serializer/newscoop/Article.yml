@@ -43,7 +43,7 @@ Newscoop\Entity\Article:
             read_only: true
             groups: ["list", "details"]
             type: string
-            accessor: 
+            accessor:
                 getter: getLanguageCode
                 setter: setLanguageCode
             serialized_name: language
