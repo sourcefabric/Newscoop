@@ -1,0 +1,80 @@
+Newscoop\Image\LocalImage:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: id
+            since_version: 1.1
+        location:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: location
+            since_version: 1.1
+        basename:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: basename
+            since_version: 1.1
+        thumbnailPath:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: thumbnailPath
+            since_version: 1.1
+        url:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: url
+            since_version: 1.1
+        description:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: description
+            since_version: 1.1
+        width:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: width
+            since_version: 1.1
+        height:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: height
+            since_version: 1.1
+        photographer:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: photographer
+            since_version: 1.1
+        photographerUrl:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: photographerUrl
+            since_version: 1.1
+        place:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: place
+            since_version: 1.1

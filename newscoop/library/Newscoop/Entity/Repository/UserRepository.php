@@ -683,7 +683,6 @@ class UserRepository extends EntityRepository
         if($criteria->maxResults != 0) {
             $qb->setMaxResults($criteria->maxResults);
         }
-        
 
         $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {

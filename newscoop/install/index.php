@@ -246,6 +246,7 @@ $app->get('/process', function (Request $request) use ($app) {
 
 $app->get('/demo-site', function (Request $request) use ($app) {
     $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
+
     $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
         ->add('demo_template', 'choice', array(
             'choices'   => array(

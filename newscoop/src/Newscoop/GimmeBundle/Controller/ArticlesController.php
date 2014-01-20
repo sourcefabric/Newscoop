@@ -18,12 +18,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Articles controller
+ */
 class ArticlesController extends FOSRestController
 {
     /**
      * @Route("/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getArticlesAction(Request $request)
     {
@@ -45,6 +50,8 @@ class ArticlesController extends FOSRestController
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
+     *
+     * @return Form
      */
     public function getArticleAction(Request $request, $number)
     {
@@ -62,6 +69,8 @@ class ArticlesController extends FOSRestController
      * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("PATCH")
      * @View()
+     *
+     * @return Form
      */
     public function setArticleAction(Request $request, $number, $language)
     {
