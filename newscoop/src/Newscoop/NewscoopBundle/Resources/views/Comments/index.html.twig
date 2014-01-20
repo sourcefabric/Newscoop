@@ -7,9 +7,12 @@
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('/js/select2-3.4.1/select2.css') }}" />
 {% endblock %}
 
-{% block admin_scripts %}{% endblock %}
+{% block admin_scripts %}
+<script src="{{ asset('/js/select2-3.4.1/select2.js') }}"></script>
+{% endblock %}
 
 {% block admin_content %}
 <div class="plugin-container">
@@ -101,7 +104,12 @@
                             <p></p>
                             <p>
                             {% if row.comment.commenter.user is empty %}
-                                {{ row.comment.commenter.name }} ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
+                                {% if row.comment.commenter.url is empty %}
+                                    {{ row.comment.commenter.name }}
+                                {% else %}
+                                    <a href="{{ row.comment.commenter.url }}" target="_blank">{{ row.comment.commenter.name }}</a>
+                                {% endif %}
+                                ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
                             {% else %}
                                 <a href="/profile/{{ row.comment.commenter.name }}">{{ row.comment.commenter.name }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
                             {% endif %}
@@ -115,6 +123,9 @@
                         <div class="dateCommentHolder" id="comment-section_{{ row.comment.id }}">
                             <h4>
                                 <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
+                                {% if row.comment.source %}
+                                    <span class="label label-info">{{ row.comment.source }}</span>
+                                {% endif %}
                                 <span class="commentSubject">
                                     {% if row.comment.subject|length > 50 %}
                                     {{ row.comment.subject|slice(0, 50) }}...
@@ -202,6 +213,7 @@
                                     <button type="button" id="recommend_{{ row.comment.id }}" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>
                                     {% endif %}
                                 </li>
+                                {{ renderHook('newscoop_admin.interface.comments.listsbutton', {'commentId': row.comment.id }) }}
                             </ul>
                         </div>
                     </td>
@@ -269,10 +281,24 @@
         }
     };
 
+    select2 = $('.commentBtns').find('select').select2({
+        maximumSelectionSize: 3
+    });
+
     $("#hoverBtns td:last-child").hover(function() {
         $(this).children('div').show();
     }, function() {
-        $(this).children('div').hide()
+        var that = $(this);
+        $(".select2-drop").live({
+            mouseover: function(){
+                $(that).children('div').show();
+            },
+            mouseleave: function(){
+                $(that).children('div').hide();
+            }
+        });
+
+        $(that).children('div').hide();
     });
 
     $('.commentBtns .action').live('click', function () {

@@ -134,3 +134,8 @@ div.table-responsive {
     font-size: 14px;
     color: #a94442;
 }
+
+.dateCommentHolder h4 span.label {
+    color: #fff;
+    font-weight: none;
+}

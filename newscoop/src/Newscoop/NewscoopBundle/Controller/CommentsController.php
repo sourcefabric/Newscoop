@@ -197,7 +197,7 @@ class CommentsController extends Controller
         $user = $this->container->get('user');
         $em = $this->container->get('em');
         $commentService = $this->container->get('comment');
-        $commentsRepository = $em->getRepository('Newscoop\Repository\CommentRepository');
+        $commentsRepository = $commentService->getRepository();
         $status = $request->request->get('status');
         $comments = $request->request->get('comment');
 
@@ -276,36 +276,33 @@ class CommentsController extends Controller
      */
     public function setRecommendedAction(Request $request, $comments, $recommended)
     {
-        if ($request->isMethod('POST')) {
-            $em = $this->container->get('em');
-            if (!is_array($comments)) {
-                $comments = array($comments);
+        $em = $this->container->get('em');
+        if (!is_array($comments)) {
+            $comments = array($comments);
+        }
+
+        foreach ($comments as $commentId) {
+            if (!$recommended) {
+                continue;
             }
+            $comment = $em->getRepository('Newscoop\Entity\Comment')->find($commentId);
 
-            foreach ($comments as $commentId) {
-                if (!$recommended) {
-                    continue;
-                }
-
-                $comment = $em->getRepository('Newscoop\Entity\Comment')->find($commentId);
-
-                $this->container->get('dispatcher')->dispatch('comment.recommended', new GenericEvent($this, array(
+            $this->container->get('dispatcher')->dispatch('comment.recommended', new GenericEvent($this, array(
                     'id' => $comment->getId(),
                     'subject' => $comment->getSubject(),
                     'article' => $comment->getThread()->getName(),
                     'commenter' => $comment->getCommenterName(),
                 )));
-            }
-
-            try {
-                $em->getRepository('Newscoop\Entity\Comment')->setRecommended($comments, $recommended);
-                $em->flush();
-            } catch (\Exception $e) {
-                return new JsonResponse(array('status' => $e->getMessage()));
-            }
-
-            return new JsonResponse(array('status' => true));
         }
+
+        try {
+            $em->getRepository('Newscoop\Entity\Comment')->setRecommended($comments, $recommended);
+            $em->flush();
+        } catch (\Exception $e) {
+            return new JsonResponse(array('status' => $e->getMessage()));
+        }
+
+        return new JsonResponse(array('status' => true));
     }
 
     /**
@@ -335,6 +332,55 @@ class CommentsController extends Controller
                 'message' => $values['message']
             ));
         }
+    }
+
+    /**
+     * @Route("/admin/comments/list", options={"expose"=true})
+     */
+    public function listAction(Request $request)
+    {
+        $cols = array('thread_order' => 'default');
+        $article = $request->request->get('article');
+        $language = $request->request->get('language');
+        $comment = $request->request->get('comment');
+
+        if ($article) {
+            $filter = array(
+                'thread' => $article,
+                'language' => $language
+            );
+        } elseif ($comment) {
+            $filter = array('id' => $comment);
+        }
+
+        $params = array(
+            'sFilter' => $filter,
+            'iDisplayStart' => $request->request->get('iDisplayStart') != null ? $request->request->get('iDisplayStart') : 0,
+            'iDisplayLength' => $request->request->get('iDisplayLength'),
+            'iSortCol_0' => 0,
+            'sSortDir_0' => 'desc'
+        );
+
+        $commentService = $this->container->get('comment');
+        $commentRepository = $commentService->getRepository();
+        $comments = $commentRepository->getData($params, $cols);
+        $result = array();
+        foreach ($comments as $comment) {
+            $commenter = $comment->getCommenter();
+            $result[] = array(
+                'name' => $commenter->getName(),
+                'email' => $commenter->getEmail(),
+                'ip' => $commenter->getIp(),
+                'id' => $comment->getId(),
+                'status' => $comment->getStatus(),
+                'subject' => $comment->getSubject(),
+                'message' => $comment->getMessage(),
+                'time_created' => $comment->getTimeCreated()->format('Y-m-d H:i:s'),
+                'recommended_toggle' => (int) !$comment->getRecommended(),
+            );
+        }
+
+       return new JsonResponse(array('result' => $result));
     }
 
     /**
