@@ -204,6 +204,15 @@ class ImageService
         return $image;
     }
 
+    /**
+     * Generate file path for thumbnail
+     *
+     * @param int     $imageId
+     * @param string  $extension
+     * @param boolean $olnyFileName
+     *
+     * @return string
+     */
     private function generateThumbnailPath($imageId, $extension, $olnyFileName = false)
     {
         if ($olnyFileName) {
@@ -213,6 +222,15 @@ class ImageService
         return $this->config['thumbnail_path'] . $this->config['thumbnail_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
     }
 
+    /**
+     * Generate file path for image
+     *
+     * @param int     $imageId
+     * @param string  $extension
+     * @param boolean $olnyFileName
+     *
+     * @return string
+     */
     private function generateImagePath($imageId, $extension, $olnyFileName = false)
     {
         if ($olnyFileName) {
@@ -222,6 +240,14 @@ class ImageService
         return $this->config['image_path'] . $this->config['image_prefix'] . sprintf('%09d', $imageId) .'.'. $extension;
     }
 
+    /**
+     * Fill image with custom/default arttributes
+     *
+     * @param LocalImage $image
+     * @param array      $attributes
+     *
+     * @return LocalImage
+     */
     private function fillImage($image, $attributes)
     {
         $attributes = array_merge(array(
