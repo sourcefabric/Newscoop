@@ -665,6 +665,40 @@ class Article
     }
 
     /**
+     * Getter for comments_locked
+     *
+     * @return mixed
+     */
+    public function commentsLocked()
+    {
+        return $this->getCommentsLocked();
+    }
+
+    /**
+     * Getter for comments_locked
+     *
+     * @return mixed
+     */
+    public function getCommentsLocked()
+    {
+        return $this->comments_locked;
+    }
+
+    /**
+     * Setter for comments_locked
+     *
+     * @param mixed $commentsLocked Value to set
+     *
+     * @return self
+     */
+    public function setCommentsLocked($commentsLocked)
+    {
+        $this->comments_locked = (int) $commentsLocked;
+
+        return $this;
+    }
+
+    /**
      * Set comments_link
      * @param string $link uri for comments resource in Newscoop API
      */
