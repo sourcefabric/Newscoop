@@ -38,6 +38,12 @@ class Template
     private $controller;
 
     /**
+     * @ORM\Column(name="Parameters", type="text")
+     * @var text
+     */
+    private $parameters;
+
+    /**
      * @ORM\Column(name="Template", type="text")
      * @var text
      */
@@ -132,12 +138,36 @@ class Template
     
         return $this;
     }
-    
+
+    /**
+         * Getter for Parameters
+         *
+         * @return string JSON
+         */
+        public function getParameters()
+        {
+            return $this->parameters;
+        }
+        
+        /**
+         * Setter for parameters
+         *
+         * @param string JSON $parameters
+         *
+         * @return Newscoop\Entity\Snippet\Template
+         */
+        public function setParameters($parameters)
+        {
+            $this->parameters = $parameters;
+        
+            return $this;
+        }
+
     
     /**
      * Getter for template
      *
-     * @return string
+     * @return string JSON
      */
     public function getTemplate()
     {
@@ -147,7 +177,7 @@ class Template
     /**
      * Setter for template
      *
-     * @param string $template
+     * @param string JSON $template
      *
      * @return Newscoop\Entity\Snippet\Template
      */

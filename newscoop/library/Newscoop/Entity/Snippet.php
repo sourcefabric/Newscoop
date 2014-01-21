@@ -125,7 +125,7 @@ class Snippet
     /**
      * Getter for Parameters
      *
-     * @return string
+     * @return string JSON
      */
     public function getParameters()
     {
@@ -135,7 +135,7 @@ class Snippet
     /**
      * Setter for Parameters
      *
-     * @param string $parameters
+     * @param string JSON $parameters
      *
      * @return Newscoop\Entity\Snippet
      */
@@ -150,7 +150,7 @@ class Snippet
     /**
      * Getter for Snippet
      *
-     * @return string
+     * @return string JSON
      */
     public function getSnippet()
     {
@@ -160,7 +160,7 @@ class Snippet
     /**
      * Setter for Snippet
      *
-     * @param string $snippet
+     * @param string JSON $snippet
      *
      * @return Newscoop\Entity\Snippet
      */
