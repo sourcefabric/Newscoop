@@ -92,6 +92,7 @@ class ImageService
             }
         } else {
             $image = new LocalImage($file->getClientOriginalName());
+            $image->setCreated(new \DateTime());
             $this->orm->persist($image);
         }
 
@@ -258,7 +259,6 @@ class ImageService
             'date' => date('Y-m-d'),
             'content_type' => 'image/jeg',
             'user' => null,
-            'created' => new \DateTime(),
             'updated' => new \DateTime(),
             'status' => 'unapproved',
             'source' => 'local',
@@ -272,8 +272,7 @@ class ImageService
         $image->setDate($attributes['date']);
         $image->setContentType($attributes['content_type']);
         $image->setUser($attributes['user']);
-        $image->setCreated($attributes['created']);
-        $image->setUpdated($attributes['created']);
+        $image->setUpdated($attributes['updated']);
         $image->setSource($attributes['source']);
         $image->setUrl($attributes['url']);
 
