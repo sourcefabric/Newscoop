@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity()
  * @ORM\Table(name="Translations", indexes={
- *   @ORM\Index(name="phrase_language_index", columns={"language"}),
+ *   @ORM\Index(name="phrase_language_index", columns={"fk_language_id"}),
  * })
  */
 class Translation
@@ -97,5 +97,15 @@ class Translation
         $this->translationText = $translationText;
 
         return $this;
+    }
+
+    /**
+     * Return translation text when echo this object
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->translationText;
     }
 }

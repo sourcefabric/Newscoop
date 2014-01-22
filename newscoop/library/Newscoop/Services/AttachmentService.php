@@ -64,6 +64,7 @@ class AttachmentService
             $description = new Translation();
             $description->setLanguage($language);
             $description->setTranslationText($descriptionText);
+            unset($attributes['description']);
             $attachment->setCreated(new \DateTime());
 
             $this->em->persist($description);
@@ -109,7 +110,7 @@ class AttachmentService
             'httpCharset' => null,
             'sizeInBytes' => null,
             'description' => null,
-            'user' => new User(),
+            'user' => null,
             'updated' => new \DateTime(),
             'source' => 'local',
             'status' => 'unaproved',

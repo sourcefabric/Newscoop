@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Snippet entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AttachmentRepository")
  * @ORM\Table(name="Attachments")
  */
 class Attachment
@@ -76,14 +76,14 @@ class Attachment
     private $sizeInBytes;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
-     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="id", nullable=true)
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation", cascade={"remove"})
+     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\Translation
      */
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
@@ -326,13 +326,27 @@ class Attachment
     }
 
     /**
+     * Get User id
+     *
+     * @return string
+     */
+    public function getUserId()
+    {
+        if ($this->user instanceof \Newscoop\Entity\User) {
+            return $this->user->getId();
+        }
+
+        return null;
+    }
+
+    /**
      * Sets the value of user.
      *
-     * @param Newscoop\Entity\User $user the user
+     * @param mixed $user the user
      *
      * @return self
      */
-    public function setUser(\Newscoop\Entity\User $user)
+    public function setUser($user)
     {
         $this->user = $user;
 
@@ -446,7 +460,7 @@ class Attachment
     /**
      * Sets the value of description.
      *
-     * @param Newscoop\Entity\Translations $description the description
+     * @param \Newscoop\Entity\Translations $description the description
      *
      * @return self
      */
@@ -455,5 +469,15 @@ class Attachment
         $this->description = $description;
 
         return $this;
+    }
+
+    /**
+     * Gets the value of description.
+     *
+     * @return \Newscoop\Entity\Translation
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

@@ -140,9 +140,9 @@ parameters:
         thumbnail_max_size: "64"
         cache_url: "images/cache"
         cache_path: "%application_path%/../images/cache/"
-    file:
+    attachment:
         file_base_url: "files/"
-        file_directory: "%application_path%/../public/files"
+        file_directory: "%application_path%/../public/files/"
         file_num_dirs_level_1: 1000
         file_num_dirs_level_2: 1000
     search:
