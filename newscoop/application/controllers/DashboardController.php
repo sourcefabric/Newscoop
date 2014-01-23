@@ -95,4 +95,15 @@ class DashboardController extends Zend_Controller_Action
         $this->getResponse()->setHttpResponseCode(400);
         $this->_helper->json($form->getMessages());
     }
+
+    public function updateTopicsAction()
+    {
+        try {
+            $this->_helper->service('user.topic')->updateTopics($this->user, $this->_getParam('topics', array()));
+            $this->view->status = '0';
+        } catch (Exception $e) {
+            $this->view->status = -1;
+            $this->view->message = $e->getMessage();
+        }
+    }
 }

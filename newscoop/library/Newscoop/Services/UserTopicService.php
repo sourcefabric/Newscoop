@@ -135,6 +135,38 @@ class UserTopicService
     }
 
     /**
+     * Update user topics
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array                $topics
+     *
+     * @return void
+     */
+    public function updateTopics(User $user, array $topics)
+    {
+        $repository = $this->em->getRepository('Newscoop\Entity\UserTopic');
+        foreach ($topics as $topicId => $status) {
+            $matches = $repository->findBy(array(
+                'user' => $user->getId(),
+                'topic_id' => $topicId,
+            ));
+
+            if ($status === 'false' && !empty($matches)) {
+                foreach ($matches as $match) {
+                    $this->em->remove($match);
+                }
+            } else if ($status === 'true' && empty($matches)) {
+                $topic = $this->findTopic($topicId);
+                if ($topic) {
+                    $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
+                }
+            }
+        }
+
+        $this->em->flush();
+    }
+
+    /**
      * Dispatch event
      *
      * @param Newscoop\Entity\User $user
