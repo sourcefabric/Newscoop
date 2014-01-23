@@ -456,9 +456,8 @@ class CommentsController extends Controller
         $qb = $em->createQueryBuilder();
         $comments = $qb
             ->from('Newscoop\Entity\Comment', 'c', 'c.id')
-            ->select('c', 't', 'i', 'cc', 'u')
+            ->select('c', 't', 'cc', 'u')
             ->leftJoin('c.thread', 't')
-            ->leftJoin('t.issue', 'i')
             ->leftJoin('c.commenter', 'cc')
             ->leftJoin('cc.user', 'u')
             ->where($qb->expr()->in('c.id', $commentIds))
@@ -471,7 +470,7 @@ class CommentsController extends Controller
                 'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
                 'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                 'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
-                'issueNumber' => $comments[$comment->getId()]->getThread()->getIssue()->getNumber(),
+                'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
                 'comment' => $comment,
                 'index' => $counter,
             );
