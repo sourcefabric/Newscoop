@@ -122,6 +122,7 @@ class ImageService
             $filesystem->remove($imagePath);
             $filesystem->remove($thumbnailPath);
             $this->orm->remove($image);
+            $this->orm->flush();
 
             throw new \Exception($e->getMessage(), $e->getCode());
         }

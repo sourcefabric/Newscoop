@@ -154,7 +154,7 @@ class AttachmentsController extends FOSRestController
 
             $attachment = $attachmentService->upload(
                 $file,
-                $attributes['name'],
+                $attributes['description'],
                 $language,
                 $attributes,
                 $attachment

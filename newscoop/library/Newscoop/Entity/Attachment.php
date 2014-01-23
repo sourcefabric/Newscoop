@@ -76,8 +76,8 @@ class Attachment
     private $sizeInBytes;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation", cascade={"remove"})
-     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true)
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
+     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true, onDelete="SET NULL")
      * @var Newscoop\Entity\Translation
      */
     private $description;

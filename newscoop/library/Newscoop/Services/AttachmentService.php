@@ -35,15 +35,20 @@ class AttachmentService
      * Upload new attachment
      *
      * @param UploadedFile $file
-     * @param string       $description
+     * @param string       $descriptionText
      * @param Language     $language
      * @param array        $attributes
      * @param Attachment   $attachment
      *
-     * @return [type]                   [description]
+     * @return Attachment
      */
-    public function upload(UploadedFile $file, $descriptionText, Language $language, array $attributes, Attachment $attachment = null)
-    {
+    public function upload(
+        UploadedFile $file,
+        $descriptionText,
+        Language $language,
+        array $attributes,
+        Attachment $attachment = null
+    ) {
         $filesystem = new Filesystem();
 
         $filesize = $file->getClientSize();
@@ -59,6 +64,14 @@ class AttachmentService
             if ($filesystem->exists($this->getStorageLocation($attachment))) {
                 $filesystem->remove($this->getStorageLocation($attachment));
             }
+
+            if ($descriptionText != $attachment->getDescription()->getTranslationText()) {
+                $description = new Translation();
+                $description->setLanguage($language);
+                $description->setTranslationText($descriptionText);
+                $this->em->persist($description);
+            }
+            unset($attributes['description']);
         } else {
             $attachment = new Attachment();
             $description = new Translation();
@@ -82,6 +95,9 @@ class AttachmentService
         ), $attributes);
 
         $this->fillAttachment($attachment, $attributes);
+        if (is_null($attributes['name'])) {
+            $attachment->setName($file->getClientOriginalName());
+        }
         $this->em->flush();
 
         $target = $this->makeDirectories($attachment);
@@ -92,11 +108,22 @@ class AttachmentService
         } catch (\Exceptiom $e) {
             $filesystem->remove($target);
             $this->em->remove($attachment);
+            $this->em->flush();
 
             throw new \Exception($e->getMessage(), $e->getCode());
         }
 
         return $attachment;
+    }
+
+    public function remove(Attachment $attachment)
+    {
+        $filesystem = new Filesystem();
+
+        $file = $this->getStorageLocation($attachment);
+        $filesystem->remove($file);
+        $this->em->remove($attachment);
+        $this->em->flush();
     }
 
     private function fillAttachment(Attachment $attachment, $attributes)
@@ -235,6 +262,8 @@ class AttachmentService
      * Make directories for attachments
      *
      * @param Attachment $attachment
+     *
+     * @return string
      */
     private function makeDirectories(Attachment $attachment)
     {
