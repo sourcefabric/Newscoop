@@ -9,12 +9,13 @@
 namespace Newscoop\Services;
 
 use Newscoop\Entity\Attachment;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Translation;
+use Newscoop\Entity\Article;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Attachment service
@@ -124,6 +125,16 @@ class AttachmentService
         $filesystem->remove($file);
         $this->em->remove($attachment);
         $this->em->flush();
+    }
+
+    public function addAttachmentToArticle(Attachment $attachment, Article $article)
+    {
+
+    }
+
+    public function removeAttachmentFormArticle(Attachment $attachment, Article $article)
+    {
+
     }
 
     private function fillAttachment(Attachment $attachment, $attributes)

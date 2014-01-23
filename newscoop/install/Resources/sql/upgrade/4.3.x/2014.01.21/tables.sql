@@ -1,4 +1,4 @@
-ALTER TABLE Attachments CHANGE 
+ALTER TABLE Attachments CHANGE
     id Id INT AUTO_INCREMENT NOT NULL,
     CHANGE fk_language_id fk_language_id INT DEFAULT NULL,
     CHANGE size_in_bytes size_in_bytes BIGINT DEFAULT NULL,
@@ -17,3 +17,7 @@ DROP INDEX phrase_language_index ON Translations;
 DROP INDEX phrase_id ON Translations;
 ALTER TABLE Translations DROP phrase_id, CHANGE id Id INT AUTO_INCREMENT NOT NULL, CHANGE fk_language_id fk_language_id INT NOT NULL;
 CREATE INDEX IDX_DE86017FEB0716C0 ON Translations (fk_language_id);
+
+ALTER TABLE ArticleAttachments DROP INDEX article_attachment_index;
+ALTER TABLE ArticleAttachments ADD PRIMARY KEY (fk_article_number, fk_attachment_id);
+ALTER TABLE ArticleAttachments CHANGE fk_article_number fk_article_number INT NOT NULL, CHANGE fk_attachment_id fk_attachment_id INT NOT NULL;

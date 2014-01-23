@@ -67,7 +67,7 @@ class AttachmentsController extends FOSRestController
 
         return $attachment;
     }
-
+    
     /**
      * @Route("/attachments.{_format}", defaults={"_format"="json"})
      * @Method("POST")
