@@ -146,10 +146,7 @@ class UserTopicService
     {
         $repository = $this->em->getRepository('Newscoop\Entity\UserTopic');
         foreach ($topics as $topicId => $status) {
-            $matches = $repository->findBy(array(
-                'user' => $user->getId(),
-                'topic_id' => $topicId,
-            ));
+            $matches = $repository->findByUser($user);
 
             if ($status === 'false' && !empty($matches)) {
                 foreach ($matches as $match) {
