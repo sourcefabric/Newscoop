@@ -191,6 +191,10 @@ class CommentRepository extends DatatableSource
 				 ->setTimeCreated($p_values['time_created'])
                  ->setRecommended($p_values['recommended']);
 
+        if (array_key_exists('source', $p_values)) {
+            $p_entity->setSource($p_values['source']);
+        }
+
         $threadLevel = 0;
 
         if (!empty($p_values['parent']) && (0 != $p_values['parent'])) {

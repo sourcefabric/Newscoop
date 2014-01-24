@@ -2111,6 +2111,7 @@ CREATE TABLE comment (
   dislikes VARCHAR(4) NOT NULL,
   recommended VARCHAR(1) NOT NULL,
   indexed DATETIME DEFAULT NULL,
+  source VARCHAR(60) NULL DEFAULT NULL,
   fk_comment_commenter_id INT DEFAULT NULL,
   fk_forum_id INT DEFAULT NULL,
   fk_language_id INT DEFAULT NULL,

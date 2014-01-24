@@ -106,9 +106,9 @@ foreach ($hiddens as $name) {
             <?php if ($g_user->hasPermission('CommentModerate')) { ?>
             <a href="<?php echo $controller->view->url(array(
                 'module' => 'admin',
-                'controller' => 'comment',
+                'controller' => 'comments',
                 'action' => 'set-recommended',
-            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php echo $translator->trans('Recommend', array(), 'article_comments'); ?></a>
+            )); ?>/${id}/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php echo $translator->trans('Recommend', array(), 'article_comments'); ?></a>
             <?php } ?>
 
             <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button"><?php echo $translator->trans('Reply to comment', array(), 'article_comments'); ?></a>
@@ -119,7 +119,7 @@ foreach ($hiddens as $name) {
     </div>
 </fieldset>
 <p style="display:none"><?php echo $translator->trans('No comments posted.', array(), 'article_comments'); ?></p>
-<form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
+<form id="comment-moderate" action="../comments/set-status" method="POST"></form>
 
 <script type="text/javascript">
 function toggleCommentStatus(commentId) {
@@ -163,7 +163,7 @@ function loadComments() {
     };
     
 
-    var call_url = '../comment/list/format/json';
+    var call_url = '../comments/list';
 
     var res_handle = function(data) {
         //$('#comment-moderate').empty();
@@ -236,21 +236,22 @@ function loadComments() {
             }
         }).click(function() {
             var link = $(this);
-            $.getJSON($(this).attr('href') + '?format=json', {
-                'security_token': g_security_token
-            }, function(data, textStatus, jqXHR) {
-                if (link.hasClass('status-0')) {
-                    link.removeClass('status-0').addClass('status-1');
-                    link.html("<?php echo $translator->trans("Recommend", array(), 'article_comments'); ?>");
-                    var status = 1;
-                } else {
-                    link.removeClass('status-1').addClass('status-0');
-                    link.html("<?php echo $translator->trans("Unrecommend", array(), 'article_comments'); ?>");
-                    var status = 1;
-                }
+            callServer('ping', [], function(json) {
+                $.getJSON(link.attr('href'), {
+                }, function(data, textStatus, jqXHR) {
+                    if (link.hasClass('status-0')) {
+                        link.removeClass('status-0').addClass('status-1');
+                        link.html("<?php echo $translator->trans("Recommend", array(), 'article_comments'); ?>");
+                        var status = 1;
+                    } else {
+                        link.removeClass('status-1').addClass('status-0');
+                        link.html("<?php echo $translator->trans("Unrecommend", array(), 'article_comments'); ?>");
+                        var status = 1;
+                    }
 
-                var href = link.attr('href');
-                link.attr('href', href.substr(0, href.length - 2) + status);
+                    var href = link.attr('href');
+                    link.attr('href', href.substr(0, href.length - 2) + '/'+ status);
+                });
             });
 
             return false;
@@ -269,7 +270,7 @@ var updateStatus = function(button) {
        "status": wanted_status
     };
 
-    var call_url = '../comment/set-status/format/json';
+    var call_url = '../comments/set-status';
 
     var res_handle = function(data) {
         //flashMessage('<?php echo $translator->trans('Comments updated.'); ?>');
