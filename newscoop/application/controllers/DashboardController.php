@@ -100,9 +100,9 @@ class DashboardController extends Zend_Controller_Action
     {
         try {
             $this->_helper->service('user.topic')->updateTopics($this->user, $this->_getParam('topics', array()));
-            $this->view->status = '0';
+            $this->view->status = 1;
         } catch (Exception $e) {
-            $this->view->status = -1;
+            $this->view->status = 0;
             $this->view->message = $e->getMessage();
         }
     }
