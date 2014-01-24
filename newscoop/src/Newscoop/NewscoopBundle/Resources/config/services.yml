@@ -80,6 +80,10 @@ services:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
         arguments:  ['@em']
 
+    newscoop_newscoop.comments_service:
+        class: Newscoop\NewscoopBundle\Services\CommentService
+        arguments:  ['@em']
+
     newscoop_newscoop.translation_template_listener:
         class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
         arguments:  ['@translator']
