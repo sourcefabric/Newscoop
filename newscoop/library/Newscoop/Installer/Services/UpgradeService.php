@@ -86,6 +86,7 @@ class UpgradeService
         $last_db_roll = $versionsArray['roll'];
 
         $first = true;
+        $errorsCount = 0;
         $skipped = array();
         $sqlVersions = array_map('basename', glob($this->newscoopDir . '/install/Resources/sql/upgrade/[2-9].[0-9]*'));
         usort($sqlVersions, array($databaseService, 'versionCompare'));
