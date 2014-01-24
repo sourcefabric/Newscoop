@@ -139,3 +139,13 @@ div.table-responsive {
     color: #fff;
     font-weight: none;
 }
+
+.select2-search-choice-close {
+    top: 0px;
+    background-size: 64px 51px;
+}
+
+a.select2-search-choice-close:hover {
+    top: -1px;
+    background-size: 64px 45px;
+}

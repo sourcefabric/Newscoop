@@ -36,6 +36,7 @@ class CommentsController extends Controller
         $imageService = $this->container->get('image');
         $paginator = $this->get('knp_paginator');
         $commentService = $this->container->get('comment');
+        $statusMap = Comment::$status_enum;
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
 
@@ -44,7 +45,8 @@ class CommentsController extends Controller
             ->leftJoin('c.commenter', 'cm')
             ->leftJoin('c.thread', 't')
             ->where($queryBuilder->expr()->isNotNull('c.article_num'))
-            ->andWhere('c.status != 3') //3 - deleted
+            ->andWhere('c.status != :deleted')
+            ->setParameter('deleted', array_search('deleted', $statusMap))
             ->orderBy('c.time_created', 'desc');
 
         $session = $request->getSession();
@@ -395,7 +397,7 @@ class CommentsController extends Controller
      */
     private function buildFilterQuery($filters, $query, $sessionParameter, $queryBuilder)
     {
-        $statusMap = \Newscoop\Entity\Comment::$status_enum;
+        $statusMap = Comment::$status_enum;
         foreach ($filters as $key => $value) {
             if ($value) {
                 $query->add($queryBuilder->expr()->eq('c.status', array_search($key, $statusMap)));

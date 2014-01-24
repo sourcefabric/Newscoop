@@ -6,8 +6,8 @@
 
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
-<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
 {% endblock %}
 
 {% block admin_scripts %}
@@ -186,7 +186,7 @@
                 <tr id="hoverBtns">
                     <td colspan="1"></td>
                     <td colspan="6">
-                        <div class="commentBtns" style="display: none; visibility: visible;">
+                        <div class="commentBtns" id="{{ row.comment.id }}" style="display: none; visibility: visible;">
                             <ul>
                                 <li>
                                     <input type="radio" name="action_comment_{{ row.comment.id }}" class="action new" id="comment_buttons_form_buttons_0" value="pending" data="pending_{{ row.comment.id }}" {% if row.comment.status == 'pending' %}checked {% endif %}>
@@ -284,17 +284,7 @@
     $("#hoverBtns td:last-child").hover(function() {
         $(this).children('div').show();
     }, function() {
-        var that = $(this);
-        $(".select2-drop").live({
-            mouseover: function(){
-                $(that).children('div').show();
-            },
-            mouseleave: function(){
-                $(that).children('div').hide();
-            }
-        });
-
-        $(that).children('div').hide();
+        $(this).children('div').hide();
     });
 
     $('.commentBtns .action').live('click', function () {
