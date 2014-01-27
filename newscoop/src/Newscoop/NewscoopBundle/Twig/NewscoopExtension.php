@@ -23,7 +23,7 @@ class NewscoopExtension extends \Twig_Extension
 
     /**
      * Constructor
-     * 
+     *
      * @param ContainerInterface $container
      */
     public function __construct($container)
@@ -59,6 +59,7 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('strpos', 'strpos'),
             new \Twig_SimpleFunction('getBreadcrumbsArray', array($this, 'getBreadcrumbsArray')),
             new \Twig_SimpleFunction('getReCaptchaImage', array($this, 'getReCaptchaImage')),
+            new \Twig_SimpleFunction('renderHook', array($this, 'renderHook')),
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
         );
     }
@@ -80,6 +81,12 @@ class NewscoopExtension extends \Twig_Extension
         $oVisualCaptcha->Create(__DIR__.'/../../../../images/cache/recaptcha.png');
 
         return '/images/cache/recaptcha.png';
+    }
+
+    public function renderHook($hookName, $params = array())
+    {
+        echo $this->container->get('newscoop.plugins.service')
+            ->renderPluginHooks($hookName, null, $params);
     }
 
     public function getName()

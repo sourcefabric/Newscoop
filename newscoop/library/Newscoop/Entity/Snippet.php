@@ -39,6 +39,12 @@ class Snippet
     private $name;
 
     /**
+     * @ORM\Column(name="Parameters", type="text")
+     * @var text
+     */
+    private $parameters;
+
+    /**
      * @ORM\Column(name="Snippet", type="text")
      * @var text
      */
@@ -115,11 +121,36 @@ class Snippet
     
         return $this;
     }
+
+    /**
+     * Getter for Parameters
+     *
+     * @return string JSON
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
+    }
+    
+    /**
+     * Setter for Parameters
+     *
+     * @param string JSON $parameters
+     *
+     * @return Newscoop\Entity\Snippet
+     */
+    public function setParameters($parameters)
+    {
+        $this->parameters = $parameters;
+    
+        return $this;
+    }
+    
     
     /**
      * Getter for Snippet
      *
-     * @return string
+     * @return string JSON
      */
     public function getSnippet()
     {
@@ -129,7 +160,7 @@ class Snippet
     /**
      * Setter for Snippet
      *
-     * @param string $snippet
+     * @param string JSON $snippet
      *
      * @return Newscoop\Entity\Snippet
      */

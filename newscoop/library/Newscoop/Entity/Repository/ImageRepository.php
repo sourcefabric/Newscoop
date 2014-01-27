@@ -9,6 +9,7 @@ namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Newscoop\Image\LocalImage;
+use Doctrine\ORM\Query;
 
 /**
  * Image Repository
@@ -34,6 +35,11 @@ class ImageRepository extends EntityRepository
         return $query->getResult();
     }
 
+    /**
+     * Get all images
+     *
+     * @return Query
+     */
     public function getImages()
     {
         $query = $this->createQueryBuilder('i')
@@ -42,6 +48,13 @@ class ImageRepository extends EntityRepository
         return $query;
     }
 
+    /**
+     * Get single image by id
+     *
+     * @param int $number
+     *
+     * @return Query
+     */
     public function getImage($number)
     {
         $query = $this->createQueryBuilder('i')
@@ -56,6 +69,7 @@ class ImageRepository extends EntityRepository
      * Get count of references for given file
      *
      * @param string $file
+     *
      * @return int
      */
     public function getImageFileReferencesCount($file)
