@@ -31,6 +31,26 @@ class UserCriteria extends Criteria
     public $created;
 
     /**
+     * @var string
+     */
+    public $email;
+
+    /**
+     * @var string
+     */
+    public $username;
+
+    /**
+     * @var string
+     */
+    public $first_name;
+
+    /**
+     * @var string
+     */
+    public $last_name;
+
+    /**
      * @var boolean
      */
     public $is_admin = false;

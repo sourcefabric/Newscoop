@@ -706,6 +706,7 @@ final class CampContext
         $p_list->setId($this->next_list_id($listObjectName));
 
         $listName = $this->m_listObjects[$objectName]['list'];
+
         if (!isset($this->m_list_count[$listName.'_lists'])) {
             $this->m_list_count[$listName.'_lists'] = 1;
         } else {

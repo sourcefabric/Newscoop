@@ -83,4 +83,14 @@ class ImageRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+    public function getArticleImages($number)
+    {
+        $query = $this->createQueryBuilder('ai')
+            ->andWhere('ai.articleNumber = :number')
+            ->setParameter('number', $number)
+            ->getQuery();
+
+        return $query;
+    }
 }

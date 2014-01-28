@@ -139,7 +139,7 @@ abstract class BaseList
     }
 
     public function getList($firstResult, $parameters)
-    {   
+    {
         if (!array_key_exists('constraints', $parameters)) {
             $parameters['constraints'] = '';
         }
@@ -216,9 +216,9 @@ abstract class BaseList
      */
     protected function convertParameters($firstResult, $parameters)
     {
-        $this->firstResult = is_numeric($firstResult) ? (int)$firstResult : 0;
-        $this->maxResults = isset($parameters['length']) ? (int)$parameters['length'] : 0;
-        $this->columns = isset($parameters['columns']) ? (int)$parameters['columns'] : 0;
+        $this->firstResult = is_numeric($firstResult) ? intval($firstResult) : 0;
+        $this->maxResults = isset($parameters['length']) ? intval($parameters['length']) : 0;
+        $this->columns = isset($parameters['columns']) ? intval($parameters['columns']) : 0;
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $this->name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
 
@@ -290,7 +290,7 @@ abstract class BaseList
      */
     private function defaultName()
     {
-        return sha1(time());
+        return sha1(time().$this->id);
     }
 
     /**
@@ -617,7 +617,7 @@ abstract class BaseList
      * @param string $constraintsString
      * @return array
      */
-    private function parseConstraintsString($constraintsString)
+    protected function parseConstraintsString($constraintsString)
     {
         if (empty($constraintsString)) {
             return array();
@@ -658,7 +658,8 @@ abstract class BaseList
      *
      * @param string $id
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->id = $id;
     }
 }

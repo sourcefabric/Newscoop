@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Attachment controller
@@ -25,6 +26,17 @@ use Doctrine\ORM\EntityNotFoundException;
 class AttachmentsController extends FOSRestController
 {
     /**
+     * Get all attachments
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the attachments are not found"
+     *         }
+     *     }
+     * )
+     *
      * @Route("/attachments.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -47,6 +59,21 @@ class AttachmentsController extends FOSRestController
     }
 
     /**
+     * Get attachment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the attachment is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Attachment id"}
+     *     },
+     *     output="\Newscoop\Entity\Attachment"
+     * )
+     *
      * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
@@ -67,8 +94,17 @@ class AttachmentsController extends FOSRestController
 
         return $attachment;
     }
-    
+
     /**
+     * Create new attachment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when attachment created succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\AttachmentType"
+     * )
+     *
      * @Route("/attachments.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
@@ -81,6 +117,18 @@ class AttachmentsController extends FOSRestController
     }
 
     /**
+     * Update attachment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when attachment updated succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\AttachmentType",
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Attachment id"}
+     *     }
+     * )
+     *
      * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
      * @Method("POST|PATCH")
      * @View()
@@ -93,6 +141,20 @@ class AttachmentsController extends FOSRestController
     }
 
     /**
+     * Delete image
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when attachment removed succesfuly",
+     *         404={
+     *           "Returned when the attachment is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Attachment id"}
+     *     }
+     * )
+     *
      * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
      * @Method("DELETE")
      * @View(statusCode=204)
