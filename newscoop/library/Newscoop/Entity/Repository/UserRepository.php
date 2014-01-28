@@ -683,9 +683,10 @@ class UserRepository extends EntityRepository
 
 
         $list = new ListResult();
-        $list->count = (int) $qb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+        $countQb = clone $qb;
+        $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
 
-        $qb->select('u, ua, ' . $this->getUserPointsSelect());
+        $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
         if($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
@@ -694,8 +695,6 @@ class UserRepository extends EntityRepository
         if($criteria->maxResults != 0) {
             $qb->setMaxResults($criteria->maxResults);
         }
-
-
 
         $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {
