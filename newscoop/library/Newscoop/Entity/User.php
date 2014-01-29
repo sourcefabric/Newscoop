@@ -616,7 +616,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @return array array with roles
      */
     public function getRoles()
-    {   
+    {
         $roles = array();
         foreach($this->groups as $group) {
             $roles[] = strtoupper(str_replace(" ", "_", $group->getName()));

@@ -16,6 +16,11 @@ use Newscoop\Entity\User;
 class UserCriteria extends Criteria
 {
     /**
+     * @var array
+     */
+    public $attributes;
+
+    /**
      * @var string
      */
     public $status = User::STATUS_ACTIVE;
