@@ -7,7 +7,7 @@ Feature: Article
     And response should have "items" with elements
 
   Scenario: Get single article from gimme
-    When I send a GET request to "/articles/74"
+    When I send a GET request to "/articles/65"
     Then the response code should be 200
     And response should have keys "number, title, updated, published, language, comments, webcode, type"
     And response should have "fields" with elements

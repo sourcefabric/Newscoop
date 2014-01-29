@@ -193,7 +193,8 @@ class ImageSearch {
                 if (isset($inUseArray[$row['Id']])) {
                     $template['in_use'] = $inUseArray[$row['Id']];
                 }
-                $imageSize = getimagesize($tmpImage->getImageStorageLocation());
+
+                $imageSize = @getimagesize($tmpImage->getImageStorageLocation()) ? : array(0, 0);
                 $template['width'] = $imageSize[0];
                 $template['height'] = $imageSize[1];
                 $this->m_imageData[] = $template;

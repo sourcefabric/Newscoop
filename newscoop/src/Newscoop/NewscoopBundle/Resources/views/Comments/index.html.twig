@@ -1,0 +1,597 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "new_comments" %}
+
+{% block admin_title %}{{ parent() }} - {{ 'comments.label.comments'|trans }}{% endblock %}
+{% block admin_page_title_content %}{{ 'comments.label.comments'|trans }}{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/admin-style/comments.css">
+<link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/comments.css') }}">
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/js/select2/select2.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="plugin-container">
+    <div id="showComments">
+        <form method="post" action="">
+        <fieldset class="filters">
+            <legend>{{ 'comments.label.show'|trans }}</legend>
+            <ul class="list-inline">
+                {% set filter = app.session.get('commentsFilters') %}
+                <li class="new">
+                    {{ form_widget(filterForm.pending, { checked : filter.get('filterPending') ? true : false }) }} {{ form_label(filterForm.pending) }}
+                </li>
+                <li class="approved">
+                    {{ form_widget(filterForm.approved, { checked : filter.get('filterApproved') ? true : false }) }} {{ form_label(filterForm.approved) }}
+                </li>
+                <li class="hidden">
+                    {{ form_widget(filterForm.hidden, { checked : filter.get('filterHidden') ? true : false }) }} {{ form_label(filterForm.hidden) }}
+                </li>
+                <li class="hidden">
+                   {{ form_widget(filterForm.recommended, { checked : filter.get('filterRecommended') ? true : false }) }} {{ form_label(filterForm.recommended) }}
+                </li>
+                <li class="hidden">
+                    {{ form_widget(filterForm.unrecommended, { checked : filter.get('filterUnrecommended') ? true : false }) }} {{ form_label(filterForm.unrecommended) }}
+                </li>
+                <li id="filterBtn">{{ form_widget(filterForm.filterButton, { 'attr': { 'class': 'btn btn-default btn-sm'} }) }}</li>
+                {{ form_rest(filterForm) }}
+            </ul>
+        </fieldset>
+        </form>
+    </div>
+    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
+        <div class="form-group">
+            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
+        </div>
+        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
+        {{ form_rest(searchForm) }}
+    </form>
+    <div id="actionExtender">
+        <fieldset class="status-actions">
+            <legend>{{ 'comments.label.actions'|trans }}</legend>
+            <select style="width: 300px" class="form-control input-sm actions">
+                <option value="">{{ 'comments.label.selectstatus'|trans }}</option>
+                <option value="pending">{{ 'comments.label.new'|trans }}</option>
+                <option value="approved">{{ 'comments.label.approved'|trans }}</option>
+                <option value="hidden">{{ 'comments.label.hidden'|trans }}</option>
+                <option value="deleted">{{ 'comments.label.deleted'|trans }}</option>
+            </select>
+        </fieldset>
+    </div>
+    <div class="row" id="paging">
+            <div class="col-xs-3 col-sm-4 col-md-5">
+                <div class="dataTables_info" id="commentsTable_info">
+                    {{ 'comments.label.showing'|trans }}
+                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                </div>
+            </div>
+            <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
+    </div>
+    <div class="table-responsive">
+        <table class="table" id="commentsTable">
+            <thead>
+                <tr>
+                  <th><input class="toggle-checkbox" type="checkbox"></th>
+                  <th >{{ knp_pagination_sortable(pagination, 'comments.label.author'|trans, 'cm.name') }}</th>
+                  <th>{{ knp_pagination_sortable(pagination, 'comments.label.date'|trans, 'c.time_created') }}</th>
+                  <th>{{ knp_pagination_sortable(pagination, 'comments.label.article'|trans, 't.name') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% if pagination.getTotalItemCount > 0 %}
+                {% for row in commentsArray %}
+                <tr id="use-hover">
+                    <td style="width: 3%; ">
+                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}.</span>
+                    </td>
+                    <td>
+                        <div class="commentUserHolder">
+                            <div>
+                                {% if row.user is empty %}
+                                    <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
+                                {% else %}
+                                    {% if row.user.image(50, 50, 'crop') is empty %}
+                                     <img src="http://www.gravatar.com/avatar/{{ row.avatarHash }}?s=50&amp;d=identicon">
+                                    {% else %}
+                                     <img src="{{ row.user.image(50, 50, 'crop') }}">
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <p></p>
+                            <p>
+                            {% if row.comment.commenter.user is empty %}
+                                {% if row.comment.commenter.url is empty %}
+                                    {{ row.comment.commenter.name }}
+                                {% else %}
+                                    <a href="{{ row.comment.commenter.url }}" target="_blank">{{ row.comment.commenter.name }}</a>
+                                {% endif %}
+                                ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
+                            {% else %}
+                                <a href="/profile/{{ row.comment.commenter.name }}">{{ row.comment.commenter.name }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
+                            {% endif %}
+                            <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
+                            <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
+                            <a href="/admin/comment-commenter/toggle-ban/format/json/commenter/{{ row.comment.commenter.id }}/thread/{{ row.comment.thread.number }}/language/{{ row.comment.language.id }}" class="btn btn-default btn-xs ban-btn"><span class="glyphicon glyphicon-ban-circle"></span> {{ 'comments.label.ban'|trans }}</a>
+                            <p></p>
+                        </div>
+                    </td>
+                    <td style="width: 40%;">
+                        <div class="dateCommentHolder" id="comment-section_{{ row.comment.id }}">
+                            <h4>
+                                <span>{{ row.comment.timeCreated|date("Y.m.d") }} {{ 'comments.label.at'|trans }} {{ row.comment.timeCreated|date("H:i:s") }}</span>
+                                {% if row.comment.source %}
+                                    <span class="label label-info">{{ row.comment.source }}</span>
+                                {% endif %}
+                                <span class="commentSubject">
+                                    {% if row.comment.subject|length > 50 %}
+                                    {{ row.comment.subject|slice(0, 50) }}...
+                                {% else %}
+                                    {{ row.comment.subject }}
+                                {% endif %}
+                                </span>
+                            </h4>
+                            <p class="commentBody">
+                                {% if row.comment.message|length > 400 %}
+                                    {{ row.comment.message|slice(0, 400) }}...
+                                {% else %}
+                                    {{ row.comment.message }}
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="dateCommentHolderReply">
+                            <fieldset class="content-reply_{{ row.comment.id }}" style="display:none;">
+                                <h3>{{ 'comments.label.replyto'|trans }}</h3>
+                                <form action="{{ path('newscoop_newscoop_comments_reply', { id: row.comment.id }) }}">
+                                    <label>{{ 'comments.label.subject'|trans }}</label>
+                                    <input name="subject" type="text" class="form-control input-sm">
+                                    <label>{{ 'comments.label.comment'|trans }}</label>
+                                    <textarea name="message" class="form-control input-sm"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="{{ 'comments.btn.cancel'|trans }}" id="{{ row.comment.id }}" class="btn btn-default btn-sm reply-cancel">
+                                        <input type="submit" value="{{ 'comments.btn.submit'|trans }}" class="btn btn-default btn-sm">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                        <div class="dateCommentHolderEdit">
+                            <fieldset class="content-edit_{{ row.comment.id }}" style="display:none; margin-top: -30px;">
+                                <h3>{{ 'comments.label.editcomment'|trans }}</h3>
+                                <form action="{{ path('newscoop_newscoop_comments_update', { id: row.comment.id }) }}">
+                                    <label>{{ 'comments.label.subject'|trans }}</label>
+                                    <input name="subject" type="text" class="form-control input-sm">
+                                    <label>{{ 'comments.label.comment'|trans }}</label>
+                                    <textarea name="message" class="form-control input-sm"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="{{ 'comments.btn.cancel'|trans }}" id="{{ row.comment.id }}" class="btn btn-default btn-sm edit-cancel">
+                                        <input type="submit" value="{{ 'comments.btn.submit'|trans }}" class="btn btn-default btn-sm">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="commentArticleHolder">
+                            <p>
+                                <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
+                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.comment.thread.section.name }}</span>
+                            </p>
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a> 
+                        </div>
+                    </td>
+                </tr>
+                <tr id="hoverBtns">
+                    <td colspan="1"></td>
+                    <td colspan="6">
+                        <div class="commentBtns" id="{{ row.comment.id }}" style="display: none; visibility: visible;">
+                            <ul>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action new" id="comment_buttons_form_buttons_0" value="pending" data="pending_{{ row.comment.id }}" {% if row.comment.status == 'pending' %}checked {% endif %}>
+                                    <label for="pending_{{ row.comment.id }}">{{ 'comments.label.new'|trans }}</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action approved" data="approved_{{ row.comment.id }}" value="approved" {% if row.comment.status == 'approved' %}checked {% endif %}>
+                                    <label for="approved_{{ row.comment.id }}">{{ 'comments.label.approved'|trans }}</label>
+                                </li>
+                                <li>
+                                    <input type="radio" name="action_comment_{{ row.comment.id }}" class="action hidden" data="hidden_{{ row.comment.id }}" value="hidden" style="height: auto" {% if row.comment.status == 'hidden' %}checked {% endif %}>
+                                    <label for="hidden_{{ row.comment.id }}">{{ 'comments.label.hidden'|trans }}</label>
+                                </li>
+                                <li><button type="button" id="{{ row.comment.id }}" class="action-edit btn btn-default btn-xs"><span class="glyphicon glyphicon-edit"></span> {{ 'comments.btn.edit'| trans }}</button>
+                                </li>
+                                <li><button type="button" id="{{ row.comment.id }}" class="action-reply btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span> {{ 'comments.btn.reply'| trans }}</button>
+                                </li>
+                                <li><button type="button" data="deleted_{{ row.comment.id }}" class=" action btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'comments.btn.delete'| trans }}</button>
+                                </li>
+                                <li>
+                                    {% if row.comment.recommended == 1 %}
+                                        <button type="button" id="unrecommend_{{ row.comment.id }}" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>
+                                    {% else %}
+                                    <button type="button" id="recommend_{{ row.comment.id }}" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>
+                                    {% endif %}
+                                </li>
+                                {{ renderHook('newscoop_admin.interface.comments.listsbutton', {'commentId': row.comment.id }) }}
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% else %}
+                <tr><td colspan="7">{{ 'comments.label.noentries'|trans }}</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+        {% if pagination.getTotalItemCount > 0 %}
+        <div class="row">
+            <div class="col-xs-3 col-sm-4 col-md-5">
+                <div class="dataTables_info" id="commentsTable_info">
+                    {{ 'comments.label.showing'|trans }}
+                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                </div>
+            </div>
+            <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
+        </div>
+        {% endif %}
+        <div class="pagination-wrapper">
+            <ul class="pagination pagination-sm">
+            {{ knp_pagination_render(pagination) }}
+            </ul>
+        </div>
+    </div>
+    <div class="dialogPopup dialog-1" title="{{ 'comments.label.fullarticle'|trans }}"></div>
+</div>
+
+<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog" aria-labelledby="modalAlertLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="modalAlertLabel">{{ 'comments.label.alert'|trans }}</h4>
+      </div>
+      <div class="modal-body">
+        {{ 'comments.msg.first'|trans }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ 'comments.btn.close'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+    function changeCommentStatus(status, value) {
+        if (status == 'approved') {
+            $('input[data=approved_'+value+']').prop('checked', true);
+            $('input[data=hidden_'+value+']').prop('checked', false);
+            $('input[data=pending_'+value+']').prop('checked', false);
+        }
+
+        if (status == 'hidden') {
+            $('input[data=approved_'+value+']').prop('checked', false);
+            $('input[data=hidden_'+value+']').prop('checked', true);
+            $('input[data=pending_'+value+']').prop('checked', false);
+        }
+
+        if (status == 'pending') {
+            $('input[data=approved_'+value+']').prop('checked', false);
+            $('input[data=hidden_'+value+']').prop('checked', false);
+            $('input[data=pending_'+value+']').prop('checked', true);
+        }
+    };
+
+    $("tr#use-hover").hover(function() {
+        $(this).next().find('.commentBtns').show();
+    }, function() {
+        $(this).next().find('.commentBtns').hide();
+    });
+
+    $("#hoverBtns td:last-child").hover(function() {
+        $(this).children('div').show();
+    }, function() {
+       $(this).children('div').hide();
+    });
+
+    $('.commentBtns .action').live('click', function () {
+        var el = $(this);
+        var id = el.attr('data');
+        var ids = [id.match(/\d+/)[0]];
+        var status = id.match(/[^_]+/)[0];
+
+        if (status == 'deleted' && !confirm('{{ 'comments.msg.sure'|trans }}' + '\n' + '{{ 'comments.msg.surequestion'|trans }}')) {
+            return false;
+        }
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setstatus'),
+                data: {
+                    "comment": ids,
+                    "status": status
+                },
+                success: function (data) {
+                    if ('deleted' == status) {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.deleted'|trans }}');
+                        location.href = Routing.generate('newscoop_newscoop_comments_index');
+                    } else if (status == 'pending') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.new'|trans }}');
+                    } else if (status == 'approved') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.approved'|trans }}');
+                    } else if (status == 'hidden') {
+                        flashMessage('{{ 'comments.msg.status.single'|trans }} {{ 'comments.msg.status.hidden'|trans }}');
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
+                }
+            });
+        });
+    });
+
+    $('.action-reply').live('click', function () {
+        var el = $(this);
+        $('.content-reply_'+el.attr('id')).hide();
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        editDiv.hide();
+        var subject = editDiv.find("input[name=subject]").val();
+        var message = editDiv.find("textarea[name=message]").val();
+        if (subject || message) {
+            $('#comment-section_'+el.attr('id')).find('.commentSubject').text(subject);
+            $('#comment-section_'+el.attr('id')).find('.commentBody').text(message);
+        }
+
+        $('.content-reply_'+el.attr('id')).toggle("fast");
+    });
+
+    $('.dateCommentHolderReply form').live('submit', function () {
+        var that = $(this);
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: that.attr('action'),
+                data: that.serialize(),
+                success: function (data) {
+                    if (data.status) {
+                        flashMessage('{{ 'comments.msg.updated'|trans }}');
+                        location.href = Routing.generate('newscoop_newscoop_comments_index');
+                    } else if (!status.data) {
+                        flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
+                    } else {
+                        flashMessage(data.status, "error");
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
+                }
+            });
+        });
+
+        return false;
+    });
+
+    $('.dateCommentHolderReply .reply-cancel').live('click', function () {
+        var el = $(this);
+        var form = $('.content-reply_'+el.attr('id')+' form');
+        $(form).each(function () {
+            this.reset();
+        });
+
+        $('.content-reply_'+el.attr('id')).slideToggle("slow");
+    });
+
+    $('.action-edit').live('click', function () {
+        var el = $(this);
+        var subject = $('#comment-section_'+el.attr('id')).find('.commentSubject');
+        var message = $('#comment-section_'+el.attr('id')).find('.commentBody');
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        editDiv.hide();
+        editDiv.find("input[name=subject]").val($.trim(subject.text()));
+        editDiv.find("textarea[name=message]").val($.trim(message.text()));
+        subject.empty();
+        message.empty();
+        $('.content-reply_'+el.attr('id')).hide();
+        editDiv.toggle("fast");
+    });
+
+    $('.dateCommentHolderEdit form').live('submit', function () {
+        var that = $(this);
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: that.attr('action'),
+                data: that.serialize(),
+                success: function (data) {
+                    if (data.status) {
+                        var divSubject = $('#comment-section_'+data.comment).find('.commentSubject');
+                        var divMessage = $('#comment-section_'+data.comment).find('.commentBody');
+                        divSubject.empty();
+                        divSubject.text(data.subject);
+                        divMessage.empty();
+                        divMessage.text(data.message);
+                        $('.content-edit_'+data.comment).slideToggle("slow");
+                        flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    } else if (!data.status) {
+                        flashMessage('{{ 'comments.msg.error.update'|trans }}', "error");
+                    } else {
+                        flashMessage(data.status, "error");
+                    }
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
+                }
+            });
+        });
+
+        return false;
+    });
+
+    $('.dateCommentHolderEdit .edit-cancel').live('click', function () {
+        var el = $(this);
+        var form = $('.content-edit_'+el.attr('id')+' form');
+        var editDiv = $('.content-edit_'+el.attr('id'));
+        var subject = editDiv.find("input[name=subject]").val();
+        var message = editDiv.find("textarea[name=message]").val();
+        $(form).each(function () {
+            this.reset();
+        });
+
+        $('#comment-section_'+el.attr('id')).find('.commentSubject').text(subject);
+        $('#comment-section_'+el.attr('id')).find('.commentBody').text(message);
+        $('.content-edit_'+el.attr('id')).slideToggle("slow");
+    });
+
+    $('.commentBtns .action-recommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('recommend_', '')];
+        var li = $(this).parent();
+
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 1 }),
+                success: function (data) {
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    li.empty();
+                    li.append('<button type="button" id="unrecommend_'+ids+'" class="action-unrecommend btn btn-default btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> {{ 'comments.btn.unrecommend'|trans }}</button>');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+                    }
+                }
+            });
+        });
+    });
+
+    $('.commentBtns .action-unrecommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('unrecommend_', '')];
+        var li = $(this).parent();
+
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_comments_setrecommended', {comments: ids, recommended: 0 }),
+                success: function (data) {
+                    flashMessage('{{ 'comments.msg.updated'|trans }}');
+                    li.empty();
+                    li.append('<button type="button" id="recommend_'+ids+'" class="btn btn-default btn-xs action-recommend"><span class="glyphicon glyphicon-thumbs-up"></span> {{ 'comments.btn.recommend'|trans }}</button>');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach'|trans }}', "error");
+                    }
+                }
+            });
+        });
+    });
+
+    $('.toggle-checkbox').click(function() {
+        $(this).parents('table').find('.table-checkbox').prop('checked', this.checked);
+    });
+
+    $('.actions').change(function () {
+        action = $(this);
+        var status = action.val();
+        if (status != '') {
+            ids = [];
+            $('.table-checkbox:checked').each(function () {
+                ids[ids.length] = $(this).val();
+            });
+            action.val('');
+            if (!ids.length) {
+                $('#modalAlert').modal();
+                return false;
+            }
+            var translationComment = '{{ 'comments.msg.status.single'|trans }}';
+            if (ids.length != 1) {
+                if (status == 'deleted' && !confirm('{{ 'comments.msg.suremultiple'|trans }}' + '\n' + '{{ 'comments.msg.surequestion'|trans }}')) {
+                    return false;
+                }
+
+                translationComment = '{{ 'comments.msg.status.all'|trans }}';
+            }
+
+            callServer('ping', [], function(json) {
+                $.ajax({
+                    type: 'POST',
+                    url: Routing.generate('newscoop_newscoop_comments_setstatus'),
+                    data: {
+                        "comment": ids,
+                        "status": status
+                    },
+                    success: function (data) {
+                        $.each(data.comments, function(index, value) {
+                            changeCommentStatus(data.status, value);
+                        });
+
+                        if ('deleted' == status) {
+                            flashMessage(translationComment+' {{ 'comments.msg.deleted'|trans }}');
+                            location.href = Routing.generate('newscoop_newscoop_comments_index');
+                        } else if (status == 'pending') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.new'|trans }}');
+                        } else if (status == 'approved') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.approved'|trans }}');
+                        } else if (status == 'hidden') {
+                            flashMessage(translationComment+' {{ 'comments.msg.status.hidden'|trans }}');
+                        }
+                    },
+                    error: function (rq, status, error) {
+                        if (status == 0 || status == -1) {
+                            flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                        }
+                    }
+                });
+            });
+        }
+    });
+
+    // Dialog
+    var buttons = {};
+    buttons['{{ 'comments.btn.close'|trans }}'] = function () {
+        $(this).dialog("close");
+    };
+
+    $('.dialogPopup').dialog({
+        autoOpen: false,
+        width: 600,
+        height: 560,
+        position: 'right',
+        buttons: buttons
+    });
+    // Dialog Link
+    $('.articleLink').live('click', function () {
+        var that = $(this);
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'GET',
+                url: that.attr('href'),
+                success: function (data) {
+                    data = $.parseJSON(data);
+                    var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
+                    for (i in data) {
+                        content += '<h4>' + i + '</h4>';
+                        content += '<p>' + data[i] + '</p>';
+                    }
+                    $('.dialogPopup').html(content);
+                    $('.dialogPopup').dialog('open');
+                },
+                error: function (rq, status, error) {
+                    if (status == 0 || status == -1) {
+                        flashMessage('{{ 'comments.msg.error.reach|trans '}}', "error");
+                    }
+                }
+            });
+        });
+
+        return false;
+    });
+</script>
+{% endblock %}

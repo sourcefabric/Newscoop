@@ -211,7 +211,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      * @param int $height
      * @return string
      */
-    public function image($width = 80, $height = 80)
+    public function image($width = 80, $height = 80, $specs = 'fit')
     {
         if (!$this->m_dbObject->getImage()) {
             return '';
@@ -220,7 +220,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $container = \Zend_Registry::get('container');
 
         return $container->get('zend_router')->assemble(array(
-            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height),
+            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
         ), 'image', false, false);
     }
 

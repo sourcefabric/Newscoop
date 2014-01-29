@@ -1,0 +1,151 @@
+.plugin-container {
+    padding: 10px 10px 30px 10px;
+    border: 1px solid #ccc;
+    background-color: #FFF;
+    font-size: 12px;
+}
+
+.hidden {
+    display: block!important;
+    visibility: visible!important;
+}
+
+.ban-btn {
+    margin-top: 3px;
+}
+
+#commentsTable_filter_input {
+    float: left;
+    margin-left: -570px;
+}
+
+.pagination-wrapper {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 0;
+    border-radius: 4px;
+}
+
+div.table-responsive {
+    padding: 20px 30px;
+}
+
+#commentsTable thead > tr > th {
+    border: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr > td:first-child {
+    border-right: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr:last-child > td:first-child {
+    border-top: none;
+}
+
+#commentsTable tbody > tr:last-child {
+    border-bottom: 1px solid #ddd;
+}
+
+#commentsTable tbody > tr > td:last-child {
+    border-right: 1px solid #ddd;
+}
+
+.dateCommentHolderReply h3 {
+    padding: 0;
+    margin-top: 0;
+}
+
+.reply-cancel {
+    margin-right: 5px;
+}
+
+.edit-cancel {
+    margin-right: 5px;
+}
+
+div.form-group input {
+    width: 500px;
+}
+
+form.navbar-form.navbar-left {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.commentBtns ul {
+    height: 30px;
+}
+
+#hoverBtns {
+    height: 35px;
+}
+
+#hoverBtns td:last-child {
+    border: none;
+    padding: 0 0 5px 0;
+}
+
+#hoverBtns td:first-child {
+    border-top: none;
+}
+
+fieldset.filters {
+    height: 75px;
+}
+
+fieldset ul {
+    height: 30px;
+}
+
+#showComments fieldset ul li {
+    height: 30px;
+    padding-top: 2px;
+}
+
+#showComments fieldset ul li#filterBtn {
+    margin-top: -2px;
+}
+
+div.table-responsive {
+    padding: 0 30px 20px 30px;
+}
+
+.status-actions {
+    margin: 15px 30px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    height: 85px;
+}
+
+#paging {
+    margin-left: 15px;
+}
+
+.modal-body {
+    font-size: 14px;
+    color: #a94442;
+}
+
+.dateCommentHolder h4 span.label {
+    color: #fff;
+    font-weight: none;
+}
+
+.select2-search-choice-close {
+    top: 0px;
+    background-size: 64px 51px;
+}
+
+a.select2-search-choice-close:hover {
+    top: -1px;
+    background-size: 64px 45px;
+}

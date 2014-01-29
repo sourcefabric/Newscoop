@@ -143,7 +143,7 @@ class FinishService
 
     /**
      * Save instance config (to files and database)
-     * 
+     *
      * @param array      $config
      * @param Connection $connection
      */

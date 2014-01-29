@@ -54,7 +54,8 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         'src' => Zend_Registry::get('view')->url(array('src' => $thumbnail->src), 'image', true, false),
         'width' => $thumbnail->width,
         'height' => $thumbnail->height,
-        'caption' => $articleRendition->getImage()->getCaption(),
+        'caption' => $articleRendition->getImage()->getDescription(),
+        'description' => $articleRendition->getImage()->getDescription(),
         'photographer' => $articleRendition->getImage()->getPhotographer(),
         'original_url' => $articleRendition->getImage()->getPath(),
     ));

@@ -4,6 +4,7 @@ use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Buzz\Message\Form\FormUpload;
 
 /**
  * Features context.
@@ -11,6 +12,10 @@ use Behat\Gherkin\Node\TableNode;
 class FeatureContext extends BehatContext
 {
     private $browser;
+
+    private $fields = array();
+
+    private $parameters;
 
     /**
      * Initializes context.
@@ -22,7 +27,7 @@ class FeatureContext extends BehatContext
     {
         $this->useContext(
             'api',
-            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\Curl()))
+            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\FileGetContents()))
         );
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
 
@@ -35,6 +40,8 @@ class FeatureContext extends BehatContext
             'publication' => $parameters['publication'],
             'access_token' => $token['access_token']
         )));
+
+        $this->parameters = $parameters;
     }
 
     /**
@@ -153,6 +160,21 @@ class FeatureContext extends BehatContext
     }
 
     /**
+     * @Then /^response should have key "([^"]*)" with value "([^"]*)"$/
+     */
+    public function responseShouldHaveKeyWithValue($key, $value)
+    {
+
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+
+        if ($response[$key] == $value) {
+            return true;
+        }
+
+        throw new \Exception($key.' don\'t have value '.$value);
+    }
+
+    /**
      * @Given /^i should have only "([^"]*)" items$/
      */
     public function iShouldHaveOnlyItems($number)
@@ -188,5 +210,101 @@ class FeatureContext extends BehatContext
         }
 
         throw new \Exception('Response is wrong');
+    }
+
+    /**
+     * @Given /^that i want to create new file \'([^\']*)\' with name \'([^\']*)\'$/
+     */
+    public function thatIWantToSendFileWithName($fileName, $name)
+    {
+        $upload = new FormUpload(__DIR__.'/assets/'.$fileName);
+        $upload->setName($name);
+        $this->fields[$name] = $upload;
+    }
+
+    /**
+     * @Given /^that i want to create "([^"]*)" with name "([^"]*)" and content "([^"]*)" with type "([^"]*)"$/
+     */
+    public function thatIWantToCreateWithNameAndContentWithType($form, $name, $content, $contentType)
+    {
+        if ($contentType == 'file') {
+            $fileName = $content;
+            $content = new FormUpload(__DIR__.'/assets/'.$fileName);
+            $content->setName($fileName);
+        }
+
+        if (!array_key_exists($form, $this->fields)) {
+            $this->fields[$form] = array();
+        }
+
+        $this->fields[$form][$name] = $content;
+    }
+
+    /**
+     * Sends HTTP request to specific URL with form data from PyString.
+     *
+     * @param string $method request method
+     * @param string $url    relative url
+     *
+     * @When /^I send a "([^"]*)" request to "([^"]+)" with custom form data$/
+     */
+    public function iSendARequestToWithCustomFormData($method, $url)
+    {
+        $webApiContext = $this->getMainContext()->getSubcontext('api');
+
+        if ($url == "last resource") {
+            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+        } else {
+            $url = $this->parameters['base_url'].ltrim($webApiContext->replacePlaceHolder($url), '/');
+        }
+
+        $this->browser->submit($url, $this->fields, $method);
+        $this->fields = array();
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
+    }
+
+    /**
+     * @Given /^response should have header "([^"]*)"$/
+     */
+    public function responseShouldHaveHeader($name)
+    {
+        $headers = $this->browser->getLastResponse()->getHeaders();
+        if (array_key_exists($name, $headers)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @When /^I send a "([^"]*)" request to last resource$/
+     */
+    public function iSendARequestToLastResource($method)
+    {
+        $url = $this->browser->getLastRequest()->getUrl();
+        if (array_key_exists('X-Location', $this->browser->getLastResponse()->getHeaders())) {
+            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+        }
+
+        $this->browser->call($url, $method);
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
     }
 }

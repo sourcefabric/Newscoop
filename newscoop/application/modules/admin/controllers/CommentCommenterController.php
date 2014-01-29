@@ -202,7 +202,7 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
                     $this->commenterRepository->flush();
                 }
             }
-            $this->_helper->redirector->gotoSimple('index', 'comment');
+            $this->_helper->redirector->gotoSimple('index', 'comments');
         }
     }
 
