@@ -1,1 +1,0 @@
-system php ./migrate.php

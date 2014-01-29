@@ -7,12 +7,18 @@
 
 namespace Newscoop\Image;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Local Image
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ImageRepository")
- * @ORM\Table(name="Images")
+ * @ORM\Table(name="Images", indexes={
+ *   @ORM\Index(name="is_updated_storage", columns={"is_updated_storage"}),
+ *   @ORM\Index(name="Description", columns={"Description"}),
+ *   @ORM\Index(name="Photographer", columns={"Photographer"}),
+ *   @ORM\Index(name="Place", columns={"Place"}),
+ * })
  */
 class LocalImage implements ImageInterface
 {
@@ -24,13 +30,16 @@ class LocalImage implements ImageInterface
     const BROKEN_WIDTH = 800;
     const BROKEN_HEIGHT = 600;
 
+    const STATUS_UNAPPROVED = 'unapproved';
+    const STATUS_APPROVED = 'approved';
+
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer", name="Id") 
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="Id", length=10)
      * @ORM\GeneratedValue
      * @var int
      */
-    private $id;
+    public $id;
 
     /**
      * @ORM\Column(name="Location")
@@ -51,6 +60,25 @@ class LocalImage implements ImageInterface
     private $thumbnailPath;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="UploadedByUser", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
+     */
+    private $user;
+
+    /**
+     * @ORM\Column(type="datetime", name="TimeCreated", nullable=true)
+     * @var DateTime
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(type="datetime", name="LastModified", nullable=true)
+     * @var DateTime
+     */
+    private $updated;
+
+    /**
      * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
@@ -63,13 +91,13 @@ class LocalImage implements ImageInterface
     private $description;
 
     /**
-     * @ORM\Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=true, name="width")
      * @var int
      */
     private $width;
 
     /**
-     * @ORM\Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=true, name="height")
      * @var int
      */
     private $height;
@@ -79,18 +107,30 @@ class LocalImage implements ImageInterface
      * @var string
      */
     private $photographer;
-    
+
+    /**
+     * @ORM\Column(nullable=True, name="photographer_url")
+     * @var string
+     */
+    private $photographerUrl;
+
     /**
      * @ORM\Column(nullable=True, name="Place")
      * @var string
      */
     private $place;
-    
+
     /**
      * @ORM\Column(nullable=True, name="Date")
      * @var string
      */
     private $date;
+
+    /**
+     * @ORM\Column(name="ContentType")
+     * @var string
+     */
+    private $contentType;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
@@ -115,6 +155,12 @@ class LocalImage implements ImageInterface
      * @var string
      */
     private $source;
+
+    /**
+     * @ORM\Column(type="string", name="Status")
+     * @var string
+     */
+    private $status;
 
     /**
      * @param string $image
@@ -197,6 +243,7 @@ class LocalImage implements ImageInterface
         $filename = $this->isLocal() ? APPLICATION_PATH . '/../' . $this->getPath() : $this->url;
         if ($this->isLocal() && !file_exists($filename)) {
             $this->setBroken();
+
             return;
         }
 
@@ -204,11 +251,13 @@ class LocalImage implements ImageInterface
             $info = getimagesize($filename);
         } catch (\Exception $e) {
             $this->setBroken();
+
             return;
         }
 
         if (!is_array($info) || empty($info[0]) || empty($info[1])) {
             $this->setBroken();
+
             return;
         }
 
@@ -253,6 +302,7 @@ class LocalImage implements ImageInterface
      * Set description
      *
      * @param string $description
+     *
      * @return void
      */
     public function setDescription($description)
@@ -294,13 +344,14 @@ class LocalImage implements ImageInterface
      * Set photographer
      *
      * @param string $photographer
+     *
      * @return void
      */
     public function setPhotographer($photographer)
     {
         $this->photographer = (string) $photographer;
     }
-    
+
     /**
      * Get photographer
      *
@@ -310,18 +361,41 @@ class LocalImage implements ImageInterface
     {
         return $this->photographer;
     }
-    
+
+    /**
+     * Set photographer url
+     *
+     * @param string $url
+     *
+     * @return void
+     */
+    public function setPhotographerUrl($url)
+    {
+        $this->photographerUrl = (string) $url;
+    }
+
+    /**
+     * Get photographer url
+     *
+     * @return string
+     */
+    public function getPhotographerUrl()
+    {
+        return $this->photographerUrl;
+    }
+
     /**
      * Set place
      *
      * @param string $place
+     *
      * @return void
      */
     public function setPlace($place)
     {
         $this->place = (string) $place;
     }
-    
+
     /**
      * Get place
      *
@@ -331,18 +405,19 @@ class LocalImage implements ImageInterface
     {
         return $this->place;
     }
-    
+
     /**
      * Set date
      *
      * @param string $date
+     *
      * @return void
      */
     public function setDate($date)
     {
         $this->date = (string) $date;
     }
-    
+
     /**
      * Get date
      *
@@ -380,6 +455,7 @@ class LocalImage implements ImageInterface
      *
      * @param string $path
      * @param string $thumbnailPath
+     *
      * @return void
      */
     public function updateStorage($path, $thumbnailPath)
@@ -392,7 +468,8 @@ class LocalImage implements ImageInterface
      * Upload image
      *
      * @param string $path
-     * @param string $thumbnailpath
+     * @param string $thumbnailPath
+     *
      * @return void
      */
     public function upload($path, $thumbnailPath)
@@ -406,12 +483,16 @@ class LocalImage implements ImageInterface
      *
      * @return string
      */
-    public function getThumbnailPath()
+    public function getThumbnailPath($clear = false)
     {
+        if ($clear) {
+            return $this->thumbnailPath;
+        }
+
         return 'images/thumbnails/' . $this->thumbnailPath;
     }
 
-    /*
+    /**
      * Get source
      *
      * @return string
@@ -419,5 +500,223 @@ class LocalImage implements ImageInterface
     public function getSource()
     {
         return $this->source;
+    }
+
+    /**
+     * Gets the value of contentType.
+     *
+     * @return string
+     */
+    public function getContentType()
+    {
+        return $this->contentType;
+    }
+
+    /**
+     * Sets the value of contentType.
+     *
+     * @param string $contentType the content type
+     *
+     * @return self
+     */
+    public function setContentType($contentType)
+    {
+        $this->contentType = $contentType;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of user.
+     *
+     * @return \Newscoop\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Sets the value of user.
+     *
+     * @param \Newscoop\Entity\User $user the user
+     *
+     * @return self
+     */
+    public function setUser(\Newscoop\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of created.
+     *
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Sets the value of created.
+     *
+     * @param DateTime $created the created
+     *
+     * @return self
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of updated.
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Sets the value of updated.
+     *
+     * @param DateTime $updated the updated
+     *
+     * @return self
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of status.
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Sets the value of status.
+     *
+     * @param string $status the status
+     *
+     * @return self
+     */
+    public function setStatus($status = null)
+    {
+        $this->status = self::STATUS_UNAPPROVED;
+
+        if ($status == self::STATUS_APPROVED) {
+            $this->status = $status;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of width.
+     *
+     * @param int $width the width
+     *
+     * @return self
+     */
+    public function setWidth($width)
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of height.
+     *
+     * @param int $height the height
+     *
+     * @return self
+     */
+    public function setHeight($height)
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of thumbnailPath.
+     *
+     * @param string $thumbnailPath the thumbnail path
+     *
+     * @return self
+     */
+    public function setThumbnailPath($thumbnailPath)
+    {
+        $this->thumbnailPath = $thumbnailPath;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of basename.
+     *
+     * @param string $basename the basename
+     *
+     * @return self
+     */
+    public function setBasename($basename)
+    {
+        $this->basename = $basename;
+
+        return $this;
+    }
+
+    /**
+     * Sets the value of source.
+     *
+     * @param string $source the source
+     *
+     * @return self
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of basename.
+     *
+     * @return string
+     */
+    public function getBasename()
+    {
+        return $this->basename;
+    }
+
+    /**
+     * Sets the value of url.
+     *
+     * @param string $url the url
+     *
+     * @return self
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+
+        return $this;
     }
 }

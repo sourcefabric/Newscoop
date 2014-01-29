@@ -8,7 +8,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 // Command processor
 if ($_REQUEST["form_name"] == "upload_article_form") {
 	if (!SecurityToken::isValid()) {
-		camp_html_display_error($translator->trans('Invalid security token!');
+		camp_html_display_error($translator->trans('Invalid security token!'));
 		exit;
 	}
 

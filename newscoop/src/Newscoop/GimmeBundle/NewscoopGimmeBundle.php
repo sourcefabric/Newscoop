@@ -16,9 +16,9 @@ use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleRenditionsHandlerFac
 
 class NewscoopGimmeBundle extends Bundle
 {
-    public function configureSerializerExtension(JMSSerializerExtension $ext)  
-    {  
-        $ext->addHandlerFactory(new ArticleAuthorHandlerFactory());  
+    public function configureSerializerExtension(JMSSerializerExtension $ext)
+    {
+        $ext->addHandlerFactory(new ArticleAuthorHandlerFactory());
         $ext->addHandlerFactory(new ArticleCommentsLinkHandlerFactory());
         $ext->addHandlerFactory(new AuthorImageUriHandlerFactory());
         $ext->addHandlerFactory(new PackageItemsLinkHandlerFactory());
@@ -27,5 +27,10 @@ class NewscoopGimmeBundle extends Bundle
         $ext->addHandlerFactory(new ArticleFieldsHandlerFactory());
         $ext->addHandlerFactory(new ArticleTranslationsHandlerFactory());
         $ext->addHandlerFactory(new ArticleRenditionsHandlerFactory());
-    }  
+    }
+
+    public function getParent()
+    {
+        return 'FOSOAuthServerBundle';
+    }
 }

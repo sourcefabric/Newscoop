@@ -73,7 +73,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     {
         return $this->m_dbObject->getEmail();
     }
-    
+
     protected function getSubscriber()
     {
         return $this->m_dbObject->getSubscriber();
@@ -211,7 +211,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      * @param int $height
      * @return string
      */
-    public function image($width = 80, $height = 80)
+    public function image($width = 80, $height = 80, $specs = 'fit')
     {
         if (!$this->m_dbObject->getImage()) {
             return '';
@@ -220,7 +220,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $container = \Zend_Registry::get('container');
 
         return $container->get('zend_router')->assemble(array(
-            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height),
+            'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
         ), 'image', false, false);
     }
 
@@ -310,7 +310,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if ($this->m_dbObject->getAuthorId()) {
             return true;
         }
-        
+
         return false;
     }
 
@@ -336,5 +336,45 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     public function isActive()
     {
         return $this->m_dbObject->isActive();
+    }
+
+    /**
+     * Test if user is a given type
+     *
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function is($name)
+    {
+        return $this->m_dbObject->hasGroup($name);
+    }
+
+    /**
+     * Gets user attribute
+     *
+     * @param string $attribute User attribute
+     *
+     * @return string
+     */
+    public function getAttribute($attribute)
+    {
+        return $this->m_dbObject->getAttribute($attribute);
+    }
+
+    /**
+     * Checks user attribute
+     *
+     * @param string $attribute User attribute
+     *
+     * @return bool
+     */
+    public function hasAttribute($attribute)
+    {
+        if ($this->m_dbObject->getAttribute($attribute)) {
+            return true;
+        }
+
+        return false;
     }
 }

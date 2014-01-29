@@ -1,0 +1,38 @@
+# Introduce the Snippet Entity
+---
+--- Snippets
+---
+DROP TABLE IF EXISTS `Snippets`;
+CREATE TABLE Snippets (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Parameters LONGTEXT NOT NULL,
+  Snippet LONGTEXT NOT NULL,
+  TemplateId INT DEFAULT NULL,
+  UNIQUE INDEX UNIQ_1457978AF846113F (TemplateId),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `SnippetTemplates`;
+CREATE TABLE SnippetTemplates (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Controller VARCHAR(255) NOT NULL,
+  Parameters LONGTEXT NOT NULL,
+  Template LONGTEXT NOT NULL,
+  Favourite TINYINT(1) NOT NULL,
+  IconInactive LONGTEXT NOT NULL,
+  IconActive LONGTEXT NOT NULL,
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
+
+DROP TABLE IF EXISTS `ArticleSnippets`;
+CREATE TABLE ArticleSnippets (
+  ArticleId INT NOT NULL,
+  SnippetId INT NOT NULL,
+  INDEX IDX_5080CDE7C53224D (ArticleId),
+  INDEX IDX_5080CDEB00DA91C (SnippetId),
+  PRIMARY KEY(ArticleId, SnippetId)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

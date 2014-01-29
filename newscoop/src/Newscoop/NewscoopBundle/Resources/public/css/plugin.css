@@ -13,7 +13,7 @@
 }
 
 .meta-bar ul {
-  padding: 2px 0 0 0;
+	padding: 2px 0 0 0;
 }
 
 .meta-bar ul li {
@@ -220,4 +220,8 @@
 		position: relative;
 		left: 0px;
 	}
+}
+
+ul.pagination li:after {
+	display: none;
 }

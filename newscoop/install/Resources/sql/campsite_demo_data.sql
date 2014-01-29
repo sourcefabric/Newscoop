@@ -49,11 +49,43 @@ UNLOCK TABLES;
 -- Dumping data for table `ArticleImages`
 --
 
-LOCK TABLES `ArticleImages` WRITE;
-/*!40000 ALTER TABLE `ArticleImages` DISABLE KEYS */;
-INSERT INTO `ArticleImages` VALUES (79,126,1,1),(71,106,1,1),(72,105,1,1),(80,124,1,1),(75,119,1,1),(82,108,1,1),(74,116,1,1),(78,122,1,1),(76,123,1,1),(77,121,1,1),(70,115,1,1),(69,107,1,1),(73,120,1,1),(67,111,1,1),(68,102,1,1),(65,110,1,1),(66,109,1,1),(81,125,1,1),(83,100,1,1),(84,113,1,1),(85,112,1,1),(86,103,1,1),(64,99,1,1),(87,114,1,1),(88,118,1,1),(89,117,1,1),(98,48,1,1),(97,49,1,1),(96,50,1,1),(95,51,1,1),(101,104,1,1);
-/*!40000 ALTER TABLE `ArticleImages` ENABLE KEYS */;
-UNLOCK TABLES;
+
+INSERT INTO `ArticleImages` (`id`, `NrArticle`, `IdImage`, `Number`, `is_default`) VALUES
+(1, 79, 126, 1, 1),
+(2, 71, 106, 1, 1),
+(3, 72, 105, 1, 1),
+(4, 80, 124, 1, 1),
+(5, 75, 119, 1, 1),
+(6, 82, 108, 1, 1),
+(7, 74, 116, 1, 1),
+(8, 78, 122, 1, 1),
+(9, 76, 123, 1, 1),
+(10, 77, 121, 1, 1),
+(11, 70, 115, 1, 1),
+(12, 69, 107, 1, 1),
+(13, 73, 120, 1, 1),
+(14, 67, 111, 1, 1),
+(15, 68, 102, 1, 1),
+(16, 65, 110, 1, 1),
+(17, 66, 109, 1, 1),
+(18, 81, 125, 1, 1),
+(19, 83, 100, 1, 1),
+(20, 84, 113, 1, 1),
+(21, 85, 112, 1, 1),
+(22, 86, 103, 1, 1),
+(23, 64, 99, 1, 1),
+(24, 87, 114, 1, 1),
+(25, 88, 118, 1, 1),
+(26, 89, 117, 1, 1),
+(27, 98, 48, 1, 1),
+(28, 97, 49, 1, 1),
+(29, 96, 50, 1, 1),
+(30, 95, 51, 1, 1),
+(31, 101, 104, 1, 1),
+(32, 104, 127, 1, 0),
+(33, 104, 128, 2, 1),
+(36, 64, 139, 2, NULL);
+
 
 --
 -- Dumping data for table `ArticleIndex`
@@ -413,15 +445,6 @@ INSERT INTO `ObjectTypes` VALUES (1,'article');
 /*!40000 ALTER TABLE `ObjectTypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `Plugins`
---
-
-LOCK TABLES `Plugins` WRITE;
-/*!40000 ALTER TABLE `Plugins` DISABLE KEYS */;
-INSERT INTO `Plugins` VALUES ('blog','0.3.0',1),('poll','0.3.1',1),('recaptcha','0.1.0',1),('debate','0.0.1',1),('soundcloud','0.1.0',1);
-/*!40000 ALTER TABLE `Plugins` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `Publications`
@@ -596,7 +619,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Versions` WRITE;
 /*!40000 ALTER TABLE `Versions` DISABLE KEYS */;
-INSERT INTO `Versions` (`id`, `ver_name`, `ver_value`, `last_modified`) VALUES (1, 'last_db_version', '4.2.x', '2013-05-29 16:34:35'), (2, 'last_db_roll', '2013.05.29', '2013-06-07 13:55:48');
+INSERT INTO `Versions` (`id`, `ver_name`, `ver_value`, `last_modified`) VALUES (1, 'last_db_version', '4.3.x', '2014-01-14 16:34:35'), (2, 'last_db_roll', '2014.01.14', '2014-01-14 16:24:35');
 /*!40000 ALTER TABLE `Versions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -723,11 +746,24 @@ UNLOCK TABLES;
 -- Dumping data for table `comment`
 --
 
-LOCK TABLES `comment` WRITE;
-/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,1,2,68,1,NULL,'Advertisers target online demographic','',0,0,0,'79.101.185.177',0,0,'2010-12-30 09:28:14','2010-12-30 09:38:36',0),(2,2,2,68,1,1,'Somethnig','Something\'s got me started',1,1,0,'79.101.185.177',0,0,'2010-12-30 09:28:14','1970-01-01 00:00:00',0),(3,3,2,68,1,1,'Not ok','Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.',2,1,0,'79.101.185.177',0,0,'2010-12-30 09:29:51','1970-01-01 00:00:00',1),(4,4,2,68,1,1,'Site comment','Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit duo, people!',3,1,0,'79.101.185.177',0,0,'2010-12-30 09:38:36','1970-01-01 00:00:00',0),(24,18,2,64,1,NULL,'I approve','I approve this choice, and I do congratulate. Cheers!',1,0,0,'127.0.0.1',0,0,'2013-05-02 10:11:13','0000-00-00 00:00:00',0),(7,1,2,86,1,NULL,'Online security risks exposed','',0,0,0,'79.101.185.177',0,0,'2010-12-30 12:24:44','2010-12-30 12:24:44',1),(8,6,2,86,1,7,'Site comment','Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.',1,1,0,'79.101.185.177',0,0,'2010-12-30 12:24:44','1970-01-01 00:00:00',0),(9,1,2,87,1,NULL,'New horizons for the browser','',0,0,0,'79.101.185.177',0,0,'2010-12-30 12:26:02','2011-01-04 14:44:03',0),(10,4,2,87,1,9,'Site comment','Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)',1,1,0,'79.101.185.177',0,0,'2010-12-30 12:26:02','1970-01-01 00:00:00',0),(11,7,2,87,1,10,'Site comment','I agree and support.',2,2,0,'79.101.185.177',0,0,'2010-12-30 12:26:37','1970-01-01 00:00:00',0),(12,1,2,77,1,NULL,'New Cannes winner a taste of paradise','',0,0,0,'79.101.185.177',0,0,'2010-12-30 12:28:12','2010-12-30 12:28:12',0),(13,8,2,77,1,12,'Site comment','Knows not where he\'s going to, but nevertheless...',1,1,0,'79.101.185.177',0,0,'2010-12-30 12:28:12','1970-01-01 00:00:00',1),(14,1,2,76,1,NULL,'Berlin Film Festival unveils 2011 line-up','',0,0,0,'79.101.185.177',0,0,'2010-12-30 12:31:35','2010-12-30 12:31:35',1),(15,9,2,76,1,14,'Site comment','Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.',1,1,0,'79.101.185.177',0,0,'2010-12-30 12:31:35','1970-01-01 00:00:00',1),(16,10,2,87,1,9,'Site comment','Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!',3,1,0,'94.189.197.96',0,0,'2011-01-04 14:44:03','1970-01-01 00:00:00',0),(25,19,2,64,1,NULL,'','Congratulations to the person!',2,0,0,'127.0.0.1',0,0,'2013-05-02 10:13:28','0000-00-00 00:00:00',0),(23,17,2,83,1,NULL,'','Hey I strongly disagree',1,0,0,'127.0.0.1',0,0,'2013-04-24 15:43:54','0000-00-00 00:00:00',0);
-/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `comment` VALUES
+(1, NULL, 68, 'Advertisers target online demographic', '', '0', '0', '0', '79.101.185.177', '2010-12-30 09:28:14', '2010-12-30 09:38:36', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(2, 1, 68, 'Somethnig', 'Something''s got me started', '1', '1', '0', '79.101.185.177', '2010-12-30 09:28:14', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 2, 2, 1),
+(3, 1, 68, 'Not ok', 'Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.', '1', '2', '0', '79.101.185.177', '2010-12-30 09:29:51', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 3, 2, 1),
+(4, 1, 68, 'Site comment', 'Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit d', '1', '3', '0', '79.101.185.177', '2010-12-30 09:38:36', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 4, 2, 1),
+(7, NULL, 86, 'Online security risks exposed', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:24:44', '2010-12-30 12:24:44', '0', '0', '1', '0000-00-00 00:00:00', 1, 2, 1),
+(8, 7, 86, 'Site comment', 'Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.', '1', '1', '0', '79.101.185.177', '2010-12-30 12:24:44', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 6, 2, 1),
+(9, NULL, 87, 'New horizons for the browser', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:26:02', '2011-01-04 14:44:03', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(10, 9, 87, 'Site comment', 'Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)', '1', '1', '0', '79.101.185.177', '2010-12-30 12:26:02', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 4, 2, 1),
+(11, 10, 87, 'Site comment', 'I agree and support.', '2', '2', '0', '79.101.185.177', '2010-12-30 12:26:37', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 7, 2, 1),
+(12, NULL, 77, 'New Cannes winner a taste of paradise', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:28:12', '2010-12-30 12:28:12', '0', '0', '0', '0000-00-00 00:00:00', 1, 2, 1),
+(13, 12, 77, 'Site comment', 'Knows not where he''s going to, but nevertheless...', '1', '1', '0', '79.101.185.177', '2010-12-30 12:28:12', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 8, 2, 1),
+(14, NULL, 76, 'Berlin Film Festival unveils 2011 line-up', '', '0', '0', '0', '79.101.185.177', '2010-12-30 12:31:35', '2010-12-30 12:31:35', '0', '0', '1', '0000-00-00 00:00:00', 1, 2, 1),
+(15, 14, 76, 'Site comment', 'Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.', '1', '1', '0', '79.101.185.177', '2010-12-30 12:31:35', '1970-01-01 00:00:00', '0', '0', '1', '0000-00-00 00:00:00', 9, 2, 1),
+(16, 9, 87, 'Site comment', 'Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!', '1', '3', '0', '94.189.197.96', '2011-01-04 14:44:03', '1970-01-01 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 10, 2, 1),
+(23, NULL, 83, '', 'Hey I strongly disagree', '0', '1', '0', '127.0.0.1', '2013-04-24 15:43:54', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 17, 2, 1),
+(24, NULL, 64, 'I approve', 'I approve this choice, and I do congratulate. Cheers!', '0', '1', '0', '127.0.0.1', '2013-05-02 10:11:13', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 18, 2, 1),
+(25, NULL, 64, '', 'Congratulations to the person!', '0', '2', '0', '127.0.0.1', '2013-05-02 10:13:28', '0000-00-00 00:00:00', '0', '0', '0', '0000-00-00 00:00:00', 19, 2, 1);
 
 --
 -- Dumping data for table `comment_acceptance`
@@ -746,16 +782,6 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` DISABLE KEYS */;
 INSERT INTO `comment_commenter` VALUES (1,NULL,'','','Anonymous User','79.101.185.177','2010-12-30 09:28:14','2010-12-30 09:38:36'),(2,NULL,'test@persona.com','','Test Persona','79.101.185.177','2010-12-30 09:28:14','1970-01-01 00:00:00'),(3,NULL,'rio@mutd.co.uk','','Rio Ferdinand','79.101.185.177','2010-12-30 09:29:51','1970-01-01 00:00:00'),(4,NULL,'jos@hua.com','','Joshua','79.101.185.177','2010-12-30 09:38:36','1970-01-01 00:00:00'),(5,NULL,'pia@gmail.com','','Pia Zadora','79.101.185.177','2010-12-30 12:23:27','1970-01-01 00:00:00'),(6,NULL,'ttm@gmail.com','','Twittermaniac','79.101.185.177','2010-12-30 12:24:44','1970-01-01 00:00:00'),(7,NULL,'swenge@gmail.com','','Swen','79.101.185.177','2010-12-30 12:26:37','1970-01-01 00:00:00'),(8,NULL,'pia@gmail.com','','Papadopulos','79.101.185.177','2010-12-30 12:28:12','1970-01-01 00:00:00'),(9,NULL,'bri@gitte.de','','Brigitte','79.101.185.177','2010-12-30 12:31:35','1970-01-01 00:00:00'),(10,NULL,'winn@eto.uu','','Winnetou','94.189.197.96','2011-01-04 14:44:03','1970-01-01 00:00:00'),(11,NULL,'black@georg.iye','','Black Georgios','46.4.76.175','2011-07-07 09:32:38','1970-01-01 00:00:00'),(12,47,'ozan@dispostable.com','','z','213.220.197.60','2012-03-08 10:48:44','0000-00-00 00:00:00'),(13,31,'ljuba.rankovic@sourcefabric.org','','Test Persona','79.101.75.169','2012-03-08 11:31:02','0000-00-00 00:00:00'),(14,NULL,'asd@asdqwd.com','','qweqwe','84.19.71.67','2012-03-13 09:40:36','0000-00-00 00:00:00'),(15,47,'ozan@dispostable.com','','<a href=\'/user/profile/Ozan+Ozbek\'>Ozan Ozbek</a>','84.19.71.67','2012-03-13 09:42:16','0000-00-00 00:00:00'),(16,31,'ljuba.rankovic@sourcefabric.org','','<a href=\'/user/profile/ljubar\'>Ljuba Rankovic</a>','188.2.52.247','2012-03-13 09:42:46','0000-00-00 00:00:00'),(17,NULL,'john@drjohn.com','','Dr John','127.0.0.1','2013-04-24 15:43:54','0000-00-00 00:00:00'),(18,54,'ljuba.rankovic@sourcefabric.org','','Boom-boom Boba','127.0.0.1','2013-05-02 10:11:13','0000-00-00 00:00:00'),(19,NULL,'bla@ckperso.na','','Black Persona','127.0.0.1','2013-05-02 10:13:28','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `community_ticker_event`
---
-
-LOCK TABLES `community_ticker_event` WRITE;
-/*!40000 ALTER TABLE `community_ticker_event` DISABLE KEYS */;
-INSERT INTO `community_ticker_event` VALUES (2,'user.register','[]','2012-03-01 17:50:07',42),(3,'comment.recommended','{\"id\":17,\"subject\":\"Some subject\",\"article\":null,\"commenter\":\"Black Georgios\"}','2012-03-02 16:48:58',NULL),(4,'comment.recommended','{\"id\":14,\"subject\":\"Berlin Film Festival unveils 2011 line-up\",\"article\":null,\"commenter\":\"Anonymous User\"}','2012-03-02 16:49:04',NULL),(5,'comment.recommended','{\"id\":15,\"subject\":\"Site comment\",\"article\":null,\"commenter\":\"Brigitte\"}','2012-03-02 16:49:07',NULL),(6,'comment.recommended','{\"id\":13,\"subject\":\"Site comment\",\"article\":null,\"commenter\":\"Papadopulos\"}','2012-03-02 16:49:10',NULL),(7,'comment.recommended','{\"id\":7,\"subject\":\"Online security risks exposed\",\"article\":null,\"commenter\":\"Anonymous User\"}','2012-03-02 16:49:13',NULL),(8,'comment.recommended','{\"id\":3,\"subject\":\"Not ok\",\"article\":null,\"commenter\":\"Rio Ferdinand\"}','2012-03-02 16:49:19',NULL),(10,'comment.recommended','{\"id\":19,\"subject\":\"Bodo\",\"article\":null,\"commenter\":\"Test Persona\"}','2012-03-08 11:32:05',NULL),(14,'comment.recommended','{\"id\":22,\"subject\":\"\",\"article\":null,\"commenter\":\"<a href=\'\\/user\\/profile\\/ljubar\'>Ljuba Rankovic<\\/a>\"}','2012-03-13 09:43:31',NULL);
-/*!40000 ALTER TABLE `community_ticker_event` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -850,9 +876,14 @@ UNLOCK TABLES;
 --
 
 LOCK TABLES `liveuser_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,777070817,'Admin','admin','sha1$yy6gsZ91UvPO$15ac16f37311edfb4a3272f6f7a22c23772e3b0f','admin@sourcefabric.org','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2013-05-02 07:56:13','2013-04-16 21:55:06','2011-07-12 14:29:44',1,NULL,6,'Peršon',1,1,0,0,NULL,NULL,NULL),(39,NULL,'Jane','janestock','sha1$2uvxzh8yDqVR$96406073308bd0a7985f3a59c74f52ea0ccb6393','jane.s@thecanonical.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:33:08','2012-02-28 16:54:36','1970-01-01 00:00:00',1,NULL,17,'Stockwriter',1,1,1,0,'e7b816f7d39bb6cbd151089baeeb542d9856bf21.jpg',NULL,7),(34,NULL,'Amerigo','amerigo','sha1$UHP3Tte3PNfs$c23649b29221879e25ef4cf23f8f36bc1c602876','amerigo.vespucci@thejournal.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:06','2012-02-28 16:18:39','1970-01-01 00:00:00',1,NULL,12,'Vespucci',1,1,1,0,'dc1989572b1a6a68f1981597d0a79eadd2df98df.jpg',NULL,11),(35,NULL,'Frank','frankenstein','sha1$Q5t8yrcj4OX0$c2a550dc9462d5393187061ea6efcd80fc3df16e','frank.n.stein@free.fr','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:24','2012-02-28 16:22:24','1970-01-01 00:00:00',1,NULL,13,'N. Stein',1,1,1,0,'9ec91c423809989ed9e5a3fb298042cbf938ec21.jpg',NULL,13),(36,NULL,'Test','testpersona','sha1$M496XdWnEk66$54ef92b98bfcf85144cc98ad0572c73b3f111dc1','test.persona@test.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2013-05-06 19:51:07','2012-02-28 16:25:39','1970-01-01 00:00:00',1,NULL,14,'Persona',1,1,1,0,'4dbcd74c2292cfd3ee10fb58b716578cf0671513.jpg',NULL,9),(37,NULL,'James Q.','jamesq','sha1$YsV9MBGoylH4$4f4bf246b9f9858b8a89b4d1a902c85a2e69d440','jamezdin@gmail.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-03-01 05:32:49','2012-02-28 16:40:41','1970-01-01 00:00:00',1,NULL,15,'Reporter',1,1,1,0,'3f9dc7e8277147719964f7bcd41a586f203b2a1e.jpg',NULL,2),(38,NULL,'Sarah','ssarah','sha1$h0sWyZtOwA2f$976c00a10b32761cba6e2b535c40bebb1974c869','sarah@thecanonical.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2012-02-28 16:49:48','2012-02-28 16:48:11','1970-01-01 00:00:00',1,NULL,16,'Staffwriter',1,1,1,0,'7a5a53fbf907cb078151a890a2ad20e9d4011bd0.jpg',NULL,3),(42,NULL,'John','johnsmith','sha1$7po4hecPCTLB$e3378fcf2d8ad195d1e4f757e1997648b5a4923b','labudovo.jezero@gmail.com','Y',NULL,'','','',NULL,'','','','','Mr.',NULL,'0-17','','','','',NULL,'','',NULL,'N','N','N','N','','','','','',NULL,NULL,NULL,'2013-05-06 19:58:12','2012-03-01 17:48:53','1970-01-01 00:00:00',1,NULL,29,'Smith',1,0,1,0,'0a925766b335ce7cf5b631f867761771bab0a15e.jpeg',NULL,NULL),(54,NULL,'Ljuba','ljubar','sha1$IEzc2DAMpmIf$e0de3f4095fa2d43ed6597dc440b61aef506d639','ljuba.rankovic@sourcefabric.org','Y',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Mr.',NULL,'0-17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'N','N','N','N',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-04-17 19:53:38','2013-04-17 21:53:38',NULL,1,NULL,41,'Ranković',1,1,0,0,NULL,NULL,NULL),(55,NULL,NULL,NULL,'sha1$MCqZ1Xn0wesZ$c2c1caaad86865dea364d1cf1e81b8aa4dc2158e','ljuba@direkcija-valjevo.rs','Y',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Mr.',NULL,'0-17',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'N','N','N','N',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2013-04-24 07:44:04','2013-04-24 09:44:04',NULL,1,NULL,42,NULL,0,0,1,0,NULL,NULL,NULL);
-/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`, `password_reset_token`, `role_id`, `last_name`, `status`, `is_admin`, `is_public`, `points`, `image`, `subscriber`, `author_id`, `indexed`) VALUES
+(39, NULL, 'Jane', 'janestock', 'sha1$2uvxzh8yDqVR$96406073308bd0a7985f3a59c74f52ea0ccb6393', 'jane.s@thecanonical.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:33:08', '2012-02-28 16:54:36', '1970-01-01 00:00:00', 1, NULL, 17, 'Stockwriter', 1, 1, 1, 0, 'e7b816f7d39bb6cbd151089baeeb542d9856bf21.jpg', NULL, 7, '0000-00-00 00:00:00'),
+(34, NULL, 'Amerigo', 'amerigo', 'sha1$UHP3Tte3PNfs$c23649b29221879e25ef4cf23f8f36bc1c602876', 'amerigo.vespucci@thejournal.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:32:06', '2012-02-28 16:18:39', '1970-01-01 00:00:00', 1, NULL, 12, 'Vespucci', 1, 1, 1, 0, 'dc1989572b1a6a68f1981597d0a79eadd2df98df.jpg', NULL, 11, '0000-00-00 00:00:00'),
+(35, NULL, 'Frank', 'frankenstein', 'sha1$Q5t8yrcj4OX0$c2a550dc9462d5393187061ea6efcd80fc3df16e', 'frank.n.stein@free.fr', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:32:24', '2012-02-28 16:22:24', '1970-01-01 00:00:00', 1, NULL, 13, 'N. Stein', 1, 1, 1, 0, '9ec91c423809989ed9e5a3fb298042cbf938ec21.jpg', NULL, 13, '0000-00-00 00:00:00'),
+(36, NULL, 'Test', 'testpersona', 'sha1$M496XdWnEk66$54ef92b98bfcf85144cc98ad0572c73b3f111dc1', 'test.persona@test.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2013-05-06 17:51:07', '2012-02-28 16:25:39', '1970-01-01 00:00:00', 1, NULL, 14, 'Persona', 1, 1, 1, 0, '4dbcd74c2292cfd3ee10fb58b716578cf0671513.jpg', NULL, 9, '0000-00-00 00:00:00'),
+(37, NULL, 'James Q.', 'jamesq', 'sha1$YsV9MBGoylH4$4f4bf246b9f9858b8a89b4d1a902c85a2e69d440', 'jamezdin@gmail.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:32:49', '2012-02-28 16:40:41', '1970-01-01 00:00:00', 1, NULL, 15, 'Reporter', 1, 1, 1, 0, '3f9dc7e8277147719964f7bcd41a586f203b2a1e.jpg', NULL, 2, '0000-00-00 00:00:00'),
+(38, NULL, 'Sarah', 'ssarah', 'sha1$h0sWyZtOwA2f$976c00a10b32761cba6e2b535c40bebb1974c869', 'sarah@thecanonical.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-02-28 15:49:48', '2012-02-28 16:48:11', '1970-01-01 00:00:00', 1, NULL, 16, 'Staffwriter', 1, 1, 1, 0, '7a5a53fbf907cb078151a890a2ad20e9d4011bd0.jpg', NULL, 3, '0000-00-00 00:00:00'),
+(42, NULL, 'John', 'johnsmith', 'sha1$7po4hecPCTLB$e3378fcf2d8ad195d1e4f757e1997648b5a4923b', 'labudovo.jezero@gmail.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2013-05-06 17:58:12', '2012-03-01 17:48:53', '1970-01-01 00:00:00', 1, NULL, 29, 'Smith', 1, 0, 1, 0, '0a925766b335ce7cf5b631f867761771bab0a15e.jpeg', NULL, NULL, '0000-00-00 00:00:00');
 UNLOCK TABLES;
 
 --

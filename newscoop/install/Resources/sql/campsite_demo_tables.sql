@@ -69,18 +69,16 @@ CREATE TABLE `ArticleAuthors` (
 --
 
 DROP TABLE IF EXISTS `ArticleImages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ArticleImages` (
-  `NrArticle` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdImage` int(10) unsigned NOT NULL DEFAULT '0',
-  `Number` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_default` int(1) DEFAULT NULL,
-  PRIMARY KEY (`NrArticle`,`IdImage`),
-  UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
-  KEY `IdImage` (`IdImage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE ArticleImages (
+  id INT AUTO_INCREMENT NOT NULL,
+  NrArticle INT NOT NULL,
+  Number INT DEFAULT NULL,
+  is_default TINYINT(1) DEFAULT NULL,
+  IdImage INT DEFAULT NULL,
+  INDEX IDX_A9426E241D447EDE (IdImage),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Table structure for table `ArticleIndex`
@@ -504,36 +502,34 @@ CREATE TABLE `FailedLoginAttempts` (
 --
 
 DROP TABLE IF EXISTS `Images`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Images` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Description` varchar(255) NOT NULL DEFAULT '',
-  `Photographer` varchar(255) NOT NULL DEFAULT '',
-  `Place` varchar(255) NOT NULL DEFAULT '',
-  `Caption` varchar(255) NOT NULL DEFAULT '',
-  `Date` date NOT NULL DEFAULT '0000-00-00',
-  `ContentType` varchar(64) NOT NULL DEFAULT '',
-  `Location` enum('local','remote') NOT NULL DEFAULT 'local',
-  `URL` varchar(255) NOT NULL DEFAULT '',
-  `ThumbnailFileName` varchar(50) NOT NULL DEFAULT '',
-  `ImageFileName` varchar(50) NOT NULL DEFAULT '',
-  `UploadedByUser` int(11) DEFAULT NULL,
-  `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `Source` enum('local','feedback','newsfeed') NOT NULL DEFAULT 'local',
-  `Status` enum('unapproved','approved') NOT NULL DEFAULT 'approved',
-  `width` int(5) DEFAULT NULL,
-  `height` int(5) DEFAULT NULL,
-  `is_updated_storage` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Id`),
-  KEY `is_updated_storage` (`is_updated_storage`,`Location`,`ImageFileName`),
-  FULLTEXT KEY `Description` (`Description`),
-  FULLTEXT KEY `Photographer` (`Photographer`),
-  FULLTEXT KEY `Place` (`Place`),
-  FULLTEXT KEY `Caption` (`Caption`)
-) ENGINE=MyISAM AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE Images (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Location VARCHAR(255) NOT NULL,
+  ImageFileName VARCHAR(80) DEFAULT NULL,
+  ThumbnailFileName VARCHAR(80) DEFAULT NULL,
+  TimeCreated DATETIME DEFAULT NULL,
+  LastModified DATETIME DEFAULT NULL,
+  URL VARCHAR(255) DEFAULT NULL,
+  Description VARCHAR(255) DEFAULT NULL,
+  width INT DEFAULT NULL,
+  height INT DEFAULT NULL,
+  Photographer VARCHAR(255) DEFAULT NULL,
+  photographer_url VARCHAR(255) DEFAULT NULL,
+  Place VARCHAR(255) DEFAULT NULL,
+  Date VARCHAR(255) DEFAULT NULL,
+  ContentType VARCHAR(255) NOT NULL,
+  is_updated_storage INT NOT NULL,
+  Source VARCHAR(255) DEFAULT NULL,
+  Status VARCHAR(255) NOT NULL,
+  UploadedByUser INT DEFAULT NULL,
+  INDEX IDX_E7B3BB5C447C15B9 (UploadedByUser),
+  INDEX is_updated_storage (is_updated_storage),
+  INDEX Description (Description),
+  INDEX Photographer (Photographer),
+  INDEX Place (Place),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 --
 -- Table structure for table `IssuePublish`
@@ -1500,33 +1496,36 @@ CREATE TABLE `audit_event` (
 --
 
 DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
-  `fk_forum_id` int(10) unsigned NOT NULL,
-  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned DEFAULT '0',
-  `fk_parent_id` int(10) unsigned DEFAULT NULL,
-  `subject` varchar(140) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(39) NOT NULL DEFAULT '',
-  `likes` tinyint(3) unsigned DEFAULT '0',
-  `dislikes` tinyint(3) unsigned DEFAULT '0',
-  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `recommended` tinyint(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `comments_users` (`fk_comment_commenter_id`),
-  KEY `publication` (`fk_forum_id`),
-  KEY `article` (`fk_thread_id`),
-  KEY `parent` (`fk_parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE comment (
+  id INT AUTO_INCREMENT NOT NULL,
+  fk_parent_id INT DEFAULT NULL,
+  fk_thread_id INT NOT NULL,
+  subject VARCHAR(140) NOT NULL,
+  message VARCHAR(255) NOT NULL,
+  thread_level VARCHAR(4) NOT NULL,
+  thread_order VARCHAR(4) NOT NULL,
+  status VARCHAR(2) NOT NULL,
+  ip VARCHAR(39) NOT NULL,
+  time_created DATETIME NOT NULL,
+  time_updated DATETIME NOT NULL,
+  likes VARCHAR(4) NOT NULL,
+  dislikes VARCHAR(4) NOT NULL,
+  recommended VARCHAR(1) NOT NULL,
+  indexed DATETIME DEFAULT NULL,
+  source VARCHAR(60) NULL DEFAULT NULL,
+  fk_comment_commenter_id INT DEFAULT NULL,
+  fk_forum_id INT DEFAULT NULL,
+  fk_language_id INT DEFAULT NULL,
+  INDEX IDX_9474526C8A5657F3 (fk_comment_commenter_id),
+  INDEX IDX_9474526C1BE4F90E (fk_forum_id),
+  INDEX IDX_9474526C13231DE0 (fk_parent_id),
+  INDEX IDX_9474526C83C99789 (fk_thread_id),
+  INDEX IDX_9474526CEB0716C0 (fk_language_id),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE comment ADD CONSTRAINT FK_9474526C13231DE0 FOREIGN KEY (fk_parent_id) REFERENCES comment (id) ON DELETE SET NULL;
 
 --
 -- Table structure for table `comment_acceptance`
@@ -1739,7 +1738,7 @@ CREATE TABLE `liveuser_rights` (
 DROP TABLE IF EXISTS `liveuser_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users` (
+CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeyId` int(10) unsigned DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
@@ -1793,10 +1792,12 @@ CREATE TABLE `liveuser_users` (
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
+  `indexed` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
-  KEY `author_id` (`author_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+  KEY `author_id` (`author_id`),
+  KEY `indexed` (`indexed`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2541,15 +2542,103 @@ CREATE TABLE `webcode` (
   `language_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`webcode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+CREATE TABLE OAuthAccessToken (
+  id INT AUTO_INCREMENT NOT NULL,
+  client_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expires_at INT DEFAULT NULL,
+  scope VARCHAR(255) DEFAULT NULL,
+  IdPublication INT DEFAULT NULL,
+  UNIQUE INDEX UNIQ_DDE10DD55F37A13B (token),
+  INDEX IDX_DDE10DD519EB6921 (client_id),
+  INDEX IDX_DDE10DD55C1FD3F4 (IdPublication),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
--- Dump completed on 2013-05-22 22:21:45
+CREATE TABLE OAuthAuthCode (
+  id INT AUTO_INCREMENT NOT NULL,
+  client_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  redirect_uri LONGTEXT NOT NULL,
+  expires_at INT DEFAULT NULL,
+  scope VARCHAR(255) DEFAULT NULL,
+  IdPublication INT DEFAULT NULL,
+  UNIQUE INDEX UNIQ_3DD60F725F37A13B (token),
+  INDEX IDX_3DD60F7219EB6921 (client_id),
+  INDEX IDX_3DD60F725C1FD3F4 (IdPublication),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE OAuthClient (
+  id INT AUTO_INCREMENT NOT NULL,
+  random_id VARCHAR(255) NOT NULL,
+  redirect_uris LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
+  secret VARCHAR(255) NOT NULL,
+  allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
+  name VARCHAR(255) NOT NULL,
+  IdPublication INT DEFAULT NULL,
+  INDEX IDX_4128BE95C1FD3F4 (IdPublication),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE OAuthPublicApiResources (
+  id INT AUTO_INCREMENT NOT NULL,
+  resource VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE OAuthRefreshToken (
+  id INT AUTO_INCREMENT NOT NULL,
+  client_id INT NOT NULL,
+  token VARCHAR(255) NOT NULL,
+  expires_at INT DEFAULT NULL,
+  scope VARCHAR(255) DEFAULT NULL,
+  IdPublication INT DEFAULT NULL,
+  UNIQUE INDEX UNIQ_4A42604C5F37A13B (token),
+  INDEX IDX_4A42604C19EB6921 (client_id),
+  INDEX IDX_4A42604C5C1FD3F4 (IdPublication),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE OAuthAccessToken ADD CONSTRAINT FK_DDE10DD519EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
+ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
+ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
+
+---
+--- Snippets
+---
+DROP TABLE IF EXISTS `Snippets`;
+CREATE TABLE Snippets (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Parameters LONGTEXT NOT NULL,
+  Snippet LONGTEXT NOT NULL,
+  TemplateId INT DEFAULT NULL,
+  UNIQUE INDEX UNIQ_1457978AF846113F (TemplateId),
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `SnippetTemplates`;
+CREATE TABLE SnippetTemplates (
+  Id INT AUTO_INCREMENT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Controller VARCHAR(255) NOT NULL,
+  Parameters LONGTEXT NOT NULL,
+  Template LONGTEXT NOT NULL,
+  Favourite TINYINT(1) NOT NULL,
+  IconInactive LONGTEXT NOT NULL,
+  IconActive LONGTEXT NOT NULL,
+  PRIMARY KEY(Id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
+
+DROP TABLE IF EXISTS `ArticleSnippets`;
+CREATE TABLE ArticleSnippets (
+  ArticleId INT NOT NULL,
+  SnippetId INT NOT NULL,
+  INDEX IDX_5080CDE7C53224D (ArticleId),
+  INDEX IDX_5080CDEB00DA91C (SnippetId),
+  PRIMARY KEY(ArticleId, SnippetId)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

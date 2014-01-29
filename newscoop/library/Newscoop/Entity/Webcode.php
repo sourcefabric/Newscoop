@@ -25,7 +25,7 @@ class Webcode
     private $webcode;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", cascade={"persist"})
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),
      *      @ORM\JoinColumn(name="language_id", referencedColumnName="IdLanguage")

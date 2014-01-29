@@ -81,7 +81,7 @@ ArticleImage::AddImageToArticle($image->getImageId(), $articleObj->getArticleNum
 <script type="text/javascript">
 try {
     parent.$.fancybox.reload = true;
-    parent.$.fancybox.message = "<?php echo $translator->trans("Image $1 added.", array('$1' => addslashes($image->getDescription()),'article_images'); ?>";
+    parent.$.fancybox.message = "<?php echo $translator->trans("Image $1 added.", array('$1' => addslashes($image->getDescription()),'article_images')); ?>";
     parent.$.fancybox.close();
 } catch (e) {}
 </script>

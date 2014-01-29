@@ -633,8 +633,10 @@ abstract class CampURI
     public function getCampsiteVector()
     {
         return array('language' => $this->language->number,
-            'publication' => $this->publication->identifier, 'issue' => $this->issue->number,
-            'section' => $this->section->number, 'article' => $this->article->number);
+                     'publication' => $this->publication->identifier,
+                     'issue' => $this->issue->number,
+                     'section' => $this->section->number,
+                     'article' => $this->article->number);
     }
 
     public function getThemePath()

@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
-    camp_html_display_error($translator->trans('Invalid security token!');
+    camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
 
@@ -87,7 +87,7 @@ if ( ($f_publish_hour == "") || ($f_publish_minute == "") ) {
 if ( ($f_publish_action != "P") && ($f_publish_action != "U")
 	 && ($f_front_page_action != "S") && ($f_front_page_action != "R")
 	 && ($f_section_page_action != "S") && ($f_section_page_action != "R") ) {
-	camp_html_add_msg($translator->trans('You must select an action.');
+	camp_html_add_msg($translator->trans('You must select an action.'));
 }
 
 if ( (count($articles) == 0) && (count($errorArticles) > 0) ) {

@@ -8,15 +8,19 @@
 namespace Newscoop;
 
 /**
+ * Vesrions class
  */
 class Version
 {
-    const VERSION = '4.2';
+    const VERSION = '4.3';
+
+    const API_VERSION = '1.1';
 
     /**
      * Compare version with current Newscoop version
      *
      * @param string $version
+     *
      * @return int
      */
     public static function compare($version)

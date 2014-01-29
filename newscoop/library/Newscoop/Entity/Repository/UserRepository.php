@@ -154,7 +154,7 @@ class UserRepository extends EntityRepository
         return !$qb->getQuery()->getSingleScalarResult();
     }
 
-    public function getActiveUsers()
+    public function getActiveUsers($public = true)
     {
         $em = $this->getEntityManager();
 
@@ -164,7 +164,7 @@ class UserRepository extends EntityRepository
             ->andWhere('u.is_public = :public')
             ->setParameters(array(
                 'status' => User::STATUS_ACTIVE,
-                'public' => true
+                'public' => $public
             ));
 
         $query = $queryBuilder->getQuery();
@@ -683,7 +683,6 @@ class UserRepository extends EntityRepository
         if($criteria->maxResults != 0) {
             $qb->setMaxResults($criteria->maxResults);
         }
-        
 
         $metadata = $this->getClassMetadata();
         foreach ($criteria->orderBy as $key => $order) {

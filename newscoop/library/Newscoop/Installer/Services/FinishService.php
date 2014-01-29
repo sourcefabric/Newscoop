@@ -13,20 +13,32 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Newscoop\Entity\User;
+use Crontab\Crontab;
+use Crontab\Job;
 
+/**
+ * Finish Newscoop installation tasks
+ */
 class FinishService
 {
     private $newscoopDir;
     private $filesystem;
 
-	public function __construct(){
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
         $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
-	}
+    }
 
-	public function generateProxies()
-	{
-        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output = array(), $code);
+    /**
+     * Generate proxies for entities
+     */
+    public function generateProxies()
+    {
+        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
@@ -38,12 +50,15 @@ class FinishService
         $generateProxies = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
         $generateProxies->run();
         if (!$generateProxies->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Generating ORM proxies command.');
+            throw new \RuntimeException($generateProxies->getErrorOutput());
         }
 
-        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output = array(), $code);
-	}
+        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
+    }
 
+    /**
+     * Reload themes reditions in datbase
+     */
     public function reloadRenditions()
     {
         $phpFinder = new PhpExecutableFinder();
@@ -61,103 +76,77 @@ class FinishService
         }
     }
 
-    public function saveCronjobs($connection)
+    /**
+     * Install bundle assets
+     */
+    public function installAssets()
     {
-        $cronJobs = array(
-            'newscoop_autopublish',
-            'newscoop_indexer',
-            'newscoop_notifyendsubs',
-            'newscoop_notifyevents',
-            'newscoop_statistics',
-            'newscoop_stats'
-        );
-
-        $binDirectory = $this->newscoopDir.'/bin';
-        $cronJobsTemplatesDir = realpath($this->newscoopDir.'/install/Resources/templates/cron_jobs/');
-        $cronJobsTempDir = realpath($this->newscoopDir.'/install/Resources/templates/cron_jobs/tmp/');
-        $allAtOnceFile = $cronJobsTempDir.'/all_at_once';
-
-        $cmd = 'crontab -l';
-        $external = true;
-        exec($cmd, $output, $result);
-        if ($result != 0) {
-            $cmd = 'crontab -';
-            exec($cmd, $output, $result);
-            if ($result != 0) {
-                $external = false;
-
-                $query = "UPDATE SystemPreferences SET value = 'N' WHERE varname = 'ExternalCronManagement'";
-                $connection->executeQuery($query);
-            }
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
         }
 
-        if (file_exists($allAtOnceFile)) {
-            unlink($allAtOnceFile);
+        $php = escapeshellarg($phpPath);
+        $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
+        $assetsInstall = new Process("$php $newscoopConsole assets:install $this->newscoopDir/public", null, null, null, 300);
+        $assetsInstall->run();
+        if (!$assetsInstall->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the assets install command.');
         }
+    }
 
-        $alreadyInstalled = false;
-        foreach ($output as $cronLine) {
-            if (!file_put_contents($allAtOnceFile, "$cronLine\n", FILE_APPEND)) {
-                $error = true;
-            }
-            if (strstr($cronLine, $binDirectory)) {
-                $alreadyInstalled = true;
-            }
-        }
+    /**
+     * Save newscoop cronjobs in user cronjob file
+     *
+     * @return bolean
+     */
+    public function saveCronjobs()
+    {
+        $binDirectory = realpath($this->newscoopDir.'/bin');
 
-        if ($alreadyInstalled) {
-            return true;
-        }
+        $crontab = new Crontab();
 
-        $buffer = '';
-        $isFileWritable = is_writable($cronJobsTempDir);
-        $error = false;
-        $twig = new \Twig_Environment(
-            new \Twig_Loader_Filesystem(__DIR__ . '/../../../../install/Resources/templates/cron_jobs/'), 
-            array('debug' => true, 'cache' => false, 'strict_variables' => true,'autoescape' => false)
-        );
+        $job = new Job();
+        $job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/newscoop-autopublish');
+        $crontab->addJob($job);
 
-        foreach ($cronJobs as $cronJob) {
-            $buffer = $twig->render('_'.$cronJob.'.twig', array('bin_directory' => $binDirectory));
+        $job = new Job();
+        $job->setMinute('0')->setHour('*/4')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/newscoop-indexer --silent');
+        $crontab->addJob($job);
 
-            $cronJobFile = $cronJobsTempDir.'/'.$cronJob;
-            if (file_exists($cronJobFile)) {
-                $isFileWritable = is_writable($cronJobFile);
-            }
+        $job = new Job();
+        $job->setMinute('0')->setHour('*/8')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/subscription-notifier');
+        $crontab->addJob($job);
 
-            if (!$isFileWritable) {
-                // try to unlink existing file
-                $isFileWritable = @unlink($cronJobFile);
+        $job = new Job();
+        $job->setMinute('*/2')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/events-notifier');
+        $crontab->addJob($job);
 
-            }
+        $job = new Job();
+        $job->setMinute('0')->setHour('*/4')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/newscoop-statistics');
+        $crontab->addJob($job);
 
-            if (!$isFileWritable) {
-                $error = true;
-                continue;
-            }
-
-            if (file_put_contents($cronJobFile, $buffer)) {
-                $buffer .= "\n";
-                if (!file_put_contents($allAtOnceFile, $buffer, FILE_APPEND)) {
-                    $error = true;
-                }
-            } else {
-                $error = true;
-            }
-        }
-
-        if ($error) {
-            return false;
-        }
-
-        if ($external && file_exists($allAtOnceFile)) {
-            $cmd = 'crontab '.escapeshellarg($allAtOnceFile);
-            exec($cmd, $output, $result);
-        }
+        $job = new Job();
+        $job->setMinute('0')->setHour('5')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($binDirectory.'/newscoop-autopublish');
+        $crontab->addJob($job);
+        $crontab->write();
 
         return true;
     }
 
+    /**
+     * Save instance config (to files and database)
+     *
+     * @param array      $config
+     * @param Connection $connection
+     */
     public function saveInstanceConfig($config, $connection)
     {
         // Set site title
@@ -186,7 +175,6 @@ class FinishService
         $stmt->bindValue(1, $password);
         $stmt->bindValue(2, $config['user_email']);
         $stmt->execute();
-        
 
         $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
 
@@ -198,5 +186,4 @@ class FinishService
             $this->filesystem->remove($this->newscoopDir.'/conf/upgrading.php');
         }
     }
-
 }

@@ -87,7 +87,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	   <BLOCKQUOTE>
-		<LI><?php  echo $translator->trans('The language $1 could not be deleted.', array('$1' => '<B>'.$languageObj->getNativeName().'</B>') 'languages'); ?></LI>
+		<LI><?php  echo $translator->trans('The language $1 could not be deleted.', array('$1' => '<B>'.$languageObj->getNativeName().'</B>'), 'languages'); ?></LI>
         <?php
         foreach ($errorMsgs as $error) { ?>
             <LI><?php p($error); ?></LI>

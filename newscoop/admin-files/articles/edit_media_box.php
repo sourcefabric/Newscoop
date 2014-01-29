@@ -44,7 +44,7 @@
                 $image = $articleImage->getImage();
                 $imageEditUrl = "/$ADMIN/articles/images/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_image_template_id=".$articleImage->getTemplateId();
                 $detachUrl = "/$ADMIN/articles/images/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_image_template_id=".$articleImage->getTemplateId().'&'.SecurityToken::URLParameter();
-                $imageSize = getimagesize($image->getImageStorageLocation());
+                $imageSize = @getimagesize($image->getImageStorageLocation()) ? : array(0, 0);
             ?>
             <li>
                 <div class="image-thumbnail-container">
@@ -101,7 +101,7 @@
                 <?php echo wordwrap($file->getFileName(), "25", "<br />", true); ?>
                 <?php } ?>
 
-                <span class="info"><?php echo htmlspecialchars($file->getDescription($f_language_selected)), ', ', camp_format_bytes($file->getSizeInBytes()); ?></span>
+                <span class="info"><?php echo !$file->getLanguageId() ? htmlspecialchars($file->getDescription(0)) : htmlspecialchars($file->getDescription($f_language_selected)) , ', ', camp_format_bytes($file->getSizeInBytes()); ?></span>
                 <a class="link icon-link" href="<?php p($downloadUrl); ?>"><span class="icon ui-icon-arrowthickstop-1-s"></span><?php echo $translator->trans('Download', array(), 'articles'); ?></a>
 
                 <?php if ($inEditMode && $g_user->hasPermission('DeleteFile')) { ?>

@@ -46,6 +46,7 @@ function smarty_function_render($p_params, &$p_smarty)
             $campsiteVector['params'] = $p_params['params'];
         }
         $smarty->campsiteVector = $campsiteVector;
+
         if (empty($p_params['cache'])) {
             $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
             $smarty->cache_lifetime = (int)$template->getCacheLifetime();

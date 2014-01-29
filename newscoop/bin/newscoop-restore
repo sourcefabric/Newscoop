@@ -542,13 +542,7 @@ if ($dbVersion < '2.6.0') {
     exit(1);
 }
 
-// Upgrade the database
-echo " * Upgrading (if necessary)...";
-flush_output($flush);
-$res = camp_upgrade_database($destDbName);
-if ($res !== 0) {
-    camp_exit_with_error($res);
-}
+// TODO: run upgrade script if needed
 
 // replace $campsite by $gimme
 echo " * Upgrading templates...";

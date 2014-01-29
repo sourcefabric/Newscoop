@@ -87,7 +87,7 @@ $.fn.serializeObject = function()
 
 function resetSpecificForm() {
 	$('#specific-multidate-id').val('');
-	$('#specific-radio-start-only').trigger('click');
+    $('#specific-radio-start-and-end').trigger('click');
 	$('#start-date-specific').val('');
 	$('#start-time-specific').val('');
 	$('#end-time-specific').val('');
@@ -184,7 +184,7 @@ function submitSpecificForm() {
 			if (valid == 1) {
 				if ( !timeOk($('#start-date-specific').val(), $('#start-time-specific').val(), $('#start-date-specific').val(), $('#end-time-specific').val()) ) {
 					valid = 0;
-					alert("<?php echo $translator->trans('End time can not be set before start time'", array(), 'articles')?>");
+					alert("<?php echo $translator->trans('End time can not be set before start time', array(), 'articles')?>");
 					$('#end-time-specific').focus();
 				}
 			}		
@@ -284,7 +284,6 @@ function popup_save() {
 }
 
 function reset_specific_start_time() {
-    $('#specific-radio-start-only').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
     $('#end-time-specific').css('visibility', 'hidden');
 }
@@ -476,7 +475,7 @@ $(function(){
 			timeFormat: 'H(:mm)'
 	});
 
-	 
+
 	 $("#start-date-specific").datepicker({ dateFormat: 'yy-mm-dd' });
 	 
 	 $('#start-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
@@ -506,6 +505,7 @@ $(function(){
 		$('#end-date-daterange').css('visibility', 'hidden');
 		});
 		    
+    $('#specific-radio-start-and-end').trigger('click');
 });
 
 window.load_events = function(start, end, callback, url) {
@@ -558,11 +558,11 @@ window.load_events = function(start, end, callback, url) {
 	
     <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input" style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true' title="<?php echo $translator->trans('Event date', array(), 'articles'); ?>" /> 
 	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' title="<?php echo $translator->trans('Event start time', array(), 'articles'); ?>" /> 
-	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: hidden" readonly='true' title="<?php echo $translator->trans('Event end time', array(), 'articles'); ?>" />
+	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: visible" readonly='true' title="<?php echo $translator->trans('Event end time', array(), 'articles'); ?>" />
 	
 	<div class="specific-radio-holder">
-		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><label for="specific-radio-start-only"><?php echo $translator->trans('Start time', array(), 'articles'); ?></label><br />
-		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><label for="specific-radio-start-and-end"><?php echo $translator->trans('Start & end time', array(), 'articles'); ?><br /></label>
+		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" /><label for="specific-radio-start-only"><?php echo $translator->trans('Start time', array(), 'articles'); ?></label><br />
+		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" checked="checked" /><label for="specific-radio-start-and-end"><?php echo $translator->trans('Start & end time', array(), 'articles'); ?><br /></label>
 		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><label for="specific-radio-all-day"><?php echo $translator->trans('All day', array(), 'articles'); ?></label>
 	</div>
 

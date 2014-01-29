@@ -12,10 +12,18 @@ fos_js_routing:
 _bazinga_exposetranslation:
     prefix: /admin
     resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
 gimme:
     type: rest
     prefix: /api
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
+NewscoopGimmeBundleConfigureApi:
+    resource: "@NewscoopGimmeBundle/Controller/ConfigureApiController.php"
+    prefix:   /
+    type:     annotation
 newscoop:
     prefix: /
     resource: "@NewscoopNewscoopBundle/Resources/config/routing.yml"

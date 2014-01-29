@@ -1,0 +1,14 @@
+{% extends "upgrade_layout.twig" %}
+
+{% block content %}
+	<p>Your Newscoop instance is upgraded from <span style="font-weight: bold; font-style: italic;">{{ oldVersions.dbInfo }}</span> to <span style="font-weight: bold; font-style: italic;">{{ newVersions.dbInfo }}</span> but <span style="font-weight: bold; font-style: italic;">with some errors.</span></p>
+	<p>We skiped those errors, upgrade process finished, but please contact with you system administrator to check what is the issue. You can find whole upgrade log inside <span style="font-weight: bold; font-style: italic;">log/upgrade.log</span> file.</p>
+
+	<h2>Errors in upgrade process.</h2>
+
+	<pre style="border: 1px solid black;padding: 5px;background-color: #000;color: #FFF;">
+{% for error in errors %}
+{{ error }} <br />
+{% endfor %}
+	</pre>
+{% endblock %}

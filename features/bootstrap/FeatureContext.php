@@ -1,11 +1,10 @@
 <?php
 
-use Behat\Behat\Context\ClosuredContextInterface;
-use Behat\Behat\Context\TranslatedContextInterface;
 use Behat\Behat\Context\BehatContext;
 use Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Buzz\Message\Form\FormUpload;
 
 /**
  * Features context.
@@ -13,6 +12,10 @@ use Behat\Gherkin\Node\TableNode;
 class FeatureContext extends BehatContext
 {
     private $browser;
+
+    private $fields = array();
+
+    private $parameters;
 
     /**
      * Initializes context.
@@ -22,15 +25,23 @@ class FeatureContext extends BehatContext
      */
     public function __construct(array $parameters)
     {
-        $this->useContext('api',
-            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\Curl()))
+        $this->useContext(
+            'api',
+            new Behat\CommonContexts\WebApiContext($parameters['base_url'], new \Buzz\Browser(new \Buzz\Client\FileGetContents()))
         );
-
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
+
+        $url = str_replace('api/', '', $parameters['base_url']).'oauth/v2/token?client_id=1_svdg45ew371vtsdgd29fgvwe5v&grant_type=client_credentials&client_secret=h48fgsmv0due4nexjsy40jdf3sswwr';
+        $this->browser->call($url, 'GET', array());
+        $token = json_decode($this->browser->getLastResponse()->getContent(), true);
+
         $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', $parameters['base_url']);
         $this->browser->addListener(new PublicationListener(array(
-            'publication' => $parameters['publication']
+            'publication' => $parameters['publication'],
+            'access_token' => $token['access_token']
         )));
+
+        $this->parameters = $parameters;
     }
 
     /**
@@ -124,6 +135,7 @@ class FeatureContext extends BehatContext
                 if (!in_array($key, $itemKeys)) {
                     continue;
                 }
+
                 return true;
             }
         }
@@ -141,6 +153,21 @@ class FeatureContext extends BehatContext
         $this->responseShouldHaveWithElements('items');
 
         if ($response['items'][0][$key] == $value) {
+            return true;
+        }
+
+        throw new \Exception($key.' don\'t have value '.$value);
+    }
+
+    /**
+     * @Then /^response should have key "([^"]*)" with value "([^"]*)"$/
+     */
+    public function responseShouldHaveKeyWithValue($key, $value)
+    {
+
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+
+        if ($response[$key] == $value) {
             return true;
         }
 
@@ -177,6 +204,7 @@ class FeatureContext extends BehatContext
                 if (!array_key_exists($key, $response['items'][0])) {
                     throw new \Exception('Key '.$key.' don\'t exist');
                 }
+
                 return true;
             }
         }
@@ -184,5 +212,99 @@ class FeatureContext extends BehatContext
         throw new \Exception('Response is wrong');
     }
 
+    /**
+     * @Given /^that i want to create new file \'([^\']*)\' with name \'([^\']*)\'$/
+     */
+    public function thatIWantToSendFileWithName($fileName, $name)
+    {
+        $upload = new FormUpload(__DIR__.'/assets/'.$fileName);
+        $upload->setName($name);
+        $this->fields[$name] = $upload;
+    }
 
+    /**
+     * @Given /^that i want to create "([^"]*)" with name "([^"]*)" and content "([^"]*)" with type "([^"]*)"$/
+     */
+    public function thatIWantToCreateWithNameAndContentWithType($form, $name, $content, $contentType)
+    {
+        if ($contentType == 'file') {
+            $fileName = $content;
+            $content = new FormUpload(__DIR__.'/assets/'.$fileName);
+            $content->setName($fileName);
+        }
+
+        if (!array_key_exists($form, $this->fields)) {
+            $this->fields[$form] = array();
+        }
+
+        $this->fields[$form][$name] = $content;
+    }
+
+    /**
+     * Sends HTTP request to specific URL with form data from PyString.
+     *
+     * @param string $method request method
+     * @param string $url    relative url
+     *
+     * @When /^I send a "([^"]*)" request to "([^"]+)" with custom form data$/
+     */
+    public function iSendARequestToWithCustomFormData($method, $url)
+    {
+        $webApiContext = $this->getMainContext()->getSubcontext('api');
+
+        if ($url == "last resource") {
+            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+        } else {
+            $url = $this->parameters['base_url'].ltrim($webApiContext->replacePlaceHolder($url), '/');
+        }
+
+        $this->browser->submit($url, $this->fields, $method);
+        $this->fields = array();
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
+    }
+
+    /**
+     * @Given /^response should have header "([^"]*)"$/
+     */
+    public function responseShouldHaveHeader($name)
+    {
+        $headers = $this->browser->getLastResponse()->getHeaders();
+        if (array_key_exists($name, $headers)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @When /^I send a "([^"]*)" request to last resource$/
+     */
+    public function iSendARequestToLastResource($method)
+    {
+        $url = $this->browser->getLastRequest()->getUrl();
+        if (array_key_exists('X-Location', $this->browser->getLastResponse()->getHeaders())) {
+            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+        }
+
+        $this->browser->call($url, $method);
+
+        $request  = $this->browser->getLastRequest();
+        $response = $this->browser->getLastResponse();
+
+        $this->printDebug(sprintf("%s %s => %d:\n%s",
+            $request->getMethod(),
+            $request->getUrl(),
+            $response->getStatusCode(),
+            $response->getContent()
+        ));
+    }
 }

@@ -69,7 +69,7 @@ class Comment
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments" )
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment\Commenter
      */
@@ -148,13 +148,13 @@ class Comment
     private $ip;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $time_created;
 
     /*
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
     private $time_updated;
@@ -176,6 +176,18 @@ class Comment
      * @var int
      */
     private $recommended = 0;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=True)
+     * @var DateTime
+     */
+    private $indexed;
+
+    /**
+     * @ORM\Column(type="string", length=60, name="source", nullable=true)
+     * @var string
+     */
+    private $source;
 
     /**
      * Set id
@@ -738,4 +750,48 @@ class Comment
         return $return;
     }
 
+    /**
+     * Set indexed
+     *
+     * @param DateTime $indexed
+     * @return void
+     */
+    public function setIndexed(\DateTime $indexed = null)
+    {
+        $this->indexed = $indexed;
+    }
+
+    /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
+
+    /**
+     * Get comment source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set comment source
+     *
+     * @param  string $source
+     *
+     * @return string
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
 }

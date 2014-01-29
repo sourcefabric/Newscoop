@@ -28,7 +28,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     public function clean($tpl_file = null)
     {
         $cache_content = $smrty_obj = null;
-        self::handler('clean', $smarty_obj, $cache_content, $tpl_file);
+        self::handler('clean', $cache_content, $tpl_file);
     }
 
     /**
@@ -37,7 +37,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     public function update($campsiteVector, $exactUpdate = false)
     {
         $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . self::vectorToWhereString($campsiteVector);
-        $this->_ado_db->Execute($queryStr);
+        $this->_ado_db->execute($queryStr);
 
         if ($exactUpdate) return;
 
@@ -50,32 +50,32 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             if (isset($campsiteVector['section'])) {
                 $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . $whereStr . "section = {$campsiteVector['section']} AND "
                 . 'article = 0';
-                $this->_ado_db->Execute($queryStr);
+                $this->_ado_db->execute($queryStr);
             }
 
             // clear language, publication, issue, null, null vector
             $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . $whereStr . "section = 0 AND article = 0";
-            $this->_ado_db->Execute($queryStr);
+            $this->_ado_db->execute($queryStr);
 
             // clear language, publication, null, null, null vector
             if (isset($campsiteVector['issue'])) {
                 $queryStr = 'UPDATE Cache SET status = "E" WHERE language = '. "{$campsiteVector['language']} AND "
                 . "publication = {$campsiteVector['publication']} AND issue = 0 AND section = 0 AND article = 0";
-                $this->_ado_db->Execute($queryStr);
+                $this->_ado_db->execute($queryStr);
             }
 
             // clear language, null, null, null, null vector
             if (isset($campsiteVector['issue'])) {
                 $queryStr = 'UPDATE Cache SET status = "E" WHERE language = '. "{$campsiteVector['language']} AND "
                 . 'publication = 0 AND issue = 0 AND section = 0 AND article = 0';
-                $this->_ado_db->Execute($queryStr);
+                $this->_ado_db->execute($queryStr);
             }
 
             // clear null, null, null, null, null vector
             if (isset($campsiteVector['issue'])) {
                 $queryStr = 'UPDATE Cache SET status = "E" WHERE language = 0 AND publication = 0 AND issue = 0 AND '
                 . 'section = 0 AND article = 0';
-                $this->_ado_db->Execute($queryStr);
+                $this->_ado_db->execute($queryStr);
             }
         }
         return;
@@ -91,16 +91,18 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         return self::$m_description;
     }
 
-    static function handler($action, &$smarty_obj, &$cache_content, $tpl_file = null, $cache_id = null,
+    static function handler($action, &$cache_content, $tpl_file = null, $cache_id = null,
         $compile_id = null, $exp_time = 0)
     {
         global $g_ado_db;
         static $cacheParams = array();
         $exp_time += time();
 
+        $uri = CampSite::GetURIInstance();
+        $campsiteVector = $uri->getCampsiteVector();
+
         $return = false;
         if ($action != 'clean') {
-            $campsiteVector = $smarty_obj->campsiteVector;
             if (!isset($campsiteVector['params'])) {
                 $campsiteVector['params'] = null;
             }
@@ -121,8 +123,8 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                             if ($result['status'] == 'E') {
                                 $queryStr = 'UPDATE Cache SET status = "U" WHERE ' . $whereStr
                                 . ' AND status = "E"';
-                                $g_ado_db->Execute($queryStr);
-                                if ($g_ado_db->Affected_Rows() > 0) {
+                                $g_ado_db->executeUpdate($queryStr);
+                                if ($g_ado_db->affected_rows() > 0) {
                                     $cacheParams[$tpl_file]['update'] = true;
                                     $return = false;
                                 } else {
@@ -137,7 +139,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         } else {
                             // clear expired cache
                             $queryStr = 'DELETE FROM Cache WHERE expired <= ' . time();
-                            $g_ado_db->Execute($queryStr);
+                            $g_ado_db->execute($queryStr);
                             $return = false;
                         }
                     }
@@ -148,7 +150,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                 // in case template changing the old cached templates should be updated
                 if (isset($cacheParams[$tpl_file]['cached']) ) {
                     $queryStr = 'UPDATE Cache SET status = "E" WHERE template = ' . "'$tpl_file'";
-                    $g_ado_db->Execute($queryStr);
+                    $g_ado_db->execute($queryStr);
                     $cacheParams[$tpl_file]['update'] = true;
                 }
                 if ($exp_time > time() + 1) {
@@ -168,8 +170,8 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
                     }
                     unset($cacheParams[$tpl_file]);
-                    $g_ado_db->Execute($queryStr);
-                    $return = $g_ado_db->Affected_Rows() > 0;
+                    $g_ado_db->executeUpdate($queryStr);
+                    $return = $g_ado_db->affected_rows() > 0;
                 }
                 break;
 
@@ -178,7 +180,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                 if ($tpl_file) {
                     $queryStr .= " WHERE template = '$tpl_file'";
                 }
-                $g_ado_db->Execute($queryStr);
+                $g_ado_db->execute($queryStr);
                 $return = true;
                 break;
 

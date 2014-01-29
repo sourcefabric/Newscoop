@@ -15,7 +15,6 @@ framework:
         storage_id: newscoop_newscoop.session.storage
         handler_id: ~
     fragments: ~
-    http_method_override: true
     translator: { fallback: en }
 
 doctrine:
@@ -61,6 +60,13 @@ fos_rest:
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
 
+fos_oauth_server:
+    db_driver: orm       # Driver availables: orm, mongodb, or propel
+    client_class:        Newscoop\GimmeBundle\Entity\Client
+    access_token_class:  Newscoop\GimmeBundle\Entity\AccessToken
+    refresh_token_class: Newscoop\GimmeBundle\Entity\RefreshToken
+    auth_code_class:     Newscoop\GimmeBundle\Entity\AuthCode
+
 jms_serializer:
     metadata:
         auto_detection: true
@@ -70,6 +76,9 @@ jms_serializer:
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Package:
                 namespace_prefix: Newscoop\Package
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Image:
+                namespace_prefix: Newscoop\Image
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
@@ -122,9 +131,9 @@ bazinga_expose_translation:
     locale_fallback: "en"
 
 ewz_recaptcha:
-    public_key:   
+    public_key:
     private_key:
-    enabled: true  
+    enabled: true
     locale_key: kernel.default_locale
 
 parameters:

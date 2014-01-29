@@ -1,0 +1,6 @@
+{% extends "upgrade_layout.twig" %}
+
+{% block content %}
+	<p>Your Newscoop instance is upgraded from <span style="font-weight: bold; font-style: italic;">{{ oldVersions.dbInfo }}</span> to <span style="font-weight: bold; font-style: italic;">{{ newVersions.dbInfo }}</span> without errors.</span></p>
+	<p style="text-align:center"><a href="/admin">Continue</a></p>
+{% endblock %}

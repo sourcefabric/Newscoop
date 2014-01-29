@@ -34,8 +34,8 @@ class ContextBoxArticle extends DatabaseObject
     	Global $g_ado_db;
         $queryStr = 'DELETE FROM context_articles'
                     .' WHERE fk_context_id=' . intval($p_context_id);
-        $g_ado_db->Execute($queryStr);
-        $wasDeleted = ($g_ado_db->Affected_Rows());
+        $g_ado_db->executeUpdate($queryStr);
+        $wasDeleted = ($g_ado_db->affected_rows());
         return $wasDeleted;
     }
 
@@ -85,18 +85,21 @@ class ContextBoxArticle extends DatabaseObject
         }
 
         if (isset($params['role']) && $params['role'] == 'child') {
-            $sql = 'SELECT b.fk_article_no FROM context_boxes b'
-                . ' WHERE b.id = (SELECT c.fk_context_id '
+            $sql = 'SELECT b.fk_article_no FROM context_boxes b, Articles a0'
+                . ' WHERE a0.Number = b.fk_article_no AND '
+                . ' a0.Type = "dossier" AND '
+                . ' b.id IN (SELECT c.fk_context_id '
                 . '     FROM Articles a, context_articles c '
                 . '     WHERE c.fk_article_no = ' . $params['article']
-                . '     AND a.Number = c.fk_article_no ORDER BY id LIMIT 1)';
+                . '     AND a.Number = c.fk_article_no)'
+                . ' ORDER BY a0.PublishDate DESC';
         } else {
             $sql = 'SELECT fk_article_no FROM context_articles'
                 . ' WHERE fk_context_id = ' . $params['context_box']
                 . ' ORDER BY id';
-            if ($p_limit > 0) {
-                $sql .= ' LIMIT ' . $p_limit;
-            }
+        }
+        if ($p_limit > 0) {
+            $sql .= ' LIMIT ' . $p_limit;
         }
 
         $returnArray = array();
@@ -114,15 +117,15 @@ class ContextBoxArticle extends DatabaseObject
 
     public static function OnArticleCopy($origArticle, $destArticle)
     {
-     
+
         global $g_ado_db;
-     
+
         $contextBox = new ContextBox(null, $destArticle);
         $sql = 'SELECT ca.fk_article_no as article_number
            FROM context_boxes cb, context_articles ca
            WHERE cb.id = ca.fk_context_id AND cb.fk_article_no = ' . $origArticle;
         $rows = $g_ado_db->GetAll($sql);
-     
+
         foreach ($rows as $row) {
             $sql = 'INSERT IGNORE INTO context_articles (fk_context_id, fk_article_no) '
                 . 'VALUES (' . $contextBox->getId() . ', ' . $row['article_number'] . ')';

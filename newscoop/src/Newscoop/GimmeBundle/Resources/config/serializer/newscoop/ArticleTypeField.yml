@@ -1,0 +1,51 @@
+Newscoop\Entity\ArticleTypeField:
+    exclusion_policy: ALL
+    properties:
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: name
+        type:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: type
+        length:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: length
+        fieldWeight:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: fieldWeight
+        isHidden:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: isHidden
+        commentsEnabled:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: commentsEnabled
+        fieldTypeParam:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: fieldTypeParam
+        isContentField:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: isContentField

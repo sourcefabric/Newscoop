@@ -1,4 +1,13 @@
+#!/usr/bin/env php
 <?php
+
+/**
+ * @package Newscoop\NewscoopBundle
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @copyright 2012 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
 global $g_ado_db;
 
 // if you don't want to setup permissions the proper way, just uncomment the following PHP line
@@ -31,14 +40,6 @@ $kernel->boot();
 $container = $kernel->getContainer();
 \Zend_Registry::set('container', $container);
 
-$g_ado_db = $container->getService('doctrine.adodb');
-
-if (!$g_ado_db->isConnected(true)) {
-    throw new \Exception("Container is missing", 1);
-}
-
-$cli->setCatchExceptions(false);
-
 $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
@@ -51,7 +52,12 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
     new \Newscoop\Tools\Console\Command\UpdatePluginCommand(),
     new \Newscoop\Tools\Console\Command\DispatchEventForPluginCommand(),
+    new \Newscoop\Tools\Console\Command\UpgradePluginsCommand(),
     new \Newscoop\Tools\Console\Command\ReloadRenditionsCommand(),
+    new \Newscoop\Tools\Console\Command\GenerateWebcodeCommand(),
+    new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
+    new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
+    new \Newscoop\Tools\Console\Command\GenerateORMSchemaCommand(),
 ));
 
 $cli->run($input);

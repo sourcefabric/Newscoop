@@ -71,27 +71,18 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
     public function findAllTypes()
     {
-        $qb = $this->getManager()->createQueryBuilder();
-
-        $qb ->select( self::ALIAS )
-            ->from( '\Newscoop\Entity\ArticleType', self::ALIAS )
-            // TODO get legacy sql thing with string 'null' out when time comes
-            ->where( self::ALIAS . ".fieldName IS NULL " . ' OR ' . self::ALIAS . ".fieldName = 'NULL'" );
-
-        return $qb->getQuery()->getResult();
+        $query = $this->getManager()->getRepository('Newscoop\Entity\ArticleType')->getAllTypes();
+        return $query->getResult();
     }
 
     public function findFields(ArticleType $type)
     {
-        $qb = $this->getManager()->createQueryBuilder();
-        $qb ->select( self::ALIAS )
-            ->from( '\Newscoop\Entity\ArticleTypeField', self::ALIAS )
-            ->where( self::ALIAS . '.typeHack = ?1' . ' AND ' . self::ALIAS . ".name IS NOT NULL" . ' AND ' . self::ALIAS . ".name <> 'NULL'" )->setParameter( 1, $type->getName() );
+        $query = $this->getManager()->getRepository('Newscoop\Entity\ArticleTypeField')->getFieldsForType($type);
 
         /**
          * @todo at refactor @see hack from \Newscoop\Entity\ArticleTypeField
          */
-        foreach(( $results = $qb->getQuery()->getResult() ) as $atf ) {
+        foreach(( $results = $query->getResult() ) as $atf ) {
             $atf->setArticleType( $type );
         }
         return $results;

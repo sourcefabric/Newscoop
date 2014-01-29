@@ -16,7 +16,7 @@ use Newscoop\Gimme\Json;
  * Add Access-Control-Allow-Origin header to response.
  */
 class AllowOriginListener
-{   
+{
     private $container;
 
     public function __construct($container)

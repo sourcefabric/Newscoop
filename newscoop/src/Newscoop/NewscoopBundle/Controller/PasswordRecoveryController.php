@@ -71,7 +71,7 @@ class PasswordRecoveryController extends Controller
      * @Template("NewscoopNewscoopBundle:PasswordRecovery:check.html.twig")
      */
     public function checkTokenAction(Request $request)
-    {   
+    {
         $translator = $this->container->get('translator');
         $preferencesService = $this->container->get('system_preferences_service');
         $email = $request->get('email');
@@ -93,7 +93,9 @@ class PasswordRecoveryController extends Controller
 
             if ($user != null) {
                 $tokenGenerated = (int) substr($token, -10);
-                if ($user->getResetToken() == $token && (time() - $tokenGenerated < 48 * 3600)) { // valid for 48 hours
+
+                // valid for 48 hours
+                if ($user->getResetToken() == $token && (time() - $tokenGenerated < 48 * 3600)) {
                     if ($request->isMethod('POST')) {
                         $form->handleRequest($request);
                         if ($form->isValid()) {

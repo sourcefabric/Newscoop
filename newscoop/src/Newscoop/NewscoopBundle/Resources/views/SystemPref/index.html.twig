@@ -36,7 +36,6 @@
                 <li><a href="#media_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.media'|trans }}</a></li>
             {% endif %}
             <li><a href="#geolocation_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.geolocation'|trans }}</a></li>
-            <li><a href="#mailchimp_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.mailchimp'|trans }}</a></li>
             <li><a href="#facebook_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.fb'|trans }}</a></li>
             <li><a href="#recaptcha_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.recaptcha'|trans }}</a></li>
             {% if hasManagePermission %}
@@ -407,23 +406,6 @@
                     </dl>
                 </div>
             {% endif %}
-            <div class="tab-pane" id="mailchimp_settings">
-                <h3>{{ 'newscoop.preferences.menu.mailchimp'|trans }}</h3>
-                <dl>
-                    <dt>
-                        <label>{{ 'newscoop.preferences.label.apikey'|trans }}</label>
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.mailchimp_apikey, {'attr' : {'class' : 'input_text' }}) }}
-                    </dd>
-                    <dt>
-                        <label>{{ 'newscoop.preferences.label.mailchimplist'|trans }}</label>
-                    </dt>
-                    <dd>
-                        {{ form_widget(form.mailchimp_listid, {'attr' : {'class' : 'input_text' }}) }}
-                    </dd>
-                </dl>
-            </div>
             <div class="tab-pane" id="facebook_settings">
                 <h3>{{ 'newscoop.preferences.menu.fb'|trans }}</h3>
                 <dl>
@@ -473,10 +455,6 @@
                         <dt class="border"><label>{{ 'newscoop.preferences.label.filter'|trans }} <small id="filter">(?)</small></label></dt>
                         <dd>
                            {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
-                        </dd> 
-                        <dt class="border"><label>{{ 'newscoop.preferences.label.cron'|trans }} <small id="cron">(?)</small></label></dt>
-                        <dd>
-                            {{ form_widget(form.external_cron_management) }}
                         </dd>
                     </dl>
                 </div>

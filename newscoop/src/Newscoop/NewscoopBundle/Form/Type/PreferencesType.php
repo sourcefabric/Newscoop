@@ -16,7 +16,7 @@ class PreferencesType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {   
+    {
         $timeZoneCities = array(
             0 => 'London, Lisbon, Casablanca',
             1 => 'Brussels, Copenhagen, Madrid, Paris',
@@ -44,7 +44,7 @@ class PreferencesType extends AbstractType
             -11 => 'Midway Island, Samoa',
             -12 => 'Eniwetok, Kwajalein',
         );
-        
+
         $timezones = array();
         for ($k = -12; $k < 13; $k++) {
             $v = $k < 0 ? $k : '+' . $k;
@@ -94,9 +94,11 @@ class PreferencesType extends AbstractType
         }
 
         $language_codes_639_1 = \Language::Get6391List();
+
         asort($language_codes_639_1);
         $languages = array();
-        foreach($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
+
+        foreach ($language_codes_639_1 as $geo_lang_code => $geo_lang_name) {
             $languages[$geo_lang_code] = $geo_lang_name;
         }
 
@@ -264,16 +266,6 @@ class PreferencesType extends AbstractType
             'error_bubbling' => true,
             'required' => true
         ))
-        ->add('external_cron_management', 'choice', array(
-            'choices'   => array(
-                'Y' => 'newscoop.preferences.label.yesoption', 
-                'N' => 'newscoop.preferences.label.nooption'
-            ),
-            'error_bubbling' => true,
-            'multiple' => false,
-            'expanded' => true,
-            'required' => true,
-        ))
         ->add('mysql_client_command_path', 'text', array(
             'attr' => array('maxlength' => 200, 'size' => 40),
             'error_bubbling' => true,
@@ -408,16 +400,6 @@ class PreferencesType extends AbstractType
             'error_bubbling' => true,
             'required' => false
         ))
-        ->add('mailchimp_apikey', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
-        ))
-        ->add('mailchimp_listid', null, array(
-            'attr' => array('maxlength' => 200, 'size' => 40),
-            'error_bubbling' => true,
-            'required' => false
-        ))
         ->add('recaptchaPublicKey', null, array(
             'attr' => array('maxlength' => 200, 'size' => 40),
             'error_bubbling' => true,
@@ -430,9 +412,10 @@ class PreferencesType extends AbstractType
         ))
         ->add('recaptchaSecure', 'choice', array(
             'choices'   => array(
-                'Y' => 'newscoop.preferences.label.yesoption', 
+                'Y' => 'newscoop.preferences.label.yesoption',
                 'N' => 'newscoop.preferences.label.nooption'
             ),
+            'data' => 'N',
             'error_bubbling' => true,
             'multiple' => false,
             'expanded' => true,
@@ -441,7 +424,7 @@ class PreferencesType extends AbstractType
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {    
+    {
         $resolver->setDefaults(array(
             'translation_domain' => 'system_pref'
         ));

@@ -1,0 +1,17 @@
+<div class="meta-bar row">
+    {% if NewscoopUser %}
+    <ul class="pull-right">
+        <li>{{ "Signed in: $1"|trans({'$1': '<strong>' ~ NewscoopUser.getFirstName() ~ ' ' ~ NewscoopUser.getLastName() ~ '</strong>'})|raw }}</li>
+        <li><a href="{{ Newscoop['site']['help_url'] }}" target="_blank">{{ 'Help'|trans }}</a></li>
+        <li><a href="/{{ Newscoop['ADMIN'] }}/logout">{{ 'Logout'|trans({}, 'messages') }}</a></li>
+    </ul>
+    {% endif %}
+</div>
+
+{% set menuItem = knp_menu_get('main_modern') %}
+<nav class="navbar navbar-default row" role="navigation">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        {{ knp_menu_render(menuItem, {'template': 'NewscoopNewscoopBundle:Menu:knp_menu.html.twig'}) }}
+        <div class="logo"></div>
+    </div>
+</nav>

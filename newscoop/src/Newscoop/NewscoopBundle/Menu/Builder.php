@@ -175,7 +175,7 @@ class Builder
 
     private function decorateMenu($menu) {
         foreach ($menu as $key => $value) {
-            $value->setLinkAttribute('class', 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
+            $value->setLinkAttribute('class', 'fg-button fg-button-menu ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all');
         }
 
         return $menu;
@@ -193,14 +193,11 @@ class Builder
             'privilege' => 'manage',
         ));
 
-        $this->addChild($menu, $translator->trans('Comments'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'comment',
-                'action' => 'index',
-            ),
-            'resource' => 'comment',
-            'privilege' => 'moderate',
-        ));
+        $this->addChild(
+            $menu,
+            $translator->trans('comments.label.menu', array(), 'new_comments'),
+            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_comments_index'))
+        );
 
         $this->addChild($menu, $translator->trans('Feedback', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
@@ -467,7 +464,7 @@ class Builder
     }
 
     private function prepareConfigureMenu($menu) 
-    {   
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('System Preferences'), array('zend_route' => array(
@@ -486,7 +483,7 @@ class Builder
             )
         ));
 
-        if($status) {
+        if ($status) {
             $menu[$translator->trans('Templates', array(), 'home')]->setDisplay(false);
         }
 
@@ -561,7 +558,7 @@ class Builder
             $menu[$translator->trans('Themes', array(), 'home')][$translator->trans('Settings', array(), 'home')][$translator->trans('Edit')]->setDisplay(false);
         }
 
-        if($this->user->hasPermission('DeleteArticleTypes')) {
+        if ($this->user->hasPermission('DeleteArticleTypes')) {
             $this->addChild($menu, $translator->trans('Article Types'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'article_types',
@@ -617,7 +614,7 @@ class Builder
             $menu[$translator->trans('Languages')][$translator->trans('Add new language')]->setDisplay(false);
         }
 
-        if($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
+        if ($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
             $this->addChild($menu, $translator->trans('Countries'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
@@ -626,7 +623,7 @@ class Builder
             ));
         }
 
-        if($this->user->hasPermission('ViewLogs')) {
+        if ($this->user->hasPermission('ViewLogs')) {
             $this->addChild($menu, $translator->trans('Logs'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'log',
@@ -653,10 +650,16 @@ class Builder
                 'action' => null
             )
         ));
+
+        $this->addChild(
+            $menu,
+            $translator->trans('api.configure.menu', array(), 'api'),
+            array('uri' => $this->container->get('router')->generate('configure_api'))
+        );
     }
 
-    private function prepareUsersMenu($menu) 
-    {   
+    private function prepareUsersMenu($menu)
+    {
         $translator = $this->container->get('translator');
 
         $this->addChild($menu, $translator->trans('Manage Users', array(), 'home'), array('zend_route' => array(
@@ -825,8 +828,7 @@ class Builder
 
                     $this->addChild($menu[$translator->trans('Plugins')], $translator->trans($info['menu']['label']), array(
                         'uri' => $uri
-                    ))->setAttribute('rightdrop', true)
-                    ->setLinkAttribute('data-toggle', 'rightdrop');
+                    ))->setLinkAttribute('data-toggle', 'rightdrop');
                 }
 
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {

@@ -292,6 +292,8 @@ $('a.iframe').each(function() {
                     window.location.reload();
                 } else if ($.fancybox.error) {
                     flashMessage($.fancybox.error, 'error');
+                } else {
+                    window.location.reload();
                 }
             }
         });

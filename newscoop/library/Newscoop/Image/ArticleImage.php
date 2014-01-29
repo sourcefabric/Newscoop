@@ -17,14 +17,20 @@ use Doctrine\ORM\Mapping AS ORM;
 class ArticleImage implements ImageInterface
 {
     /**
-     * @ORM\Id 
+     * @ORM\Id()
+     * @ORM\Column(type="integer") 
+     * @ORM\GeneratedValue()
+     * @var int
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="integer", name="NrArticle")
      * @var int
      */
     private $articleNumber;
 
     /**
-     * @ORM\Id 
      * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
      * @ORM\JoinColumn(name="IdImage", referencedColumnName="Id")
      * @var Newscoop\Image\Image

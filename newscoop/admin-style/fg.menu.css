@@ -922,7 +922,7 @@ ul.navigation li { margin-right: 0px; }
     box-sizing: border-box;
 }
 
-a.fg-button { font-size: 12px !important; padding: 9px 25px 9px 15px;}
+a.fg-button-menu { font-size: 12px !important; padding: 9px 25px 9px 15px;}
 
 .fg-button-icon-right .fg-button-ui-icon { right: 7px; }
 

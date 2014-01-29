@@ -60,7 +60,6 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
     <fieldset class="plain">
 
     <legend><?php echo $translator->trans('Change attachment information', array(), 'media_archive'); ?></legend>
-
     <ul>
         <li>
             <label for="description"><?php echo $translator->trans("Description"); ?>:</label>
