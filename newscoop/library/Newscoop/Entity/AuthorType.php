@@ -19,7 +19,7 @@ use Newscoop\Utils\Validation;
 class AuthorType
 {
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      * @var int
@@ -30,6 +30,25 @@ class AuthorType
      * @ORM\Column(type="string", unique=true, name="type")
      */
     private $type;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
+     * @ORM\JoinTable(name="AuthorAssignedTypes",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    private $authors;
+
+    private function __construct()
+    {
+        $this->authors = new ArrayCollection();
+    }
 
     /**
      * Get type field
