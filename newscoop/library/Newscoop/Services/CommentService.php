@@ -234,11 +234,13 @@ class CommentService
         $queryBuilder = $this->em->getRepository('Newscoop\Entity\Comment\Acceptance')
             ->createQueryBuilder('a');
 
-        $queryBuilder->where($queryBuilder->expr()->orX(
-            $queryBuilder->expr()->eq('a.search', ':name'),
-            $queryBuilder->expr()->eq('a.search', ':email'),
-            $queryBuilder->expr()->eq('a.search', ':ip')
-        ));
+        $queryBuilder
+            ->select('a.search')
+            ->where($queryBuilder->expr()->orX(
+                $queryBuilder->expr()->eq('a.search', ':name'),
+                $queryBuilder->expr()->eq('a.search', ':email'),
+                $queryBuilder->expr()->eq('a.search', ':ip')
+            ));
 
         $queryBuilder->setParameters(array(
             'name' => $commenter->getName(),
@@ -246,7 +248,7 @@ class CommentService
             'ip' => $commenter->getIp()
         ));
 
-        $result = $queryBuilder->getQuery()->getResult();
+        $result = $queryBuilder->getQuery()->getArrayResult();
 
         if ($result) {
             return true;

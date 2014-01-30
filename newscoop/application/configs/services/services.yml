@@ -25,7 +25,7 @@ services:
         factory_method: getInstance
     user:
         class:      Newscoop\Services\UserService
-        arguments:  ["@em", "@zend_auth"]
+        arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory", "@session"]
     user.list:
         class:      Newscoop\Services\ListUserService
         arguments:  ["%blog%", "@em"]
@@ -53,6 +53,9 @@ services:
     email:
         class:      Newscoop\Services\EmailService
         arguments:  ["@view", "@user.token"]
+    sendemail:
+        class:      Newscoop\Services\SendEmailService
+        arguments:  ["@em", "@user.token", "@preferences", "@zend_router", "@mailer", "@templating"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
