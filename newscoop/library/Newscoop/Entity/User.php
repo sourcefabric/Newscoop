@@ -17,6 +17,8 @@ use Newscoop\View\UserView;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Zend_View_Abstract;
+use Newscoop\Search\DocumentInterface;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -25,7 +27,7 @@ use Zend_View_Abstract;
  * })
  * @ORM\HasLifecycleCallbacks
  */
-class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface
+class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface, DocumentInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -616,7 +618,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @return array array with roles
      */
     public function getRoles()
-    {   
+    {
         $roles = array();
         foreach($this->groups as $group) {
             $roles[] = strtoupper(str_replace(" ", "_", $group->getName()));
@@ -756,12 +758,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
-            if (!$resource && !$action){ 
+            if (!$resource && !$action){
                 list($resource, $action) = PermissionToAcl::translate($permission);
             }
 
             if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-                if (!$resource && !$action){ 
+                if (!$resource && !$action){
                     return \SaaS::singleton()->hasPermission($permission);
                 }
 
@@ -845,7 +847,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
             throw new \InvalidArgumentException("User Property '$p_key' not found");
         }
     }
-    
+
     /**
      * Set subscriber
      *
@@ -927,11 +929,14 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * Set indexed
      *
      * @param DateTime $indexed
-     * @return void
+     *
+     * @return self
      */
-    public function setIndexed(\DateTime $indexed = null)
+    public function setIndexed(DateTime $indexed = null)
     {
         $this->indexed = $indexed;
+
+        return self;
     }
 
     /**
@@ -947,7 +952,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      *
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Update user profile
      *
      * @param string $username
@@ -988,7 +993,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Get edit view
      *
      * @param Zend_View_Abstract $view
@@ -1024,7 +1029,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Get DataTable view
      *
      * @param Zend_View_Abstract $view
@@ -1068,7 +1073,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     *  
+     *
      * Get url for given action
      *
      * @param string $action
@@ -1087,7 +1092,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Rename user
      *
      * @param string $username
@@ -1100,7 +1105,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Render user
      *
      * @return UserView

@@ -12,11 +12,12 @@ use Doctrine\ORM\Query\Expr;
 use Newscoop\Entity\User;
 use Newscoop\User\UserCriteria;
 use Newscoop\ListResult;
+use Newscoop\Search\RepositoryInterface;
 
 /**
  * User repository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository implements RepositoryInterface
 {
     /** @var array */
     private $setters = array(
@@ -235,7 +236,7 @@ class UserRepository extends EntityRepository
             $user->setPoints((int) $result['comments']);
             $users[] = $user;
         }
-        
+
         return $users;
     }
 
@@ -544,7 +545,7 @@ class UserRepository extends EntityRepository
      *
      * @return array
      */
-    public function getBatch()
+    public function getBatch($count = self::BATCH_COUNT, array $filter = null)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.indexed IS NULL OR u.indexed < u.updated')
@@ -575,7 +576,7 @@ class UserRepository extends EntityRepository
      *
      * @return void
      */
-    public function setIndexedNull()
+    public function setIndexedNull(array $items = null)
     {
         $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\User u SET u.indexed = NULL')
             ->execute();

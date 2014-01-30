@@ -14,11 +14,12 @@ use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Entity\User;
+use Newscoop\Search\RepositoryInterface;
 
 /**
  * Comment repository
  */
-class CommentRepository extends DatatableSource
+class CommentRepository extends DatatableSource implements RepositoryInterface
 {
 
     /**
@@ -472,12 +473,10 @@ class CommentRepository extends DatatableSource
     }
 
     /**
-     *
      * Get direct replies to a comment
      *
      * @param $p_comment_id
      */
-
     public function getDirectReplies($p_comment_id)
     {
         $em = $this->getEntityManager();
@@ -508,5 +507,62 @@ class CommentRepository extends DatatableSource
             ->createQuery("SELECT COUNT(comment) FROM Newscoop\Entity\Comment comment WHERE comment.commenter IN (SELECT commenter.id FROM Newscoop\Entity\Comment\Commenter commenter WHERE commenter.user = :user)")
             ->setParameter('user', $user->getId())
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Find comments for indexing
+     *
+     * @param mixed $count Number of comments to index. When null default will be used
+     *
+     * @return array
+     */
+    public function getBatch($count = self::BATCH_COUNT, array $filter = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if (is_null($filter)) {
+            $qb->where('c.indexed IS NULL')
+                ->orWhere('c.indexed < c.time_updated')
+                ->orderBy('c.time_updated', 'DESC');
+        } else {
+            die('Not implemented yet!');
+        }
+
+        if (is_numeric($count)) {
+            $qb->setMaxResults($count);
+        }
+
+        $batch = $qb->getQuery()
+            ->getResult();
+
+        return $batch;
+    }
+
+    /**
+     * Set indexed now
+     *
+     * @param array $comments
+     * @return void
+     */
+    public function setIndexedNow(array $comments)
+    {
+        if (empty($comments)) {
+            return;
+        }
+
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = CURRENT_TIMESTAMP() WHERE c.id IN (:comments)')
+            ->setParameter('comments', array_map(function($comment) { return $comment->getId(); }, $comments))
+            ->execute();
+    }
+
+    /**
+     * Set indexed null
+     *
+     * @return void
+     */
+    public function setIndexedNull(array $comments = null)
+    {
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = NULL')
+            ->execute();
     }
 }
