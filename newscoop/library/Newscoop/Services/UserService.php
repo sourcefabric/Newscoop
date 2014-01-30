@@ -12,6 +12,11 @@ use Newscoop\Entity\User;
 use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * User service
@@ -32,14 +37,24 @@ class UserService
     /** @var \Newscoop\Entity\Repository\UserRepository */
     private $repository;
 
+    /** @var SecurityContext */
+    private $security;
+
+    private $factory;
+
+    private $session;
+
     /**
      * @param Doctrine\ORM\EntityManager $em
      * @param Zend_Auth $auth
      */
-    public function __construct(ObjectManager $em, \Zend_Auth $auth)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory, Session $session)
     {
         $this->em = $em;
         $this->auth = $auth;
+        $this->security = $security;
+        $this->factory = $factory;
+        $this->session = $session;
     }
 
     /**
@@ -404,4 +419,20 @@ class UserService
 
         return $groups;
     }
+
+    public function loginUser(User $user)
+    {
+        //$providerKey = $this->container->getParameter('fos_user.firewall_name');
+        $roles = $user->getRoles();
+        $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
+        $this->security->setToken($token);
+    }
+
+    public function logoutUser()
+    {
+        $token = new AnonymousToken(null, new User());
+        $this->security->setToken($token);
+        $this->session->invalidate();
+    }
+
 }
