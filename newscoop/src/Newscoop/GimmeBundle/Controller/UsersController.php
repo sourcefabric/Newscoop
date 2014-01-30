@@ -69,7 +69,11 @@ class UsersController extends FOSRestController
      *         200="Returned when successful",
      *         403="Returned when wrong password given.",
      *         404="Returned when the user is not found",
-     *     }
+     *     },
+     *     parameters={
+     *         {"name"="username", "dataType"="string", "required"=true, "description"="User nickname"},
+     *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
+     *     },
      * )
      *
      * @Route("/users/login.{_format}", defaults={"_format"="json"})
@@ -141,7 +145,10 @@ class UsersController extends FOSRestController
      *         200="Returned when successful",
      *         404="Returned when the user is not found",
      *         409="Returned when user is already registered",
-     *     }
+     *     },
+     *     parameters={
+     *         {"name"="email", "dataType"="string", "required"=true, "description"="User email"}
+     *     },
      * )
      *
      * @Route("/users/register.{_format}", defaults={"_format"="json"})
@@ -194,7 +201,10 @@ class UsersController extends FOSRestController
      *     statusCodes={
      *         200="Returned when successful",
      *         404="Returned when email is not found",
-     *     }
+     *     },
+     *     parameters={
+     *         {"name"="email", "dataType"="string", "required"=true, "description"="User email"}
+     *     },
      * )
      *
      * @Route("/users/restore-password.{_format}", defaults={"_format"="json"})
