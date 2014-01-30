@@ -7,3 +7,4 @@ Newscoop\Entity\ArticleType:
             type: string
             groups: ["list", "details"]
             serialized_name: name
+            since_version: 1.1

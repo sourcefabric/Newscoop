@@ -20,22 +20,22 @@
 function smarty_block_list_users($params, $content, &$smarty, &$repeat)
 {
     $context = $smarty->getTemplateVars('gimme');
-
-    if (!isset($content)) { // init
+    if (!isset($content)) {
         $start = $context->next_list_start('Newscoop\TemplateList\UsersList');
-        $list = \Zend_Registry::get('container')->get('newscoop_newscoop.template_lists.users');
+        $list = new Newscoop\TemplateList\UsersList(new Newscoop\User\UserCriteria());
         $list->getList($start, $params);
         if ($list->isEmpty()) {
             $context->setCurrentList($list, array());
             $context->resetCurrentList();
             $repeat = false;
-            return;
+            return null;
         }
 
         $context->setCurrentList($list, array('list_user'));
         $context->list_user = $context->current_users_list->current;
+
         $repeat = true;
-    } else { // next
+    } else {
         $context->current_users_list->defaultIterator()->next();
         if (!is_null($context->current_users_list->current)) {
             $context->list_user = $context->current_users_list->current;

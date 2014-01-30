@@ -46,7 +46,7 @@ class ArticlesListController extends FOSRestController
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getSectionsArticlesAction(Request $request, $id)
+    public function getPlaylistsArticlesAction(Request $request, $id)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();

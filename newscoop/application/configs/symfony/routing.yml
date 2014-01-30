@@ -20,6 +20,9 @@ gimme:
     type: rest
     prefix: /api
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /documentation/rest-api
 NewscoopGimmeBundleConfigureApi:
     resource: "@NewscoopGimmeBundle/Controller/ConfigureApiController.php"
     prefix:   /
