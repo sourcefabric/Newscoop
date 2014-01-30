@@ -11,6 +11,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\User;
 use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Send email service
@@ -26,74 +27,70 @@ class SendEmailService
     /** @var Newscoop\NewscoopBundle\Services\SystemPreferencesService */
     protected $preferencesService;
 
-    /** @var Zend_Controller_Router_Rewrite */
-    protected $zendRouter;
-
     /** @var Swift_Mailer */
     protected $mailer;
 
-    /** @var Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine */
-    protected $templating;
+    /** @var Newscoop\Services\TemplatesService */
+    protected $templatesService;
 
     /**
-     * @param Doctrine\ORM\EntityManager                                 $em
-     * @param Newscoop\Services\UserTokenService                         $tokenService
-     * @param Newscoop\NewscoopBundle\Services\SystemPreferencesService  $preferencesService
-     * @param Zend_Controller_Router_Rewrite                             $zendRouter
-     * @param Swift_Mailer                                               $mailer
-     * @param Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine $templating
+     * @param Doctrine\ORM\EntityManager                                $em
+     * @param Newscoop\Services\UserTokenService                        $tokenService
+     * @param Newscoop\NewscoopBundle\Services\SystemPreferencesService $preferencesService
+     * @param Swift_Mailer                                              $mailer
+     * @param Newscoop\Services\TemplatesService                        $templatesService
      */
     public function __construct(
         EntityManager $em,
         UserTokenService $tokenService,
         SystemPreferencesService $preferencesService,
-        \Zend_Controller_Router_Rewrite $zendRouter,
         \Swift_Mailer $mailer,
-        $templating
+        $templatesService
     )
     {
         $this->em = $em;
         $this->tokenService = $tokenService;
         $this->preferencesService = $preferencesService;
-        $this->zendRouter = $zendRouter;
         $this->mailer = $mailer;
-        $this->templating = $templating;
+        $this->templatesService = $templatesService;
     }
 
     /**
      * Send to user email confirmation token
      *
      * @param Newscoop\Entity\User $user
+     * @param string               $hostname
      *
-     * @return void
+     * @return void|Exception
      */
     public function sendConfirmationToken(User $user, $hostname)
     {
-        $params = $this->zendRouter->assemble(array(
-            'user' => $user->getId(),
-            'token' => $this->tokenService->generateToken($user, 'email.confirm')
-        ), 'confirm-email', true, false);
-
-        $link = $hostname.$params;
-        $this->send($link, $user->getEmail(), $hostname, 0, $this->preferencesService->EmailFromAddress);
+        $smarty = $this->templatesService->getSmarty();
+        $smarty->assign('user', $user->getId());
+        $smarty->assign('token', $this->tokenService->generateToken($user, 'email.confirm'));
+        $smarty->assign('publication', $hostname);
+        $smarty->assign('site', $hostname);
+        $message = $this->templatesService->fetchTemplate("email_confirm.tpl");
+        $this->send($message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
     }
 
     /**
      * Send password restore token
      *
      * @param Newscoop\Entity\User $user
-     * @return void
+     * @param string               $hostname
+     *
+     * @return void|Exception
      */
     public function sendPasswordRestoreToken(User $user, $hostname)
     {
-        /*$params = $this->zendRouter->assemble(array(
-            'user' => $user->getId(),
-            'token' => $this->tokenService->generateToken($user, 'password.restore'),
-        ), 'password-restore', true, false);*/
-
-
-        //$link = $hostname.$params;
-        $this->send($hostname, $user->getEmail(), $hostname, 1, $this->preferencesService->EmailFromAddress);
+        $smarty = $this->templatesService->getSmarty();
+        $smarty->assign('user', $user->getId());
+        $smarty->assign('token', $this->tokenService->generateToken($user, 'password.restore'));
+        $smarty->assign('publication', $hostname);
+        $smarty->assign('site', $hostname);
+        $message = $this->templatesService->fetchTemplate("email_password-restore.tpl");
+        $this->send($message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
     }
 
     /**
@@ -101,32 +98,25 @@ class SendEmailService
      *
      * @param string $message
      * @param string $to
+     * @param string $hostname
      * @param string $from
      *
      * @return void
      */
-    private function send($link, $to, $hostname, $type, $from = null)
+    private function send($message, $to, $hostname, $from = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $hostname;
         }
 
-        $confirmationEmail = $this->templating->render(
-            'NewscoopNewscoopBundle:Emails:confirmation.txt.twig',
-            array(
-                'link' => urldecode($link),
-                'hostname' => $hostname
-            )
-        );
-
         try {
-            $message = \Swift_Message::newInstance()
+            $messageToSend = \Swift_Message::newInstance()
                 ->setSubject('E-mail confirmation')
                 ->setFrom($from)
                 ->setTo($to)
-                ->setBody($confirmationEmail);
+                ->setBody($message);
 
-            $this->mailer->send($message);
+            $this->mailer->send($messageToSend);
         } catch (\Exception $exception) {
             throw new \Exception("Error sending email.", 1);
         }

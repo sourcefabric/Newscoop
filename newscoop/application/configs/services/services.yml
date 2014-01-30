@@ -58,7 +58,7 @@ services:
         arguments:  ["@view", "@user.token"]
     sendemail:
         class:      Newscoop\Services\SendEmailService
-        arguments:  ["@em", "@user.token", "@preferences", "@zend_router", "@mailer", "@templating"]
+        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]

@@ -40,13 +40,18 @@ class UserService
     /** @var SecurityContext */
     private $security;
 
+    /** @var EncoderFactory */
     private $factory;
 
+    /** @var Session */
     private $session;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Zend_Auth $auth
+     * @param Zend_Auth                  $auth
+     * @param SecurityContext            $security
+     * @param EncoderFactory             $factory
+     * @param Session                    $session
      */
     public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory, Session $session)
     {
@@ -420,6 +425,13 @@ class UserService
         return $groups;
     }
 
+    /**
+     * Log in user
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return void
+     */
     public function loginUser(User $user)
     {
         //$providerKey = $this->container->getParameter('fos_user.firewall_name');
@@ -428,6 +440,11 @@ class UserService
         $this->security->setToken($token);
     }
 
+    /**
+     * Logout user
+     *
+     * @return void
+     */
     public function logoutUser()
     {
         $token = new AnonymousToken(null, new User());

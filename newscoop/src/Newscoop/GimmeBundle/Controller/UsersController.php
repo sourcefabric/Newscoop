@@ -22,9 +22,19 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class UsersController extends FOSRestController
 {
     /**
+     * Get all users
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *     }
+     * )
+     *
      * @Route("/users.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getUsersAction(Request $request)
     {
@@ -42,9 +52,23 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Get user by given id
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404="Returned when the user is not found",
+     *     },
+     *     parameters={
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="User id"},
+     *     },
+     * )
+     *
      * @Route("/users/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getUserAction(Request $request, $id)
     {
