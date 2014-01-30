@@ -671,10 +671,22 @@ class UserRepository extends EntityRepository
             $this->addNameRangeWhere($qb, $criteria->nameRange);
         }
 
-        $list = new ListResult();
-        $list->count = (int) $qb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+        $qb->leftJoin('u.attributes', 'ua');
 
-        $qb->select('u, ' . $this->getUserPointsSelect());
+        if (count($criteria->attributes) > 0) {
+            $qb->andWhere('ua.attribute = ?1')
+                ->andWhere('ua.value = ?2')
+                ->setParameter(1, $criteria->attributes[0])
+                ->setParameter(2, $criteria->attributes[1]);
+        }
+
+
+
+        $list = new ListResult();
+        $countQb = clone $qb;
+        $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+
+        $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
         if($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);

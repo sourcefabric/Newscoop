@@ -7,11 +7,12 @@
 
 namespace Newscoop\Image;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article Image
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ImageRepository")
  * @ORM\Table(name="ArticleImages")
  */
 class ArticleImage implements ImageInterface

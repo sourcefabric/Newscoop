@@ -25,6 +25,11 @@ services:
         arguments:  ["@newscoop.publication_service"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+    newscoop.gimme.listener.link_request:
+        class: Newscoop\GimmeBundle\EventListener\LinkRequestListener
+        arguments:  ["@controller_resolver", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     newscoop.gimme.listener.public_resources:
         class: Newscoop\GimmeBundle\EventListener\PublicResourcesListener
         arguments:  ["@em", "@fos_oauth_server.server", "@security.context"]

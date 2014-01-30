@@ -29,6 +29,7 @@ class CommentServiceSpec extends ObjectBehavior
             ->createQueryBuilder('a')
             ->willReturn($queryBuilder);
 
+        $queryBuilder->select('a.search')->willReturn($queryBuilder);
         $queryBuilder->where(null)->willReturn($queryBuilder);
         $queryBuilder->expr()->willReturn($expr);
         $queryBuilder->setParameters(array("name" => null, "email" => null, "ip" => null))->willReturn($queryBuilder);

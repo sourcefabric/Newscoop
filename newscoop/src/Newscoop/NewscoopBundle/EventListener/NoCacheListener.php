@@ -29,7 +29,7 @@ class NoCacheListener
                 $response = $event->getResponse();
                 $response->headers->setCookie(new Cookie('NO_CACHE', 1, 0, '/'));
                 $event->setResponse($response);
-            } else if ($session->get('NO_CACHE') == false) {
+            } elseif ($session->get('NO_CACHE') == false) {
                 $response = $event->getResponse();
                 $response->headers->clearCookie('NO_CACHE', '/');
                 $event->setResponse($response);

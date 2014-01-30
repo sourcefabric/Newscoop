@@ -56,6 +56,20 @@ security:
                 target: /admin
                 invalidate_session: false
 
+        frontend_area:
+            pattern:    ^/
+            provider: user_db
+            form_login:
+                use_forward: true
+                login_path:  /auth
+                check_path:  /auth/login_check
+                success_handler: newscoop_newscoop.security.authentication.success_handler
+            logout:
+                path: /auth/logout
+                target: /
+                invalidate_session: false
+            anonymous:  true
+
     access_control:
         - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/oauth/v2/auth, role: IS_AUTHENTICATED_ANONYMOUSLY }

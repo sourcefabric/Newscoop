@@ -7,45 +7,53 @@ Newscoop\Entity\ArticleTypeField:
             type: string
             groups: ["details"]
             serialized_name: name
+            since_version: 1.1
         type:
             expose: true
             read_only: true
             type: string
             groups: ["details"]
             serialized_name: type
+            since_version: 1.1
         length:
             expose: true
             read_only: true
             type: integer
             groups: ["details"]
             serialized_name: length
+            since_version: 1.1
         fieldWeight:
             expose: true
             read_only: true
             type: integer
             groups: ["details"]
             serialized_name: fieldWeight
+            since_version: 1.1
         isHidden:
             expose: true
             read_only: true
             type: integer
             groups: ["details"]
             serialized_name: isHidden
+            since_version: 1.1
         commentsEnabled:
             expose: true
             read_only: true
             type: integer
             groups: ["details"]
             serialized_name: commentsEnabled
+            since_version: 1.1
         fieldTypeParam:
             expose: true
             read_only: true
             type: string
             groups: ["details"]
             serialized_name: fieldTypeParam
+            since_version: 1.1
         isContentField:
             expose: true
             read_only: true
             type: integer
             groups: ["details"]
             serialized_name: isContentField
+            since_version: 1.1
