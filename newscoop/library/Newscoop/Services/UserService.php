@@ -434,4 +434,5 @@ class UserService
         $this->security->setToken($token);
         $this->session->invalidate();
     }
+
 }

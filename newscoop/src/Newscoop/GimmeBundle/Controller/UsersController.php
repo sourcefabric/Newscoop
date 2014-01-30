@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class UsersController extends FOSRestController
 {
@@ -61,18 +62,21 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Log in user
      *
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         404={
-     *           "Returned when the user is not found"
-     *         }
+     *         403="Returned when wrong password given.",
+     *         404="Returned when the user is not found",
      *     }
      * )
+     *
      * @Route("/users/login.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View(statusCode=200)
+     *
+     * @return array
      */
     public function loginAction(Request $request)
     {
@@ -111,9 +115,17 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Logout user
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful"
+     *     }
+     * )
+     *
      * @Route("/users/logout.{_format}", defaults={"_format"="json"})
      * @Method("POST")
-     * @View(statusCode=401)
+     * @View(statusCode=200)
      */
     public function logoutAction(Request $request)
     {
@@ -122,9 +134,21 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Register user
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404="Returned when the user is not found",
+     *         409="Returned when user is already registered",
+     *     }
+     * )
+     *
      * @Route("/users/register.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
+     *
+     * @return Response|Exception
      */
     public function registerAction(Request $request)
     {
@@ -148,7 +172,9 @@ class UsersController extends FOSRestController
         }
 
         if (!$user->isPending()) {
-            throw new \Exception('User with this email is already registered.');
+            $response->setStatusCode(409);
+
+            return $response;
         } else {
             $emailService->sendConfirmationToken($user, $this->getRequest()->getHost());
             $response->setStatusCode(200);
@@ -162,9 +188,20 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Restore user password
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404="Returned when email is not found",
+     *     }
+     * )
+     *
      * @Route("/users/restore-password.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
+     *
+     * @return Response
      */
     public function restorePasswordAction(Request $request)
     {
@@ -184,7 +221,9 @@ class UsersController extends FOSRestController
 
             return $response;
         } else if (empty($user)) {
-            throw new \Exception('Given email not found.');
+            $response->setStatusCode(404);
+
+            return $response;
         }
     }
 }
