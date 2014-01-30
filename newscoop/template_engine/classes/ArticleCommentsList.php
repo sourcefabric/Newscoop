@@ -25,8 +25,8 @@ class ArticleCommentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+	    $container = Zend_Registry::get('container');
+        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
         $cols = array('time_created' => 'bydate', 'thread_order' => 'default');
 
         $filter = array();
@@ -166,6 +166,7 @@ class ArticleCommentsList extends ListObject
             $this->m_constraints['thread'] = $context->article->number;
         } else {
             $order = array();
+            if (count($this->m_order) == 0) {$this->m_order = array(); }
             foreach ($this->m_order as $orderCond) {
                 if ($orderCond['field'] == 'bydate') {
                     $order[] = $orderCond;
