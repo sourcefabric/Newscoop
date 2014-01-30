@@ -352,5 +352,53 @@ class Publication
     {
         return $this->moderator_from;
     }
+
+    /**
+     * Getter for defaultAliasId
+     *
+     * @return mixed
+     */
+    public function getDefaultAliasId()
+    {
+        return $this->defaultAliasId;
+    }
+
+    /**
+     * Setter for defaultAliasId
+     *
+     * @param mixed $defaultAliasId Value to set
+     *
+     * @return self
+     */
+    public function setDefaultAliasId($defaultAliasId)
+    {
+        $this->defaultAliasId = $defaultAliasId;
+
+        return $this;
+    }
+
+    /**
+     * Set seo
+     *
+     * @param array $seo
+     *
+     * @return self
+     */
+    public function setSeo(array $seo)
+    {
+        $this->seo = serialize($seo);
+
+        return $this;
+    }
+
+    /**
+     * Get seo
+     *
+     * @return array
+     */
+    public function getSeo()
+    {
+        return (array) unserialize($this->seo);
+    }
 }
 
