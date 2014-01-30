@@ -19,6 +19,9 @@ services:
     image:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]
+    attachment:
+        class:      Newscoop\Services\AttachmentService
+        arguments:  ["%attachment%", "@em"]
     zend_auth:
         class:      Zend_Auth
         factory_class: Zend_Auth

@@ -20,7 +20,8 @@ class LocaleListener
 {
     private $em;
 
-    public function __construct($em) {
+    public function __construct($em)
+    {
         $this->em = $em;
     }
 
@@ -46,7 +47,7 @@ class LocaleListener
         if ($cookies->has('TOL_Language')) {
             $request->setLocale($cookies->get("TOL_Language"));
         }
-        
+
         if ($pos === false) {
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);

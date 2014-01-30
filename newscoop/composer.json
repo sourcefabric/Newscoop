@@ -52,7 +52,9 @@
         "symfony/twig-bridge": "~2.3",
         "excelwebzone/recaptcha-bundle": "2.0.*@dev",
         "friendsofsymfony/oauth-server-bundle": "1.4.0",
-        "newscoop/plugins-installer": "v0.2"
+        "newscoop/plugins-installer": "v0.2",
+        "nelmio/api-doc-bundle": "2.4.5",
+        "newscoop/comment-lists-plugin": "*"
     },
     "require-dev":{
         "phpunit/phpunit": "~3.7.10",
@@ -92,6 +94,7 @@
     "minimum-stability":"dev",
     "config":{
         "bin-dir":"vendor\/bin",
+        "discard-changes": true,
         "process-timeout": 3600
     },
     "extra":{

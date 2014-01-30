@@ -47,3 +47,9 @@ NewscoopGimmeBundleImages:
     resource: "@NewscoopGimmeBundle/Controller/ImagesController.php"
     prefix:   /
     type:     annotation
+
+
+NewscoopGimmeBundleAttachments:
+    resource: "@NewscoopGimmeBundle/Controller/AttachmentsController.php"
+    prefix:   /
+    type:     annotation
