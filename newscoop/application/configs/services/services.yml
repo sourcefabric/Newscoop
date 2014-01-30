@@ -50,6 +50,19 @@ services:
     auth.adapter.social:
         class:      Newscoop\Services\Auth\SocialAuthService
         arguments:  ["@em"]
+    article.link:
+        class:      Newscoop\Article\LinkService
+        arguments:  ["@em", "@zend_router"]
+    article.repository:
+        class:      Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:  ["\\Newscoop\\Entity\\Article"]
+    comment.repository:
+        class:      Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:  ["\\Newscoop\\Entity\\Comment"]
     email:
         class:      Newscoop\Services\EmailService
         arguments:  ["@view", "@user.token"]
@@ -65,6 +78,11 @@ services:
     user.search:
         class:      Newscoop\Services\UserSearchService
         arguments:  ["@em"]
+    user.repository:
+        class:      Doctrine\Common\Persistence\ObjectRepository
+        factory_service: doctrine
+        factory_method: getRepository
+        arguments:  ["\\Newscoop\\Entity\\User"]
     content.publication:
         class:      Newscoop\Content\PublicationService
         arguments:  ["@em"]
@@ -138,12 +156,27 @@ services:
         arguments: ["@em"]
     http.client.factory:
         class: Newscoop\Http\ClientFactory
-    search.index:
-        class: Newscoop\Search\SolrIndex
-        arguments: ["@http.client.factory", "%search%"]
-    search.indexer.article:
-        class: Newscoop\Search\ArticleIndexer
-        arguments: ["@em", "@search.index"]
+    index_client.default:
+        class: Newscoop\Search\DefaultIndexClient
+        arguments: ["@service_container"]
+    indexer.article:
+        class: Newscoop\Search\Indexer
+        arguments: ["@service_container", "@search.article", "@article.repository"]
+    indexer.comment:
+        class: Newscoop\Search\Indexer
+        arguments: ["@service_container", "@search.comment", "@comment.repository"]
+    indexer.user:
+        class: Newscoop\Search\Indexer
+        arguments: ["@service_container", "@search.user", "@user.repository"]
+    search.article:
+        class: Newscoop\Article\SearchService
+        arguments: ["@webcode", "@image.rendition", "@article.link", "@em"]
+    search.comment:
+        class: Newscoop\Comment\SearchService
+        arguments: ["@article.link"]
+    search.user:
+        class: Newscoop\User\SearchService
+        arguments: ["@image"]
     preferences:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
         arguments: ["@em"]
