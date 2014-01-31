@@ -353,8 +353,6 @@ final class CampContext
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $requestActionName = $this->m_readonlyProperties['request_action']->name;
 
-        if ($requestActionName != 'default') {
-            $this->m_readonlyProperties['request_action']->takeAction($this);
         if ($requestActionName != 'default' && $requestActionName != 'submit_comment') {
         	$this->m_readonlyProperties['request_action']->takeAction($this);
         }
