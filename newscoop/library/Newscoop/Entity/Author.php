@@ -94,12 +94,6 @@ class Author
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="author")
-     * @var Newscoop\Entity\User
-     */
-    private $user;
-
-    /**
      * @param string $firstName
      * @param string $lastName
      */

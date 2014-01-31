@@ -836,41 +836,6 @@ class Article
     }
 
     /**
-     * Legacy getter for commentsLocked
-     *
-     * @return int
-     */
-    public function commentsLocked()
-    {
-        return $this->getCommentsLocked();
-    }
-
-    /**
-     * Getter for commentsLocked
-     *
-     * @return int
-     */
-    public function getCommentsLocked()
-    {
-        return $this->commentsLocked;
-    }
-
-    /**
-     * Setter for commentsLocked
-     *
-     * @param int $commentsLocked Value to set
-     *
-     * @return self
-     */
-    public function setCommentsLocked($commentsLocked)
-    {
-        $this->commentsLocked = $commentsLocked;
-
-        return $this;
-    }
-
-
-    /**
      * Set webcode
      *
      * @param Newscoop\Entity\Webcode $webcode
