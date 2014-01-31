@@ -33,19 +33,24 @@ class SendEmailService
     /** @var Newscoop\Services\TemplatesService */
     protected $templatesService;
 
+    /** @var Newscoop\Services\CommentsService */
+    protected $placeholdersService;
+
     /**
      * @param Doctrine\ORM\EntityManager                                $em
      * @param Newscoop\Services\UserTokenService                        $tokenService
      * @param Newscoop\NewscoopBundle\Services\SystemPreferencesService $preferencesService
      * @param Swift_Mailer                                              $mailer
      * @param Newscoop\Services\TemplatesService                        $templatesService
+     * @param Newscoop\Services\PlaceholdersService                     $placeholdersService
      */
     public function __construct(
         EntityManager $em,
         UserTokenService $tokenService,
         SystemPreferencesService $preferencesService,
         \Swift_Mailer $mailer,
-        $templatesService
+        $templatesService,
+        $placeholdersService
     )
     {
         $this->em = $em;
@@ -53,6 +58,7 @@ class SendEmailService
         $this->preferencesService = $preferencesService;
         $this->mailer = $mailer;
         $this->templatesService = $templatesService;
+        $this->placeholdersService = $placeholdersService;
     }
 
     /**
@@ -71,7 +77,7 @@ class SendEmailService
         $smarty->assign('publication', $hostname);
         $smarty->assign('site', $hostname);
         $message = $this->templatesService->fetchTemplate("email_confirm.tpl");
-        $this->send($message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
+        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
     }
 
     /**
@@ -90,12 +96,13 @@ class SendEmailService
         $smarty->assign('publication', $hostname);
         $smarty->assign('site', $hostname);
         $message = $this->templatesService->fetchTemplate("email_password-restore.tpl");
-        $this->send($message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
+        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $hostname, $this->preferencesService->EmailFromAddress);
     }
 
     /**
      * Send email
      *
+     * @param string $placeholder
      * @param string $message
      * @param string $to
      * @param string $hostname
@@ -103,7 +110,7 @@ class SendEmailService
      *
      * @return void
      */
-    private function send($message, $to, $hostname, $from = null)
+    private function send($placeholder, $message, $to, $hostname, $from = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $hostname;
@@ -111,7 +118,7 @@ class SendEmailService
 
         try {
             $messageToSend = \Swift_Message::newInstance()
-                ->setSubject('E-mail confirmation')
+                ->setSubject($placeholder)
                 ->setFrom($from)
                 ->setTo($to)
                 ->setBody($message);

@@ -58,7 +58,7 @@ services:
         arguments:  ["@view", "@user.token"]
     sendemail:
         class:      Newscoop\Services\SendEmailService
-        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service"]
+        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service", "@newscoop.placeholders.service"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
@@ -161,6 +161,8 @@ services:
         arguments: ["@dispatcher", "@em"]
     newscoop.templates.service:
         class: Newscoop\Services\TemplatesService
+    newscoop.placeholders.service:
+        class: Newscoop\Services\PlaceholdersService
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
     #     class:      Newscoop\Search\ArticleIndexer

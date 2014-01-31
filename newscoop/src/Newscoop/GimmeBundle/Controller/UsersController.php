@@ -2,6 +2,7 @@
 /**
  * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -177,7 +178,6 @@ class UsersController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         404="Returned when the user is not found",
      *         409="Returned when user is already registered",
      *     },
      *     parameters={
@@ -210,10 +210,6 @@ class UsersController extends FOSRestController
         if (count($users) > 0) {
             $user = array_pop($users);
         } else {
-            if (!$users) {
-                throw new EntityNotFoundException('Result was not found.');
-            }
-
             $user = $userService->createPending($email);
         }
 
