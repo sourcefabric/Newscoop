@@ -18,7 +18,7 @@ services:
         tags:
             - { name: kernel.event_subscriber}
     newscoop.publication_service:
-        class: Newscoop\NewscoopBundle\PublicationService
+        class: Newscoop\Services\PublicationService
         arguments:  ["@em"]
     newscoop.gimme.listener.publication:
         class: Newscoop\NewscoopBundle\EventListener\PublicationListener
