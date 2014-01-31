@@ -33,7 +33,7 @@ class SendEmailService
     /** @var Newscoop\Services\TemplatesService */
     protected $templatesService;
 
-    /** @var Newscoop\Services\CommentsService */
+    /** @var Newscoop\Services\PlaceholdersService */
     protected $placeholdersService;
 
     /**

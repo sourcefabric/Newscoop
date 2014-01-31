@@ -197,6 +197,7 @@ class UsersController extends FOSRestController
         $userService = $this->container->get('user');
         $emailService = $this->container->get('sendemail');
         $zendRouter = $this->container->get('zend_router');
+        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $response = new Response();
         $secured = 'http://www.';
         $users = $userService->findBy(array(
@@ -218,11 +219,11 @@ class UsersController extends FOSRestController
 
             return $response;
         } else {
-            $emailService->sendConfirmationToken($user, $this->getRequest()->getHost());
+            $emailService->sendConfirmationToken($user, $publicationMetadata['alias']['name']);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $secured.$request->getHost().$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
+                $secured.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
             );
 
             return $response;
@@ -252,12 +253,13 @@ class UsersController extends FOSRestController
     {
         $response = new Response();
         $zendRouter = $this->container->get('zend_router');
+        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $user = $this->container->get('user')->findOneBy(array(
             'email' => $request->get('email'),
         ));
 
         if (!empty($user) && $user->isActive()) {
-            $this->container->get('sendemail')->sendPasswordRestoreToken($user, $this->getRequest()->getHost());
+            $this->container->get('sendemail')->sendPasswordRestoreToken($user, $publicationMetadata['alias']['name']);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
