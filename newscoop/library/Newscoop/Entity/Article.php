@@ -203,20 +203,6 @@ class Article
     private $lockUser;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Attachment")
-     * @ORM\JoinTable(name="ArticleAttachments",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="Id")
-     *      }
-     *  )
-     * @var \Newscoop\Entity\Attachment
-     */
-    private $attachments;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
      * @ORM\JoinTable(name="ArticleTopics",
      *      joinColumns={
@@ -1239,19 +1225,5 @@ class Article
         }
 
         return $this->data;
-    }
-
-    /**
-     * Gets the Article Attachments
-     *
-     * @return \Newscoop\Entity\Attachment
-     */
-    public function getAttachments()
-    {
-        if (count($this->attachments) == 0) {
-            return null;
-        }
-
-        return $this->attachments;
     }
 }
