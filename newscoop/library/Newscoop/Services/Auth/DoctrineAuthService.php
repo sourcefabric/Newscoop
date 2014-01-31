@@ -121,4 +121,25 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
         $this->email = (string) $email;
         return $this;
     }
+
+    /**
+     * Find by credentials
+     *
+     * @param string $email
+     * @param string $password
+     * @return Newscoop\Entity\User
+     */
+    public function findByCredentials($email, $password)
+    {
+        $user = $this->em->getRepository('Newscoop\Entity\User')
+            ->findOneBy(array(
+                'email' => $email,
+            ));
+
+        if (empty($user) || !$user->isActive() || !$user->checkPassword($password)) {
+            return null;
+        }
+
+        return $user;
+    }
 }

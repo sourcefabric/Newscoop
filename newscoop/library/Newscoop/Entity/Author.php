@@ -9,6 +9,7 @@ namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\View\AuthorView;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuthorRepository")
@@ -17,9 +18,9 @@ use Newscoop\View\AuthorView;
 class Author
 {
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="id", type="integer")
      * @var int
      */
     private $id;
@@ -43,6 +44,44 @@ class Author
     private $last_name;
 
     /**
+     * @ORM\Column(type="string", length=244, nullable=True)
+     * @var string
+     */
+    private $email;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\AuthorType")
+     * @ORM\JoinTable(name="AuthorAssignedTypes",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=244, nullable=True)
+     * @var string
+     */
+    private $skype;
+
+    /**
+     * @ORM\Column(type="string", length=244, nullable=True)
+     * @var string
+     */
+    private $jabber;
+
+    /**
+     * @ORM\Column(type="string", length=244, nullable=True)
+     * @var string
+     */
+    private $aim;
+
+    /**
      * @ORM\Column(type="string", nullable=True, name="biography")
      * @var string
      */
@@ -62,10 +101,11 @@ class Author
     {
         $this->first_name = (string) $firstName;
         $this->last_name = (string) $lastName;
+        $this->articles = new ArrayCollection();
     }
 
     /**
-     * Get id
+     * Getter for id
      *
      * @return int
      */
@@ -73,6 +113,69 @@ class Author
     {
         return $this->id;
     }
+
+    /**
+     * Setter for id
+     *
+     * @param int $id Value to set
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Getter for first_name
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    /**
+     * Setter for first_name
+     *
+     * @param string $firstName Value to set
+     *
+     * @return self
+     */
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Getter for last_name
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    /**
+     * Setter for last_name
+     *
+     * @param string $lastName Value to set
+     *
+     * @return self
+     */
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+
+        return $this;
+    }
+
 
     /**
      * Get full name
@@ -85,30 +188,125 @@ class Author
     }
 
     /**
-     * Get types
+     * Getter for email
      *
      * @return string
      */
-    public function getTypes()
+    public function getEmail()
     {
-        if (count($this->types) == 0) {
-            return null;
-        }
-
-        return $this->types;
+        return $this->email;
     }
 
     /**
-     * Set types
+     * Setter for email
      *
-     * @return Author
+     * @param string $email Value to set
+     *
+     * @return self
      */
-    public function setTypes($types)
+    public function setEmail($email)
     {
-        $this->types = $types;
+        $this->email = $email;
 
         return $this;
     }
+
+    /**
+     * Getter for type
+     *
+     * @return Newscoop\Entity\AuthorType
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Setter for type
+     *
+     * @param Newscoop\Entity\AuthorType $type Value to set
+     *
+     * @return self
+     */
+    public function setType(\Newscoop\Entity\AuthorType $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Getter for skype
+     *
+     * @return string
+     */
+    public function getSkype()
+    {
+        return $this->skype;
+    }
+
+    /**
+     * Setter for skype
+     *
+     * @param string $skype Value to set
+     *
+     * @return self
+     */
+    public function setSkype($skype)
+    {
+        $this->skype = $skype;
+
+        return $this;
+    }
+
+    /**
+     * Getter for jabber
+     *
+     * @return string
+     */
+    public function getJabber()
+    {
+        return $this->jabber;
+    }
+
+    /**
+     * Setter for jabber
+     *
+     * @param string $jabber Value to set
+     *
+     * @return self
+     */
+    public function setJabber($jabber)
+    {
+        $this->jabber = $jabber;
+
+        return $this;
+    }
+
+    /**
+     * Getter for aim
+     *
+     * @return aim
+     */
+    public function getAim()
+    {
+        return $this->aim;
+    }
+
+    /**
+     * Setter for aim
+     *
+     * @param aim $aim Value to set
+     *
+     * @return self
+     */
+    public function setAim($aim)
+    {
+        $this->aim = $aim;
+
+        return $this;
+    }
+
 
     /**
      * Get biography
@@ -116,7 +314,7 @@ class Author
      * @return string
      */
     public function getBiography()
-    {   
+    {
 
         return $this->biography;
     }
@@ -124,7 +322,9 @@ class Author
     /**
      * Set biography
      *
-     * @return Author
+     * @param string biography Value to set
+     *
+     * @return self
      */
     public function setBiography($biography)
     {
@@ -146,7 +346,9 @@ class Author
     /**
      * Set image
      *
-     * @return Author
+     * @param string image Value to set
+     *
+     * @return self
      */
     public function setImage($image)
     {
@@ -154,6 +356,31 @@ class Author
 
         return $this;
     }
+
+    /**
+     * Getter for user
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Setter for user
+     *
+     * @param Newscoop\Entity\User $user Value to set
+     *
+     * @return self
+     */
+    public function setUser(\Newscoop\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
 
     /**
      * Get view

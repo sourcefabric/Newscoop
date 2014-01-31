@@ -40,12 +40,12 @@ class Comment
 
     /**
      * Constants for status
+     */
 
     const STATUS_APPROVED   = 0;
     const STATUS_PENDING    = 1;
     const STATUS_HIDDEN     = 2;
     const STATUS_DELETED    = 3;
-     */
     /**
      * @var string to code mapper for status
     static $status_enum = array(
@@ -61,7 +61,7 @@ class Comment
     static $status_enum = array('approved', 'pending', 'hidden', 'deleted');
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
@@ -622,7 +622,7 @@ class Comment
         if (is_object($p_comment)) {
             return $p_comment->getId() == $this->getId();
         }
-        
+
         return false;
     }
 
