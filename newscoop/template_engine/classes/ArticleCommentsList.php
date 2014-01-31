@@ -10,6 +10,7 @@ require_once('ListObject.php');
 class ArticleCommentsList extends ListObject
 {
     private static $s_orderFields = array('bydate', 'default');
+    private $_nested = false;
 
     /**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -51,12 +52,36 @@ class ArticleCommentsList extends ListObject
                 $params['sSortDir_0'] = $order['dir'];
             }
         }
+
 	    $p_count = $repository->getCount($params, $cols);
         $articleCommentsList = $repository->getData($params, $cols);
-	    foreach ($articleCommentsList as $comment)
-	    {
-	        $metaCommentsList[] = new MetaComment($comment->getId());
-	    }
+        if ($this->_nested) {
+            $root = new \Node(0,0,''); // create a new Node, we remove this one later, but we need a Root Node.
+
+            foreach ($articleCommentsList as $comment) {
+                $reSortedComments[$comment->getId()] = $comment;
+            }
+
+            ksort($reSortedComments);   // sort by commentId
+
+            foreach ($reSortedComments as $comment) {
+                if ($comment->getParent() instanceof \Newscoop\Entity\Comment) {
+                    $node = new \Node($comment->getId(), $comment->getParent()->getId(), new MetaComment($comment->getId()));
+                } else {
+                    $node = new \Node($comment->getId(), 0, new MetaComment($comment->getId()));
+                }
+                $root->insertNode($node);
+            }
+
+            $list = $root->flatten();
+            unset($list[0]);
+            $metaCommentsList = $list;
+        } else {
+            foreach ($articleCommentsList as $comment) {
+                $metaCommentsList[] = new MetaComment($comment->getId());
+            }
+        }
+
 	    return $metaCommentsList;
 	}
 
@@ -150,6 +175,8 @@ class ArticleCommentsList extends ListObject
                 case 'recommended':
 					if ($value == 'true' || $value == 'false') $parameters[$parameter] = $value;
                     break;
+                case 'nested':
+                    if ($value == 'yes') $this->_nested = true;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}

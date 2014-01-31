@@ -177,6 +177,11 @@ class Comment
      */
     private $recommended = 0;
 
+    public function __construct()
+    {
+        $this->setTimeCreated(new \DateTime());
+    }
+
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
