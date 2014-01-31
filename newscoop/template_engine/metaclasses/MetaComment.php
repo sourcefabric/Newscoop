@@ -46,6 +46,9 @@ final class MetaComment extends MetaDbObject
         $this->m_customProperties['article'] = 'getArticle';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['user'] = 'getUser';
+        $this->m_customProperties['parent'] = 'getParent';
+        $this->m_customProperties['has_parent'] = 'hasParent';
+        $this->m_customProperties['thread_level'] = 'threadLevel';
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
@@ -124,5 +127,29 @@ final class MetaComment extends MetaDbObject
     {
         $user = $this->m_dbObject->getCommenter()->getUser();
         return new \MetaUser($user);
+    }
+
+    public function getParent()
+    {
+        $parent = $this->m_dbObject->getParent();
+        if ($parent instanceof \Newscoop\Entity\Comment) {
+            $parent = $this->m_dbObject->getParent()->getId();
+        } else {
+            $parent = 0;
+        }
+        return $parent;
+    }
+
+    public function hasParent()
+    {
+        if ($this->getParent() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function threadLevel()
+    {
+        return $this->m_dbObject->getThreadLevel();
     }
 }

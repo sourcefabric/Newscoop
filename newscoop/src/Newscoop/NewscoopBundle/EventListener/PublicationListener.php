@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Newscoop\Gimme
+ * @package Newscoop\Newscoop
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\EventListener;
+namespace Newscoop\NewscoopBundle\EventListener;
 
-use Newscoop\Gimme\PublicationService;
+use Newscoop\NewscoopBundle\PublicationService;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
@@ -34,6 +34,6 @@ class PublicationListener
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
-        $this->publicationService->poblicationResolver($event->getRequest());
+        $this->publicationService->publicationResolver($event->getRequest());
     }
 }
