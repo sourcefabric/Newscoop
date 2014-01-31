@@ -118,7 +118,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     newscoop_newscoop.article_service:
-        class: Newscoop\NewscoopBundle\ArticleService
+        class: Newscoop\Services\ArticleService
         arguments:  ["@em"]
     newscoop_newscoop.listener.article:
         class: Newscoop\NewscoopBundle\EventListener\ArticleListener
