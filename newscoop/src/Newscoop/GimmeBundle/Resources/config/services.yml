@@ -18,10 +18,10 @@ services:
         tags:
             - { name: kernel.event_subscriber}
     newscoop.publication_service:
-        class: Newscoop\Gimme\PublicationService
+        class: Newscoop\NewscoopBundle\PublicationService
         arguments:  ["@em"]
     newscoop.gimme.listener.publication:
-        class: Newscoop\GimmeBundle\EventListener\PublicationListener
+        class: Newscoop\NewscoopBundle\EventListener\PublicationListener
         arguments:  ["@newscoop.publication_service"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
