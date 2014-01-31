@@ -56,7 +56,7 @@ services:
             - { name: jms_serializer.handler, type: author, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.author_image_uri_handler:
         class: Newscoop\GimmeBundle\Serializer\Author\ImageUriHandler
-        arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+        arguments:  ["@image", "@zend_router", "@newscoop_newscoop.publication_service"]
         tags:
             - { name: jms_serializer.handler, type: image_uri, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.package_items_link_handler:
@@ -75,7 +75,7 @@ services:
             - { name: jms_serializer.handler, type: article_translations, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.article_renditions_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\RenditionsHandler
-        arguments:  ["@image", "@zend_router", "@newscoop.publication_service", "@image.rendition"]
+        arguments:  ["@image", "@zend_router", "@newscoop_newscoop.publication_service", "@image.rendition"]
         tags:
             - { name: jms_serializer.handler, type: article_renditions, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.article_comments_link_handler:

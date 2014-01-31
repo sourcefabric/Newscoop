@@ -54,10 +54,20 @@ class Webcode
     }
 
     /**
+     * Get webcode
+     *
+     * @return string|null
+     */
+    public function getWebcode()
+    {
+        return $this->webcode;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return $this->webcode;
+        return (string) $this->webcode;
     }
 }

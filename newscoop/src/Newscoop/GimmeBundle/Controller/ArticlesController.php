@@ -33,7 +33,7 @@ class ArticlesController extends FOSRestController
     public function getArticlesAction(Request $request)
     {
         $em = $this->container->get('em');
-        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
             ->getArticles($publication, $request->get('type', null), $request->get('language', null));
@@ -56,7 +56,7 @@ class ArticlesController extends FOSRestController
     public function getArticleAction(Request $request, $number)
     {
         $em = $this->container->get('em');
-        $publication = $this->get('newscoop.publication_service')->getPublication();
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
 
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
