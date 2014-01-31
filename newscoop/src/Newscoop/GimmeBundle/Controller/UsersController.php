@@ -62,6 +62,7 @@ class UsersController extends FOSRestController
      *     parameters={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="User id"},
      *     },
+     *     output="\Newscoop\Entity\User"
      * )
      *
      * @Route("/users/{id}.{_format}", defaults={"_format"="json"})
@@ -95,7 +96,7 @@ class UsersController extends FOSRestController
      *         404="Returned when the user is not found",
      *     },
      *     parameters={
-     *         {"name"="username", "dataType"="string", "required"=true, "description"="User nickname"},
+     *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
      *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
      *     },
      * )
@@ -108,12 +109,17 @@ class UsersController extends FOSRestController
      */
     public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
+        $zendRouter = $this->container->get('zend_router');
+        $userService = $this->container->get('user');
+        $em = $this->container->get('em');
         $username = $request->get('username');
         $password = $request->get('password');
-        $em = $this->container->get('em');
+        if (!$username || !$password) {
+            throw new \InvalidArgumentException('Wrong parameters given');
+        }
+
+        $response = new Response();
         $passwordEncoder = $this->container->get('newscoop_newscoop.password_encoder');
-        $userService = $this->container->get('user');
         $user = $em->getRepository('Newscoop\Entity\User')
             ->findOneBy(array(
                 'username' => $username
@@ -135,11 +141,15 @@ class UsersController extends FOSRestController
         }
 
         $userService->loginUser($user);
-
-        return array(
-            'success' => true,
-            'user' => $user
+        $response->setStatusCode(200);
+        $response->headers->set(
+            'X-Location',
+            $this->generateUrl('newscoop_gimme_users_getuser', array(
+                    'id' => $user->getId()
+            ), true)
         );
+
+        return $response;
     }
 
     /**
@@ -188,9 +198,14 @@ class UsersController extends FOSRestController
         $emailService = $this->container->get('sendemail');
         $zendRouter = $this->container->get('zend_router');
         $response = new Response();
+        $secured = 'http://www.';
         $users = $userService->findBy(array(
             'email' => $email,
         ));
+
+        if ($request->isSecure()) {
+            $secured = 'https://www.';
+        }
 
         if (count($users) > 0) {
             $user = array_pop($users);
@@ -211,7 +226,7 @@ class UsersController extends FOSRestController
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
+                $secured.$request->getHost().$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
             );
 
             return $response;
