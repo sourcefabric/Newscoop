@@ -29,9 +29,8 @@ class ExceptionController extends FOSExceptionController
      */
     public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
     {
-        $pos = strpos($request->server->get('REQUEST_URI'), '/api/');
-
-        if ($pos === false) {
+        $route = $request->attributes->get('_route');
+        if (strpos($route, 'newscoop_gimme_') !== false) {
             return;
         }
 

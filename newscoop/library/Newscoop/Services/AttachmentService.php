@@ -127,14 +127,16 @@ class AttachmentService
         $this->em->flush();
     }
 
-    public function addAttachmentToArticle(Attachment $attachment, Article $article)
+    public function addAttachmentToArticle(Article $article, Attachment $attachment)
     {
-
+        $article->addAttachment($attachment);
+        $this->em->flush();
     }
 
-    public function removeAttachmentFormArticle(Attachment $attachment, Article $article)
+    public function removeAttachmentFormArticle(Article $article, Attachment $attachment)
     {
-
+        $article->getAttachments()->removeElement($attachment);
+        $this->em->flush();
     }
 
     private function fillAttachment(Attachment $attachment, $attributes)
