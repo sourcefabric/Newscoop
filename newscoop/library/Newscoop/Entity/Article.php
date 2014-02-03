@@ -427,16 +427,6 @@ class Article
     }
 
     /**
-     * Getter for issue
-     *
-     * @return \Newscoop\Entity\Issue
-     */
-    public function getIssue()
-    {
-        return $this->issue;
-    }
-
-    /**
      * Setter for issue
      *
      * @param \Newscoop\Entity\Issue $issue Value to set
@@ -863,6 +853,10 @@ class Article
      */
     public function getWebcode()
     {
+        if (!$this->webcode) {
+            return null;
+        }
+
         return $this->webcode->getWebcode();
     }
 
