@@ -19,7 +19,7 @@ class UserAttribute
     const IS_VERIFIED = 'is_verified';
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="User", inversedBy="attributes")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
@@ -27,7 +27,7 @@ class UserAttribute
     private $user;
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\Column(type="string", length=255)
      * @var string
      */

@@ -81,6 +81,12 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: topics
+        attachments:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: attachments
         fields:
             expose: true
             read_only: true

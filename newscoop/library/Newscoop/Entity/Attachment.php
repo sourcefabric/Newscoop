@@ -1,147 +1,128 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2013 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @copyright 2014 Sourcefabric o.p.s.
+ * @author Paweł Mikołąjczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Attachment entity
+ * Snippet entity
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AttachmentRepository")
  * @ORM\Table(name="Attachments")
  */
 class Attachment
 {
-    /* Values for enum fields */
-    const CONTENT_DISPOSITION_ATTACHMENT = 'attachment';
-
+    const CONTENT_DISPOSITION = 'attachment';
     const SOURCE_LOCAL = 'local';
     const SOURCE_FEEDBACK = 'feedback';
-
-    private $source_array = array(SOURCE_LOCAL, SOURCE_FEEDBACK);
-
+    const STATUS_UNAPPROVED = 'unapproved';
     const STATUS_APPROVED = 'approved';
-    const STATUS_UNAPPORVED = 'unapproved';
-
-    private $status_array = array(STATUS_APPROVED, STATUS_UNAPPORVED);
 
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
+     * @ORM\Column(name="Id", type="integer")
      * @var int
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article")
-     * @ORM\JoinTable(name="ArticleAttachments",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
-     *      }
-     *  )
-     * @var Doctrine\Common\Collections\Collection
-     */
-    private $articles;
-
-    /**
-     * @ORM\Column(name="file_name", nullable=True)
+     * @ORM\Column(name="file_name", nullable=true)
      * @var string
      */
-    private $filename;
+    private $name;
 
     /**
-     * @ORM\Column(name="extension", nullable=True)
+     * @ORM\Column(name="extension", length=50, nullable=true)
      * @var string
      */
     private $extension;
 
     /**
-     * @ORM\Column(name="mime_type", nullable=True)
+     * @ORM\Column(name="mime_type", nullable=true)
      * @var string
      */
     private $mimeType;
 
     /**
-     * @ORM\Column(name="content_disposition", nullable=True)
+     * @ORM\Column(name="content_disposition", nullable=true)
      * @var string
      */
     private $contentDisposition;
 
     /**
-     * @ORM\Column(name="http_charset", nullable=True)
+     * @ORM\Column(name="http_charset", length=50, nullable=true)
      * @var string
      */
     private $httpCharset;
 
     /**
-     * @ORM\Column(type="bigint", name="size_in_bytes", nullable=True)
-     * @var string
+     * @ORM\Column(name="size_in_bytes", type="bigint", nullable=true)
+     * @var integer
      */
     private $sizeInBytes;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Translation", mappedBy="phrase_id")
-     * @ORM\JoinColumn(name="phrase_id", referencedColumnName="fk_description_id", nullable=True)
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
+     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true, onDelete="SET NULL")
      * @var Newscoop\Entity\Translation
-     * TODO: Fix this problem. Related to tables Translations, AutoId, Topics.
      */
     private $description;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id", nullable=True)
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @ORM\Column(type="datetime", name="time_created")
+     * @ORM\Column(type="datetime", name="last_modified", nullable=false)
+     * @var DateTime
+     */
+    private $updated;
+
+    /**
+     * @ORM\Column(type="datetime", name="time_created", nullable=false)
      * @var DateTime
      */
     private $created;
 
     /**
-     * @ORM\Column(type="datetime", name="last_modified")
-     * @var DateTime
-     */
-    private $modified;
-
-    /**
-     * @ORM\Column(name="Source")
+     * @ORM\Column(name="Source", nullable=false)
      * @var string
      */
-    private $source = SOURCE_LOCAL;
+    private $source;
 
     /**
-     * @ORM\Column(name="Status")
+     * @ORM\Column(name="Status", nullable=false)
      * @var string
      */
-    private $status = STATUS_APPROVED;
+    private $status;
 
-    private function __construct()
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
     {
-        $this->articles = new ArrayCollection();
-        $this->description = new ArrayCollection();
+        $this->updated = new \DateTime();
     }
 
     /**
-     * Getter for id
+     * Gets the value of id.
      *
      * @return int
      */
@@ -151,9 +132,9 @@ class Attachment
     }
 
     /**
-     * Setter for id
+     * Sets the value of id.
      *
-     * @param int $id Value to set
+     * @param int $id the id
      *
      * @return self
      */
@@ -165,7 +146,7 @@ class Attachment
     }
 
     /**
-     * Getter for language
+     * Gets the value of language.
      *
      * @return Newscoop\Entity\Language
      */
@@ -175,9 +156,9 @@ class Attachment
     }
 
     /**
-     * Setter for language
+     * Sets the value of language.
      *
-     * @param Newscoop\Entity\Language $language Value to set
+     * @param \Newscoop\Entity\Language $language the language
      *
      * @return self
      */
@@ -189,55 +170,31 @@ class Attachment
     }
 
     /**
-     * Getter for articles
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getArticles()
-    {
-        return $this->articles;
-    }
-
-    /**
-     * Setter for articles
-     *
-     * @param Doctrine\Common\Collections\ArrayCollection $articles Value to set
-     *
-     * @return self
-     */
-    public function setArticles(ArrayCollection $articles)
-    {
-        $this->articles = $articles;
-
-        return $this;
-    }
-
-    /**
-     * Getter for filename
+     * Gets the value of name.
      *
      * @return string
      */
-    public function getFilename()
+    public function getName()
     {
-        return $this->filename;
+        return $this->name;
     }
 
     /**
-     * Setter for filename
+     * Sets the value of name.
      *
-     * @param string $filename Value to set
+     * @param string $name the name
      *
      * @return self
      */
-    public function setFilename($filename)
+    public function setName($name)
     {
-        $this->filename = $filename;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Getter for extension
+     * Gets the value of extension.
      *
      * @return string
      */
@@ -247,9 +204,9 @@ class Attachment
     }
 
     /**
-     * Setter for extension
+     * Sets the value of extension.
      *
-     * @param string $extension Value to set
+     * @param string $extension the extension
      *
      * @return self
      */
@@ -261,7 +218,7 @@ class Attachment
     }
 
     /**
-     * Getter for mimeType
+     * Gets the value of mimeType.
      *
      * @return string
      */
@@ -271,9 +228,9 @@ class Attachment
     }
 
     /**
-     * Setter for mimeType
+     * Sets the value of mimeType.
      *
-     * @param string $mimeType Value to set
+     * @param string $mimeType the mime type
      *
      * @return self
      */
@@ -285,7 +242,7 @@ class Attachment
     }
 
     /**
-     * Getter for contentDisposition
+     * Gets the value of contentDisposition.
      *
      * @return string
      */
@@ -295,21 +252,23 @@ class Attachment
     }
 
     /**
-     * Setter for contentDisposition
+     * Sets the value of contentDisposition.
      *
-     * @param string $contentDisposition Value to set
+     * @param string $contentDisposition the content disposition
      *
      * @return self
      */
     public function setContentDisposition($contentDisposition)
     {
-        $this->contentDisposition = $contentDisposition;
+        if ($contentDisposition == self::CONTENT_DISPOSITION) {
+            $this->contentDisposition = $contentDisposition;
+        }
 
         return $this;
     }
 
     /**
-     * Getter for httpCharset
+     * Gets the value of httpCharset.
      *
      * @return string
      */
@@ -319,9 +278,9 @@ class Attachment
     }
 
     /**
-     * Setter for httpCharset
+     * Sets the value of httpCharset.
      *
-     * @param string $httpCharset Value to set
+     * @param string $httpCharset the http charset
      *
      * @return self
      */
@@ -333,9 +292,9 @@ class Attachment
     }
 
     /**
-     * Getter for sizeInBytes
+     * Gets the value of sizeInBytes.
      *
-     * @return string
+     * @return integer
      */
     public function getSizeInBytes()
     {
@@ -343,9 +302,9 @@ class Attachment
     }
 
     /**
-     * Setter for sizeInBytes
+     * Sets the value of sizeInBytes.
      *
-     * @param string $sizeInBytes Value to set
+     * @param integer $sizeInBytes the size in bytes
      *
      * @return self
      */
@@ -357,54 +316,9 @@ class Attachment
     }
 
     /**
-     * Gets description (Translation) phrase id
-     * TODO: check if this is needed, see annotation comment for property description
+     * Gets the value of user.
      *
-     * @return int|null
-     */
-    public function getDescriptionId()
-    {
-        $description = $this->getDescription();
-
-        if ($description !== null && $description->count() > 0) {
-
-            $firstDescription = $description->first();
-
-            return $firstDescription->getPhraseId();
-        } else {
-
-            return null;
-        }
-    }
-
-    /**
-     * Getter for description
-     *
-     * @return Newscoop\Entity\Translation
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Setter for description
-     *
-     * @param Doctrine\Common\Collections\ArrayCollection $description Value to set
-     *
-     * @return self
-     */
-    public function setDescription(ArrayCollection $description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Getter for user
-     *
-     * @return Newscoop\Entity\User|null
+     * @return Newscoop\Entity\User
      */
     public function getUser()
     {
@@ -412,9 +326,23 @@ class Attachment
     }
 
     /**
-     * Setter for user
+     * Get User id
      *
-     * @param Newscoop\Entity\User|null $user Value to set
+     * @return string
+     */
+    public function getUserId()
+    {
+        if ($this->user instanceof \Newscoop\Entity\User) {
+            return $this->user->getId();
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the value of user.
+     *
+     * @param mixed $user the user
      *
      * @return self
      */
@@ -426,7 +354,31 @@ class Attachment
     }
 
     /**
-     * Getter for created
+     * Gets the value of updated.
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Sets the value of updated.
+     *
+     * @param DateTime $updated the updated
+     *
+     * @return self
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of created.
      *
      * @return DateTime
      */
@@ -436,9 +388,9 @@ class Attachment
     }
 
     /**
-     * Setter for created
+     * Sets the value of created.
      *
-     * @param DateTime $created Value to set
+     * @param DateTime $created the created
      *
      * @return self
      */
@@ -450,31 +402,7 @@ class Attachment
     }
 
     /**
-     * Getter for modified
-     *
-     * @return DateTime
-     */
-    public function getModified()
-    {
-        return $this->modified;
-    }
-
-    /**
-     * Setter for modified
-     *
-     * @param DateTime $modified Value to set
-     *
-     * @return self
-     */
-    public function setModified(\DateTime $modified)
-    {
-        $this->modified = $modified;
-
-        return $this;
-    }
-
-    /**
-     * Getter for source
+     * Gets the value of source.
      *
      * @return string
      */
@@ -484,24 +412,25 @@ class Attachment
     }
 
     /**
-     * Setter for source
+     * Sets the value of source.
      *
-     * @param string $source Value to set
+     * @param string $source the source
      *
      * @return self
      */
     public function setSource($source)
     {
-        if (!in_array($source, $source_array)) {
-            throw new \InvalidArgumentException("Invalid Source.");
+        $this->source = self::SOURCE_LOCAL;
+
+        if (in_array($source, array(self::SOURCE_FEEDBACK))) {
+            $this->source = $source;
         }
-        $this->source = $source;
 
         return $this;
     }
 
     /**
-     * Getter for status
+     * Gets the value of status.
      *
      * @return string
      */
@@ -511,22 +440,47 @@ class Attachment
     }
 
     /**
-     * Setter for status
+     * Sets the value of status.
      *
-     * @param string $status Value to set
+     * @param string $status the status
      *
      * @return self
      */
     public function setStatus($status)
     {
-        if (!in_array($status, $status_array)) {
-            throw new \InvalidArgumentException("Invalid status.");
+        $this->status = self::STATUS_UNAPPROVED;
+
+        if (in_array($status, array(self::STATUS_APPROVED))) {
+            $this->status = $status;
         }
-        $this->status = $status;
 
         return $this;
     }
 
+    /**
+     * Sets the value of description.
+     *
+     * @param \Newscoop\Entity\Translations $description the description
+     *
+     * @return self
+     */
+    public function setDescription(\Newscoop\Entity\Translation $description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of description.
+     *
+     * @return \Newscoop\Entity\Translation
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    
     /**
      * Return the relative URL to the attached image.
      *

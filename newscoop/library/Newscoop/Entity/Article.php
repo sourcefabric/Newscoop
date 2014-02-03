@@ -441,16 +441,6 @@ class Article
     }
 
     /**
-     * Get issue
-     *
-     * @return Newscoop\Entity\Issue
-     */
-    public function getIssue()
-    {
-        return $this->issue;
-    }
-
-    /**
      * Get issue id
      *
      * @return int

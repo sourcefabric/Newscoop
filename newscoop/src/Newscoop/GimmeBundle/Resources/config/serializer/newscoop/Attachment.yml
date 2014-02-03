@@ -1,0 +1,98 @@
+Newscoop\Entity\Attachment:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: id
+            since_version: 1.1
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: name
+            since_version: 1.1
+        extension:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: extension
+            since_version: 1.1
+        mimeType:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: mimeType
+            since_version: 1.1
+        contentDisposition:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: contentDisposition
+            since_version: 1.1
+        httpCharset:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: httpCharset
+            since_version: 1.1
+        sizeInBytes:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: sizeInBytes
+            since_version: 1.1
+        description:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: description
+            access_type: public_method
+            since_version: 1.1
+        user:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: user
+            access_type: public_method
+            accessor:
+                getter: getUserId
+            since_version: 1.1
+        source:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: source
+            since_version: 1.1
+        status:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: status
+            since_version: 1.1
+        updated:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details"]
+            serialized_name: updated
+            since_version: 1.1
+        created:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details"]
+            serialized_name: created
+            since_version: 1.1
