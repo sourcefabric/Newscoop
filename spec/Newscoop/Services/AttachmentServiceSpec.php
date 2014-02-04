@@ -5,6 +5,7 @@ namespace spec\Newscoop\Services;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Newscoop\Entity\Attachment;
+use Newscoop\Entity\Translation;
 use Newscoop\Entity\Language;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -54,11 +55,26 @@ class AttachmentServiceSpec extends ObjectBehavior
 
     function it_should_update_attachment()
     {
+        $filesystem = new Filesystem();
 
+        $newFileName = __DIR__.'/../../assets/images/temp-image.jpg';
+        $filesystem->copy(__DIR__.'/../../assets/images/picture.jpg', $newFileName);
+        $uploadedFile = new UploadedFile($newFileName, 'temp-image.jpg', 'image/jpg', filesize($newFileName), null, true);
+        $language = new Language();
+        $attachment = new Attachment();
+
+        $description = new Translation();
+        $description->setLanguage($language);
+        $description->setTranslationText('Description text');
+        $attachment->setDescription($description);
+
+        $this->upload($uploadedFile, 'Test file - updated', $language, array(), $attachment);
     }
 
     function it_should_remove_attachemnt()
     {
+        $attachment = new Attachment();
 
+        $this->remove($attachment);
     }
 }

@@ -98,7 +98,7 @@ class BootstrapService
     /**
      * Reload themes reditions in datbase
      */
-    public function reloadRenditions()
+    public function warmapCache()
     {
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
@@ -108,10 +108,10 @@ class BootstrapService
 
         $php = escapeshellarg($phpPath);
         $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
-        $reloadRenditions = new Process("$php $newscoopConsole renditions:reload", null, null, null, 300);
-        $reloadRenditions->run();
-        if (!$reloadRenditions->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Reload renditions command.');
+        $command = new Process("$php $newscoopConsole cache:warmup", null, null, null, 300);
+        $command->run();
+        if (!$command->isSuccessful()) {
+            throw new \RuntimeException($command->getErrorOutput());
         }
     }
 }

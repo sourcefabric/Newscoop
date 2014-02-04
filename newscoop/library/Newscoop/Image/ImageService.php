@@ -152,7 +152,7 @@ class ImageService
 
         $articleImages = $this->orm->getRepository('Newscoop\Image\ArticleImage')
             ->getArticleImagesForImage($image)
-            ->getResults();
+            ->getResult();
 
         foreach ($articleImages as $articleImage) {
             \ArticleImage::RemoveImageTagsFromArticleText($articleImage->getArticleNumber(), $articleImage->getNumber());
