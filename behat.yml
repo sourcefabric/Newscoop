@@ -1,5 +1,6 @@
 default:
     context:
         parameters:
+            api_prefix: api
             base_url:   http://newscoop.dev/api/
             publication: newscoop.dev
