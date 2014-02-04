@@ -10,7 +10,9 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Newscoop\Entity\Article;
+use Newscoop\NewscoopException;
 use Newscoop\GimmeBundle\Form\Type\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -24,6 +26,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticlesController extends FOSRestController
 {
     /**
+     * Get Articles
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when articles found",
+     *         404={
+     *           "Returned when articles are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -47,6 +60,25 @@ class ArticlesController extends FOSRestController
     }
 
     /**
+     *
+     * Get article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the article is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
+     *     },
+     *     filters={
+     *          {"name"="language", "dataType"="string", "description"="Language code"}
+     *     },
+     *     output="\Newscoop\Entity\Article"
+     * )
+     *
      * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
@@ -63,6 +95,121 @@ class ArticlesController extends FOSRestController
             ->getOneOrNullResult();
 
         return $article;
+    }
+
+    /**
+     * Link resource with Article entity
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when successful",
+     *         404="Returned when resource not found",
+     *         409={
+     *           "Returned when the link already exists",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Method("LINK")
+     * @View(statusCode=201)
+     *
+     * @return Form
+     */
+    public function linkArticleAction(Request $request, $number)
+    {
+        $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication();
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw NotFoundHttpException('Article was not found');
+        }
+
+        foreach ($request->attributes->get('links') as $key => $object) {
+            if ($object instanceof \Exception) {
+                throw $object;
+            }
+
+            if ($object instanceof \Newscoop\Image\LocalImage) {
+                $imagesService = $this->get('image');
+                $imagesService->addArticleImage($article->getNumber(), $object);
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\Entity\Attachment) {
+                $attachmentService = $this->get('attachment');
+                $attachmentService->addAttachmentToArticle($article, $object);
+
+                continue;
+            }
+        }
+    }
+
+    /**
+     * Unlink resource from Article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when successful",
+     *         404="Returned when resource not found"
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Method("UNLINK")
+     * @View(statusCode=204)
+     *
+     * @return Form
+     */
+    public function unlinkArticleAction(Request $request, $number)
+    {
+        $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication();
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw NotFoundHttpException('Article was not found');
+        }
+
+        foreach ($request->attributes->get('links') as $key => $object) {
+            if ($object instanceof \Exception) {
+                throw $object;
+            }
+
+            if ($object instanceof \Newscoop\Image\LocalImage) {
+                $imagesService = $this->get('image');
+                $articleImage = $em->getRepository('Newscoop\Image\ArticleImage')
+                    ->getArticleImage($article->getNumber(), $object)
+                    ->getOneOrNullResult();
+
+                if ($articleImage) {
+                    $imagesService->removeArticleImage($articleImage);
+                }
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\Entity\Attachment) {
+                $attachmentService = $this->get('attachment');
+                $attachmentService->removeAttachmentFormArticle($article, $object);
+
+                continue;
+            }
+        }
     }
 
     /**

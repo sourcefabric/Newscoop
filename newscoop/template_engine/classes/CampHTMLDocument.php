@@ -286,7 +286,6 @@ final class CampHTMLDocument
         $siteinfo['generator'] = $this->getGenerator();
         $siteinfo['keywords'] = $this->getMetaTag('keywords');
         $siteinfo['description'] = $this->getMetaTag('description');
-
         $tpl = CampTemplate::singleton();
         $tpl->template_dir = array_unique($tpl->template_dir);
 
@@ -296,6 +295,7 @@ final class CampHTMLDocument
         } elseif (!$this->templateExists($template, $tpl)) {
             $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
         }
+
         if (!is_null($siteinfo['error_message'])) {
             $siteinfo['templates_path'] = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
             $template = '_campsite_error.tpl';

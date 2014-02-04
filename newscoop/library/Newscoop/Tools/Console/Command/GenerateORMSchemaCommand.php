@@ -45,13 +45,13 @@ class GenerateORMSchemaCommand extends Console\Command\Command
         $entityMetaClasses = array();
 
         foreach ($input->getArgument('entity') as $entity) {
-            $entityMetaClasses[] = $em->getClassMetadata($entity);   
+            $entityMetaClasses[] = $em->getClassMetadata($entity);
         }
-        
+
         $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 
         if ($input->getOption('alter')) {
-            $schema = $tool->getUpdateSchemaSql($entityMetaClasses);
+            $schema = $tool->getUpdateSchemaSql($entityMetaClasses, true);
         } else {
             $schema = $tool->getCreateSchemaSql($entityMetaClasses);
         }

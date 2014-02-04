@@ -18,7 +18,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * Gimme Pagination service.
  */
-class PaginatorService {
+class PaginatorService
+{
     /**
      * Paginator class
      * @var Knp\Component\Pager\Paginator
@@ -160,15 +161,17 @@ class PaginatorService {
 
     /**
      * Paginate data
-     * @param  mixed $data   Data to paginate
-     * @param  array  $params Prameters for Paginator
+     *
+     * @param mixed $data   Data to paginate
+     * @param array $params Prameters for Paginator
+     *
      * @return array         Paginated data
      */
     public function paginate($data, $params = array())
     {
         $paginator = $this->paginator->paginate(
-            $data, 
-            $this->pagination->getPage(), 
+            $data,
+            $this->pagination->getPage(),
             $this->pagination->getItemsPerPage(),
             $params
         );
@@ -191,8 +194,10 @@ class PaginatorService {
 
     /**
      * Generate links for pagination object
-     * @param  array $paginationData Array with calculated pagination data
-     * @return array                Array with links
+     *
+     * @param array $paginationData Array with calculated pagination data
+     *
+     * @return array                 Array with links
      */
     private function getPaginationLinks($paginationData)
     {
