@@ -12,14 +12,14 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class AttachmentServiceSpec extends ObjectBehavior
 {
-    function let($die, \Doctrine\ORM\EntityManager $em)
+    function let($die, \Doctrine\ORM\EntityManager $em, \Symfony\Component\Routing\Router $router)
     {
         $this->beConstructedWith(array(
             'file_base_url' => "files/",
             'file_directory' => realpath(__DIR__ . '/../../../newscoop/public/files').'/',
             'file_num_dirs_level_1' => 1000,
             'file_num_dirs_level_2' => 1000,
-        ), $em);
+        ), $em, $router);
     }
 
     function it_is_initializable()
@@ -76,5 +76,12 @@ class AttachmentServiceSpec extends ObjectBehavior
         $attachment = new Attachment();
 
         $this->remove($attachment);
+    }
+
+    function it_should_generate_attachment_url()
+    {
+        $attachment = new Attachment();
+        $attachment->setName('testfile.pdf')->setId(34);
+        $this->getAttachmentUrl($attachment);
     }
 }
