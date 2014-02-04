@@ -14,9 +14,6 @@ newscoop/themes/publication_*
 newscoop/themes/unassigned/empty/
 newscoop/themes/unassigned/system_templates/
 newscoop/install/cron_jobs/all_at_once
-newscoop/.htaccess*
 newscoop/application/configs/application.ini
 newscoop/application/configs/parameters/custom_parameters.yml
 .vagrant
-.htaccess
-.htaccess-default

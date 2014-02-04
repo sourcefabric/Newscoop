@@ -480,14 +480,4 @@ class Attachment
     {
         return $this->description;
     }
-
-    /**
-     * Return the relative URL to the attached image.
-     *
-     * @return string
-     */
-    public function getAttachmentUri()
-    {
-        return '/attachment/' . $this->getId()  . '/' . $this->getFilename();
-    }
 }
