@@ -19,12 +19,6 @@
 -- Dumping data for table `Aliases`
 --
 
-LOCK TABLES `Aliases` WRITE;
-/*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
-INSERT INTO `Aliases` VALUES (4,'localhost',2);
-/*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
-UNLOCK TABLES;
-
 --
 -- Dumping data for table `ArticleAttachments`
 --
@@ -877,6 +871,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_users` WRITE;
 INSERT INTO `liveuser_users` (`Id`, `KeyId`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `City`, `StrAddress`, `State`, `CountryCode`, `Phone`, `Fax`, `Contact`, `Phone2`, `Title`, `Gender`, `Age`, `PostalCode`, `Employer`, `EmployerType`, `Position`, `Interests`, `How`, `Languages`, `Improvements`, `Pref1`, `Pref2`, `Pref3`, `Pref4`, `Field1`, `Field2`, `Field3`, `Field4`, `Field5`, `Text1`, `Text2`, `Text3`, `time_updated`, `time_created`, `lastLogin`, `isActive`, `password_reset_token`, `role_id`, `last_name`, `status`, `is_admin`, `is_public`, `points`, `image`, `subscriber`, `author_id`, `indexed`) VALUES
+(1, NULL, 'Administrator', 'admin', 'sha1$iC36OZ4F9iON$4805ef7ba0f686ad5fd8de267ba3abfe5df74bda', 'mikolajczuk.private@gmail.com', 'Y', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Mr.', NULL, '0-17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'N', 'N', 'N', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2014-01-15 15:17:17', '2014-01-15 16:17:17', NULL, 1, NULL, 6, NULL, 1, 1, 0, 0, NULL, NULL, NULL, '0000-00-00 00:00:00'),
 (39, NULL, 'Jane', 'janestock', 'sha1$2uvxzh8yDqVR$96406073308bd0a7985f3a59c74f52ea0ccb6393', 'jane.s@thecanonical.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:33:08', '2012-02-28 16:54:36', '1970-01-01 00:00:00', 1, NULL, 17, 'Stockwriter', 1, 1, 1, 0, 'e7b816f7d39bb6cbd151089baeeb542d9856bf21.jpg', NULL, 7, '0000-00-00 00:00:00'),
 (34, NULL, 'Amerigo', 'amerigo', 'sha1$UHP3Tte3PNfs$c23649b29221879e25ef4cf23f8f36bc1c602876', 'amerigo.vespucci@thejournal.com', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:32:06', '2012-02-28 16:18:39', '1970-01-01 00:00:00', 1, NULL, 12, 'Vespucci', 1, 1, 1, 0, 'dc1989572b1a6a68f1981597d0a79eadd2df98df.jpg', NULL, 11, '0000-00-00 00:00:00'),
 (35, NULL, 'Frank', 'frankenstein', 'sha1$Q5t8yrcj4OX0$c2a550dc9462d5393187061ea6efcd80fc3df16e', 'frank.n.stein@free.fr', 'Y', NULL, '', '', '', NULL, '', '', '', '', 'Mr.', NULL, '0-17', '', '', '', '', NULL, '', '', NULL, 'N', 'N', 'N', 'N', '', '', '', '', '', NULL, NULL, NULL, '2012-03-01 04:32:24', '2012-02-28 16:22:24', '1970-01-01 00:00:00', 1, NULL, 13, 'N. Stein', 1, 1, 1, 0, '9ec91c423809989ed9e5a3fb298042cbf938ec21.jpg', NULL, 13, '0000-00-00 00:00:00'),

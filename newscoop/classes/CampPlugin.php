@@ -44,7 +44,7 @@ class CampPlugin extends DatabaseObject
         }
     } // constructor
 
-    public function create($p_name, $p_version, $p_enabled = true)
+    public function create($p_name = null, $p_version = null, $p_enabled = true)
     {
         // Create the record
         $this->m_data['Name'] = $p_name;
@@ -63,7 +63,7 @@ class CampPlugin extends DatabaseObject
 
     static public function GetAll($p_reload = false)
     {
-        global $g_ado_db;
+        $g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
 
         if (!$p_reload && is_array(self::$m_allPlugins)) {
         	return self::$m_allPlugins;
@@ -197,7 +197,7 @@ class CampPlugin extends DatabaseObject
         self::ClearPluginsInfo();
     }
 
-    public function update()
+    public function update($p_columns = NULL, $p_commit = true, $p_isSql = false)
     {
         $info = $this->getPluginInfo();
         if (function_exists($info['update'])) {

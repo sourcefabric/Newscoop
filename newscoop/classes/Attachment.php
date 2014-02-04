@@ -59,14 +59,14 @@ class Attachment extends DatabaseObject {
 
         // Delete all the references to this image.
         ArticleAttachment::OnAttachmentDelete($this->m_data['id']);
-
-        // Delete the description
-        Translation::deletePhrase($this->m_data['fk_description_id']);
-
         $tmpData = $this->m_data;
 
         // Delete the record in the database
         $success = parent::delete();
+
+        // Delete the description
+        Translation::deletePhrase($tmpData['fk_description_id']);
+
         return $success;
     } // fn delete
 

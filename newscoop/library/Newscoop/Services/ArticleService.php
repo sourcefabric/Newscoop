@@ -1,12 +1,12 @@
 <?php
 /**
- * @package Newscoop\NewscoopBundle
+ * @package Newscoop
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\NewscoopBundle;
+namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Article;

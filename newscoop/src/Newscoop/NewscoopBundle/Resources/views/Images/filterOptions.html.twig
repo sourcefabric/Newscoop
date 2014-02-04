@@ -1,0 +1,26 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "plugins_manager" %}
+
+{% block admin_title %}Image Filters management{% endblock %}
+{% block admin_page_title_content %}Edit '{{ imageFilter.name }}' filter options{% endblock %}
+
+{% block admin_stylesheets %}
+{% endblock %}
+
+{% block admin_scripts %}
+
+{% endblock %}
+
+{% block admin_content %}
+<div class="row">
+    <div class="col-md-6" style="background-color: #fff;border: 1px solid #9d9d9d;float: none;margin: 30px 30px;padding: 20px 20px 50px 20px;-moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);-webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);box-shadow: 0 2px 2px rgba(0,0,0,.10); width: 600px">
+    <h2>Edit {{ imageFilter.name }} options</h2>
+    {% for p in form.children %}
+        <div class="form-group">
+            {{ form_row(p) }}
+        </div>
+    {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

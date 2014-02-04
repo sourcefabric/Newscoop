@@ -238,6 +238,7 @@ class ArticleType {
 	 */
 	public function getTranslations()
 	{
+        
 		return Translation::GetTranslations($this->getPhraseId());
 	} // fn getTranslations
 

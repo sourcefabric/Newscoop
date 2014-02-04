@@ -96,7 +96,10 @@ final class CampSite extends CampSystem
     {
         global $g_errorList;
 
-        $errors = $GLOBALS['controller']->getRequest()->getParam('errors', null);
+        $errors = array();
+        if (array_key_exists('controller', $GLOBALS)) {
+            $errors = $GLOBALS['controller']->getRequest()->getParam('errors', null);
+        }
 
         $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();

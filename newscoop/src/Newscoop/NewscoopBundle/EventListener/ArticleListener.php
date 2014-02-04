@@ -8,7 +8,7 @@
 
 namespace Newscoop\NewscoopBundle\EventListener;
 
-use Newscoop\NewscoopBundle\ArticleService;
+use Newscoop\Services\ArticleService;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**

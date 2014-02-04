@@ -215,7 +215,7 @@ abstract class CampURI
             $uriString = preg_replace('/[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']/',
                     '""', $uriString);
         }
-
+        
         $this->parse($uriString);
         $this->m_queryArray = array_merge($this->m_queryArray,
                 CampRequest::GetInput('POST'));

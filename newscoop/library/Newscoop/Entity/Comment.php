@@ -571,6 +571,20 @@ class Comment
     }
 
     /**
+     * Get Parent Id
+     *
+     * @return Newscoop\Entity\Comment
+     */
+    public function getParentId()
+    {
+        if ($this->parent) {
+            return $this->parent->getId();
+        }
+
+        return null;
+    }
+
+    /**
      * Get the likes count
      *
      * @return int

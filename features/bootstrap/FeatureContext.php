@@ -253,7 +253,11 @@ class FeatureContext extends BehatContext
         $webApiContext = $this->getMainContext()->getSubcontext('api');
 
         if ($url == "last resource") {
-            $url = $this->browser->getLastResponse()->getHeader('X-Location');
+            if ($this->browser->getLastResponse()->getHeader('X-Location') !== null) {
+                $url = $this->browser->getLastResponse()->getHeader('X-Location');
+            } else {
+                $url = $this->browser->getLastRequest()->getUrl();
+            }
         } else {
             $url = $this->parameters['base_url'].ltrim($webApiContext->replacePlaceHolder($url), '/');
         }
@@ -278,11 +282,11 @@ class FeatureContext extends BehatContext
     public function responseShouldHaveHeader($name)
     {
         $headers = $this->browser->getLastResponse()->getHeaders();
-        if (array_key_exists($name, $headers)) {
+        if ($this->browser->getLastResponse()->getHeader($name) !== null) {
             return true;
         }
 
-        return false;
+        throw new \Exception('header "'.$name.'" don\'t exist');
     }
 
     /**

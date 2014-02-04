@@ -24,9 +24,8 @@ class FormatJsonResponseListener
         }
 
         $request = $event->getRequest();
-        $pos = strpos($request->server->get('REQUEST_URI'), '/api');
-
-        if ($pos === false) {
+        $route = $request->attributes->get('_route');
+        if (strpos($route, 'newscoop_gimme_') === false) {
             return;
         }
 

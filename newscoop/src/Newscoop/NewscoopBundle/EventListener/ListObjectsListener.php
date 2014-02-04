@@ -10,12 +10,15 @@ namespace Newscoop\NewscoopBundle\EventListener;
 
 use Newscoop\EventDispatcher\Events\CollectObjectsDataEvent;
 
+/**
+ * Register new lists in $gimme
+ */
 class ListObjectsListener
 {
     /**
      * Register plugin list objects in Newscoop
-     * 
-     * @param  CollectObjectsDataEvent $event
+     *
+     * @param CollectObjectsDataEvent $event
      */
     public function registerObjects(CollectObjectsDataEvent $event)
     {

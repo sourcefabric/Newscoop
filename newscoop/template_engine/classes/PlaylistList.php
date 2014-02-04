@@ -47,7 +47,7 @@ class PlaylistList extends ListObject
             return false;
         }
 
-        $repo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Playlist');
+        $repo = $doctrine->getManager()->getRepository('Newscoop\Entity\Playlist');
         /* @var $repo \Newscoop\Entity\Repository\PlaylistRepository */
 
         // get playlist
@@ -71,7 +71,7 @@ class PlaylistList extends ListObject
 
         $context = CampTemplate::singleton()->context();
 
-        $langRepo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Language');
+        $langRepo = $doctrine->getManager()->getRepository('Newscoop\Entity\Language');
         /* @var $langRepo \Newscoop\Entity\Repository\LanguageRepository */
         $languageId = $context->language->number;
         $lang = $langRepo->find($context->language->number);

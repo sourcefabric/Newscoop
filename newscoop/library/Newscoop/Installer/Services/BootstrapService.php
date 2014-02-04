@@ -10,6 +10,8 @@ namespace Newscoop\Installer\Services;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 /**
  * Bootstrap installer service
@@ -18,6 +20,7 @@ class BootstrapService
 {
     public $mustBeWritable;
     public $basePath;
+    private $newscoopDir;
     private $filesystem;
     private $logger;
 
@@ -34,6 +37,7 @@ class BootstrapService
         $basePath = null
     ) {
         $this->mustBeWritable = $directories;
+        $this->newscoopDir = __DIR__ . '/../../../..';
         $this->filesystem = new Filesystem();
         $this->logger = $logger;
         $this->basePath = $basePath;
@@ -91,5 +95,25 @@ class BootstrapService
         }
 
         return true;
+    }
+
+    /**
+     * Warmap cache
+     */
+    public function warmapCache()
+    {
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $newscoopConsole = escapeshellarg($this->newscoopDir . '/application/console');
+        $command = new Process("$php $newscoopConsole cache:warmup", null, null, null, 3600);
+        $command->run();
+        if (!$command->isSuccessful()) {
+            var_dump($command->getErrorOutput());
+        }
     }
 }

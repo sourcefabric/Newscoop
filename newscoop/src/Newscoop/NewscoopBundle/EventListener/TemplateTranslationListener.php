@@ -42,10 +42,10 @@ class TemplateTranslationListener
         if ($filesystem->exists($dir)) {
             $finder->files()->in($dir);
             $finder->files()->name('*.'.$locale.'.yml');
-            
+
             foreach ($finder as $file) {
                 $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
-                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);    
+                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
             }
         }
     }

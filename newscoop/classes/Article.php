@@ -2538,11 +2538,20 @@ class Article extends DatabaseObject {
 
                 $firstName = trim($g_ado_db->escape($author['first_name']), "'");
                 $lastName = trim($g_ado_db->escape($author['last_name']), "'");
-                $whereCondition = "ArticleAuthors.fk_author_id IN
-                    (SELECT Authors.id
-                     FROM Authors
-                     WHERE CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol
-                         '$valModifier$firstName $lastName$valModifier')";
+
+                $authors = $g_ado_db->GetAll("
+                    SELECT Authors.id
+                    FROM Authors
+                    WHERE CONCAT(Authors.first_name, ' ', Authors.last_name) $symbol
+                         '$valModifier$firstName $lastName$valModifier'
+                ");
+
+                $authorsIds = array();
+                foreach ($authors as $author) {
+                    $authorsIds[] = $author['id'];
+                }
+
+                $whereCondition = "ArticleAuthors.fk_author_id IN (".implode(',', $authorsIds).")";
                 $selectClauseObj->addWhere($whereCondition);
                 $selectClauseObj->addWhere('Articles.Number = ArticleAuthors.fk_article_number');
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');

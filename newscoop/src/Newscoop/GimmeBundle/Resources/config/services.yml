@@ -17,6 +17,24 @@ services:
         arguments:  ["@newscoop.paginator.paginator_service"]
         tags:
             - { name: kernel.event_subscriber}
+    newscoop.publication_service:
+        class: Newscoop\Services\PublicationService
+        arguments:  ["@em"]
+    newscoop.gimme.listener.publication:
+        class: Newscoop\NewscoopBundle\EventListener\PublicationListener
+        arguments:  ["@newscoop.publication_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+    newscoop.gimme.listener.link_request:
+        class: Newscoop\GimmeBundle\EventListener\LinkRequestListener
+        arguments:  ["@controller_resolver", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+    newscoop.gimme.listener.public_resources:
+        class: Newscoop\GimmeBundle\EventListener\PublicResourcesListener
+        arguments:  ["@em", "@fos_oauth_server.server", "@security.context"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
     newscoop.gimme.listener.format_json:
         class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
         tags:

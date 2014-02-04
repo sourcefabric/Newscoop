@@ -1,6 +1,12 @@
 Newscoop\Entity\Comment:
     exclusion_policy: ALL
     properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
         subject:
             expose: true
             read_only: true
@@ -28,3 +34,23 @@ Newscoop\Entity\Comment:
                 getter: getCommenterName
                 setter: setCommenterName
             serialized_name: author
+        parent:
+            expose: true
+            read_only: true
+            type: integer
+            accessor: 
+                getter: getParentId
+            groups: ["details", "list"]
+            serialized_name: parent
+        thread_level:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: thread_level
+        thread_order:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: thread_order

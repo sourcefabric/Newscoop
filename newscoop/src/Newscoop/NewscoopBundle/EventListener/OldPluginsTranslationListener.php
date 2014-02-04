@@ -28,7 +28,8 @@ class OldPluginsTranslationListener
         $this->translator = $translator;
     }
 
-    public function onRequest(GetResponseEvent $event) {
+    public function onRequest(GetResponseEvent $event)
+    {
 
         $request = $event->getRequest();
         $locale = $request->getLocale();
@@ -40,12 +41,12 @@ class OldPluginsTranslationListener
 
             $finder->files()->in(__DIR__.'/../../../../plugins');
             $finder->files()->name('*.'.$locale.'.yml');
-            
+
             foreach ($finder as $file) {
                 $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
-                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);    
+                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
             }
-            
+
         } catch (\InvalidArgumentException $exception) {
             throw new \Exception('Plugins directory doesn\'t exist!');
         }

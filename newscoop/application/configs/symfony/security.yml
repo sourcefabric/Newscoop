@@ -43,6 +43,12 @@ security:
             stateless:  true
             anonymous:  true
 
+        content-api:
+            pattern:    ^/content-api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  true
+
         admin_area:
             pattern:    ^/admin
             provider: user_db

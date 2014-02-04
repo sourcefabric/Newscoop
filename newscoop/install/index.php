@@ -14,6 +14,8 @@ if (!file_exists(__DIR__ . '/../vendor') && !file_exists(__DIR__.'/../vendor/aut
     die;
 }
 
+umask(0000);
+
 require_once __DIR__.'/../vendor/autoload.php';
 require_once dirname(__FILE__).'/SymfonyRequirements.php';
 
@@ -43,6 +45,7 @@ if (count($missingReq) > 0) {
 }
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Filesystem\Filesystem;
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -79,8 +82,6 @@ $app['finish_service'] = $app->share(function () use ($app) {
     return new Services\FinishService();
 });
 
-$app['dispatcher']->addListener('newscoop.installer.bootstrap', $app['bootstrap_service']->makeDirectoriesWritable());
-
 $app->before(function (Request $request) use ($app) {
     if ($request->request->has('db_config') || $app['session']->has('db_data')) {
         $requestDbConfig = $request->request->get('db_config');
@@ -103,6 +104,7 @@ $app->get('/', function (Silex\Application $app) use ($symfonyRequirements, $req
     $app['dispatcher']->dispatch('newscoop.installer.bootstrap', new GenericEvent());
 
     $directories = $app['bootstrap_service']->checkDirectories();
+    $app['bootstrap_service']->warmapCache();
     if ($directories !== true) {
         return $app['twig']->render('botstrap_errors.twig', array('directories' => $directories));
     }
@@ -249,11 +251,14 @@ $app->get('/demo-site', function (Request $request) use ($app) {
 
     $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
         ->add('demo_template', 'choice', array(
-            'choices'   => array(
-                array('no'   => 'No thanks')
-            )+array_map(function ($template, $key) {
-                return array($key => $template['name']);
-            }, $app['database_service']->sampleTemplates, array_keys($app['database_service']->sampleTemplates)),
+            'choices' => array_merge(
+                array(
+                    array('no'   => 'No thanks')
+                ),
+                array_map(function ($template, $key) {
+                    return array($key => $template['name']);
+                }, $app['database_service']->sampleTemplates, array_keys($app['database_service']->sampleTemplates))
+            ),
             'expanded'  => true,
         ))
         ->getForm();
@@ -262,8 +267,10 @@ $app->get('/demo-site', function (Request $request) use ($app) {
         $form->bind($request);
         if ($form->isValid()) {
             $data = $form->getData();
+
             if ($data['demo_template'] != 'no') {
-                $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
+                $app['database_service']->installSampleData($app['db']);
+                $app['db']->executeQuery('INSERT INTO Aliases VALUES (4,?,2)', array($request->server->get('HTTP_HOST')));
                 $app['demosite_service']->copyTemplate($data['demo_template']);
                 $app['demosite_service']->installEmptyTheme();
             }

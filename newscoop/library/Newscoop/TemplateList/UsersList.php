@@ -34,6 +34,11 @@ class UsersList extends BaseList
         // run default simple parameters converting
         parent::convertParameters($firstResult, $parameters);
 
+        // apply attributes as a filters
+        if (array_key_exists('attributes', $parameters)) {
+            $this->criteria->attributes = $this->parseConstraintsString($parameters['attributes']);
+        }
+
         // convert your special parameters into criteria properties.
         if (array_key_exists('search', $parameters)) {
             $this->criteria->query = $parameters['search'];

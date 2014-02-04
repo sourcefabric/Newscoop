@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 /**
  * Images controller
@@ -25,6 +26,17 @@ use Doctrine\ORM\EntityNotFoundException;
 class ImagesController extends FOSRestController
 {
     /**
+     * Get all images
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the images are not found"
+     *         }
+     *     }
+     * )
+     *
      * @Route("/images.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -47,6 +59,21 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * Get image
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the image is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"}
+     *     },
+     *     output="\Newscoop\Image\LocalImage"
+     * )
+     *
      * @Route("/images/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
@@ -69,6 +96,65 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * Get all images for specified article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the images are not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"},
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Two letters code for article language"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/{language}/images.{_format}", defaults={"_format"="json"})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     */
+    public function getImagesForArticleAction($number, $language)
+    {
+        $em = $this->container->get('em');
+        $paginatorService = $this->get('newscoop.paginator.paginator_service');
+        $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $language)
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
+        }
+
+        $articleImages = $em->getRepository('Newscoop\Image\ArticleImage')
+            ->getArticleImages($number);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $articleImages = $paginator->paginate($articleImages);
+
+        $images = array();
+        foreach ($articleImages['items'] as $articleImage) {
+            $images[] = $articleImage->getImage();
+        }
+
+        $images = $paginator->paginate($images);
+
+        return $images;
+    }
+
+    /**
+     * Create new image
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when image created succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\ImageType"
+     * )
+     *
      * @Route("/images.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
@@ -81,6 +167,21 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * Update image
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when image updated succesfuly",
+     *         404={
+     *           "Returned when the images are not found",
+     *         }
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\ImageType",
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"}
+     *     }
+     * )
+     *
      * @Route("/images/{number}.{_format}", defaults={"_format"="json"})
      * @Method("POST|PATCH")
      * @View()
@@ -93,6 +194,20 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * Delete image
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when image removed succesfuly",
+     *         404={
+     *           "Returned when the images are not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"}
+     *     }
+     * )
+     *
      * @Route("/images/{number}.{_format}", defaults={"_format"="json"})
      * @Method("DELETE")
      * @View(statusCode=204)

@@ -50,13 +50,17 @@ fos_rest:
         prefer_extension: true
     exception:
         codes:
+            'Newscoop\Exception\ResourcesConflictException': 409
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+            'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
         messages:
+            'Newscoop\Exception\ResourcesConflictException': true
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Doctrine\ORM\OptimisticLockException': true
+            'Doctrine\ORM\EntityNotFoundException': true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
 
@@ -129,6 +133,11 @@ smarty:
 
 bazinga_expose_translation:
     locale_fallback: "en"
+
+nelmio_api_doc:
+    name:                     Newscoop REST API documentation
+    request_listener:
+        enabled:              false
 
 ewz_recaptcha:
     public_key:

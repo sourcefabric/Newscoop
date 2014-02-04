@@ -57,9 +57,12 @@ class CampURIShortNames extends CampURI
 
         try {
             $this->setURLType(URLTYPE_SHORT_NAMES);
+            // HUGE TODO: rewrite this - remove globals controller usage!
             if (array_key_exists('controller', $GLOBALS)) {
                 if (is_object($GLOBALS['controller'])) {
                     $this->setURL($GLOBALS['controller']->getRequest());
+                } else {
+                    $this->setURLFromSymfony(Zend_Registry::get('container')->getService('request'));
                 }
             } else {
                 $this->setURL(new Zend_Controller_Request_Http());
@@ -397,6 +400,25 @@ class CampURIShortNames extends CampURI
         }
         $this->m_template = $this->_getTemplate();
 
+    }
+
+    /**
+     * Sets the URL values
+     *
+     * @param Symfony\Component\HttpFoundation\Request $request
+     */
+    private function setURLFromSymfony($request)
+    {
+        $this->setQueryVar('acid', null);
+        $this->m_publication = $this->_getPublication();
+        $language = $request->get('language', 'en');
+
+        $this->m_language = $this->_getLanguage($language, $this->m_publication);
+        $this->m_issue = $this->_getIssue($request->get('issue'), $this->m_language, $this->m_publication);
+        $this->m_section = $this->_getSection($request->get('section'), $this->m_issue, $this->m_language, $this->m_publication);
+        $this->m_article = $this->_getArticle($request->get('articleNo'), $this->m_language);
+
+        $this->m_template = $this->_getTemplate();
     }
 
     /**

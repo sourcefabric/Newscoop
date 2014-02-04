@@ -83,4 +83,62 @@ class ImageRepository extends EntityRepository
 
         return $query->getSingleScalarResult();
     }
+
+    /**
+     * Get images attached to article
+     *
+     * @param int $number Article number
+     *
+     * @return Query
+     */
+    public function getArticleImages($number)
+    {
+        $query = $this->createQueryBuilder('ai')
+            ->andWhere('ai.articleNumber = :number')
+            ->setParameter('number', $number)
+            ->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get single ArticleImage
+     *
+     * @param int        $articleNumber Article number
+     * @param LocalImage $image         Image object
+     *
+     * @return Query
+     */
+    public function getArticleImage($articleNumber, LocalImage $image)
+    {
+        $query = $this->createQueryBuilder('ai')
+            ->andWhere('ai.articleNumber = :number')
+            ->andWhere('ai.image = :image')
+            ->setParameters(array(
+                'number' => $articleNumber,
+                'image' => $image
+            ))
+            ->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get ArticleImages for specific image
+     *
+     * @param LocalImage $image
+     *
+     * @return Query
+     */
+    public function getArticleImagesForImage(LocalImage $image)
+    {
+        $query = $this->createQueryBuilder('ai')
+            ->andWhere('ai.image = :image')
+            ->setParameters(array(
+                'image' => $image
+            ))
+            ->getQuery();
+
+        return $query;
+    }
 }
