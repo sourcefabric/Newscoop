@@ -19,6 +19,9 @@ services:
     image:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]
+    attachment:
+        class:      Newscoop\Services\AttachmentService
+        arguments:  ["%attachment%", "@em"]
     zend_auth:
         class:      Zend_Auth
         factory_class: Zend_Auth
@@ -153,6 +156,8 @@ services:
     newscoop.plugins.service:
         class: Newscoop\Services\Plugins\PluginsService
         arguments: ["@dispatcher", "@em"]
+    newscoop.templates.service:
+        class: Newscoop\Services\TemplatesService
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
     #     class:      Newscoop\Search\ArticleIndexer

@@ -59,7 +59,7 @@ final class CampContext
             'handler'=>'setCommentHandler'
         ),
         'subtitle'=>array(
-            'class'=>'Subtitle',
+            'class'=>'Subtitle',newscoop/template_engine/classes/CampContext.php
             'handler'=>'setSubtitleHandler'
         ),
         'topic'=>array(
@@ -352,8 +352,9 @@ final class CampContext
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $requestActionName = $this->m_readonlyProperties['request_action']->name;
-        if ($requestActionName != 'default') {
-            $this->m_readonlyProperties['request_action']->takeAction($this);
+
+        if ($requestActionName != 'default' && $requestActionName != 'submit_comment') {
+        	$this->m_readonlyProperties['request_action']->takeAction($this);
         }
 
         foreach (MetaAction::ReadAvailableActions() as $actionName=>$actionAttributes) {
@@ -706,6 +707,7 @@ final class CampContext
         $p_list->setId($this->next_list_id($listObjectName));
 
         $listName = $this->m_listObjects[$objectName]['list'];
+
         if (!isset($this->m_list_count[$listName.'_lists'])) {
             $this->m_list_count[$listName.'_lists'] = 1;
         } else {

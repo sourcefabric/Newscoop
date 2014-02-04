@@ -133,6 +133,8 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
                 $html = '<input type="hidden" name="f_comment_'.$attribute
 					.'" value="0"><input type="checkbox" name="f_comment_'.$attribute
                     .'" value="1" '.$p_params['html_code'].' />';
+            } elseif ($attribute == 'parent') {
+                $html = '<input type="hidden" name="f_comment_parent" '.$p_params['html_code'].' />';
             }
         }
         break;

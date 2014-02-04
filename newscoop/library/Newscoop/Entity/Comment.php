@@ -177,6 +177,11 @@ class Comment
      */
     private $recommended = 0;
 
+    public function __construct()
+    {
+        $this->setTimeCreated(new \DateTime());
+    }
+
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
@@ -563,6 +568,20 @@ class Comment
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Get Parent Id
+     *
+     * @return Newscoop\Entity\Comment
+     */
+    public function getParentId()
+    {
+        if ($this->parent) {
+            return $this->parent->getId();
+        }
+
+        return null;
     }
 
     /**

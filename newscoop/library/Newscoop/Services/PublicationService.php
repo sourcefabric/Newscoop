@@ -1,12 +1,12 @@
 <?php
 /**
- * @package Newscoop\Gimme
+ * @package Newscoop\NewscoopBundle
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Gimme;
+namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Publication;
@@ -103,11 +103,13 @@ class PublicationService
 
     /**
      * Resolve publication from provided data
-     * @param  Request $request Request object
+     *
+     * @param Request $request Request object
+     *
      * @return Publication $publication Publication entity object
      */
-    public function poblicationResolver(Request $request)
-    {   
+    public function publicationResolver(Request $request)
+    {
         /**
          * By default try get publication alias from requested http_host
          */

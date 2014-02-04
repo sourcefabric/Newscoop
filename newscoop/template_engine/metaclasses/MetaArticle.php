@@ -397,8 +397,8 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getOwner()
     {
-        global $controller;
-        $userService = $controller->getHelper('service')->getService('user');
+        $container = Zend_Registry::get('container');
+        $userService =  $container->getService('user');
         return new MetaUser($userService->find($this->m_dbObject->getProperty('IdUser')));
     }
 
@@ -503,8 +503,8 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCount() {
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $container = Zend_Registry::get('container');
+        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
         $filter = array(
             'status' => 'approved',
             'thread' => $this->m_dbObject->getArticleNumber(),
@@ -519,8 +519,8 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCountAllLang() {
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $container = Zend_Registry::get('container');
+        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
         $filter = array(
             'status' => 'approved',
             'thread' => $this->m_dbObject->getArticleNumber(),
@@ -533,8 +533,8 @@ final class MetaArticle extends MetaDbObject {
     }
 
     protected function getRecommendedCommentCount() {
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $container = Zend_Registry::get('container');
+        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
         $filter = array(
             'status' => 'approved',
             'thread' => $this->m_dbObject->getArticleNumber(),

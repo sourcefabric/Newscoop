@@ -70,6 +70,12 @@ class Commenter
      */
     private $comments;
 
+    public function __construct()
+    {
+        $this->setUrl('');
+        $this->setTimeCreated(new \DateTime());
+    }
+
     /**
      * Set commenter id
      *
