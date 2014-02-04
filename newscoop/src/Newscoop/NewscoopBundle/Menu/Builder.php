@@ -23,7 +23,7 @@ class Builder
     private function preparePrivileges()
     {
         $this->showPublishingEnvironmentMenu = (
-            $this->user->hasPermission('ManageTempl') || 
+            $this->user->hasPermission('ManageTempl') ||
             $this->user->hasPermission('DeleteTempl') ||
             $this->user->hasPermission('ManageArticleTypes') ||
             $this->user->hasPermission('DeleteArticleTypes') ||
@@ -35,16 +35,16 @@ class Builder
         );
 
         $this->showConfigureMenu = (
-            $this->showPublishingEnvironmentMenu || 
+            $this->showPublishingEnvironmentMenu ||
             $this->user->hasPermission('ViewLogs')
         );
 
         $this->showUserMenu = (
-            $this->user->hasPermission('ManageUsers') || 
-            $this->user->hasPermission('DeleteUsers') || 
-            $this->user->hasPermission('ManageSubscriptions') || 
-            $this->user->hasPermission('ManageUserTypes') || 
-            $this->user->hasPermission('ManageReaders') || 
+            $this->user->hasPermission('ManageUsers') ||
+            $this->user->hasPermission('DeleteUsers') ||
+            $this->user->hasPermission('ManageSubscriptions') ||
+            $this->user->hasPermission('ManageUserTypes') ||
+            $this->user->hasPermission('ManageReaders') ||
             $this->user->hasPermission('EditAuthors')
         );
     }
@@ -56,7 +56,7 @@ class Builder
     }
 
     public function mainMenu($modern = false)
-    {   
+    {
         $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
         $this->preparePrivileges();
@@ -133,8 +133,8 @@ class Builder
 
         // Extend menu with events
         $this->container->get('event_dispatcher')->dispatch('newscoop_newscoop.menu_configure', new ConfigureMenuEvent(
-            $this->factory, 
-            $menu, 
+            $this->factory,
+            $menu,
             $this->container->get('router')
         ));
 
@@ -240,7 +240,7 @@ class Builder
 
         // add content/publications
         $publicationService = $this->container->get('content.publication');
-        foreach ($publicationService->findAll() as $publication) {
+        foreach ($publicationService->getPublicationsForMenu()->getResult() as $publication) {
             $pubId = $publication->getId();
             $this->addChild($menu, $publication->getName(), array('uri' => $this->generateZendRoute('admin') . "/issues/?Pub=$pubId"))
                 ->setAttribute('rightdrop', true)
@@ -252,8 +252,8 @@ class Builder
                 $languageId = $issue->getLanguage()->getId();
                 $issueName = sprintf('%d. %s (%s)', $issue->getNumber(), $issue->getName(), $issue->getLanguage()->getName());
                 $this->addChild(
-                    $menu[$publication->getName()], 
-                    $issueName, 
+                    $menu[$publication->getName()],
+                    $issueName,
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                 ))->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
@@ -264,7 +264,7 @@ class Builder
                         $sectionName = sprintf('%d. %s', $section->getNumber(), $section->getName());
                         $this->addChild(
                             $menu[$publication->getName()][$issueName],
-                            $sectionName, 
+                            $sectionName,
                             array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
                         ));
                     }
@@ -273,39 +273,39 @@ class Builder
                             $this->addChild($menu[$publication->getName()][$issueName], null, array())->setAttribute('class', 'divider');
                             $this->addChild(
                                 $menu[$publication->getName()][$issueName],
-                                $translator->trans('More...'), 
+                                $translator->trans('More...'),
                                 array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                             ));
                         } else {
                             $this->addChild(
                                 $menu[$publication->getName()][$issueName],
-                                $translator->trans('More...'), 
+                                $translator->trans('More...'),
                                 array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                             ))->setAttribute('divider_prepend', true);
                         }
                     }
-            }  
+            }
 
             if (count($publication->getIssues()) > 0) {
                 if (!$modern) {
                     $this->addChild($menu[$publication->getName()], null, array())->setAttribute('class', 'divider');
                     $this->addChild(
                         $menu[$publication->getName()],
-                        $translator->trans('More...'), 
+                        $translator->trans('More...'),
                         array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
                     ));
                 } else {
                     $this->addChild(
                         $menu[$publication->getName()],
-                        $translator->trans('More...'), 
+                        $translator->trans('More...'),
                         array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/issues/?Pub=$pubId"
                     ))->setAttribute('divider_prepend', true);
                 }
             }
-        }    
+        }
     }
 
-    private function prepareActionsMenu($menu) 
+    private function prepareActionsMenu($menu)
     {
         $translator = $this->container->get('translator');
 
@@ -374,7 +374,7 @@ class Builder
             'resource' => 'article-type',
             'privilege' => 'manage',
         ));
-        
+
         if ($status) {
             $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 2', array(), 'home')]->setDisplay(false);
         }
@@ -393,7 +393,7 @@ class Builder
             $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 3', array(), 'home')]->setDisplay(false);
         }
 
-        if($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
+        if ($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {
             $status = $this->addChild($menu, $translator->trans('Countries'), array('zend_route' => array(
                     'module' => 'admin',
                     'controller' => 'country',
@@ -457,13 +457,13 @@ class Builder
         if (\CampCache::IsEnabled() && $this->user->hasPermission('ClearCache')) {
             $this->addChild(
                 $menu,
-                $translator->trans('Clear system cache', array(), 'home'), 
+                $translator->trans('Clear system cache', array(), 'home'),
                 array('uri' => $this->generateZendRoute('admin') . "/?clear_cache=yes"
             ));
         }
     }
 
-    private function prepareConfigureMenu($menu) 
+    private function prepareConfigureMenu($menu)
     {
         $translator = $this->container->get('translator');
 
@@ -763,33 +763,36 @@ class Builder
     }
 
     public function preparePluginsMenu($menu)
-    {   
+    {
         $translator = $this->container->get('translator');
-        $root_menu = false;
-        $plugin_infos = \CampPlugin::GetPluginsInfo(true);
+        $rootMenu = false;
+        $pluginInfos = \CampPlugin::GetPluginsInfo(true);
         if ($this->user->hasPermission('plugin_manager')) {
-            $root_menu = true;
+            $rootMenu = true;
         }
 
-        foreach ($plugin_infos as $info) {
+        foreach ($pluginInfos as $info) {
             if (isset($info['menu']['permission']) && $this->user->hasPermission($info['menu']['permission'])) {
-                $root_menu = true;
+                $rootMenu = true;
             } elseif (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
-                foreach ($info['menu']['sub'] as $menu_info) {
-                    if ($this->user->hasPermission($menu_info['permission'])) {
-                        $root_menu = true;
+                foreach ($info['menu']['sub'] as $menuInfo) {
+                    if ($this->user->hasPermission($menuInfo['permission'])) {
+                        $rootMenu = true;
                     }
                 }
             }
         }
 
-        if (!$root_menu) {
-            return;
-        }
-
         $menu->addChild($translator->trans('Plugins'), array('uri' => '#'))
             ->setAttribute('dropdown', true)
             ->setLinkAttribute('data-toggle', 'dropdown');
+
+        if (!$rootMenu) {
+            $menu[$translator->trans('Plugins')]->setDisplay(false);
+
+            return;
+        }
+
 
         if ($this->user->hasPermission('plugin_manager')) {
             $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'), array('zend_route' => array(
@@ -806,21 +809,21 @@ class Builder
             $enabledIds[] = $plugin->getName();
         }
 
-        foreach ($plugin_infos as $info) {
+        foreach ($pluginInfos as $info) {
             if (in_array($info['name'], $enabledIds)) {
-                $parent_menu = false;
+                $parentMenu = false;
 
                 if (isset($info['menu']['permission']) && $this->user->hasPermission($info['menu']['permission'])) {
-                    $parent_menu = true;
+                    $parentMenu = true;
                 } elseif (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
-                    foreach ($info['menu']['sub'] as $menu_info) {
-                        if ($this->user->hasPermission($menu_info['permission'])) {
-                            $parent_menu = true;
+                    foreach ($info['menu']['sub'] as $menuInfo) {
+                        if ($this->user->hasPermission($menuInfo['permission'])) {
+                            $parentMenu = true;
                         }
                     }
                 }
 
-                if ($parent_menu && isset($info['menu'])) {
+                if ($parentMenu && isset($info['menu'])) {
                     $uri = '#';
                     if (isset($info['menu']['path'])) {
                         $uri = $this->generateZendRoute('admin') .'/'. $info['menu']['path'];
@@ -832,14 +835,14 @@ class Builder
                 }
 
                 if (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
-                    foreach ($info['menu']['sub'] as $menu_info) {
-                        if ($this->user->hasPermission($menu_info['permission'])) {
+                    foreach ($info['menu']['sub'] as $menuInfo) {
+                        if ($this->user->hasPermission($menuInfo['permission'])) {
                             $uri = '#';
-                            if (isset($menu_info['path'])) {
-                                $uri = $this->generateZendRoute('admin') .'/'. $menu_info['path'];
+                            if (isset($menuInfo['path'])) {
+                                $uri = $this->generateZendRoute('admin') .'/'. $menuInfo['path'];
                             }
 
-                            $this->addChild($menu[$translator->trans('Plugins')][$translator->trans($info['menu']['label'])], $translator->trans($menu_info['label']), array(
+                            $this->addChild($menu[$translator->trans('Plugins')][$translator->trans($info['menu']['label'])], $translator->trans($menuInfo['label']), array(
                                 'uri' => $uri
                             ));
                         }
@@ -851,30 +854,31 @@ class Builder
         return $menu;
     }
 
-    protected function addChild($menu, $name, $element) {
-        if(array_key_exists('resource', $element) && array_key_exists('privilege', $element)) {
+    protected function addChild($menu, $name, $element)
+    {
+        if (array_key_exists('resource', $element) && array_key_exists('privilege', $element)) {
             if (!$this->hasPermission($element['resource'], $element['privilege'])) {
                 return false;
             }
         }
 
-        if(array_key_exists('zend_route', $element)) {
-            $element['uri'] = $this->generateZendRoute($element['zend_route']['module'], $element); 
+        if (array_key_exists('zend_route', $element)) {
+            $element['uri'] = $this->generateZendRoute($element['zend_route']['module'], $element);
         }
-        
+
         if (is_object($menu)) {
             return $menu->addChild($name, $element);
         }
     }
 
-    private function hasPermission($resource, $action) 
+    private function hasPermission($resource, $action)
     {
         return $this->user->hasPermission(null, $resource, $action);
     }
 
-    private function generateZendRoute($module, $element = array()) 
+    private function generateZendRoute($module, $element = array())
     {
-        if(!array_key_exists('zend_route', $element)) {
+        if (!array_key_exists('zend_route', $element)) {
             $element['zend_route'] = array();
         }
 
@@ -883,17 +887,17 @@ class Builder
         $controller = array_key_exists('controller', $zendRouteParams) == true ? $zendRouteParams['controller'] : null;
         $action = array_key_exists('action', $zendRouteParams) == true ? $zendRouteParams['action'] : null;
         $module = array_key_exists('module', $zendRouteParams) == true ? $zendRouteParams['module'] : $module;
-        $reset_params = array_key_exists('reset_params', $zendRouteParams) == true ? $zendRouteParams['reset_params'] : true;
+        $resetParams = array_key_exists('reset_params', $zendRouteParams) == true ? $zendRouteParams['reset_params'] : true;
 
-        $get_params = '';
-        if (count($_GET) > 0 && !$reset_params) {
-            $get_params = '?'.http_build_query($_GET);
+        $getParams = '';
+        if (count($_GET) > 0 && !$resetParams) {
+            $getParams = '?'.http_build_query($_GET);
         }
 
         return $this->container->get('zend_router')->assemble(array(
             'controller' => $controller,
             'action' => $action,
             'module' => $module
-        ) + $params, 'default', $reset_params).$get_params;
+        ) + $params, 'default', $resetParams).$getParams;
     }
 }

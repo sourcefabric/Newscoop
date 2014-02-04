@@ -60,8 +60,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             }, error_reporting());
         }
 
-        require_once APPLICATION_PATH . "/../admin-files/init_content.php";
-
         if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
             CampCache::singleton()->clear('user');
             unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
