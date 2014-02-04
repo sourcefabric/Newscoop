@@ -56,4 +56,14 @@ class PublicationService
         return $this->orm->getRepository('Newscoop\Entity\Publication')
             ->findAll();
     }
+
+    public function getPublicationsForMenu()
+    {
+        return $this->orm->getRepository('Newscoop\Entity\Publication')
+            ->createQueryBuilder('p')
+            ->select('p', 'i', 's')
+            ->leftJoin('p.issues', 'i')
+            ->leftJoin('i.sections', 's')
+            ->getQuery();
+    }
 }

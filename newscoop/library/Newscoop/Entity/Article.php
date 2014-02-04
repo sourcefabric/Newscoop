@@ -8,12 +8,13 @@
 namespace Newscoop\Entity;
 
 use DateTime;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
+use Newscoop\Entity\Attachment;
 
 /**
  * Article entity
@@ -839,6 +840,7 @@ class Article
      * Set webcode
      *
      * @param Newscoop\Entity\Webcode $webcode
+     *
      * @return void
      */
     public function setWebcode($webcode)
@@ -853,6 +855,10 @@ class Article
      */
     public function getWebcode()
     {
+        if (!$this->webcode) {
+            return null;
+        }
+
         return $this->webcode->getWebcode();
     }
 
@@ -1096,6 +1102,10 @@ class Article
      */
     public function getAttachments()
     {
+        if (count($this->attachments) == 0) {
+            return null;
+        }
+
         return $this->attachments;
     }
 
@@ -1109,6 +1119,20 @@ class Article
     public function setAttachments($attachments)
     {
         $this->attachments = $attachments;
+
+        return $this;
+    }
+
+    /**
+     * Setter for attachments
+     *
+     * @param Attachment $attachment
+     *
+     * @return self
+     */
+    public function addAttachment(Attachment $attachment)
+    {
+        $this->attachments->add($attachment);
 
         return $this;
     }

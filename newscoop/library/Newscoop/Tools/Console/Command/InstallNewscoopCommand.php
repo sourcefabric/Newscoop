@@ -32,7 +32,7 @@ class InstallNewscoopCommand extends Console\Command\Command
     {
         $this
             ->setName('newscoop:install')
-            ->setDescription('Update composer.json with plugins after Newscoop upgrade.')
+            ->setDescription('Install newscoop with command line')
             ->addArgument('alias', InputArgument::OPTIONAL, 'Newscoop instance alias', 'newscoop.dev')
             ->addOption('fix', null, InputOption::VALUE_NONE, 'If set we will try to fix chmods')
             ->addOption('database_server_name', null, InputOption::VALUE_OPTIONAL, 'Database host', 'localhost')

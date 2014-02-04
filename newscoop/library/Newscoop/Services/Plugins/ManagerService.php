@@ -91,7 +91,7 @@ class ManagerService
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .'  --prefer-dist --no-dev');
+        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require --no-update ' . $pluginName .':' . $version .' && php composer.phar update ' . $pluginName .'  --prefer-dist --no-dev -n');
 
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {

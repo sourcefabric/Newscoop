@@ -7,11 +7,12 @@
 
 namespace Newscoop\Image;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article Image
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ImageRepository")
  * @ORM\Table(name="ArticleImages")
  */
 class ArticleImage implements ImageInterface
@@ -54,11 +55,12 @@ class ArticleImage implements ImageInterface
      * @param Newscoop\Image\LocalImage $image
      * @param bool $isDefault
      */
-    public function __construct($articleNumber, LocalImage $image, $isDefault = false)
+    public function __construct($articleNumber, LocalImage $image, $isDefault = false, $number = 1)
     {
         $this->articleNumber = (int) $articleNumber;
         $this->image = $image;
         $this->isDefault = (bool) $isDefault;
+        $this->number = $number;
     }
 
     /**
@@ -140,5 +142,29 @@ class ArticleImage implements ImageInterface
     public function isDefault()
     {
         return $this->isDefault;
+    }
+
+    /**
+     * Sets the value of number.
+     *
+     * @param int $number the number
+     *
+     * @return self
+     */
+    public function setNumber($number)
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of number.
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
     }
 }

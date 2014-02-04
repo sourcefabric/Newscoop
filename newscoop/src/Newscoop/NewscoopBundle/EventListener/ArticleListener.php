@@ -8,14 +8,14 @@
 
 namespace Newscoop\NewscoopBundle\EventListener;
 
-use Newscoop\NewscoopBundle\ArticleService;
+use Newscoop\Services\ArticleService;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 
 /**
  * Run publication resolver on request
  */
 class ArticleListener
-{   
+{
     /**
      * Article service
      * @var ArticleService
@@ -30,7 +30,7 @@ class ArticleListener
     {
         $this->articleService = $articleService;
     }
-    
+
     public function onRequest(GetResponseEvent $event)
     {
         $pos = strpos($_SERVER['REQUEST_URI'], '_profiler');
