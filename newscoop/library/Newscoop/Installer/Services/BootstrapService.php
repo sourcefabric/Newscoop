@@ -10,6 +10,8 @@ namespace Newscoop\Installer\Services;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 /**
  * Bootstrap installer service
@@ -91,5 +93,25 @@ class BootstrapService
         }
 
         return true;
+    }
+
+    /**
+     * Reload themes reditions in datbase
+     */
+    public function reloadRenditions()
+    {
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
+        $reloadRenditions = new Process("$php $newscoopConsole renditions:reload", null, null, null, 300);
+        $reloadRenditions->run();
+        if (!$reloadRenditions->isSuccessful()) {
+            throw new \RuntimeException('An error occurred when executing the Reload renditions command.');
+        }
     }
 }

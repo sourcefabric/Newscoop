@@ -123,7 +123,7 @@ class DatabaseService
      * @param Connection $connection
      * @param string     $host
      */
-    public function installSampleData($connection, $host)
+    public function installSampleData($connection)
     {
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
         $errors = $this->importDB($sqlFile, $connection);
@@ -133,8 +133,6 @@ class DatabaseService
 
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
         $errors = $this->importDB($sqlFile, $connection);
-
-        $connection->executeQuery('UPDATE Aliases SET Name=?', array($host));
     }
 
     /**

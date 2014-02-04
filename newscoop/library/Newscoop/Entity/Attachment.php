@@ -480,7 +480,7 @@ class Attachment
     {
         return $this->description;
     }
-    
+
     /**
      * Return the relative URL to the attached image.
      *
