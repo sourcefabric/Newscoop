@@ -32,6 +32,7 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     // gets the context variable
     $campsite = $p_smarty->getTemplateVars('gimme');
 
+    $view = Zend_Registry::get('view');
     $url = $campsite->url;
     $url->uri_parameter = "";
     $template = null;
@@ -46,12 +47,15 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     } elseif (is_numeric($url->get_parameter('tpl'))) {
         $template = $campsite->default_template;
     }
+
     if (!isset($p_params['submit_button'])) {
         $p_params['submit_button'] = 'Submit';
     }
+
     if (!isset($p_params['html_code']) || empty($p_params['html_code'])) {
         $p_params['html_code'] = '';
     }
+
     if (!isset($p_params['button_html_code']) || empty($p_params['button_html_code'])) {
         $p_params['button_html_code'] = '';
     }
@@ -59,24 +63,29 @@ function smarty_block_login_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     if (isset($template)) {
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
     }
-    $html = "<form name=\"login\" action=\"" . $url->uri_path . "\" method=\"post\" "
+
+    $html = "<form name=\"login\" action=\"" . $view->url(array(
+        'controller' => 'auth',
+        'action' => 'index'), 'default') . "\" method=\"POST\" "
     . $p_params['html_code'] . ">\n";
+
     if (isset($template)) {
         $html .= "<input type=\"hidden\" name=\"tpl\" value=\"".$template->identifier."\" />\n";
     }
+
     foreach ($campsite->url->form_parameters as $param) {
         if ($param['name'] == 'tpl') {
             continue;
         }
+
         $html .= '<input type="hidden" name="'.$param['name']
         .'" value="'.htmlentities($param['value'])."\" />\n";
     }
+
     $html .= $p_content;
     $html .= "<input type=\"submit\" name=\"f_login\" value=\""
     .smarty_function_escape_special_chars($p_params['submit_button'])
     ."\" ".$p_params['button_html_code']." />\n</form>\n";
 
     return $html;
-} // fn smarty_block_login_form
-
-?>
+}

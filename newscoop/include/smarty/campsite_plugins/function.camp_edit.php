@@ -43,6 +43,9 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
 
     $object = strtolower($p_params['object']);
     $attribute = strtolower($p_params['attribute']);
+    if ($attribute === 'uname') {
+        $attribute = 'email';
+    }
 
     switch ($object) {
     case 'user':
@@ -56,12 +59,12 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
         
         $passwdFields = array('password','passwordagain');
         $txtAreaFields = array('interests','improvements','text1','text2','text3');
-        $otherFields = array('name', 'uname', 'email', 'city', 'str_address', 'state',
+        $otherFields = array('name', 'email', 'city', 'str_address', 'state',
         'phone', 'fax', 'contact', 'second_phone', 'postal_code', 'employer', 'position',
         'how', 'languages', 'field1', 'field2', 'field3', 'field4', 'field5');
 
         if (in_array($attribute, $passwdFields)) {
-            $html = '<input type="password" name="f_user_'.$attribute.'" size="32" '
+            $html = '<input type="password" name="'.$attribute.'" size="32" '
                 .'maxlength="32" '.$p_params['html_code'].' value="'
                 .smarty_function_escape_special_chars($fieldValue).'" />';
         } elseif (in_array($attribute, $txtAreaFields)) {
@@ -72,7 +75,7 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
                 .smarty_function_escape_special_chars($fieldValue).'</textarea>';
         } elseif (in_array($attribute, $otherFields)) {
             $length = substr($row['Type'], strpos($row['Type'], '(') + 1, -1);
-            $html = '<input type="text" name="f_user_'.$attribute
+            $html = '<input type="text" name="'.($attribute === 'email' ? $attribute : 'f_user_' . $attribute)
                 .'" size="'.($length > 32 ? 32 : $length)
                 .'" maxlength="'.$length.'" '
                 .'value="'.smarty_function_escape_special_chars($fieldValue).'" ';
@@ -89,10 +92,10 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     case 'login':
         if ($attribute == 'password') {
             $fieldType = 'password';
-        } elseif ($attribute == 'uname') {
+        } elseif ($attribute == 'email') {
             $fieldType = 'text';
         }
-        $html = '<input type="'.$fieldType.'" name="f_login_'.$attribute
+        $html = '<input type="'.$fieldType.'" name="'.(in_array($attribute, array('email', 'password')) ? $attribute : 'f_login_' . $attribute)
             .'" maxlength="32" size="10" '.$p_params['html_code'].' />';
         break;
 
