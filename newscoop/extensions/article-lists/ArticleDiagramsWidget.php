@@ -14,6 +14,13 @@
  */
 class ArticleDiagramsWidget extends Widget
 {
+    /** @setting */
+    protected $article_type = "news";
+
+    /** @setting */
+    protected $api_prefix = "api";
+
+
     public function render()
     {
         include_once dirname(__FILE__) . '/diagrams.phtml';

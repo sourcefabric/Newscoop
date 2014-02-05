@@ -83,3 +83,13 @@ services:
         arguments:  ["@router"]
         tags:
             - { name: jms_serializer.handler, type: comments_link, direction: serialization, format:json, method:serializeToJson }
+    newscoop.gimme.serializer.article_recommended_comments_count_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\CommentsCountHandler
+        arguments:  ["@comment"]
+        tags:
+            - { name: jms_serializer.handler, type: recommended_comments_count, direction: serialization, format:json, method:getRecomendedCommentsCount }
+    newscoop.gimme.serializer.article_comments_count_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\CommentsCountHandler
+        arguments:  ["@comment"]
+        tags:
+            - { name: jms_serializer.handler, type: comments_count, direction: serialization, format:json, method:getCommentsCount }

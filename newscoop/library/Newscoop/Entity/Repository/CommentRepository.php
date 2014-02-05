@@ -33,11 +33,13 @@ class CommentRepository extends DatatableSource
 
     /**
      * Get comments for article
-     * @param  int $article  Article number
-     * @param  string $language Language code in format "en" for example.
+     *
+     * @param int    $article  Article number
+     * @param string $language Language code in format "en" for example.
+     *
      * @return Doctrine\ORM\Query           Query
      */
-    public function getArticleComments($article, $language)
+    public function getArticleComments($article, $language, $recommended = false)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -51,6 +53,48 @@ class CommentRepository extends DatatableSource
                 'thread' => $article,
                 'language' => $languageId->getId()
             ));
+
+        if ($recommended) {
+            $queryBuilder->andWhere('c.recommended = 1');
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get all comments query
+     *
+     * @return Query
+     */
+    public function getComments()
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c');
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get single comment query
+     *
+     * @param int $id
+     *
+     * @return Query
+     */
+    public function getComment($id)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id);
 
         $query = $queryBuilder->getQuery();
 
