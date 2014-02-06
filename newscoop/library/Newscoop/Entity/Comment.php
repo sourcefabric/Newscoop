@@ -10,13 +10,15 @@ namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Comment\Commenter;
+use Newscoop\Search\DocumentInterface;
+use DateTime;
 
 /**
  * Comment entity
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
-class Comment
+class Comment implements DocumentInterface
 {
     private $allowedEmpty = array( 'br', 'input', 'image' );
 
@@ -99,6 +101,16 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      })
+     * @var Newscoop\Entity\Article
+     */
+    private $article;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
@@ -153,7 +165,7 @@ class Comment
      */
     private $time_created;
 
-    /*
+    /**
      * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
@@ -223,6 +235,29 @@ class Comment
     public function getArticleNumber()
     {
         return $this->article_num;
+    }
+
+    /**
+     * Set article
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return void
+     */
+    public function setArticle(Article $article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 
     /**
@@ -773,11 +808,14 @@ class Comment
      * Set indexed
      *
      * @param DateTime $indexed
-     * @return void
+     *
+     * @return self
      */
-    public function setIndexed(\DateTime $indexed = null)
+    public function setIndexed(DateTime $indexed = null)
     {
         $this->indexed = $indexed;
+
+        return self;
     }
 
     /**
