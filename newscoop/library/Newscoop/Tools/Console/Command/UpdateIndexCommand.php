@@ -7,13 +7,15 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console;
+use Newscoop\Tools\Console\Command\AbstractIndexCommand;
 
 /**
- * Index Update Command
+ * Index update command
  */
-class UpdateIndexCommand extends Console\Command\Command
+class UpdateIndexCommand extends AbstractIndexCommand
 {
     /**
      * @see Console\Command\Command
@@ -21,9 +23,11 @@ class UpdateIndexCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-            ->setName('index:update')
-            ->setDescription('Update Search Index.')
-            ->addArgument('limit', InputArgument::OPTIONAL, 'Articles batch size limit', 10);
+        ->setName('index:update')
+        ->setDescription('Update Search Index.')
+        ->addArgument('type', InputArgument::OPTIONAL, 'Types to index', 'all')
+        ->addArgument('limit', InputArgument::OPTIONAL, 'Articles batch size limit', 50)
+        ->setHelp("");
     }
 
     /**
@@ -31,13 +35,33 @@ class UpdateIndexCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        if ($this->getApplication()->getKernel()->getContainer()->hasService('search.indexer.article')) {
-            $indexer = $this->getApplication()->getKernel()->getContainer()->getService('search.indexer.article');
-            $result = $indexer->updateIndex($input->getArgument('limit'));
+        // This is needed to surpress STRICT errors, else everything will FAIL :'(
+        error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);
 
-            $output->writeln(sprintf('Indexed %s articles.', $result));
+        global $g_ado_db;
+        $container = $this->getApplication()->getKernel()->getContainer();
+        $g_ado_db = $container->get('doctrine.adodb');
+
+        $type = $input->getArgument('type');
+        $indexers = $this->getIndexers();
+
+        if ($type !== 'all' && !array_key_exists($type, $indexers)) {
+
+            $output->writeln('<error>Invalid value for parameter type specified.</error> Valid values are: all, '
+                . implode(', ', array_keys($indexers)));
         } else {
-            $output->writeln('Indexer is not configured.');
+
+            if ($type === 'all') {
+                foreach ($indexers as $name => $indexer) {
+                    $output->writeln('Running indexer on '.$name.'.');
+                    $indexer->update($input->getArgument('limit'));
+                }
+            } else {
+                $output->writeln('Running indexer on '.$type.'.');
+                $indexers[$type]->update($input->getArgument('limit'));
+            }
+
+            $output->writeln('Search Index updated.');
         }
     }
 }
