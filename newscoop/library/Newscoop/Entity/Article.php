@@ -616,6 +616,17 @@ class Article implements DocumentInterface
     }
 
     /**
+     * Set date
+     *
+     * @param DateTime $updated
+     * @return void
+     */
+    public function setDate(DateTime $date)
+    {
+        $this->date = $date;
+    }
+
+    /**
      * Set data
      *
      * @param array $data

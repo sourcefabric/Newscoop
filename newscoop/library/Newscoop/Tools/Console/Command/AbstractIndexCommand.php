@@ -7,9 +7,9 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console;
 
 /**
  * Base Index Command
@@ -17,17 +17,22 @@ use Symfony\Component\Console\Input\InputArgument,
 abstract class AbstractIndexCommand extends Console\Command\Command
 {
     /**
-     * Get all indexers
+     * Get all search services for indexable documents
      *
      * @return array
      */
     protected function getIndexers()
     {
-        return array(
-            'articles' => $this->getHelper('container')->getService('search_indexer_article'),
-            'comments' => $this->getHelper('container')->getService('search_indexer_comment'),
-            'users' => $this->getHelper('container')->getService('search_indexer_user'),
-            'twitter' => $this->getHelper('container')->getService('search_indexer_twitter'),
-        );
+        $container = $this->getApplication()->getKernel()->getContainer();
+        $servicIds = $container->getServiceIds();
+        $indexingServices = array();
+
+        foreach ($servicIds AS $serviceId) {
+            if (strpos($serviceId, 'indexer.') === false) continue;
+
+            $indexingServices[$serviceId] = $container->get($serviceId);
+        }
+
+        return $indexingServices;
     }
 }

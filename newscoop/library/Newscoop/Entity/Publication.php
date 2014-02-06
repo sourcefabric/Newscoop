@@ -352,7 +352,6 @@ class Publication
     {
         return $this->moderator_from;
     }
-
     public function getCaptchaEnabled()
     {
         return $this->commentsCaptchaEnabled;
@@ -367,7 +366,6 @@ class Publication
     {
         return $this->commentsPublicModerated;
     }
-
     /**
      * Getter for defaultAliasId
      *

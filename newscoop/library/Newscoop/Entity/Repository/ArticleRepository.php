@@ -41,7 +41,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'workflowStatus' => 'Y',
                 'publication' => $publication
             ));
-
+            
         if ($type) {
             $countQueryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);
@@ -69,7 +69,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-
+        
         return $query;
     }
 
@@ -87,21 +87,21 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         if (!is_null($language)) {
             if (!is_numeric($language)) {
-                $languageObject = $em->getRepository('Newscoop\Entity\Language')
-                    ->findOneByCode($language);
+            $languageObject = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
             } else {
                 $languageObject = $em->getRepository('Newscoop\Entity\Language')
                     ->findOneById($language);
             }
 
             if ($languageObject instanceof Newscoop\Entity\Language) {
-                $queryBuilder->andWhere('a.language = :languageId')
+            $queryBuilder->andWhere('a.language = :languageId')
                 ->setParameter('languageId', $languageObject->getId());
-            }
+        }
         }
 
         $query = $queryBuilder->getQuery();
-
+        
         return $query;
     }
 
@@ -139,7 +139,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'count' => $articlesCount
             );
         }
-
+        
         return $query;
     }
 
@@ -163,7 +163,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-
+        
         return $query;
     }
 
@@ -189,7 +189,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-
+        
         return $query;
     }
 
@@ -208,7 +208,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ));
 
         $query = $queryBuilder->getQuery();
-
+ 
         return $query;
     }
 
@@ -277,7 +277,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $articleNumbers = array();
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
-            }
+    }
 
             $qb = $qb->where($qb->expr()->in('a.number',  $articleNumbers));
         }
@@ -301,36 +301,11 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $articleNumbers = array();
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
-            }
+    		}
 
             $qb = $qb->where($qb->expr()->in('a.number',  $articleNumbers));
         }
 
         return $qb->getQuery()->execute();
     }
-
-    // /**
-    //  * Reset articles index
-    //  *
-    //  * @return void
-    //  */
-    // public function resetIndex()
-    // {
-    //     $query = $this->getEntityManager()
-    //         ->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
-    //     $query->execute();
-    // }
-
-    // public function setArticleIndexedNow($article)
-    // {
-    //     $query = $this->getEntityManager()
-    //             ->createQuery("UPDATE Newscoop\Entity\Article a SET a.indexed = :date, a.updated = a.updated WHERE a.number = :number AND a.language = :language")
-    //             ->setParameters(array(
-    //                 'date' => new \DateTime(),
-    //                 'number' => $article->getNumber(),
-    //                 'language' => $article->getLanguageId(),
-    //             ));
-
-    //     $query->execute();
-    // }
 }

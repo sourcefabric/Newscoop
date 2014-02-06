@@ -20,4 +20,5 @@ interface QueryInterface
     public function decodeResponse($responseBody);
 
     public function find(array $filter = array());
+
 }
