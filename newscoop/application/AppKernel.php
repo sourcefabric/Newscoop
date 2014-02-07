@@ -44,7 +44,7 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
-        $cachedPlugins = __DIR__ . '/../plugins/avaiable_plugins.json';
+        $cachedPlugins = __DIR__ . '/../plugins/available_plugins.json';
         if (file_exists($cachedPlugins)) {
             $plugins = json_decode(file_get_contents($cachedPlugins));
             foreach ($plugins as $plugin) {
