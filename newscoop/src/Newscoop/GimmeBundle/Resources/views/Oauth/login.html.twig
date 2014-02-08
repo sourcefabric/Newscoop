@@ -1,0 +1,81 @@
+<html lang="{{ localeFromCookie }}" dir="ltr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Expires" content="now" />
+    <title>{% block admin_title %}{{ Newscoop['site']['title'] }} - {{ 'Login'|trans }}{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ Newscoop['WEBSITE_URL'] }}/images/7773658c3ccbf03954b4dacb029b2229.ico" />
+    <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet_new.css" />
+    <link rel="stylesheet" type="text/css" href="{{ Newscoop['ADMIN_STYLE_URL'] }}/admin_stylesheet.css" />
+
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/campsite.js"></script>
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.config.js"></script>
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.core.js"></script>
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.lang-enUS.js"></script>
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/fValidate/fValidate.validators.js"></script>
+    <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/js/crypt.js"></script>
+</head>
+<body>
+    <form name="login_form" action="{{ path('oauth_login_check') }}{% if app.request.query.has('ajax') %}?ajax=true{% endif %} " method="post">
+        <div class="login_box">
+            {% if not app.request.query.has('ajax') %}
+            <div class="logobox">
+                <img src="{{ Newscoop['ADMIN_IMAGE_BASE_URL'] }}/sign_big.gif" border="0" alt="" />
+            </div>
+            {% endif %}
+            <h2>{{ "Login"|trans }}</h2>
+            <noscript>
+               {{ "Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop."|trans({},'home') }}
+            </noscript>
+
+            <div class="login_error" style="color: #ff2200;">
+            {% if error %}
+                {{ error.message|trans({},'home') }}
+            {% endif %}
+            </div>
+
+            <table border="0" cellspacing="0" cellpadding="0" class="box_table login" width="420">
+                <tr>
+                    <td colspan="2"><span class="light">{{ "Please enter your user name and password"|trans({},'home') }}:</span></td>
+                </tr>
+                <tr>
+                    <td align="right" >
+                        <strong>{{ "User name"|trans({},'home') }}:</strong>
+                    </td>
+                    <td>
+                        <input type="text" value="{{ last_username }}" name="_username" size="32" class="input_text" alt="blank" style="width:250px;" emsg="{{ "Please enter your user name."|trans({},'home') }}" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right"><strong>{{ "Password"|trans }}:</strong></td>
+                    <td>
+                        <input type="password" name="_password" size="32" class="input_text" alt="blank" style="width:250px;" emsg="{{ "Please enter your password."|trans({},'home') }}" />
+                        <input type="hidden" name="_target_path" value="{% if app.request.server.get('REDIRECT_URL') != path('oauth_login') %}{{ app.request.server.get('REDIRECT_URL') }}?{{ app.request.server.get('REDIRECT_QUERY_STRING') }}{% else %}/admin{% endif %}" />
+                    </td>
+                </tr>
+
+                <tr class="buttonBlock2">
+                    <td>
+                    {% if getSystemPref('PasswordRecovery') == 'Y' %}
+                        <a href="{{ Newscoop['WEBSITE_URL'] }}/admin/password-recovery">{{ 'Forgot your password?'|trans({},'home') }}</a>
+                    {% endif %}
+                    </td>
+                    <td>
+                        <noscript>
+                          <input type="submit" class="button" name="Login" value="{{ 'Login'|trans }}" disabled />
+                        </noscript>
+                        <script type="text/javascript">
+                            document.write('<input type="submit" class="button" name="Login" value="{{ 'Login'|trans }}"/>');
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+
+    <div class="footer">
+        <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists. 
+        <br />
+        &copy; {{ NewscoopVersion.getCopyrightYear() }} 
+        <a href="{{ NewscoopVersion.getWebURL() }}" target="_blank">{{ NewscoopVersion.getOrganization() }}</a> {{ NewscoopVersion.getPackage() }} is distributed under {{ NewscoopVersion.getLicense() }}   
+    </div>
+</body>

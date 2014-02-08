@@ -145,7 +145,7 @@ class Comment
      */
     private $time_created;
 
-    /*
+    /**
      * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
@@ -172,6 +172,7 @@ class Comment
     public function __construct()
     {
         $this->setTimeCreated(new \DateTime());
+        $this->setTimeUpdated(new \DateTime());
     }
 
     /**
@@ -254,7 +255,7 @@ class Comment
     public function setTimeUpdated(\DateTime $datetime)
     {
         $this->time_updated = $datetime;
-        // return this for chaining mechanism
+
         return $this;
     }
 

@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Entity;
 
 use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="OAuthAuthCode")
@@ -39,6 +40,13 @@ class AuthCode extends BaseAuthCode
     private $publication;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @var UserInterface
+     */
+    protected $user;
+
+    /**
      * Gets the value of id.
      *
      * @return mixed
@@ -47,7 +55,7 @@ class AuthCode extends BaseAuthCode
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the value of id.
      *
@@ -71,7 +79,7 @@ class AuthCode extends BaseAuthCode
     {
         return $this->client;
     }
-    
+
     /**
      * Sets the value of client.
      *
@@ -95,7 +103,7 @@ class AuthCode extends BaseAuthCode
     {
         return $this->publication;
     }
-    
+
     /**
      * Sets the value of publication.
      *
@@ -106,6 +114,30 @@ class AuthCode extends BaseAuthCode
     public function setPublication(\Newscoop\Entity\Publication $publication)
     {
         $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of user.
+     *
+     * @return \Newscoop\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Sets the value of user.
+     *
+     * @param \Newscoop\Entity\User $user the user
+     *
+     * @return self
+     */
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
 
         return $this;
     }

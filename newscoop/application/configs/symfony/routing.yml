@@ -16,10 +16,17 @@ fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 fos_oauth_server_authorize:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+oauth_login:
+    pattern:   /oauth/v2/auth_login
+    defaults:  { _controller: NewscoopGimmeBundle:Oauth:login }
+oauth_login_check:
+    pattern:   /oauth/v2/auth_login_check
 gimme:
     type: rest
     prefix: /api
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
+admin_login_check:
+    pattern:   /admin/login_check
 NelmioApiDocBundle:
     resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
     prefix:   /documentation/rest-api

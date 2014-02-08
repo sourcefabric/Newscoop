@@ -109,17 +109,18 @@ class ArticlesController extends FOSRestController
      *         }
      *     },
      *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language string"}
      *     }
      * )
      *
-     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("LINK")
      * @View(statusCode=201)
      *
      * @return Form
      */
-    public function linkArticleAction(Request $request, $number)
+    public function linkArticleAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication();

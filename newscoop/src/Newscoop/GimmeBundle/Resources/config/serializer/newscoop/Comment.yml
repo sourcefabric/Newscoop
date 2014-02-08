@@ -19,6 +19,16 @@ Newscoop\Entity\Comment:
             type: string
             groups: ["details", "list"]
             serialized_name: message
+        time_updated:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details", "list"]
+            serialized_name: updated
+            access_type: public_method
+            accessor:
+                getter: getTimeUpdated
+            since_version: 1.1
         time_created:
             expose: true
             read_only: true

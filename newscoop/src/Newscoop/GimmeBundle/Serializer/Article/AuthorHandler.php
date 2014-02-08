@@ -23,7 +23,7 @@ class AuthorHandler
     }
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $articleAuthors, $type)
-    {   
+    {
         if (count($articleAuthors) == 0) {
             return null;
         }

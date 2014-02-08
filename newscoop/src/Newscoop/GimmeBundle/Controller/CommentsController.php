@@ -13,9 +13,14 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Doctrine\ORM\EntityNotFoundException;
+use Newscoop\GimmeBundle\Form\Type\CommentType;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Newscoop\Entity\Comment;
 
 class CommentsController extends FOSRestController
 {
@@ -137,5 +142,135 @@ class CommentsController extends FOSRestController
         $articleComments = $paginator->paginate($articleComments);
 
         return $articleComments;
+    }
+
+    /**
+     * Create new comment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when comment created succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
+     * )
+     *
+     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"})
+     * @Method("POST")
+     * @View()
+     *
+     * @return Form
+     */
+    public function createCommentAction(Request $request, $articleNumber, $languageCode)
+    {
+        return $this->processForm($request, null, $articleNumber, $languageCode);
+    }
+
+    /**
+     * Update comment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when comment updated succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
+     * )
+     *
+     * @Route("/comments/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/article/{article}/{language}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Method("POST|PATCH")
+     * @View()
+     *
+     * @return Form
+     */
+    public function updateCommentAction(Request $request, $commentId)
+    {
+        return $this->processForm($request, $commentId);
+    }
+
+    /**
+     * Process comment form
+     *
+     * @param Request $request
+     * @param integer $comment
+     * @param integer $articleNumber
+     * @param string  $languageCode
+     *
+     * @return Form
+     */
+    private function processForm($request, $comment = null, $articleNumber = null, $languageCode = null)
+    {
+        $publicationService = $this->get('newscoop.publication_service');
+        $publication = $publicationService->getPublication();
+
+        if (
+            false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') &&
+            false === (bool) $publication->getPublicCommentsEnabled()
+        ) {
+            throw new AccessDeniedException('Public comments are disabled');
+        }
+
+        $em = $this->container->get('em');
+        $commentService = $this->container->get('comment');
+
+        if (!$comment) {
+            $comment = new Comment();
+            $statusCode = 201;
+        } else {
+            $statusCode = 200;
+            $comment = $em->getRepository('Newscoop\Entity\Comment')->findOneById($comment);
+
+            if (!$comment) {
+                throw new EntityNotFoundException('Result was not found.');
+            }
+        }
+
+        $form = $this->createForm(new CommentType(), array());
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $attributes = $form->getData();
+            $user = $this->getUser();
+
+            if ($comment->getId() !== null) {
+                // update comment
+                $comment = $commentService->updateComment($comment, $attributes);
+            } else {
+                // create new comment
+                if ($user) {
+                    $attributes['user'] = $user->getId();
+                } else if (!$attributes['name']) {
+                    throw new InvalidArgumentException('When user is not logged in, then commenter name is required.');
+                }
+
+                if ($articleNumber) {
+                    $attributes['thread'] = $articleNumber;
+                }
+
+                if ($languageCode) {
+                    $attributes['language'] = $languageCode;
+                }
+
+                $attributes['time_created'] = new \DateTime();
+                $attributes['ip'] = $request->getClientIp();
+
+                $comment = $commentService->save($comment, $attributes);
+            }
+
+            $this->get('ladybug')->log($comment);
+
+            $response = new Response();
+            $response->setStatusCode($statusCode);
+
+            $response->headers->set(
+                'X-Location',
+                $this->generateUrl('newscoop_gimme_comments_getcomment', array(
+                    'id' => $comment->getId(),
+                ), true)
+            );
+
+            return $response;
+        }
+
+        return $form;
     }
 }

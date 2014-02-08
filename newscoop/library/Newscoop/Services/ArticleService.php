@@ -99,8 +99,8 @@ class ArticleService
             $articleInfo['section'] = $uriExplode[3];
 
             $article = $this->em->getRepository('Newscoop\Entity\Article')
-                                ->getArticle($articleInfo['id'], $articleInfo['lang'])
-                                ->getOneOrNullResult();
+                ->getArticle($articleInfo['id'], $articleInfo['lang'])
+                ->getOneOrNullResult();
 
             if (!is_null($article)) {
                 // fill the article meta data

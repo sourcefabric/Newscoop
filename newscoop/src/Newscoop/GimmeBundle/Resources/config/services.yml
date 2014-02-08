@@ -49,6 +49,19 @@ services:
         arguments: ["@em"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 1025 }
+
+    newscoop.gimme.authorize.form_type:
+        class: Newscoop\GimmeBundle\Form\Type\AuthorizeFormType
+    newscoop.gimme.authorize.form:
+        class: Symfony\Component\Form\Form
+        factory_service: form.factory
+        factory_method: createNamed
+        arguments: ["newscoop_gimme_oauth_authorize", "@newscoop.gimme.authorize.form_type"]
+    newscoop.gimme.authorize.form_handler:
+        class: Newscoop\GimmeBundle\Form\Handler\AuthorizeFormHandler
+        arguments:  ["@newscoop.gimme.authorize.form", "@request", "@security.context", "@fos_oauth_server.server"]
+        scope:        request
+
     newscoop.gimme.serializer.article_author_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\AuthorHandler
         arguments: ["@router"]
