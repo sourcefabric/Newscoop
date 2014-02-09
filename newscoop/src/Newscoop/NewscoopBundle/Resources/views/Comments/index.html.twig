@@ -43,15 +43,8 @@
         </fieldset>
         </form>
     </div>
-    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
-        <div class="form-group">
-            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
-        </div>
-        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
-        {{ form_rest(searchForm) }}
-    </form>
-    <div id="actionExtender">
-        <fieldset class="status-actions">
+    <div id="showComments">
+        <fieldset class="filters" style="height: 95px">
             <legend>{{ 'comments.label.actions'|trans }}</legend>
             <select style="width: 300px" class="form-control input-sm actions">
                 <option value="">{{ 'comments.label.selectstatus'|trans }}</option>
@@ -62,6 +55,14 @@
             </select>
         </fieldset>
     </div>
+    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
+        <div class="form-group">
+            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
+        </div>
+        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
+        {{ form_rest(searchForm) }}
+    </form>
+
     <div class="row" id="paging">
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
