@@ -29,7 +29,7 @@ class RenditionsHandler
     }
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
-    {   
+    {
         $articleRenditions = $this->renditionService->getArticleRenditions($data->number);
         $renditions = $this->renditionService->getRenditions();
         $media = array();
@@ -37,14 +37,14 @@ class RenditionsHandler
         if (count($renditions) == 0) {
             return null;
         }
-        
+
         foreach ($renditions as $renditionName => $rendition) {
             if (!$articleRenditions->offsetExists($rendition)) {
                 continue;
             }
 
             $image = $this->imageService->find($articleRenditions[$rendition]->getImage()->getId());
-            $imageSrc = $this->imageService->getSrc($image->getPath(), $rendition->getWidth(), $rendition->getHeight());
+            $imageSrc = $this->imageService->getSrc($image->getPath(), $rendition->getWidth(), $rendition->getHeight(), 'crop');
             $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
                 'src' => $imageSrc
             ), 'image');

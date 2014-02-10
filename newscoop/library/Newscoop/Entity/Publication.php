@@ -367,5 +367,28 @@ class Publication
     {
         return $this->commentsPublicModerated;
     }
-}
 
+    /**
+     * Gets the value of public_enabled.
+     *
+     * @return bool
+     */
+    public function getPublicCommentsEnabled()
+    {
+        return $this->public_enabled;
+    }
+
+    /**
+     * Sets the value of public_enabled.
+     *
+     * @param bool $public_enabled the public_enabled
+     *
+     * @return self
+     */
+    public function setPublicCommentsEnabled($public_enabled)
+    {
+        $this->public_enabled = $public_enabled;
+
+        return $this;
+    }
+}

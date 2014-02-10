@@ -86,10 +86,10 @@ final class CampTemplate extends Smarty
 
         $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',
-            APPLICATION_PATH . '/../themes/unassigned/system_templates/',
+            APPLICATION_PATH . '/../themes/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
         ));
-        
+
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
@@ -112,7 +112,7 @@ final class CampTemplate extends Smarty
                 $dirs[] = $directoryPath;
             }
         }
-        
+
         //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";

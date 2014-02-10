@@ -111,6 +111,7 @@ services:
     newscoop_newscoop.publication_service:
         class: Newscoop\Services\PublicationService
         arguments:  ["@em"]
+
     newscoop_newscoop.listener.publication:
         class: Newscoop\NewscoopBundle\EventListener\PublicationListener
         arguments:  ["@newscoop_newscoop.publication_service"]
@@ -120,6 +121,7 @@ services:
     newscoop_newscoop.article_service:
         class: Newscoop\Services\ArticleService
         arguments:  ["@em"]
+
     newscoop_newscoop.listener.article:
         class: Newscoop\NewscoopBundle\EventListener\ArticleListener
         arguments:  ["@newscoop_newscoop.article_service"]

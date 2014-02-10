@@ -11,6 +11,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Comment;
+use Newscoop\Services\PublicationService;
 
 /**
  * Comment service
@@ -22,88 +23,79 @@ class CommentService
 
     /**
      * @param Doctrine\ORM\EntityManager $em
+     * @param PublicationService         $publicationService
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, PublicationService $publicationService)
     {
         $this->em = $em;
+        $this->publicationService = $publicationService;
     }
 
-    private function comment_create($params)
+    /**
+     * Save (create new/update) comment (with commenter)
+     *
+     * @param Comment $comment
+     * @param array   $attributes
+     *
+     * @return Comment
+     */
+    public function save($comment, $attributes)
     {
-        $comment = $this->find($params['id']);
+        $publication = $this->publicationService->getPublication();
 
-        $commenter = $comment->getCommenter();
-        $user = $commenter->getUser();
-
-        if (!isset($user)) {
-            return;
+        // If the user was unknown (public comment) and public comments were moderated
+        // or the user was known (subscriber comment) and subscriber comments were moderated
+        // set the comment status to 'pending'. Otherwise, set the status to 'approved'.
+        if (
+            (!is_null($userId) && $publication->getCommentsSubscribersModerated()) ||
+            (is_null($userId) && $publication->getCommentsPublicModerated())
+        ){
+            $attributes['status'] = "pending";
+        } else {
+            $attributes['status'] = "approved";
         }
 
-        $attribute_value = $user->getAttribute("comment_delivered");
-        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
+        $comment = $this->em->getRepository('Newscoop\Entity\Comment')
+            ->save($comment, $attributes);
 
-        $user->addAttribute("comment_delivered", $attribute_value);
+        // save persisted comment object
+        $this->em->flush();
 
-        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
-                    ->getPointValueForAction("comment_delivered");
-
-        $points = $user->getPoints();
-
-        $user->setPoints($points+$points_action);
+        return $comment;
     }
 
-    private function comment_recommended($params)
+    /**
+     * Update comment
+     *
+     * @param Comment $comment
+     * @param array   $attributes
+     *
+     * @return Comment
+     */
+    public function updateComment($comment, $attributes)
     {
-        $comment = $this->find($params['id']);
+        $comment = $this->em->getRepository('Newscoop\Entity\Comment')
+            ->update($comment, $attributes);
 
-        $commenter = $comment->getCommenter();
-        $user = $commenter->getUser();
+        // save persisted comment object
+        $this->em->flush();
 
-        if (!isset($user)) {
-            return;
-        }
-
-        $attribute_value = $user->getAttribute("comment_recommended");
-        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
-
-        $user->addAttribute("comment_recommended", $attribute_value);
-
-        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
-                    ->getPointValueForAction("comment_recommended");
-
-        $points = $user->getPoints();
-
-        $user->setPoints($points+$points_action);
+        return $comment;
     }
 
-    private function comment_update($params)
+    /**
+     * Mark comment as removed
+     *
+     * @param Comment $comment
+     *
+     * @return Comment
+     */
+    public function remove($comment)
     {
-        $comment = $this->find($params['id']);
-    }
+        $comment->setStatus('deleted');
+        $this->em->flush();
 
-    private function comment_delete($params)
-    {
-        $comment = $this->find($params['id']);
-
-        $commenter = $comment->getCommenter();
-        $user = $commenter->getUser();
-
-        if (!isset($user)) {
-            return;
-        }
-
-        $attribute_value = $user->getAttribute("comment_deleted");
-        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
-
-        $user->addAttribute("comment_deleted", $attribute_value);
-
-        //have to remove points for a deleted comment.
-        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
-                    ->getPointValueForAction("comment_delivered");
-
-        $points = $user->getPoints();
-
-        $user->setPoints($points-$points_action);
+        return $comment;
     }
 
     /**
@@ -299,6 +291,7 @@ class CommentService
      * Get comments statistics for articles
      *
      * @param mixed $ids
+     *
      * @return array
      */
     public function getArticleStats($ids)
@@ -351,9 +344,10 @@ class CommentService
      * Get articles comment counts
      *
      * @param array $ids
+     *
      * @return array
      */
-    private function getCommentCounts(array $ids, $recommended = false)
+    public function getCommentCounts(array $ids, $recommended = false, $all = false)
     {
         $qb = $this->getRepository()
             ->createQueryBuilder('c')
@@ -361,10 +355,12 @@ class CommentService
             ->andWhere('c.article_num IN (:ids)')
             ->andWhere('c.status = :status');
 
-        if ($recommended) {
-            $qb->andWhere('c.recommended = 1');
-        } else {
-            $qb->andWhere('c.recommended <> 1');
+        if (!$all) {
+            if ($recommended) {
+                $qb->andWhere('c.recommended = 1');
+            } else {
+                $qb->andWhere('c.recommended <> 1');
+            }
         }
 
         return $qb->groupBy('c.article_num')
@@ -372,5 +368,83 @@ class CommentService
             ->setParameter('status', Comment::STATUS_APPROVED)
             ->getQuery()
             ->getResult();
+    }
+
+    private function comment_create($params)
+    {
+        $comment = $this->find($params['id']);
+
+        $commenter = $comment->getCommenter();
+        $user = $commenter->getUser();
+
+        if (!isset($user)) {
+            return;
+        }
+
+        $attribute_value = $user->getAttribute("comment_delivered");
+        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
+
+        $user->addAttribute("comment_delivered", $attribute_value);
+
+        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
+                    ->getPointValueForAction("comment_delivered");
+
+        $points = $user->getPoints();
+
+        $user->setPoints($points+$points_action);
+    }
+
+    private function comment_recommended($params)
+    {
+        $comment = $this->find($params['id']);
+
+        $commenter = $comment->getCommenter();
+        $user = $commenter->getUser();
+
+        if (!isset($user)) {
+            return;
+        }
+
+        $attribute_value = $user->getAttribute("comment_recommended");
+        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
+
+        $user->addAttribute("comment_recommended", $attribute_value);
+
+        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
+                    ->getPointValueForAction("comment_recommended");
+
+        $points = $user->getPoints();
+
+        $user->setPoints($points+$points_action);
+    }
+
+    private function comment_update($params)
+    {
+        $comment = $this->find($params['id']);
+    }
+
+    private function comment_delete($params)
+    {
+        $comment = $this->find($params['id']);
+
+        $commenter = $comment->getCommenter();
+        $user = $commenter->getUser();
+
+        if (!isset($user)) {
+            return;
+        }
+
+        $attribute_value = $user->getAttribute("comment_deleted");
+        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
+
+        $user->addAttribute("comment_deleted", $attribute_value);
+
+        //have to remove points for a deleted comment.
+        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
+                    ->getPointValueForAction("comment_delivered");
+
+        $points = $user->getPoints();
+
+        $user->setPoints($points-$points_action);
     }
 }

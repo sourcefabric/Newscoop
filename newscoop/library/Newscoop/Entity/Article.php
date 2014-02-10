@@ -132,6 +132,16 @@ class Article
     private $comments;
 
     /**
+     * @var int
+     */
+    private $comments_count;
+
+    /**
+     * @var int
+     */
+    private $recommended_comments_count;
+
+    /**
      * @var string
      */
     private $comments_link;

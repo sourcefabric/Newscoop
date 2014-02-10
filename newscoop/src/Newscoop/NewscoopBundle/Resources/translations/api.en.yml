@@ -75,7 +75,7 @@ api:
       resources: 'Public Resources'
       clients: 'Clients'
     resources:
-      info: 'By default all resources are protected by firewall, but you can choose read resources to make them public for everyone.'
+      info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
       add_button: 'Add Client'
     clients:
       table:

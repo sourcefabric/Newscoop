@@ -22,7 +22,7 @@ class SystemPrefController extends Controller
      * @Template()
      */
     public function indexAction(Request $request)
-    {   
+    {
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
 
@@ -40,12 +40,12 @@ class SystemPrefController extends Controller
 
         $hasManagePermission = false;
 
-        if(\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+        if (\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
             $hasManagePermission = true;
         }
 
         $max_upload_filesize = $preferencesService->MaxUploadFileSize;
-        if(empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
+        if (empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
             $preferencesService->MaxUploadFileSize = ini_get('upload_max_filesize');
         }
 
@@ -110,7 +110,7 @@ class SystemPrefController extends Controller
             'smtp_port' => $preferencesService->SMTPPort,
             'email_from' => $preferencesService->EmailFromAddress,
             'image_ratio' => $preferencesService->EditorImageRatio,
-            'image_width' => (int)$preferencesService->EditorImageResizeWidth,     
+            'image_width' => (int)$preferencesService->EditorImageResizeWidth,
             'image_height' => (int)$preferencesService->EditorImageResizeHeight,
             'zoom' => $preferencesService->EditorImageZoom,
             'use_replication_host' => $preferencesService->DBReplicationHost,
@@ -200,7 +200,6 @@ class SystemPrefController extends Controller
                 }
                 //geolocation
                 $geolocationSettings = $this->geolocation($data['center_latitude_default'], $data['center_longitude_default'], $geoLocation, $translator);
-                
                 if ($geolocationSettings instanceof RedirectResponse) {
                     return $geolocationSettings;
                 }
@@ -231,8 +230,6 @@ class SystemPrefController extends Controller
                     $this->smtpConfiguration($data['smtp_host'], $data['smtp_port']);
                     // Image resizing for WYSIWYG editor
                     $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
-                    // Replication
-                    
                     // template filter
                     $this->templateFilter($data['template_filter']);
                 }
@@ -533,5 +530,5 @@ class SystemPrefController extends Controller
         if (strip_tags($mysql_client_command_path)) {
             $preferencesService->MysqlClientCommandPath = strip_tags($mysql_client_command_path);
         }
-    }            
+    }
 }

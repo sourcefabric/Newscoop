@@ -61,6 +61,24 @@ Newscoop\Entity\Article:
             serialized_name: authors
             accessor:
                 getter: getArticleAuthors
+        comments_count:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: comments_count
+            serialized_name: comments_count
+            accessor:
+                getter: getView
+            since_version: 1.1
+        recommended_comments_count:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: recommended_comments_count
+            serialized_name: recommended_comments_count
+            accessor:
+                getter: getView
+            since_version: 1.1
         comments_link:
             expose: true
             read_only: true
@@ -87,6 +105,7 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: attachments
+            since_version: 1.1
         fields:
             expose: true
             read_only: true

@@ -35,7 +35,12 @@ security:
 
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
-            anonymous: true
+            provider: user_db
+            form_login:
+                use_forward: true
+                login_path: /oauth/v2/auth_login
+                check_path: /oauth/v2/auth_login_check
+                success_handler: newscoop_newscoop.security.authentication.success_handler
 
         api:
             pattern:    ^/api
@@ -43,6 +48,7 @@ security:
             stateless:  true
             anonymous:  true
 
+        # backup endpoint for our rest api (in case of exisitng one under /api)
         content-api:
             pattern:    ^/content-api
             fos_oauth:  true
@@ -64,4 +70,4 @@ security:
 
     access_control:
         - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/oauth/v2/auth, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

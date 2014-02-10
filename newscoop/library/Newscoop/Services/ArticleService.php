@@ -77,24 +77,30 @@ class ArticleService
 
     /**
      * Resolve article from provided data
-     * @param  Request $request Request object
+     * @param Request $request Request object
+     *
      * @return Article $article Article entity object
      */
     public function articleResolver(Request $request)
     {
         // get the article information from the URL
         // explode the information and use it to fetch the article
-        $uri_explode = explode('/', $request->server->get('REQUEST_URI'));
+        $uriExplode = explode('/', $request->server->get('REQUEST_URI'));
+
+        // Articles are allways under newscoop_zendbridge_bridge_index_3 route
+        if ($request->attributes->get('_route') != 'newscoop_zendbridge_bridge_index_3') {
+            return null;
+        }
 
         // if key 4 does not exist, it's probably not an article
-        if (array_key_exists(4, $uri_explode)) {
-            $articleInfo['id'] = $uri_explode[4];
-            $articleInfo['lang'] = $uri_explode[1];
-            $articleInfo['section'] = $uri_explode[3];
+        if (array_key_exists(4, $uriExplode)) {
+            $articleInfo['id'] = $uriExplode[4];
+            $articleInfo['lang'] = $uriExplode[1];
+            $articleInfo['section'] = $uriExplode[3];
 
             $article = $this->em->getRepository('Newscoop\Entity\Article')
-                                ->getArticle($articleInfo['id'], $articleInfo['lang'])
-                                ->getOneOrNullResult();
+                ->getArticle($articleInfo['id'], $articleInfo['lang'])
+                ->getOneOrNullResult();
 
             if (!is_null($article)) {
                 // fill the article meta data
