@@ -38,7 +38,7 @@ class FinishService
      */
     public function generateProxies()
     {
-        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
+        $this->filesystem->chmod($this->newscoopDir.'/cache/prod/annotations', 777);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
@@ -175,15 +175,5 @@ class FinishService
         $stmt->bindValue(1, $password);
         $stmt->bindValue(2, $config['user_email']);
         $stmt->execute();
-
-        $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
-
-        if (file_exists($this->newscoopDir.'/conf/installation.php')) {
-            $this->filesystem->remove($this->newscoopDir.'/conf/installation.php');
-        }
-
-        if (file_exists($this->newscoopDir.'/conf/upgrading.php')) {
-            $this->filesystem->remove($this->newscoopDir.'/conf/upgrading.php');
-        }
     }
 }

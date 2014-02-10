@@ -4,6 +4,7 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_counta
 require_once($GLOBALS['g_campsiteDir']. "/classes/ArticleType.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$publications = Publication::GetPublications();
 
 global $Campsite;
 
@@ -34,8 +35,8 @@ if ($f_article_language <= 0) {
 	$f_destination_section_number = 0;
 }
 
-if (count($Campsite['publications']) == 1) {
-    $singlePublication = camp_array_peek($Campsite['publications']);
+if (count($publications) == 1) {
+    $singlePublication = camp_array_peek($publications);
     $f_destination_publication_id = $singlePublication->getPublicationId();
     $f_article_language = $singlePublication->getDefaultLanguageId();
 }
@@ -166,9 +167,9 @@ if (sizeof($allArticleTypes) == 0) {
 		<TR>
 			<TD VALIGN="middle" ALIGN="RIGHT" style="padding-left: 20px;"><?php  echo $translator->trans('Publication'); ?>: </TD>
 			<TD valign="middle" ALIGN="LEFT">
-				<?php if ( count($Campsite["publications"]) == 0) { ?>
+				<?php if ( count($publications) == 0) { ?>
 					<SELECT class="input_select" DISABLED><OPTION><?php  echo $translator->trans('No publications'); ?></option></SELECT>
-				<?php } elseif (count($Campsite["publications"]) == 1) {
+				<?php } elseif (count($publications) == 1) {
 				    echo htmlspecialchars($singlePublication->getName());
 				    ?>
 				    <input type="hidden" name="f_destination_publication_id" value="<?php p($singlePublication->getPublicationId()); ?>">
@@ -177,7 +178,7 @@ if (sizeof($allArticleTypes) == 0) {
     				<SELECT NAME="f_destination_publication_id" class="input_select" ONCHANGE="if (this.options[this.selectedIndex].value != <?php p($f_destination_publication_id); ?>) {this.form.submit();}" <?php if ($f_article_language == 0) { echo "disabled"; } ?>>
     				<OPTION VALUE="0"><?php  echo $translator->trans('---Select publication---'); ?></option>
     				<?php
-    				foreach ($Campsite["publications"] as $tmpPublication) {
+    				foreach ($publications as $tmpPublication) {
     					camp_html_select_option($tmpPublication->getPublicationId(), $f_destination_publication_id, $tmpPublication->getName());
     				}
     				?>

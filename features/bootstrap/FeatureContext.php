@@ -31,7 +31,7 @@ class FeatureContext extends BehatContext
         );
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
 
-        $url = str_replace('api/', '', $parameters['base_url']).'oauth/v2/token?client_id=1_svdg45ew371vtsdgd29fgvwe5v&grant_type=client_credentials&client_secret=h48fgsmv0due4nexjsy40jdf3sswwr';
+        $url = str_replace($parameters['api_prefix'].'/', '', $parameters['base_url']).'oauth/v2/token?client_id=1_svdg45ew371vtsdgd29fgvwe5v&grant_type=client_credentials&client_secret=h48fgsmv0due4nexjsy40jdf3sswwr';
         $this->browser->call($url, 'GET', array());
         $token = json_decode($this->browser->getLastResponse()->getContent(), true);
 

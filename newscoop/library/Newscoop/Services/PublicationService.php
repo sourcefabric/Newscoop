@@ -103,11 +103,13 @@ class PublicationService
 
     /**
      * Resolve publication from provided data
-     * @param  Request $request Request object
+     *
+     * @param Request $request Request object
+     *
      * @return Publication $publication Publication entity object
      */
     public function publicationResolver(Request $request)
-    {   
+    {
         /**
          * By default try get publication alias from requested http_host
          */

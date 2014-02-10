@@ -5,9 +5,9 @@ $view = $GLOBALS['controller']->view; ?>
 <script type="text/javascript" src="<?php echo $view->baseUrl('/js/raphael-min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $view->baseUrl('/js/morris.min.js'); ?>"></script>
 <script type="text/javascript">
-  var api = new NewscoopRestApi(<?php echo json_encode($view->serverUrl($view->baseUrl('/api'))); ?>);
+  var api = new NewscoopRestApi(<?php echo json_encode($view->serverUrl($view->baseUrl('/'.$this->getSetting('api_prefix')))); ?>);
 
-  api.getResource('/articles', {'type': 'news'})
+  api.getResource('/articles', {'type': '<?php echo $this->getSetting('article_type') ?>'})
     .setItemsPerPage(20)
     .setOrder({'published': 'desc'})
     .makeRequest(function(res){

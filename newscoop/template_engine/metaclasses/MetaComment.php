@@ -21,14 +21,15 @@ final class MetaComment extends MetaDbObject
 
 	private $m_realName = false;
 
-    public function __construct($p_messageId = null)
+    public function __construct($messageId = null)
     {
         $container = \Zend_Registry::get('container');
         $repository = $container->getService('em')->getRepository('Newscoop\Entity\Comment');
-        if(is_null($p_messageId))
+        if(is_null($messageId)) {
             $this->m_dbObject = $repository->getPrototype();
-        else
-            $this->m_dbObject = $repository->find($p_messageId);
+        } else{
+            $this->m_dbObject = $repository->find($messageId);
+        }
 
         $this->m_properties = self::$m_baseProperties;
 

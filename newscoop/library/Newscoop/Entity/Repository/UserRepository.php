@@ -680,8 +680,6 @@ class UserRepository extends EntityRepository
                 ->setParameter(2, $criteria->attributes[1]);
         }
 
-
-
         $list = new ListResult();
         $countQb = clone $qb;
         $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();

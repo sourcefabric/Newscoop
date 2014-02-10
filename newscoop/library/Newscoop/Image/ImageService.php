@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Newscoop\Image\ImageInterface as NewscoopImageInterface;
 use Newscoop\Image\LocalImage;
 use Newscoop\Entity\User;
+use Newscoop\Exception\ResourcesConflictException;
 
 /**
  * Image Service
@@ -147,6 +148,15 @@ class ImageService
 
         if (file_exists($image->getThumbnailPath())) {
             unlink($this->config['thumbnail_path'] . $image->getThumbnailPath(true));
+        }
+
+        $articleImages = $this->orm->getRepository('Newscoop\Image\ArticleImage')
+            ->getArticleImagesForImage($image)
+            ->getResult();
+
+        foreach ($articleImages as $articleImage) {
+            \ArticleImage::RemoveImageTagsFromArticleText($articleImage->getArticleNumber(), $articleImage->getNumber());
+            $this->orm->remove($articleImage);
         }
 
         $this->orm->remove($image);
@@ -302,15 +312,34 @@ class ImageService
             $this->orm->flush($image);
         }
 
+        if ($this->getArticleImage($articleNumber, $image->getId())) {
+            throw new ResourcesConflictException("Image already attached to article", 409);
+        }
+
+        $imagesCount = $this->getArticleImagesCount($articleNumber);
         $articleImage = new ArticleImage(
             $articleNumber,
             $image,
-            $defaultImage || $this->getArticleImagesCount($articleNumber) === 0
+            $defaultImage || $imagesCount === 0,
+            $imagesCount+1
         );
         $this->orm->persist($articleImage);
         $this->orm->flush($articleImage);
 
         return $articleImage;
+    }
+
+    /**
+     * Remove image from article
+     *
+     * @param ArticleImage $articleImage
+     */
+    public function removeArticleImage(ArticleImage $articleImage)
+    {
+        \ArticleImage::RemoveImageTagsFromArticleText($articleImage->getArticleNumber(), $articleImage->getNumber());
+
+        $this->orm->remove($articleImage);
+        $this->orm->flush();
     }
 
     /**
@@ -439,7 +468,7 @@ class ImageService
 
         return $query
             ->setParameter('articleNumber', $articleNumber)
-            ->getScalarResult();
+            ->getSingleScalarResult();
     }
 
     /**

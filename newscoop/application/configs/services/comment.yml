@@ -1,7 +1,7 @@
 services:
     comment:
         class:      Newscoop\Services\CommentService
-        arguments:  ["@em"]
+        arguments:  ["@em", "@newscoop.publication_service"]
         tags:
             -  { name: kernel.event_listener, event: comment.create, method: update }
             -  { name: kernel.event_listener, event: comment.update, method: update }

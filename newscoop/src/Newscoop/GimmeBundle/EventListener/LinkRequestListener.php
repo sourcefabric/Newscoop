@@ -100,18 +100,18 @@ class LinkRequestListener
 
             try {
                 $result = call_user_func_array($controller, $arguments);
-                // By convention the controller action must return an array
-                if (!is_array($result)) {
+                // Our api returns objects for single resources
+                if (!is_object($result)) {
                     continue;
-                }ladybug_dump($result);die;
+                }
 
-                // The key of first item is discarded
-                $links[$idx] = current($result);
+                $links[$idx] = $result;
             } catch (\Exception $e) {
+                $links[$idx] = $e;
+
                 continue;
             }
         }
-
 
         $event->getRequest()->attributes->set('links', $links);
         $this->urlMatcher->getContext()->setMethod($requestMethod);

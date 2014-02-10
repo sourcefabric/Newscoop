@@ -19,6 +19,16 @@ Newscoop\Entity\Comment:
             type: string
             groups: ["details", "list"]
             serialized_name: message
+        time_updated:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details", "list"]
+            serialized_name: updated
+            access_type: public_method
+            accessor:
+                getter: getTimeUpdated
+            since_version: 1.1
         time_created:
             expose: true
             read_only: true
@@ -30,7 +40,7 @@ Newscoop\Entity\Comment:
             read_only: true
             groups: ["details", "list"]
             type: string
-            accessor: 
+            accessor:
                 getter: getCommenterName
                 setter: setCommenterName
             serialized_name: author
@@ -38,19 +48,37 @@ Newscoop\Entity\Comment:
             expose: true
             read_only: true
             type: integer
-            accessor: 
+            accessor:
                 getter: getParentId
             groups: ["details", "list"]
             serialized_name: parent
+            since_version: 1.1
         thread_level:
             expose: true
             read_only: true
             type: integer
             groups: ["details", "list"]
             serialized_name: thread_level
+            since_version: 1.1
         thread_order:
             expose: true
             read_only: true
             type: integer
             groups: ["details", "list"]
             serialized_name: thread_order
+            since_version: 1.1
+        recommended:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: recommended
+            since_version: 1.1
+        status:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: status
+            access_type: public_method
+            since_version: 1.1

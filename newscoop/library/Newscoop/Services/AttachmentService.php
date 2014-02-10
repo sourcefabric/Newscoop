@@ -16,6 +16,7 @@ use Newscoop\Entity\Article;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Router;
 
 /**
  * Attachment service
@@ -25,11 +26,13 @@ class AttachmentService
     /**
      * @param array         $config
      * @param EntityManager $em
+     * @param Router        $router
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $em)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $em, Router $router)
     {
         $this->config = $config;
         $this->em = $em;
+        $this->router = $router;
     }
 
     /**
@@ -127,14 +130,24 @@ class AttachmentService
         $this->em->flush();
     }
 
-    public function addAttachmentToArticle(Attachment $attachment, Article $article)
+    public function addAttachmentToArticle(Article $article, Attachment $attachment)
     {
-
+        $article->addAttachment($attachment);
+        $this->em->flush();
     }
 
-    public function removeAttachmentFormArticle(Attachment $attachment, Article $article)
+    public function removeAttachmentFormArticle(Article $article, Attachment $attachment)
     {
+        $article->getAttachments()->removeElement($attachment);
+        $this->em->flush();
+    }
 
+    public function getAttachmentUrl($attachment)
+    {
+        return $this->router->generate('newscoop_newscoop_attachments_downloadattachment', array(
+            'id' => $attachment->getId(),
+            'name' => $attachment->getName()
+        ), true);
     }
 
     private function fillAttachment(Attachment $attachment, $attributes)
