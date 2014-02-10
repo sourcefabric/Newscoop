@@ -8,6 +8,7 @@
 namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Newscoop\Gimme\Json;
@@ -44,8 +45,6 @@ class AllowOriginListener
         }
 
         $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, PATCH, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Headers', '*');
-        
 
         if (in_array('*', $alowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
@@ -58,5 +57,19 @@ class AllowOriginListener
         }
 
         $event->setResponse($response);
+    }
+
+    /**
+     * @param GetResponseEvent $event
+     */
+    public function onKernelRequest(GetResponseEvent $event)
+    {
+        $request = $event->getRequest();
+        $response = new Response();
+
+        if ($request->getMethod() == 'OPTIONS') {
+            $response->headers->set('Access-Control-Allow-Headers', $request->headers->get('Access-Control-Request-Headers'));
+            $event->setResponse($response);
+        }
     }
 }

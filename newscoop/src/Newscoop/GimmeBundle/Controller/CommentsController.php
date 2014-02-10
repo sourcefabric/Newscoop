@@ -290,7 +290,7 @@ class CommentsController extends FOSRestController
                 $attributes['time_created'] = new \DateTime();
                 $attributes['ip'] = $request->getClientIp();
 
-                $comment = $commentService->save($comment, $attributes);
+                $comment = $commentService->save($comment, $attributes, $user);
             }
 
             $response = new Response();

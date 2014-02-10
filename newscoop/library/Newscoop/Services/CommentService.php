@@ -39,7 +39,7 @@ class CommentService
      *
      * @return Comment
      */
-    public function save($comment, $attributes)
+    public function save($comment, $attributes, $userId = null)
     {
         $publication = $this->publicationService->getPublication();
 
