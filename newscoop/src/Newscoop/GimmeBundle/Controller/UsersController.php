@@ -141,12 +141,20 @@ class UsersController extends FOSRestController
             throw new AccessDeniedException("Wrong password");
         }
 
-        $userService->loginUser($user);
+        $token = $userService->loginUser($user);
+        $session = $request->getSession();
+        $session->set('_security_frontend_area', serialize($token));
+
+        $zendAuth = \Zend_Auth::getInstance();
+        $authAdapter = $this->get('auth.adapter');
+        $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
+        $zendAuth->authenticate($authAdapter);
+
         $response->setStatusCode(200);
         $response->headers->set(
             'X-Location',
             $this->generateUrl('newscoop_gimme_users_getuser', array(
-                    'id' => $user->getId()
+                'id' => $user->getId()
             ), true)
         );
 
@@ -170,6 +178,8 @@ class UsersController extends FOSRestController
     {
         $userService = $this->container->get('user');
         $userService->logoutUser();
+        $zendAuth = \Zend_Auth::getInstance();
+        $zendAuth->clearIdentity();
     }
 
     /**
@@ -195,7 +205,7 @@ class UsersController extends FOSRestController
     {
         $email = $request->get('email');
         $userService = $this->container->get('user');
-        $emailService = $this->container->get('sendemail');
+        $emailService = $this->container->get('email');
         $zendRouter = $this->container->get('zend_router');
         $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $response = new Response();
@@ -219,7 +229,7 @@ class UsersController extends FOSRestController
 
             return $response;
         } else {
-            $emailService->sendConfirmationToken($user, $publicationMetadata['alias']['name']);
+            $emailService->sendConfirmationToken($user);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
@@ -258,14 +268,13 @@ class UsersController extends FOSRestController
             'email' => $request->get('email'),
         ));
 
-        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $secured = 'http://www.';
         if ($request->isSecure()) {
             $secured = 'https://www.';
         }
 
         if (!empty($user) && $user->isActive()) {
-            $this->container->get('sendemail')->sendPasswordRestoreToken($user, $publicationMetadata['alias']['name']);
+            $this->container->get('email')->sendPasswordRestoreToken($user);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',

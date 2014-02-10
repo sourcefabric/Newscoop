@@ -434,10 +434,12 @@ class UserService
      */
     public function loginUser(User $user)
     {
-        //$providerKey = $this->container->getParameter('fos_user.firewall_name');
+        $providerKey = 'frontend_area';
         $roles = $user->getRoles();
         $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
         $this->security->setToken($token);
+
+        return $token;
     }
 
     /**

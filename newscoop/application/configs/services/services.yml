@@ -55,10 +55,7 @@ services:
         arguments:  ["@em"]
     email:
         class:      Newscoop\Services\EmailService
-        arguments:  ["@view", "@user.token"]
-    sendemail:
-        class:      Newscoop\Services\SendEmailService
-        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service", "@newscoop.placeholders.service"]
+        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service", "@newscoop.placeholders.service", "@newscoop_newscoop.publication_service"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
