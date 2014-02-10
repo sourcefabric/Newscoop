@@ -43,16 +43,20 @@ class AllowOriginListener
             return false;
         }
 
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, PATCH, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Headers', '*');
+        
+
         if (in_array('*', $alowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
-            $event->setResponse($response);
         } else {
             foreach ($alowedHosts as $host) {
                 if ($request->server->get('HTTP_ORIGIN') == $host) {
                     $response->headers->set('Access-Control-Allow-Origin', $host);
-                    $event->setResponse($response);
                 }
             }
         }
+
+        $event->setResponse($response);
     }
 }

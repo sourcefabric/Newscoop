@@ -506,7 +506,7 @@ class CommentRepository extends DatatableSource
     }
 
     /**
-     * Delete commenter commnets
+     * Delete commenter comments
      *
      * @param Newscoop\Entity\Commenter $commenter
      */
@@ -520,7 +520,7 @@ class CommentRepository extends DatatableSource
     }
 
     /**
-     * Delete commenter commnets
+     * Delete commenter comments
      *
      * @param array $commenters
      */
