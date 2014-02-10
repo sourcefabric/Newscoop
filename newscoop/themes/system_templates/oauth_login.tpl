@@ -82,7 +82,7 @@
 
   <body>
     <div id="container">
-        <form class="form-signin" action="/oauth/v2/auth_login_check" method="post">
+        <form class="form-signin" action="{{ generate_url route="oauth_login_check" }}" method="post">
             <img src="/themes/system_templates/img/newscoop_logo_big.png" />
             <h1 class="form-signin-heading text-muted">Sign In to {{ $gimme->publication->name }}</h1>
 
@@ -92,7 +92,7 @@
             {{ /if }}
             </div>
 
-            <input type="text" class="form-control" placeholder="Login" value="{{ $last_username }}" name="_username" required="" autofocus="">
+            <input type="text" class="form-control" placeholder="Login" value="{{ $lastUsername }}" name="_username" required="" autofocus="">
             <input type="password" class="form-control" placeholder="Password" name="_password" required="">
             <input type="hidden" name="_target_path" value="{{ if $targetPath }}{{ $targetPath }}{{ else }}/oauth/v2/auth{{ /if }}" />
             <a class="forgot-password pull-left" href="{{ $view->url(['controller' => 'auth', 'action' => 'password-restore']) }}">Forgot password?</a>

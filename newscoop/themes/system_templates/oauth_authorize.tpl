@@ -28,11 +28,11 @@
   <body>
     <div id="container">
         <form class="form-signin" action="{{ generate_url route="fos_oauth_server_authorize" parameters=[
-            "client_id" => {{ $smarty.get.client_id }}, 
-            "response_type" => {{ $smarty.get.response_type }},
-            "redirect_uri" => {{ $smarty.get.redirect_uri }},
-            "state" => {{ $smarty.get.state }},
-            "scope" => {{ $smarty.get.scope }}
+            "client_id" => {{ get_request_param name="client_id" default="" }},
+            "response_type" => {{ get_request_param name="response_type" default="" }},
+            "redirect_uri" => {{ get_request_param name="redirect_uri" default="" }},
+            "state" => {{ get_request_param name="state" default="" }},
+            "scope" => {{ get_request_param name="scope" default="" }}
         ] absolute=true}}" method="post">
             <img src="/themes/system_templates/img/newscoop_logo_big.png" />
             <h1 class="form-signin-heading text-muted" style="text-align: center; margin-bottom: 20px;">Grant access to: <br />"{{ $client->getName() }}"</h1>

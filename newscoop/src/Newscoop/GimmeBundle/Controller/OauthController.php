@@ -26,11 +26,11 @@ class OauthController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         } else {
-            $error = '';
+            $error = false;
         }
 
         if ($error) {
-            $error = $error->getMessage(); // WARNING! Symfony source code identifies this line as a potential security threat.
+            $error = $error->getMessage();
         }
 
         $lastUsername = (null === $session) ? '' : $session->get(SecurityContext::LAST_USERNAME);
