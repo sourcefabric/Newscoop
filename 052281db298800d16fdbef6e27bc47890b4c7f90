@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by terwey at 2014-02-04T22:43:44Z
+
+How about:
+
+```
+GET /comments/{commentid} # single comment
+GET /comments/article/{articleid}/{languageid}/ # for all
+GET /comments/article/{articleid}/{languageid}/recommended # for recommended
+GET /comments/article/{articleid}/{languageid}/handpicked # for handpicked (not yet implemented)
+
+POST /comments/article/{articleid}/{languageid}/ # insert new comment
+
+PATCH /comments/{commentid}
+PATCH /comments/article/{articleid}/{languageid}/{commentid}
+
+DELETE /comments/{commentid}
+DELETE /comments/article/{articleid}/{languageid}/{commentid}
+```
+
+Now we can only post Comments on an Article, but in the future we maybe want to allow commenting on Playlists etc. Then you can do
+
+```
+GET /comments/playlist/{playlistid}/{languageid}/ # for all
+```
+
+---------------------------------------------------------------------------
+
+by terwey at 2014-02-10T13:20:57Z
+
+Looks alright
