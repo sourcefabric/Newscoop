@@ -41,10 +41,6 @@ function smarty_function_get_request_param($params, &$smarty)
         throw new \Newscoop\NewscoopException('Parameter "name" is required');
     }
 
-    if (count($params) > 2) {
-        throw new \Newscoop\NewscoopException('To many parameters');
-    }
-
     $default = array_key_exists('default', $params)? $params['default'] : '';
 
     return $request->get($params['name'], $default);

@@ -7,13 +7,13 @@
  */
 
 /**
- * Newscoop translate modifier plugin
+ * Newscoop dump modifier plugin
  *
  * Type:     modifier
  * Name:     dump
  * Purpose:  Dump given object
  *
- * @param String to translate
+ * @param Object to dump
  *     $object
  */
 

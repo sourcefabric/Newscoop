@@ -39,7 +39,7 @@ class CommentRepository extends DatatableSource
      *
      * @return Doctrine\ORM\Query           Query
      */
-    public function getArticleComments($article, $language, $recommended = false)
+    public function getArticleComments($article, $language, $recommended = false, $getDeleted = true)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -58,6 +58,11 @@ class CommentRepository extends DatatableSource
             $queryBuilder->andWhere('c.recommended = 1');
         }
 
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
+
         $query = $queryBuilder->getQuery();
 
         return $query;
@@ -68,12 +73,17 @@ class CommentRepository extends DatatableSource
      *
      * @return Query
      */
-    public function getComments()
+    public function getComments($getDeleted = true)
     {
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
             ->createQueryBuilder('c');
+
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
 
         $query = $queryBuilder->getQuery();
 
@@ -87,7 +97,7 @@ class CommentRepository extends DatatableSource
      *
      * @return Query
      */
-    public function getComment($id)
+    public function getComment($id, $getDeleted = true)
     {
         $em = $this->getEntityManager();
 
@@ -95,6 +105,11 @@ class CommentRepository extends DatatableSource
             ->createQueryBuilder('c')
             ->andWhere('c.id = :id')
             ->setParameter('id', $id);
+
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
 
         $query = $queryBuilder->getQuery();
 

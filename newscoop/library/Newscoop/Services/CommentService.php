@@ -64,13 +64,35 @@ class CommentService
         return $comment;
     }
 
-
+    /**
+     * Update comment
+     *
+     * @param Comment $comment
+     * @param array   $attributes
+     *
+     * @return Comment
+     */
     public function updateComment($comment, $attributes)
     {
         $comment = $this->em->getRepository('Newscoop\Entity\Comment')
             ->update($comment, $attributes);
 
         // save persisted comment object
+        $this->em->flush();
+
+        return $comment;
+    }
+
+    /**
+     * Mark comment as removed
+     *
+     * @param Comment $comment
+     *
+     * @return Comment
+     */
+    public function remove($comment)
+    {
+        $comment->setStatus('deleted');
         $this->em->flush();
 
         return $comment;
@@ -269,6 +291,7 @@ class CommentService
      * Get comments statistics for articles
      *
      * @param mixed $ids
+     *
      * @return array
      */
     public function getArticleStats($ids)
@@ -321,6 +344,7 @@ class CommentService
      * Get articles comment counts
      *
      * @param array $ids
+     *
      * @return array
      */
     public function getCommentCounts(array $ids, $recommended = false, $all = false)
@@ -346,7 +370,7 @@ class CommentService
             ->getResult();
     }
 
-        private function comment_create($params)
+    private function comment_create($params)
     {
         $comment = $this->find($params['id']);
 

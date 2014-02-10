@@ -47,7 +47,7 @@ class CommentsController extends FOSRestController
         $em = $this->container->get('em');
 
         $comments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getComments();
+            ->getComments(false);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $comments = $paginator->paginate($comments, array(
@@ -84,7 +84,7 @@ class CommentsController extends FOSRestController
         $em = $this->container->get('em');
 
         $comment = $em->getRepository('Newscoop\Entity\Comment')
-            ->getComment($id)
+            ->getComment($id, false)
             ->getOneOrNullResult();
 
         if (!$comment) {
@@ -136,7 +136,7 @@ class CommentsController extends FOSRestController
         }
 
         $articleComments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getArticleComments($number, $language, $recommended);
+            ->getArticleComments($number, $language, $recommended, false);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleComments = $paginator->paginate($articleComments);
@@ -185,6 +185,43 @@ class CommentsController extends FOSRestController
     public function updateCommentAction(Request $request, $commentId)
     {
         return $this->processForm($request, $commentId);
+    }
+
+    /**
+     * Delete comment
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when comment removed succesfuly",
+     *         404={
+     *           "Returned when the comment is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"}
+     *     }
+     * )
+     *
+     * @Route("/comments/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/article/{articleNumber}/{languageCode}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Method("DELETE")
+     * @View(statusCode=204)
+     *
+     * @return Form
+     */
+    public function deleteCommentAction(Request $request, $commentId, $articleNumber = null, $languageCode = null)
+    {
+        $commentService = $this->container->get('comment');
+        $em = $this->container->get('em');
+        $comment = $em->getRepository('Newscoop\Entity\Comment')
+            ->getComment($commentId, false)
+            ->getOneOrNullResult();
+
+        if (!$comment) {
+            throw new EntityNotFoundException('Result was not found.');
+        }
+
+        $commentService->remove($comment);
     }
 
     /**
@@ -255,8 +292,6 @@ class CommentsController extends FOSRestController
 
                 $comment = $commentService->save($comment, $attributes);
             }
-
-            $this->get('ladybug')->log($comment);
 
             $response = new Response();
             $response->setStatusCode($statusCode);

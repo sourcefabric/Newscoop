@@ -11,7 +11,7 @@
  *
  * Type:     function
  * Name:     generate_url
- * Purpose:  Sets placeholders
+ * Purpose:  Get url for symfony route
  *
  * @param array
  *     $params Parameters
