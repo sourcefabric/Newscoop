@@ -1,117 +1,171 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\User,
-    Newscoop\Entity\Comment;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
+use Newscoop\Entity\Comment;
+use Newscoop\Entity\Article;
+use Newscoop\NewscoopBundle\Services\SystemPreferencesService;
 
 /**
  * Email service
  */
 class EmailService
 {
-    const CHARSET = 'utf-8';
-    const PLACEHOLDER_SUBJECT = 'subject';
-
-
-    /** @var Zend_View_Abstract */
-    private $view;
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
 
     /** @var Newscoop\Services\UserTokenService */
-    private $tokenService;
+    protected $tokenService;
+
+    /** @var Newscoop\NewscoopBundle\Services\SystemPreferencesService */
+    protected $preferencesService;
+
+    /** @var Swift_Mailer */
+    protected $mailer;
+
+    /** @var Newscoop\Services\TemplatesService */
+    protected $templatesService;
+
+    /** @var Newscoop\Services\PlaceholdersService */
+    protected $placeholdersService;
+
+    /** @var Newscoop\Services\PublicationService */
+    protected $publicationService;
 
     /**
-     * @param Zend_View_Abstract $view
-     * @param UserTokenService $tokenService
+     * @param Doctrine\ORM\EntityManager                                $em
+     * @param Newscoop\Services\UserTokenService                        $tokenService
+     * @param Newscoop\NewscoopBundle\Services\SystemPreferencesService $preferencesService
+     * @param Swift_Mailer                                              $mailer
+     * @param Newscoop\Services\TemplatesService                        $templatesService
+     * @param Newscoop\Services\PlaceholdersService                     $placeholdersService
+     * @param Newscoop\Services\PublicationService                      $publicationService
      */
-    public function __construct(\Zend_View_Abstract $view, UserTokenService $tokenService)
+    public function __construct(
+        EntityManager $em,
+        UserTokenService $tokenService,
+        SystemPreferencesService $preferencesService,
+        \Swift_Mailer $mailer,
+        $templatesService,
+        $placeholdersService,
+        $publicationService
+    )
     {
-        $this->view = $view;
+        $this->em = $em;
         $this->tokenService = $tokenService;
+        $this->preferencesService = $preferencesService;
+        $this->mailer = $mailer;
+        $this->templatesService = $templatesService;
+        $this->placeholdersService = $placeholdersService;
+        $this->publicationService = $publicationService;
     }
 
     /**
      * Send to user email confirmation token
      *
      * @param Newscoop\Entity\User $user
-     * @return void
+     *
+     * @return void|Exception
      */
     public function sendConfirmationToken(User $user)
-    {   
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $message = $this->view->action('confirm', 'email', 'default', array(
-            'user' => $user->getId(),
-            'token' => $this->tokenService->generateToken($user, 'email.confirm'),
-            'format' => null,
-        ));
-
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
+    {
+        $smarty = $this->templatesService->getSmarty();
+        $smarty->assign('user', $user->getId());
+        $smarty->assign('token', $this->tokenService->generateToken($user, 'email.confirm'));
+        $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
+        $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
+        $message = $this->templatesService->fetchTemplate("email_confirm.tpl");
+        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
     }
 
     /**
      * Send password restore token
      *
      * @param Newscoop\Entity\User $user
-     * @return void
+     *
+     * @return void|Exception
      */
     public function sendPasswordRestoreToken(User $user)
-    {   
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $message = $this->view->action('password-restore', 'email', 'default', array(
-            'user' => $user->getId(),
-            'token' => $this->tokenService->generateToken($user, 'password.restore'),
-            'format' => null,
-        ));
+    {
+        $smarty = $this->templatesService->getSmarty();
+        $smarty->assign('user', $user->getId());
+        $smarty->assign('token', $this->tokenService->generateToken($user, 'password.restore'));
+        $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
+        $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
+        $message = $this->templatesService->fetchTemplate("email_password-restore.tpl");
+        $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
+    }
 
-        $this->send($this->view->placeholder(self::PLACEHOLDER_SUBJECT), $message, $user->getEmail(), $preferencesService->EmailFromAddress);
+    /**
+     * Send email
+     *
+     * @param string $placeholder
+     * @param string $message
+     * @param string $to
+     * @param string $from
+     *
+     * @return void
+     */
+    private function send($placeholder, $message, $to, $from = null)
+    {
+        if (empty($from)) {
+            $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();
+        }
+
+        try {
+            $messageToSend = \Swift_Message::newInstance()
+                ->setSubject($placeholder)
+                ->setFrom($from)
+                ->setTo($to)
+                ->setBody($message);
+
+            $this->mailer->send($messageToSend);
+        } catch (\Exception $exception) {
+            throw new \Exception("Error sending email.", 1);
+        }
     }
 
     /**
      * Send comment notification
      *
      * @param Newscoop\Entity\Comment $comment
-     * @param Article $article
-     * @param array $authors
-     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Article $article
+     * @param array                   $authors
+     * @param Newscoop\Entity\User    $user
+     *
      * @return void
      */
-    public function sendCommentNotification(Comment $comment, \Article $article, array $authors, User $user = null)
+    public function sendCommentNotification(Comment $comment, Article $article, array $authors, User $user = null)
     {
-        $emails = array_unique(array_filter(array_map(function($author) { return $author->getEmail(); }, $authors)));
+        $emails = array_unique(array_filter(array_map(function($author) {
+            return $author->getEmail();
+        }, $authors)));
+
         if (empty($emails)) {
             return;
         }
 
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $this->view = $GLOBALS['controller']->view;
+        $smarty = $this->templatesService->getSmarty();
         $uri = \CampSite::GetURIInstance();
-
-        $this->view->placeholder(self::PLACEHOLDER_SUBJECT)->set('New Comment');
         if ($user) {
-            $this->view->username = $user->getUsername();
-        }
-        $this->view->comment = $comment;
-        $this->view->article = $article;
-        $this->view->publication = $uri->getBase();
-        $this->view->articleLink = \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueNumber(), $article->getSectionNumber(), $article->getArticleNumber());
-
-        $message = $this->view->render('email_comment-notify.tpl');
-
-        $mail = new \Zend_Mail(self::CHARSET);
-        $mail->setSubject($this->view->placeholder(self::PLACEHOLDER_SUBJECT));
-        $mail->setBodyHtml($message);
-        $mail->setFrom($user ? $user->getEmail() : $preferencesService->EmailFromAddress);
-
-        foreach ($emails as $email) {
-            $mail->addTo($email);
+            $smarty->assign('username', $user->getUsername());
         }
 
-        $mail->send();
+        $smarty->assign('comment', $comment);
+        $smarty->assign('article', $article);
+        $smarty->assign('publication', $uri->getBase());
+        $smarty->assign('articleLink', \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueId(), $article->getSectionId(), $article->getNumber()));
+
+        $message = $this->templatesService->fetchTemplate("email_comment-notify.tpl");
+        $this->send($this->placeholdersService->get('subject'), $message, $emails, $user ? $user->getEmail() : $this->preferencesService->EmailFromAddress);
     }
 
     /**
@@ -121,33 +175,11 @@ class EmailService
      * @param string $to
      * @param string $subject
      * @param string $message
+     *
      * @return void
      */
     public function sendUserEmail($from, $to, $subject, $message)
     {
         $this->send($subject, $message, $to, $from);
-    }
-
-    /**
-     * Send email
-     *
-     * @param string $subject
-     * @param string $message
-     * @param mixed $tos
-     * @return void
-     */
-    private function send($subject, $message, $tos, $from = null)
-    {   
-        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-        $mail = new \Zend_Mail(self::CHARSET);
-        $mail->setSubject($subject);
-        $mail->setBodyText($message);
-        $mail->setFrom(isset($from) ? $from : $preferencesService->EmailFromAddress);
-
-        foreach ((array) $tos as $to) {
-            $mail->addTo($to);
-        }
-
-        $mail->send();
     }
 }
