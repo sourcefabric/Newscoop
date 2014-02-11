@@ -29,19 +29,19 @@ function smarty_function_get_request_param($params, &$smarty)
     $request = \Zend_Registry::get('container')->get('request');
     $request = $request::createFromGlobals();
 
-    if (count($params) == 0) {
-        return $request;
-    }
-
-    if (array_key_exists('assign', $params)) {
-        $smarty->assign($params['assign'], $request);
-    }
-
     if (!array_key_exists('name', $params) && !array_key_exists('assign', $params)) {
         throw new \Newscoop\NewscoopException('Parameter "name" is required');
+    } elseif (array_key_exists('assign', $params) && count($params) == 1) {
+        $smarty->assign($params['assign'], $request);
+
+        return;
     }
 
-    $default = array_key_exists('default', $params)? $params['default'] : '';
+    $result = $request->get($params['name'], array_key_exists('default', $params)? $params['default'] : '');
 
-    return $request->get($params['name'], $default);
+    if (array_key_exists('assign', $params)) {
+        $smarty->assign($params['assign'], $result);
+    } else {
+        return $result;
+    }
 }
