@@ -19,6 +19,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
  * Users Rest API Controller
@@ -179,10 +180,16 @@ class UsersController extends FOSRestController
      */
     public function logoutAction(Request $request)
     {
-        $this->get('security.context')->setToken(null);
+        $token = new AnonymousToken(null, 'anon.');
+        $response = new Response();
+        $session = $request->getSession();
         $request->getSession()->invalidate();
+        $session->set('_security_frontend_area', serialize($token));
+        $this->get('security.context')->setToken($token);
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();
+
+        return $response;
     }
 
     /**
