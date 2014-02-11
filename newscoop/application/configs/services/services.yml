@@ -28,7 +28,7 @@ services:
         factory_method: getInstance
     user:
         class:      Newscoop\Services\UserService
-        arguments:  ["@em", "@zend_auth"]
+        arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
     user.list:
         class:      Newscoop\Services\ListUserService
         arguments:  ["%blog%", "@em"]
@@ -55,7 +55,7 @@ services:
         arguments:  ["@em"]
     email:
         class:      Newscoop\Services\EmailService
-        arguments:  ["@view", "@user.token"]
+        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service", "@newscoop.placeholders.service", "@newscoop_newscoop.publication_service"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
@@ -158,6 +158,8 @@ services:
         arguments: ["@dispatcher", "@em"]
     newscoop.templates.service:
         class: Newscoop\Services\TemplatesService
+    newscoop.placeholders.service:
+        class: Newscoop\Services\PlaceholdersService
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
     #     class:      Newscoop\Search\ArticleIndexer

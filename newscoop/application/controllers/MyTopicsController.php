@@ -32,5 +32,6 @@ class MyTopicsController extends Zend_Controller_Action
 
     public function authAction()
     {
+        $this->_helper->redirector('index', 'auth');
     }
 }

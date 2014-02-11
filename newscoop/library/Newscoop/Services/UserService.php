@@ -12,6 +12,9 @@ use Newscoop\Entity\User;
 use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 /**
  * User service
@@ -32,14 +35,25 @@ class UserService
     /** @var \Newscoop\Entity\Repository\UserRepository */
     private $repository;
 
+    /** @var SecurityContext */
+    private $security;
+
+    /** @var EncoderFactory */
+    private $factory;
+
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Zend_Auth $auth
+     * @param Zend_Auth                  $auth
+     * @param SecurityContext            $security
+     * @param EncoderFactory             $factory
+     * @param Session                    $session
      */
-    public function __construct(ObjectManager $em, \Zend_Auth $auth)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory)
     {
         $this->em = $em;
         $this->auth = $auth;
+        $this->security = $security;
+        $this->factory = $factory;
     }
 
     /**
@@ -49,7 +63,7 @@ class UserService
      */
     public function getCurrentUser()
     {
-        if ($this->currentUser === NULL) {
+        if ($this->currentUser === null) {
             if ($this->auth->hasIdentity()) {
                 $this->currentUser = $this->getRepository()->find($this->auth->getIdentity());
             }
@@ -62,6 +76,7 @@ class UserService
      * Find user
      *
      * @param int $id
+     *
      * @return Newscoop\Entity\User
      */
     public function find($id)
@@ -82,10 +97,11 @@ class UserService
     /**
      * Find by given criteria
      *
-     * @param array $criteria
+     * @param array      $criteria
      * @param array|null $orderBy
-     * @param int|null $limit
-     * @param int|null $offset
+     * @param int|null   $limit
+     * @param int|null   $offset
+     *
      * @return mixed
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
@@ -98,8 +114,9 @@ class UserService
      *
      * @param array $criteria
      * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param int   $limit
+     * @param int   $offset
+     *
      * @return Newscoop\PaginatedCollection
      */
     public function getCollection(array $criteria, array $orderBy, $limit = null, $offset = null)
@@ -137,6 +154,7 @@ class UserService
      * Find one by given criteria
      *
      * @param array $criteria
+     *
      * @return Newscoop\Entity\User
      */
     public function findOneBy(array $criteria)
@@ -147,13 +165,14 @@ class UserService
     /**
      * Save user
      *
-     * @param array $data
+     * @param array                $data
      * @param Newscoop\Entity\User $user
+     *
      * @return Newscoop\Entity\User
      */
     public function save(array $data, User $user = null)
     {
-        if (NULL === $user) {
+        if (null === $user) {
             $user = new User();
         }
 
@@ -175,6 +194,7 @@ class UserService
      * Delete user
      *
      * @param Newscoop\Entity\User $user
+     *
      * @return void
      */
     public function delete(User $user)
@@ -190,6 +210,7 @@ class UserService
      * Rename user
      *
      * @param object $command
+     *
      * @return void
      */
     public function renameUser($command)
@@ -213,6 +234,7 @@ class UserService
      *
      * @param string $firstName
      * @param string $lastName
+     *
      * @return string
      */
     public function generateUsername($firstName, $lastName)
@@ -240,6 +262,7 @@ class UserService
      * Set user active
      *
      * @param Newscoop\Entity\User $user
+     *
      * @return void
      */
     public function setActive(User $user)
@@ -251,7 +274,11 @@ class UserService
     /**
      * Create pending user
      *
-     * @param string $email
+     * @param string      $email
+     * @param string|null $first_name
+     * @param string|null $last_name
+     * @param string|null $subscriber
+     *
      * @return Newscoop\Entity\User
      */
     public function createPending($email, $first_name = null, $last_name = null, $subscriber = null)
@@ -285,8 +312,9 @@ class UserService
     /**
      * Save pending user
      *
-     * @param array $data
+     * @param array                $data
      * @param Newscoop\Entity\User $user
+     *
      * @return void
      */
     public function savePending($data, User $user)
@@ -306,6 +334,7 @@ class UserService
      * Test if username is available
      *
      * @param string $username
+     *
      * @return bool
      */
     public function checkUsername($username)
@@ -317,6 +346,7 @@ class UserService
      * Find user by author
      *
      * @param int $authorId
+     *
      * @return Newscoop\Entity\User|null
      */
     public function findByAuthor($authorId)
@@ -340,6 +370,7 @@ class UserService
      * Count users by given criteria
      *
      * @param array $criteria
+     *
      * @return int
      */
     public function countBy(array $criteria)
@@ -403,5 +434,22 @@ class UserService
         }
 
         return $groups;
+    }
+
+    /**
+     * Log in user
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return void
+     */
+    public function loginUser(User $user)
+    {
+        $providerKey = 'frontend_area';
+        $roles = $user->getRoles();
+        $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
+        $this->security->setToken($token);
+
+        return $token;
     }
 }

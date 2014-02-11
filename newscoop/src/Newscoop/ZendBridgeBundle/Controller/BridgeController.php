@@ -21,6 +21,7 @@ class BridgeController extends Controller
         $bootstrap = $application->getBootstrap();
 
         $front = $bootstrap->getResource('FrontController');
+        $front->setDefaultControllerName('legacy');
         $front->returnResponse(true);
         $default = $front->getDefaultModule();
         if (null === $front->getControllerDirectory($default)) {

@@ -47,6 +47,7 @@ final class MetaComment extends MetaDbObject
         $this->m_customProperties['article'] = 'getArticle';
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['user'] = 'getUser';
+        $this->m_customProperties['source'] = 'getSource';
         $this->m_customProperties['parent'] = 'getParent';
         $this->m_customProperties['has_parent'] = 'hasParent';
         $this->m_customProperties['thread_level'] = 'threadLevel';
@@ -128,6 +129,12 @@ final class MetaComment extends MetaDbObject
     {
         $user = $this->m_dbObject->getCommenter()->getUser();
         return new \MetaUser($user);
+    }
+
+
+    protected function getSource()
+    {
+        return $this->m_dbObject->getSource();
     }
 
     public function getParent()
