@@ -63,6 +63,12 @@ class Section
     private $name;
 
     /**
+     * @ORM\Column(name="ShortName", nullable=True)
+     * @var string
+     */
+    private $shortName;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="SectionTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
@@ -192,6 +198,30 @@ class Section
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set short name
+     *
+     * @param string $shortName
+     *
+     * @return void
+     */
+    public function setShortName($shortName)
+    {
+        $this->shortName = (string) $shortName;
+
+        return $this;
+    }
+
+    /**
+     * Get short name
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
     }
 
     /**

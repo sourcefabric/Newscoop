@@ -367,7 +367,6 @@ class Publication
     {
         return $this->commentsPublicModerated;
     }
-
     /**
      * Gets the value of public_enabled.
      *
@@ -376,7 +375,7 @@ class Publication
     public function getPublicCommentsEnabled()
     {
         return $this->public_enabled;
-    }
+}
 
     /**
      * Sets the value of public_enabled.
@@ -390,5 +389,53 @@ class Publication
         $this->public_enabled = $public_enabled;
 
         return $this;
+    }
+
+	/**
+     * Getter for defaultAliasId
+     *
+     * @return mixed
+     */
+    public function getDefaultAliasId()
+    {
+        return $this->defaultAliasId;
+    }
+
+    /**
+     * Setter for defaultAliasId
+     *
+     * @param mixed $defaultAliasId Value to set
+     *
+     * @return self
+     */
+    public function setDefaultAliasId($defaultAliasId)
+    {
+        $this->defaultAliasId = $defaultAliasId;
+
+        return $this;
+    }
+
+    /**
+     * Set seo
+     *
+     * @param array $seo
+     *
+     * @return self
+     */
+    public function setSeo(array $seo)
+    {
+        $this->seo = serialize($seo);
+
+        return $this;
+    }
+
+    /**
+     * Get seo
+     *
+     * @return array
+     */
+    public function getSeo()
+    {
+        return (array) unserialize($this->seo);
     }
 }

@@ -14,11 +14,12 @@ use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Entity\User;
+use Newscoop\Search\RepositoryInterface;
 
 /**
  * Comment repository
  */
-class CommentRepository extends DatatableSource
+class CommentRepository extends DatatableSource implements RepositoryInterface
 {
 
     /**
@@ -34,8 +35,8 @@ class CommentRepository extends DatatableSource
     /**
      * Get comments for article
      *
-     * @param int    $article  Article number
-     * @param string $language Language code in format "en" for example.
+     * @param  int $article  Article number
+     * @param  string $language Language code in format "en" for example.
      *
      * @return Doctrine\ORM\Query           Query
      */
@@ -53,63 +54,6 @@ class CommentRepository extends DatatableSource
                 'thread' => $article,
                 'language' => $languageId->getId()
             ));
-
-        if ($recommended) {
-            $queryBuilder->andWhere('c.recommended = 1');
-        }
-
-        if (!$getDeleted) {
-            $queryBuilder->andWhere('c.status != :status')
-                ->setParameter('status', Comment::STATUS_DELETED);
-        }
-
-        $query = $queryBuilder->getQuery();
-
-        return $query;
-    }
-
-    /**
-     * Get all comments query
-     *
-     * @return Query
-     */
-    public function getComments($getDeleted = true)
-    {
-        $em = $this->getEntityManager();
-
-        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
-            ->createQueryBuilder('c');
-
-        if (!$getDeleted) {
-            $queryBuilder->andWhere('c.status != :status')
-                ->setParameter('status', Comment::STATUS_DELETED);
-        }
-
-        $query = $queryBuilder->getQuery();
-
-        return $query;
-    }
-
-    /**
-     * Get single comment query
-     *
-     * @param int $id
-     *
-     * @return Query
-     */
-    public function getComment($id, $getDeleted = true)
-    {
-        $em = $this->getEntityManager();
-
-        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
-            ->createQueryBuilder('c')
-            ->andWhere('c.id = :id')
-            ->setParameter('id', $id);
-
-        if (!$getDeleted) {
-            $queryBuilder->andWhere('c.status != :status')
-                ->setParameter('status', Comment::STATUS_DELETED);
-        }
 
         $query = $queryBuilder->getQuery();
 
@@ -194,7 +138,7 @@ class CommentRepository extends DatatableSource
     {
         foreach ($commentIds as $commentId) {
             $this->setCommentRecommended($this->find($commentId), $recommended);
-        }
+		}
     }
 
     /**
@@ -272,7 +216,6 @@ class CommentRepository extends DatatableSource
                 ->setLanguage($parent->getLanguage())
                 ->setForum($parent->getForum())
                 ->setThread($parent->getThread());
-
             /**
              * get the maximum thread order from the current parent
              */
@@ -292,26 +235,27 @@ class CommentRepository extends DatatableSource
                 $threadOrder = $parent->getThreadOrder();
             }
             $threadOrder += 1;
-
             /**
              * update all the comment for the thread where thread order is less or equal
              * of the current thread_order
              */
             $qb = $this->createQueryBuilder('c');
             $qb->update()
-                ->set('c.thread_order', 'c.thread_order+1')
-                ->andwhere('c.thread_order >= :thread_order')
-                ->andWhere('c.thread = :thread')
-                ->andWhere('c.language = :language')
-                ->setParameter('language', $parent->getLanguage()->getId())
-                ->setParameter('thread', $parent->getThread()->getId())
-                ->setParameter('thread_order', $threadOrder);
-
+               ->set('c.thread_order',  'c.thread_order+1')
+               ->andwhere('c.thread_order >= :thread_order')
+               ->andWhere('c.thread = :thread')
+               ->andWhere('c.language = :language')
+                    ->setParameter('language', $parent->getLanguage()->getId())
+                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('thread_order', $threadOrder);
             $qb->getQuery()->execute();
             // set the thread level the thread level of the parent plus one the current level
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
-            $languageRepository = $em->getRepository('Newscoop\Entity\Language');
+            if (!isset($p_values['language'])) {
+                $language = $thread->getLanguage();
+            } else {
+                $languageRepository = $em->getRepository('Newscoop\Entity\Language');
             $language = $languageRepository->findOneByCode($values['language']);
 
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
@@ -447,6 +391,11 @@ class CommentRepository extends DatatableSource
 
     /**
      * Build filter condition
+     *
+     * @param array $p_
+     * @param string $p_cols
+     * @param
+     * @return Doctrine\ORM\Query\Expr
      */
     protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
     {
@@ -471,17 +420,17 @@ class CommentRepository extends DatatableSource
                     }
                     break;
                 case 'recommended':
-                    foreach ($values as $value) {
+					foreach ($values as $value) {
                         $orx->add($qb->expr()->eq('e.recommended', $value));
                     }
             }
             $andx->add($orx);
         }
-
         return $andx;
     }
 
     /**
+     *
      * Delete article comments
      *
      * @param Newscoop\Entity\Article  $article
@@ -495,11 +444,9 @@ class CommentRepository extends DatatableSource
             $params['language'] = $language;
         }
         $comments = $this->findBy($params);
-
         foreach ($comments as $comment) {
             $comment->setParent();
         }
-
         foreach ($comments as $comment) {
             $this->setCommentStatus($comment, 'deleted');
         }
@@ -544,6 +491,7 @@ class CommentRepository extends DatatableSource
     }
 
     /**
+     *
      * Get direct replies to a comment
      *
      * @param $commentId
@@ -563,10 +511,9 @@ class CommentRepository extends DatatableSource
         $commentIds = $query->getArrayResult();
 
         $clearCommentIds = array();
-        foreach ($commentIds as $key => $value) {
-            $clearCommentIds[] = $value['id'];
+        foreach($commentIds as $key => $value) {
+        	$clearCommentIds[] = $value['id'];
         }
-
         return $clearCommentIds;
     }
 
@@ -583,5 +530,62 @@ class CommentRepository extends DatatableSource
             ->createQuery("SELECT COUNT(comment) FROM Newscoop\Entity\Comment comment WHERE comment.commenter IN (SELECT commenter.id FROM Newscoop\Entity\Comment\Commenter commenter WHERE commenter.user = :user)")
             ->setParameter('user', $user->getId())
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Find comments for indexing
+     *
+     * @param mixed $count Number of comments to index. When null default will be used
+     *
+     * @return array
+     */
+    public function getBatch($count = self::BATCH_COUNT, array $filter = null)
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        if (is_null($filter)) {
+            $qb->where('c.indexed IS NULL')
+                ->orWhere('c.indexed < c.time_updated')
+                ->orderBy('c.time_updated', 'DESC');
+        } else {
+            die('Not implemented yet!');
+        }
+
+        if (is_numeric($count)) {
+            $qb->setMaxResults($count);
+        }
+
+        $batch = $qb->getQuery()
+            ->getResult();
+
+        return $batch;
+    }
+
+    /**
+     * Set indexed now
+     *
+     * @param array $comments
+     * @return void
+     */
+    public function setIndexedNow(array $comments)
+    {
+        if (empty($comments)) {
+            return;
+        }
+
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = CURRENT_TIMESTAMP() WHERE c.id IN (:comments)')
+            ->setParameter('comments', array_map(function($comment) { return $comment->getId(); }, $comments))
+            ->execute();
+    }
+
+    /**
+     * Set indexed null
+     *
+     * @return void
+     */
+    public function setIndexedNull(array $comments = null)
+    {
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = NULL')
+            ->execute();
     }
 }

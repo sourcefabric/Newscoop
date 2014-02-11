@@ -36,6 +36,8 @@ class ArticlesList extends ListObject
                                                                 'type'=>'void'),
                                          'topic'=>array('field'=>null,
                                                         'type'=>'topic'),
+                                         'topic_strict' => array('field' => null,
+                                                                 'type' => 'topic'),
                                          'reads'=>array('field'=>null, 'type'=>'integer'),
                                          'author'=>array('field'=>null, 'type'=>'string'),
                                          'section'=>array('field'=>'NrSection', 'type'=>'integer'),
