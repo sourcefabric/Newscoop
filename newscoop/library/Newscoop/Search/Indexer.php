@@ -11,12 +11,15 @@ use Symfony\Component\DependencyInjection\Container;
 use Newscoop\Search\IndexClientInterface;
 use Newscoop\Search\ServiceInterface;
 use Newscoop\Search\RepositoryInterface;
+use Exception;
 
 /**
  * Indexer
  */
 class Indexer
 {
+    const BATCH_MAX = 200;
+
     /**
      * @var Newscoop\Search\IndexClientInterface
      */
@@ -66,28 +69,48 @@ class Indexer
      */
     public function update($count = 50, $filter = null)
     {
-        $items = $this->repository->getBatch($count, $filter);
+        $logger = $this->container->get('logger');
 
-        foreach ($this->indexClients AS $client) {
+        $batches = ($count <= self::BATCH_MAX) ? 1 : ceil($count/self::BATCH_MAX);
 
-            $client->setService($this->service);
+        for ($i = 1; $i <= $batches; $i++)  {
 
-            foreach ($items as $item) {
+            $batchCount = ($i == $batches && ($count%self::BATCH_MAX) > 0)
+                ? ($count%self::BATCH_MAX) : self::BATCH_MAX;
+            $items = $this->repository->getBatch($batchCount, $filter);
 
-                $client->setItem($item);
+            // TODO: Built in check if $items are less then $batchcount, we could stop iterating
 
-                if ($this->service->isIndexable($item)) {
+            foreach ($this->indexClients AS $client) {
 
-                    $client->add($this->service->getDocument($item));
-                } else if ($this->service->isIndexed($item)) {
+                $client->setService($this->service);
 
-                    $client->delete($this->service->getDocumentId($item));
+                foreach ($items as $item) {
+
+                    $client->setItem($item);
+
+                    if ($this->service->isIndexable($item)) {
+
+                        try {
+                            $client->add($this->service->getDocument($item));
+                        } catch(Exception $e) {
+                            $itemData = $this->service->getDocument($item);
+                            $logger->error('Could not (completely) add item ('.$itemData['id'].') to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
+                        }
+                    } else if ($this->service->isIndexed($item)) {
+
+                        try {
+                            $client->delete($this->service->getDocumentId($item));
+                        } catch(Exception $e) {
+                            $logger->error('Could not (completely) delete item to indexing client. ('.__CLASS__ .' - '. $e->getMessage() .')');
+                        }
+                    }
                 }
-            }
 
-            $client->flush();
+                $client->flush();
+            }
+            $this->repository->setIndexedNow($items);
         }
-        $this->repository->setIndexedNow($items);
     }
 
     /**
@@ -107,7 +130,17 @@ class Indexer
     }
 
     /**
-     * Delete all docs
+     * Clear all indexed timestamps
+     *
+     * @return void
+     */
+    public function clearAll()
+    {
+        $this->repository->setIndexedNull();
+    }
+
+    /**
+     * Delete all docs from indexing clients
      *
      * @return void
      */
@@ -116,7 +149,7 @@ class Indexer
         foreach ($this->indexClients AS $client) {
             $client->deleteAll();
         }
-        $this->repository->setIndexedNull();
+        $this->clearAll();
     }
 
     /**
