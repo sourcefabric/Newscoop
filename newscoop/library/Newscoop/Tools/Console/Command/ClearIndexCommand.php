@@ -49,11 +49,11 @@ class ClearIndexCommand extends AbstractIndexCommand
             if ($type === 'all') {
                 foreach ($indexers as $name => $indexer) {
                     $output->writeln('Clearing index on '.$name.'.');
-                    $indexer->deleteAll();
+                    $indexer->clearAll();
                 }
             } else {
                 $output->writeln('Clearing index on '.$type.'.');
-                $indexers[$type]->deleteAll();
+                $indexers[$type]->clearAll();
             }
 
             $output->writeln('Search index cleared.');
