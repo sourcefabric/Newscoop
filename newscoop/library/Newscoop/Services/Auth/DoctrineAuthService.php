@@ -11,7 +11,8 @@ use Doctrine\ORM\EntityManager;
 
 /**
  * Doctrine Auth service
- * @deprecated
+ *
+ * @deprecated in 4.3, will be removed in 4.4
  */
 class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
 {

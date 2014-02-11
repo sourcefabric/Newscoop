@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+/**
+ * Users Rest API Controller
+ */
 class UsersController extends FOSRestController
 {
     /**
@@ -176,8 +179,8 @@ class UsersController extends FOSRestController
      */
     public function logoutAction(Request $request)
     {
-        $userService = $this->container->get('user');
-        $userService->logoutUser();
+        $this->get('security.context')->setToken(null);
+        $request->getSession()->invalidate();
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();
     }
@@ -209,14 +212,9 @@ class UsersController extends FOSRestController
         $zendRouter = $this->container->get('zend_router');
         $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $response = new Response();
-        $secured = 'http://www.';
         $users = $userService->findBy(array(
             'email' => $email,
         ));
-
-        if ($request->isSecure()) {
-            $secured = 'https://www.';
-        }
 
         if (count($users) > 0) {
             $user = array_pop($users);
@@ -233,7 +231,7 @@ class UsersController extends FOSRestController
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $secured.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
+                $request->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
             );
 
             return $response;
@@ -268,17 +266,12 @@ class UsersController extends FOSRestController
             'email' => $request->get('email'),
         ));
 
-        $secured = 'http://www.';
-        if ($request->isSecure()) {
-            $secured = 'https://www.';
-        }
-
         if (!empty($user) && $user->isActive()) {
             $this->container->get('email')->sendPasswordRestoreToken($user);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $secured.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'auth', 'action' => 'password-restore-after'))
+                $request->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'auth', 'action' => 'password-restore-after'))
             );
 
             return $response;

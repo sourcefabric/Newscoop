@@ -8,33 +8,11 @@
 
 namespace Newscoop\Services;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 /**
  * Placeholder service
  */
-class PlaceholdersService
+class PlaceholdersService extends ParameterBag
 {
-    /**
-     * Set given value for given property
-     *
-     * @param string $property Given property
-     * @param string $value    Value for given property
-     *
-     * @return void
-     */
-    public function set($property, $value)
-    {
-        $this->$property = $value;
-    }
-
-    /**
-     * Get value for given property
-     *
-     * @param string $property Given property
-     *
-     * @return string
-     */
-    public function get($property)
-    {
-        return $this->$property;
-    }
 }
