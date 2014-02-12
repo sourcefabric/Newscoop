@@ -275,8 +275,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->set('a.indexed', 'CURRENT_TIMESTAMP()');
 
         if (!is_null($articles) && count($articles) > 0) {
-
             $articleNumbers = array();
+
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
             }
@@ -299,8 +299,8 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->set('a.indexed', 'NULL');
 
         if (!is_null($articles) && count($articles) > 0) {
-
             $articleNumbers = array();
+
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
     		}
