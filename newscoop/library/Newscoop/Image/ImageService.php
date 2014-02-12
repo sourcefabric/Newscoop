@@ -563,7 +563,7 @@ class ImageService
     {
         if ($user->getImage() !== null) {
             return $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop');
-        ]
+        }
 
         return null;
     }
