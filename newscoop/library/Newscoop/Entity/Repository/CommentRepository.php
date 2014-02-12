@@ -194,7 +194,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     {
         foreach ($commentIds as $commentId) {
             $this->setCommentRecommended($this->find($commentId), $recommended);
-		}
+        }
     }
 
     /**
