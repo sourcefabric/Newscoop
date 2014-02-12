@@ -1,0 +1,1 @@
+ALTER TABLE  `liveuser_users` CHANGE  `indexed`  `indexed` DATETIME NULL;
