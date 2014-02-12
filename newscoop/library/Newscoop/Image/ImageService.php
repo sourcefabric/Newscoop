@@ -552,6 +552,23 @@ class ImageService
     }
 
     /**
+     * Get user image
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function getUserImage(User $user, $width = 65, $height = 65)
+    {
+        if ($user->getImage() !== null) {
+            return $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop');
+        }
+
+        return null;
+    }
+
+    /**
      * Update schema if needed
      *
      * @param integer $articleNumber

@@ -7,15 +7,14 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console;
-use Newscoop\Tools\Console\Command\AbstractIndexCommand;
+use Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\Console\Input\InputOption,
+    Symfony\Component\Console;
 
 /**
- * Index update command
+ * Index clear command
  */
-class UpdateIndexCommand extends AbstractIndexCommand
+class ClearIndexCommand extends AbstractIndexCommand
 {
     /**
      * @see Console\Command\Command
@@ -23,10 +22,9 @@ class UpdateIndexCommand extends AbstractIndexCommand
     protected function configure()
     {
         $this
-        ->setName('index:update')
-        ->setDescription('Update Search Index.')
-        ->addArgument('type', InputArgument::OPTIONAL, 'Types to index', 'all')
-        ->addArgument('limit', InputArgument::OPTIONAL, 'Articles batch size limit', 50)
+        ->setName('index:clear')
+        ->setDescription('Clear search index.')
+        ->addArgument('type', InputArgument::OPTIONAL, 'Types to clear index for', 'all')
         ->setHelp("");
     }
 
@@ -35,9 +33,6 @@ class UpdateIndexCommand extends AbstractIndexCommand
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        // This is needed to surpress STRICT errors, else everything will FAIL :'(
-        error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_STRICT);
-
         global $g_ado_db;
         $container = $this->getApplication()->getKernel()->getContainer();
         $g_ado_db = $container->get('doctrine.adodb');
@@ -53,15 +48,15 @@ class UpdateIndexCommand extends AbstractIndexCommand
 
             if ($type === 'all') {
                 foreach ($indexers as $name => $indexer) {
-                    $output->writeln('Running indexer on '.$name.'.');
-                    $indexer->update($input->getArgument('limit'));
+                    $output->writeln('Clearing index on '.$name.'.');
+                    $indexer->clearAll();
                 }
             } else {
-                $output->writeln('Running indexer on '.$type.'.');
-                $indexers[$type]->update($input->getArgument('limit'));
+                $output->writeln('Clearing index on '.$type.'.');
+                $indexers[$type]->clearAll();
             }
 
-            $output->writeln('Search Index updated.');
+            $output->writeln('Search index cleared.');
         }
     }
 }

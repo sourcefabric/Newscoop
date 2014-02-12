@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
 use Newscoop\Entity\Attachment;
+use Newscoop\Search\DocumentInterface;
 
 /**
  * Article entity
@@ -22,7 +23,7 @@ use Newscoop\Entity\Attachment;
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
  * @ORM\Table(name="Articles")
  */
-class Article
+class Article implements DocumentInterface
 {
     const STATUS_PUBLISHED = 'Y';
     const STATUS_NOT_PUBLISHED = 'N';
@@ -625,6 +626,17 @@ class Article
     }
 
     /**
+     * Set date
+     *
+     * @param DateTime $updated
+     * @return void
+     */
+    public function setDate(DateTime $date)
+    {
+        $this->date = $date;
+    }
+
+    /**
      * Set data
      *
      * @param array $data
@@ -668,6 +680,24 @@ class Article
         }
 
         return $this->data->setProperty('F'.$field, $value);
+    }
+
+    /**
+     * Get all field names for this article type
+     *
+     * @return mixed Returns array with field names or null
+     */
+    public function getFieldNames()
+    {
+        if ($this->data === null) {
+            return null;
+        }
+
+        if (is_array($this->data)) {
+            return array_keys($this->data);
+        } else {
+            return $this->data->getUserDefinedColumns(true);
+        }
     }
 
     /**
@@ -868,7 +898,6 @@ class Article
         if (!$this->webcode) {
             return null;
         }
-
         return $this->webcode->getWebcode();
     }
 
@@ -977,6 +1006,21 @@ class Article
     }
 
     /**
+     * Get topic names
+     *
+     * @return array
+     */
+    public function getTopicNames()
+    {
+        $names = array();
+        foreach ($this->topics as $topic) {
+            $names[$topic->getTopicId()] = $topic->getName($this->getLanguage());
+        }
+
+        return array_filter($names);
+    }
+
+    /**
      * Set Fields
      * $fields
      */
@@ -1079,14 +1123,27 @@ class Article
     }
 
     /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
+
+    /**
      * Set indexed
      *
-     * @return void
+     * @param DateTime $indexed
+     *
+     * @return self
      */
-    public function setIndexed()
+    public function setIndexed(DateTime $indexed = null)
     {
-        $this->indexed = new DateTime();
-        $this->updated = clone $this->updated;
+        $this->indexed = $indexed;
+
+        return $this;
     }
 
     /**
@@ -1115,7 +1172,6 @@ class Article
         if (count($this->attachments) == 0) {
             return null;
         }
-
         return $this->attachments;
     }
 
@@ -1129,7 +1185,6 @@ class Article
     public function setAttachments($attachments)
     {
         $this->attachments = $attachments;
-
         return $this;
     }
 

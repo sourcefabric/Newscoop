@@ -598,7 +598,7 @@ class Article extends DatabaseObject {
      * @return Article
      */
     public function createTranslation($p_languageId, $p_userId, $p_name)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         // Construct the duplicate article object.
         $articleCopy = new Article();
@@ -1398,7 +1398,7 @@ class Article extends DatabaseObject {
      * @return string
      */
     public function getWorkflowDisplayString($p_value = null)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         if (is_null($p_value)) {
@@ -2523,6 +2523,16 @@ class Article extends DatabaseObject {
                 $topic = new Topic($comparisonOperation['right']);
                 if ($topic->exists()) {
                     $topicIds = $topic->getSubtopics(true, 0);
+                    $topicIds[] = $comparisonOperation['right'];
+                    if ($comparisonOperation['symbol'] == '=') {
+                        $hasTopics[] = $topicIds;
+                    } else {
+                        $hasNotTopics[] = $topicIds;
+                    }
+                }
+            } elseif ($leftOperand == 'topic_strict') {
+                $topic = new Topic($comparisonOperation['right']);
+                if ($topic->exists()) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;

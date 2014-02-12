@@ -49,7 +49,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
     new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
     new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
-    new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
+    new \Newscoop\Tools\Console\Command\ClearIndexCommand(),
     new \Newscoop\Tools\Console\Command\InstallPluginCommand(),
     new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
     new \Newscoop\Tools\Console\Command\UpdatePluginCommand(),
