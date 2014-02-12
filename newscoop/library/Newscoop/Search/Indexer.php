@@ -123,7 +123,7 @@ class Indexer
     public function delete(\sfEvent $event)
     {
         if ($this->service->isIndexed($event['entity'])) {
-            foreach ($this->indexClients AS $client) {
+            foreach ($this->indexClients as $client) {
                 $client->delete($this->service->getDocumentId($event['entity']));
                 $client->flush();
             }
