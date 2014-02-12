@@ -37,10 +37,7 @@
             <img src="/themes/system_templates/img/newscoop_logo_big.png" />
             <h1 class="form-signin-heading text-muted" style="text-align: center; margin-bottom: 20px;">Grant access to: <br />"{{ $client->getName() }}"</h1>
             <p>Allow to access instance rest api resources like: read/write/delete articles, images, comments and more...</p>
-
             <input type="hidden" name="newscoop_gimme_oauth_authorize[allowAccess]" value="true" />
-
-
             <button class="btn pull-left btn-danger">
                 Cancel
             </button>

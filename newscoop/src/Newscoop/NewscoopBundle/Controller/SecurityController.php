@@ -90,5 +90,4 @@ class SecurityController extends Controller
 
         return $defaultLanguage;
     }
-
 }

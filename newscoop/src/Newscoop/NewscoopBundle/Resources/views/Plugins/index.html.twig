@@ -119,8 +119,8 @@ li:after {content: none;}
                             <tr>
                                 <td style="width: 20%;">{{ plugin.name }}</td>
                                 <td style="width: 35%;">{{ plugin.description }}</td>
-                                <td>{{ plugin.license }}</td>
                                 <td>{{ plugin.version }}</td>
+                                <td>{{ plugin.license }}</td>
                                 <td style="text-align: center;">{% if not plugin.installed %}<a href="/admin/plugins/getStream/install/{{ plugin.name }}" class="get-stream iframe" data-href="/admin/plugins/getStream/update/{{ plugin.name }}">{{ 'newscoop.plugins_manager.installed_table.install_plugin'|trans }}</a>{% else %}{{ 'newscoop.plugins_manager.installed_table.plugin_installed'|trans }}{% endif %}</td>
                             </tr>
                             {% endfor %}
