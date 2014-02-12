@@ -15,6 +15,7 @@ use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Entity\User;
 use Newscoop\Search\RepositoryInterface;
+use Newscoop\NewscoopException\IndexException;
 
 /**
  * Comment repository
@@ -421,9 +422,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                     }
                     break;
                 case 'recommended':
-					foreach ($values as $value) {
+                    foreach ($values as $value) {
                         $orx->add($qb->expr()->eq('e.recommended', $value));
                     }
+                    break;
             }
             $andx->add($orx);
         }
@@ -513,8 +515,9 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
         $clearCommentIds = array();
         foreach($commentIds as $key => $value) {
-        	$clearCommentIds[] = $value['id'];
+            $clearCommentIds[] = $value['id'];
         }
+
         return $clearCommentIds;
     }
 
@@ -549,7 +552,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 ->orWhere('c.indexed < c.time_updated')
                 ->orderBy('c.time_updated', 'DESC');
         } else {
-            die('Not implemented yet!');
+            throw new IndexException("Filter is not implemented yet.");
         }
 
         if (is_numeric($count)) {

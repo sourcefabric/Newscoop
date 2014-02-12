@@ -7,8 +7,6 @@
 
 namespace Newscoop\Search;
 
-use DateTime;
-
 /**
  * Document interface
  *
@@ -31,5 +29,5 @@ interface DocumentInterface
      *
      * @return self
      */
-    public function setIndexed(DateTime $indexed = null);
+    public function setIndexed(\DateTime $indexed = null);
 }

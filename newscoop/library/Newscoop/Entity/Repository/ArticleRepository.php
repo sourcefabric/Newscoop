@@ -10,9 +10,10 @@ namespace Newscoop\Entity\Repository;
 use DateTime;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-use Newscoop\Datatable\Source as DatatableSource;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;
+use Newscoop\NewscoopException\IndexException;
 
 /**
  * Article repository
@@ -41,7 +42,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'workflowStatus' => 'Y',
                 'publication' => $publication
             ));
-            
+
         if ($type) {
             $countQueryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);
@@ -69,7 +70,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-        
+
         return $query;
     }
 
@@ -86,22 +87,23 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ->setParameter('number', $number);
 
         if (!is_null($language)) {
+
             if (!is_numeric($language)) {
-            $languageObject = $em->getRepository('Newscoop\Entity\Language')
-                ->findOneByCode($language);
+                $languageObject = $em->getRepository('Newscoop\Entity\Language')
+                    ->findOneByCode($language);
             } else {
                 $languageObject = $em->getRepository('Newscoop\Entity\Language')
                     ->findOneById($language);
             }
 
             if ($languageObject instanceof Newscoop\Entity\Language) {
-            $queryBuilder->andWhere('a.language = :languageId')
-                ->setParameter('languageId', $languageObject->getId());
-        }
+                $queryBuilder->andWhere('a.language = :languageId')
+                    ->setParameter('languageId', $languageObject->getId());
+            }
         }
 
         $query = $queryBuilder->getQuery();
-        
+
         return $query;
     }
 
@@ -139,7 +141,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 'count' => $articlesCount
             );
         }
-        
+
         return $query;
     }
 
@@ -163,7 +165,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-        
+
         return $query;
     }
 
@@ -189,7 +191,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
-        
+
         return $query;
     }
 
@@ -208,7 +210,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             ));
 
         $query = $queryBuilder->getQuery();
- 
+
         return $query;
     }
 
@@ -247,7 +249,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                 ->orWhere('a.indexed < a.updated')
                 ->orderBy('a.number', 'DESC');
         } else {
-            die('Not implemented yet!');
+            throw new IndexException("Filter is not implemented yet.");
         }
 
         if (is_numeric($count)) {
@@ -277,7 +279,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
             $articleNumbers = array();
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
-    }
+            }
 
             $qb = $qb->where($qb->expr()->in('a.number',  $articleNumbers));
         }

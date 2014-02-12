@@ -158,7 +158,6 @@ class DefaultIndexClient implements IndexClientInterface
      */
     public function deleteAll()
     {
-
         return true;
     }
 

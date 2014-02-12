@@ -561,7 +561,11 @@ class ImageService
      */
     public function getUserImage(User $user, $width = 65, $height = 65)
     {
-        return $user->getImage() !== null ? $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop') : null;
+        if ($user->getImage() !== null) {
+            return $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop');
+        ]
+
+        return null;
     }
 
     /**

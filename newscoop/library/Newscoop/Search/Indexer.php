@@ -81,7 +81,7 @@ class Indexer
 
             // TODO: Built in check if $items are less then $batchcount, we could stop iterating
 
-            foreach ($this->indexClients AS $client) {
+            foreach ($this->indexClients as $client) {
 
                 $client->setService($this->service);
 
@@ -109,6 +109,7 @@ class Indexer
 
                 $client->flush();
             }
+
             $this->repository->setIndexedNow($items);
         }
     }
@@ -146,7 +147,7 @@ class Indexer
      */
     public function deleteAll()
     {
-        foreach ($this->indexClients AS $client) {
+        foreach ($this->indexClients as $client) {
             $client->deleteAll();
         }
         $this->clearAll();
@@ -164,8 +165,11 @@ class Indexer
 
         // TODO: Build in check to check if single indexing client has been set
 
-        foreach ($servicIds AS $serviceId) {
-            if (strpos($serviceId, 'index_client.') === false) continue;
+        foreach ($servicIds as $serviceId) {
+
+            if (strpos($serviceId, 'index_client.') === false) {
+                 continue;
+            }
 
             $indexingServices[$serviceId] = $this->container->get($serviceId);
         }
