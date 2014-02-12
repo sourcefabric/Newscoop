@@ -13,9 +13,6 @@ use Newscoop\Search\ServiceInterface;
 use Newscoop\Search\DocumentInterface;
 use Newscoop\Search\QueryInterface;
 
-/**
- * Solr Index
- */
 class DefaultIndexClient implements IndexClientInterface
 {
     /**
