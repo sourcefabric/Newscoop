@@ -27,7 +27,6 @@
 function smarty_function_get_request_param($params, &$smarty)
 {
     $request = \Zend_Registry::get('container')->get('request');
-    $request = $request::createFromGlobals();
 
     if (!array_key_exists('name', $params) && !array_key_exists('assign', $params)) {
         throw new \Newscoop\NewscoopException('Parameter "name" is required');
