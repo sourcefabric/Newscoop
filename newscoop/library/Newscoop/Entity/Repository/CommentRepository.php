@@ -15,7 +15,6 @@ use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Entity\User;
 use Newscoop\Search\RepositoryInterface;
-use Newscoop\NewscoopException\IndexException;
 
 /**
  * Comment repository
@@ -55,6 +54,62 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 'thread' => $article,
                 'language' => $languageId->getId()
             ));
+        if ($recommended) {
+            $queryBuilder->andWhere('c.recommended = 1');
+        }
+
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get all comments query
+     *
+     * @return Query
+     */
+    public function getComments($getDeleted = true)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c');
+
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    /**
+     * Get single comment query
+     *
+     * @param int $id
+     *
+     * @return Query
+     */
+    public function getComment($id, $getDeleted = true)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id);
+
+        if (!$getDeleted) {
+            $queryBuilder->andWhere('c.status != :status')
+                ->setParameter('status', Comment::STATUS_DELETED);
+        }
 
         $query = $queryBuilder->getQuery();
 
@@ -139,7 +194,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     {
         foreach ($commentIds as $commentId) {
             $this->setCommentRecommended($this->find($commentId), $recommended);
-        }
+		}
     }
 
     /**
@@ -253,12 +308,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             // set the thread level the thread level of the parent plus one the current level
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
-            if (!isset($p_values['language'])) {
-                $language = $thread->getLanguage();
-            } else {
-                $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-                $language = $languageRepository->findOneByCode($values['language']);
-            }
+            $languageRepository = $em->getRepository('Newscoop\Entity\Language');
+            $language = $languageRepository->findOneByCode($values['language']);
 
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find(array('number' => $values['thread'], 'language' => $language->getId()));
@@ -393,11 +444,6 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
     /**
      * Build filter condition
-     *
-     * @param array $p_
-     * @param string $p_cols
-     * @param
-     * @return Doctrine\ORM\Query\Expr
      */
     protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
     {
@@ -422,10 +468,9 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                     }
                     break;
                 case 'recommended':
-                    foreach ($values as $value) {
+					foreach ($values as $value) {
                         $orx->add($qb->expr()->eq('e.recommended', $value));
                     }
-                    break;
             }
             $andx->add($orx);
         }
@@ -433,7 +478,6 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     *
      * Delete article comments
      *
      * @param Newscoop\Entity\Article  $article
@@ -494,14 +538,12 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     }
 
     /**
-     *
      * Get direct replies to a comment
      *
      * @param $commentId
      *
      * return array
      */
-
     public function getDirectReplies($commentId)
     {
         $em = $this->getEntityManager();
@@ -515,9 +557,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
         $clearCommentIds = array();
         foreach($commentIds as $key => $value) {
-            $clearCommentIds[] = $value['id'];
+        	$clearCommentIds[] = $value['id'];
         }
-
         return $clearCommentIds;
     }
 
@@ -552,7 +593,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 ->orWhere('c.indexed < c.time_updated')
                 ->orderBy('c.time_updated', 'DESC');
         } else {
-            throw new IndexException("Filter is not implemented yet.");
+            die('Not implemented yet!');
         }
 
         if (is_numeric($count)) {
