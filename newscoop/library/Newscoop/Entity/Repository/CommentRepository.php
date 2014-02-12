@@ -256,7 +256,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 $language = $thread->getLanguage();
             } else {
                 $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-            $language = $languageRepository->findOneByCode($values['language']);
+                $language = $languageRepository->findOneByCode($values['language']);
+            }
 
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find(array('number' => $values['thread'], 'language' => $language->getId()));
