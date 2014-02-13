@@ -188,7 +188,7 @@ class MetaActionSubmit_Comment extends MetaAction
         // error code to 'internal error' and exit.
         $values = array(
             'thread' => $articleMetaObj->number,
-            'language' => $articleMetaObj->language->number,
+            'language' => $articleMetaObj->language->code,
             'name' => $userRealName,
             'email'=> $userEmail,
             'message' =>  $this->m_properties['content'],
