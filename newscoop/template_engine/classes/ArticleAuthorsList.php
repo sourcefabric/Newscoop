@@ -68,6 +68,7 @@ class ArticleAuthorsList extends ListObject
 	 */
 	protected function ProcessOrder(array $p_order)
 	{
+        $order = array();
         if (count($p_order) == 1) {
             $p_order[] = 'asc';
         }
