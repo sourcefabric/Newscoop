@@ -22,7 +22,7 @@ class RouterFactory
             'content',
             new \Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
                 'module' => 'default',
-                'controller' => 'index',
+                'controller' => 'legacy',
                 'action' => 'index',
                 'articleUrl' => null,
                 'articleNo' => null,
