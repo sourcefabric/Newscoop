@@ -120,6 +120,18 @@ class RouterFactory
             )
         );
 
+        $router->addRoute(
+            'admin',
+            new \Zend_Controller_Router_Route(
+                'admin/*',
+                array(
+                    'module' => 'admin',
+                    'controller' => 'legacy',
+                    'action' => 'index',
+                ), array()
+            )
+        );
+
         return $router;
     }
 }
