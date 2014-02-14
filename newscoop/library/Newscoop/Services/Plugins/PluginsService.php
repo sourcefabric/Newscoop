@@ -127,11 +127,21 @@ class PluginsService
 
     public function isEnabled($pluginName)
     {
-        $plugin = $pluginService->getPluginByCriteria('name', $pluginName)->first();
+        $plugin = $this->getPluginByCriteria('name', $pluginName)->first();
         if ($plugin) {
             if ($plugin->getEnabled()) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    public function isInstalled($pluginName)
+    {
+        $plugin = $this->getPluginByCriteria('name', $pluginName)->first();
+        if ($plugin) {
+            return true;
         }
 
         return false;

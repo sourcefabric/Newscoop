@@ -411,7 +411,7 @@ class ManagerService
      */
     public function isInstalled($pluginName)
     {
-        $installedPlugins = $this->getInstalledPlugins();
+        return $this->pluginsService->isInstalled($pluginName);
     }
 
     /**

@@ -16,6 +16,19 @@ class RouterFactory
     public static function initRouter($container) {
         $front = \Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
+
+        $router->addRoute(
+            'admin',
+            new \Zend_Controller_Router_Route(
+                'admin/:controller/:action/*',
+                array(
+                    'module' => 'admin',
+                    'controller' => 'legacy',
+                    'action' => 'index',
+                )
+            )
+        );
+
         $router->addDefaultRoutes();
 
         $router->addRoute(

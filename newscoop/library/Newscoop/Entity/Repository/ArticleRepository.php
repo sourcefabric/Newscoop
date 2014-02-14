@@ -80,8 +80,9 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('a', 'p')
-            ->leftJoin('a.packages', 'p');
+            ->select('a', 'p', 'i')
+            ->leftJoin('a.packages', 'p')
+            ->leftJoin('a.issue', 'i');
 
         $queryBuilder->where('a.number = :number')
             ->setParameter('number', $number);
