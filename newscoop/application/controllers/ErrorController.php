@@ -21,21 +21,17 @@ class ErrorController extends Zend_Controller_Action
             return;
         }
 
-        $notFound = array(
-            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
-            //Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
-        );
+        $request = $this->getRequest();
+        $adminControllerFile = __DIR__.'/../..'.str_replace('/admin', '/admin-files', $request->getPathInfo());
+        if (file_exists($adminControllerFile)) {
 
-        if (in_array($errors->type, $notFound)) { // handle with old code
-            $errors = null;
-            $this->_forward('index', 'legacy', $this->_getParam('module'), array(
-                'errors' => $errors,
-            ));
+            $this->_forward('index', 'legacy', 'admin', array());
+            return;
         }
     }
 
     public function errorAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
@@ -50,27 +46,33 @@ class ErrorController extends Zend_Controller_Action
             return;
         }
 
+        $notFound = array(
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
+            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
+        );
+
+        if (in_array($errors->type, $notFound)) {
+            $this->_helper->layout->disableLayout();
+            $this->_helper->viewRenderer->setNoRender(true);
+            $templatesService = \Zend_Registry::get('container')->get('newscoop.templates.service');
+            $templatesService->renderTemplate('404.tpl');
+
+            return;
+        }
+
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION:
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
-                $priority = Zend_Log::NOTICE;
                 $this->view->message = $translator->trans('Page not found', array(), 'bug_reporting');
                 break;
             default:
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
-                $priority = Zend_Log::CRIT;
                 $this->view->message = $translator->trans('Application error', array(), 'bug_reporting');
                 break;
-        }
-
-        // Log exception, if logger available
-        if ($log = $this->getLog()) {
-            $params = $request->getParams();
-            $log->log(sprintf("%s (Params: %s)", $this->view->message, json_encode($request->getParams())), $priority, $errors->exception);
         }
 
         if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
@@ -82,16 +84,5 @@ class ErrorController extends Zend_Controller_Action
             $this->view->request = $errors->request;
             $this->view->errors = $errors;
         }
-    }
-
-    public function getLog()
-    {
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        if (!$bootstrap->hasResource('Log')) {
-            return false;
-        }
-
-        $log = $bootstrap->getResource('Log');
-        return $log;
     }
 }

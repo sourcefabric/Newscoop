@@ -352,7 +352,13 @@ final class CampContext
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $requestActionName = $this->m_readonlyProperties['request_action']->name;
-        if ($requestActionName != 'default' && $requestActionName != 'submit_comment') {
+
+        $runAction = true;
+        if ($pluginsService->isInstalled('terwey/plugin-newscoop-comments') && $requestActionName == 'submit_comment') {
+            $runAction = false;
+        }
+
+        if ($requestActionName != 'default' && $runAction) {
             $this->m_readonlyProperties['request_action']->takeAction($this);
         }
 
