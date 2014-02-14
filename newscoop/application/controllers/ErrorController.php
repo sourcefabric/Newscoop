@@ -20,6 +20,14 @@ class ErrorController extends Zend_Controller_Action
         if (!$errors) {
             return;
         }
+
+        $request = $this->getRequest();
+        $adminControllerFile = __DIR__.'/../..'.str_replace('/admin', '/admin-files', $request->getPathInfo());
+        if (file_exists($adminControllerFile)) {
+
+            $this->_forward('index', 'legacy', 'admin', array());
+            return;
+        }
     }
 
     public function errorAction()

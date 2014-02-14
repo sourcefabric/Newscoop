@@ -11,6 +11,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/themes/system_templates/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/themes/system_templates/css/main.css" rel="stylesheet">
     <style type="text/css" media="screen">
         body {
             padding-top: 40px;
