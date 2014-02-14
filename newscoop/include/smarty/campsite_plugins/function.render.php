@@ -55,11 +55,21 @@ function smarty_function_render($p_params, &$p_smarty)
         }
     }
 
+    // add parameters as variables in rendered file
     foreach ($p_params as $key => $value) {
-        $smarty->assign($key, $value);
+        if ($key != 'params' && $key != 'file') {
+            $smarty->assign($key, $value);
+        }
     }
 
     $smarty->display($p_params['file']);
+
+    // clear assigned variables
+    foreach ($p_params as $key => $value) {
+        if ($key != 'params' && $key != 'file') {
+            $smarty->clearAssign($key);
+        }
+    }
     $smarty->cache_lifetime = $cache_lifetimeBak;
     $smarty->campsiteVector = $campsiteVectorBak;
 
