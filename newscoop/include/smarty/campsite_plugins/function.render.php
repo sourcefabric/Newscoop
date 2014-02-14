@@ -55,6 +55,10 @@ function smarty_function_render($p_params, &$p_smarty)
         }
     }
 
+    foreach ($p_params as $key => $value) {
+        $smarty->assign($key, $value);
+    }
+
     $smarty->display($p_params['file']);
     $smarty->cache_lifetime = $cache_lifetimeBak;
     $smarty->campsiteVector = $campsiteVectorBak;
