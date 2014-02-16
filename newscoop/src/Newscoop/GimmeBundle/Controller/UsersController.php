@@ -97,8 +97,9 @@ class UsersController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         403="Returned when wrong password given.",
+     *         403="Returned when wrong password given",
      *         404="Returned when the user is not found",
+     *         400="Returned when invalid arguments",
      *     },
      *     parameters={
      *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
@@ -119,11 +120,13 @@ class UsersController extends FOSRestController
         $em = $this->container->get('em');
         $username = $request->get('username');
         $password = $request->get('password');
+        $response = new Response();
         if (!$username || !$password) {
-            throw new \InvalidArgumentException('Wrong parameters given');
+            $response->setStatusCode(400);
+
+            return $response;
         }
 
-        $response = new Response();
         $passwordEncoder = $this->container->get('newscoop_newscoop.password_encoder');
         $user = $em->getRepository('Newscoop\Entity\User')
             ->findOneBy(array(
