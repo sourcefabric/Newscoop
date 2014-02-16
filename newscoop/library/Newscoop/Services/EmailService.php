@@ -114,7 +114,7 @@ class EmailService
      *
      * @return void
      */
-    private function send($placeholder, $message, $to, $from = null)
+    public function send($placeholder, $message, $to, $from = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();

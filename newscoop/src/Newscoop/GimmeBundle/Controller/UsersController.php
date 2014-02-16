@@ -142,7 +142,9 @@ class UsersController extends FOSRestController
         }
 
         if (!$passwordEncoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-            throw new AccessDeniedException("Wrong password");
+            $response->setStatusCode(403);
+
+            return $response;
         }
 
         $token = $userService->loginUser($user);
@@ -231,8 +233,6 @@ class UsersController extends FOSRestController
 
         if (!$user->isPending()) {
             $response->setStatusCode(409);
-
-            return $response;
         } else {
             $emailService->sendConfirmationToken($user);
             $response->setStatusCode(200);
@@ -240,9 +240,9 @@ class UsersController extends FOSRestController
                 'X-Location',
                 $request->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
             );
-
-            return $response;
         }
+
+        return $response;
     }
 
     /**
