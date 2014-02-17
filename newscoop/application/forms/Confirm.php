@@ -36,7 +36,7 @@ class Application_Form_Confirm extends Zend_Form
         $this->getElement('username')->setOrder(3);
 
         $this->addElement('file', 'image', array(
-            'label' => 'Profile image',
+            'label' => $translator->trans('Profile image', array(), 'users'),
             'maxfilesize' => $this->getMaxFileSize(),
             'validators' => array(
                 'isImage',
@@ -69,12 +69,12 @@ class Application_Form_Confirm extends Zend_Form
         $this->getElement('password_confirm')->setOrder(6);
 
         $this->addElement('checkbox', 'terms_of_use', array(
-            'label' => 'Accepting terms of use',
+            'label' => $translator->trans('Accepting terms of use', array(), 'users'),
             'required' => true,
             'validators' => array(
                 array('greaterThan', true, array('min' => 0)),
             ),
-            'errorMessages' => array("You must accept the terms of use."),
+            'errorMessages' => array($translator->trans('You must accept the terms of use.', array(), 'users')),
         ));
 
         $this->addElement('submit', 'submit', array(
