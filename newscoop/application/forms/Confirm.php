@@ -35,6 +35,15 @@ class Application_Form_Confirm extends Zend_Form
         ));
         $this->getElement('username')->setOrder(3);
 
+        $this->addElement('file', 'image', array(
+            'label' => 'Profile image',
+            'maxfilesize' => $this->getMaxFileSize(),
+            'validators' => array(
+                'isImage',
+            ),
+        ));
+        $this->getElement('username')->setOrder(4);
+
         $this->addElement('password', 'password', array(
             'label' => $translator->trans('Password').'*:',
             'required' => true,
@@ -43,7 +52,7 @@ class Application_Form_Confirm extends Zend_Form
                 array('stringLength', false, array(6, 80)),
             ),
         ));
-        $this->getElement('password')->setOrder(4);
+        $this->getElement('password')->setOrder(5);
 
         $form = $this;
         $this->addElement('password', 'password_confirm', array(
@@ -57,12 +66,34 @@ class Application_Form_Confirm extends Zend_Form
             ),
             'errorMessages' => array($translator->trans("Password confirmation does not match your password.", array(), 'users')),
         ));
-        $this->getElement('password_confirm')->setOrder(5);
+        $this->getElement('password_confirm')->setOrder(6);
+
+        $this->addElement('checkbox', 'terms_of_use', array(
+            'label' => 'Accepting terms of use',
+            'required' => true,
+            'validators' => array(
+                array('greaterThan', true, array('min' => 0)),
+            ),
+            'errorMessages' => array("You must accept the terms of use."),
+        ));
 
         $this->addElement('submit', 'submit', array(
             'label' => $translator->trans('Login'),
             'ignore' => true,
         ));
-        $this->getElement('submit')->setOrder(7);
+        $this->getElement('submit')->setOrder(8);
+    }
+
+    /**
+     * Get max file size
+     *
+     * @return int
+     */
+    public function getMaxFileSize()
+    {
+        $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $maxFileSize = $preferencesService->MaxProfileImageFileSize ?: ini_get('upload_max_filesize');
+
+        return camp_convert_bytes($maxFileSize);
     }
 }
