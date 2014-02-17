@@ -686,7 +686,6 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $resultCount = $countQb->select('u')->groupBy('u.id')->getQuery()->getArrayResult();
         $list->count = count($resultCount);
 
-
         $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
         if($criteria->firstResult != 0) {
