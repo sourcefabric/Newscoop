@@ -95,7 +95,9 @@ class UsersController extends FOSRestController
         }
 
         $metaUser = new \MetaUser($user);
-        $user->setImage($metaUser->image($imageWidth ?: 80, $imageHeight ?: 80, $imageType ?: 'crop'));
+        $user->setImage($metaUser->image(
+            is_numeric($imageWidth) ? $imageWidth : 80, is_numeric($imageHeight) ? $imageHeight : 80, !is_numeric($imageType) ? $imageType : 'crop'
+        ));
 
         return $user;
     }
