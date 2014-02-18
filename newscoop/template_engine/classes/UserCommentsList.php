@@ -40,7 +40,8 @@ class UserCommentsList extends ListObject
             return $comments;
 	    }
 
-        $comment_service = $GLOBALS['controller']->getHelper('service')->getService('comment');
+        $comment_service = \Zend_Registry::get('container')->getService('comment');
+
 
         foreach ($comment_service->findUserComments($p_parameters, $this->m_order, $p_limit, $p_start) as $comment) {
             $comments[] = new MetaComment($comment->getId());
@@ -100,7 +101,7 @@ class UserCommentsList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-	    $user_service = $GLOBALS['controller']->getHelper('service')->getService('user');
+        $user_service = \Zend_Registry::get('container')->getService('user');
 
 	    $parameters = array();
 	    foreach ($p_parameters as $parameter => $value) {
