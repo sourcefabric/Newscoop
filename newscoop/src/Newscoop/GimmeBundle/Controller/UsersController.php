@@ -66,6 +66,9 @@ class UsersController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="User id"},
+     *         {"name"="image_type", "dataType"="string", "required"=false, "description"="User image specification (e.g. crop, fit)"},
+     *         {"name"="image_width", "dataType"="integer", "required"=false, "description"="User image width"},
+     *         {"name"="image_height", "dataType"="integer", "required"=false, "description"="User image height"},
      *     },
      *     output="\Newscoop\Entity\User"
      * )
@@ -79,6 +82,9 @@ class UsersController extends FOSRestController
     public function getUserAction(Request $request, $id)
     {
         $em = $this->container->get('em');
+        $imageType = $request->get('image_type');
+        $imageHeight = $request->get('image_height');
+        $imageWidth = $request->get('image_width');
 
         $user = $em->getRepository('Newscoop\Entity\User')
             ->getOneActiveUser($id)
@@ -87,6 +93,9 @@ class UsersController extends FOSRestController
         if (!$user) {
             throw new NotFoundHttpException('Result was not found.');
         }
+
+        $metaUser = new \MetaUser($user);
+        $user->setImage($metaUser->image($imageWidth ?: 80, $imageHeight ?: 80, $imageType ?: 'crop'));
 
         return $user;
     }
