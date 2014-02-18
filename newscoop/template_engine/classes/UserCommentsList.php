@@ -42,7 +42,6 @@ class UserCommentsList extends ListObject
 
         $comment_service = \Zend_Registry::get('container')->getService('comment');
 
-
         foreach ($comment_service->findUserComments($p_parameters, $this->m_order, $p_limit, $p_start) as $comment) {
             $comments[] = new MetaComment($comment->getId());
         }
