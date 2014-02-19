@@ -78,7 +78,7 @@ class EmailService
     public function sendConfirmationToken(User $user)
     {
         $smarty = $this->templatesService->getSmarty();
-        $smarty->assign('user', $user->getId());
+        $smarty->assign('user', new \MetaUser($user));
         $smarty->assign('token', $this->tokenService->generateToken($user, 'email.confirm'));
         $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
         $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
@@ -96,7 +96,7 @@ class EmailService
     public function sendPasswordRestoreToken(User $user)
     {
         $smarty = $this->templatesService->getSmarty();
-        $smarty->assign('user', $user->getId());
+        $smarty->assign('user', new \MetaUser($user));
         $smarty->assign('token', $this->tokenService->generateToken($user, 'password.restore'));
         $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
         $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
@@ -114,7 +114,7 @@ class EmailService
      *
      * @return void
      */
-    private function send($placeholder, $message, $to, $from = null)
+    public function send($placeholder, $message, $to, $from = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();

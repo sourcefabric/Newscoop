@@ -125,6 +125,36 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
+        $this->view->img = $this->getUserImageSrc($user);
+        $this->view->user = new \MetaUser($user);
+    }
+
+    /**
+     * Get user image filename
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return string
+     */
+    private function getUserImageFilename(User $user)
+    {
+        $num = $user->getId() % 6;
+
+        return "user_placeholder_{$num}.png";
+    }
+
+    /**
+     * Get user image src
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return string
+     */
+    private function getUserImageSrc(User $user)
+    {
+        return $this->view->url(array(
+            'src' => $this->getHelper('service')->getService('image')->getSrc('images/' . $this->getUserImageFilename($user), 125, 125, 'fit'),
+        ), 'image', false, false);
     }
 
     public function generateUsernameAction()
