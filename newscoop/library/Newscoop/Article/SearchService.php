@@ -39,7 +39,7 @@ class SearchService implements ServiceInterface
      * @var array
      */
     private $config = array(
-        'type' => array(),
+        'type' => array(), // TODO: Extrend with indexable article types
         'rendition' => null,
         'blogs' => array('blog', 'bloginfo'),
     );
@@ -132,7 +132,7 @@ class SearchService implements ServiceInterface
             }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
             'webcode' => $this->webcoder->getArticleWebcode($article),
             'image' => $image ? $image['src'] : null,
-            'link' => '',//$this->linkService->getLink($article),
+            'link' => $this->linkService->getLink($article),
             'section' => $this->linkService->getSectionShortName($article),
             'section_name' => ($article->getSection()) ? $article->getSection()->getName() : null,
             'section_id' => $article->getSectionId(),
