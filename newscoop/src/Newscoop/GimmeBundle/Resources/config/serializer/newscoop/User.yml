@@ -31,6 +31,12 @@ Newscoop\Entity\User:
             type: string
             groups: ["list"]
             serialized_name: lastName
+        image:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: image
         attributes:
             expose: true
             read_only: true
