@@ -19,6 +19,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Form\Exception\InvalidArgumentException;
+use Newscoop\Exception\ResourceNotModifiedException;
 
 /**
  * Articles controller
@@ -41,75 +44,106 @@ class ArticlesController extends FOSRestController
 	   return $gpcList;
 	} // fn CleanMagicQuotes
 
-	public static function GetVar($inputArray, $p_varName, $p_type = 'string', $p_defaultValue = null, $p_errorsOk = false)
-	{
-		global $g_inputErrors;
-	    $p_type = strtolower($p_type);
+	/**
+ *
+ * inputObject the array or string to search in
+ * variableName variable to look for
+ * variableType type the variable should have (string, int, array, boolean)
+ * defaultValue default value for the variable if it doesn't exist
+ * checkIfExists check if the variable exists (for if statements, only returns BOOL)
+ * ignoreErrors ignore errors, return empty
+ */
 
-	    if ($p_type == 'checkbox') {
-	        if (strtolower($p_defaultValue) != 'numeric') {
-	            return isset($inputArray[$p_varName]);
-	        } else {
-	            return isset($inputArray[$p_varName]) ? '1' : '0';
+	public static function getVar(array $parameters = array())
+	{
+	    $requiredParams = array('inputObject', 'variableName');
+	    $defaultParams = array(
+	                            'variableType' => 'string',
+	                            'defaultValue' => null,
+	                            'checkIfExists' => false,
+	                            'ignoreErrors' => false
+	                        );
+	    foreach ($requiredParams as $requiredParam) {
+	        if (!array_key_exists($requiredParam, $parameters)) {
+	            throw new \InvalidArgumentException(__METHOD__.': Parameter '.$requiredParam.' is required.');
 	        }
 	    }
-		if (!isset($inputArray[$p_varName])) {
-			if (!$p_errorsOk) {
-				$g_inputErrors[$p_varName] = 'not set';
-			}
-			return $p_defaultValue;
-		}
-		// Clean the slashes
-		if (get_magic_quotes_gpc()) {
-			if (is_array($inputArray[$p_varName])) {
-				$inputArray[$p_varName] = self::CleanMagicQuotes($inputArray[$p_varName]);
-			} else {
-				$inputArray[$p_varName] = stripslashes($inputArray[$p_varName]);
-			}
-		}
-		switch ($p_type) {
-		case 'boolean':
-			$value = strtolower($inputArray[$p_varName]);
-			if ( ($value == "true") || (is_numeric($value) && ($value > 0)) ) {
-				return true;
-			} else {
-				return false;
-			}
-			break;
-		case 'int':
-			if (!is_numeric($inputArray[$p_varName])) {
-				if (!$p_errorsOk) {
-					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
-						.', but received type '.gettype($inputArray[$p_varName]).'.'
-						.' Value is "'.$inputArray[$p_varName].'".';
-				}
-				return (int)$p_defaultValue;
-			}
-			break;
-		case 'string':
-			if (!is_string($inputArray[$p_varName])) {
-				if (!$p_errorsOk) {
-					$g_inputErrors[$p_varName] = 'Incorrect type.  Expected type '.$p_type
-						.', but received type '.gettype($inputArray[$p_varName]).'.'
-						.' Value is "'.$inputArray[$p_varName].'".';
-				}
-				return $p_defaultValue;
-			}
-			break;
-		case 'array':
-			if (!is_array($inputArray[$p_varName])) {
-				// Create an array if it isnt one already.
-				// Arrays are used with checkboxes and radio buttons.
-				// The problem with them is that if there is only one
-				// checkbox, the given value will not be an array.  So
-				// we make it easy for the programmer by always returning
-				// an array.
-				$newArray = array();
-				$newArray[] = $inputArray[$p_varName];
-				return $newArray;
-			}
-		}
-		return $inputArray[$p_varName];
+
+	    foreach ($defaultParams as $defaultParam => $defaultValue) {
+	        if (!array_key_exists($defaultParam, $parameters)) {
+	            $parameters[$defaultParam] = $defaultValue;
+	        }
+	    }
+
+	    // allow the GetVar to also use strings
+	    if (!is_array($parameters['inputObject'])) {
+	        $parameters['inputObject'] = array($parameters['variableName'] => $parameters['inputObject']);
+	    }
+
+	    $parameters['variableType'] = strtolower($parameters['variableType']);
+
+	    if (!isset($parameters['inputObject'][$parameters['variableName']])) {
+	        if ($parameters['checkIfExists']) {
+	            return false;
+	        } else {
+	            return true;
+	        }
+	        if (!$parameters['ignoreErrors']) {
+	            throw new InvalidArgumentException('"'.$parameters['variableName'].'" is not set');
+	        }
+	        return $parameters['defaultValue'];
+	    }
+	    // Clean the slashes
+	    if (get_magic_quotes_gpc()) {
+	        if (is_array($parameters['inputObject'][$parameters['variableName']])) {
+	            $parameters['inputObject'][$parameters['variableName']] = self::CleanMagicQuotes($parameters['inputObject'][$parameters['variableName']]);
+	        } else {
+	            $parameters['inputObject'][$parameters['variableName']] = stripslashes($parameters['inputObject'][$parameters['variableName']]);
+	        }
+	    }
+	    switch ($parameters['variableType']) {
+	        case 'boolean':
+	            $value = strtolower($parameters['inputObject'][$parameters['variableName']]);
+	            if ( ($value == "true") || (is_numeric($value) && ($value > 0)) ) {
+	                return true;
+	            } else {
+	                return false;
+	            }
+	            break;
+	        case 'int':
+	            if (!is_numeric($parameters['inputObject'][$parameters['variableName']])) {
+	                if (!$parameters['ignoreErrors']) {
+	                    throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
+	                }
+	                return (int)$parameters['defaultValue'];
+	            }
+	            break;
+	        case 'string':
+	            if (!is_string($parameters['inputObject'][$parameters['variableName']])) {
+	                if (!$parameters['ignoreErrors']) {
+	                    throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
+	                }
+	                return $parameters['defaultValue'];
+	            }
+	            break;
+	        case 'array':
+	            if (!is_array($parameters['inputObject'][$parameters['variableName']])) {
+	                // Create an array if it isnt one already.
+	                // Arrays are used with checkboxes and radio buttons.
+	                // The problem with them is that if there is only one
+	                // checkbox, the given value will not be an array.  So
+	                // we make it easy for the programmer by always returning
+	                // an array.
+	                $newArray = array();
+	                $newArray[] = $parameters['inputObject'][$parameters['variableName']];
+	                return $newArray;
+	            }
+	            break;
+	        default:
+	            throw new \InvalidArgumentException(__METHOD__.': Variable type '.$parameters['variableType'].' is not supported.');
+	            break;
+	        }
+	    return $parameters['inputObject'][$parameters['variableName']];
 	} // fn get
 
 	/**
@@ -120,31 +154,39 @@ class ArticlesController extends FOSRestController
      *         201="Returned when Article is created"
      *     },
      *     parameters={
-     *         {"name"="access_token", "dataType"="string", "required"=true, "description"="oAuth Access Token"}
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
+     *         {"name"="language", "dataType"="string", "required"=false, "description"="Language code"}
      *     }
      * )
      *
-     * @Route("/articles.{_format}", defaults={"_format"="json"})
-     * @Method("POST")
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json", "language"="en"})
+     * @Method("PATCH")
 	 */
-	public function postArticleAction(Request $request)
+	public function patchArticleAction(Request $request, $number, $language)
     {
     	$params = array();
 	    $content = $this->get("request")->getContent();
-	    // print ladybug_dump($content);
+	    // // print ladybug_dump($content);
 	    if (!empty($content))
 	    {
 	        $params = json_decode($content, true); // 2nd param to get as array
 	    }
+	    /* else {
+	    	throw new ResourceNotModifiedException('Body is empty.');
+	    }
 
-	    print ladybug_dump($params);
+	    if (count($params) == 0) {
+	    	throw new ResourceNotModifiedException('Body contains no fields.');
+	    }*/
+
+	    // print ladybug_dump($params);
 
 	    // $authors = array();
 	    // foreach ($params['authors'] as $key => $value) {
 	    // 	$authors[] = $value['name'];
 	    // }
 
-	    // print ladybug_dump($authors);
+	    // // print ladybug_dump($authors);
 
 	    // $f_publication_id = Input::Get('f_publication_id', 'int', 0, true);                      // does not exist in JSON
 		// $f_issue_number = Input::Get('f_issue_number', 'int', 0, true);                          // does not exist in JSON
@@ -153,20 +195,29 @@ class ArticlesController extends FOSRestController
 		// the Code is provided but not as an ID, should be fetched
 		// $f_language_selected = Input::Get('f_language_selected', 'int', 0);                      // does not exist in JSON
 
-		$clean['f_article_number'] = $params['number'];
+		// $clean['f_article_number'] = $params['number'];
+		// $clean['f_article_number'] = self::getVar($params, 'number', 'int');
+		$clean['f_article_number'] = self::getVar(array('inputObject' => $number, 'variableName' => 'number', 'variableType' => 'int'));
+		$clean['f_language_code'] = self::getVar(array('inputObject' => $language, 'variableName' => 'language'));
 
 		$authors = array();
 		foreach ($params['authors'] as $key => $value) {
-		    $authors[] = $value['name'];
+		    $authors[] = self::getVar(array('inputObject' => $value, 'variableName' => 'name'));
 		}
 
 		$clean['f_article_author'] = $authors;
 		// $f_article_author_type = Input::Get('f_article_author_type', 'array', array(), true);    // does not exist in JSON
-		$clean['f_article_title'] = $params['title'];
-		// $f_message = Input::Get('f_message', 'string', '', true);                                // does not exist in JSON
-		// $f_creation_date = Input::Get('f_creation_date');                                        // does not exist in JSON
-		$clean['f_publish_date'] = date_format(date_create_from_format(DATE_ATOM, $params['published']), 'Y-m-d H:i:s');
-		$clean['f_creation_date'] = date_format(date_create_from_format(DATE_ATOM, $params['published']), 'Y-m-d H:i:s');
+		if (self::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
+			$clean['f_article_title'] = self::getVar(array('inputObject' => $params, 'variableName' => 'title'));
+		}
+		if (self::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
+			$clean['f_creation_date'] = date_format(date_create_from_format(DATE_ATOM, self::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
+		}
+		if (self::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
+			$clean['f_publish_date'] = date_format(date_create_from_format(DATE_ATOM, self::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
+		}
+
+		
 		// $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
 		$notBodyFields = array('deck');
 		foreach ($params['fields'] as $key => $value) {
@@ -177,9 +228,10 @@ class ArticlesController extends FOSRestController
 			}
 		}
 
-		print ladybug_dump($clean);
+		// print ladybug_dump($clean);
 
 		$g_user = $this->getUser();
+		// print ladybug_dump($g_user);
 
 	    /*
 	     * This is copied from admin-files/articles/post.php
@@ -190,11 +242,24 @@ class ArticlesController extends FOSRestController
 	    $translator = \Zend_Registry::get('container')->getService('translator');
 
 	    // Fetch article
-		$articleObj = new \Article(1, $params['number']);
-		print ladybug_dump($articleObj);
+		$articleObj = new \Article(1, $clean['f_article_number']);
+
 		if (!$articleObj->exists()) {
-			camp_html_display_error($translator->trans('No such article.', array(), 'articles'), $BackLink);
-			exit;
+			throw new NewscoopException('Article does not exist');
+		}
+
+		if (!$articleObj->userCanModify($g_user)) {
+			throw new AccessDeniedException('User cannot modify article.');
+		}
+
+		// Only users with a lock on the article can change it.
+		if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
+			$lockTime = new \DateTime($articleObj->getLockTime());
+			$now = new \DateTime("now");
+			$difference = $now->diff($lockTime);
+			$ago = $difference->format("%R%H:%I:%S");
+			$lockUser = new \User($articleObj->getLockedByUser());
+			throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
 		}
 
 		$articleTypeObj = $articleObj->getArticleData();
@@ -204,10 +269,10 @@ class ArticlesController extends FOSRestController
 		foreach ($dbColumns as $dbColumn) {
 		    if ($dbColumn->getType() == \ArticleTypeField::TYPE_BODY) {
 		        $dbColumnParam = $dbColumn->getName() . '_' . $clean['f_article_number'];
-		        print ladybug_dump('body: '. $dbColumnParam);
+		        // print ladybug_dump('body: '. $dbColumnParam);
 		    } else {
 		        $dbColumnParam = $dbColumn->getName();
-		        print ladybug_dump('not body: '. $dbColumnParam);
+		        // print ladybug_dump('not body: '. $dbColumnParam);
 		    }
 		    
 		    if (isset($clean[$dbColumnParam])) {
@@ -226,25 +291,8 @@ class ArticlesController extends FOSRestController
 		    }
 		}
 
-		if (!empty($f_message)) {
-			camp_html_add_msg($f_message, "ok");
-		}
-
-		// if (!$articleObj->userCanModify($g_user)) {
-		// 	camp_html_add_msg($translator->trans("You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.", array(), 'articles'));
-		// 	camp_html_goto_page($BackLink);
-		// 	exit;
-		// }
-		// Only users with a lock on the article can change it.
-		// if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedByUser())) {
-		// 	$diffSeconds = time() - strtotime($articleObj->getLockTime());
-		// 	$hours = floor($diffSeconds/3600);
-		// 	$diffSeconds -= $hours * 3600;
-		// 	$minutes = floor($diffSeconds/60);
-		// 	$lockUser = new User($articleObj->getLockedByUser());
-		// 	camp_html_add_msg($translator->trans('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', array('$1' => $lockUser->getRealName(), '$2' => $hours, '$3' => $minutes), 'articles'));
-		// 	camp_html_goto_page($BackLink);
-		// 	exit;
+		// if (!empty($f_message)) {
+		// 	camp_html_add_msg($f_message, "ok");
 		// }
 
 		// Update the article author
@@ -327,112 +375,10 @@ class ArticlesController extends FOSRestController
 		    $articleTypeObj->setProperty($dbColumnName, $text);
 		}
 
-		print ladybug_dump($articleObj);
-		print ladybug_dump($articleTypeObj);
-
-
-
-		/* this was an experiment */
-    	// error_log(__METHOD__);
-    	// error_log('testing');
-    	// error_log(print_r($request, true));
-
-    	// print ladybug_dump($request);
-    	// // $cookies = $request->cookies->all();
-    	// // print ladybug_dump($cookies);
-    	// $headers = $request->headers->all();
-    	// print ladybug_dump($headers);
-    	// $cookie = $request->headers->get('cookie');
-    	// print ladybug_dump($cookie);
-    	// $host = $request->headers->get('host');
-    	// print ladybug_dump($host);
-
-
-    	// $path_to_legacy_code = $this->container->getParameter('kernel.root_dir').'/../admin-files/articles/post.php';
-    	// // print ladybug_dump($path_to_legacy_code);
-    	// $url = $path_to_legacy_code;
-    	// // $url = 'file:///home/twisted/www/newscoop/admin-files/articles/post.php';
-    	// $url = 'http://www.newscooptest.com/admin/articles/post.php';
-    	// print ladybug_dump($url);
-
-    	// //open connection
-     //    $ch = curl_init();
-     //    curl_setopt($ch, CURLOPT_URL, $url);
-     //    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-     //    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-     //    curl_setopt($ch, CURLOPT_HEADER, 0);
-     //    curl_setopt($ch, CURLOPT_VERBOSE, 1);
-
-        // logs the connection (optional)
-        // $stderr = fopen("{$this->container->getParameter('kernel.root_dir')}/../log/curl.txt", "w");
-        // print ladybug_dump($this->container->getParameter('kernel.root_dir'));
-
-        // $browser = new \Buzz\Browser();
-        // $response = $browser->get('http://www.newscooptest.com/admin/articles/post.php');
-//        $request = new \Buzz\Message\Request('GET', '/admin/articles/post.php', 'http://'.$host);
-        // $request = new \Buzz\Message\Request('GET', '/../admin-files/articles/post.php', $this->container->getParameter('kernel.root_dir'));
-        // $request->addHeader('Cookie: PHPSESSID=usp8eaek3p1n3r3mocfh2ej2j7');
-        // foreach ($cookies as $key => $value) {
-    		// $request->addHeader('Cookie: '.$key.'='.$value);
-    	// }
-
-
-
-
-		// $request->addHeader('cookie: '.$cookie);
-
-		// print ladybug_dump($request);
-
-		// $response = new \Buzz\Message\Response();
-
-		// $client = new \Buzz\Client\FileGetContents();
-		// $client->send($request, $response);
-
-		// print ladybug_dump($request);
-		// print ladybug_dump($response);
-
-		// $postParameters['foo'] = 'bar';
-
-
-
-
-
-
-
-        // $postParametersString = '';
-        // foreach ($postParameters as $key => $value) {
-        //     $postParametersString .= $key . '=' . $value . '&';
-        // }
-        // rtrim($postParametersString, '&');
-
-  //       curl_setopt($ch, CURLOPT_POST, count($postParameters));
-  //       curl_setopt($ch, CURLOPT_POSTFIELDS, $postParametersString);
-
-  //       curl_setopt($ch, CURLOPT_COOKIESESSION, 0);
-		// curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookies.txt');
-		// curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookies.txt');
-
-        // print ladybug_dump(curl_getinfo($ch));
-        // $result = curl_exec($ch);
-        // print ladybug_dump(curl_getinfo($ch));
-        // print ladybug_dump(curl_error($ch));
-        // curl_close($ch);
-
-        // print ladybug_dump($result);
-
-    	
-    	// print ladybug_dump($request->request->all());
-    	// return print_r($request, true);
-    	// print ladybug_dump($request);
-    	// return json_encode($request->request);
-        // $em = $this->container->get('em');
-        // $publication = $this->get('newscoop_newscoop.publication_service')->getPublication();
-
-        // $article = $em->getRepository('Newscoop\Entity\Article')
-        //     ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
-        //     ->getOneOrNullResult();
-
-        // return $article;
+		$this->get('ladybug')->log($articleObj);
+		$this->get('ladybug')->log($articleTypeObj);
+		// print ladybug_dump($articleObj);
+		// print ladybug_dump($articleTypeObj);
     }
 
 
