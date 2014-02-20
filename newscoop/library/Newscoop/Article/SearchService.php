@@ -171,6 +171,7 @@ class SearchService implements ServiceInterface
                 $doc['lead'] = strip_tags($article->getData('DataLead'));
                 $doc['content'] = strip_tags($article->getData('DataContent'));
                 $doc['lead_short'] = strip_tags($article->getData('NewsLineText'));
+                // TODO: Get this from plugin ingest table
                 //$doc['dateline'] = strip_tags($article->getData('Location'));
                 break;
 
