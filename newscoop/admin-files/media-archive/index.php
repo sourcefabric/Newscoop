@@ -309,6 +309,7 @@ function newscoopMediaArchiveDataTable (element) {
         height: 800,
         type: 'iframe',
         onClosed: function() {
+            alert('sss');
            location.reload();
         }
     });
