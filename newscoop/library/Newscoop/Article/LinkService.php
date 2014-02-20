@@ -94,11 +94,14 @@ class LinkService
     public function getLink(Article $article)
     {
         if ($article->getType() === 'dossier') {
+
             $link = array(
                 $this->getPublicationAliasName($article),
-                $this->router->assemble(array('topic' => $this->getArticleTopicName($article)), 'topic'),
+                'themen',
+                urlencode($this->getArticleTopicName($article))
             );
         } else {
+
             $link = array(
                 $this->getPublicationAliasName($article),
                 ($article->getLanguage()) ? $article->getLanguage()->getCode() : null,
@@ -115,7 +118,6 @@ class LinkService
         $link = array_map(function ($part) {
             return trim($part, '/');
         }, $link);
-
 
         $link = implode('/', $link) . (in_array($article->getType(), $this->sectionTypes) ? '/' : '');
         return strpos($link, 'http') === 0 ? $link : 'http://' . $link;
@@ -186,11 +188,18 @@ class LinkService
      */
     public function getSectionShortName(Article $article)
     {
+        $issue = $this->em->getRepository('Newscoop\Entity\Issue')
+            ->findOneBy(array(
+                'number' => $article->getIssueId(),
+                'publication' => $article->getPublicationId(),
+                'language' => $article->getLanguageId(),
+            ));
+
         $section = $this->em->getRepository('Newscoop\Entity\Section')->findOneBy(array(
             'number' => $article->getSectionId(),
             'publication' => $article->getPublicationId(),
             'language' => $article->getLanguageId(),
-            'issue' => $article->getIssueId(),
+            'issue' => $issue->getId(),
         ));
 
         return $section ? $section->getShortName() : null;

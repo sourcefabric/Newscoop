@@ -39,9 +39,8 @@ class SearchService implements ServiceInterface
      * @var array
      */
     private $config = array(
-        'type' => array(), // TODO: Extrend with indexable article types
+        'type' => array(),
         'rendition' => null,
-        'blogs' => array('blog', 'bloginfo'),
     );
 
     /**
@@ -66,14 +65,15 @@ class SearchService implements ServiceInterface
         WebcodeFacade $webcoder,
         RenditionService $renditionService,
         LinkService $linkService,
-        EntityManager $em
+        EntityManager $em,
+        $config
     )
     {
         $this->webcoder = $webcoder;
         $this->renditionService = $renditionService;
         $this->linkService = $linkService;
-        //$this->config = array_merge($this->config, $config);
         $this->em = $em;
+        $this->config = array_merge($this->config, $config['article']);
     }
 
     /**
@@ -106,7 +106,7 @@ class SearchService implements ServiceInterface
     public function isIndexable(DocumentInterface $article)
     {
         return $article->isPublished()
-            //&& in_array($article->getType(), $this->config['type'])
+            && in_array($article->getType(), $this->config['type'])
             && $article->getLanguageId() > 0
             && $article->getSectionId() > 0;
     }
@@ -121,16 +121,22 @@ class SearchService implements ServiceInterface
     {
         $image = $this->renditionService->getArticleRenditionImage($article->getNumber(), $this->config['rendition'], 200, 150);
 
+        $webcode = $this->webcoder->getArticleWebcode($article);
+        if (strpos($webcode, 0, 1) != '+') {
+            $webcode = '+'.$webcode;
+        }
+
         $doc = array(
             'id' => $this->getDocumentId($article),
             'title' => $article->getTitle(),
+            // TODO: Extend this via class, instead of in core code
             'type' => in_array($article->getType(), $this->config['blogs']) ? 'blog' : $article->getType(),
             'published' => gmdate(self::DATE_FORMAT, $article->getPublishDate()->getTimestamp()),
             'updated' => gmdate(self::DATE_FORMAT, $article->getDate()->getTimestamp()),
             'author' => array_map(function($author) {
                 return $author->getFullName();
             }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
-            'webcode' => $this->webcoder->getArticleWebcode($article),
+            'webcode' => $webcode,
             'image' => $image ? $image['src'] : null,
             'link' => $this->linkService->getLink($article),
             'section' => $this->linkService->getSectionShortName($article),
@@ -164,7 +170,7 @@ class SearchService implements ServiceInterface
                 $doc['lead'] = strip_tags($article->getData('DataLead'));
                 $doc['content'] = strip_tags($article->getData('DataContent'));
                 $doc['lead_short'] = strip_tags($article->getData('NewsLineText'));
-                $doc['dateline'] = strip_tags($article->getData('Location'));
+                //$doc['dateline'] = strip_tags($article->getData('Location'));
                 break;
 
             case 'link':
