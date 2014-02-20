@@ -39,8 +39,9 @@ class SearchService implements ServiceInterface
      * @var array
      */
     private $config = array(
-        'type' => array(),
+        'type' => array('news'), // By default only index news, can be overwritten in config
         'rendition' => null,
+        'blogs' => array() // TODO: Extend this via class, instead of in core code
     );
 
     /**
