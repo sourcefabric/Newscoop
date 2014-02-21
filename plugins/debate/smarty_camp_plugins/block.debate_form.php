@@ -30,10 +30,12 @@ function smarty_block_debate_form($p_params, $p_content, &$p_smarty, &$p_repeat)
         // gets the context variable
         $campsite = $p_smarty->getTemplateVars('gimme');
         $html = '';
+        $template = null;
 
         if (isset($p_params['template'])) {
             $template = new Template($p_params['template']);
         }
+
         $templateId = is_null($template) ? $campsite->template->identifier : $template->getTemplateId();
         if (!isset($p_params['submit_button'])) {
             $p_params['submit_button'] = 'Submit';
@@ -69,7 +71,9 @@ function debate_'.$campsite->debate->identifier.'_vote()
         }
 
         $url = $campsite->url;
-        $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->getName());
+        if ($template) {
+            $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->getName());
+        }
 
         $html .= "<form name=\"debate\" id=\"debate_{$campsite->debate->identifier}_form\" action=\"" . $url->uri . "\" method=\"post\">\n";
 

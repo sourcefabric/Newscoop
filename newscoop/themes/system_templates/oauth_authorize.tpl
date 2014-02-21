@@ -1,3 +1,4 @@
+{{ dynamic }}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -53,3 +54,4 @@
     <script src="/themes/system_templates/js/bootstrap.min.js"></script>
   </body>
 </html>
+{{ /dynamic }}

@@ -729,6 +729,21 @@ final class CampContext
     } // fn setCurrentList
 
 
+    public function getListName($list)
+    {
+        $objectName = $this->GetListObjectName(get_class($list));
+        if ($objectName == '' || !isset($this->m_listObjects[$objectName])) {
+            throw new InvalidObjectException(get_class($list));
+        }
+
+        $listObjectName = $this->m_listObjects[$objectName]['class'].'List';
+        if (!is_a($list, $listObjectName)) {
+            throw new InvalidObjectException(get_class($list));
+        }
+
+        return $listObjectName;
+    }
+
     /**
      * Resets the current list.
      *
