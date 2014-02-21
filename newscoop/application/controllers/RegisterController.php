@@ -84,7 +84,8 @@ class RegisterController extends Zend_Controller_Action
         $user = $this->getAuthUser();
 
         $translator = \Zend_Registry::get('container')->getService('translator');
-        
+
+        $social = $this->_getParam('social');
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
         $form->setDefaults(array(
@@ -127,6 +128,7 @@ class RegisterController extends Zend_Controller_Action
         $this->view->form = $form;
         $this->view->img = $this->getUserImageSrc($user);
         $this->view->user = new \MetaUser($user);
+        $this->view->social = $social ?: false;
     }
 
     /**
