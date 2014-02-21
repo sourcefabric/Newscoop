@@ -64,6 +64,8 @@ class AuthController extends Zend_Controller_Action
     public function socialAction()
     {   
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $userService = \Zend_Registry::get('container')->getService('user');
+        $session = \Zend_Registry::get('container')->getService('session');
 
         $config = array(
 		    'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))), 
@@ -99,6 +101,8 @@ class AuthController extends Zend_Controller_Action
                 $this->auth->authenticate($socialAdapter);
             } else {
                 $user = $this->_helper->service('user')->getCurrentUser();
+                $token = $userService->loginUser($user);
+                $session->set('_security_frontend_area', serialize($token));
             }
 
             if ($user->isPending()) {
