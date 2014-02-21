@@ -18,8 +18,8 @@ parameters:
                 Action_Helper: "%application_path%/controllers/helpers"
         layout:
             layoutPath: "%application_path%/layouts/scripts/"
-        view: ""        
-        modules: 
+        view: ""
+        modules:
             - ""
     pluginPaths:
         Resource: "%application_path%/../library/Resource"
@@ -145,6 +145,7 @@ parameters:
         file_directory: "%application_path%/../public/files/"
         file_num_dirs_level_1: 1000
         file_num_dirs_level_2: 1000
-    search:
-        solr_server: "http://localhost:8983/solr"
     subscriptions.service.class: "Newscoop\Services\SubscriptionService"
+    search.article:
+        type: ["news"]
+        rendition: ''

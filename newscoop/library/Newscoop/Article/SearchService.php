@@ -23,38 +23,36 @@ class SearchService implements ServiceInterface
     /**
      * @var Newscoop\Webcode\Mapper
      */
-    private $webcoder;
+    protected $webcoder;
 
     /**
      * @var Newscoop\Image\RenditionService
      */
-    private $renditionService;
+    protected $renditionService;
 
     /**
      * @var Newscoop\Article\LinkService
      */
-    private $linkService;
+    protected $linkService;
 
     /**
      * @var array
      */
-    private $config = array(
-        'type' => array(), // TODO: Extrend with indexable article types
-        'rendition' => null,
-        'blogs' => array('blog', 'bloginfo'),
+    protected $config = array(
+        'rendition' => null
     );
 
     /**
      * @var array
      */
-    private $switches = array(
+    protected $switches = array(
         'print',
     );
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @param Newscoop\Webcode\Mapper $webcoder
@@ -66,14 +64,17 @@ class SearchService implements ServiceInterface
         WebcodeFacade $webcoder,
         RenditionService $renditionService,
         LinkService $linkService,
-        EntityManager $em
+        EntityManager $em,
+        $config = null
     )
     {
         $this->webcoder = $webcoder;
         $this->renditionService = $renditionService;
         $this->linkService = $linkService;
-        //$this->config = array_merge($this->config, $config);
         $this->em = $em;
+        if ($config !== null &&  is_array($config)) {
+            $this->config = array_merge($this->config, $config);
+        }
     }
 
     /**
@@ -106,7 +107,7 @@ class SearchService implements ServiceInterface
     public function isIndexable(DocumentInterface $article)
     {
         return $article->isPublished()
-            //&& in_array($article->getType(), $this->config['type'])
+            && in_array($article->getType(), $this->config['type'])
             && $article->getLanguageId() > 0
             && $article->getSectionId() > 0;
     }
@@ -121,16 +122,21 @@ class SearchService implements ServiceInterface
     {
         $image = $this->renditionService->getArticleRenditionImage($article->getNumber(), $this->config['rendition'], 200, 150);
 
+        $webcode = $this->webcoder->getArticleWebcode($article);
+        if (strpos($webcode, 0, 1) != '+') {
+            $webcode = '+'.$webcode;
+        }
+
         $doc = array(
             'id' => $this->getDocumentId($article),
             'title' => $article->getTitle(),
-            'type' => in_array($article->getType(), $this->config['blogs']) ? 'blog' : $article->getType(),
+            'type' => $article->getType(),
             'published' => gmdate(self::DATE_FORMAT, $article->getPublishDate()->getTimestamp()),
             'updated' => gmdate(self::DATE_FORMAT, $article->getDate()->getTimestamp()),
             'author' => array_map(function($author) {
                 return $author->getFullName();
             }, (is_array($article->getArticleAuthors())) ? $article->getArticleAuthors() : array()),
-            'webcode' => $this->webcoder->getArticleWebcode($article),
+            'webcode' => $webcode,
             'image' => $image ? $image['src'] : null,
             'link' => $this->linkService->getLink($article),
             'section' => $this->linkService->getSectionShortName($article),
@@ -140,55 +146,6 @@ class SearchService implements ServiceInterface
             'topic' => array_values($article->getTopicNames()),
             'switches' => $this->getArticleSwitches($article),
         );
-
-        // TODO: Extend this via class, instead of in core code
-
-        switch ($article->getType()) {
-            case 'blog':
-            case 'news':
-                $doc['lead'] = strip_tags($article->getData('lede'));
-                $doc['content'] = strip_tags($article->getData('body'));
-                $doc['title_short'] = strip_tags($article->getData('short_name'));
-                break;
-
-            case 'dossier':
-                $doc['lead'] = strip_tags($article->getData('teaser'));
-                $doc['content'] = strip_tags($article->getData('lede') . "\n" . $article->getData('history'));
-                $doc['title'] = array(
-                    'value' => $doc['title'],
-                    'boost' => 1.5,
-                );
-                break;
-
-            case 'newswire':
-                $doc['lead'] = strip_tags($article->getData('DataLead'));
-                $doc['content'] = strip_tags($article->getData('DataContent'));
-                $doc['lead_short'] = strip_tags($article->getData('NewsLineText'));
-                $doc['dateline'] = strip_tags($article->getData('Location'));
-                break;
-
-            case 'link':
-                $doc['link_url'] = $article->getData('link_url');
-                $doc['link_description'] = strip_tags($article->getData('link_description'));
-                break;
-
-            case 'event':
-                $doc['event_organizer'] = $article->getData('organizer');
-                $doc['event_town'] = $article->getData('town');
-                $doc['link_url'] = $article->getData('web');
-
-                $date = $this->getArticleDateTime($article);
-                if ($date !== null) {
-                    $doc['event_date'] = $date->getStartDate()->format('d.m.Y');
-                    $doc['event_time'] = $date->getStartTime()->format('H:i');
-                }
-                break;
-
-            case 'bloginfo':
-                $doc['lead'] = strip_tags($article->getData('motto'));
-                $doc['content'] = strip_tags($article->getData('infolong'));
-                break;
-        }
 
         return array_filter($doc);
     }
@@ -210,7 +167,7 @@ class SearchService implements ServiceInterface
      * @param Newscoop\Entity\Article $article
      * @return ArticleDatetime
      */
-    private function getArticleDatetime($article)
+    public function getArticleDatetime($article)
     {
         return $this->em->getRepository('Newscoop\Entity\ArticleDatetime')->findOneBy(array(
             'articleId' => $article->getNumber(),
@@ -224,7 +181,7 @@ class SearchService implements ServiceInterface
      * @param Newscoop\Entity\Article $article
      * @return array
      */
-    private function getArticleSwitches($article)
+    public function getArticleSwitches($article)
     {
         $switches = array();
 
@@ -237,6 +194,5 @@ class SearchService implements ServiceInterface
                 // @noop
             }
         }
-
     }
 }
