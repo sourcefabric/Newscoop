@@ -177,7 +177,7 @@ abstract class BaseList
      *
      * @return ListResult
      */
-    abstract protected function prepareList($criteria, $parameters);
+    abstract protected function prepareList($criteria = null, $parameters = null);
 
     /**
      * Convert constraints array to Criteria
