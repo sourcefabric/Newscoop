@@ -89,8 +89,9 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($socialAdapter);
 
             if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
-                $user = $this->_helper->service('user')->findBy(array('email' => $userData->email));
-                if (!$user)  {
+                $user = $this->_helper->service('user')->findOneBy(array('email' => $userData->email));
+
+                if (!$user) {
                     $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
                 }
 
@@ -101,13 +102,14 @@ class AuthController extends Zend_Controller_Action
             }
 
             if ($user->isPending()) {
-                $this->_forward('confirm', 'register', 'default');
+                $this->_forward('confirm', 'register', 'default', array(
+                    'social' => true,
+                ));
             } else {
                 $this->_helper->redirector('index', 'dashboard');
             }
         } catch (\Exception $e) {
-            var_dump($e->getMessage(), $e->getTraceAsString());
-            exit;
+            throw new \Exception($e->getMessage());
         }
     }
 
