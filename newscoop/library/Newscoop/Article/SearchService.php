@@ -130,8 +130,7 @@ class SearchService implements ServiceInterface
         $doc = array(
             'id' => $this->getDocumentId($article),
             'title' => $article->getTitle(),
-            // TODO: Extend this via class, instead of in core code
-            'type' => in_array($article->getType(), $this->config['blogs']) ? 'blog' : $article->getType(),
+            'type' => $article->getType(),
             'published' => gmdate(self::DATE_FORMAT, $article->getPublishDate()->getTimestamp()),
             'updated' => gmdate(self::DATE_FORMAT, $article->getDate()->getTimestamp()),
             'author' => array_map(function($author) {
@@ -147,56 +146,6 @@ class SearchService implements ServiceInterface
             'topic' => array_values($article->getTopicNames()),
             'switches' => $this->getArticleSwitches($article),
         );
-
-        // TODO: Extend this via class, instead of in core code
-
-        switch ($article->getType()) {
-            case 'blog':
-            case 'news':
-                $doc['lead'] = strip_tags($article->getData('lede'));
-                $doc['content'] = strip_tags($article->getData('body'));
-                $doc['title_short'] = strip_tags($article->getData('short_name'));
-                break;
-
-            case 'dossier':
-                $doc['lead'] = strip_tags($article->getData('teaser'));
-                $doc['content'] = strip_tags($article->getData('lede') . "\n" . $article->getData('history'));
-                $doc['title'] = array(
-                    'value' => $doc['title'],
-                    'boost' => 1.5,
-                );
-                break;
-
-            case 'newswire':
-                $doc['lead'] = strip_tags($article->getData('DataLead'));
-                $doc['content'] = strip_tags($article->getData('DataContent'));
-                $doc['lead_short'] = strip_tags($article->getData('NewsLineText'));
-                // TODO: Get this from plugin ingest table
-                //$doc['dateline'] = strip_tags($article->getData('Location'));
-                break;
-
-            case 'link':
-                $doc['link_url'] = $article->getData('link_url');
-                $doc['link_description'] = strip_tags($article->getData('link_description'));
-                break;
-
-            case 'event':
-                $doc['event_organizer'] = $article->getData('organizer');
-                $doc['event_town'] = $article->getData('town');
-                $doc['link_url'] = $article->getData('web');
-
-                $date = $this->getArticleDateTime($article);
-                if ($date !== null) {
-                    $doc['event_date'] = $date->getStartDate()->format('d.m.Y');
-                    $doc['event_time'] = $date->getStartTime()->format('H:i');
-                }
-                break;
-
-            case 'bloginfo':
-                $doc['lead'] = strip_tags($article->getData('motto'));
-                $doc['content'] = strip_tags($article->getData('infolong'));
-                break;
-        }
 
         return array_filter($doc);
     }
