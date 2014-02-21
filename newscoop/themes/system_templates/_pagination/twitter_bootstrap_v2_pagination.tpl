@@ -1,3 +1,4 @@
+{{ dynamic }}
 {{ math equation="ceil(totalCount / numItemsPerPage)" assign=pageCountCeil numItemsPerPage=$data['numItemsPerPage'] totalCount=$data['totalCount'] }}
 {{ $pageCount =  $pageCountCeil|intval }}
 
@@ -109,3 +110,4 @@
         </ul>
     </div>
 {{ /if }}
+{{ /dynamic }}
