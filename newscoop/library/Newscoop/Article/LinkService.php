@@ -61,19 +61,19 @@ class LinkService
     /**
      * @var array
      */
-    private $sectionTypes = array(
+    protected $sectionTypes = array(
         'bloginfo',
     );
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\Router
      */
-    private $router;
+    protected $router;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -93,33 +93,23 @@ class LinkService
      */
     public function getLink(Article $article)
     {
-        if ($article->getType() === 'dossier') {
+        $link = array(
+            $this->getPublicationAliasName($article),
+            ($article->getLanguage()) ? $article->getLanguage()->getCode() : null,
+            $this->getIssueShortName($article),
+            $this->getSectionShortName($article),
+        );
 
-            $link = array(
-                $this->getPublicationAliasName($article),
-                'themen',
-                urlencode($this->getArticleTopicName($article))
-            );
-        } else {
-
-            $link = array(
-                $this->getPublicationAliasName($article),
-                ($article->getLanguage()) ? $article->getLanguage()->getCode() : null,
-                $this->getIssueShortName($article),
-                $this->getSectionShortName($article),
-            );
-
-            if (!in_array($article->getType(), $this->sectionTypes)) {
-                $link[] = $article->getNumber();
-                $link[] = $this->getSeo($article, ($article->getPublication()) ? $article->getPublication()->getSeo() : array());
-            }
+        if (!in_array($article->getType(), $this->sectionTypes)) {
+            $link[] = $article->getNumber();
+            $link[] = $this->getSeo($article, ($article->getPublication()) ? $article->getPublication()->getSeo() : array());
         }
 
         $link = array_map(function ($part) {
             return trim($part, '/');
         }, $link);
 
-        $link = implode('/', $link) . (in_array($article->getType(), $this->sectionTypes) ? '/' : '');
+        $link = implode('/', $link);
         return strpos($link, 'http') === 0 ? $link : 'http://' . $link;
     }
 
@@ -142,7 +132,7 @@ class LinkService
             $link[] = $article->getNumber();
         }
 
-        $link = implode('/', $link) . (in_array($article->getType(), $this->sectionTypes) ? '/' : '');
+        $link = implode('/', $link);
         return strpos($link, 'http') === 0 ? $link : 'http://' . $link;
     }
 
@@ -246,7 +236,7 @@ class LinkService
      * @param string $url
      * @return string
      */
-    private function encode($url)
+    public function encode($url)
     {
         list($url,) = explode('.', $url, 2);
         $url = strtolower($url);
@@ -262,7 +252,7 @@ class LinkService
      * @param object $article
      * @return string
      */
-    private function getArticleTopicName($article)
+    public function getArticleTopicName($article)
     {
         $topics = $article->getTopicNames();
         return empty($topics) ? null : array_shift($topics);
