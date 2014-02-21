@@ -39,9 +39,7 @@ class SearchService implements ServiceInterface
      * @var array
      */
     protected $config = array(
-        'type' => array('news'), // By default only index news, can be overwritten in config
-        'rendition' => null,
-        'blogs' => array() // TODO: Extend this via class, instead of in core code
+        'rendition' => null
     );
 
     /**
@@ -67,14 +65,18 @@ class SearchService implements ServiceInterface
         RenditionService $renditionService,
         LinkService $linkService,
         EntityManager $em,
-        $config
+        $config = null
     )
     {
         $this->webcoder = $webcoder;
         $this->renditionService = $renditionService;
         $this->linkService = $linkService;
         $this->em = $em;
-        $this->config = array_merge($this->config, $config['article']);
+        if ($config !== null &&  is_array($config)) {
+            $this->config = array_merge($this->config, $config);
+        }
+
+        ladybug_dump($this->config); exit;
     }
 
     /**

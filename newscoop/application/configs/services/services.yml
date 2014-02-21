@@ -173,13 +173,13 @@ services:
         arguments: ["@service_container", "@search.user", "@user.repository"]
     search.article:
         class: Newscoop\Article\SearchService
-        arguments: ["@webcode", "@image.rendition", "@article.link", "@em", "%search%"]
+        arguments: ["@webcode", "@image.rendition", "@article.link", "@em", "%search.article%"]
     search.comment:
         class: Newscoop\Comment\SearchService
-        arguments: ["@article.link", "%search%"]
+        arguments: ["@article.link"]
     search.user:
         class: Newscoop\User\SearchService
-        arguments: ["@image", "%search%"]
+        arguments: ["@image"]
     preferences:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
         arguments: ["@em"]
