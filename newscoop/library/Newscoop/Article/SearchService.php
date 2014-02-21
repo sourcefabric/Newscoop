@@ -23,22 +23,22 @@ class SearchService implements ServiceInterface
     /**
      * @var Newscoop\Webcode\Mapper
      */
-    private $webcoder;
+    protected $webcoder;
 
     /**
      * @var Newscoop\Image\RenditionService
      */
-    private $renditionService;
+    protected $renditionService;
 
     /**
      * @var Newscoop\Article\LinkService
      */
-    private $linkService;
+    protected $linkService;
 
     /**
      * @var array
      */
-    private $config = array(
+    protected $config = array(
         'type' => array('news'), // By default only index news, can be overwritten in config
         'rendition' => null,
         'blogs' => array() // TODO: Extend this via class, instead of in core code
@@ -47,14 +47,14 @@ class SearchService implements ServiceInterface
     /**
      * @var array
      */
-    private $switches = array(
+    protected $switches = array(
         'print',
     );
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @param Newscoop\Webcode\Mapper $webcoder
@@ -167,7 +167,7 @@ class SearchService implements ServiceInterface
      * @param Newscoop\Entity\Article $article
      * @return ArticleDatetime
      */
-    private function getArticleDatetime($article)
+    public function getArticleDatetime($article)
     {
         return $this->em->getRepository('Newscoop\Entity\ArticleDatetime')->findOneBy(array(
             'articleId' => $article->getNumber(),
@@ -181,7 +181,7 @@ class SearchService implements ServiceInterface
      * @param Newscoop\Entity\Article $article
      * @return array
      */
-    private function getArticleSwitches($article)
+    public function getArticleSwitches($article)
     {
         $switches = array();
 
@@ -194,6 +194,5 @@ class SearchService implements ServiceInterface
                 // @noop
             }
         }
-
     }
 }
