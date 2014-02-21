@@ -75,8 +75,6 @@ class SearchService implements ServiceInterface
         if ($config !== null &&  is_array($config)) {
             $this->config = array_merge($this->config, $config);
         }
-
-        ladybug_dump($this->config); exit;
     }
 
     /**
