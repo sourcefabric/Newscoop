@@ -16,14 +16,22 @@ use Knp\Component\Pager\Paginator;
  */
 class ListPaginatorService
 {
+    /**
+     * @var \Knp\Component\Pager\Paginator
+     */
     private $paginator;
 
+    /**
+     * @var \Newscoop\Services\TemplatesService
+     */
     private $templatesService;
 
     /**
      * Set page partameter name
      *
      * @param string $pageParameterName
+     *
+     * @return self
      */
     public function setPageParameterName($pageParameterName)
     {
@@ -38,6 +46,8 @@ class ListPaginatorService
      * Set used route
      *
      * @param string $route Used route in request
+     *
+     * @return self
      */
     public function setRoute($route)
     {
@@ -52,6 +62,8 @@ class ListPaginatorService
      * Set parameters required by route generator for used route
      *
      * @param array $params Route parameters
+     *
+     * @return self
      */
     public function setRouteParams(array $params = array())
     {
@@ -62,12 +74,24 @@ class ListPaginatorService
         return $this;
     }
 
+    /**
+     * @param \Newscoop\Services\TemplatesService $templatesService
+     */
     public function __construct($templatesService)
     {
         $this->paginator = new Paginator();
         $this->templatesService = $templatesService;
     }
 
+    /**
+     * Paginate target with passed page and limit, apply default pagination remplate to renderer
+     *
+     * @param mixed   $target
+     * @param integer $pageNumber
+     * @param integer $limit
+     *
+     * @return \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination
+     */
     public function paginate($target, $pageNumber = 1, $limit = 10)
     {
         $pagination = $this->paginator->paginate($target, $pageNumber, $limit);
@@ -80,6 +104,8 @@ class ListPaginatorService
 
     /**
      * Get paginator
+     *
+     * @return \Knp\Component\Pager\Paginator
      */
     public function getPaginator()
     {

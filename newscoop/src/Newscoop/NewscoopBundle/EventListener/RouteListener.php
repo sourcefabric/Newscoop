@@ -20,11 +20,19 @@ class RouteListener
 {
     private $listPaginatorService;
 
+    /**
+     * @param \Newscoop\Services\ListPaginatorService $listPaginatorService
+     */
     public function __construct($listPaginatorService)
     {
         $this->listPaginatorService = $listPaginatorService;
     }
 
+    /**
+     * Fill listPaginatorService with information about route and parameters from request
+     *
+     * @param GetResponseEvent $event
+     */
     public function onRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
