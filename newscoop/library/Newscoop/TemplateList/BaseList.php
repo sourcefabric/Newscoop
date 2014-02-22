@@ -146,7 +146,7 @@ abstract class BaseList
 
         $this->convertParameters($firstResult, $parameters);
         $this->constraints = $this->parseConstraintsString($parameters['constraints']);
-        $this->convertConstraints($this->constraints);
+        $this->convertConstraints();
 
         if ($this->constraints === false || $parameters === false) {
             $this->totalCount = 0;
@@ -160,8 +160,7 @@ abstract class BaseList
             $this->duplicateObject($this->objectsList);
             return;
         }
-
-        $this->objectsList = $this->prepareList($this->criteria);
+        $this->objectsList = $this->prepareList($this->criteria, $parameters);
         $this->totalCount = $this->objectsList->count();
         $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->maxResults);
         $this->storeInCache();
@@ -171,27 +170,27 @@ abstract class BaseList
 
     /**
      * Get ListResult object with list elements
-     * 
+     *
      * @param  integer  $firstResult
      * @param  integer  $maxResults
      * @param  Criteria $criteria
-     * 
+     *
      * @return ListResult
      */
-    abstract protected function prepareList($criteria);
+    abstract protected function prepareList($criteria, $parameters);
 
     /**
      * Convert constraints array to Criteria
-     * 
+     *
      * @param  array  $constraints
      * @param  Criteria $criteria
-     * 
+     *
      * @return Criteria
      */
-    protected function convertConstraints($constraints){
+    protected function convertConstraints(){
         $perametersOperators = array();
-        $constraints = array_chunk($constraints, 3, true);
-        foreach ($constraints as $constraint) {
+        $this->constraints = array_chunk($this->constraints, 3, true);
+        foreach ($this->constraints as $constraint) {
             if (count($constraint) == 3) {
                 foreach ($this->criteria as $key => $value) {
                     if ($key == $constraint[0]) {
@@ -216,8 +215,8 @@ abstract class BaseList
      */
     protected function convertParameters($firstResult, $parameters)
     {
-        $this->firstResult = is_numeric($firstResult) ? intval($firstResult) : 0;
-        $this->maxResults = isset($parameters['length']) ? intval($parameters['length']) : 0;
+        $this->firstResult = is_numeric($firstResult) ? intval($firstResult) : $this->criteria->firstResult;
+        $this->maxResults = isset($parameters['length']) ? intval($parameters['length']) : $this->criteria->maxResults;
         $this->columns = isset($parameters['columns']) ? intval($parameters['columns']) : 0;
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $this->name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
@@ -382,7 +381,7 @@ abstract class BaseList
      */
     public function isEmpty()
     {
-        return $this->objectsList->count() == 0;
+        return count($this->objectsList->items) == 0;
     }
 
     /**
@@ -592,7 +591,7 @@ abstract class BaseList
                 return $this->getTotalCount();
             case 'at_beginning':
                 return $this->getIndex() == ($this->getStart() + 1);
-            case 'at_end';
+            case 'at_end':
                 return $this->getIndex() == $this->getEnd();
             case 'has_next_elements':
                 return $this->hasNextElements();

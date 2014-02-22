@@ -128,11 +128,11 @@ class PublicationService
             ->findOneByName($publication);
 
         if (!$alias) {
-            throw new NotFoundHttpException('Requested publication was not found.');
+            return null;
         }
 
         if (!$alias->getPublication()) {
-            throw new NotFoundHttpException('Requested publication was not found.');
+            return null;
         }
 
         $this->publicationMetadata['alias'] = array(
