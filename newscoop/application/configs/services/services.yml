@@ -21,7 +21,7 @@ services:
         arguments:  ["%image%", "@em"]
     attachment:
         class:      Newscoop\Services\AttachmentService
-        arguments:  ["%attachment%", "@em"]
+        arguments:  ["%attachment%", "@em", "@router"]
     zend_auth:
         class:      Zend_Auth
         factory_class: Zend_Auth
@@ -173,7 +173,7 @@ services:
         arguments: ["@service_container", "@search.user", "@user.repository"]
     search.article:
         class: Newscoop\Article\SearchService
-        arguments: ["@webcode", "@image.rendition", "@article.link", "@em"]
+        arguments: ["@webcode", "@image.rendition", "@article.link", "@em", "%search.article%"]
     search.comment:
         class: Newscoop\Comment\SearchService
         arguments: ["@article.link"]

@@ -64,6 +64,8 @@ class AuthController extends Zend_Controller_Action
     public function socialAction()
     {   
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+        $userService = \Zend_Registry::get('container')->getService('user');
+        $session = \Zend_Registry::get('container')->getService('session');
 
         $config = array(
 		    'base_url' => $this->view->serverUrl($this->view->url(array('action' => 'socialendpoint'))), 
@@ -89,8 +91,9 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($socialAdapter);
 
             if ($result->getCode() !== Zend_Auth_Result::SUCCESS) {
-                $user = $this->_helper->service('user')->findBy(array('email' => $userData->email));
-                if (!$user)  {
+                $user = $this->_helper->service('user')->findOneBy(array('email' => $userData->email));
+
+                if (!$user) {
                     $user = $this->_helper->service('user')->createPending($userData->email, $userData->firstName, $userData->lastName);
                 }
 
@@ -98,16 +101,19 @@ class AuthController extends Zend_Controller_Action
                 $this->auth->authenticate($socialAdapter);
             } else {
                 $user = $this->_helper->service('user')->getCurrentUser();
+                $token = $userService->loginUser($user);
+                $session->set('_security_frontend_area', serialize($token));
             }
 
             if ($user->isPending()) {
-                $this->_forward('confirm', 'register', 'default');
+                $this->_forward('confirm', 'register', 'default', array(
+                    'social' => true,
+                ));
             } else {
                 $this->_helper->redirector('index', 'dashboard');
             }
         } catch (\Exception $e) {
-            var_dump($e->getMessage(), $e->getTraceAsString());
-            exit;
+            throw new \Exception($e->getMessage());
         }
     }
 

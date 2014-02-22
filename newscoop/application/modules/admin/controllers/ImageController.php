@@ -239,8 +239,8 @@ class Admin_ImageController extends Zend_Controller_Action
                     $iptcPlace = implode(', ', $iptcPlace);
                 }
             }
-            
-            if ($image->getDate() == '0000-00-00') {
+
+            if ($image->getDate() == '0000-00-00' || $image->getDate() == '') {
                 if (isset($iptcPhotographer)) {
                     $image->setPhotographer($iptcPhotographer);
                 }
@@ -256,7 +256,7 @@ class Admin_ImageController extends Zend_Controller_Action
                 if (isset($iptcDate)) {
                     $image->setDate($iptcDate);
                 }
-                
+
                 $images[] = $image;
             }
 
@@ -264,7 +264,7 @@ class Admin_ImageController extends Zend_Controller_Action
                 $images[] = $image;
             }
         }
-        
+
         $this->view->images = $images;
     }
 
