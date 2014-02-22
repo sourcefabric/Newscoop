@@ -121,11 +121,18 @@ class EmailService
         }
 
         try {
-            $messageToSend = \Swift_Message::newInstance()
-                ->setSubject($placeholder)
+
+            $messageToSend = \Swift_Message::newInstance();
+
+            if (array_key_exists('moderator', $to)) {
+                $messageToSend->addBcc($to['moderator']);
+                unset($to['moderator']);
+            }
+
+            $messageToSend->setSubject($placeholder)
                 ->setFrom($from)
                 ->setTo($to)
-                ->setBody($message);
+                ->setBody($message, 'text/html');
 
             $this->mailer->send($messageToSend);
         } catch (\Exception $exception) {
@@ -160,12 +167,18 @@ class EmailService
         }
 
         $smarty->assign('comment', $comment);
-        $smarty->assign('article', $article);
+        $smarty->assign('article', new \MetaArticle($article->getLanguageId(), $article->getNumber()));
         $smarty->assign('publication', $uri->getBase());
         $smarty->assign('articleLink', \ShortURL::GetURI($article->getPublicationId(), $article->getLanguageId(), $article->getIssueId(), $article->getSectionId(), $article->getNumber()));
+        $moderatorFrom = $this->publicationService->getPublication()->getModeratorFrom();
+
+        if ($this->publicationService->getPublication()->getCommentsPublicModerated()) {
+            $moderatorTo = $this->publicationService->getPublication()->getModeratorTo();
+            $moderatorTo ? $emails['moderator'] = $moderatorTo : null;
+        }
 
         $message = $this->templatesService->fetchTemplate("email_comment-notify.tpl");
-        $this->send($this->placeholdersService->get('subject'), $message, $emails, $user ? $user->getEmail() : $this->preferencesService->EmailFromAddress);
+        $this->send($this->placeholdersService->get('subject'), $message, $emails, $moderatorFrom ?: $this->preferencesService->EmailFromAddress);
     }
 
     /**

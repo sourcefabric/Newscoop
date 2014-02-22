@@ -312,6 +312,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $languageRepository = $em->getRepository('Newscoop\Entity\Language');
             $language = $languageRepository->findOneByCode($values['language']);
 
+            if (is_numeric($values['language'])) {
+                $language = $languageRepository->findOneById($values['language']);
+            }
+
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find(array('number' => $values['thread'], 'language' => $language->getId()));
 
@@ -390,8 +394,9 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $qb->where($andx);
         // limit
         if (isset($p_params['iDisplayLength'])) {
-            $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
+            $qb->setFirstResult(0)->setMaxResults((int)$p_params['iDisplayLength'] - (int) $p_params['iDisplayStart']);
         }
+        //ladybug_dump(count($qb->getQuery()->getArrayResult()));die;
         return $qb->getQuery()->getResult();
     }
 

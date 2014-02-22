@@ -161,7 +161,6 @@ function loadComments() {
         "iDisplayStart": lastCommentId,
         "iDisplayLength": commentsNumber
     };
-    
 
     var call_url = '../comments/list';
 
