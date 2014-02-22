@@ -76,7 +76,6 @@ class PluginsController extends Controller
             $privatePackages[$resultKey] = $package;
         }
 
-
         return array(
             'allAvailablePlugins' => $allAvailablePlugins,
             'privatePackages' => $privatePackages,
