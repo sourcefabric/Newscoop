@@ -21,10 +21,6 @@ class ListPaginatorService
      */
     private $paginator;
 
-    /**
-     * @var \Newscoop\Services\TemplatesService
-     */
-    private $templatesService;
 
     /**
      * Set page partameter name
@@ -74,13 +70,9 @@ class ListPaginatorService
         return $this;
     }
 
-    /**
-     * @param \Newscoop\Services\TemplatesService $templatesService
-     */
-    public function __construct($templatesService)
+    public function __construct()
     {
         $this->paginator = new Paginator();
-        $this->templatesService = $templatesService;
     }
 
     /**
@@ -95,9 +87,6 @@ class ListPaginatorService
     public function paginate($target, $pageNumber = 1, $limit = 10)
     {
         $pagination = $this->paginator->paginate($target, $pageNumber, $limit);
-        $pagination->renderer = function ($data) {
-            return $this->templatesService->fetchTemplate('_pagination/twitter_bootstrap_v2_pagination.tpl', array('data' => $data));
-        };
 
         return $pagination;
     }

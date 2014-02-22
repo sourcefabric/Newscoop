@@ -73,9 +73,8 @@ services:
     newscoop_newscoop.listener.route_listener:
         class: Newscoop\NewscoopBundle\EventListener\RouteListener
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 30 }
         arguments:  ['@newscoop.listpaginator.service']
-
 
     newscoop_newscoop.listener.no_cache_listener:
         class: Newscoop\NewscoopBundle\EventListener\NoCacheListener

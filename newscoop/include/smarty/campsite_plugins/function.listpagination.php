@@ -27,10 +27,14 @@ function smarty_function_listpagination($params, &$smarty)
     }
 
     if ($context->current_list->getIndex() === $context->current_list->getEnd()) {
+        $templatesService = \Zend_Registry::get('container')->get('newscoop.templates.service');
         if (array_key_exists('file', $params)) {
-            $templatesService = \Zend_Registry::get('container')->get('newscoop.templates.service');
             $context->current_list->pagination->renderer = function ($data) use ($templatesService, $params) {
                 return $templatesService->fetchTemplate($params['file'], array('data' => $data));
+            };
+        } else {
+             $context->current_list->pagination->renderer = function ($data) use ($templatesService, $params) {
+                return $templatesService->fetchTemplate('_pagination/twitter_bootstrap_v2_pagination.tpl', array('data' => $data));
             };
         }
 
