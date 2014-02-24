@@ -77,7 +77,7 @@ class ArticlesController extends FOSRestController
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         // Fetch article
-        $articleObj = new \Article(1, $clean['articleNumber']);
+        $articleObj = new \Article($clean['languageId'], $clean['articleNumber']);
 
         if (!$articleObj->exists()) {
             throw new NewscoopException('Article does not exist');
