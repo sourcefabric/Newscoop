@@ -17,7 +17,8 @@ if (!$g_user->hasPermission('AddFile')) {
 }
 
 // get all files without description (0)
-$fileData = Attachment::GetUnedited($g_user->getUserId());
+$attachmentService = \Zend_Registry::get('container')->getService('attachment');
+$fileData = $attachmentService->getUnedited($g_user->getUserId());
 
 if (empty($fileData)) {
     camp_html_add_msg($translator->trans('No files for multi editing.', array(), 'media_archive'), 'ok');
@@ -52,21 +53,21 @@ camp_html_display_msgs();
 <ul id="edit-files">
     <?php foreach ($fileData as $index => $file): ?>
     <li>
-        <h2><?php echo $file->getFileName(); ?></h2>
+        <h2><?php echo $file['name']; ?></h2>
         <fieldset>
             <legend><?php  echo $translator->trans("Change file information", array(), 'media_archive'); ?></legend>
 
             <dl>
                 <dt><?php  echo $translator->trans("Description"); ?>:</dt>
-                <dd><input type="text" name="file[<?php echo $file->getAttachmentId(); ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php echo $translator->trans("Please enter a description for the file: $1.", array('$1' => $file->getFileName()), 'media_archive'); ?>"/></dd>
+                <dd><input type="text" name="file[<?php echo $file['id']; ?>][f_description]" value="" size="32" class="input_text" size="32" class="input_text" alt="blank" emsg="<?php echo $translator->trans("Please enter a description for the file: $1.", array('$1' => $file['name']), 'media_archive'); ?>"/></dd>
             </dl>
             <dl>
                 <dt><?php  echo $translator->trans("Should this file only be available for this translation of the article, or for all translations?", array(), 'media_archive'); ?></dt>
                 <dd>
                     <p>
-                        <input id="language_specific_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_language_specific]" value="yes">
+                        <input id="language_specific_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file['id']; ?>][f_language_specific]" value="yes">
                         <label for="language_specific_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Only this translation", array(), 'media_archive'); ?></label>
-                        <input id="language_specific_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_language_specific]" value="no" checked="checked" />
+                        <input id="language_specific_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file['id']; ?>][f_language_specific]" value="no" checked="checked" />
                         <label for="language_specific_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("All translations", array(), 'media_archive'); ?></label>
                     </p>
                 </dd>
@@ -75,9 +76,9 @@ camp_html_display_msgs();
                 <dt><?php  echo $translator->trans("Do you want this file to open in the user's browser, or to automatically download?", array(), 'media_archive'); ?></dt>
                 <dd>
                     <p>
-                        <input id="disposition_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_content_disposition]" value=""/>
+                        <input id="disposition_0_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file['id']; ?>][f_content_disposition]" value=""/>
                         <label for="disposition_0_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Open in the browser", array(), 'media_archive'); ?></label>
-                        <input id="disposition_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file->getAttachmentId(); ?>][f_content_disposition]" value="attachment" checked="checked" />
+                        <input id="disposition_1_<?php echo $index; ?>" class="input_radio" type="radio" name="file[<?php echo $file['id']; ?>][f_content_disposition]" value="attachment" checked="checked" />
                         <label for="disposition_1_<?php echo $index; ?>" class="inline-style left-floated" style="padding-right:15px"><?php echo $translator->trans("Automatically download", array(), 'media_archive'); ?></label>
                     </p>
                 </dd>

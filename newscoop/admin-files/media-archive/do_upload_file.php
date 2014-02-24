@@ -39,12 +39,12 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
     $statusIdx = 'uploader_' . $i . '_status';
     if ($_POST[$statusIdx] == 'done') {
         $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment()).'/'.$_POST[$tmpnameIdx];
-        $file = new UploadedFile($fileLocation, $_POST[$nameIdx], null, filesize($fileLocation), null, true);
+        $file = new UploadedFile($fileLocation, $_POST[$nameIdx], mime_content_type($fileLocation), filesize($fileLocation), null, true);
         $result = $attachmentService->upload($file, '', $language, array('user' => $user));
     }
 }
 
-if ($result != NULL) {
+if ($result) {
     camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => $nrOfFiles), 'media_archive'), "ok");
     camp_html_goto_page("/$ADMIN/media-archive/multiedit_file.php");
 } else {

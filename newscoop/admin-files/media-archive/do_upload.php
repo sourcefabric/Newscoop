@@ -8,6 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 $translator = \Zend_Registry::get('container')->getService('translator');
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 $nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
@@ -15,7 +17,7 @@ $f_article_edit = isset($_POST['f_article_edit']) ? $_POST['f_article_edit'] : n
 $f_language_id = isset($_POST['f_language_id']) ? $_POST['f_language_id'] : null;
 $f_article_number = isset($_POST['f_article_number']) ? $_POST['f_article_number'] : null;
 
-if (!SecurityToken::isValid()) {
+if (!SecurityToken::isValid() && !isset($f_article_edit)) {
     camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
@@ -52,13 +54,22 @@ if (!empty($f_image_url)) {
 	}
 }
 
+$container = \Zend_Registry::get('container');
+$user = $container->get('security.context')->getToken()->getUser();
+$em = $container->get('em');
+$language = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($container->get('request')->getLocale());
+$imageService = $container->get('image');
+
 // process uploaded images
 for ($i = 0; $i < $nrOfFiles; $i++) {
     $tmpnameIdx = 'uploader_' . $i . '_tmpname';
     $nameIdx = 'uploader_' . $i . '_name';
     $statusIdx = 'uploader_' . $i . '_status';
     if ($_POST[$statusIdx] == 'done') {
-        $result = Image::ProcessFile($_POST[$tmpnameIdx], $_POST[$nameIdx], $g_user->getUserId());
+        $fileLocation = $imageService->getImagePath() . $_POST[$tmpnameIdx];
+        $mime = getimagesize($fileLocation);
+        $file = new UploadedFile($fileLocation, $_POST[$nameIdx], $mime['mime'], filesize($fileLocation), null, true);
+        $result = $imageService->upload($file, array('user' => $user));
         $images[] = $result;
     }
 }
@@ -72,11 +83,11 @@ if (!empty($images)) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
-        
+
         //$imageIdList = array();
         foreach ($images as $image) {
             $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
-            ArticleImage::AddImageToArticle($image->getImageId(), $f_article_number, $ImageTemplateId);
+            ArticleImage::AddImageToArticle($image->getId(), $f_article_number, $ImageTemplateId);
             //$imageIdList[] = $image->getImageId();
         }
         //$imageIdList = implode(',',$imageIdList);

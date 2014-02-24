@@ -588,4 +588,46 @@ class ImageService
             }
         }
     }
+
+    /**
+     * Gets path of local images
+     *
+     * @return string
+     */
+    public function getImagePath()
+    {
+        return $this->config['image_path'];
+    }
+
+    /**
+     * Return true if the image is being used by an article.
+     *
+     * @param LocalImage $image Local image
+     *
+     * @return boolean
+     */
+    public function inUse($image)
+    {
+        $imageArticle = $this->orm->getRepository('Newscoop\Image\ArticleImage')->findOneBy(array(
+            'image' => $image,
+        ));
+
+        if ($imageArticle) {
+            $imagesCount = $this->orm->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('count(a)')
+                ->where('number = :articleNumber')
+                ->andWhere('images = :image')
+                ->setParameter('image', $imageArticle)
+                ->setParameter('articleNumber', $imageArticle->getArticleNumber())
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            if ($imagesCount > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

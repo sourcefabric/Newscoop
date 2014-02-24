@@ -260,9 +260,7 @@ class Attachment
      */
     public function setContentDisposition($contentDisposition)
     {
-        if ($contentDisposition == self::CONTENT_DISPOSITION) {
-            $this->contentDisposition = $contentDisposition;
-        }
+        $this->contentDisposition = $contentDisposition;
 
         return $this;
     }
