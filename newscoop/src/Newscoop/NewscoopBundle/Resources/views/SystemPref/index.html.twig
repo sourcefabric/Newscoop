@@ -144,6 +144,23 @@
                         {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
                     </dd>
                     <dt>
+                        <label>{{ 'newscoop.preferences.label.cacheenginehost'|trans }} <small id="cacheenginehost">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.cache_engine_host, {'attr' : {'class' : 'input_text wide'}}) }} 
+                    </dd>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.cacheengineport'|trans }} <small id="cacheengineport">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.cache_engine_port, {'attr' : {'class' : 'input_text','style' : 'width: 81px;'}}) }} 
+                    </dd>
+
+                    <div class="clear-database-cache">
+                        <button class="btn btn-small btn-danger" type="text">{{ 'newscoop.preferences.btn.cleardatabasecache'|trans }}</button>
+                    </div>
+
+                    <dt>
                         <label>{{ 'newscoop.preferences.label.cachetemplate'|trans }} <small id="cachetemplate">(?)</small></label>
                     </dt>
                     <dd>
@@ -511,7 +528,27 @@
         $("input:radio[name=preferencesform\\[use_replication\\]]:checked").change();
     });
 
+    $('.clear-database-cache button').click(function(e){
+        e.preventDefault();
+
+        var that = $(this);
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_systempref_cleardatabasecache'),
+                success: function (data) {
+                    flashMessage('{{ 'newscoop.preferences.success.cacheCleared'|trans}}');
+                },
+                error: function (rq, status, error) {
+                    flashMessage('{{ 'newscoop.preferences.error.cacheNotCleared'|trans}}', "error");
+                }
+            });
+        });
+    });
+
     popover($('#cacheengine'), '{{ 'newscoop.preferences.popover.cacheengine'|trans }}');
+    popover($('#cacheenginehost'), '{{ 'newscoop.preferences.popover.cacheenginehost'|trans }}');
+    popover($('#cacheengineport'), '{{ 'newscoop.preferences.popover.cacheengineport'|trans }}');
     popover($('#cachetemplate'), '{{ 'newscoop.preferences.popover.cachetemplate'|trans }}');
     popover($('#cacheimage'), '{{ 'newscoop.preferences.popover.cacheimage'|trans }}');
     popover($('#allowrecovery'), '{{ 'newscoop.preferences.popover.recovery'|trans }}');

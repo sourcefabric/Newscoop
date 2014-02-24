@@ -195,6 +195,9 @@ services:
         class: Newscoop\Services\PlaceholdersService
     newscoop.listpaginator.service:
         class: Newscoop\Services\ListPaginatorService
+    newscoop.cache:
+        class: Newscoop\Services\CacheService
+        arguments: ["@system_preferences_service"]
 
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:

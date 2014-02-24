@@ -33,7 +33,7 @@ function smarty_function_listpagination($params, &$smarty)
                 return $templatesService->fetchTemplate($params['file'], array('data' => $data));
             };
         } else {
-             $context->current_list->pagination->renderer = function ($data) use ($templatesService, $params) {
+            $context->current_list->pagination->renderer = function ($data) use ($templatesService, $params) {
                 return $templatesService->fetchTemplate('_pagination/twitter_bootstrap_v2_pagination.tpl', array('data' => $data));
             };
         }

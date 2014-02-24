@@ -10,8 +10,10 @@ newscoop:
       noaccess: "You do not have the right to change system preferences."
       latitude: "Latitude field value is not valid."
       longitude: "Longitude field value is not valid."
+      cacheNotCleared: "There was error with cache clearing"
     success:
       saved: "System preferences updated."
+      cacheCleared: "Cache was cleared"
     menu:
       general: "General Settings"
       email: "Email Settings"
@@ -22,6 +24,8 @@ newscoop:
       cache: "Cache Settings"
       other: "Other Settings"
       recaptcha: "reCAPTCHA Settings"
+    btn:
+      cleardatabasecache: "Clear current driver cache"
     label:
       title: "System Preferences"
       header: "Preferences"
@@ -31,6 +35,8 @@ newscoop:
       metadescription: "Site Meta Description:"
       timezone: "Time Zone:"
       cacheengine: "Database Cache Engine:"
+      cacheenginehost: "Database Cache Engine Host:"
+      cacheengineport: "Database Cache Engine Port:"
       cachetemplate: "Template Cache Handler:"
       cacheimage: "Imagecache Lifetime:"
       allowrecovery: "Allow password recovery:"
@@ -99,7 +105,9 @@ newscoop:
       nooption: "No"
       geosearch: "Use Local GeoNames Search:"
     popover:
-      cacheengine: "Enables or disables the APC cache, which can improve Newscoop performance."
+      cacheengine: "Enables or disables system cache cache, which can improve Newscoop performance."
+      cacheenginehost: "Provide cache host (for Memcache, Memcached or Redis)"
+      cacheengineport: "Provide cache host port (for Memcache, Memcached or Redis)"
       cacheimage: "The time that images will be cached for, from 30 seconds to infinite."
       cachetemplate: "Select DB to enable the cache for templates."
       recovery: "Whether users can get a password reminder by email. Note that if this feature is enabled and your email account is compromised, your Newscoop publication can easily be compromised in turn."

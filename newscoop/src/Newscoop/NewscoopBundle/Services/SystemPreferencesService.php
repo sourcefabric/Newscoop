@@ -84,7 +84,7 @@ class SystemPreferencesService
      * @return string|null
      */
     public function __get($property)
-    {   
+    {
         $currentProperty = $this->findOneBy($property);
 
         if (!$currentProperty->isEmpty()) {
@@ -96,9 +96,9 @@ class SystemPreferencesService
 
     /**
      * Set given value for given property
-     * 
-     * @param  $property Given property
-     * @param  $value    Value for given property
+     *
+     * @param $property Given property
+     * @param $value    Value for given property
      *
      * @return void
      */
@@ -110,13 +110,19 @@ class SystemPreferencesService
     /**
      * Get value for given property
      *
-     * @param  $property Given property
+     * @param $property Given property
      *
      * @return string
      */
-    public function get($property)
+    public function get($property, $default = null)
     {
-        return $this->$property;
+        $property = $this->$property;
+
+        if ($property === null) {
+            return $default;
+        }
+
+        return $property;
     }
 
     /**
@@ -125,7 +131,7 @@ class SystemPreferencesService
      * @return array
      */
     public function getAllPreferences()
-    {   
+    {
         if ($this->preferences) {
             return $this->preferences;
         }
@@ -137,7 +143,7 @@ class SystemPreferencesService
      * Find one preference by matching criteria from object
      * Works like caching
      *
-     * @param  string $property Property name
+     * @param string $property Property name
      *
      * @return ArrayCollection
      */
@@ -148,7 +154,7 @@ class SystemPreferencesService
         $criteria = new Criteria($expr);
 
         $preferences = new ArrayCollection($this->getAllPreferences());
-        
+
         return $preferences->matching($criteria);
     }
 }
