@@ -94,6 +94,7 @@ class ArticlesController extends FOSRestController
             $difference = $now->diff($lockTime);
             $ago = $difference->format("%R%H:%I:%S");
             $lockUser = new \User($articleObj->getLockedByUser());
+
             throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
         }
 
@@ -199,8 +200,7 @@ class ArticlesController extends FOSRestController
             // as appropriate.
             if ($articleObj->commentsEnabled() != $commentsEnabled) {
                 $articleObj->setCommentsEnabled($commentsEnabled);
-                global $controller;
-                $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+                $repository = $em->getRepository('Newscoop\Entity\Comment');
                 $repository->setArticleStatus($clean['articleNumber'], $clean['languageId'], $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
                 $repository->flush();
             }
