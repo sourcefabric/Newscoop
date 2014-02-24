@@ -17,7 +17,7 @@ use Newscoop\ListResult;
 class UsersList extends BaseList 
 {
 
-    protected function prepareList($criteria)
+    protected function prepareList($criteria, $parameters)
     {
         $service = \Zend_Registry::get('container')->get('user.list');
         $list = $service->findByCriteria($criteria);

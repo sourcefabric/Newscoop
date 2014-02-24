@@ -173,7 +173,7 @@ services:
         arguments: ["@service_container", "@search.user", "@user.repository"]
     search.article:
         class: Newscoop\Article\SearchService
-        arguments: ["@webcode", "@image.rendition", "@article.link", "@em"]
+        arguments: ["@webcode", "@image.rendition", "@article.link", "@em", "%search.article%"]
     search.comment:
         class: Newscoop\Comment\SearchService
         arguments: ["@article.link"]
@@ -193,6 +193,9 @@ services:
         class: Newscoop\Services\TemplatesService
     newscoop.placeholders.service:
         class: Newscoop\Services\PlaceholdersService
+    newscoop.listpaginator.service:
+        class: Newscoop\Services\ListPaginatorService
+
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
     #     class:      Newscoop\Search\ArticleIndexer

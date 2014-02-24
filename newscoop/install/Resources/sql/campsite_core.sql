@@ -20,25 +20,14 @@
 --
 
 DROP TABLE IF EXISTS `Aliases`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Aliases` (
+
+CREATE TABLE IF NOT EXISTS `Aliases` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` char(128) NOT NULL DEFAULT '',
-  `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
+  `IdPublication` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Aliases`
---
-
-LOCK TABLES `Aliases` WRITE;
-/*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ArticleAttachments`
@@ -2123,8 +2112,6 @@ CREATE TABLE comment (
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C13231DE0 FOREIGN KEY (fk_parent_id) REFERENCES comment (id) ON DELETE SET NULL
-
 --
 -- Dumping data for table `comment`
 --
@@ -3262,9 +3249,6 @@ ALTER TABLE OAuthAccessToken ADD CONSTRAINT FK_DDE10DD519EB6921 FOREIGN KEY (cli
 ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 
----
---- Snippets
----
 DROP TABLE IF EXISTS `Snippets`;
 CREATE TABLE Snippets (
   Id INT AUTO_INCREMENT NOT NULL,

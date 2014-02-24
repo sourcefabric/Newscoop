@@ -37,22 +37,6 @@ class PluginsController extends Controller
             }
         }
 
-        // search for private plugins
-        $privatePackages = $this->searchForPrivatePlugins($pluginService);
-        foreach ($privatePackages as $resultKey => $package) {
-            $installed = false;
-
-            foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
-                if ($package['name'] == $plugin->getName()) {
-                    $package['installed'] = true;
-                } else {
-                    $package['installed'] = false;
-                }
-            }
-
-            $privatePackages[$resultKey] = $package;
-        }
-
         $form = $this->container->get('form.factory')
             ->create(new PrivatePluginUploadType(), array());
 
@@ -71,7 +55,25 @@ class PluginsController extends Controller
                 }
 
                 $file->move($pluginService->getPluginsDir().'/private_plugins', $file->getClientOriginalName());
+
+                return $this->redirect($this->generateUrl('newscoop_newscoop_plugins_index'));
             }
+        }
+
+        // search for private plugins
+        $privatePackages = $this->searchForPrivatePlugins($pluginService);
+        foreach ($privatePackages as $resultKey => $package) {
+            $installed = false;
+
+            foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
+                if ($package['name'] == $plugin->getName()) {
+                    $package['installed'] = true;
+                } else {
+                    $package['installed'] = false;
+                }
+            }
+
+            $privatePackages[$resultKey] = $package;
         }
 
         return array(

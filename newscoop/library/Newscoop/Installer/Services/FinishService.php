@@ -38,7 +38,6 @@ class FinishService
      */
     public function generateProxies()
     {
-        $this->filesystem->chmod($this->newscoopDir.'/cache/prod/annotations', 777);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
