@@ -34,12 +34,19 @@ abstract class PaginatedBaseList extends BaseList
     private $paginatorService;
 
     /**
+     * @var \Newscoop\Services\CacheService
+     */
+    private $cacheService;
+
+    /**
      * @param \Newscoop\Criteria                  $criteria
      * @param \Newscoop\Services\TemplatesService $paginatorService
+     * @param \Newscoop\Services\CacheService     $cacheService
      */
-    public function __construct($criteria, $paginatorService)
+    public function __construct($criteria, $paginatorService, $cacheService)
     {
         $this->paginatorService = $paginatorService;
+        $this->cacheService = $cacheService;
 
         parent::__construct($criteria);
     }
@@ -74,7 +81,15 @@ abstract class PaginatedBaseList extends BaseList
             $pageNumber = $this->pageNumber;
         }
 
-        $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
+        $cacheId = array($this->getCacheKey(), $this->getPageNumber());
+
+        if ($this->cacheService->contains($cacheId)) {
+            $this->pagination = $this->cacheService->fetch($cacheId);
+        } else {
+            $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
+            $this->cacheService->save($cacheId, $this->pagination);
+        }
+
         $list->count = $this->pagination->getTotalItemCount();
         $list->items = $this->pagination->getItems();
 

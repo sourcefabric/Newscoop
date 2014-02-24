@@ -223,6 +223,6 @@ final class CampTemplate extends Smarty
      */
     private static function isDevelopment()
     {
-        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
+        return false;//return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }

@@ -9,17 +9,19 @@
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
     "version":"4.1",
     "license":"GPL-3.0",
-    "authors":[],
-    "repositories": [
+    "authors":[
+        
+    ],
+    "repositories":[
         {
-            "type": "artifact",
-            "url": "plugins/private_plugins"
+            "type":"artifact",
+            "url":"plugins\/private_plugins"
         }
     ],
     "require":{
         "php":">=5.3.3",
         "symfony\/symfony":"2.3.*",
-        "silex/silex": "~1.1",
+        "silex\/silex":"~1.1",
         "doctrine\/orm":">=2.2.3,<2.4-dev",
         "doctrine\/doctrine-bundle":"1.2.*",
         "twig\/extensions":"1.0.*",
@@ -27,7 +29,7 @@
         "symfony\/swiftmailer-bundle":"2.3.*",
         "symfony\/monolog-bundle":"2.3.*",
         "sensio\/distribution-bundle":"2.3.*",
-        "sensio\/framework-extra-bundle": "v2.3.3",
+        "sensio\/framework-extra-bundle":"v2.3.3",
         "sensio\/generator-bundle":"2.3.*",
         "incenteev\/composer-parameter-handler":"~2.0",
         "bombayworks\/zendframework1":"1.11.*",
@@ -44,21 +46,26 @@
         "knplabs\/knp-menu":"2.0.*@dev",
         "raulfraile\/ladybug-bundle":"0.*@dev",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
-        "willdurand/expose-translation-bundle": "1.2.0",
+        "willdurand\/expose-translation-bundle":"1.2.0",
         "recaptcha\/php5":"v1.0.0",
-        "knplabs/packagist-api": "v1.1",
-        "yzalis/crontab": "1.0.x-dev",
-        "imagine/imagine": "v0.5.0",
-        "symfony/twig-bridge": "~2.3",
-        "excelwebzone/recaptcha-bundle": "2.0.*@dev",
-        "friendsofsymfony/oauth-server-bundle": "1.4.0",
-        "newscoop/plugins-installer": "v0.2",
-        "nelmio/api-doc-bundle": "dev-master"
+        "knplabs\/packagist-api":"v1.1",
+        "yzalis\/crontab":"1.0.x-dev",
+        "imagine\/imagine":"v0.5.0",
+        "symfony\/twig-bridge":"~2.3",
+        "excelwebzone\/recaptcha-bundle":"2.0.*@dev",
+        "friendsofsymfony\/oauth-server-bundle":"1.4.0",
+        "newscoop\/plugins-installer":"v0.2",
+        "nelmio\/api-doc-bundle":"dev-master",
+        "newscoop\/comment-lists-plugin":"9999999-dev",
+        "newscoop\/tageswoche-extra":"*",
+        "newscoop\/community-ticker-plugin":"*",
+        "ahs\/adverts-plugin":"*",
+        "newscoop/example-plugin-bundle": "*"
     },
     "require-dev":{
-        "phpunit/phpunit": "~3.7.10",
-        "phpspec/phpspec": "2.0.*@dev",
-        "liip/rmt": "1.0.*"
+        "phpunit\/phpunit":"~3.7.10",
+        "phpspec\/phpspec":"2.0.*@dev",
+        "liip\/rmt":"1.0.*"
     },
     "autoload":{
         "psr-0":{
@@ -93,8 +100,8 @@
     "minimum-stability":"dev",
     "config":{
         "bin-dir":"vendor\/bin",
-        "discard-changes": true,
-        "process-timeout": 3600
+        "discard-changes":true,
+        "process-timeout":3600
     },
     "extra":{
         "symfony-app-dir":"application",
