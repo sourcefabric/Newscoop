@@ -86,7 +86,7 @@ class InputManipulator
                 return true;
             }
             if (!$parameters['ignoreErrors']) {
-                throw new InvalidArgumentException('"'.$parameters['variableName'].'" is not set');
+                throw new \InvalidArgumentException('"'.$parameters['variableName'].'" is not set');
             }
 
             return $parameters['defaultValue'];
@@ -111,7 +111,7 @@ class InputManipulator
             case 'int':
                 if (!is_numeric($parameters['inputObject'][$parameters['variableName']])) {
                     if (!$parameters['ignoreErrors']) {
-                        throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
+                        throw new \InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
                     }
 
                     return (int) $parameters['defaultValue'];
@@ -120,7 +120,7 @@ class InputManipulator
             case 'string':
                 if (!is_string($parameters['inputObject'][$parameters['variableName']])) {
                     if (!$parameters['ignoreErrors']) {
-                        throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
+                        throw new \InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
                     }
 
                     return $parameters['defaultValue'];
