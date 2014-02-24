@@ -74,13 +74,6 @@ class ArticlesController extends FOSRestController
         }
 
         $user = $this->getUser();
-
-        /*
-         * This is copied from admin-files/articles/post.php
-         */
-        require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
-
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         // Fetch article
@@ -217,13 +210,13 @@ class ArticlesController extends FOSRestController
         // Make sure that the time stamp is updated.
         $articleObj->setProperty('time_updated', 'NOW()', true, true);
 
-        if (preg_match("/\d{4}-\d{2}-\d{2}/", $clean['creationDate'])) {
+        if (array_key_exists('creationDate', $clean) && preg_match("/\d{4}-\d{2}-\d{2}/", $clean['creationDate'])) {
             $articleObj->setCreationDate($clean['creationDate']);
         }
 
         // Verify publish date is in the correct format.
         // If not, dont change it.
-        if (preg_match("/\d{4}-\d{2}-\d{2}/", $clean['publishDate'])) {
+        if (array_key_exists('publishDate', $clean) && preg_match("/\d{4}-\d{2}-\d{2}/", $clean['publishDate'])) {
             $articleObj->setPublishDate($clean['publishDate']);
         }
 
