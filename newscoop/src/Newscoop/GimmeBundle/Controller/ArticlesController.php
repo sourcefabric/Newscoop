@@ -20,138 +20,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Form\Exception\InvalidArgumentException;
-use Newscoop\Exception\ResourceNotModifiedException;
 
 /**
  * Articles controller
  */
 class ArticlesController extends FOSRestController
 {
-    public static function CleanMagicQuotes(array $array)
-    {
-       $gpcList = array();
-
-       foreach ($array as $key => $value) {
-           $decodedKey = stripslashes($key);
-           if (is_array($value)) {
-               $decodedValue = self::CleanMagicQuotes($value);
-           } else {
-               $decodedValue = stripslashes($value);
-           }
-           $gpcList[$decodedKey] = $decodedValue;
-       }
-
-       return $gpcList;
-    } // fn CleanMagicQuotes
-
-    /**
-	 *
-	 * inputObject the array or string to search in
-	 * variableName variable to look for
-	 * variableType type the variable should have (string, int, array, boolean)
-	 * defaultValue default value for the variable if it doesn't exist
-	 * checkIfExists check if the variable exists (for if statements, only returns BOOL)
-	 * ignoreErrors ignore errors, return empty
-	 */
-
-    public static function getVar(array $parameters = array())
-    {
-        $requiredParams = array('inputObject', 'variableName');
-        $defaultParams = array(
-                                'variableType' => 'string',
-                                'defaultValue' => null,
-                                'checkIfExists' => false,
-                                'ignoreErrors' => false
-                            );
-        foreach ($requiredParams as $requiredParam) {
-            if (!array_key_exists($requiredParam, $parameters)) {
-                throw new \InvalidArgumentException(__METHOD__.': Parameter '.$requiredParam.' is required.');
-            }
-        }
-
-        foreach ($defaultParams as $defaultParam => $defaultValue) {
-            if (!array_key_exists($defaultParam, $parameters)) {
-                $parameters[$defaultParam] = $defaultValue;
-            }
-        }
-
-        // allow the GetVar to also use strings
-        if (!is_array($parameters['inputObject'])) {
-            $parameters['inputObject'] = array($parameters['variableName'] => $parameters['inputObject']);
-        }
-
-        $parameters['variableType'] = strtolower($parameters['variableType']);
-
-        if (!isset($parameters['inputObject'][$parameters['variableName']])) {
-            if ($parameters['checkIfExists']) {
-                return false;
-            } else {
-                return true;
-            }
-            if (!$parameters['ignoreErrors']) {
-                throw new InvalidArgumentException('"'.$parameters['variableName'].'" is not set');
-            }
-
-            return $parameters['defaultValue'];
-        }
-        // Clean the slashes
-        if (get_magic_quotes_gpc()) {
-            if (is_array($parameters['inputObject'][$parameters['variableName']])) {
-                $parameters['inputObject'][$parameters['variableName']] = self::CleanMagicQuotes($parameters['inputObject'][$parameters['variableName']]);
-            } else {
-                $parameters['inputObject'][$parameters['variableName']] = stripslashes($parameters['inputObject'][$parameters['variableName']]);
-            }
-        }
-        switch ($parameters['variableType']) {
-            case 'boolean':
-                $value = strtolower($parameters['inputObject'][$parameters['variableName']]);
-                if ( ($value == "true") || (is_numeric($value) && ($value > 0)) ) {
-                    return true;
-                } else {
-                    return false;
-                }
-                break;
-            case 'int':
-                if (!is_numeric($parameters['inputObject'][$parameters['variableName']])) {
-                    if (!$parameters['ignoreErrors']) {
-                        throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
-                    }
-
-                    return (int) $parameters['defaultValue'];
-                }
-                break;
-            case 'string':
-                if (!is_string($parameters['inputObject'][$parameters['variableName']])) {
-                    if (!$parameters['ignoreErrors']) {
-                        throw new InvalidArgumentException('"'.$parameters['variableName'].'" Incorrect type. Expected type: "'.$parameters['variableType'].'" got "'.gettype($parameters['inputObject'][$parameters['variableName']]).'" ("'.$parameters['inputObject'][$parameters['variableName']].'") instead.');
-                    }
-
-                    return $parameters['defaultValue'];
-                }
-                break;
-            case 'array':
-                if (!is_array($parameters['inputObject'][$parameters['variableName']])) {
-                    // Create an array if it isnt one already.
-                    // Arrays are used with checkboxes and radio buttons.
-                    // The problem with them is that if there is only one
-                    // checkbox, the given value will not be an array.  So
-                    // we make it easy for the programmer by always returning
-                    // an array.
-                    $newArray = array();
-                    $newArray[] = $parameters['inputObject'][$parameters['variableName']];
-
-                    return $newArray;
-                }
-                break;
-            default:
-                throw new \InvalidArgumentException(__METHOD__.': Variable type '.$parameters['variableType'].' is not supported.');
-                break;
-        }
-
-        return $parameters['inputObject'][$parameters['variableName']];
-    } // fn get
-
     /**
      * Write Article
      *
@@ -175,61 +49,37 @@ class ArticlesController extends FOSRestController
         if (!empty($content)) {
             $params = json_decode($content, true); // 2nd param to get as array
         }
-        /* else {
-            throw new ResourceNotModifiedException('Body is empty.');
-        }
-
-        if (count($params) == 0) {
-            throw new ResourceNotModifiedException('Body contains no fields.');
-        }*/
 
         $em = $this->container->get('em');
         $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
         $clean['languageId'] = $languageObject->getId();
-
-        print ladybug_dump($languageObject);
-
         $clean['articleNumber'] = $number;
-        // self::getVar(array('inputObject' => $number, 'variableName' => 'number', 'variableType' => 'int'));
+
+        $inputManipulator = $this->get('newscoop.input_manipulator');
 
         $authors = array();
         foreach ($params['authors'] as $key => $value) {
-            $authors[] = self::getVar(array('inputObject' => $value, 'variableName' => 'name'));
+            $authors[] = $inputManipulator::getVar(array('inputObject' => $value, 'variableName' => 'name'));
         }
 
         $clean['articleAuthor'] = $authors;
-        // $articleAuthor_type = Input::Get('articleAuthor_type', 'array', array(), true);    // does not exist in JSON
-        if (self::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
-            $clean['articleTitle'] = self::getVar(array('inputObject' => $params, 'variableName' => 'title'));
+        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
+            $clean['articleTitle'] = $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title'));
         }
-        if (self::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
-            $clean['creationDate'] = date_format(date_create_from_format(DATE_ATOM, self::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
+        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created', 'checkIfExists' => true))) {
+            $clean['creationDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'created'))), 'Y-m-d H:i:s');
         }
-        if (self::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
-            $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, self::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
+        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published', 'checkIfExists' => true))) {
+            $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
         }
-
-
-        // $f_comment_status = Input::Get('f_comment_status', 'string', '', true);
-        $notBodyFields = array('deck');
-        foreach ($params['fields'] as $key => $value) {
-            if (!in_array($key, $notBodyFields)) {
-                $clean['F'.$key.'_'.$clean['articleNumber']] = $value;
-            } else {
-                $clean['F'.$key] = $value;
-            }
-        }
-
-        print ladybug_dump($clean);
 
         $user = $this->getUser();
-        // print ladybug_dump($user);
 
         /*
          * This is copied from admin-files/articles/post.php
          */
-
         require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
         $translator = \Zend_Registry::get('container')->getService('translator');
 
@@ -239,10 +89,6 @@ class ArticlesController extends FOSRestController
         if (!$articleObj->exists()) {
             throw new NewscoopException('Article does not exist');
         }
-
-        $articleTypeObj = $articleObj->getArticleData();
-
-        print ladybug_dump($articleTypeObj);
 
         if (!$articleObj->userCanModify($user)) {
             throw new AccessDeniedException('User cannot modify article.');
@@ -258,20 +104,37 @@ class ArticlesController extends FOSRestController
             throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
         }
 
+        $articleTypeObj = $articleObj->getArticleData();
+        $articleType = new \ArticleType($articleTypeObj->m_articleTypeName);
+        $fields = $articleType->getUserDefinedColumns(null, true, true);
+
+        $notBodyFields = array();
+        foreach ($fields as $field) {
+            if (!$field->isContent()) {
+                $notBodyFields[] = $field->getPrintName();
+            }
+        }
+
+        foreach ($params['fields'] as $key => $value) {
+            if (!in_array($key, $notBodyFields)) {
+                $clean['F'.$key.'_'.$clean['articleNumber']] = $value;
+            } else {
+                $clean['F'.$key] = $value;
+            }
+        }
+
         $dbColumns = $articleTypeObj->getUserDefinedColumns(false, true);
 
         $articleFields = array();
         foreach ($dbColumns as $dbColumn) {
             if ($dbColumn->getType() == \ArticleTypeField::TYPE_BODY) {
                 $dbColumnParam = $dbColumn->getName() . '_' . $clean['articleNumber'];
-                // print ladybug_dump('body: '. $dbColumnParam);
             } else {
                 $dbColumnParam = $dbColumn->getName();
-                // print ladybug_dump('not body: '. $dbColumnParam);
             }
 
             if (isset($clean[$dbColumnParam])) {
-                if($dbColumn->getType() == \ArticleTypeField::TYPE_TEXT
+                if ($dbColumn->getType() == \ArticleTypeField::TYPE_TEXT
                     && $dbColumn->getMaxSize()!=0
                     && $dbColumn->getMaxSize()!='') {
                         $fieldValue = trim($clean[$dbColumnParam]);
@@ -286,10 +149,10 @@ class ArticlesController extends FOSRestController
             }
         }
 
-        // if (!empty($f_message)) {
-        // 	camp_html_add_msg($f_message, "ok");
-        // }
-
+        /**
+         * TODO
+         * This still has to be placed back in
+         */
         // Update the article author
             // $blogService = \Zend_Registry::get('container')->getService('blog');
             // $blogInfo = $blogService->getBlogInfo($user);
@@ -333,8 +196,8 @@ class ArticlesController extends FOSRestController
         $articleObj->setTitle($clean['articleTitle']);
         $articleObj->setIsIndexed(false);
 
-        if (!empty($f_comment_status)) {
-            if ($f_comment_status == "enabled" || $f_comment_status == "locked") {
+        if (!empty($commentStatus)) {
+            if ($commentStatus == "enabled" || $commentStatus == "locked") {
                 $commentsEnabled = true;
             } else {
                 $commentsEnabled = false;
@@ -345,20 +208,18 @@ class ArticlesController extends FOSRestController
                 $articleObj->setCommentsEnabled($commentsEnabled);
                 global $controller;
                 $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-                $repository->setArticleStatus($clean['articleNumber'], $f_language_selected, $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
+                $repository->setArticleStatus($clean['articleNumber'], $clean['languageId'], $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
                 $repository->flush();
             }
-            $articleObj->setCommentsLocked($f_comment_status == "locked");
+            $articleObj->setCommentsLocked($commentStatus == "locked");
         }
 
         // Make sure that the time stamp is updated.
         $articleObj->setProperty('time_updated', 'NOW()', true, true);
 
-        // Verify creation date is in the correct format.
-        // If not, dont change it.
-        // if (preg_match("/\d{4}-\d{2}-\d{2}/", $creationDate)) {
-        // 	$articleObj->setCreationDate($creationDate);
-        // }
+        if (preg_match("/\d{4}-\d{2}-\d{2}/", $clean['creationDate'])) {
+            $articleObj->setCreationDate($clean['creationDate']);
+        }
 
         // Verify publish date is in the correct format.
         // If not, dont change it.
@@ -369,11 +230,6 @@ class ArticlesController extends FOSRestController
         foreach ($articleFields as $dbColumnName => $text) {
             $articleTypeObj->setProperty($dbColumnName, $text);
         }
-
-        $this->get('ladybug')->log($articleObj);
-        $this->get('ladybug')->log($articleTypeObj);
-        print ladybug_dump($articleObj);
-        print ladybug_dump($articleTypeObj);
     }
 
     /**
@@ -411,7 +267,6 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     *
      * Get article
      *
      * @ApiDoc(
