@@ -649,8 +649,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere('u.status = :status')
             ->setParameter('status', $criteria->status);
 
-        $qb->andWhere('u.is_public = :is_public')
-            ->setParameter('is_public', $criteria->is_public);
+        if (!is_null($criteria->is_public)) {
+            $qb->andWhere('u.is_public = :is_public')
+                ->setParameter('is_public', $criteria->is_public);
+        }
 
         foreach ($criteria->perametersOperators as $key => $operator) {
             $qb->andWhere('u.'.$key.' = :'.$key)
@@ -707,6 +709,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $list->items = array_map(function ($row) {
             $user = $row[0];
             $user->setPoints((int) $row['comments']);
+
             return $user;
         }, $qb->getQuery()->getResult());
 

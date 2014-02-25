@@ -661,16 +661,13 @@ class Builder
     private function prepareUsersMenu($menu)
     {
         $translator = $this->container->get('translator');
+        $this->addChild(
+            $menu,
+            $translator->trans('users.menu.manage', array(), 'users'),
+            array('uri' => $this->container->get('router')->generate('newscoop_newscoop_users_index'))
+        );
 
-        $this->addChild($menu, $translator->trans('Manage Users', array(), 'home'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'user',
-                'action' => 'index',
-                'params' => array('user' => null),
-            )
-        ));
-
-        $status = $this->addChild($menu[$translator->trans('Manage Users', array(), 'home')], $translator->trans('Edit user', array(), 'home'), array('zend_route' => array(
+        $status = $this->addChild($menu[$translator->trans('users.menu.manage', array(), 'users')], $translator->trans('Edit user', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'edit',
@@ -679,10 +676,10 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Manage Users', array(), 'home')][$translator->trans('Edit user', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Edit user', array(), 'home')]->setDisplay(false);
         }
 
-        $status = $this->addChild($menu[$translator->trans('Manage Users', array(), 'home')][$translator->trans('Edit user', array(), 'home')], $translator->trans('Edit permissions', array(), 'home'), array('zend_route' => array(
+        $status = $this->addChild($menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Edit user', array(), 'home')], $translator->trans('Edit permissions', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'acl',
                 'action' => 'edit'
@@ -690,10 +687,10 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Manage Users', array(), 'home')][$translator->trans('Edit user', array(), 'home')][$translator->trans('Edit permissions', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Edit user', array(), 'home')][$translator->trans('Edit permissions', array(), 'home')]->setDisplay(false);
         }
 
-        $status = $this->addChild($menu[$translator->trans('Manage Users', array(), 'home')], $translator->trans('Rename user', array(), 'home'), array('zend_route' => array(
+        $status = $this->addChild($menu[$translator->trans('users.menu.manage', array(), 'users')], $translator->trans('Rename user', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'rename',
@@ -702,10 +699,10 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Manage Users', array(), 'home')][$translator->trans('Rename user', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Rename user', array(), 'home')]->setDisplay(false);
         }
 
-        $status = $this->addChild($menu[$translator->trans('Manage Users', array(), 'home')], $translator->trans('Create new user', array(), 'home'), array('zend_route' => array(
+        $status = $this->addChild($menu[$translator->trans('users.menu.manage', array(), 'users')], $translator->trans('Create new user', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
@@ -714,7 +711,7 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Manage Users', array(), 'home')][$translator->trans('Create new user', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('users.menu.manage', array(), 'users')][$translator->trans('Create new user', array(), 'home')]->setDisplay(false);
         }
 
         $this->addChild($menu, $translator->trans('Manage Authors', array(), 'home'), array('zend_route' => array(

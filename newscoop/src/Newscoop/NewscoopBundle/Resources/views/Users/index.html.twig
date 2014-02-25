@@ -1,0 +1,154 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "users" %}
+
+{% block admin_title %}{{ parent() }} - {{ 'users.label.title'|trans }}{% endblock %}
+{% block admin_page_title_content %}
+{{ 'users.label.title'|trans }}
+{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<style type="text/css">
+    .form-control {
+        margin: 0px 0px 10px 0px;
+    }
+    .form-control input {
+        margin-right: 10px;
+    }
+
+    #users-table {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    #users-table th {
+        background: #007fb3;
+        color: #fff;
+    }
+
+    a.action-btn {margin-left: 5px;}
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/js/select2/select2.js') }}"></script>
+<script src="{{ asset('/bundles/newscoopnewscoop/js/jquery.dynatable.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row">
+    <div class="col-md-3 aside">
+        <ul id="status-filter" class="filters">
+            <li class="vspace">Status</li>
+            <li><a href="#1" class="active">registered (*) (<span>10493</span>)</a></li>
+            <li><a href="#0">pending (<span>139</span>)</a></li>
+            <li><a href="#3">deleted (*) (<span>173</span>)</a></li>
+            <li><a href="#active">Active (<span>237</span>)</a></li>
+        </ul>
+    </div>
+
+    <div class="col-md-10">
+        <table id="users-table" class="table table-bordered table-hover table-striped" style="word-wrap: break-word;table-layout: fixed;">
+        <thead>
+          <tr>
+            <th data-dynatable-column="username">Login</th>
+            <th data-dynatable-column="first_name">Name</th>
+            <th data-dynatable-column="last_name">Surname</th>
+            <th>email</th>
+            <th  data-dynatable-column="types" data-dynatable-no-sort="true">Type</th>
+            <th  data-dynatable-column="created">Created</th>
+            <th  data-dynatable-column="updated">Updated</th>
+            <th style="width: 280px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+    </div>
+    <div class="cleafix"></div>
+</div>
+
+<script type="text/javascript">
+    $('#users-table').dynatable({
+        inputs: {
+          paginationClass: 'pagination',
+          paginationActiveClass: 'current',
+          paginationDisabledClass: 'unavailable',
+          paginationPrev: '&laquo;',
+          paginationNext: '&raquo;'
+        },
+        dataset: {
+            ajax: true,
+            ajaxUrl: Routing.generate('newscoop_newscoop_users_loadusers'),
+            ajaxOnLoad: true,
+            records: [],
+            perPageDefault: 10,
+            perPageOptions: [10,20,50,100],
+        },
+        writers: {
+            _cellWriter: function (column, record) {
+                if (column.id == 'actions') {
+                    column.attributeWriter = function(record) {
+                        var html = "";
+                        for (index = 0; index < record['links'].length; ++index) {
+                            var el = record['links'][index];
+
+                            if (el['rel'] == 'edit') {
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Edit User</a>";
+                            }
+
+                            if (el['rel'] == 'delete') {
+                                html += "<a class='btn btn-xs btn-danger action-btn' href="+el['href']+">Remove User</a>";
+                            }
+
+                            if (el['rel'] == 'token' && record['status'] != "Active") {
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Resend activation email</a>";
+                            }
+
+                            if (el['rel'] == 'rename') {
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Rename User</a>";
+                            }
+                        }
+                        return html;
+                    }
+                }
+
+                if (column.id == 'created') {
+                    column.attributeWriter = function(record) {
+                        return record.created.date;
+                    }
+                }
+
+                if (column.id == 'updated') {
+                    column.attributeWriter = function(record) {
+                        return record.updated.date;
+                    }
+                }
+
+                var html = column.attributeWriter(record),
+                    td = '<td';
+
+                if (column.hidden || column.textAlign) {
+                  td += ' style="';
+                  // keep cells for hidden column headers hidden
+                  if (column.hidden) {
+                    td += 'display: none;';
+                  }
+                  // keep cells aligned as their column headers are aligned
+                  if (column.textAlign) {
+                    td += 'text-align: ' + column.textAlign + ';';
+                  }
+                  td += '"';
+                }
+                if (column.cssClass) {
+                  td += ' class="' + column.cssClass + '"';
+                }
+
+                return td + '>' + html + '</td>';
+            }
+        }
+    });
+</script>
+{% endblock %}
