@@ -91,6 +91,8 @@
             $('.dynatable-filter').removeClass('active');
             $('.dynatable-filter.filter-'+hash).addClass('active');
             dynatable.queries.add('filter', hash);
+        } else {
+            dynatable.queries.add('filter', 'registered');
         }
     })
     .dynatable({
