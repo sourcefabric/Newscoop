@@ -59,7 +59,7 @@ if ($f_publication_id > 0) {
 
 <P>
 <div class="indent">
-<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
+<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" style="max-width: 600px;" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
 </div>
 <p>
 <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_edit.php" >

@@ -66,7 +66,7 @@ if ($f_publication_id > 0) {
                 (strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
                 (strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) { ?>
 <div class="indent">
-<IMG SRC="<?php echo $attachmentObj->getAttachmentUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>">
+<IMG SRC="<?php echo $attachmentObj->getAttachmentUrl(); ?>" style="max-width: 600px;" BORDER="0" ALT="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>">
 </div>
 <P>
 <?php } ?>
