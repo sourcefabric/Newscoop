@@ -34,7 +34,11 @@ class UsersController extends Controller
             'registered' => $registered,
             'pending' => $pending,
             'deleted' => $deleted,
-            'active' => $active
+            'active' => $active,
+            'active_logins' => array(
+                'newscoop' => $em->getRepository('Newscoop\Entity\User')->getNewscoopLoginCount(),
+                'external' => $em->getRepository('Newscoop\Entity\User')->getExternalLoginCount(),
+            )
         );
     }
 

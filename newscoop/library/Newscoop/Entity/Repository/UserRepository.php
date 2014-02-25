@@ -619,6 +619,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->getQuery();
 
         $query->setParameter('status', User::STATUS_ACTIVE);
+
         return $query->getSingleScalarResult();
     }
 

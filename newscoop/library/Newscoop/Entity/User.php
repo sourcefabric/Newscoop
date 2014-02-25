@@ -175,6 +175,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     private $indexed;
 
     /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\UserIdentity", mappedBy="user", cascade={"remove"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $identities;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -183,6 +189,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         $this->created = $this->updated = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
+        $this->identities = new ArrayCollection();
         $this->role = new Role();
         $this->is_admin = false;
         $this->is_public = false;
