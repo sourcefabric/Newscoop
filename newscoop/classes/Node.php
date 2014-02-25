@@ -10,7 +10,6 @@
  * Node class
  * A treewalker for nesting objects
  */
-
 class Node
 {
     public $id;
