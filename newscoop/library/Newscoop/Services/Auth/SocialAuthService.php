@@ -87,6 +87,7 @@ class SocialAuthService implements \Zend_Auth_Adapter_Interface
     {
         $userIdentity = new UserIdentity($provider, $providerUserId, $user);
         $this->em->persist($userIdentity);
+        $user->setLastLogin(new \DateTime());
         $this->em->flush();
         return $userIdentity;
     }

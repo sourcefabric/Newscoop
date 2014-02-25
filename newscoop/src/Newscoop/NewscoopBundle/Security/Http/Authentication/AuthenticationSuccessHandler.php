@@ -1,32 +1,35 @@
 <?php
- 
+
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
- 
+
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
- 
+
 /**
  * Custom authentication success handler
  */
 class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
     private $authAdapter;
- 
+
+    private $em;
+
     /**
     * Constructor
-    * 
+    *
     * @param Zend_Auth   $zendAuth
     */
-    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter)
+    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em)
     {
         $this->authAdapter = $authAdapter;
+        $this->em = $em;
 
         parent::__construct($httpUtils, $options);
     }
- 
+
     /**
     * This is called when an interactive authentication attempt succeeds. This
     * is called by authentication listeners inheriting from AbstractAuthenticationListener.
@@ -56,6 +59,9 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 
         $session = $request->getSession();
         $session->set('NO_CACHE', true);
+
+        $user->setLastLogin(new \DateTime());
+        $this->em->flush();
 
         if ($request->get('ajax') === 'true') {
             // close popup with login.

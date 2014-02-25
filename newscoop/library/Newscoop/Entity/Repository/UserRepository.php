@@ -173,6 +173,28 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get getLatelyLoggedInUsers (logged in x days before today)
+     *
+     * @return int
+     */
+    public function getLatelyLoggedInUsers($daysNumber = 7, $count = false)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        if ($count) {
+            $query->select('COUNT(u)');
+        }
+
+        $query = $query->where('u.lastLogin > :date')
+            ->getQuery();
+
+        $date = new \DateTime();
+        $query->setParameter('date', $date->modify('- '.$daysNumber.' days'));
+
+        return $query;
+    }
+
     public function getOneActiveUser($id, $public = true)
     {
         $em = $this->getEntityManager();
@@ -672,6 +694,12 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         if (!empty($criteria->nameRange)) {
             $this->addNameRangeWhere($qb, $criteria->nameRange);
+        }
+
+        if (!empty($criteria->lastLoginDays)) {
+            $qb->andWhere('u.lastLogin > :lastLogin');
+            $date = new \DateTime();
+            $qb->setParameter('lastLogin', $date->modify('- '.$criteria->lastLoginDays.' days'));
         }
 
         $qb->leftJoin('u.attributes', 'ua');

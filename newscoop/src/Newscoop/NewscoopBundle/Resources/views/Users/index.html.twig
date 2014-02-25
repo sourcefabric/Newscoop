@@ -2,14 +2,27 @@
 {% trans_default_domain "users" %}
 
 {% block admin_title %}{{ parent() }} - {{ 'users.label.title'|trans }}{% endblock %}
-{% block admin_page_title_content %}
-{{ 'users.label.title'|trans }}
+{% block admin_page_title_box %}
+<div class="toolbar row">
+<span class="article-title">{{ 'users.label.title'|trans }}</span>
+
+<div class="pull-right">
+    <div class="actions">
+        <ul class="navigation" style="height: auto;">
+            <li>
+                <a class="add" href="{{ generateZendUrl('user', 'create', 'admin') }}">Create new account</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
 {% endblock %}
 
 {% block admin_stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
 <style type="text/css">
     .form-control {
         margin: 0px 0px 10px 0px;
@@ -42,10 +55,10 @@
     <div class="col-md-3 aside">
         <ul id="status-filter" class="filters">
             <li class="vspace">Status</li>
-            <li><a href="#1" class="active">registered (*) (<span>10493</span>)</a></li>
-            <li><a href="#0">pending (<span>139</span>)</a></li>
-            <li><a href="#3">deleted (*) (<span>173</span>)</a></li>
-            <li><a href="#active">Active (<span>237</span>)</a></li>
+            <li><a href="#registered" class="active dynatable-filter filter-registered" data-filter="registered">registered (*) (<span>{{ registered }}</span>)</a></li>
+            <li><a href="#pending" class="dynatable-filter filter-pending" data-filter="pending">pending (<span>{{ pending }}</span>)</a></li>
+            <li><a href="#deleted" class="dynatable-filter filter-deleted" data-filter="deleted">deleted (*) (<span>{{ deleted }}</span>)</a></li>
+            <li><a href="#active" class="dynatable-filter filter-active" data-filter="active">Active (<span>{{ active }}</span>)</a></li>
         </ul>
     </div>
 
@@ -60,7 +73,7 @@
             <th  data-dynatable-column="types" data-dynatable-no-sort="true">Type</th>
             <th  data-dynatable-column="created">Created</th>
             <th  data-dynatable-column="updated">Updated</th>
-            <th style="width: 280px;">Actions</th>
+            <th style="width: 180px;">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -71,7 +84,16 @@
 </div>
 
 <script type="text/javascript">
-    $('#users-table').dynatable({
+    var dynatable = $('#users-table')
+    .bind('dynatable:init', function (e, dynatable) {
+        var hash = window.location.hash.substring(1);
+        if (hash != "") {
+            $('.dynatable-filter').removeClass('active');
+            $('.dynatable-filter.filter-'+hash).addClass('active');
+            dynatable.queries.add('filter', hash);
+        }
+    })
+    .dynatable({
         inputs: {
           paginationClass: 'pagination',
           paginationActiveClass: 'current',
@@ -82,10 +104,13 @@
         dataset: {
             ajax: true,
             ajaxUrl: Routing.generate('newscoop_newscoop_users_loadusers'),
-            ajaxOnLoad: true,
+            ajaxOnLoad: false,
             records: [],
             perPageDefault: 10,
             perPageOptions: [10,20,50,100],
+        },
+        features: {
+            paginate: true,
         },
         writers: {
             _cellWriter: function (column, record) {
@@ -96,19 +121,19 @@
                             var el = record['links'][index];
 
                             if (el['rel'] == 'edit') {
-                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Edit User</a>";
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Edit</a>";
                             }
 
-                            if (el['rel'] == 'delete') {
-                                html += "<a class='btn btn-xs btn-danger action-btn' href="+el['href']+">Remove User</a>";
-                            }
-
-                            if (el['rel'] == 'token' && record['status'] != "Active") {
+                            if (el['rel'] == 'token' && record['status'] == "Inactive") {
                                 html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Resend activation email</a>";
                             }
 
                             if (el['rel'] == 'rename') {
-                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Rename User</a>";
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">Rename</a>";
+                            }
+
+                            if (el['rel'] == 'delete' && record['status'] != "Deleted") {
+                                html += "<a class='btn btn-xs btn-danger action-btn js-remove-user' data-user-id='"+record.id+"' href="+el['href']+">Remove</a>";
                             }
                         }
                         return html;
@@ -149,6 +174,13 @@
                 return td + '>' + html + '</td>';
             }
         }
+    }).data('dynatable');
+
+    $('.dynatable-filter').click(function(e){
+        $('.dynatable-filter').removeClass('active');
+        $(this).addClass('active');
+        dynatable.queries.add('filter', $(this).data('filter'));
+        dynatable.process();
     });
 </script>
 {% endblock %}

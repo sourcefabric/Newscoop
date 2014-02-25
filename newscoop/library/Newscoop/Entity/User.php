@@ -87,6 +87,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $updated;
 
     /**
+     * @ORM\Column(type="datetime", name="lastLogin", nullable=true)
+     * @var DateTime
+     */
+    private $lastLogin;
+
+    /**
      * @ORM\Column(type="integer", length=1)
      * @var int
      */
@@ -1154,5 +1160,29 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function isEqualTo(UserInterface $user)
     {
         return $this->id === $user->getId();
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param DateTime $lastLogin
+     * @return void
+     */
+    public function setLastLogin(\DateTime $lastLogin = null)
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @param DateTime $lastLogin
+     * @return void
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }
