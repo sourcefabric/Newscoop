@@ -623,7 +623,7 @@ class ImageService
                 ->getQuery()
                 ->getSingleScalarResult();
 
-            if ($imagesCount > 0) {
+            if ((int) $imagesCount > 0) {
                 return true;
             }
         }

@@ -3,8 +3,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
-use Newscoop\Entity\Translation;
-
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 if (!SecurityToken::isValid()) {
@@ -22,11 +20,9 @@ if (!Input::IsValid() || ($f_attachment_id <= 0)) {
 
 $em = \Zend_Registry::get('container')->getService('em');
 $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($f_attachment_id);
-$description = new Translation();
+$description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
 $description->setLanguage($attachment->getLanguage());
 $description->setTranslationText($f_description);
-$em->persist($description);
-$attachment->setDescription($description);
 $attachment->setUpdated(new \DateTime());
 $attachment->setContentDisposition($f_content_disposition);
 

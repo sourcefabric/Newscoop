@@ -5,6 +5,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 /**
@@ -109,36 +111,46 @@ if (!Input::IsValid()) {
 	setMessage($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), TRUE);
 }
 
-$attributes = array();
-$attributes['fk_user_id'] = $g_user->getUserId();
-if ($f_language_specific == "yes") {
-	$attributes['fk_language_id'] = $f_language_selected;
-} else {
-    $description = new Translation(0);
-    $description->create($f_description);
-    $attributes['fk_description_id'] = $description->getPhraseId();
-}
-if ($f_content_disposition == "attachment") {
-	$attributes['content_disposition'] = "attachment";
-}
+$container = \Zend_Registry::get('container');
+$user = $container->get('security.context')->getToken()->getUser();
+$em = $container->get('em');
 
 if (!empty($_FILES['f_file'])) {
-	$file = Attachment::OnFileUpload($_FILES['f_file'], $attributes);
+    $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
+    $attachmentService = $container->get('attachment');
+    $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment()).'/'.$_FILES['f_file']['name'];
+    ladybug_dump($fileLocation);die;
+    $file = new UploadedFile($fileLocation, $_FILES['f_file']['name'], $_FILES['f_file']['type'], filesize($fileLocation), null, true);
+    $attachment = $attachmentService->upload($file, $f_description, $language, array('user' => $user));
+
+    if ($f_language_specific != "yes") {
+        $queryBuilder = $em->createQueryBuilder();
+        $attach = $queryBuilder->update('Newscoop\Entity\Attachment', 'a')
+            ->set('a.language', 'null')
+            ->where('a.id = ?1')
+            ->setParameter(1, $attachment->getId())
+            ->getQuery();
+        $attach->execute();
+    }
+
+    if ($f_content_disposition == "attachment") {
+        $attachment->setContentDisposition($f_content_disposition);
+    }
 } else {
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'files/popup.php'));
 }
 
 // Check if image was added successfully
-if (PEAR::isError($file)) {
+if (!$attachment) {
     setMessage($file->getMessage());
 	camp_html_goto_page($BackLink);
 }
 
 if (!$inArchive) {
-    ArticleAttachment::AddFileToArticle($file->getAttachmentId(), $articleObj->getArticleNumber());
+    ArticleAttachment::AddFileToArticle($attachment->getId(), $articleObj->getArticleNumber());
 
     $logtext = $translator->trans('File #$1 "$2" attached to article',
-        array('$1' => $file->getAttachmentId(), '$2' => $file->getFileName()), 'article_files');
+        array('$1' => $file->getId(), '$2' => $attachment->getName()), 'article_files');
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 
     setMessage($translator->trans('File attached.', array(), 'article_files'));
