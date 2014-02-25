@@ -11,8 +11,9 @@ define('CACHE_SERIAL_FOOTER', "*/\n?".">");
 
 
  /**
- * @package Campsite
- */
+  * @package Campsite
+  * @deprecated from 4.3, removed in 4.4, use newscoop.cache service
+  */
 final class CampCache
 {
     /**
@@ -55,10 +56,12 @@ final class CampCache
 
     /**
      * CampCache class constructor.
-     *
+     * @deprecated from 4.3, removed in 4.4, use newscoop.cache service
      */
     private function __construct($p_cacheEngine)
     {
+        return;
+
         global $Campsite;
 
         if (empty($p_cacheEngine)) {
@@ -375,12 +378,9 @@ final class CampCache
      */
     public static function IsEnabled($p_cacheEngine = null)
     {
-        if (is_null(self::$m_enabled)) {
-            self::singleton();
-        }
-        return self::$m_enabled;
-    } // fn IsEnabled
-
-} // class CampCache
-
-?>
+        /**
+         * @deprecated from 4.3, removed in 4.4, use newscoop.cache service
+         */
+        return false;
+    }
+}

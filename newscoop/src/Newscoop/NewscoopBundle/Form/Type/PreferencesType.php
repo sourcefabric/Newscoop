@@ -55,12 +55,12 @@ class PreferencesType extends AbstractType
             }
         }
 
-        $availableCacheEngines = \CacheEngine::AvailableEngines();
+        $availableCacheEngines = $options['cacheService']->getAvailableCacheEngines();
         $availableTemplateCacheHandlers = \CampTemplateCache::availableHandlers();
         $cacheEngines = array();
         $cacheTemplate = array();
-        foreach ($availableCacheEngines as $cacheEngineName => $engineData) {
-            $cacheEngines[$cacheEngineName] = $cacheEngineName;
+        foreach ($availableCacheEngines as $cacheEngineName => $engineValue) {
+            $cacheEngines[$engineValue] = $cacheEngineName;
         }
 
         foreach ($availableTemplateCacheHandlers as $handler => $value) {
@@ -135,7 +135,15 @@ class PreferencesType extends AbstractType
         ))
         ->add('cache_engine', 'choice', array(
             'choices'   => $cacheEngines,
-            'empty_value' => 'newscoop.preferences.label.disabled',
+            'empty_value' => 'Array',
+            'required' => false
+        ))
+        ->add('cache_engine_host', 'text', array(
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('cache_engine_port', 'text', array(
+            'error_bubbling' => true,
             'required' => false
         ))
         ->add('cache_template', 'choice', array(
@@ -428,6 +436,11 @@ class PreferencesType extends AbstractType
         $resolver->setDefaults(array(
             'translation_domain' => 'system_pref'
         ));
+
+        $resolver->setRequired(array(
+            'cacheService',
+        ));
+
 
     }
 
