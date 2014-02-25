@@ -8,6 +8,9 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$request = \Zend_Registry::get('container')->getService('request');
+$params = $request->request->all();
+$queryParams = $request->query->all();
 
 /**
  * Set message
@@ -16,7 +19,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
  */
 function setMessage($message, $isError = FALSE)
 {
-    if (empty($_REQUEST['archive'])) { // fancybox
+    if (empty($queryParams['archive'])) { // fancybox
         echo '<script type="text/javascript">';
         echo 'try {';
 
@@ -41,7 +44,7 @@ function setMessage($message, $isError = FALSE)
     camp_html_add_msg($message);
 }
 
-if (empty($_POST)) {
+if (empty($params)) {
     setMessage($translator->trans('The file exceeds the allowed max file size.', array(), 'article_files'), TRUE);
 }
 
@@ -61,7 +64,7 @@ if (!ini_get('safe_mode')) {
 	set_time_limit(0);
 }
 
-$inArchive = !empty($_REQUEST['archive']);
+$inArchive = !empty($queryParams['archive']);
 
 if (!$inArchive) {
     $f_language_id = Input::Get('f_language_id', 'int', 0);
