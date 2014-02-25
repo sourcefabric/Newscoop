@@ -28,9 +28,9 @@ class Node {
         return false;
     }
 
-    public function flatten() {
-        $aggregate = array($this->data);
-
+    public function flatten($rootNode = true) {
+        $aggregate = ($rootNode) ? array($this->data) : array();
+        
         foreach($this->children as $child) {
             foreach($child->flatten() as $flat) {
                 $aggregate[] = $flat;

@@ -73,8 +73,7 @@ class ArticleCommentsList extends ListObject
                 $root->insertNode($node);
             }
 
-            $list = $root->flatten();
-            unset($list[0]);
+            $list = $root->flatten(false);
             $metaCommentsList = $list;
         } else {
             foreach ($articleCommentsList as $comment) {
