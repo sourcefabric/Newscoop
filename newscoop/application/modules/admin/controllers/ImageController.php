@@ -240,7 +240,7 @@ class Admin_ImageController extends Zend_Controller_Action
                 }
             }
 
-            if ($image->getDate() == '0000-00-00' || $image->getDate() == '') {
+            if ($image->getDescription() == '') {
                 if (isset($iptcPhotographer)) {
                     $image->setPhotographer($iptcPhotographer);
                 }
@@ -264,6 +264,7 @@ class Admin_ImageController extends Zend_Controller_Action
                 $images[] = $image;
             }
         }
+
 
         $this->view->images = $images;
     }

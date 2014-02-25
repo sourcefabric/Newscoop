@@ -51,7 +51,7 @@ camp_html_display_msgs();
 
 <?php echo SecurityToken::FormParameter(); ?>
 <ul id="edit-files">
-    <?php foreach ($fileData as $index => $file): ?>
+    <?php foreach ($fileData as $index => $file) { ?>
     <li>
         <h2><?php echo $file['name']; ?></h2>
         <fieldset>
@@ -85,7 +85,7 @@ camp_html_display_msgs();
             </dl>
         </fieldset>
     </li>
-    <?php endforeach; ?>
+    <?php } ?>
 </ul>
 
 </fieldset>

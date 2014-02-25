@@ -118,9 +118,10 @@ $em = $container->get('em');
 if (!empty($_FILES['f_file'])) {
     $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
     $attachmentService = $container->get('attachment');
-    $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment()).'/'.$_FILES['f_file']['name'];
-    ladybug_dump($fileLocation);die;
-    $file = new UploadedFile($fileLocation, $_FILES['f_file']['name'], $_FILES['f_file']['type'], filesize($fileLocation), null, true);
+    $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment());
+    $path = $fileLocation.'/'.basename($_FILES['f_file']['name']);
+    move_uploaded_file($_FILES['f_file']['tmp_name'], $path);
+    $file = new UploadedFile($path, $_FILES['f_file']['name'], $_FILES['f_file']['type'], $_FILES['f_file']['size'], null, true);
     $attachment = $attachmentService->upload($file, $f_description, $language, array('user' => $user));
 
     if ($f_language_specific != "yes") {
@@ -142,7 +143,7 @@ if (!empty($_FILES['f_file'])) {
 
 // Check if image was added successfully
 if (!$attachment) {
-    setMessage($file->getMessage());
+    setMessage($translator->trans("There was a problem uploading the file.", array(), 'article_files'), TRUE);
 	camp_html_goto_page($BackLink);
 }
 
@@ -150,7 +151,7 @@ if (!$inArchive) {
     ArticleAttachment::AddFileToArticle($attachment->getId(), $articleObj->getArticleNumber());
 
     $logtext = $translator->trans('File #$1 "$2" attached to article',
-        array('$1' => $file->getId(), '$2' => $attachment->getName()), 'article_files');
+        array('$1' => $attachment->getId(), '$2' => $attachment->getName()), 'article_files');
     Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 
     setMessage($translator->trans('File attached.', array(), 'article_files'));
