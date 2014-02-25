@@ -176,7 +176,7 @@ class ArticleCommentsList extends ListObject
 					if ($value == 'true' || $value == 'false') $parameters[$parameter] = $value;
                     break;
                 case 'nested':
-                    if ($value == 'yes') $this->_nested = true;
+                    if ($value == 'true') $this->_nested = true;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
