@@ -69,7 +69,8 @@ class LanguageRepository extends EntityRepository
             ->setShortDay4($values['short_day4'])
             ->setShortDay5($values['short_day5'])
             ->setShortDay6($values['short_day6'])
-            ->setShortDay7($values['short_day7']);
+            ->setShortDay7($values['short_day7'])
+            ->setRFC3066bis($values['RFC3066bis']);
 
         $em->persist($language);
         $em->flush();
