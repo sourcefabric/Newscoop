@@ -72,9 +72,12 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
         $mime = getimagesize($fileLocation);
         $file = new UploadedFile($fileLocation, $params[$nameIdx], $mime['mime'], filesize($fileLocation), null, true);
         $result = $imageService->upload($file, array('user' => $user));
+        $result->setDate('0000-00-00');
         $images[] = $result;
     }
 }
+
+$em->flush();
 
 if (!empty($images)) {
     camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => count($images)), 'media_archive', "ok"));
