@@ -16,7 +16,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
  */
 class Admin_ImageController extends Zend_Controller_Action
 {
-    const LIMIT = 7;
+    const LIMIT = 24;
     
     protected $renditions = array();
 
@@ -87,11 +87,18 @@ class Admin_ImageController extends Zend_Controller_Action
             $source_criteria = array();
         }
 
-        $count = 0;
+        $count = $this->_helper->service('image')->getCountBy(array());
         $this->view->q = $this->_getParam('search', '');
         if (is_array($this->view->q)) {
             $this->view->q = $this->view->q[0];
         }
+
+        $paginator = Zend_Paginator::factory($count);
+        $paginator->setItemCountPerPage(self::LIMIT);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setView($this->view);
+        $paginator->setDefaultScrollingStyle('Sliding');
+        $this->view->paginator = $paginator;
 
         if (!empty($this->view->q)) {
             $search_count = 0;
@@ -101,15 +108,8 @@ class Admin_ImageController extends Zend_Controller_Action
             $this->view->images = $this->_helper->service('image.search')->find($uploaderId, $source_criteria, array('id' => 'desc'), $search_paging);
         } else {
             $count = $this->_helper->service('image')->getCountBy($source_criteria);
-            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($page - 1) * self::LIMIT);
+            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
         }
-
-        $paginator = Zend_Paginator::factory($count);
-        $paginator->setItemCountPerPage(self::LIMIT);
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setView($this->view);
-        $paginator->setDefaultScrollingStyle('Sliding');
-        $this->view->paginator = $paginator;
 
         $this->view->newsfeed = false;
         if ($newsfeed) {
