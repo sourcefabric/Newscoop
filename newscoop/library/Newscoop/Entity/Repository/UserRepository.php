@@ -703,9 +703,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             $qb->setParameter('lastLogin', $date->modify('- '.$criteria->lastLoginDays.' days'));
         }
 
-        $qb->leftJoin('u.attributes', 'ua');
-
         if (count($criteria->attributes) > 0) {
+            $qb->leftJoin('u.attributes', 'ua');
             $qb->andWhere('ua.attribute = ?1')
                 ->andWhere('ua.value = ?2')
                 ->setParameter(1, $criteria->attributes[0])

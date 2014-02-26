@@ -171,7 +171,7 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('session_lifetime', 'integer', array(
-            'attr' => array('maxlength' => '4', 'max' => '9999', 'min' => 0),
+            'attr' => array('maxlength' => '4', 'max' => '99999', 'min' => 0),
             'error_bubbling' => true,
             'required' => true
         ))

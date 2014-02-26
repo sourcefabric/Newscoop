@@ -246,8 +246,10 @@ class Builder
                 ->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
+            $issues = $this->container->get('em')->getRepository('Newscoop\Entity\Issue')->getLatestBy(array(), 10);
+
             // add content/publication/issue
-            foreach ($publication->getIssues() as $issue) {
+            foreach ($issues as $issue) {
                 $issueId = $issue->getNumber();
                 $languageId = $issue->getLanguage()->getId();
                 $issueName = sprintf('%d. %s (%s)', $issue->getNumber(), $issue->getName(), $issue->getLanguage()->getName());
@@ -268,6 +270,7 @@ class Builder
                             array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
                         ));
                     }
+
                     if (count($issue->getSections()) > 0) {
                         if (!$modern) {
                             $this->addChild($menu[$publication->getName()][$issueName], null, array())->setAttribute('class', 'divider');
@@ -286,7 +289,7 @@ class Builder
                     }
             }
 
-            if (count($publication->getIssues()) > 0) {
+            if (count($publication->getIssues()) > 10) {
                 if (!$modern) {
                     $this->addChild($menu[$publication->getName()], null, array())->setAttribute('class', 'divider');
                     $this->addChild(
