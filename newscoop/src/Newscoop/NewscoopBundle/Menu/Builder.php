@@ -246,7 +246,7 @@ class Builder
                 ->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
-            $issues = $this->container->get('em')->getRepository('Newscoop\Entity\Issue')->getLatestBy(array(), 10);
+            $issues = $this->container->get('em')->getRepository('Newscoop\Entity\Issue')->getLatestBy(array('publication' => $pubId), 10);
 
             // add content/publication/issue
             foreach ($issues as $issue) {
