@@ -6,8 +6,9 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/admin_stylesheet.css')); ?>
-
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/js/select2/select2.css')); ?>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/select2/select2.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
 
 <style type="text/css">
@@ -103,6 +104,14 @@ $translator = \Zend_Registry::get('container')->getService('translator');
         <input id="search_input" type="text" placeholder="<?php echo($translator->trans('Search')); ?>" name="q" value="<?php if ($this->q) echo(htmlspecialchars($this->q, ENT_QUOTES, 'UTF-8')); ?>">
         <input type="checkbox" <?php if ($this->newsfeed) { ?>value="on" checked="checked"<?php } else { ?> value="off"<?php } ?> name="with_newsfeeds" id="with_newsfeeds"><label for="with_newsfeeds"><?php echo($translator->trans('Display newsfeed images', array(), 'article_images')); ?></label>
         </form>
+        <input type="hidden" style="width: 300px" name="uploaders" id="uploaders"/>
+        <form id="uploader-form" method="post" action="<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article-attach',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>"></form>
         <br>
         <?php if (!empty($this->images)) { ?>
         <div id="image-archive">
@@ -131,6 +140,43 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 <script>
 $(function() {
     
+    $("input#uploaders").select2({
+        minimumInputLength: 3,
+        placeholder: "<?php echo $translator->trans('Filter by uploader...', array(), 'article_images'); ?>",
+        id: function(uploader) { return uploader.id; },
+        ajax: {
+            url: '',
+            dataType: 'json',
+            data: function (term, page) { // page is the one-based page number tracked by Select2
+                return { term: term };
+            },
+            results: function (data, page) {
+                return { results: data.items };
+            }
+        },
+        formatResult: function(uploader) { return uploader.username; },
+        formatSelection: function(uploader) { return uploader.username; },
+    }).on("select2-selecting", function(e) {
+        onUploaderSearch(e.val);
+    });
+
+    function onUploaderSearch(term) {
+        var searchUrl = $("#uploader-form").attr('action');
+        searchUrl = searchUrl.replace(/\/uploader\/[^\/]*/i, "");
+        searchUrl = searchUrl.replace(/\/page\/[\d]*/i, "/page/1");
+        searchUrl = searchUrl.replace(/#media-archive/i, "");
+
+        var query_raw = '' + term;
+
+        if ("" != query_raw) {
+            var query_enc = encodeURIComponent(query_raw);
+            searchUrl += "/uploader/" + query_enc;
+        }
+
+        searchUrl += "#media-archive";
+        $("#uploader-form").attr('action', searchUrl);
+        $("#uploader-form").submit();
+    };
     $("#tabs").tabs();
     if (document.location.hash == '#media-archive') {
 		$("#tabs").tabs('option', 'selected', 'tabs-2');
