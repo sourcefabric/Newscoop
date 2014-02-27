@@ -59,7 +59,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_UserCriteria();
         $form->groups->addMultiOptions($this->_helper->service('user')->getGroupOptions());

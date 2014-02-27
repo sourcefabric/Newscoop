@@ -72,6 +72,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, NULL);
         }
 
+        $user->setLastLogin(new \DateTime());
         $this->em->flush(); // store updated password
         return new \Zend_Auth_Result(\Zend_Auth_Result::SUCCESS, $user->getId());
     }

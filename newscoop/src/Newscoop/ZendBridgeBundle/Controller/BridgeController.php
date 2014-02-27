@@ -32,7 +32,7 @@ class BridgeController extends Controller
 
         $front->setParam('bootstrap', $bootstrap);
         $response = $front->dispatch();
-
+        
         //copy headers
         $symfonyHeaders = array();
         foreach ($response->getHeaders() as $key => $header) {

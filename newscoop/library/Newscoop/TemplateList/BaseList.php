@@ -152,18 +152,13 @@ abstract class BaseList
             $this->totalCount = 0;
             $this->objectsList = new ListResult();
             $this->hasNextResults = false;
+
             return;
         }
 
-        $this->objectsList = $this->fetchFromCache();
-        if (!is_null($this->objectsList)) {
-            $this->duplicateObject($this->objectsList);
-            return;
-        }
         $this->objectsList = $this->prepareList($this->criteria, $parameters);
         $this->totalCount = $this->objectsList->count();
         $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->maxResults);
-        $this->storeInCache();
 
         return $this->objectsList;
     }
@@ -171,9 +166,8 @@ abstract class BaseList
     /**
      * Get ListResult object with list elements
      *
-     * @param  integer  $firstResult
-     * @param  integer  $maxResults
-     * @param  Criteria $criteria
+     * @param Criteria $criteria
+     * @param array    $parameters
      *
      * @return ListResult
      */
@@ -181,13 +175,9 @@ abstract class BaseList
 
     /**
      * Convert constraints array to Criteria
-     *
-     * @param  array  $constraints
-     * @param  Criteria $criteria
-     *
-     * @return Criteria
      */
-    protected function convertConstraints(){
+    protected function convertConstraints()
+    {
         $perametersOperators = array();
         $this->constraints = array_chunk($this->constraints, 3, true);
         foreach ($this->constraints as $constraint) {
@@ -207,10 +197,10 @@ abstract class BaseList
 
     /**
      * Convert parameters array to Criteria
-     * 
-     * @param  array  $parameters
-     * @param  Criteria $criteria
-     * 
+     *
+     * @param integer $firstResult
+     * @param array   $parameters
+     *
      * @return Criteria
      */
     protected function convertParameters($firstResult, $parameters)
@@ -234,37 +224,17 @@ abstract class BaseList
             }
         }
 
-        // Set first and max results values to critera. 
+        // Set first and max results values to critera.
         $this->criteria->firstResult = $this->firstResult;
         $this->criteria->maxResults = $this->maxResults;
     }
 
-    private function fetchFromCache()
-    {
-        if (\CampCache::IsEnabled()) {
-            $object = \CampCache::singleton()->fetch($this->getCacheKey());
-            if ($object !== false && is_object($object)) {
-                return $object;
-            }
-        }
-
-        return null;
-    }
-
-
-    private function storeInCache()
-    {
-        if (\CampCache::IsEnabled()) {
-            \CampCache::singleton()->store($this->getCacheKey(), $this, $this->defaultTTL);
-        }
-    }
-
-
     protected function getCacheKey()
     {
         if (is_null($this->cacheKey)) {
-            $this->cacheKey = get_class($this) . '__' . serialize($this->criteria) . '__' . $this->columns;
+            $this->cacheKey = get_class($this) . '__' . md5(serialize($this->criteria)) . '__' . $this->columns;
         }
+
         return $this->cacheKey;
     }
 
@@ -272,12 +242,13 @@ abstract class BaseList
     /**
      * Copies the given object
      *
-     * @param object $p_source
+     * @param object $source
+     *
      * @return object
      */
     private function duplicateObject($source)
     {
-        foreach ($source as $key=>$value) {
+        foreach ($source as $key => $value) {
             $this->$key = $value;
         }
     }
@@ -302,7 +273,7 @@ abstract class BaseList
         if (!isset($this->defaultIterator)) {
             $this->defaultIterator = $this->getIterator();
         }
-        
+
         return $this->defaultIterator;
     }
 
