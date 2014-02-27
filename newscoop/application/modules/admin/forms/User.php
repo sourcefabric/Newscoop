@@ -77,6 +77,10 @@ class Admin_Form_User extends Zend_Form
             'label' => $translator->trans("Allow users profile to be publicly displayed", array(), 'users'),
         ));
 
+        $this->addElement('checkbox', 'is_verified', array(
+            'label' => $translator->trans('User account is verified', array(), 'users'),
+        ));
+
         $this->addElement('multiCheckbox', 'user_type', array(
             'label' => $translator->trans('User Type', array(), 'users'),
         ));
@@ -119,6 +123,7 @@ class Admin_Form_User extends Zend_Form
             'status' => $user->isActive(),
             'is_admin' => $user->isAdmin(),
             'is_public' => $user->isPublic(),
+            'is_verified' => $user->getAttribute('is_verified'),
             'user_type' => $types,
             'author' => $user->getAuthorId(),
         ));
