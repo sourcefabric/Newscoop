@@ -124,9 +124,11 @@ class EmailService
 
             $messageToSend = \Swift_Message::newInstance();
 
-            if (array_key_exists('moderator', $to)) {
-                $messageToSend->addBcc($to['moderator']);
-                unset($to['moderator']);
+            if (is_array($to)) {
+                if (array_key_exists('moderator', $to)) {
+                    $messageToSend->addBcc($to['moderator']);
+                    unset($to['moderator']);
+                }
             }
 
             $messageToSend->setSubject($placeholder)
