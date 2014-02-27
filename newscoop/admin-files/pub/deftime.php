@@ -68,7 +68,7 @@ foreach ($defaultTimes as $time) {
 			<?php p(htmlspecialchars($time->getPaidTime())); ?>
 		</TD>
 		<TD ALIGN="CENTER">
-			<A HREF="/<?php p($ADMIN); ?>/pub/do_deldeftime.php?Pub=<?php p($Pub); ?>&CountryCode=<?php  p($time->getCountryCode()); ?>&Language=<?php p($Language); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php echo $translator->trans('Are you sure you want to delete the subscription settings for $1?', "&quot;".htmlspecialchars($publicationObj->getName()).':'.htmlspecialchars($time->getCountryCode())."&quot;"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  echo $translator->trans('Delete'); ?>" TITLE="<?php  echo $translator->trans('Delete'); ?>" ></A>
+			<A HREF="/<?php p($ADMIN); ?>/pub/do_deldeftime.php?Pub=<?php p($Pub); ?>&CountryCode=<?php  p($time->getCountryCode()); ?>&Language=<?php p($Language); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php echo $translator->trans('Are you sure you want to delete the subscription settings for $1?', array('$1' => "&quot;".htmlspecialchars($publicationObj->getName()).':'.htmlspecialchars($time->getCountryCode())."&quot;")); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0" ALT="<?php  echo $translator->trans('Delete'); ?>" TITLE="<?php  echo $translator->trans('Delete'); ?>" ></A>
 		</TD>
 	</TR>
 <?php
