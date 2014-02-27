@@ -1,4 +1,4 @@
-<?php if (empty($userIsBlogger)) { 
+<?php
 $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
 <div class="articlebox" title="<?php echo $translator->trans('Related Articles', array(), 'articles'); ?>"><div>
@@ -14,4 +14,3 @@ $translator = \Zend_Registry::get('container')->getService('translator');
     <?php endif; ?>
 </div>
 </div></div>
-<?php } ?>
