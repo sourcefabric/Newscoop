@@ -41,11 +41,13 @@ AddType application/font-woff            .woff
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+js
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+css
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+images
+    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/\.php$
     RewriteCond %{REQUEST_URI} !/+themes
     RewriteCond %{REQUEST_URI} !/public/+videos
     RewriteCond %{REQUEST_URI} !/public/+pdf
     RewriteCond %{REQUEST_URI} !^/images/
     RewriteCond %{REQUEST_URI} !/+images/+cache
+    RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule . index.php [L]
 
     RewriteCond %{REQUEST_URI} .tpl$

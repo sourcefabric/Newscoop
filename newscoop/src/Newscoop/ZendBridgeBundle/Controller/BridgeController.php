@@ -17,6 +17,18 @@ class BridgeController extends Controller
     */
     public function indexAction(Request $request)
     {
+        // don't render page on tinymce files
+        $specialfiles = array(
+            realpath(__DIR__ . '/../../../../js/tinymce/plugins/campsiteimage/popup.php'),
+            realpath(__DIR__ . '/../../../../js/tinymce/plugins/campsiteimage/images.php'),
+            realpath(__DIR__ . '/../../../../js/tinymce/plugins/campsiteattachment/popup.php'),
+            realpath(__DIR__ . '/../../../../js/tinymce/plugins/campsiteattachment/attachments.php')
+        );
+
+        if (in_array($request->server->get('SCRIPT_FILENAME'), $specialfiles)) {
+            return new Response();
+        }
+
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 

@@ -26,29 +26,7 @@ if (APPLICATION_ENV === 'production') {
 $kernel->loadClassCache();
 $request = Request::createFromGlobals();
 
-try {
-    $response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
-    $response->send();
-    $kernel->terminate($request, $response);
-} catch (NotFoundHttpException $e) {
-    if (!\Zend_Registry::isRegistered('container')) {
-        $container = $kernel->getContainer();
-        \Zend_Registry::set('container', $container);
-    }
-    
-    $container = \Zend_Registry::get('container');
 
-    // Fill zend application options
-    $config = $container->getParameterBag()->all();
-    $application = new \Zend_Application(APPLICATION_ENV);
-    $iniConfig = APPLICATION_PATH . '/configs/application.ini';
-    if (file_exists($iniConfig)) {
-        $userConfig = new \Zend_Config_Ini($iniConfig, APPLICATION_ENV);
-        $config = $application->mergeOptions($config, $userConfig->toArray());
-    }
-
-    $application->setOptions($config);
-    if (!defined('DONT_BOOTSTRAP_ZEND')) {
-        $application->bootstrap();
-    }
-}
+$response = $kernel->handle($request, \Symfony\Component\HttpKernel\HttpKernelInterface::MASTER_REQUEST, false);
+$response->send();
+$kernel->terminate($request, $response);
