@@ -84,7 +84,6 @@ class Admin_LegacyController extends Zend_Controller_Action
             if (!$needs_menu) {
                 $this->_helper->layout->disableLayout();
             }
-
             // Verify the file exists
             $path_name = $Campsite['HTML_DIR'] . "/$ADMIN_DIR/$call_script";
 

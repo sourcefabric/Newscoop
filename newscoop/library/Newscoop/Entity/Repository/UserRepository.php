@@ -173,6 +173,28 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         return $query;
     }
 
+    /**
+     * Get getLatelyLoggedInUsers (logged in x days before today)
+     *
+     * @return int
+     */
+    public function getLatelyLoggedInUsers($daysNumber = 7, $count = false)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        if ($count) {
+            $query->select('COUNT(u)');
+        }
+
+        $query = $query->where('u.lastLogin > :date')
+            ->getQuery();
+
+        $date = new \DateTime();
+        $query->setParameter('date', $date->modify('- '.$daysNumber.' days'));
+
+        return $query;
+    }
+
     public function getOneActiveUser($id, $public = true)
     {
         $em = $this->getEntityManager();
@@ -597,6 +619,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->getQuery();
 
         $query->setParameter('status', User::STATUS_ACTIVE);
+
         return $query->getSingleScalarResult();
     }
 
@@ -649,8 +672,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere('u.status = :status')
             ->setParameter('status', $criteria->status);
 
-        $qb->andWhere('u.is_public = :is_public')
-            ->setParameter('is_public', $criteria->is_public);
+        if (!is_null($criteria->is_public)) {
+            $qb->andWhere('u.is_public = :is_public')
+                ->setParameter('is_public', $criteria->is_public);
+        }
 
         foreach ($criteria->perametersOperators as $key => $operator) {
             $qb->andWhere('u.'.$key.' = :'.$key)
@@ -672,9 +697,14 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             $this->addNameRangeWhere($qb, $criteria->nameRange);
         }
 
-        $qb->leftJoin('u.attributes', 'ua');
+        if (!empty($criteria->lastLoginDays)) {
+            $qb->andWhere('u.lastLogin > :lastLogin');
+            $date = new \DateTime();
+            $qb->setParameter('lastLogin', $date->modify('- '.$criteria->lastLoginDays.' days'));
+        }
 
         if (count($criteria->attributes) > 0) {
+            $qb->leftJoin('u.attributes', 'ua');
             $qb->andWhere('ua.attribute = ?1')
                 ->andWhere('ua.value = ?2')
                 ->setParameter(1, $criteria->attributes[0])
@@ -707,6 +737,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $list->items = array_map(function ($row) {
             $user = $row[0];
             $user->setPoints((int) $row['comments']);
+
             return $user;
         }, $qb->getQuery()->getResult());
 

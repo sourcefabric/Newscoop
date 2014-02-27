@@ -133,7 +133,7 @@ camp_html_display_msgs();
 
                 <input type="text" class="input_text date" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11"
                 	value="<?php if (isset($date_begin)) p($date_begin); else p(strftime('%Y-%m-%d', strtotime("Friday"))); ?>"
-                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php echo $translator->trans('You must fill in the $1 field.',"'".$translator->trans('Date begin', array(), 'plugin_debate')."'"); ?>" />
+                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php echo $translator->trans('You must fill in the $1 field.', array('$1' => $translator->trans('Date begin', array(), 'plugin_debate'))); ?>" />
 
                	<input type="text" class="input_text time" name="f_time_begin" id="f_time_begin" maxlength="5" size="5"
                		value="<?php if (isset($time_begin)) p($time_begin); else p("12:00"); ?>" />

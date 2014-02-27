@@ -184,3 +184,38 @@ Miscellaneous: Różne
 'User will be notified on several events': 'Używkotnik będzie informowany przy kilku zdarzeniach.'
 'Editor Miscellaneous Settings': 'Dodatkowe ustawienia edytora'
 'No such user account.': 'Brak użytkownika.'
+users:
+    label:
+        title: "Wyszukiwarka uzytkowników"
+    menu:
+        manage: "Zarządzaj użytkownikami"
+    created: "Utworzony"
+    updated: "Zaktualizowany"
+    status:
+        status: "Status"
+        registered: "Zarejestrowany"
+        pending: "Oczekujący"
+        deleted: "Usuniety"
+        active: "Aktywny"
+    table:
+        actions:
+            actions: "Akcje"
+            edit: "Edytuj"
+            resend_email: "Wyślij mail aktywacyjny"
+            rename: "Zmień nazwę"
+            remove: "Usuń"
+        confirm_remove: "Na pewno chcesz usunąć tego użytkownika?"
+        table_messages:
+            page: "Strona"
+            perPageText: "Pokazuje: "
+            pageText: "Strony: "
+            recordCountPageBoundTemplate: "{pageLowerBound} do {pageUpperBound} z"
+            recordCountPageUnboundedTemplate: "{recordsShown} z"
+            recordCountTotalTemplate: "{recordsQueryCount} {collectionName}"
+            recordCountFilteredTemplate: " (wyszukane z {recordsTotal} wszystkich wyników)"
+            recordCountText: "Wyświetla "
+            recordCountTextTemplate: "{text} {pageTemplate} {totalTemplate} {filteredTemplate}"
+            recordCountTemplate: "<span id='dynatable-record-count-{elementId}' class='dynatable-record-count'>{textTemplate}</span>"
+            processingText: "Przetważanie..."
+    chart:
+        title: "Źródła logowania"

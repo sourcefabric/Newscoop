@@ -56,6 +56,11 @@ class UserCriteria extends Criteria
     public $last_name;
 
     /**
+     * @var integer
+     */
+    public $lastLoginDays;
+
+    /**
      * @var boolean
      */
     public $is_admin = false;

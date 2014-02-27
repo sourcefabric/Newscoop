@@ -24,9 +24,19 @@ class ErrorController extends Zend_Controller_Action
         $request = $this->getRequest();
         $adminControllerFile = __DIR__.'/../..'.str_replace('/admin', '/admin-files', $request->getPathInfo());
         if (file_exists($adminControllerFile)) {
-
             $this->_forward('index', 'legacy', 'admin', array());
+
             return;
+        }
+
+        foreach (\CampPlugin::GetEnabled() as $CampPlugin) {
+            $adminControllerFile = dirname(APPLICATION_PATH).'/'.$CampPlugin->getBasePath().str_replace('/admin', '/admin-files', $request->getPathInfo());
+
+            if (file_exists($adminControllerFile)) {
+                $this->_forward('index', 'legacy', 'admin', array());
+
+                return;
+            }
         }
     }
 

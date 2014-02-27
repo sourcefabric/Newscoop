@@ -61,12 +61,25 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('getReCaptchaImage', array($this, 'getReCaptchaImage')),
             new \Twig_SimpleFunction('renderHook', array($this, 'renderHook')),
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
+            new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
         );
     }
 
     public function getBreadcrumbsArray($currentMenuItem) {
         $manipulator = new \Knp\Menu\Util\MenuManipulator();
+
         return $manipulator->getBreadcrumbsArray($currentMenuItem);
+    }
+
+    public function generateZendUrl($controller, $action, $module = 'admin', $params = array())
+    {
+        $zendRouter = $this->container->get('zend_router');
+
+        return $zendRouter->assemble(array_merge(array(
+            'module' => $module,
+            'controller' => $controller,
+            'action' => $action,
+        ), $params), 'default', true);
     }
 
     public function getReCaptchaImage()

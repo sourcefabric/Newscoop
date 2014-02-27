@@ -1,0 +1,264 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "users" %}
+
+{% block admin_title %}{{ parent() }} - {{ 'users.label.title'|trans }}{% endblock %}
+{% block admin_page_title_box %}
+<div class="toolbar row">
+<span class="article-title">{{ 'users.label.title'|trans }}</span>
+
+<div class="pull-right">
+    <div class="actions">
+        <ul class="navigation" style="height: auto;">
+            <li>
+                <a class="add" href="{{ generateZendUrl('user', 'create', 'admin') }}">{{ 'Create new account'|trans }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block admin_stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/bootstrap.css') }}">
+<link rel="stylesheet" href="{{ asset('/bundles/newscoopnewscoop/css/jquery.dynatable.css') }}">
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
+<style type="text/css">
+    .form-control {
+        margin: 0px 0px 10px 0px;
+    }
+    .form-control input {
+        margin-right: 10px;
+    }
+
+    #users-table {
+        padding: 10px;
+        border: 1px solid #ccc;
+    }
+
+    #users-table th {
+        background: #007fb3;
+        color: #fff;
+    }
+
+    a.action-btn {margin-left: 5px; margin-bottom: 5px;}
+</style>
+{% endblock %}
+
+{% block admin_scripts %}
+<script src="{{ asset('/js/select2/select2.js') }}"></script>
+<script src="{{ asset('/bundles/newscoopnewscoop/js/jquery.dynatable.js') }}"></script>
+{% endblock %}
+
+{% block admin_content %}
+<div class="row">
+    <div class="col-md-3 aside">
+        <ul id="status-filter" class="filters">
+            <li class="vspace">{{ 'users.status.status'|trans }}</li>
+            <li><a href="#registered" class="active dynatable-filter filter-registered" data-filter="registered">{{ 'users.status.registered'|trans }} (<span>{{ registered }}</span>)</a></li>
+            <li><a href="#pending" class="dynatable-filter filter-pending" data-filter="pending">{{ 'users.status.pending'|trans }} (<span>{{ pending }}</span>)</a></li>
+            <li><a href="#deleted" class="dynatable-filter filter-deleted" data-filter="deleted">{{ 'users.status.deleted'|trans }} (<span>{{ deleted }}</span>)</a></li>
+            <li><a href="#active" class="dynatable-filter filter-active" data-filter="active">{{ 'users.status.active'|trans }} (<span>{{ active }}</span>)</a></li>
+        </ul>
+        <div id="chart"></div>
+    </div>
+
+    <div class="col-md-10">
+        <table id="users-table" class="table table-bordered table-hover table-striped" style="word-wrap: break-word;table-layout: fixed;">
+        <thead>
+          <tr>
+            <th data-dynatable-column="username">{{ 'Username'|trans }}</th>
+            <th data-dynatable-column="first_name">{{ 'First Name'|trans }}</th>
+            <th data-dynatable-column="last_name">{{ 'Last Name'|trans }}</th>
+            <th>{{ 'Email'|trans }}</th>
+            <th  data-dynatable-column="types" data-dynatable-no-sort="true">{{ 'User Type'|trans }}</th>
+            <th  data-dynatable-column="created">{{ 'users.created'|trans }}</th>
+            <th  data-dynatable-column="updated">{{ 'users.updated'|trans }}</th>
+            <th style="width: 220px;">{{ 'users.table.actions.actions'|trans }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+    </div>
+    <div class="cleafix"></div>
+</div>
+
+<script type="text/javascript">
+    var dynatable = $('#users-table')
+    .bind('dynatable:init', function (e, dynatable) {
+        var hash = window.location.hash.substring(1);
+        if (hash != "") {
+            $('.dynatable-filter').removeClass('active');
+            $('.dynatable-filter.filter-'+hash).addClass('active');
+            dynatable.queries.add('filter', hash);
+        } else {
+            dynatable.queries.add('filter', 'registered');
+        }
+    })
+    .dynatable({
+        inputs: {
+            paginationClass: 'pagination',
+            paginationActiveClass: 'current',
+            paginationDisabledClass: 'unavailable',
+            paginationPrev: '&laquo;',
+            paginationNext: '&raquo;',
+            pageText: '{{ 'users.table.table_messages.page'|trans }}',
+            perPageText: '{{ 'users.table.table_messages.perPageText'|trans }}',
+            pageText: '{{ 'users.table.table_messages.pageText'|trans }}',
+            recordCountPageBoundTemplate: '{{ 'users.table.table_messages.recordCountPageBoundTemplate'|trans }}',
+            recordCountPageUnboundedTemplate: '{{ 'users.table.table_messages.recordCountPageUnboundedTemplate'|trans }}',
+            recordCountTotalTemplate: '{{ 'users.table.table_messages.recordCountTotalTemplate'|trans }}',
+            recordCountFilteredTemplate: '{{ 'users.table.table_messages.recordCountFilteredTemplate'|trans }}',
+            recordCountText: '{{ 'users.table.table_messages.recordCountText'|trans }}',
+            recordCountTextTemplate: '{{ 'users.table.table_messages.recordCountTextTemplate'|trans }}',
+            recordCountTemplate: '{{ 'users.table.table_messages.recordCountTemplate'|trans }}',
+            processingText: '{{ 'users.table.table_messages.processingText'|trans }}'
+        },
+        dataset: {
+            ajax: true,
+            ajaxUrl: Routing.generate('newscoop_newscoop_users_loadusers'),
+            ajaxOnLoad: false,
+            records: [],
+            perPageDefault: 10,
+            perPageOptions: [10,20,50,100],
+        },
+        features: {
+            paginate: true,
+        },
+        writers: {
+            _cellWriter: function (column, record) {
+                if (column.label == '{{ 'users.table.actions.actions'|trans }}') {
+                    column.attributeWriter = function(record) {
+                        var html = "";
+                        for (index = 0; index < record['links'].length; ++index) {
+                            var el = record['links'][index];
+
+                            if (el['rel'] == 'edit') {
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">{{ 'users.table.actions.edit'|trans }}</a>";
+                            }
+
+                            if (el['rel'] == 'token' && record['status'] == "Inactive") {
+                                html += "<a class='btn btn-xs btn-success action-btn js-resend-mail' href="+el['href']+">{{ 'users.table.actions.resend_email'|trans }}/a>";
+                            }
+
+                            if (el['rel'] == 'rename') {
+                                html += "<a class='btn btn-xs btn-success action-btn' href="+el['href']+">{{ 'users.table.actions.rename'|trans }}</a>";
+                            }
+
+                            if (el['rel'] == 'delete' && record['status'] != "Deleted") {
+                                html += "<a class='btn btn-xs btn-danger action-btn js-remove-user' data-user-id='"+record.id+"' href="+el['href']+">{{ 'users.table.actions.remove'|trans }}</a>";
+                            }
+                        }
+                        return html;
+                    }
+                }
+
+                if (column.id == 'created') {
+                    column.attributeWriter = function(record) {
+                        return record.created.date;
+                    }
+                }
+
+                if (column.id == 'updated') {
+                    column.attributeWriter = function(record) {
+                        return record.updated.date;
+                    }
+                }
+
+                var html = column.attributeWriter(record),
+                    td = '<td';
+
+                if (column.hidden || column.textAlign) {
+                  td += ' style="';
+                  // keep cells for hidden column headers hidden
+                  if (column.hidden) {
+                    td += 'display: none;';
+                  }
+                  // keep cells aligned as their column headers are aligned
+                  if (column.textAlign) {
+                    td += 'text-align: ' + column.textAlign + ';';
+                  }
+                  td += '"';
+                }
+                if (column.cssClass) {
+                  td += ' class="' + column.cssClass + '"';
+                }
+
+                return td + '>' + html + '</td>';
+            }
+        }
+    }).data('dynatable');
+
+    $('.dynatable-filter').click(function(e){
+        $('.dynatable-filter').removeClass('active');
+        $(this).addClass('active');
+        dynatable.queries.add('filter', $(this).data('filter'));
+        dynatable.process();
+    });
+
+    $('.js-remove-user').live('click', function(event){
+        event.preventDefault();
+        var r = confirm("{{ 'users.table.confirm_remove'|trans }}");
+        if (r == true) {
+            $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+                if (data.message) {
+                    flashMessage(data.message, 'error');
+                    return false;
+                }
+                dynatable.process();
+                flashMessage('{{ 'User was deleted.'|trans }}');
+            });
+        }
+    });
+
+    $('.js-resend-mail').live('click', function(event){
+        event.preventDefault();
+        $.getJSON($(this).attr('href'), {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return false;
+            }
+
+            flashMessage('{{ 'New confirmation email was sent to user.'|trans }}');
+        });
+    });
+</script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Type');
+        data.addColumn('number', 'Users');
+        data.addRows([
+            ['Newscoop', {{active_logins.newscoop }}],
+            ['External', {{active_logins.external }}]
+        ]);
+
+        // Set chart options
+        var options = {
+            'title': '{{ 'users.chart.title'|trans }}',
+            'width':150,
+            'height':150,
+            'legend': {
+                'position': 'bottom'
+            }
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart'));
+        chart.draw(data, options);
+    }
+</script>
+{% endblock %}

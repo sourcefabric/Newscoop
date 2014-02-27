@@ -56,7 +56,7 @@ services:
     newscoop_newscoop.security.authentication.success_handler:
         class: %newscoop_newscoop.security.authentication.success_handler.class%
         public: false
-        arguments:  ['@security.http_utils', {}, '@auth.adapter']
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em']
 
     newscoop_newscoop.security.authentication.frontend.success_handler:
         class: %newscoop_newscoop.security.authentication.frontend.success_handler.class%
