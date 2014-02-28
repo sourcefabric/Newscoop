@@ -20,7 +20,10 @@ $this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' =
 $('.content a.iframe').fancybox({
     hideOnContentClick: false,
     width: 900,
-    height: 600
+    height: 600,
+    'onClosed':function () {
+        window.location.reload();
+    },
 });
 
 $('#edit-form').submit(function() {

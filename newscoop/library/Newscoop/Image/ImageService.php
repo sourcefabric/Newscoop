@@ -166,6 +166,27 @@ class ImageService
     }
 
     /**
+     * Save image
+     *
+     * @param array $info
+     *
+     * @return string
+     */
+    public function save(array $info)
+    {
+        if (!in_array($info['type'], $this->supportedTypes)) {
+            throw new \InvalidArgumentException("Unsupported image type '$info[type]'.");
+        }
+
+        $name = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
+        if (!file_exists(APPLICATION_PATH . "/../images/$name")) {
+            rename($info['tmp_name'], APPLICATION_PATH . "/../images/$name");
+        }
+
+        return $name;
+    }
+
+    /**
      * Get image src
      *
      * @param string $image
