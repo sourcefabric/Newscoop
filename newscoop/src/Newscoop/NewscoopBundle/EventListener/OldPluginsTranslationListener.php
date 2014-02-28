@@ -20,12 +20,15 @@ class OldPluginsTranslationListener
 {
     private $translator;
 
+    private $cacheService;
+
     /**
      * @param Translator $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, $cacheService)
     {
         $this->translator = $translator;
+        $this->cacheService = $cacheService;
     }
 
     public function onRequest(GetResponseEvent $event)
@@ -33,18 +36,31 @@ class OldPluginsTranslationListener
 
         $request = $event->getRequest();
         $locale = $request->getLocale();
-        $this->translator->addLoader('yaml', new YamlFileLoader());
         $finder = new Finder();
         $extension = $locale.'.yml';
 
         try {
-
             $finder->files()->in(__DIR__.'/../../../../plugins');
             $finder->files()->name('*.'.$locale.'.yml');
+            $cacheKey = 'oldPlugins_translations_'.$finder->count();
+            if ($this->cacheService->contains($cacheKey)) {
+                $files = $this->cacheService->fetch($cacheKey);
+            } else {
+                $files = array();
+                foreach ($finder as $file) {
+                    $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
+                    $files[$domain] = $file->getRealpath();
+                }
 
-            foreach ($finder as $file) {
-                $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
-                $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
+                $this->cacheService->save($cacheKey, $files);
+            }
+
+            if (count($files) > 0) {
+                $this->translator->addLoader('yaml', new YamlFileLoader());
+
+                foreach ($files as $key => $file) {
+                    $this->translator->addResource('yaml', $file, $locale, $key);
+                }
             }
 
         } catch (\InvalidArgumentException $exception) {

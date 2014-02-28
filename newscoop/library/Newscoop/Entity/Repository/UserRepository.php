@@ -262,6 +262,20 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         return $users;
     }
 
+    public function findVerifiedUsers($countOnly, $offset, $limit)
+    {
+        if ($countOnly) {
+            $qb = $this->getEntityManager()->createQuery('SELECT COUNT(u.id) FROM Newscoop\Entity\User u JOIN u.attributes a WHERE a.attribute = \'is_verified\' AND a.value = 1');
+            return $qb->getSingleScalarResult();
+        }
+
+        $qb = $this->getEntityManager()->createQuery('SELECT u FROM Newscoop\Entity\User u JOIN u.attributes a WHERE a.attribute = \'is_verified\' AND a.value = 1');
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        return $qb->getResult();
+    }
+
     /**
      * Create query builder for public users
      *

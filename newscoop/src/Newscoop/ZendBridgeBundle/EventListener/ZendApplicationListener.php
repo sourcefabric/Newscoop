@@ -14,9 +14,9 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  * Run zend legacy code (zend router, acl etc...)
  */
 class ZendApplicationListener
-{   
+{
     private $container;
-    
+
     public function __construct($container) {
         $this->container = $container;
         \Zend_Registry::set('container', $this->container);
@@ -29,7 +29,6 @@ class ZendApplicationListener
 
         // don't call Zend Application for profiler.
         if (false === $pos) {
-            
             // init adodb
             require_once __DIR__ . '/../../../../db_connect.php';
 

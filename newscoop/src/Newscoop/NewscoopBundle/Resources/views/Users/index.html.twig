@@ -60,6 +60,15 @@
             <li><a href="#deleted" class="dynatable-filter filter-deleted" data-filter="deleted">{{ 'users.status.deleted'|trans }} (<span>{{ deleted }}</span>)</a></li>
             <li><a href="#active" class="dynatable-filter filter-active" data-filter="active">{{ 'users.status.active'|trans }} (<span>{{ active }}</span>)</a></li>
         </ul>
+
+        <ul id="status-filter" class="filters">
+            <li class="vspace">User Types</li>
+
+            {% for group in userGroups %}
+            <li><input type="checkbox" class="dynatable-user-group" name="user-groups[]" value="{{group.id}}" /> {{ group.name }}</li>
+            {% endfor %}
+        </ul>
+
         <div id="chart"></div>
     </div>
 
@@ -194,6 +203,18 @@
         $('.dynatable-filter').removeClass('active');
         $(this).addClass('active');
         dynatable.queries.add('filter', $(this).data('filter'));
+        dynatable.process();
+    });
+
+    $('.dynatable-user-group').click(function(e){
+        var values = [];
+        $('.dynatable-user-group').each(function(key, el){
+            if ($(el).is(':checked')) {
+                values.push($(el).val());
+            }
+        });
+
+        dynatable.queries.add('user-group', values);
         dynatable.process();
     });
 

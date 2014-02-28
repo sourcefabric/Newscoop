@@ -210,7 +210,17 @@ class Admin_UserController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
-                $this->userService->save($form->getValues(), $user);
+                $values = $form->getValues();
+                $values['attributes'] = array(
+                    'is_verified' => $values['is_verified'],
+                );
+                unset($values['is_verified']);
+
+                $this->userService->save($values, $user);
+
+                $cacheService = \Zend_Registry::get('container')->get('newscoop.cache');
+                $cacheService->getCacheDriver()->deleteAll();
+
                 $this->_helper->flashMessenger($translator->trans("User saved", array(), 'users'));
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
