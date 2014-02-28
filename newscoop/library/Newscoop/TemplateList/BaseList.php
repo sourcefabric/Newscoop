@@ -22,14 +22,14 @@ abstract class BaseList
      *
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * The name of the list
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The start page number from which to generate the list.
@@ -50,7 +50,7 @@ abstract class BaseList
      *
      * @var bool
      */
-    private $hasNextResults;
+    protected $hasNextResults;
 
     /**
      * The number of columns (for generating tables)
@@ -64,7 +64,7 @@ abstract class BaseList
      *
      * @var array
      */
-    private $constraints;
+    protected $constraints;
 
     /**
      * The clean array of parameters

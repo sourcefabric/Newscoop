@@ -29,7 +29,7 @@ class AuthorType
     /**
      * @ORM\Column(type="string", unique=true, name="type")
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
@@ -43,7 +43,7 @@ class AuthorType
      *  )
      * @var Doctrine\Common\Collections\ArrayCollection
      */
-    private $authors;
+    protected $authors;
 
     private function __construct()
     {

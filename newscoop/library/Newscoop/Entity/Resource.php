@@ -33,12 +33,12 @@ class Resource extends AbstractEntity
      * @ORM\Column(name="name", nullable=FALSE)
      * @var string
      */
-    private $name;
+    protected $name;
     /**
      * @ORM\Column(name="path", unique=TRUE, nullable=FALSE)
      * @var string
      */
-    private $path;
+    protected $path;
 
     /* --------------------------------------------------------------- */
 

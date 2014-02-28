@@ -22,7 +22,7 @@ class Country
      * @ORM\Column(type="string", name="Code")
      * @var string
      */
-    private $code;
+    protected $code;
 
     /**
      * @ORM\Id
@@ -30,13 +30,13 @@ class Country
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(type="string", name="Name")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Get code

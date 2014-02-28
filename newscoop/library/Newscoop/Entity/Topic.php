@@ -22,7 +22,7 @@ class Topic
      * @var int
      * @todo add reference to topic
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Id
@@ -30,19 +30,19 @@ class Topic
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Link to topic articles resource
      * @var string
      */
-    private $articlesLink;
+    protected $articlesLink;
 
     /**
      * @param int $id

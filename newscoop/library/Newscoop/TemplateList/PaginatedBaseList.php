@@ -21,22 +21,22 @@ abstract class PaginatedBaseList extends BaseList
     /**
      * @var string
      */
-    private $pageParameterName;
+    protected $pageParameterName;
 
     /**
      * @var int
      */
-    private $pageNumber = 1;
+    protected $pageNumber = 1;
 
     /**
      * @var \Newscoop\Services\TemplatesService
      */
-    private $paginatorService;
+    protected $paginatorService;
 
     /**
      * @var \Newscoop\Services\CacheService
      */
-    private $cacheService;
+    protected $cacheService;
 
     /**
      * @param \Newscoop\Criteria                  $criteria
@@ -84,14 +84,16 @@ abstract class PaginatedBaseList extends BaseList
         $cacheId = array($this->getCacheKey(), $this->getPageNumber());
 
         if ($this->cacheService->contains($cacheId)) {
-            $this->pagination = $this->cacheService->fetch($cacheId);
+            $list = $this->cacheService->fetch($cacheId);
+
+            return $list;
         } else {
             $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);
-            $this->cacheService->save($cacheId, $this->pagination);
-        }
+            $list->count = $this->pagination->getTotalItemCount();
+            $list->items = $this->pagination->getItems();
 
-        $list->count = $this->pagination->getTotalItemCount();
-        $list->items = $this->pagination->getItems();
+            $this->cacheService->save($cacheId, $list);
+        }
 
         return $list;
     }

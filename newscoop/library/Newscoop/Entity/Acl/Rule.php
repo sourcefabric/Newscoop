@@ -25,34 +25,34 @@ class Rule implements RuleInterface
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column
      * @var string
      */
-    private $type;
+    protected $type;
 
     /** @var array */
-    private $types = array(self::ALLOW, self::DENY);
+    protected $types = array(self::ALLOW, self::DENY);
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Acl\Role", inversedBy="rules")
      * @var Newscoop\Entity\Acl\Role
      */
-    private $role;
+    protected $role;
 
     /**
      * @ORM\Column(length=80)
      * @var string
      */
-    private $resource;
+    protected $resource;
 
     /**
      * @ORM\Column(length=80)
      * @var string
      */
-    private $action;
+    protected $action;
 
     /**
      * Get id

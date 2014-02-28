@@ -21,25 +21,25 @@ class Feed
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string")
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="string")
      * @var string
      */
-    private $mode;
+    protected $mode;
 
     /**
      * @param string $title

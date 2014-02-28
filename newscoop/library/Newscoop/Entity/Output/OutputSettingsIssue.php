@@ -34,14 +34,14 @@ class OutputSettingsIssue extends OutputSettings
 	 * @ORM\JoinColumn(name="fk_issue_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Issue
 	 */
-	private $issue;
+	protected $issue;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
 	 * @ORM\JoinColumn(name="fk_theme_path_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Resource
 	 */
-	private $themePath;
+	protected $themePath;
 
 	/* --------------------------------------------------------------- */
 

@@ -23,31 +23,31 @@ class Author
      * @ORM\Column(name="id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=True)
      * @var string
      */
-    private $first_name;
+    protected $first_name;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User", mappedBy="author")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=True)
      * @var string
      */
-    private $last_name;
+    protected $last_name;
 
     /**
      * @ORM\Column(type="string", length=244, nullable=True)
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\AuthorType")
@@ -61,37 +61,37 @@ class Author
      *  )
      * @var Doctrine\Common\Collections\ArrayCollection
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="string", length=244, nullable=True)
      * @var string
      */
-    private $skype;
+    protected $skype;
 
     /**
      * @ORM\Column(type="string", length=244, nullable=True)
      * @var string
      */
-    private $jabber;
+    protected $jabber;
 
     /**
      * @ORM\Column(type="string", length=244, nullable=True)
      * @var string
      */
-    private $aim;
+    protected $aim;
 
     /**
      * @ORM\Column(type="string", nullable=True, name="biography")
      * @var string
      */
-    private $biography;
+    protected $biography;
 
     /**
      * @ORM\Column(type="string", length=80, nullable=True)
      * @var string
      */
-    private $image;
+    protected $image;
 
     /**
      * @param string $firstName

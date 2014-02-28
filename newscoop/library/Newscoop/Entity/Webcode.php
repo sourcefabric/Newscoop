@@ -22,7 +22,7 @@ class Webcode
      * @ORM\Column(type="string", length=80)
      * @var string
      */
-    private $webcode;
+    protected $webcode;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", cascade={"persist"})
@@ -31,7 +31,7 @@ class Webcode
      *      @ORM\JoinColumn(name="language_id", referencedColumnName="IdLanguage")
      *  })
      */
-    private $article;
+    protected $article;
 
     /**
      * @param string $webcode

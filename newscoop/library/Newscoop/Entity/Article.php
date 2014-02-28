@@ -35,184 +35,184 @@ class Article implements DocumentInterface
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
      * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
      */
-    private $issue;
+    protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section
      */
-    private $section;
+    protected $section;
 
     /**
      * @ORM\Column(name="NrSection", nullable=True)
      * @var int
      */
-    private $sectionId;
+    protected $sectionId;
 
     /**
      * @ORM\Column(name="NrIssue", nullable=True)
      * @var int
      */
-    private $issueId;
+    protected $issueId;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $creator;
+    protected $creator;
 
     /**
      * Article fields used by Newscoop API
      * @var array
      */
-    private $fields;
+    protected $fields;
 
     /**
      * Article Authors for Newscoop\Gimme
      * @var object
      */
-    private $articleAuthors;
+    protected $articleAuthors;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="Number")
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @ORM\Column(name="Name", nullable=True)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="ShortName", nullable=True)
      * @var string
      */
-    private $shortName;
+    protected $shortName;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated", nullable=true)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="datetime", name="indexed", nullable=true)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
 
     /**
      * @ORM\Column(name="comments_enabled", nullable=True)
      * @var int
      */
-    private $comments_enabled;
+    protected $comments_enabled;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
      * @var Newscoop\Entity\Comments
      */
-    private $comments;
+    protected $comments;
 
     /**
      * @var int
      */
-    private $comments_count;
+    protected $comments_count;
 
     /**
      * @var int
      */
-    private $recommended_comments_count;
+    protected $recommended_comments_count;
 
     /**
      * @var string
      */
-    private $comments_link;
+    protected $comments_link;
 
     /**
      * @ORM\Column(name="Type", nullable=True)
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="datetime", name="PublishDate", nullable=true)
      * @var DateTime
      */
-    private $published;
+    protected $published;
 
     /**
      * @ORM\Column(name="Published", nullable=true)
      * @var string
      */
-    private $workflowStatus;
+    protected $workflowStatus;
 
     /**
      * @ORM\Column(type="integer", name="ArticleOrder", nullable=True)
      * @var int
      */
-    private $articleOrder;
+    protected $articleOrder;
 
     /**
      * @ORM\Column(name="Public", nullable=True)
      * @var string
      */
-    private $public;
+    protected $public;
 
     /**
      * @ORM\Column(name="OnFrontPage", nullable=True)
      * @var string
      */
-    private $onFrontPage;
+    protected $onFrontPage;
 
     /**
      * @ORM\Column(name="OnSection", nullable=True)
      * @var string
      */
-    private $onSection;
+    protected $onSection;
 
     /**
      * @ORM\Column(type="datetime", name="UploadDate", nullable=True)
      * @var DateTime
      */
-    private $uploaded;
+    protected $uploaded;
 
     /**
      * @ORM\Column(name="Keywords", nullable=True)
      * @var string
      */
-    private $keywords;
+    protected $keywords;
 
     /**
      * @ORM\Column(name="IsIndexed", nullable=True)
      * @var string
      */
-    private $isIndexed;
+    protected $isIndexed;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $lockUser;
+    protected $lockUser;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
@@ -226,7 +226,7 @@ class Article implements DocumentInterface
      *  )
      * @var Newscoop\Entity\Topic
      */
-    private $topics;
+    protected $topics;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
@@ -240,25 +240,25 @@ class Article implements DocumentInterface
      *  )
      * @var Newscoop\Entity\Playlist
      */
-    private $playlists;
+    protected $playlists;
 
     /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
-    private $lockTime;
+    protected $lockTime;
 
     /**
      * @ORM\Column(type="integer", name="comments_locked", nullable=True)
      * @var int
      */
-    private $commentsLocked;
+    protected $commentsLocked;
 
     /**
      * @ORM\Column(type="integer", name="object_id", nullable=True)
      * @var int
      */
-    private $objectId;
+    protected $objectId;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Package\Package")
@@ -272,32 +272,32 @@ class Article implements DocumentInterface
      *  )
      * @var Newscoop\Package\Package
      */
-    private $packages;
+    protected $packages;
 
     /**
      * Article renditions used by Newscoop API
      * @var array
      */
-    private $renditions;
+    protected $renditions;
 
     /**
      * Article translations used by Newscoop API
      * @var array
      */
-    private $translations;
+    protected $translations;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
      * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
      * @var Newscoop\Entity\Webcode
      */
-    private $webcode;
+    protected $webcode;
 
     /**
      * Article reads number used by Newscoop API
      * @var int
      */
-    private $reads;
+    protected $reads;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
@@ -312,7 +312,7 @@ class Article implements DocumentInterface
      * )
      * @var Doctrine\Common\Collections\Collection
      */
-    private $authors;
+    protected $authors;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Attachment")
@@ -326,7 +326,7 @@ class Article implements DocumentInterface
      *  )
      * @var Doctrine\Common\Collections\ArrayCollection
      */
-    private $attachments;
+    protected $attachments;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Image\LocalImage")
@@ -336,7 +336,7 @@ class Article implements DocumentInterface
      * )
      * @var Doctrine\Common\Collections\ArrayCollection
      */
-    private $images;
+    protected $images;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
@@ -350,12 +350,12 @@ class Article implements DocumentInterface
      *  )
      * @var Newscoop\Entity\Snippet
      */
-    private $snippets;
+    protected $snippets;
 
     /**
      * @var ArticleData
      */
-    private $data;
+    protected $data;
 
     /**
      * @param int $number

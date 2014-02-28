@@ -33,7 +33,7 @@ class OutputSettingsSection extends OutputSettings
      * @ORM\JoinColumn(name="fk_section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
-    private $section;
+    protected $section;
 
     /* --------------------------------------------------------------- */
 

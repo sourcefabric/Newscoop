@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository,
 class ThemeRepository extends EntityRepository
 {
     /** @var Newscoop\Theme\Loader\Loader */
-    private $loader;
+    protected $loader;
 
     /**
      * Set theme loader

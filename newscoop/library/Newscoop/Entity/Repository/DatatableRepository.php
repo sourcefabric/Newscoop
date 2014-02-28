@@ -15,13 +15,13 @@ use Doctrine\ORM\EntityManager;
 class DatatableRepository
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var Doctrine\ORM\EntityRepository */
-    private $repository;
+    protected $repository;
 
     /** @var string */
-    private $entityName;
+    protected $entityName;
 
     /**
      * @param Doctrine\ORM\EntityRepository $repository
