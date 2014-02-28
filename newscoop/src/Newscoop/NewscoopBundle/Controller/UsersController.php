@@ -25,16 +25,19 @@ class UsersController extends Controller
     {
         $userService = $this->get('user');
         $em = $this->get('em');
+
         $registered = $userService->countBy(array('status' => User::STATUS_ACTIVE));
         $pending = $userService->countBy(array('status' => User::STATUS_INACTIVE));
         $deleted = $userService->countBy(array('status' => User::STATUS_DELETED));
         $active = $em->getRepository('Newscoop\Entity\User')->getLatelyLoggedInUsers(14, true)->getSingleScalarResult();
+        $userGroups = $em->getRepository('Newscoop\Entity\User\Group')->findAll();
 
         return array(
             'registered' => $registered,
             'pending' => $pending,
             'deleted' => $deleted,
             'active' => $active,
+            'userGroups' => $userGroups,
             'active_logins' => array(
                 'newscoop' => $em->getRepository('Newscoop\Entity\User')->getNewscoopLoginCount(),
                 'external' => $em->getRepository('Newscoop\Entity\User')->getExternalLoginCount(),
@@ -50,21 +53,36 @@ class UsersController extends Controller
     {
         $em = $this->get('em');
         $zendRouter = $this->get('zend_router');
+        $userService = $this->get('user');
+        $cacheService = $this->get('newscoop.cache');
 
         $criteria = $this->processRequest($request);
         $criteria->is_public = null;
-        $users = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria);
+        $registered = $userService->countBy(array('status' => User::STATUS_ACTIVE));
+        $pending = $userService->countBy(array('status' => User::STATUS_INACTIVE));
 
-        $pocessed = array();
-        foreach ($users as $user) {
-            $pocessed[] = $this->processUser($user, $zendRouter);
+        $cacheKey = array('users__'.md5(serialize($criteria)), $registered, $pending);
+
+        if ($cacheService->contains($cacheKey)) {
+            $responseArray =  $cacheService->fetch($cacheKey);
+        } else {
+            $users = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria);
+
+            $pocessed = array();
+            foreach ($users as $user) {
+                $pocessed[] = $this->processUser($user, $zendRouter);
+            }
+
+            $responseArray = array(
+                'records' => $pocessed,
+                'queryRecordCount' => $users->count,
+                'totalRecordCount'=> count($users->items)
+            );
+
+            $cacheService->save($cacheKey, $responseArray);
         }
 
-        return new JsonResponse(array(
-            'records' => $pocessed,
-            'queryRecordCount' => $users->count,
-            'totalRecordCount'=> count($users->items)
-        ));
+        return new JsonResponse($responseArray);
     }
 
     private function processRequest($request)
@@ -99,6 +117,12 @@ class UsersController extends Controller
 
                 if ($queries['filter'] == 'deleted') {
                     $criteria->status = User::STATUS_DELETED;
+                }
+            }
+
+            if (array_key_exists('user-group', $queries)) {
+                foreach ($queries['user-group'] as $key => $value) {
+                    $criteria->groups[$key] = $value;
                 }
             }
         }

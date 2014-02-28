@@ -7,8 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\UserType;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\UserType;
 
 /**
  * User type service
