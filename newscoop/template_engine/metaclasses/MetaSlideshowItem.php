@@ -55,6 +55,8 @@ final class MetaSlideshowItem
                 ), 'image', true, false),
                 'width' => $thumbnail->width,
                 'height' => $thumbnail->height,
+                'photographer' => $item->getImage()->getPhotographer(),
+                'photographer_url' => $item->getImage()->getPhotographerUrl(),
                 'original' => $item->getImage()->getPath(),
                 'id' => $image->getId()
             );

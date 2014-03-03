@@ -157,6 +157,10 @@ echo $breadcrumbs;
     ?>
 	</TD>
 </TR>
+<tr>
+    <td><?php echo $translator->trans('Photographer URL', array(), 'media_archive'); ?>:</td>
+    <td><input type="text" name="f_photographer_url" class="input_text" value="<?php echo $this->view->escape($imageObj->getPhotographerUrl()); ?>" size="32" title="<?php echo $this->view->escape($translator->trans('Add website url starting with http://', array(), 'media_archive')); ?>" /></td>
+</tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Place"); ?>:</TD>
 	<TD align="left">

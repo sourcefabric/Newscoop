@@ -110,6 +110,14 @@ if ($f_publication_id > 0) {
 		} ?>
 	</TD>
 </TR>
+<tr>
+    <td><?php echo $translator->trans('Photographer URL', array(), 'media_archive'); ?>:</td>
+    <td><?php if ($g_user->hasPermission('ChangeImage')) { ?>
+    	<input type="text" name="f_photographer_url" class="input_text" value="<?php echo $this->view->escape($imageObj->getPhotographerUrl()); ?>" size="32" title="<?php echo $this->view->escape($translator->trans('Add website url starting with http://', array(), 'media_archive')); ?>" /></td>
+    	<?php } else {
+			echo htmlspecialchars($imageObj->getPhotographerUrl());
+		} ?>
+</tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php echo $translator->trans('Place'); ?>:</TD>
 	<TD>
