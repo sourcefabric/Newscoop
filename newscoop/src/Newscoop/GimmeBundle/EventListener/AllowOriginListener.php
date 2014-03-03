@@ -44,7 +44,7 @@ class AllowOriginListener
             return false;
         }
 
-        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, PATCH, OPTIONS');
+        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, UNLINK, PATCH, OPTIONS');
 
         if (in_array('*', $alowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
