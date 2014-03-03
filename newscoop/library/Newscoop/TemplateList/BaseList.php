@@ -178,21 +178,21 @@ abstract class BaseList
      */
     protected function convertConstraints()
     {
-        $perametersOperators = array();
+        if (!is_array($this->criteria->perametersOperators)) {
+            $this->criteria->perametersOperators = array();
+        }
+
         $this->constraints = array_chunk($this->constraints, 3, true);
         foreach ($this->constraints as $constraint) {
             if (count($constraint) == 3) {
                 foreach ($this->criteria as $key => $value) {
                     if ($key == $constraint[0]) {
-                        $perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
+                        $this->criteria->perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
                         $this->criteria->$key = $constraint[2];
                     }
                 }
             }
         }
-
-        // save constraints operators into criteria objects
-        $this->criteria->perametersOperators = $perametersOperators;
     }
 
     /**

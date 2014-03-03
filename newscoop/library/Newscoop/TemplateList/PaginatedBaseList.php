@@ -81,7 +81,9 @@ abstract class PaginatedBaseList extends BaseList
             $pageNumber = $this->pageNumber;
         }
 
-        $cacheId = array($this->getCacheKey(), $this->getPageNumber());
+        $cacheId = $this->cacheService->getCacheKey(array(
+            $this->getCacheKey(), $this->getPageNumber()
+        ), $this->getName());
 
         if ($this->cacheService->contains($cacheId)) {
             $this->pagination = $this->cacheService->fetch($cacheId);
