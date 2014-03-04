@@ -31,6 +31,7 @@ class Image extends DatabaseObject
 		'UploadedByUser',
 		'LastModified',
 		'TimeCreated',
+        'photographer_url',
 		'Source',
 		'Status'
 	);
@@ -195,6 +196,15 @@ class Image extends DatabaseObject
 		return strip_tags($this->m_data['Photographer']);
 	} // fn getPhotographer
 
+    /**
+     * Get photographer url
+     *
+     * @return string
+     */
+    public function getPhotographerUrl()
+    {
+        return (string) $this->m_data['photographer_url'];
+    }
 
 	/**
 	 * @return string
@@ -973,6 +983,7 @@ class Image extends DatabaseObject
 		$template['content_type'] = $this->getContentType();
 		$template['image_url'] = $this->getImageUrl();
 		$template['thumbnail_url'] = $this->getThumbnailUrl();
+        $template['photographer_url'] = $this->getPhotographerUrl();
 		return $template;
 	} // fn toTemplate
 
