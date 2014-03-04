@@ -24,98 +24,98 @@ class Picture
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="Photographer")
      * @var string
      */
-    private $photographer;
+    protected $photographer;
 
     /**
      * @ORM\Column(name="Description")
      * @var string
      */
-    private $headline;
+    protected $headline;
 
     /**
      * @ORM\Column(name="Caption", nullable=True)
      * @var string
      */
-    private $caption;
+    protected $caption;
 
     /**
      * @ORM\Column(name="Source")
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * @ORM\Column(type="datetime", name="Date", nullable=True)
      * @var DateTime
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(name="Place", nullable=True)
      * @var string
      */
-    private $place;
+    protected $place;
 
     /**
      * @ORM\Column(name="ContentType", nullable=True)
      * @var string
      */
-    private $contentType;
+    protected $contentType;
 
     /**
      * @ORM\Column(name="Location", nullable=True)
      * @var string
      */
-    private $location;
+    protected $location;
 
     /**
      * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @ORM\Column(name="ThumbnailFileName", nullable=True)
      * @var string
      */
-    private $thumbnailFileName;
+    protected $thumbnailFileName;
 
     /**
      * @ORM\Column(name="ImageFileName", nullable=True)
      * @var string
      */
-    private $imageFileName;
+    protected $imageFileName;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="UploadedByUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $uploadedBy;
+    protected $uploadedBy;
 
     /**
      * @ORM\Column(type="datetime", name="TimeCreated", nullable=True)
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime", name="LastModified", nullable=True)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(name="Status", nullable=True)
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * Get headline

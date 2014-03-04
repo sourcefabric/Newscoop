@@ -24,41 +24,41 @@ class ArticleAuthor
      *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
      *  })
      */
-    private $article;
+    protected $article;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="fk_article_number")
      * @var int
      */
-    private $articleNumber;
+    protected $articleNumber;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="fk_language_id")
      * @var int
      */
-    private $languageId;
+    protected $languageId;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Author")
      * @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
      * @var Newscoop\Entity\Author
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\AuthorType")
      * @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
      * @var Newscoop\Entity\AuthorType
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="`order`")
      * @var int
      */
-    private $order;
+    protected $order;
 
     /**
      * @param int $articleNumber

@@ -24,20 +24,20 @@ class UserAttribute
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $attribute;
+    protected $attribute;
 
     /**
      * @ORM\Column(type="string", length=300, nullable=True)
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * @param string $name

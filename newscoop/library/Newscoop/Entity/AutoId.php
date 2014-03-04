@@ -20,5 +20,5 @@ class AutoId
      * @ORM\Column(type="integer", name="ArticleId")
      * @var int
      */
-    private $articleId;
+    protected $articleId;
 }

@@ -48,38 +48,38 @@ class Acceptance
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $forum;
+    protected $forum;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $for_column;
+    protected $for_column;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @var int
      */
-    private $search;
+    protected $search;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $search_type;
+    protected $search_type;
 
 
     /**

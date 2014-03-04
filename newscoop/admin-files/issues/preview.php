@@ -99,10 +99,10 @@ $websiteURL = $scheme.$siteAlias->getName();
 $accessParams = "";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
-	$url = "$websiteURL"  . $Campsite['SUBDIR'] . "/tpl/" . $templateObj->getName()
+	$url = "$websiteURL"  . "/tpl/" . $templateObj->getName()
 	. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {
-	$url = "$websiteURL" . $Campsite['SUBDIR'] . '/' . $languageObj->getCode()
+	$url = "$websiteURL" . '/' . $languageObj->getCode()
 	. "/" . $issueObj->getUrlName() . "?$accessParams";
 }
 

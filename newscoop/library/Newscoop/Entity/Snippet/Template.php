@@ -23,49 +23,49 @@ class Template
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="Name", type="string")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="Controller", type="string")
      * @var string
      */
-    private $controller;
+    protected $controller;
 
     /**
      * @ORM\Column(name="Parameters", type="text")
      * @var text
      */
-    private $parameters;
+    protected $parameters;
 
     /**
      * @ORM\Column(name="Template", type="text")
      * @var text
      */
-    private $template;
+    protected $template;
 
     /**
      * @ORM\Column(name="Favourite", type="boolean")
      * @var boolean
      */
-    private $favourite;
+    protected $favourite;
 
     /**
      * @ORM\Column(name="IconInactive", type="text")
      * @var text base64 encoded image
      */
-    private $iconInactive;
+    protected $iconInactive;
 
     /**
      * @ORM\Column(name="IconActive", type="text")
      * @var text base64 encoded image
      */
-    private $iconActive;
+    protected $iconActive;
 
     /**
      * Getter for id

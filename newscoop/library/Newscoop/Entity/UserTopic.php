@@ -20,14 +20,14 @@ class UserTopic
      * @ORM\Column(type="integer", name="topic_id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Topic")
@@ -37,7 +37,7 @@ class UserTopic
      *  })
      * @var Topic
      */
-    private $topic;
+    protected $topic;
 
     /**
      * @param User $user

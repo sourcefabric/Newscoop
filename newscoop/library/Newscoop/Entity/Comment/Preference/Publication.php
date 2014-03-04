@@ -21,61 +21,61 @@ class Publication
      * @ORM\JoinColumn(name="id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="enabled")
      * @var bool
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @ORM\Column(name="article_default_enabled")
      * @var bool
      */
-    private $article_default_enabled;
+    protected $article_default_enabled;
 
     /**
      * @ORM\Column(name="subscribers_moderated")
      * @var bool
      */
-    private $subscribers_moderated;
+    protected $subscribers_moderated;
 
     /**
      * @ORM\Column(name="public_moderated")
      * @var bool
      */
-    private $public_moderated;
+    protected $public_moderated;
 
     /**
      * @ORM\Column(name="public_enabled")
      * @var bool
      */
-    private $public_enabled;
+    protected $public_enabled;
 
     /**
      * @ORM\Column(name="captcha_enabled")
      * @var bool
      */
-    private $captcha_enabled;
+    protected $captcha_enabled;
 
     /**
      * @ORM\Column(name="spam_blocking_enabled")
      * @var bool
      */
-    private $spam_blocking_enabled;
+    protected $spam_blocking_enabled;
 
     /**
      * @ORM\Column(name="moderator_to")
      * @var string
      */
-    private $moderator_to;
+    protected $moderator_to;
 
     /**
      * @ORM\Column(name="moderator_from")
      * @var string
      */
-    private $moderator_from;
+    protected $moderator_from;
 
     /**
      * Setting the the id

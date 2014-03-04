@@ -22,26 +22,26 @@ class Article
      * @ORM\Column(name="Number", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(name="comments_enabled")
      * @var int
      */
-    private $enabled;
+    protected $enabled;
 
     /**
      * @ORM\Column(name="comments_locked")
      * @var int
      */
-    private $locked;
+    protected $locked;
 
     /**
      * Set article id

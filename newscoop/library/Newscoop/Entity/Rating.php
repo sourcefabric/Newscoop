@@ -29,31 +29,31 @@ class Rating extends AbstractEntity
      * @ORM\Column(type="integer", name="article_number")
      * @var int
      */
-    private $articleId;
+    protected $articleId;
 
     /**
      * @ORM\Column(type="integer", name="user_id")
      * @var int
      */
-    private $userId;
+    protected $userId;
 
     /**
      * @ORM\Column(type="integer", name="rating_score")
      * @var int
      */
-    private $ratingScore;
+    protected $ratingScore;
 
     /**
      * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
-    private $timeCreated;
+    protected $timeCreated;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
-    private $timeUpdated;
+    protected $timeUpdated;
 
     /**
      * @return int

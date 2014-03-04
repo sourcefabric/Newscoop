@@ -32,13 +32,13 @@ class Playlist extends AbstractEntity
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
-    private $articles;
+    protected $articles;
 
     /**
      * Link to topic articles resource
      * @var string
      */
-    private $articlesLink;
+    protected $articlesLink;
     
     /**
      * Set link to topic articles resource
