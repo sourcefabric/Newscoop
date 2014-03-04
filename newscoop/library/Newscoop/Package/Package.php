@@ -270,4 +270,28 @@ class Package
             'id' => $this->getId()
         ));
     }
+
+    /**
+     * Gets the value of articles.
+     *
+     * @return array
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
+    /**
+     * Sets the value of articles.
+     *
+     * @param array $articles the articles
+     *
+     * @return self
+     */
+    public function setArticles(array $articles)
+    {
+        $this->articles = $articles;
+
+        return $this;
+    }
 }

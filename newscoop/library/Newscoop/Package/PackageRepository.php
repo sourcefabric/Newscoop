@@ -7,6 +7,8 @@
 
 namespace Newscoop\Package;
 
+use Newscoop\Criteria\SlideshowCriteria;
+
 /**
  * Package repository
  */
@@ -46,6 +48,40 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $packages;
+    }
+
+    /**
+     * Get list for given criteria
+     *
+     * @param Newscoop\Criteria\SlideshowCriteria $criteria
+     *
+     * @return Newscoop\ListResult
+     */
+    public function getListByCriteria(SlideshowCriteria $criteria)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p, i, a, ii')
+            ->leftJoin('p.items', 'i')
+            ->leftJoin('p.articles', 'a')
+            ->leftJoin('i.image', 'ii');
+
+
+        foreach ($criteria->perametersOperators as $key => $operator) {
+            $qb->andWhere('p.'.$key.' '.$operator.' :'.$key)
+                ->setParameter($key, $criteria->$key);
+        }
+
+        $metadata = $this->getClassMetadata();
+        foreach ($criteria->orderBy as $key => $order) {
+            if (array_key_exists($key, $metadata->columnNames)) {
+                $key = 'p.' . $key;
+            }
+
+            $qb->orderBy($key, $order);
+        }
+        $query = $qb->getQuery();
+
+        return $query;
     }
 
     /**

@@ -265,10 +265,10 @@ class Item
     {
         if ($this->videoUrl) {
             return 'video';
-        } else if ($this->image){
+        } elseif ($this->image) {
             return 'image';
         }
-        
+
         return null;
     }
 
