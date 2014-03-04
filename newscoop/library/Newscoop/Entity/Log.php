@@ -20,35 +20,35 @@ class Log
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="integer", name="fk_event_id")
      * @var int
      */
-    private $eventId;
+    protected $eventId;
 
     /**
      * @ORM\Column(type="integer", name="fk_user_id")
      * @var int
      */
-    private $userId;
+    protected $userId;
 
     /**
      * @ORM\Column(name="text")
      * @var int
      */
-    private $message;
+    protected $message;
 
     /**
      * @ORM\Column(name="user_ip")
      * @var string
      */
-    private $userIp;
+    protected $userIp;
 }

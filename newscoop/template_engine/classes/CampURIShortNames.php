@@ -98,7 +98,7 @@ class CampURIShortNames extends CampURI
     {
         $uriString = null;
         if (!is_null($this->m_language) && $this->m_language->defined()) {
-            $uriString = $this->m_config->getSetting('SUBDIR') . '/' . $this->m_language->code . '/';
+            $uriString = '/' . $this->m_language->code . '/';
         }
 
         return $uriString;
@@ -513,7 +513,7 @@ class CampURIShortNames extends CampURI
         }
 
         if (!is_null($this->m_language) && $this->m_language->defined() && is_null($this->m_buildPath)) {
-            $this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/' . $this->m_language->code . '/';
+            $this->m_buildPath = '/' . $this->m_language->code . '/';
             if (!is_null($this->m_issue) && $this->m_issue->defined()) {
                 $this->m_buildPath .= $this->m_issue->url_name . '/';
                 if (!is_null($this->m_section) && $this->m_section->defined()) {

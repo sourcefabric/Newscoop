@@ -64,7 +64,7 @@ class ArticleDatetime extends AbstractEntity
      * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
      * @var int
      */
-    private $articleId;
+    protected $articleId;
 
     /**
      * @ORM\Column( type="string", name="article_type" )

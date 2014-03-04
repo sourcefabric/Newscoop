@@ -60,24 +60,24 @@ class Notification
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="content")
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $type;
+    protected $type;
     /**
      * @ORM\Column(type="integer")
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * Get id

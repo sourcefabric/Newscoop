@@ -34,59 +34,59 @@ class Section
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="sections")
      * @ORM\JoinColumn(name="fk_issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
-    private $issue;
+    protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(type="integer", name="Number")
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @ORM\Column(name="Name")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="ShortName", nullable=True)
      * @var string
      */
-    private $shortName;
+    protected $shortName;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="SectionTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    private $template;
+    protected $template;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="ArticleTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    private $articleTemplate;
+    protected $articleTemplate;
 
     /**
      * Link to topic articles resource
      * @var string
      */
-    private $articlesLink;
+    protected $articlesLink;
 
     /**
      * Getter for id

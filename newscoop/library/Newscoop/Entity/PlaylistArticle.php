@@ -34,14 +34,14 @@ class PlaylistArticle extends AbstractEntity
 	 * @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
      * @var Newscoop\Entity\Playlist
      */
-    private $playlist;
+    protected $playlist;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
 	 * @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
-    private $article;
+    protected $article;
 
     /**
      * set playlist

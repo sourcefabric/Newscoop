@@ -26,20 +26,20 @@ class Translation
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id", nullable=false)
      * @var \Newscoop\Entity\Language
      */
-    private $language = 0;
+    protected $language = 0;
 
     /**
      * @ORM\Column(name="translation_text", type="text", nullable=true)
      * @var integer
      */
-    private $translationText;
+    protected $translationText;
 
     /**
      * Gets the value of id.

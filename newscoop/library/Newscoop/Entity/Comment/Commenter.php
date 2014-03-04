@@ -24,51 +24,51 @@ class Commenter
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", inversedBy="commenters")
      * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(length=100)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(length=100)
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @ORM\Column(length=255)
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @ORM\Column(length=39)
      * @var int
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $time_created;
+    protected $time_created;
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
      */
-    private $comments;
+    protected $comments;
 
     public function __construct()
     {

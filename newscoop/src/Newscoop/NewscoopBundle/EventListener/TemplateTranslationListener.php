@@ -33,13 +33,13 @@ class TemplateTranslationListener
 
         $request = $event->getRequest();
         $locale = $request->getLocale();
-        $this->translator->addLoader('yaml', new YamlFileLoader());
-        $finder = new Finder();
         $filesystem = new Filesystem();
-        $extension = $locale.'.yml';
-        $dir = $_SERVER['DOCUMENT_ROOT'].'/themes/'.\CampSite::GetURIInstance()->getThemePath().'translations';
+        $dir = __DIR__.'/../../../../themes/'.\CampSite::GetURIInstance()->getThemePath().'translations';
 
         if ($filesystem->exists($dir)) {
+            $finder = new Finder();
+            $this->translator->addLoader('yaml', new YamlFileLoader());
+            $extension = $locale.'.yml';
             $finder->files()->in($dir);
             $finder->files()->name('*.'.$locale.'.yml');
 

@@ -43,6 +43,7 @@ class BridgeController extends Controller
         }
 
         $front->setParam('bootstrap', $bootstrap);
+        $front->setBaseUrl('/');
         $response = $front->dispatch();
         
         //copy headers

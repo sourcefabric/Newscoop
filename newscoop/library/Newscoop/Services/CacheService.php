@@ -82,11 +82,7 @@ class CacheService
      */
     public function fetch($id)
     {
-        if (is_array($id)) {
-            $id = implode('__', $id);
-        }
-
-        return $this->cacheDriver->fetch($id);
+        return $this->cacheDriver->fetch($this->getCacheKey($id));
     }
 
     /**
@@ -98,11 +94,7 @@ class CacheService
      */
     public function contains($id)
     {
-        if (is_array($id)) {
-            $id = implode('__', $id);
-        }
-
-        return $this->cacheDriver->contains($id);
+        return $this->cacheDriver->contains($this->getCacheKey($id));
     }
 
     /**
@@ -116,11 +108,7 @@ class CacheService
      */
     public function save($id, $data, $lifeTime = 1400)
     {
-        if (is_array($id)) {
-            $id = implode('__', $id);
-        }
-
-        return $this->cacheDriver->save($id, $data, $lifeTime);
+        return $this->cacheDriver->save($this->getCacheKey($id), $data, $lifeTime);
     }
 
     /**
@@ -132,11 +120,36 @@ class CacheService
      */
     public function delete($id)
     {
+        return $this->cacheDriver->delete($this->getCacheKey($id));
+    }
+
+    public function getCacheKey($id, $namespace = null)
+    {
         if (is_array($id)) {
             $id = implode('__', $id);
         }
 
-        return $this->cacheDriver->delete($id);
+        if ($namespace) {
+            $namespace = $this->getNamespace($namespace);
+
+            return $namespace.'__'.$id;
+        }
+
+        return $id;
+    }
+
+    public function getNamespace($namespace)
+    {
+        if ($this->cacheDriver->contains($namespace)) {
+            return $this->cacheDriver->fetch($namespace);
+        }
+
+        return $this->cacheDriver->save($namespace, time());
+    }
+
+    public function clearNamespace($namespace)
+    {
+        $this->cacheDriver->save($namespace, time());
     }
 
     /**

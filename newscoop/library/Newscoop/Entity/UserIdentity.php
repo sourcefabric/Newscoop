@@ -20,21 +20,21 @@ class UserIdentity
      * @ORM\Column(type="string", length=80)
      * @var string
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
      * @var string
      */
-    private $provider_user_id;
+    protected $provider_user_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", fetch="EAGER")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @param string $provider

@@ -948,8 +948,7 @@ abstract class CampURI
         $memberName = "m_$p_property";
         $this->$memberName = $p_value;
         if ($p_property == 'publication') {
-            $subdir = $this->m_config->getSetting('SUBDIR');
-            $this->m_host = str_replace($subdir, '', $this->m_publication->site);
+            $this->m_host = $this->m_publication->site;
         }
         $this->validateCache(false);
         return true;
@@ -1026,10 +1025,10 @@ abstract class CampURI
         			$this->m_buildPath = '';
         			break;
         		}
-        		$this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/themes/' . $this->getThemePath() . $staticFile;
+        		$this->m_buildPath = '/themes/' . $this->getThemePath() . $staticFile;
         		break;
             case 'root_level':
-                $this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/';
+                $this->m_buildPath = '/';
                 if ($p_preview) {
                     $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
                 } else {
@@ -1064,7 +1063,7 @@ abstract class CampURI
                     $articleImage = new ArticleImage($context->article->number, null, $imageNo);
                     $context->image = new MetaImage($articleImage->getImageId());
                 }
-                $this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/get_img';
+                $this->m_buildPath = '/get_img';
                 $this->m_validURI = $context->image->defined();
                 $this->m_buildQueryArray['ImageId'] = $context->image->number;
                 if (!is_null($imageNo)) {

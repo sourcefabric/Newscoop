@@ -30,88 +30,88 @@ class Attachment
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(name="file_name", nullable=true)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="extension", length=50, nullable=true)
      * @var string
      */
-    private $extension;
+    protected $extension;
 
     /**
      * @ORM\Column(name="mime_type", nullable=true)
      * @var string
      */
-    private $mimeType;
+    protected $mimeType;
 
     /**
      * @ORM\Column(name="content_disposition", nullable=true)
      * @var string
      */
-    private $contentDisposition;
+    protected $contentDisposition;
 
     /**
      * @ORM\Column(name="http_charset", length=50, nullable=true)
      * @var string
      */
-    private $httpCharset;
+    protected $httpCharset;
 
     /**
      * @ORM\Column(name="size_in_bytes", type="bigint", nullable=true)
      * @var integer
      */
-    private $sizeInBytes;
+    protected $sizeInBytes;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
      * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true, onDelete="SET NULL")
      * @var Newscoop\Entity\Translation
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id", nullable=true)
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="datetime", name="last_modified", nullable=false)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="datetime", name="time_created", nullable=false)
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(name="Source", nullable=false)
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * @ORM\Column(name="Status", nullable=false)
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\PreUpdate

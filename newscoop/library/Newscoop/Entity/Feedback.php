@@ -24,28 +24,28 @@ class Feedback
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
     
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
     
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
-    private $section;
+    protected $section;
     
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
     
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
@@ -55,43 +55,43 @@ class Feedback
      * })
      * @var Newscoop\Entity\Article
      */
-    private $article;
+    protected $article;
     
     /**
      * @ORM\Column(length=2048)
      * @var text
      */
-    private $message;
+    protected $message;
     
     /**
      * @ORM\Column(length=128)
      * @var string
      */
-    private $url;
+    protected $url;
     
     /**
      * @ORM\Column(length=128)
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @ORM\Column(length=2)
      * @var int
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $time_created;
+    protected $time_created;
 
     /*
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $time_updated;
+    protected $time_updated;
 
     /**
      * @var string to code mapper for status
@@ -106,13 +106,13 @@ class Feedback
      * @ORM\Column(length=1)
      * @var int
      */
-    private $attachment_type;
+    protected $attachment_type;
     
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $attachment_id;
+    protected $attachment_id;
 
 
     /**

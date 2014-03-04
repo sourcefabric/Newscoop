@@ -21,27 +21,27 @@ class UserToken
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Id 
      * @ORM\Column(type="string", length=40)
      * @var string
      */
-    private $action;
+    protected $action;
 
     /**
      * @ORM\Id 
      * @ORM\Column(type="string", length=40)
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @param string $action
