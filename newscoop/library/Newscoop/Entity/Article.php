@@ -252,7 +252,7 @@ class Article implements DocumentInterface
      * @ORM\Column(type="integer", name="comments_locked", nullable=True)
      * @var int
      */
-    private $commentsLocked;
+    private $comments_locked;
 
     /**
      * @ORM\Column(type="integer", name="object_id", nullable=True)
