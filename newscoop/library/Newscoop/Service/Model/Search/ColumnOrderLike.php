@@ -17,7 +17,7 @@ class ColumnOrderLike extends ColumnOrder
 {
 
 	/** @var string **/
-	private $like = NULL;
+	protected $like = NULL;
 
 	/* --------------------------------------------------------------- */
 

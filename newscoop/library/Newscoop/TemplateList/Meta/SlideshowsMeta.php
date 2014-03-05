@@ -22,13 +22,19 @@ class SlideshowsMeta extends MetaBase
             'description' => 'getDescription',
             'items' => 'getItems',
             'articles' => 'getArticles',
-            'slug' => 'getSlug'
+            'slug' => 'getSlug',
+            'count' => 'getItemsCount'
         );
     }
 
     public function getItems()
     {
         return $this->dataObject->getItems()->toArray();
+    }
+
+    public function getItemsCount()
+    {
+        return count($this->dataObject->getItems()->toArray());
     }
 
     public function getArticles()

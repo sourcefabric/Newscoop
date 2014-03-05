@@ -8,17 +8,17 @@ namespace Newscoop;
  */
 class ArticleDatetime
 {
-    private $startDate = null;
+    protected $startDate = null;
 
-    private $endDate = null;
+    protected $endDate = null;
 
-    private $startTime = null;
+    protected $startTime = null;
 
-    private $endTime = null;
+    protected $endTime = null;
 
-    private $recurring = null;
+    protected $recurring = null;
 
-    private $spawns = array();
+    protected $spawns = array();
 
     /**
      * @param mixed $format

@@ -15,13 +15,13 @@ class Item
     const TYPE_DIR = 'dir';
 
     /** @var string */
-    private $key;
+    protected $key;
 
     /** @var Newscoop\Storage */
-    private $storage;
+    protected $storage;
 
     /** @var array */
-    private $metadata = array();
+    protected $metadata = array();
 
     /**
      * @param string $key

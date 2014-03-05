@@ -19,10 +19,10 @@ class Search
 {
 
 	/** @var array **/
-	private $allColumns = array();
+	protected $allColumns = array();
 
 	/** @var array **/
-	private $orderBy = array();
+	protected $orderBy = array();
 
 	/* --------------------------------------------------------------- */
 

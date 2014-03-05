@@ -15,7 +15,7 @@ class ColumnOrder extends Column
 {
 
 	/** @var bool **/
-	private $ascending = NULL;
+	protected $ascending = NULL;
 
 	/* --------------------------------------------------------------- */
 	

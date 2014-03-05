@@ -23,13 +23,13 @@ class ResourceId
 	/* --------------------------------------------------------------- */
 
 	/** @var Newscoop\Service\Resource\ResourceId  */
-	private $parent;
+	protected $parent;
 
 	/** @var string  */
-	private $id;
+	protected $id;
 
 	/** @var string  */
-	private $type;
+	protected $type;
 
 	/**
 	 * Construct a resource id for the provided id.

@@ -25,17 +25,17 @@ class ImageService
     /**
      * @var array
      */
-    private $config = array();
+    protected $config = array();
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @var array
      */
-    private $supportedTypes = array(
+    protected $supportedTypes = array(
         'image/jpeg',
         'image/jpg',
         'image/png',

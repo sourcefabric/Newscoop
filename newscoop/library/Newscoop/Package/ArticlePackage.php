@@ -27,7 +27,7 @@ class ArticlePackage
      * @ORM\ManyToOne(targetEntity="Package")
      * @ORM\JoinColumn(name="package_id", referencedColumnName="id")
      */
-    private $package;
+    protected $package;
 
     /**
      * Gets the value of article.

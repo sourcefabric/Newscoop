@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityManager,
 class StatService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

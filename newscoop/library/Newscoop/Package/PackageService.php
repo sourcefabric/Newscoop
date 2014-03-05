@@ -17,17 +17,17 @@ class PackageService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @var Doctrine\ORM\EntityRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @var Newscoop\Image\ImageService
      */
-    private $imageService;
+    protected $imageService;
 
     /**
      * @param Doctrine\ORM\EntityManager $orm

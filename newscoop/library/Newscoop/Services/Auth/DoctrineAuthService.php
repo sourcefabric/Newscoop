@@ -17,19 +17,19 @@ use Doctrine\ORM\EntityManager;
 class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var string */
-    private $email;
+    protected $email;
 
     /** @var string */
-    private $username;
+    protected $username;
 
     /** @var string */
-    private $password;
+    protected $password;
 
     /** @var bool */
-    private $is_admin = FALSE;
+    protected $is_admin = FALSE;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

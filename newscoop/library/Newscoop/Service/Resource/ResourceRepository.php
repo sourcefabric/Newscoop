@@ -38,10 +38,10 @@ class ResourceRepository {
 	/* --------------------------------------------------------------- */
 
 	/** @var array  */
-	private $repositoryProperties = NULL;
+	protected $repositoryProperties = NULL;
 
 	/** @var array  */
-	private $serviceCache = NULL;
+	protected $serviceCache = NULL;
 
 	private function __construct() {}
 

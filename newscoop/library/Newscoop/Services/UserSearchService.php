@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class UserSearchService
 {
     /** @var \Doctrine\Common\Persistence\ObjectManager */
-    private $em;
+    protected $em;
 
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $em

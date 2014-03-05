@@ -16,13 +16,13 @@ namespace Newscoop\Image;
 class ArticleRenditionCollection implements \ArrayAccess
 {
     /** @var int */
-    private $articleNumber;
+    protected $articleNumber;
 
     /** @var array */
-    private $renditions = array();
+    protected $renditions = array();
 
     /** @var Newscoop\Image\ImageInterface */
-    private $defaultImage;
+    protected $defaultImage;
 
     /**
      * @param int $articleNumber

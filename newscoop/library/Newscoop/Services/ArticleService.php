@@ -23,19 +23,19 @@ class ArticleService
      * Entity Manager
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * Article object
      * @var Article
      */
-    private $article;
+    protected $article;
 
     /**
      * Article metadata.
      * @var array
      */
-    private $articleMetadata = array();
+    protected $articleMetadata = array();
 
     /**
      * Construct Article Service

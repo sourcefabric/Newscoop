@@ -47,17 +47,17 @@ class ItemRepository extends EntityRepository
             $qb->andWhere('i.package '.$criteria->perametersOperators['slideshow'].' :package')
                 ->setParameter('package', $criteria->slideshow);
 
-            $criteria->slideshow = null;
+            unset($criteria->perametersOperators['slideshow']);
         }
 
         if ($criteria->type) {
-            if ($criteria->type == 'image' && $criteria->perametersOperators['slideshow'] == '=') {
+            if ($criteria->type == 'image' && $criteria->perametersOperators['type'] == '=') {
                 $qb->andWhere('i.videoUrl IS NULL');
-            } elseif ($criteria->type == 'video' && $criteria->perametersOperators['slideshow'] == '=') {
+            } elseif ($criteria->type == 'video' && $criteria->perametersOperators['type'] == '=') {
                 $qb->andWhere('i.videoUrl IS NOT NULL');
             }
 
-            $criteria->type = null;
+            unset($criteria->perametersOperators['type']);
         }
 
         foreach ($criteria->perametersOperators as $key => $operator) {

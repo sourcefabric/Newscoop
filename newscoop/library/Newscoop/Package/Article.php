@@ -20,14 +20,14 @@ class Article
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToMany(targetEntity="Package", inversedBy="articles")
      * @ORM\JoinTable(name="package_article_package")
      * @var array
      */
-    private $packages;
+    protected $packages;
 
     /**
      * @param int $id

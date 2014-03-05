@@ -17,7 +17,7 @@ class AdoDbStatement
     /**
      * @var Doctrine\DBAL\Statement
      */
-    private $statement;
+    protected $statement;
 
     /**
      * @param Doctrine\DBAL\Statement $statement

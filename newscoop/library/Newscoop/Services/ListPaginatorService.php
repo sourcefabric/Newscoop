@@ -19,7 +19,7 @@ class ListPaginatorService
     /**
      * @var \Knp\Component\Pager\Paginator
      */
-    private $paginator;
+    protected $paginator;
 
 
     /**

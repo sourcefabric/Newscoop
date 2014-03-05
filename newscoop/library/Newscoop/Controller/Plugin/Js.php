@@ -20,13 +20,13 @@ class Js extends Zend_Controller_Plugin_Abstract
      * ! will be incomplete after constructor, full in postDispatch
      * @var string
      */
-    private $_baseUrn = null;
+    protected $_baseUrn = null;
 
     /**
      * physical path, if you don't set this you need to have a 404 handler with .htaccess, like originally designed
      * @var string
      */
-    private $_basePath = null;
+    protected $_basePath = null;
 
     /**
      * @var \Zend_View
@@ -37,13 +37,13 @@ class Js extends Zend_Controller_Plugin_Abstract
      * Js file suffix/extension
      * @var string
      */
-    private $_fileSuffix = "js";
+    protected $_fileSuffix = "js";
 
     /**
      * The shared js file to be included with every request
      * @var string
      */
-    private $_sharedFileName = "_shared";
+    protected $_sharedFileName = "_shared";
 
     /**
      * jsPath is for those who don't have a propper server config in the js folder

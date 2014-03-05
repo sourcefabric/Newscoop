@@ -15,7 +15,7 @@ class ImageSearchService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @param Doctrine\ORM\EntityManager $orm

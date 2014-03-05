@@ -23,32 +23,32 @@ class ArticleImage implements ImageInterface
      * @ORM\GeneratedValue()
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="integer", name="NrArticle")
      * @var int
      */
-    private $articleNumber;
+    protected $articleNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
      * @ORM\JoinColumn(name="IdImage", referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
-    private $image;
+    protected $image;
 
     /**
      * @ORM\Column(type="integer", name="Number", nullable=True)
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @ORM\Column(type="boolean", name="is_default", nullable=True)
      * @var bool
      */
-    private $isDefault;
+    protected $isDefault;
 
     /**
      * @param int $articleNumber

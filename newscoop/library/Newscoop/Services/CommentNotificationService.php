@@ -15,16 +15,16 @@ use Doctrine\ORM\EntityManager;
 class CommentNotificationService
 {
     /** @var Newscoop\Services\EmailService */
-    private $emailService;
+    protected $emailService;
 
     /** @var Newscoop\Services\CommentService */
-    private $commentService;
+    protected $commentService;
 
     /** @var Newscoop\Services\UserService */
-    private $userService;
+    protected $userService;
 
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * @param Newscoop\Services\EmailService   $emailService

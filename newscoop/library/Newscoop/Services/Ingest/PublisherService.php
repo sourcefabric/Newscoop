@@ -19,7 +19,7 @@ class PublisherService
     const PROGRAM_TITLE = 'sda - WOCHENPROGRAMM';
 
     /** @var array */
-    private $config;
+    protected $config;
 
     /**
      * @param array $config

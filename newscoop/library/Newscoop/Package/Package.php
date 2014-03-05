@@ -8,7 +8,7 @@
 namespace Newscoop\Package;
 
 use Newscoop\Image\Rendition;
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\View\PackageView;
 
 /**
@@ -23,56 +23,56 @@ class Package
      * @ORM\GeneratedValue
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column
      * @var string
      */
-    private $headline;
+    protected $headline;
 
     /**
      * @ORM\Column(type="text", nullable=True)
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package", cascade={"remove"})
      * @ORM\OrderBy({"offset"="ASC"})
      * @return Doctrine\Common\Collections\Collection
      */
-    private $items;
+    protected $items;
 
     /**
      * Items link used by Newscoop API
      * @var string
      */
-    private $itemsLink;
+    protected $itemsLink;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Image\Rendition")
      * @ORM\JoinColumn(referencedColumnName="name")
      * @var Newscoop\Image\Rendition
      */
-    private $rendition;
+    protected $rendition;
 
     /**
      * @ORM\Column(nullable=True)
      * @var string
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var int
      */
-    private $itemsCount;
+    protected $itemsCount;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article", mappedBy="packages", cascade={"remove"})
      * @var array
      */
-    private $articles;
+    protected $articles;
 
     /**
      */

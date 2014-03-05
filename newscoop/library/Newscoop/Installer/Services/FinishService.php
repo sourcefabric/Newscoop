@@ -21,8 +21,8 @@ use Crontab\Job;
  */
 class FinishService
 {
-    private $newscoopDir;
-    private $filesystem;
+    protected $newscoopDir;
+    protected $filesystem;
 
     /**
      * Construct

@@ -17,10 +17,10 @@ class BlogService
     const SEPARATOR = ',';
 
     /** @var array */
-    private $config = array();
+    protected $config = array();
 
     /** @var array */
-    private $getArticleActions = array(
+    protected $getArticleActions = array(
         'edit.php',
         'preview.php',
         'locations',
@@ -33,7 +33,7 @@ class BlogService
     );
 
     /** @var array */
-    private $postArticleActions = array(
+    protected $postArticleActions = array(
         'images',
         'topics',
         'files',
