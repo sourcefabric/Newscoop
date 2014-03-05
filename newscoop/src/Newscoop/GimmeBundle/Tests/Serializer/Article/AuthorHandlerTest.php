@@ -17,9 +17,9 @@ use JMS\SerializerBundle\Serializer\Naming\CamelCaseNamingStrategy;
 
 class AuthorHandlerTest extends ContainerAwareUnitTestCase
 {
-    private $article;
-    private $authorHandler;
-    private $ymlSerializationVisitor;
+    protected $article;
+    protected $authorHandler;
+    protected $ymlSerializationVisitor;
 
     protected function setUp()
     {

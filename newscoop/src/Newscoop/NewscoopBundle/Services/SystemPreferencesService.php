@@ -22,7 +22,7 @@ class SystemPreferencesService
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
-    private $preferences;
+    protected $preferences;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

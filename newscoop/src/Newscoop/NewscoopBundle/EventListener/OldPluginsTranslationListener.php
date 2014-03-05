@@ -18,9 +18,9 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
  */
 class OldPluginsTranslationListener
 {
-    private $translator;
+    protected $translator;
 
-    private $cacheService;
+    protected $cacheService;
 
     /**
      * @param Translator $translator

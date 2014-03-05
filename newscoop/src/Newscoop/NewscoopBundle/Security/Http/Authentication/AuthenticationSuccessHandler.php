@@ -13,9 +13,9 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
  */
 class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    private $authAdapter;
+    protected $authAdapter;
 
-    private $em;
+    protected $em;
 
     /**
     * Constructor

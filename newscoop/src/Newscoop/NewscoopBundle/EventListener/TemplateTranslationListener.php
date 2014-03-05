@@ -19,7 +19,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class TemplateTranslationListener
 {
-    private $translator;
+    protected $translator;
 
     /**
      * @param Translator $translator

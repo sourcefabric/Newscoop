@@ -15,9 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class ConfigureMenuEvent extends Event
 {
-    private $factory;
-    private $menu;
-    private $router;
+    protected $factory;
+    protected $menu;
+    protected $router;
 
     /**
      * @param \Knp\Menu\FactoryInterface $factory

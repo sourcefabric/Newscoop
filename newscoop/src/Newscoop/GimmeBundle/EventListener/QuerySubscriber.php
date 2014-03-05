@@ -15,7 +15,7 @@ use Doctrine\ORM\Query;
 
 class QuerySubscriber implements EventSubscriberInterface
 {
-    private $paginationService;
+    protected $paginationService;
 
     public function __construct($paginationService)
     {

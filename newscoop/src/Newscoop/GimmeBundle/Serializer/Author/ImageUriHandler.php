@@ -12,9 +12,9 @@ use JMS\Serializer\JsonSerializationVisitor;
 
 class ImageUriHandler
 {
-    private $imageService;
-    private $zendRouter;
-    private $publicationAliasName;
+    protected $imageService;
+    protected $zendRouter;
+    protected $publicationAliasName;
 
     public function __construct($imageService, $zendRouter, $publicationService)
     {

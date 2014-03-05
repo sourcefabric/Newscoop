@@ -17,7 +17,7 @@ use Newscoop\Gimme\PaginatorService;
  */
 class PaginationExtraDataSubscriber implements EventSubscriberInterface
 {
-    private $paginatorService;
+    protected $paginatorService;
 
     public function __construct(PaginatorService $paginatorService)
     {

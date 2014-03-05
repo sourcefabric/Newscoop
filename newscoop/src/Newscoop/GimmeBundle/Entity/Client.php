@@ -34,7 +34,7 @@ class Client extends BaseClient
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * Gets the value of id.
