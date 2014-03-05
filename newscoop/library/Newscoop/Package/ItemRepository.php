@@ -39,14 +39,25 @@ class ItemRepository extends EntityRepository
     public function getListByCriteria(SlideshowItemCriteria $criteria)
     {
         $qb = $this->createQueryBuilder('i');
-        $qb->select('i, ii')
-            ->leftJoin('i.image', 'ii');
+        $qb->select('i, ii, p')
+            ->leftJoin('i.image', 'ii')
+            ->leftJoin('i.package', 'p');
 
         if ($criteria->slideshow) {
             $qb->andWhere('i.package '.$criteria->perametersOperators['slideshow'].' :package')
                 ->setParameter('package', $criteria->slideshow);
 
             $criteria->slideshow = null;
+        }
+
+        if ($criteria->type) {
+            if ($criteria->type == 'image' && $criteria->perametersOperators['slideshow'] == '=') {
+                $qb->andWhere('i.videoUrl IS NULL');
+            } elseif ($criteria->type == 'video' && $criteria->perametersOperators['slideshow'] == '=') {
+                $qb->andWhere('i.videoUrl IS NOT NULL');
+            }
+
+            $criteria->type = null;
         }
 
         foreach ($criteria->perametersOperators as $key => $operator) {

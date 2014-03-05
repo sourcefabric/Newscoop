@@ -25,13 +25,13 @@ class Item
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items", fetch="EAGER")
      * @var Newscoop\Package\Package
      */
     private $package;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items", fetch="EAGER")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\LocalImage
      */
@@ -246,6 +246,16 @@ class Item
     public function getPackageId()
     {
         return $this->package->getId();
+    }
+
+    /**
+     * Get package
+     *
+     * @return int
+     */
+    public function getPackage()
+    {
+        return $this->package;
     }
 
     /**

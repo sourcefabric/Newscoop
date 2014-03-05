@@ -24,6 +24,11 @@ class SlideshowItemMeta extends MetaBase
         return $this->dataObject->isImage();
     }
 
+    public function getSlideshow()
+    {
+        return new \Newscoop\TemplateList\Meta\SlideshowsMeta($this->dataObject->getPackage());
+    }
+
     public function getVideo()
     {
         return (object) array(

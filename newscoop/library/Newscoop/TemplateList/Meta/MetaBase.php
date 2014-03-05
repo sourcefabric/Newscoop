@@ -18,7 +18,7 @@ abstract class MetaBase
 {
     protected $dataObject;
 
-    public function __construct($dataObject)
+    public function __construct($dataObject = null)
     {
         $this->dataObject = $dataObject;
     }

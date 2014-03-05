@@ -69,7 +69,7 @@ class Package
     private $itemsCount;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Article", mappedBy="packages", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article", mappedBy="packages", cascade={"remove"})
      * @var array
      */
     private $articles;

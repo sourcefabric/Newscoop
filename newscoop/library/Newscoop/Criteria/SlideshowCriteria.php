@@ -47,6 +47,12 @@ class SlideshowCriteria extends Criteria
     public $itemsCount;
 
     /**
+     * Custom handled
+     * @var integer
+     */
+    public $publication;
+
+    /**
      * @var array
      */
     public $orderBy = array('id' => 'desc');
