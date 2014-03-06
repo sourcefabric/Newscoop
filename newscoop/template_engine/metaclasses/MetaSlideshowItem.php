@@ -42,6 +42,9 @@ final class MetaSlideshowItem
      */
     public function __construct(\Newscoop\Package\Item $item)
     {
+        global $Campsite;
+
+        $this->item = $item;
         $this->caption = $item->getCaption();
         $this->is_image = $item->isImage();
         $this->is_video = $item->isVideo();
@@ -55,8 +58,11 @@ final class MetaSlideshowItem
                 ), 'image', true, false),
                 'width' => $thumbnail->width,
                 'height' => $thumbnail->height,
-                'original' => $item->getImage()->getPath(),
-                'id' => $image->getId()
+                'id' => $image->getId(),
+                'caption' => $item->getCaption() ?: $item->getImage()->getCaption(),
+                'photographer' => $image->getPhotographer(),
+                'photographer_url' => $image->getPhotographerUrl(),
+                'original' => $image->isLocal() ? $Campsite['IMAGE_BASE_URL'] . str_replace('images/', '', $image->getPath()) : $image->getPath()
             );
         } else {
             $this->video = (object) array(
@@ -65,5 +71,23 @@ final class MetaSlideshowItem
                 'height' => $item->getRendition()->getHeight(),
             );
         }
+    }
+
+    /**
+     * Get preview
+     *
+     * @return object
+     */
+    public function preview($width, $height)
+    {
+        $preview = $this->item->getRendition()->getPreview($width, $height);
+        $thumbnail = $preview->getThumbnail($this->item->getImage(), Zend_Registry::get('container')->getService('image'));
+        return (object) array(
+            'src' => Zend_Registry::get('view')->url(array(
+                'src' => $thumbnail->src,
+            ), 'image', true, false),
+            'width' => $thumbnail->width,
+            'height' => $thumbnail->height,
+        );
     }
 }
