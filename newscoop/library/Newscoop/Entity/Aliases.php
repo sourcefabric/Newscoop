@@ -22,20 +22,20 @@ class Aliases
      * @ORM\Column(type="integer", name="Id")
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", name="Name")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * Get id

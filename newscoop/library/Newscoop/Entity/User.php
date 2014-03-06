@@ -90,7 +90,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @ORM\Column(type="datetime", name="lastLogin", nullable=true)
      * @var DateTime
      */
-    private $lastLogin;
+    protected $lastLogin;
 
     /**
      * @ORM\Column(type="integer", length=1)
@@ -166,19 +166,19 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @ORM\OneToOne(targetEntity="Author", inversedBy="user")
      * @var Newscoop\Entity\Author
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\UserIdentity", mappedBy="user", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
-    private $identities;
+    protected $identities;
 
     /**
      * @param string $email

@@ -23,7 +23,7 @@ class ArticleType
      * @ORM\Id
      * @ORM\Column(type="string",unique=true,name="type_name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Id
@@ -31,20 +31,20 @@ class ArticleType
      *
      * TODO MASSIVE ALERT HERE! WE HAVE THE STRING: NULL FOR NULL VALUES FROM LEGACY!!!...
      */
-    private $fieldName = 'NULL';
+    protected $fieldName = 'NULL';
 
     /**
      * @ORM\Column(type="integer", name="fk_phrase_id", nullable=True)
      * @var int
      */
-    private $phraseId;
+    protected $phraseId;
 
     /**
      * @var Doctrine\Common\Collections\ArrayCollection
      * (at) OneToMany( targetEntity="Newscoop\Entity\ArticleTypeField", mappedBy="articleType" )
      * @todo hack
      */
-    private $articleTypeFields;
+    protected $articleTypeFields;
 
     /**
      * Provides the name of the article type.

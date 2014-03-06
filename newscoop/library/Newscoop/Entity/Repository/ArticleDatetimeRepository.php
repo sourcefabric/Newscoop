@@ -26,8 +26,8 @@ class ArticleDatetimeRepository extends EntityRepository
     const RECURRING_MONTHLY = 'monthly';
     const RECURRING_YEARLY = 'yearly';
 
-    private $lastQb;
-    private $lastQParams;
+    protected $lastQb;
+    protected $lastQParams;
 
     /**
      * @return array

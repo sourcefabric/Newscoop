@@ -32,7 +32,7 @@ class Output extends AbstractEntity
 	 * @ORM\Column(name="name", unique=TRUE, nullable=FALSE)
 	 * @var string
 	 */
-	private $name;
+	protected $name;
 
 	/* --------------------------------------------------------------- */
 

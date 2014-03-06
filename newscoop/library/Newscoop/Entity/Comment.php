@@ -21,9 +21,9 @@ use DateTime;
  */
 class Comment implements DocumentInterface
 {
-    private $allowedEmpty = array( 'br', 'input', 'image' );
+    protected $allowedEmpty = array( 'br', 'input', 'image' );
 
-    private $allowedTags =
+    protected $allowedTags =
     array(
         'a' => array('title', 'href'),
         'abbr' => array('title'),
@@ -60,28 +60,28 @@ class Comment implements DocumentInterface
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment\Commenter
      */
-    private $commenter;
+    protected $commenter;
 
     /**
      * @ORM\ManyToOne(targetEntity="Publication")
      * @ORM\JoinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $forum;
+    protected $forum;
 
     /**
      * @ORM\ManyToOne(targetEntity="Comment")
      * @ORM\JoinColumn(name="fk_parent_id", referencedColumnName="id", onDelete="SET NULL")
      * @var Newscoop\Entity\Comment
      */
-    private $parent;
+    protected $parent;
 
     /**
      * TODO get rid of this when the composite key stuff is done.
@@ -89,7 +89,7 @@ class Comment implements DocumentInterface
      * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
      */
-    private $article_num;
+    protected $article_num;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
@@ -99,87 +99,87 @@ class Comment implements DocumentInterface
      *      })
      * @var Newscoop\Entity\Article
      */
-    private $article;
+    protected $article;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
-    private $thread;
+    protected $thread;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(length=140)
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @ORM\Column()
      * @var text
      */
-    private $message;
+    protected $message;
 
     /**
      * @ORM\Column(length=4)
      * @var int
      */
-    private $thread_level;
+    protected $thread_level;
 
     /**
      * @ORM\Column(length=4)
      * @var int
      */
-    private $thread_order;
+    protected $thread_order;
 
     /**
      * @ORM\Column(length=2)
      * @var int
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(length=39)
      * @var int
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
-    private $time_created;
+    protected $time_created;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
-    private $time_updated;
+    protected $time_updated;
 
     /**
      * @ORM\Column(length=4)
      * @var int
      */
-    private $likes = 0;
+    protected $likes = 0;
 
     /**
      * @ORM\Column(length=4)
      * @var int
      */
-    private $dislikes = 0;
+    protected $dislikes = 0;
 
     /**
      * @ORM\Column(length=1)
      * @var int
      */
-    private $recommended = 0;
+    protected $recommended = 0;
 
     public function __construct()
     {
@@ -191,13 +191,13 @@ class Comment implements DocumentInterface
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
 
     /**
      * @ORM\Column(type="string", length=60, name="source", nullable=true)
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * Set id

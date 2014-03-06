@@ -17,7 +17,7 @@ class LocalLoader implements Loader
     const CONFIG = 'theme.xml';
 
     /** @var string */
-    private $path;
+    protected $path;
 
     /**
      * @param string $path

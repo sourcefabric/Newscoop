@@ -30,146 +30,146 @@ class Publication
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="Name", nullable=True)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
      * @var array
      */
-    private $issues;
+    protected $issues;
 
     /**
      * @ORM\Column(name="comments_public_enabled", nullable=True)
      * @var bool
      */
-    private $public_enabled;
+    protected $public_enabled;
 
     /**
      * @ORM\Column(name="comments_moderator_to", nullable=True)
      * @var string
      */
-    private $moderator_to;
+    protected $moderator_to;
 
     /**
      * @ORM\Column(name="comments_moderator_from", nullable=True)
      * @var string
      */
-    private $moderator_from;
+    protected $moderator_from;
 
     /**
      * @ORM\Column(name="TimeUnit", nullable=True)
      * @var string
      */
-    private $timeUnit;
+    protected $timeUnit;
 
     /**
      * @ORM\Column(type="decimal", name="UnitCost", nullable=True)
      * @var float
      */
-    private $unitCost;
+    protected $unitCost;
 
     /**
      * @ORM\Column(type="decimal", name="UnitCostAllLang", nullable=True)
      * @var float
      */
-    private $unitCostAll;
+    protected $unitCostAll;
 
     /**
      * @ORM\Column(name="Currency", nullable=True)
      * @var string
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\Column(type="integer", name="TrialTime", nullable=True)
      * @var int
      */
-    private $trialTime;
+    protected $trialTime;
 
     /**
      * @ORM\Column(type="integer", name="PaidTime", nullable=True)
      * @var int
      */
-    private $paidTime;
+    protected $paidTime;
 
     /**
      * @ORM\Column(type="integer", name="IdDefaultAlias", nullable=True)
      * @var int
      */
-    private $defaultAliasId;
+    protected $defaultAliasId;
 
     /**
      * @ORM\Column(type="integer", name="IdURLType", nullable=True)
      * @var int
      */
-    private $urlTypeId;
+    protected $urlTypeId;
 
     /**
      * @ORM\Column(type="integer", name="fk_forum_id", nullable=True)
      * @var int
      */
-    private $forumId;
+    protected $forumId;
 
     /**
      * @ORM\Column(type="boolean", name="comments_enabled", nullable=True)
      * @var bool
      */
-    private $commentsEnabled;
+    protected $commentsEnabled;
 
     /**
      * @ORM\Column(type="boolean", name="comments_article_default_enabled", nullable=True)
      * @var bool
      */
-    private $commentsArticleDefaultEnabled;
+    protected $commentsArticleDefaultEnabled;
 
     /**
      * @ORM\Column(type="boolean", name="comments_subscribers_moderated", nullable=True)
      * @var bool
      */
-    private $commentsSubscribersModerated;
+    protected $commentsSubscribersModerated;
 
     /**
      * @ORM\Column(type="boolean", name="comments_public_moderated", nullable=True)
      * @var bool
      */
-    private $commentsPublicModerated;
+    protected $commentsPublicModerated;
 
     /**
      * @ORM\Column(type="boolean", name="comments_captcha_enabled", nullable=True)
      * @var bool
      */
-    private $commentsCaptchaEnabled;
+    protected $commentsCaptchaEnabled;
 
     /**
      * @ORM\Column(type="boolean", name="comments_spam_blocking_enabled", nullable=True)
      * @var bool
      */
-    private $commentsSpamBlockingEnabled;
+    protected $commentsSpamBlockingEnabled;
 
     /**
      * @ORM\Column(type="integer", name="url_error_tpl_id", nullable=True)
      * @var int
      */
-    private $urlErrorTemplateId;
+    protected $urlErrorTemplateId;
 
     /**
      * @ORM\Column(nullable=True)
      * @var int
      */
-    private $seo;
+    protected $seo;
 
     /**
      */

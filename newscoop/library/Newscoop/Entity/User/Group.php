@@ -23,24 +23,24 @@ class Group implements \Zend_Acl_Role_Interface
      * @ORM\Column(type="integer", name="group_id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(name="group_define_name")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role")
      * @var Newscoop\Entity\Acl\Role
      */
-    private $role;
+    protected $role;
     
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups")
      */
-    private $users;
+    protected $users;
 
     /**
      */

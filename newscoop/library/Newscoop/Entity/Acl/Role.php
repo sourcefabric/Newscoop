@@ -22,12 +22,12 @@ class Role
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Acl\Rule", mappedBy="role")
      */
-    private $rules;
+    protected $rules;
 
     /**
      */

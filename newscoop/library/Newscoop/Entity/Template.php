@@ -21,19 +21,19 @@ class Template
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(length=255, name="Name")
      * @var string
      */
-    private $key;
+    protected $key;
 
     /**
      * @ORM\Column(type="integer", name="CacheLifetime")
      * @var int
      */
-    private $cache_lifetime;
+    protected $cache_lifetime;
 
     /**
      * @param string $key

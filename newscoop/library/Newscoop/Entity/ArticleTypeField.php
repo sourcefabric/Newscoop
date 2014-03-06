@@ -24,7 +24,7 @@ class ArticleTypeField
      * @ORM\Id
      * @ORM\Column(type="string",name="field_name")
      */
-    private $name;
+    protected $name;
 
     /**
 	 * @var Newscoop\Entity\ArticleType
@@ -32,59 +32,59 @@ class ArticleTypeField
 	 * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
 	 * @todo hack
      */
-    private $articleType;
+    protected $articleType;
 
     /**
      * @ORM\Column(type="string",name="type_name")
      * @todo hack used for getting the parent article type from same table, which we will set later on into self::$type.
      */
-    private $typeHack;
+    protected $typeHack;
 
     /**
      * @ORM\Column(type="integer", name="max_size", nullable=True)
      */
-    private $length;
+    protected $length;
 
     /**
      * @ORM\Column(type="string",name="field_type", nullable=True)
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="integer", name="field_weight", nullable=True)
      * @var int
      */
-    private $fieldWeight;
+    protected $fieldWeight;
 
     /**
      * @ORM\Column(type="integer", name="is_hidden", nullable=True)
      * @var int
      */
-    private $isHidden;
+    protected $isHidden;
 
     /**
      * @ORM\Column(type="integer", name="comments_enabled", nullable=True)
      * @var int
      */
-    private $commentsEnabled;
+    protected $commentsEnabled;
 
     /**
      * @ORM\Column(type="integer", name="fk_phrase_id", nullable=True)
      * @var int
      */
-    private $phraseId;
+    protected $phraseId;
 
     /**
      * @ORM\Column(name="field_type_param", nullable=True)
      * @var string
      */
-    private $fieldTypeParam;
+    protected $fieldTypeParam;
 
     /**
      * @ORM\Column(type="integer", name="is_content_field", nullable=True)
      * @var int
      */
-    private $isContentField;
+    protected $isContentField;
 
     /**
      * Get the article type

@@ -19,22 +19,22 @@ class Theme extends AbstractEntity
 {
 
 	/** @var string  */
-	private $path;
+	protected $path;
 
 	/** @var string  */
-	private $name;
+	protected $name;
 
 	/** @var string  */
-	private $designer;
+	protected $designer;
 
 	/** @var string  */
-	private $version;
+	protected $version;
 
 	/** @var string  */
-	private $minorNewscoopVersion;
+	protected $minorNewscoopVersion;
 
 	/** @var string  */
-	private $description;
+	protected $description;
 
 	/* --------------------------------------------------------------- */
 

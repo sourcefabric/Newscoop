@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository,
 class TemplateRepository extends EntityRepository
 {
     /** @var string */
-    private $basePath = '';
+    protected $basePath = '';
 
     /**
      * Set base path

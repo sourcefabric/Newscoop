@@ -22,22 +22,22 @@ class UserPoints
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer",unique=true,name="id")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string",unique=true,name="action")
      */
-    private $action;
+    protected $action;
 
     /**
      * @ORM\Column(type="string",unique=true,name="name")
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer",unique=false,name="points")
      */
-    private $points;
+    protected $points;
 
 
     /**

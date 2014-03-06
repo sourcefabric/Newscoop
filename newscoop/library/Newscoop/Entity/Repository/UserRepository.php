@@ -20,7 +20,7 @@ use Newscoop\Search\RepositoryInterface;
 class UserRepository extends EntityRepository implements RepositoryInterface
 {
     /** @var array */
-    private $setters = array(
+    protected $setters = array(
         'username' => 'setUsername',
         'password' => 'setPassword',
         'first_name' => 'setFirstName',

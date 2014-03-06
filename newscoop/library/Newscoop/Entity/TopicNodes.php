@@ -22,19 +22,19 @@ class TopicNodes
      * @ORM\Column(type="integer", name="id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="integer", name="node_left")
      * @var int
      */
-    private $leftNode;
+    protected $leftNode;
 
     /**
      * @ORM\Column(type="integer", name="node_right")
      * @var int
      */
-    private $rightNode;
+    protected $rightNode;
 
     /**
      * Get id

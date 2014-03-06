@@ -21,18 +21,18 @@ class ArticleImage
      * @ORM\Column(type="integer", name="NrArticle")
      * @var int
      */
-    private $articleNumber;
+    protected $articleNumber;
 
     /**
      * @ORM\Id 
      * @ORM\Column(type="integer", name="IdImage")
      * @var int
      */
-    private $imageId;
+    protected $imageId;
 
     /**
      * @ORM\Column(type="integer", name="Number", nullable=True)
      * @var int
      */
-    private $number;
+    protected $number;
 }

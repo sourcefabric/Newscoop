@@ -22,20 +22,20 @@ class Ip
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="StartIP")
      * @var int
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @ORM\Column(type="integer", name="Addresses")
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @param string $ip
