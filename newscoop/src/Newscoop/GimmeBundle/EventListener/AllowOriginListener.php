@@ -44,7 +44,13 @@ class AllowOriginListener
             return false;
         }
 
-        $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, UNLINK, PATCH, OPTIONS');
+        $allowedMethods = array('POST', 'GET', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'PATCH', 'OPTIONS');
+        if (preg_match('/Firefox/', $request->headers->get('user-agent'))) {
+            foreach ($allowedMethods as $method) {
+                $allowedMethods[] = ucfirst(strtolower($method));
+            }
+        }
+        $response->headers->set('Access-Control-Allow-Methods', implode(', ', $allowedMethods));
 
         if (in_array('*', $allowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
