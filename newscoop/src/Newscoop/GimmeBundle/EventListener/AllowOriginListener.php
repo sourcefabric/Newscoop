@@ -38,18 +38,18 @@ class AllowOriginListener
             return false;
         }
 
-        $alowedHosts = $this->container->getParameter('newscoop.gimme.allow_origin');
+        $allowedHosts = $this->container->getParameter('newscoop.gimme.allow_origin');
 
-        if (count($alowedHosts) == 0) {
+        if (count($allowedHosts) == 0) {
             return false;
         }
 
         $response->headers->set('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, LINK, UNLINK, PATCH, OPTIONS');
 
-        if (in_array('*', $alowedHosts)) {
+        if (in_array('*', $allowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
         } else {
-            foreach ($alowedHosts as $host) {
+            foreach ($allowedHosts as $host) {
                 if ($request->server->get('HTTP_ORIGIN') == $host) {
                     $response->headers->set('Access-Control-Allow-Origin', $host);
                 }
