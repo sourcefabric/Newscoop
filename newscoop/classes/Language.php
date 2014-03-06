@@ -53,11 +53,11 @@ class Language extends DatabaseObject {
 	 */
 	public function create($p_values = null)
 	{
-        ladybug_dump($p_values);die;
 		$success = parent::create($p_values);
 		if ($success) {
 			CampCache::singleton()->clear('user');
 		}
+
 		return $success;
 	} // fn create
 
