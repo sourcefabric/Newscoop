@@ -15,6 +15,7 @@ $this->placeholder('title')->set($translator->trans('Languages'));
         <th><?php echo $translator->trans('Language'); ?></th>
         <th><?php echo $translator->trans('Native name', array(), 'languages'); ?></th>
         <th><?php echo $translator->trans('Code'); ?></th>
+        <th><?php echo 'RFC3066bis '.$translator->trans('Code'); ?></th>
         <th><?php echo $translator->trans('Delete'); ?></th>
     </tr>
     <?php foreach ($this->languages as $language) { ?>
@@ -22,6 +23,7 @@ $this->placeholder('title')->set($translator->trans('Languages'));
         <td><a href="<?php echo $this->url(array('action' => 'edit', 'language' => $language->getId())); ?>"><?php echo $this->escape($language->getName()); ?></a></td>
         <td><?php echo $this->escape($language->getNativeName()); ?></td>
         <td class="text"><?php echo $this->escape($language->getCode()); ?></td>
+        <td class="text"><?php echo $this->escape($language->getRFC3066bis()); ?></td>
         <td>
           <?php if ($language->getCode() !== 'en') { ?>
           <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>"><?php echo $translator->trans('Delete'); ?></a>

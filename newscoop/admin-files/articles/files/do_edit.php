@@ -53,20 +53,28 @@ if (!$articleObj->userCanModify($g_user)) {
 	exit;
 }
 
-$attachmentObj = new Attachment($f_attachment_id);
+$em = \Zend_Registry::get('container')->getService('em');
+$attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($f_attachment_id);
+$description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
+$description->setTranslationText($f_description);
+$language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
 if ($f_language_specific == "yes") {
-	$attachmentObj->setDescription($f_language_selected, $f_description);
-	$attachmentObj->setLanguageId($f_language_selected);
+	$attachment->setLanguage($language);
 } else {
-	$attachmentObj->setDescription(0, $f_description);
-	$attachmentObj->setLanguageId(null);
+	$queryBuilder = $em->createQueryBuilder();
+    $attach = $queryBuilder->update('Newscoop\Entity\Attachment', 'a')
+        ->set('a.language', 'null')
+        ->where('a.id = ?1')
+        ->setParameter(1, $f_attachment_id)
+        ->getQuery();
+    $attach->execute();
 }
 if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
-	$attachmentObj->setContentDisposition($f_content_disposition);
+	$attachment->setContentDisposition($f_content_disposition);
 }
-
+$em->flush();
 // Go back to article.
-camp_html_add_msg($translator->trans("File '$1' updated.", array('$1' => $attachmentObj->getFileName()), 'article_files'), "ok");
+camp_html_add_msg($translator->trans("File '$1' updated.", array('$1' => $attachment->getName()), 'article_files'), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 
 ?>

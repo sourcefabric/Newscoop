@@ -369,17 +369,17 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
-$fileSrcDir = "$tempDirName/files";
+$fileSrcDir = "$tempDirName/public/files";
 $imagesSrcDir = "$tempDirName/images";
 $configDestDir = $ETC_DIR;
-$filesDestDir = $CAMPSITE_DIR.'/files';
+$filesDestDir = $CAMPSITE_DIR.'/public/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates'; // keep for gimme template upgrade
 $themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 $themesDestDir = $CAMPSITE_DIR.'/'.$themesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
-$pdfDir = $CAMPSITE_DIR.'/pdf';
+$pdfDir = $CAMPSITE_DIR.'/public/pdf';
 
 $destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir,
     $compiledTemplatesDir, $pdfDir);

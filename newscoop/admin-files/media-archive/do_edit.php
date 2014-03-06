@@ -34,7 +34,8 @@ $updateArray = array('Description' => $f_image_description,
 					'Photographer' => $f_image_photographer,
 					'Place' => $f_image_place,
 					'Date' => $f_image_date,
-					'Status' => $f_image_status);
+					'Status' => $f_image_status,
+                    'photographer_url' => Input::Get('f_photographer_url'));
 //if (!empty($f_image_url)) {
 //	$updateArray['URL'] = $f_image_url;
 //}

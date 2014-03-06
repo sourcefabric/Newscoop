@@ -169,6 +169,7 @@ class RenditionService
             'height' => $thumbnail->height,
             'caption' => $rendition->getImage()->getCaption(),
             'photographer' => $rendition->getImage()->getPhotographer(),
+            'photographer_url' => $rendition->getImage()->getPhotographerUrl(),
             'original' => (object) array(
                 'width' => $rendition->getImage()->getWidth(),
                 'height' => $rendition->getImage()->getHeight(),

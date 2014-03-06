@@ -55,13 +55,9 @@ class Language extends DatabaseObject {
 	{
 		$success = parent::create($p_values);
 		if ($success) {
-		        $result = Localizer::CreateLanguageFiles($this->m_data['Code']);
-			if (PEAR::isError($result)) {
-			        $this->delete(false);
-				return $result;
-			}
 			CampCache::singleton()->clear('user');
 		}
+
 		return $success;
 	} // fn create
 
@@ -96,12 +92,7 @@ class Language extends DatabaseObject {
 		if (is_link($GLOBALS['g_campsiteDir'] . '/' . $this->getCode() . '.php')) {
 			unlink($GLOBALS['g_campsiteDir'] . '/' . $this->getCode() . '.php');
 		}
-		if ($p_deleteLanguageFiles) {
-			$result = Localizer::DeleteLanguageFiles($this->getCode());
-			if (PEAR::isError($result)) {
-				return result;
-			}
-		}
+
 		$tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {

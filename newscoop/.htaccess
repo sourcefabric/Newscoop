@@ -41,6 +41,7 @@ AddType application/font-woff            .woff
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+js
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+css
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+images
+    RewriteCond %{REQUEST_URI} !^/js/
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/\.php$
     RewriteCond %{REQUEST_URI} !/+themes
     RewriteCond %{REQUEST_URI} !/public/+videos

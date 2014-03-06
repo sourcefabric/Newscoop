@@ -89,6 +89,7 @@ class RatingController extends Zend_Controller_Action
      * Get rating stats for a given article
      *
      * @param int $articleId
+     *
      * @return array
      */
     protected function getArticleRating($articleId)
@@ -96,12 +97,22 @@ class RatingController extends Zend_Controller_Action
         $ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
         $ratingScores = $ratingRepository->getArticleRating($articleId);
 
-        return array('widget_id' => $articleId, 
-            'number_votes' => (int)$ratingScores[0]['number_votes'],
-            'total_score' => (int)$ratingScores[0]['total_score'],
-            'dec_avg' => (float)round($ratingScores[0]['avg_score'], 2),
-            'whole_avg' => (int)round($ratingScores[0]['avg_score'])
+        $rating = array(
+            'widget_id' => $articleId,
+            'number_votes' => 0,
+            'total_score' => 0,
+            'dec_avg' => 0,
+            'whole_avg' => 0
         );
-        
+
+        if (!empty($ratingScores)) {
+            $rating['widget_id'] = $articleId;
+            $rating['number_votes'] = (int) $ratingScores[0]['number_votes'];
+            $rating['total_score'] = (int) $ratingScores[0]['total_score'];
+            $rating['dec_avg'] = (float) round($ratingScores[0]['avg_score'], 2);
+            $rating['whole_avg'] = (int) round($ratingScores[0]['avg_score']);
+        }
+
+        return $rating;
     }
 }

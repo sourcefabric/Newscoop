@@ -300,4 +300,30 @@ class AttachmentService
 
         return $level2;
     }
+
+     /**
+     * Return the ids of the file not edited yet.
+     *
+     * @param integer $userId User id
+     *
+     * @return array
+     */
+    public function getUnedited($userId)
+    {
+        $qb = $this->em->getRepository('Newscoop\Entity\Attachment')
+            ->createQueryBuilder('a');
+
+        $uneditedAttachments = $qb
+            ->leftJoin('a.description', 'd')
+            ->where('a.user = :userId')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('d.translationText'),
+                "d.translationText = ''"
+            ))
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getArrayResult();
+
+        return $uneditedAttachments;
+    }
 }

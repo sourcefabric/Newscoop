@@ -16,6 +16,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$em = \Zend_Registry::get('container')->getService('em');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error($translator->trans('Invalid security token!'));
@@ -25,22 +26,20 @@ $f_language_id = Input::Get('f_language_id', 'int', 0);
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 
 foreach ($_POST['file'] as $id => $values) {
-    $description = new Translation((int) $f_language_selected);
-    $description->create($values['f_description']); //$values
+    $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($id);
+    $description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
 
-    $updateArray = array();
-    $updateArray['fk_description_id'] = $description->getPhraseId();
-/*    if ($values['f_language_specific'] == "yes") {
-        $updateArray['fk_language_id'] = $f_language_selected;
+    if ($f_language_selected > 0) {
+        $description->setLanguage($f_language_selected);
     }
-*/
-    if ($values['f_content_disposition'] == "attachment") {
-        $updateArray['content_disposition'] = "attachment";
-    }
-    $fileObj = new Attachment((int) $id);
-    $fileObj->update($updateArray);
+
+    $description->setTranslationText($values['f_description']);
+    $attachment->setDescription($description);
+    $attachment->setUpdated(new \DateTime());
+    $attachment->setContentDisposition($values['f_content_disposition']);
 }
 
+$em->flush();
 camp_html_add_msg($translator->trans("Images updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/index.php#files");
 ?>

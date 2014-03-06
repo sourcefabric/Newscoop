@@ -81,10 +81,9 @@ class RegisterController extends Zend_Controller_Action
 
     public function confirmAction()
     {
-        $user = $this->getAuthUser();
-
         $translator = \Zend_Registry::get('container')->getService('translator');
-
+        $session = \Zend_Registry::get('container')->getService('session');
+        $user = $this->getAuthUser();
         $social = $this->_getParam('social');
         $form = $this->_helper->form('confirm');
         $form->setMethod('POST');
@@ -113,11 +112,13 @@ class RegisterController extends Zend_Controller_Action
                 $auth = \Zend_Auth::getInstance();
                 if ($auth->hasIdentity()) {
                     $this->_helper->flashMessenger('User registered successfully.');
-                    $this->_helper->redirector('index', 'index', 'default');
+                    $this->_helper->redirector(null, null, 'default');
                 } else {
                     $adapter = $this->_helper->service('auth.adapter');
                     $adapter->setEmail($user->getEmail())->setPassword($values['password']);
                     $result = $auth->authenticate($adapter);
+                    $token = $this->_helper->service('user')->loginUser($user);
+                    $session->set('_security_frontend_area', serialize($token));
                     $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (InvalidArgumentException $e) {
@@ -131,7 +132,7 @@ class RegisterController extends Zend_Controller_Action
         $this->view->social = $social ?: false;
     }
 
-    /**
+  /**
      * Get user image filename
      *
      * @param Newscoop\Entity\User $user
@@ -227,12 +228,12 @@ class RegisterController extends Zend_Controller_Action
 
         if (empty($user)) {
             $this->_helper->flashMessenger(array('error', "User not found"));
-            $this->_helper->redirector('index', 'index', 'default');
+            $this->_helper->redirector(null, null, 'default');
         }
 
         if (!$user->isPending()) {
             $this->_helper->flashMessenger(array('error', "User has been activated"));
-            $this->_helper->redirector('index', 'index', 'default');
+            $this->_helper->redirector(null, null, 'default');
         }
 
         if ($this->auth->hasIdentity()) {
@@ -242,12 +243,12 @@ class RegisterController extends Zend_Controller_Action
         $token = $this->_getParam('token', false);
         if (!$token && !$auth->hasIdentity()) {
             $this->_helper->flashMessenger(array('error', "No token provided"));
-            $this->_helper->redirector('index', 'index', 'default');
+            $this->_helper->redirector(null, null, 'default');
         }
 
         if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
             $this->_helper->flashMessenger(array('error', "Invalid token"));
-            $this->_helper->redirector('index', 'index', 'default');
+            $this->_helper->redirector(null, null, 'default');
         }
 
         return $user;

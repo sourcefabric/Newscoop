@@ -291,30 +291,7 @@ function onUpload()
     flashMessage('<?php echo $translator->trans('File uploaded.', array(), 'media_archive'); ?>');
 }
 
-/**
- * Callback function used in datatable "fnDrawCallback" callback
- * @param  object element table jquery object
- */
-function newscoopMediaArchiveDataTable (element) {
-    var fancyBoxSelector;
-    if (element.hasClass('imagelist')) {
-        fancyBoxSelector = $('#images table td a');
-    } else if (element.hasClass('medialist')) {
-        fancyBoxSelector = $('#files a');
-    }
 
-    fancyBoxSelector.fancybox({
-        hideOnContentClick: false,
-        width: 1300,
-        height: 800,
-        type: 'iframe',
-        onClosed: function() {
-           location.reload();
-        }
-    });
-};
-
-//-->
 </script>
 
 <?php camp_html_copyright_notice(); ?>
