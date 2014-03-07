@@ -100,6 +100,7 @@ class CommentsController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
+     *         204="Returned when successful but article doesn't have comments.",
      *         404={
      *           "Returned when the comments are not found",
      *         }
@@ -139,7 +140,7 @@ class CommentsController extends FOSRestController
             ->getArticleComments($number, $language, $recommended, false);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $articleComments = $paginator->paginate($articleComments);
+        $articleComments = $paginator->paginate($articleComments, array('emptyAllowed'=>true));
 
         return $articleComments;
     }
