@@ -69,10 +69,10 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if ($currentUser == 'anon.') {
-                        $this->currentUser = null;
-                    } else {
+                    if( $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
                         $this->currentUser = $currentUser;
+                    } else {
+                        $this->currentUser = null;
                     }
                 }
             }
