@@ -15,8 +15,8 @@ use JMS\Serializer\JsonSerializationVisitor;
  */
 class TranslationsHandler
 {
-    private $em;
-    private $router;
+    protected $em;
+    protected $router;
 
     public function __construct($em, $router)
     {

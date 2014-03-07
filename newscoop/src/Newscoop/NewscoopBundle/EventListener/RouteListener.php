@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class RouteListener
 {
-    private $listPaginatorService;
+    protected $listPaginatorService;
 
     /**
      * @param \Newscoop\Services\ListPaginatorService $listPaginatorService

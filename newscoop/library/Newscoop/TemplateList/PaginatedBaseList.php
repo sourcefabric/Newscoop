@@ -92,7 +92,7 @@ abstract class PaginatedBaseList extends BaseList
             $this->cacheService->save($cacheId, $this->pagination);
         }
 
-        $list->count = $this->pagination->getTotalItemCount();
+        $list->count = count($this->pagination->getItems());
         $list->items = $this->pagination->getItems();
 
         return $list;

@@ -17,7 +17,7 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
 class UserPointsService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

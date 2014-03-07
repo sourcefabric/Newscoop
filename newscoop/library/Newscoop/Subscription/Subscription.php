@@ -30,57 +30,57 @@ class Subscription
      * @ORM\Column(type="integer", name="Id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\Column(type="decimal", name="ToPay")
      * @var float
      */
-    private $toPay = 0.0;
+    protected $toPay = 0.0;
 
     /**
      * @ORM\Column(name="Type")
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(name="Currency")
      * @var string
      */
-    private $currency;
+    protected $currency;
 
     /**
      * @ORM\Column(name="Active")
      * @var string
      */
-    private $active;
+    protected $active;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Section", mappedBy="subscription", cascade={"persist", "remove"})
      * @var array
      */
-    private $sections;
+    protected $sections;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Article", mappedBy="subscription", cascade={"persist", "remove"})
      * @var array
      */
-    private $articles;
+    protected $articles;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Issue", mappedBy="subscription", cascade={"persist", "remove"})

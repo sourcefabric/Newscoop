@@ -20,8 +20,8 @@ class BootstrapService
 {
     public $mustBeWritable;
     public $basePath;
-    private $filesystem;
-    private $logger;
+    protected $filesystem;
+    protected $logger;
 
     /**
      * Construct class

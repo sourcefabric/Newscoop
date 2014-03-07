@@ -17,10 +17,10 @@ use Doctrine\ORM\EntityManager,
 class AuthorService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var Doctrine\ORM\EntityRepository */
-    private $repository;
+    protected $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

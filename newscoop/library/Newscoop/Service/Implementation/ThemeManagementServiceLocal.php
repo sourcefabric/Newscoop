@@ -87,15 +87,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /* --------------------------------------------------------------- */
 
     /** @var Doctrine\ORM\EntityManager */
-    private $em = NULL;
+    protected $em = NULL;
     /** @var Newscoop\Service\IOutputService */
-    private $outputService = NULL;
+    protected $outputService = NULL;
     /** @var Newscoop\Service\IOutputSettingIssueService */
-    private $outputSettingIssueService = NULL;
+    protected $outputSettingIssueService = NULL;
     /** @var Newscoop\Service\ISyncResourceService */
-    private $syncResourceService = NULL;
+    protected $syncResourceService = NULL;
     /** @var Newscoop\Service\IArticleTypeService */
-    private $articleTypeService = NULL;
+    protected $articleTypeService = NULL;
 
     /* --------------------------------------------------------------- */
     private function getUnassignedThemesData(SearchTheme $search = NULL)

@@ -23,58 +23,58 @@ class Issue
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Subscription\Subscription", inversedBy="sections")
      * @ORM\JoinColumn(name="IdSubscription", referencedColumnName="Id")
      * @var Newscoop\Subscription\Subscription
      */
-    private $subscription;
+    protected $subscription;
 
     /**
      * @ORM\Column(type="integer", name="issue_number")
      * @var int
      */
-    private $issueNumber;
+    protected $issueNumber;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
      * @ORM\JoinColumn(name="issue_number", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
      */
-    private $issue;
+    protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(type="date", name="StartDate")
      * @var DateTime
      */
-    private $startDate;
+    protected $startDate;
 
     /**
      * @ORM\Column(type="integer", name="Days")
      * @var int
      */
-    private $days;
+    protected $days;
 
     /**
      * @ORM\Column(type="integer", name="PaidDays")
      * @var int
      */
-    private $paidDays;
+    protected $paidDays;
 
     /**
      * @ORM\Column(name="NoticeSent")
      * @var string
      */
-    private $noticeSent;
+    protected $noticeSent;
 
     /**
      * @param Subscription $subscription

@@ -17,7 +17,7 @@ class StorageService
     /**
      * @param Zend_Cloud_StorageService_Adapter
      */
-    private $adapter;
+    protected $adapter;
 
     /**
      * @param Zend_Cloud_StorageService_Adapter $adapter

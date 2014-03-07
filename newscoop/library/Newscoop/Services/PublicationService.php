@@ -23,25 +23,25 @@ class PublicationService
      * Entity Manager
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * Publication object
      * @var Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * Alias object
      * @var Aliases
      */
-    private $publicationAlias;
+    protected $publicationAlias;
 
     /**
      * Publication metadata.
      * @var array
      */
-    private $publicationMetadata = array();
+    protected $publicationMetadata = array();
 
     /**
      * Construct Publication Service

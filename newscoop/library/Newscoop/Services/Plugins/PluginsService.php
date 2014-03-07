@@ -26,18 +26,18 @@ class PluginsService
     /**
      * @var Newscoop\EventDispatcher\EventDispatcher
      */
-    private $dispatcher;
+    protected $dispatcher;
 
     /** 
      * @var Doctrine\ORM\EntityManager 
      */
-    private $em;
+    protected $em;
 
     /**
      * Avaiable plugins
      * @var Collection
      */
-    private $avaiablePlugins;
+    protected $avaiablePlugins;
 
     /**
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher

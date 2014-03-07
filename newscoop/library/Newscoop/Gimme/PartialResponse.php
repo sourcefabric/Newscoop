@@ -16,7 +16,7 @@ class PartialResponse {
      * Fields property - string with comma separated fields
      * @var string
      */
-    private $fields = null;
+    protected $fields = null;
     
     /**
      * Set fields

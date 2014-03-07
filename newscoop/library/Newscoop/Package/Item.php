@@ -22,56 +22,56 @@ class Item
      * @ORM\GeneratedValue
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items", fetch="EAGER")
      * @var Newscoop\Package\Package
      */
-    private $package;
+    protected $package;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items", fetch="EAGER")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\LocalImage
      */
-    private $image;
+    protected $image;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $offset;
+    protected $offset;
 
     /**
      * @ORM\Column(nullable=True)
      * @var string
      */
-    private $caption;
+    protected $caption;
 
     /**
      * @ORM\Column(nullable=True)
      * @var string
      */
-    private $coords;
+    protected $coords;
 
     /**
      * @ORM\Column(nullable=True, name="video_url")
      * @var string
      */
-    private $videoUrl;
+    protected $videoUrl;
 
     /**
      * Item type used by Newscoop API
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * Item link used by Newscoop API
      * @var string
      */
-    private $link;
+    protected $link;
 
     /**
      * @param Newscoop\Package\Package $package
@@ -249,6 +249,16 @@ class Item
     }
 
     /**
+     * Get package
+     *
+     * @return int
+     */
+    public function getPackage()
+    {
+        return $this->package;
+    }
+
+    /**
      * Set Item type
      * @param string $type "video" or "image"
      */
@@ -265,10 +275,10 @@ class Item
     {
         if ($this->videoUrl) {
             return 'video';
-        } else if ($this->image){
+        } elseif ($this->image) {
             return 'image';
         }
-        
+
         return null;
     }
 

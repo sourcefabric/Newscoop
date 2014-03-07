@@ -184,12 +184,11 @@ abstract class BaseList
 
         $this->constraints = array_chunk($this->constraints, 3, true);
         foreach ($this->constraints as $constraint) {
+            $constraint = array_values($constraint);
             if (count($constraint) == 3) {
-                foreach ($this->criteria as $key => $value) {
-                    if ($key == $constraint[0]) {
-                        $this->criteria->perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
-                        $this->criteria->$key = $constraint[2];
-                    }
+                if (array_key_exists($constraint[0], $this->criteria)) {
+                    $this->criteria->perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
+                    $this->criteria->$constraint[0] = $constraint[2];
                 }
             }
         }

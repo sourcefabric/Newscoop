@@ -15,9 +15,9 @@ use OAuth2\OAuth2AuthenticateException;
 
 class PublicResourcesListener
 {
-    private $em;
-    private $serverService;
-    private $security;
+    protected $em;
+    protected $serverService;
+    protected $security;
 
     public function __construct($em, $serverService, $security)
     {

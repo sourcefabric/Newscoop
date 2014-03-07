@@ -28,30 +28,30 @@ class ManagerService
     /** 
      * @var Doctrine\ORM\EntityManager 
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\EventDispatcher\EventDispatcher
      */
-    private $dispatcher;
+    protected $dispatcher;
 
     /**
      * Plugins service
      * @var Newscoop\Services\Plugins\PluginsService
      */
-    private $pluginsService;
+    protected $pluginsService;
 
     /**
      * Logger
      * @var Symfony\Bridge\Monolog\Logger
      */
-    private $logger;
+    protected $logger;
 
     /**
      * Newscoop root directory
      * @var string
      */
-    private $newsoopDir;
+    protected $newsoopDir;
 
     /**
      * Plugins directory

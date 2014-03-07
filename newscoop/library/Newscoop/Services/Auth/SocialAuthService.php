@@ -16,13 +16,13 @@ use Doctrine\ORM\EntityManager,
 class SocialAuthService implements \Zend_Auth_Adapter_Interface
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var string */
-    private $provider;
+    protected $provider;
 
     /** @var string */
-    private $providerUserId;
+    protected $providerUserId;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

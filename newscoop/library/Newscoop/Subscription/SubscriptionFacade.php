@@ -17,12 +17,12 @@ class SubscriptionFacade
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\Subscription\SubscriptionRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

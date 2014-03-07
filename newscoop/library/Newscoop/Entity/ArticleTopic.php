@@ -31,7 +31,7 @@ class ArticleTopic
      * @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
      */
     protected $topic;
-    
+
     /**
      * Get article
      *
@@ -76,4 +76,3 @@ class ArticleTopic
         return $this;
     }
 }
-

@@ -15,13 +15,13 @@ class ThemeFiles extends AAdapter
      * The theme files service
      * @var Newscoop\Service\Implementation\ThemeServiceLocalFileSystem
      */
-    private $_service;
+    protected $_service;
 
     /**
      * the theme entity
      * @var Newscoop\Entity\Theme
      */
-    private $_theme;
+    protected $_theme;
 
     public function __construct( IThemeService $service, $themeId )
     {

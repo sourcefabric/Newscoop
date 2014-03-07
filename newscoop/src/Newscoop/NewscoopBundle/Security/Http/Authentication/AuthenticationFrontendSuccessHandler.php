@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
  */
 class AuthenticationFrontendSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    private $authAdapter;
+    protected $authAdapter;
 
     /**
      * Constructor

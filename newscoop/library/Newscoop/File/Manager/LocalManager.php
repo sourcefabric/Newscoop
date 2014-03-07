@@ -16,16 +16,16 @@ use Newscoop\Entity\Repository\TemplateRepository,
 class LocalManager implements Manager
 {
     /** @var array */
-    private $files = array();
+    protected $files = array();
 
     /** @var string */
-    private $root;
+    protected $root;
 
     /** @var path */
-    private $path;
+    protected $path;
 
     /** @var Newscoop\Entity\Repository\TemplateRepository */
-    private $repository;
+    protected $repository;
 
     /**
      * @param string $path

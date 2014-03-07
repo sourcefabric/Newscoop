@@ -24,43 +24,43 @@ class PaginatorService
      * Paginator class
      * @var Knp\Component\Pager\Paginator
      */
-    private $paginator;
+    protected $paginator;
 
     /**
      * Pagination object with parsed data from request.
      * @var Newscoop\Gimme\Pagination
      */
-    private $pagination;
+    protected $pagination;
 
     /**
      * PartialResponse object with parsed data from request.
      * @var Newscoop\Gimme\PartialResponse
      */
-    private $partialResponse;
+    protected $partialResponse;
 
     /**
      * Router class
      * @var Symfony\Bundle\FrameworkBundle\Routing\Router
      */
-    private $router;
+    protected $router;
 
     /**
      * Extra data injected to response when result have more items than requested.
      * @var array
      */
-    private $paginationData;
+    protected $paginationData;
 
     /**
      * Used route name
      * @var string
      */
-    private $route;
+    protected $route;
 
     /**
      * Used route params
      * @var array
      */
-    private $routeParams = array();
+    protected $routeParams = array();
 
     /**
      * Construct Paginator service object

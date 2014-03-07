@@ -32,15 +32,15 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
     /* --------------------------------------------------------------- */
 
     /** @var Doctrine\ORM\EntityManager */
-    private $em = NULL;
+    protected $em = NULL;
     /** @var Newscoop\Service\IIssueService */
-    private $issueService = NULL;
+    protected $issueService = NULL;
     /** @var Newscoop\Service\ISectionService */
-    private $sectionService = NULL;
+    protected $sectionService = NULL;
     /** @var Newscoop\Service\IOutputSettingSectionService */
-    private $outputSettingSectionService = NULL;
+    protected $outputSettingSectionService = NULL;
     /** @var Newscoop\Service\IOutputSettingIssueService */
-    private $outputSettingIssueService = NULL;
+    protected $outputSettingIssueService = NULL;
 
     /* --------------------------------------------------------------- */
     /** @var string */

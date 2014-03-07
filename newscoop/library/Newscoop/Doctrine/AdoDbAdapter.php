@@ -19,17 +19,17 @@ class AdoDbAdapter
     /**
      * @var Doctrine\DBAL\Connection
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @var Newscoop\Doctrine\AdoDbStatement
      */
-    private $statement;
+    protected $statement;
 
     /**
      * @var int
      */
-    private $affectedRows = 0;
+    protected $affectedRows = 0;
 
     /**
      * @param Doctrine\DBAL\Connection $connection

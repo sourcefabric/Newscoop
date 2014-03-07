@@ -18,7 +18,7 @@ use Newscoop\Gimme\Json;
  */
 class AllowOriginListener
 {
-    private $container;
+    protected $container;
 
     public function __construct($container)
     {

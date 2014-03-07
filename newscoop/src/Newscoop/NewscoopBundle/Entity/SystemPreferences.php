@@ -24,7 +24,7 @@ class SystemPreferences
      * @ORM\Column(type="integer", name="id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=100, name="varname")
@@ -36,13 +36,13 @@ class SystemPreferences
      * @ORM\Column(type="string", length=100, name="value", nullable=true)
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * @ORM\Column(type="datetime", name="last_modified")
      * @var datetime
      */
-    private $created_at;
+    protected $created_at;
 
     public function __construct() {
         $this->setCreatedAt(new \DateTime());

@@ -17,19 +17,19 @@ class Theme extends AAdapter
      * Theme service
      * @var ThemeManagementServiceLocal
      */
-    private $_service;
+    protected $_service;
 
     /**
      * The search object
      * @var SearchTheme
      */
-    private $_search;
+    protected $_search;
 
     /**
      * Search column index used for filtering per publication
      * @var int $_pubColFilterIdx
      */
-    private $_pubColFilterIdx;
+    protected $_pubColFilterIdx;
 
     public function __construct( IThemeManagementService $service )
     {

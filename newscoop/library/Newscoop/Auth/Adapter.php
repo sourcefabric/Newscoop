@@ -17,13 +17,13 @@ use Doctrine\ORM\EntityRepository,
 class Adapter implements Zend_Auth_Adapter_Interface
 {
     /** @var Doctrine\ORM\EntityRepository */
-    private $repository;
+    protected $repository;
 
     /** @var string */
-    private $username;
+    protected $username;
 
     /** @var string */
-    private $password;
+    protected $password;
 
     /**
      * @param Doctrine\ORM\EntityRepository

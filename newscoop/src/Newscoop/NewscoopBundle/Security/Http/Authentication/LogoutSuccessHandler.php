@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
  */
 class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 {
-    private $authAdapter;
+    protected $authAdapter;
  
     /**
      * Creates a Response object to send upon a successful logout.

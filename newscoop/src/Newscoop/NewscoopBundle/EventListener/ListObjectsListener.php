@@ -27,5 +27,25 @@ class ListObjectsListener
             'list' => 'users',
             'url_id' => 'uid',
         ));
+
+        $event->registerListObject('newscoop\templatelist\slideshows', array(
+            'class' => 'Newscoop\TemplateList\Slideshows',
+            'list' => 'slideshows',
+            'url_id' => 'sliid',
+        ));
+
+        $event->registerListObject('newscoop\templatelist\slideshowitems', array(
+            'class' => 'Newscoop\TemplateList\SlideshowItems',
+            'list' => 'slideshow_items',
+            'url_id' => 'slit',
+        ));
+
+        $event->registerObjectTypes('slideshow', array(
+            'class' => '\Newscoop\TemplateList\Meta\SlideshowsMeta'
+        ));
+
+        $event->registerObjectTypes('slideshow_item', array(
+            'class' => '\Newscoop\TemplateList\Meta\SlideshowItemMeta'
+        ));
     }
 }

@@ -24,42 +24,42 @@ class Rendition
      * @ORM\Column(type="string")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @ORM\Column
      * @var string
      */
-    private $specs;
+    protected $specs;
 
     /**
      * @var string
      */
-    private $coords;
+    protected $coords;
 
     /**
      * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
-    private $offset;
+    protected $offset;
 
     /**
      * @ORM\Column(nullable=True)
      * @var string
      */
-    private $label;
+    protected $label;
 
     /**
      * @param int $width

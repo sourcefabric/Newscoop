@@ -15,12 +15,12 @@ class SectionFacade
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\Subscription\SectionRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

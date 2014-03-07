@@ -24,22 +24,22 @@ class UserService
     const USER_ENTITY = 'Newscoop\Entity\User';
 
     /** @var \Doctrine\Common\Persistence\ObjectManager */
-    private $em;
+    protected $em;
 
     /** @var \Zend_Auth */
-    private $auth;
+    protected $auth;
 
     /** @var \Newscoop\Entity\User */
-    private $currentUser;
+    protected $currentUser;
 
     /** @var \Newscoop\Entity\Repository\UserRepository */
-    private $repository;
+    protected $repository;
 
     /** @var SecurityContext */
-    private $security;
+    protected $security;
 
     /** @var EncoderFactory */
-    private $factory;
+    protected $factory;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

@@ -20,7 +20,7 @@ class AuditMaintenanceService
     const LOG_LIFETIME = 'P7D';
 
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
 
     /**

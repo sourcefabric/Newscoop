@@ -13,12 +13,12 @@ use Newscoop\NewscoopBundle\Event\ConfigureMenuEvent;
 class Builder
 {
 
-    private $factory;
-    private $container;
-    private $user;
-    private $showPublishingEnvironmentMenu;
-    private $showConfigureMenu;
-    private $showUserMenu;
+    protected $factory;
+    protected $container;
+    protected $user;
+    protected $showPublishingEnvironmentMenu;
+    protected $showConfigureMenu;
+    protected $showUserMenu;
 
     private function preparePrivileges()
     {
