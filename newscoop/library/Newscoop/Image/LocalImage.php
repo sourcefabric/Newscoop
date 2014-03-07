@@ -197,9 +197,9 @@ class LocalImage implements ImageInterface
     public function getPath()
     {
         if ($this->hasUpdatedStorage()) {
-            return 'images/' . $this->basename;
+            return '/images/' . $this->basename;
         } elseif ($this->isLocal()) {
-            return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
+            return basename($this->basename) === $this->basename ? '/images/' . $this->basename : $this->basename;
         } else {
             return $this->url;
         }

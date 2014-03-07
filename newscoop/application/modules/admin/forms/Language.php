@@ -37,6 +37,11 @@ class Admin_Form_Language extends Zend_Form
             'label' => $translator->trans('Code'),
         ));
 
+        $this->addElement('text', 'RFC3066bis', array(
+            'required' => TRUE,
+            'label' => 'RFC3066bis ' . $translator->trans('Code'),
+        ));
+
         $this->addElement('text', 'month1', array('label' => $translator->trans('January', array(), 'languages')));
         $this->addElement('text', 'month2', array('label' => $translator->trans('February', array(), 'languages')));
         $this->addElement('text', 'month3', array('label' => $translator->trans('March', array(), 'languages')));
@@ -164,6 +169,7 @@ class Admin_Form_Language extends Zend_Form
             'native_name' => $language->getNativeName(),
             'code_page' => $language->getCodePage(),
             'code' => $language->getCode(),
+            'RFC3066bis' => $language->getRFC3066bis(),
             'month1' => $language->getMonth1(),
             'month2' => $language->getMonth2(),
             'month3' => $language->getMonth3(),

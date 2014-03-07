@@ -219,7 +219,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $commentObj = $repository->getPrototype();
         $comment = $repository->save($commentObj,$values);
         $repository->flush();
-        
+
         if (!$comment) {
             $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
             ACTION_SUBMIT_COMMENT_ERR_INTERNAL);

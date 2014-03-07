@@ -8,14 +8,19 @@
  * @link http://www.sourcefabric.org
  */
 
-$translator = \Zend_Registry::get('container')->getService('translator');
-$f_image_url = Input::Get('f_image_url', 'string', '', true);
-$nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
-$f_article_edit = isset($_POST['f_article_edit']) ? $_POST['f_article_edit'] : null;
-$f_language_id = isset($_POST['f_language_id']) ? $_POST['f_language_id'] : null;
-$f_article_number = isset($_POST['f_article_number']) ? $_POST['f_article_number'] : null;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-if (!SecurityToken::isValid()) {
+$translator = \Zend_Registry::get('container')->getService('translator');
+$container = \Zend_Registry::get('container');
+$request = $container->get('request');
+$params = $request->request->all();
+$f_image_url = Input::Get('f_image_url', 'string', '', true);
+$nrOfFiles = isset($params['uploader_count']) ? $params['uploader_count'] : 0;
+$f_article_edit = isset($params['f_article_edit']) ? $params['f_article_edit'] : null;
+$f_language_id = isset($params['f_language_id']) ? $params['f_language_id'] : null;
+$f_article_number = isset($params['f_article_number']) ? $params['f_article_number'] : null;
+
+if (!SecurityToken::isValid() && !isset($f_article_edit)) {
     camp_html_display_error($translator->trans('Invalid security token!'));
     exit;
 }
@@ -52,16 +57,27 @@ if (!empty($f_image_url)) {
 	}
 }
 
+$user = $container->get('security.context')->getToken()->getUser();
+$em = $container->get('em');
+$language = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($request->getLocale());
+$imageService = $container->get('image');
+
 // process uploaded images
 for ($i = 0; $i < $nrOfFiles; $i++) {
     $tmpnameIdx = 'uploader_' . $i . '_tmpname';
     $nameIdx = 'uploader_' . $i . '_name';
     $statusIdx = 'uploader_' . $i . '_status';
-    if ($_POST[$statusIdx] == 'done') {
-        $result = Image::ProcessFile($_POST[$tmpnameIdx], $_POST[$nameIdx], $g_user->getUserId());
+    if ($params[$statusIdx] == 'done') {
+        $fileLocation = $imageService->getImagePath() . $params[$tmpnameIdx];
+        $mime = getimagesize($fileLocation);
+        $file = new UploadedFile($fileLocation, $params[$nameIdx], $mime['mime'], filesize($fileLocation), null, true);
+        $result = $imageService->upload($file, array('user' => $user));
+        $result->setDate('0000-00-00');
         $images[] = $result;
     }
 }
+
+$em->flush();
 
 if (!empty($images)) {
     camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => count($images)), 'media_archive', "ok"));
@@ -72,11 +88,11 @@ if (!empty($images)) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
-        
+
         //$imageIdList = array();
         foreach ($images as $image) {
             $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
-            ArticleImage::AddImageToArticle($image->getImageId(), $f_article_number, $ImageTemplateId);
+            ArticleImage::AddImageToArticle($image->getId(), $f_article_number, $ImageTemplateId);
             //$imageIdList[] = $image->getImageId();
         }
         //$imageIdList = implode(',',$imageIdList);

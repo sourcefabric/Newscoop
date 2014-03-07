@@ -34,34 +34,40 @@ class Commenter
     protected $user;
 
     /**
-     * @ORM\Column(length=100)
+     * @ORM\Column(length=100, nullable=false)
      * @var string
      */
     protected $name;
 
     /**
-     * @ORM\Column(length=100)
+     * @ORM\Column(length=100, nullable=false)
      * @var string
      */
     protected $email;
 
     /**
-     * @ORM\Column(length=255)
+     * @ORM\Column(length=255, nullable=true)
      * @var string
      */
     protected $url;
 
     /**
-     * @ORM\Column(length=39)
+     * @ORM\Column(length=39, nullable=true)
      * @var int
      */
     protected $ip;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=false)
      * @var DateTime
      */
     protected $time_created;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var DateTime
+     */
+    private $time_updated;
 
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
@@ -74,18 +80,20 @@ class Commenter
     {
         $this->setUrl('');
         $this->setTimeCreated(new \DateTime());
+        $this->setTimeUpdated(new \DateTime());
     }
 
     /**
      * Set commenter id
      *
-     * @param int $p_id
+     * @param int $id
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setId($p_id)
+    public function setId($id)
     {
-        $this->id = $p_id;
-        // return this for chaining mechanism
+        $this->id = $id;
+
         return $this;
     }
 
@@ -102,13 +110,14 @@ class Commenter
     /**
      * Set commenter full name
      *
-     * @param string $p_name
+     * @param string $name
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setName($p_name)
+    public function setName($name)
     {
-        $this->name = (string) $p_name;
-        // return this for chaining mechanism
+        $this->name = (string) $name;
+
         return $this;
     }
 
@@ -125,13 +134,14 @@ class Commenter
     /**
      * Set commenter email address
      *
-     * @param string $p_email
+     * @param string $email
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setEmail($p_email)
+    public function setEmail($email)
     {
-        $this->email = (string) $p_email;
-        // return this for chaining mechanism
+        $this->email = (string) $email;
+
         return $this;
     }
 
@@ -149,12 +159,13 @@ class Commenter
      * Set user
      *
      * @param Newscoop\Entity\User $user
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
     public function setUser(User $user)
     {
         $this->user = $user;
-        // return this for chaining mechanism
+
         return $this;
     }
     /**
@@ -170,13 +181,14 @@ class Commenter
     /**
      * Set comment user url
      *
-     * @param string $p_url
+     * @param string $url
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setUrl($p_url)
+    public function setUrl($url)
     {
-        $this->url = (string) $p_url;
-        // return this for chaining mechanism
+        $this->url = (string) $url;
+
         return $this;
     }
 
@@ -193,15 +205,16 @@ class Commenter
     /**
      * Set ip
      *
-     * @param string $p_ip
+     * @param string $ip
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setIp($p_ip)
+    public function setIp($ip)
     {
         // remove subnet & limit to IP_LENGTH
-        $ip_array = explode('/', (string) $p_ip);
+        $ip_array = explode('/', (string) $ip);
         $this->ip = substr($ip_array[0], 0, 39);
-        // return this for chaining mechanism
+
         return $this;
     }
 
@@ -225,13 +238,14 @@ class Commenter
     /**
      * Set time created
      *
-     * @param DateTime $p_datetime
+     * @param DateTime $datetime
+     *
      * @return Newscoop\Entity\Comment\Commenter
      */
-    public function setTimeCreated(DateTime $p_datetime)
+    public function setTimeCreated(DateTime $datetime)
     {
-        $this->time_created = $p_datetime;
-        // return this for chaining mechanism
+        $this->time_created = $datetime;
+
         return $this;
     }
 
@@ -243,6 +257,30 @@ class Commenter
     public function getTimeCreated()
     {
         return $this->time_created;
+    }
+
+    /**
+     * Set time updated
+     *
+     * @param DateTime $datetime
+     *
+     * @return Newscoop\Entity\Comment\Commenter
+     */
+    public function setTimeUpdated(DateTime $datetime)
+    {
+        $this->time_updated = $datetime;
+        
+        return $this;
+    }
+
+    /**
+     * Get updated time.
+     *
+     * @return DateTime
+     */
+    public function getTimeUpdated()
+    {
+        return $this->time_updated;
     }
 
     /**

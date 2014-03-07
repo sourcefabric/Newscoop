@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
+require_once LIBS_DIR . '/MediaPlayer/MediaPlayer.php';
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 
@@ -65,7 +66,7 @@ if ($f_publication_id > 0) {
                 (strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
                 (strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) { ?>
 <div class="indent">
-<IMG SRC="<?php echo $attachmentObj->getAttachmentUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>">
+<IMG SRC="<?php echo $attachmentObj->getAttachmentUrl(); ?>" style="max-width: 600px;" BORDER="0" ALT="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>">
 </div>
 <P>
 <?php } ?>
@@ -78,16 +79,24 @@ if ($f_publication_id > 0) {
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
+<tr>
+    <td></td>
+    <td><?php if (strstr($attachmentObj->getMimeType(), "audio/") || strstr($attachmentObj->getMimeType(), "video/")) {
+        echo new MediaPlayer($attachmentObj->getAttachmentUrl() . '?g_show_in_browser=1', $attachmentObj->getMimeType()); 
+    } ?></td>
+</tr>
+<?php if (strstr($attachmentObj->getMimeType(), "application/") || strstr($attachmentObj->getMimeType(), "image/")) { ?>
 <TR>
     <TD ALIGN="RIGHT"><?php echo $translator->trans('File Name', array(), 'article_files'); ?>:</TD>
     <TD><?php echo htmlspecialchars($attachmentObj->getFileName()); ?> &nbsp; <A
         HREF="<?php p($attachmentObj->getAttachmentUrl()); ?>"><IMG
         TITLE="<?php echo $translator->trans('Download', array(), 'article_files'); ?>" BORDER="0" ALIGN="absmiddle" SRC="<?php p($Campsite["ADMIN_IMAGE_BASE_URL"]);?>/download.png" /></A></TD>
 </TR>
+<?php } ?>
 <TR>
     <TD ALIGN="RIGHT"><?php echo $translator->trans('Description'); ?>:</TD>
     <TD>
-    <INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($attachmentObj->getLanguageId())); ?>" class="input_text" SIZE="32" <?php p($isReadOnly); ?>>
+    <INPUT TYPE="TEXT" NAME="f_description" VALUE="<?php echo htmlspecialchars($attachmentObj->getDescription($f_language_selected)); ?>" class="input_text" SIZE="32" <?php p($isReadOnly); ?>>
     </TD>
 </TR>
 <TR>

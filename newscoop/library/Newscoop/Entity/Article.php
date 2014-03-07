@@ -733,7 +733,7 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for comments_locked
+     * Getter for commentsLocked
      *
      * @return mixed
      */
@@ -743,17 +743,17 @@ class Article implements DocumentInterface
     }
 
     /**
-     * Getter for comments_locked
+     * Getter for commentsLocked
      *
      * @return mixed
      */
     public function getCommentsLocked()
     {
-        return $this->comments_locked;
+        return $this->commentsLocked;
     }
 
     /**
-     * Setter for comments_locked
+     * Setter for commentsLocked
      *
      * @param mixed $commentsLocked Value to set
      *
@@ -761,7 +761,7 @@ class Article implements DocumentInterface
      */
     public function setCommentsLocked($commentsLocked)
     {
-        $this->comments_locked = (int) $commentsLocked;
+        $this->commentsLocked = (int) $commentsLocked;
 
         return $this;
     }

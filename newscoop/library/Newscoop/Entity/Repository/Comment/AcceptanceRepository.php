@@ -184,7 +184,8 @@ class AcceptanceRepository extends DatatableSource
     public function checkBanned($p_params, $p_forum)
     {
             $return = array();
-            if (in_array('name', $p_params)) {
+
+            if (array_key_exists('name', $p_params)) {
                 $name = array(
                     'forum' => $p_forum,
                     'search' => $p_params['name'],
@@ -195,7 +196,7 @@ class AcceptanceRepository extends DatatableSource
                 $return['name'] = $this->matched($name);
             }
 
-            if (in_array('email', $p_params)) {
+            if (array_key_exists('email', $p_params)) {
                 $email = array(
                     'forum' => $p_forum,
                     'search' => $p_params['email'],
@@ -206,7 +207,7 @@ class AcceptanceRepository extends DatatableSource
                 $return['email'] = $this->matched($email);
             }
 
-            if (in_array('ip', $p_params)) {
+            if (array_key_exists('ip', $p_params)) {
                 $ip = array(
                     'forum' => $p_forum,
                     'search' => $p_params['ip'],
@@ -216,8 +217,6 @@ class AcceptanceRepository extends DatatableSource
                 );
                 $return['ip'] = $this->matched($ip);
             }
-
-            var_dump($return);
 
             return $return;
     }

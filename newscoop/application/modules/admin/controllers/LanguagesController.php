@@ -110,7 +110,6 @@ class Admin_LanguagesController extends Zend_Controller_Action
             $this->_helper->redirector('index', 'languages', 'admin');
         }
 
-        Localizer::DeleteLanguageFiles($language->getCode());
         $this->repository->delete($language->getId());
         $this->_helper->flashMessenger->addMessage($translator->trans('Language removed.', array(), 'languages'));
         $this->_helper->redirector('index', 'languages', 'admin');

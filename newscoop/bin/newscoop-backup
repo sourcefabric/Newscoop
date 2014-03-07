@@ -169,7 +169,7 @@ if (!$silent) {
 	echo " * Backing up file attachments...";
 	flush_output($flush);
 }
-camp_copy_files("$html_dir/files", $backupDirFullPath);
+camp_copy_files("$html_dir/public/files", $backupDirFullPath);
 if (!$silent) {
 	echo "done.\n";
 }

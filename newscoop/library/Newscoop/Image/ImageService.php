@@ -166,6 +166,27 @@ class ImageService
     }
 
     /**
+     * Save image
+     *
+     * @param array $info
+     *
+     * @return string
+     */
+    public function save(array $info)
+    {
+        if (!in_array($info['type'], $this->supportedTypes)) {
+            throw new \InvalidArgumentException("Unsupported image type '$info[type]'.");
+        }
+
+        $name = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
+        if (!file_exists(APPLICATION_PATH . "/../images/$name")) {
+            rename($info['tmp_name'], APPLICATION_PATH . "/../images/$name");
+        }
+
+        return $name;
+    }
+
+    /**
      * Get image src
      *
      * @param string $image
@@ -587,5 +608,47 @@ class ImageService
                 $this->orm->getConnection()->exec('ALTER TABLE ArticleImages ADD is_default INT(1) DEFAULT NULL');
             }
         }
+    }
+
+    /**
+     * Gets path of local images
+     *
+     * @return string
+     */
+    public function getImagePath()
+    {
+        return $this->config['image_path'];
+    }
+
+    /**
+     * Return true if the image is being used by an article.
+     *
+     * @param LocalImage $image Local image
+     *
+     * @return boolean
+     */
+    public function inUse($image)
+    {
+        $imageArticle = $this->orm->getRepository('Newscoop\Image\ArticleImage')->findOneBy(array(
+            'image' => $image,
+        ));
+
+        if ($imageArticle) {
+            $imagesCount = $this->orm->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('count(a)')
+                ->where('number = :articleNumber')
+                ->andWhere('images = :image')
+                ->setParameter('image', $imageArticle)
+                ->setParameter('articleNumber', $imageArticle->getArticleNumber())
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            if ((int) $imagesCount > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

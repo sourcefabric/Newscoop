@@ -30,6 +30,7 @@ class BlogService
         'comments',
         'autopublish.php',
         'do_unlock.php',
+        'context_box',
     );
 
     /** @var array */
@@ -40,6 +41,7 @@ class BlogService
         'comments',
         'do_article_action.php',
         'autopublish_do_add.php',
+        'context_box',
     );
 
     /**

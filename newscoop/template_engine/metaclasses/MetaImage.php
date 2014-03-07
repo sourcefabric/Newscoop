@@ -23,6 +23,7 @@ final class MetaImage extends MetaDbObject {
 
         $this->m_properties['number'] = 'Id';
         $this->m_properties['photographer'] = 'Photographer';
+        $this->m_properties['photographer_url'] = 'photographer_url';
         $this->m_properties['place'] = 'Place';
         $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
@@ -46,6 +47,7 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['filerpath'] = 'getImageRelativePath';
         $this->m_customProperties['is_local'] = 'isLocal';
         $this->m_customProperties['type'] = 'getType';
+        $this->m_customProperties['photographer_url'] = 'getPhotographerUrl';
     } // fn __construct
 
 
