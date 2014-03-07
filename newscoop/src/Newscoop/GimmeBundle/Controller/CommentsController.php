@@ -140,7 +140,7 @@ class CommentsController extends FOSRestController
             ->getArticleComments($number, $language, $recommended, false);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $articleComments = $paginator->paginate($articleComments, array('emptyAllowed'=>true));
+        $articleComments = $paginator->paginate($articleComments);
 
         return $articleComments;
     }

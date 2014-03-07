@@ -163,17 +163,18 @@ class PaginatorService
     /**
      * Paginate data
      *
-     * @param mixed $data                   Data to paginate
-     * @param array $params                 Parameters for Paginator
-     * @param bool  $params['emptyAllowed'] Allows the response to be empty, returns 204. Won't be send to the Paginator
+     * @param mixed $data                    Data to paginate
+     * @param array $params                  Parameters for Paginator
+     * @param bool  $params['emptyResponse'] Sets behaviour for an empty response, Default true returns 204. False returns 404
+     *                                       Won't be send to the Paginator
      *
      * @return array         Paginated data
      */
     public function paginate($data, $params = array())
     {
-        $emptyAllowed = false;
-        if (array_key_exists('emptyAllowed', $params)) {
-            $emptyAllowed = true;
+        $emptyResponse = true;
+        if (array_key_exists('emptyResponse', $params)) {
+            $emptyResponse = $params['emptyResponse'];
             unset($params['emptyAllowed']);
         }
 
@@ -187,7 +188,7 @@ class PaginatorService
         $items['items'] = $paginator->getItems();
 
         if (count($items['items']) == 0) {
-            if ($emptyAllowed) {
+            if ($emptyResponse) {
                 throw new ResourceIsEmptyException('Result is empty.');
             } else {
                 throw new NotFoundHttpException('Results was not found.');
