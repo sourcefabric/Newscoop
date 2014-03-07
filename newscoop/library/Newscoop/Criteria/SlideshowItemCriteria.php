@@ -34,5 +34,5 @@ class SlideshowItemCriteria extends Criteria
     /**
      * @var array
      */
-    public $orderBy = array('id' => 'desc');
+    public $orderBy = array('offset' => 'asc');
 }

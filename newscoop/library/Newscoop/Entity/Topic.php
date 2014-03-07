@@ -25,6 +25,13 @@ class Topic
     protected $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\TopicNodes", inversedBy="names")
+     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id")
+     * @var Newscoop\Entity\TopicNodes
+     */
+    protected $topic;
+
+    /**
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
@@ -64,6 +71,16 @@ class Topic
     public function getTopicId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get topic left node
+     *
+     * @return int
+     */
+    public function getTopicLeft()
+    {
+        return $this->topic->getLeftNode();
     }
 
     /**
