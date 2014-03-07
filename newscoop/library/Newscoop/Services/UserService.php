@@ -68,7 +68,12 @@ class UserService
                 $this->currentUser = $this->getRepository()->find($this->auth->getIdentity());
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
-                    $this->currentUser = $this->security->getToken()->getUser();
+                    $currentUser = $this->security->getToken()->getUser();
+                    if( $this->security->isGranted('IS_AUTHENTICATED_FULLY') ){
+                        $this->currentUser = $currentUser;
+                    } else {
+                        $this->currentUser = null;
+                    }
                 }
             }
         }
