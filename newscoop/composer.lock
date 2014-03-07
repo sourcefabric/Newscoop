@@ -3,46 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ea04afba9194e1203fc2badb34c78aa1",
+    "hash": "92eecc195efc653d1921745262dea4b8",
     "packages": [
-        {
-            "name": "ahs/adverts-plugin",
-            "version": "0.1.1",
-            "target-dir": "AHS/AdvertsPluginBundle",
-            "dist": {
-                "type": "zip",
-                "url": "/var/www/newscoop/newscoop/plugins/private_plugins/AdvertsPluginBundle.zip",
-                "reference": "AdvertsPluginBundle.zip",
-                "shasum": "e285c3ec20121c0a87845f3fa4097607a7b225f9"
-            },
-            "require": {
-                "knplabs/knp-paginator-bundle": "v2.3.2",
-                "newscoop/plugins-installer": "*",
-                "php": ">=5.3.3"
-            },
-            "type": "newscoop-plugin",
-            "autoload": {
-                "psr-0": {
-                    "AHS\\AdvertsPluginBundle\\AHSAdvertsPluginBundle": ""
-                }
-            },
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Pawel Mikolajczuk",
-                    "email": "mikolajczuk.private@gmail.com"
-                }
-            ],
-            "description": "Adverts plugin bundle for Newscoop",
-            "keywords": [
-                "adverts",
-                "cms",
-                "integration",
-                "newscoop"
-            ]
-        },
         {
             "name": "behat/behat",
             "version": "v2.5.1",
@@ -292,76 +254,17 @@
             "time": "2012-10-16 23:37:45"
         },
         {
-            "name": "dflydev/markdown",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/dflydev/dflydev-markdown.git",
-                "reference": "dee1f7a6b60776a94c10efa8340ccd486ec834b7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/dflydev/dflydev-markdown/zipball/dee1f7a6b60776a94c10efa8340ccd486ec834b7",
-                "reference": "dee1f7a6b60776a94c10efa8340ccd486ec834b7",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "dflydev\\markdown": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Dragonfly Development Inc.",
-                    "email": "info@dflydev.com",
-                    "homepage": "http://dflydev.com"
-                },
-                {
-                    "name": "Beau Simensen",
-                    "email": "beau@dflydev.com",
-                    "homepage": "http://beausimensen.com"
-                },
-                {
-                    "name": "Michel Fortin",
-                    "homepage": "http://michelf.com"
-                },
-                {
-                    "name": "John Gruber",
-                    "homepage": "http://daringfireball.net"
-                }
-            ],
-            "description": "PHP Markdown & Extra - DEPRECATED",
-            "homepage": "http://github.com/dflydev/dflydev-markdown",
-            "keywords": [
-                "markdown"
-            ],
-            "time": "2014-01-06 23:32:02"
-        },
-        {
             "name": "doctrine/annotations",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "218d670dd2fbb96c515e2fb4f8f7104ae4d73edb"
+                "reference": "316b956b70c0ceab28ba0817fc3343624aa83b56"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/218d670dd2fbb96c515e2fb4f8f7104ae4d73edb",
-                "reference": "218d670dd2fbb96c515e2fb4f8f7104ae4d73edb",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/316b956b70c0ceab28ba0817fc3343624aa83b56",
+                "reference": "316b956b70c0ceab28ba0817fc3343624aa83b56",
                 "shasum": ""
             },
             "require": {
@@ -420,7 +323,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2014-02-03 22:09:20"
+            "time": "2014-03-03 13:00:20"
         },
         {
             "name": "doctrine/cache",
@@ -752,7 +655,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
@@ -826,7 +731,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -972,17 +877,17 @@
         },
         {
             "name": "excelwebzone/recaptcha-bundle",
-            "version": "2.0.x-dev",
+            "version": "dev-master",
             "target-dir": "EWZ/Bundle/RecaptchaBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/excelwebzone/EWZRecaptchaBundle.git",
-                "reference": "4fdc71168f5a091e84ab38acf2ba97b6e0215348"
+                "reference": "4e89f571e785e6d529ff90d5b2d24dc4d971f3c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/4fdc71168f5a091e84ab38acf2ba97b6e0215348",
-                "reference": "4fdc71168f5a091e84ab38acf2ba97b6e0215348",
+                "url": "https://api.github.com/repos/excelwebzone/EWZRecaptchaBundle/zipball/4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
+                "reference": "4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
                 "shasum": ""
             },
             "require": {
@@ -991,7 +896,7 @@
             "type": "symfony-bundle",
             "autoload": {
                 "psr-0": {
-                    "EWZ\\Bundle\\RecaptchaBundle": ""
+                    "EWZ\\Bundle\\RecaptchaBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1010,7 +915,7 @@
             "keywords": [
                 "recaptcha"
             ],
-            "time": "2012-11-10 18:12:19"
+            "time": "2013-10-17 02:28:14"
         },
         {
             "name": "friendsofsymfony/jsrouting-bundle",
@@ -1139,12 +1044,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/oauth2-php.git",
-                "reference": "d2169764e02998c7bcd37e6bc6c193379c581d30"
+                "reference": "fd5575b9a3e16581cf57f0e643a23df5c8fb6c98"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/oauth2-php/zipball/d2169764e02998c7bcd37e6bc6c193379c581d30",
-                "reference": "d2169764e02998c7bcd37e6bc6c193379c581d30",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/oauth2-php/zipball/fd5575b9a3e16581cf57f0e643a23df5c8fb6c98",
+                "reference": "fd5575b9a3e16581cf57f0e643a23df5c8fb6c98",
                 "shasum": ""
             },
             "require": {
@@ -1182,7 +1087,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2014-02-09 10:54:40"
+            "time": "2014-03-05 20:58:32"
         },
         {
             "name": "friendsofsymfony/rest",
@@ -1320,7 +1225,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/63c8b10b98ca42ff5779b3fd76f33e51b153d206",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/dd3e6c0e3f0d5de9347fd9c9efb71597577c9a92",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -1408,12 +1313,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9"
+                "reference": "a6f00729b99f0b2e6903e4cc6cf5099941d319e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/6d89473b379fc7a904e69ee63f548af3308bd4d9",
-                "reference": "6d89473b379fc7a904e69ee63f548af3308bd4d9",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/a6f00729b99f0b2e6903e4cc6cf5099941d319e6",
+                "reference": "a6f00729b99f0b2e6903e4cc6cf5099941d319e6",
                 "shasum": ""
             },
             "require": {
@@ -1449,7 +1354,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2013-02-21 06:45:16"
+            "time": "2014-03-06 12:41:08"
         },
         {
             "name": "imagine/imagine",
@@ -1510,12 +1415,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Incenteev/ParameterHandler.git",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241"
+                "reference": "e4e191b96fb8af9cde738f439ec7fe69023e45f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/143272a0a09c62616a3c8011fc165a10c6b35241",
-                "reference": "143272a0a09c62616a3c8011fc165a10c6b35241",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/e4e191b96fb8af9cde738f439ec7fe69023e45f9",
+                "reference": "e4e191b96fb8af9cde738f439ec7fe69023e45f9",
                 "shasum": ""
             },
             "require": {
@@ -1553,7 +1458,7 @@
             "keywords": [
                 "parameters management"
             ],
-            "time": "2013-12-07 10:10:39"
+            "time": "2014-02-25 11:14:12"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1698,12 +1603,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "4a49caf0a20babcf8040fb1cf84f26faff6e7d85"
+                "reference": "d980279bba4b76ab927f67a61f63a6932220aa13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/4a49caf0a20babcf8040fb1cf84f26faff6e7d85",
-                "reference": "4a49caf0a20babcf8040fb1cf84f26faff6e7d85",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/d980279bba4b76ab927f67a61f63a6932220aa13",
+                "reference": "d980279bba4b76ab927f67a61f63a6932220aa13",
                 "shasum": ""
             },
             "require": {
@@ -1731,7 +1636,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.14-dev"
+                    "dev-master": "0.15-dev"
                 }
             },
             "autoload": {
@@ -1747,7 +1652,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1760,7 +1665,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2014-02-10 11:00:05"
+            "time": "2014-03-04 10:46:39"
         },
         {
             "name": "jms/serializer-bundle",
@@ -1817,7 +1722,7 @@
                 {
                     "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1899,12 +1804,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "835ee51d911e4d8c9adf129907ebbebfa9a1e906"
+                "reference": "c730b8a019ca914bd90c0aef80dcf42c4320dcec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/835ee51d911e4d8c9adf129907ebbebfa9a1e906",
-                "reference": "835ee51d911e4d8c9adf129907ebbebfa9a1e906",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/c730b8a019ca914bd90c0aef80dcf42c4320dcec",
+                "reference": "c730b8a019ca914bd90c0aef80dcf42c4320dcec",
                 "shasum": ""
             },
             "require": {
@@ -1955,7 +1860,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2014-02-03 10:44:10"
+            "time": "2014-03-03 11:05:54"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -1964,12 +1869,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenuBundle.git",
-                "reference": "838c4a0f9b0631b37d699d9a7ebd695707298678"
+                "reference": "e5700ed8cbd5c402d24d6dda118aa23400937288"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/838c4a0f9b0631b37d699d9a7ebd695707298678",
-                "reference": "838c4a0f9b0631b37d699d9a7ebd695707298678",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenuBundle/zipball/e5700ed8cbd5c402d24d6dda118aa23400937288",
+                "reference": "e5700ed8cbd5c402d24d6dda118aa23400937288",
                 "shasum": ""
             },
             "require": {
@@ -2009,7 +1914,7 @@
             "keywords": [
                 "menu"
             ],
-            "time": "2013-12-03 00:27:28"
+            "time": "2014-03-03 22:44:01"
         },
         {
             "name": "knplabs/knp-paginator-bundle",
@@ -2243,17 +2148,203 @@
             "time": "2013-09-12 13:09:33"
         },
         {
+            "name": "m038/ingest-plugin-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/IngestPluginBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/m038/plugin-IngestPluginBundle.git",
+                "reference": "901ec52a8d57069823c8d400375e6e02528ac810"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/m038/plugin-IngestPluginBundle/zipball/901ec52a8d57069823c8d400375e6e02528ac810",
+                "reference": "901ec52a8d57069823c8d400375e6e02528ac810",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": ">=v0.2",
+                "php": ">=5.3.3",
+                "simplepie/simplepie": ">=1.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\IngestPluginBundle\\NewscoopIngestPluginBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mischa Gorinskat",
+                    "email": "mischa.gorinskat@sourcefabric.org"
+                }
+            ],
+            "description": "Ingest bundle for Newscoop",
+            "keywords": [
+                "admin",
+                "cms",
+                "ingest",
+                "integration",
+                "newscoop"
+            ],
+            "time": "2014-03-04 10:49:54"
+        },
+        {
+            "name": "m038/solr-search-plugin-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/SolrSearchPluginBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/m038/plugin-SolrSearchPluginBundle.git",
+                "reference": "93761c5d35ff871b0f3ce12060d7a85e34960f79"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/m038/plugin-SolrSearchPluginBundle/zipball/93761c5d35ff871b0f3ce12060d7a85e34960f79",
+                "reference": "93761c5d35ff871b0f3ce12060d7a85e34960f79",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": ">=v0.2",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\SolrSearchPluginBundle\\NewscoopSolrSearchPluginBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mischa Gorinskat",
+                    "email": "mischa.gorinskat@sourcefabric.org"
+                }
+            ],
+            "description": "Solr search bundle for Newscoop",
+            "keywords": [
+                "cms",
+                "indexing",
+                "integration",
+                "newscoop",
+                "search",
+                "solr"
+            ],
+            "time": "2014-02-19 08:52:39"
+        },
+        {
+            "name": "mailchimp/mailchimp",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php.git",
+                "reference": "190cf58000ee4ed47900c78d5d4ef58c4cae0b49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://bitbucket.org/mailchimp/mailchimp-api-php/get/190cf58000ee4ed47900c78d5d4ef58c4cae0b49.zip",
+                "reference": "190cf58000ee4ed47900c78d5d4ef58c4cae0b49",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mailchimp": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "MailChimp Devs",
+                    "email": "api@mailchimp.com",
+                    "homepage": "http://mailchimp.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "API client library for the MailChimp bulk email as a service platform",
+            "homepage": "https://bitbucket.org/mailchimp/mailchimp-api-php",
+            "keywords": [
+                "api",
+                "email"
+            ],
+            "time": "2013-10-17 10:16:33"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "dev-lib",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/michelf/php-markdown.git",
+                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/michelf/php-markdown/zipball/6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
+                "reference": "6f952ee180e9bd345f3dd6005aa11e0f5dcbd1b8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "http://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "http://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "http://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2013-11-29 21:49:31"
+        },
+        {
             "name": "monolog/monolog",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "6cabe95f23322735f446b00ca8582b6c875dcbfe"
+                "reference": "0ac27c8089d0ec41728d96b5aa0dcad18fb0d459"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6cabe95f23322735f446b00ca8582b6c875dcbfe",
-                "reference": "6cabe95f23322735f446b00ca8582b6c875dcbfe",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/0ac27c8089d0ec41728d96b5aa0dcad18fb0d459",
+                "reference": "0ac27c8089d0ec41728d96b5aa0dcad18fb0d459",
                 "shasum": ""
             },
             "require": {
@@ -2261,9 +2352,9 @@
                 "psr/log": "~1.0"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "~2.4.8",
-                "doctrine/couchdb": "dev-master",
-                "mlehner/gelf-php": "1.0.*",
+                "aws/aws-sdk-php": "~2.4, >2.4.8",
+                "doctrine/couchdb": "~1.0@dev",
+                "graylog2/gelf-php": "~1.0",
                 "phpunit/phpunit": "~3.7.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*"
@@ -2273,7 +2364,7 @@
                 "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server",
-                "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
+                "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
                 "raven/raven": "Allow sending log messages to a Sentry server",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
@@ -2284,8 +2375,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Monolog": "src/"
+                "psr-4": {
+                    "Monolog\\": "src/Monolog"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2307,7 +2398,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-02-06 20:35:10"
+            "time": "2014-02-26 12:30:17"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2316,16 +2407,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "5bd455f955dfa0ad66527a078ba1c718be39c590"
+                "reference": "eca9d25ca7541b5522fde1d3640d3c22b43504d6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/5bd455f955dfa0ad66527a078ba1c718be39c590",
-                "reference": "5bd455f955dfa0ad66527a078ba1c718be39c590",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/eca9d25ca7541b5522fde1d3640d3c22b43504d6",
+                "reference": "eca9d25ca7541b5522fde1d3640d3c22b43504d6",
                 "shasum": ""
             },
             "require": {
-                "dflydev/markdown": "~1.0",
+                "michelf/php-markdown": "~1.4",
                 "symfony/console": "~2.1",
                 "symfony/framework-bundle": "~2.1",
                 "symfony/twig-bundle": "~2.1"
@@ -2353,7 +2444,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.4.x-dev"
+                    "dev-master": "2.5.x-dev"
                 }
             },
             "autoload": {
@@ -2382,7 +2473,53 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-02-07 00:05:59"
+            "time": "2014-02-19 21:34:43"
+        },
+        {
+            "name": "newscoop/article-recommendation-plugin",
+            "version": "dev-master",
+            "target-dir": "Newscoop/ArticleRecommendationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/takeit/plugin-ArticleRecommendation.git",
+                "reference": "3d9c6e2493db0d569dead2f16b7c12c283736167"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/takeit/plugin-ArticleRecommendation/zipball/3d9c6e2493db0d569dead2f16b7c12c283736167",
+                "reference": "3d9c6e2493db0d569dead2f16b7c12c283736167",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": ">=v0.2",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\ArticleRecommendationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rafał Muszyński",
+                    "email": "rafal.muszynski@sourcefabric.org"
+                }
+            ],
+            "description": "Article recommendation plugin.",
+            "keywords": [
+                "article",
+                "cms",
+                "email",
+                "newscoop",
+                "recommendation",
+                "widget"
+            ],
+            "time": "2014-01-31 10:29:41"
         },
         {
             "name": "newscoop/comment-lists-plugin",
@@ -2391,12 +2528,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/takeit/plugin-CommentLists.git",
-                "reference": "978c86358c43afc9168bb82ce9d9dec9b5d659d7"
+                "reference": "7004bd36d0b911958d66d9f66f8edfb4c7a4859d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takeit/plugin-CommentLists/zipball/978c86358c43afc9168bb82ce9d9dec9b5d659d7",
-                "reference": "978c86358c43afc9168bb82ce9d9dec9b5d659d7",
+                "url": "https://api.github.com/repos/takeit/plugin-CommentLists/zipball/7004bd36d0b911958d66d9f66f8edfb4c7a4859d",
+                "reference": "7004bd36d0b911958d66d9f66f8edfb4c7a4859d",
                 "shasum": ""
             },
             "require": {
@@ -2427,31 +2564,32 @@
                 "newscoop",
                 "widget"
             ],
-            "time": "2014-02-09 22:39:45"
+            "time": "2014-03-07 12:05:10"
         },
         {
-            "name": "newscoop/community-ticker-plugin",
+            "name": "newscoop/newsletter-plugin-bundle",
             "version": "dev-master",
-            "target-dir": "Newscoop/CommunityTickerBundle",
+            "target-dir": "Newscoop/NewsletterPluginBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/takeit/plugin-CommunityTicker.git",
-                "reference": "d15392217b4eb3981b70256568bbac6ecd45fcdb"
+                "url": "https://github.com/takeit/plugin-NewscoopNewsletter.git",
+                "reference": "c1566ae619c77b647da66b59a9649a6d8076d1b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/takeit/plugin-CommunityTicker/zipball/d15392217b4eb3981b70256568bbac6ecd45fcdb",
-                "reference": "d15392217b4eb3981b70256568bbac6ecd45fcdb",
+                "url": "https://api.github.com/repos/takeit/plugin-NewscoopNewsletter/zipball/c1566ae619c77b647da66b59a9649a6d8076d1b0",
+                "reference": "c1566ae619c77b647da66b59a9649a6d8076d1b0",
                 "shasum": ""
             },
             "require": {
+                "mailchimp/mailchimp": "dev-master",
                 "newscoop/plugins-installer": ">=v0.2",
                 "php": ">=5.3.3"
             },
             "type": "newscoop-plugin",
             "autoload": {
                 "psr-0": {
-                    "Newscoop\\CommunityTickerBundle\\NewscoopCommunityTickerBundle": ""
+                    "Newscoop\\NewsletterPluginBundle": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -2464,61 +2602,15 @@
                     "email": "rafal.muszynski@sourcefabric.org"
                 }
             ],
-            "description": "Community ticker plugin bundle for Newscoop",
+            "description": "Newscoop Newsletter Plugin bundle",
             "keywords": [
-                "blog",
-                "cms",
-                "community",
-                "integration",
+                "email",
+                "mailchimp",
                 "newscoop",
-                "plugin",
-                "ticker"
+                "newsletter",
+                "plugin"
             ],
-            "time": "2014-02-11 14:29:29"
-        },
-        {
-            "name": "newscoop/example-plugin-bundle",
-            "version": "dev-master",
-            "target-dir": "Newscoop/ExamplePluginBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/newscoop/plugin-ExamplePluginBundle.git",
-                "reference": "f6fe60bd0164a0f39679346e790fc540dcea2ac5"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/newscoop/plugin-ExamplePluginBundle/zipball/f6fe60bd0164a0f39679346e790fc540dcea2ac5",
-                "reference": "f6fe60bd0164a0f39679346e790fc540dcea2ac5",
-                "shasum": ""
-            },
-            "require": {
-                "newscoop/plugins-installer": ">=v0.2",
-                "php": ">=5.3.3"
-            },
-            "type": "newscoop-plugin",
-            "autoload": {
-                "psr-0": {
-                    "Newscoop\\ExamplePluginBundle\\NewscoopExamplePluginBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Pawel Mikolajczuk",
-                    "email": "pawel.mikolajczuk@sourcefabric.org"
-                }
-            ],
-            "description": "Example plugin bundle for Newscoop",
-            "keywords": [
-                "cms",
-                "example",
-                "integration",
-                "newscoop"
-            ],
-            "time": "2013-11-13 12:08:14"
+            "time": "2014-02-26 13:43:21"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -2557,14 +2649,60 @@
             "time": "2013-12-08 20:52:57"
         },
         {
+            "name": "newscoop/send-feedback-plugin",
+            "version": "dev-master",
+            "target-dir": "Newscoop/SendFeedbackBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/takeit/plugin-SendFeedback.git",
+                "reference": "7201b250f0077d764262f4a3fc44e241755b2f9d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/takeit/plugin-SendFeedback/zipball/7201b250f0077d764262f4a3fc44e241755b2f9d",
+                "reference": "7201b250f0077d764262f4a3fc44e241755b2f9d",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": ">=v0.2",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\SendFeedbackBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rafał Muszyński",
+                    "email": "rafal.muszynski@sourcefabric.org"
+                }
+            ],
+            "description": "Send feedback plugin.",
+            "keywords": [
+                "cms",
+                "email",
+                "feedback",
+                "newscoop",
+                "send",
+                "widget"
+            ],
+            "time": "2014-01-30 10:12:27"
+        },
+        {
             "name": "newscoop/tageswoche-extra",
             "version": "0.1.1",
             "target-dir": "Newscoop/TagesWocheExtraBundle",
             "dist": {
                 "type": "zip",
-                "url": "/var/www/newscoop/newscoop/plugins/private_plugins/TagesWocheExtraBundle.zip",
-                "reference": "TagesWocheExtraBundle.zip",
-                "shasum": "a5117515e1b742768285946d1ea413b7bdaaf0c5"
+                "url": "/var/www/newscoop4.3/newscoop/plugins/private_plugins/tageswocheextrabundle-master.zip",
+                "reference": "tageswocheextrabundle-master.zip",
+                "shasum": "a795a210afc9062796725a129c39300a2207d9ce"
             },
             "require": {
                 "newscoop/plugins-installer": ">=v0.2",
@@ -2592,6 +2730,48 @@
                 "newscoop",
                 "tageswoche"
             ]
+        },
+        {
+            "name": "newscoop/tw-mobile-plugin-bundle",
+            "version": "dev-master",
+            "target-dir": "Newscoop/TagesWocheMobilePluginBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/m038/plugin-TagesWocheMobilePluginBundle.git",
+                "reference": "0c53d37ff58931782c791a9af02ba067d4e56fc3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/m038/plugin-TagesWocheMobilePluginBundle/zipball/0c53d37ff58931782c791a9af02ba067d4e56fc3",
+                "reference": "0c53d37ff58931782c791a9af02ba067d4e56fc3",
+                "shasum": ""
+            },
+            "require": {
+                "newscoop/plugins-installer": ">=v0.2",
+                "php": ">=5.3.3"
+            },
+            "type": "newscoop-plugin",
+            "autoload": {
+                "psr-0": {
+                    "Newscoop\\TagesWocheMobilePluginBundle\\NewscoopTagesWocheMobilePluginBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Mischa Gorinskat",
+                    "email": "mischa.gorinskat@sourcefabric.org"
+                }
+            ],
+            "description": "TagesWoche mobile API and mobile subscriptions for Newscoop",
+            "keywords": [
+                "cms",
+                "integration",
+                "mobile",
+                "newscoop",
+                "tageswoche"
+            ],
+            "time": "2014-03-07 11:00:27"
         },
         {
             "name": "noiselabs/smarty-bundle",
@@ -2795,7 +2975,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Pimple is a simple Dependency Injection Container for PHP 5.3",
@@ -2999,12 +3181,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
-                "reference": "cf0179711b24d84d4a29d71a4010540f4c990bd8"
+                "reference": "b8abddbe220d2247a1f381d670a47648fc5b7088"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/cf0179711b24d84d4a29d71a4010540f4c990bd8",
-                "reference": "cf0179711b24d84d4a29d71a4010540f4c990bd8",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/b8abddbe220d2247a1f381d670a47648fc5b7088",
+                "reference": "b8abddbe220d2247a1f381d670a47648fc5b7088",
                 "shasum": ""
             },
             "require": {
@@ -3028,7 +3210,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "The base bundle for the Symfony Distributions",
@@ -3036,7 +3220,7 @@
                 "configuration",
                 "distribution"
             ],
-            "time": "2013-12-16 06:18:38"
+            "time": "2014-02-19 15:36:36"
         },
         {
             "name": "sensio/framework-extra-bundle",
@@ -3092,12 +3276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "1e1e0cca18021e87efa639788f843896a3cd79fc"
+                "reference": "eae9c659949b0901947a565ec0ff7606692ce53e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/1e1e0cca18021e87efa639788f843896a3cd79fc",
-                "reference": "1e1e0cca18021e87efa639788f843896a3cd79fc",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/eae9c659949b0901947a565ec0ff7606692ce53e",
+                "reference": "eae9c659949b0901947a565ec0ff7606692ce53e",
                 "shasum": ""
             },
             "require": {
@@ -3127,11 +3311,13 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-01-07 14:18:21"
+            "time": "2014-02-19 06:31:38"
         },
         {
             "name": "silex/silex",
@@ -3139,12 +3325,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silexphp/Silex.git",
-                "reference": "3c5e0bbe4cb1c0dbee9181437f16ed13bea8bb1a"
+                "reference": "b40e5b2bd3c550424e96104545c31da1023d7f66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silexphp/Silex/zipball/3c5e0bbe4cb1c0dbee9181437f16ed13bea8bb1a",
-                "reference": "3c5e0bbe4cb1c0dbee9181437f16ed13bea8bb1a",
+                "url": "https://api.github.com/repos/silexphp/Silex/zipball/b40e5b2bd3c550424e96104545c31da1023d7f66",
+                "reference": "b40e5b2bd3c550424e96104545c31da1023d7f66",
                 "shasum": ""
             },
             "require": {
@@ -3202,7 +3388,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Igor Wiedler",
@@ -3215,7 +3403,61 @@
             "keywords": [
                 "microframework"
             ],
-            "time": "2014-02-05 06:19:22"
+            "time": "2014-03-04 21:23:45"
+        },
+        {
+            "name": "simplepie/simplepie",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplepie/simplepie.git",
+                "reference": "5f00e77b5feb96605cbcea4dcfb555e87c2fed24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplepie/simplepie/zipball/5f00e77b5feb96605cbcea4dcfb555e87c2fed24",
+                "reference": "5f00e77b5feb96605cbcea4dcfb555e87c2fed24",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SimplePie": "library"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Ryan Parman",
+                    "homepage": "http://ryanparman.com/",
+                    "role": "Creator, alumnus developer"
+                },
+                {
+                    "name": "Geoffrey Sneddon",
+                    "homepage": "http://gsnedders.com/",
+                    "role": "Alumnus developer"
+                },
+                {
+                    "name": "Ryan McCue",
+                    "email": "me@ryanmccue.info",
+                    "homepage": "http://ryanmccue.info/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple Atom/RSS parsing library for PHP",
+            "homepage": "http://simplepie.org/",
+            "keywords": [
+                "atom",
+                "feeds",
+                "rss"
+            ],
+            "time": "2013-10-24 06:37:55"
         },
         {
             "name": "smarty/smarty",
@@ -3523,7 +3765,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 },
                 {
                     "name": "Symfony Community",
@@ -3540,12 +3784,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "f964cc8474f6e9fd65c93cbf4d9a66711d046495"
+                "reference": "1017d83260c0750ab63875fcf55458c30b72b8db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/f964cc8474f6e9fd65c93cbf4d9a66711d046495",
-                "reference": "f964cc8474f6e9fd65c93cbf4d9a66711d046495",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/1017d83260c0750ab63875fcf55458c30b72b8db",
+                "reference": "1017d83260c0750ab63875fcf55458c30b72b8db",
                 "shasum": ""
             },
             "require": {
@@ -3642,7 +3886,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-02-10 14:33:09"
+            "time": "2014-03-05 07:16:11"
         },
         {
             "name": "twig/extensions",
@@ -3650,16 +3894,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions.git",
-                "reference": "0fdc8ca874d415b65c7a0d31376cac9c9ed775af"
+                "reference": "502303198afc1ec0bcc061c6f3a0926f7eb685e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/0fdc8ca874d415b65c7a0d31376cac9c9ed775af",
-                "reference": "0fdc8ca874d415b65c7a0d31376cac9c9ed775af",
+                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/502303198afc1ec0bcc061c6f3a0926f7eb685e3",
+                "reference": "502303198afc1ec0bcc061c6f3a0926f7eb685e3",
                 "shasum": ""
             },
             "require": {
-                "twig/twig": "~1.0"
+                "twig/twig": "~1.12"
             },
             "type": "library",
             "extra": {
@@ -3679,7 +3923,9 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
@@ -3689,7 +3935,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2013-11-27 18:19:39"
+            "time": "2014-03-01 02:53:07"
         },
         {
             "name": "twig/twig",
@@ -3697,12 +3943,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "cea2143465149c8ea4c29b227b2958989c5696d6"
+                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/cea2143465149c8ea4c29b227b2958989c5696d6",
-                "reference": "cea2143465149c8ea4c29b227b2958989c5696d6",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
+                "reference": "8c5844a56fe5cbe13ef3becd9ed9f7b3ade104a2",
                 "shasum": ""
             },
             "require": {
@@ -3746,27 +3992,30 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-02-10 07:40:03"
+            "time": "2014-02-24 15:39:56"
         },
         {
-            "name": "willdurand/expose-translation-bundle",
-            "version": "1.2.0",
+            "name": "willdurand/js-translation-bundle",
+            "version": "1.2.x-dev",
             "target-dir": "Bazinga/ExposeTranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
-                "reference": "61fa1a3ada45fa42e22b960f128877127c3c6875"
+                "reference": "dee69aa0a1424a067c4608a3278e07cfba903ae7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/61fa1a3ada45fa42e22b960f128877127c3c6875",
-                "reference": "61fa1a3ada45fa42e22b960f128877127c3c6875",
+                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/dee69aa0a1424a067c4608a3278e07cfba903ae7",
+                "reference": "dee69aa0a1424a067c4608a3278e07cfba903ae7",
                 "shasum": ""
             },
             "require": {
                 "symfony/console": "~2.1",
                 "symfony/finder": "~2.1",
                 "symfony/framework-bundle": "~2.1"
+            },
+            "replace": {
+                "willdurand/expose-translation-bundle": "1.2.*"
             },
             "require-dev": {
                 "symfony/browser-kit": "~2.1",
@@ -3775,7 +4024,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -3800,7 +4049,7 @@
                 "symfony",
                 "translation"
             ],
-            "time": "2013-12-27 02:17:05"
+            "time": "2014-01-31 09:56:04"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -3957,7 +4206,13 @@
         "yzalis/crontab": 20,
         "excelwebzone/recaptcha-bundle": 20,
         "nelmio/api-doc-bundle": 20,
+        "newscoop/article-recommendation-plugin": 20,
+        "newscoop/send-feedback-plugin": 20,
         "newscoop/comment-lists-plugin": 20,
+        "newscoop/newsletter-plugin-bundle": 20,
+        "m038/ingest-plugin-bundle": 20,
+        "newscoop/tw-mobile-plugin-bundle": 20,
+        "m038/solr-search-plugin-bundle": 20,
         "phpspec/phpspec": 20
     },
     "platform": {
