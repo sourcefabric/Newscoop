@@ -100,6 +100,7 @@ class CommentsController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
+     *         204="Returned when successful but article doesn't have comments.",
      *         404={
      *           "Returned when the comments are not found",
      *         }

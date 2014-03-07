@@ -14,6 +14,7 @@ use Newscoop\Gimme\PartialResponse;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Newscoop\Exception\ResourceIsEmptyException;
 
 /**
  * Gimme Pagination service.
@@ -162,13 +163,21 @@ class PaginatorService
     /**
      * Paginate data
      *
-     * @param mixed $data   Data to paginate
-     * @param array $params Prameters for Paginator
+     * @param mixed $data                    Data to paginate
+     * @param array $params                  Parameters for Paginator
+     * @param bool  $params['emptyResponse'] Sets behaviour for an empty response, Default true returns 204. False returns 404
+     *                                       Won't be send to the Paginator
      *
      * @return array         Paginated data
      */
     public function paginate($data, $params = array())
     {
+        $emptyResponse = true;
+        if (array_key_exists('emptyResponse', $params)) {
+            $emptyResponse = $params['emptyResponse'];
+            unset($params['emptyAllowed']);
+        }
+
         $paginator = $this->paginator->paginate(
             $data,
             $this->pagination->getPage(),
@@ -179,7 +188,11 @@ class PaginatorService
         $items['items'] = $paginator->getItems();
 
         if (count($items['items']) == 0) {
-            throw new NotFoundHttpException('Results was not found.');
+            if ($emptyResponse) {
+                throw new ResourceIsEmptyException('Result is empty.');
+            } else {
+                throw new NotFoundHttpException('Results was not found.');
+            }
         }
 
         /**
