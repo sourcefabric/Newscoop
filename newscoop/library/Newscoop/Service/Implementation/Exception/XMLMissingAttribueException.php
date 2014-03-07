@@ -17,7 +17,7 @@ class XMLMissingAttribueException extends \Exception
 {
 
 	/** @var string */
-	private $attributeName;
+	protected $attributeName;
 
 	public function __construct($attributeName)
 	{

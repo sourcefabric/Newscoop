@@ -25,12 +25,12 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     /**
      * @var Newscoop\Service\Resource\ResourceId
      */
-    private $id;
+    protected $id;
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em = NULL;
+    protected $em = NULL;
 
     /**
      * Construct the service base d on the provided resource id.

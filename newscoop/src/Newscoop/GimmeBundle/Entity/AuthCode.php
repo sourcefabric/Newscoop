@@ -37,7 +37,7 @@ class AuthCode extends BaseAuthCode
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")

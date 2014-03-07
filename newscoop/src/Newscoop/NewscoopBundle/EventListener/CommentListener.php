@@ -25,12 +25,12 @@ require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 
 class CommentListener
 {
-    private $log;
-    private $em;
-    private $input;
-    private $captchaEnabled;
-    private $article;
-    private $publication;
+    protected $log;
+    protected $em;
+    protected $input;
+    protected $captchaEnabled;
+    protected $article;
+    protected $publication;
 
     public function __construct($logger, $em)
     {

@@ -15,7 +15,7 @@ use Newscoop\Gimme\PartialResponse;
 
 class PaginatorServiceTest extends ContainerAwareUnitTestCase
 {   
-    private $paginatorService;
+    protected $paginatorService;
 
     protected function setUp()
     {

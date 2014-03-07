@@ -33,7 +33,7 @@ class PaginatedCollection implements IteratorAggregate
     /**
      * @var Traversable
      */
-    private $result;
+    protected $result;
 
     /**
      * @param Doctrine\ORM\AbstractQuery $query

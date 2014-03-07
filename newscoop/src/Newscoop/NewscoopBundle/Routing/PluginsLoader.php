@@ -18,14 +18,14 @@ use Symfony\Component\Routing\Loader\YamlFileLoader;
  
 class PluginsLoader implements LoaderInterface
 {
-    private $loaded = false;
+    protected $loaded = false;
 
     /**
      * @var ManagerService
      */
-    private $pluginsManager;
+    protected $pluginsManager;
 
-    private $container;
+    protected $container;
 
     public function __construct($pluginsManager, $container) {
         $this->pluginsManager = $pluginsManager;

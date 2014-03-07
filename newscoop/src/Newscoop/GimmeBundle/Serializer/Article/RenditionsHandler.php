@@ -15,10 +15,10 @@ use JMS\Serializer\JsonSerializationVisitor;
  */
 class RenditionsHandler
 {
-    private $imageService;
-    private $zendRouter;
-    private $publicationAliasName;
-    private $renditionService;
+    protected $imageService;
+    protected $zendRouter;
+    protected $publicationAliasName;
+    protected $renditionService;
 
     public function __construct($imageService, $zendRouter, $publicationService, $renditionService)
     {

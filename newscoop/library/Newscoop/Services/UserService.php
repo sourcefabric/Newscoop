@@ -24,22 +24,22 @@ class UserService
     const USER_ENTITY = 'Newscoop\Entity\User';
 
     /** @var \Doctrine\Common\Persistence\ObjectManager */
-    private $em;
+    protected $em;
 
     /** @var \Zend_Auth */
-    private $auth;
+    protected $auth;
 
     /** @var \Newscoop\Entity\User */
-    private $currentUser;
+    protected $currentUser;
 
     /** @var \Newscoop\Entity\Repository\UserRepository */
-    private $repository;
+    protected $repository;
 
     /** @var SecurityContext */
-    private $security;
+    protected $security;
 
     /** @var EncoderFactory */
-    private $factory;
+    protected $factory;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -66,6 +66,10 @@ class UserService
         if ($this->currentUser === null) {
             if ($this->auth->hasIdentity()) {
                 $this->currentUser = $this->getRepository()->find($this->auth->getIdentity());
+            } elseif ($this->security->getToken()) {
+                if ($this->security->getToken()->getUser()) {
+                    $this->currentUser = $this->security->getToken()->getUser();
+                }
             }
         }
 
@@ -275,13 +279,13 @@ class UserService
      * Create pending user
      *
      * @param string      $email
-     * @param string|null $first_name
-     * @param string|null $last_name
+     * @param string|null $firstName
+     * @param string|null $lastName
      * @param string|null $subscriber
      *
      * @return Newscoop\Entity\User
      */
-    public function createPending($email, $first_name = null, $last_name = null, $subscriber = null)
+    public function createPending($email, $firstName = null, $lastName = null, $subscriber = null)
     {
         $users = $this->findBy(array('email' => $email));
         if (empty($users)) {
@@ -291,12 +295,12 @@ class UserService
             $user = $users[0];
         }
 
-        if ($first_name) {
-            $user->setFirstName($first_name);
+        if ($firstName) {
+            $user->setFirstName($firstName);
         }
 
-        if ($last_name) {
-            $user->setLastName($last_name);
+        if ($lastName) {
+            $user->setLastName($lastName);
         }
 
         if ($subscriber) {

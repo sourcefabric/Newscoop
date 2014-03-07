@@ -20,7 +20,7 @@ class SearchService implements ServiceInterface
     /**
      * @var Newscoop\Article\LinkService
      */
-    private $articleLinkService;
+    protected $articleLinkService;
 
     /**
      * @param Newscoop\Article\LinkService $articleLinkService

@@ -20,10 +20,10 @@ use Newscoop\Topic\SaveUserTopicsCommand;
 class UserTopicService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var Newscoop\EventDispatcher\EventDispatcher */
-    private $dispatcher;
+    protected $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

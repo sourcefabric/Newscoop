@@ -16,7 +16,7 @@ use Newscoop\Utils\PermissionToAcl;
 class Storage implements StorageInterface
 {
     /** @var Newscoop\Doctrine\Registry */
-    private $doctrine;
+    protected $doctrine;
 
     /**
      * @var Newscoop\Doctrine\Registry $doctrine

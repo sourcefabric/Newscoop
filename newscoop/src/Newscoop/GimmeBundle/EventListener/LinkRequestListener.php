@@ -20,8 +20,8 @@ class LinkRequestListener
     /**
      * @var ControllerResolverInterface
      */
-    private $resolver;
-    private $urlMatcher;
+    protected $resolver;
+    protected $urlMatcher;
 
     /**
      * @param ControllerResolverInterface $controllerResolver The 'controller_resolver' service

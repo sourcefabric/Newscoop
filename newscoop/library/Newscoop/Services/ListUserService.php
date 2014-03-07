@@ -20,7 +20,7 @@ class ListUserService
     protected $em;
 
     /** @var array */
-    private $config = array('role' => 0);
+    protected $config = array('role' => 0);
 
     /**
      * @param array $config

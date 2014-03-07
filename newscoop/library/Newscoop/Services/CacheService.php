@@ -18,7 +18,7 @@ class CacheService
      *
      * @var \Doctrine\Common\Cache\CacheProvider
      */
-    private $cacheDriver;
+    protected $cacheDriver;
 
     /**
      * Initialize cache driver (based on system preferences settings, default is array)

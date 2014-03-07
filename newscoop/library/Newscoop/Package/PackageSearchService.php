@@ -15,12 +15,12 @@ class PackageSearchService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @var Doctrine\ORM\EntityRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $orm

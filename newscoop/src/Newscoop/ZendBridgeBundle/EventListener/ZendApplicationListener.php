@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class ZendApplicationListener
 {
-    private $container;
+    protected $container;
 
     public function __construct($container) {
         $this->container = $container;

@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class LocaleListener
 {
-    private $em;
+    protected $em;
 
     public function __construct($em)
     {

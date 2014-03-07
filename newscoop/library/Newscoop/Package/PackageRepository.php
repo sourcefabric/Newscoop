@@ -7,6 +7,8 @@
 
 namespace Newscoop\Package;
 
+use Newscoop\Criteria\SlideshowCriteria;
+
 /**
  * Package repository
  */
@@ -46,6 +48,61 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $packages;
+    }
+
+    /**
+     * Get list for given criteria
+     *
+     * @param Newscoop\Criteria\SlideshowCriteria $criteria
+     *
+     * @return Newscoop\ListResult
+     */
+    public function getListByCriteria(SlideshowCriteria $criteria)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p, i, ii')
+            ->leftJoin('p.items', 'i')
+            ->leftJoin('i.image', 'ii');
+
+        if ($criteria->publication) {
+            $publicationPackages = $this->_em->getRepository('Newscoop\Package\ArticlePackage')
+                ->createQueryBuilder('ap')
+                ->select('ap')
+                ->leftJoin('ap.article', 'a')
+                ->where('a.publication = :publication')
+                ->setParameter('publication', $criteria->publication)
+                ->getQuery()
+                ->getArrayResult();
+
+            $packagesIds = array();
+            foreach ($publicationPackages as $package) {
+                $packagesIds[] = $package['package_id'];
+            }
+
+            $qb->andWhere('p.id IN (:packagesIds)')
+                    ->setParameter('packagesIds', $packagesIds);
+
+            $criteria->publication = null;
+        }
+
+        foreach ($criteria->perametersOperators as $key => $operator) {
+            if ($criteria->$key !== null) {
+                $qb->andWhere('p.'.$key.' '.$operator.' :'.$key)
+                    ->setParameter($key, $criteria->$key);
+            }
+        }
+
+        $metadata = $this->getClassMetadata();
+        foreach ($criteria->orderBy as $key => $order) {
+            if (array_key_exists($key, $metadata->columnNames)) {
+                $key = 'p.' . $key;
+            }
+
+            $qb->orderBy($key, $order);
+        }
+        $query = $qb->getQuery();
+
+        return $query;
     }
 
     /**

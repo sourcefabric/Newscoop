@@ -20,10 +20,10 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
  */
 class EventDispatcherProxy implements EventSubscriber
 {
-    private $dispatcher;
+    protected $dispatcher;
 
     /** @var array */
-    private $events = array();
+    protected $events = array();
 
     /**
      * @param $dispatcher

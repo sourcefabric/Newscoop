@@ -28,9 +28,9 @@ abstract class AEntityBaseServiceDoctrine
     /* --------------------------------------------------------------- */
 
     /** @var Newscoop\Service\Resource\ResourceId */
-    private $id;
+    protected $id;
     /** @var Doctrine\ORM\EntityManager */
-    private $em = NULL;
+    protected $em = NULL;
 
     /* ------------------------------- */
     /** @var string */

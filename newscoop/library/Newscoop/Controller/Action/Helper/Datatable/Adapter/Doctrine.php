@@ -19,22 +19,22 @@ class Doctrine extends AAdapter
     /** 
      * @var Doctrine\ORM\EntityManager 
      */
-    private $_entityManager;
+    protected $_entityManager;
 
     /**
      * @var Doctrine\ORM\EntityRepository 
      */
-    private $_repository;
+    protected $_repository;
 
     /** 
      * @var string
      */
-    private $_entityName;
+    protected $_entityName;
 
     /**
      * @var QueryBuilder
      */
-    private $_queryObject;
+    protected $_queryObject;
     
     /**
      * @param Doctrine\ORM\EntityRepository $repository

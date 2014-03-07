@@ -12,7 +12,7 @@ namespace Newscoop;
 class SmartyView extends \Zend_View_Abstract
 {
     /** @var Smarty */
-    private $smarty;
+    protected $smarty;
 
     /**
      */

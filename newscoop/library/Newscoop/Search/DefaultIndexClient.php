@@ -25,42 +25,42 @@ class DefaultIndexClient implements IndexClientInterface
      *
      * @var Newscoop\Search\DocumentInterface
      */
-    private $item;
+    protected $item;
 
     /**
      * Newscoop service interface
      *
      * @var Newscoop\Search\ServiceInterface
      */
-    private $service;
+    protected $service;
 
     /**
      * Symfony container
      *
      * @var Symfony\Component\DependencyInjection\Container
      */
-    private $container;
+    protected $container;
 
     /**
      * Contains data to be added
      *
      * @var array
      */
-    private $add = array();
+    protected $add = array();
 
     /**
      * Contains data to be updated
      *
      * @var array
      */
-    private $update = array();
+    protected $update = array();
 
     /**
      * Contains data to be deleted
      *
      * @var array
      */
-    private $delete = array();
+    protected $delete = array();
 
     /**
      * @param Container $container

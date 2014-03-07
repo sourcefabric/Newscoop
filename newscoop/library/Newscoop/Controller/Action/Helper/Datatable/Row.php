@@ -9,7 +9,7 @@ namespace Newscoop\Controller\Action\Helper\Datatable;
 
 class Row // implements \ArrayAccess, \IteratorAggregate
 {
-    private $_data;
+    protected $_data;
     
     public function __construct()
     {

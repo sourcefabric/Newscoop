@@ -17,12 +17,12 @@ class IpFacade
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\Entity\Repository\User\IpRepository
      */
-    private $repository;
+    protected $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

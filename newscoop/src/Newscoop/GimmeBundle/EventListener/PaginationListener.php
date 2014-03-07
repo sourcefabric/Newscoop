@@ -25,13 +25,13 @@ class PaginationListener
      * Session object
      * @var Session
      */
-    private $session;
+    protected $session;
 
     /**
      * Paginator service object
      * @var PaginatorService
      */
-    private $paginatorService;
+    protected $paginatorService;
 
     /**
      * Construct PaginationListener object

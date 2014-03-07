@@ -53,9 +53,9 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	/* --------------------------------------------------------------- */
 
 	/** @var Newscoop\Service\Resource\ResourceId */
-	private $id;
+	protected $id;
 	/** @var Newscoop\Service\IErrorHandler */
-	private $errorHandler = NULL;
+	protected $errorHandler = NULL;
 
 	/* ------------------------------- */
 

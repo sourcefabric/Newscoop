@@ -115,9 +115,18 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getImageUrl()
+    public function getImageUrl($width = null, $height = null, $specs = 'crop')
     {
         $url = $this->m_dbObject->getImageUrl();
+
+        if ($width && $height) {
+            $container = \Zend_Registry::get('container');
+
+            return $container->get('zend_router')->assemble(array(
+                'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImageFileName(), $width, $height, $specs),
+            ), 'image', false, false);
+        }
+
         return $url;
     }
 

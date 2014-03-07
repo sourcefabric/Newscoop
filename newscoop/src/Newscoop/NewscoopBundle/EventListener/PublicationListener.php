@@ -20,7 +20,7 @@ class PublicationListener
      * Publication service
      * @var PublicationService
      */
-    private $publicationService;
+    protected $publicationService;
 
     /**
      * Contruct PublicationListener object

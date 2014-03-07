@@ -18,12 +18,12 @@ class UpdateStorageService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var Newscoop\Storage\StorageService
      */
-    private $storage;
+    protected $storage;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

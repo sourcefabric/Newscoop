@@ -45,122 +45,122 @@ class LocalImage implements ImageInterface
      * @ORM\Column(name="Location")
      * @var string
      */
-    private $location;
+    protected $location;
 
     /**
      * @ORM\Column(name="ImageFileName", nullable=True, length=80)
      * @var string
      */
-    private $basename;
+    protected $basename;
 
     /**
      * @ORM\Column(name="ThumbnailFileName", nullable=True, length=80)
      * @var string
      */
-    private $thumbnailPath;
+    protected $thumbnailPath;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="UploadedByUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="datetime", name="TimeCreated", nullable=true)
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime", name="LastModified", nullable=true)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @ORM\Column(nullable=True, name="Description")
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="width")
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="height")
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @ORM\Column(nullable=True, name="Photographer")
      * @var string
      */
-    private $photographer;
+    protected $photographer;
 
     /**
      * @ORM\Column(nullable=True, name="photographer_url")
      * @var string
      */
-    private $photographerUrl;
+    protected $photographerUrl;
 
     /**
      * @ORM\Column(nullable=True, name="Place")
      * @var string
      */
-    private $place;
+    protected $place;
 
     /**
      * @ORM\Column(nullable=True, name="Date")
      * @var string
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(name="ContentType")
      * @var string
      */
-    private $contentType;
+    protected $contentType;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
-    private $renditions;
+    protected $renditions;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
-    private $items;
+    protected $items;
 
     /**
      * @ORM\Column(type="integer", name="is_updated_storage")
      * @var int
      */
-    private $isUpdatedStorage = 0;
+    protected $isUpdatedStorage = 0;
 
     /**
      * @ORM\Column(name="Source", nullable=true)
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * @ORM\Column(type="string", name="Status")
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @param string $image

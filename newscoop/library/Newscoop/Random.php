@@ -15,12 +15,12 @@ class Random
     /**
      * @var array
      */
-    private $chars = array();
+    protected $chars = array();
 
     /**
      * @var int
      */
-    private $chars_count;
+    protected $chars_count;
 
     /**
      */

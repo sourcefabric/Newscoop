@@ -33,22 +33,22 @@ class Template
     );
 
     /** @var Newscoop\Storage */
-    private $storage;
+    protected $storage;
 
     /** @var Newscoop\Entity\Repository\TemplateRepository */
-    private $repository;
+    protected $repository;
 
     /**
      * Used for getting the proper id of a template
      * @var Newscoop\Service\Implementation\SyncResourceServiceDoctrine
      */
-    private $syncResServ;
+    protected $syncResServ;
 
     /**
      * The theme that the files belong to
      * @var Newscoop\Entity\Theme
      */
-    private $theme;
+    protected $theme;
 
     /**
      * @param Newscoop\Storage $storage

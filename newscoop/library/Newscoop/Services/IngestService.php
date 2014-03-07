@@ -31,13 +31,13 @@ class IngestService
     const MODE_SETTING = 'IngestAutoMode';
 
     /** @var array */
-    private $config = array();
+    protected $config = array();
 
     /** Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var Newscoop\Services\Ingest\PublisherService */
-    private $publisher;
+    protected $publisher;
 
 
     /**

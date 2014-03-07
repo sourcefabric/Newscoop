@@ -16,7 +16,7 @@ class TemplatesService
     /**
      * @var \CampTemplate
      */
-    private $smarty;
+    protected $smarty;
 
     public function __construct()
     {

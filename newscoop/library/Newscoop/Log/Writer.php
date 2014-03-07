@@ -20,7 +20,7 @@ use DateTime,
 class Writer extends Zend_Log_Writer_Abstract
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em = NULL;
+    protected $em = NULL;
 
     /** @var array */
     private static $ipKeys = array(

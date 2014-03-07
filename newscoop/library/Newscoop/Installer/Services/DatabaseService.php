@@ -16,7 +16,7 @@ use Doctrine\DBAL\Connection;
  */
 class DatabaseService
 {
-    private $logger;
+    protected $logger;
     public $errorQueries = array();
     public $sampleTemplates = array(
         'set_quetzal' => array(

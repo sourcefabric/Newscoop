@@ -20,7 +20,7 @@ class ArticleListener
      * Article service
      * @var ArticleService
      */
-    private $articleService;
+    protected $articleService;
 
     /**
      * Construct ArticleListener object

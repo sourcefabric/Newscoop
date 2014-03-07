@@ -21,7 +21,7 @@ class TopicService
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @param EntityManager $em

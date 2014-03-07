@@ -51,6 +51,7 @@ fos_rest:
     exception:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
+            'Newscoop\Exception\ResourceIsEmptyException': 204
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
@@ -58,6 +59,7 @@ fos_rest:
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
+            'Newscoop\Exception\ResourceIsEmptyException': false
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Doctrine\ORM\EntityNotFoundException': true
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
