@@ -775,14 +775,14 @@
             },
             "require-dev": {
                 "jms/serializer-bundle": "0.12.*",
-                "sensio/framework-extra-bundle": ">=2.1,<3.0",
+                "sensiolabs/framework-extra-bundle": ">=2.1,<3.0",
                 "symfony/form": ">=2.1,<3.0",
                 "symfony/security": ">=2.1,<3.0",
                 "symfony/yaml": ">=2.1,<3.0"
             },
             "suggest": {
                 "jms/serializer-bundle": "Add support for advanced serialization capabilities, recommended, requires 0.12.*",
-                "sensio/framework-extra-bundle": "Add support for route annotations and the view response listener",
+                "sensiolabs/framework-extra-bundle": "Add support for route annotations and the view response listener",
                 "symfony/serializer": "Add support for basic serialization capabilities, requires >=2.0,<2.3-dev"
             },
             "type": "symfony-bundle",
@@ -1135,7 +1135,7 @@
                 "doctrine/orm": "*",
                 "jms/security-extra-bundle": "1.*",
                 "phpcollection/phpcollection": ">=0.1,<0.3-dev",
-                "sensio/framework-extra-bundle": "*",
+                "sensiolabs/framework-extra-bundle": "*",
                 "symfony/browser-kit": "*",
                 "symfony/class-loader": "*",
                 "symfony/form": "*",
@@ -1288,7 +1288,7 @@
             "require-dev": {
                 "doctrine/doctrine-bundle": "*",
                 "doctrine/orm": "*",
-                "sensio/framework-extra-bundle": "*",
+                "sensiolabs/framework-extra-bundle": "*",
                 "symfony/browser-kit": "*",
                 "symfony/class-loader": "*",
                 "symfony/css-selector": "*",
@@ -1950,17 +1950,17 @@
             "time": "2012-12-03 18:00:04"
         },
         {
-            "name": "sensio/distribution-bundle",
+            "name": "sensiolabs/distribution-bundle",
             "version": "2.2.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sensio/SensioDistributionBundle.git",
+                "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
                 "reference": "v2.3.0-BETA1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensio/SensioDistributionBundle/zipball/v2.3.0-BETA1",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/v2.3.0-BETA1",
                 "reference": "v2.3.0-BETA1",
                 "shasum": ""
             },
@@ -1996,7 +1996,7 @@
             "time": "2013-04-16 15:18:14"
         },
         {
-            "name": "sensio/framework-extra-bundle",
+            "name": "sensiolabs/framework-extra-bundle",
             "version": "2.2.x-dev",
             "target-dir": "Sensio/Bundle/FrameworkExtraBundle",
             "source": {
