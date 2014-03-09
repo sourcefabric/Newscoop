@@ -107,14 +107,16 @@ class EmailService
     /**
      * Send email
      *
-     * @param string $placeholder
-     * @param string $message
-     * @param string $to
-     * @param string $from
+     * @param string      $placeholder
+     * @param string      $message
+     * @param string      $to
+     * @param string|null $from
+     * @param string|null $attachmentDir
      *
      * @return void
+     * @throws Exception when error sending email
      */
-    public function send($placeholder, $message, $to, $from = null)
+    public function send($placeholder, $message, $to, $from = null, $attachmentDir = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();
@@ -135,6 +137,10 @@ class EmailService
                 ->setFrom($from)
                 ->setTo($to)
                 ->setBody($message, 'text/html');
+
+            if ($attachmentDir) {
+                $messageToSend->attach(\Swift_Attachment::fromPath($attachmentDir));
+            }
 
             $this->mailer->send($messageToSend);
         } catch (\Exception $exception) {

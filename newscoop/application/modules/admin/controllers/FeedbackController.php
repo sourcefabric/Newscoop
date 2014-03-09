@@ -69,12 +69,14 @@ class Admin_FeedbackController extends Zend_Controller_Action
         );
         $table->setCols(
             array(
-                'index' => $view->toggleCheckbox(), 'user' => $translator->trans('User', array(), 'comments'),
+                'id' => $view->toggleCheckbox(), 'user' => $translator->trans('User', array(), 'comments'),
                 'message' => $translator->trans('Date') . ' / ' . $translator->trans('Message', array(), 'comments'),
                 'url' => $translator->trans('Coming from', array(), 'comments')
             ),
-            array('index' => false)
+            array('id' => false)
         );
+
+        $table->setInitialSorting(array('id' => 'desc'));
 
         $index = 1;
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
@@ -86,6 +88,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $publication = $feedback->getPublication();
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
+                $translator = \Zend_Registry::get('container')->getService('translator');
                 
                 if ($article) {
                     $article_name = $article->getName();
@@ -129,10 +132,18 @@ class Admin_FeedbackController extends Zend_Controller_Action
                     $banned = false;
                 }
 
+                $zendRouter = \Zend_Registry::get('container')->getService('zend_router');
+                $userUrl = $zendRouter->assemble(array_merge(array(
+                    'module' => 'default',
+                    'controller' => 'user',
+                    'action' => 'profile',
+                )), 'default', true);
+
                 return array(
-                    'index' => $index++,
+                    'id' => $index++,
                     'user' => array(
-                        'username' => $user->getUsername(),
+                        'username' => strip_tags($user->getUsername()),
+                        'userUrl' => $userUrl.'/'.strip_tags($user->getUsername()),
                         'name' => $user->getFirstName(),
                         'email' => $user->getEmail(),
                         'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
@@ -142,7 +153,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                             'user' => $user->getId(),
                             'publication' => $publication->getId()
                         )),
-                        'is_banned' => $banned
+                        'is_banned' => $banned,
                     ),
                     'message' => array(
                         'id' => $feedback->getId(),
@@ -179,14 +190,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 ->setOption('sDom','<"top">lf<"#actionExtender">rit<"bottom"ip>')
                 ->setStripClasses()
                 ->toggleAutomaticWidth(false)
-                ->setDataProp(array('index' => null, 'user' => null, 'message' => null, 'url' => null))
-                ->setClasses(array('index' => 'commentId', 'user' => 'commentUser', 'message' => 'commentTimeCreated', 'url' => 'commentThread'));
+                ->setDataProp(array('id' => null, 'user' => null, 'message' => null, 'url' => null))
+                ->setClasses(array('id' => 'commentId', 'user' => 'commentUser', 'message' => 'commentTimeCreated', 'url' => 'commentThread'));
 
         try {
             $table->dispatch();
         } catch (Exception $e) {
-            var_dump($e);
-            exit;
+            throw new \Exception($e->getMessage());
         }
         //$this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));
         //$this->view->editForm = $this->editForm;
