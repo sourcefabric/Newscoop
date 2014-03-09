@@ -5,7 +5,11 @@
     require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
 ?>
 <h1><?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
-<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="return validateTinyMCEEditors();">
+<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="<?php
+    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+        echo 'return validateTinyMCEEditors();';
+    }
+?>">
 
 <div class="editarea">
     <div>

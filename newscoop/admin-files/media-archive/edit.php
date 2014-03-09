@@ -117,7 +117,11 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px; max-width: 800px">
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
-<FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="return validateTinyMCEEditors();">
+<FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="<?php
+    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+        echo 'return validateTinyMCEEditors();';
+    }
+?>">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>

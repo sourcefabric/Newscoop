@@ -29,7 +29,12 @@
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'edit-image-data'
-))); ?>" onSubmit="return validateTinyMCEEditors();">
+))); ?>" onSubmit="<?php
+    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+        echo 'return validateTinyMCEEditors();';
+    }
+?>">
+
 
 <input type="hidden" name="article_number" value="<?php echo($this->article); ?>">
 <input type="hidden" name="language_id" value="<?php echo($this->languageId); ?>">
