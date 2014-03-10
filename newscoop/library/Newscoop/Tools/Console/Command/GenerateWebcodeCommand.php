@@ -10,6 +10,7 @@ namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,7 +27,8 @@ class GenerateWebcodeCommand extends Console\Command\Command
         $this
             ->setName('webcode:generate')
             ->setDescription('Generates webcodes for articles without it.')
-            ->addArgument('number', InputArgument::OPTIONAL, 'Article number range to start from, e.g. 300', 1);
+            ->addArgument('number', InputArgument::OPTIONAL, 'Article number range to start from, e.g. 300', 1)
+            ->addOption('clear', null, InputOption::VALUE_NONE, 'If set, clears indexes. Use this first time.');
     }
 
     /**
@@ -38,25 +40,67 @@ class GenerateWebcodeCommand extends Console\Command\Command
         $number = (int) $input->getArgument('number');
 
         try {
-            $output->writeln('<info>Generating webcodes. Please wait! It can take up to few minutes, depends on database size.</info>');
             ini_set('memory_limit', '-1');
 
-            $articles = $em->getRepository('Newscoop\Entity\Article')
-                ->createQueryBuilder('a')
-                ->getQuery()
-                ->getResult();
+            if ($input->getOption('clear')) {
+                $output->writeln('<info>Clearing webcodes.</info>');
 
-            foreach ($articles as $key => $article) {
-                if ($article->getNumber() > $number && $number) {
-                    $this->clearWebcode($em, $article->getNumber());
-                    $webcode = $this->encode($article->getNumber());
-                    $webcodeEntity = new \Newscoop\Entity\Webcode($webcode, $article);
-                    $em->persist($webcodeEntity);
-                    $this->updateArticleWebcode($em, $webcode, $article->getNumber());
-                }
+                $qb = $em->createQueryBuilder();
+                $result = $qb->update('Newscoop\Entity\Article', 'a')
+                    ->set('a.webcode', 'null')
+                    ->getQuery()
+                    ->execute();
+
+                $output->writeln('<info>Articles clear from webcode: '.$result.'.</info>');
+
+                $result = $qb->update('Newscoop\Entity\Webcode', 'w')
+                    ->delete()
+                    ->getQuery()
+                    ->execute();
+
+                $output->writeln('<info>Webcodes cleared: '.$result.'.</info>');
             }
 
-            $em->flush();
+            $output->writeln('<info>Generating webcodes. Please wait! It can take up to few minutes, depends on database size.</info>');
+
+            $articlesCount = (int) $em->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('COUNT(a.number)')
+                ->where('a.webcode IS NULL')
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            $output->writeln('<info>Articles to generate webcode for: '.$articlesCount.'.</info>');
+
+            $batch = 100;
+            $steps = ($articlesCount > $batch) ? ceil($articlesCount/$batch) : 1;
+
+            for ($i = 0; $i < $steps; $i++) {
+
+                $offset = $i * $batch;
+
+                $articles = $em->getRepository('Newscoop\Entity\Article')
+                    ->createQueryBuilder('a')
+                    ->where('a.webcode IS NULL')
+                    ->setFirstResult($offset)
+                    ->setMaxResults($batch)
+                    ->getQuery()
+                    ->getResult();
+
+                foreach ($articles as $key => $article) {
+                    if ($article->getNumber() > $number && $number) {
+                        $this->clearWebcode($em, $article->getNumber());
+                        $webcode = $this->encode($article->getNumber());
+
+                        $webcodeEntity = new \Newscoop\Entity\Webcode($webcode, $article);
+                        $em->persist($webcodeEntity);
+                        $this->updateArticleWebcode($em, $webcode, $article->getNumber());
+                    }
+                }
+
+                $em->flush();
+            }
+
             $output->writeln('<info>Webcodes generated successfully!</info>');
         } catch (\Exception $e) {
             $output->writeln('<error>'.$e->getMessage().'</error>');
