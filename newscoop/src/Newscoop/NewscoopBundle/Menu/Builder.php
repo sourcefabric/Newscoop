@@ -261,14 +261,24 @@ class Builder
                 ->setLinkAttribute('data-toggle', 'rightdrop');
 
                 // add content/publication/issue/section
+                    $firstSections = array();
                     foreach ($issue->getSections() as $section) {
-                        $sectionId = $section->getNumber();
-                        $sectionName = sprintf('%d. %s', $section->getNumber(), $section->getName());
-                        $this->addChild(
-                            $menu[$publication->getName()][$issueName],
-                            $sectionName,
-                            array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
-                        ));
+                        $firstSections[$section->getNumber()] = $section;
+                    }
+
+                    ksort($firstSections);
+                    $sectionsCounter = 0;
+                    foreach ($firstSections as $section) {
+                        if ($sectionsCounter < 10) {
+                            $sectionId = $section->getNumber();
+                            $sectionName = sprintf('%d. %s', $section->getNumber(), $section->getName());
+                            $this->addChild(
+                                $menu[$publication->getName()][$issueName],
+                                $sectionName,
+                                array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"
+                            ));
+                            $sectionsCounter ++;
+                        }
                     }
 
                     if (count($issue->getSections()) > 0) {
