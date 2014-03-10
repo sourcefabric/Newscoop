@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': "Karten benutzen"
+Locations: Orte
+First: Erste(r)
+Last: Letzte(r)
+'Publish Schedule': "Zeitplan der Publizierung"
+'You do not have the right to delete articles.': "Sie haben keine Berechtigung, Artikel zu löschen."
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Sie haben keine Berechtigung, den Artikelstatus zu ändern. Eingestellte Artikel können nur von berechtigten Nutzern geändert werden. '
+'Toggle: On Section Page': 'Schalter: auf Rubrikenseite'
+'Toggle: On Front Page': 'Schalter: auf Titelseite'
+'Toggle: Comments': 'Schalter: Kommentare'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Der Artikel wurde von $1 ($2) vor $3 Minuten gesperrt.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Der Artikel wurde von $1 ($2) vor $3 Stunden und $4 Minuten gesperrt. '
+'Status: Publish': 'Status: Veröffentlichen'
+'Status: Set New': 'Status: Neu eingestellt'
+'Status: Submit': 'Status: Einpflegt'
+'Showing _START_ to _END_ of _TOTAL_ entries': "Zeige _START_ bis _END_ von _TOTAL_ Eingaben"
+'Show / hide columns': 'Spalte zeigen/verbergen'
+'Select some article first.': 'Zuerst einen Artikel auswählen.'
+'Select action': 'Aktion auswählen'
+'Reset all filters': 'Alle Filter zurückstellen'
+'Save order': 'Reihenfolge speichern'
+'Publish Date': 'Veröffentlichungsdatum'
+'Publish date': 'Veröffentlichungsdatum'
+'Published after': 'Veröffentlicht nach'
+'Published before': 'Veröffentlicht bevor'
+'Order updated.': 'Reihenfolge aktualisiert.'
+'No sections found': 'Keine Rubriken gefunden'
+'No records found.': 'Keine Datensätze gefunden'
+'No publications found': 'Keine Publikationen gefunden'
+'No issues found': 'Keine Ausgaben gefunden'
+'No entries to show': 'Keine Einträge zu zeigen'
+'Loading data': 'Daten laden'
+'Last Modified': 'Zuletzt geändert'
+'Filter by...': 'Filtern nach...'
+'Filter': 'Filter'
+'Duplicate to another section': 'Eine andere Rubrik duplizieren'
+'Display _MENU_ records': 'Zeigt _MENU_ Datensätze'
+Creator: Ersteller
+'Create Date': 'Datum erstellen'
+'Article status set to $1': 'Artikelstatus ist $1'
+'Article(s) duplicated': 'Artikel dupliziert'
+'Article(s) unlocked': 'Artikel entsperrt'
+'Articles updated': 'Artikel aktualisiert'
+'Are you sure you want to delete selected articles?': 'Wollen Sie wirklich die ausgewählten Artikel löschen?'
+'All Issues': 'Alle Ausgaben'
+'All Publications': 'Alle Publikationen'
+'All Sections': 'Alle Rubriken'
+'Access denied.': 'Zugang verwehrt.'
+'$1 articles have been removed': '$1 Artikel sind entfernt worden'
+'$1 toggled': '$1 umgeschaltet.'
+' - filtering from _MAX_ records': ' - filtert aus _MAX_ Einträgen '

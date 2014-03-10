@@ -125,7 +125,7 @@ Publish: Veröffentlichen
 Unpublish: 'Zurück stellen'
 Unlock: Freigeben
 Uploaded: Hochgeladen
-YYYY-MM-DD: JJJJ-MM-TT
+YYYY-MM-DD: 'JJJJ-MM-TT'
 Submit: Absenden
 Image: Bild
 Description: Beschreibung
@@ -148,6 +148,7 @@ Localizer: Lokalisierung
 'Add new publication': 'Neue Publikation hinzufügen'
 'Upload new template': 'Neues Template hochladen'
 'Add new staff member': 'Neues Personalkonto einrichten'
+'Staff member deleted.': 'Mitarbeiterin gelöscht.'
 'Add new subscriber': 'Neuen Abonnenten einrichten'
 'Add new user type': 'Neuen Benutzertyp hinzufügen'
 'Add new article type': 'Neuen Artikel hinzufügen'
@@ -209,7 +210,7 @@ Add: Hinzu
 'Select All': 'Alle auswählen'
 'Select None': 'Keine auswählen'
 'Add Event': 'Ereignis hinzufügen'
-N/A: N.A.
+N/A: 'N.A.'
 'On Front Page': 'Auf der Startseite'
 'On Section Page': 'Auf der Rubrikenseite'
 'Created by': 'Erstellt von'
@@ -244,30 +245,40 @@ Author: Autor/in
 Other: Andere
 'Time:': 'Uhrzeit:'
 'No events.': 'Keine Ereignisse.'
-'Default templates': Standard-Template
+'Default templates': 'Standard-Template'
 'System Preferences': Systemeinstellungen
 'The date must be in the future.': 'Das Datum muss in der Zukunft liegen.'
 Send: Senden
 'Thank you.': 'Vielen Dank.'
 'Please take a minute to send us an email.': 'Bitte nehmen Sie sich eine Minute, um uns eine E-Mail zu senden.'
-(optional): (optional)
+'(optional)': '(optional)'
 'The URL you entered is invalid: $1': 'Die angegebene URL ist ungültig: $1'
 Reads: Gelesen
 'Publish with issue': 'Mit Ausgabe veröffentlichen'
 'Universal List': 'Universelle Liste und Suche'
 'Invalid security token!': 'Ungültiges Sicherheits-Token! '
 Authors: Autoren
-'User name': Benutzername
-'User Types': Benutzertypen
-'Subscription Default Time': 'Standard Abonement Laufzeit'
-'No such language.': 'Sprache nicht vorhanden'
-'No such infotype.': 'Infotyp nicht vorhanden'
-'No such keyword.': 'Stichwort nicht vorhanden'
-'No such country.': 'Land nicht vorhanden'
-'User may add/change user accounts and passwords': 'BenutzerIn kann Benutzerprofile hinzufügen / ändern'
-'User may delete user accounts': 'BenutzerIn kann Benutzerprofile löschen'
-'Add new user account': 'Neues Benutzerprofil hinzufügen'
-'There are $1 issue(s) left.': 'Es sind noch $1 Ausgaben vorhanden'
-'There are $1 keyword(s) left.': 'Es sind noch $1 Stichworte vorhanden'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Name (bearbeiten, bitte anklicken)'
-'New field': 'Neues Feld'
+Title: Title
+'Edit country': 'Edit country'
+'Entry $1 prepared for publishing': 'Entry $1 prepared for publishing'
+'Entry deleted': 'Entry deleted'
+'Feed saved': 'Feed saved'
+'Item published': 'Item published'
+'Settings saved': 'Settings saved'
+'Self-delete is not permitted.': 'Self-delete is not permitted.'
+'Edit staff member $1': 'Edit staff member $1'
+'Delete staff member $1': 'Delete staff member $1'
+'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure it does not already exist'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist'
+'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you to manage users. Aborted.'
+'Staff member saved.': 'Staff member saved.'
+'Permissions: $1': 'Permissions: $1'
+'Change user account information': 'Change user account information'
+'Staff management': 'Staff management'
+'Updated': 'Updated'
+'Options': 'Options'
+'Verified': 'Verified'
+Confirm: Confirm
+at: auf
+published: veröffentlicht
+unpublished: unveröffentlicht

@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': 'Zeige Newsfeed Bilder an.'
+'Mark image': 'Wählen Sie ein Foto'
+'Add selected images to slideshow': 'Markierte Bilder zur Bildstrecke hinzufügen. '
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Das Bild ist leider zu klein. Das Bild muss mindestens  %dx%d groß sein.'
 'Slideshow rendition': 'Bildzuschnitt für Bildstrecke'
 'Renditions reloaded': 'Bildzuschnitte neu geladen'
@@ -77,7 +77,7 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Datum<BR><SMALL>(yyyy-mm-dd)</SMALL> '
 'Attach selected slideshows': 'Ausgewählte Slideshows anhängen'
 'No slideshows': 'Keine Slideshows angehängt'
 'Delete image $1': 'Bild $1 löschen'
-'Click one of the ': 
-'Are you sure you want to delete the image $1?': 
+'Click one of the ': 'Klicken Sie auf eine der'
+'Are you sure you want to delete the image $1?': 'Sind Sie sicher, dass Sie um das Bild zu löschen?'
 'The image $1 has been added.': 'Bild $1 erfolgreich hinzugefügt'
 'Filter by uploader...': 'Filtern nach uploader...'

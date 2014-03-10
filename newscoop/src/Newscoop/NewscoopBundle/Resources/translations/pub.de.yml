@@ -23,7 +23,7 @@
 'Comments enabled?': 'Kommentare aktivieren?'
 'Comments enabled': 'Kommentare aktiviert'
 'Article comments default to enabled?': 'Artikelkommentare standardmäßig aktivieren?'
-'trial subscription': Probe-Abonnement
+'trial subscription': 'Probe-Abonnement'
 'paid subscription': 'Bezahltes Abonnement'
 'time units': Zeiteinheiten
 'one language': 'Eine Sprache'
@@ -35,7 +35,7 @@
 'Go To Issues': 'Gehe zu Ausgaben'
 'Delete publication $1': 'Publikation $1 löschen'
 'No publications.': 'Keine Publikationen'
-'Default Site Alias': Standard-Seitenalias
+'Default Site Alias': 'Standard-Seitenalias'
 'URL Type': 'URL Typ'
 'Country<BR><SMALL>(click to edit)</SMALL>': 'Land<BR><SMALL>(zum Bearbeiten anklicken)</SMALL>'
 'Delete alias $1': 'Eintrag $1 löschen'

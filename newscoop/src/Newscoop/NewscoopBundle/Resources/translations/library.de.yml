@@ -1,5 +1,5 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': 'Artikel mit gefilterten Typen anzeigen'
+'Display Articles of Filtered Types': 'Artikel mit gefilterten Typen anzeigen'
 Webcode: Webcode
 'View article': 'Artikel ansehen. '
 Source: Quelle
@@ -69,5 +69,5 @@ Creator: 'Erstellt von'
 Added: Hinzugefügt
 'Access denied.': 'Zugang verweigert'
 '$1 toggled.': '$1 ausgewählt'
-'$1 articles have been removed': '$ 1 Artikel wurden entfernt'
-' - filtering from _MAX_ records': 'filtert aus _MAX_ Einträgen '
+'$1 articles have been removed': '$1 Artikel wurden entfernt'
+' - filtering from _MAX_ records': ' - filtert aus _MAX_ Einträgen '

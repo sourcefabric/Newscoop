@@ -1,0 +1,40 @@
+newscoop:
+  datatable:
+    label:
+      filter: Filter
+      first: Erste(r)
+      last: Letzte(r)
+      next: Nächste(r)
+      norecords: Keine Datensätze gefunden.
+      previous: Vorherige(r)
+      processing: In Bearbeitung...
+      search: Suche
+    table:
+      filtering: '- fltern aus_MAX_Datensätzen'
+      info: Zeigt _START_ bis _END_ von _TOTAL_ Eingaben
+      menu: Zeige _MENU_ Datensätze
+      noentries: Keine Eingabe anzuzeigen
+  plugins_manager:
+    form:
+      package: Paket muss eine Zip-Datei sein.
+      submit: Hochladen
+    install:
+      public: Neue Plugins installieren
+    installed_table:
+      actions: Aktionen
+      description: Beschreibung
+      enabled: Ermöglicht
+      install_plugin: Installieren
+      installed_at: Installiert um
+      license: Lizenz
+      name: Name
+      plugin_installed: Installiert
+      remove_plugin: Entfernen
+      update_plugin: Aktualisierung
+      updated_at: Aktualisiert um
+      version: Version
+    private_plugins: Private Plugins
+    public_plugins: Öffentliche Plugins
+    search_for_plugins: Nach Plugins suchen
+    upload:
+      private: Privates Plugin hochladen
