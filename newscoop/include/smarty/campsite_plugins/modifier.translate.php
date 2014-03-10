@@ -17,22 +17,24 @@
  *     $string
  * @param Translation domain
  *     $domain
+  * @param params
+ *     $params
  *
- * @return
+ * @return string
  *
  */
 
-function smarty_modifier_translate($string, $domain)
+function smarty_modifier_translate($string, $domain = null, $params = array())
 {
     if (!isset($string)) {
         return '';
     }
 
-    if (!isset($domain)) {
+    if (!is_null($domain)) {
         $domain = 'theme_translation';
     }
 
     $translator = \Zend_Registry::get('container')->getService('translator');
 
-    return $translator->trans($string, array(), $domain);
+    return $translator->trans($string, $params, $domain);
 }
