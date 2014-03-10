@@ -45,10 +45,9 @@ class FeedbackRepository extends DatatableSource
         // get the entity manager
         $em = $this->getEntityManager();
         if (array_key_exists('user', $values)) {
-			$user = $em->getReference('Newscoop\Entity\User', $values['user']);
-			$entity->setUser($user);
+			$entity->setUser($values['user']);
 		}
-        
+
         if (!empty($values['publication'])) {
 			$publication = $em->getReference('Newscoop\Entity\Publication', $values['publication']);
 			$entity->setPublication($publication);
@@ -64,7 +63,7 @@ class FeedbackRepository extends DatatableSource
 			));
 			$entity->setArticle($article);
 		}
-        
+
         if (isset($values['subject'])) $entity->setSubject($values['subject']);
 		if (isset($values['message'])) $entity->setMessage($values['message']);
         if (isset($values['url'])) $entity->setUrl($values['url']);
@@ -139,7 +138,7 @@ class FeedbackRepository extends DatatableSource
             $dir = $params['sSortDir_0'] ? : 'asc';
             switch ($sortBy) {
                 case 'user':
-                    $qb->orderBy('s.name', $dir);
+                    $qb->orderBy('s.username', $dir);
                     break;
                 case 'message':
                     $qb->orderBy('e.time_created', $dir);
@@ -161,7 +160,7 @@ class FeedbackRepository extends DatatableSource
         if (isset($params['iDisplayLength'])) {
             $qb->setFirstResult((int)$params['iDisplayStart'])->setMaxResults((int)$params['iDisplayLength']);
         }
-        
+
         return $qb->getQuery()->getResult();
     }
 
@@ -175,7 +174,7 @@ class FeedbackRepository extends DatatableSource
     protected function buildWhere(array $cols, $search, $qb = null, $andx = null)
     {
         $orx = $qb->expr()->orx();
-        $orx->add($qb->expr()->like('s.name', $qb->expr()->literal("%{$search}%")));
+        $orx->add($qb->expr()->like('s.username', $qb->expr()->literal("%{$search}%")));
         $orx->add($qb->expr()->like('e.subject', $qb->expr()->literal("%{$search}%")));
         $orx->add($qb->expr()->like('e.message', $qb->expr()->literal("%{$search}%")));
         return $andx->add($orx);

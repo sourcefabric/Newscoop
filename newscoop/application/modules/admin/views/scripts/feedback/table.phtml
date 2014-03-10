@@ -75,7 +75,7 @@
       <tr>
         <td class="commentId sorting_1">
           <input type="checkbox" name="index[]" value="{{message.id}}" class="table-checkbox">
-          <span class="index">{{index}}.</span>
+          <span class="index">{{id}}.</span>
         </td>
         <td class="commentUser">
           <div class="commentUserHolder">
@@ -83,11 +83,10 @@
               <img src="{{user.avatar}}">
             </div>
             <p>
-            <p {% if (user.is_banned) %}class="user-blocked-avatar"{% endif %}><b>{{user.username}}</b></p>
+            <p {% if (user.is_banned) %}class="user-blocked-avatar"{% endif %}><a target="_blank" href="{{user.userUrl}}"><b>{{user.username}}</b></a></p>
             <p>{{user.name}}</p>
-                    
+
             <p><a href="mailto:{{user.email}}">{{user.email}}</a></p>
-            <p><a href="{{user.url}}">{{user.url}}</a></p>
             <p><a href="{{user.banurl}}" class="banUser"><span><?php echo $translator->trans('Ban/Unban user', array(), 'feedback'); ?></span></a></p>
             </p>
           </div>

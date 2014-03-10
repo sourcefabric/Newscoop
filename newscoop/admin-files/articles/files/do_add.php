@@ -121,10 +121,7 @@ $em = $container->get('em');
 if (!empty($_FILES['f_file'])) {
     $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
     $attachmentService = $container->get('attachment');
-    $fileLocation = $attachmentService->getStorageLocation(new \Newscoop\Entity\Attachment());
-    $path = $fileLocation.'/'.basename($_FILES['f_file']['name']);
-    move_uploaded_file($_FILES['f_file']['tmp_name'], $path);
-    $file = new UploadedFile($path, $_FILES['f_file']['name'], $_FILES['f_file']['type'], $_FILES['f_file']['size'], null, true);
+    $file = new UploadedFile($_FILES['f_file']['tmp_name'], $_FILES['f_file']['name'], $_FILES['f_file']['type'], $_FILES['f_file']['size'], null, true);
     $attachment = $attachmentService->upload($file, $f_description, $language, array('user' => $user));
 
     if ($f_language_specific != "yes") {
