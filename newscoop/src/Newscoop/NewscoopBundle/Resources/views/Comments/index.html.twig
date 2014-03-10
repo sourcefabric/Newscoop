@@ -179,9 +179,9 @@
                         <div class="commentArticleHolder">
                             <p>
                                 <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
-                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.comment.thread.section.name }}</span>
+                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
                             </p>
-                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a> 
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
                         </div>
                     </td>
                 </tr>
