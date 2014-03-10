@@ -25,7 +25,7 @@ final class MetaSlideshow
     /**
      * @var Newscoop\Package\Package
      */
-    private $slideshow;
+    public $slideshow;
 
     /**
      * @param Newscoop\Package\Package $package
