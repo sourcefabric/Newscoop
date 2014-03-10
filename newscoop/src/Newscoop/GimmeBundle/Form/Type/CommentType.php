@@ -31,6 +31,10 @@ class CommentType extends AbstractType
         $builder->add('email', null, array(
             'required' => false,
         ));
+
+        $builder->add('parent', null, array(
+            'required' => false,
+        ));
     }
 
     public function getName()
