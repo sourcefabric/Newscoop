@@ -131,8 +131,7 @@ class TopicService
      */
     public function addTopicToArticle($topicId, $articleId)
     {
-        try
-        {   
+        try {
             $articleTopic = new ArticleTopic();
             $topicObj = $this->em->getRepository('Newscoop\Entity\Topic')
                 ->findOneBy(array(
@@ -143,13 +142,32 @@ class TopicService
                 ->findOneBy(array(
                     'number' => $articleId,
             ));
-            
-            $articleTopic->setTopic($topicObj);
-            $articleTopic->setArticle($articleObj);
-            $this->em->persist($articleTopic);
-            $this->em->flush();
+
+            $qb = $this->em->getRepository('Newscoop\Entity\ArticleTopic')
+                ->createQueryBuilder('at');
+
+            $currentTopic = $qb
+                ->select('count(at)')
+                ->leftJoin('at.topic', 't')
+                ->leftJoin('at.article', 'a')
+                ->where('t.id = :topicId')
+                ->andWhere('a.number = :articleId')
+                ->setParameters(array(
+                    'topicId' => $topicId,
+                    'articleId' => $articleId
+                ))
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            if ((int) $currentTopic == 0) {
+                $articleTopic->setTopic($topicObj);
+                $articleTopic->setArticle($articleObj);
+                $this->em->persist($articleTopic);
+                $this->em->flush();
+            }
+
         } catch(\Exception $e) {
-            throw new \Exception('Fatal error occured. Try again!');
+            throw new \Exception($e->getMessage());
         }
     }
 
