@@ -29,7 +29,6 @@ if (!$g_user->hasPermission('CommentEnable')) {
       </li>
       <li><input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="default-button" /></li>
     </ul>
-    <input type="hidden" id="comments-total">
     </fieldset>
 </form>
 <script>
