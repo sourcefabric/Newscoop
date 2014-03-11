@@ -85,6 +85,18 @@ class SocialAuthService implements \Zend_Auth_Adapter_Interface
      */
     public function addIdentity(User $user, $provider, $providerUserId)
     {
+
+        $userIdentity = $this->em->getRepository('Newscoop\Entity\UserIdentity')
+            ->findOneBy(array(
+                'provider' => $provider,
+                'provider_user_id' => $providerUserId,
+            )
+        );
+
+        if ($userIdentity) {
+            return $userIdentity;
+        }
+
         $userIdentity = new UserIdentity($provider, $providerUserId, $user);
         $this->em->persist($userIdentity);
         $user->setLastLogin(new \DateTime());
