@@ -46,11 +46,11 @@ function addComment() {
 	    var call_url = '../comment/add-to-article/format/json';
 
 		var res_handle = function(data) {
-
 			$('#comment-add').each(function(){
 				this.reset();
 			});
-			loadComments();
+
+			loadComments(true);
 			flashMessage('<?php echo $translator->trans('Comment saved.', array(), 'article_comments'); ?>');
 
 		};
