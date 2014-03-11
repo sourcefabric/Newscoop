@@ -52,6 +52,8 @@ class AllowOriginListener
         }
         $response->headers->set('Access-Control-Allow-Methods', implode(', ', $allowedMethods));
 
+        $response->headers->set('Access-Control-Expose-Headers', 'X-Location, X-Debug');
+
         if (in_array('*', $allowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
         } else {
