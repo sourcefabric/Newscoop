@@ -151,7 +151,7 @@ Localizer: Lokalisierung
 'Staff member deleted.': 'Mitarbeiterin gelöscht.'
 'Add new subscriber': 'Neuen Abonnenten einrichten'
 'Add new user type': 'Neuen Benutzertyp hinzufügen'
-'Add new article type': 'Neuen Artikel hinzufügen'
+'Add new article type': 'Neuen Artikeltyp hinzufügen'
 'Add new country': 'Neues Land hinzufügen'
 'Add new language': 'Neue Sprache hinzufügen'
 'View logs': 'Logfiles anzeigen'
@@ -258,27 +258,27 @@ Reads: Gelesen
 'Universal List': 'Universelle Liste und Suche'
 'Invalid security token!': 'Ungültiges Sicherheits-Token! '
 Authors: Autoren
-Title: Title
-'Edit country': 'Edit country'
-'Entry $1 prepared for publishing': 'Entry $1 prepared for publishing'
-'Entry deleted': 'Entry deleted'
-'Feed saved': 'Feed saved'
-'Item published': 'Item published'
-'Settings saved': 'Settings saved'
-'Self-delete is not permitted.': 'Self-delete is not permitted.'
-'Edit staff member $1': 'Edit staff member $1'
-'Delete staff member $1': 'Delete staff member $1'
-'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure it does not already exist'
-'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist'
-'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you to manage users. Aborted.'
-'Staff member saved.': 'Staff member saved.'
-'Permissions: $1': 'Permissions: $1'
-'Change user account information': 'Change user account information'
-'Staff management': 'Staff management'
-'Updated': 'Updated'
-'Options': 'Options'
-'Verified': 'Verified'
-Confirm: Confirm
-at: auf
+Title: Titel
+'Edit country': 'Land bearbeiten'
+'Entry $1 prepared for publishing': 'Eintrag $1 vorbereitet zur Publikation'
+'Entry deleted': 'Eintrag gelöscht'
+'Feed saved': 'Feed gespeichert'
+'Item published': 'Artikel veröffentlicht'
+'Settings saved': 'Einstellungen gespeichert'
+'Self-delete is not permitted.': 'Selbst-Löschung ist nicht erlaubt.'
+'Edit staff member $1': 'Mitarbeiter $1 bearbeiten'
+'Delete staff member $1': 'Mitarbeiter $1 löschen'
+'Could not save user $1. Please make sure it does not already exist': 'Benutzer $1 konnte nicht gespeichert werden. Bitte stellen Sie sicher, dass der Benutzer nicht schon existiert.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Benutzer mit E-Mail-Adresse $1 konnte nicht gespeichert werden. Bitte prüfen Sie, ob diese E-Mail Adresse nicht schon existiert'
+'Changing user type would prevent you to manage users. Aborted.': 'Ändern des Benutzertyps führt dazu, dass Benutzer nicht mehr verwaltet werden dürfen. Abgebrochen.'
+'Staff member saved.': 'Mitarbeiter gespeichert.'
+'Permissions: $1': 'Berechtigungen: $1'
+'Change user account information': 'Benutzerinformation ändern'
+'Staff management': 'Mitarbeiter Management'
+'Updated': 'Aktualisiert'
+'Options': 'Optionen'
+'Verified': 'Verifiziert'
+Confirm: Bestätige
+at: um
 published: veröffentlicht
 unpublished: unveröffentlicht

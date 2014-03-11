@@ -394,9 +394,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $qb->where($andx);
         // limit
         if (isset($p_params['iDisplayLength'])) {
-            $qb->setFirstResult(0)->setMaxResults((int)$p_params['iDisplayLength'] - (int) $p_params['iDisplayStart']);
+            $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
         }
-        //ladybug_dump(count($qb->getQuery()->getArrayResult()));die;
         return $qb->getQuery()->getResult();
     }
 

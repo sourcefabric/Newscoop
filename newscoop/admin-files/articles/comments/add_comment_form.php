@@ -29,6 +29,7 @@ if (!$g_user->hasPermission('CommentEnable')) {
       </li>
       <li><input type="submit" value="<?php echo $translator->trans('Submit'); ?>" class="default-button" /></li>
     </ul>
+    <input type="hidden" id="comments-total">
     </fieldset>
 </form>
 <script>
@@ -46,11 +47,11 @@ function addComment() {
 	    var call_url = '../comment/add-to-article/format/json';
 
 		var res_handle = function(data) {
-
 			$('#comment-add').each(function(){
 				this.reset();
 			});
-			loadComments();
+
+			loadComments(true);
 			flashMessage('<?php echo $translator->trans('Comment saved.', array(), 'article_comments'); ?>');
 
 		};
