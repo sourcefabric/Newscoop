@@ -3184,7 +3184,8 @@ CREATE TABLE IF NOT EXISTS `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,
   `language_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`webcode`)
+  PRIMARY KEY (`webcode`),
+  UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE OAuthAccessToken (

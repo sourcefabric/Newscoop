@@ -44,6 +44,7 @@ function smarty_block_list_debates($p_params, $p_content, &$p_smarty, &$p_repeat
 	    $campContext->url->reset_parameter('f_debate_nr');
 	    $campContext->url->reset_parameter('f_debate_language_id');
 	    $campContext->resetCurrentList();
+        $campContext->debate = array();
     	return $html;
     } else {
         $campContext->debate = $currentDebate;

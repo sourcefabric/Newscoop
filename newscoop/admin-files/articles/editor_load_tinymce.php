@@ -55,6 +55,10 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorTable')) {
 	    $plugins[] = 'table';
 	}
+    if ($p_user->hasPermission('EditorTable')) {
+        $plugins[] = 'table';
+            $plugins[] = 'textbox';
+    }
 	if ($p_user->hasPermission('EditorLink')) {
 	    $plugins[] = 'campsiteinternallink';
 	    if ($p_objectType == 'article') {
@@ -220,9 +224,10 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar2[] = "fontsizeselect";
 	}
 
-	if ($p_user->hasPermission('EditorTable')) {
-	    $toolbar3[] = "tablecontrols";
-	}
+    if ($p_user->hasPermission('EditorTable')) {
+        $toolbar3[] = "tablecontrols";
+        $toolbar3[] = 'textbox';
+    }
 	$toolbar2[] = 'iframe';
 
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
