@@ -464,18 +464,6 @@ class LocalImage implements ImageInterface
     }
 
     /**
-     * Get caption
-     *
-     * Proxy to getDescription
-     *
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->getDescription();
-    }
-
-    /**
      * Test is storage was updated
      *
      * @return bool
