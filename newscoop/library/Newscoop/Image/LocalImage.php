@@ -164,9 +164,9 @@ class LocalImage implements ImageInterface
     protected $status;
 
     /**
-     * @OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
-    * @var array
-    */
+     * @ORM\OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
+     * @var array
+     */
     protected $captions;
 
     /**
