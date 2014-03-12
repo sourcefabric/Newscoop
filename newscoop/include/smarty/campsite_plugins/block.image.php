@@ -55,7 +55,7 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         'width' => $thumbnail->width,
         'height' => $thumbnail->height,
         'caption' => $articleRendition->getImage()->getDescription(),
-        'caption' => $imageService->getCaption($articleRendition->getImage(), $article->number, $article->language->number);
+        'caption' => $imageService->getCaption($articleRendition->getImage(), $article->number, $article->language->number),
         'description' => $articleRendition->getImage()->getDescription(),
         'photographer' => $articleRendition->getImage()->getPhotographer(),
         'original_url' => $articleRendition->getImage()->getPath(),
