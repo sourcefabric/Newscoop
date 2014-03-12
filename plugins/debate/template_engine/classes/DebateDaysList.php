@@ -211,7 +211,7 @@ class DebateDaysList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_debate_answers", $p_smarty);
     		}
     	}
-    	$this->m_item = is_string($p_parameters['item']) && trim($p_parameters['item']) != '' ? $p_parameters['item'] : null;
+    	$this->m_item = (isset($p_parameters['item']) && trim($p_parameters['item']) != '') ? $p_parameters['item'] : null;
     	return $parameters;
 	}
 
