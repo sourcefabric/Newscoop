@@ -16,6 +16,7 @@ use Newscoop\Image\ImageInterface as NewscoopImageInterface;
 use Newscoop\Image\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\Exception\ResourcesConflictException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Image Service
