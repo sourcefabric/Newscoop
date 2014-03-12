@@ -32,7 +32,7 @@ function smarty_block_list_debates($p_params, $p_content, &$p_smarty, &$p_repeat
     $html = '';
 
     if (!isset($p_content)) {
-        $start = $campContext->next_list_start('DebatesList');
+        $start = $campContext->next_list_start('DebateList');
     	$debatesList = new DebateList($start, $p_params);
     	$campContext->setCurrentList($debatesList, array('debate'));
     }
