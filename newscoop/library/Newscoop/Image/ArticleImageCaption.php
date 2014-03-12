@@ -8,6 +8,7 @@
 namespace Newscoop\Image;
 
 use Newscoop\Entity\Language;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article Image Caption Entity
