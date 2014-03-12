@@ -8,6 +8,8 @@
 namespace Newscoop\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Language;
 
 /**
  * Article Image
@@ -51,6 +53,12 @@ class ArticleImage implements ImageInterface
     protected $isDefault;
 
     /**
+     * @ORM\OneToMany(targetEntity="ArticleImageCaption", mappedBy="articleImage", indexBy="languageId", cascade={"persist"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $captions;
+
+    /**
      * @param int $articleNumber
      * @param Newscoop\Image\LocalImage $image
      * @param bool $isDefault
@@ -61,6 +69,7 @@ class ArticleImage implements ImageInterface
         $this->image = $image;
         $this->isDefault = (bool) $isDefault;
         $this->number = $number;
+        $this->captions = new ArrayCollection();
     }
 
     /**
@@ -166,5 +175,31 @@ class ArticleImage implements ImageInterface
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+    * Set caption
+    *
+    * @param string $caption
+    * @param Newscoop\Entity\Language $language
+    * @return void
+    */
+    public function setCaption($caption, Language $language)
+    {
+        if (!isset($this->captions[$language->getId()])) {
+            $this->captions[$language->getId()] = new ArticleImageCaption($this, $language);
+        }
+
+        $this->captions[$language->getId()]->setCaption($caption);
+    }
+
+    /**
+    * Get caption
+    *
+    * @return string
+    */
+    public function getCaption($languageId)
+    {
+        return isset($this->captions[$languageId]) ? $this->captions[$languageId]->getCaption() : null;
     }
 }
