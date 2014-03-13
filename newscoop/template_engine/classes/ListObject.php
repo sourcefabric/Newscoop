@@ -182,7 +182,9 @@ abstract class ListObject
             return;
         }
         $this->m_parameters = $parameters;
-        $this->m_constraints = array_merge($this->m_constraints, $constraints);
+        if (isset($constraints)) {
+            $this->m_constraints = array_merge($this->m_constraints, $constraints);
+        }
 
 		/**
 		 * Process order constraints.
