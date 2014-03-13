@@ -8,7 +8,7 @@
 namespace Newscoop\Image;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collection\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Local Image
@@ -182,8 +182,8 @@ class LocalImage implements ImageInterface
             $this->basename = (string) $image;
         }
 
-        $this->renditions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->renditions = new ArrayCollection();
+        $this->items = new ArrayCollection();
         $this->captions = new ArrayCollection();
     }
 
