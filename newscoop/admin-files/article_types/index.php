@@ -3,8 +3,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
-$publicationService = \Zend_Registry::get('container')->get('newscoop.publication_service');
-$publicationMetadata = $publicationService->getPublicationMetadata();
+$request = \Zend_Registry::get('container')->get('request');
+$locale = $request->getLocale();
 
 if (!$g_user->hasPermission('ManageArticleTypes') && !$g_user->hasPermission('DeleteArticleTypes')) {
 	camp_html_goto_page("/$ADMIN/");
@@ -14,8 +14,8 @@ $articleTypes = ArticleType::GetArticleTypes(true);
 // return value is sorted by language
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
-$lang = camp_session_get('LoginLanguageId', $publicationMetadata['publication']['id_default_language']);
-$languageObj = new Language($publicationMetadata['publication']['id_default_language']);
+$lang = Language::GetLanguageByCode($locale);
+$languageObj = new Language($lang->getLanguageId());
 
 $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
