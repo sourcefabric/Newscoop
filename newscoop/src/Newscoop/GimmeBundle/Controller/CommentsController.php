@@ -107,17 +107,18 @@ class CommentsController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
+     *         {"name"="order", "dataType"="string", "required"=false, "description"="Ordering type"}
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/comments.{_format}", defaults={"_format"="json"})
-     * @Route("/comments/article/{number}/{language}.{_format}", defaults={"_format"="json"})
-     * @Route("/comments/article/{number}/{language}/recommended.{_format}", defaults={"_format"="json"}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
+     * @Route("/articles/{number}/{language}/comments/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
+     * @Route("/comments/article/{number}/{language}/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
+     * @Route("/comments/article/{number}/{language}/{order}/recommended.{_format}", defaults={"_format"="json", "order"="chrono"}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getCommentsForArticleAction(Request $request, $number, $language)
+    public function getCommentsForArticleAction(Request $request, $number, $language, $order)
     {
         $em = $this->container->get('em');
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
@@ -137,7 +138,29 @@ class CommentsController extends FOSRestController
         }
 
         $articleComments = $em->getRepository('Newscoop\Entity\Comment')
-            ->getArticleComments($number, $language, $recommended, false);
+            ->getArticleComments($number, $language, $recommended, false)
+            ->getResult();
+
+        if ($order == 'nested') {
+            $root = new \Node(0,0,''); // create a new Node, we remove this one later, but we need a Root Node.
+
+            foreach ($articleComments as $comment) {
+                $reSortedComments[$comment->getId()] = $comment;
+            }
+
+            ksort($reSortedComments);   // sort by commentId
+
+            foreach ($reSortedComments as $comment) {
+                if ($comment->getParent() instanceof \Newscoop\Entity\Comment) {
+                    $node = new \Node($comment->getId(), $comment->getParent()->getId(), $comment);
+                } else {
+                    $node = new \Node($comment->getId(), 0, $comment);
+                }
+                $root->insertNode($node);
+            }
+
+            $articleComments = $root->flatten(false);
+        }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleComments = $paginator->paginate($articleComments);
