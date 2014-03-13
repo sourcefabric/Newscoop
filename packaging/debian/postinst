@@ -42,10 +42,13 @@ case "$1" in
       rm -f /etc/$webserver/conf.d/newscoop.conf || true
       restart="$webserver $restart"
     fi
+
     if [ -f /etc/$webserver/sites-available/newscoop-vhost ]; then
-      a2dissite newscoop-vhost &>/dev/null || true
-      restart="$webserver $restart"
+      a2dissite newscoop-vhost
+    elif [ -f /etc/$webserver/sites-available/newscoop-vhost.conf ]; then
+      a2dissite newscoop-vhost.conf
     fi
+
     if [ -L /etc/cron.d/newscoop ]; then
       rm -f /etc/cron.d/newscoop || true
     fi
@@ -58,10 +61,11 @@ case "$1" in
       fi
       if [ ! -e /etc/$webserver/conf.d/newscoop.conf ]; then
         ln -s ${includefile} /etc/$webserver/conf.d/newscoop.conf
-        a2enmod rewrite &>/dev/null || true
+        a2enmod rewrite
         restart="$webserver $restart"
       fi
       dohtaccess="/newscoop"
+
     elif [ "$RET" == "dedicated v-host" ]; then
       db_get newscoop/apache-servername
       SN=$RET
@@ -71,10 +75,11 @@ case "$1" in
       if [ ! -d /etc/$webserver/sites-available/ ]; then
         install -d -m755 /etc/$webserver/sites-available/
       fi
+
       sed -e "s/__SERVER_ADMIN__/${SA}/;s/__SERVER_NAME__/${SN}/" \
-        ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost
-      a2ensite newscoop-vhost &>/dev/null
-      a2enmod rewrite &>/dev/null || true
+        ${a2tplfile} > /etc/$webserver/sites-available/newscoop-vhost.conf
+      a2ensite newscoop-vhost.conf
+      a2enmod rewrite
       restart="$webserver $restart"
       dohtaccess="/"
     fi
