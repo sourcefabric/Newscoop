@@ -33,7 +33,7 @@ class Translation
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id", nullable=false)
      * @var \Newscoop\Entity\Language
      */
-    protected $language = 0;
+    protected $language;
 
     /**
      * @ORM\Column(name="translation_text", type="text", nullable=true)

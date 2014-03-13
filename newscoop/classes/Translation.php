@@ -130,7 +130,7 @@ class Translation extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$sql = "SELECT translation_text FROM Translations"
-			   ." WHERE id=".$p_phraseId
+			   ." WHERE phrase_id=".$p_phraseId
 			   ." AND fk_language_id=".$p_languageId;
 		return $g_ado_db->GetOne($sql);
 	} // fn GetPhrase
@@ -171,7 +171,7 @@ class Translation extends DatabaseObject {
 		if (!is_numeric($p_phraseId)) {
 			return $phrases;
 		}
-		$sql = "SELECT fk_language_id, translation_text FROM Translations WHERE id = $p_phraseId";
+		$sql = "SELECT fk_language_id, translation_text FROM Translations WHERE phrase_id = $p_phraseId";
 		$rows = $g_ado_db->GetAll($sql);
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
