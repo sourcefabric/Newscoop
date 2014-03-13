@@ -5,7 +5,7 @@ final class MetaDebateDays // extends MetaObject
 
     public function __construct($date = null)
     {
-        if (isset$date)) {
+        if (isset($date)) {
             foreach ($date as $key => $value)
             {
                 switch (true)
