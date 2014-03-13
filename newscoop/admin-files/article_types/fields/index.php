@@ -4,6 +4,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$publicationService = \Zend_Registry::get('container')->get('newscoop.publication_service');
+$publicationMetadata = $publicationService->getPublicationMetadata();
 
 if (!Saas::singleton()->hasPermission('ManageArticleTypes')) {
     camp_html_display_error($translator->trans("You do not have the right to manage article types.", array(), 'article_type_fields'));
@@ -14,8 +16,8 @@ $articleTypeName = Input::Get('f_article_type');
 // return value is sorted by language
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
-$lang = camp_session_get('LoginLanguageId', 1);
-$languageObj = new Language($lang);
+$lang = camp_session_get('LoginLanguageId', $publicationMetadata['publication']['id_default_language']);
+$languageObj = new Language($publicationMetadata['publication']['id_default_language']);
 
 
 $articleType = new ArticleType($articleTypeName);
@@ -256,7 +258,7 @@ foreach ($fields as $field) {
 	</TD>
 
 	<TD>
-		<?php print htmlspecialchars($field->getDisplayName()); ?> <?php print htmlspecialchars($field->getDisplayNameLanguageCode()); ?>
+		<?php print htmlspecialchars($field->getDisplayName($languageObj->getLanguageId())); ?> <?php print htmlspecialchars($field->getDisplayNameLanguageCode($languageObj->getLanguageId())); ?>
 	</TD>
 
 	<td>

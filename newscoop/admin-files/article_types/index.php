@@ -15,7 +15,7 @@ $articleTypes = ArticleType::GetArticleTypes(true);
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
 $lang = camp_session_get('LoginLanguageId', $publicationMetadata['publication']['id_default_language']);
-$languageObj = new Language($lang);
+$languageObj = new Language($publicationMetadata['publication']['id_default_language']);
 
 $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
