@@ -2,16 +2,17 @@
 
 class Translation extends DatabaseObject {
 	var $m_dbTableName = 'Translations';
-	var $m_keyColumnNames = array('fk_language_id');
+	var $m_keyColumnNames = array('phrase_id', 'fk_language_id');
 	var $m_keyIsAutoIncrement = false;
 	var $m_columnNames = array('id',
+							   'phrase_id',
 	                           'fk_language_id',
 	                           'translation_text');
 
 	public function Translation($p_languageId = null, $p_phraseId = null)
 	{
 		if (is_numeric($p_phraseId)) {
-			$this->m_data['id'] = $p_phraseId;
+			$this->m_data['phrase_id'] = $p_phraseId;
 		}
 		if  (is_numeric($p_languageId)) {
 			$this->m_data['fk_language_id'] = $p_languageId;
@@ -33,6 +34,10 @@ class Translation extends DatabaseObject {
 	 */
 	public function create($p_text = null)
 	{
+		if (!isset($this->m_data['phrase_id'])) {
+			$this->m_data['phrase_id'] = Translation::__GeneratePhraseId();
+		}
+
 		return parent::create(array("translation_text" => $p_text));
 	} // fn create
 
@@ -46,12 +51,29 @@ class Translation extends DatabaseObject {
 	{
 		global $g_ado_db;
 		if (is_null($p_phraseId)) {
-			$p_phraseId = $this->m_data['id'];
+			$p_phraseId = $this->m_data['phrase_id'];
 			$this->m_exists = false;
 		}
-		$sql = "DELETE FROM Translations WHERE id = " . (int)$p_phraseId;
+		$sql = "DELETE FROM Translations WHERE phrase_id = " . (int)$p_phraseId;
 		$g_ado_db->Execute($sql);
 	} // fn deletePhrase
+
+	/**
+	* Create a unique identifier for a phrase.
+	* @access private
+	*/
+	private function __GeneratePhraseId()
+	{
+		global $g_ado_db;
+
+		$queryStr = 'UPDATE AutoId SET translation_phrase_id=LAST_INSERT_ID(translation_phrase_id + 1)';
+		$g_ado_db->executeUpdate($queryStr);
+		if ($g_ado_db->affected_rows() <= 0) {
+			return 0;
+		}
+
+		return (int)$g_ado_db->insert_id();
+	}
 
 	/**
 	 * Get the phrase ID.
@@ -60,7 +82,7 @@ class Translation extends DatabaseObject {
 	 */
 	public function getPhraseId()
 	{
-		return $this->m_data['id'];
+		return $this->m_data['phrase_id'];
 	} // fn getPhraseId
 
 
