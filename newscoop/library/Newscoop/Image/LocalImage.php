@@ -8,6 +8,7 @@
 namespace Newscoop\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Local Image
@@ -163,6 +164,12 @@ class LocalImage implements ImageInterface
     protected $status;
 
     /**
+     * @ORM\OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
+     * @var array
+     */
+    protected $captions;
+
+    /**
      * @param string $image
      */
     public function __construct($image = '')
@@ -175,8 +182,9 @@ class LocalImage implements ImageInterface
             $this->basename = (string) $image;
         }
 
-        $this->renditions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->renditions = new ArrayCollection();
+        $this->items = new ArrayCollection();
+        $this->captions = new ArrayCollection();
     }
 
     /**
@@ -385,6 +393,33 @@ class LocalImage implements ImageInterface
     }
 
     /**
+    * Get caption
+    *
+    * @proxy to getDescription
+    *
+    * @return string
+    */
+    public function getCaption()
+    {
+        return $this->getDescription();
+    }
+
+    /**
+    * Get captions
+    *
+    * @return array
+    */
+    public function getCaptions()
+    {
+        $captions = array();
+        foreach ($this->captions as $languageId => $caption) {
+            $captions[$languageId] = $caption->getCaption();
+        }
+
+        return $captions;
+    }
+
+    /**
      * Set place
      *
      * @param string $place
@@ -426,18 +461,6 @@ class LocalImage implements ImageInterface
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Get caption
-     *
-     * Proxy to getDescription
-     *
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->getDescription();
     }
 
     /**
