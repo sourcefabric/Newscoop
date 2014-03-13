@@ -40,6 +40,7 @@ $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
 $iptcDate = null;
 $iptcPlace = null;
 $iptcPhotographer = null;
+$iptcDescription = null;
 
 if (in_array($imageExtension, $allowedExtensions)) {
     $exif = @exif_read_data($imageObj->getImageStorageLocation());

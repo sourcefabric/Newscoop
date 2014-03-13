@@ -8,6 +8,7 @@
 namespace Newscoop\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collection\ArrayCollection;
 
 /**
  * Local Image
@@ -163,6 +164,12 @@ class LocalImage implements ImageInterface
     protected $status;
 
     /**
+     * @ORM\OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
+     * @var array
+     */
+    protected $captions;
+
+    /**
      * @param string $image
      */
     public function __construct($image = '')
@@ -177,6 +184,7 @@ class LocalImage implements ImageInterface
 
         $this->renditions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->captions = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -197,9 +205,9 @@ class LocalImage implements ImageInterface
     public function getPath()
     {
         if ($this->hasUpdatedStorage()) {
-            return 'images/' . $this->basename;
+            return '/images/' . $this->basename;
         } elseif ($this->isLocal()) {
-            return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
+            return basename($this->basename) === $this->basename ? '/images/' . $this->basename : $this->basename;
         } else {
             return $this->url;
         }
@@ -385,6 +393,33 @@ class LocalImage implements ImageInterface
     }
 
     /**
+    * Get caption
+    *
+    * @proxy to getDescription
+    *
+    * @return string
+    */
+    public function getCaption()
+    {
+        return $this->getDescription();
+    }
+
+    /**
+    * Get captions
+    *
+    * @return array
+    */
+    public function getCaptions()
+    {
+        $captions = array();
+        foreach ($this->captions as $languageId => $caption) {
+            $captions[$languageId] = $caption->getCaption();
+        }
+
+        return $captions;
+    }
+
+    /**
      * Set place
      *
      * @param string $place
@@ -426,18 +461,6 @@ class LocalImage implements ImageInterface
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Get caption
-     *
-     * Proxy to getDescription
-     *
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->getDescription();
     }
 
     /**
