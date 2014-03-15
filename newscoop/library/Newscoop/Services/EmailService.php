@@ -172,6 +172,8 @@ class EmailService
         $uri = \CampSite::GetURIInstance();
         if ($user) {
             $smarty->assign('username', $user->getUsername());
+        } else {
+            $smarty->assign('username', 'Unbekannt');
         }
 
         $smarty->assign('comment', $comment);
