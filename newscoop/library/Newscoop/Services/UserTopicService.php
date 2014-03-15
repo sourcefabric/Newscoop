@@ -48,9 +48,47 @@ class UserTopicService
             $this->em->persist(new UserTopic($user, $topic));
             $this->em->flush();
             $this->notify($user, $topic);
-        } catch (Exception $e) { // ignore if exists
+        } catch (\Exception $e) { // ignore if exists
         }
     }
+
+    /**
+     * Unfollow topic
+     *
+     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Topic $topic
+     * @return void
+     */
+    public function unfollowTopic(User $user, Topic $topic)
+    {
+        try {
+            $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
+               ->findOneBy(array(
+                   'user' => $user,
+                    'topic_id' => $topic->getTopicId(),
+               ));
+
+           if ($userTopic) {
+                    $this->em->remove($userTopic);
+                    $this->em->flush();
+            }
+        } catch (\Exception $e) { // ignore if exists
+           print "Exception: " . $e->getMessage();
+        }
+    }
+    {
+        $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
+            ->findOneBy(array(
+                'user' => $user,
+                'topic_id' => $topic->getTopicId(),
+            ));
+
+        if ($userTopic) {
+            $this->em->remove($userTopic);
+            $this->em->flush();
+        }
+    }
+
 
     /**
      * Get user topics
@@ -185,7 +223,7 @@ class UserTopicService
 
         $this->dispatcher->dispatch('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
-            'topic_id' => $topic->getTopic()->getId(),
+            'topic_id' => $topic->getId(),
             'user' => $user,
         )));
     }
