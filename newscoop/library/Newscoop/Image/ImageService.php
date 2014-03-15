@@ -188,6 +188,47 @@ class ImageService
     }
 
     /**
+     * Save Profile image
+     *
+     * @param array $info
+     *
+     * @return string
+     */
+    public function saveProfileImage(array $info)
+        if (!in_array($info['type'], $this->supportedTypes)) {
+            throw new \InvalidArgumentException("Unsupported image type '$info[type]'.");
+        }
+
+        $imagine = new Imagine();
+
+        $extension = substr($info['type'], (strpos($info['type'], "/") + 1));
+
+        $originalName = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
+        $newName = sha1_file($info['tmp_name']) . '.' . $extension;
+
+        $originalPath = APPLICATION_PATH . "/../images/" . $originalName;
+        $newPath = APPLICATION_PATH . "/../images/" . $newName;
+
+        if (!file_exists($originalPath)) {
+            rename($info['tmp_name'], $newPath);
+        } 
+
+        $profileImagePath = APPLICATION_PATH . "/../images/cache/125x125/fit/images|" . $newName;
+        $imagine->open($originalPath)
+            ->flipVertically()
+            ->resize(new Box(125, 125))
+            ->save($profileImagePath);
+
+        $profileImagePath = APPLICATION_PATH . "/../images/cache/130x130/crop/images|" . $newName;
+        $imagine->open($originalPath)
+            ->flipVertically()
+            ->resize(new Box(130, 130))
+            ->save($profileImagePath);
+
+        return $newName;
+    }
+
+    /**
      * Get image src
      *
      * @param string $image
