@@ -27,10 +27,22 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 
 foreach ($_POST['file'] as $id => $values) {
     $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($id);
-    $description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
+    $description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getPhraseId());
+
+    if (!$description) {
+        $nextTranslationPhraseId = $em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+        $description = new \Newscoop\Entity\Translation($nextTranslationPhraseId);
+        $em->persist($description);
+    }
 
     if ($f_language_selected > 0) {
-        $description->setLanguage($f_language_selected);
+        $language = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($f_language_selected);
+        $description->setLanguage($language);
+    } else {
+        $publicationService = \Zend_Registry::get('container')->get('newscoop.publication_service');
+        $publicationMetadata = $publicationService->getPublicationMetadata();
+        $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);
+        $description->setLanguage($language);
     }
 
     $description->setTranslationText($values['f_description']);

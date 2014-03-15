@@ -33,13 +33,27 @@ class Translation
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id", nullable=false)
      * @var \Newscoop\Entity\Language
      */
-    protected $language = 0;
+    protected $language;
 
     /**
      * @ORM\Column(name="translation_text", type="text", nullable=true)
      * @var integer
      */
     protected $translationText;
+
+    /**
+     * @ORM\Column(name="phrase_id", type="integer")
+     * @var int
+     */
+    protected $phrase_id;
+
+    /**
+     * @param int $phraseId Current phrase id for translations from autoid table.
+     */
+    public function __construct($phraseId)
+    {
+        $this->setPhraseId($phraseId);
+    }
 
     /**
      * Gets the value of id.
@@ -107,5 +121,29 @@ class Translation
     public function __toString()
     {
         return $this->translationText;
+    }
+
+    /**
+     * Gets the value of phrase_id.
+     *
+     * @return int
+     */
+    public function getPhraseId()
+    {
+        return $this->phrase_id;
+    }
+
+    /**
+     * Sets the value of phrase_id.
+     *
+     * @param int $phrase_id the phrase_id
+     *
+     * @return self
+     */
+    public function setPhraseId($phrase_id)
+    {
+        $this->phrase_id = $phrase_id;
+
+        return $this;
     }
 }

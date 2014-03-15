@@ -70,7 +70,8 @@ class AttachmentService
             }
 
             if ($descriptionText != $attachment->getDescription()->getTranslationText()) {
-                $description = new Translation();
+                $nextTranslationPhraseId = $this->em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+                $description = new Translation($nextTranslationPhraseId);
                 $description->setLanguage($language);
                 $description->setTranslationText($descriptionText);
                 $this->em->persist($description);
@@ -78,7 +79,8 @@ class AttachmentService
             unset($attributes['description']);
         } else {
             $attachment = new Attachment();
-            $description = new Translation();
+            $nextTranslationPhraseId = $this->em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+            $description = new Translation($nextTranslationPhraseId);
             $description->setLanguage($language);
             $description->setTranslationText($descriptionText);
             unset($attributes['description']);
