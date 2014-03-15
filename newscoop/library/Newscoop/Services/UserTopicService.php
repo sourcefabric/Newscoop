@@ -50,7 +50,6 @@ class UserTopicService
             $this->em->flush();
             $this->notify($user, $topic);
         } catch (Exception $e) { // ignore if exists
-            throw new Exception('Could not follow topic. ('.$e->getMessage().')');
         }
     }
 
@@ -74,7 +73,7 @@ class UserTopicService
                 $this->em->remove($userTopic);
                 $this->em->flush();
             }
-        } catch (Exception $e) { // ignore if exists
+        } catch (Exception $e) {
             throw new Exception('Could not unfollow topic. ('.$e->getMessage().')');
         }
     }
