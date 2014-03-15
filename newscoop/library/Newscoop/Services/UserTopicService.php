@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -13,6 +13,7 @@ use Newscoop\Entity\Topic;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserTopic;
 use Newscoop\Topic\SaveUserTopicsCommand;
+use Exception;
 
 /**
  * User service
@@ -48,7 +49,8 @@ class UserTopicService
             $this->em->persist(new UserTopic($user, $topic));
             $this->em->flush();
             $this->notify($user, $topic);
-        } catch (\Exception $e) { // ignore if exists
+        } catch (Exception $e) { // ignore if exists
+            throw new Exception('Could not follow topic. ('.$e->getMessage().')');
         }
     }
 
@@ -65,30 +67,17 @@ class UserTopicService
             $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
                ->findOneBy(array(
                    'user' => $user,
-                    'topic_id' => $topic->getTopicId(),
+                   'topic_id' => $topic->getTopicId(),
                ));
 
-           if ($userTopic) {
-                    $this->em->remove($userTopic);
-                    $this->em->flush();
+            if ($userTopic) {
+                $this->em->remove($userTopic);
+                $this->em->flush();
             }
-        } catch (\Exception $e) { // ignore if exists
-           print "Exception: " . $e->getMessage();
+        } catch (Exception $e) { // ignore if exists
+            throw new Exception('Could not unfollow topic. ('.$e->getMessage().')');
         }
     }
-    {
-        $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findOneBy(array(
-                'user' => $user,
-                'topic_id' => $topic->getTopicId(),
-            ));
-
-        if ($userTopic) {
-            $this->em->remove($userTopic);
-            $this->em->flush();
-        }
-    }
-
 
     /**
      * Get user topics
