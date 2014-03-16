@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -13,6 +13,7 @@ use Newscoop\Entity\Topic;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserTopic;
 use Newscoop\Topic\SaveUserTopicsCommand;
+use Exception;
 
 /**
  * User service
@@ -49,6 +50,31 @@ class UserTopicService
             $this->em->flush();
             $this->notify($user, $topic);
         } catch (Exception $e) { // ignore if exists
+        }
+    }
+
+    /**
+     * Unfollow topic
+     *
+     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Topic $topic
+     * @return void
+     */
+    public function unfollowTopic(User $user, Topic $topic)
+    {
+        try {
+            $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
+               ->findOneBy(array(
+                   'user' => $user,
+                   'topic_id' => $topic->getTopicId(),
+               ));
+
+            if ($userTopic) {
+                $this->em->remove($userTopic);
+                $this->em->flush();
+            }
+        } catch (Exception $e) {
+            throw new Exception('Could not unfollow topic. ('.$e->getMessage().')');
         }
     }
 
@@ -185,7 +211,7 @@ class UserTopicService
 
         $this->dispatcher->dispatch('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
-            'topic_id' => $topic->getTopic()->getId(),
+            'topic_id' => $topic->getId(),
             'user' => $user,
         )));
     }

@@ -12,11 +12,6 @@ ALTER TABLE Attachments ADD CONSTRAINT FK_C158750178917F82 FOREIGN KEY (fk_descr
 CREATE INDEX IDX_C1587501EB0716C0 ON Attachments (fk_language_id);
 CREATE UNIQUE INDEX UNIQ_C158750178917F82 ON Attachments (fk_description_id);
 
-DROP INDEX phrase_language_index ON Translations;
-DROP INDEX phrase_id ON Translations;
-ALTER TABLE Translations DROP phrase_id, CHANGE id Id INT AUTO_INCREMENT NOT NULL, CHANGE fk_language_id fk_language_id INT NOT NULL;
-CREATE INDEX IDX_DE86017FEB0716C0 ON Translations (fk_language_id);
-
 ALTER TABLE ArticleAttachments DROP INDEX article_attachment_index;
 ALTER TABLE ArticleAttachments ADD PRIMARY KEY (fk_article_number, fk_attachment_id);
 ALTER TABLE ArticleAttachments CHANGE fk_article_number fk_article_number INT NOT NULL, CHANGE fk_attachment_id fk_attachment_id INT NOT NULL;

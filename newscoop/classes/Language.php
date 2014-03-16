@@ -288,6 +288,23 @@ class Language extends DatabaseObject {
         return $result[0]['Id'];
     } // fn GetLanguageIdByCode
 
+    /**
+     * Returns language for the provided language code
+     */
+    public static function GetLanguageByCode($languageCode)
+    {
+        global $g_ado_db;
+
+        $queryStr = "SELECT * FROM Languages WHERE Code = ? LIMIT 1";
+        $queryParams = array($languageCode);
+
+        $result = $g_ado_db->GetAll($queryStr, $queryParams);
+
+        if ((!$result) || (1 > count($result))) {return null;}
+
+        return new Language($result[0]['Id']);
+    }
+
     public static function Get6391List()
     {
         return array(

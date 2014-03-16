@@ -26,7 +26,7 @@ class AuthorBiography extends DatabaseObject
      * @param int $p_authorId
      * @param int $p_languageId
      */
-    public function __construct($p_authorId, $p_languageId)
+    public function __construct($p_authorId = null, $p_languageId = null)
     {
         if (is_numeric($p_authorId)) {
             $this->m_data['fk_author_id'] = $p_authorId;

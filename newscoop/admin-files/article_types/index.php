@@ -3,6 +3,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
 $translator = \Zend_Registry::get('container')->getService('translator');
+$request = \Zend_Registry::get('container')->get('request');
+$locale = $request->getLocale();
 
 if (!$g_user->hasPermission('ManageArticleTypes') && !$g_user->hasPermission('DeleteArticleTypes')) {
 	camp_html_goto_page("/$ADMIN/");
@@ -12,8 +14,8 @@ $articleTypes = ArticleType::GetArticleTypes(true);
 // return value is sorted by language
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
 
-$lang = camp_session_get('LoginLanguageId', 1);
-$languageObj = new Language($lang);
+$lang = Language::GetLanguageByCode($locale);
+$languageObj = new Language($lang->getLanguageId());
 
 $crumbs = array();
 $crumbs[] = array($translator->trans("Configure"), "");
@@ -143,7 +145,7 @@ foreach ($articleTypes as $articleType) {
 	</TD>
 
 	<TD>
-		<?php  print $currentArticleType->getDisplayName(); ?> <?php print $currentArticleType->getDisplayNameLanguageCode(); ?>&nbsp;
+		<?php  print $currentArticleType->getDisplayName($languageObj->getLanguageId()); ?> <?php print $currentArticleType->getDisplayNameLanguageCode($languageObj->getLanguageId()); ?>&nbsp;
 	</TD>
 
 	<td>

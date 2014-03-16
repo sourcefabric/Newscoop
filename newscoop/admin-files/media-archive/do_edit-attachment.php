@@ -21,6 +21,11 @@ if (!Input::IsValid() || ($f_attachment_id <= 0)) {
 $em = \Zend_Registry::get('container')->getService('em');
 $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($f_attachment_id);
 $description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
+if (!$description) {
+    $nextTranslationPhraseId = $em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+    $description = new \Newscoop\Entity\Translation($nextTranslationPhraseId);
+    $em->persist($description);
+}
 $description->setLanguage($attachment->getLanguage());
 $description->setTranslationText($f_description);
 $attachment->setUpdated(new \DateTime());

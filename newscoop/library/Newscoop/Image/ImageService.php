@@ -16,6 +16,7 @@ use Newscoop\Image\ImageInterface as NewscoopImageInterface;
 use Newscoop\Image\LocalImage;
 use Newscoop\Entity\User;
 use Newscoop\Exception\ResourcesConflictException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Image Service
@@ -650,5 +651,54 @@ class ImageService
         }
 
         return false;
+    }
+
+    /**
+    * Get image caption
+    *
+    * @param int $image
+    * @param int $articleNumber
+    * @param int $languageId
+    *
+    * @return string
+    */
+    public function getCaption(\Newscoop\Image\LocalImage $image, $articleNumber, $languageId)
+    {
+        $caption = $this->getArticleImageCaption($image->getId(), $articleNumber, $languageId);
+
+        if (!empty($caption)) {
+            return $caption;
+        }
+
+        return $image->getDescription();
+    }
+
+    /**
+    * Get article specific image caption
+    *
+    * @param int $imageId
+    * @param int $articleNumber
+    * @param int $languageId
+    *
+    * @return string
+    */
+    private function getArticleImageCaption($imageId, $articleNumber, $languageId)
+    {
+        $query = $this->orm->getRepository('Newscoop\Image\ArticleImageCaption')->createQueryBuilder('c')
+            ->select('c.caption')
+            ->where('c.articleNumber = :article')
+            ->andWhere('c.image = :image')
+            ->andWhere('c.languageId = :language')
+            ->getQuery();
+
+        $query->setParameters(array(
+            'article' => $articleNumber,
+            'image' => $imageId,
+            'language' => $languageId,
+        ));
+
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {}
     }
 }
