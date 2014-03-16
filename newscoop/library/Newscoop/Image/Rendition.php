@@ -67,12 +67,14 @@ class Rendition
      * @param string $specs
      * @param string $name
      */
-    public function __construct($width, $height, $specs = 'fit', $name = null)
+    public function __construct($width, $height, $specs = 'fit', $name = null, $offset = null, $label = null)
     {
         $this->width = (int) $width;
         $this->height = (int) $height;
         $this->specs = (string) $specs;
         $this->name = (string) $name;
+        $this->offset = (int) $offset;
+        $this->label = (string) $label;
     }
 
     /**

@@ -242,6 +242,8 @@ class RenditionService
                         $existing[$renditionName]->setWidth($rendition['width']);
                         $existing[$renditionName]->setHeight($rendition['height']);
                         $existing[$renditionName]->setSpecs($rendition['specs']);
+                        $existing[$renditionName]->setOffset($rendition['offset']);
+                        $existing[$renditionName]->setLabel($rendition['label']);
                         $this->renditions[$renditionName] = $existing[$renditionName];
                     } else {
                         $this->orm->persist($this->renditions[$renditionName] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']));
