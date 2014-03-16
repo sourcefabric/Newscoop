@@ -62,10 +62,12 @@ class Rendition
     protected $label;
 
     /**
-     * @param int $width
-     * @param int $height
+     * @param int    $width
+     * @param int    $height
      * @param string $specs
      * @param string $name
+     * @param int    $offset
+     * @param string $label
      */
     public function __construct($width, $height, $specs = 'fit', $name = null, $offset = null, $label = null)
     {
