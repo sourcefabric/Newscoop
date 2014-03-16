@@ -215,13 +215,11 @@ class ImageService
 
         $profileImagePath = APPLICATION_PATH . "/../images/cache/125x125/fit/images|" . $newName;
         $imagine->open($originalPath)
-            ->flipVertically()
             ->resize(new Box(125, 125))
             ->save($profileImagePath);
 
         $profileImagePath = APPLICATION_PATH . "/../images/cache/130x130/crop/images|" . $newName;
         $imagine->open($originalPath)
-            ->flipVertically()
             ->resize(new Box(130, 130))
             ->save($profileImagePath);
 
