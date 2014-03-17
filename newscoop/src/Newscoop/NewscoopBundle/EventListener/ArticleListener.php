@@ -33,10 +33,10 @@ class ArticleListener
 
     public function onRequest(GetResponseEvent $event)
     {
-        $pos = strpos($_SERVER['REQUEST_URI'], '_profiler');
+        $request = $event->getRequest();
+        $pos = strpos($request->getRequestUri(), '_profiler');
         if ($pos === false) {
-            $request = $event->getRequest();
-            $this->articleService->articleResolver($event->getRequest());
+            $this->articleService->articleResolver($request);
         }
     }
 }
