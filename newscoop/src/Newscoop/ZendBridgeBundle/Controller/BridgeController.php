@@ -22,7 +22,11 @@ class BridgeController extends Controller
             'js/tinymce/plugins/campsiteimage/popup.php',
             'js/tinymce/plugins/campsiteimage/images.php',
             'js/tinymce/plugins/campsiteattachment/popup.php',
-            'js/tinymce/plugins/campsiteattachment/attachments.php'
+            'js/tinymce/plugins/campsiteattachment/attachments.php',
+            'bin/events-notifier',
+            'bin/newscoop-autopublish',
+            'bin/newscoop-indexer',
+            'bin/newscoop-statistics'
         );
 
         foreach ($specialfiles as $file) {
