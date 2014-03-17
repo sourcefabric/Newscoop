@@ -28,9 +28,18 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
         \Article::UnlockByUser((int) $zendAuth->getIdentity());
         $zendAuth->clearIdentity();
 
-        $session = $request->getSession();
-        $session->set('NO_CACHE', false);
+        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         return parent::onLogoutSuccess($request);
+    }
+
+    private function extractDomain($domain)
+    {
+        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
+        {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
     }
 }
