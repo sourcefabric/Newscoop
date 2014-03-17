@@ -56,9 +56,7 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         \Article::UnlockByUser($zendAuth->getIdentity());
 
         $request->setLocale($request->request->get('login_language'));
-
-        $session = $request->getSession();
-        $session->set('NO_CACHE', true);
+        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         $user->setLastLogin(new \DateTime());
         $this->em->flush();
@@ -69,5 +67,14 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         }
 
         return parent::onAuthenticationSuccess($request, $token);
+    }
+
+    private function extractDomain($domain)
+    {
+        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
     }
 }
