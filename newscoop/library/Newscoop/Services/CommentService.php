@@ -224,26 +224,11 @@ class CommentService
      */
     public function isBanned($commenter)
     {
-        $queryBuilder = $this->em->getRepository('Newscoop\Entity\Comment\Acceptance')
-            ->createQueryBuilder('a');
+        $publication = $this->publicationService->getPublication();
+        $results = $this->em->getRepository('Newscoop\Entity\Comment\Acceptance')->isBanned($commenter, $publication);
+        $result = count(array_intersect(array(true), $results));
 
-        $queryBuilder
-            ->select('a.search')
-            ->where($queryBuilder->expr()->orX(
-                $queryBuilder->expr()->eq('a.search', ':name'),
-                $queryBuilder->expr()->eq('a.search', ':email'),
-                $queryBuilder->expr()->eq('a.search', ':ip')
-            ));
-
-        $queryBuilder->setParameters(array(
-            'name' => $commenter->getName(),
-            'email' => $commenter->getEmail(),
-            'ip' => $commenter->getIp()
-        ));
-
-        $result = $queryBuilder->getQuery()->getArrayResult();
-
-        if ($result) {
+        if ($result > 0) {
             return true;
         }
 
