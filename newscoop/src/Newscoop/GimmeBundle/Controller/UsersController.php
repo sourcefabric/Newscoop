@@ -169,6 +169,7 @@ class UsersController extends FOSRestController
         $authAdapter = $this->get('auth.adapter');
         $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
         $zendAuth->authenticate($authAdapter);
+        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         $response->setStatusCode(200);
         $response->headers->set(
@@ -204,6 +205,7 @@ class UsersController extends FOSRestController
         $this->get('security.context')->setToken($token);
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();
+        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         return $response;
     }
@@ -301,5 +303,15 @@ class UsersController extends FOSRestController
         $response->setStatusCode(404);
 
         return $response;
+    }
+
+    private function extractDomain($domain)
+    {
+        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
+        {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
     }
 }
