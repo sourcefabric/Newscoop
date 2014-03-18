@@ -12,9 +12,7 @@ use Newscoop\Entity\User;
 use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
-use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,10 +34,10 @@ class UserService
     /** @var \Newscoop\Entity\Repository\UserRepository */
     protected $repository;
 
-    /** @var SecurityContext */
+    /** @var Symfony\Component\Security\Core\SecurityContext */
     protected $security;
 
-    /** @var EncoderFactory */
+    /** @var Symfony\Component\Security\Core\Encoder\EncoderFactory */
     protected $factory;
 
     /** @var ContainerInterface */
