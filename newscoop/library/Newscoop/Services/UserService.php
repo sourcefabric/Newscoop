@@ -15,6 +15,7 @@ use InvalidArgumentException;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * User service
@@ -41,19 +42,20 @@ class UserService
     /** @var EncoderFactory */
     protected $factory;
 
+    /** @var ContainerInterface */
+    private $container;
+
     /**
-     * @param Doctrine\ORM\EntityManager $em
-     * @param Zend_Auth                  $auth
-     * @param SecurityContext            $security
-     * @param EncoderFactory             $factory
-     * @param Session                    $session
+     * @param ContainerInterface $container
      */
-    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory)
+    public function __construct(ContainerInterface $container)
     {
-        $this->em = $em;
-        $this->auth = $auth;
-        $this->security = $security;
-        $this->factory = $factory;
+        $this->container = $container;
+        $this->em = $this->container->get('em');
+        $this->auth = $this->container->get('zend_auth');
+        $this->security = $this->container->get('security.context');
+        $this->factory = $this->container->get('security.encoder_factory');
+        $this->request = $this->container->get('request');
     }
 
     /**
@@ -460,5 +462,21 @@ class UserService
         $this->security->setToken($token);
 
         return $token;
+    }
+
+    /**
+     *  Get user ip
+     *
+     * @return string
+     */
+    public function getIp()
+    {
+        if (!is_null($this->request->server->get('HTTP_CLIENT_IP'))) {
+            return $this->request->server->get('HTTP_CLIENT_IP');
+        } elseif (!is_null($this->request->server->get('HTTP_X_FORWARDED_FOR'))) {
+            return $this->request->server->get('HTTP_X_FORWARDED_FOR');
+        } else {
+            return $this->request->server->get('REMOTE_ADDR');
+        }
     }
 }

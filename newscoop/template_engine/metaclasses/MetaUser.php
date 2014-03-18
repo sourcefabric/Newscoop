@@ -195,12 +195,12 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function isBlockedFromComments()
     {
         $em = \Zend_Registry::get('container')->getService('em');
-
-        $userIp = getIp();
-        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
+        $userService = \Zend_Registry::get('container')->getService('user');
+        $userIp = $userService->getIp();
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
         $repositoryAcceptance = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
 
-        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
+        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publicationId);
     }
 
     /**
@@ -375,21 +375,5 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
 
         return false;
-    }
-
-    /**
-     *  Get user ip
-     *
-     * @return string
-     */
-    private function getIp()
-    {
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            return $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            return $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            return $_SERVER['REMOTE_ADDR'];
-        }
     }
 }
