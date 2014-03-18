@@ -309,7 +309,12 @@ final class CampHTMLDocument
         // on template caching add additional info
         if ($preferencesService->TemplateCacheHandler) {
             $uri = CampSite::GetURIInstance();
-            $tpl->campsiteVector = $uri->getCampsiteVector();
+            $smarty = CampTemplate::singleton();
+            $tpl->campsiteVector = array_merge(
+                $uri->getCampsiteVector(),
+                $smarty->campsiteVector
+            );
+
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
             $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
         }

@@ -97,18 +97,13 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         global $g_ado_db;
         static $cacheParams = array();
         $exp_time += time();
-
-        if (strpos($tpl_file, 'legacy_index.tpl') !== false) {
-            return false;
-        }
-
         $tpl_file = md5($tpl_file).substr($tpl_file, -15);
 
         $uri = CampSite::GetURIInstance();
         $smarty = CampTemplate::singleton();
         $campsiteVector = array_merge(
             $uri->getCampsiteVector(),
-            array()//$smarty->campsiteVector
+            $smarty->campsiteVector
         );
 
         $return = false;
@@ -120,38 +115,37 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 
         switch ($action) {
             case 'read':
-                if (!empty($campsiteVector['language']) && !empty($campsiteVector['publication'])) {
-                    $whereStr = self::vectorToWhereString($campsiteVector) . " AND template = '$tpl_file'";
+                $whereStr = self::vectorToWhereString($campsiteVector) . " AND template = '$tpl_file'";
 
-                    $cacheParams[$tpl_file] = array();
-                    $cacheParams[$tpl_file]['where'] = $whereStr;
+                $cacheParams[$tpl_file] = array();
+                $cacheParams[$tpl_file]['where'] = $whereStr;
 
-                    $queryStr = 'SELECT expired, content, status FROM Cache WHERE ' . $whereStr;
-                    $result = $g_ado_db->GetRow($queryStr);
-                    if ($result) {
-                        if ($result['expired'] > time()) {
-                            if ($result['status'] == 'E') {
-                                $queryStr = 'UPDATE Cache SET status = "U" WHERE ' . $whereStr
-                                . ' AND status = "E"';
-                                $g_ado_db->executeUpdate($queryStr);
-                                if ($g_ado_db->affected_rows() > 0) {
-                                    $cacheParams[$tpl_file]['update'] = true;
-                                    $return = false;
-                                } else {
-                                    $cache_content = $result['content'];
-                                    $return = $result['expired'];
-                                }
+                $queryStr = 'SELECT expired, content, status FROM Cache WHERE ' . $whereStr;
+
+                $result = $g_ado_db->GetRow($queryStr);
+                if ($result) {
+                    if ($result['expired'] > time()) {
+                        if ($result['status'] == 'E') {
+                            $queryStr = 'UPDATE Cache SET status = "U" WHERE ' . $whereStr
+                            . ' AND status = "E"';
+                            $g_ado_db->executeUpdate($queryStr);
+                            if ($g_ado_db->affected_rows() > 0) {
+                                $cacheParams[$tpl_file]['update'] = true;
+                                $return = false;
                             } else {
-                                $cacheParams[$tpl_file]['cached'] = true;
                                 $cache_content = $result['content'];
                                 $return = $result['expired'];
                             }
                         } else {
-                            // clear expired cache
-                            $queryStr = 'DELETE FROM Cache WHERE expired <= ' . time();
-                            $g_ado_db->execute($queryStr);
-                            $return = false;
+                            $cacheParams[$tpl_file]['cached'] = true;
+                            $cache_content = $result['content'];
+                            $return = $result['expired'];
                         }
+                    } else {
+                        // clear expired cache
+                        $queryStr = 'DELETE FROM Cache WHERE expired <= ' . time();
+                        $g_ado_db->execute($queryStr);
+                        $return = false;
                     }
                 }
                 break;
