@@ -145,6 +145,7 @@ final class CampSite extends CampSystem
                     $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }
+
         $params = array(
             'context' => $context,
             'template' => $template,

@@ -98,8 +98,19 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         static $cacheParams = array();
         $exp_time += time();
 
+        if (strpos($tpl_file, 'legacy_index.tpl') !== false) {
+            return false;
+        }
+
+        $tpl_file = md5($tpl_file).substr($tpl_file, -15);
+
+        $uri = CampSite::GetURIInstance();
         $smarty = CampTemplate::singleton();
-        $campsiteVector = $smarty->campsiteVector;
+        $campsiteVector = array_merge(
+            $uri->getCampsiteVector(),
+            array()//$smarty->campsiteVector
+        );
+
         $return = false;
         if ($action != 'clean') {
             if (!isset($campsiteVector['params'])) {
@@ -153,7 +164,6 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                     $cacheParams[$tpl_file]['update'] = true;
                 }
                 if ($exp_time > time() + 1) {
-
                     // update/insert new cached content
                     if (isset($cacheParams[$tpl_file]['update'])) {
                         $queryStr = 'UPDATE Cache SET status = null, expired = ' . $exp_time . ', '
