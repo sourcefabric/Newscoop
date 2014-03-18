@@ -100,9 +100,6 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 
         $smarty = CampTemplate::singleton();
         $campsiteVector = $smarty->campsiteVector;
-ladybug_dump($action);
-ladybug_dump($tpl_file);
-ladybug_dump($campsiteVector);
         $return = false;
         if ($action != 'clean') {
             if (!isset($campsiteVector['params'])) {
