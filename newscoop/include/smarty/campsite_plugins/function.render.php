@@ -50,6 +50,8 @@ function smarty_function_render($p_params, &$p_smarty)
             } else {
                 $campsiteVector['params'] = $p_params['params'];
             }
+        } else {
+            $campsiteVector['params'] = null;
         }
         $smarty->campsiteVector = $campsiteVector;
 
@@ -78,7 +80,6 @@ function smarty_function_render($p_params, &$p_smarty)
     }
     $smarty->cache_lifetime = $cache_lifetimeBak;
     $smarty->campsiteVector = $campsiteVectorBak;
-
-} // fn smarty_function_render
+}
 
 ?>
