@@ -12,7 +12,6 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 class MetaActionSubmit_Comment extends MetaAction
 {
@@ -94,6 +93,7 @@ class MetaActionSubmit_Comment extends MetaAction
         \CampRequest::SetVar('f_'.$this->m_name);
 
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $userService = \Zend_Registry::get('container')->getService('user');
 
         if (!is_null($this->m_error)) {
             return false;
@@ -124,7 +124,7 @@ class MetaActionSubmit_Comment extends MetaAction
         // Get the publication.
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
-        $userIp = getIp();
+        $userIp = $userService->getIp();
 
         if ($user->defined)
         {
