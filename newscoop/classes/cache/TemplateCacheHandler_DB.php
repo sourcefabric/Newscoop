@@ -98,9 +98,11 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         static $cacheParams = array();
         $exp_time += time();
 
-        $uri = CampSite::GetURIInstance();
-        $campsiteVector = $uri->getCampsiteVector();
-
+        $smarty = CampTemplate::singleton();
+        $campsiteVector = $smarty->campsiteVector;
+ladybug_dump($action);
+ladybug_dump($tpl_file);
+ladybug_dump($campsiteVector);
         $return = false;
         if ($action != 'clean') {
             if (!isset($campsiteVector['params'])) {
