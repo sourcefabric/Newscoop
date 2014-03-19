@@ -73,7 +73,7 @@ class LegacyController extends Zend_Controller_Action
         } else {
 	        set_error_handler(create_function('', 'return true;'));
         }
-        
+
         // renders the site
         $campsite->render();
 
