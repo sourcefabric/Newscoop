@@ -271,10 +271,7 @@ class AttachmentService
     private function getLevel2DirectoryName(Attachment $attachment)
     {
         if ($attachment->getId()) {
-            $level2Dir = floor(
-                $attachment->getId() /
-                ($this->config['file_num_dirs_level_2'] * $this->config['file_num_dirs_level_1'])
-            );
+            $level2Dir = ($attachment->getId() / $this->config['file_num_dirs_level_2']) % $this->config['file_num_dirs_level_1'];
         } else {
             $level2Dir = 0;
         }
