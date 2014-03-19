@@ -13,7 +13,9 @@ use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User service
@@ -22,7 +24,7 @@ class UserService
 {
     const USER_ENTITY = 'Newscoop\Entity\User';
 
-        /** @var \Doctrine\Common\Persistence\ObjectManager */
+    /** @var \Doctrine\Common\Persistence\ObjectManager */
     protected $em;
 
     /** @var \Zend_Auth */
@@ -494,7 +496,7 @@ class UserService
      *
      * @return string $userIp User IP
      */
-    public function userResolver(Request $request)
+    public function userIpResolver(Request $request)
     {
         $userIp = null;
         if (!is_null($request->server->get('HTTP_CLIENT_IP'))) {

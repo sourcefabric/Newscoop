@@ -41,6 +41,6 @@ class UserIpListener
             return;
         }
 
-        $this->userService->userResolver($event->getRequest());
+        $this->userService->userIpResolver($event->getRequest());
     }
 }
