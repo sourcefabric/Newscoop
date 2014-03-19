@@ -40,6 +40,9 @@ class UserService
     /** @var Symfony\Component\Security\Core\Encoder\EncoderFactory */
     protected $factory;
 
+    /** @var Symfony\Component\HttpFoundation\Request */
+    protected $request;
+
     /** @var ContainerInterface */
     private $container;
 
@@ -150,6 +153,15 @@ class UserService
         if (isset($criteria['status'])) {
             $qb->andWhere('u.status = :status')
                 ->setParameter('status', $criteria['status']);
+        }
+
+        if (isset($criteria['attribute']) && is_array($criteria['attribute'])) {
+            foreach ($criteria['attribute'] as $attribute => $value) {
+                $qb->join('u.attributes', 'a', 'WITH', 'a.attribute = :attribute AND a.value = :value');
+                $qb->setParameter('attribute', $attribute);
+                $qb->setParameter('value', $value);
+                break; // only 1
+            }
         }
 
         foreach ($orderBy as $column => $dir) {
