@@ -13,7 +13,9 @@ use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * User service
@@ -34,26 +36,27 @@ class UserService
     /** @var \Newscoop\Entity\Repository\UserRepository */
     protected $repository;
 
-    /** @var Symfony\Component\Security\Core\SecurityContext */
+    /** @var SecurityContext */
     protected $security;
 
-    /** @var Symfony\Component\Security\Core\Encoder\EncoderFactory */
+    /** @var EncoderFactory */
     protected $factory;
 
-    /** @var ContainerInterface */
-    private $container;
+    /** @var $userIp */
+    protected $userIp;
 
     /**
-     * @param ContainerInterface $container
+     * @param Doctrine\ORM\EntityManager $em
+     * @param Zend_Auth                  $auth
+     * @param SecurityContext            $security
+     * @param EncoderFactory             $factory
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth, SecurityContext $security, EncoderFactory $factory)
     {
-        $this->container = $container;
-        $this->em = $this->container->get('em');
-        $this->auth = $this->container->get('zend_auth');
-        $this->security = $this->container->get('security.context');
-        $this->factory = $this->container->get('security.encoder_factory');
-        $this->request = $this->container->get('request');
+        $this->em = $em;
+        $this->auth = $auth;
+        $this->security = $security;
+        $this->factory = $factory;
     }
 
     /**
@@ -463,18 +466,49 @@ class UserService
     }
 
     /**
-     *  Get user ip
+     * Get user IP
      *
      * @return string
      */
-    public function getIp()
+    public function getUserIp()
     {
-        if (!is_null($this->request->server->get('HTTP_CLIENT_IP'))) {
-            return $this->request->server->get('HTTP_CLIENT_IP');
-        } elseif (!is_null($this->request->server->get('HTTP_X_FORWARDED_FOR'))) {
-            return $this->request->server->get('HTTP_X_FORWARDED_FOR');
+        return $this->userIp;
+    }
+
+    /**
+     * Set user IP
+     *
+     * @param string $userIp User IP
+     *
+     * @return string
+     */
+    public function setUserIp($userIp = null)
+    {
+        $this->userIp = $userIp;
+
+        return $this;
+    }
+
+    /**
+     * Resolve user IP from provided data
+     *
+     * @param Request $request Request object
+     *
+     * @return string $userIp User IP
+     */
+    public function userIpResolver(Request $request)
+    {
+        $userIp = null;
+        if (!is_null($request->server->get('HTTP_CLIENT_IP'))) {
+            $userIp = $request->server->get('HTTP_CLIENT_IP');
+        } elseif (!is_null($request->server->get('HTTP_X_FORWARDED_FOR'))) {
+            $userIp = $request->server->get('HTTP_X_FORWARDED_FOR');
         } else {
-            return $this->request->server->get('REMOTE_ADDR');
+            $userIp = $request->server->get('REMOTE_ADDR');
         }
+
+        $this->setUserIp($userIp);
+
+        return $userIp;
     }
 }

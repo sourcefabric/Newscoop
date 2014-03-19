@@ -28,7 +28,7 @@ services:
         factory_method: getInstance
     user:
         class:      Newscoop\Services\UserService
-        arguments:  ["@service_container"]
+        arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
     user.list:
         class:      Newscoop\Services\ListUserService
         arguments:  ["%blog%", "@em"]

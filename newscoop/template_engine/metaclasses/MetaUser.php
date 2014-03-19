@@ -196,7 +196,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     {
         $em = \Zend_Registry::get('container')->getService('em');
         $userService = \Zend_Registry::get('container')->getService('user');
-        $userIp = $userService->getIp();
+        $userIp = $userService->getUserIp();
         $publicationId = CampTemplate::singleton()->context()->publication->identifier;
         $repositoryAcceptance = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
 

@@ -125,6 +125,12 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
+    newscoop_newscoop.listener.userip:
+        class: Newscoop\NewscoopBundle\EventListener\UserIpListener
+        arguments:  ["@user"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.article_service:
         class: Newscoop\Services\ArticleService
         arguments:  ["@em"]
