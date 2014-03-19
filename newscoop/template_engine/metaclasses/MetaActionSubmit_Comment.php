@@ -124,7 +124,7 @@ class MetaActionSubmit_Comment extends MetaAction
         // Get the publication.
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
-        $userIp = $userService->getIp();
+        $userIp = $userService->getUserIp();
 
         if ($user->defined)
         {

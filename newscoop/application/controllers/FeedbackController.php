@@ -40,7 +40,7 @@ class FeedbackController extends Zend_Controller_Action
             $acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
             $user = new User($auth->getIdentity());
 
-            $userIp = $userService->getIp();
+            $userIp = $userService->getUserIp();
             if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
                 $errors[] = $translator->trans('You have been banned from writing feedbacks.');
             }
