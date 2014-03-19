@@ -155,15 +155,6 @@ class UserService
                 ->setParameter('status', $criteria['status']);
         }
 
-        if (isset($criteria['attribute']) && is_array($criteria['attribute'])) {
-            foreach ($criteria['attribute'] as $attribute => $value) {
-                $qb->join('u.attributes', 'a', 'WITH', 'a.attribute = :attribute AND a.value = :value');
-                $qb->setParameter('attribute', $attribute);
-                $qb->setParameter('value', $value);
-                break; // only 1
-            }
-        }
-
         foreach ($orderBy as $column => $dir) {
             $qb->addOrderBy("u.$column", $dir);
         }
