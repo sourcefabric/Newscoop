@@ -36,7 +36,7 @@ class AuthController extends Zend_Controller_Action
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-                setcookie('NO_CACHE', '1', NULL, '/');
+                setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
                 $this->_helper->redirector('index', 'dashboard');
             } else {
                 $form->addError($translator->trans("Invalid credentials"));
@@ -52,7 +52,7 @@ class AuthController extends Zend_Controller_Action
             $this->auth->clearIdentity();
         }
 
-        setcookie('NO_CACHE', 'NO', time()-3600, '/');
+        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
         $url = $this->_getParam('url');
         if (!is_null($url)) {
             $this->_redirect($url);
@@ -104,7 +104,7 @@ class AuthController extends Zend_Controller_Action
                 $token = $userService->loginUser($user);
                 $session->set('_security_frontend_area', serialize($token));
             }
-
+            setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
             if ($user->isPending()) {
                 $this->_forward('confirm', 'register', 'default', array(
                     'social' => true,
@@ -192,5 +192,15 @@ class AuthController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
+    }
+
+    private function extractDomain($domain)
+    {
+        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
+        {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
     }
 }
