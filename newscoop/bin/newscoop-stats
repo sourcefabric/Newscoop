@@ -1,6 +1,0 @@
-#!/usr/bin/env php
-<?php
-
-require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
-
-echo(exec('php '.$CAMPSITE_DIR.'/scripts/newscoop.php stats'));
