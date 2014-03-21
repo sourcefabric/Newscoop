@@ -411,7 +411,7 @@ class Comment implements DocumentInterface
      */
     public function getRecommended()
     {
-        return $this->recommended;
+        return (bool) $this->recommended;
     }
 
     /**
@@ -439,6 +439,16 @@ class Comment implements DocumentInterface
     }
 
     /**
+     * Get the commenter's name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getCommenterName();
+    }
+
+    /**
      * Get commenter name
      *
      * @return string
@@ -446,6 +456,16 @@ class Comment implements DocumentInterface
     public function getCommenterName()
     {
         return $this->getCommenter()->getName();
+    }
+
+    /**
+     * Get the commenter's email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getCommenterEmail();
     }
 
     /**

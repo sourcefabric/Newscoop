@@ -319,10 +319,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
             $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-            $language = $languageRepository->findOneByCode($values['language']);
 
             if (is_numeric($values['language'])) {
                 $language = $languageRepository->findOneById($values['language']);
+            } else {
+                $language = $languageRepository->findOneByCode($values['language']);
             }
 
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
