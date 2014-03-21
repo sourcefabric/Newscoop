@@ -15,13 +15,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class CommentType extends AbstractType
 {
+    private $patch;
+
+    public function __construct(array $options = array())
+    {
+        if (array_key_exists('patch', $options)) {
+            $this->patch = $options['patch'];
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $defaultRequired = ($this->patch) ? false : true;
+
         $builder->add('subject', null, array(
             'required' => false,
         ));
         $builder->add('message', null, array(
-            'required' => true,
+            'required' => $defaultRequired,
         ));
 
         $builder->add('name', null, array(
@@ -33,6 +44,14 @@ class CommentType extends AbstractType
         ));
 
         $builder->add('parent', null, array(
+            'required' => false,
+        ));
+
+        $builder->add('recommended', 'integer', array(
+            'required' => false,
+        ));
+
+        $builder->add('status', null, array(
             'required' => false,
         ));
     }
