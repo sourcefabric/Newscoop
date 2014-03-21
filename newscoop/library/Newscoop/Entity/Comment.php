@@ -176,7 +176,7 @@ class Comment implements DocumentInterface
     protected $dislikes = 0;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
+     * @ORM\Column(type="boolean")
      * @var int
      */
     protected $recommended = 0;
