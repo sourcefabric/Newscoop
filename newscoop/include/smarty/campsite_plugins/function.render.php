@@ -34,7 +34,7 @@ function smarty_function_render($p_params, &$p_smarty)
         $campsiteVector = $smarty->campsiteVector;
         foreach ($campsiteVector as $key => $value) {
             if (isset($p_params[$key])) {
-                if (empty($p_params[$key]) || strtolower($p_params[$key]) == 'off') {
+                if (empty($p_params[$key]) || (is_string($p_params[$key]) && strtolower($p_params[$key]) == 'off')) {
                     $campsiteVector[$key] = null;
                 }
                 if (is_int($p_params[$key])) {
