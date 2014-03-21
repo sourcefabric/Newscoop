@@ -128,19 +128,19 @@ class Comment implements DocumentInterface
     protected $message;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $thread_level;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $thread_order;
 
     /**
-     * @ORM\Column(length=2)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $status;
@@ -164,19 +164,19 @@ class Comment implements DocumentInterface
     protected $time_updated;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $likes = 0;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $dislikes = 0;
 
     /**
-     * @ORM\Column(length=1)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $recommended = 0;
