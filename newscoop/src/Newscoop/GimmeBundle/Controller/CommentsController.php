@@ -276,6 +276,7 @@ class CommentsController extends FOSRestController
         if (!$comment) {
             $comment = new Comment();
             $statusCode = 201;
+            $patch = false;
         } else {
             $statusCode = 200;
             $comment = $em->getRepository('Newscoop\Entity\Comment')->findOneById($comment);
@@ -283,9 +284,9 @@ class CommentsController extends FOSRestController
             if (!$comment) {
                 throw new EntityNotFoundException('Result was not found.');
             }
+            $patch = true;
         }
 
-        $patch = ($request->getMethod() == 'PATCH') ? true : false;
         $form = $this->createForm(new CommentType(array('patch'=>$patch)), array());
         $form->handleRequest($request);
 
