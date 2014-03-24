@@ -287,7 +287,7 @@ class CommentsController extends FOSRestController
             $patch = true;
         }
 
-        $form = $this->createForm(new CommentType(array('patch'=>$patch)), array());
+        $form = $this->createForm(new CommentType(array('patch'=>$patch)), array(), array('method'=>$request->getMethod()));
         $form->handleRequest($request);
 
         if ($form->isValid()) {

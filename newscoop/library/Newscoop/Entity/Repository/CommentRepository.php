@@ -225,16 +225,16 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     {
         // get the enitity manager
         $em = $this->getEntityManager();
-        if (!is_null($values['subject'])) {
+        if (array_key_exists('subject', $values) && !is_null($values['subject'])) {
             $comment->setSubject($values['subject']);
         }
-        if (!is_null($values['message'])) {
+        if (array_key_exists('message', $values) && !is_null($values['message'])) {
             $comment->setMessage($values['message']);
         }
-        if (!is_null($values['recommended'])) {
+        if (array_key_exists('recommended', $values) && !is_null($values['recommended'])) {
             $comment->setRecommended($values['recommended']);
         }
-        if (!is_null($values['status'])) {
+        if (array_key_exists('status', $values) && !is_null($values['status'])) {
             $comment->setStatus($values['status']);
         }
         $comment->setTimeUpdated(new \DateTime());
