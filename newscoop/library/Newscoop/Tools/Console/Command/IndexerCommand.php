@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
-require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 
 /**
  * Index newscoop articles command

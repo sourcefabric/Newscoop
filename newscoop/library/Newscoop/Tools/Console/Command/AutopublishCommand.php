@@ -11,9 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
-
-require_once APPLICATION_PATH . '/../' . '/include/campsite_init.php';
-
 /**
  * Update Image Storage Command
  */
@@ -35,7 +32,6 @@ class AutopublishCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $_SERVER['HTTP_HOST'] = '';
         $issueActions = \IssuePublish::DoPendingActions();
         $articleActions = \ArticlePublish::DoPendingActions();
 
@@ -43,7 +39,7 @@ class AutopublishCommand extends Console\Command\Command
             fopen(realpath(APPLICATION_PATH . '/../') .'/reset_cache', 'w');
         }
 
-        $output->writeln('Published issues: <info>'.count($issueActions).'</info>.');
-        $output->writeln('Published articles: <info>'.count($articleActions).'</info>.');
+        $output->writeln('Published issues: <info>'.$issueActions.'</info>.');
+        $output->writeln('Published articles: <info>'.$articleActions.'</info>.');
     }
 }
