@@ -22,22 +22,22 @@ class Session
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="datetime", name="start_time")
      */
-    private $start_time;
+    protected $start_time;
 
     /**
      * @ORM\Column(type="integer", name="user_id", nullable=true)
      */
-    private $user_id;
+    protected $user_id;
 
     /**
      * @ORM\OneToMany(targetEntity="Request", mappedBy="session_id")
      */
-    private $requests;
+    protected $requests;
 
     /**
      * Construct Session object

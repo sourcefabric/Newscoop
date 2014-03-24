@@ -44,13 +44,6 @@ class Section
     protected $issue;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="sections")
-     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="id")
-     * @var Newscoop\Entity\Issue
-     */
-    private $nrIssue;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
@@ -94,12 +87,6 @@ class Section
      * @var string
      */
     protected $articlesLink;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\SubscriptionsSection", mappedBy="subscription")
-     * @var Doctrine\Common\Collections\Collection;
-     */
-    private $subscriptionSection;
 
     /**
      * Getter for id
@@ -293,15 +280,5 @@ class Section
     public function __toString()
     {
         return $this->getNameAndLanguage();
-    }
-
-    /**
-     * Get subscriptionSection
-     *
-     * @return Newscoop\Entity\SubscriptionsSection
-     */
-    public function getSubscriptionSection()
-    {
-        return $this->subscriptionSection;
     }
 }

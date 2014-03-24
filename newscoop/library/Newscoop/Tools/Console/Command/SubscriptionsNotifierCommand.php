@@ -69,7 +69,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
         $notifiedIndex = 0;
         foreach ($endingSubscriptions as $subscription) {
             $issueMaxNumber = $this->getIssueMaxNumber($subscription->getPublication()->getId(), $subscription->getPublication()->getDefaultLanguage()->getId());
-            $subscriptionSectionToUpdate = $this->em->getRepository('Newscoop\Entity\SubscriptionsSection')
+            $subscriptionSectionToUpdate = $this->em->getRepository('Newscoop\Subscription\Section')
                 ->createQueryBuilder('ss')
                 ->where('ss.subscription = :subscription')
                 ->setParameter('subscription', $subscription->getId());
@@ -113,7 +113,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
 
                 $notify = true;
                 if (count($subscritpionsSections) == 1) {
-                    $subSectionsCount = $this->em->getRepository('Newscoop\Entity\SubscriptionsSection')
+                    $subSectionsCount = $this->em->getRepository('Newscoop\Subscription\Section')
                         ->createQueryBuilder('ss')
                         ->select('ss')
                         ->where('ss.subscription = :subscription')
@@ -132,7 +132,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
 
                 if ($counter == 0) {
                     $subsType = ($subscription->getType() == 'P') ? 'paid' : 'trial';
-                    $tpl->assign('user_title', $subscription->getUser()->getTitle());
+                    $tpl->assign('user_title', $subscription->getUser()->getFirstName());
                     $tpl->assign('user_name', $subscription->getUser()->getFirstName());
                     $tpl->assign('subs_type', $subsType);
                     $tpl->assign('subs_date', $formatedStartDate);
@@ -144,18 +144,18 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
                     $tpl->assign('subs_expire_date', $formatedEndDate);
                     $tpl->assign('subs_remained_days', $remainedDays);
                 } else {
-                    $sectionData = $this->em->getRepository('Newscoop\Entity\Section')
+                   try { $sectionData = $this->em->getRepository('Newscoop\Entity\Section')
                         ->createQueryBuilder('s')
                         ->select('s.name, s.number')
-                        ->from('Newscoop\Entity\SubscriptionsSection', 'ss')
+                        ->from('Newscoop\Subscription\Section', 'ss')
                         ->andWhere('ss.subscription = :subscription')
                         ->andWhere('ss.noticeSent = :noticeSent')
                         ->andWhere('ss.startDate = :startDate')
                         ->andWhere('ss.paidDays = :paidDays')
                         ->andWhere('s.publication = :publication')
-                        ->andWhere('s.nrIssue = :issue')
+                        ->andWhere('s.issue = :issue')
                         ->andWhere('s.language = :language')
-                        ->andWhere('s.number = ss.section')
+                        ->andWhere('s.number = ss.sectionNumber')
                         ->getQuery()
                         ->setParameters(array(
                             'subscription' =>$subscription->getId(),
@@ -167,7 +167,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
                             'language' => $subscription->getPublication()->getDefaultLanguage()
                         ))
                         ->getResult();
-
+} catch (\Exception $e) {ladybug_dump($e->getMessage());die;}
                     if ($counter == 0) {
                         $tpl->assign('subs_expire_plan', 1);
                     }
@@ -247,11 +247,11 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
 
     /**
      * Get ending subscriptions
-     * @return Newscoop\Entity\Subscriptions
+     * @return Newscoop\Subscription\Subscription
      */
     private function getEndingSubscriptions()
     {
-        $subscriptions = $this->em->getRepository('Newscoop\Entity\Subscriptions')
+        $subscriptions = $this->em->getRepository('Newscoop\Subscription\Subscription')
             ->createQueryBuilder('s')
             ->select('s, p, u, a')
             ->leftJoin('s.publication', 'p')
@@ -313,12 +313,12 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
 
     private function getSubscritpionsSections($subscriptionId)
     {
-        $sectionsCount = $this->em->getRepository('Newscoop\Entity\SubscriptionsSection')
+        $sectionsCount = $this->em->getRepository('Newscoop\Subscription\Section')
             ->createQueryBuilder('s');
 
         // select sections older than 48 hours
         $rsm = new \Doctrine\ORM\Query\ResultSetMapping();
-        $rsm->addEntityResult('\Newscoop\Entity\SubscriptionsSection', 'ss');
+        $rsm->addEntityResult('\Newscoop\Subscription\Section', 'ss');
         $rsm->addFieldResult('ss', 'StartDate', 'startDate');
         $rsm->addFieldResult('ss', 'PaidDays', 'paidDays');
         $rsm->addFieldResult('ss', 'IdSubscription', 'subscription');
@@ -344,8 +344,6 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
                 GROUP BY 
                     ss.StartDate, ss.PaidDays
         ";
-
-        $
 
         $query = $this->em->createNativeQuery($sql, $rsm);
 

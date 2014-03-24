@@ -23,20 +23,20 @@ class Request
      * @ORM\ManyToOne(targetEntity="Session", inversedBy="requests")
      * @ORM\JoinColumn(name="session_id", referencedColumnName="id")
      */
-    private $session;
+    protected $session;
 
     /**
      * @ORM\Column(type="datetime", name="last_stats_update")
      * @var string
      */
-    private $last_stats_update;
+    protected $last_stats_update;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="object_id", length=11)
      * @var string
      */
-    private $object_id;
+    protected $object_id;
 
     /**
      * Get $session_id
