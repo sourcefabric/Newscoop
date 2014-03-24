@@ -231,10 +231,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         if (!empty($values['message'])) {
             $comment->setMessage($values['message']);
         }
-        if (!empty($values['recommended'])) {
+        if ($values['recommended'] == 0 || !empty($values['recommended'])) {
             $comment->setRecommended($values['recommended']);
         }
-        if (!empty($values['status'])) {
+        if ($values['status'] == 0 || !empty($values['status'])) {
             $comment->setStatus($values['status']);
         }
         $comment->setTimeUpdated(new \DateTime());
