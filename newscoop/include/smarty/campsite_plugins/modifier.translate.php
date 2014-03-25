@@ -30,7 +30,7 @@ function smarty_modifier_translate($string, $domain = null, $params = array())
         return '';
     }
 
-    if (!is_null($domain)) {
+    if (is_null($domain)) {
         $domain = 'theme_translation';
     }
 
