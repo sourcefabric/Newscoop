@@ -97,7 +97,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
                     ->findOneById($language);
             }
 
-            if ($languageObject instanceof Newscoop\Entity\Language) {
+            if ($languageObject instanceof \Newscoop\Entity\Language) {
                 $queryBuilder->andWhere('a.language = :languageId')
                     ->setParameter('languageId', $languageObject->getId());
             }

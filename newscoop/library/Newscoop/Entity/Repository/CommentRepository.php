@@ -225,10 +225,19 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     {
         // get the enitity manager
         $em = $this->getEntityManager();
-        $comment
-            ->setSubject($values['subject'])
-            ->setMessage($values['message'])
-            ->setTimeUpdated(new \DateTime());
+        if (array_key_exists('subject', $values) && !is_null($values['subject'])) {
+            $comment->setSubject($values['subject']);
+        }
+        if (array_key_exists('message', $values) && !is_null($values['message'])) {
+            $comment->setMessage($values['message']);
+        }
+        if (array_key_exists('recommended', $values) && !is_null($values['recommended'])) {
+            $comment->setRecommended($values['recommended']);
+        }
+        if (array_key_exists('status', $values) && !is_null($values['status'])) {
+            $comment->setStatus($values['status']);
+        }
+        $comment->setTimeUpdated(new \DateTime());
 
         return $comment;
     }
@@ -310,10 +319,11 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
             $languageRepository = $em->getRepository('Newscoop\Entity\Language');
-            $language = $languageRepository->findOneByCode($values['language']);
 
             if (is_numeric($values['language'])) {
                 $language = $languageRepository->findOneById($values['language']);
+            } else {
+                $language = $languageRepository->findOneByCode($values['language']);
             }
 
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');

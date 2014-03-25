@@ -128,19 +128,19 @@ class Comment implements DocumentInterface
     protected $message;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $thread_level;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $thread_order;
 
     /**
-     * @ORM\Column(length=2)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $status;
@@ -164,19 +164,19 @@ class Comment implements DocumentInterface
     protected $time_updated;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $likes = 0;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
     protected $dislikes = 0;
 
     /**
-     * @ORM\Column(length=1)
+     * @ORM\Column(type="boolean")
      * @var int
      */
     protected $recommended = 0;
@@ -411,7 +411,7 @@ class Comment implements DocumentInterface
      */
     public function getRecommended()
     {
-        return $this->recommended;
+        return (bool) $this->recommended;
     }
 
     /**
@@ -439,6 +439,16 @@ class Comment implements DocumentInterface
     }
 
     /**
+     * Get the commenter's name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getCommenterName();
+    }
+
+    /**
      * Get commenter name
      *
      * @return string
@@ -446,6 +456,16 @@ class Comment implements DocumentInterface
     public function getCommenterName()
     {
         return $this->getCommenter()->getName();
+    }
+
+    /**
+     * Get the commenter's email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getCommenterEmail();
     }
 
     /**
