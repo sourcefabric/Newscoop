@@ -44,6 +44,7 @@ function smarty_function_render($p_params, &$p_smarty)
         }
         if (isset($p_params['params'])) {
             if (is_array($p_params['params'])) {
+                $campsiteVector['params'] = '';
                 foreach ($p_params['params'] as $key => $value) {
                     $campsiteVector['params'] .= $key .'__'. $value;
                 }
