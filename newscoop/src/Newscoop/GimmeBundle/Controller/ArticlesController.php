@@ -65,6 +65,7 @@ class ArticlesController extends FOSRestController
 
             $clean['articleAuthor'] = $authors;
         }
+
         if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
             $clean['articleTitle'] = $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title'));
         }
