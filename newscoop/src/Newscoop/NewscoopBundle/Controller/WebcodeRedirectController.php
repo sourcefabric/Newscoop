@@ -34,7 +34,7 @@ class WebcodeRedirectController extends Controller
         if (!is_null($article)) {
             $link = $linkService->getLinkCanonical($article);
 
-            return $this->redirect($link);
+            return $this->redirect($link, 301);
         }
 
         return $this->redirect('/');
