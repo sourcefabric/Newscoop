@@ -57,12 +57,14 @@ class ArticlesController extends FOSRestController
 
         $inputManipulator = $this->get('newscoop.input_manipulator');
 
-        $authors = array();
-        foreach ($params['authors'] as $key => $value) {
-            $authors[] = $inputManipulator::getVar(array('inputObject' => $value, 'variableName' => 'name'));
-        }
+        if (array_key_exists('authors', $params)) {
+            $authors = array();
+            foreach ($params['authors'] as $key => $value) {
+                $authors[] = $inputManipulator::getVar(array('inputObject' => $value, 'variableName' => 'name'));
+            }
 
-        $clean['articleAuthor'] = $authors;
+            $clean['articleAuthor'] = $authors;
+        }
         if ($inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title', 'checkIfExists' => true))) {
             $clean['articleTitle'] = $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'title'));
         }
@@ -109,11 +111,13 @@ class ArticlesController extends FOSRestController
             }
         }
 
-        foreach ($params['fields'] as $key => $value) {
-            if (!in_array($key, $notBodyFields)) {
-                $clean['F'.$key.'_'.$clean['articleNumber']] = $value;
-            } else {
-                $clean['F'.$key] = $value;
+        if (array_key_exists('fields', $params)) {
+            foreach ($params['fields'] as $key => $value) {
+                if (!in_array($key, $notBodyFields)) {
+                    $clean['F'.$key.'_'.$clean['articleNumber']] = $value;
+                } else {
+                    $clean['F'.$key] = $value;
+                }
             }
         }
 
@@ -187,7 +191,9 @@ class ArticlesController extends FOSRestController
             // }
 
         // Update the article.
-        $articleObj->setTitle($clean['articleTitle']);
+        if (array_key_exists('articleTitle', $clean)) {
+            $articleObj->setTitle($clean['articleTitle']);
+        }
         $articleObj->setIsIndexed(false);
 
         if (!empty($commentStatus)) {
