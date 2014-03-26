@@ -23,7 +23,7 @@ class UsersList extends PaginatedBaseList
         $em = \Zend_Registry::get('container')->get('em');
         $service = \Zend_Registry::get('container')->get('user.list');
         $qb = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
-        $list = $this->paginateList($qb, null, $criteria->maxResults);
+        $list = $this->paginateList($qb, null, $criteria->maxResults, null, false);
 
         $tempList = array_map(function ($row) {
             $user = $row[0];
