@@ -69,7 +69,7 @@ class EventsNotifierCommand extends Console\Command\Command
             ->andWhere('e.notify = :notify')
             ->andWhere('l.created > :logTimestamp')
             ->getQuery()
-            ->setparameters(array(
+            ->setParameters(array(
                 'logTimestamp' => $logTimestamp,
                 'notify' => 'Y'
             ))

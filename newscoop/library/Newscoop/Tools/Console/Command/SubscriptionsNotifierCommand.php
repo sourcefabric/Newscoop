@@ -144,7 +144,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
                     $tpl->assign('subs_expire_date', $formatedEndDate);
                     $tpl->assign('subs_remained_days', $remainedDays);
                 } else {
-                   try { $sectionData = $this->em->getRepository('Newscoop\Entity\Section')
+                    $sectionData = $this->em->getRepository('Newscoop\Entity\Section')
                         ->createQueryBuilder('s')
                         ->select('s.name, s.number')
                         ->from('Newscoop\Subscription\Section', 'ss')
@@ -167,7 +167,7 @@ class SubscriptionsNotifierCommand extends Console\Command\Command
                             'language' => $subscription->getPublication()->getDefaultLanguage()
                         ))
                         ->getResult();
-} catch (\Exception $e) {ladybug_dump($e->getMessage());die;}
+
                     if ($counter == 0) {
                         $tpl->assign('subs_expire_plan', 1);
                     }
