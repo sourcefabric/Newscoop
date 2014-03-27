@@ -79,17 +79,19 @@ class InputManipulator
 
         $parameters['variableType'] = strtolower($parameters['variableType']);
 
-        if (!isset($parameters['inputObject'][$parameters['variableName']])) {
+        if (!array_key_exists($parameters['variableName'], $parameters['inputObject'])) {
             if ($parameters['checkIfExists']) {
                 return false;
-            } else {
-                return true;
             }
             if (!$parameters['ignoreErrors']) {
                 throw new \InvalidArgumentException('"'.$parameters['variableName'].'" is not set');
             }
 
             return $parameters['defaultValue'];
+        } else {
+            if ($parameters['checkIfExists']) {
+                return true;
+            }
         }
         // Clean the slashes
         if (get_magic_quotes_gpc()) {
