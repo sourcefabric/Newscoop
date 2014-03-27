@@ -84,7 +84,7 @@ function smarty_function_render($p_params, &$p_smarty)
     }
     $smarty->cache_lifetime = $cache_lifetimeBak;
     $smarty->campsiteVector = $campsiteVectorBak;
-    $smarty->cache = $cache_statusBak;
+    $smarty->caching = $cache_statusBak;
 }
 
 ?>
