@@ -298,7 +298,6 @@ class TopicService
             ->getQuery();
 
         $nodes->execute();
-
     }
 
     /**

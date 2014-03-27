@@ -11,9 +11,10 @@ namespace Newscoop\NewscoopBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Webcode Redirect Controller
+ * Redirects article with webcode to original article link
  */
 class WebcodeRedirectController extends Controller
 {
@@ -24,6 +25,9 @@ class WebcodeRedirectController extends Controller
     {
         $em = $this->get('em');
         $linkService = $this->get('article.link');
+        $response = new Response();
+        $templatesService = $this->get('newscoop.templates.service');
+
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
             ->where('a.webcode = :webcode')
@@ -37,6 +41,8 @@ class WebcodeRedirectController extends Controller
             return $this->redirect($link, 301);
         }
 
-        return $this->redirect('/');
+        $response->setContent($templatesService->fetchTemplate('404.tpl'));
+
+        return $response;
     }
 }
