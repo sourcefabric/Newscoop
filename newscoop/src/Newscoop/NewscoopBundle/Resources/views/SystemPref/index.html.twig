@@ -543,11 +543,11 @@
 
     $(function() {
         $("input:radio[name=preferencesform\\[userGarbageActive\\]]").change(function() {
-            var replication_div = $('#user-garbage');
+            var garbageDiv = $('#user-garbage');
             if ($(this).val() == 'Y') {
-                replication_div.show();
+                garbageDiv.show();
             } else {
-                replication_div.hide();
+                garbageDiv.hide();
             }
         });
 

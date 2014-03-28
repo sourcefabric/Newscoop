@@ -26,7 +26,6 @@ newscoop:
       recaptcha: "reCAPTCHA Settings"
     btn:
       cleardatabasecache: "Clear current driver cache"
-      removepeningusers: "Delete pending users now"
     label:
       title: "System Preferences"
       header: "Preferences"
