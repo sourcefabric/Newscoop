@@ -428,6 +428,20 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
+        ))
+        ->add('userGarbageActive', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
+        ))
+        ->add('userGarbageDays', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 1),
+            'required' => true
         ));
     }
 

@@ -26,6 +26,7 @@ newscoop:
       recaptcha: "reCAPTCHA Settings"
     btn:
       cleardatabasecache: "Clear current driver cache"
+      removepeningusers: "Delete pending users now"
     label:
       title: "System Preferences"
       header: "Preferences"
@@ -104,6 +105,9 @@ newscoop:
       yesoption: "Yes"
       nooption: "No"
       geosearch: "Use Local GeoNames Search:"
+      usergarbage: "Remove obsolete pending users data?"
+      usergarbagedaysinfo: "Define a certain number of days after which the pending users will be deleted."
+      usergarbagedays: "Days number"
     popover:
       cacheengine: "Enables or disables system cache cache, which can improve Newscoop performance."
       cacheenginehost: "Provide cache host (for Memcache, Memcached or Redis)"
@@ -125,3 +129,4 @@ newscoop:
         publickey: "Use this in the JavaScript code that is served to your users."
         privatekey: "Use this when communicating between your server and reCAPTCHA server. Be sure to keep it a secret."
         secure: "If you use secure url for reCAPTCHA choose Yes option."
+      garbage: "If enabled, this allows the publisher to define a certain number of days after which the pending users are being deleted. By default 90 days number is set."
