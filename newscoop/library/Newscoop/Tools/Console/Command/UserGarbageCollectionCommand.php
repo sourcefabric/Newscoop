@@ -35,16 +35,20 @@ class UserGarbageCollectionCommand extends ContainerAwareCommand
     {
         $systemPreferences = $this->getContainer()->getService('system_preferences_service');
         $text = '<info>Obsolete pending users successfuly removed.</info>';
-        if ($input->getOption('force')) {
-            $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
-            if ($input->getOption('verbose')) {
-                $output->writeln($text);
+        try {
+            if ($input->getOption('force')) {
+                $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
+                if ($input->getOption('verbose')) {
+                    $output->writeln($text);
+                }
+            } elseif ($systemPreferences->get('userGarbageActive') === 'Y' && !is_null($systemPreferences->get('userGarbageActive'))) {
+                $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
+                if ($input->getOption('verbose')) {
+                    $output->writeln($text);
+                }
             }
-        } elseif ($systemPreferences->get('userGarbageActive') === 'Y' && !is_null($systemPreferences->get('userGarbageActive'))) {
-            $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
-            if ($input->getOption('verbose')) {
-                $output->writeln($text);
-            }
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
         }
     }
 }
