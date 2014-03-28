@@ -25,7 +25,8 @@ class UserGarbageCollectionCommand extends ContainerAwareCommand
         $this
         ->setName('user:garbage')
         ->setDescription('Users Garbage Collection')
-        ->setHelp("Removes obsolete pending users data");
+        ->setHelp("Removes obsolete pending users data")
+        ->addOption('force', null, InputOption::VALUE_NONE, 'If set, foreces command execution ommiting system preferences settings.');
     }
 
     /**
@@ -33,12 +34,16 @@ class UserGarbageCollectionCommand extends ContainerAwareCommand
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $systemPreferences = $this->getContainer()->getService('system_preferences_service');
-
-        if ($systemPreferences->get('userGarbageActive') === 'Y' && !is_null($systemPreferences->get('userGarbageActive'))) {
+        $text = '<info>Obsolete pending users successfuly removed.</info>';
+        if ($input->getOption('force')) {
             $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
-
             if ($input->getOption('verbose')) {
-                $output->writeln('<info>Obsolete pending users successfuly removed.</info>');
+                $output->writeln($text);
+            }
+        } elseif ($systemPreferences->get('userGarbageActive') === 'Y' && !is_null($systemPreferences->get('userGarbageActive'))) {
+            $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
+            if ($input->getOption('verbose')) {
+                $output->writeln($text);
             }
         }
     }
