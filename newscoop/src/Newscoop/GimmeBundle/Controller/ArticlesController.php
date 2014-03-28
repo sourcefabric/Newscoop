@@ -76,18 +76,22 @@ class ArticlesController extends FOSRestController
             $clean['publishDate'] = date_format(date_create_from_format(DATE_ATOM, $inputManipulator::getVar(array('inputObject' => $params, 'variableName' => 'published'))), 'Y-m-d H:i:s');
         }
 
+        $commentStatus = null;
+
         if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_locked', 'checkIfExists' => true))) {
             if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_locked')) == 1) {
                 $commentStatus = 'locked';
             }
         }
 
-        if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled', 'checkIfExists' => true))) {
-            $commentsEnabled = $inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled'));
-            if ($commentsEnabled == 0) {
-                $commentStatus = 'disabled';
-            } elseif ($commentsEnabled == 1) {
-                $commentStatus = 'enabled';
+        if ($commentStatus != 'locked') {
+            if ($inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled', 'checkIfExists' => true))) {
+                $commentsEnabled = $inputManipulator::getVar(array('inputObject' => $params, 'variableType' => 'int', 'variableName' => 'comments_enabled'));
+                if ($commentsEnabled == 0) {
+                    $commentStatus = 'disabled';
+                } elseif ($commentsEnabled == 1) {
+                    $commentStatus = 'enabled';
+                }
             }
         }
 
