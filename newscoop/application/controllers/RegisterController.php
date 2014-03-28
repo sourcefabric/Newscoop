@@ -103,6 +103,13 @@ class RegisterController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
             try {
+                if (!empty($values['image'])) {
+                    $imageInfo = array_pop($form->image->getFileInfo());
+                    $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                } else {
+                    $values['image'] = $this->getUserImageFilename($user);
+                }
+
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->_helper->service('dispatcher')->dispatch('user.register', new GenericEvent($this, array(
                     'user' => $user,
