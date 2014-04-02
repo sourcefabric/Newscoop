@@ -34,10 +34,10 @@ class UserTopicRepository extends EntityRepository
     /**
      * Find results for user and topic
      *
-     * @param  [type] $user  [description]
-     * @param  [type] $topic [description]
+     * @param  Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\Topic $topic
      *
-     * @return [type]        [description]
+     * @return Newscoop\Entity\UserTopic
      */
     public function findByTopicAndUser(User $user, Topic $topic)
     {
