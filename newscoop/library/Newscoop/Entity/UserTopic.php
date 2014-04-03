@@ -16,15 +16,16 @@ use Doctrine\ORM\Mapping AS ORM;
 class UserTopic
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="topic_id")
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="id")
      * @var int
      */
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
      * @var User
      */
     protected $user;
