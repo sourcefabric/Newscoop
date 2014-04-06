@@ -268,6 +268,19 @@ class Section
     public function getExpirationDate() {
         $startDate = new \DateTime(isset($this->startDate) ? $this->startDate : 'now');
         $timeSpan = new \DateInterval('P' . $this->days . 'D');
+
         return $startDate->add($timeSpan);
+    }
+
+    /**
+     * Set noticeSent
+     *
+     * @param string $noticeSent
+     */
+    public function setNoticeSent($noticeSent)
+    {
+        $this->noticeSent = $noticeSent;
+
+        return $this;
     }
 }

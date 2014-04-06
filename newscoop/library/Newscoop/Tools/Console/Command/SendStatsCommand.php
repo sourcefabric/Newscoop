@@ -7,9 +7,9 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-    Symfony\Component\Console;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console;
 
 /**
  * Send stats command
@@ -22,7 +22,7 @@ class SendStatsCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('stats')
+        ->setName('newscoop:stats:send')
         ->setDescription('Sends stats')
         ->setHelp(<<<EOT
 Sends stats
@@ -67,7 +67,7 @@ EOT
             $client = new \Zend_Http_Client();
             $client->setUri($statsUrl);
             $client->setParameterPost($parameters);
-            $response = $client->request('POST');
+            $client->request('POST');
         }
     }
 }

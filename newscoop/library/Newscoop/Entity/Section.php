@@ -228,11 +228,13 @@ class Section
      * Set template
      *
      * @param Newscoop\Entity\Template $template
+     *
      * @return Newscoop\Entity\Section
      */
     public function setTemplate(Template $template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -240,11 +242,13 @@ class Section
      * Set article template
      *
      * @param Newscoop\Entity\Template $template
+     *
      * @return Newscoop\Entity\Section
      */
     public function setArticleTemplate(Template $template)
     {
         $this->articleTemplate = $template;
+
         return $this;
     }
 
