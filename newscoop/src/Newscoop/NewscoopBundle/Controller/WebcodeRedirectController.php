@@ -36,7 +36,7 @@ class WebcodeRedirectController extends Controller
             ->getOneOrNullResult();
 
         if (!is_null($article)) {
-            $link = $linkService->getLinkCanonical($article);
+            $link = $linkService->getLink($article);
 
             return $this->redirect($link, 301);
         }
