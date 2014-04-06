@@ -38,8 +38,8 @@ class Field
     protected $field;
 
     /**
-     * @ORM\Column(name="Data", type="string")
-     * @var string
+     * @ORM\Column(name="Data", type="text")
+     * @var text
      */
     protected $data;
 
