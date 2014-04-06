@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="SnippetFields")
  */
-class Field
+class SnippetField
 {
     /**
      * @ORM\Id
@@ -32,8 +32,8 @@ class Field
     protected $snippet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template\Field")
-     * @var Newscoop\Entity\Snippet\Template\Field
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template\TemplateField")
+     * @var Newscoop\Entity\Snippet\Template\TemplateField
      */
     protected $field;
 
@@ -58,7 +58,7 @@ class Field
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\Field
+     * @return Newscoop\Entity\Snippet\SnippetField
      */
     public function setId($id)
     {
@@ -70,7 +70,7 @@ class Field
     /**
      * Getter for field
      *
-     * @return Newscoop\Entity\Snippet\Template\Field
+     * @return Newscoop\Entity\Snippet\Template\TemplateField
      */
     public function getField()
     {
@@ -82,7 +82,7 @@ class Field
      *
      * @param mixed $field Value to set
      *
-     * @return Newscoop\Entity\Snippet\Field
+     * @return Newscoop\Entity\Snippet\SnippetField
      */
     public function setField($field)
     {
@@ -106,7 +106,7 @@ class Field
      *
      * @param mixed $data Value to set
      *
-     * @return Newscoop\Entity\Snippet\Field
+     * @return Newscoop\Entity\Snippet\SnippetField
      */
     public function setData($data)
     {

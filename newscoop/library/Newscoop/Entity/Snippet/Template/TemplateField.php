@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping AS ORM;
  * @ORM\Entity
  * @ORM\Table(name="SnippetTemplateField")
  */
-class Field
+class TemplateField
 {
     const TYPE_INT = 'int';
     const TYPE_STRING = 'string';
@@ -71,7 +71,7 @@ class Field
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\Template\Field
+     * @return Newscoop\Entity\Snippet\Template\TemplateField
      */
     public function setId($id)
     {
@@ -95,7 +95,7 @@ class Field
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Snippet\Template\Field
+     * @return Newscoop\Entity\Snippet\Template\TemplateField
      */
     public function setName($name)
     {
@@ -119,7 +119,7 @@ class Field
      *
      * @param string $type Value to set
      *
-     * @return Newscoop\Entity\Snippet\Template\Field
+     * @return Newscoop\Entity\Snippet\Template\TemplateField
      */
     public function setType($type)
     {
@@ -146,7 +146,7 @@ class Field
      *
      * @param string $scope Value to set
      *
-     * @return Newscoop\Entity\Snippet\Template\Field
+     * @return Newscoop\Entity\Snippet\Template\TemplateField
      */
     public function setScope($scope)
     {

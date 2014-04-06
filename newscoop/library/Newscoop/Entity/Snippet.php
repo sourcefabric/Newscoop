@@ -39,8 +39,8 @@ class Snippet
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Field", mappedBy="snippet")
-     * @var Newscoop\Entity\Snippet\Field
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet")
+     * @var Newscoop\Entity\Snippet\SnippetField
      */
     protected $fields;
 

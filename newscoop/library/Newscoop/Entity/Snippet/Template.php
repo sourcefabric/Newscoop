@@ -38,8 +38,8 @@ class Template
     protected $controller;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Template\Field", mappedBy="template")
-     * @var Newscoop\Entity\Snippet\Template\Field
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Template\TemplateField", mappedBy="template")
+     * @var Newscoop\Entity\Snippet\Template\TemplateField
      */
     protected $fields;
 
@@ -152,7 +152,7 @@ class Template
     /**
      * Add Snippet Template Field
      *
-     * @param Newscoop\Entity\Snippet\Template\Field $field Field to add
+     * @param Newscoop\Entity\Snippet\Template\TemplateField $field Field to add
      *
      * @return Newscoop\Entity\Snippet\Template
      */
