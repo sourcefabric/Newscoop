@@ -7,10 +7,12 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\View\TopicView;
 
 /**
+ * Topic names entity
+ *
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\TopicRepository")
  * @ORM\Table(name="TopicNames")
  */
@@ -23,13 +25,6 @@ class Topic
      * @todo add reference to topic
      */
     protected $id;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\TopicNodes", inversedBy="names")
-     * @ORM\JoinColumn(name="fk_topic_id", referencedColumnName="id")
-     * @var Newscoop\Entity\TopicNodes
-     */
-    protected $topic;
 
     /**
      * @ORM\Id
@@ -52,18 +47,6 @@ class Topic
     protected $articlesLink;
 
     /**
-     * @param int $id
-     * @param int $language
-     * @param int $name
-     */
-    public function __construct($id, $language, $name)
-    {
-        $this->id = (int) $id;
-        $this->language = $language;
-        $this->name = (string) $name;
-    }
-
-    /**
      * Get topic id
      *
      * @return int
@@ -74,13 +57,17 @@ class Topic
     }
 
     /**
-     * Get topic left node
+     * Set topic id
+     *
+     * @param int $id
      *
      * @return int
      */
-    public function getTopicLeft()
+    public function setTopicId($id)
     {
-        return $this->topic->getLeftNode();
+        $this->id = $id;
+
+        return $id;
     }
 
     /**
@@ -94,6 +81,20 @@ class Topic
     }
 
     /**
+     * Set language
+     *
+     * @param Language $language
+     *
+     * @return int
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $language;
+    }
+
+    /**
      * Get name
      *
      * @return string
@@ -104,7 +105,22 @@ class Topic
     }
 
     /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $name;
+    }
+
+    /**
      * Set link to topic articles resource
+     *
      * @param string $articlesLink Link to topic articles resource
      */
     public function setArticlesLink($articlesLink)
@@ -143,6 +159,7 @@ class Topic
         $view->identifier = $this->id;
         $view->name = $this->name;
         $view->value = sprintf('%s:%s', $this->name, $this->language->getCode());
+
         return $view;
     }
 }

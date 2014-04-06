@@ -679,7 +679,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
      * @param Newscoop\User\UserCriteria $criteria
      * @return Newscoop\ListResult
      */
-    public function getListByCriteria(UserCriteria $criteria)
+    public function getListByCriteria(UserCriteria $criteria, $results = true)
     {
         $qb = $this->createQueryBuilder('u');
 
@@ -703,7 +703,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->query)) {
-            $qb->andWhere("(u.username LIKE :query)");
+            $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
         }
 
@@ -746,6 +746,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             }
 
             $qb->orderBy($key, $order);
+        }
+
+        if (!$results) {
+            return $qb;
         }
 
         $list->items = array_map(function ($row) {

@@ -8,9 +8,11 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Topic nodes entity
+ *
  * @ORM\Entity()
  * @ORM\Table(name="Topics")
  */
@@ -59,13 +61,14 @@ class TopicNodes
     /**
      * Set left node
      *
-     * @param  int $leftNode
+     * @param int $leftNode
+     *
      * @return int
      */
     public function setLeftNode($leftNode)
     {
         $this->leftNode = $leftNode;
-        
+
         return $leftNode;
     }
 
@@ -82,13 +85,14 @@ class TopicNodes
     /**
      * Set right node
      *
-     * @param  int $rightNode
+     * @param int $rightNode
+     *
      * @return int
      */
     public function setRightNode($rightNode)
     {
         $this->rightNode = $rightNode;
-        
+
         return $rightNode;
     }
 }

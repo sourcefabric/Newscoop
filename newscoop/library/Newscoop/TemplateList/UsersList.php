@@ -10,20 +10,29 @@
 namespace Newscoop\TemplateList;
 
 use Newscoop\ListResult;
+use Newscoop\TemplateList\PaginatedBaseList;
 
 /**
  * List users
  */
-class UsersList extends BaseList 
+class UsersList extends PaginatedBaseList 
 {
 
     protected function prepareList($criteria, $parameters)
     {
+        $em = \Zend_Registry::get('container')->get('em');
         $service = \Zend_Registry::get('container')->get('user.list');
-        $list = $service->findByCriteria($criteria);
-        foreach ($list as $key => $user) {
-            $list->items[$key] = new \MetaUser($user);
-        }
+        $qb = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
+        $list = $this->paginateList($qb, null, $criteria->maxResults, null, false);
+
+        $tempList = array_map(function ($row) {
+            $user = $row[0];
+            $user->setPoints((int) $row['comments']);
+
+            return new \MetaUser($user);
+        }, $list->items);
+
+        $list->items = $tempList;
 
         return $list;
     }

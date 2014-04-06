@@ -1,17 +1,3 @@
 #!/usr/bin/env php
 <?php
-
-require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
-
-require_once WWW_DIR . '/include/campsite_init.php';
-require_once WWW_DIR . '/classes/ArticlePublish.php';
-require_once WWW_DIR . '/classes/IssuePublish.php';
-
-// fill in HTTP_HOST to avoid notices in campsite_constants.php
-$_SERVER['HTTP_HOST'] = '';
-$issueActions = IssuePublish::DoPendingActions();
-$articleActions = ArticlePublish::DoPendingActions();
-
-if ($issueActions > 0 || $articleActions > 0) {
-    fopen(WWW_DIR.'/reset_cache', 'w');
-}
+system(__DIR__ . '/../application/console newscoop:autopublish');

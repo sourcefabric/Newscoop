@@ -26,7 +26,8 @@ class Publication
     /* --------------------------------------------------------------- */
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
@@ -110,6 +111,12 @@ class Publication
      * @var int
      */
     protected $defaultAliasId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Aliases", inversedBy="publication")
+     * @ORM\JoinColumn(name="IdDefaultAlias", referencedColumnName="Id")
+     */
+    private $defaultAlias;
 
     /**
      * @ORM\Column(type="integer", name="IdURLType", nullable=True)
@@ -353,6 +360,16 @@ class Publication
         return $this->moderator_from;
     }
 
+    /**
+     * Get defaultAlias
+     *
+     * @return Aliases
+     */
+    public function getDefaultAlias()
+    {
+        return $this->defaultAlias;
+    }
+
     public function getCaptchaEnabled()
     {
         return $this->commentsCaptchaEnabled;
@@ -375,7 +392,7 @@ class Publication
     public function getPublicCommentsEnabled()
     {
         return $this->public_enabled;
-}
+    }
 
     /**
      * Sets the value of public_enabled.

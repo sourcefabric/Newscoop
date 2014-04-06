@@ -540,6 +540,7 @@ class Publication extends DatabaseObject {
         }
         $queryStr .= ' GROUP BY Languages.Id';
         $order = Publication::ProcessLanguageListOrder($p_order);
+        $sqlOrder = array();
         foreach ($order as $orderDesc) {
             $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
         }

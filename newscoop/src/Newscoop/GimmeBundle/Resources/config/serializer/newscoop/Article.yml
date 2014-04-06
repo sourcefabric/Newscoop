@@ -138,3 +138,15 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: reads
+        comments_enabled:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: comments_enabled
+            since_version: 1.1
+        commentsLocked:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: comments_locked
+            since_version: 1.1

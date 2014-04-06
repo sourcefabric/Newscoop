@@ -225,3 +225,8 @@
 ul.pagination li:after {
 	display: none;
 }
+
+.dropdown-menu li a.latest-published {
+    background-color: #008148;
+    border-radius: 3px 3px;
+}
