@@ -40,6 +40,7 @@ class Snippet
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet")
+     * @ORM\JoinColumn(name="FieldId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\SnippetField
      */
     protected $fields;

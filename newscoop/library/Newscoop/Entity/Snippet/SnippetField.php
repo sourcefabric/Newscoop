@@ -27,12 +27,14 @@ class SnippetField
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet
      */
     protected $snippet;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template\TemplateField")
+     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\Template\TemplateField
      */
     protected $field;
