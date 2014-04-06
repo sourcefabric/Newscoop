@@ -212,7 +212,7 @@ class LinkService
                     break;
 
                 case 'keywords':
-                    $seo[] = trim($this->getKeywords());
+                    $seo[] = trim($article->getKeywords());
                     break;
 
                 case 'topics':
