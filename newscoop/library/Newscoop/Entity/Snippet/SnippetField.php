@@ -26,7 +26,7 @@ class SnippetField
     protected $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet", inversedBy="fields")
      * @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet
      */

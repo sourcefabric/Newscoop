@@ -50,7 +50,7 @@ class TemplateField
     protected $scope;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\Template")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\Template", inversedBy="fields")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\Template
      */

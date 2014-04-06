@@ -339,7 +339,7 @@ class Article implements DocumentInterface
     protected $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleSnippets",
      *      joinColumns={
      *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
