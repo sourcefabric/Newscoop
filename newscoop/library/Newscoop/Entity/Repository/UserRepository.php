@@ -703,7 +703,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->query)) {
-            $qb->andWhere("(u.username LIKE :query)");
+            $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
         }
 

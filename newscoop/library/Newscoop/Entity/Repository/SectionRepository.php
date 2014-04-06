@@ -34,7 +34,7 @@ class SectionRepository extends EntityRepository
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $count);
-        
+
         return $query;
     }
 
@@ -81,6 +81,32 @@ class SectionRepository extends EntityRepository
         }
 
         return $sections;
+    }
+
+    public function findSectionByArticle($article)
+    {
+        $em = $this->getEntityManager();
+
+        $issue = $em->getRepository('Newscoop\Entity\Issue')
+            ->findOneBy(array(
+                'language' => $article->getLanguage(),
+                'publication' => $article->getPublication(),
+                'number' => $article->getIssueId(),
+            ));
+
+        if ($issue === null) {
+            return null;
+        }
+
+        $section = $em->getRepository('Newscoop\Entity\Section')
+            ->findOneBy(array(
+                'language' => $article->getLanguage(),
+                'publication' => $article->getPublication(),
+                'issue' => $issue,
+                'number' => $article->getSectionId(),
+            ));
+
+        return $section;
     }
 }
 
