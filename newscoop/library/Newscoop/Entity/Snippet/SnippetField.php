@@ -70,6 +70,16 @@ class SnippetField
     }
 
     /**
+     * Getter for field name
+     *
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return $this->field->name;
+    }
+
+    /**
      * Getter for field
      *
      * @return Newscoop\Entity\Snippet\Template\TemplateField

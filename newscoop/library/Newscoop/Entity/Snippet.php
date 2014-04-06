@@ -51,6 +51,12 @@ class Snippet
      */
     protected $articles;
 
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection();
+        $this->articles = new ArrayCollection();
+    }
+
     /**
      * Getter for id
      *
