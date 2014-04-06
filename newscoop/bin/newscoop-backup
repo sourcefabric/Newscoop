@@ -1,6 +1,10 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+use Newscoop\Services\FilesystemService;
+
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 if (empty($GLOBALS['argv']) && empty($options)) {
@@ -14,7 +18,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
 
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
 	exit(1);
 }
 
@@ -109,7 +113,12 @@ if (!$silent) {
 }
 
 if (!file_exists($backupDirFullPath)) {
-	camp_create_dir($backupDirFullPath, $adviceOnError);
+  try {
+    $filesystem = new Filesystem();
+    $filesystem->mkdir($backupDirFullPath);
+  } catch(IOException $e) {
+    throw new IOException($adviceOnError);
+  }
 }
 
 $tmpVersion = preg_split('/ /', $Campsite["VERSION"]);
