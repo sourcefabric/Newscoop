@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * Snippet entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\SnippetRepository")
  * @ORM\Table(name="Snippets")
  */
 class Snippet
@@ -39,16 +39,16 @@ class Snippet
     protected $name;
 
     /**
-     * @ORM\Column(name="Parameters", type="text")
-     * @var text
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Field", mappedBy="snippet")
+     * @var Newscoop\Entity\Snippet\Field
      */
-    protected $parameters;
+    protected $fields;
 
     /**
-     * @ORM\Column(name="Snippet", type="text")
-     * @var text
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Article", mappedBy="snippets")
+     * @var Newscoop\Entity\Article
      */
-    protected $snippet;
+    protected $articles;
 
     /**
      * Getter for id
@@ -97,6 +97,16 @@ class Snippet
     
         return $this;
     }
+
+    public function getTemplateName()
+    {
+        return $this->template->getName();
+    }
+
+    public function getTemplateId()
+    {
+        return $this->template->getId();
+    }
     
     /**
      * Getter for Name
@@ -123,52 +133,27 @@ class Snippet
     }
 
     /**
-     * Getter for Parameters
+     * Getter for fields
      *
-     * @return string JSON
+     * @return array
      */
-    public function getParameters()
+    public function getFields()
     {
-        return $this->parameters;
+        return $this->fields;
     }
     
     /**
-     * Setter for Parameters
+     * Setter for fields
      *
-     * @param string JSON $parameters
+     * @param mixed $fields Value to set
      *
      * @return Newscoop\Entity\Snippet
      */
-    public function setParameters($parameters)
+    public function setFields($fields)
     {
-        $this->parameters = $parameters;
+        $this->fields = $fields;
     
         return $this;
     }
-    
-    
-    /**
-     * Getter for Snippet
-     *
-     * @return string JSON
-     */
-    public function getSnippet()
-    {
-        return $this->snippet;
-    }
-    
-    /**
-     * Setter for Snippet
-     *
-     * @param string JSON $snippet
-     *
-     * @return Newscoop\Entity\Snippet
-     */
-    public function setSnippet($snippet)
-    {
-        $this->snippet = $snippet;
-    
-        return $this;
-    }
-    
+            
 }

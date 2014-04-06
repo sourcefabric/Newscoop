@@ -38,10 +38,10 @@ class Template
     protected $controller;
 
     /**
-     * @ORM\Column(name="Parameters", type="text")
-     * @var text
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Template\Field", mappedBy="template")
+     * @var Newscoop\Entity\Snippet\Template\Field
      */
-    protected $parameters;
+    protected $fields;
 
     /**
      * @ORM\Column(name="Template", type="text")
@@ -140,29 +140,28 @@ class Template
     }
 
     /**
-         * Getter for Parameters
-         *
-         * @return string JSON
-         */
-        public function getParameters()
-        {
-            return $this->parameters;
-        }
-        
-        /**
-         * Setter for parameters
-         *
-         * @param string JSON $parameters
-         *
-         * @return Newscoop\Entity\Snippet\Template
-         */
-        public function setParameters($parameters)
-        {
-            $this->parameters = $parameters;
-        
-            return $this;
-        }
-
+     * Getter for field
+     *
+     * @return mixed
+     */
+    public function getFields()
+    {
+        return $this->fields;
+    }
+    
+    /**
+     * Add Snippet Template Field
+     *
+     * @param Newscoop\Entity\Snippet\Template\Field $field Field to add
+     *
+     * @return Newscoop\Entity\Snippet\Template
+     */
+    public function addField($field)
+    {
+        $this->field = $field;
+    
+        return $this;
+    }
     
     /**
      * Getter for template
