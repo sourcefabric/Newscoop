@@ -18,6 +18,7 @@ regGS("Messages status change to $1.", "Statu zpráv změněn na  $1");
 regGS("Message status change to $1.", "Status zprávy změněn na  $1");
 regGS("Messages updated.", "Zprávy aktualizovány");
 regGS("Message updated.", "Zpráva aktualizována");
+regGS("No attachment", "Žádná příloha");
 regGS("Processed", "Zpracováno");
 regGS("Reply", "Odpovědět");
 regGS("Reply to message", "Odpovědět na zprávu");

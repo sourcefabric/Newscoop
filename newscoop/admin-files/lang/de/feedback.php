@@ -18,6 +18,7 @@ regGS("Messages status change to $1.", "Status der Nachrichen ändern zu $1.");
 regGS("Message status change to $1.", "Status der Nachricht ändern zu $1.");
 regGS("Messages updated.", "Nachrichten aktualisiert. ");
 regGS("Message updated.", "Nachricht aktualisiert. ");
+regGS("No attachment", "Kein Anhang");
 regGS("Processed", "Verarbeitet");
 regGS("Reply", "Antworten");
 regGS("Reply to message", "Auf Nachricht antworten");

@@ -13,6 +13,8 @@ regGS("Reply", "Адказ");
 regGS("Processed", "Апрацаванае");
 regGS("No records found.", "");
 regGS("No entries to show", "");
+regGS("None", "Пуста");
+regGS("No attachment", "Няма ўкладання");
 regGS("Messages updated.", "Паведамленні абноўленыя");
 regGS("Messages status change to $1.", "Статус паведамлення зменены на $1.");
 regGS("Messages deleted.", "Паведамленні выдаленыя.");

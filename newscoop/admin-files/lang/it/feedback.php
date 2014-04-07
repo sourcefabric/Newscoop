@@ -18,6 +18,7 @@ regGS("Messages status change to $1.", "Stato dei messaggi cambiato in $1.");
 regGS("Message status change to $1.", "Stato del messaggio cambiato in $1.");
 regGS("Messages updated.", "Messaggi aggiornati.");
 regGS("Message updated.", "Messaggi aggiornati.");
+regGS("No attachment", "Nessun allegato");
 regGS("Processed", "Processato");
 regGS("Reply", "Risposta");
 regGS("Reply to message", "Rispondi al messaggio");

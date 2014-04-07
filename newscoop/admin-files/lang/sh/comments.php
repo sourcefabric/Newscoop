@@ -13,6 +13,8 @@ regGS("Reply", "Odgovori");
 regGS("Processed", "");
 regGS("No records found.", "");
 regGS("No entries to show", "");
+regGS("None", "");
+regGS("No attachment", "");
 regGS("Messages updated.", "");
 regGS("Messages status change to $1.", "");
 regGS("Messages deleted.", "");
