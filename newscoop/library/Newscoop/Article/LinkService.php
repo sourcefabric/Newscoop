@@ -216,9 +216,11 @@ class LinkService
                     break;
 
                 case 'topics':
-                    $topics = \ArticleTopic::GetArticleTopics($article->getNumber());
-                    foreach ($articleTopics as $topic) {
-                        $seo[] = trim($topic->getName($article->getLanguageId()));
+                    $articleTopics = \ArticleTopic::GetArticleTopics($article->getNumber());
+                    if (is_array($articleTopics)) {
+                        foreach ($articleTopics as $topic) {
+                            $seo[] = trim($topic->getName($article->getLanguageId()));
+                        }
                     }
                     break;
             }
