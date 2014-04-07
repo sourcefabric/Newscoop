@@ -63,14 +63,17 @@ class UserTopicService
     public function unfollowTopic(User $user, Topic $topic)
     {
         try {
-            $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
-               ->findOneBy(array(
-                   'user' => $user,
-                   'topic_id' => $topic->getTopicId(),
-               ));
+            $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
+                ->findByTopicAndUser($user, $topic);
 
-            if ($userTopic) {
-                $this->em->remove($userTopic);
+            if ($userTopics) {
+                if (is_array($userTopics)) {
+                    foreach ($userTopics AS $userTopic) {
+                        $this->em->remove($userTopic);
+                    }
+                } else {
+                    $this->em->remove($userTopics);
+                }
                 $this->em->flush();
             }
         } catch (Exception $e) {
@@ -211,7 +214,7 @@ class UserTopicService
 
         $this->dispatcher->dispatch('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
-            'topic_id' => $topic->getId(),
+            'topic_id' => $topic->getTopicId(),
             'user' => $user,
         )));
     }
