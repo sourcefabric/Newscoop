@@ -21,6 +21,8 @@ use Doctrine\ORM\EntityNotFoundException;
 use Newscoop\GimmeBundle\Form\Type\SnippetType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Newscoop\Entity\Snippet;
+use Newscoop\Entity\Snippet\SnippetTemplate;
+use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 
 class SnippetsController extends FOSRestController
 {
@@ -134,9 +136,29 @@ class SnippetsController extends FOSRestController
             ->getArticleSnippets($number, $language)
             ->getResult();
 
+        $snippetTemplate = new SnippetTemplate();
+        $snippetTemplateField1 = new SnippetTemplateField();
+        $snippetTemplateField1->setName('Field1')->setType('string')->setScope('frontend');
+        $snippetTemplate->addField($snippetTemplateField1);
+        $snippetTemplate->setName('Template1');
+        $snippetTemplate->setTemplateCode('{{ Field1 }}');
+        $newSnippet = new Snippet($snippetTemplate);
+        $newSnippet->setName('Test Snippet');
         
+        ladybug_dump($newSnippet);
+        ladybug_dump($newSnippet->getFields());
+
+        $newSnippet->setData('Field1', 'foobar');
+
+        ladybug_dump($newSnippet);
+
+        $em->persist($newSnippet);
+        $em->flush();
+
+        ladybug_dump($newSnippet->render());
+
         $ladybug->log($articleSnippets);
-        
+
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleSnippets = $paginator->paginate($articleSnippets);
