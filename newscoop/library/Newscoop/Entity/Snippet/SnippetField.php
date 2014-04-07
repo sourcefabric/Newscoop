@@ -9,9 +9,11 @@
 namespace Newscoop\Entity\Snippet;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 
 /**
  * Snippet Template Field entity
+ *
  * @ORM\Entity
  * @ORM\Table(name="SnippetFields")
  */
@@ -33,14 +35,14 @@ class SnippetField
     protected $snippet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template\TemplateField")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
-     * @var Newscoop\Entity\Snippet\Template\TemplateField
+     * @var Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     protected $field;
 
     /**
-     * @ORM\Column(name="Data", type="text")
+     * @ORM\Column(name="Data", type="text", nullable=true)
      * @var text
      */
     protected $data;
@@ -76,15 +78,15 @@ class SnippetField
      */
     public function getFieldName()
     {
-        return $this->field->name;
+        return $this->field->getName();
     }
 
     /**
      * Getter for field
      *
-     * @return Newscoop\Entity\Snippet\Template\TemplateField
+     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
-    public function getField()
+    public function getTemplateField()
     {
         return $this->field;
     }
@@ -96,7 +98,7 @@ class SnippetField
      *
      * @return Newscoop\Entity\Snippet\SnippetField
      */
-    public function setField($field)
+    public function setTemplateField(SnippetTemplateField $field)
     {
         $this->field = $field;
     
@@ -127,4 +129,13 @@ class SnippetField
         return $this;
     }
     
+    /**
+     * SnippetField name
+     *
+     * @return string name
+     */
+    public function __toString()
+    {
+        return $this->field->getName();
+    }
 }

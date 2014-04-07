@@ -9,13 +9,16 @@
 namespace Newscoop\Entity\Snippet;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 
 /**
  * Snippet Template entity
+ *
  * @ORM\Entity
  * @ORM\Table(name="SnippetTemplates")
  */
-class Template
+class SnippetTemplate
 {
     /**
      * @ORM\Id
@@ -32,40 +35,48 @@ class Template
     protected $name;
 
     /**
-     * @ORM\Column(name="Controller", type="string")
+     * @ORM\Column(name="Controller", type="string", nullable=true)
      * @var string
      */
     protected $controller;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\Template\TemplateField", mappedBy="template")
-     * @var Newscoop\Entity\Snippet\Template\TemplateField
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist"})
+     * @var Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     protected $fields;
 
     /**
-     * @ORM\Column(name="Template", type="text")
+     * @ORM\Column(name="TemplateCode", type="text")
      * @var text
      */
-    protected $template;
+    protected $templateCode;
 
     /**
-     * @ORM\Column(name="Favourite", type="boolean")
+     * @ORM\Column(name="Favourite", type="boolean", nullable=true)
      * @var boolean
      */
     protected $favourite;
 
     /**
-     * @ORM\Column(name="IconInactive", type="text")
+     * @ORM\Column(name="IconInactive", type="text", nullable=true)
      * @var text base64 encoded image
      */
     protected $iconInactive;
 
     /**
-     * @ORM\Column(name="IconActive", type="text")
+     * @ORM\Column(name="IconActive", type="text", nullable=true)
      * @var text base64 encoded image
      */
     protected $iconActive;
+
+    /**
+     * Constructs the SnippetTemplate
+     */
+    public function __construct()
+    {
+        $this->fields = new ArrayCollection();
+    }
 
     /**
      * Getter for id
@@ -82,7 +93,7 @@ class Template
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setId($id)
     {
@@ -106,7 +117,7 @@ class Template
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setName($name)
     {
@@ -130,13 +141,23 @@ class Template
      *
      * @param string $controller Value to set
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setController($controller)
     {
         $this->controller = $controller;
     
         return $this;
+    }
+
+    /**
+     * Check if the Template has Fields
+     *
+     * @return mixed
+     */
+    public function hasFields()
+    {
+        return !is_null($this->fields);
     }
 
     /**
@@ -152,13 +173,13 @@ class Template
     /**
      * Add Snippet Template Field
      *
-     * @param Newscoop\Entity\Snippet\Template\TemplateField $field Field to add
+     * @param Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField $field Field to add
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
-    public function addField($field)
+    public function addField(SnippetTemplateField $field)
     {
-        $this->field = $field;
+        $this->fields->add($field);
     
         return $this;
     }
@@ -168,21 +189,21 @@ class Template
      *
      * @return string JSON
      */
-    public function getTemplate()
+    public function getTemplateCode()
     {
-        return $this->template;
+        return $this->templateCode;
     }
     
     /**
-     * Setter for template
+     * Setter for template code
      *
-     * @param string JSON $template
+     * @param string $templateCode Template Code to Set (Twig format)
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
-    public function setTemplate($template)
+    public function setTemplateCode($templateCode)
     {
-        $this->template = $template;
+        $this->templateCode = $templateCode;
     
         return $this;
     }
@@ -202,7 +223,7 @@ class Template
      *
      * @param boolean $favourite
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setFavourite($favourite)
     {
@@ -224,9 +245,9 @@ class Template
     /**
      * Setter for iconInactive
      *
-     * @param text base64 encoded image $iconInactive
+     * @param string $iconInactive base64 encoded image
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setIconInactive($iconInactive)
     {
@@ -248,14 +269,24 @@ class Template
     /**
      * Setter for iconActive
      *
-     * @param text base64 encoded image $iconInactive
+     * @param string $iconActive base64 encoded image $iconInactive
      *
-     * @return Newscoop\Entity\Snippet\Template
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
      */
     public function setIconActive($iconActive)
     {
         $this->iconActive = $iconActive;
     
         return $this;
+    }
+
+    /**
+     * Returns SnippetTemplate name
+     *
+     * @return string name
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 }

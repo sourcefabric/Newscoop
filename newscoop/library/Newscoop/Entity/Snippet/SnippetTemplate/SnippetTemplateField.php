@@ -6,16 +6,18 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Entity\Snippet\Template;
+namespace Newscoop\Entity\Snippet\SnippetTemplate;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Entity\Snippet\SnippetTemplate;
 
 /**
  * Snippet Template Field entity
+ *
  * @ORM\Entity
  * @ORM\Table(name="SnippetTemplateField")
  */
-class TemplateField
+class SnippetTemplateField
 {
     const TYPE_INT = 'int';
     const TYPE_STRING = 'string';
@@ -50,9 +52,9 @@ class TemplateField
     protected $scope;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\Template", inversedBy="fields")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate", inversedBy="fields")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
-     * @var Newscoop\Entity\Snippet\Template
+     * @var Newscoop\Entity\Snippet\SnippetTemplate
      */
     protected $template;
 
@@ -71,7 +73,7 @@ class TemplateField
      *
      * @param int $id
      *
-     * @return Newscoop\Entity\Snippet\Template\TemplateField
+     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     public function setId($id)
     {
@@ -95,7 +97,7 @@ class TemplateField
      *
      * @param string $name
      *
-     * @return Newscoop\Entity\Snippet\Template\TemplateField
+     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     public function setName($name)
     {
@@ -119,7 +121,7 @@ class TemplateField
      *
      * @param string $type Value to set
      *
-     * @return Newscoop\Entity\Snippet\Template\TemplateField
+     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     public function setType($type)
     {
@@ -146,7 +148,7 @@ class TemplateField
      *
      * @param string $scope Value to set
      *
-     * @return Newscoop\Entity\Snippet\Template\TemplateField
+     * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     public function setScope($scope)
     {
