@@ -26,7 +26,7 @@ class UserGarbageCollectionCommand extends ContainerAwareCommand
         ->setName('user:garbage')
         ->setDescription('Users Garbage Collection')
         ->setHelp("Removes obsolete pending users data")
-        ->addOption('force', null, InputOption::VALUE_NONE, 'If set, foreces command execution ommiting system preferences settings.');
+        ->addOption('force', null, InputOption::VALUE_NONE, 'If set, foreces command execution omitting system preferences settings.');
     }
 
     /**
@@ -35,6 +35,7 @@ class UserGarbageCollectionCommand extends ContainerAwareCommand
     {
         $systemPreferences = $this->getContainer()->getService('system_preferences_service');
         $text = '<info>Obsolete pending users successfuly removed.</info>';
+
         try {
             if ($input->getOption('force')) {
                 $this->getContainer()->getService('user.garbage')->run($systemPreferences->get('userGarbageDays'));
