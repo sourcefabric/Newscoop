@@ -1,7 +1,7 @@
 <?php 
-regGS("show", "إظهار");
-regGS("hide", "إخفاء");
-regGS("Title", "عنوان");
+regGS("show", "أظهر");
+regGS("hide", "أخف");
+regGS("Title", "العنوان");
 regGS("Resource Type:", "نوع المورد:");
 regGS("Resource Type", "نوع المورد");
 regGS("Resource", "مورد");
