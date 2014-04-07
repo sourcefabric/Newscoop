@@ -163,7 +163,7 @@
 }
 
 .breadcrumb li:after {
-	content: url('http://rockstar.lab.sourcefabric.org/admin-style/images/breadcrumb_arrow.png');
+	content: url('/admin-style/images/breadcrumb_arrow.png');
 	position: relative;
 	height: 10px;
 	width: 10px;
