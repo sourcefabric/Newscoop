@@ -155,6 +155,8 @@ class SystemPrefController extends Controller
             'recaptchaPublicKey' => $preferencesService->RecaptchaPublicKey,
             'recaptchaPrivateKey' => $preferencesService->RecaptchaPrivateKey,
             'recaptchaSecure' => $preferencesService->RecaptchaSecure,
+            'userGarbageActive' => $preferencesService->userGarbageActive ?: 'N',
+            'userGarbageDays' => $preferencesService->userGarbageDays ?: 90,
         )
         , array(
             'cacheService' => $this->container->get('newscoop.cache')
@@ -237,6 +239,9 @@ class SystemPrefController extends Controller
                     $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
                     // template filter
                     $this->templateFilter($data['template_filter']);
+                    // users garbage settings
+                    $preferencesService->set('userGarbageActive', $data['userGarbageActive']);
+                    $preferencesService->set('userGarbageDays', $data['userGarbageDays']);
                 }
                 // General Settings
                 $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 

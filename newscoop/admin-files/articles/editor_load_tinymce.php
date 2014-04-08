@@ -308,10 +308,10 @@ $().ready(function() {
 
         <?php
         $translator = \Zend_Registry::get('container')->getService('translator');
-        if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
+        ?>
         setup : function(ed) {
-            var text = '';
             var wordcount = false;
+            <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
             ed.onInit.add(function(){
                 ed.controlManager.setDisabled('pasteword', true);
                     if (tinymce.isIE) {
@@ -327,25 +327,6 @@ $().ready(function() {
             });
             ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
 
-            ed.onKeyUp.add(function(ed, l) {
-                var idx = ed.id.lastIndexOf('_');
-                var buttonId = ed.id.substr(0, idx);
-                var row = tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row');
-
-                if (32 == l.keyCode || 13 == l.keyCode || 46 == l.keyCode || 33 == l.keyCode || 63 == l.keyCode ) {
-                    if (!wordcount) {
-                        tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, '<?php echo $translator->trans("Characters", array(), 'articles'); ?>: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
-                        wordcount = true;
-                    }
-                    text = ed.getContent().replace(/(< ([^>]+)<)/g,"").replace(/\s+/g," ");
-                    text = $.trim(text);
-                    if (row) {
-                        tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', text.length);
-                    }
-                }
-
-            });
-
             ed.addButton('campsite-subhead', {
                 title : '<?php echo $translator->trans("Newscoop Subhead", array(), 'articles'); ?>',
                 image : website_url + '/js/tinymce/themes/advanced/img/campsite_subhead.gif',
@@ -353,9 +334,18 @@ $().ready(function() {
                     CampsiteSubhead(ed);
                 }
             });
-        },
-        <?php } ?>
+            <?php } ?>
 
+            ed.onKeyUp.add(function(ed, l) {
+                var row = tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row');
+                if (!wordcount) {
+                    tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, '<?php echo $translator->trans("Characters", array(), 'articles'); ?>: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
+                    wordcount = true;
+                }
+                var strip = (tinyMCE.activeEditor.getContent()).replace(/(<([^>]+)>)/ig,"");
+                tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', strip.length);
+            });
+        },
     });
 });
 

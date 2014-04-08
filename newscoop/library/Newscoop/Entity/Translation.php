@@ -22,11 +22,10 @@ class Translation
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(name="Id", type="integer")
+     * @ORM\Column(name="phrase_id", type="integer")
      * @var int
      */
-    protected $id;
+    protected $phrase_id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Newscoop\Entity\Language")
@@ -42,27 +41,11 @@ class Translation
     protected $translationText;
 
     /**
-     * @ORM\Column(name="phrase_id", type="integer")
-     * @var int
-     */
-    protected $phrase_id;
-
-    /**
      * @param int $phraseId Current phrase id for translations from autoid table.
      */
     public function __construct($phraseId)
     {
         $this->setPhraseId($phraseId);
-    }
-
-    /**
-     * Gets the value of id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

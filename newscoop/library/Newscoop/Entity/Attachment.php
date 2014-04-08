@@ -77,7 +77,7 @@ class Attachment
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Translation")
-     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="Id", nullable=true, onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fk_description_id", referencedColumnName="phrase_id", nullable=true, onDelete="SET NULL")
      * @var Newscoop\Entity\Translation
      */
     protected $description;
