@@ -38,9 +38,9 @@ class UpdateApplicationVersionCurrentVersion extends \Liip\RMT\Action\BaseAction
         $appFile = realpath(__DIR__.'/../newscoop/template_engine/classes/CampVersion.php');
         Context::get('output')->write("New version [<yellow>$newVersion</yellow>] udpated into $appFile: ");
         $fileContent = file_get_contents($appFile);
-        $fileContent = preg_replace('/(.*private $m_release = .*;)/', "    private $m_release = '$newVersion';", $fileContent);
-        $fileContent = preg_replace('/(.*private $m_releaseDate = .*;)/', "    private $m_releaseDate = 'date('Y-m-d')';", $fileContent);
-        $fileContent = preg_replace('/(.*private $m_copyrightYear = .*;)/', "    private $m_copyrightYear = date('Y');", $fileContent);
+        $fileContent = preg_replace('/(.*private $m_release = .*;)/', "    private {$m_release} = '$newVersion';", $fileContent);
+        $fileContent = preg_replace('/(.*private $m_releaseDate = .*;)/', "    private {$m_releaseDate} = 'date('Y-m-d')';", $fileContent);
+        $fileContent = preg_replace('/(.*private $m_copyrightYear = .*;)/', "    private {$m_copyrightYear} = date('Y');", $fileContent);
         file_put_contents($appFile, $fileContent);
 
         $this->confirmSuccess();
