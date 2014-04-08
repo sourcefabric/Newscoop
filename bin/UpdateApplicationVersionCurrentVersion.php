@@ -31,7 +31,7 @@ class UpdateApplicationVersionCurrentVersion extends \Liip\RMT\Action\BaseAction
         Context::get('output')->write("New version [<yellow>$newVersion</yellow>] udpated into $appFile: ");
         $fileContent = file_get_contents($appFile);
         //const VERSION = '4.3';
-        $fileContent = preg_replace('/(.*const .*VERSION = .*;)/', "const VERSION = '$newVersion';", $fileContent);
+        $fileContent = preg_replace('/(.*const VERSION = .*;)/', "    const VERSION = '$newVersion';", $fileContent);
         file_put_contents($appFile, $fileContent);
 
         $this->confirmSuccess();
