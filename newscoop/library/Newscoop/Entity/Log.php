@@ -10,13 +10,16 @@ namespace Newscoop\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
+ * Log entity
+ *
  * @ORM\Entity
  * @ORM\Table(name="Log")
  */
 class Log
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
@@ -29,14 +32,16 @@ class Log
     protected $created;
 
     /**
-     * @ORM\Column(type="integer", name="fk_event_id")
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Event")
+     * @ORM\JoinColumn(name="fk_event_id", referencedColumnName="id")
+     * @var Newscoop\Entity\Event
      */
     protected $eventId;
 
     /**
-     * @ORM\Column(type="integer", name="fk_user_id")
-     * @var int
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", fetch="EAGER")
+     * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
      */
     protected $userId;
 
@@ -51,4 +56,43 @@ class Log
      * @var string
      */
     protected $userIp;
+
+    /**
+     * Get created
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Get eventId
+     *
+     * @return Newscoop\Entity\Event
+     */
+    public function getEvent()
+    {
+        return $this->eventId;
+    }
+
+    /**
+     * Get message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
 }

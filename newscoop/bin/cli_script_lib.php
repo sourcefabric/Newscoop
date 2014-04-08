@@ -1,17 +1,5 @@
 <?php
 
-function camp_is_readable($p_fileName)
-{
-    if (!is_readable($p_fileName)) {
-        echo "\nThis script requires access to the file $p_fileName.\n";
-        echo "Please run this script as a user with appropriate privileges.\n";
-        echo "Most often this user is 'root'.\n\n";
-        return false;
-    }
-    return true;
-} // fn camp_is_readable
-
-
 /**
  * Execute a command in the shell.
  *
@@ -54,26 +42,6 @@ function camp_readline()
     $in = fgets($GLOBALS['stdin'], 4094); // Maximum windows buffer size
     return $in;
 } // fn camp_readline
-
-
-/**
- * Create a directory.  If this fails, print out the given error
- * message or a default one.
- *
- * @param string $p_dirName
- * @param string $p_msg
- * @return void
- */
-function camp_create_dir($p_dirName, $p_msg = "")
-{
-    if ($p_msg == "") {
-        $p_msg = "Unable to create directory $p_dirName.";
-    }
-    if (!is_dir($p_dirName) && !mkdir($p_dirName)) {
-        camp_exit_with_error($p_msg);
-    }
-} // fn camp_create_dir
-
 
 /**
  * @return boolean
