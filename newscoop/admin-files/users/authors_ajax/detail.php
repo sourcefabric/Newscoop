@@ -216,7 +216,7 @@ if ($id > 0) {
         </li>
         <li>&nbsp;</li>
         <?php
-            if (isset($author) && is_object($author) && is_numeric($author->getImage())) {
+            if (isset($author) && is_object($author) && $author->getImage() != 0) {
               echo '<li><button><a href="#user-image" id="user-image-btn">'.$translator->trans("User image (full-size)", array(), "users").'</a></button></li>';
             }
           ?>
