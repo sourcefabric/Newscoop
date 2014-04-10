@@ -395,7 +395,7 @@ class LocalImage implements ImageInterface
     /**
     * Get caption
     *
-    * @proxy to getDescription
+    * Proxy to getDescription
     *
     * @return string
     */
