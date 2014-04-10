@@ -27,7 +27,9 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 
 foreach ($_POST['file'] as $id => $values) {
     $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($id);
-    $description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getPhraseId());
+    $description = $em->getRepository('Newscoop\Entity\Translation')->findOneBy(array(
+        'phrase_id' => $attachment->getDescription()->getPhraseId()
+    ));
 
     if (!$description) {
         $nextTranslationPhraseId = $em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
