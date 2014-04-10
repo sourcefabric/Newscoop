@@ -55,8 +55,14 @@ class AttachmentsController extends Controller
     private function sendFileAsAttachment($attachment, $attachmentService)
     {
         $file = $attachmentService->getStorageLocation($attachment);
+        $fileSystemService = $this->get('newscoop.filesystem');
         $response = new BinaryFileResponse($file);
-        $d = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $attachment->getName());
+        $d = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $attachment->getName(),
+            $fileSystemService->sanitizeFileName($attachment->getName())
+        );
+
         $response->headers->set('Content-Disposition', $d);
 
         return $response;
