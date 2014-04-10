@@ -4,8 +4,7 @@ class Translation extends DatabaseObject {
 	var $m_dbTableName = 'Translations';
 	var $m_keyColumnNames = array('phrase_id', 'fk_language_id');
 	var $m_keyIsAutoIncrement = false;
-	var $m_columnNames = array('id',
-							   'phrase_id',
+	var $m_columnNames = array('phrase_id',
 	                           'fk_language_id',
 	                           'translation_text');
 

@@ -253,14 +253,18 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if (!$this->m_dbObject->getId()) {
             return 0;
         }
+
         $em = \Zend_Registry::get('container')->getService('em');
 
         $sum = 0;
-        $sum +=  $em->getRepository('Newscoop\Entity\Comment')
+        $sum += $em->getRepository('Newscoop\Entity\Comment')
             ->countByUser($this->m_dbObject);
 
-        $sum +=  $em->getRepository('Newscoop\Entity\Feedback')
+        $sum += $em->getRepository('Newscoop\Entity\Feedback')
             ->countByUser($this->m_dbObject);
+
+        $sum += $em->getRepository('Newscoop\Entity\Article')
+            ->countByAuthor($this->m_dbObject);
 
         return $sum;
     }
