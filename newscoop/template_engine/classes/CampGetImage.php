@@ -247,7 +247,7 @@ class CampGetImage
      */
     private function ReadImage($p_ending)
     {
-        $func = 'imagecreatefrom'.$p_ending;;
+        $func = 'imagecreatefrom'.$p_ending;
         return $func($this->getSourcePath());
     }  // fn ReadImage
 

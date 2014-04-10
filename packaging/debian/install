@@ -1,7 +1,0 @@
-newscoop/* var/lib/newscoop/
-newscoop/.htaccess var/lib/newscoop/
-debian/etc/apache.conf /etc/newscoop/4.2/
-debian/etc/newscoop.ini /etc/newscoop/4.2/
-debian/etc/apache.vhost.tpl /etc/newscoop/4.2/
-debian/etc/newscoop.cron.tpl /etc/newscoop/4.2/
-debian/usr/newscoop /usr/share/lintian/overrides/

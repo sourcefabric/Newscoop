@@ -116,7 +116,7 @@ class Publication
      * @ORM\ManyToOne(targetEntity="Aliases", inversedBy="publication")
      * @ORM\JoinColumn(name="IdDefaultAlias", referencedColumnName="Id")
      */
-    private $defaultAlias;
+    protected $defaultAlias;
 
     /**
      * @ORM\Column(type="integer", name="IdURLType", nullable=True)

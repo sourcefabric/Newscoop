@@ -1,4 +1,3 @@
-composer.phar
 newscoop/images/*
 newscoop/cache/*
 newscoop/plugins/*
@@ -9,11 +8,10 @@ newscoop/.htaccess
 newscoop/conf/configuration.php
 newscoop/conf/database_conf.php
 newscoop/templates_cache/*
-newscoop/system_preferences.php
 newscoop/themes/publication_*
 newscoop/themes/unassigned/empty/
 newscoop/themes/unassigned/system_templates/
 newscoop/install/cron_jobs/all_at_once
 newscoop/application/configs/application.ini
 newscoop/application/configs/parameters/custom_parameters.yml
-.vagrant
+newscoop/composer.phar

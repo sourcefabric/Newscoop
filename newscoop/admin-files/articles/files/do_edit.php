@@ -55,7 +55,9 @@ if (!$articleObj->userCanModify($g_user)) {
 
 $em = \Zend_Registry::get('container')->getService('em');
 $attachment = $em->getRepository('Newscoop\Entity\Attachment')->findOneById($f_attachment_id);
-$description = $em->getRepository('Newscoop\Entity\Translation')->findOneById($attachment->getDescription()->getId());
+$description = $em->getRepository('Newscoop\Entity\Translation')->findOneBy(array(
+    'phrase_id' => $attachment->getDescription()->getPhraseId()
+));
 $description->setTranslationText($f_description);
 $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
 if ($f_language_specific == "yes") {
