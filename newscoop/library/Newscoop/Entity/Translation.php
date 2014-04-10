@@ -129,14 +129,4 @@ class Translation
 
         return $this;
     }
-
-    /**
-     * Gets the value of phrase_id.
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->phrase_id;
-    }
 }
