@@ -10,22 +10,39 @@ $this->placeholder('title')->set($translator->trans("Edit user $1", array('$1' =
         'module' => 'admin',
         'controller' => 'user',
         'action' => 'profile',
-    )); ?>" class="iframe"><img src="<?php echo $this->url(array('src' => $this->image), 'image', false, false) ?: $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php echo $translator->trans('Edit profile', array(), 'users'); ?></a>
+        'user' => $this->user->getId(),
+    )); ?>" class="iframe"><img src="<?php echo $this->originalImage ? $this->url(array('src' => $this->image), 'image', false, false) : $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php echo $translator->trans('Edit profile', array(), 'users'); ?></a>
 </div>
 <?php } ?>
 
 <?php echo $this->form->setAttrib('id', 'edit-form'); ?>
 
+<div id="user-image" style="display:none">
+    <img id="original-image" src="<?php echo $this->url(array('src' => '../'.$this->originalImage), 'image', false, false); ?>" width="100%" height="100%"/><br>
+    <label><b><?php echo $translator->trans("URL"); ?>: </b></label><br>
+    <input onclick="this.select();" class="input_text" value="<?php echo $this->baseImage ?>" style="width:99%"type="text"/>
+</div>
+
 <script>
+$(function() {
+    $("a#user-image-btn").fancybox({
+        'onStart': function() { $("#user-image").css("display","block"); },
+        'onClosed': function() { $("#user-image").css("display","none"); }
+    });
+ });
 $('.content a.iframe').fancybox({
     hideOnContentClick: false,
     width: 900,
     height: 600,
     'onClosed':function () {
-        window.location.reload();
+        setTimeout(function() {
+            window.location.reload();
+        }, 500);
     },
 });
-
+<?php if ($this->user->isPublic() && $this->originalImage) { ?>
+$('.content .actions .navigation').append('<li><a href="#user-image" id="user-image-btn"><?php echo $translator->trans("User image (full-size)", array(), 'users'); ?></a></li>');
+<?php } ?>
 $('#edit-form').submit(function() {
     $('#save_button').attr('disabled', 'disabled');
 });

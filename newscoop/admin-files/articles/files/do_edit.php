@@ -16,8 +16,8 @@ if (!SecurityToken::isValid()) {
 }
 
 if (!$g_user->hasPermission('ChangeFile')) {
-	camp_html_display_error($translator->trans('You do not have the right to change files.', array(), 'article_files'), null, true);
-	exit;
+    camp_html_display_error($translator->trans('You do not have the right to change files.', array(), 'article_files'), null, true);
+    exit;
 }
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -32,8 +32,8 @@ $f_language_specific = Input::Get('f_language_specific');
 $f_content_disposition = Input::Get('f_content_disposition');
 
 if (!Input::IsValid()) {
-	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
-	exit;
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
+    exit;
 }
 
 $articleObj = new Article($f_language_selected, $f_article_number);
@@ -42,15 +42,15 @@ $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
 
 if (!$articleObj->exists()) {
-	camp_html_display_error($translator->trans("Article does not exist."), null, true);
-	exit;
+    camp_html_display_error($translator->trans("Article does not exist."), null, true);
+    exit;
 }
 
 // This file can only be accessed if the user has the right to change articles
 // or the user created this article and it hasnt been published yet.
 if (!$articleObj->userCanModify($g_user)) {
-	camp_html_display_error($translator->trans('You do not have the right to change the article.', array(), 'article_files'), null, true);
-	exit;
+    camp_html_display_error($translator->trans('You do not have the right to change the article.', array(), 'article_files'), null, true);
+    exit;
 }
 
 $em = \Zend_Registry::get('container')->getService('em');
@@ -61,9 +61,9 @@ $description = $em->getRepository('Newscoop\Entity\Translation')->findOneBy(arra
 $description->setTranslationText($f_description);
 $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($f_language_selected);
 if ($f_language_specific == "yes") {
-	$attachment->setLanguage($language);
+    $attachment->setLanguage($language);
 } else {
-	$queryBuilder = $em->createQueryBuilder();
+    $queryBuilder = $em->createQueryBuilder();
     $attach = $queryBuilder->update('Newscoop\Entity\Attachment', 'a')
         ->set('a.language', 'null')
         ->where('a.id = ?1')
@@ -72,7 +72,7 @@ if ($f_language_specific == "yes") {
     $attach->execute();
 }
 if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
-	$attachment->setContentDisposition($f_content_disposition);
+    $attachment->setContentDisposition($f_content_disposition);
 }
 $em->flush();
 // Go back to article.
