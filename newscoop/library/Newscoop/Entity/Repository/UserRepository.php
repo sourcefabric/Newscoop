@@ -674,7 +674,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $articlesCount = $em->getRepository('Newscoop\Entity\Article')
             ->countByAuthor($user);
 
-        $user->setPoints($result['comments'] + (int) $articlesCount);
+        $user->setPoints($result['comments'] + $articlesCount);
     }
 
     /**
