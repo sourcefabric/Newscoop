@@ -18,7 +18,7 @@ class UserTopic
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="id")
+     * @ORM\Column(type="integer", name="topic_id")
      * @var int
      */
     protected $id;
