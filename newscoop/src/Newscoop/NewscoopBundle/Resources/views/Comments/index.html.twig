@@ -129,19 +129,11 @@
                                     <span class="label label-info">{{ row.comment.source }}</span>
                                 {% endif %}
                                 <span class="commentSubject">
-                                    {% if row.comment.subject|length > 50 %}
-                                    {{ row.comment.subject|slice(0, 50) }}...
-                                {% else %}
                                     {{ row.comment.subject }}
-                                {% endif %}
                                 </span>
                             </h4>
                             <p class="commentBody">
-                                {% if row.comment.message|length > 400 %}
-                                    {{ row.comment.message|slice(0, 400) }}...
-                                {% else %}
-                                    {{ row.comment.message }}
-                                {% endif %}
+                                {{ row.comment.message }}
                             </p>
                         </div>
                         <div class="dateCommentHolderReply">
