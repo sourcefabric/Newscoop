@@ -21,18 +21,26 @@ class UsersList extends PaginatedBaseList
     protected function prepareList($criteria, $parameters)
     {
         $em = \Zend_Registry::get('container')->get('em');
-        $service = \Zend_Registry::get('container')->get('user.list');
-        $qb = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
-        $list = $this->paginateList($qb, null, $criteria->maxResults, null, false);
+        $list = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria);
 
-        $tempList = array_map(function ($row) {
-            $user = $row[0];
-            $user->setPoints((int) $row['comments']);
+        if (array_key_exists('newPagination', $parameters)) {
+            $result = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
+            $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
+            $list->count = $result[1];
 
-            return new \MetaUser($user);
-        }, $list->items);
+            $tempList = array_map(function ($row) {
+                $user = $row[0];
+                $user->setPoints((int) $row['comments']);
 
-        $list->items = $tempList;
+                return new \MetaUser($user);
+            }, $list->items);
+
+            $list->items = $tempList;
+        } else {
+            foreach ($list as $key => $user) {
+                $list->items[$key] = new \MetaUser($user);
+            }
+        }
 
         return $list;
     }

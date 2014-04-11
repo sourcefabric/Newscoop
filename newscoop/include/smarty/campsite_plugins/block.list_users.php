@@ -31,10 +31,13 @@ function smarty_block_list_users($params, $content, &$smarty, &$repeat)
             $cacheService
         );
 
-        $list->setPageParameterName($context->next_list_id($context->getListName($list)));
-        $list->setPageNumber(\Zend_Registry::get('container')->get('request')->get($list->getPageParameterName(), 1));
+        if (array_key_exists('newPagination', $params)) {
+            $list->setPageParameterName($context->next_list_id($context->getListName($list)));
+            $list->setPageNumber(\Zend_Registry::get('container')->get('request')->get($list->getPageParameterName(), 1));
+            $start = 0;
+        }
 
-        $list->getList(0, $params);
+        $list->getList($start, $params);
         if ($list->isEmpty()) {
             $context->setCurrentList($list, array());
             $context->resetCurrentList();
