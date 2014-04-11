@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Newscoop\Entity\Article;
 use Newscoop\NewscoopException;
+use Newscoop\Exception\InvalidParametersException;
 use Newscoop\GimmeBundle\Form\Type\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -133,7 +134,8 @@ class ArticlesController extends FOSRestController
             throw NotFoundHttpException('Article was not found');
         }
 
-        foreach ($request->attributes->get('links') as $key => $object) {
+        $matched = false;
+        foreach ($request->attributes->get('links', array()) as $key => $object) {
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -142,6 +144,8 @@ class ArticlesController extends FOSRestController
                 $imagesService = $this->get('image');
                 $imagesService->addArticleImage($article->getNumber(), $object);
 
+                $matched = true;
+
                 continue;
             }
 
@@ -149,8 +153,15 @@ class ArticlesController extends FOSRestController
                 $attachmentService = $this->get('attachment');
                 $attachmentService->addAttachmentToArticle($article, $object);
 
+                $matched = true;
+
                 continue;
             }
+        }
+
+
+        if ($matched === false) {
+            throw new InvalidParametersException('Any supported link object not found');
         }
     }
 
@@ -186,7 +197,8 @@ class ArticlesController extends FOSRestController
             throw NotFoundHttpException('Article was not found');
         }
 
-        foreach ($request->attributes->get('links') as $key => $object) {
+        $matched = false;
+        foreach ($request->attributes->get('links', array()) as $key => $object) {
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -201,6 +213,8 @@ class ArticlesController extends FOSRestController
                     $imagesService->removeArticleImage($articleImage);
                 }
 
+                $matched = true;
+
                 continue;
             }
 
@@ -208,8 +222,14 @@ class ArticlesController extends FOSRestController
                 $attachmentService = $this->get('attachment');
                 $attachmentService->removeAttachmentFormArticle($article, $object);
 
+                $matched = true;
+
                 continue;
             }
+        }
+
+        if ($matched === false) {
+            throw new InvalidParametersException('Any supported unlink object not found');
         }
     }
 

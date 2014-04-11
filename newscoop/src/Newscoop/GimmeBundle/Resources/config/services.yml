@@ -107,3 +107,5 @@ services:
         arguments:  ["@comment"]
         tags:
             - { name: jms_serializer.handler, type: comments_count, direction: serialization, format:json, method:getCommentsCount }
+parameters:
+    twig.exception_listener.class: Newscoop\GimmeBundle\EventListener\ExceptionListener
