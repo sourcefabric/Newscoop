@@ -73,9 +73,10 @@ class LinkRequestListener
             $linkParams = explode(';', trim($link));
             $resource   = array_shift($linkParams);
             $resource   = preg_replace('/<|>/', '', $resource);
+            $context = new \Symfony\Component\Routing\RequestContext($resource);
 
             try {
-                $route = $this->urlMatcher->match($resource);
+                $route = $this->urlMatcher->match($context->getBaseUrl());
             } catch (\Exception $e) {
                 // If we don't have a matching route we return the original Link header
                 continue;
