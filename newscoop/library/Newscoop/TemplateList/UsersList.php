@@ -15,32 +15,24 @@ use Newscoop\TemplateList\PaginatedBaseList;
 /**
  * List users
  */
-class UsersList extends PaginatedBaseList 
+class UsersList extends PaginatedBaseList
 {
 
     protected function prepareList($criteria, $parameters)
     {
         $em = \Zend_Registry::get('container')->get('em');
-        $list = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria);
+        $result = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
+        $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
+        $list->count = $result[1];
 
-        if (array_key_exists('newPagination', $parameters)) {
-            $result = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
-            $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
-            $list->count = $result[1];
+        $tempList = array_map(function ($row) {
+            $user = $row[0];
+            $user->setPoints((int) $row['comments']);
 
-            $tempList = array_map(function ($row) {
-                $user = $row[0];
-                $user->setPoints((int) $row['comments']);
+            return new \MetaUser($user);
+        }, $list->items);
 
-                return new \MetaUser($user);
-            }, $list->items);
-
-            $list->items = $tempList;
-        } else {
-            foreach ($list as $key => $user) {
-                $list->items[$key] = new \MetaUser($user);
-            }
-        }
+        $list->items = $tempList;
 
         return $list;
     }
