@@ -103,9 +103,7 @@ class Translation
      */
     public function __toString()
     {
-        if ($this->translationText) {
-            return $this->translationText;
-        }
+        return $this->translationText;
     }
 
     /**
