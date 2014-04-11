@@ -14,12 +14,12 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Newscoop\Entity\Article;
 use Newscoop\NewscoopException;
 use Newscoop\Exception\InvalidParametersException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\GimmeBundle\Form\Type\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Articles controller
@@ -131,7 +131,7 @@ class ArticlesController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$article) {
-            throw NotFoundHttpException('Article was not found');
+            throw new NotFoundHttpException('Article was not found');
         }
 
         $matched = false;
@@ -194,7 +194,7 @@ class ArticlesController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$article) {
-            throw NotFoundHttpException('Article was not found');
+            throw new NotFoundHttpException('Article was not found');
         }
 
         $matched = false;

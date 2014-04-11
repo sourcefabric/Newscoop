@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Images controller
@@ -126,7 +127,7 @@ class ImagesController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$article) {
-            throw new NotFoundHttpException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
+            throw new EntityNotFoundException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
         }
 
         $articleImages = $em->getRepository('Newscoop\Image\ArticleImage')

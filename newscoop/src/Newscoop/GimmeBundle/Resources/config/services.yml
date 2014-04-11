@@ -12,6 +12,11 @@ services:
         arguments:  ["@newscoop.paginator.paginator_service"]
         tags:
             - { name: kernel.event_subscriber}
+    newscoop.serializer.serializer_subscriber:
+        class: Newscoop\GimmeBundle\EventListener\SerializerSubscriber
+        arguments:  ["@service_container"]
+        tags:
+            - { name: kernel.event_subscriber}
     newscoop.paginator.pagination_extra_data_subscriber:
         class: Newscoop\GimmeBundle\EventListener\PaginationExtraDataSubscriber
         arguments:  ["@newscoop.paginator.paginator_service"]
