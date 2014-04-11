@@ -1,6 +1,7 @@
 <?php $translator = \Zend_Registry::get('container')->getService('translator');
 $this->placeholder('title')->set($translator->trans('User ban settings', array(), 'comments')); ?>
 
-<?php echo($translator->trans("Bans can be applied to a user's name, email address or IP address.", array(), 'comments')); ?>
+<span class="label label-info">Info</span>
+<div><?php echo($translator->trans("Bans can be applied to a user's username, email address or IP address.", array(), 'comments')); ?></div>
 
 <?php echo $this->form; ?>
