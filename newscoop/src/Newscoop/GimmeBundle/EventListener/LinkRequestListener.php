@@ -81,6 +81,11 @@ class LinkRequestListener
                 // If we don't have a matching route we return the original Link header
                 continue;
             }
+
+            if (strpos($match['_route'], 'newscoop_gimme_') === false) {
+                return;
+            }
+
             $stubRequest->attributes->replace($route);
 
             if (false === $controller = $this->resolver->getController($stubRequest)) {
