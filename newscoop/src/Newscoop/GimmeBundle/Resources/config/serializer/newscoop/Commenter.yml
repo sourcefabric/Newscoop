@@ -1,0 +1,61 @@
+Newscoop\Entity\Comment\Commenter:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
+            since_version: 1.1
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: name
+            since_version: 1.1
+        email:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: email
+            since_version: 1.1
+        url:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: url
+            since_version: 1.1
+        ip:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: ip
+            since_version: 1.1
+        time_updated:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details", "list"]
+            serialized_name: updated
+            access_type: public_method
+            accessor:
+                getter: getTimeUpdated
+            since_version: 1.1
+        time_created:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details", "list"]
+            serialized_name: created
+            since_version: 1.1
+    virtual_properties:
+        getUser:
+            type: image_uri
+            serialized_name: image
+            groups: ["details", "list"]
+            since_version: 1.1

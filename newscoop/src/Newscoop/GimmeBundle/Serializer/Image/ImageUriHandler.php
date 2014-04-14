@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Author;  
+namespace Newscoop\GimmeBundle\Serializer\Image;  
 
 use JMS\Serializer\JsonSerializationVisitor;
 
@@ -25,16 +25,25 @@ class ImageUriHandler
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, array $type)
     {
-        if (!$data->imageId) {
+        if (!$data->imageId && !$data->image) {
             return;
         }
 
-        $image = $this->imageService->find($data->imageId);
-        $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
-        $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
-            'src' => $imageSrc
-        ), 'image');
+        if ($data->image && is_string($data->image)) {
+            $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
+                'controller' => 'images',
+                'action' => null
+            )).'/'.$data->image;
 
-        return $imageUri;
+            return $imageUri;
+        } else {
+            $image = $this->imageService->find($data->imageId);
+            $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
+            $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
+                'src' => $imageSrc
+            ), 'image');
+
+            return $imageUri;
+        }
     }
 }

@@ -85,6 +85,9 @@ jms_serializer:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Comment:
+                namespace_prefix: Newscoop\Entity\Comment
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Package:
                 namespace_prefix: Newscoop\Package
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
