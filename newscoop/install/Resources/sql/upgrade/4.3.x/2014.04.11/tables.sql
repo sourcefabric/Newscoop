@@ -1,0 +1,1 @@
+ALTER TABLE  `liveuser_users` ADD  `registered_with_publication` INT NULL DEFAULT NULL ;

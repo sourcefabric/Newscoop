@@ -41,7 +41,8 @@ class RegisterController extends Zend_Controller_Action
             if (count($users) > 0) {
                 $user = array_pop($users);
             } else {
-                $user = $this->_helper->service('user')->createPending($values['email']);
+                $publicationService = \Zend_Registry::get('container')->getService('newscoop_newscoop.publication_service');
+                $user = $this->_helper->service('user')->createPending($values['email'], null, null, null, $publicationService->getPublication()->getId());
             }
 
             if (!$user->isPending()) {

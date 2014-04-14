@@ -302,7 +302,7 @@ class UserService
      *
      * @return Newscoop\Entity\User
      */
-    public function createPending($email, $firstName = null, $lastName = null, $subscriber = null)
+    public function createPending($email, $firstName = null, $lastName = null, $subscriber = null, $publication = null)
     {
         $users = $this->findBy(array('email' => $email));
         if (empty($users)) {
@@ -322,6 +322,10 @@ class UserService
 
         if ($subscriber) {
             $user->setSubscriber($subscriber);
+        }
+
+        if ($publication) {
+            $user->setPublication($publication);
         }
 
         $this->em->persist($user);

@@ -50,6 +50,8 @@ class DashboardController extends Zend_Controller_Action
         $form = $this->_helper->form('profile');
         $form->setMethod('POST');
         $form->setDefaults((array) $this->user->getView());
+        $form->username->setRequired(false);
+        $form->removeElement('username');
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
