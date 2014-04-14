@@ -120,7 +120,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @ORM\Column(type="string", length=255, nullable=TRUE)
      * @var string
      */
-    protected $image;
+    public $image;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
