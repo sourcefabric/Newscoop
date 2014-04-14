@@ -704,6 +704,18 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
+     * Remove attribute
+     *
+     * @param string $name
+     *
+     * @return Newscoop\Entity\UserAttribute
+     */
+    public function removeAttribute($name)
+    {
+        return $this->attributes->remove($name);
+    }
+
+    /**
      * Set User attributes
      * @param mixed $attributes UserAttributes
      */
