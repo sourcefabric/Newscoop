@@ -53,7 +53,7 @@ class SnippetTemplateField
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate", inversedBy="fields")
-     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet\SnippetTemplate
      */
     protected $template;
@@ -156,6 +156,30 @@ class SnippetTemplateField
             throw new \InvalidArgumentException("Invalid scope");
         }
         $this->scope = $scope;
+    
+        return $this;
+    }
+    
+    /**
+     * Getter for template
+     *
+     * @return mixed
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
+    
+    /**
+     * Setter for template
+     *
+     * @param mixed $template Value to set
+     *
+     * @return self
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     
         return $this;
     }

@@ -179,6 +179,7 @@ class SnippetTemplate
      */
     public function addField(SnippetTemplateField $field)
     {
+        $field->setTemplate($this);
         $this->fields->add($field);
     
         return $this;

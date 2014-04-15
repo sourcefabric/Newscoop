@@ -43,9 +43,8 @@ class Snippet
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist"})
-     * @ORM\JoinColumn(name="FieldId", referencedColumnName="Id")
-     * @var Newscoop\Entity\Snippet\SnippetField
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist", "remove"})
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $fields;
 
@@ -117,6 +116,7 @@ class Snippet
 
         foreach ($template->getFields() as $templateField) {
             $field = new SnippetField();
+            $field->setSnippet($this);
             $field->setTemplateField($templateField);
             $this->addField($field);
         }

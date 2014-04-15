@@ -29,14 +29,14 @@ class SnippetField
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet", inversedBy="fields")
-     * @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet
      */
     protected $snippet;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField")
-     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
+     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     protected $field;
@@ -70,6 +70,32 @@ class SnippetField
     
         return $this;
     }
+
+    /**
+     * Getter for snippet
+     *
+     * @return mixed
+     */
+    public function getSnippet()
+    {
+        return $this->snippet;
+    }
+    
+    /**
+     * Setter for snippet
+     *
+     * @param mixed $snippet Value to set
+     *
+     * @return self
+     */
+    public function setSnippet($snippet)
+    {
+
+        $this->snippet = $snippet;
+    
+        return $this;
+    }
+    
 
     /**
      * Getter for field name
