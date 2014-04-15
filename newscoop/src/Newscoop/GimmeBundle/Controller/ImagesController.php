@@ -70,7 +70,7 @@ class ImagesController extends FOSRestController
      *         }
      *     },
      *     parameters={
-     *         {"name"="query", "dataType"="mixed", "required"=true, "description"="Image serach query"},
+     *         {"name"="query", "dataType"="mixed", "required"=false, "description"="Image serach query"},
      *         {"name"="uploader", "dataType"="integer", "required"=false, "description"="Uploader id"}
      *     },
      * )
