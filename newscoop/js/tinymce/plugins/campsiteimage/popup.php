@@ -107,9 +107,6 @@ if (isset($_REQUEST['image_id'])) {
       <td><input type="text" id="f_ratio" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td colspan="2" align="right"><small>{#campsiteimage_dlg.resizenotice}</small></td>
-    </tr>
-    <tr>
       <td align="right"><label for="f_resize_width">{#campsiteimage_dlg.resizewidth}:</label></td>
       <td><input type="hidden" id="f_original_width" value="" /><input type="text" id="f_resize_width" class="largelWidth" value="" /></td>
     </tr>

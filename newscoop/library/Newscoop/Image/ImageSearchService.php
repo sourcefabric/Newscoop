@@ -31,7 +31,7 @@ class ImageSearchService
      * @param string $query
      * @return array
      */
-    public function find($query, $criteria = null, $sort = null, $paging = null, &$count = null)
+    public function find($query, $criteria = null, $sort = null, $paging = null, &$count = null, $queryOnly = false)
     {
         $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i');
         $andX = $qb->expr()->andX();
@@ -55,10 +55,18 @@ class ImageSearchService
             $qb->andWhere($orX);
         }
 
+        if (is_array($criteria) && isset($criteria['user']) && (!empty($criteria['user']))) {
+            $andX->add($qb->expr()->eq('i.user', $criteria['user']));
+        }
+
         if ((!empty($sort)) && is_array($sort)) {
-            foreach($sort as $sort_column => $sort_dir) {
-                $qb->addOrderBy('i.'.$sort_column, $sort_dir);
+            foreach ($sort as $sortColumn => $sortDir) {
+                $qb->addOrderBy('i.'.$sortColumn, $sortDir);
             }
+        }
+
+        if ($queryOnly) {
+            return $qb->getQuery();
         }
 
         if ((!empty($paging)) && is_array($paging)) {

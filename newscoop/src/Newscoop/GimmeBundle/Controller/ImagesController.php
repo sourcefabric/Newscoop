@@ -35,11 +35,7 @@ class ImagesController extends FOSRestController
      *         404={
      *           "Returned when the images are not found"
      *         }
-     *     },
-     *     parameters={
-     *         {"name"="query", "dataType"="mixed", "required"=true, "description"="Image serach query"},
-     *         {"name"="uploader", "dataType"="integer", "required"=false, "description"="Uploader id"}
-     *     },
+     *     }
      * )
      *
      * @Route("/images.{_format}", defaults={"_format"="json"})
@@ -72,7 +68,11 @@ class ImagesController extends FOSRestController
      *         404={
      *           "Returned when the images are not found"
      *         }
-     *     }
+     *     },
+     *     parameters={
+     *         {"name"="query", "dataType"="mixed", "required"=true, "description"="Image serach query"},
+     *         {"name"="uploader", "dataType"="integer", "required"=false, "description"="Uploader id"}
+     *     },
      * )
      *
      * @Route("/search/images.{_format}", defaults={"_format"="json"})
@@ -81,12 +81,17 @@ class ImagesController extends FOSRestController
      *
      * @return array
      */
-    public function getImagesAction(Request $request)
+    public function searchImagesAction(Request $request)
     {
-        $em = $this->container->get('em');
+        $imagesSerach = $this->container->get('image.search');
+        $criteria = array();
+        $count = null;
 
-        $images = $em->getRepository('Newscoop\Image\LocalImage')
-            ->getImages();
+        if ($request->query->get('uploader', false)) {
+            $criteria = array('user' => $request->query->get('uploader'));
+        }
+
+        $images = $imagesSerach->find($request->query->get('query', false), $criteria, null, null, $count, true);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $images = $paginator->paginate($images, array(
