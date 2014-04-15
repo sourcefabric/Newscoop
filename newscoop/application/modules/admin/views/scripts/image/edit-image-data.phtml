@@ -7,6 +7,7 @@
     require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
 
     $loadAsRichtext = array();
+    $richtextCaption = SystemPref::Get("MediaRichTextCaptions");
     $captionLimit = SystemPref::Get('MediaCaptionLength');
 ?>
 
@@ -49,14 +50,13 @@
         <div class="image-data">
             <label for="" style="font-size: 11px;"><?php
                 echo(getGS('Description'));
-                $captionLimit = SystemPref::Get('MediaCaptionLength');
-                if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+                if ($richtextCaption == 'Y' && $captionLimit > 0) {
                     echo('&nbsp;'.getGS('(max. $1 characters)', $captionLimit));
                 }
             ?>: <a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
 
             <?php
-                if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+                if ($richtextCaption == 'Y') {
 
                     $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
                     $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
@@ -87,6 +87,7 @@
 </form>
 
 <?php
+
     // Load tinymce once for all textareas
     if (count($loadAsRichtext) > 0) {
 

@@ -134,7 +134,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
         theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
         // Limit characters
-        max_chars : 255,
+        max_chars : 0,
         max_chars_indicator : ".maxCharsSpan",
      
         // Example content CSS (should be your site CSS)
@@ -175,6 +175,12 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
     };
 
     $.extend(tinyMceOptions, <?php echo $optionsAsJson; ?>);
+
+    // Remove option when value is  '0'. '0' indicates no character limit but
+    // plugin doesn't support this functionality.
+    if (tinyMceOptions.max_chars == 0) {
+        delete tinyMceOptions.max_chars;
+    }
  
     // Default skin
     tinyMCE.init(tinyMceOptions);
@@ -191,6 +197,10 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_editorLanguage, $options=
     ?>
 
     function validateTinyMCEEditors() {
+
+        if (typeof(tinyMceOptions.max_chars) == 'undefined') {
+            return true;
+        }
 
         var valid = true;
         var invalidInstances = [];

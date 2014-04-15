@@ -258,11 +258,9 @@ class Admin_ImageController extends Zend_Controller_Action
                 if (isset($iptcDate)) {
                     $image->setDate($iptcDate);
                 }
-                
-                $images[] = $image;
-            }
 
-            if ($this->_getParam('force_edit')) {
+                $images[] = $image;
+            } elseif ($this->_getParam('force_edit')) {
                 $images[] = $image;
             }
         }

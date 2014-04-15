@@ -84,6 +84,9 @@ if ($g_user->hasPermission('ChangeImage')) {
 	$label_text = getGS('View image');
 }
 
+$richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+$captionLimit = SystemPref::Get('MediaCaptionLength');
+
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
@@ -118,7 +121,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
 <FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data" onSubmit="<?php
-    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+    if ($richtextCaption == 'Y') {
         echo 'return validateTinyMCEEditors();';
     }
 ?>">
@@ -131,8 +134,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 	</TD>
 </TR>
 <?php
-    $captionLimit = SystemPref::Get('MediaCaptionLength');
-    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+    if ($richtextCaption == 'Y') {
 
         $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
         $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
@@ -144,8 +146,7 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
 <TR>
         <TD ALIGN="RIGHT" style="width:115px;"><?php
             putGS('Description');
-            $captionLimit = SystemPref::Get('MediaCaptionLength');
-            if (SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+            if ($richtextCaption == 'Y' && $captionLimit > 0) {
                 echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
             }
         ?>:</TD>

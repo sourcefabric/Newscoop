@@ -35,6 +35,9 @@ if (!$g_user->hasPermission('ChangeImage')) {
 	$title = getGS('Change image information');
 }
 
+$richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+$captionLimit = SystemPref::Get('MediaCaptionLength');
+
 // Add extra breadcrumb for image list.
 if ($f_publication_id > 0) {
 	$extraCrumbs = array(getGS("Images") => "");
@@ -64,7 +67,7 @@ if ($f_publication_id > 0) {
 </div>
 <p>
 <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_edit.php" onSubmit="<?php
-    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+    if ($richtextCaption == 'Y') {
         echo 'return validateTinyMCEEditors();';
     }
 ?>">
@@ -98,8 +101,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" style="width:120px;"><?php
         putGS('Description');
-        $captionLimit = SystemPref::Get('MediaCaptionLength');
-        if ($g_user->hasPermission('ChangeImage') && SystemPref::Get("MediaRichTextCaptions") == 'Y' && $captionLimit > 0) {
+        if ($g_user->hasPermission('ChangeImage') && $richtextCaption == 'Y' && $captionLimit > 0) {
             echo '&nbsp;'; putGS('(max. $1 characters)', $captionLimit);
         }
     ?>:</TD>
@@ -107,8 +109,7 @@ if ($f_publication_id > 0) {
 		<?php
 			if ($g_user->hasPermission('ChangeImage')) {
 
-				$captionLimit = SystemPref::Get('MediaCaptionLength');
-			    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+			    if ($richtextCaption == 'Y') {
 
 			        $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
 			        $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
