@@ -3,10 +3,13 @@
 <?php
     // Load tinymce for richtext editor
     require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
+
+    $richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+    $captionLimit = SystemPref::Get('MediaCaptionLength');
 ?>
 <h1><?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="<?php
-    if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+    if ($richtextCaption == 'Y') {
         echo 'return validateTinyMCEEditors();';
     }
 ?>">
@@ -21,8 +24,7 @@
         <input type="text" name="url" value="<?php echo $this->escape($this->form->url->getValue()); ?>" />
         <?php } ?>
         <?php
-            $captionLimit = SystemPref::Get('MediaCaptionLength');
-            if (SystemPref::Get("MediaRichTextCaptions") == 'Y') {
+            if ($richtextCaption == 'Y') {
 
                 $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
                 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
