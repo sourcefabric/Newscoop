@@ -211,6 +211,8 @@ class ArticlesController extends FOSRestController
 
                 if ($articleImage) {
                     $imagesService->removeArticleImage($articleImage);
+                } else {
+                    throw new InvalidParametersException('Image is not linked to article');
                 }
 
                 $matched = true;
