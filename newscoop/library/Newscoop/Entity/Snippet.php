@@ -30,7 +30,7 @@ class Snippet
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate", cascade={"persist"}, inversedBy="snippets")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\SnippetTemplate
      */
@@ -49,10 +49,20 @@ class Snippet
     protected $fields;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Article", mappedBy="snippets")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Article", mappedBy="snippets")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="LanguageId", referencedColumnName="IdLanguage")
+     *      })
      * @var Newscoop\Entity\Article
      */
     protected $articles;
+
+    /**
+     * @ORM\Column(name="Enabled", type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $enabled = 1;
 
     /**
      * Constructs the Snippet
@@ -63,6 +73,9 @@ class Snippet
     {
         if (!$template->hasFields()) {
             throw new \Exception('SnippetTemplate should have fields');
+        }
+        if (!$template->getEnabled()) {
+            throw new \Exception('SnippetTemplate should be enabled');
         }
         $this->fields = new ArrayCollection();
         $this->articles = new ArrayCollection();
@@ -211,6 +224,31 @@ class Snippet
         return $this;
     }
     
+    /**
+     * Getter for enabled
+     *
+     * @return mixed
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+    
+    /**
+     * Setter for enabled
+     *
+     * @param mixed $enabled Value to set
+     *
+     * @return self
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+    
+        return $this;
+    }
+    
+
     /**
      * Renders the Snippet with the Data into the Template
      *

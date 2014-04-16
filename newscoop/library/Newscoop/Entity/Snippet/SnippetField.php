@@ -28,18 +28,18 @@ class SnippetField
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet", inversedBy="fields")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet", inversedBy="templateFields")
      * @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet
      */
     protected $snippet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField")
-     * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField")
+     * @ORM\JoinColumn(name="TemplateFieldId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
-    protected $field;
+    protected $templateField;
 
     /**
      * @ORM\Column(name="Data", type="text", nullable=true)
@@ -98,35 +98,35 @@ class SnippetField
     
 
     /**
-     * Getter for field name
+     * Getter for templateField name
      *
      * @return string
      */
     public function getFieldName()
     {
-        return $this->field->getName();
+        return $this->templateField->getName();
     }
 
     /**
-     * Getter for field
+     * Getter for templateField
      *
      * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
     public function getTemplateField()
     {
-        return $this->field;
+        return $this->templateField;
     }
     
     /**
-     * Setter for field
+     * Setter for templateField
      *
-     * @param mixed $field Value to set
+     * @param mixed $templateField Value to set
      *
      * @return Newscoop\Entity\Snippet\SnippetField
      */
-    public function setTemplateField(SnippetTemplateField $field)
+    public function setTemplateField(SnippetTemplateField $templateField)
     {
-        $this->field = $field;
+        $this->templateField = $templateField;
     
         return $this;
     }
@@ -162,6 +162,6 @@ class SnippetField
      */
     public function __toString()
     {
-        return $this->field->getName();
+        return $this->templateField->getName();
     }
 }

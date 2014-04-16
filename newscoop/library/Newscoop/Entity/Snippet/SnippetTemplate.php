@@ -15,7 +15,7 @@ use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 /**
  * Snippet Template entity
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\SnippetTemplateRepository")
  * @ORM\Table(name="SnippetTemplates")
  */
 class SnippetTemplate
@@ -27,6 +27,12 @@ class SnippetTemplate
      * @var int
      */
     protected $id;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet", mappedBy="template")
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $snippets;
 
     /**
      * @ORM\Column(name="Name", type="string")
@@ -42,7 +48,7 @@ class SnippetTemplate
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist"})
-     * @var Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $fields;
 
@@ -57,6 +63,12 @@ class SnippetTemplate
      * @var boolean
      */
     protected $favourite;
+
+    /**
+     * @ORM\Column(name="Enabled", type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $enabled = 1;
 
     /**
      * @ORM\Column(name="IconInactive", type="text", nullable=true)
@@ -87,7 +99,7 @@ class SnippetTemplate
     {
         return $this->id;
     }
-    
+
     /**
      * Setter for id
      *
@@ -98,8 +110,18 @@ class SnippetTemplate
     public function setId($id)
     {
         $this->id = $id;
-    
+
         return $this;
+    }
+
+    /**
+     * Get Snippets using the selected Template
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getSnippets()
+    {
+        return $this->snippets;
     }
 
     /**
@@ -111,7 +133,7 @@ class SnippetTemplate
     {
         return $this->name;
     }
-    
+
     /**
      * Setter for name
      *
@@ -122,7 +144,7 @@ class SnippetTemplate
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
@@ -135,7 +157,7 @@ class SnippetTemplate
     {
         return $this->controller;
     }
-    
+
     /**
      * Setter for controller
      *
@@ -146,7 +168,7 @@ class SnippetTemplate
     public function setController($controller)
     {
         $this->controller = $controller;
-    
+
         return $this;
     }
 
@@ -169,7 +191,7 @@ class SnippetTemplate
     {
         return $this->fields;
     }
-    
+
     /**
      * Add Snippet Template Field
      *
@@ -181,10 +203,45 @@ class SnippetTemplate
     {
         $field->setTemplate($this);
         $this->fields->add($field);
-    
+
         return $this;
     }
-    
+
+    /**
+     * Create and add Snippet Template Field
+     *
+     * @param array  $parameters          Array with Parameters
+     * @param string $parameters['name']  SnippetTemplateField name
+     * @param string $parameters['type']  SnippetTemplateField type  (string | int | bool)
+     * @param string $parameters['scope'] SnippetTemplateField scope (frontend | backend)
+     *
+     * @return Newscoop\Entity\Snippet\SnippetTemplate
+     */
+    public function createField(array $parameters)
+    {
+        if (!array_key_exists('name', $parameters)) {
+            throw new \InvalidArgumentException("Name is not defined");
+        }
+
+        $defaultParams = array(
+            'type' => 'string',
+            'scope' => 'frontend'
+            );
+
+        foreach ($defaultParams as $defaultParam => $defaultValue) {
+            if (!array_key_exists($defaultParam, $parameters)) {
+                $parameters[$defaultParam] = $defaultValue;
+            }
+        }
+
+        $snippetTemplateField = new SnippetTemplateField();
+        $snippetTemplateField->setName($parameters['name']);
+        $snippetTemplateField->setType($parameters['type']);
+        $snippetTemplateField->setScope($parameters['scope']);
+
+        return $this->addField($snippetTemplateField);
+    }
+
     /**
      * Getter for template
      *
@@ -194,7 +251,7 @@ class SnippetTemplate
     {
         return $this->templateCode;
     }
-    
+
     /**
      * Setter for template code
      *
@@ -205,7 +262,7 @@ class SnippetTemplate
     public function setTemplateCode($templateCode)
     {
         $this->templateCode = $templateCode;
-    
+
         return $this;
     }
 
@@ -218,7 +275,7 @@ class SnippetTemplate
     {
         return $this->favourite;
     }
-    
+
     /**
      * Setter for favourite
      *
@@ -229,10 +286,34 @@ class SnippetTemplate
     public function setFavourite($favourite)
     {
         $this->favourite = $favourite;
-    
+
         return $this;
     }
-    
+
+    /**
+     * Getter for enabled
+     *
+     * @return mixed
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Setter for enabled
+     *
+     * @param mixed $enabled Value to set
+     *
+     * @return self
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = $enabled;
+
+        return $this;
+    }
+
     /**
      * Getter for iconInactive
      *
@@ -242,7 +323,7 @@ class SnippetTemplate
     {
         return $this->iconInactive;
     }
-    
+
     /**
      * Setter for iconInactive
      *
@@ -253,7 +334,7 @@ class SnippetTemplate
     public function setIconInactive($iconInactive)
     {
         $this->iconInactive = $iconInactive;
-    
+
         return $this;
     }
 
@@ -266,7 +347,7 @@ class SnippetTemplate
     {
         return $this->iconActive;
     }
-    
+
     /**
      * Setter for iconActive
      *
@@ -277,7 +358,7 @@ class SnippetTemplate
     public function setIconActive($iconActive)
     {
         $this->iconActive = $iconActive;
-    
+
         return $this;
     }
 

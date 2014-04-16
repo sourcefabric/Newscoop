@@ -341,14 +341,10 @@ class Article implements DocumentInterface
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleSnippets",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
-     *      }
+     *      joinColumns={@ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")}
      *  )
-     * @var Newscoop\Entity\Snippet
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $snippets;
 
@@ -370,6 +366,7 @@ class Article implements DocumentInterface
         $this->topics = new ArrayCollection();
         $this->attachments = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->snippets = new ArrayCollection();
     }
 
     /**
@@ -1315,4 +1312,15 @@ class Article implements DocumentInterface
 
         return $this->data;
     }
+
+    /**
+     * Get Article Snippets
+     *
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getSnippets()
+    {
+        return $this->snippets;
+    }
+    
 }
