@@ -811,12 +811,7 @@ class Builder
 
 
         if ($this->user->hasPermission('plugin_manager')) {
-            $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'), array('zend_route' => array(
-                    'module' => 'admin',
-                    'controller' => 'plugins',
-                    'action' => 'manage.php',
-                )
-            ));
+            $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'),  array('uri' => $this->container->get('router')->generate('newscoop_newscoop_plugins_index')));
         }
 
         $enabled = \CampPlugin::GetEnabled();
