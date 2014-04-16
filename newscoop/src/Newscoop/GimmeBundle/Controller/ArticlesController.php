@@ -178,7 +178,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("UNLINK")
      * @View(statusCode=204)
      *

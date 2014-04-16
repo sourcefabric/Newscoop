@@ -73,16 +73,16 @@ class LinkRequestListener
             $linkParams = explode(';', trim($link));
             $resource   = array_shift($linkParams);
             $resource   = preg_replace('/<|>/', '', $resource);
-            $context = new \Symfony\Component\Routing\RequestContext($resource);
+            $tempRequest = Request::create($resource);
 
             try {
-                $route = $this->urlMatcher->match($context->getBaseUrl());
+                $route = $this->urlMatcher->match($tempRequest->getRequestUri());
             } catch (\Exception $e) {
                 // If we don't have a matching route we return the original Link header
                 continue;
             }
 
-            if (strpos($match['_route'], 'newscoop_gimme_') === false) {
+            if (strpos($route['_route'], 'newscoop_gimme_') === false) {
                 return;
             }
 

@@ -60,6 +60,48 @@ class ImagesController extends FOSRestController
     }
 
     /**
+     * Search for images
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the images are not found"
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="query", "dataType"="mixed", "required"=false, "description"="Image serach query"},
+     *         {"name"="uploader", "dataType"="integer", "required"=false, "description"="Uploader id"}
+     *     },
+     * )
+     *
+     * @Route("/search/images.{_format}", defaults={"_format"="json"})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     *
+     * @return array
+     */
+    public function searchImagesAction(Request $request)
+    {
+        $imagesSerach = $this->container->get('image.search');
+        $criteria = array();
+        $count = null;
+
+        if ($request->query->get('uploader', false)) {
+            $criteria = array('user' => $request->query->get('uploader'));
+        }
+
+        $images = $imagesSerach->find($request->query->get('query', false), $criteria, null, null, $count, true);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $images = $paginator->paginate($images, array(
+            'distinct' => false
+        ));
+
+        return $images;
+    }
+
+    /**
      * Get image
      *
      * @ApiDoc(
@@ -148,6 +190,12 @@ class ImagesController extends FOSRestController
 
     /**
      * Create new image
+     *
+     * Request:
+     * Data should be send as multiparts formdata.
+     *
+     * Response:
+     * Succesful response will contain "X-Location" header with path to new resource.
      *
      * @ApiDoc(
      *     statusCodes={

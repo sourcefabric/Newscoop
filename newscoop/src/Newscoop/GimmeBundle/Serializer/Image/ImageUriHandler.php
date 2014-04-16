@@ -25,18 +25,18 @@ class ImageUriHandler
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, array $type)
     {
-        if (!$data->imageId && !$data->image) {
+        if (!property_exists($data, 'imageId') && !property_exists($data, 'image')) {
             return;
         }
 
-        if ($data->image && is_string($data->image)) {
+        if (property_exists($data, 'image') && is_string($data->image)) {
             $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
                 'controller' => 'images',
                 'action' => null
             )).'/'.$data->image;
 
             return $imageUri;
-        } else {
+        } else if (property_exists($data, 'imageId')) {
             $image = $this->imageService->find($data->imageId);
             $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
             $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
