@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Run backend session resolver on request
+ * Run authentication resolver on request
  */
 class AuthenticationListener
 {
