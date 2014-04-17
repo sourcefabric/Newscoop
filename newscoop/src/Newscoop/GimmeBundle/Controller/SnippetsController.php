@@ -60,7 +60,7 @@ class SnippetsController extends FOSRestController
     }
 
     /**
-     * Get comment
+     * Get Snippet
      *
      * @ApiDoc(
      *     statusCodes={
@@ -135,7 +135,7 @@ class SnippetsController extends FOSRestController
         if (!$article) {
             throw new NotFoundHttpException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
         }
-        
+
         $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet')
             ->getArticleSnippets($number, $language, $show)
             ->getResult();

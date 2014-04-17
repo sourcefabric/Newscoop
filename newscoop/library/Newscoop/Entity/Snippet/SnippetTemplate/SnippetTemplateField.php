@@ -19,7 +19,7 @@ use Newscoop\Entity\Snippet\SnippetTemplate;
  */
 class SnippetTemplateField
 {
-    const TYPE_INT = 'int';
+    const TYPE_INT = 'integer';
     const TYPE_STRING = 'string';
     const TYPE_BOOL = 'bool';
     const SCOPE_FRONTEND = 'frontend';

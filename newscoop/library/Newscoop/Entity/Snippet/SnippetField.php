@@ -108,6 +108,26 @@ class SnippetField
     }
 
     /**
+     * Getter for templateField type
+     *
+     * @return string
+     */
+    public function getFieldType()
+    {
+        return $this->templateField->getType();
+    }
+
+    /**
+     * Getter for templateField scope
+     *
+     * @return string
+     */
+    public function getFieldScope()
+    {
+        return $this->templateField->getScope();
+    }
+
+    /**
      * Getter for templateField
      *
      * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
@@ -138,7 +158,7 @@ class SnippetField
      */
     public function getData()
     {
-        return $this->data;
+        return $this->typeJuggle($this->data);
     }
     
     /**
@@ -150,9 +170,26 @@ class SnippetField
      */
     public function setData($data)
     {
-        $this->data = $data;
+        $this->data = $this->typeJuggle($data);
     
         return $this;
+    }
+
+    private function typeJuggle($data = null)
+    {
+        if ($this->getFieldType() === 'integer') {
+            $data = intval($data);
+        }
+        
+        if ($this->getFieldType() === 'bool') {
+            $data = boolval($data);
+        }
+
+        if ($this->getFieldType() === 'string') {
+            $data = strval($data);
+        }
+
+        return $data;
     }
     
     /**

@@ -12,10 +12,6 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Snippet;
 // use Newscoop\Entity\Snippet\Commenter;
-use Newscoop\Datatable\Source as DatatableSource;
-use Newscoop\Entity\User;
-use Newscoop\Search\RepositoryInterface;
-use Newscoop\NewscoopException\IndexException;
 
 /**
  * Snippet repository
@@ -33,7 +29,7 @@ class SnippetRepository extends EntityRepository
         return new Snippet;
     }
 
-    private function getSnippetQueryBuilder($show)
+    public function getSnippetQueryBuilder($show)
     {
         $queryBuilder = $this->createQueryBuilder('snippet')
             ->join('snippet.template', 'template')
@@ -52,7 +48,7 @@ class SnippetRepository extends EntityRepository
         return $queryBuilder;
     }
 
-    private function getArticleSnippetQueryBuilder($articleNr, $language, $show)
+    public function getArticleSnippetQueryBuilder($articleNr, $language, $show)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -72,21 +68,19 @@ class SnippetRepository extends EntityRepository
 
     /**
      * Get Snippets for Article
-     * 
+     *
      * Returns all the associated Snippets to an Article. If the SnippetTemplate
      * is disabled, the Snippets depending on it won't be returned.
      * By Default all Snippets that are Disabled themselves are not returned.
      *
-     * @param  int $article  Article number
-     * @param  string $language Language code in format "en" for example.
-     * @param string $show Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     * @param int    $article  Article number
+     * @param string $language Language code in format "en" for example.
+     * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      *
-     * @return Doctrine\ORM\Query           Query
+     * @return Doctrine\ORM\Query Query
      */
     public function getArticleSnippets($articleNr, $languageCode, $show = 'enabled')
     {
-        $em = $this->getEntityManager();
-
         $queryBuilder = $this->getArticleSnippetQueryBuilder($articleNr, $languageCode, $show);
         $query = $queryBuilder->getQuery();
 
@@ -94,57 +88,19 @@ class SnippetRepository extends EntityRepository
     }
 
     /**
-     * Get SnippetsTemplates for Article
-     * 
-     * Returns all the SnippetsTemplates associated to a Snippet for an Article.
-     *
-     * @param  int $article  Article number
-     * @param  string $language Language code in format "en" for example.
-     * @param string $show Define which Snippets to return, 'enabled' | 'disabled' | 'all'
-     *
-     * @return Doctrine\ORM\Query           Query
-     */
-    public function getArticleSnippetTemplates($articleNr, $languageCode, $show = 'enabled')
-    {
-        $em = $this->getEntityManager();
-        $snippetTemplateIDsQuery = $this->getArticleSnippetQueryBuilder($articleNr, $languageCode, $show)
-            ->select('template.id');
-
-        $snippetTemplateIDsQueryResult = $snippetTemplateIDsQuery
-            ->distinct()
-            ->getQuery()
-            ->getResult();
-
-        $ids = array_map('current', $snippetTemplateIDsQuery);
-
-        $queryBuilder = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')->createQueryBuilder('template');
-
-        $queryBuilder->add('where',
-            $queryBuilder->expr()->in('template.id', $ids)
-        );
-
-        return $queryBuilder->getQuery();
-    }
-
-    /**
      * Get Snippet
      *
-     * @param int $id Snippet ID
+     * @param int    $id   Snippet ID
      * @param string $show Define which Snippets to return, 'enabled' | 'disabled' | 'all'
      *
      * @return Newscoop\Entity\Snippet
      */
     public function getSnippetById($id, $show = 'enabled')
     {
-        if (empty($id)) {
-            throw new \InvalidArgumentException("ID is empty");
-        }
-
         if (!is_numeric($id)) {
             throw new \InvalidArgumentException("ID is not numeric: ".$id);
         }
 
-        $em = $this->getEntityManager();
         $queryBuilder = $this->getSnippetQueryBuilder($show)
             ->andWhere('snippet.id = :id')
             ->setParameter('id', $id);
@@ -157,17 +113,59 @@ class SnippetRepository extends EntityRepository
     /**
      * Get Snippet by Name
      *
-     * @param string $name Snippet Name
+     * @param string  $name  Snippet Name
+     * @param string  $show  Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     * @param boolean $fuzzy Find fuzzy or not
      *
-     * @return \Newscoop\Entity\Snippet
+     * @return Doctrine\ORM\Query Query
      */
-    public function getSnippetByName($name)
+    public function findSnippetsByName($name, $show = 'enabled', $fuzzy = false)
     {
-        if (empty($name)) {
-            throw new \InvalidArgumentException("Name is empty");
+        $queryBuilder = $this->getSnippetQueryBuilder($show)
+            ->andWhere('snippet.name LIKE :name');
+
+        if ($fuzzy) {
+            $queryBuilder
+                ->setParameter('name', '%'.$name.'%');
+        } else {
+            $queryBuilder
+                ->setParameter('name', $name.'%');
         }
 
-        return $this->findOneByName($name);
+        return $queryBuilder->getQuery();
+    }
+
+    /**
+     * Get Snippet by Name
+     *
+     * @param int     $article  Article number
+     * @param string  $language Language code in format "en" for example.
+     * @param string  $name     Snippet Name
+     * @param string  $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     * @param boolean $fuzzy    Find fuzzy or not
+     *
+     * @return Doctrine\ORM\Query Query
+     */
+    public function findSnippetsByNameForArticle($articleNr, $languageCode, $name, $show = 'enabled', $fuzzy = false)
+    {
+        $queryBuilder = $this->getArticleSnippetQueryBuilder($articleNr, $languageCode, $show)
+            ->andWhere('snippet.name LIKE :name');
+
+        if ($fuzzy) {
+            $queryBuilder
+                ->setParameter('name', '%'.$name.'%');
+        } else {
+            $queryBuilder
+                ->setParameter('name', $name.'%');
+        }
+
+        return $queryBuilder->getQuery();
+    }
+
+    public function createSnippetForArticle($articleNr, $languageCode, array $snippetData)
+    {
+        // $snipp
+        // $snippet = new Snippet();
     }
 
     /**
