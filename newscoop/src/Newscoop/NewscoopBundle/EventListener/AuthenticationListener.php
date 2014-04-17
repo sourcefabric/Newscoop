@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * Run backend session resolver on request
  */
-class BackendSessionListener
+class AuthenticationListener
 {
     /**
      * User service
@@ -27,7 +27,7 @@ class BackendSessionListener
     protected $userService;
 
     /**
-     * Contruct BackendSessionListener object
+     * Contruct AuthenticationListener object
      *
      * @param UserService $userService User service
      * @param UserService $routerService Symfony router
