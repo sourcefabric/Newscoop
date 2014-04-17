@@ -27,7 +27,7 @@ class BackendSessionListener
     protected $userService;
 
     /**
-     * Contruct UserIpListener object
+     * Contruct BackendSessionListener object
      *
      * @param UserService $userService User service
      * @param UserService $routerService Symfony router
