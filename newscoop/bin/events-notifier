@@ -70,6 +70,10 @@ $num_rows = mysql_num_rows($result);
 if ($num_rows > 0) {
     $tpl = init_smarty();
     $recipients = get_users_to_notify();
+
+    if (empty($recipients)) {
+        return false;
+    }
 }
 
 $last_tstamp = 0;
