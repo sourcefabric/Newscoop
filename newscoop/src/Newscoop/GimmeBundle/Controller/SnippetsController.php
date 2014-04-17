@@ -66,27 +66,29 @@ class SnippetsController extends FOSRestController
      *     statusCodes={
      *         200="Returned when successful",
      *         404={
-     *           "Returned when the comment is not found",
+     *           "Returned when the Snippet is not found",
      *         }
      *     },
      *     parameters={
-     *         {"name"="id", "dataType"="integer", "required"=true, "description"="Comment id"}
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="Snippet id"},
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
      *     },
      *     output="\Newscoop\Entity\Snippet"
      * )
      *
      * @Route("/snippets/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{id}/{show}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return Form
      */
-    public function getSnippetAction($id)
+    public function getSnippetAction($id, $show = 'enabled')
     {
         $em = $this->container->get('em');
 
         $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
-        $snippet     = $snippetRepo->find($id);
+        $snippet = $snippetRepo->getSnippetById($id, $show);
 
         if (!$snippet) {
             throw new EntityNotFoundException('Result was not found.');
@@ -108,18 +110,20 @@ class SnippetsController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
      *     }
      * )
      *
      * @Route("/articles/{number}/{language}/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/snippets/{show}.{_format}", defaults={"_format"="json"})
      * @Route("/snippets/article/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/article/{number}/{language}/{show}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getSnippetsForArticleAction(Request $request, $number, $language)
+    public function getSnippetsForArticleAction(Request $request, $number, $language, $show = 'enabled')
     {
-        $ladybug = \Zend_Registry::get('container')->getService('ladybug');
         $em = $this->container->get('em');
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
@@ -131,39 +135,13 @@ class SnippetsController extends FOSRestController
         if (!$article) {
             throw new NotFoundHttpException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
         }
-
-        $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet')
-            ->getArticleSnippets($number, $language)
-            ->getResult();
-
-        $snippetTemplate = new SnippetTemplate();
-        $snippetTemplateField1 = new SnippetTemplateField();
-        $snippetTemplateField1->setName('Field1')->setType('string')->setScope('frontend');
-        $snippetTemplate->addField($snippetTemplateField1);
-        $snippetTemplate->setName('Template1');
-        $snippetTemplate->setTemplateCode('{{ Field1 }}');
-        $newSnippet = new Snippet($snippetTemplate);
-        $newSnippet->setName('Test Snippet');
         
-        ladybug_dump($newSnippet);
-        ladybug_dump($newSnippet->getFields());
-
-        $newSnippet->setData('Field1', 'foobar');
-
-        ladybug_dump($newSnippet);
-
-        $em->persist($newSnippet);
-        $em->flush();
-
-        ladybug_dump($newSnippet->render());
-
-        $ladybug->log($articleSnippets);
-
+        $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet')
+            ->getArticleSnippets($number, $language, $show)
+            ->getResult();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleSnippets = $paginator->paginate($articleSnippets);
-
-        $ladybug->log($articleSnippets);
 
         return $articleSnippets;
     }
