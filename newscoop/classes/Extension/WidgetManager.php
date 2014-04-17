@@ -16,6 +16,8 @@ require_once dirname(__FILE__) . '/WidgetRendererDecorator.php';
 require_once dirname(__FILE__) . '/Index.php';
 require_once dirname(__FILE__) . '/FeedWidget.php';
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
 /**
  * Widget Manager
  */
@@ -99,6 +101,12 @@ class WidgetManager
     public static function GetWidgetsByContext(IWidgetContext $context)
     {
         global $g_user, $g_ado_db;
+
+        if ($g_user === null) {
+            $router = \Zend_Registry::get('container')->getService('router');
+
+            return new RedirectResponse($router->generate('admin_logout'));
+        }
 
         $queryStr = 'SELECT w.path, w.class, wcw.*
             FROM ' . Extension_Extension::TABLE . ' w
