@@ -71,9 +71,6 @@ class ArticlesController extends FOSRestController
      *           "Returned when the article is not found",
      *         }
      *     },
-     *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
-     *     },
      *     filters={
      *          {"name"="language", "dataType"="string", "description"="Language code"}
      *     },
