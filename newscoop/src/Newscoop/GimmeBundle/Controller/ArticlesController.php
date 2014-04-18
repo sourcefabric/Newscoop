@@ -92,6 +92,10 @@ class ArticlesController extends FOSRestController
             ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
             ->getOneOrNullResult();
 
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
+        }
+
         return $article;
     }
 

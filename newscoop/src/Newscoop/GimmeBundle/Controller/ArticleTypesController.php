@@ -72,6 +72,11 @@ class ArticleTypesController extends FOSRestController
     {
         $em = $this->container->get('em');
         $type = $em->getRepository('Newscoop\Entity\ArticleType')->findOneByName($name);
+
+        if (!$type) {
+            throw new NotFoundHttpException('Article Type was not found');
+        }
+
         $articleTypesFields = $em->getRepository('Newscoop\Entity\ArticleTypeField')
             ->getFieldsForType($type)
             ->getResult();
