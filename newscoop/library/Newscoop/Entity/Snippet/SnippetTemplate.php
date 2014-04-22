@@ -15,7 +15,7 @@ use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 /**
  * Snippet Template entity
  *
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\SnippetTemplateRepository")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Snippet\SnippetTemplateRepository")
  * @ORM\Table(name="SnippetTemplates")
  */
 class SnippetTemplate
