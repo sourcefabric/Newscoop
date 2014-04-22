@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class TopicsController extends FOSRestController
 {
     /**
+     * Get Topics
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when succesfull",
+     *         404={
+     *           "Returned when topics are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/topics.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -42,6 +54,19 @@ class TopicsController extends FOSRestController
     }
 
     /**
+     * Get topic articles
+     *
+     * Returns array with articles under "items" key and requested topic "id" and "title"
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the topic is not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/topics/{id}/{language}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})

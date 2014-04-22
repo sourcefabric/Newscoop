@@ -71,9 +71,6 @@ class ArticlesController extends FOSRestController
      *           "Returned when the article is not found",
      *         }
      *     },
-     *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
-     *     },
      *     filters={
      *          {"name"="language", "dataType"="string", "description"="Language code"}
      *     },
@@ -94,6 +91,10 @@ class ArticlesController extends FOSRestController
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
             ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
+        }
 
         return $article;
     }
