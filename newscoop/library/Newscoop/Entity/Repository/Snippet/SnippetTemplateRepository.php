@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Entity\Repository;
+namespace Newscoop\Entity\Repository\Snippet;
 
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
