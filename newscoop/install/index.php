@@ -51,7 +51,7 @@ if ($templates_cache_not_writable || $logs_not_writable) {
     }
 
     if ($themes_not_writable) {
-        echo "<p>Directory '$proxy' is not writable.</p>";
+        echo "<p>Directory '$themes' is not writable.</p>";
         echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $themes</code> on linux)</p>";
     }
 
