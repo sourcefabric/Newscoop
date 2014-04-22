@@ -65,6 +65,18 @@ class Snippet
     protected $enabled = 1;
 
     /**
+     * @ORM\Column(name="Created", type="datetime")
+     * @var string
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(name="Modified", type="datetime")
+     * @var string
+     */
+    protected $modified;
+
+    /**
      * Constructs the Snippet
      *
      * @param SnippetTemplate $template SnippetTemplate to set for this Snippet
@@ -80,6 +92,8 @@ class Snippet
         $this->fields = new ArrayCollection();
         $this->articles = new ArrayCollection();
         $this->setTemplate($template);
+        $this->setCreated();
+        $this->setUpdated();
     }
 
     /**
@@ -133,6 +147,8 @@ class Snippet
             $field->setTemplateField($templateField);
             $this->addField($field);
         }
+
+        $this->setUpdated();
     
         return $this;
     }
@@ -177,6 +193,7 @@ class Snippet
     public function setName($name)
     {
         $this->name = $name;
+        $this->setUpdated();
     
         return $this;
     }
@@ -221,6 +238,8 @@ class Snippet
             throw new \Exception('Snippet: "'.$this->name.'" does not have Field: "'.$fieldName.'"');
         }
 
+        $this->setUpdated();
+
         return $this;
     }
     
@@ -244,6 +263,63 @@ class Snippet
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+        $this->setUpdated();
+    
+        return $this;
+    }
+    
+    /**
+     * Getter for created
+     *
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
+    /**
+     * Setter for created
+     *
+     * @param DateTime $created Value to set
+     *
+     * @return Newscoop\Entity\Snippet
+     */
+    public function setCreated($created = null)
+    {
+        if (!($created instanceof \DateTime)) {
+            $created = new \DateTime("now");
+        }
+        
+        $this->created = $created;    
+    
+        return $this;
+    }
+    
+    /**
+     * Getter for updated
+     *
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+    
+    /**
+     * Setter for updated
+     *
+     * @param mixed $updated Value to set
+     *
+     * @return self
+     */
+    public function setUpdated($updated = null)
+    {
+        if (!($updated instanceof \DateTime)) {
+            $updated = new \DateTime("now");
+        }
+
+        $this->updated = $updated;
     
         return $this;
     }

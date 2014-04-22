@@ -1,7 +1,8 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
@@ -11,25 +12,28 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Snippet;
-// use Newscoop\Entity\Snippet\Commenter;
 
 /**
  * Snippet repository
  */
 class SnippetRepository extends EntityRepository
 {
-
     /**
-     * Get new instance of the Snippet
+     * Convenience QueryBuilder for Snippets
      *
-     * @return \Newscoop\Entity\Snippet
+     * This internal function is used by almost all Repository functions,
+     * it allows for more consistency. The rest of the doc also applies
+     * to the functions using it.
+     *
+     * Returns all Snippets. If the SnippetTemplate
+     * is disabled, the Snippets depending on it won't be returned.
+     * By Default all Snippets that are Disabled themselves are not returned.
+     *
+     * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     *
+     * @return Doctrine\ORM\Querybuilder $queryBuilder
      */
-    public function getPrototype()
-    {
-        return new Snippet;
-    }
-
-    public function getSnippetQueryBuilder($show)
+    protected function getSnippetQueryBuilder($show)
     {
         $queryBuilder = $this->createQueryBuilder('snippet')
             ->join('snippet.template', 'template')
@@ -48,7 +52,24 @@ class SnippetRepository extends EntityRepository
         return $queryBuilder;
     }
 
-    public function getArticleSnippetQueryBuilder($articleNr, $language, $show)
+    /**
+     * Convenience QueryBuilder for Snippets attached to an Article
+     *
+     * This internal function is used by almost all Repository functions,
+     * it allows for more consistency. The rest of the doc also applies
+     * to the functions using it.
+     *
+     * Returns all the associated Snippets to an Article. If the SnippetTemplate
+     * is disabled, the Snippets depending on it won't be returned.
+     * By Default all Snippets that are Disabled themselves are not returned.
+     *
+     * @param int    $article  Article number
+     * @param string $language Language code in format "en" for example.
+     * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     *
+     * @return Doctrine\ORM\Querybuilder $queryBuilder
+     */
+    protected function getArticleSnippetQueryBuilder($articleNr, $language, $show)
     {
         $em = $this->getEntityManager();
         $languageId = $em->getRepository('Newscoop\Entity\Language')
@@ -64,6 +85,25 @@ class SnippetRepository extends EntityRepository
             ));
 
         return $queryBuilder;
+    }
+
+    /**
+     * Get all Snippets
+     *
+     * Returns all Snippets. If the SnippetTemplate
+     * is disabled, the Snippets depending on it won't be returned.
+     * By Default all Snippets that are Disabled themselves are not returned.
+     *
+     * @param string $show     Define which Snippets to return, 'enabled' | 'disabled' | 'all'
+     *
+     * @return Doctrine\ORM\Query Query
+     */
+    public function getSnippets($show = 'enabled')
+    {
+        $queryBuilder = $this->getSnippetQueryBuilder($show);
+        $query = $queryBuilder->getQuery();
+
+        return $query;
     }
 
     /**
@@ -166,13 +206,5 @@ class SnippetRepository extends EntityRepository
     {
         // $snipp
         // $snippet = new Snippet();
-    }
-
-    /**
-     * Flush method
-     */
-    public function flush()
-    {
-        $this->getEntityManager()->flush();
     }
 }

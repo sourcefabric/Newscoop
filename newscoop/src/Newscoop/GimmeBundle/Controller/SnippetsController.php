@@ -35,21 +35,25 @@ class SnippetsController extends FOSRestController
      *         404={
      *           "Returned when the snippets are not found"
      *         }
-     *     }
+     *     },
+     *     parameters={
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
+     *     },
      * )
      *
      * @Route("/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{show}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
      * @return array
      */
-    public function getSnippetsAction()
+    public function getSnippetsAction($show = 'enabled')
     {
         $em = $this->container->get('em');
 
         $snippets = $em->getRepository('Newscoop\Entity\Snippet')
-            ->findAll();
+            ->getSnippets($show);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $snippets = $paginator->paginate($snippets, array(
@@ -177,8 +181,8 @@ class SnippetsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route("/snippets/{commentId}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{article}/{language}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/article/{article}/{language}/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("POST|PATCH")
      * @View()
      *
@@ -204,8 +208,8 @@ class SnippetsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/snippets/{commentId}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{articleNumber}/{languageCode}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/article/{articleNumber}/{languageCode}/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("DELETE")
      * @View(statusCode=204)
      *

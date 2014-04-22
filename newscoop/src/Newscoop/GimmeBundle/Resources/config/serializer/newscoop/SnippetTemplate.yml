@@ -1,4 +1,4 @@
-Newscoop\Entity\Snippet\Template:
+Newscoop\Entity\Snippet\SnippetTemplate:
     exclusion_policy: ALL
     properties:
         id:
@@ -19,50 +19,3 @@ Newscoop\Entity\Snippet\Template:
             type: string
             groups: ["details", "list"]
             serialized_name: template
-        # commenter:
-        #     expose: true
-        #     read_only: true
-        #     groups: ["details", "list"]
-        #     type: string
-        #     accessor:
-        #         getter: getCommenterName
-        #         setter: setCommenterName
-        #     serialized_name: author
-        # parent:
-        #     expose: true
-        #     read_only: true
-        #     type: integer
-        #     accessor:
-        #         getter: getParentId
-        #     groups: ["details", "list"]
-        #     serialized_name: parent
-        #     since_version: 1.1
-        # thread_level:
-        #     expose: true
-        #     read_only: true
-        #     type: integer
-        #     groups: ["details", "list"]
-        #     serialized_name: thread_level
-        #     since_version: 1.1
-        # thread_order:
-        #     expose: true
-        #     read_only: true
-        #     type: integer
-        #     groups: ["details", "list"]
-        #     serialized_name: thread_order
-        #     since_version: 1.1
-        # recommended:
-        #     expose: true
-        #     read_only: true
-        #     type: integer
-        #     groups: ["details", "list"]
-        #     serialized_name: recommended
-        #     since_version: 1.1
-        # status:
-        #     expose: true
-        #     read_only: true
-        #     type: string
-        #     groups: ["details", "list"]
-        #     serialized_name: status
-        #     access_type: public_method
-        #     since_version: 1.1

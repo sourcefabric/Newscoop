@@ -90,7 +90,6 @@ class SnippetField
      */
     public function setSnippet($snippet)
     {
-
         $this->snippet = $snippet;
     
         return $this;
