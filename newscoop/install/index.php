@@ -20,10 +20,12 @@ require_once __DIR__ . '/../constants.php';
 $templates_cache = dirname(dirname(__FILE__)) . '/cache';
 $logs = dirname(dirname(__FILE__)) . '/log';
 $proxy = dirname(dirname(__FILE__)) . '/library/Proxy';
+$themes = dirname(dirname(__FILE__)) . '/themes';
 
 $templates_cache_not_writable = !is_writable($templates_cache);
 $logs_not_writable = !is_writable($logs);
 $proxy_not_writable = !is_writable($proxy);
+$themes_not_writable = !is_writable($themes);
 
 if ($templates_cache_not_writable || $logs_not_writable) {
     echo '<!DOCTYPE html>';
@@ -47,7 +49,12 @@ if ($templates_cache_not_writable || $logs_not_writable) {
         echo "<p>Directory '$proxy' is not writable.</p>";
         echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $proxy</code> on linux)</p>";
     }
-    
+
+    if ($themes_not_writable) {
+        echo "<p>Directory '$proxy' is not writable.</p>";
+        echo "<p>Please make it writable in order to continue. (i.e. <code>$ sudo chmod -R 777 $themes</code> on linux)</p>";
+    }
+
     echo '</body></html>';
     exit;
 }
