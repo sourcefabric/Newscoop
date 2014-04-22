@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.2.1';
+    private $m_release = '4.2.2';
 
     /**
      * @var string
@@ -43,11 +43,6 @@ final class CampVersion
      * @var string
      */
     private $m_releaseDate = '2013-12-05';
-
-    /**
-     * @var string
-     */
-    private $m_copyrightYear = 2013;
 
     /**
      * @var string
@@ -102,7 +97,7 @@ final class CampVersion
 
     public function getCopyright()
     {
-        $c = '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;<a href="' . $this->m_website
+        $c = '&copy;&nbsp;' . date("Y") . '&nbsp;<a href="' . $this->m_website
             . '" target="_blank">' . $this->m_organization . '</a>';
         return $c;
     }
