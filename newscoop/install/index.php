@@ -27,7 +27,7 @@ $logs_not_writable = !is_writable($logs);
 $proxy_not_writable = !is_writable($proxy);
 $themes_not_writable = !is_writable($themes);
 
-if ($templates_cache_not_writable || $logs_not_writable) {
+if ($templates_cache_not_writable || $logs_not_writable || $proxy_not_writable || $themes_not_writable) {
     echo '<!DOCTYPE html>';
     echo '<html><head><meta charset="utf-8" />';
     echo '<title>Install requirement</title>';
