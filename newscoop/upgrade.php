@@ -31,6 +31,7 @@ if (file_exists($application_ini_path)) {
     // backup application.ini
     exec("mv $application_ini_path $application_ini_bak_path", $output = array(), $code);
     if (PHP_SAPI !== 'cli') {
+        $year = _(date("Y"));
         echo $message = <<<EOF
 <!doctype html>
 <html lang="en">
@@ -62,7 +63,7 @@ p{margin:0 0 10px}</style>
         <a href="http://newscoop.sourcefabric.org/" target="_blank">
             Newscoop</a>, the open content management system for professional journalists.
          <br>
-            ©&nbsp;2013&nbsp;<a href="http://www.sourcefabric.org" target="_blank">Sourcefabric o.p.s.</a>&nbsp;Newscoop       is distributed under GNU GPL v.3    
+            ©&nbsp;$year&nbsp;<a href="http://www.sourcefabric.org" target="_blank">Sourcefabric o.p.s.</a>&nbsp;Newscoop       is distributed under GNU GPL v.3    
     </div>
 </div>
 </body>

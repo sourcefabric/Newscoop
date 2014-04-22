@@ -42,12 +42,12 @@
         </tr>
         <tr>
             <td width="40%" valign="top"><div class="help" style="margin-right:8px">
-                <p>Sourcefabric offers free community support for Newscoop. Continue to <a href="http://welcome.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">welcome.sourcefabric.org</a> to create your Sourcefabric forums account and we will automatically add you to the Newscoop support forum and mailing list.</p>
-                <p>Keep up to date with the Newscoop development news and other useful info by signing up to the Sourcefabric newsletter on the same <a href="http://welcome.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">page</a>.</p>
+                <p>Sourcefabric offers free community support for Newscoop. Continue to <a href="https://login.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">login.sourcefabric.org</a> to create your Sourcefabric forums account and we will automatically add you to the Newscoop support forum and mailing list.</p>
+                <p>Keep up to date with the Newscoop development news and other useful info by signing up to the Sourcefabric newsletter on the same <a href="https://login.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">page</a>.</p>
             </div></td>
             <td width="60%" valign="top">
             <div class="icon">
-              <a href="http://welcome.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">
+              <a href="https://login.sourcefabric.org/" title="Welcome to Sourcefabric" target="_blank">
                 <img src="img/welcome.png" /><br />
                 <span>Welcome to Sourcefabric</span>
               </a>
