@@ -32,7 +32,7 @@ class AuthorHandler
         foreach ($articleAuthors as $author) {
             $simpleArticleAuthors[] = array(
                 'name' => $author->getFullName(),
-                'link' => $this->router->generate('newscoop_gimme_authors_getarticle', array('id' => $author->getId()), true)
+                'link' => $this->router->generate('newscoop_gimme_authors_getauthor', array('id' => $author->getId()), true)
             );
         }
 
