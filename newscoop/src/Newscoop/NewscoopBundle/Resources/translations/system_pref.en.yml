@@ -125,3 +125,4 @@ newscoop:
         publickey: "Use this in the JavaScript code that is served to your users."
         privatekey: "Use this when communicating between your server and reCAPTCHA server. Be sure to keep it a secret."
         secure: "If you use secure url for reCAPTCHA choose Yes option."
+      lifetime: "Session lifetime in seconds. Max: 86400 (24 hours). Min: 0 (until the browser is closed)."

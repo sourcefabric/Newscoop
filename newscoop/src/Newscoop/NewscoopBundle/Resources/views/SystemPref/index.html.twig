@@ -95,7 +95,7 @@
                             {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }} <small id="lifetime">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.session_lifetime, {'attr' : {'class' : 'input_text'}}) }}
@@ -565,6 +565,7 @@
     popover($('#recaptchaprivatekey'), '{{ 'newscoop.preferences.popover.recaptcha.privatekey'|trans }}');
     popover($('#recaptchapublickey'), '{{ 'newscoop.preferences.popover.recaptcha.publickey'|trans }}');
     popover($('#recaptchasecure'), '{{ 'newscoop.preferences.popover.recaptcha.secure'|trans }}');
+    popover($('#lifetime'), '{{ 'newscoop.preferences.popover.lifetime'|trans }}');
 
 //--></script>
 {% endblock %}
