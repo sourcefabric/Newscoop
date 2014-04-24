@@ -1,2 +1,2 @@
-INSERT INTO `SystemPreferences` (`varname`, `value`, `last_modified`) VALUES ('MediaRichTextCaptions', 'N', NOW());
-INSERT INTO `SystemPreferences` (`varname`, `value`, `last_modified`) VALUES ('MediaCaptionLength', '255', NOW());
+INSERT INTO `SystemPreferences` (`varname`, `value`, `last_modified`) VALUES ('MediaRichTextCaptions', 'N', NOW()) ON DUPLICATE KEY UPDATE `varname` = VALUES(`varname`), `value` = VALUES(`value`), `last_modified` = VALUES(`last_modified`);
+INSERT INTO `SystemPreferences` (`varname`, `value`, `last_modified`) VALUES ('MediaCaptionLength', '255', NOW()) ON DUPLICATE KEY UPDATE `varname` = VALUES(`varname`), `value` = VALUES(`value`), `last_modified` = VALUES(`last_modified`);
