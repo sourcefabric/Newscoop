@@ -35,29 +35,28 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
     }
 
     $imageService = Zend_Registry::get('container')->getService('image');
-    $articleRenditions = $article->getRenditions();
-    $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
-    if ($articleRendition === null) {
+    $renditionService = \Zend_Registry::get('container')->getService('image.rendition');
+    $image = null;
+
+    if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
+        $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition'], $params['width'], $params['height']);
+    } else {
+        $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition']);
+    }
+
+    if ($image === false) {
         $smarty->assign('image', false);
         $repeat = false;
         return;
     }
 
-    if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
-        $preview = $articleRendition->getRendition()->getPreview($params['width'], $params['height']);
-        $thumbnail = $preview->getThumbnail($articleRendition->getImage(), $imageService);
-    } else {
-        $thumbnail = $articleRendition->getRendition()->getThumbnail($articleRendition->getImage(), $imageService);
-    }
-
     $smarty->assign('image', (object) array(
-        'src' => \Zend_Registry::get('view')->url(array('src' => $thumbnail->src), 'image', true, false),
-        'width' => $thumbnail->width,
-        'height' => $thumbnail->height,
-        'caption' => $articleRendition->getImage()->getDescription(),
+        'src' => \Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false),
+        'width' => $image['width'],
+        'height' => $image['height'],
         'caption' => $imageService->getCaption($articleRendition->getImage(), $article->number, $article->language->number),
         'description' => $articleRendition->getImage()->getDescription(),
         'photographer' => $articleRendition->getImage()->getPhotographer(),
-        'original_url' => $articleRendition->getImage()->getPath(),
+        'original' => $image['original'],
     ));
 }
