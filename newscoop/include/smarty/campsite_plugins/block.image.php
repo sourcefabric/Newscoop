@@ -35,19 +35,20 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
     }
 
     $imageService = Zend_Registry::get('container')->getService('image');
+    $articleRenditions = $article->getRenditions();
+    $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
+    if ($articleRendition === null) {
+        $smarty->assign('image', false);
+        $repeat = false;
+        return;
+    }
+
     $renditionService = \Zend_Registry::get('container')->getService('image.rendition');
     $image = null;
-
     if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
         $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition'], $params['width'], $params['height']);
     } else {
         $image = $renditionService->getArticleRenditionImage($article->number, $params['rendition']);
-    }
-
-    if ($image === false) {
-        $smarty->assign('image', false);
-        $repeat = false;
-        return;
     }
 
     $smarty->assign('image', (object) array(
