@@ -2,7 +2,7 @@ Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField:
     exclusion_policy: ALL
     properties:
         id:
-            expose: true
+            expose: false
             read_only: true
             type: integer
             groups: ["details"]

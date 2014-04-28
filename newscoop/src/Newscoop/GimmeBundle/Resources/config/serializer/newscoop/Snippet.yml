@@ -26,7 +26,7 @@ Newscoop\Entity\Snippet:
             read_only: true
             type: string
             groups: ["details", "list"]
-            serialized_name: template
+            serialized_name: templateName
             accessor:
                 getter: getTemplateName
         enabled:
