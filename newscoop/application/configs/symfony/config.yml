@@ -97,6 +97,9 @@ jms_serializer:
             Newscoop_Snippet:
                 namespace_prefix: Newscoop\Entity\Snippet
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_SnippetTemplate:
+                namespace_prefix: Newscoop\Entity\Snippet\SnippetTemplate
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
 # SensioExtraBundle Configuration
