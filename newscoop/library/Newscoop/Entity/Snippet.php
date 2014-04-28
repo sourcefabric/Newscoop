@@ -44,9 +44,8 @@ class Snippet
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist", "remove"}, indexBy="name")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist", "remove"}, indexBy="fieldName")
      * @var Doctrine\Common\Collections\ArrayCollection
-     * @Type("ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>")
      */
     protected $fields;
 

@@ -120,7 +120,7 @@ class SnippetsController extends FOSRestController
      * @Route("/articles/{number}/{language}/snippets.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
      * @Route("/snippets/article/{number}/{language}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
      * @Method("GET")
-     * @View(serializerGroups={"details"})
+     * @View(serializerGroups={"list"})
      */
     public function getSnippetsForArticleAction(Request $request, $number, $language, $show)
     {

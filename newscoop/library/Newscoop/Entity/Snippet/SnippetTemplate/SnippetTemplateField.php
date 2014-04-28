@@ -37,7 +37,7 @@ class SnippetTemplateField
      * @ORM\Column(name="Name", type="string")
      * @var string
      */
-    protected $name;
+    protected $templateFieldName;
 
     /**
      * @ORM\Column(name="Type", type="string")
@@ -89,19 +89,19 @@ class SnippetTemplateField
      */
     public function getName()
     {
-        return $this->name;
+        return $this->templateFieldName;
     }
     
     /**
      * Setter for name
      *
-     * @param string $name
+     * @param string $templateFieldName
      *
      * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
      */
-    public function setName($name)
+    public function setName($templateFieldName)
     {
-        $this->name = $name;
+        $this->templateFieldName = $templateFieldName;
     
         return $this;
     }

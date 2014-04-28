@@ -47,7 +47,7 @@ class SnippetTemplate
     protected $controller;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist"}, indexBy="templateFieldName")
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $fields;
