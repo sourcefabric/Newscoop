@@ -48,6 +48,19 @@ class SnippetField
     protected $data;
 
     /**
+     * Doctrine is not able to read the Name of the SnippetField without a real property
+     * 
+     * @ORM\Column(name="Name", type="string", length=255, nullable=false)
+     * @var text
+     */
+    protected $fieldName;
+
+    public function __construct()
+    {
+        $this->fieldName = $this->getFieldName();
+    }
+
+    /**
      * Getter for id
      *
      * @return int
@@ -198,6 +211,6 @@ class SnippetField
      */
     public function __toString()
     {
-        return $this->templateField->getName();
+        return $this->getFieldName();
     }
 }

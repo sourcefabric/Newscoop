@@ -35,6 +35,10 @@ class SnippetRepository extends EntityRepository
      */
     protected function getSnippetQueryBuilder($show)
     {
+        if (!in_array($show, array('enabled', 'disabled', 'all'))) {
+            $show = 'enabled';
+        }
+
         $queryBuilder = $this->createQueryBuilder('snippet')
             ->join('snippet.template', 'template')
             ->andWhere('template.enabled = 1');     // Template should always be enabled
@@ -85,6 +89,11 @@ class SnippetRepository extends EntityRepository
             ));
 
         return $queryBuilder;
+    }
+
+    // need to be able to search for all articles attached to a snippet
+    protected function getSnippetArticlesQueryBuilder(Snippet $snippet, $show)
+    {
     }
 
     /**
@@ -200,6 +209,19 @@ class SnippetRepository extends EntityRepository
         }
 
         return $queryBuilder->getQuery();
+    }
+
+    public function deleteSnippet(Snippet $snippet, $force = false)
+    {
+        // We got to do some checks, remove it from the Article and such
+        //
+        // If all is good, and it's not attached, remove
+
+        $em = $this->getEntityManager();
+        $em->remove($snippet);
+        $em->flush();
+
+        return true;
     }
 
     public function createSnippetForArticle($articleNr, $languageCode, array $snippetData)

@@ -41,14 +41,13 @@ class SnippetsController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/snippets.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/{show}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
      * @return array
      */
-    public function getSnippetsAction($show = 'enabled')
+    public function getSnippetsAction($show)
     {
         $em = $this->container->get('em');
 
@@ -80,14 +79,13 @@ class SnippetsController extends FOSRestController
      *     output="\Newscoop\Entity\Snippet"
      * )
      *
-     * @Route("/snippets/{id}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/{id}/{show}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{id}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
-     * @return Form
+     * @return array
      */
-    public function getSnippetAction($id, $show = 'enabled')
+    public function getSnippetAction($id, $show)
     {
         $em = $this->container->get('em');
 
@@ -119,14 +117,12 @@ class SnippetsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/snippets.{_format}", defaults={"_format"="json"})
-     * @Route("/articles/{number}/{language}/snippets/{show}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{number}/{language}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{number}/{language}/{show}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/snippets.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/snippets/article/{number}/{language}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
      * @Method("GET")
-     * @View(serializerGroups={"list"})
+     * @View(serializerGroups={"details"})
      */
-    public function getSnippetsForArticleAction(Request $request, $number, $language, $show = 'enabled')
+    public function getSnippetsForArticleAction(Request $request, $number, $language, $show)
     {
         $em = $this->container->get('em');
         $paginatorService = $this->get('newscoop.paginator.paginator_service');

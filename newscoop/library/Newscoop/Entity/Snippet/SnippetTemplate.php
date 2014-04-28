@@ -83,11 +83,24 @@ class SnippetTemplate
     protected $iconActive;
 
     /**
+     * @ORM\Column(name="Created", type="datetime", nullable=false)
+     * @var string
+     */
+    protected $created;
+
+    /**
+     * @ORM\Column(name="Modified", type="datetime", nullable=false)
+     * @var string
+     */
+    protected $modified;
+
+    /**
      * Constructs the SnippetTemplate
      */
     public function __construct()
     {
         $this->fields = new ArrayCollection();
+        $this->setCreated();
     }
 
     /**
@@ -144,6 +157,7 @@ class SnippetTemplate
     public function setName($name)
     {
         $this->name = $name;
+        $this->setUpdated();
 
         return $this;
     }
@@ -168,6 +182,7 @@ class SnippetTemplate
     public function setController($controller)
     {
         $this->controller = $controller;
+        $this->setUpdated();
 
         return $this;
     }
@@ -203,6 +218,7 @@ class SnippetTemplate
     {
         $field->setTemplate($this);
         $this->fields->add($field);
+        $this->setUpdated();
 
         return $this;
     }
@@ -262,6 +278,7 @@ class SnippetTemplate
     public function setTemplateCode($templateCode)
     {
         $this->templateCode = $templateCode;
+        $this->setUpdated();
 
         return $this;
     }
@@ -286,6 +303,7 @@ class SnippetTemplate
     public function setFavourite($favourite)
     {
         $this->favourite = $favourite;
+        $this->setUpdated();
 
         return $this;
     }
@@ -310,6 +328,7 @@ class SnippetTemplate
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
+        $this->setUpdated();
 
         return $this;
     }
@@ -334,6 +353,7 @@ class SnippetTemplate
     public function setIconInactive($iconInactive)
     {
         $this->iconInactive = $iconInactive;
+        $this->setUpdated();
 
         return $this;
     }
@@ -358,7 +378,65 @@ class SnippetTemplate
     public function setIconActive($iconActive)
     {
         $this->iconActive = $iconActive;
+        $this->setUpdated();
 
+        return $this;
+    }
+
+    /**
+     * Getter for created
+     *
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    
+    /**
+     * Setter for created
+     *
+     * @param DateTime $created Value to set
+     *
+     * @return Newscoop\Entity\Snippet
+     */
+    public function setCreated($created = null)
+    {
+        if (!($created instanceof \DateTime)) {
+            $created = new \DateTime("now");
+        }
+        
+        $this->created = $created;    
+        $this->setUpdated();
+    
+        return $this;
+    }
+    
+    /**
+     * Getter for updated
+     *
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+    
+    /**
+     * Setter for updated
+     *
+     * @param mixed $updated Value to set
+     *
+     * @return self
+     */
+    public function setUpdated($updated = null)
+    {
+        if (!($updated instanceof \DateTime)) {
+            $updated = new \DateTime("now");
+        }
+
+        $this->updated = $updated;
+    
         return $this;
     }
 

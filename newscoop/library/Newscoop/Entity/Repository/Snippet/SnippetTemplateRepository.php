@@ -30,7 +30,7 @@ class SnippetTemplateRepository extends EntityRepository
         return new SnippetTemplate;
     }
 
-    private function getSnippetTemplateQueryBuilder($show)
+    public function getSnippetTemplateQueryBuilder($show)
     {
         $queryBuilder = $this->createQueryBuilder('template');
 
@@ -61,7 +61,7 @@ class SnippetTemplateRepository extends EntityRepository
             throw new \InvalidArgumentException("ID is not numeric: ".$id);
         }
 
-        $queryBuilder = $this->getSnippetQueryBuilder($show)
+        $queryBuilder = $this->getSnippetTemplateQueryBuilder($show)
             ->andWhere('template.id = :id')
             ->setParameter('id', $id);
 
@@ -81,7 +81,7 @@ class SnippetTemplateRepository extends EntityRepository
      */
     public function findSnippetTemplatesByName($name, $show = 'enabled', $fuzzy = false)
     {
-        $queryBuilder = $this->getSnippetQueryBuilder($show)
+        $queryBuilder = $this->getSnippetTemplateQueryBuilder($show)
             ->andWhere('template.name LIKE :name');
 
         if ($fuzzy) {

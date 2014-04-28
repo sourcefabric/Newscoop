@@ -9,6 +9,7 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use JMS\Serializer\Annotation\Type;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Entity\Snippet\SnippetTemplate;
 use Newscoop\Entity\Snippet\SnippetField;
@@ -43,8 +44,9 @@ class Snippet
     protected $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetField", mappedBy="snippet", cascade={"persist", "remove"}, indexBy="name")
      * @var Doctrine\Common\Collections\ArrayCollection
+     * @Type("ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>")
      */
     protected $fields;
 
@@ -65,13 +67,13 @@ class Snippet
     protected $enabled = 1;
 
     /**
-     * @ORM\Column(name="Created", type="datetime")
+     * @ORM\Column(name="Created", type="datetime", nullable=false)
      * @var string
      */
     protected $created;
 
     /**
-     * @ORM\Column(name="Modified", type="datetime")
+     * @ORM\Column(name="Modified", type="datetime", nullable=false)
      * @var string
      */
     protected $modified;
@@ -93,7 +95,6 @@ class Snippet
         $this->articles = new ArrayCollection();
         $this->setTemplate($template);
         $this->setCreated();
-        $this->setUpdated();
     }
 
     /**
@@ -292,6 +293,7 @@ class Snippet
         }
         
         $this->created = $created;    
+        $this->setUpdated();
     
         return $this;
     }
