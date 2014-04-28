@@ -1,3 +1,5 @@
+'newscoop.plugins_manager.manager': 'Plugins Manager'
+'newscoop.plugins_manager.legacy_manager': 'Legacy Plugins Manager'
 'newscoop.plugins_manager.public_plugins': 'Public plugins'
 'newscoop.plugins_manager.private_plugins': 'Private plugins'
 'newscoop.plugins_manager.install.public': 'Install new plugins'

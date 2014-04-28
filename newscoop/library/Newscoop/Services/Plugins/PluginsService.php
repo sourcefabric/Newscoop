@@ -28,8 +28,8 @@ class PluginsService
      */
     protected $dispatcher;
 
-    /** 
-     * @var Doctrine\ORM\EntityManager 
+    /**
+     * @var Doctrine\ORM\EntityManager
      */
     protected $em;
 
@@ -41,16 +41,16 @@ class PluginsService
 
     /**
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
-     * @param Doctrine\ORM\EntityManager $em
+     * @param Doctrine\ORM\EntityManager               $em
      */
     public function __construct($dispatcher, EntityManager $em)
     {
         $this->dispatcher = $dispatcher;
-        $this->em = $em; 
+        $this->em = $em;
     }
 
     public function getAllAvailablePlugins()
-    {   
+    {
         if ($this->avaiablePlugins) {
             return $this->avaiablePlugins;
         }
@@ -65,7 +65,7 @@ class PluginsService
         $criteria = new Criteria($expr);
 
         $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
-        
+
         return $avaiablePlugins->matching($criteria);
     }
 
@@ -76,17 +76,17 @@ class PluginsService
         $criteria = new Criteria($expr);
 
         $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
-        
+
         return $avaiablePlugins->matching($criteria);
     }
 
     /**
      * Dispatch hook event and render collected Response objects
-     * 
-     * @param  string $eventName
-     * @param  mixed $subject
-     * @param  array $options
-     * 
+     *
+     * @param string $eventName
+     * @param mixed  $subject
+     * @param array  $options
+     *
      * @return string
      */
     public function renderPluginHooks($eventName, $subject = null, $options = null)
@@ -103,10 +103,10 @@ class PluginsService
 
     /**
      * Dispatch event for list objects registration
-     * 
-     * @param  mixed $subject
-     * @param  array $options
-     * 
+     *
+     * @param mixed $subject
+     * @param array $options
+     *
      * @return string
      */
     public function collectListObjects($subject = null, $options = array())

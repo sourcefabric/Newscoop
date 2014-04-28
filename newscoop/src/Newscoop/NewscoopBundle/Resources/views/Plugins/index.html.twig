@@ -1,8 +1,22 @@
 {% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
 {% trans_default_domain "plugins_manager" %}
 
-{% block admin_title %}Plugins management{% endblock %}
-{% block admin_page_title_content %}Plugins manager{% endblock %}
+{% block admin_title %}{{ 'newscoop.plugins_manager.manager'|trans }}{% endblock %}
+{% block admin_page_title_box %}
+<div class="toolbar row">
+<span class="article-title">{{ 'newscoop.plugins_manager.manager'|trans }}</span>
+
+<div class="pull-right">
+    <div class="actions">
+        <ul class="navigation" style="height: auto;">
+            <li>
+                <a href="{{ generateZendUrl('plugins', 'manage.php', 'admin') }}">{{ 'newscoop.plugins_manager.legacy_manager'|trans }}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}
 
 {% block admin_stylesheets %}
 <link rel="stylesheet" type="text/css" href="{{ asset('/js/select2/select2.css') }}" />
@@ -18,6 +32,7 @@ li:after {content: none;}
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/DT_bootstrap.js"></script>
 <script src="{{ asset('/js/select2/select2.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('/admin-style/action_buttons.css') }}">
 {% endblock %}
 
 {% block admin_content %}

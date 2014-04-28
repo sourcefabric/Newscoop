@@ -68,7 +68,8 @@ class PluginsController extends Controller
             foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
                 if ($package['name'] == $plugin->getName()) {
                     $package['installed'] = true;
-                } else {
+                    $installed = true;
+                } else if (!$installed) {
                     $package['installed'] = false;
                 }
             }
@@ -136,7 +137,7 @@ class PluginsController extends Controller
                     $packages['total'] = $packages['total']-1;
                 }
             }
-            
+
             if (!$installed) {
                 $cleanResults[] = $package;
             }
