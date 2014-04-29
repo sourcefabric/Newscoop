@@ -32,6 +32,10 @@ class SnippetTemplateRepository extends EntityRepository
 
     public function getSnippetTemplateQueryBuilder($show)
     {
+        if (!in_array($show, array('enabled', 'disabled', 'all'))) {
+            $show = 'enabled';
+        }
+
         $queryBuilder = $this->createQueryBuilder('template');
 
         if ($show == 'enabled') {

@@ -41,14 +41,15 @@ class SnippetsController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/snippets.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/snippets.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
      * @return array
      */
-    public function getSnippetsAction($show)
+    public function getSnippetsAction(Request $request)
     {
+        $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
 
         $snippets = $em->getRepository('Newscoop\Entity\Snippet')
@@ -79,14 +80,15 @@ class SnippetsController extends FOSRestController
      *     output="\Newscoop\Entity\Snippet"
      * )
      *
-     * @Route("/snippets/{id}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/snippets/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return array
      */
-    public function getSnippetAction($id, $show)
+    public function getSnippetAction(Request $request, $id)
     {
+        $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
 
         $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
@@ -117,13 +119,14 @@ class SnippetsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/snippets.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
-     * @Route("/snippets/article/{number}/{language}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/articles/{number}/{language}/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/article/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getSnippetsForArticleAction(Request $request, $number, $language, $show)
+    public function getSnippetsForArticleAction(Request $request, $number, $language)
     {
+        $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));

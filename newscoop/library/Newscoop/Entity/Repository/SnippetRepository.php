@@ -2,7 +2,7 @@
 /**
  * @package Newscoop
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
- * @copyright 2014 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric z.u.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
@@ -45,12 +45,12 @@ class SnippetRepository extends EntityRepository
 
         if ($show == 'enabled') {
             $queryBuilder
-                ->where('snippet.enabled = 1');
+                ->andWhere('snippet.enabled = 1');
         }
 
         if ($show == 'disabled') {
             $queryBuilder
-                ->where('snippet.enabled = 0');
+                ->andWhere('snippet.enabled = 0');
         }
 
         return $queryBuilder;
@@ -155,6 +155,31 @@ class SnippetRepository extends EntityRepository
             ->setParameter('id', $id);
 
         $result = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        return $this->checkIfSnippetIsDisabled($queryBuilder, $result, $show);
+    }
+
+    /**
+     * Check if a Snippet is disabled
+     * Internal use only
+     *
+     * @param Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param mixed $result
+     * @param string $show
+     */
+    protected function checkIfSnippetIsDisabled($queryBuilder, $result, $show)
+    {
+        if ($show == 'enabled' && is_null($result)) {
+            $expr = $queryBuilder->getDQLPart('where')->getParts();
+            $newExpr = new \Doctrine\ORM\Query\Expr\Andx();
+            $newExpr->addMultiple(preg_grep("/\bsnippet.enabled\b/i", $expr, PREG_GREP_INVERT));
+            $queryBuilder->resetDQLPart('where');
+            $queryBuilder->add('where', $newExpr);
+
+            if (!is_null($queryBuilder->getQuery()->getOneOrNullResult())) {
+                throw new \Exception('Result was found but disabled.');
+            }
+        }
 
         return $result;
     }

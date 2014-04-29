@@ -41,14 +41,15 @@ class SnippetTemplatesController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/snippetTemplates.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/snippetTemplates.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
      * @return array
      */
-    public function getSnippetTemplatesAction($show)
+    public function getSnippetTemplatesAction(Request $request)
     {
+        $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
 
         $snippetTemplates = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
@@ -79,14 +80,15 @@ class SnippetTemplatesController extends FOSRestController
      *     output="\Newscoop\Entity\SnippetTemplate"
      * )
      *
-     * @Route("/snippetTemplates/{id}.{_format}/{show}", defaults={"_format"="json", "show"="enabled"})
+     * @Route("/snippetTemplates/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return array
      */
-    public function getSingleSnippetTemplateAction($id, $show)
+    public function getSingleSnippetTemplateAction(Request $request, $id)
     {
+        $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
 
         $snippetTemplate = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')

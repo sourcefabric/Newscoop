@@ -25,7 +25,7 @@ Newscoop\Entity\Snippet:
             expose: true
             read_only: true
             type: string
-            groups: ["details", "list"]
+            groups: ["details"]
             serialized_name: templateName
             accessor:
                 getter: getTemplateName
@@ -33,7 +33,7 @@ Newscoop\Entity\Snippet:
             expose: true
             read_only: true
             type: boolean
-            groups: ["details"]
+            groups: ["list", "details"]
             serialized_name: enabled
         created:
             expose: true
