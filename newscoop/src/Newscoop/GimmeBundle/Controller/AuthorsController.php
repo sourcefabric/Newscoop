@@ -66,7 +66,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\Author"
      * )
      *
-     * @Route("/authors/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/authors/{id}.{_format}", defaults={"_format"="json"}, requirements={"id" = "^[0-9]"})
      * @Method("GET")
      * @View()
      */
@@ -124,7 +124,51 @@ class AuthorsController extends FOSRestController
      * @View()
      */
     public function getAuthorsTypesAction()
-    {}
+    {
+        $em = $this->container->get('em');
+        $authorsTypes = $em->getRepository('Newscoop\Entity\AuthorType')
+            ->getAuthorsTypes();
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $authorsTypes = $paginator->paginate($authorsTypes, array(
+            'distinct' => false
+        ));
+
+        return $authorsTypes;
+    }
+
+    /**
+     * Get author type
+     *
+     * Get single author type
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the author type is not found",
+     *         }
+     *     },
+     *     output="\Newscoop\Entity\AuthorType"
+     * )
+     *
+     * @Route("/authors/types/{id}.{_format}", defaults={"_format"="json"})
+     * @Method("GET")
+     * @View()
+     */
+    public function getAuthorTypeAction($id)
+    {
+        $em = $this->container->get('em');
+        $authorType = $em->getRepository('Newscoop\Entity\AuthorType')
+            ->getAuthorType($id)
+            ->getOneOrNullResult();
+
+        if (!$authorType) {
+            throw new NotFoundHttpException('Author Type was not found.');
+        }
+
+        return $authorType;
+    }
 
     /**
      * Search for authors
@@ -143,7 +187,7 @@ class AuthorsController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/authors/search.{_format}", defaults={"_format"="json"})
+     * @Route("/search/authors.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
@@ -179,16 +223,28 @@ class AuthorsController extends FOSRestController
      *         404={
      *           "Returned when the article author is not found",
      *         }
-     *     }
+     *     },
+     *     output="\Newscoop\Entity\ArticleAuthor"
      * )
      *
      * @Route("/articles/{number}/{language}/authors/{id}.{_format}", defaults={"_format"="json"})
      * @Route("/authors/{id}/article/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getArticleAuthorAction($number, $language, $id)
-    {}
+    {
+        $em = $this->container->get('em');
+        $articleAuthor = $em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthor($number, $language, $id)
+            ->getOneOrNullResult();
+
+        if (!$articleAuthor) {
+            throw new NotFoundHttpException('Article Author was not found.');
+        }
+
+        return $articleAuthor;
+    }
 
     /**
      * Set article authors order

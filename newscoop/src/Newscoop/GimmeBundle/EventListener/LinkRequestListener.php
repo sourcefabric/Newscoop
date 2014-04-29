@@ -92,7 +92,7 @@ class LinkRequestListener
                 continue;
             }
 
-            // Make sure @ParamConverter and friends are handled
+            // Make sure @ParamConverter is handled
             $subEvent = new FilterControllerEvent(
                 $event->getKernel(),
                 $controller,

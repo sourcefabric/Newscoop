@@ -7,13 +7,13 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\Validation;
 
 /**
  * Issue entity
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuthorTypeRepository")
  * @ORM\Table(name="AuthorTypes")
  */
 class AuthorType

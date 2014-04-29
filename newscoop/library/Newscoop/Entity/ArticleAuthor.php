@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping AS ORM;
 /**
  * Article Author Association class.
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleAuthorRepository")
  * @ORM\Table(name="ArticleAuthors")
  */
 class ArticleAuthor
