@@ -237,14 +237,12 @@ class User extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = 'SELECT * FROM liveuser_users WHERE EMail = ?';
-        $inputArray[] = $email;
+        $queryStr = 'SELECT * FROM liveuser_users WHERE EMail = "'.$email.'"';
         if ($p_adminOnly) {
-            $queryStr .= ' AND Reader = ?';
-            $inputArray[] = 'N';
+            $queryStr .= ' AND Reader = "N"';
         }
 
-        $row = $g_ado_db->GetRow($queryStr, $inputArray);
+        $row = $g_ado_db->GetRow($queryStr);
         if ($row) {
             $user = new User();
             $user->fetch($row);
