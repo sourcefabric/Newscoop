@@ -193,17 +193,18 @@ class SnippetsController extends FOSRestController
     }
 
     /**
-     * Delete comment
+     * Delete Snippet
      *
      * @ApiDoc(
      *     statusCodes={
-     *         204="Returned when comment removed succesfuly",
+     *         204="Returned when Snippet removed succesfuly",
      *         404={
-     *           "Returned when the comment is not found",
-     *         }
+     *           "Returned when the Snippet is not found",
+     *         },
+     *         409="Returned when Snippet is used by Articles"
      *     },
      *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Image id"}
+     *         {"name"="force", "dataType"="boolean", "required"=false, "description"="Force delete"},
      *     }
      * )
      *
@@ -211,22 +212,13 @@ class SnippetsController extends FOSRestController
      * @Route("/snippets/article/{articleNumber}/{languageCode}/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("DELETE")
      * @View(statusCode=204)
-     *
-     * @return Form
      */
     public function deleteSnippetAction(Request $request, $snippetId, $articleNumber = null, $languageCode = null)
     {
-        $snippetService = $this->container->get('comment');
+        $force = $request->query->get('force', false);
         $em = $this->container->get('em');
-        $snippet = $em->getRepository('Newscoop\Entity\Snippet')
-            ->getComment($snippetId, false)
-            ->getOneOrNullResult();
-
-        if (!$snippet) {
-            throw new EntityNotFoundException('Result was not found.');
-        }
-
-        $snippetService->remove($snippet);
+        $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet')
+            ->deleteSnippet($snippetId, $force);
     }
 
     /**

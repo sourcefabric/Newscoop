@@ -242,6 +242,11 @@ class Snippet
 
         return $this;
     }
+
+    public function getArticles()
+    {
+        return $this->articles;
+    }
     
     /**
      * Getter for enabled

@@ -12,6 +12,7 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Snippet;
+use Newscoop\Exception\ResourcesConflictException;
 
 /**
  * Snippet repository
@@ -33,15 +34,19 @@ class SnippetRepository extends EntityRepository
      *
      * @return Doctrine\ORM\Querybuilder $queryBuilder
      */
-    protected function getSnippetQueryBuilder($show)
+    protected function getSnippetQueryBuilder($show, $templateEnabled = true)
     {
         if (!in_array($show, array('enabled', 'disabled', 'all'))) {
             $show = 'enabled';
         }
 
-        $queryBuilder = $this->createQueryBuilder('snippet')
-            ->join('snippet.template', 'template')
-            ->andWhere('template.enabled = 1');     // Template should always be enabled
+        $queryBuilder = $this->createQueryBuilder('snippet');
+
+        if ($templateEnabled) { // by default a Template should always be enabled
+            $queryBuilder
+                ->join('snippet.template', 'template')
+                ->andWhere('template.enabled = 1');
+        }
 
         if ($show == 'enabled') {
             $queryBuilder
@@ -92,8 +97,19 @@ class SnippetRepository extends EntityRepository
     }
 
     // need to be able to search for all articles attached to a snippet
-    protected function getSnippetArticlesQueryBuilder(Snippet $snippet, $show)
+    protected function getSnippetArticles($id)
     {
+        $queryBuilder = $this->getSnippetQueryBuilder('all', false)
+            ->andWhere('snippet.id = :id')
+            ->setParameter('id', $id);
+
+        $snippet = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        if (!$snippet) {
+            throw new \Exception('Snippet with ID: '.$id.' does not exist');
+        }
+    
+        return $snippet->getArticles();
     }
 
     /**
@@ -144,13 +160,13 @@ class SnippetRepository extends EntityRepository
      *
      * @return Newscoop\Entity\Snippet
      */
-    public function getSnippetById($id, $show = 'enabled')
+    public function getSnippetById($id, $show = 'enabled', $template = true)
     {
         if (!is_numeric($id)) {
             throw new \InvalidArgumentException("ID is not numeric: ".$id);
         }
 
-        $queryBuilder = $this->getSnippetQueryBuilder($show)
+        $queryBuilder = $this->getSnippetQueryBuilder($show, $template)
             ->andWhere('snippet.id = :id')
             ->setParameter('id', $id);
 
@@ -236,17 +252,24 @@ class SnippetRepository extends EntityRepository
         return $queryBuilder->getQuery();
     }
 
-    public function deleteSnippet(Snippet $snippet, $force = false)
+    public function deleteSnippet($id, $force = false)
     {
-        // We got to do some checks, remove it from the Article and such
-        //
-        // If all is good, and it's not attached, remove
+        $articles = $this->getSnippetArticles($id)->toArray();
+        if (count($articles) == 0 || $force == true) {
+            $snippet = $this->getSnippetById($id, 'all', false);
+            $em = $this->getEntityManager();
+            $em->remove($snippet);
+            $em->flush();
 
-        $em = $this->getEntityManager();
-        $em->remove($snippet);
-        $em->flush();
-
-        return true;
+            return true;
+        } else {
+            $articleNumbers = array();
+            foreach ($articles as $article) {
+                $articleNumbersArr[$article->getNumber()] = $article->getNumber();
+            }
+            $articleNumbers = implode(", ", array_flip($articleNumbersArr));
+            throw new \Newscoop\Exception\ResourcesConflictException('Snippet with ID: '.$id.' is in use by Articles ('.$articleNumbers.')');
+        }
     }
 
     public function createSnippetForArticle($articleNr, $languageCode, array $snippetData)
