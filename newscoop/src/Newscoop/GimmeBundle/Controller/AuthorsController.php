@@ -100,7 +100,7 @@ class AuthorsController extends FOSRestController
      *
      * @Route("/authors.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getAuthorsAction()
     {}
@@ -121,7 +121,7 @@ class AuthorsController extends FOSRestController
      *
      * @Route("/authors/types.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
     public function getAuthorsTypesAction()
     {
@@ -130,9 +130,7 @@ class AuthorsController extends FOSRestController
             ->getAuthorsTypes();
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $authorsTypes = $paginator->paginate($authorsTypes, array(
-            'distinct' => false
-        ));
+        $authorsTypes = $paginator->paginate($authorsTypes);
 
         return $authorsTypes;
     }
@@ -154,7 +152,7 @@ class AuthorsController extends FOSRestController
      *
      * @Route("/authors/types/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"details"})
      */
     public function getAuthorTypeAction($id)
     {
@@ -189,10 +187,20 @@ class AuthorsController extends FOSRestController
      *
      * @Route("/search/authors.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
-    public function searchAuthorsAction()
-    {}
+    public function searchAuthorsAction(Request $request)
+    {
+        $em = $this->container->get('em');
+        $query = $request->query->get('query', '');
+        $authors = $em->getRepository('Newscoop\Entity\Author')
+            ->searchAuthors($query);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $authors = $paginator->paginate($authors);
+
+        return $authors;
+    }
 
     /**
      * Get article authors
