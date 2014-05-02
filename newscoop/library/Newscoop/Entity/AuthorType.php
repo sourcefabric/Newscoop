@@ -77,5 +77,14 @@ class AuthorType
     {
         return $this->getType();
     }
-}
 
+    /**
+     * Gets the value of id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

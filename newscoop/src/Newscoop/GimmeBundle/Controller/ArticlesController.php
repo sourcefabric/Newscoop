@@ -102,6 +102,21 @@ class ArticlesController extends FOSRestController
     /**
      * Link resource with Article entity
      *
+     * **article authors headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/authors/7; rel="author">,</api/authors/types/4; rel="author-type">"
+     *
+     * **attachments headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/attachments/1; rel="attachment">"
+     *
+     * **images headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/images/1; rel="image">"
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -136,7 +151,10 @@ class ArticlesController extends FOSRestController
         }
 
         $matched = false;
-        foreach ($request->attributes->get('links', array()) as $key => $object) {
+        foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
+            $resourceType = $objectArray['resourceType'];
+            $object = $objectArray['object'];
+
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -155,6 +173,24 @@ class ArticlesController extends FOSRestController
                 $attachmentService->addAttachmentToArticle($article, $object);
 
                 $matched = true;
+
+                continue;
+            }
+
+            if ($object instanceof \Newscoop\Entity\Author) {
+                $authorService = $this->get('author');
+                $authorType = false;
+                foreach ($request->attributes->get('links') as $key => $tempObjectArray) {
+                    if ($tempObjectArray['object'] instanceof \Newscoop\Entity\AuthorType) {
+                        $authorType = $tempObjectArray['object'];
+                    }
+                }
+
+                if ($authorType) {
+                    $authorService->addAuthorToArticle($article, $object, $authorType);
+
+                    $matched = true;
+                }
 
                 continue;
             }

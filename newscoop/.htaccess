@@ -34,7 +34,7 @@ AddType application/font-woff            .woff
     RewriteCond %{REQUEST_URI} !\.eot$
     RewriteCond %{REQUEST_URI} !\.js$
     RewriteCond %{REQUEST_URI} !\.ico$
-    RewriteCond %{REQUEST_URI} !/+admin
+    RewriteCond %{REQUEST_URI} !/+admin/
     RewriteCond %{REQUEST_URI} !/+install
     RewriteCond %{REQUEST_URI} !/+robots.txt$
     RewriteCond %{REQUEST_URI} !/+crossdomain.xml$

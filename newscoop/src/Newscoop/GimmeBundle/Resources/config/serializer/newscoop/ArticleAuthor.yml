@@ -13,3 +13,8 @@ Newscoop\Entity\ArticleAuthor:
             serialized_name: type
             groups: ["list", "details"]
             since_version: 1.1
+        order:
+            expose: true
+            serialized_name: order
+            groups: ["list", "details"]
+            since_version: 1.1

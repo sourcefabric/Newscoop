@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Article Author Association class.
@@ -48,6 +48,7 @@ class ArticleAuthor
     protected $author;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\AuthorType")
      * @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
      * @var Newscoop\Entity\AuthorType
@@ -67,7 +68,7 @@ class ArticleAuthor
      * @param int $typeId
      * @param int $order
      */
-    public function __construct($articleNumber, $languageId, $authorId, $typeId, $order)
+    public function __construct($articleNumber = null, $languageId = null, $authorId = null, $typeId = null, $order = null)
     {
         $this->articleNumber = (int) $articleNumber;
         $this->languageId = (int) $languageId;

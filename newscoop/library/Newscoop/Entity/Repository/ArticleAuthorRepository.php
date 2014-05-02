@@ -14,16 +14,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleAuthorRepository extends EntityRepository
 {
-    public function getArticleAuthor($articleNumber, $languageCode, $authorId)
+    public function getArticleAuthor($articleNumber, $languageCode, $authorId, $typeId = null)
     {
+        $languageId = $this->_em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($languageCode);
+
         $qb = $this->createQueryBuilder('au')
             ->where('au.articleNumber = :articleNumber')
             ->andWhere('au.languageId = :languageId')
             ->andWhere('au.author = :author')
             ->setParameters(array(
                 'articleNumber' => $articleNumber,
-                'languageId' => 1,
+                'languageId' => $languageId,
                 'author' => $authorId
+            ));
+
+        if ($typeId) {
+            $qb->andWhere('au.type = :type')
+                ->setParameter('type', $typeId);
+        }
+
+        return $qb->getQuery();
+    }
+
+    public function getArticleAuthors($articleNumber, $languageCode)
+    {
+        $languageId = $this->_em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($languageCode);
+
+        $qb = $this->createQueryBuilder('au')
+            ->where('au.articleNumber = :articleNumber')
+            ->andWhere('au.languageId = :languageId')
+            ->setParameters(array(
+                'articleNumber' => $articleNumber,
+                'languageId' => $languageId
             ));
 
         return $qb->getQuery();

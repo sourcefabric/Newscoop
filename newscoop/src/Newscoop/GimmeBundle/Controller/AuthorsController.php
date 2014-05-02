@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Newscoop\Exception\InvalidParametersException;
 
 class AuthorsController extends FOSRestController
 {
@@ -197,7 +198,7 @@ class AuthorsController extends FOSRestController
             ->searchAuthors($query);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $authors = $paginator->paginate($authors);
+        $authors = $paginator->paginate($authors, array('distinct' => false));
 
         return $authors;
     }
@@ -217,10 +218,19 @@ class AuthorsController extends FOSRestController
      * @Route("/articles/{number}/{language}/authors.{_format}", defaults={"_format"="json"})
      * @Route("/authors/article/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View()
+     * @View(serializerGroups={"list"})
      */
-    public function getArticleAuthorsAction($number, $language, $id)
-    {}
+    public function getArticleAuthorsAction($number, $language)
+    {
+        $em = $this->container->get('em');
+        $authors = $em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthors($number, $language);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $authors = $paginator->paginate($authors, array('distinct' => false));
+
+        return $authors;
+    }
 
     /**
      * Get single article author
@@ -252,6 +262,71 @@ class AuthorsController extends FOSRestController
         }
 
         return $articleAuthor;
+    }
+
+    /**
+     * Update single article author
+     *
+     * To update currently assigned article author you need provide his old and new article
+     * type, it can be done with special ```link``` header value:
+     *
+     *     </api/authors/types/{authorTypeId}; rel="old-author-type">,</api/authors/types/{authorTypeId}; rel="new-author-type">
+     *
+     *  example:
+     *
+     *  **To update artile author with number 7 and type 1 to type 2 you need to send**:
+     *
+     *      [POST] /articles/{number}/{language}/authors/7
+     *
+     *  **With header ```link``` and his value:**
+     *
+     *      </api/authors/types/1; rel="old-author-type">,</api/authors/types/2; rel="new-author-type">
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the article author is not found",
+     *         }
+     *     },
+     *     output="\Newscoop\Entity\ArticleAuthor"
+     * )
+     *
+     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"})
+     * @Method("POST|PATCH")
+     * @View(serializerGroups={"list"}, statusCode=201)
+     */
+    public function updateArticleAuthorAction(Request $request, $number, $language, $authorId)
+    {
+        $em = $this->container->get('em');
+        $links = $request->attributes->get('links');
+
+        $oldAuthorType = null;
+        $newAuthorType = null;
+        foreach ($links as $key => $objectArray) {
+            if ($objectArray['object'] instanceof \Newscoop\Entity\AuthorType && $objectArray['resourceType'] == 'old-author-type') {
+                $oldAuthorType = $objectArray['object'];
+            }
+
+            if ($objectArray['object'] instanceof \Newscoop\Entity\AuthorType && $objectArray['resourceType'] == 'new-author-type') {
+                $newAuthorType = $objectArray['object'];
+            }
+        }
+
+        if (!$oldAuthorType || !$newAuthorType) {
+            return new InvalidParametersException("\"old-author-type\" and \"new-author-type\" resources are required");
+        }
+
+        $articleAuthor = $em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthor($number, $language, $authorId, $oldAuthorType->getId())
+            ->getOneOrNullResult();
+
+        if (!$articleAuthor) {
+            throw new NotFoundHttpException('Article Author was not found.');
+        }
+
+        $articleAuthor->setType($newAuthorType);
+        $em->flush();
     }
 
     /**

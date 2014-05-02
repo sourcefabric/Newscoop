@@ -2,6 +2,13 @@ Newscoop\Entity\Author:
     exclusion_policy: ALL
     exclude: false
     properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            serialized_name: id
+            access_type: public_method
+            groups: ["list", "details"]
         biography:
             expose: true
             read_only: true
