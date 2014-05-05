@@ -83,4 +83,28 @@ class AuthorService
 
         return $articleAuthor;
     }
+
+
+    /**
+     * Remove author with type from article
+     *
+     * @param Article       $article
+     * @param Author        $author
+     * @param ArticleAuthor $authorType
+     *
+     * @return ArticleAuthor
+     */
+    public function removeAuthorFromArticle(Article $article, Author $author, AuthorType $authorType)
+    {
+        $articleAuthor = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthor($article->getNumber(), $article->getLanguageCode(), $author->getId(), $authorType->getId())
+            ->getOneOrNullResult();
+
+        if (!$articleAuthor) {
+            throw new ResourcesConflictException("Author with this type is not attached to article", 409);
+        }
+
+        $this->em->remove($articleAuthor);
+        $this->em->flush();
+    }
 }
