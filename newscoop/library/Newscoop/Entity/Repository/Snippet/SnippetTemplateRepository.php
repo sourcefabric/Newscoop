@@ -201,11 +201,28 @@ class SnippetTemplateRepository extends EntityRepository
         return $queryBuilder->getQuery();
     }
 
-    /**
-     * Flush method
-     */
-    public function flush()
+    public function deleteSnippetTemplate($id, $force = false)
     {
-        $this->getEntityManager()->flush();
+        // check if the SnippetTemplate has any Snippets attached to it.
+        $snippetTemplate = $this->getTemplateById($id, 'all');
+        if (!is_null($snippetTemplate)) {
+            $snippets = $snippetTemplate->getSnippets()->toArray();
+            if (count($snippets) == 0 || $force == true) {
+                $em = $this->getEntityManager();
+                $em->remove($snippetTemplate);
+                $em->flush();
+
+                return true;
+            } else {
+                foreach ($snippets as $snippet) {
+                    $snippetIdArr[$snippet->getId()] = $snippet->getId();
+                }
+                $snippetIds = implode(", ", array_flip($snippetIdArr));
+
+                throw new \Newscoop\Exception\ResourcesConflictException('SnippetTemplate with ID: '.$id.' is in use by Snippets ('.$snippetIds.')');
+            }
+        } else {
+            throw new \Exception('SnippetTemplate with ID: '.$id.' does not exist');
+        }
     }
 }

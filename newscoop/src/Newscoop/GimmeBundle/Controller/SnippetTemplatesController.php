@@ -101,4 +101,31 @@ class SnippetTemplatesController extends FOSRestController
         return $snippetTemplate;
     }
 
+    /**
+     * Delete SnippetTemplate
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         204="Returned when SnippetTemplate removed succesfuly",
+     *         404={
+     *           "Returned when the SnippetTemplate is not found",
+     *         },
+     *         409="Returned when SnippetTemplate is used by Articles"
+     *     },
+     *     parameters={
+     *         {"name"="force", "dataType"="boolean", "required"=false, "description"="Force delete"},
+     *     }
+     * )
+     *
+     * @Route("/snippetTemplates/{id}.{_format}", defaults={"_format"="json"})
+     * @Method("DELETE")
+     * @View(statusCode=204)
+     */
+    public function deleteSnippetTemplateAction(Request $request, $id)
+    {
+        $force = $request->query->get('force', false);
+        $em = $this->container->get('em');
+        $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
+            ->deleteSnippetTemplate($id, $force);
+    }
 }

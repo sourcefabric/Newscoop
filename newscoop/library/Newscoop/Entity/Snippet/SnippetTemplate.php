@@ -29,7 +29,7 @@ class SnippetTemplate
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet", mappedBy="template")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet", cascade={"remove"}, mappedBy="template")
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $snippets;
@@ -47,7 +47,7 @@ class SnippetTemplate
     protected $controller;
 
     /**
-     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist"}, indexBy="templateFieldName")
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField", mappedBy="template", cascade={"persist", "remove"}, indexBy="templateFieldName")
      * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $fields;
