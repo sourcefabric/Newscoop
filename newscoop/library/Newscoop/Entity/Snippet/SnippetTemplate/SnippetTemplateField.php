@@ -52,6 +52,12 @@ class SnippetTemplateField
     protected $scope;
 
     /**
+     * @ORM\Column(name="Required", type="boolean")
+     * @var boolean
+     */
+    protected $required;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Snippet\SnippetTemplate", inversedBy="fields")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id", nullable=false)
      * @var Newscoop\Entity\Snippet\SnippetTemplate
@@ -184,4 +190,27 @@ class SnippetTemplateField
         return $this;
     }
     
+    /**
+     * Getter for required
+     *
+     * @return boolean
+     */
+    public function getRequired()
+    {
+        return $this->required;
+    }
+    
+    /**
+     * Setter for Required
+     *
+     * @param boolean $required Value to set
+     *
+     * @return self
+     */
+    public function setRequired($required)
+    {
+        $this->required = $required;
+    
+        return $this;
+    }
 }

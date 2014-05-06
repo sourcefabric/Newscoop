@@ -25,3 +25,9 @@ Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField:
             type: string
             groups: ["details", "list"]
             serialized_name: scope
+        required:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["details", "list"]
+            serialized_name: required
