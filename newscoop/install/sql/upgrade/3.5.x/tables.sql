@@ -295,6 +295,7 @@ ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
 ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
 
 UPDATE `liveuser_users` SET `status` = 1, `is_public` = 1;
+UPDATE liveuser_users l0_ INNER JOIN liveuser_groupusers l2_ ON l0_.Id = l2_.perm_user_id INNER JOIN liveuser_groups l1_ ON l1_.group_id = l2_.group_id AND (l1_.group_id IN (SELECT `group_id` FROM `liveuser_groups`)) SET l0_.is_admin = true;
 
 DROP TABLE IF EXISTS `audit_event`;
 CREATE TABLE IF NOT EXISTS `audit_event` (
