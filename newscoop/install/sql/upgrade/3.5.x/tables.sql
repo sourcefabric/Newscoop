@@ -294,7 +294,7 @@ ALTER TABLE `liveuser_users` CHANGE `time_updated` `time_updated` timestamp DEFA
 ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
 ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
 
-UPDATE `liveuser_users` SET `status` = 1, `is_admin` = 1, `is_public` = 1;
+UPDATE `liveuser_users` SET `status` = 1, `is_public` = 1;
 
 DROP TABLE IF EXISTS `audit_event`;
 CREATE TABLE IF NOT EXISTS `audit_event` (
