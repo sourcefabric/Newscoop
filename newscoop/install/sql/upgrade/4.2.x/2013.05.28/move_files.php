@@ -94,7 +94,10 @@ function rmove($src, $dest)
 			@unlink($f->getRealPath());
 		}
 	}
-	@unlink($src);
+
+	if (!is_dir($src)) {
+		@unlink($src);
+	}
 }
 
 // When the directory is not empty:
