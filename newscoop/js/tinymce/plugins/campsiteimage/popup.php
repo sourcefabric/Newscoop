@@ -33,7 +33,7 @@ if (isset($_REQUEST['image_id'])) {
         $imageParams .= '&image_alt=' . str_replace('\\', '', $_REQUEST['image_alt']);
     }
     if (isset($_REQUEST['image_title'])) {
-        $imageParams .= '&image_title=' . str_replace('\\', '', $_REQUEST['image_title']);
+        $imageParams .= '&image_title=' . urlencode(str_replace('\\', '', $_REQUEST['image_title']));
     }
     if (isset($_REQUEST['image_alignment'])) {
         if (in_array($_REQUEST['image_alignment'], array('left','right','middle'))) {
@@ -50,6 +50,10 @@ if (isset($_REQUEST['image_id'])) {
         $imageParams .= '&image_resize_height=' . (int) $_REQUEST['image_resize_height'];
     }
 }
+
+$richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+$captionLimit = SystemPref::Get('MediaCaptionLength');
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -58,14 +62,30 @@ if (isset($_REQUEST['image_id'])) {
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="css/campsiteimage.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/js/jquery/jquery-1.7.1.min.js"></script>
+  <script type="text/javascript" src="/js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
   <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
+  <script type="text/javascript">
+  <?php
+    require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/media-archive/editor_load_tinymce.php");
+
+    if ($richtextCaption == 'Y') { ?>
+      var captionsEnabled = true;
+  <?php } else { ?>
+      var captionsEnabled = false;
+  <?php } ?>
+  </script>
   <script type="text/javascript" src="js/campsiteimage.js"></script>
   <script type="text/javascript" src="assets/popup.js"></script>
   <script type="text/javascript" src="assets/dialog.js"></script>
   <script type="text/javascript" src="assets/manager.js"></script>
 </head>
 <body>
-  <form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data">
+  <form action="images.php" id="uploadForm" method="post" enctype="multipart/form-data" onSubmit="<?php
+    if ($richtextCaption == 'Y') {
+        echo 'return validateTinyMCEEditors();';
+    }
+?>">
   <fieldset>
     <div class="dirs">
       <iframe src="images.php?article_id=<?php echo $_REQUEST['article_id'] . $imageParams; ?>" name="imgManager" id="imgManager" class="imageFrame" scrolling="auto" title="Image Selection" frameborder="0"></iframe>
@@ -89,7 +109,21 @@ if (isset($_REQUEST['image_id'])) {
     </tr>
     <tr>
       <td align="right"><label for="f_caption">{#campsiteimage_dlg.caption}</label></td>
-      <td><input type="text" id="f_caption" class="largelWidth" value="" /></td>
+      <td>
+        <?php
+        if ($richtextCaption == 'Y') {
+              $user = \Zend_Registry::get('container')->getService('user');
+              $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+              $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+
+              editor_load_tinymce('f_caption', $user->getCurrentUser(), $editorLanguage, array('max_chars' => $captionLimit));
+          ?>
+
+              <textarea name="f_caption" id="f_caption" rows="8" cols="70"></textarea>
+          <?php } else { ?>
+              <input type="text" id="f_caption" name="f_caption" class="largelWidth" value="" />
+          <?php } ?>
+      </td>
     </tr>
     <tr>
       <td align="right"><label for="f_align">{#campsiteimage_dlg.alignment}:</label></td>
