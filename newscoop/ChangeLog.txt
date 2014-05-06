@@ -1,3 +1,22 @@
+4.2.2 (May 06, 2014)
+  Improvements
+ -------------
+ - CS-5334 - Upgrade SQL needed for new localizations
+ - [installer] force user to give writable access for themes directory
+ - CS-4796 Add Azerbaijani language support to default database
+
+  Bug fixes
+ ------------
+ - IM-1501 - user register for commenting have access to the site's backend
+ - CS-5344 - Blank page after restore password on back-end
+ - CS-5333 - link "Use to all" is not working for description in Attach image process
+ - CS-5312 - Reinstallation of Newscoop fails with bogus upgrade message
+ - help links fix
+ - CS-4877 - events-notifier generates fatal error
+ - CS-4956 & SITE-560 & IM-1355 - Fixes issue with rich text captions
+ - IM-1389 - Fixes route to author: {{ url options="author" }} now works
+ - IM-1333: Fixes 'Numeric value out or range: 1690 BIGINT'
+
 4.2.1 (December 05, 2013)
   Improvements
  -------------

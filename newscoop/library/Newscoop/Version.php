@@ -11,12 +11,13 @@ namespace Newscoop;
  */
 class Version
 {
-    const VERSION = '4.2.1';
+    const VERSION = '4.2.2';
 
     /**
      * Compare version with current Newscoop version
      *
      * @param string $version
+     *
      * @return int
      */
     public static function compare($version)
