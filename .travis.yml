@@ -13,7 +13,7 @@ before_script:
   - sudo service apache2 restart
   - mysql -e 'create database newscoop;' -uroot
   - cd newscoop/
-  - composer install --prefer-dist
+  - composer install --prefer-dist --no-dev
   - ./application/console newscoop:install --fix --database_name newscoop --database_user root
   - sudo php upgrade.php
   - ./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test
