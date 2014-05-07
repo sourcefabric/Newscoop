@@ -347,5 +347,7 @@ class AuthorsController extends FOSRestController
      * @View()
      */
     public function setArticleAuthorsOrderAction($number, $language, $id)
-    {}
+    {
+        $em = $this->container->get('em');
+    }
 }
