@@ -12,7 +12,6 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 class MetaActionSubmit_Comment extends MetaAction
 {
@@ -37,7 +36,8 @@ class MetaActionSubmit_Comment extends MetaAction
         }
         $this->m_properties['nickname'] = isset($p_input['f_comment_nickname']) ?
                                           $p_input['f_comment_nickname'] : '';
-        $this->m_properties['subject'] = $p_input['f_comment_subject'];
+        $this->m_properties['subject'] = (!empty($p_input['f_comment_subject'])) ? $p_input['f_comment_subject'] : '';
+        $this->m_properties['parent'] = (!empty($p_input['f_comment_parent'])) ? $p_input['f_comment_parent'] : 0;
         $this->m_properties['content'] = $p_input['f_comment_content'];
         $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
         $this->m_properties['bot_detect'] = $p_input['f_comment_email_protect'];
@@ -93,6 +93,7 @@ class MetaActionSubmit_Comment extends MetaAction
         \CampRequest::SetVar('f_'.$this->m_name);
 
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $userService = \Zend_Registry::get('container')->getService('user');
 
         if (!is_null($this->m_error)) {
             return false;
@@ -123,7 +124,7 @@ class MetaActionSubmit_Comment extends MetaAction
         // Get the publication.
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
-        $userIp = getIp();
+        $userIp = $userService->getUserIp();
 
         if ($user->defined)
         {
@@ -187,11 +188,12 @@ class MetaActionSubmit_Comment extends MetaAction
         // error code to 'internal error' and exit.
         $values = array(
             'thread' => $articleMetaObj->number,
-            'language' => $articleMetaObj->language->number,
+            'language' => $articleMetaObj->language->code,
             'name' => $userRealName,
             'email'=> $userEmail,
             'message' =>  $this->m_properties['content'],
             'subject' => $this->m_properties['subject'],
+            'parent' => $this->m_properties['parent'],
             'ip' => $userIp,
             'time_created' => new DateTime
         );
@@ -217,7 +219,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $commentObj = $repository->getPrototype();
         $comment = $repository->save($commentObj,$values);
         $repository->flush();
-        
+
         if (!$comment) {
             $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
             ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
@@ -227,11 +229,13 @@ class MetaActionSubmit_Comment extends MetaAction
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
         $p_context->default_url->reset_parameter('f_comment_content');
+        $p_context->default_url->reset_parameter('f_comment_parent');
         $p_context->default_url->reset_parameter('f_submit_comment');
         $p_context->default_url->reset_parameter('f_captcha_code');
         $p_context->url->reset_parameter('f_comment_reader_email');
         $p_context->url->reset_parameter('f_comment_subject');
         $p_context->url->reset_parameter('f_comment_content');
+        $p_context->url->reset_parameter('f_comment_parent');
         $p_context->url->reset_parameter('f_submit_comment');
         $p_context->url->reset_parameter('f_captcha_code');
 

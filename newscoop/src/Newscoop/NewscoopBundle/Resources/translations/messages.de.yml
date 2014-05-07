@@ -125,7 +125,7 @@ Publish: Veröffentlichen
 Unpublish: 'Zurück stellen'
 Unlock: Freigeben
 Uploaded: Hochgeladen
-YYYY-MM-DD: JJJJ-MM-TT
+YYYY-MM-DD: 'JJJJ-MM-TT'
 Submit: Absenden
 Image: Bild
 Description: Beschreibung
@@ -148,9 +148,10 @@ Localizer: Lokalisierung
 'Add new publication': 'Neue Publikation hinzufügen'
 'Upload new template': 'Neues Template hochladen'
 'Add new staff member': 'Neues Personalkonto einrichten'
+'Staff member deleted.': 'Mitarbeiterin gelöscht.'
 'Add new subscriber': 'Neuen Abonnenten einrichten'
 'Add new user type': 'Neuen Benutzertyp hinzufügen'
-'Add new article type': 'Neuen Artikel hinzufügen'
+'Add new article type': 'Neuen Artikeltyp hinzufügen'
 'Add new country': 'Neues Land hinzufügen'
 'Add new language': 'Neue Sprache hinzufügen'
 'View logs': 'Logfiles anzeigen'
@@ -209,7 +210,7 @@ Add: Hinzu
 'Select All': 'Alle auswählen'
 'Select None': 'Keine auswählen'
 'Add Event': 'Ereignis hinzufügen'
-N/A: N.A.
+N/A: 'N.A.'
 'On Front Page': 'Auf der Startseite'
 'On Section Page': 'Auf der Rubrikenseite'
 'Created by': 'Erstellt von'
@@ -244,30 +245,40 @@ Author: Autor/in
 Other: Andere
 'Time:': 'Uhrzeit:'
 'No events.': 'Keine Ereignisse.'
-'Default templates': Standard-Template
+'Default templates': 'Standard-Template'
 'System Preferences': Systemeinstellungen
 'The date must be in the future.': 'Das Datum muss in der Zukunft liegen.'
 Send: Senden
 'Thank you.': 'Vielen Dank.'
 'Please take a minute to send us an email.': 'Bitte nehmen Sie sich eine Minute, um uns eine E-Mail zu senden.'
-(optional): (optional)
+'(optional)': '(optional)'
 'The URL you entered is invalid: $1': 'Die angegebene URL ist ungültig: $1'
 Reads: Gelesen
 'Publish with issue': 'Mit Ausgabe veröffentlichen'
 'Universal List': 'Universelle Liste und Suche'
 'Invalid security token!': 'Ungültiges Sicherheits-Token! '
 Authors: Autoren
-'User name': Benutzername
-'User Types': Benutzertypen
-'Subscription Default Time': 'Standard Abonement Laufzeit'
-'No such language.': 'Sprache nicht vorhanden'
-'No such infotype.': 'Infotyp nicht vorhanden'
-'No such keyword.': 'Stichwort nicht vorhanden'
-'No such country.': 'Land nicht vorhanden'
-'User may add/change user accounts and passwords': 'BenutzerIn kann Benutzerprofile hinzufügen / ändern'
-'User may delete user accounts': 'BenutzerIn kann Benutzerprofile löschen'
-'Add new user account': 'Neues Benutzerprofil hinzufügen'
-'There are $1 issue(s) left.': 'Es sind noch $1 Ausgaben vorhanden'
-'There are $1 keyword(s) left.': 'Es sind noch $1 Stichworte vorhanden'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Name (bearbeiten, bitte anklicken)'
-'New field': 'Neues Feld'
+Title: Titel
+'Edit country': 'Land bearbeiten'
+'Entry $1 prepared for publishing': 'Eintrag $1 vorbereitet zur Publikation'
+'Entry deleted': 'Eintrag gelöscht'
+'Feed saved': 'Feed gespeichert'
+'Item published': 'Artikel veröffentlicht'
+'Settings saved': 'Einstellungen gespeichert'
+'Self-delete is not permitted.': 'Selbst-Löschung ist nicht erlaubt.'
+'Edit staff member $1': 'Mitarbeiter $1 bearbeiten'
+'Delete staff member $1': 'Mitarbeiter $1 löschen'
+'Could not save user $1. Please make sure it does not already exist': 'Benutzer $1 konnte nicht gespeichert werden. Bitte stellen Sie sicher, dass der Benutzer nicht schon existiert.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Benutzer mit E-Mail-Adresse $1 konnte nicht gespeichert werden. Bitte prüfen Sie, ob diese E-Mail Adresse nicht schon existiert'
+'Changing user type would prevent you to manage users. Aborted.': 'Ändern des Benutzertyps führt dazu, dass Benutzer nicht mehr verwaltet werden dürfen. Abgebrochen.'
+'Staff member saved.': 'Mitarbeiter gespeichert.'
+'Permissions: $1': 'Berechtigungen: $1'
+'Change user account information': 'Benutzerinformation ändern'
+'Staff management': 'Mitarbeiter Management'
+'Updated': 'Aktualisiert'
+'Options': 'Optionen'
+'Verified': 'Verifiziert'
+Confirm: Bestätige
+at: um
+published: veröffentlicht
+unpublished: unveröffentlicht

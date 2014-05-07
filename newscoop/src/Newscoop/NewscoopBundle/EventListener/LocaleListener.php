@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
  */
 class LocaleListener
 {
-    private $em;
+    protected $em;
 
     public function __construct($em)
     {
@@ -39,7 +39,8 @@ class LocaleListener
         }
     }
 
-    public function onRequest(GetResponseEvent $event) {
+    public function onRequest(GetResponseEvent $event)
+    {
         $request = $event->getRequest();
         $pos = strpos($request->server->get('REQUEST_URI'), '/admin');
         $cookies = $request->cookies;
@@ -51,7 +52,9 @@ class LocaleListener
         if ($pos === false) {
             $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
             $language = $this->em->getRepository('Newscoop\Entity\Language')->findOneById($publicationMetadata['publication']['id_default_language']);
-            $request->setLocale($language->getCode());
+            if ($language) {
+                $request->setLocale($language->getCode());
+            }
         }
     }
 }

@@ -21,8 +21,8 @@ use Crontab\Job;
  */
 class FinishService
 {
-    private $newscoopDir;
-    private $filesystem;
+    protected $newscoopDir;
+    protected $filesystem;
 
     /**
      * Construct
@@ -38,7 +38,6 @@ class FinishService
      */
     public function generateProxies()
     {
-        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
@@ -104,6 +103,7 @@ class FinishService
     public function saveCronjobs()
     {
         $binDirectory = realpath($this->newscoopDir.'/bin');
+        $appDirectory = realpath($this->newscoopDir.'/application/console');
 
         $crontab = new Crontab();
 
@@ -135,6 +135,11 @@ class FinishService
         $job = new Job();
         $job->setMinute('0')->setHour('5')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
             ->setCommand($binDirectory.'/newscoop-autopublish');
+        $crontab->addJob($job);
+
+        $job = new Job();
+        $job->setMinute('30')->setHour('0')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($appDirectory.' user:garbage');
         $crontab->addJob($job);
         $crontab->write();
 
@@ -175,15 +180,5 @@ class FinishService
         $stmt->bindValue(1, $password);
         $stmt->bindValue(2, $config['user_email']);
         $stmt->execute();
-
-        $this->filesystem->copy($this->newscoopDir.'/htaccess', $this->newscoopDir.'/.htaccess');
-
-        if (file_exists($this->newscoopDir.'/conf/installation.php')) {
-            $this->filesystem->remove($this->newscoopDir.'/conf/installation.php');
-        }
-
-        if (file_exists($this->newscoopDir.'/conf/upgrading.php')) {
-            $this->filesystem->remove($this->newscoopDir.'/conf/upgrading.php');
-        }
     }
 }

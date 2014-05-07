@@ -9,6 +9,7 @@ namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Newscoop\Entity\Attachment;
+use Newscoop\Entity\Translation;
 use Doctrine\ORM\Query;
 
 /**
@@ -44,5 +45,28 @@ class AttachmentRepository extends EntityRepository
             ->getQuery();
 
         return $query;
+
+    }
+
+    /**
+     * Get attachment decritpion
+     * @param int $attachmentId
+     *
+     * @return Translation
+     */
+    public function getDescription($attachmentId)
+    {
+        $em = $this->getEntityManager();
+
+        $attachment = $em->getRepository('Newscoop\Entity\Attachment')
+            ->findOneById($attachmentId);
+
+        $description = $em->getRepository('Newscoop\Entity\Translation')
+            ->findBy(array(
+                'phraseId' => $attachment->getDescriptionId(),
+                'language' => $attachment->getLanguage()
+            ));
+
+        return $description;
     }
 }

@@ -7,19 +7,54 @@
 
 namespace Newscoop\Http;
 
+use Guzzle\Http\Plugin\CurlAuthPlugin;
+
 /**
- * Http Client Factory
  */
 class ClientFactory
 {
     /**
-     * Create client
+     * @var array
+     */
+    private $options = array(
+        'curl.options' => array(
+            CURLOPT_CONNECTTIMEOUT => 0,
+            CURLOPT_TIMEOUT => 30,
+        ),
+    );
+
+    /**
+     * Create Client
      *
      * @param string $url
      * @return Newscoop\Http\Client
      */
     public function createClient($url = null)
     {
-        return new Client($url);
+        return $this->getClient($url);
+    }
+
+    /**
+     * Get client
+     *
+     * @return Newscoop\Http\Client
+     */
+    public function getClient($url = null)
+    {
+        return new Client($url, $this->options);
+    }
+
+    /**
+     * Get auth client
+     *
+     * @param string $username
+     * @param string $password
+     * @return Guzzle\Http\Client
+     */
+    public function getAuthClient($username, $password)
+    {
+        $client = $this->getClient();
+        $client->addSubscriber(new CurlAuthPlugin($username, $password));
+        return $client;
     }
 }

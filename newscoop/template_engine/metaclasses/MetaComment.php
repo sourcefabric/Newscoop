@@ -21,14 +21,15 @@ final class MetaComment extends MetaDbObject
 
 	private $m_realName = false;
 
-    public function __construct($p_messageId = null)
+    public function __construct($messageId = null)
     {
         $container = \Zend_Registry::get('container');
         $repository = $container->getService('em')->getRepository('Newscoop\Entity\Comment');
-        if(is_null($p_messageId))
+        if(is_null($messageId)) {
             $this->m_dbObject = $repository->getPrototype();
-        else
-            $this->m_dbObject = $repository->find($p_messageId);
+        } else{
+            $this->m_dbObject = $repository->find($messageId);
+        }
 
         $this->m_properties = self::$m_baseProperties;
 
@@ -47,6 +48,9 @@ final class MetaComment extends MetaDbObject
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['source'] = 'getSource';
+        $this->m_customProperties['parent'] = 'getParent';
+        $this->m_customProperties['has_parent'] = 'hasParent';
+        $this->m_customProperties['thread_level'] = 'threadLevel';
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
@@ -127,8 +131,33 @@ final class MetaComment extends MetaDbObject
         return new \MetaUser($user);
     }
 
+
     protected function getSource()
     {
         return $this->m_dbObject->getSource();
+    }
+
+    public function getParent()
+    {
+        $parent = $this->m_dbObject->getParent();
+        if ($parent instanceof \Newscoop\Entity\Comment) {
+            $parent = $this->m_dbObject->getParent()->getId();
+        } else {
+            $parent = 0;
+        }
+        return $parent;
+    }
+
+    public function hasParent()
+    {
+        if ($this->getParent() != 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public function threadLevel()
+    {
+        return $this->m_dbObject->getThreadLevel();
     }
 }

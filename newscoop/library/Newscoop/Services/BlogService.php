@@ -17,10 +17,10 @@ class BlogService
     const SEPARATOR = ',';
 
     /** @var array */
-    private $config = array();
+    protected $config = array();
 
     /** @var array */
-    private $getArticleActions = array(
+    protected $getArticleActions = array(
         'edit.php',
         'preview.php',
         'locations',
@@ -30,16 +30,18 @@ class BlogService
         'comments',
         'autopublish.php',
         'do_unlock.php',
+        'context_box',
     );
 
     /** @var array */
-    private $postArticleActions = array(
+    protected $postArticleActions = array(
         'images',
         'topics',
         'files',
         'comments',
         'do_article_action.php',
         'autopublish_do_add.php',
+        'context_box',
     );
 
     /**

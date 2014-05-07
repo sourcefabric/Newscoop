@@ -22,14 +22,14 @@ abstract class BaseList
      *
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * The name of the list
      *
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * The start page number from which to generate the list.
@@ -50,7 +50,7 @@ abstract class BaseList
      *
      * @var bool
      */
-    private $hasNextResults;
+    protected $hasNextResults;
 
     /**
      * The number of columns (for generating tables)
@@ -64,7 +64,7 @@ abstract class BaseList
      *
      * @var array
      */
-    private $constraints;
+    protected $constraints;
 
     /**
      * The clean array of parameters
@@ -146,78 +146,66 @@ abstract class BaseList
 
         $this->convertParameters($firstResult, $parameters);
         $this->constraints = $this->parseConstraintsString($parameters['constraints']);
-        $this->convertConstraints($this->constraints);
+        $this->convertConstraints();
 
         if ($this->constraints === false || $parameters === false) {
             $this->totalCount = 0;
             $this->objectsList = new ListResult();
             $this->hasNextResults = false;
+
             return;
         }
 
-        $this->objectsList = $this->fetchFromCache();
-        if (!is_null($this->objectsList)) {
-            $this->duplicateObject($this->objectsList);
-            return;
-        }
-
-        $this->objectsList = $this->prepareList($this->criteria);
+        $this->objectsList = $this->prepareList($this->criteria, $parameters);
         $this->totalCount = $this->objectsList->count();
         $this->hasNextResults = $this->totalCount > ($this->firstResult + $this->maxResults);
-        $this->storeInCache();
 
         return $this->objectsList;
     }
 
     /**
      * Get ListResult object with list elements
-     * 
-     * @param  integer  $firstResult
-     * @param  integer  $maxResults
-     * @param  Criteria $criteria
-     * 
+     *
+     * @param Criteria $criteria
+     * @param array    $parameters
+     *
      * @return ListResult
      */
-    abstract protected function prepareList($criteria);
+    abstract protected function prepareList($criteria, $parameters);
 
     /**
      * Convert constraints array to Criteria
-     * 
-     * @param  array  $constraints
-     * @param  Criteria $criteria
-     * 
-     * @return Criteria
      */
-    protected function convertConstraints($constraints){
-        $perametersOperators = array();
-        $constraints = array_chunk($constraints, 3, true);
-        foreach ($constraints as $constraint) {
+    protected function convertConstraints()
+    {
+        if (!is_array($this->criteria->perametersOperators)) {
+            $this->criteria->perametersOperators = array();
+        }
+
+        $this->constraints = array_chunk($this->constraints, 3, true);
+        foreach ($this->constraints as $constraint) {
+            $constraint = array_values($constraint);
             if (count($constraint) == 3) {
-                foreach ($this->criteria as $key => $value) {
-                    if ($key == $constraint[0]) {
-                        $perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
-                        $this->criteria->$key = $constraint[2];
-                    }
+                if (array_key_exists($constraint[0], $this->criteria)) {
+                    $this->criteria->perametersOperators[$constraint[0]] = $this->operatorsMap[$constraint[1]];
+                    $this->criteria->$constraint[0] = $constraint[2];
                 }
             }
         }
-
-        // save constraints operators into criteria objects
-        $this->criteria->perametersOperators = $perametersOperators;
     }
 
     /**
      * Convert parameters array to Criteria
-     * 
-     * @param  array  $parameters
-     * @param  Criteria $criteria
-     * 
+     *
+     * @param integer $firstResult
+     * @param array   $parameters
+     *
      * @return Criteria
      */
     protected function convertParameters($firstResult, $parameters)
     {
-        $this->firstResult = is_numeric($firstResult) ? intval($firstResult) : 0;
-        $this->maxResults = isset($parameters['length']) ? intval($parameters['length']) : 0;
+        $this->firstResult = is_numeric($firstResult) ? intval($firstResult) : $this->criteria->firstResult;
+        $this->maxResults = isset($parameters['length']) ? intval($parameters['length']) : $this->criteria->maxResults;
         $this->columns = isset($parameters['columns']) ? intval($parameters['columns']) : 0;
         $name = isset($parameters['name']) ? $parameters['name'] : '';
         $this->name = is_string($name) && trim($name) != '' ? $name : $this->defaultName();
@@ -235,37 +223,17 @@ abstract class BaseList
             }
         }
 
-        // Set first and max results values to critera. 
+        // Set first and max results values to critera.
         $this->criteria->firstResult = $this->firstResult;
         $this->criteria->maxResults = $this->maxResults;
     }
 
-    private function fetchFromCache()
-    {
-        if (\CampCache::IsEnabled()) {
-            $object = \CampCache::singleton()->fetch($this->getCacheKey());
-            if ($object !== false && is_object($object)) {
-                return $object;
-            }
-        }
-
-        return null;
-    }
-
-
-    private function storeInCache()
-    {
-        if (\CampCache::IsEnabled()) {
-            \CampCache::singleton()->store($this->getCacheKey(), $this, $this->defaultTTL);
-        }
-    }
-
-
     protected function getCacheKey()
     {
         if (is_null($this->cacheKey)) {
-            $this->cacheKey = get_class($this) . '__' . serialize($this->criteria) . '__' . $this->columns;
+            $this->cacheKey = get_class($this) . '__' . md5(serialize($this->criteria)) . '__' . $this->columns;
         }
+
         return $this->cacheKey;
     }
 
@@ -273,12 +241,13 @@ abstract class BaseList
     /**
      * Copies the given object
      *
-     * @param object $p_source
+     * @param object $source
+     *
      * @return object
      */
     private function duplicateObject($source)
     {
-        foreach ($source as $key=>$value) {
+        foreach ($source as $key => $value) {
             $this->$key = $value;
         }
     }
@@ -303,7 +272,7 @@ abstract class BaseList
         if (!isset($this->defaultIterator)) {
             $this->defaultIterator = $this->getIterator();
         }
-        
+
         return $this->defaultIterator;
     }
 
@@ -382,7 +351,7 @@ abstract class BaseList
      */
     public function isEmpty()
     {
-        return $this->objectsList->count() == 0;
+        return count($this->objectsList->items) == 0;
     }
 
     /**
@@ -592,7 +561,7 @@ abstract class BaseList
                 return $this->getTotalCount();
             case 'at_beginning':
                 return $this->getIndex() == ($this->getStart() + 1);
-            case 'at_end';
+            case 'at_end':
                 return $this->getIndex() == $this->getEnd();
             case 'has_next_elements':
                 return $this->hasNextElements();

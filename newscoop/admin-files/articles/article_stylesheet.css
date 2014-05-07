@@ -7,3 +7,31 @@
 	text-decoration: underline;
 	color: blue;
 }
+
+.swiss-info-free,
+.largebox,
+.smallbox,
+.interview-box,
+.camp-textbox {
+  display: block;
+  border: 1px solid #000;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+  font-size: 15px !important;
+  font-style: normal;
+  font-family: Arial, Helvetica, sans-serif !important;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.interview-box {
+    border-color: #007fb3;
+}
+
+.smallbox {
+  width: 250px;
+  margin-left: 20px;
+  float: right;
+}

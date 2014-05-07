@@ -29,9 +29,16 @@ class ExceptionController extends FOSExceptionController
      */
     public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
     {
-        $pos = strpos($request->server->get('REQUEST_URI'), '/api/');
+        $urlMatcher = $this->container->get('router');
+        try {
+            $context = new \Symfony\Component\Routing\RequestContext($request->getPathInfo(), $request->getMethod());
+            $urlMatcher->setContext($context);
+            $match = $urlMatcher->match($context->getBaseUrl());
+        } catch (\Exception $e) {
+            return;
+        }
 
-        if ($pos === false) {
+        if (strpos($match['_route'], 'newscoop_gimme_') === false) {
             return;
         }
 

@@ -1,36 +1,4 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+Anonymous: Anonym
 'You are about to permanently delete multiple messages.': 'Sie sind im Begriff mehrere Nachrichten permanent zu löschen. '
 'You are about to permanently delete a message.': 'Sie sind im Begriff eine Nachricht permanent zu löschen. '
 User: Benutzer
@@ -70,7 +38,7 @@ Forum: Forum
 'For Column': 'Für Spalte'
 Email: Email
 'Edit acceptance criteria': 'Bearbeite Freigabekriterien'
-E-mail: E-Mail
+E-mail: 'E-Mail'
 'Delete all comments?': 'Alle Kommentare löschen?'
 'Date Created': 'Datum erstellt'
 'Comments updated.': 'Kommtare aktualisiert. '

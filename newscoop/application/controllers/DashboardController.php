@@ -7,6 +7,8 @@
 
 use Newscoop\Entity\User;
 use Newscoop\Topic\SaveUserTopicsCommand;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  */
@@ -43,7 +45,7 @@ class DashboardController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = Zend_Registry::get('container')->getService('translator');
         $form = $this->_helper->form('profile');
         $form->setMethod('POST');

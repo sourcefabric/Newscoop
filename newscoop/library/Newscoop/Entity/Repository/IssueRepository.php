@@ -24,13 +24,21 @@ class IssueRepository extends EntityRepository
      *
      * @return \Newscoop\Entity\Issue|null
      */
-    public function getLatestBy(Array $parameters = array())
+    public function getLatestBy(Array $parameters = array(), $maxResults = 1)
     {
-        $issue  = $this->getEntityManager()
+        if ($maxResults == 1) {
+            $issue = $this->getEntityManager()
             ->getRepository('\Newscoop\Entity\Issue')
             ->findOneBy($parameters, array(
                 'id' => 'DESC'
             ));
+        } else {
+            $issue = $this->getEntityManager()
+            ->getRepository('\Newscoop\Entity\Issue')
+            ->findBy($parameters, array(
+                'id' => 'DESC'
+            ), $maxResults);
+        }
 
         return $issue;
     }

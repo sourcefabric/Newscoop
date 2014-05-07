@@ -148,11 +148,19 @@ function toggleCommentStatus(commentId) {
     });
 }
 
-function loadComments() {
+function loadComments(addComment) {
     var lastCommentId = null;
     var commentsNumber = 10;
     if ($('#comment-moderate .comments-block').length > 0) {
         lastCommentId = $('#comment-moderate .comments-block').length;
+        if (addComment) {
+            lastCommentId = 0;
+            commentsNumber = 1;
+        }
+
+        if (lastCommentId >= commentsNumber) {
+            commentsNumber += commentsNumber;
+        }
     }
 
     var call_data = {
@@ -161,13 +169,11 @@ function loadComments() {
         "iDisplayStart": lastCommentId,
         "iDisplayLength": commentsNumber
     };
-    
 
     var call_url = '../comments/list';
 
     var res_handle = function(data) {
-        //$('#comment-moderate').empty();
-        $('fieldset.get-more-comments').remove();
+       $('fieldset.get-more-comments').remove();
         var hasComment = false;
         for(var i in data.result) {
             hasComment = true;
@@ -184,7 +190,12 @@ function loadComments() {
                 }
                 template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
             }
-            $('#comment-moderate').append('<fieldset data-comment-id="'+comment['id']+'" class="plain comments-block">'+template+'</fieldset>');
+
+            if (data.result.length == 1) {
+                $('#comment-moderate').prepend('<fieldset data-comment-id="'+comment['id']+'" class="plain comments-block">'+template+'</fieldset>');
+            } else {
+                $('#comment-moderate').append('<fieldset data-comment-id="'+comment['id']+'" class="plain comments-block">'+template+'</fieldset>');
+            }
             toggleCommentStatus(comment['id']);
         }
 
@@ -195,9 +206,12 @@ function loadComments() {
                 e.preventDefault();
             });
 
-        $('#comment-moderate').append(getMoreLink);
+        if (data.result.length >= commentsNumber) {
+            $('#comment-moderate').append(getMoreLink);
+        }
 
         if (data.result.length == 0) {
+            $('#comment-moderate').append(getMoreLink);
             $('fieldset.get-more-comments').html('<p><?php echo $translator->trans('There are no more comments', array(), 'article_comments'); ?></p>');
         }
 

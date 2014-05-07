@@ -22,19 +22,19 @@ class CityNames
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Newscoop\NewscoopBundle\Entity\CityLocations")
      */
-    private $fk_citylocations;
+    protected $fk_citylocations;
 
     /**
      * @ORM\Column(type="string", length=10, name="name_type")
      * @var int
      */
-    private $name_type;
+    protected $name_type;
 
     /**
      * @ORM\Column(type="string", length=1024, name="city_name")
      * @var string
      */
-    private $city_name;
+    protected $city_name;
 
     public function __construct() {}
 

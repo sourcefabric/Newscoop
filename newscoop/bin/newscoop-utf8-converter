@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+use Newscoop\Services\FilesystemService;
+
 if (!is_array($GLOBALS['argv'])) {
     echo "\n";
     echo "Can't read command line arguments\n";
@@ -14,7 +16,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
 
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
     exit(1);
 }
 

@@ -8,6 +8,7 @@
 namespace Newscoop\Image;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Local Image
@@ -45,122 +46,128 @@ class LocalImage implements ImageInterface
      * @ORM\Column(name="Location")
      * @var string
      */
-    private $location;
+    protected $location;
 
     /**
      * @ORM\Column(name="ImageFileName", nullable=True, length=80)
      * @var string
      */
-    private $basename;
+    protected $basename;
 
     /**
      * @ORM\Column(name="ThumbnailFileName", nullable=True, length=80)
      * @var string
      */
-    private $thumbnailPath;
+    protected $thumbnailPath;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="UploadedByUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      * @ORM\Column(type="datetime", name="TimeCreated", nullable=true)
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime", name="LastModified", nullable=true)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * @ORM\Column(nullable=True, name="Description")
      * @var string
      */
-    private $description;
+    protected $description;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="width")
      * @var int
      */
-    private $width;
+    protected $width;
 
     /**
      * @ORM\Column(type="integer", nullable=true, name="height")
      * @var int
      */
-    private $height;
+    protected $height;
 
     /**
      * @ORM\Column(nullable=True, name="Photographer")
      * @var string
      */
-    private $photographer;
+    protected $photographer;
 
     /**
      * @ORM\Column(nullable=True, name="photographer_url")
      * @var string
      */
-    private $photographerUrl;
+    protected $photographerUrl;
 
     /**
      * @ORM\Column(nullable=True, name="Place")
      * @var string
      */
-    private $place;
+    protected $place;
 
     /**
      * @ORM\Column(nullable=True, name="Date")
      * @var string
      */
-    private $date;
+    protected $date;
 
     /**
      * @ORM\Column(name="ContentType")
      * @var string
      */
-    private $contentType;
+    protected $contentType;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
-    private $renditions;
+    protected $renditions;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
-    private $items;
+    protected $items;
 
     /**
      * @ORM\Column(type="integer", name="is_updated_storage")
      * @var int
      */
-    private $isUpdatedStorage = 0;
+    protected $isUpdatedStorage = 0;
 
     /**
      * @ORM\Column(name="Source", nullable=true)
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * @ORM\Column(type="string", name="Status")
      * @var string
      */
-    private $status;
+    protected $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
+     * @var array
+     */
+    protected $captions;
 
     /**
      * @param string $image
@@ -175,8 +182,9 @@ class LocalImage implements ImageInterface
             $this->basename = (string) $image;
         }
 
-        $this->renditions = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->renditions = new ArrayCollection();
+        $this->items = new ArrayCollection();
+        $this->captions = new ArrayCollection();
     }
 
     /**
@@ -385,6 +393,33 @@ class LocalImage implements ImageInterface
     }
 
     /**
+    * Get caption
+    *
+    * Proxy to getDescription
+    *
+    * @return string
+    */
+    public function getCaption()
+    {
+        return $this->getDescription();
+    }
+
+    /**
+    * Get captions
+    *
+    * @return array
+    */
+    public function getCaptions()
+    {
+        $captions = array();
+        foreach ($this->captions as $languageId => $caption) {
+            $captions[$languageId] = $caption->getCaption();
+        }
+
+        return $captions;
+    }
+
+    /**
      * Set place
      *
      * @param string $place
@@ -426,18 +461,6 @@ class LocalImage implements ImageInterface
     public function getDate()
     {
         return $this->date;
-    }
-
-    /**
-     * Get caption
-     *
-     * Proxy to getDescription
-     *
-     * @return string
-     */
-    public function getCaption()
-    {
-        return $this->getDescription();
     }
 
     /**

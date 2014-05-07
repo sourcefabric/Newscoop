@@ -34,7 +34,7 @@ class Smarty_CacheResource_Newscoop extends Smarty_CacheResource_Custom
         $handler = $this->cacheClass;
         $expired = $handler::handler('read', $cache_content, $tpl_name, null, null, null);
         if ($cacheLifetime == 0) {
-        $template = new Template($uri->getThemePath() . $tpl_name);
+            $template = new Template($uri->getThemePath() . $tpl_name);
             $cacheLifetime = (int)$template->getCacheLifetime();
         }
 

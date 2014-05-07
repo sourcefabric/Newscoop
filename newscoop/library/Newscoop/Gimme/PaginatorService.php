@@ -14,6 +14,7 @@ use Newscoop\Gimme\PartialResponse;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Newscoop\Exception\ResourceIsEmptyException;
 
 /**
  * Gimme Pagination service.
@@ -24,43 +25,43 @@ class PaginatorService
      * Paginator class
      * @var Knp\Component\Pager\Paginator
      */
-    private $paginator;
+    protected $paginator;
 
     /**
      * Pagination object with parsed data from request.
      * @var Newscoop\Gimme\Pagination
      */
-    private $pagination;
+    protected $pagination;
 
     /**
      * PartialResponse object with parsed data from request.
      * @var Newscoop\Gimme\PartialResponse
      */
-    private $partialResponse;
+    protected $partialResponse;
 
     /**
      * Router class
      * @var Symfony\Bundle\FrameworkBundle\Routing\Router
      */
-    private $router;
+    protected $router;
 
     /**
      * Extra data injected to response when result have more items than requested.
      * @var array
      */
-    private $paginationData;
+    protected $paginationData;
 
     /**
      * Used route name
      * @var string
      */
-    private $route;
+    protected $route;
 
     /**
      * Used route params
      * @var array
      */
-    private $routeParams = array();
+    protected $routeParams = array();
 
     /**
      * Construct Paginator service object
@@ -162,13 +163,21 @@ class PaginatorService
     /**
      * Paginate data
      *
-     * @param mixed $data   Data to paginate
-     * @param array $params Prameters for Paginator
+     * @param mixed $data                    Data to paginate
+     * @param array $params                  Parameters for Paginator
+     * @param bool  $params['emptyResponse'] Sets behaviour for an empty response, Default true returns 204. False returns 404
+     *                                       Won't be send to the Paginator
      *
      * @return array         Paginated data
      */
     public function paginate($data, $params = array())
     {
+        $emptyResponse = true;
+        if (array_key_exists('emptyResponse', $params)) {
+            $emptyResponse = $params['emptyResponse'];
+            unset($params['emptyAllowed']);
+        }
+
         $paginator = $this->paginator->paginate(
             $data,
             $this->pagination->getPage(),
@@ -179,7 +188,11 @@ class PaginatorService
         $items['items'] = $paginator->getItems();
 
         if (count($items['items']) == 0) {
-            throw new NotFoundHttpException('Results was not found.');
+            if ($emptyResponse) {
+                throw new ResourceIsEmptyException('Result is empty.');
+            } else {
+                throw new NotFoundHttpException('Results was not found.');
+            }
         }
 
         /**

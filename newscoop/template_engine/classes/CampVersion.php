@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.2';
+    private $m_release = '4.3';
 
     /**
      * @var string

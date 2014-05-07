@@ -23,11 +23,12 @@ final class MetaImage extends MetaDbObject {
 
         $this->m_properties['number'] = 'Id';
         $this->m_properties['photographer'] = 'Photographer';
+        $this->m_properties['photographer_url'] = 'photographer_url';
         $this->m_properties['place'] = 'Place';
         $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
         $this->m_properties['last_update'] = 'LastModified';
-        $this->m_properties['caption'] = 'Description';
+        $this->m_properties['caption'] = 'getCaption';
 
         $this->m_customProperties['year'] = 'getYear';
         $this->m_customProperties['mon'] = 'getMonth';
@@ -46,6 +47,7 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['filerpath'] = 'getImageRelativePath';
         $this->m_customProperties['is_local'] = 'isLocal';
         $this->m_customProperties['type'] = 'getType';
+        $this->m_customProperties['photographer_url'] = 'getPhotographerUrl';
     } // fn __construct
 
 
@@ -113,9 +115,18 @@ final class MetaImage extends MetaDbObject {
     }
 
 
-    public function getImageUrl()
+    public function getImageUrl($width = null, $height = null, $specs = 'crop')
     {
         $url = $this->m_dbObject->getImageUrl();
+
+        if ($width && $height) {
+            $container = \Zend_Registry::get('container');
+
+            return $container->get('zend_router')->assemble(array(
+                'src' => $container->getService('image')->getSrc('images/' . $this->m_dbObject->getImageFileName(), $width, $height, $specs),
+            ), 'image', false, false);
+        }
+
         return $url;
     }
 
@@ -165,6 +176,24 @@ final class MetaImage extends MetaDbObject {
      */
     protected function getArticleIndex() {
         return CampTemplate::singleton()->context()->article->image_index;
+    }
+
+    /**
+    * Get article specific caption
+    *
+    * @return string
+    */
+    protected function getCaption()
+    {
+        $article = $this->getContext()->article;
+        $imageService = \Zend_Registry::get('container')->getService('image');
+        $caption = $imageService->getCaption(
+            $imageService->find($this->m_dbObject->getImageId()),
+            $article->number,
+            $article->language->number
+        );
+
+        return $caption;
     }
 
 } // class MetaSection

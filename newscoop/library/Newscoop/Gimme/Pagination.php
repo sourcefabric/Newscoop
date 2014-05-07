@@ -17,19 +17,19 @@ class Pagination {
      * Requested page number
      * @var integer
      */
-    private $page = 1;
+    protected $page = 1;
 
     /**
      * Array with sorting parameters
      * @var array
      */
-    private $sort = array();
+    protected $sort = array();
     
     /**
      * Requested number items per page.
      * @var integer
      */
-    private $itemsPerPage = 10;
+    protected $itemsPerPage = 10;
 
     /**
      * Set currently requested page number

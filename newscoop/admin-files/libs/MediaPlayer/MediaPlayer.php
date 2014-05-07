@@ -58,8 +58,11 @@ class MediaPlayer
                 echo '<img src="', $this->src, '" height="240" alt="', $this->alt, '" />';
                 break;
 
-            case 'audio/mpeg': 
-            case 'audio/ogg': 
+            case 'audio/mpeg':
+            case 'audio/ogg':
+            case 'audio/mp3':
+            case 'audio/mp4':
+            case 'application/ogg':
                 echo '<audio src="', $this->src, '" controls="controls">';
                 echo '</audio>';
                 break;
@@ -72,6 +75,7 @@ class MediaPlayer
                 break;
 
             case 'video/flv':
+            case 'video/x-flv':
                 $player = $Campsite['WEBSITE_URL'] . '/public/videos/player.swf';
                 include dirname(__FILE__) . '/flash.phtml';
                 break;

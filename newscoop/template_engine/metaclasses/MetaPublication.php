@@ -91,8 +91,8 @@ final class MetaPublication extends MetaDbObject {
         if (!$defaultAlias->exists()) {
             return null;
         }
-        $subdir = CampConfig::singleton()->getSetting('SUBDIR');
-        return $defaultAlias->getName() . $subdir;
+        
+        return $defaultAlias->getName();
     }
 
 

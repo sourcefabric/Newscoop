@@ -31,78 +31,78 @@ class Issue
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="issues")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\Column(type="integer", name="Number")
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(name="Name")
      * @var string
      */
-    private $name = '';
+    protected $name = '';
 
     /**
      * @ORM\Column(name="Published", nullable=True)
      * @var string
      */
-    private $workflowStatus;
+    protected $workflowStatus;
 
     /**
      * @ORM\OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
      * @var array
      */
-    private $sections;
+    protected $sections;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="IssueTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    private $template;
+    protected $template;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="SectionTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    private $sectionTemplate;
+    protected $sectionTemplate;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
      * @ORM\JoinColumn(name="ArticleTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    private $articleTemplate;
+    protected $articleTemplate;
 
     /**
      * @ORM\Column(name="ShortName")
      * @var string
      */
-    private $shortName = '';
+    protected $shortName = '';
 
     /**
     * @ORM\OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
     * @var Newscoop\Entity\Output\OutputSettingsIssue
     */
-    private $outputSettingsIssues;
+    protected $outputSettingsIssues;
 
     /**
      * @param int $number

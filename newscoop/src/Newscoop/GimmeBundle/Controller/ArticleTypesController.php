@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticleTypesController extends FOSRestController
 {
     /**
+     * Get Article Types
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when article types found",
+     *         404={
+     *           "Returned when article types are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/articleTypes.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -37,6 +49,21 @@ class ArticleTypesController extends FOSRestController
     }
 
     /**
+     * Get Article Type
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the article type is not found",
+     *         }
+     *     },
+     *     parameters={
+     *         {"name"="name", "dataType"="string", "required"=true, "description"="Article Type name"}
+     *     },
+     *     output="\Newscoop\Entity\ArticleTypeField"
+     * )
+     *
      * @Route("/articleTypes/{name}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
@@ -45,7 +72,14 @@ class ArticleTypesController extends FOSRestController
     {
         $em = $this->container->get('em');
         $type = $em->getRepository('Newscoop\Entity\ArticleType')->findOneByName($name);
-        $articleTypesFields = $em->getRepository('Newscoop\Entity\ArticleTypeField')->getFieldsForType($type)->getResult();
+
+        if (!$type) {
+            throw new NotFoundHttpException('Article Type was not found');
+        }
+
+        $articleTypesFields = $em->getRepository('Newscoop\Entity\ArticleTypeField')
+            ->getFieldsForType($type)
+            ->getResult();
 
         $allItems = array(
             'name' => $type->getName(),

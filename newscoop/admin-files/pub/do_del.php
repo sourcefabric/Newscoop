@@ -60,7 +60,7 @@ if ($doDelete) {
 	camp_html_goto_page("/$ADMIN/pub");
 } else {
 	$errorMsgs[] = $translator->trans('The publication $1 could not be deleted.',
-						 array('$1' => '<B>'.htmlspecialchars($publicationObj->getName()).'</B>'), array(), 'pub');
+						 array('$1' => '<B>'.htmlspecialchars($publicationObj->getName()).'</B>'), 'pub');
 }
 echo camp_html_content_top($translator->trans("Deleting publication", array(), 'pub'), array("Pub" => $publicationObj));
 

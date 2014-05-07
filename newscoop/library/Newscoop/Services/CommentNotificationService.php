@@ -8,41 +8,52 @@
 namespace Newscoop\Services;
 
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Doctrine\ORM\EntityManager;
 
 /**
  */
 class CommentNotificationService
 {
     /** @var Newscoop\Services\EmailService */
-    private $emailService;
+    protected $emailService;
 
     /** @var Newscoop\Services\CommentService */
-    private $commentService;
+    protected $commentService;
 
     /** @var Newscoop\Services\UserService */
-    private $userService;
+    protected $userService;
+
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
 
     /**
-     * @param Newscoop\Services\EmailService $emailService
+     * @param Newscoop\Services\EmailService   $emailService
      * @param Newscoop\Services\CommentService $commentService
+     * @param Newscoop\Services\User           $userService
+     * @param Doctrine\ORM\EntityManager       $em
      */
-    public function __construct(EmailService $emailService, CommentService $commentService, UserService $userService)
+    public function __construct(EmailService $emailService, CommentService $commentService, UserService $userService, EntityManager $em)
     {
         $this->emailService = $emailService;
         $this->commentService = $commentService;
         $this->userService = $userService;
+        $this->em = $em;
     }
 
     /**
      * Update
      *
      * @param GenericEvent $event
+     *
      * @return void
      */
     public function update(GenericEvent $event)
     {
         $comment = $this->commentService->find($event['id']);
-        $article = new \Article($comment->getLanguage()->getId(), $comment->getThread()->getNumber());
+        $article = $this->em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId())
+            ->getSingleResult();
+
         $authors = \ArticleAuthor::GetAuthorsByArticle($comment->getThread()->getNumber(), $comment->getLanguage()->getId());
         $this->emailService->sendCommentNotification($comment, $article, $authors, $this->userService->getCurrentUser());
     }

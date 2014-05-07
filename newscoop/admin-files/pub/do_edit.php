@@ -4,6 +4,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/SaaS.php");
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 

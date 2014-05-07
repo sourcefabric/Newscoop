@@ -16,13 +16,13 @@ use Doctrine\ORM\EntityManager,
 class SocialAuthService implements \Zend_Auth_Adapter_Interface
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var string */
-    private $provider;
+    protected $provider;
 
     /** @var string */
-    private $providerUserId;
+    protected $providerUserId;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -85,8 +85,21 @@ class SocialAuthService implements \Zend_Auth_Adapter_Interface
      */
     public function addIdentity(User $user, $provider, $providerUserId)
     {
+
+        $userIdentity = $this->em->getRepository('Newscoop\Entity\UserIdentity')
+            ->findOneBy(array(
+                'provider' => $provider,
+                'provider_user_id' => $providerUserId,
+            )
+        );
+
+        if ($userIdentity) {
+            return $userIdentity;
+        }
+
         $userIdentity = new UserIdentity($provider, $providerUserId, $user);
         $this->em->persist($userIdentity);
+        $user->setLastLogin(new \DateTime());
         $this->em->flush();
         return $userIdentity;
     }

@@ -9,14 +9,14 @@
 namespace Newscoop\Services;
 
 /**
- * Attachment service
+ * Templates service
  */
 class TemplatesService
 {
     /**
      * @var \CampTemplate
      */
-    private $smarty;
+    protected $smarty;
 
     public function __construct()
     {
@@ -25,14 +25,30 @@ class TemplatesService
         $this->preconfigureSmarty();
     }
 
-    public function fetchTemplate($file, $cache_id = null, $compile_id = null, $parent = null)
+    public function fetchTemplate($file, $params = array())
     {
-        return $this->smarty->fetch($file, $cache_id, $compile_id, $parent, false);
+        $this->assignParameters($params);
+
+        return $this->smarty->fetch($file, null, null, null, false);
+    }
+
+    public function renderTemplate($file, $params = array())
+    {
+        $this->assignParameters($params);
+
+        return $this->smarty->fetch($file, null, null, null, true);
     }
 
     public function getSmarty()
     {
         return $this->smarty;
+    }
+
+    private function assignParameters($params = array())
+    {
+        foreach ($params as $key => $value) {
+            $this->smarty->assign($key, $value);
+        }
     }
 
     private function preconfigureSmarty()

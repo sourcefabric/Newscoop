@@ -17,10 +17,29 @@ class BridgeController extends Controller
     */
     public function indexAction(Request $request)
     {
+        // don't render page on tinymce files
+        $specialfiles = array(
+            'js/tinymce/plugins/campsiteimage/popup.php',
+            'js/tinymce/plugins/campsiteimage/images.php',
+            'js/tinymce/plugins/campsiteattachment/popup.php',
+            'js/tinymce/plugins/campsiteattachment/attachments.php',
+            'bin/events-notifier',
+            'bin/newscoop-autopublish',
+            'bin/newscoop-indexer',
+            'bin/newscoop-statistics'
+        );
+
+        foreach ($specialfiles as $file) {
+            if (strpos($request->server->get('SCRIPT_FILENAME'), $file) !== false) {
+                return new Response();
+            }
+        }
+
         $application = \Zend_Registry::get('zend_application');
         $bootstrap = $application->getBootstrap();
 
         $front = $bootstrap->getResource('FrontController');
+        $front->setDefaultControllerName('legacy');
         $front->returnResponse(true);
         $default = $front->getDefaultModule();
         if (null === $front->getControllerDirectory($default)) {
@@ -30,8 +49,9 @@ class BridgeController extends Controller
         }
 
         $front->setParam('bootstrap', $bootstrap);
+        $front->setBaseUrl('/');
         $response = $front->dispatch();
-
+        
         //copy headers
         $symfonyHeaders = array();
         foreach ($response->getHeaders() as $key => $header) {

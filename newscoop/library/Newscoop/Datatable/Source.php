@@ -63,9 +63,15 @@ class Source extends EntityRepository implements ISource
 
         $qb = $this->createQueryBuilder('e')
             ->select('COUNT(e)');
+
         if(is_array($p_params) && !empty($p_params['sSearch'])) {
+            if (array_key_exists('user', $p_cols)) {
+                $qb->leftJoin('e.user', 'u');
+            }
+
             $qb->where($this->buildWhere($p_cols, $p_params['sSearch']));
         }
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 
@@ -86,7 +92,11 @@ class Source extends EntityRepository implements ISource
                 continue;
             }
 
-            $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
+            if ($property == 'user') {
+                $or->add($qb->expr()->like("u.username", $qb->expr()->literal("%{$p_search}%")));
+            } else {
+                $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$p_search}%")));
+            }
         }
 
         return $or;

@@ -8,6 +8,7 @@
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\User;
 use Newscoop\Entity\UserAttribute;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
@@ -17,7 +18,7 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
 class UserAttributeService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -26,7 +27,6 @@ class UserAttributeService
     {
         $this->em = $em;
     }
-
 
     /**
      * Receives notifications of points events.
@@ -54,6 +54,25 @@ class UserAttributeService
         $attribute_value = isset($attribute_value) ? ($attribute_value+1) : 1;
 
         $user->addAttribute($attribute_name, $attribute_value);
+
+        $this->em->flush();
+    }
+
+    /**
+     * Remove user attributes
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $attributes
+     *
+     * @return void
+     */
+    public function removeAttributes(User $user, array $attributes)
+    {
+        foreach ($attributes as $attribute) {
+            if ($entity = $user->removeAttribute($attribute)) {
+                $this->em->remove($entity);
+            }
+        }
 
         $this->em->flush();
     }

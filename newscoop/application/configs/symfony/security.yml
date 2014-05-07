@@ -1,7 +1,7 @@
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-        Newscoop\Entity\User: 
+        Newscoop\Entity\User:
             id: newscoop_newscoop.password_encoder
 
     role_hierarchy:
@@ -9,8 +9,10 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        user_db:
+        backend_db:
             entity: { class: Newscoop\Entity\User, property: username }
+        frontend_db:
+            entity: { class: Newscoop\Entity\User, property: email }
 
     firewalls:
         dev:
@@ -35,7 +37,11 @@ security:
 
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
-            anonymous: true
+            provider: backend_db
+            form_login:
+                use_forward: true
+                login_path: /oauth/v2/auth_login
+                check_path: /oauth/v2/auth_login_check
 
         api:
             pattern:    ^/api
@@ -43,9 +49,16 @@ security:
             stateless:  true
             anonymous:  true
 
+        # backup endpoint for our rest api (in case of exisitng one under /api)
+        content-api:
+            pattern:    ^/content-api
+            fos_oauth:  true
+            stateless:  true
+            anonymous:  true
+
         admin_area:
             pattern:    ^/admin
-            provider: user_db
+            provider: backend_db
             form_login:
                 use_forward: true
                 login_path:  admin_login
@@ -58,12 +71,13 @@ security:
 
         frontend_area:
             pattern:    ^/
-            provider: user_db
+            provider: frontend_db
             form_login:
-                use_forward: true
                 login_path:  /auth
                 check_path:  /auth/login_check
-                success_handler: newscoop_newscoop.security.authentication.success_handler
+                username_parameter: email
+                password_parameter: password
+                success_handler: newscoop_newscoop.security.authentication.frontend.success_handler
             logout:
                 path: /auth/logout
                 target: /
@@ -72,4 +86,4 @@ security:
 
     access_control:
         - { path: ^/admin/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/oauth/v2/auth, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth/v2/auth_login$, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -9,10 +9,13 @@ namespace Newscoop\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
+use Newscoop\Entity\Attachment;
+use Newscoop\Search\DocumentInterface;
 
 /**
  * Article entity
@@ -20,7 +23,7 @@ use Newscoop\View\ArticleView;
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
  * @ORM\Table(name="Articles")
  */
-class Article
+class Article implements DocumentInterface
 {
     const STATUS_PUBLISHED = 'Y';
     const STATUS_NOT_PUBLISHED = 'N';
@@ -32,188 +35,184 @@ class Article
      * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
      * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
      */
-    private $issue;
+    protected $issue;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section
      */
-    private $section;
+    protected $section;
 
     /**
      * @ORM\Column(name="NrSection", nullable=True)
      * @var int
      */
-    private $sectionId;
+    protected $sectionId;
 
     /**
      * @ORM\Column(name="NrIssue", nullable=True)
      * @var int
      */
-    private $issueId;
+    protected $issueId;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $creator;
+    protected $creator;
 
     /**
      * Article fields used by Newscoop API
      * @var array
      */
-    private $fields;
+    protected $fields;
 
     /**
      * Article Authors for Newscoop\Gimme
      * @var object
      */
-    private $articleAuthors;
+    protected $articleAuthors;
 
     /**
      * @ORM\Id
      * @ORM\Column(type="integer", name="Number")
      * @var int
      */
-    private $number;
+    protected $number;
 
     /**
      * @ORM\Column(name="Name", nullable=True)
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="ShortName", nullable=True)
      * @var string
      */
-    private $shortName;
+    protected $shortName;
 
     /**
      * @ORM\Column(type="datetime", name="time_updated", nullable=true)
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="datetime", name="indexed", nullable=true)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
 
     /**
      * @ORM\Column(name="comments_enabled", nullable=True)
      * @var int
      */
-    private $comments_enabled;
+    protected $comments_enabled;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
      * @var Newscoop\Entity\Comments
      */
-    private $comments;
+    protected $comments;
+
+    /**
+     * @var int
+     */
+    protected $comments_count;
+
+    /**
+     * @var int
+     */
+    protected $recommended_comments_count;
 
     /**
      * @var string
      */
-    private $comments_link;
+    protected $comments_link;
 
     /**
      * @ORM\Column(name="Type", nullable=True)
      * @var string
      */
-    private $type;
+    protected $type;
 
     /**
      * @ORM\Column(type="datetime", name="PublishDate", nullable=true)
      * @var DateTime
      */
-    private $published;
+    protected $published;
 
     /**
      * @ORM\Column(name="Published", nullable=true)
      * @var string
      */
-    private $workflowStatus;
+    protected $workflowStatus;
 
     /**
      * @ORM\Column(type="integer", name="ArticleOrder", nullable=True)
      * @var int
      */
-    private $articleOrder;
+    protected $articleOrder;
 
     /**
      * @ORM\Column(name="Public", nullable=True)
      * @var string
      */
-    private $public;
+    protected $public;
 
     /**
      * @ORM\Column(name="OnFrontPage", nullable=True)
      * @var string
      */
-    private $onFrontPage;
+    protected $onFrontPage;
 
     /**
      * @ORM\Column(name="OnSection", nullable=True)
      * @var string
      */
-    private $onSection;
+    protected $onSection;
 
     /**
      * @ORM\Column(type="datetime", name="UploadDate", nullable=True)
      * @var DateTime
      */
-    private $uploaded;
+    protected $uploaded;
 
     /**
      * @ORM\Column(name="Keywords", nullable=True)
      * @var string
      */
-    private $keywords;
+    protected $keywords;
 
     /**
      * @ORM\Column(name="IsIndexed", nullable=True)
      * @var string
      */
-    private $isIndexed;
+    protected $isIndexed;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $lockUser;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Attachment")
-     * @ORM\JoinTable(name="ArticleAttachments",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="Id")
-     *      }
-     *  )
-     * @var \Newscoop\Entity\Attachment
-     */
-    private $attachments;
+    protected $lockUser;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
@@ -227,7 +226,7 @@ class Article
      *  )
      * @var Newscoop\Entity\Topic
      */
-    private $topics;
+    protected $topics;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
@@ -241,25 +240,25 @@ class Article
      *  )
      * @var Newscoop\Entity\Playlist
      */
-    private $playlists;
+    protected $playlists;
 
     /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
-    private $lockTime;
+    protected $lockTime;
 
     /**
      * @ORM\Column(type="integer", name="comments_locked", nullable=True)
      * @var int
      */
-    private $commentsLocked;
+    protected $commentsLocked;
 
     /**
      * @ORM\Column(type="integer", name="object_id", nullable=True)
      * @var int
      */
-    private $objectId;
+    protected $objectId;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Package\Package")
@@ -273,32 +272,32 @@ class Article
      *  )
      * @var Newscoop\Package\Package
      */
-    private $packages;
+    protected $packages;
 
     /**
      * Article renditions used by Newscoop API
      * @var array
      */
-    private $renditions;
+    protected $renditions;
 
     /**
      * Article translations used by Newscoop API
      * @var array
      */
-    private $translations;
+    protected $translations;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
      * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
      * @var Newscoop\Entity\Webcode
      */
-    private $webcode;
+    protected $webcode;
 
     /**
      * Article reads number used by Newscoop API
      * @var int
      */
-    private $reads;
+    protected $reads;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Author")
@@ -310,10 +309,34 @@ class Article
      *      inverseJoinColumns={
      *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
      *      }
-     *  )
+     * )
      * @var Doctrine\Common\Collections\Collection
      */
-    private $authors;
+    protected $authors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Attachment")
+     * @ORM\JoinTable(name="ArticleAttachments",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_attachment_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $attachments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Image\LocalImage")
+     * @ORM\JoinTable(name="ArticleImages",
+     *      joinColumns={@ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="IdImage", referencedColumnName="Id")}
+     * )
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    protected $images;
 
     /**
      * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
@@ -327,12 +350,12 @@ class Article
      *  )
      * @var Newscoop\Entity\Snippet
      */
-    private $snippets;
+    protected $snippets;
 
     /**
      * @var ArticleData
      */
-    private $data;
+    protected $data;
 
     /**
      * @param int $number
@@ -343,9 +366,10 @@ class Article
         $this->number = (int) $number;
         $this->language = $language;
         $this->updated = new DateTime();
-        $this->authors = new ArrayCollection();
+        $this->authors = new Collection();
         $this->topics = new ArrayCollection();
         $this->attachments = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     /**
@@ -598,7 +622,18 @@ class Article
      */
     public function getDate()
     {
-        return $this->updated;
+        return $this->getUpdated();
+    }
+
+    /**
+     * Set date
+     *
+     * @param DateTime $updated
+     * @return void
+     */
+    public function setDate(DateTime $date)
+    {
+        $this->date = $date;
     }
 
     /**
@@ -648,6 +683,24 @@ class Article
     }
 
     /**
+     * Get all field names for this article type
+     *
+     * @return mixed Returns array with field names or null
+     */
+    public function getFieldNames()
+    {
+        if ($this->data === null) {
+            return null;
+        }
+
+        if (is_array($this->data)) {
+            return array_keys($this->data);
+        } else {
+            return $this->data->getUserDefinedColumns(true);
+        }
+    }
+
+    /**
      * Get whether commenting is enabled
      *
      * @return int
@@ -680,6 +733,40 @@ class Article
     }
 
     /**
+     * Getter for commentsLocked
+     *
+     * @return mixed
+     */
+    public function commentsLocked()
+    {
+        return $this->getCommentsLocked();
+    }
+
+    /**
+     * Getter for commentsLocked
+     *
+     * @return mixed
+     */
+    public function getCommentsLocked()
+    {
+        return $this->commentsLocked;
+    }
+
+    /**
+     * Setter for commentsLocked
+     *
+     * @param mixed $commentsLocked Value to set
+     *
+     * @return self
+     */
+    public function setCommentsLocked($commentsLocked)
+    {
+        $this->commentsLocked = (int) $commentsLocked;
+
+        return $this;
+    }
+
+    /**
      * Set comments_link
      * @param string $link uri for comments resource in Newscoop API
      */
@@ -698,13 +785,62 @@ class Article
     }
 
     /**
+     * Getter for updated
+     *
+     * @return mixed
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Setter for updated
+     *
+     * @param DateTime $updated Value to set
+     *
+     * @return self
+     */
+    public function setUpdated(DateTime $updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+
+    /**
      * Get publishDate
      *
      * @return string
      */
     public function getPublishDate()
     {
+        return $this->getPublished();
+    }
+
+    /**
+     * Get published
+     *
+     * @return string
+     */
+    public function getPublished()
+    {
         return $this->published;
+    }
+
+    /**
+     * Set published
+     *
+     * @param Datetime|null $published
+     *
+     * @return string
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
     }
 
     /**
@@ -744,6 +880,7 @@ class Article
      * Set webcode
      *
      * @param Newscoop\Entity\Webcode $webcode
+     *
      * @return void
      */
     public function setWebcode($webcode)
@@ -761,8 +898,7 @@ class Article
         if (!$this->webcode) {
             return null;
         }
-
-        return (string) $this->webcode;
+        return $this->webcode->getWebcode();
     }
 
     /**
@@ -870,6 +1006,21 @@ class Article
     }
 
     /**
+     * Get topic names
+     *
+     * @return array
+     */
+    public function getTopicNames()
+    {
+        $names = array();
+        foreach ($this->topics as $topic) {
+            $names[$topic->getTopicId()] = $topic->getName($this->getLanguage());
+        }
+
+        return array_filter($names);
+    }
+
+    /**
      * Set Fields
      * $fields
      */
@@ -972,14 +1123,27 @@ class Article
     }
 
     /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
+
+    /**
      * Set indexed
      *
-     * @return void
+     * @param DateTime $indexed
+     *
+     * @return self
      */
-    public function setIndexed()
+    public function setIndexed(DateTime $indexed = null)
     {
-        $this->indexed = new DateTime();
-        $this->updated = clone $this->updated;
+        $this->indexed = $indexed;
+
+        return $this;
     }
 
     /**
@@ -996,6 +1160,80 @@ class Article
         foreach ($fields as $key => $val) {
             $this->setFieldValue($key, $val);
         }
+    }
+
+    /**
+     * Getter for attachments
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getAttachments()
+    {
+        if (count($this->attachments) == 0) {
+            return null;
+        }
+        return $this->attachments;
+    }
+
+    /**
+     * Setter for attachments
+     *
+     * @param Doctrine\Common\Collections\ArrayCollection|null $attachments Value to set
+     *
+     * @return self
+     */
+    public function setAttachments($attachments)
+    {
+        $this->attachments = $attachments;
+        return $this;
+    }
+
+    /**
+     * Setter for attachments
+     *
+     * @param Attachment $attachment
+     *
+     * @return self
+     */
+    public function addAttachment(Attachment $attachment)
+    {
+        $this->attachments->add($attachment);
+
+        return $this;
+    }
+
+    /**
+     * Getter for images
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * Get article first image
+     *
+     * @return Newscoop\Image\LocalImage
+     */
+    public function getFirstImage()
+    {
+        return ($this->getImages()->isEmpty()) ? null : $this->getImages()->first();
+    }
+
+    /**
+     * Setter for images
+     *
+     * @param Doctrine\Common\Collections\ArrayCollection $images Value to set
+     *
+     * @return self
+     */
+    public function setImages(\Doctrine\Common\Collections\ArrayCollection $images)
+    {
+        $this->images = $images;
+
+        return $this;
     }
 
     /**
@@ -1076,19 +1314,5 @@ class Article
         }
 
         return $this->data;
-    }
-
-    /**
-     * Gets the Article Attachments
-     *
-     * @return \Newscoop\Entity\Attachment
-     */
-    public function getAttachments()
-    {
-        if (count($this->attachments) == 0) {
-            return null;
-        }
-
-        return $this->attachments;
     }
 }

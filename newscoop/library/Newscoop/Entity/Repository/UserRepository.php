@@ -12,14 +12,15 @@ use Doctrine\ORM\Query\Expr;
 use Newscoop\Entity\User;
 use Newscoop\User\UserCriteria;
 use Newscoop\ListResult;
+use Newscoop\Search\RepositoryInterface;
 
 /**
  * User repository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository implements RepositoryInterface
 {
     /** @var array */
-    private $setters = array(
+    protected $setters = array(
         'username' => 'setUsername',
         'password' => 'setPassword',
         'first_name' => 'setFirstName',
@@ -172,6 +173,28 @@ class UserRepository extends EntityRepository
         return $query;
     }
 
+    /**
+     * Get getLatelyLoggedInUsers (logged in x days before today)
+     *
+     * @return int
+     */
+    public function getLatelyLoggedInUsers($daysNumber = 7, $count = false)
+    {
+        $query = $this->createQueryBuilder('u');
+
+        if ($count) {
+            $query->select('COUNT(u)');
+        }
+
+        $query = $query->where('u.lastLogin > :date')
+            ->getQuery();
+
+        $date = new \DateTime();
+        $query->setParameter('date', $date->modify('- '.$daysNumber.' days'));
+
+        return $query;
+    }
+
     public function getOneActiveUser($id, $public = true)
     {
         $em = $this->getEntityManager();
@@ -235,8 +258,22 @@ class UserRepository extends EntityRepository
             $user->setPoints((int) $result['comments']);
             $users[] = $user;
         }
-        
+
         return $users;
+    }
+
+    public function findVerifiedUsers($countOnly, $offset, $limit)
+    {
+        if ($countOnly) {
+            $qb = $this->getEntityManager()->createQuery('SELECT COUNT(u.id) FROM Newscoop\Entity\User u JOIN u.attributes a WHERE a.attribute = \'is_verified\' AND a.value = 1');
+            return $qb->getSingleScalarResult();
+        }
+
+        $qb = $this->getEntityManager()->createQuery('SELECT u FROM Newscoop\Entity\User u JOIN u.attributes a WHERE a.attribute = \'is_verified\' AND a.value = 1');
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        return $qb->getResult();
     }
 
     /**
@@ -544,7 +581,7 @@ class UserRepository extends EntityRepository
      *
      * @return array
      */
-    public function getBatch()
+    public function getBatch($count = self::BATCH_COUNT, array $filter = null)
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.indexed IS NULL OR u.indexed < u.updated')
@@ -575,7 +612,7 @@ class UserRepository extends EntityRepository
      *
      * @return void
      */
-    public function setIndexedNull()
+    public function setIndexedNull(array $items = null)
     {
         $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\User u SET u.indexed = NULL')
             ->execute();
@@ -596,6 +633,7 @@ class UserRepository extends EntityRepository
             ->getQuery();
 
         $query->setParameter('status', User::STATUS_ACTIVE);
+
         return $query->getSingleScalarResult();
     }
 
@@ -632,7 +670,11 @@ class UserRepository extends EntityRepository
 
         $query->setParameter('user', $user->getId());
         $result = $query->getSingleResult();
-        $user->setPoints($result['comments'] + $result['articles']);
+
+        $articlesCount = $em->getRepository('Newscoop\Entity\Article')
+            ->countByAuthor($user);
+
+        $user->setPoints($result['comments'] + $articlesCount);
     }
 
     /**
@@ -641,15 +683,17 @@ class UserRepository extends EntityRepository
      * @param Newscoop\User\UserCriteria $criteria
      * @return Newscoop\ListResult
      */
-    public function getListByCriteria(UserCriteria $criteria)
+    public function getListByCriteria(UserCriteria $criteria, $results = true)
     {
         $qb = $this->createQueryBuilder('u');
 
         $qb->andWhere('u.status = :status')
             ->setParameter('status', $criteria->status);
 
-        $qb->andWhere('u.is_public = :is_public')
-            ->setParameter('is_public', $criteria->is_public);
+        if (!is_null($criteria->is_public)) {
+            $qb->andWhere('u.is_public = :is_public')
+                ->setParameter('is_public', $criteria->is_public);
+        }
 
         foreach ($criteria->perametersOperators as $key => $operator) {
             $qb->andWhere('u.'.$key.' = :'.$key)
@@ -663,7 +707,7 @@ class UserRepository extends EntityRepository
         }
 
         if (!empty($criteria->query)) {
-            $qb->andWhere("(u.username LIKE :query)");
+            $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
         }
 
@@ -671,20 +715,23 @@ class UserRepository extends EntityRepository
             $this->addNameRangeWhere($qb, $criteria->nameRange);
         }
 
-        $qb->leftJoin('u.attributes', 'ua');
+        if (!empty($criteria->lastLoginDays)) {
+            $qb->andWhere('u.lastLogin > :lastLogin');
+            $date = new \DateTime();
+            $qb->setParameter('lastLogin', $date->modify('- '.$criteria->lastLoginDays.' days'));
+        }
 
         if (count($criteria->attributes) > 0) {
+            $qb->leftJoin('u.attributes', 'ua');
             $qb->andWhere('ua.attribute = ?1')
                 ->andWhere('ua.value = ?2')
                 ->setParameter(1, $criteria->attributes[0])
                 ->setParameter(2, $criteria->attributes[1]);
         }
 
-
-
         $list = new ListResult();
         $countQb = clone $qb;
-        $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+        $list->count = (int) $countQb->select('COUNT(DISTINCT u)')->getQuery()->getSingleScalarResult();
 
         $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
@@ -705,9 +752,14 @@ class UserRepository extends EntityRepository
             $qb->orderBy($key, $order);
         }
 
+        if (!$results) {
+            return $qb;
+        }
+
         $list->items = array_map(function ($row) {
             $user = $row[0];
             $user->setPoints((int) $row['comments']);
+
             return $user;
         }, $qb->getQuery()->getResult());
 

@@ -2,6 +2,7 @@
 /**
  * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -18,13 +19,27 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
+/**
+ * Users Rest API Controller
+ */
 class UsersController extends FOSRestController
 {
     /**
+     * Get all users
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *     }
+     * )
+     *
      * @Route("/users.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getUsersAction(Request $request)
     {
@@ -42,13 +57,34 @@ class UsersController extends FOSRestController
     }
 
     /**
+     * Get user by given id
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404="Returned when the user is not found",
+     *     },
+     *     parameters={
+     *         {"name"="id", "dataType"="integer", "required"=true, "description"="User id"},
+     *         {"name"="image_type", "dataType"="string", "required"=false, "description"="User image specification (e.g. crop, fit)"},
+     *         {"name"="image_width", "dataType"="integer", "required"=false, "description"="User image width"},
+     *         {"name"="image_height", "dataType"="integer", "required"=false, "description"="User image height"},
+     *     },
+     *     output="\Newscoop\Entity\User"
+     * )
+     *
      * @Route("/users/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
+     *
+     * @return array
      */
     public function getUserAction(Request $request, $id)
     {
         $em = $this->container->get('em');
+        $imageType = $request->get('image_type');
+        $imageHeight = $request->get('image_height');
+        $imageWidth = $request->get('image_width');
 
         $user = $em->getRepository('Newscoop\Entity\User')
             ->getOneActiveUser($id)
@@ -57,6 +93,11 @@ class UsersController extends FOSRestController
         if (!$user) {
             throw new NotFoundHttpException('Result was not found.');
         }
+
+        $metaUser = new \MetaUser($user);
+        $user->setImage($metaUser->image(
+            is_numeric($imageWidth) ? $imageWidth : 80, is_numeric($imageHeight) ? $imageHeight : 80, !is_numeric($imageType) && is_string($imageType) ? $imageType : 'crop'
+        ));
 
         return $user;
     }
@@ -67,11 +108,12 @@ class UsersController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         403="Returned when wrong password given.",
+     *         403="Returned when wrong password given",
      *         404="Returned when the user is not found",
+     *         400="Returned when invalid arguments",
      *     },
      *     parameters={
-     *         {"name"="username", "dataType"="string", "required"=true, "description"="User nickname"},
+     *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
      *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
      *     },
      * )
@@ -84,12 +126,19 @@ class UsersController extends FOSRestController
      */
     public function loginAction(Request $request)
     {
-        $request = $this->getRequest();
+        $zendRouter = $this->container->get('zend_router');
+        $userService = $this->container->get('user');
+        $em = $this->container->get('em');
         $username = $request->get('username');
         $password = $request->get('password');
-        $em = $this->container->get('em');
+        $response = new Response();
+        if (!$username || !$password) {
+            $response->setStatusCode(400);
+
+            return $response;
+        }
+
         $passwordEncoder = $this->container->get('newscoop_newscoop.password_encoder');
-        $userService = $this->container->get('user');
         $user = $em->getRepository('Newscoop\Entity\User')
             ->findOneBy(array(
                 'username' => $username
@@ -107,15 +156,30 @@ class UsersController extends FOSRestController
         }
 
         if (!$passwordEncoder->isPasswordValid($user->getPassword(), $password, $user->getSalt())) {
-            throw new AccessDeniedException("Wrong password");
+            $response->setStatusCode(403);
+
+            return $response;
         }
 
-        $userService->loginUser($user);
+        $token = $userService->loginUser($user);
+        $session = $request->getSession();
+        $session->set('_security_frontend_area', serialize($token));
 
-        return array(
-            'success' => true,
-            'user' => $user
+        $zendAuth = \Zend_Auth::getInstance();
+        $authAdapter = $this->get('auth.adapter');
+        $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
+        $zendAuth->authenticate($authAdapter);
+        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+
+        $response->setStatusCode(200);
+        $response->headers->set(
+            'X-Location',
+            $this->generateUrl('newscoop_gimme_users_getuser', array(
+                'id' => $user->getId()
+            ), true)
         );
+
+        return $response;
     }
 
     /**
@@ -133,8 +197,17 @@ class UsersController extends FOSRestController
      */
     public function logoutAction(Request $request)
     {
-        $userService = $this->container->get('user');
-        $userService->logoutUser();
+        $token = new AnonymousToken(null, 'anon.');
+        $response = new Response();
+        $session = $request->getSession();
+        $request->getSession()->invalidate();
+        $session->set('_security_frontend_area', serialize($token));
+        $this->get('security.context')->setToken($token);
+        $zendAuth = \Zend_Auth::getInstance();
+        $zendAuth->clearIdentity();
+        setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
+
+        return $response;
     }
 
     /**
@@ -143,7 +216,6 @@ class UsersController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         404="Returned when the user is not found",
      *         409="Returned when user is already registered",
      *     },
      *     parameters={
@@ -161,8 +233,9 @@ class UsersController extends FOSRestController
     {
         $email = $request->get('email');
         $userService = $this->container->get('user');
-        $emailService = $this->container->get('sendemail');
+        $emailService = $this->container->get('email');
         $zendRouter = $this->container->get('zend_router');
+        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $response = new Response();
         $users = $userService->findBy(array(
             'email' => $email,
@@ -171,27 +244,21 @@ class UsersController extends FOSRestController
         if (count($users) > 0) {
             $user = array_pop($users);
         } else {
-            if (!$users) {
-                throw new EntityNotFoundException('Result was not found.');
-            }
-
             $user = $userService->createPending($email);
         }
 
         if (!$user->isPending()) {
             $response->setStatusCode(409);
-
-            return $response;
         } else {
-            $emailService->sendConfirmationToken($user, $this->getRequest()->getHost());
+            $emailService->sendConfirmationToken($user);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
+                $request->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'register', 'action' => 'after'))
             );
-
-            return $response;
         }
+
+        return $response;
     }
 
     /**
@@ -217,23 +284,34 @@ class UsersController extends FOSRestController
     {
         $response = new Response();
         $zendRouter = $this->container->get('zend_router');
+        $publicationMetadata = $request->attributes->get('_newscoop_publication_metadata');
         $user = $this->container->get('user')->findOneBy(array(
             'email' => $request->get('email'),
         ));
 
         if (!empty($user) && $user->isActive()) {
-            $this->container->get('sendemail')->sendPasswordRestoreToken($user, $this->getRequest()->getHost());
+            $this->container->get('email')->sendPasswordRestoreToken($user);
             $response->setStatusCode(200);
             $response->headers->set(
                 'X-Location',
-                $zendRouter->assemble(array('controller' => 'auth', 'action' => 'password-restore-after'))
+                $request->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'auth', 'action' => 'password-restore-after'))
             );
 
             return $response;
-        } else if (empty($user)) {
-            $response->setStatusCode(404);
+        }
 
-            return $response;
+        $response->setStatusCode(404);
+
+        return $response;
+    }
+
+    private function extractDomain($domain)
+    {
+        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
+        {
+            return $matches['domain'];
+        } else {
+            return $domain;
         }
     }
 }

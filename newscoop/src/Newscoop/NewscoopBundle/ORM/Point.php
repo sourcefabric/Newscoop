@@ -7,8 +7,8 @@ namespace Newscoop\NewscoopBundle\ORM;
  */
 class Point {
 
-    private $latitude;
-    private $longitude;
+    protected $latitude;
+    protected $longitude;
 
     public function __construct($latitude, $longitude) {
         $this->latitude = $latitude;

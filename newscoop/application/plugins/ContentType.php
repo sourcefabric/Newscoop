@@ -17,13 +17,5 @@ class Application_Plugin_ContentType extends Zend_Controller_Plugin_Abstract
         if (!$header_set) {
             $response->setHeader('Content-Type', 'text/html; charset=utf-8');
         }
-
-        switch ($request->getModuleName()) {
-            case 'default':
-                $response->setHeader('Cache-Control', 'public, max-age=3600', true);
-                $response->setHeader('Pragma', 'cache', true);
-                break;
-        }
     }
 }
-

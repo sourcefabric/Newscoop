@@ -16,6 +16,7 @@ use Newscoop\Entity\Article;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Routing\Router;
 
 /**
  * Attachment service
@@ -25,11 +26,13 @@ class AttachmentService
     /**
      * @param array         $config
      * @param EntityManager $em
+     * @param Router        $router
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $em)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $em, Router $router)
     {
         $this->config = $config;
         $this->em = $em;
+        $this->router = $router;
     }
 
     /**
@@ -67,7 +70,8 @@ class AttachmentService
             }
 
             if ($descriptionText != $attachment->getDescription()->getTranslationText()) {
-                $description = new Translation();
+                $nextTranslationPhraseId = $this->em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+                $description = new Translation($nextTranslationPhraseId);
                 $description->setLanguage($language);
                 $description->setTranslationText($descriptionText);
                 $this->em->persist($description);
@@ -75,7 +79,8 @@ class AttachmentService
             unset($attributes['description']);
         } else {
             $attachment = new Attachment();
-            $description = new Translation();
+            $nextTranslationPhraseId = $this->em->getRepository('Newscoop\Entity\AutoId')->getNextTranslationPhraseId();
+            $description = new Translation($nextTranslationPhraseId);
             $description->setLanguage($language);
             $description->setTranslationText($descriptionText);
             unset($attributes['description']);
@@ -127,14 +132,24 @@ class AttachmentService
         $this->em->flush();
     }
 
-    public function addAttachmentToArticle(Attachment $attachment, Article $article)
+    public function addAttachmentToArticle(Article $article, Attachment $attachment)
     {
-
+        $article->addAttachment($attachment);
+        $this->em->flush();
     }
 
-    public function removeAttachmentFormArticle(Attachment $attachment, Article $article)
+    public function removeAttachmentFormArticle(Article $article, Attachment $attachment)
     {
+        $article->getAttachments()->removeElement($attachment);
+        $this->em->flush();
+    }
 
+    public function getAttachmentUrl($attachment)
+    {
+        return $this->router->generate('newscoop_newscoop_attachments_downloadattachment', array(
+            'id' => $attachment->getId(),
+            'name' => $attachment->getName()
+        ), true);
     }
 
     private function fillAttachment(Attachment $attachment, $attributes)
@@ -256,10 +271,7 @@ class AttachmentService
     private function getLevel2DirectoryName(Attachment $attachment)
     {
         if ($attachment->getId()) {
-            $level2Dir = floor(
-                $attachment->getId() /
-                ($this->config['file_num_dirs_level_2'] * $this->config['file_num_dirs_level_1'])
-            );
+            $level2Dir = ($attachment->getId() / $this->config['file_num_dirs_level_2']) % $this->config['file_num_dirs_level_1'];
         } else {
             $level2Dir = 0;
         }
@@ -286,5 +298,31 @@ class AttachmentService
         $filesystem->mkdir($level2);
 
         return $level2;
+    }
+
+     /**
+     * Return the ids of the file not edited yet.
+     *
+     * @param integer $userId User id
+     *
+     * @return array
+     */
+    public function getUnedited($userId)
+    {
+        $qb = $this->em->getRepository('Newscoop\Entity\Attachment')
+            ->createQueryBuilder('a');
+
+        $uneditedAttachments = $qb
+            ->leftJoin('a.description', 'd')
+            ->where('a.user = :userId')
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('d.translationText'),
+                "d.translationText = ''"
+            ))
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getArrayResult();
+
+        return $uneditedAttachments;
     }
 }

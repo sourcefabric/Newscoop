@@ -184,3 +184,40 @@ Miscellaneous: Miscellaneous
 'User will be notified on several events': 'User will be notified on several events'
 'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
 'No such user account.': 'No such user account.'
+'User image (full-size)': 'User image (full-size)'
+
+users:
+    label:
+        title: "Users search"
+    menu:
+        manage: "Manage Users"
+    created: "Created"
+    updated: "Updated"
+    status:
+        status: "Status"
+        registered: "Registered"
+        pending: "Pending"
+        deleted: "Deleted"
+        active: "Active"
+    table:
+        actions:
+            actions: "Actions"
+            edit: Edit
+            resend_email: "Resend activation email"
+            rename: "Rename"
+            remove: "Remove"
+        confirm_remove: "You realy want to remove this user?"
+        table_messages:
+            page: "Page"
+            perPageText: "Show: "
+            pageText: "Pages: "
+            recordCountPageBoundTemplate: "{pageLowerBound} to {pageUpperBound} of"
+            recordCountPageUnboundedTemplate: "{recordsShown} of"
+            recordCountTotalTemplate: "{recordsQueryCount} {collectionName}"
+            recordCountFilteredTemplate: " (filtered from {recordsTotal} total records)"
+            recordCountText: "Showing "
+            recordCountTextTemplate: "{text} {pageTemplate} {totalTemplate} {filteredTemplate}"
+            recordCountTemplate: "<span id='dynatable-record-count-{elementId}' class='dynatable-record-count'>{textTemplate}</span>"
+            processingText: "Processing..."
+    chart:
+        title: "Active Logins"

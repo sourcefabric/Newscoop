@@ -43,15 +43,8 @@
         </fieldset>
         </form>
     </div>
-    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
-        <div class="form-group">
-            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
-        </div>
-        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
-        {{ form_rest(searchForm) }}
-    </form>
-    <div id="actionExtender">
-        <fieldset class="status-actions">
+    <div id="showComments">
+        <fieldset class="filters" style="height: 95px">
             <legend>{{ 'comments.label.actions'|trans }}</legend>
             <select style="width: 300px" class="form-control input-sm actions">
                 <option value="">{{ 'comments.label.selectstatus'|trans }}</option>
@@ -62,6 +55,14 @@
             </select>
         </fieldset>
     </div>
+    <form class="navbar-form navbar-left" method="post" role="search" style="width: 100%;" action="{{ path('newscoop_newscoop_comments_search') }}" {{ form_enctype(searchForm) }}>
+        <div class="form-group">
+            {{ form_widget(searchForm.search, { 'attr': { 'class': 'form-control input-sm', 'placeholder' : 'comments.label.searchholder'|trans } }) }}
+        </div>
+        <input type="submit" class="btn btn-default btn-sm" value="{{ 'comments.btn.submit'|trans }}">
+        {{ form_rest(searchForm) }}
+    </form>
+
     <div class="row" id="paging">
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
@@ -107,11 +108,12 @@
                                 {% if row.comment.commenter.url is empty %}
                                     {{ row.comment.commenter.name }}
                                 {% else %}
-                                    <a href="{{ row.comment.commenter.url }}" target="_blank">{{ row.comment.commenter.name }}</a>
+                                    <a href="{{ row.comment.commenter.url }}" target="_blank">{{ row.comment.commenter.name|striptags }}</a>
                                 {% endif %}
                                 ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
                             {% else %}
-                                <a href="/profile/{{ row.comment.commenter.name }}">{{ row.comment.commenter.name }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
+
+                                <a href="{{ generateZendUrl('user', 'profile', 'default') }}/{{ row.comment.commenter.user.username|striptags }}">{{ row.comment.commenter.user.username|striptags }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
                             {% endif %}
                             <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
                             <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
@@ -127,19 +129,11 @@
                                     <span class="label label-info">{{ row.comment.source }}</span>
                                 {% endif %}
                                 <span class="commentSubject">
-                                    {% if row.comment.subject|length > 50 %}
-                                    {{ row.comment.subject|slice(0, 50) }}...
-                                {% else %}
                                     {{ row.comment.subject }}
-                                {% endif %}
                                 </span>
                             </h4>
                             <p class="commentBody">
-                                {% if row.comment.message|length > 400 %}
-                                    {{ row.comment.message|slice(0, 400) }}...
-                                {% else %}
-                                    {{ row.comment.message }}
-                                {% endif %}
+                                {{ row.comment.message }}
                             </p>
                         </div>
                         <div class="dateCommentHolderReply">
@@ -177,9 +171,9 @@
                         <div class="commentArticleHolder">
                             <p>
                                 <a href="/admin/articles/get.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}" class="articleLink">{{ row.comment.thread.name }}</a><br>
-                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.comment.thread.section.name }}</span>
+                                <span>{{ row.comment.thread.publication.name }} - <b>{{ 'comments.label.section'|trans }}</b> {{ row.section }}</span>
                             </p>
-                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a> 
+                            <a class="goToArticle" href="/admin/articles/edit.php?f_publication_id={{ row.comment.thread.publication.id }}&amp;f_issue_number={{ row.issueNumber }}&amp;f_section_number={{ row.comment.thread.section.number }}&amp;f_article_number={{ row.comment.thread.number }}&amp;f_language_id={{ row.comment.thread.language.id }}&amp;f_language_selected={{ row.comment.thread.language.id }}">{{ 'comments.label.editarticle'|trans }}</a>
                         </div>
                     </td>
                 </tr>

@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Article;  
+namespace Newscoop\GimmeBundle\Serializer\Article;
 
 use JMS\Serializer\JsonSerializationVisitor;
 
@@ -17,7 +17,7 @@ class FieldsHandler
 {
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
-    {   
+    {
         $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../../newscoop/');
 
         $articleData = new \ArticleData($data->type, $data->number, $data->languageId);

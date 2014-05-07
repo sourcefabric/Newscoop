@@ -86,10 +86,10 @@ final class CampTemplate extends Smarty
 
         $this->setTemplateDir(array(
             APPLICATION_PATH . '/../themes/',
-            APPLICATION_PATH . '/../themes/unassigned/system_templates/',
+            APPLICATION_PATH . '/../themes/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
         ));
-        
+
         $this->assign('view', \Zend_Registry::get('container')->get('view'));
         $this->assign('userindex', false);
         $this->assign('user', new MetaUser());
@@ -112,7 +112,7 @@ final class CampTemplate extends Smarty
                 $dirs[] = $directoryPath;
             }
         }
-        
+
         //legacy plugins
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
             $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
@@ -170,7 +170,7 @@ final class CampTemplate extends Smarty
      *
      * @return void
      */
-    public function clearCache()
+    public function clearCache($template_name = null, $cache_id = NULL, $compile_id = NULL, $exp_time = NULL, $type = NULL)
     {
         $this->clearCompiledTemplate();
         $this->clearAllCache();
@@ -223,6 +223,6 @@ final class CampTemplate extends Smarty
      */
     private static function isDevelopment()
     {
-        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
+        return false;//return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }

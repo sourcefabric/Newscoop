@@ -191,9 +191,7 @@ class ConfigureApiController extends Controller
         foreach ($allRoutes as $key => $route) {
             if (strpos($key, 'newscoop_gimme_') !== false) {
                 $routeMethods = $route->getMethods();
-                if (in_array('GET', $route->getMethods())) {
-                    $apiRoutes[$key] = '['.$routeMethods[0].'] '.str_replace('{_format}', 'json', $route->getPath());
-                }
+                $apiRoutes[$key] = '['.$routeMethods[0].'] '.str_replace('{_format}', 'json', $route->getPath());
             }
         }
 

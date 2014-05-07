@@ -23,7 +23,7 @@ class Storage
     const ERROR_KEY_INVALID = 6;
 
     /** @var string */
-    private $root;
+    protected $root;
     /**
      * @param string $root
      */

@@ -22,97 +22,97 @@ class Entry
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Ingest\Feed", inversedBy="entries")
      * @var Newscoop\Entity\Ingest\Feed
      */
-    private $feed;
+    protected $feed;
 
     /**
      * @ORM\Column(type="string")
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $updated;
+    protected $updated;
 
     /**
      * @ORM\Column(type="string", nullable=True)
      * @var string
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\Column(type="text")
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
      * @ORM\Column(type="text", nullable=True)
      * @var string
      */
-    private $summary;
+    protected $summary;
 
     /**
      * @ORM\Column(type="string", nullable=True)
      * @var string
      */
-    private $category;
+    protected $category;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $published;
+    protected $published;
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $embargoed;
+    protected $embargoed;
 
     /**
      * @ORM\Column(type="string", nullable=True)
      * @var string
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
-    private $priority;
+    protected $priority;
 
     /**
      * @ORM\Column(type="string", nullable=True)
      * @var string
      */
-    private $date_id;
+    protected $date_id;
 
     /**
      * @ORM\Column(type="string", nullable=True)
      * @var string
      */
-    private $news_item_id;
+    protected $news_item_id;
 
     /**
      * @ORM\Column(type="array", nullable=True)
      * @var array
      */
-    private $attributes = array();
+    protected $attributes = array();
 
     /**
      * @param string $title

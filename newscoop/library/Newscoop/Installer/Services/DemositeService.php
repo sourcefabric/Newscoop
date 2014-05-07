@@ -20,10 +20,10 @@ use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
  */
 class DemositeService
 {
-    private $logger;
-    private $templatesDir;
-    private $installDir;
-    private $filesystem;
+    protected $logger;
+    protected $templatesDir;
+    protected $installDir;
+    protected $filesystem;
 
     /**
      * @param object $logger

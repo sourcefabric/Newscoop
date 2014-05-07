@@ -184,32 +184,39 @@ class AcceptanceRepository extends DatatableSource
     public function checkBanned($p_params, $p_forum)
     {
             $return = array();
-            $name = array(
-                'forum' => $p_forum,
-                'search' => $p_params['name'],
-                'for_column' => 'name',
-                'type' => 'deny',
-                'search_type' => 'normal'
-            );
-            $return['name'] = $this->matched($name);
 
-            $email = array(
-                'forum' => $p_forum,
-                'search' => $p_params['email'],
-                'for_column' => 'email',
-                'type' => 'deny',
-                'search_type' => 'normal'
-            );
-            $return['email'] = $this->matched($email);
+            if (array_key_exists('name', $p_params)) {
+                $name = array(
+                    'forum' => $p_forum,
+                    'search' => $p_params['name'],
+                    'for_column' => 'name',
+                    'type' => 'deny',
+                    'search_type' => 'normal'
+                );
+                $return['name'] = $this->matched($name);
+            }
 
-            $ip = array(
-                'forum' => $p_forum,
-                'search' => $p_params['ip'],
-                'for_column' => 'ip',
-                'type' => 'deny',
-                'search_type' => 'normal'
-            );
-            $return['ip'] = $this->matched($ip);
+            if (array_key_exists('email', $p_params)) {
+                $email = array(
+                    'forum' => $p_forum,
+                    'search' => $p_params['email'],
+                    'for_column' => 'email',
+                    'type' => 'deny',
+                    'search_type' => 'normal'
+                );
+                $return['email'] = $this->matched($email);
+            }
+
+            if (array_key_exists('ip', $p_params)) {
+                $ip = array(
+                    'forum' => $p_forum,
+                    'search' => $p_params['ip'],
+                    'for_column' => 'ip',
+                    'type' => 'deny',
+                    'search_type' => 'normal'
+                );
+                $return['ip'] = $this->matched($ip);
+            }
 
             return $return;
     }

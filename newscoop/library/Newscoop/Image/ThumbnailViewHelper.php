@@ -15,7 +15,7 @@ class ThumbnailViewHelper extends \Zend_View_Helper_Abstract
     /**
      * @var Newscoop\Image\ImageService
      */
-    private $imageService;
+    protected $imageService;
 
     /**
      * @param Newscoop\Image\ImageService $imageService

@@ -59,7 +59,7 @@ class ShortURL
 		if (!$languageObj->exists()) {
 			return new PEAR_Error($translator->trans('Language does not exist.'));
 		}
-		$uri = $GLOBALS['Campsite']['SUBDIR'] . '/' . $languageObj->getCode() . '/';
+		$uri = '/' . $languageObj->getCode() . '/';
 		if (!is_null($p_issueNo) && is_null($p_articleNo)) {
 			$issueObj = new Issue($p_publicationId, $p_languageId, $p_issueNo);
 			if (!$issueObj->exists()) {

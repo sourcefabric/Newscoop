@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Article;  
+namespace Newscoop\GimmeBundle\Serializer\Article;
 
 use JMS\Serializer\JsonSerializationVisitor;
 
@@ -15,8 +15,8 @@ use JMS\Serializer\JsonSerializationVisitor;
  */
 class TranslationsHandler
 {
-    private $em;
-    private $router;
+    protected $em;
+    protected $router;
 
     public function __construct($em, $router)
     {
@@ -25,8 +25,7 @@ class TranslationsHandler
     }
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
-    {   
-
+    {
         $articleTranslations = $this->em->getRepository('Newscoop\Entity\Article')
             ->getArticleTranslations($data->number, $data->languageId)
             ->getResult();

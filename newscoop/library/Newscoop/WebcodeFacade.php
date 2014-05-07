@@ -18,12 +18,12 @@ class WebcodeFacade
     /**
      * @Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @Newscoop\Random
      */
-    private $random;
+    protected $random;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

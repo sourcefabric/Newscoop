@@ -41,7 +41,7 @@ class NotificationService
     /**
      * @var array
      */
-    private $params = array(
+    protected $params = array(
         'resource' => 'notification',
         'action' => 'get',
     );
@@ -49,7 +49,7 @@ class NotificationService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

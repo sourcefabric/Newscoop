@@ -20,18 +20,16 @@ if (!$g_user->hasPermission('AddFile')) {
 
 $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 
+$crumbs = array();
+$crumbs[] = array($translator->trans('Content'), "");
+$crumbs[] = array($translator->trans('Media Archive', array(), 'home'), "/$ADMIN/media-archive/index.php");
+$crumbs[] = array($translator->trans('Add new file', array(), 'media_archive'), "");
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
+
+echo $breadcrumbs;
+
 camp_html_display_msgs();
 ?>
-
-<html>
-  <head>
-    <?php 
-      include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
-      include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
-    ?>
-    <link rel="stylesheet" type="text/css" media="screen" href="../../js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
-  </head>
-  <body>
 
   <br />
       <form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload_file.php" enctype="multipart/form-data">
@@ -53,5 +51,3 @@ camp_html_display_msgs();
   )); ?>
 
   <?php camp_html_copyright_notice(); ?>
-  </body>
-</html>

@@ -473,6 +473,7 @@ class CommentsController extends Controller
                 'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
                 'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
                 'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
+                'section' => $comments[$comment->getId()]->getThread()->getSection()->getName(),
                 'comment' => $comment,
                 'index' => $counter,
             );

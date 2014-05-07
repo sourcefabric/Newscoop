@@ -1,32 +1,35 @@
 <?php
- 
+
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
- 
+
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessHandler;
- 
+
 /**
  * Custom authentication success handler
  */
 class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 {
-    private $authAdapter;
- 
+    protected $authAdapter;
+
+    protected $em;
+
     /**
     * Constructor
-    * 
+    *
     * @param Zend_Auth   $zendAuth
     */
-    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter)
+    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em)
     {
         $this->authAdapter = $authAdapter;
+        $this->em = $em;
 
         parent::__construct($httpUtils, $options);
     }
- 
+
     /**
     * This is called when an interactive authentication attempt succeeds. This
     * is called by authentication listeners inheriting from AbstractAuthenticationListener.
@@ -53,9 +56,10 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         \Article::UnlockByUser($zendAuth->getIdentity());
 
         $request->setLocale($request->request->get('login_language'));
+        setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
-        $session = $request->getSession();
-        $session->set('NO_CACHE', true);
+        $user->setLastLogin(new \DateTime());
+        $this->em->flush();
 
         if ($request->get('ajax') === 'true') {
             // close popup with login.
@@ -63,5 +67,14 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         }
 
         return parent::onAuthenticationSuccess($request, $token);
+    }
+
+    private function extractDomain($domain)
+    {
+        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
+            return $matches['domain'];
+        } else {
+            return $domain;
+        }
     }
 }

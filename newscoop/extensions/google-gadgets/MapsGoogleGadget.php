@@ -30,7 +30,7 @@ class MapsGoogleGadget extends GoogleGadget
     /**
      * gadget code
      */
-    protected $code = '<script src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/mapsearch.xml&amp;up_location=&amp;up_largeMapMode=1&amp;up_kml=0&amp;up_traffic=&amp;up_locationCacheString=&amp;up_locationCacheLat=&amp;up_locationCacheLng=&amp;up_mapType=m&amp;up_idleZoom=11&amp;up_transitionQuery=&amp;up_rawquery=&amp;up_selectedtext=&amp;synd=open&amp;w=742&amp;h=375&amp;title=__MSG_title__&amp;lang=cs&amp;country=ALL&amp;border=%23ffffff%7C3px%2C1px+solid+%23999999&amp;output=js"></script>';
+    protected $code = '<script src="//www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/mapsearch.xml&amp;up_location=&amp;up_largeMapMode=1&amp;up_kml=0&amp;up_traffic=&amp;up_locationCacheString=&amp;up_locationCacheLat=&amp;up_locationCacheLng=&amp;up_mapType=m&amp;up_idleZoom=11&amp;up_transitionQuery=&amp;up_rawquery=&amp;up_selectedtext=&amp;synd=open&amp;w=742&amp;h=375&amp;title=__MSG_title__&amp;lang=cs&amp;country=ALL&amp;border=%23ffffff%7C3px%2C1px+solid+%23999999&amp;output=js"></script>';
 
     public function render()
     {

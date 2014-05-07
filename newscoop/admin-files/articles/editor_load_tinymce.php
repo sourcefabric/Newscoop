@@ -13,14 +13,14 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 
     $stylesheetFile = $Campsite['WEBSITE_URL'] . '/admin/articles/article_stylesheet.css';
 
-	/** STEP 1 ********************************************************
-	 * What are the names of the textareas you will be turning
-	 * into editors?
-	 ******************************************************************/
-	$editors = array();
-	if (is_array($p_dbColumns)) {
-	    foreach ($p_dbColumns as $dbColumn) {
-	        if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
+    /** STEP 1 ********************************************************
+     * What are the names of the textareas you will be turning
+     * into editors?
+     ******************************************************************/
+    $editors = array();
+    if (is_array($p_dbColumns)) {
+        foreach ($p_dbColumns as $dbColumn) {
+            if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
                 if ($p_articleNumber > 0) {
                     $editors[] = $dbColumn->getName().'_'.$p_articleNumber;
                 } else {
@@ -28,211 +28,216 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
                 }
             }
         }
-	} else {
-	    if ($p_articleNumber > 0) {
-	        $editors[] = $p_dbColumns.'_'.$p_articleNumber;
-	    } else {
-	        $editors[] = $p_dbColumns;
-	    }
+    } else {
+        if ($p_articleNumber > 0) {
+            $editors[] = $p_dbColumns.'_'.$p_articleNumber;
+        } else {
+            $editors[] = $p_dbColumns;
+        }
     }
     $textareas = implode(",", $editors);
 
-	/** STEP 2 ********************************************************
-	 * Now, what are the plugins you will be using in the editors
-	 * on this page.  List all the plugins you will need, even if not
-	 * all the editors will use all the plugins.
-	 ******************************************************************/
-	$plugins = array();
-	if ($p_user->hasPermission('EditorCopyCutPaste')) {
-	    $plugins[] = 'paste';
-	}
-	if ($p_user->hasPermission('EditorFindReplace')) {
+    /** STEP 2 ********************************************************
+     * Now, what are the plugins you will be using in the editors
+     * on this page.  List all the plugins you will need, even if not
+     * all the editors will use all the plugins.
+     ******************************************************************/
+    $plugins = array();
+    if ($p_user->hasPermission('EditorCopyCutPaste')) {
+        $plugins[] = 'paste';
+    }
+    if ($p_user->hasPermission('EditorFindReplace')) {
         $plugins[] = 'searchreplace';
-	}
-	if ($p_user->hasPermission('EditorEnlarge')) {
-	    $plugins[] = 'fullscreen';
-	}
-	if ($p_user->hasPermission('EditorTable')) {
-	    $plugins[] = 'table';
-	}
-	if ($p_user->hasPermission('EditorLink')) {
-	    $plugins[] = 'campsiteinternallink';
-	    if ($p_objectType == 'article') {
-	        $plugins[] = 'campsiteattachment';
-	    }
-	}
-	if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
-	        $plugins[] = 'campsiteimage';
+    }
+    if ($p_user->hasPermission('EditorEnlarge')) {
+        $plugins[] = 'fullscreen';
+    }
+    if ($p_user->hasPermission('EditorTable')) {
+        $plugins[] = 'table';
+    }
+    if ($p_user->hasPermission('EditorTable')) {
+        $plugins[] = 'table';
+            $plugins[] = 'textbox';
+    }
+    if ($p_user->hasPermission('EditorLink')) {
+        $plugins[] = 'campsiteinternallink';
+        if ($p_objectType == 'article') {
+            $plugins[] = 'campsiteattachment';
+        }
+    }
+    if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
+            $plugins[] = 'campsiteimage';
             $plugins[] = 'media';
-	}
+    }
         if ($p_user->hasPermission('EditorFontColor')) {
             $plugins[] = 'codehighlighting';
         }
         if ($p_user->hasPermission('EditorTextDirection')) {
             $plugins[] = 'directionality';
         }
-	$plugins[] = 'iframe';
+    $plugins[] = 'iframe';
 
-	$plugins_list = implode(",", $plugins);
+    $plugins_list = implode(",", $plugins);
 
-	$statusbar_location = "none";
-	if ($p_user->hasPermission('EditorStatusBar')) {
-	    $statusbar_location = "bottom";
-	}
+    $statusbar_location = "none";
+    if ($p_user->hasPermission('EditorStatusBar')) {
+        $statusbar_location = "bottom";
+    }
 
-	/** STEP 3 ********************************************************
-	 * We create a default configuration to be used by all the editors.
-	 * If you wish to configure some of the editors differently this
-	 * will be done in step 4.
-	 ******************************************************************/
-	$toolbar1 = array();
-	if ($p_user->hasPermission('EditorBold')) {
-	    $toolbar1[] = "bold";
-	}
-	if ($p_user->hasPermission('EditorItalic')) {
-	    $toolbar1[] = "italic";
-	}
-	if ($p_user->hasPermission('EditorUnderline')) {
-	    $toolbar1[] = "underline";
-	}
-	if ($p_user->hasPermission('EditorStrikethrough')) {
-	    $toolbar1[] = "strikethrough";
+    /** STEP 3 ********************************************************
+     * We create a default configuration to be used by all the editors.
+     * If you wish to configure some of the editors differently this
+     * will be done in step 4.
+     ******************************************************************/
+    $toolbar1 = array();
+    if ($p_user->hasPermission('EditorBold')) {
+        $toolbar1[] = "bold";
+    }
+    if ($p_user->hasPermission('EditorItalic')) {
+        $toolbar1[] = "italic";
+    }
+    if ($p_user->hasPermission('EditorUnderline')) {
+        $toolbar1[] = "underline";
+    }
+    if ($p_user->hasPermission('EditorStrikethrough')) {
+        $toolbar1[] = "strikethrough";
             $toolbar1[] = "blockquote";
-	}
-	if ($p_user->hasPermission('EditorTextAlignment')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "justifyleft";
-	    $toolbar1[] = "justifycenter";
-	    $toolbar1[] = "justifyright";
-	    $toolbar1[] = "justifyfull";
-	}
-	if ($p_user->hasPermission('EditorIndent')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "outdent";
-	    $toolbar1[] = "indent";
-	}
-	if ($p_user->hasPermission('EditorCopyCutPaste')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "copy";
-	    $toolbar1[] = "cut";
-	    $toolbar1[] = "paste";
-	    $toolbar1[] = "pastetext";
-	    $toolbar1[] = "pasteword";
-	}
-	if ($p_user->hasPermission('EditorUndoRedo')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "undo";
-	    $toolbar1[] = "redo";
-	}
-	if ($p_user->hasPermission('EditorTextDirection')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "ltr";
-	    $toolbar1[] = "rtl";
-	}
+    }
+    if ($p_user->hasPermission('EditorTextAlignment')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "justifyleft";
+        $toolbar1[] = "justifycenter";
+        $toolbar1[] = "justifyright";
+        $toolbar1[] = "justifyfull";
+    }
+    if ($p_user->hasPermission('EditorIndent')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "outdent";
+        $toolbar1[] = "indent";
+    }
+    if ($p_user->hasPermission('EditorCopyCutPaste')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "copy";
+        $toolbar1[] = "cut";
+        $toolbar1[] = "paste";
+        $toolbar1[] = "pastetext";
+        $toolbar1[] = "pasteword";
+    }
+    if ($p_user->hasPermission('EditorUndoRedo')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "undo";
+        $toolbar1[] = "redo";
+    }
+    if ($p_user->hasPermission('EditorTextDirection')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "ltr";
+        $toolbar1[] = "rtl";
+    }
 
-	if ($p_user->hasPermission('EditorLink')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "campsiteinternallink";
-	    $toolbar1[] = "link";
-	    $toolbar1[] = "anchor";
-	    if ($p_objectType == 'article') {
-	        $toolbar1[] = "campsiteattachment";
-	    }
-	}
-	if ($p_user->hasPermission('EditorSubhead')) {
-	    $toolbar1[] = "campsite-subhead";
-	}
-	if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
-	        $toolbar1[] = "campsiteimage";
-		    $toolbar1[] = "media";
-	}
-	if ($p_user->hasPermission('EditorSourceView')) {
-	    $toolbar1[] = "code";
-	}
-	if ($p_user->hasPermission('EditorEnlarge')) {
-	    $toolbar1[] = "fullscreen";
-	}
-	if ($p_user->hasPermission('EditorHorizontalRule')) {
-	    $toolbar1[] = "hr";
-	}
-	if ($p_user->hasPermission('EditorFontColor')) {
-	    $toolbar1[] = "forecolor";
-	    $toolbar1[] = "backcolor";
+    if ($p_user->hasPermission('EditorLink')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "campsiteinternallink";
+        $toolbar1[] = "link";
+        $toolbar1[] = "anchor";
+        if ($p_objectType == 'article') {
+            $toolbar1[] = "campsiteattachment";
+        }
+    }
+    if ($p_user->hasPermission('EditorSubhead')) {
+        $toolbar1[] = "campsite-subhead";
+    }
+    if ($p_user->hasPermission('EditorImage') && $p_objectType == 'article') {
+            $toolbar1[] = "campsiteimage";
+            $toolbar1[] = "media";
+    }
+    if ($p_user->hasPermission('EditorSourceView')) {
+        $toolbar1[] = "code";
+    }
+    if ($p_user->hasPermission('EditorEnlarge')) {
+        $toolbar1[] = "fullscreen";
+    }
+    if ($p_user->hasPermission('EditorHorizontalRule')) {
+        $toolbar1[] = "hr";
+    }
+    if ($p_user->hasPermission('EditorFontColor')) {
+        $toolbar1[] = "forecolor";
+        $toolbar1[] = "backcolor";
             $toolbar1[] = 'codehighlighting';
-	}
-	if ($p_user->hasPermission('EditorSubscript')) {
-	    $toolbar1[] = "sub";
-	}
-	if ($p_user->hasPermission('EditorSuperscript')) {
-	    $toolbar1[] = "sup";
-	}
-	if ($p_user->hasPermission('EditorFindReplace')) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "search";
-	    $toolbar1[] = "replace";
-	}
+    }
+    if ($p_user->hasPermission('EditorSubscript')) {
+        $toolbar1[] = "sub";
+    }
+    if ($p_user->hasPermission('EditorSuperscript')) {
+        $toolbar1[] = "sup";
+    }
+    if ($p_user->hasPermission('EditorFindReplace')) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "search";
+        $toolbar1[] = "replace";
+    }
 
-	$toolbar2 = array();
-	// Slice up the first toolbar if it is too long.
-	if (count($toolbar1) > 34) {
-		$toolbar2 = array_splice($toolbar1, 34);
-	}
+    $toolbar2 = array();
+    // Slice up the first toolbar if it is too long.
+    if (count($toolbar1) > 34) {
+        $toolbar2 = array_splice($toolbar1, 34);
+    }
 
-	if ($p_user->hasPermission('EditorCharacterMap')) {
+    if ($p_user->hasPermission('EditorCharacterMap')) {
         $toolbar2[] = "charmap";
-	}
+    }
 
 
-	// This is to put the bulleted and numbered list controls
-	// on the most appropriate line of the toolbar.
-	if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 19) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "bullist";
-	    $toolbar1[] = "numlist";
-	} elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 34) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "bullist";
-	} elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
-	    $toolbar1[] = "|";
-	    $toolbar1[] = "numlist";
-	} else {
-	    $hasSeparator = false;
-	    if ($p_user->hasPermission('EditorListBullet')) {
-	        $toolbar2[] = "|";
-	        $toolbar2[] = "bullist";
+    // This is to put the bulleted and numbered list controls
+    // on the most appropriate line of the toolbar.
+    if ($p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 19) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "bullist";
+        $toolbar1[] = "numlist";
+    } elseif ($p_user->hasPermission('EditorListBullet') && !$p_user->hasPermission('EditorListNumber') && count($toolbar1) < 34) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "bullist";
+    } elseif (!$p_user->hasPermission('EditorListBullet') && $p_user->hasPermission('EditorListNumber') && count($toolbar1) < 20) {
+        $toolbar1[] = "|";
+        $toolbar1[] = "numlist";
+    } else {
+        $hasSeparator = false;
+        if ($p_user->hasPermission('EditorListBullet')) {
+            $toolbar2[] = "|";
+            $toolbar2[] = "bullist";
             $hasSeparator = true;
-	    }
-	    if ($p_user->hasPermission('EditorListNumber')) {
-	        if (!$hasSeparator) {
+        }
+        if ($p_user->hasPermission('EditorListNumber')) {
+            if (!$hasSeparator) {
                 $toolbar2[] = "|";
             }
-	        $toolbar2[] = "numlist";
-	    }
-	}
+            $toolbar2[] = "numlist";
+        }
+    }
 
-	if ($p_user->hasPermission('EditorFontFace')) {
-	    $toolbar2[] = "|";
-	    //$toolbar2[] = "styleselect";
-	    $toolbar2[] = "formatselect";
-	    //$toolbar2[] = "fontselect";
-	}
-	if ($p_user->hasPermission('EditorFontSize')) {
-	    $toolbar2[] = "fontsizeselect";
-	}
+    if ($p_user->hasPermission('EditorFontFace')) {
+        $toolbar2[] = "|";
+        //$toolbar2[] = "styleselect";
+        $toolbar2[] = "formatselect";
+        //$toolbar2[] = "fontselect";
+    }
+    if ($p_user->hasPermission('EditorFontSize')) {
+        $toolbar2[] = "fontsizeselect";
+    }
 
-	if ($p_user->hasPermission('EditorTable')) {
-	    $toolbar3[] = "tablecontrols";
-	}
-	$toolbar2[] = 'iframe';
+    if ($p_user->hasPermission('EditorTable')) {
+        $toolbar3[] = "tablecontrols";
+        $toolbar3[] = 'textbox';
+    }
+    $toolbar2[] = 'iframe';
 
-	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
-	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
-	$theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
+    $theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
+    $theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
+    $theme_buttons3 = (count($toolbar3) > 0) ? implode(',', $toolbar3) : '';
 
     $localeFile = $Campsite['CAMPSITE_DIR'] . '/js/tinymce/langs/' . $p_editorLanguage . '.js';
-	if (!file_exists($localeFile)) {
-	    $p_editorLanguage = 'en';
-	}
+    if (!file_exists($localeFile)) {
+        $p_editorLanguage = 'en';
+    }
 ?>
 
 <!-- Load TinyMCE -->
@@ -254,10 +259,10 @@ $().ready(function() {
     $('textarea.tinymce').tinymce({
 
 
-    	// Location of TinyMCE script
+        // Location of TinyMCE script
         script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/js/tinymce/tiny_mce.js',
 
-     	// General options
+        // General options
         language : "<?php p($p_editorLanguage); ?>",
         theme : "advanced",
         plugins : "<?php p($plugins_list); ?>",
@@ -277,17 +282,17 @@ $().ready(function() {
         theme_advanced_resizing : false,
         theme_advanced_statusbar_location: "<?php p($statusbar_location); ?>",
 
-     	// Example content CSS (should be your site CSS)
+        // Example content CSS (should be your site CSS)
         content_css : "<?php echo $stylesheetFile; ?>",
 
-     	// Drop lists for link/image/media/template dialogs
+        // Drop lists for link/image/media/template dialogs
         template_external_list_url : "lists/template_list.js",
         external_link_list_url : "lists/link_list.js",
         external_image_list_url : "lists/image_list.js",
         media_external_list_url : "lists/media_list.js",
 
 
-     	// paste options
+        // paste options
         paste_auto_cleanup_on_paste: true,
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
@@ -303,27 +308,24 @@ $().ready(function() {
 
         <?php
         $translator = \Zend_Registry::get('container')->getService('translator');
-        if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
+        ?>
         setup : function(ed) {
+            var wordcount = false;
+            <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
             ed.onInit.add(function(){
-				ed.controlManager.setDisabled('pasteword', true);
-					if (tinymce.isIE) {
-						tinymce.dom.Event.add(ed.getBody(), "dragenter", function(e) {
-							return tinymce.dom.Event.cancel(e);
-						});
-					} else {
-					   tinymce.dom.Event.add(ed.getBody().parentNode, "drop", function(e) {
-							tinymce.dom.Event.cancel(e);
-							tinymce.dom.Event.stop(e);
-						});
-					}
-			});
-            ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
-
-            ed.onKeyUp.add(function(ed, l) {
-                var idx = ed.id.lastIndexOf('_');
-                var buttonId = ed.id.substr(0, idx);
+                ed.controlManager.setDisabled('pasteword', true);
+                    if (tinymce.isIE) {
+                        tinymce.dom.Event.add(ed.getBody(), "dragenter", function(e) {
+                            return tinymce.dom.Event.cancel(e);
+                        });
+                    } else {
+                       tinymce.dom.Event.add(ed.getBody().parentNode, "drop", function(e) {
+                            tinymce.dom.Event.cancel(e);
+                            tinymce.dom.Event.stop(e);
+                        });
+                    }
             });
+            ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
 
             ed.addButton('campsite-subhead', {
                 title : '<?php echo $translator->trans("Newscoop Subhead", array(), 'articles'); ?>',
@@ -332,9 +334,18 @@ $().ready(function() {
                     CampsiteSubhead(ed);
                 }
             });
-        },
-        <?php } ?>
+            <?php } ?>
 
+            ed.onKeyUp.add(function(ed, l) {
+                var row = tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row');
+                if (!wordcount) {
+                    tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, '<?php echo $translator->trans("Characters", array(), 'articles'); ?>: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
+                    wordcount = true;
+                }
+                var strip = (tinyMCE.activeEditor.getContent()).replace(/(<([^>]+)>)/ig,"");
+                tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', strip.length);
+            });
+        },
     });
 });
 

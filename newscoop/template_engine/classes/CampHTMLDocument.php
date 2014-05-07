@@ -302,11 +302,6 @@ final class CampHTMLDocument
             array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         }
 
-        $subdir = $this->m_config->getSetting('SUBDIR');
-        if (!empty($subdir)) {
-            $siteinfo['templates_path'] = substr($subdir, 1) . '/' . $siteinfo['templates_path'];
-        }
-
         $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
@@ -314,7 +309,12 @@ final class CampHTMLDocument
         // on template caching add additional info
         if ($preferencesService->TemplateCacheHandler) {
             $uri = CampSite::GetURIInstance();
-            $tpl->campsiteVector = $uri->getCampsiteVector();
+            $smarty = CampTemplate::singleton();
+            $tpl->campsiteVector = array_merge(
+                $uri->getCampsiteVector(),
+                $smarty->campsiteVector
+            );
+
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
             $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
         }

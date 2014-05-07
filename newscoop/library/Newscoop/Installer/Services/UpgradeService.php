@@ -15,9 +15,9 @@ use Newscoop\Installer\Services;
  */
 class UpgradeService
 {
-    private $newscoopDir;
-    private $connection;
-    private $monolog;
+    protected $newscoopDir;
+    protected $connection;
+    protected $monolog;
 
     /**
      * @param Connection $connection

@@ -25,36 +25,36 @@ class CityLocations
      * @ORM\Column(type="integer", name="id")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="point", name="position")
      */
-    private $position;
+    protected $position;
 
     /**
      * @ORM\Column(type="string", name="city_type", nullable=true)
      * @var string
      */
-    private $city_type;
+    protected $city_type;
 
     /**
      * @ORM\Column(type="integer", name="population")
      * @var int
      */
-    private $population;
+    protected $population;
 
     /**
      * @ORM\Column(type="string", columnDefinition="CHAR(2) NOT NULL", name="elevation")
      * @var string
      */
-    private $elevation;
+    protected $elevation;
 
     /**
      * @ORM\Column(type="string", length=1023, name="time_zone")
      * @var string
      */
-    private $time_zone;
+    protected $time_zone;
 
     public function __construct() {}
 

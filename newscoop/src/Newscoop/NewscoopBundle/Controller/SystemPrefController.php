@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Newscoop\NewscoopBundle\Form\Type\PreferencesType;
 
@@ -22,7 +23,7 @@ class SystemPrefController extends Controller
      * @Template()
      */
     public function indexAction(Request $request)
-    {   
+    {
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
 
@@ -40,12 +41,12 @@ class SystemPrefController extends Controller
 
         $hasManagePermission = false;
 
-        if(\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+        if (\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
             $hasManagePermission = true;
         }
 
         $max_upload_filesize = $preferencesService->MaxUploadFileSize;
-        if(empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
+        if (empty($max_upload_filesize) || $max_upload_filesize == 0 || $max_upload_filesize != ini_get('upload_max_filesize')) {
             $preferencesService->MaxUploadFileSize = ini_get('upload_max_filesize');
         }
 
@@ -97,6 +98,8 @@ class SystemPrefController extends Controller
             'meta_description' => $preferencesService->SiteMetaDescription,
             'timezone' => $preferencesService->TimeZone,
             'cache_engine' => $preferencesService->DBCacheEngine,
+            'cache_engine_host' => $preferencesService->DBCacheEngineHost,
+            'cache_engine_port' => $preferencesService->DBCacheEnginePort,
             'cache_template' => $preferencesService->TemplateCacheHandler,
             'cache_image' => $preferencesService->ImagecacheLifetime,
             'allow_recovery' => $preferencesService->PasswordRecovery,
@@ -110,7 +113,7 @@ class SystemPrefController extends Controller
             'smtp_port' => $preferencesService->SMTPPort,
             'email_from' => $preferencesService->EmailFromAddress,
             'image_ratio' => $preferencesService->EditorImageRatio,
-            'image_width' => (int)$preferencesService->EditorImageResizeWidth,     
+            'image_width' => (int)$preferencesService->EditorImageResizeWidth,
             'image_height' => (int)$preferencesService->EditorImageResizeHeight,
             'zoom' => $preferencesService->EditorImageZoom,
             'use_replication_host' => $preferencesService->DBReplicationHost,
@@ -152,8 +155,12 @@ class SystemPrefController extends Controller
             'recaptchaPublicKey' => $preferencesService->RecaptchaPublicKey,
             'recaptchaPrivateKey' => $preferencesService->RecaptchaPrivateKey,
             'recaptchaSecure' => $preferencesService->RecaptchaSecure,
+            'userGarbageActive' => $preferencesService->userGarbageActive ?: 'N',
+            'userGarbageDays' => $preferencesService->userGarbageDays ?: 90,
         )
-        , array());
+        , array(
+            'cacheService' => $this->container->get('newscoop.cache')
+        ));
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -200,14 +207,13 @@ class SystemPrefController extends Controller
                 }
                 //geolocation
                 $geolocationSettings = $this->geolocation($data['center_latitude_default'], $data['center_longitude_default'], $geoLocation, $translator);
-                
                 if ($geolocationSettings instanceof RedirectResponse) {
                     return $geolocationSettings;
                 }
 
                 if($hasManagePermission) {
                     // DB Caching
-                    $databaseCacheSettings = $this->databaseCache($data['cache_engine'], $translator);
+                    $databaseCacheSettings = $this->databaseCache($data['cache_engine'], $data['cache_engine_host'], $data['cache_engine_port']);
 
                     if ($databaseCacheSettings instanceof RedirectResponse) {
                         return $databaseCacheSettings;
@@ -231,10 +237,11 @@ class SystemPrefController extends Controller
                     $this->smtpConfiguration($data['smtp_host'], $data['smtp_port']);
                     // Image resizing for WYSIWYG editor
                     $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
-                    // Replication
-                    
                     // template filter
                     $this->templateFilter($data['template_filter']);
+                    // users garbage settings
+                    $preferencesService->set('userGarbageActive', $data['userGarbageActive']);
+                    $preferencesService->set('userGarbageDays', $data['userGarbageDays']);
                 }
                 // General Settings
                 $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
@@ -261,29 +268,37 @@ class SystemPrefController extends Controller
     }
 
     /**
+     * @Route("/admin/preferences/cache/clear", options={"expose"=true})
+     * @Template()
+     */
+    public function clearDatabaseCacheAction(Request $request)
+    {
+        $cacheService = $this->get('newscoop.cache');
+        $cacheDriver = $cacheService->getCacheDriver();
+
+        try {
+            $cacheDriver->deleteAll();
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
      * Sets database caching
      *
-     * @param string                                   $cache_engine Values 1 or 0
-     * @param Symfony\Component\Translation\Translator $translator   Translator
+     * @param string $cache_engine
+     * @param string $cache_engine_host
+     * @param string $cache_engine_port
      *
      * @return void|RedirectResponse
      */
-    private function databaseCache($cache_engine, $translator) {
+    private function databaseCache($cache_engine, $cache_engine_host, $cache_engine_port) {
         $preferencesService = $this->container->get('system_preferences_service');
-
-        if ($preferencesService->DBCacheEngine != $cache_engine) {
-            if (!$cache_engine || \CampCache::IsSupported($cache_engine)) {
-                $preferencesService->DBCacheEngine = $cache_engine;
-                \CampCache::singleton()->clear('user');
-                \CampCache::singleton()->clear();
-            } else {
-                $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.cache',
-                    array('%cache%' => $cache_engine), 'system_pref'
-                ));
-
-                return $this->redirect($this->generateUrl('newscoop_newscoop_systempref_index'));
-            }
-        }
+        $preferencesService->set('DBCacheEngine', $cache_engine);
+        $preferencesService->set('DBCacheEngineHost', $cache_engine_host);
+        $preferencesService->set('DBCacheEnginePort', $cache_engine_port);
     }
 
     /**
@@ -533,5 +548,5 @@ class SystemPrefController extends Controller
         if (strip_tags($mysql_client_command_path)) {
             $preferencesService->MysqlClientCommandPath = strip_tags($mysql_client_command_path);
         }
-    }            
+    }
 }

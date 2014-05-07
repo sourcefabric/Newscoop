@@ -20,8 +20,8 @@ class LinkRequestListener
     /**
      * @var ControllerResolverInterface
      */
-    private $resolver;
-    private $urlMatcher;
+    protected $resolver;
+    protected $urlMatcher;
 
     /**
      * @param ControllerResolverInterface $controllerResolver The 'controller_resolver' service
@@ -73,13 +73,19 @@ class LinkRequestListener
             $linkParams = explode(';', trim($link));
             $resource   = array_shift($linkParams);
             $resource   = preg_replace('/<|>/', '', $resource);
+            $tempRequest = Request::create($resource);
 
             try {
-                $route = $this->urlMatcher->match($resource);
+                $route = $this->urlMatcher->match($tempRequest->getRequestUri());
             } catch (\Exception $e) {
                 // If we don't have a matching route we return the original Link header
                 continue;
             }
+
+            if (strpos($route['_route'], 'newscoop_gimme_') === false) {
+                return;
+            }
+
             $stubRequest->attributes->replace($route);
 
             if (false === $controller = $this->resolver->getController($stubRequest)) {
@@ -100,18 +106,18 @@ class LinkRequestListener
 
             try {
                 $result = call_user_func_array($controller, $arguments);
-                // By convention the controller action must return an array
-                if (!is_array($result)) {
+                // Our api returns objects for single resources
+                if (!is_object($result)) {
                     continue;
-                }ladybug_dump($result);die;
+                }
 
-                // The key of first item is discarded
-                $links[$idx] = current($result);
+                $links[$idx] = $result;
             } catch (\Exception $e) {
+                $links[$idx] = $e;
+
                 continue;
             }
         }
-
 
         $event->getRequest()->attributes->set('links', $links);
         $this->urlMatcher->getContext()->setMethod($requestMethod);

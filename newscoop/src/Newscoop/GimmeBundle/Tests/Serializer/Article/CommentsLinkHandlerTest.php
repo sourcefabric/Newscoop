@@ -17,9 +17,9 @@ use JMS\SerializerBundle\Serializer\Naming\CamelCaseNamingStrategy;
 
 class CommentsLinkHandlerTest extends ContainerAwareUnitTestCase
 {   
-    private $article;
-    private $commentsHandler;
-    private $ymlSerializationVisitor;
+    protected $article;
+    protected $commentsHandler;
+    protected $ymlSerializationVisitor;
 
     protected function setUp()
     {

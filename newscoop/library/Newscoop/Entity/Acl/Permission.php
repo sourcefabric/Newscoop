@@ -21,7 +21,7 @@ class Permission
      * @ORM\Column(name="right_define_name")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * Return name

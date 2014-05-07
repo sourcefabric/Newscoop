@@ -23,32 +23,32 @@ class Snippet
      * @ORM\Column(name="Id", type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Snippet\Template")
      * @ORM\JoinColumn(name="TemplateId", referencedColumnName="Id")
      * @var Newscoop\Entity\Snippet\Template
      */
-    private $template;
+    protected $template;
 
     /**
      * @ORM\Column(name="Name", type="string")
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(name="Parameters", type="text")
      * @var text
      */
-    private $parameters;
+    protected $parameters;
 
     /**
      * @ORM\Column(name="Snippet", type="text")
      * @var text
      */
-    private $snippet;
+    protected $snippet;
 
     /**
      * Getter for id

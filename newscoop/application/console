@@ -25,6 +25,8 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
 
+error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
+
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'prod');
 $debug = getenv('SYMFONY_DEBUG') !== '0' && !$input->hasParameterOption(array('--no-debug', '')) && $env !== 'prod';
@@ -47,7 +49,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
     new \Newscoop\Tools\Console\Command\UpdateAutoloadCommand(),
     new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
-    new \Newscoop\Tools\Console\Command\ResetIndexCommand(),
+    new \Newscoop\Tools\Console\Command\ClearIndexCommand(),
     new \Newscoop\Tools\Console\Command\InstallPluginCommand(),
     new \Newscoop\Tools\Console\Command\RemovePluginCommand(),
     new \Newscoop\Tools\Console\Command\UpdatePluginCommand(),
@@ -58,6 +60,12 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
     new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
     new \Newscoop\Tools\Console\Command\GenerateORMSchemaCommand(),
+    new \Newscoop\Tools\Console\Command\UserGarbageCollectionCommand(),
+    new \Newscoop\Tools\Console\Command\AutopublishCommand(),
+    new \Newscoop\Tools\Console\Command\ClearOldStatisticsCommand(),
+    new \Newscoop\Tools\Console\Command\IndexerCommand(),
+    new \Newscoop\Tools\Console\Command\EventsNotifierCommand(),
+    new \Newscoop\Tools\Console\Command\SubscriptionsNotifierCommand(),
 ));
 
 $cli->run($input);

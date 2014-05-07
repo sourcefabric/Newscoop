@@ -30,35 +30,35 @@ class OutputSettings extends AbstractEntity
 	 * @ORM\JoinColumn(name="fk_output_id", referencedColumnName="id", nullable=FALSE)
 	 * @var Newscoop\Entity\Output
 	 */
-	private $output;
+	protected $output;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
 	 * @ORM\JoinColumn(name="fk_front_page_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Resource
 	 */
-	private $frontPage;
+	protected $frontPage;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
 	 * @ORM\JoinColumn(name="fk_section_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
-	private $sectionPage;
+	protected $sectionPage;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
 	 * @ORM\JoinColumn(name="fk_article_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
-	private $articlePage;
+	protected $articlePage;
 
 	/**
 	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
 	 * @ORM\JoinColumn(name="fk_error_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
-	private $errorPage;
+	protected $errorPage;
 
 	/* --------------------------------------------------------------- */
 

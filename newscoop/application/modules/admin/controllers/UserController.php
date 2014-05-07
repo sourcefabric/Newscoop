@@ -59,7 +59,7 @@ class Admin_UserController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Admin_Form_UserCriteria();
         $form->groups->addMultiOptions($this->_helper->service('user')->getGroupOptions());
@@ -210,7 +210,17 @@ class Admin_UserController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
-                $this->userService->save($form->getValues(), $user);
+                $values = $form->getValues();
+                $values['attributes'] = array(
+                    'is_verified' => $values['is_verified'],
+                );
+                unset($values['is_verified']);
+
+                $this->userService->save($values, $user);
+
+                $cacheService = \Zend_Registry::get('container')->get('newscoop.cache');
+                $cacheService->getCacheDriver()->deleteAll();
+
                 $this->_helper->flashMessenger($translator->trans("User saved", array(), 'users'));
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
@@ -228,9 +238,15 @@ class Admin_UserController extends Zend_Controller_Action
             }
         }
 
+        $requestSymfony = \Zend_Registry::get('container')->getService('request');
+        $zendRouter = \Zend_Registry::get('container')->getService('zend_router');
+        $publicationMetadata = $requestSymfony->attributes->get('_newscoop_publication_metadata');
+        $baseUrl = $requestSymfony->getScheme().'://'.$publicationMetadata['alias']['name'].$zendRouter->assemble(array('controller' => 'images'), 'default', true);
         $this->view->form = $form;
         $this->view->user = $user;
         $this->view->image = $this->_helper->service('image')->getSrc('images/' . $user->getImage(), 80, 80, 'crop');
+        $this->view->baseImage = $baseUrl.'/'.$user->getImage();
+        $this->view->originalImage = $user->getImage();
         $this->view->actions = array(
             array(
                 'label' => $translator->trans('Edit permissions', array(), 'users'),

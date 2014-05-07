@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Newscoop\Image\ImageInterface as NewscoopImageInterface;
 use Newscoop\Image\LocalImage;
 use Newscoop\Entity\User;
+use Newscoop\Exception\ResourcesConflictException;
+use Doctrine\ORM\NoResultException;
 
 /**
  * Image Service
@@ -24,17 +26,17 @@ class ImageService
     /**
      * @var array
      */
-    private $config = array();
+    protected $config = array();
 
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @var array
      */
-    private $supportedTypes = array(
+    protected $supportedTypes = array(
         'image/jpeg',
         'image/jpg',
         'image/png',
@@ -149,10 +151,40 @@ class ImageService
             unlink($this->config['thumbnail_path'] . $image->getThumbnailPath(true));
         }
 
+        $articleImages = $this->orm->getRepository('Newscoop\Image\ArticleImage')
+            ->getArticleImagesForImage($image)
+            ->getResult();
+
+        foreach ($articleImages as $articleImage) {
+            \ArticleImage::RemoveImageTagsFromArticleText($articleImage->getArticleNumber(), $articleImage->getNumber());
+            $this->orm->remove($articleImage);
+        }
+
         $this->orm->remove($image);
         $this->orm->flush();
 
         return true;
+    }
+
+    /**
+     * Save image
+     *
+     * @param array $info
+     *
+     * @return string
+     */
+    public function save(array $info)
+    {
+        if (!in_array($info['type'], $this->supportedTypes)) {
+            throw new \InvalidArgumentException("Unsupported image type '$info[type]'.");
+        }
+
+        $name = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
+        if (!file_exists(APPLICATION_PATH . "/../images/$name")) {
+            rename($info['tmp_name'], APPLICATION_PATH . "/../images/$name");
+        }
+
+        return $name;
     }
 
     /**
@@ -302,15 +334,34 @@ class ImageService
             $this->orm->flush($image);
         }
 
+        if ($this->getArticleImage($articleNumber, $image->getId())) {
+            throw new ResourcesConflictException("Image already attached to article", 409);
+        }
+
+        $imagesCount = $this->getArticleImagesCount($articleNumber);
         $articleImage = new ArticleImage(
             $articleNumber,
             $image,
-            $defaultImage || $this->getArticleImagesCount($articleNumber) === 0
+            $defaultImage || $imagesCount === 0,
+            $imagesCount+1
         );
         $this->orm->persist($articleImage);
         $this->orm->flush($articleImage);
 
         return $articleImage;
+    }
+
+    /**
+     * Remove image from article
+     *
+     * @param ArticleImage $articleImage
+     */
+    public function removeArticleImage(ArticleImage $articleImage)
+    {
+        \ArticleImage::RemoveImageTagsFromArticleText($articleImage->getArticleNumber(), $articleImage->getNumber());
+
+        $this->orm->remove($articleImage);
+        $this->orm->flush();
     }
 
     /**
@@ -433,13 +484,13 @@ class ImageService
     {
         $query = $this->orm->getRepository('Newscoop\Image\ArticleImage')
             ->createQueryBuilder('i')
-            ->select('COUNT(i)')
+            ->select('MAX(i.number)')
             ->where('i.articleNumber = :articleNumber')
             ->getQuery();
 
         return $query
             ->setParameter('articleNumber', $articleNumber)
-            ->getScalarResult();
+            ->getSingleScalarResult();
     }
 
     /**
@@ -523,6 +574,23 @@ class ImageService
     }
 
     /**
+     * Get user image
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function getUserImage(User $user, $width = 65, $height = 65)
+    {
+        if ($user->getImage() !== null) {
+            return $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop');
+        }
+
+        return null;
+    }
+
+    /**
      * Update schema if needed
      *
      * @param integer $articleNumber
@@ -541,5 +609,96 @@ class ImageService
                 $this->orm->getConnection()->exec('ALTER TABLE ArticleImages ADD is_default INT(1) DEFAULT NULL');
             }
         }
+    }
+
+    /**
+     * Gets path of local images
+     *
+     * @return string
+     */
+    public function getImagePath()
+    {
+        return $this->config['image_path'];
+    }
+
+    /**
+     * Return true if the image is being used by an article.
+     *
+     * @param LocalImage $image Local image
+     *
+     * @return boolean
+     */
+    public function inUse($image)
+    {
+        $imageArticle = $this->orm->getRepository('Newscoop\Image\ArticleImage')->findOneBy(array(
+            'image' => $image,
+        ));
+
+        if ($imageArticle) {
+            $imagesCount = $this->orm->getRepository('Newscoop\Entity\Article')
+                ->createQueryBuilder('a')
+                ->select('count(a)')
+                ->where('number = :articleNumber')
+                ->andWhere('images = :image')
+                ->setParameter('image', $imageArticle)
+                ->setParameter('articleNumber', $imageArticle->getArticleNumber())
+                ->getQuery()
+                ->getSingleScalarResult();
+
+            if ((int) $imagesCount > 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+    * Get image caption
+    *
+    * @param int $image
+    * @param int $articleNumber
+    * @param int $languageId
+    *
+    * @return string
+    */
+    public function getCaption(\Newscoop\Image\LocalImage $image, $articleNumber, $languageId)
+    {
+        $caption = $this->getArticleImageCaption($image->getId(), $articleNumber, $languageId);
+
+        if (!empty($caption)) {
+            return $caption;
+        }
+
+        return $image->getDescription();
+    }
+
+    /**
+    * Get article specific image caption
+    *
+    * @param int $imageId
+    * @param int $articleNumber
+    * @param int $languageId
+    *
+    * @return string
+    */
+    private function getArticleImageCaption($imageId, $articleNumber, $languageId)
+    {
+        $query = $this->orm->getRepository('Newscoop\Image\ArticleImageCaption')->createQueryBuilder('c')
+            ->select('c.caption')
+            ->where('c.articleNumber = :article')
+            ->andWhere('c.image = :image')
+            ->andWhere('c.languageId = :language')
+            ->getQuery();
+
+        $query->setParameters(array(
+            'article' => $articleNumber,
+            'image' => $imageId,
+            'language' => $languageId,
+        ));
+
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) {}
     }
 }

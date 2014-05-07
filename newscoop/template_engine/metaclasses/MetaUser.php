@@ -194,14 +194,13 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function isBlockedFromComments()
     {
-        require_once dirname(__FILE__) . '/../../include/get_ip.php';
-
         $em = \Zend_Registry::get('container')->getService('em');
+        $userService = \Zend_Registry::get('container')->getService('user');
+        $userIp = $userService->getUserIp();
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
+        $repositoryAcceptance = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
 
-        $userIp = getIp();
-        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
-        $repositoryAcceptance = $em->getRepository('Newscoop\user\Comment\Acceptance');
-        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
+        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publicationId);
     }
 
     /**
@@ -254,14 +253,18 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if (!$this->m_dbObject->getId()) {
             return 0;
         }
+
         $em = \Zend_Registry::get('container')->getService('em');
 
         $sum = 0;
-        $sum +=  $em->getRepository('Newscoop\Entity\Comment')
+        $sum += $em->getRepository('Newscoop\Entity\Comment')
             ->countByUser($this->m_dbObject);
 
-        $sum +=  $em->getRepository('Newscoop\Entity\Feedback')
+        $sum += $em->getRepository('Newscoop\Entity\Feedback')
             ->countByUser($this->m_dbObject);
+
+        $sum += $em->getRepository('Newscoop\Entity\Article')
+            ->countByAuthor($this->m_dbObject);
 
         return $sum;
     }

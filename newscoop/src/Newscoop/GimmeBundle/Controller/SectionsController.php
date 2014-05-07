@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +19,17 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SectionsController extends FOSRestController
 {
     /**
+     * Get Sections
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when sections found",
+     *         404={
+     *           "Returned when sections are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/sections.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -25,7 +37,7 @@ class SectionsController extends FOSRestController
     public function getSectionsAction(Request $request)
     {
         $em = $this->container->get('em');
-        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $sections = $em->getRepository('Newscoop\Entity\Section')
             ->getSections($publication);
@@ -43,6 +55,19 @@ class SectionsController extends FOSRestController
     }
 
     /**
+     * Get section articles
+     *
+     * Returns array with articles under "items" key and requested section "id" and "title"
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *         404={
+     *           "Returned when the section articles are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/sections/{number}/{language}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
@@ -50,7 +75,7 @@ class SectionsController extends FOSRestController
     public function getSectionsArticlesAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
-        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));

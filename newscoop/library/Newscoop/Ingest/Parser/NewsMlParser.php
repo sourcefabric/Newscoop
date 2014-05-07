@@ -17,10 +17,10 @@ class NewsMlParser implements Parser
     const MEDIA_PRODUCT = 'Photo Dienst D';
 
     /** @var SimpleXMLElement */
-    private $xml;
+    protected $xml;
 
     /** @var string */
-    private $dir;
+    protected $dir;
 
     /**
      * @param string $content

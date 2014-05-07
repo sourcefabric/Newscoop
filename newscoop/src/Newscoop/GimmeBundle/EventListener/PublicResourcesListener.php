@@ -15,9 +15,9 @@ use OAuth2\OAuth2AuthenticateException;
 
 class PublicResourcesListener
 {
-    private $em;
-    private $serverService;
-    private $security;
+    protected $em;
+    protected $serverService;
+    protected $security;
 
     public function __construct($em, $serverService, $security)
     {
@@ -32,6 +32,17 @@ class PublicResourcesListener
         $route = $request->attributes->get('_route');
 
         $unprotected = $this->em->getRepository('\Newscoop\GimmeBundle\Entity\PublicApiResource')->findOneByResource($route);
+        $rootsArray = array(
+            'newscoop_gimme_users_login',
+            'newscoop_gimme_users_logout',
+            'newscoop_gimme_users_register',
+            'newscoop_gimme_users_restorepassword'
+        );
+
+        if (in_array($route, $rootsArray)) {
+            $unprotected = true;
+        }
+
         if (!$unprotected &&
             strpos($route, 'newscoop_gimme_') !== false &&
             false === $this->security->isGranted('IS_AUTHENTICATED_FULLY')

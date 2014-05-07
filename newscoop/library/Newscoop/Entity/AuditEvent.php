@@ -16,60 +16,61 @@ use Doctrine\ORM\Mapping AS ORM;
 class AuditEvent
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(length=80)
      * @var string
      */
-    private $resource_type;
+    protected $resource_type;
 
     /**
      * @ORM\Column(length=80, nullable=True, name="resource_id")
      * @var string
      */
-    private $resource_id;
+    protected $resource_id;
 
     /**
      * @ORM\Column(length=255, nullable=True)
      * @var string
      */
-    private $resource_title;
+    protected $resource_title;
 
     /**
      * @ORM\Column(type="text", nullable=True, name="resource_diff")
      * @var string
      */
-    private $resource_diff;
+    protected $resource_diff;
 
     /**
      * @ORM\Column(length=80)
      * @var string
      */
-    private $action;
+    protected $action;
 
     /**
      * @ORM\Column(type="datetime")
      * @var DateTime
      */
-    private $created;
+    protected $created;
 
     /**
      * @ORM\Column(type="boolean")
      * @var bool
      */
-    private $is_public = FALSE;
+    protected $is_public = FALSE;
 
     /**
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
-    private $user;
+    protected $user;
 
     /**
      */

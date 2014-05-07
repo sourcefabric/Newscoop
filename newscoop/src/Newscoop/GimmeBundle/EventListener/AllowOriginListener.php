@@ -8,6 +8,7 @@
 namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Newscoop\Gimme\Json;
@@ -17,7 +18,7 @@ use Newscoop\Gimme\Json;
  */
 class AllowOriginListener
 {
-    private $container;
+    protected $container;
 
     public function __construct($container)
     {
@@ -37,22 +38,46 @@ class AllowOriginListener
             return false;
         }
 
-        $alowedHosts = $this->container->getParameter('newscoop.gimme.allow_origin');
+        $allowedHosts = $this->container->getParameter('newscoop.gimme.allow_origin');
 
-        if (count($alowedHosts) == 0) {
+        if (count($allowedHosts) == 0) {
             return false;
         }
 
-        if (in_array('*', $alowedHosts)) {
+        $allowedMethods = array('POST', 'GET', 'PUT', 'DELETE', 'LINK', 'UNLINK', 'PATCH', 'OPTIONS');
+        if (preg_match('/Firefox/', $request->headers->get('user-agent'))) {
+            foreach ($allowedMethods as $method) {
+                $allowedMethods[] = ucfirst(strtolower($method));
+            }
+        }
+        $response->headers->set('Access-Control-Allow-Methods', implode(', ', $allowedMethods));
+
+        $response->headers->set('Access-Control-Expose-Headers', 'X-Location, X-Debug');
+
+        if (in_array('*', $allowedHosts)) {
             $response->headers->set('Access-Control-Allow-Origin', '*');
-            $event->setResponse($response);
         } else {
-            foreach ($alowedHosts as $host) {
+            foreach ($allowedHosts as $host) {
                 if ($request->server->get('HTTP_ORIGIN') == $host) {
                     $response->headers->set('Access-Control-Allow-Origin', $host);
-                    $event->setResponse($response);
                 }
             }
+        }
+
+        $event->setResponse($response);
+    }
+
+    /**
+     * @param GetResponseEvent $event
+     */
+    public function onKernelRequest(GetResponseEvent $event)
+    {
+        $request = $event->getRequest();
+        $response = new Response();
+
+        if ($request->getMethod() == 'OPTIONS') {
+            $response->headers->set('Access-Control-Allow-Headers', $request->headers->get('Access-Control-Request-Headers'));
+            $event->setResponse($response);
         }
     }
 }

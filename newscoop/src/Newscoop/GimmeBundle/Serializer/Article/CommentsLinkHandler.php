@@ -23,7 +23,7 @@ class CommentsLinkHandler
     }
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
-    {   
+    {
         return $this->router->generate('newscoop_gimme_comments_getcommentsforarticle', array('number' => $data->number, 'language' => $data->language), true);
     }
 }

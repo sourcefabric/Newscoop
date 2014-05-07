@@ -11,24 +11,25 @@ use Doctrine\ORM\EntityManager;
 
 /**
  * Doctrine Auth service
- * @deprecated
+ *
+ * @deprecated in 4.3, will be removed in 4.4
  */
 class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var string */
-    private $email;
+    protected $email;
 
     /** @var string */
-    private $username;
+    protected $username;
 
     /** @var string */
-    private $password;
+    protected $password;
 
     /** @var bool */
-    private $is_admin = FALSE;
+    protected $is_admin = FALSE;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -71,6 +72,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, NULL);
         }
 
+        $user->setLastLogin(new \DateTime());
         $this->em->flush(); // store updated password
         return new \Zend_Auth_Result(\Zend_Auth_Result::SUCCESS, $user->getId());
     }
@@ -121,5 +123,26 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
     {
         $this->email = (string) $email;
         return $this;
+    }
+
+    /**
+     * Find by credentials
+     *
+     * @param string $email
+     * @param string $password
+     * @return Newscoop\Entity\User
+     */
+    public function findByCredentials($email, $password)
+    {
+        $user = $this->em->getRepository('Newscoop\Entity\User')
+            ->findOneBy(array(
+                'email' => $email,
+            ));
+
+        if (empty($user) || !$user->isActive() || !$user->checkPassword($password)) {
+            return null;
+        }
+
+        return $user;
     }
 }

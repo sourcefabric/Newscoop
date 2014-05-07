@@ -62,6 +62,7 @@ if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 	$attributes['Photographer'] = $f_image_photographer;
 	$attributes['Place'] = $f_image_place;
 	$attributes['Date'] = $f_image_date;
+	$attributes['photographer_url'] = Input::Get('f_photographer_url');
     $attributes['Status'] = $f_image_status ? 'approved' : 'unapproved';
 	$imageObj->update($attributes);
 }

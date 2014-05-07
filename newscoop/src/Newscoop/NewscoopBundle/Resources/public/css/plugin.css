@@ -163,7 +163,7 @@
 }
 
 .breadcrumb li:after {
-	content: url('http://rockstar.lab.sourcefabric.org/admin-style/images/breadcrumb_arrow.png');
+	content: url('/admin-style/images/breadcrumb_arrow.png');
 	position: relative;
 	height: 10px;
 	width: 10px;
@@ -224,4 +224,9 @@
 
 ul.pagination li:after {
 	display: none;
+}
+
+.dropdown-menu li a.latest-published {
+    background-color: #008148;
+    border-radius: 3px 3px;
 }

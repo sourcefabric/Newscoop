@@ -56,6 +56,11 @@ services:
     newscoop_newscoop.security.authentication.success_handler:
         class: %newscoop_newscoop.security.authentication.success_handler.class%
         public: false
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em']
+
+    newscoop_newscoop.security.authentication.frontend.success_handler:
+        class: %newscoop_newscoop.security.authentication.frontend.success_handler.class%
+        public: false
         arguments:  ['@security.http_utils', {}, '@auth.adapter']
 
     newscoop_newscoop.listener.locale_listener:
@@ -65,6 +70,12 @@ services:
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
         arguments:  ['@em']
 
+    newscoop_newscoop.listener.route_listener:
+        class: Newscoop\NewscoopBundle\EventListener\RouteListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 30 }
+        arguments:  ['@newscoop.listpaginator.service']
+
     newscoop_newscoop.listener.no_cache_listener:
         class: Newscoop\NewscoopBundle\EventListener\NoCacheListener
         tags:
@@ -72,16 +83,12 @@ services:
 
     newscoop_newscoop.translation_listener:
         class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
-        arguments:  ['@translator']
+        arguments:  ['@translator', '@newscoop.cache']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
     system_preferences_service:
         class: Newscoop\NewscoopBundle\Services\SystemPreferencesService
-        arguments:  ['@em']
-
-    newscoop_newscoop.comments_service:
-        class: Newscoop\NewscoopBundle\Services\CommentService
         arguments:  ['@em']
 
     newscoop_newscoop.translation_template_listener:
@@ -108,11 +115,38 @@ services:
         tags:
           - { name: kernel.event_listener, event: newscoop.listobjects.register, method: registerObjects }
 
+    newscoop_newscoop.publication_service:
+        class: Newscoop\Services\PublicationService
+        arguments:  ["@em"]
+
+    newscoop_newscoop.listener.publication:
+        class: Newscoop\NewscoopBundle\EventListener\PublicationListener
+        arguments:  ["@newscoop_newscoop.publication_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
+    newscoop_newscoop.listener.userip:
+        class: Newscoop\NewscoopBundle\EventListener\UserIpListener
+        arguments:  ["@user"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
+    newscoop_newscoop.article_service:
+        class: Newscoop\Services\ArticleService
+        arguments:  ["@em"]
+
+    newscoop_newscoop.listener.article:
+        class: Newscoop\NewscoopBundle\EventListener\ArticleListener
+        arguments:  ["@newscoop_newscoop.article_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
 parameters:
     smarty.extension.routing.class: "Newscoop\\NewscoopBundle\\Extension\\RoutingExtension"
     smarty.extension.assetic.dynamic.class: "Newscoop\\NewscoopBundle\\Extension\\DynamicAsseticExtension"
     smarty.extension.assetic.static.class: "Newscoop\\NewscoopBundle\\Extension\\StaticAsseticExtension"
     newscoop_newscoop.security.authentication.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationSuccessHandler"
+    newscoop_newscoop.security.authentication.frontend.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFrontendSuccessHandler"
     security.authentication.failure_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFailedHandler"
     security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"

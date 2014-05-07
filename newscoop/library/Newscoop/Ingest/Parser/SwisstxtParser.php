@@ -15,10 +15,10 @@ use Newscoop\Ingest\Parser;
 class SwisstxtParser implements Parser
 {
     /** @var SimpleXMLElement */
-    private $story;
+    protected $story;
 
     /** @var DateTime */
-    private $date;
+    protected $date;
 
     /**
      * @param string $content

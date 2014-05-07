@@ -23,7 +23,7 @@ class SubscriptionService
      * Subscriptions config
      * @var array
      */
-    private $subscriptionsConfig;
+    protected $subscriptionsConfig;
 
     /**
      * @param Doctrine\ORM\EntityManager $em

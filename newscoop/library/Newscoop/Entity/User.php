@@ -17,6 +17,8 @@ use Newscoop\View\UserView;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Zend_View_Abstract;
+use Newscoop\Search\DocumentInterface;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -25,7 +27,7 @@ use Zend_View_Abstract;
  * })
  * @ORM\HasLifecycleCallbacks
  */
-class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface
+class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, EquatableInterface, DocumentInterface
 {
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
@@ -85,6 +87,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $updated;
 
     /**
+     * @ORM\Column(type="datetime", name="lastLogin", nullable=true)
+     * @var DateTime
+     */
+    protected $lastLogin;
+
+    /**
      * @ORM\Column(type="integer", length=1)
      * @var int
      */
@@ -112,7 +120,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @ORM\Column(type="string", length=255, nullable=TRUE)
      * @var string
      */
-    protected $image;
+    public $image;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
@@ -158,13 +166,19 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @ORM\OneToOne(targetEntity="Author", inversedBy="user")
      * @var Newscoop\Entity\Author
      */
-    private $author;
+    protected $author;
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Newscoop\Entity\UserIdentity", mappedBy="user", cascade={"remove"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $identities;
 
     /**
      * @param string $email
@@ -175,6 +189,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         $this->created = $this->updated = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
+        $this->identities = new ArrayCollection();
         $this->role = new Role();
         $this->is_admin = false;
         $this->is_public = false;
@@ -683,6 +698,18 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
+     * Remove attribute
+     *
+     * @param string $name
+     *
+     * @return Newscoop\Entity\UserAttribute
+     */
+    public function removeAttribute($name)
+    {
+        return $this->attributes->remove($name);
+    }
+
+    /**
      * Set User attributes
      * @param mixed $attributes UserAttributes
      */
@@ -756,12 +783,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
-            if (!$resource && !$action){ 
+            if (!$resource && !$action){
                 list($resource, $action) = PermissionToAcl::translate($permission);
             }
 
             if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-                if (!$resource && !$action){ 
+                if (!$resource && !$action){
                     return \SaaS::singleton()->hasPermission($permission);
                 }
 
@@ -845,7 +872,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
             throw new \InvalidArgumentException("User Property '$p_key' not found");
         }
     }
-    
+
     /**
      * Set subscriber
      *
@@ -927,11 +954,14 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * Set indexed
      *
      * @param DateTime $indexed
-     * @return void
+     *
+     * @return self
      */
-    public function setIndexed(\DateTime $indexed = null)
+    public function setIndexed(DateTime $indexed = null)
     {
         $this->indexed = $indexed;
+
+        return self;
     }
 
     /**
@@ -947,7 +977,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      *
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Update user profile
      *
      * @param string $username
@@ -988,7 +1018,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Get edit view
      *
      * @param Zend_View_Abstract $view
@@ -1024,7 +1054,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Get DataTable view
      *
      * @param Zend_View_Abstract $view
@@ -1068,7 +1098,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     *  
+     *
      * Get url for given action
      *
      * @param string $action
@@ -1087,7 +1117,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Rename user
      *
      * @param string $username
@@ -1100,7 +1130,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
     /**
      * TODO: move this to user service - it's not a part of entity
-     * 
+     *
      * Render user
      *
      * @return UserView
@@ -1149,5 +1179,29 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function isEqualTo(UserInterface $user)
     {
         return $this->id === $user->getId();
+    }
+
+    /**
+     * Set lastLogin
+     *
+     * @param DateTime $lastLogin
+     * @return void
+     */
+    public function setLastLogin(\DateTime $lastLogin = null)
+    {
+        $this->lastLogin = $lastLogin;
+
+        return $this;
+    }
+
+    /**
+     * Get lastLogin
+     *
+     * @param DateTime $lastLogin
+     * @return void
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
     }
 }

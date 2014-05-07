@@ -24,7 +24,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
 {
 
     /** @var Newscoop\Service\IOutputService */
-    private $outputService = NULL;
+    protected $outputService = NULL;
 
     /**
      * Provides the ouput service.

@@ -15,7 +15,7 @@ class ImageSearchService
     /**
      * @var Doctrine\ORM\EntityManager
      */
-    private $orm;
+    protected $orm;
 
     /**
      * @param Doctrine\ORM\EntityManager $orm
@@ -31,44 +31,42 @@ class ImageSearchService
      * @param string $query
      * @return array
      */
-    public function find($query, $criteria = null, $sort = null, $paging = null, &$count = null)
+    public function find($query, $criteria = null, $sort = null, $paging = null, &$count = null, $queryOnly = false)
     {
-        $count = 0;
-
         $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i');
-        $qb_count = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i')
-            ->select('COUNT(i)');
+        $andX = $qb->expr()->andX();
 
-        $tokens_spec = $qb->expr()->orx();
-
-        $tokens = explode(' ', trim($query));
-        foreach ($tokens as $i => $token) {
-
-            $tokens_spec->add($qb->expr()->like('i.description', $qb->expr()->literal("%{$token}%")));
+        if (is_numeric($query)) {
+            $andX->add($qb->expr()->eq('i.user', $query));
+        } else {
+            $andX->add($qb->expr()->like('i.description', $qb->expr()->literal("%{$query}%")));
         }
 
-        if (!empty($tokens_spec)) {
-            $qb->andWhere($tokens_spec);
-            $qb_count->andWhere($tokens_spec);
+        if (!empty($andX)) {
+            $qb->andWhere($andX);
         }
 
         if (is_array($criteria) && isset($criteria['source']) && is_array($criteria['source']) && (!empty($criteria['source']))) {
-
-            $source_cases = array();
-            foreach ($criteria['source'] as $one_source) {
-                $source_cases[] = $one_source;
+            $orX = $qb->expr()->orx();
+            foreach ($criteria['source'] as $oneSource) {
+                $orX->add($qb->expr()->eq('i.source', $qb->expr()->literal($oneSource)));
             }
 
-            $qb->andwhere('i.source IN (:source)');
-            $qb->setParameter('source', $source_cases);
-            $qb_count->andwhere('i.source IN (:source)');
-            $qb_count->setParameter('source', $source_cases);
+            $qb->andWhere($orX);
+        }
+
+        if (is_array($criteria) && isset($criteria['user']) && (!empty($criteria['user']))) {
+            $andX->add($qb->expr()->eq('i.user', $criteria['user']));
         }
 
         if ((!empty($sort)) && is_array($sort)) {
-            foreach($sort as $sort_column => $sort_dir) {
-                $qb->addOrderBy('i.'.$sort_column, $sort_dir);
+            foreach ($sort as $sortColumn => $sortDir) {
+                $qb->addOrderBy('i.'.$sortColumn, $sortDir);
             }
+        }
+
+        if ($queryOnly) {
+            return $qb->getQuery();
         }
 
         if ((!empty($paging)) && is_array($paging)) {
@@ -79,8 +77,6 @@ class ImageSearchService
                 $qb->setFirstResult(0 + $paging['offset']);
             }
         }
-
-        $count = 0 + (int) $qb_count->getQuery()->getSingleScalarResult();
 
         return $qb->getQuery()->getResult();
     }

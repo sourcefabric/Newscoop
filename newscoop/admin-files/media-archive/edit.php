@@ -40,6 +40,7 @@ $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
 $iptcDate = null;
 $iptcPlace = null;
 $iptcPhotographer = null;
+$iptcDescription = null;
 
 if (in_array($imageExtension, $allowedExtensions)) {
     $exif = @exif_read_data($imageObj->getImageStorageLocation());
@@ -80,17 +81,20 @@ if (in_array($imageExtension, $allowedExtensions)) {
     }
 }
 
+$crumbs = array();
+$crumbs[] = array($translator->trans('Content'), "");
+$crumbs[] = array($translator->trans('Media Archive', array(), 'home'), "/$ADMIN/media-archive/index.php");
+
 if ($g_user->hasPermission('ChangeImage')) {
 	$label_text = $translator->trans('Change image information', array(), 'media_archive');
 } else {
 	$label_text = $translator->trans('View image', array(), 'media_archive');
 }
 
-include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
-include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
+$crumbs[] = array($label_text, '');
+$breadcrumbs = camp_html_breadcrumbs($crumbs);
 
-echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text . '</span></div>';
-
+echo $breadcrumbs;
 ?>
 <p></p>
 <table cellpadding="0" cellspacing="0" class="action_buttons">
@@ -154,6 +158,10 @@ echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text 
     ?>
 	</TD>
 </TR>
+<tr>
+    <td><?php echo $translator->trans('Photographer URL', array(), 'media_archive'); ?>:</td>
+    <td><input type="text" name="f_photographer_url" class="input_text" value="<?php echo $this->view->escape($imageObj->getPhotographerUrl()); ?>" size="32" title="<?php echo $this->view->escape($translator->trans('Add website url starting with http://', array(), 'media_archive')); ?>" /></td>
+</tr>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  echo $translator->trans("Place"); ?>:</TD>
 	<TD align="left">
@@ -286,4 +294,7 @@ if (count($articles) > 0) {
 	}
 	?>
 	</table>
-<?php } ?>
+
+<?php }
+camp_html_copyright_notice();
+?>

@@ -16,7 +16,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
  */
 class Admin_ImageController extends Zend_Controller_Action
 {
-    const LIMIT = 7;
+    const LIMIT = 24;
     
     protected $renditions = array();
 
@@ -50,39 +50,47 @@ class Admin_ImageController extends Zend_Controller_Action
     public function articleAttachAction()
     {
         $this->_helper->layout->setLayout('iframe');
-        
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator-hash.phtml');
-
-        $source_criteria = array('source' => array('local', 'feedback'));
-        $newsfeed = $this->_getParam('newsfeed', 0);
-        if ($newsfeed) {
-            $source_criteria = array();
-        }
 
         $page = (int) $this->_getParam('page', 1);
         if (1 > $page) {
             $page = 1;
         }
 
-        $count = 0;
+        $search_paging = array(
+            'length' => self::LIMIT,
+            'offset' => ($page - 1) * self::LIMIT,
+        );
 
+        $term = $this->_getParam('term');
+        $em = \Zend_Registry::get('container')->getService('em');
+        if (!empty($term)) {
+            $qb = $em->getRepository('Newscoop\Image\LocalImage')
+                ->createQueryBuilder('i');
+
+            $users = $qb->select('i.id', 'u.id', 'u.username')
+                ->leftJoin('i.user', 'u')
+                ->where($qb->expr()->like('u.username', $qb->expr()->literal('%'.$term.'%')))
+                ->groupBy('u.id')
+                ->setMaxResults(25)
+                ->getQuery()
+                ->getArrayResult();
+
+            echo json_encode(array('items' => $users));die;
+        }
+
+        $source_criteria = array('source' => array('local', 'feedback'));
+        $uploaderId = $this->_getParam('uploader', '');
+        $newsfeed = $this->_getParam('newsfeed', 0);
+
+        if ($newsfeed) {
+            $source_criteria = array();
+        }
+
+        $count = $this->_helper->service('image')->getCountBy(array());
         $this->view->q = $this->_getParam('search', '');
         if (is_array($this->view->q)) {
             $this->view->q = $this->view->q[0];
-        }
-
-        if (!empty($this->view->q)) {
-            $search_paging = array(
-                'length' => self::LIMIT,
-                'offset' => ($page - 1) * self::LIMIT,
-            );
-            $search_count = 0;
-
-            $this->view->images = $this->_helper->service('image.search')->find($this->view->q, $source_criteria, array('id' => 'desc'), $search_paging, $search_count);
-            $count = $search_count;
-        } else {
-            $count = $this->_helper->service('image')->getCountBy($source_criteria);
-            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($page - 1) * self::LIMIT);
         }
 
         $paginator = Zend_Paginator::factory($count);
@@ -91,6 +99,17 @@ class Admin_ImageController extends Zend_Controller_Action
         $paginator->setView($this->view);
         $paginator->setDefaultScrollingStyle('Sliding');
         $this->view->paginator = $paginator;
+
+        if (!empty($this->view->q)) {
+            $search_count = 0;
+            $this->view->images = $this->_helper->service('image.search')->find($this->view->q, $source_criteria, array('id' => 'desc'), $search_paging, $search_count);
+            $count = $search_count;
+        } else if (!empty($uploaderId)) {
+            $this->view->images = $this->_helper->service('image.search')->find($uploaderId, $source_criteria, array('id' => 'desc'), $search_paging);
+        } else {
+            $count = $this->_helper->service('image')->getCountBy($source_criteria);
+            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+        }
 
         $this->view->newsfeed = false;
         if ($newsfeed) {
@@ -101,7 +120,7 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->view->languageId = (int) $this->_getParam('language_id', 0);
         $this->view->articleImages = $this->_helper->service('image')->findByArticle((int) $this->_getParam('article_number', 0));
     }
-    
+
     public function setAttachAction()
     {        
         $this->_helper->layout->disableLayout();
@@ -239,8 +258,8 @@ class Admin_ImageController extends Zend_Controller_Action
                     $iptcPlace = implode(', ', $iptcPlace);
                 }
             }
-            
-            if ($image->getDate() == '0000-00-00') {
+
+            if ($image->getDescription() == '') {
                 if (isset($iptcPhotographer)) {
                     $image->setPhotographer($iptcPhotographer);
                 }
@@ -256,7 +275,7 @@ class Admin_ImageController extends Zend_Controller_Action
                 if (isset($iptcDate)) {
                     $image->setDate($iptcDate);
                 }
-                
+
                 $images[] = $image;
             }
 
@@ -264,7 +283,8 @@ class Admin_ImageController extends Zend_Controller_Action
                 $images[] = $image;
             }
         }
-        
+
+
         $this->view->images = $images;
     }
 

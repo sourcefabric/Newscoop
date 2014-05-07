@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Entity;
 
 use FOS\OAuthServerBundle\Entity\RefreshToken as BaseRefreshToken;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="OAuthRefreshToken")
@@ -36,7 +37,38 @@ class RefreshToken extends BaseRefreshToken
      * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $publication;
+    protected $publication;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @var UserInterface
+     */
+    protected $user;
+
+    /**
+     * Gets the value of user.
+     *
+     * @return \Newscoop\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Sets the value of user.
+     *
+     * @param \Newscoop\Entity\User $user the user
+     *
+     * @return self
+     */
+    public function setUser(UserInterface $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 
     /**
      * Gets the value of id.
@@ -47,7 +79,7 @@ class RefreshToken extends BaseRefreshToken
     {
         return $this->id;
     }
-    
+
     /**
      * Sets the value of id.
      *

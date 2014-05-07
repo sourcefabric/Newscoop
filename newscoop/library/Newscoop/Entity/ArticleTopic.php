@@ -23,15 +23,15 @@ class ArticleTopic
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
      */
-    private $article;
+    protected $article;
 
     /**
      * @ORM\Id()
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
      * @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
      */
-    private $topic;
-    
+    protected $topic;
+
     /**
      * Get article
      *
@@ -76,4 +76,3 @@ class ArticleTopic
         return $this;
     }
 }
-

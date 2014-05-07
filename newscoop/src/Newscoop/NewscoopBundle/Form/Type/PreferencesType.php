@@ -55,12 +55,12 @@ class PreferencesType extends AbstractType
             }
         }
 
-        $availableCacheEngines = \CacheEngine::AvailableEngines();
+        $availableCacheEngines = $options['cacheService']->getAvailableCacheEngines();
         $availableTemplateCacheHandlers = \CampTemplateCache::availableHandlers();
         $cacheEngines = array();
         $cacheTemplate = array();
-        foreach ($availableCacheEngines as $cacheEngineName => $engineData) {
-            $cacheEngines[$cacheEngineName] = $cacheEngineName;
+        foreach ($availableCacheEngines as $cacheEngineName => $engineValue) {
+            $cacheEngines[$engineValue] = $cacheEngineName;
         }
 
         foreach ($availableTemplateCacheHandlers as $handler => $value) {
@@ -135,7 +135,15 @@ class PreferencesType extends AbstractType
         ))
         ->add('cache_engine', 'choice', array(
             'choices'   => $cacheEngines,
-            'empty_value' => 'newscoop.preferences.label.disabled',
+            'empty_value' => 'Array',
+            'required' => false
+        ))
+        ->add('cache_engine_host', 'text', array(
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('cache_engine_port', 'text', array(
+            'error_bubbling' => true,
             'required' => false
         ))
         ->add('cache_template', 'choice', array(
@@ -163,7 +171,7 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('session_lifetime', 'integer', array(
-            'attr' => array('maxlength' => '4', 'max' => '9999', 'min' => 0),
+            'attr' => array('maxlength' => '4', 'max' => '99999', 'min' => 0),
             'error_bubbling' => true,
             'required' => true
         ))
@@ -420,6 +428,20 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
+        ))
+        ->add('userGarbageActive', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
+        ))
+        ->add('userGarbageDays', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 1),
+            'required' => true
         ));
     }
 
@@ -428,6 +450,11 @@ class PreferencesType extends AbstractType
         $resolver->setDefaults(array(
             'translation_domain' => 'system_pref'
         ));
+
+        $resolver->setRequired(array(
+            'cacheService',
+        ));
+
 
     }
 

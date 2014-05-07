@@ -1,6 +1,7 @@
 {{extends file="layout.tpl"}}
 
 {{block content}}
+{{ dynamic }}
 <div class="span error-page">
 <h1>Hey, this is error!</h1>
 
@@ -22,7 +23,8 @@
     <pre>{{ $exception->getTraceAsString() }}</pre>
 
     <h3>Request Parameters</h3>
-    <pre>{{ var_export($request->getParams(), true) }}</pre>
+    <pre>{{ ladybug_dump($request) }}</pre>
 {{ /if }}
 </div>
+{{ /dynamic }}
 {{/block}}

@@ -352,7 +352,13 @@ final class CampContext
 
         $this->m_readonlyProperties['request_action'] = MetaAction::CreateAction(CampRequest::GetInput(CampRequest::GetMethod()));
         $requestActionName = $this->m_readonlyProperties['request_action']->name;
-        if ($requestActionName != 'default') {
+
+        $runAction = true;
+        if ($pluginsService->isInstalled('terwey/plugin-newscoop-comments') && $requestActionName == 'submit_comment') {
+            $runAction = false;
+        }
+
+        if ($requestActionName != 'default' && $runAction) {
             $this->m_readonlyProperties['request_action']->takeAction($this);
         }
 
@@ -706,7 +712,6 @@ final class CampContext
         $p_list->setId($this->next_list_id($listObjectName));
 
         $listName = $this->m_listObjects[$objectName]['list'];
-
         if (!isset($this->m_list_count[$listName.'_lists'])) {
             $this->m_list_count[$listName.'_lists'] = 1;
         } else {
@@ -723,6 +728,21 @@ final class CampContext
         return $this->m_readonlyProperties;
     } // fn setCurrentList
 
+
+    public function getListName($list)
+    {
+        $objectName = $this->GetListObjectName(get_class($list));
+        if ($objectName == '' || !isset($this->m_listObjects[$objectName])) {
+            throw new InvalidObjectException(get_class($list));
+        }
+
+        $listObjectName = $this->m_listObjects[$objectName]['class'].'List';
+        if (!is_a($list, $listObjectName)) {
+            throw new InvalidObjectException(get_class($list));
+        }
+
+        return $listObjectName;
+    }
 
     /**
      * Resets the current list.

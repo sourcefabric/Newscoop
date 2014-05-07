@@ -598,7 +598,7 @@ class Article extends DatabaseObject {
      * @return Article
      */
     public function createTranslation($p_languageId, $p_userId, $p_name)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         // Construct the duplicate article object.
         $articleCopy = new Article();
@@ -668,7 +668,6 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
-
         // Delete scheduled publishing
         ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
@@ -1117,7 +1116,11 @@ class Article extends DatabaseObject {
      */
     public function getPublicationId()
     {
-        return (int)$this->m_data['IdPublication'];
+        if (isset($this->m_data['IdPublication'])) {
+            return (int) $this->m_data['IdPublication'];
+        }
+
+        return 0;
     } // fn getPublicationId
 
 
@@ -1144,7 +1147,11 @@ class Article extends DatabaseObject {
      */
     public function getIssueNumber()
     {
-        return (int)$this->m_data['NrIssue'];
+        if (isset($this->m_data['NrIssue'])) {
+            return (int) $this->m_data['NrIssue'];
+        }
+
+        return 0;
     } // fn getIssueNumber
 
 
@@ -1171,7 +1178,11 @@ class Article extends DatabaseObject {
      */
     public function getSectionNumber()
     {
-        return (int)$this->m_data['NrSection'];
+        if (isset($this->m_data['NrSection'])) {
+            return (int) $this->m_data['NrSection'];
+        }
+
+        return 0;
     } // fn getSectionNumber
 
 
@@ -1198,7 +1209,11 @@ class Article extends DatabaseObject {
      */
     public function getLanguageId()
     {
-        return (int)$this->m_data['IdLanguage'];
+        if (isset($this->m_data['IdLanguage'])) {
+            return (int) $this->m_data['IdLanguage'];
+        }
+
+        return 0;
     } // fn getLanguageId
 
 
@@ -1213,7 +1228,11 @@ class Article extends DatabaseObject {
      */
     public function getArticleNumber()
     {
-        return (int)$this->m_data['Number'];
+        if (isset($this->m_data['Number'])) {
+            return (int) $this->m_data['Number'];
+        }
+
+        return 0;
     } // fn getArticleNumber
 
 
@@ -1398,7 +1417,7 @@ class Article extends DatabaseObject {
      * @return string
      */
     public function getWorkflowDisplayString($p_value = null)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         if (is_null($p_value)) {
@@ -2523,6 +2542,16 @@ class Article extends DatabaseObject {
                 $topic = new Topic($comparisonOperation['right']);
                 if ($topic->exists()) {
                     $topicIds = $topic->getSubtopics(true, 0);
+                    $topicIds[] = $comparisonOperation['right'];
+                    if ($comparisonOperation['symbol'] == '=') {
+                        $hasTopics[] = $topicIds;
+                    } else {
+                        $hasNotTopics[] = $topicIds;
+                    }
+                }
+            } elseif ($leftOperand == 'topic_strict') {
+                $topic = new Topic($comparisonOperation['right']);
+                if ($topic->exists()) {
                     $topicIds[] = $comparisonOperation['right'];
                     if ($comparisonOperation['symbol'] == '=') {
                         $hasTopics[] = $topicIds;

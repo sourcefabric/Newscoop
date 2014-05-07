@@ -20,25 +20,14 @@
 --
 
 DROP TABLE IF EXISTS `Aliases`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Aliases` (
+
+CREATE TABLE IF NOT EXISTS `Aliases` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` char(128) NOT NULL DEFAULT '',
-  `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
+  `IdPublication` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Aliases`
---
-
-LOCK TABLES `Aliases` WRITE;
-/*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
-/*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ArticleAttachments`
@@ -2101,15 +2090,15 @@ CREATE TABLE comment (
   fk_thread_id INT NOT NULL,
   subject VARCHAR(140) NOT NULL,
   message VARCHAR(255) NOT NULL,
-  thread_level VARCHAR(4) NOT NULL,
-  thread_order VARCHAR(4) NOT NULL,
-  status VARCHAR(2) NOT NULL,
+  thread_level INT NOT NULL,
+  thread_order INT NOT NULL,
+  status INT NOT NULL,
   ip VARCHAR(39) NOT NULL,
   time_created DATETIME NOT NULL,
   time_updated DATETIME NOT NULL,
-  likes VARCHAR(4) NOT NULL,
-  dislikes VARCHAR(4) NOT NULL,
-  recommended VARCHAR(1) NOT NULL,
+  likes INT NOT NULL,
+  dislikes INT NOT NULL,
+  recommended INT NOT NULL,
   indexed DATETIME DEFAULT NULL,
   source VARCHAR(60) NULL DEFAULT NULL,
   fk_comment_commenter_id INT DEFAULT NULL,
@@ -2122,8 +2111,6 @@ CREATE TABLE comment (
   INDEX IDX_9474526CEB0716C0 (fk_language_id),
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C13231DE0 FOREIGN KEY (fk_parent_id) REFERENCES comment (id) ON DELETE SET NULL
 
 --
 -- Dumping data for table `comment`
@@ -3197,7 +3184,8 @@ CREATE TABLE IF NOT EXISTS `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,
   `language_id` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`webcode`)
+  PRIMARY KEY (`webcode`),
+  UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE OAuthAccessToken (
@@ -3262,9 +3250,6 @@ ALTER TABLE OAuthAccessToken ADD CONSTRAINT FK_DDE10DD519EB6921 FOREIGN KEY (cli
 ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 
----
---- Snippets
----
 DROP TABLE IF EXISTS `Snippets`;
 CREATE TABLE Snippets (
   Id INT AUTO_INCREMENT NOT NULL,

@@ -13,7 +13,6 @@ use Newscoop\Entity\Feedback;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Plupload.php');
 
 class FeedbackController extends Zend_Controller_Action
@@ -25,8 +24,9 @@ class FeedbackController extends Zend_Controller_Action
     }
 
     public function saveAction()
-    {   
+    {
         $translator = Zend_Registry::get('container')->getService('translator');
+        $userService = Zend_Registry::get('container')->getService('user');
         $this->_helper->layout->disableLayout();
         $parameters = $this->getRequest()->getParams();
 
@@ -40,7 +40,7 @@ class FeedbackController extends Zend_Controller_Action
             $acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
             $user = new User($auth->getIdentity());
 
-            $userIp = getIp();
+            $userIp = $userService->getUserIp();
             if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
                 $errors[] = $translator->trans('You have been banned from writing feedbacks.');
             }

@@ -50,17 +50,28 @@ fos_rest:
         prefer_extension: true
     exception:
         codes:
+            'Newscoop\Exception\ResourcesConflictException': 409
+            'Newscoop\Exception\InvalidParametersException': 422
+            'Newscoop\Exception\ResourceIsEmptyException': 204
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
-            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+            'Doctrine\ORM\EntityNotFoundException': 404
+            'Symfony\Component\Form\Exception\InvalidArgumentException': 500
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
         messages:
+            'Newscoop\Exception\ResourcesConflictException': true
+            'Newscoop\Exception\InvalidParametersException': true
+            'Newscoop\Exception\ResourceIsEmptyException': true
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
-            'Doctrine\ORM\OptimisticLockException': true
+            'Doctrine\ORM\EntityNotFoundException': true
+            'Symfony\Component\Form\Exception\InvalidArgumentException' : true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
 
 fos_oauth_server:
+    service:
+        options:
+            supported_scopes: standard_access
     db_driver: orm       # Driver availables: orm, mongodb, or propel
     client_class:        Newscoop\GimmeBundle\Entity\Client
     access_token_class:  Newscoop\GimmeBundle\Entity\AccessToken
@@ -73,6 +84,9 @@ jms_serializer:
         directories:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Comment:
+                namespace_prefix: Newscoop\Entity\Comment
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Package:
                 namespace_prefix: Newscoop\Package
@@ -144,3 +158,9 @@ ewz_recaptcha:
 parameters:
     smarty.class: "CampTemplate"
     templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
+
+ewz_recaptcha:
+    public_key:   6LeVFuASAAAAAJvc6hlYEHZnlEIBakblsE54bTwA
+    private_key:  6LeVFuASAAAAAGhz6dWgsO6WVGY_pcg_7wAt61eQ
+    secure:       false
+    locale_key:   kernel.default_locale

@@ -6,7 +6,7 @@ default: Standard
 'Delete all articles and all of their translations': 'Alle Artikel und ihre Übersetzungen löschen'
 'Delete only this section ($1)': 'Nur diese Rubrik ($1) löschen'
 'Delete all translations of this section': 'Alle Übersetzungen dieser Rubrik löschen'
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': Artikelanzahl<BR><SMALL>(Veröffentlicht/Gesamt)</SMALL>
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 'Artikelanzahl<BR><SMALL>(Veröffentlicht/Gesamt)</SMALL>'
 'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 'Der URL Name muss für alle Rubriken dieser Ausgabe unterschiedlich sein. Der gewählte URL Name steht im Widerspruch zur Rubrik $2$3. $4$5'
 'Section updated': 'Rubrik aktualisiert'
 'There are $1 subscriptions which will be affected.': '$1 Abonnements sind betroffen.'

@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -13,6 +13,7 @@ use Newscoop\Entity\Topic;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserTopic;
 use Newscoop\Topic\SaveUserTopicsCommand;
+use Exception;
 
 /**
  * User service
@@ -20,10 +21,10 @@ use Newscoop\Topic\SaveUserTopicsCommand;
 class UserTopicService
 {
     /** @var Doctrine\ORM\EntityManager */
-    private $em;
+    protected $em;
 
     /** @var Newscoop\EventDispatcher\EventDispatcher */
-    private $dispatcher;
+    protected $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -49,6 +50,34 @@ class UserTopicService
             $this->em->flush();
             $this->notify($user, $topic);
         } catch (Exception $e) { // ignore if exists
+        }
+    }
+
+    /**
+     * Unfollow topic
+     *
+     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Topic $topic
+     * @return void
+     */
+    public function unfollowTopic(User $user, Topic $topic)
+    {
+        try {
+            $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
+                ->findByTopicAndUser($user, $topic);
+
+            if ($userTopics) {
+                if (is_array($userTopics)) {
+                    foreach ($userTopics AS $userTopic) {
+                        $this->em->remove($userTopic);
+                    }
+                } else {
+                    $this->em->remove($userTopics);
+                }
+                $this->em->flush();
+            }
+        } catch (Exception $e) {
+            throw new Exception('Could not unfollow topic. ('.$e->getMessage().')');
         }
     }
 
@@ -185,7 +214,7 @@ class UserTopicService
 
         $this->dispatcher->dispatch('topic.follow', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
-            'topic_id' => $topic->getTopic()->getId(),
+            'topic_id' => $topic->getTopicId(),
             'user' => $user,
         )));
     }

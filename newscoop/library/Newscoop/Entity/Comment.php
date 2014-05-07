@@ -8,19 +8,22 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Newscoop\Entity\Comment\Commenter;
+use Newscoop\Search\DocumentInterface;
+use DateTime;
 
 /**
  * Comment entity
+ * 
  * @ORM\Table(name="comment")
  * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
-class Comment
+class Comment implements DocumentInterface
 {
-    private $allowedEmpty = array( 'br', 'input', 'image' );
+    protected $allowedEmpty = array( 'br', 'input', 'image' );
 
-    private $allowedTags =
+    protected $allowedTags =
     array(
         'a' => array('title', 'href'),
         'abbr' => array('title'),
@@ -40,54 +43,45 @@ class Comment
 
     /**
      * Constants for status
-
+     */
     const STATUS_APPROVED   = 0;
     const STATUS_PENDING    = 1;
     const STATUS_HIDDEN     = 2;
     const STATUS_DELETED    = 3;
-     */
-    /**
-     * @var string to code mapper for status
-    static $status_enum = array(
-    self::STATUS_APPROVED,
-    self::STATUS_PENDING,
-    self::STATUS_HIDDEN,
-    self::STATUS_DELETED
-    );
-     */
+
     /**
      * @var string to code mapper for status
      */
     static $status_enum = array('approved', 'pending', 'hidden', 'deleted');
 
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments", cascade={"persist"})
      * @ORM\JoinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment\Commenter
      */
-    private $commenter;
+    protected $commenter;
 
     /**
      * @ORM\ManyToOne(targetEntity="Publication")
      * @ORM\JoinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
-    private $forum;
+    protected $forum;
 
     /**
      * @ORM\ManyToOne(targetEntity="Comment")
      * @ORM\JoinColumn(name="fk_parent_id", referencedColumnName="id", onDelete="SET NULL")
      * @var Newscoop\Entity\Comment
      */
-    private $parent;
+    protected $parent;
 
     /**
      * TODO get rid of this when the composite key stuff is done.
@@ -95,109 +89,128 @@ class Comment
      * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
      */
-    private $article_num;
+    protected $article_num;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      })
+     * @var Newscoop\Entity\Article
+     */
+    protected $article;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
      * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
-    private $thread;
+    protected $thread;
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
-    private $language;
+    protected $language;
 
     /**
      * @ORM\Column(length=140)
      * @var string
      */
-    private $subject;
+    protected $subject;
 
     /**
      * @ORM\Column()
      * @var text
      */
-    private $message;
+    protected $message;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
-    private $thread_level;
+    protected $thread_level;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
-    private $thread_order;
+    protected $thread_order;
 
     /**
-     * @ORM\Column(length=2)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
-    private $status;
+    protected $status;
 
     /**
      * @ORM\Column(length=39)
      * @var int
      */
-    private $ip;
+    protected $ip;
 
     /**
      * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
-    private $time_created;
+    protected $time_created;
 
-    /*
+    /**
      * @ORM\Column(type="datetime", name="time_updated")
      * @var DateTime
      */
-    private $time_updated;
+    protected $time_updated;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
-    private $likes = 0;
+    protected $likes = 0;
 
     /**
-     * @ORM\Column(length=4)
+     * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
-    private $dislikes = 0;
+    protected $dislikes = 0;
 
     /**
-     * @ORM\Column(length=1)
+     * @ORM\Column(type="boolean")
      * @var int
      */
-    private $recommended = 0;
+    protected $recommended = 0;
+
+    public function __construct()
+    {
+        $this->setTimeCreated(new \DateTime());
+        $this->setTimeUpdated(new \DateTime());
+    }
 
     /**
      * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
-    private $indexed;
+    protected $indexed;
 
     /**
      * @ORM\Column(type="string", length=60, name="source", nullable=true)
      * @var string
      */
-    private $source;
+    protected $source;
 
     /**
      * Set id
      *
-     * @param int $p_id
+     * @param int $id
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setId($p_id)
+    public function setId($id)
     {
-        return $this->id;
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -221,14 +234,38 @@ class Comment
     }
 
     /**
+     * Set article
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return void
+     */
+    public function setArticle(Article $article)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
+    }
+
+    /**
      * Set timecreated
      *
-     * @param DateTime $p_datetime
+     * @param DateTime $datetime
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setTimeCreated(\DateTime $p_datetime)
+    public function setTimeCreated(\DateTime $datetime)
     {
-        $this->time_created = $p_datetime;
+        $this->time_created = $datetime;
         // return this for chaining mechanism
         return $this;
     }
@@ -246,13 +283,14 @@ class Comment
     /**
      * Set time updated
      *
-     * @param DateTime $p_datetime
+     * @param DateTime $datetime
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setTimeUpdated(\DateTime $p_datetime)
+    public function setTimeUpdated(\DateTime $datetime)
     {
-        $this->time_updated = $p_datetime;
-        // return this for chaining mechanism
+        $this->time_updated = $datetime;
+
         return $this;
     }
 
@@ -269,13 +307,14 @@ class Comment
     /**
      * Set comment subject.
      *
-     * @param string $p_subject
+     * @param string $subject
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setSubject($p_subject)
+    public function setSubject($subject)
     {
-        $this->subject = (string)$p_subject;
-        // return this for chaining mechanism
+        $this->subject = (string)$subject;
+
         return $this;
     }
 
@@ -292,13 +331,14 @@ class Comment
     /**
      * Set comment message.
      *
-     * @param string $p_message
+     * @param string $message
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setMessage($p_message)
+    public function setMessage($message)
     {
-        $this->message = $this->formatMessage((string)$p_message);
-        // return this for chaining mechanism
+        $this->message = $this->formatMessage((string)$message);
+
         return $this;
     }
 
@@ -315,15 +355,16 @@ class Comment
     /**
      * Set comment ip address
      *
-     * @param string $p_ip
+     * @param string $ip
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setIp($p_ip)
+    public function setIp($ip)
     {
         // remove subnet & limit to IP_LENGTH
-        $ip_array = explode('/', (string)$p_ip);
-        $this->ip = substr($ip_array[0], 0, 39);
-        // return this for chaining mechanism
+        $ipArray = explode('/', $ip);
+        $this->ip = substr($ipArray[0], 0, 39);
+
         return $this;
     }
 
@@ -334,26 +375,32 @@ class Comment
      */
     public function getIp()
     {
-        if (is_numeric($this->ip)) { // try to use old format
+        if (is_numeric($this->ip)) {
+            // try to use old format
             static $max = 0xffffffff; // 2^32
             if ($this->ip > 0 && $this->ip < $max) {
                 return long2ip($this->ip);
             }
         }
-        return (string)$this->ip;
+
+        return $this->ip;
     }
 
     /**
      * Set recommended
      *
-     * @param string $p_recommended
+     * @param string $recommended
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setRecommended($p_recommended)
+    public function setRecommended($recommended)
     {
-        if ($p_recommended) $this->recommended = 1;
-        else $this->recommended = 0;
-        // return this for chaining mechanism
+        if ($recommended) {
+            $this->recommended = 1;
+        } else {
+            $this->recommended = 0;
+        }
+
         return $this;
     }
 
@@ -364,19 +411,20 @@ class Comment
      */
     public function getRecommended()
     {
-        return (string)$this->recommended;
+        return (bool) $this->recommended;
     }
 
     /**
      * Set commenter
      *
-     * @param Newscoop\Entity\Comment\Commenter $p_commenter
+     * @param Newscoop\Entity\Comment\Commenter $commenter
+     *
      * @return Newscoop\Entity\Comment
      */
-    public function setCommenter(Commenter $p_commenter)
+    public function setCommenter(Commenter $commenter)
     {
-        $this->commenter = $p_commenter;
-        // return this for chaining mechanism
+        $this->commenter = $commenter;
+
         return $this;
     }
 
@@ -391,6 +439,16 @@ class Comment
     }
 
     /**
+     * Get the commenter's name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getCommenterName();
+    }
+
+    /**
      * Get commenter name
      *
      * @return string
@@ -398,6 +456,16 @@ class Comment
     public function getCommenterName()
     {
         return $this->getCommenter()->getName();
+    }
+
+    /**
+     * Get the commenter's email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->getCommenterEmail();
     }
 
     /**
@@ -415,11 +483,11 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setStatus($p_status)
+    public function setStatus($status)
     {
         $status_enum = array_flip(self::$status_enum);
-        $this->status = $status_enum[$p_status];
-        // return this for chaining mechanism
+        $this->status = $status_enum[$status];
+
         return $this;
     }
 
@@ -438,10 +506,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setForum(Publication $p_forum)
+    public function setForum(Publication $forum)
     {
-        $this->forum = $p_forum;
-        // return this for chaining mechanism
+        $this->forum = $forum;
+
         return $this;
     }
 
@@ -460,10 +528,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThread(Article $p_thread)
+    public function setThread(Article $thread)
     {
-        $this->thread = $p_thread;
-        // return this for chaining mechanism
+        $this->thread = $thread;
+
         return $this;
     }
 
@@ -482,10 +550,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThreadLevel($p_level)
+    public function setThreadLevel($level)
     {
-        $this->thread_level = $p_level;
-        // return this for chaining mechanism
+        $this->thread_level = $level;
+
         return $this;
     }
 
@@ -504,10 +572,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setThreadOrder($p_order)
+    public function setThreadOrder($order)
     {
-        $this->thread_order = $p_order;
-        // return this for chaining mechanism
+        $this->thread_order = $order;
+
         return $this;
     }
 
@@ -526,10 +594,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setLanguage(Language $p_language)
+    public function setLanguage(Language $language)
     {
-        $this->language = $p_language;
-        // return this for chaining mechanism
+        $this->language = $language;
+
         return $this;
     }
 
@@ -548,10 +616,10 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setParent(Comment $p_parent = null)
+    public function setParent(Comment $parent = null)
     {
-        $this->parent = $p_parent;
-        // return this for chaining mechanism
+        $this->parent = $parent;
+
         return $this;
     }
 
@@ -613,16 +681,17 @@ class Comment
     /**
      * Check if the comment is the same as this one
      *
-     * @param Comment $p_comment
+     * @param Comment $comment
+     *
      * @return bool
      * @deprecated legacy from frontend controllers
      */
-    public function SameAs($p_comment)
+    public function SameAs($comment)
     {
-        if (is_object($p_comment)) {
-            return $p_comment->getId() == $this->getId();
+        if (is_object($comment)) {
+            return $comment->getId() == $this->getId();
         }
-        
+
         return false;
     }
 
@@ -641,14 +710,15 @@ class Comment
     /**
      * Get an enity property
      *
-     * @param $p_key
+     * @param $key
+     *
      * @return mixed
      * @deprecated legacy from frontend controllers
      */
-    public function getProperty($p_key)
+    public function getProperty($key)
     {
-        if (isset($this->$p_key)) {
-            return $this->$p_key;
+        if (isset($this->$key)) {
+            return $this->$key;
         } else {
             return null;
         }
@@ -768,11 +838,14 @@ class Comment
      * Set indexed
      *
      * @param DateTime $indexed
-     * @return void
+     *
+     * @return self
      */
-    public function setIndexed(\DateTime $indexed = null)
+    public function setIndexed(DateTime $indexed = null)
     {
         $this->indexed = $indexed;
+
+        return self;
     }
 
     /**
