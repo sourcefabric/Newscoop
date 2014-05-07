@@ -15,15 +15,15 @@ use Newscoop\TemplateList\PaginatedBaseList;
 /**
  * List users
  */
-class UsersList extends PaginatedBaseList 
+class UsersList extends PaginatedBaseList
 {
 
     protected function prepareList($criteria, $parameters)
     {
         $em = \Zend_Registry::get('container')->get('em');
-        $service = \Zend_Registry::get('container')->get('user.list');
-        $qb = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
-        $list = $this->paginateList($qb, null, $criteria->maxResults, null, false);
+        $result = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
+        $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
+        $list->count = $result[1];
 
         $tempList = array_map(function ($row) {
             $user = $row[0];

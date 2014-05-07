@@ -1,4 +1,10 @@
 services:
+    newscoop_newscoop.listener.authentication.backend.session:
+        class: Newscoop\NewscoopBundle\EventListener\AuthenticationListener
+        arguments:  ["@user", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.routing.loader.plugins:
         class: Newscoop\NewscoopBundle\Routing\PluginsLoader
         arguments: ["@newscoop.plugins.manager", "@service_container"]
