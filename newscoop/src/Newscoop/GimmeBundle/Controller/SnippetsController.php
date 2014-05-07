@@ -2,7 +2,7 @@
 /**
  * @package Newscoop\Gimme
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
- * @copyright 2014 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -150,7 +150,7 @@ class SnippetsController extends FOSRestController
     }
 
     /**
-     * Create new comment
+     * Create new Snippet
      *
      * @ApiDoc(
      *     statusCodes={
@@ -159,15 +159,16 @@ class SnippetsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\SnippetType"
      * )
      *
+     * @Route("/snippets.{_format}", defaults={"_format"="json"})
      * @Route("/snippets/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
      *
      * @return Form
      */
-    public function createSnippetAction(Request $request, $articleNumber, $languageCode)
+    public function createSnippetAction(Request $request)
     {
-        return $this->processForm($request, null, $articleNumber, $languageCode);
+        return $this->processForm($request);
     }
 
     /**
@@ -231,90 +232,58 @@ class SnippetsController extends FOSRestController
      *
      * @return Form
      */
-    private function processForm($request, $snippet = null, $articleNumber = null, $languageCode = null)
+    private function processForm($request, $snippetId = null, $articleNumber = null, $languageCode = null)
     {
-        // $publicationService = $this->get('newscoop.publication_service');
-        // $publication = $publicationService->getPublication();
+        $em = $this->container->get('em');
 
-        // if (
-        //     false === $this->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY') &&
-        //     false === (bool) $publication->getPublicSnippetsEnabled()
-        // ) {
-        //     throw new AccessDeniedException('Public snippets are disabled');
-        // }
+        if (!$snippetId) {
+            $templateId = $request->request->get('template');
 
-        // $em = $this->container->get('em');
-        // $snippetService = $this->container->get('comment');
+            if (!is_numeric($templateId)) {
+                throw new InvalidArgumentException("Parameter 'template' is not numeric");
+            }
 
-        // if (!$snippet) {
-        //     $snippet = new Comment();
-        //     $statusCode = 201;
-        // } else {
-        //     $statusCode = 200;
-        //     $snippet = $em->getRepository('Newscoop\Entity\Snippet')->findOneById($snippet);
+            $snippetTemplate = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
+                ->getTemplateById($templateId);
+            
+            if (is_null($snippetTemplate)) {
+                $snippetTemplate = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
+                    ->getTemplateById($templateId, 'all');
+                
+                if (is_null($snippetTemplate)) {
+                    throw new InvalidArgumentException("Template with ID: '".$templateId."' does not exist.");
+                }
 
-        //     if (!$snippet) {
-        //         throw new EntityNotFoundException('Result was not found.');
-        //     }
-        // }
+                throw new InvalidArgumentException("Template with ID: '".$templateId."' is not enabled.");
+            }
 
-        $ladybug = \Zend_Registry::get('container')->getService('ladybug');
-        $ladybug->log($request);
+            $snippet = new Snippet($snippetTemplate);
+            $statusCode = 201;
+        } else {
+            $snippet = $em->getRepository('Newscoop\Entity\Snippet')
+                ->getSnippetById($snippetId);
+            $statusCode = 200;
+        }
 
-        $form = $this->createForm(new SnippetType(array('patch'=>true)), array());
+        $form = $this->container->get('form.factory')->create(new SnippetType(), $snippet);
         $form->handleRequest($request);
 
-        
-        $ladybug->log($form);
-        $ladybug->log($form->getData());
-        // print ladybug_dump($request);
-        // print ladybug_dump($form);
-        // print ladybug_dump($form->getData());
+        if ($form->isValid()) {
+            $snippet = $form->getData();
+            $em->getRepository('Newscoop\Entity\Snippet')
+                ->save($snippet);
+            $response = new Response();
+            $response->setStatusCode($statusCode);
 
-        // if ($form->isValid()) {
-        //     $attributes = $form->getData();
-        //     $user = $this->getUser();
+            $response->headers->set(
+                'X-Location',
+                $this->generateUrl('newscoop_gimme_snippets_getsnippet', array(
+                    'id' => $snippet->getId(),
+                ), true)
+            );
 
-        //     if ($snippet->getId() !== null) {
-        //         // update comment
-        //         $snippet = $snippetService->updateComment($snippet, $attributes);
-        //     } else {
-
-
-
-        //         // create new comment
-        //         if ($user) {
-        //             $attributes['user'] = $user->getId();
-        //         } else if (!$attributes['name']) {
-        //             throw new InvalidArgumentException('When user is not logged in, then commenter name is required.');
-        //         }
-
-        //         if ($articleNumber) {
-        //             $attributes['thread'] = $articleNumber;
-        //         }
-
-        //         if ($languageCode) {
-        //             $attributes['language'] = $languageCode;
-        //         }
-
-        //         $attributes['time_created'] = new \DateTime();
-        //         $attributes['ip'] = $request->getClientIp();
-
-        //         $snippet = $snippetService->save($snippet, $attributes, $user);
-        //     }
-
-        //     $response = new Response();
-        //     $response->setStatusCode($statusCode);
-
-        //     $response->headers->set(
-        //         'X-Location',
-        //         $this->generateUrl('newscoop_gimme_snippets_getcomment', array(
-        //             'id' => $snippet->getId(),
-        //         ), true)
-        //     );
-
-        //     return $response;
-        // }
+            return $response;
+        }
 
         return $form;
     }

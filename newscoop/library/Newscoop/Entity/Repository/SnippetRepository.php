@@ -277,4 +277,23 @@ class SnippetRepository extends EntityRepository
         // $snipp
         // $snippet = new Snippet();
     }
+
+    public function save(Snippet $snippet)
+    {
+        if (!$snippet->hasName()) {
+            throw new \InvalidArgumentException("Snippet name cannot be empty");
+        }
+
+        foreach($snippet->getFields()->toArray() as $field) {
+            if ($field->isRequired()) {
+                if (!$field->hasData()) {
+                    throw new \InvalidArgumentException("SnippetField: '".$field->getFieldName()."' requires a value");
+                }
+            }
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($snippet);
+        $em->flush();
+    }
 }

@@ -55,8 +55,9 @@ class SnippetField
      */
     protected $fieldName;
 
-    public function __construct()
+    public function __construct(SnippetTemplateField $templateField)
     {
+        $this->setTemplateField($templateField);
         $this->fieldName = $this->getFieldName();
     }
 
@@ -140,6 +141,16 @@ class SnippetField
     }
 
     /**
+     * Getter for templateField required
+     *
+     * @return string
+     */
+    public function isRequired()
+    {
+        return $this->templateField->getRequired();
+    }
+
+    /**
      * Getter for templateField
      *
      * @return Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField
@@ -185,6 +196,17 @@ class SnippetField
         $this->data = $this->typeJuggle($data);
     
         return $this;
+    }
+
+    /**
+     * Check if Field has Data set
+     *
+     * @return mixed
+     */
+    public function hasData()
+    {
+        $data = $this->typeJuggle($this->data);
+        return !empty($data);
     }
 
     private function typeJuggle($data = null)

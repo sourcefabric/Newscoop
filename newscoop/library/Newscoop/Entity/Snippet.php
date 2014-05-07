@@ -63,7 +63,7 @@ class Snippet
      * @ORM\Column(name="Enabled", type="boolean", nullable=false)
      * @var boolean
      */
-    protected $enabled = 1;
+    protected $enabled = true;
 
     /**
      * @ORM\Column(name="Created", type="datetime", nullable=false)
@@ -142,13 +142,12 @@ class Snippet
         $this->template = $template;
 
         foreach ($template->getFields() as $templateField) {
-            $field = new SnippetField();
+            $field = new SnippetField($templateField);
             $field->setSnippet($this);
-            $field->setTemplateField($templateField);
             $this->addField($field);
         }
 
-        $this->setUpdated();
+        $this->setModified();
     
         return $this;
     }
@@ -193,9 +192,19 @@ class Snippet
     public function setName($name)
     {
         $this->name = $name;
-        $this->setUpdated();
+        $this->setModified();
     
         return $this;
+    }
+    
+    /**
+     * Check if Snippet has a name
+     *
+     * @return boolean
+     */
+    public function hasName()
+    {
+        return !empty($this->name);
     }
 
     /**
@@ -238,7 +247,7 @@ class Snippet
             throw new \Exception('Snippet: "'.$this->name.'" does not have Field: "'.$fieldName.'"');
         }
 
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -268,7 +277,7 @@ class Snippet
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
-        $this->setUpdated();
+        $this->setModified();
     
         return $this;
     }
@@ -297,35 +306,35 @@ class Snippet
         }
         
         $this->created = $created;    
-        $this->setUpdated();
+        $this->setModified();
     
         return $this;
     }
     
     /**
-     * Getter for updated
+     * Getter for modified
      *
      * @return mixed
      */
-    public function getUpdated()
+    public function getModified()
     {
-        return $this->updated;
+        return $this->modified;
     }
     
     /**
-     * Setter for updated
+     * Setter for modified
      *
-     * @param mixed $updated Value to set
+     * @param mixed $modified Value to set
      *
      * @return self
      */
-    public function setUpdated($updated = null)
+    public function setModified($modified = null)
     {
-        if (!($updated instanceof \DateTime)) {
-            $updated = new \DateTime("now");
+        if (!($modified instanceof \DateTime)) {
+            $modified = new \DateTime("now");
         }
 
-        $this->updated = $updated;
+        $this->modified = $modified;
     
         return $this;
     }
