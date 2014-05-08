@@ -63,7 +63,7 @@ class DemositeService
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Reload renditions command.');
+            throw new \RuntimeException('An error occurred when executing the Fetch publications command.');
         }
 
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
