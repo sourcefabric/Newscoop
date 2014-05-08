@@ -32,12 +32,11 @@ class FetchPublicationsCommand extends ContainerAwareCommand
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $em = $this->getContainer()->getService('em');
         $resourceId = new \Newscoop\Service\Resource\ResourceId(__CLASS__);
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
-
         $publicationService = $this->getContainer()->getService('content.publication');
         $publications =  $publicationService->findAll();
+
         foreach ($themeService->getUnassignedThemes() as $theme) {
             foreach ($publications as $publication) {
                 $themeService->assignTheme($theme, $publication);
