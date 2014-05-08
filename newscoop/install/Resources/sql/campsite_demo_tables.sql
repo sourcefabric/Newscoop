@@ -2280,6 +2280,25 @@ CREATE TABLE `plugin_blog_topic` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `plugin_community_ticker_event`
+--
+
+DROP TABLE IF EXISTS `plugin_community_ticker_event`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `plugin_community_ticker_event` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) COLLATE utf8_unicode_ci NOT NULL,
+  `params` longtext COLLATE utf8_unicode_ci,
+  `created` datetime NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_6C3DB5B9A76ED395` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `plugin_debate`
 --
 
