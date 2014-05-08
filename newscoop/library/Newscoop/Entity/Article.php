@@ -1322,5 +1322,21 @@ class Article implements DocumentInterface
     {
         return $this->snippets;
     }
-    
+
+	/**
+     * Add a Snippet to the Article
+     * 
+     * @param Snippet $snippet the Snippet to attach
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function addSnippet(Snippet $snippet)
+    {
+		if (!$this->snippets->contains($snippet)) {
+			$this->snippets->add($snippet);
+			$snippet->addArticle($this);
+		}
+
+        return $this;
+    }    
 }

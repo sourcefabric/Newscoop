@@ -154,43 +154,46 @@ class SnippetsController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         201="Returned when comment created succesfuly"
+     *         201="Returned when Snippet created succesfuly"
+     *     },
+     *     parameters={
+     *         {"name"="template", "dataType"="integer", "required"=true, "description"="SnippetTemplate ID"}
      *     },
      *     input="\Newscoop\GimmeBundle\Form\Type\SnippetType"
      * )
      *
      * @Route("/snippets.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View()
      *
      * @return Form
      */
-    public function createSnippetAction(Request $request)
+    public function createSnippetAction(Request $request, $articleNumber = null, $languageCode = null)
     {
-        return $this->processForm($request);
+        return $this->processForm($request, null, $articleNumber, $languageCode);
     }
 
     /**
-     * Update comment
+     * Update Snippet
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when comment updated succesfuly"
+     *         200="Returned when Snippet updated succesfuly"
      *     },
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
      * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{article}/{language}/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("POST|PATCH")
      * @View()
      *
      * @return Form
      */
-    public function updateSnippetAction(Request $request, $snippetId)
+    public function updateSnippetAction(Request $request, $snippetId, $articleNumber = null, $languageCode = null)
     {
-        return $this->processForm($request, $snippetId);
+        return $this->processForm($request, $snippetId, $articleNumber, $languageCode);
     }
 
     /**
@@ -223,7 +226,7 @@ class SnippetsController extends FOSRestController
     }
 
     /**
-     * Process comment form
+     * Process Snippet form
      *
      * @param Request $request
      * @param integer $snippet
@@ -234,7 +237,9 @@ class SnippetsController extends FOSRestController
      */
     private function processForm($request, $snippetId = null, $articleNumber = null, $languageCode = null)
     {
+        // XXX It breaks using PATCH
         $em = $this->container->get('em');
+        $patch = false;
 
         if (!$snippetId) {
             $templateId = $request->request->get('template');
@@ -261,15 +266,33 @@ class SnippetsController extends FOSRestController
             $statusCode = 201;
         } else {
             $snippet = $em->getRepository('Newscoop\Entity\Snippet')
-                ->getSnippetById($snippetId);
+                ->getSnippetById($snippetId, 'all');
             $statusCode = 200;
+            $patch = true;
+            if (is_null($snippet)) {
+                throw new NotFoundHttpException("Snippet with ID: '".$snippetId."' was not found");
+            }
         }
 
-        $form = $this->container->get('form.factory')->create(new SnippetType(), $snippet);
+        $article = null;
+        if (!is_null($articleNumber) && !is_null($languageCode)) {
+            $article = $em->getRepository('Newscoop\Entity\Article')
+                ->getArticle($articleNumber, $languageCode)
+                ->getOneOrNullResult();
+
+            if (!$article) {
+                throw new NotFoundHttpException('Article with number:"'.$articleNumber.'" and language: "'.$languageCode.'" was not found.');
+            }
+        }
+
+        $form = $this->container->get('form.factory')->create(new SnippetType(array('patch'=>$patch)), $snippet);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $snippet = $form->getData();
+            if ($article) {
+                $snippet->addArticle($article);
+            }
             $em->getRepository('Newscoop\Entity\Snippet')
                 ->save($snippet);
             $response = new Response();

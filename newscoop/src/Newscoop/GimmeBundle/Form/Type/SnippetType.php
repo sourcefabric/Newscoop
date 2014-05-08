@@ -21,6 +21,7 @@ class SnippetType extends AbstractType
 
     public function __construct(array $options = array())
     {
+		$this->patch = false;
         if (array_key_exists('patch', $options)) {
             $this->patch = $options['patch'];
         }
@@ -38,9 +39,10 @@ class SnippetType extends AbstractType
             $constraints = array();
         }
 
-
         $builder->add('fields', 'collection', array(
-            'type' => new SnippetFieldType()
+			'type' => new SnippetFieldType(array('patch'=>$this->patch)),
+			'required' => $defaultRequired,
+			'constraints' => $constraints,
         ));
 
         $builder->add('name', null, array(

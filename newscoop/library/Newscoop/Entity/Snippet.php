@@ -210,7 +210,7 @@ class Snippet
     /**
      * Getter for fields
      *
-     * @return array
+     * @return Doctrine\Common\Collections\ArrayCollection
      */
     public function getFields()
     {
@@ -252,9 +252,31 @@ class Snippet
         return $this;
     }
 
+    /**
+     * Return the attached Articles
+     * 
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
     public function getArticles()
     {
         return $this->articles;
+    }
+
+    /**
+     * Add an Article to the Snippet
+     * 
+     * @param Article $article the Article to attach
+     *
+     * @return Newscoop\Entity\Snippet
+     */
+    public function addArticle(Article $article)
+    {
+        if (!$this->articles->contains($article)) {
+            $this->articles->add($article);
+            $article->addSnippet($this);
+        }
+
+        return $this;
     }
     
     /**

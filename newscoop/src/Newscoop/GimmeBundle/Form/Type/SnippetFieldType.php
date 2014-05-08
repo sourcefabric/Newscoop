@@ -20,6 +20,7 @@ class SnippetFieldType extends AbstractType
 
     public function __construct(array $options = array())
     {
+		$this->patch = false;
         if (array_key_exists('patch', $options)) {
             $this->patch = $options['patch'];
         }
