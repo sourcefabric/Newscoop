@@ -24,6 +24,10 @@ Just run the composer:
     curl -s https://getcomposer.org/installer | php
     php composer.phar create-project sourcefabric/newscoop path/to/install dev-master
 
+## Newscoop REST API documentation
+
+REST API documentation will be available under `http://www.domain.com/documentation/rest-api/` link, after Newscoop installation will be done.
+
 ## How to contribute
 
 Only 4 steps:

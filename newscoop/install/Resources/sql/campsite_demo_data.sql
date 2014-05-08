@@ -16,16 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `Aliases`
---
-
-LOCK TABLES `Aliases` WRITE;
-/*!40000 ALTER TABLE `Aliases` DISABLE KEYS */;
-INSERT INTO `Aliases` VALUES (2,'localhost',1);
-/*!40000 ALTER TABLE `Aliases` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `ArticleAttachments`
 --
 
