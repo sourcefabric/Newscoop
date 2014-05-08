@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2014 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric z.ú.
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */

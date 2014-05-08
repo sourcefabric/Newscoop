@@ -2,7 +2,7 @@
 /**
  * @package Newscoop\Gimme
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
- * @copyright 2014 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 

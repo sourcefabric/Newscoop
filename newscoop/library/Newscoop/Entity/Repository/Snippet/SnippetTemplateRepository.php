@@ -2,7 +2,7 @@
 /**
  * @package Newscoop
  * @author Yorick Terweijden <yorick.terweijden@sourcefabric.org>
- * @copyright 2014 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric z.ú.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
