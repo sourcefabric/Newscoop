@@ -21,7 +21,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     global $ADMIN_DIR;
     global $ADMIN;
     global $Campsite;
-	global $g_user;
+    global $g_user;
 
     // --- Return on unimportant errors ---
     if (!$Campsite['DEBUG']) {
@@ -51,10 +51,10 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 
     // -- Return on generic errors ---
     if (preg_match ('/^Undefined index:/i', $p_string)){
-    	return;
+        return;
     }
     if (preg_match ('/^Undefined variable:/i', $p_string)){
-    	return;
+        return;
     }
     if (preg_match ('/^Undefined offset:/i', $p_string)){
         return;
@@ -67,12 +67,12 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 
     // -- Return on URL parse errors
     if (preg_match('/^parse_url/i', $p_string)) {
-    	return;
+        return;
     }
 
     // -- Return on mysql connect errors ---
     if (preg_match ('/^mysql_connect/i', $p_string)){
-	return;
+    return;
     }
 
     // --- Return on socket errors ---
@@ -132,7 +132,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     }
 
     if (is_object($g_user)) {
-	    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
+        require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
     }
 
     // --- If reporter doesn't exist, make one ($reporter might exist
@@ -141,13 +141,13 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     $version = explode(" ", $Campsite['VERSION']);
     $version = array_shift($version);
 
-	if (!isset($reporter)) {
-	    $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line,
-	    							'Newscoop', $version);
-	}
+    if (!isset($reporter)) {
+        $reporter = new BugReporter($p_number, $p_string, $p_file, $p_line,
+                                    'Newscoop', $version);
+    }
 
-	// --- Print results ---
+    // --- Print results ---
     http_response_code(500);
-	include dirname(__FILE__) . '/emailus.php';
+    include dirname(__FILE__) . '/emailus.php';
     exit();
 }
