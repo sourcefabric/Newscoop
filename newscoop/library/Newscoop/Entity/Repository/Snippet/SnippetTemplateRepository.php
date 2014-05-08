@@ -12,7 +12,6 @@ use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Snippet\SnippetTemplate;
-// use Newscoop\Entity\Snippet\Commenter;
 
 /**
  * Snippet repository
@@ -226,7 +225,7 @@ class SnippetTemplateRepository extends EntityRepository
         }
     }
 
-	public function save(SnippetTemplate $snippetTemplate)
+    public function save(SnippetTemplate $snippetTemplate)
     {
         if (!$snippetTemplate->hasName()) {
             throw new \InvalidArgumentException("SnippetTemplate name cannot be empty");
@@ -236,16 +235,15 @@ class SnippetTemplateRepository extends EntityRepository
             throw new \InvalidArgumentException("SnippetTemplate templateCode cannot be empty");
         }
 
-		if (!$snippetTemplate->hasFields()) {
+        if (!$snippetTemplate->hasFields()) {
             throw new \InvalidArgumentException("SnippetTemplate requires at least 1 SnippetTemplateField");
-		}
+        }
         foreach($snippetTemplate->getFields()->toArray() as $field) {
-			$field->setTemplate($snippetTemplate);
+            $field->setTemplate($snippetTemplate);
         }
 
         $em = $this->getEntityManager();
         $em->persist($snippetTemplate);
         $em->flush();
     }
-
 }

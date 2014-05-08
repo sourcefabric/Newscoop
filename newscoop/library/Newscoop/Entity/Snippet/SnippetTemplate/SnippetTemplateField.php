@@ -98,10 +98,10 @@ class SnippetTemplateField
         return $this->templateFieldName;
     }
 
-	public function hasName()
-	{
-		return !empty($this->templateFieldName);
-	}
+   public function hasName()
+   {
+      return !empty($this->templateFieldName);
+   }
     
     /**
      * Setter for name

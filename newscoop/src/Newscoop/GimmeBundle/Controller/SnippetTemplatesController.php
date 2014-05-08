@@ -129,7 +129,7 @@ class SnippetTemplatesController extends FOSRestController
             ->deleteSnippetTemplate($id, $force);
     }
 
-	/**
+    /**
      * Create new SnippetTemplate
      *
      * @ApiDoc(
@@ -150,7 +150,7 @@ class SnippetTemplatesController extends FOSRestController
         return $this->processForm($request, null);
     }
 
-	/**
+    /**
      * Process SnippetTemplate form
      *
      * @param Request $request

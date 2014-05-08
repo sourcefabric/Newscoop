@@ -100,6 +100,10 @@ class SnippetsController extends FOSRestController
             throw new EntityNotFoundException('Result was not found.');
         }
 
+        if ($rendered) {
+            return $snippet->render();
+        }
+
         return $snippet;
     }
 

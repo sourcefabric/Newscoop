@@ -147,10 +147,10 @@ class SnippetTemplate
         return $this->name;
     }
 
-	public function hasName()
-	{
-		return !empty($this->name);
-	}
+   public function hasName()
+   {
+      return !empty($this->name);
+   }
 
     /**
      * Setter for name
@@ -199,11 +199,11 @@ class SnippetTemplate
      */
     public function hasFields()
     {
-		if (count($this->fields) >= 1) {
-			return true;
-		}
+      if (count($this->fields) >= 1) {
+         return true;
+      }
 
-		return false;
+      return false;
     }
 
     /**
@@ -292,10 +292,10 @@ class SnippetTemplate
         return $this;
     }
 
-	public function hasTemplateCode()
-	{
-		return !empty($this->templateCode);
-	}
+   public function hasTemplateCode()
+   {
+      return !empty($this->templateCode);
+   }
 
     /**
      * Getter for favourite
