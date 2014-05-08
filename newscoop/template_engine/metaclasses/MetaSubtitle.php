@@ -195,10 +195,10 @@ final class MetaSubtitle {
      * @return string
      */
     private static function ProcessContent($p_content) {
-    	$content = trim($p_content);
-    	if (empty($content)) {
-    		return $p_content;
-    	}
+        $content = trim($p_content);
+        if (empty($content)) {
+            return $p_content;
+        }
         // process internal links
         $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
@@ -223,8 +223,8 @@ final class MetaSubtitle {
      * @return string
      */
     public static function ProcessImageLink(array $p_matches) {
-    	$context = CampTemplate::singleton()->context();
-    	$oldImage = $context->image;
+        $context = CampTemplate::singleton()->context();
+        $oldImage = $context->image;
         $uri = $context->url;
         if ($uri->article->number == 0) {
             return '';
@@ -234,22 +234,22 @@ final class MetaSubtitle {
         $detailsString = $p_matches[2];
         $detailsArray = array();
         if (trim($detailsString) != '') {
-        	$imageAttributes = 'align|alt|sub|width|height|ratio|\w+';
-        	preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
-        	$detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
-        	if (count($detailsArray1[1]) > 0) {
-        		$detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
-        	} else {
-        		$detailsArray1 = array();
-        	}
-        	preg_match_all("/[\s]+($imageAttributes)=([^\"\s]+)/i", $detailsString, $detailsArray2);
-        	$detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
-        	if (count($detailsArray2[1]) > 0) {
-        		$detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
-        	} else {
-        		$detailsArray2 = array();
-        	}
-        	$detailsArray = array_merge($detailsArray1, $detailsArray2);
+            $imageAttributes = 'align|alt|sub|width|height|ratio|\w+';
+            preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
+            $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
+            if (count($detailsArray1[1]) > 0) {
+                $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
+            } else {
+                $detailsArray1 = array();
+            }
+            preg_match_all("/[\s]+($imageAttributes)=([^\"\s]+)/i", $detailsString, $detailsArray2);
+            $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
+            if (count($detailsArray2[1]) > 0) {
+                $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
+            } else {
+                $detailsArray2 = array();
+            }
+            $detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
         $articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
@@ -265,20 +265,20 @@ final class MetaSubtitle {
         $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
         'height'=>'EditorImageResizeHeight');
         foreach (array('ratio', 'width', 'height') as $imageOption) {
-        	$defaultOption = (int)SystemPref::Get($defaultOptions[$imageOption]);
-        	if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
-        		$imageOptions .= " $imageOption " . (int)$detailsArray[$imageOption];
-        	} elseif ($imageOption != 'ratio' && $defaultOption > 0) {
-        		$imageOptions .= " $imageOption $defaultOption";
-        	} elseif ($imageOption == 'ratio' && $defaultOption != 100) {
-        		$imageOptions .= " $imageOption $defaultOption";
-        	}
+            $defaultOption = (int)SystemPref::Get($defaultOptions[$imageOption]);
+            if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
+                $imageOptions .= " $imageOption " . (int)$detailsArray[$imageOption];
+            } elseif ($imageOption != 'ratio' && $defaultOption > 0) {
+                $imageOptions .= " $imageOption $defaultOption";
+            } elseif ($imageOption == 'ratio' && $defaultOption != 100) {
+                $imageOptions .= " $imageOption $defaultOption";
+            }
         }
         $imageOptions = trim($imageOptions);
 
         $imgZoomLink = '';
         if (SystemPref::Get("EditorImageZoom") == 'Y' && strlen($imageOptions) > 0) {
-        	$uri->uri_parameter = "image";
+            $uri->uri_parameter = "image";
             $imgZoomLink = '<a href="' . $uri->uri . '" class="photoViewer" ';
             if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
                 $imgZoomLink .= 'title="' . $detailsArray['sub'] . '">';
@@ -310,13 +310,13 @@ final class MetaSubtitle {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
         }
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-            $imgString .= ' title="' . $detailsArray['sub'] . '"';
+            $imgString .= ' title="' . strip_tags(htmlspecialchars_decode($detailsArray['sub'])) . '"';
         }
         $imgString .= ' border="0"/>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-    		$imgString .= '<p class="cs_img_caption">';
-            $imgString .= $detailsArray['sub'] . '</p>';
+            $imgString .= '<p class="cs_img_caption">';
+            $imgString .= htmlspecialchars_decode($detailsArray['sub']) . '</p>';
         }
         if ($isCentered) {
             $imgString .= '</div></div><p>';

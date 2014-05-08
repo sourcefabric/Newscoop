@@ -46,10 +46,10 @@ $refreshDir = false;
 // Check for any sub-directory request.
 // Check that the requested sub-directory exists and valid.
 if (isset($_REQUEST['dir'])) {
-	$path = rawurldecode($_REQUEST['dir']);
-	if ($manager->validRelativePath($path)) {
-		$relative = $path;
-	}
+    $path = rawurldecode($_REQUEST['dir']);
+    if ($manager->validRelativePath($path)) {
+        $relative = $path;
+    }
 }
 
 $manager = new ImageManager($IMConfig);
@@ -93,54 +93,54 @@ if (isset($_REQUEST['image_id'])) {
  */
 function drawFiles($list, &$manager)
 {
-        global $relative, $image;
-	$first = true;
-	foreach($list as $entry => $file)
-	{
-	    if (isset($image) && is_object($image)) {
-	        if ($image->getImageId() == $file['image_object']->getImageId()) {
+    global $relative, $image;
+    $first = true;
+    foreach($list as $entry => $file)
+    {
+        if (isset($image) && is_object($image)) {
+            if ($image->getImageId() == $file['image_object']->getImageId()) {
 ?>
-		<td>
-			<table width="100" cellpadding="0" cellspacing="0">
-			<tr>
-				<td class="block" id="block_<?php echo $file['template_id']; ?>">
-		                        <img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/>
-		                </td></tr><tr><td class="edit">
-		<?php
-		if ($file['image']) {
-			echo $file['image'][0].'x'.$file['image'][1];
-		}
-		else {
-			echo " ";
-		}
-		?>
-		                </td>
+        <td>
+            <table width="100" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="block" id="block_<?php echo $file['template_id']; ?>">
+                                <img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo $file['alt']; ?>"/>
+                        </td></tr><tr><td class="edit">
+        <?php
+        if ($file['image']) {
+            echo $file['image'][0].'x'.$file['image'][1];
+        }
+        else {
+            echo " ";
+        }
+        ?>
+                        </td>
                         </tr></table></td>
         <?php
-			}
-		} else {
-	?>
-		<td>
-			<table width="100" cellpadding="0" cellspacing="0">
-			<tr>
-		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');" title="<?php echo  escape_js_param($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  escape_js_param($file['alt']); ?>"/></a>
-		                </td></tr><tr><td class="edit">
-		<?php
-		if ($file['image']) {
-			echo $file['image'][0].'x'.$file['image'][1];
-		}
-		else {
-			echo " ";
-		}
-		?>
-		                </td>
+            }
+        } else {
+    ?>
+        <td>
+            <table width="100" cellpadding="0" cellspacing="0">
+            <tr>
+                        <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');">
+        <a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');" title="<?php echo  escape_js_param($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  escape_js_param($file['alt']); ?>"/></a>
+                        </td></tr><tr><td class="edit">
+        <?php
+        if ($file['image']) {
+            echo $file['image'][0].'x'.$file['image'][1];
+        }
+        else {
+            echo " ";
+        }
+        ?>
+                        </td>
                         </tr></table></td>
-	<?php   } ?>
-	  <?php
-	  if ($first == true) { ?><script>CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');</script><?php }
-	  $first = false;
-	}//foreach
+    <?php   } ?>
+      <?php
+      if ($first == true) { ?><script>CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');</script><?php }
+      $first = false;
+    }//foreach
 }//function drawFiles
 
 
@@ -149,20 +149,20 @@ function drawFiles($list, &$manager)
  */
 function drawDirs($list, &$manager)
 {
-	global $relative;
+    global $relative;
 
-	foreach($list as $path => $dir)
-	{ ?>
-		<td><table width="100" cellpadding="0" cellspacing="0"><tr><td class="block">
-		<a href="images.php?dir=<?php echo rawurlencode($path); ?>" onclick="updateDir('<?php echo $path; ?>')" title="<?php echo $dir['entry']; ?>"><img src="img/folder.gif" height="80" width="80" alt="<?php echo $dir['entry']; ?>" /></a>
-		</td></tr><tr>
-		<td class="edit">
-			<a href="images.php?dir=<?php echo $relative; ?>&amp;deld=<?php echo rawurlencode($path); ?>" title="Trash" onclick="return confirmDeleteDir('<?php echo $dir['entry']; ?>', <?php echo $dir['count']; ?>);"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a>
-			<?php echo $dir['entry']; ?>
-		</td>
-		</tr></table></td>
-	  <?php
-	} //foreach
+    foreach($list as $path => $dir)
+    { ?>
+        <td><table width="100" cellpadding="0" cellspacing="0"><tr><td class="block">
+        <a href="images.php?dir=<?php echo rawurlencode($path); ?>" onclick="updateDir('<?php echo $path; ?>')" title="<?php echo $dir['entry']; ?>"><img src="img/folder.gif" height="80" width="80" alt="<?php echo $dir['entry']; ?>" /></a>
+        </td></tr><tr>
+        <td class="edit">
+            <a href="images.php?dir=<?php echo $relative; ?>&amp;deld=<?php echo rawurlencode($path); ?>" title="Trash" onclick="return confirmDeleteDir('<?php echo $dir['entry']; ?>', <?php echo $dir['count']; ?>);"><img src="img/edit_trash.gif" height="15" width="15" alt="Trash"/></a>
+            <?php echo $dir['entry']; ?>
+        </td>
+        </tr></table></td>
+      <?php
+    } //foreach
 }//function drawDirs
 
 
@@ -199,73 +199,85 @@ function drawErrorBase(&$manager)
 
 <html>
 <head>
-	<title>Image List</title>
+    <title>Image List</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="css/imagelist.css" rel="stylesheet" type="text/css" />
+    <link href="css/imagelist.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="assets/dialog.js"></script>
 <script type="text/javascript">
 /*<![CDATA[*/
 
-	if(window.top)
-		I18N = window.top.I18N;
+    if(window.top)
+        I18N = window.top.I18N;
 
-	function hideMessage()
-	{
-		var topDoc = window.top.document;
-		var messages = topDoc.getElementById('messages');
-		if(messages)
-			messages.style.display = "none";
-	}
+    function hideMessage()
+    {
+        var topDoc = window.top.document;
+        var messages = topDoc.getElementById('messages');
+        if(messages)
+            messages.style.display = "none";
+    }
 
-	init = function()
-	{
-		hideMessage();
-		var topDoc = window.top.document;
+    init = function()
+    {
+        hideMessage();
+        var topDoc = window.top.document;
 
 <?php
-	//we need to refesh the drop directory list
-	//save the current dir, delete all select options
-	//add the new list, re-select the saved dir.
-	if($refreshDir)
-	{
-		$dirs = $manager->getDirs();
+    //we need to refesh the drop directory list
+    //save the current dir, delete all select options
+    //add the new list, re-select the saved dir.
+    if($refreshDir)
+    {
+        $dirs = $manager->getDirs();
 ?>
-		var selection = topDoc.getElementById('dirPath');
-		var currentDir = selection.options[selection.selectedIndex].text;
+        var selection = topDoc.getElementById('dirPath');
+        var currentDir = selection.options[selection.selectedIndex].text;
 
-		while(selection.length > 0)
-		{	selection.remove(0); }
+        while(selection.length > 0)
+        {   selection.remove(0); }
 
-		selection.options[selection.length] = new Option("/","<?php echo rawurlencode('/'); ?>");
-		<?php foreach($dirs as $relative=>$fullpath) { ?>
-		selection.options[selection.length] = new Option("<?php echo $relative; ?>","<?php echo rawurlencode($relative); ?>");
-		<?php } ?>
+        selection.options[selection.length] = new Option("/","<?php echo rawurlencode('/'); ?>");
+        <?php foreach($dirs as $relative=>$fullpath) { ?>
+        selection.options[selection.length] = new Option("<?php echo $relative; ?>","<?php echo rawurlencode($relative); ?>");
+        <?php } ?>
 
-		for(var i = 0; i < selection.length; i++)
-		{
-			var thisDir = selection.options[i].text;
-			if(thisDir == currentDir)
-			{
-				selection.selectedIndex = i;
-				break;
-			}
-		}
+        for(var i = 0; i < selection.length; i++)
+        {
+            var thisDir = selection.options[i].text;
+            if(thisDir == currentDir)
+            {
+                selection.selectedIndex = i;
+                break;
+            }
+        }
 <?php } ?>
-	}
+    }
 
-	function editImage(image)
-	{
-		var url = "editor.php?img="+image;
-		Dialog(url, function(param)
-		{
-			if (!param) // user must have pressed Cancel
-				return false;
-			else
-			{
-				return true;
-			}
-		}, null);
-	}
+    function editImage(image)
+    {
+        var url = "editor.php?img="+image;
+        Dialog(url, function(param)
+        {
+            if (!param) // user must have pressed Cancel
+                return false;
+            else
+            {
+                return true;
+            }
+        }, null);
+    }
+
+<?php
+
+    $richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+    $captionLimit = SystemPref::Get('MediaCaptionLength');
+
+    if ($richtextCaption == 'Y') { ?>
+      var captionsEnabled = true;
+      var captionLimit = <?php echo (int) $captionLimit; ?>;
+<?php } else { ?>
+      var captionsEnabled = false;
+<?php } ?>
 
 /*]]>*/
 </script>
@@ -276,40 +288,42 @@ function drawErrorBase(&$manager)
 
 <body>
 <?php if ($manager->isValidBase() == false) { drawErrorBase($manager); }
-	elseif(count($list[0]) > 0 || count($list[1]) > 0) { ?>
+    elseif(count($list[0]) > 0 || count($list[1]) > 0) { ?>
 <table>
-	<tr>
-	<?php drawDirs($list[0], $manager); ?>
-	<?php drawFiles($list[1], $manager); ?>
-	</tr>
+    <tr>
+    <?php drawDirs($list[0], $manager); ?>
+    <?php drawFiles($list[1], $manager); ?>
+    </tr>
 </table>
 
-	<?php
-	if (isset($image) && is_object($image)) {
-	    if (strpos($_REQUEST['image_id'], '_') === false) {
-	        $templateId = $_REQUEST['image_id'];
-	    } else {
-	        list($templateId, $imageRatio) = explode('_', $_REQUEST['image_id']);
-	    }
-	    $imageUrl = $image->getImageUrl();
-	    if (!empty($imageAltOpt)) {
-	        $imageAlt = $imageAltOpt;
-	    } else {
-	        $imageAlt = $image->getDescription();
-	    }
-	    if (!empty($imageTitleOpt)) {
-	        $imageTitle = $imageTitleOpt;
-	    } else {
-	        $imageTitle = $image->getDescription();
-	    }
-	    $imageAlign = (!empty($imageAlignOpt)) ? $imageAlignOpt : '';
-	    $imageRatio = (!empty($imageRatioOpt)) ? $imageRatioOpt : '';
+    <?php
+    if (isset($image) && is_object($image)) {
+        if (strpos($_REQUEST['image_id'], '_') === false) {
+            $templateId = $_REQUEST['image_id'];
+        } else {
+            list($templateId, $imageRatio) = explode('_', $_REQUEST['image_id']);
+        }
+        $imageUrl = $image->getImageUrl();
+        if (!empty($imageAltOpt)) {
+            $imageAlt = $imageAltOpt;
+        } else {
+            $imageAlt = $image->getDescription();
+        }
+
+        if (!empty($imageTitleOpt)) {
+            $imageTitle = $imageTitleOpt;
+        } else {
+            $imageTitle = $image->getDescription();
+        }
+
+        $imageAlign = (!empty($imageAlignOpt)) ? $imageAlignOpt : '';
+        $imageRatio = (!empty($imageRatioOpt)) ? $imageRatioOpt : '';
         $imageResizeWidth = (!empty($imageResizeWidthOpt)) ? $imageResizeWidthOpt : '';
         $imageResizeHeight = (!empty($imageResizeHeightOpt)) ? $imageResizeHeightOpt : '';
-	} else {
-	    $firstImage = array_shift($list[1]);
-	    if (!empty($firstImage)) {
-	        $templateId = $firstImage['template_id'];
+    } else {
+        $firstImage = array_shift($list[1]);
+        if (!empty($firstImage)) {
+            $templateId = $firstImage['template_id'];
             $imageUrl = $firstImage['image_object']->getImageUrl();
             $imageAlt = $firstImage['alt'];
             $imageTitle = $imageAlt;
@@ -317,13 +331,13 @@ function drawErrorBase(&$manager)
             $imageRatio = '';
             $imageResizeWidth = '';
             $imageResizeHeight = '';
-	    }
-	}
-	?>
-	<!-- automatically select the image -->
-	<script>
-	    CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo escape_js_param($imageAlt); ?>', '<?php echo escape_js_param($imageTitle); ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
-	</script>
+        }
+    }
+    ?>
+    <!-- automatically select the image -->
+    <script>
+        CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo htmlspecialchars_decode($imageAlt); ?>', '<?php echo htmlspecialchars_decode(urldecode($imageTitle)); ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
+    </script>
 <?php } else { drawNoResults(); } ?>
 </body>
 </html>
