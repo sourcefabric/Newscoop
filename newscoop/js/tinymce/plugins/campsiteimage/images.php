@@ -93,7 +93,7 @@ if (isset($_REQUEST['image_id'])) {
  */
 function drawFiles($list, &$manager)
 {
-        global $relative, $image;
+    global $relative, $image;
     $first = true;
     foreach($list as $entry => $file)
     {
@@ -267,6 +267,18 @@ function drawErrorBase(&$manager)
         }, null);
     }
 
+<?php
+
+    $richtextCaption = SystemPref::Get("MediaRichTextCaptions");
+    $captionLimit = SystemPref::Get('MediaCaptionLength');
+
+    if ($richtextCaption == 'Y') { ?>
+      var captionsEnabled = true;
+      var captionLimit = <?php echo (int) $captionLimit; ?>;
+<?php } else { ?>
+      var captionsEnabled = false;
+<?php } ?>
+
 /*]]>*/
 </script>
 <script type="text/javascript" src="../../tiny_mce_popup.js"></script>
@@ -324,7 +336,6 @@ function drawErrorBase(&$manager)
     ?>
     <!-- automatically select the image -->
     <script>
-    console.log('<?php echo $imageTitle; ?>');
         CampsiteImageDialog.select(<?php echo $templateId; ?>, '<?php echo $imageUrl; ?>', '<?php echo htmlspecialchars_decode($imageAlt); ?>', '<?php echo htmlspecialchars_decode(urldecode($imageTitle)); ?>', '<?php echo $imageAlign; ?>', '<?php echo $imageRatio; ?>', '<?php echo $imageResizeWidth; ?>', '<?php echo $imageResizeHeight; ?>');
     </script>
 <?php } else { drawNoResults(); } ?>

@@ -71,6 +71,7 @@ $captionLimit = SystemPref::Get('MediaCaptionLength');
 
     if ($richtextCaption == 'Y') { ?>
       var captionsEnabled = true;
+      var captionLimit = <?php echo (int) $captionLimit; ?>;
   <?php } else { ?>
       var captionsEnabled = false;
   <?php } ?>
@@ -116,7 +117,12 @@ $captionLimit = SystemPref::Get('MediaCaptionLength');
               $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
               $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
 
-              editor_load_tinymce('f_caption', $user->getCurrentUser(), $editorLanguage, array('max_chars' => $captionLimit));
+              editor_load_tinymce('f_caption', $user->getCurrentUser(), $editorLanguage,
+                array(
+                  'max_chars' => $captionLimit,
+                  'entity_encoding' => 'raw'
+                )
+              );
           ?>
 
               <textarea name="f_caption" id="f_caption" rows="8" cols="70"></textarea>

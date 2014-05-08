@@ -4,14 +4,16 @@ tinyMCEPopup.requireLangPack();
 
 var CampsiteImageDialog = {
     init : function(ed) {
+        if (captionsEnabled) {
+            ed.windowManager.params.mce_height = ed.windowManager.params.mce_height + 80;
+        }
         tinyMCEPopup.resizeToInnerSize();
     },
-    
+
     edit_insert : function(command) {
         var ed = tinyMCEPopup.editor, dom = ed.dom;
         var topDoc = window.top.document;
         var re = /\"/;
-        alert('sdsdsds');
         if (!captionsEnabled) {
             var alt = topDoc.getElementById('f_alt').value;
             var caption = topDoc.getElementById('f_caption').value;
@@ -20,10 +22,14 @@ var CampsiteImageDialog = {
                 alert('Double quotes are not allowed for Alt and Caption fields.\nUse single quotes or double single quotes instead.');
                 return false;
             }
+        } else {
+            if (!validateTinyMCEEditors()) {
+                return false;
+            }
         }
-        
+
         var shrinkRatio = topDoc.getElementById('f_ratio').value;
-        
+
         if (shrinkRatio < 1 || shrinkRatio > 99) {
             shrinkRatio = '';
         }
@@ -33,15 +39,15 @@ var CampsiteImageDialog = {
 
         if (command == 'insert') var mce_command = 'mceInsertContent';
         if (command == 'edit') var mce_command = 'mceReplaceContent';
-        
+
         var width = topDoc.getElementById('f_original_width').value;
         var height = topDoc.getElementById('f_original_height').value;
-        
+
         if (topDoc.getElementById('f_ratio').value != '') {
             width = width * topDoc.getElementById('f_ratio').value * 0.01;
             height = height * topDoc.getElementById('f_ratio').value * 0.01;
         }
-        
+
         if (topDoc.getElementById('f_resize_width').value != '' && topDoc.getElementById('f_resize_width').value != topDoc.getElementById('f_original_width').value && topDoc.getElementById('f_resize_width').value != width) width = topDoc.getElementById('f_resize_width').value;
         if (topDoc.getElementById('f_resize_height').value != '' && topDoc.getElementById('f_resize_height').value != topDoc.getElementById('f_original_height').value && topDoc.getElementById('f_resize_height').value != height) height = topDoc.getElementById('f_resize_height').value;
 
@@ -54,7 +60,6 @@ var CampsiteImageDialog = {
             width : width,
             height : height
         });
-console.log(element);
         tinyMCEPopup.execCommand(mce_command, false, element);
         return(tinyMCEPopup.close());
     },
@@ -68,7 +73,7 @@ console.log(element);
     },
 
     select : function(p_image_template_id, p_filename, p_alt, p_title, p_align, p_ratio, p_width, p_height, p_original_width, p_original_height) {
-        
+
         var topDoc = window.top.document;
 
         var obj = topDoc.getElementById('f_image_template_id');
@@ -82,8 +87,9 @@ console.log(element);
 
         var obj = topDoc.getElementById('f_caption');
         obj.value = p_title;
-        console.log(p_title+'aaaaaaaaaaaaaaaaaaaa');
-        tinyMCE.activeEditor.setContent(p_title, {format : 'html'});
+        if (typeof(captionsEnabled) !== 'undefined' && captionsEnabled) {
+            tinyMCE.get('f_caption').setContent(p_title, {format : 'html'});
+        }
 
         var obj = topDoc.getElementById('f_align');
         obj.value = p_align;
@@ -92,22 +98,22 @@ console.log(element);
             var obj = topDoc.getElementById('f_ratio');
             obj.value = p_ratio;
         }
-        
+
         if (p_width != undefined && p_width != '') {
             var obj = topDoc.getElementById('f_resize_width');
             obj.value = p_width;
-            
+
             var obj = topDoc.getElementById('f_original_width');
             obj.value = p_width;
         }
         if (p_height != undefined && p_height != '') {
             var obj = topDoc.getElementById('f_resize_height');
             obj.value = p_height;
-            
+
             var obj = topDoc.getElementById('f_original_height');
             obj.value = p_height;
         }
-        
+
         if (p_original_width != undefined && p_original_width != '') {
             var obj = topDoc.getElementById('f_original_width');
             obj.value = p_original_width;
