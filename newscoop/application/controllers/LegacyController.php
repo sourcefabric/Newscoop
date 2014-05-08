@@ -89,6 +89,7 @@ class LegacyController extends Zend_Controller_Action
         header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
         header("Cache-Control: no-store, no-cache, must-revalidate");
 
+        $year = _(date("Y"));
         $message = <<<EOF
 <!doctype html>
 <html lang="en">
@@ -168,7 +169,7 @@ class LegacyController extends Zend_Controller_Action
         <a href="http://newscoop.sourcefabric.org/" target="_blank">
             Newscoop</a>, the open content management system for professional journalists.
          <br>
-            ©&nbsp;2013&nbsp;<a href="http://www.sourcefabric.org" target="_blank">Sourcefabric o.p.s.</a>&nbsp;Newscoop       is distributed under GNU GPL v.3    
+            ©&nbsp;$year&nbsp;<a href="http://www.sourcefabric.org" target="_blank">Sourcefabric z.ú.</a>&nbsp;Newscoop       is distributed under GNU GPL v.3    
     </div>
 </div>
 </body>
