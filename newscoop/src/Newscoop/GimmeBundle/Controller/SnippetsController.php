@@ -80,19 +80,21 @@ class SnippetsController extends FOSRestController
      *     output="\Newscoop\Entity\Snippet"
      * )
      *
-     * @Route("/snippets/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
      * @return array
      */
-    public function getSnippetAction(Request $request, $id)
+    public function getSnippetAction(Request $request, $snippetId)
     {
+        // XXX Check if the SnippetID belongs to the articleNumber
         $show = $request->query->get('show', 'enabled');
         $em = $this->container->get('em');
 
         $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
-        $snippet = $snippetRepo->getSnippetById($id, $show);
+        $snippet = $snippetRepo->getSnippetById($snippetId, $show);
 
         if (!$snippet) {
             throw new EntityNotFoundException('Result was not found.');

@@ -272,12 +272,6 @@ class SnippetRepository extends EntityRepository
         }
     }
 
-    public function createSnippetForArticle($articleNr, $languageCode, array $snippetData)
-    {
-        // $snipp
-        // $snippet = new Snippet();
-    }
-
     public function save(Snippet $snippet)
     {
         if (!$snippet->hasName()) {
