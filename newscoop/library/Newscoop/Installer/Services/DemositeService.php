@@ -59,11 +59,11 @@ class DemositeService
 
         $php = escapeshellarg($phpPath);
         $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
-        $availablePublications = new Process("$php $newscoopConsole publications:fetch", null, null, null, 300);
+        $availablePublications = new Process("$php $newscoopConsole themes:assign", null, null, null, 300);
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Fetch publications command.');
+            throw new \RuntimeException('An error occurred when executing the Assign theme command.');
         }
 
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);

@@ -15,17 +15,17 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Newscoop\Service\IThemeManagementService;
 
 /**
- * Fetch available publications Command
+ * Assign themes for publication Command
  */
-class FetchPublicationsCommand extends ContainerAwareCommand
+class AssignThemeCommand extends ContainerAwareCommand
 {
     /**
      */
     protected function configure()
     {
         $this
-        ->setName('publications:fetch')
-        ->setDescription('Fetch available publications');
+        ->setName('themes:assign')
+        ->setDescription('Assign theme for publications');
     }
 
     /**
