@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Doctrine\ORM\EntityNotFoundException;
-use Newscoop\GimmeBundle\Form\Type\SnippetType;
+use Newscoop\GimmeBundle\Form\Type\SnippetTemplateType;
 use Symfony\Component\Form\Exception\InvalidArgumentException;
 use Newscoop\Entity\Snippet;
 use Newscoop\Entity\Snippet\SnippetTemplate;
@@ -127,5 +127,79 @@ class SnippetTemplatesController extends FOSRestController
         $em = $this->container->get('em');
         $articleSnippets = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
             ->deleteSnippetTemplate($id, $force);
+    }
+
+	/**
+     * Create new SnippetTemplate
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when SnippetTemplate created succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\SnippetTemplateType"
+     * )
+     *
+     * @Route("/snippetTemplates.{_format}", defaults={"_format"="json"})
+     * @Method("POST")
+     * @View()
+     *
+     * @return Form
+     */
+    public function createSnippetTemplateAction(Request $request)
+    {
+        return $this->processForm($request, null);
+    }
+
+	/**
+     * Process SnippetTemplate form
+     *
+     * @param Request $request
+     * @param integer $snippetTemplateId
+     *
+     * @return Form
+     */
+    private function processForm($request, $snippetTemplateId = null)
+    {
+        // XXX It breaks using PATCH
+        $em = $this->container->get('em');
+        $patch = false;
+        if (!is_null($snippetTemplateId) && !is_numeric($snippetTemplateId)) {
+            throw new InvalidArgumentException("Parameter 'template' is not numeric");
+        }
+
+        if (!$snippetTemplateId) {
+            $snippetTemplate = new SnippetTemplate();
+            $statusCode = 201;
+        } else {
+            $snippetTemplate = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
+                ->getTemplateById($templateId);
+            $statusCode = 200;
+            $patch = true;
+            if (is_null($snippetTemplate)) {
+                throw new InvalidArgumentException("Template with ID: '".$templateId."' does not exist.");
+            }
+        }
+
+        $form = $this->container->get('form.factory')->create(new SnippetTemplateType(array('patch'=>$patch)), $snippetTemplate);
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $snippetTemplate = $form->getData();
+            $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
+                ->save($snippetTemplate);
+            $response = new Response();
+            $response->setStatusCode($statusCode);
+
+            $response->headers->set(
+                'X-Location',
+                $this->generateUrl('newscoop_gimme_snippettemplates_getsinglesnippettemplate', array(
+                    'id' => $snippetTemplate->getId(),
+                ), true)
+            );
+
+            return $response;
+        }
+
+        return $form;
     }
 }

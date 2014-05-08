@@ -225,4 +225,27 @@ class SnippetTemplateRepository extends EntityRepository
             throw new \Exception('SnippetTemplate with ID: '.$id.' does not exist');
         }
     }
+
+	public function save(SnippetTemplate $snippetTemplate)
+    {
+        if (!$snippetTemplate->hasName()) {
+            throw new \InvalidArgumentException("SnippetTemplate name cannot be empty");
+        }
+
+        if (!$snippetTemplate->hasTemplateCode()) {
+            throw new \InvalidArgumentException("SnippetTemplate templateCode cannot be empty");
+        }
+
+		if (!$snippetTemplate->hasFields()) {
+            throw new \InvalidArgumentException("SnippetTemplate requires at least 1 SnippetTemplateField");
+		}
+        foreach($snippetTemplate->getFields()->toArray() as $field) {
+			$field->setTemplate($snippetTemplate);
+        }
+
+        $em = $this->getEntityManager();
+        $em->persist($snippetTemplate);
+        $em->flush();
+    }
+
 }

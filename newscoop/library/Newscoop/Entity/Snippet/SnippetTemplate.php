@@ -68,7 +68,7 @@ class SnippetTemplate
      * @ORM\Column(name="Enabled", type="boolean", nullable=false)
      * @var boolean
      */
-    protected $enabled = 1;
+    protected $enabled = true;
 
     /**
      * @ORM\Column(name="IconInactive", type="text", nullable=true)
@@ -147,6 +147,11 @@ class SnippetTemplate
         return $this->name;
     }
 
+	public function hasName()
+	{
+		return !empty($this->name);
+	}
+
     /**
      * Setter for name
      *
@@ -157,7 +162,7 @@ class SnippetTemplate
     public function setName($name)
     {
         $this->name = $name;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -182,7 +187,7 @@ class SnippetTemplate
     public function setController($controller)
     {
         $this->controller = $controller;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -194,7 +199,11 @@ class SnippetTemplate
      */
     public function hasFields()
     {
-        return !is_null($this->fields);
+		if (count($this->fields) >= 1) {
+			return true;
+		}
+
+		return false;
     }
 
     /**
@@ -218,7 +227,7 @@ class SnippetTemplate
     {
         $field->setTemplate($this);
         $this->fields->add($field);
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -278,10 +287,15 @@ class SnippetTemplate
     public function setTemplateCode($templateCode)
     {
         $this->templateCode = $templateCode;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
+
+	public function hasTemplateCode()
+	{
+		return !empty($this->templateCode);
+	}
 
     /**
      * Getter for favourite
@@ -303,7 +317,7 @@ class SnippetTemplate
     public function setFavourite($favourite)
     {
         $this->favourite = $favourite;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -328,7 +342,7 @@ class SnippetTemplate
     public function setEnabled($enabled)
     {
         $this->enabled = $enabled;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -353,7 +367,7 @@ class SnippetTemplate
     public function setIconInactive($iconInactive)
     {
         $this->iconInactive = $iconInactive;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -378,7 +392,7 @@ class SnippetTemplate
     public function setIconActive($iconActive)
     {
         $this->iconActive = $iconActive;
-        $this->setUpdated();
+        $this->setModified();
 
         return $this;
     }
@@ -407,35 +421,35 @@ class SnippetTemplate
         }
         
         $this->created = $created;    
-        $this->setUpdated();
+        $this->setModified();
     
         return $this;
     }
     
     /**
-     * Getter for updated
+     * Getter for modified
      *
      * @return mixed
      */
-    public function getUpdated()
+    public function getModified()
     {
-        return $this->updated;
+        return $this->modified;
     }
     
     /**
-     * Setter for updated
+     * Setter for modified
      *
-     * @param mixed $updated Value to set
+     * @param mixed $modified Value to set
      *
      * @return self
      */
-    public function setUpdated($updated = null)
+    public function setModified($modified = null)
     {
-        if (!($updated instanceof \DateTime)) {
-            $updated = new \DateTime("now");
+        if (!($modified instanceof \DateTime)) {
+            $modified = new \DateTime("now");
         }
 
-        $this->updated = $updated;
+        $this->modified = $modified;
     
         return $this;
     }

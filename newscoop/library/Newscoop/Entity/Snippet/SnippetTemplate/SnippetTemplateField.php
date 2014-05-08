@@ -21,7 +21,7 @@ class SnippetTemplateField
 {
     const TYPE_INT = 'integer';
     const TYPE_STRING = 'string';
-    const TYPE_BOOL = 'bool';
+    const TYPE_BOOL = 'boolean';
     const SCOPE_FRONTEND = 'frontend';
     const SCOPE_BACKEND = 'backend';
 
@@ -97,6 +97,11 @@ class SnippetTemplateField
     {
         return $this->templateFieldName;
     }
+
+	public function hasName()
+	{
+		return !empty($this->templateFieldName);
+	}
     
     /**
      * Setter for name
