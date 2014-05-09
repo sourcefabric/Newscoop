@@ -59,7 +59,7 @@ class DemositeService
 
         $php = escapeshellarg($phpPath);
         $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
-        $availablePublications = new Process("$php $newscoopConsole themes:assign", null, null, null, 300);
+        $availablePublications = new Process("$php $newscoopConsole themes:assign $templateName", null, null, null, 300);
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {

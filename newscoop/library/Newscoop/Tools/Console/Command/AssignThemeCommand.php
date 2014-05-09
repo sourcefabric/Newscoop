@@ -25,6 +25,7 @@ class AssignThemeCommand extends ContainerAwareCommand
     {
         $this
         ->setName('themes:assign')
+        ->addArgument('theme', InputArgument::OPTIONAL, 'Theme name to assign, e.g. set_quetzal', 1)
         ->setDescription('Assign theme for publications');
     }
 
@@ -36,10 +37,21 @@ class AssignThemeCommand extends ContainerAwareCommand
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
         $publicationService = $this->getContainer()->getService('content.publication');
         $publications =  $publicationService->findAll();
+        $themeToSet = (string) $input->getArgument('theme');
 
-        foreach ($themeService->getUnassignedThemes() as $theme) {
-            foreach ($publications as $publication) {
-                $themeService->assignTheme($theme, $publication);
+        if ($themeToSet != null) {
+            foreach ($themeService->getUnassignedThemes() as $theme) {
+                if ($theme === $themeToSet) {
+                    foreach ($publications as $publication) {
+                        $themeService->assignTheme($theme, $publication);
+                    }
+                }
+            }
+        } else {
+            foreach ($themeService->getUnassignedThemes() as $theme) {
+                foreach ($publications as $publication) {
+                    $themeService->assignTheme($theme, $publication);
+                }
             }
         }
     }
