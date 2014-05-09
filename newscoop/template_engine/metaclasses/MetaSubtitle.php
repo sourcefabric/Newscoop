@@ -204,8 +204,14 @@ final class MetaSubtitle {
 
         // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)\s*=\s*("[^"]*"|[^\s]*))*)[\s]*>';
-        return preg_replace_callback("/$imagePattern/i",
+        $content = preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
+                                     $content);
+
+        // snippet tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
+        $snippetPattern = '<!\-\-\sSnippet\s([\d]+)\s(align="([^"]+)")*[^\s]*[\s]*\-\->';
+        return preg_replace_callback("/$snippetPattern/i",
+                                     array('MetaSubtitle', 'ProcessSnippet'),
                                      $content);
     }
 
@@ -323,6 +329,23 @@ final class MetaSubtitle {
 
         return $imgString;
     }
+
+	/**
+	 * Process the Snippet markup and return the Snippet rendered
+	 *
+	 * @param array $p_matches
+	 * @return string
+	 */ 
+	public static function ProcessSnippet(array $p_matches)
+	{
+		$snippet = '';
+		if (array_key_exists(1, $p_matches)) {
+			$em = \Zend_Registry::get('container')->getService('doctrine.em');
+			$snippet = $em->getRepository('Newscoop\Entity\Snippet')->getSnippetById($p_matches[1]);
+			$snippet = $snippet->render();
+		}
+		return $snippet;
+	}
 
 
     /**
