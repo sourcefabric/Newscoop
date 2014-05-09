@@ -151,6 +151,27 @@ class SnippetTemplatesController extends FOSRestController
     }
 
     /**
+     * Edit existing SnippetTemplate
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when SnippetTemplate edited succesfuly"
+     *     },
+     *     input="\Newscoop\GimmeBundle\Form\Type\SnippetTemplateType"
+     * )
+     *
+     * @Route("/snippetTemplates/{snippetTemplateId}.{_format}", defaults={"_format"="json"})
+     * @Method("PATCH|POST")
+     * @View()
+     *
+     * @return Form
+     */
+    public function editSnippetTemplateAction(Request $request, $snippetTemplateId)
+    {
+        return $this->processForm($request, $snippetTemplateId);
+    }
+
+    /**
      * Process SnippetTemplate form
      *
      * @param Request $request
@@ -172,11 +193,11 @@ class SnippetTemplatesController extends FOSRestController
             $statusCode = 201;
         } else {
             $snippetTemplate = $em->getRepository('Newscoop\Entity\Snippet\SnippetTemplate')
-                ->getTemplateById($templateId);
+                ->getTemplateById($snippetTemplateId, 'all');
             $statusCode = 200;
             $patch = true;
             if (is_null($snippetTemplate)) {
-                throw new InvalidArgumentException("Template with ID: '".$templateId."' does not exist.");
+                throw new InvalidArgumentException("Template with ID: '".$snippetTemplateId."' does not exist.");
             }
         }
 

@@ -42,7 +42,6 @@ class SnippetFieldType extends AbstractType
             'required' => $defaultRequired,
             'constraints'  => $constraints,
         ));
-
     }
 
     public function getName()

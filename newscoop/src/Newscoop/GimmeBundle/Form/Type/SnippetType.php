@@ -21,7 +21,7 @@ class SnippetType extends AbstractType
 
     public function __construct(array $options = array())
     {
-		$this->patch = false;
+        $this->patch = false;
         if (array_key_exists('patch', $options)) {
             $this->patch = $options['patch'];
         }
@@ -40,9 +40,9 @@ class SnippetType extends AbstractType
         }
 
         $builder->add('fields', 'collection', array(
-			'type' => new SnippetFieldType(array('patch'=>$this->patch)),
-			'required' => $defaultRequired,
-			'constraints' => $constraints,
+            'type' => new SnippetFieldType(array('patch'=>$this->patch)),
+            'required' => $defaultRequired,
+            'constraints' => $constraints,
         ));
 
         $builder->add('name', null, array(
@@ -53,6 +53,23 @@ class SnippetType extends AbstractType
         $builder->add('enabled', 'checkbox', array(
             'required' => false,
         ));
+
+        $callback = function(FormEvent $event) {
+            if (null === $event->getData()) { // check if the Form's field is empty
+                if (is_bool($event->getForm()->getData())) { // check if it's a boolean
+                    if ($event->getForm()->getData()) {
+                        $event->setData('1');
+                    } else {
+                         $event->setData('0');
+                    }
+                } else { // set the data back
+                    $event->setData($event->getForm()->getData());
+                }
+            }
+        };
+
+        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('enabled')->addEventListener(FormEvents::PRE_BIND, $callback);
     }
 
     public function getName()

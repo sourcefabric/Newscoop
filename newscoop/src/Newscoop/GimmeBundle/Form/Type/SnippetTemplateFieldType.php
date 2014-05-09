@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class SnippetTemplateFieldType extends AbstractType
 {
@@ -59,6 +61,25 @@ class SnippetTemplateFieldType extends AbstractType
             'required' => $defaultRequired,
             'constraints'  => $constraints,
         ));
+
+        $callback = function(FormEvent $event) {
+            if (null === $event->getData()) { // check if the Form's field is empty
+                if (is_bool($event->getForm()->getData())) { // check if it's a boolean
+                    if ($event->getForm()->getData()) {
+                        $event->setData('1');
+                    } else {
+                         $event->setData('0');
+                    }
+                } else { // set the data back
+                    $event->setData($event->getForm()->getData());
+                }
+            }
+        };
+
+        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('type')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('scope')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('required')->addEventListener(FormEvents::PRE_BIND, $callback);
     }
 
     public function getName()

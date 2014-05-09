@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class SnippetTemplateType extends AbstractType
 {
@@ -21,7 +23,7 @@ class SnippetTemplateType extends AbstractType
 
     public function __construct(array $options = array())
     {
-      $this->patch = false;
+        $this->patch = false;
         if (array_key_exists('patch', $options)) {
             $this->patch = $options['patch'];
         }
@@ -33,17 +35,17 @@ class SnippetTemplateType extends AbstractType
         $constraints = array(
             new NotBlank
         );
-        
+
         if ($this->patch) {
             $defaultRequired = false;
             $constraints = array();
         }
 
         $builder->add('fields', 'collection', array(
-         'type' => new SnippetTemplateFieldType(array('patch'=>$this->patch)),
-         'required' => $defaultRequired,
-         'constraints' => $constraints,
-         'allow_add' => true
+            'type' => new SnippetTemplateFieldType(array('patch'=>$this->patch)),
+            'required' => $defaultRequired,
+            'constraints' => $constraints,
+            'allow_add' => true
         ));
 
         $builder->add('name', 'text', array(
@@ -51,14 +53,53 @@ class SnippetTemplateType extends AbstractType
             'constraints'  => $constraints,
         ));
 
-      $builder->add('templateCode', 'textarea', array(
+        $builder->add('templateCode', 'textarea', array(
             'required' => $defaultRequired,
             'constraints'  => $constraints,
+        ));
+
+        $builder->add('controller', 'text', array(
+            'required' => false,
         ));
 
         $builder->add('enabled', 'checkbox', array(
             'required' => false,
         ));
+
+        $builder->add('favourite', 'checkbox', array(
+            'required' => false,
+        ));
+
+        $builder->add('iconInactive', 'textarea', array(
+            'required' => false,
+        ));
+
+        $builder->add('iconActive', 'textarea', array(
+            'required' => false,
+        ));
+
+        $callback = function(FormEvent $event) {
+            if (null === $event->getData()) { // check if the Form's field is empty
+                if (is_bool($event->getForm()->getData())) { // check if it's a boolean
+                    if ($event->getForm()->getData()) {
+                        $event->setData('1');
+                    } else {
+                         $event->setData('0');
+                    }
+                } else { // set the data back
+                    $event->setData($event->getForm()->getData());
+                }
+            }
+        };
+
+        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('templateCode')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('controller')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('enabled')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('favourite')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('iconInactive')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('iconActive')->addEventListener(FormEvents::PRE_BIND, $callback);
+
     }
 
     public function getName()
