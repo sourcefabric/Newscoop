@@ -41,7 +41,7 @@ class AssignThemeCommand extends ContainerAwareCommand
 
         if ($themeToSet != null) {
             foreach ($themeService->getUnassignedThemes() as $theme) {
-                if ($theme === $themeToSet) {
+                if (strpos($theme->getPath(), $themeToSet) !== false) {
                     foreach ($publications as $publication) {
                         $themeService->assignTheme($theme, $publication);
                     }
