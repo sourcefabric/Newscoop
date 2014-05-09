@@ -2347,53 +2347,6 @@
             "time": "2014-04-23 10:13:35"
         },
         {
-            "name": "newscoop/community-ticker-plugin",
-            "version": "dev-master",
-            "target-dir": "Newscoop/CommunityTickerBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/takeit/plugin-CommunityTicker.git",
-                "reference": "4d78326ab831266288c65cace49f0a82a7c8862e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/takeit/plugin-CommunityTicker/zipball/4d78326ab831266288c65cace49f0a82a7c8862e",
-                "reference": "4d78326ab831266288c65cace49f0a82a7c8862e",
-                "shasum": ""
-            },
-            "require": {
-                "newscoop/plugins-installer": ">=v0.2",
-                "php": ">=5.3.3"
-            },
-            "type": "newscoop-plugin",
-            "autoload": {
-                "psr-0": {
-                    "Newscoop\\CommunityTickerBundle\\NewscoopCommunityTickerBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "RafaĹ MuszyĹski",
-                    "email": "rafal.muszynski@sourcefabric.org"
-                }
-            ],
-            "description": "Community ticker plugin bundle for Newscoop",
-            "keywords": [
-                "blog",
-                "cms",
-                "community",
-                "integration",
-                "newscoop",
-                "plugin",
-                "ticker"
-            ],
-            "time": "2014-02-26 13:42:34"
-        },
-        {
             "name": "newscoop/plugins-installer",
             "version": "v0.2",
             "target-dir": "Newscoop/Composer",

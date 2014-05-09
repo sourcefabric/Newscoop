@@ -147,7 +147,35 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
     }
 
     // --- Print results ---
-    http_response_code(500);
+    if (!function_exists('http_response_code')) {
+        httpResponseCode(500);
+    } else {
+        http_response_code(500);
+    }
+
     include dirname(__FILE__) . '/emailus.php';
     exit();
+}
+
+
+/**
+ * http_response_code function is supported from PHP >= 5.4
+ * This function provide same functionality for PHP < 5.4
+ *
+ * @param int|string $newCode Status code.
+ *
+ * @return int
+ */
+function httpResponseCode($newcode = null)
+{
+    $code = 200;
+
+    if ($newcode !== null) {
+        header('X-PHP-Response-Code: '.$newcode, true, $newcode);
+        if (!headers_sent()) {
+            $code = $newcode;
+        }
+    }
+
+    return $code;
 }
