@@ -684,7 +684,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Translations` WRITE;
 /*!40000 ALTER TABLE `Translations` DISABLE KEYS */;
-INSERT INTO `Translations` VALUES (1,1,1,'article'),(2,0,0,'Sourcefabric Jingle');
+INSERT INTO `Translations` VALUES (1,1,1,'article'),(2,2,0,'Sourcefabric Jingle');
 /*!40000 ALTER TABLE `Translations` ENABLE KEYS */;
 UNLOCK TABLES;
 
