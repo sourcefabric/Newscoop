@@ -1096,6 +1096,25 @@ LOCK TABLES `plugin_blog_topic` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `plugin_community_ticker_event`
+--
+
+LOCK TABLES `plugin_community_ticker_event` WRITE;
+/*!40000 ALTER TABLE `plugin_community_ticker_event` DISABLE KEYS */;
+INSERT INTO `plugin_community_ticker_event` (`id`, `event`, `params`, `created`, `is_active`, `user_id`) VALUES
+(1, 'comment.recommended', '{"id":4,"subject":"","article":"European Council candidates set to be named","commenter":"Administrator (don''t delete)"}', '2014-03-03 14:55:15', 1, NULL),
+(2, 'comment.recommended', '{"id":2,"subject":"","article":"European Council candidates set to be named","commenter":"Reader"}', '2014-03-03 14:56:57', 1, NULL),
+(3, 'comment.recommended', '{"id":1,"subject":"","article":"European Council candidates set to be named","commenter":"Reader"}', '2014-03-03 14:57:00', 1, NULL),
+(4, 'comment.recommended', '{"id":3,"subject":"","article":"Preserving Berlin Wall vs new developments","commenter":"Guest"}', '2014-03-03 14:57:41', 1, NULL),
+(5, 'comment.recommended', '{"id":13,"subject":"","article":"Commercial space flight becomes a reality","commenter":"John"}', '2014-03-03 15:36:16', 1, NULL),
+(6, 'comment.recommended', '{"id":11,"subject":"","article":"City life may be beneficial say doctors","commenter":"Reader"}', '2014-03-03 15:36:18', 1, NULL),
+(7, 'comment.recommended', '{"id":9,"subject":"","article":"City life may be beneficial say doctors","commenter":"User"}', '2014-03-03 15:36:21', 1, NULL),
+(8, 'comment.recommended', '{"id":7,"subject":"","article":"Sightseeing is good for the heart","commenter":"Reader"}', '2014-03-03 15:36:23', 1, NULL),
+(9, 'comment.recommended', '{"id":5,"subject":"cxvbcxxcvb","article":"European Council candidates set to be named","commenter":"Administrator (don''t delete)"}', '2014-03-03 15:36:25', 1, NULL);
+/*!40000 ALTER TABLE `plugin_community_ticker_event` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `plugin_debate`
 --
 
