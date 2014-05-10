@@ -455,32 +455,36 @@ class CommentsController extends Controller
             $commentIds[] = $value[0]->getId();
         }
 
-        $qb = $em->createQueryBuilder();
-        $comments = $qb
-            ->from('Newscoop\Entity\Comment', 'c', 'c.id')
-            ->select('c', 't', 'cc', 'u')
-            ->leftJoin('c.thread', 't')
-            ->leftJoin('c.commenter', 'cc')
-            ->leftJoin('cc.user', 'u')
-            ->where($qb->expr()->in('c.id', $commentIds))
-            ->getQuery()
-            ->getResult();
+        if (!empty($commentIds)) {
+            $qb = $em->createQueryBuilder();
+            $comments = $qb
+                ->from('Newscoop\Entity\Comment', 'c', 'c.id')
+                ->select('c', 't', 'cc', 'u')
+                ->leftJoin('c.thread', 't')
+                ->leftJoin('c.commenter', 'cc')
+                ->leftJoin('cc.user', 'u')
+                ->where($qb->expr()->in('c.id', $commentIds))
+                ->getQuery()
+                ->getResult();
 
-        foreach ($pagination as $comment) {
-            $comment = $comment[0];
-            $commentsArray[] = array(
-                'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
-                'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
-                'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
-                'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
-                'section' => $comments[$comment->getId()]->getThread()->getSection()->getName(),
-                'comment' => $comment,
-                'index' => $counter,
-            );
+            foreach ($pagination as $comment) {
+                $comment = $comment[0];
+                $commentsArray[] = array(
+                    'banned' => $commentService->isBanned($comments[$comment->getId()]->getCommenter()),
+                    'avatarHash' => md5($comments[$comment->getId()]->getCommenter()->getEmail()),
+                    'user' =>  $comments[$comment->getId()]->getCommenter()->getUser() ? new \MetaUser($comments[$comment->getId()]->getCommenter()->getUser()) : null,
+                    'issueNumber' => $comments[$comment->getId()]->getThread()->getIssueId(),
+                    'section' => $comments[$comment->getId()]->getThread()->getSection()->getName(),
+                    'comment' => $comment,
+                    'index' => $counter,
+                );
 
-            $counter++;
+                $counter++;
+            }
+
+            return $commentsArray;
         }
 
-        return $commentsArray;
+        return $commentIds;
     }
 }

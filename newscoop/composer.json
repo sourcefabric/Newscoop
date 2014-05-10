@@ -7,7 +7,7 @@
         "publication"
     ],
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
-    "version":"4.1",
+    "version":"4.3",
     "license":"GPL-3.0",
     "authors":[
         
@@ -58,7 +58,7 @@
         "nelmio\/api-doc-bundle":"dev-master"
     },
     "require-dev":{
-        "phpunit\/phpunit":"~3.7.10",
+        "phpunit\/phpunit":"~4.0",
         "phpspec\/phpspec":"2.0.*@dev",
         "liip\/rmt":"1.0.*"
     },

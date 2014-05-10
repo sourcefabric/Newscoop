@@ -5,7 +5,6 @@ require_once dirname(__FILE__) . '/../classes/Input.php';
 $translator = \Zend_Registry::get('container')->getService('translator');
 
 $ADReason = Input::Get('ADReason', 'string', $translator->trans('You do not have the right to access this page.', array(), 'home'), true);
-$BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 ?>
 <p>
 <FORM>
@@ -33,11 +32,13 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
             <script type="text/javascript">
             $(function() {
                 $('#ok-button').click(function() {
-		            <?php if ($BackLink != "/$ADMIN/home.php") { ?>
-                    location.href = <?php echo json_encode($BackLink); ?>;
-                    <?php } else { ?>
-                    window.history.back();
-                    <?php } ?>
+                    if(typeof $.fancybox == 'function') {
+                        parent.$.fancybox.close();
+                    } else {
+                        window.history.back();
+                    }
+
+                    location.href = "/admin";
                 });
             });
             </script>
@@ -48,4 +49,11 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 </CENTER>
 </FORM>
 </p>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.meta-bar').hide();
+    $('.main-menu-bar').hide();
+    $('.footer').hide();
+});
+</script>
 <?php camp_html_copyright_notice(); ?>

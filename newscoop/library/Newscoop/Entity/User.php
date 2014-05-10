@@ -181,6 +181,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $identities;
 
     /**
+     * @ORM\Column(type="integer", nullable=True, name="registered_with_publication")
+     * @var int
+     */
+    protected $publication;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -1203,5 +1209,29 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getLastLogin()
     {
         return $this->lastLogin;
+    }
+
+    /**
+     * Set publication which user registered with
+     *
+     * @param integer $publication Publication id
+     *
+     * @return int
+     */
+    public function setPublication($publication)
+    {
+        $this->publication = $publication;
+
+        return $this;
+    }
+
+    /**
+     * Get publication id which user registered with
+     *
+     * @return integer
+     */
+    public function getPublication()
+    {
+        return $this->publication;
     }
 }

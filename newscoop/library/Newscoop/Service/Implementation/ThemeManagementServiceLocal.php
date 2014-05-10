@@ -114,6 +114,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if($search !== NULL){
             $themes = $this->filterThemes($search, $themes);
         }
+
         return $themes;
     }
 

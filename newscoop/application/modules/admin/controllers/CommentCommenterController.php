@@ -171,9 +171,13 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
             $publication = $this->articleRepository->find(array('number' => $params['thread'], 'language' => $params['language']))->getPublication();
         if(isset($params['forum']))
             $publication = $this->publicationRepository->find($params['forum']);
-            
+
         //$publication = null;
         $commenter = $this->commenterRepository->find($params['commenter']);
+
+        if ($commenter->getUser() != null) {
+            $commenter->setName($commenter->getUser()->getUsername());
+        }
 
         $form = new Admin_Form_Ban;
         $this->handleBanForm($form, $commenter, $publication);
