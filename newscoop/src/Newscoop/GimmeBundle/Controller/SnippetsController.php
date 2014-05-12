@@ -307,7 +307,7 @@ class SnippetsController extends FOSRestController
             $response->headers->set(
                 'X-Location',
                 $this->generateUrl('newscoop_gimme_snippets_getsnippet', array(
-                    'id' => $snippet->getId(),
+                    'snippetId' => $snippet->getId(),
                 ), true)
             );
 

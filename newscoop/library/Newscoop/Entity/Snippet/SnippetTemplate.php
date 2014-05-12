@@ -10,6 +10,7 @@ namespace Newscoop\Entity\Snippet;
 
 use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Snippet;
 use Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField;
 
 /**
@@ -190,6 +191,16 @@ class SnippetTemplate
         $this->setModified();
 
         return $this;
+    }
+
+    public function hasController()
+    {
+        return !empty($this->controller);
+    }
+
+    public function executeController(Snippet $snippet, $update = false)
+    {
+        return new $this->controller($snippet, $update);
     }
 
     /**

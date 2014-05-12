@@ -286,6 +286,11 @@ class SnippetRepository extends EntityRepository
             }
         }
 
+        if ($snippet->getTemplate()->hasController()) {
+            $object = $snippet->getTemplate()->executeController($snippet);
+            $snippet = $object->getSnippet();
+        }
+
         $em = $this->getEntityManager();
         $em->persist($snippet);
         $em->flush();

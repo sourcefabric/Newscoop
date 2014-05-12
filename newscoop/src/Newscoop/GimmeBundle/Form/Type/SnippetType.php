@@ -14,6 +14,8 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class SnippetType extends AbstractType
 {
@@ -68,8 +70,8 @@ class SnippetType extends AbstractType
             }
         };
 
-        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('enabled')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('name')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('enabled')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
     }
 
     public function getName()

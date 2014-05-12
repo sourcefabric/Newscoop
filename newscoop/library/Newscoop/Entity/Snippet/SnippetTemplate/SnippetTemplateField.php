@@ -20,7 +20,9 @@ use Newscoop\Entity\Snippet\SnippetTemplate;
 class SnippetTemplateField
 {
     const TYPE_INT = 'integer';
-    const TYPE_STRING = 'string';
+    const TYPE_TEXT = 'text';
+    const TYPE_TEXTAREA = 'textarea';
+    const TYPE_URL = 'url';
     const TYPE_BOOL = 'boolean';
     const SCOPE_FRONTEND = 'frontend';
     const SCOPE_BACKEND = 'backend';
@@ -136,7 +138,7 @@ class SnippetTemplateField
      */
     public function setType($type)
     {
-        if (!in_array($type, array(self::TYPE_INT, self::TYPE_BOOL, self::TYPE_STRING))) {
+        if (!in_array($type, array(self::TYPE_INT, self::TYPE_BOOL, self::TYPE_TEXT, self::TYPE_TEXTAREA, self::TYPE_URL))) {
             throw new \InvalidArgumentException("Invalid type");
         }
         $this->type = $type;

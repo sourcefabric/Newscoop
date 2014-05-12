@@ -46,7 +46,7 @@ class SnippetTemplateFieldType extends AbstractType
         ));
 
         $builder->add('type', 'choice', array(
-            'choices' => array('integer' => 'integer', 'string' => 'string', 'boolean' => 'boolean'),
+            'choices' => array('integer' => 'integer', 'text' => 'text', 'textarea' => 'textarea', 'url' => 'url', 'boolean' => 'boolean'),
             'required' => $defaultRequired,
             'constraints'  => $constraints,
         ));
@@ -76,10 +76,10 @@ class SnippetTemplateFieldType extends AbstractType
             }
         };
 
-        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('type')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('scope')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('required')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('name')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('type')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('scope')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('required')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
     }
 
     public function getName()

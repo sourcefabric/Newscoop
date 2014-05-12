@@ -13,6 +13,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class SnippetFieldType extends AbstractType
 {
@@ -20,7 +22,7 @@ class SnippetFieldType extends AbstractType
 
     public function __construct(array $options = array())
     {
-		$this->patch = false;
+        $this->patch = false;
         if (array_key_exists('patch', $options)) {
             $this->patch = $options['patch'];
         }
@@ -28,20 +30,29 @@ class SnippetFieldType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $defaultRequired = true;
-        $constraints = array(
-            new NotBlank
-        );
-        
-        if ($this->patch) {
-            $defaultRequired = false;
-            $constraints = array();
-        }
+        $defaultRequired = false;
+        $constraints = array();
 
-        $builder->add('data', null, array(
-            'required' => $defaultRequired,
-            'constraints'  => $constraints,
-        ));
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+            function (FormEvent $event) {
+                $form = $event->getForm();
+                $data = $event->getData();
+                $defaultRequired = false;
+                $constraints = array();
+                if ($data->isRequired() && !$this->patch) {
+                    $defaultRequired = true;
+                    $constraints = array(
+                        new NotBlank
+                    );
+                }
+                $form->add('data', $data->getFieldType(), array(
+                    'required' => $defaultRequired,
+                    'constraints'  => $constraints,
+
+                ));
+            }
+        );
     }
 
     public function getName()

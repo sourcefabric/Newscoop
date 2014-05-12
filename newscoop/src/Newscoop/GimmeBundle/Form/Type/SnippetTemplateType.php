@@ -92,13 +92,13 @@ class SnippetTemplateType extends AbstractType
             }
         };
 
-        $builder->get('name')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('templateCode')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('controller')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('enabled')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('favourite')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('iconInactive')->addEventListener(FormEvents::PRE_BIND, $callback);
-        $builder->get('iconActive')->addEventListener(FormEvents::PRE_BIND, $callback);
+        $builder->get('name')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('templateCode')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('controller')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('enabled')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('favourite')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('iconInactive')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
+        $builder->get('iconActive')->addEventListener(FormEvents::PRE_SUBMIT, $callback);
 
     }
 
