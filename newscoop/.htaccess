@@ -18,7 +18,7 @@ AddType application/font-woff            .woff
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{REQUEST_URI} /+images/+cache
+    RewriteCond %{REQUEST_URI} /+images/+cache/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule . index.php [L]
 
@@ -34,27 +34,27 @@ AddType application/font-woff            .woff
     RewriteCond %{REQUEST_URI} !\.eot$
     RewriteCond %{REQUEST_URI} !\.js$
     RewriteCond %{REQUEST_URI} !\.ico$
-    RewriteCond %{REQUEST_URI} !/+admin
-    RewriteCond %{REQUEST_URI} !/+install
+    RewriteCond %{REQUEST_URI} !/+admin/
+    RewriteCond %{REQUEST_URI} !/+install/
     RewriteCond %{REQUEST_URI} !/+robots.txt$
     RewriteCond %{REQUEST_URI} !/+crossdomain.xml$
-    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+js
-    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+css
-    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+images
+    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+js/
+    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+css/
+    RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/+images/
     RewriteCond %{REQUEST_URI} !^/js/
     RewriteCond %{REQUEST_URI} !/plugins/([^/]*)?/\.php$
-    RewriteCond %{REQUEST_URI} !/+themes
-    RewriteCond %{REQUEST_URI} !/public/+videos
-    RewriteCond %{REQUEST_URI} !/public/+pdf
+    RewriteCond %{REQUEST_URI} !/+themes/
+    RewriteCond %{REQUEST_URI} !/public/+videos/
+    RewriteCond %{REQUEST_URI} !/public/+pdf/
     RewriteCond %{REQUEST_URI} !^/images/
-    RewriteCond %{REQUEST_URI} !/+images/+cache
+    RewriteCond %{REQUEST_URI} !/+images/+cache/
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule . index.php [L]
 
     RewriteCond %{REQUEST_URI} .tpl$
     RewriteRule . index.php [L]
 
-    RewriteCond %{REQUEST_URI} /+admin$|/+admin/+.*|/+admin-files
+    RewriteCond %{REQUEST_URI} /+admin$|/+admin/+.*|/+admin-files/
     RewriteRule . admin.php [L]
 </IfModule>
 
