@@ -21,6 +21,8 @@ class ItemRepository extends EntityRepository
 
         $queryBuilder = $em->getRepository('Newscoop\Package\Item')
             ->createQueryBuilder('i')
+            ->select('i, ii')
+            ->leftJoin('i.image', 'ii')
             ->where('i.package = :package')
             ->setParameter('package', $id);
 

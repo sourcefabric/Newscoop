@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\GimmeBundle\Serializer\Image;  
+namespace Newscoop\GimmeBundle\Serializer\Image;
 
 use JMS\Serializer\JsonSerializationVisitor;
 
@@ -36,8 +36,16 @@ class ImageUriHandler
             )).'/'.$data->image;
 
             return $imageUri;
-        } else if (property_exists($data, 'imageId')) {
+        } elseif (property_exists($data, 'imageId')) {
             $image = $this->imageService->find($data->imageId);
+            $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
+            $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
+                'src' => $imageSrc
+            ), 'image');
+
+            return $imageUri;
+        } elseif (is_object($data->image)) {
+            $image = $data->image;
             $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
             $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
                 'src' => $imageSrc

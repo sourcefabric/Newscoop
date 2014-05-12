@@ -13,9 +13,21 @@ Newscoop\Entity\Section:
             type: string
             groups: ["list"]
             serialized_name: title
-        articlesLink:
+        publication:
             expose: true
             read_only: true
-            type: articles_link
+            type: string
             groups: ["list"]
-            serialized_name: articlesLink
+            accessor:
+                getter: getPublicationName
+            serialized_name: publicationName
+            since_version: 1.1
+        issue:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            accessor:
+                getter: getIssueName
+            serialized_name: issueName
+            since_version: 1.1
