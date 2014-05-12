@@ -80,7 +80,7 @@ class Section
      * @ORM\JoinColumn(name="ArticleTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    public $articleTemplate;
+    protected $articleTemplate;
 
     /**
      * Link to topic articles resource
