@@ -59,11 +59,19 @@ class DemositeService
 
         $php = escapeshellarg($phpPath);
         $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
+
+        $clearCache = new Process("$php $newscoopConsole cache:clear", null, null, null, 300);
+        $clearCache->run();
+
+        if (!$clearCache->isSuccessful()) {
+            throw new \RuntimeException($clearCache->getErrorOutput());
+        }
+
         $availablePublications = new Process("$php $newscoopConsole themes:assign $templateName", null, null, null, 300);
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the Assign theme command.');
+            throw new \RuntimeException($clearCache->getErrorOutput());
         }
 
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
