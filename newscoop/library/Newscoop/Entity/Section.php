@@ -80,7 +80,7 @@ class Section
      * @ORM\JoinColumn(name="ArticleTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
-    protected $articleTemplate;
+    public $articleTemplate;
 
     /**
      * Link to topic articles resource
@@ -270,6 +270,26 @@ class Section
     public function getNameAndLanguage()
     {
         return $this->getName() .' ('.$this->getLanguageName().')';
+    }
+
+    /**
+     * Get name of publication
+     *
+     * @return string
+     */
+    public function getPublicationName()
+    {
+        return $this->publication->getName();
+    }
+
+    /**
+     * Get name of Issue
+     *
+     * @return string
+     */
+    public function getIssueName()
+    {
+        return $this->issue->getName();
     }
 
     /**
