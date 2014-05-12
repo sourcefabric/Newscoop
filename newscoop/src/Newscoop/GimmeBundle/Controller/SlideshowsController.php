@@ -34,7 +34,7 @@ class SlideshowsController extends FOSRestController
      *
      * @Route("/slideshows/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View(serializerGroups={"slideshowsDetails"})
+     * @View(serializerGroups={"details"})
      */
     public function getSlideshowItemsAction(Request $request, $id)
     {
