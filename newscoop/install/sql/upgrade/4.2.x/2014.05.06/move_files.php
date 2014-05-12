@@ -15,8 +15,8 @@ $dirs = array(
     '/include/smarty/plugins',
 );
 
-rmove($newscoop_dir . '/files', $newscoop_dir . '/public/files');
-rmove($newscoop_dir . '/videos', $newscoop_dir . '/public/videos');
+rmove2($newscoop_dir . '/files', $newscoop_dir . '/public/files');
+rmove2($newscoop_dir . '/videos', $newscoop_dir . '/public/videos');
 
 $fail = false;
 $required_commands = array();
@@ -33,7 +33,7 @@ foreach($files as $file) {
 
 foreach($dirs as $dir) {
     if (file_exists($newscoop_dir . $dir)) {
-        if(rrmdir(realpath($newscoop_dir . $dir)) !== true) {
+        if(rrmdir2(realpath($newscoop_dir . $dir)) !== true) {
             echo 'Please remove directory rm -R "'.realpath($newscoop_dir . $dir).'"'."\n";
             $required_commands[] = 'sudo rm -R '.realpath($newscoop_dir . $dir);
             $fail = true;
@@ -57,7 +57,7 @@ if ($fail) {
  * @param String $src - Source of files being moved
  * @param String $dest - Destination of files being moved
  */
-function rmove($src, $dest)
+function rmove2($src, $dest)
 {
     // If source is not a directory stop processing
     if(!is_dir($src)) return false;
@@ -76,7 +76,7 @@ function rmove($src, $dest)
         if($f->isFile()) {
             rename($f->getRealPath(), "$dest/" . $f->getFilename());
         } else if(!$f->isDot() && $f->isDir()) {
-            rmove($f->getRealPath(), "$dest/$f");
+            rmove2($f->getRealPath(), "$dest/$f");
             @unlink($f->getRealPath());
         }
     }
@@ -87,12 +87,12 @@ function rmove($src, $dest)
 }
 
 // When the directory is not empty:
-function rrmdir($dir) {
+function rrmdir2($dir) {
     if (is_dir($dir)) {
         $objects = scandir($dir);
         foreach ($objects as $object) {
             if ($object != "." && $object != "..") {
-                if (filetype($dir."/".$object) == "dir") rrmdir($dir."/".$object); else unlink($dir."/".$object);
+                if (filetype($dir."/".$object) == "dir") rrmdir2($dir."/".$object); else unlink($dir."/".$object);
             }
         }
         reset($objects);
