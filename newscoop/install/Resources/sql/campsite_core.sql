@@ -3290,3 +3290,11 @@ CREATE TABLE ArticleSnippets (
   INDEX IDX_5080CDEB00DA91C (SnippetId),
   PRIMARY KEY(ArticleId, SnippetId)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE user_oauth_clients (
+  user_id INT NOT NULL,
+  client_id INT NOT NULL,
+  INDEX IDX_FD402C51A76ED395 (user_id),
+  INDEX IDX_FD402C5119EB6921 (client_id),
+  PRIMARY KEY(user_id, client_id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
