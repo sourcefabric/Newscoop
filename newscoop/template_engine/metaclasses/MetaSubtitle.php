@@ -210,9 +210,11 @@ final class MetaSubtitle {
 
         // snippet tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
         $snippetPattern = '<!\-\-\sSnippet\s([\d]+)\s(align="([^"]+)")*[^\s]*[\s]*\-\->';
-        return preg_replace_callback("/$snippetPattern/i",
+        $content = preg_replace_callback("/$snippetPattern/i",
                                      array('MetaSubtitle', 'ProcessSnippet'),
                                      $content);
+
+        return $content;
     }
 
 
@@ -344,6 +346,7 @@ final class MetaSubtitle {
 			$snippet = $em->getRepository('Newscoop\Entity\Snippet')->getSnippetById($p_matches[1]);
 			$snippet = $snippet->render();
 		}
+
 		return $snippet;
 	}
 

@@ -18,6 +18,7 @@ class EmbedlyController implements SnippetControllerInterface
 {
     private $snippet;
     private $endpoints = array('oEmbed', 'Extract', 'Display', 'Preview', 'Objectify');
+
     public function __construct(Snippet $snippet, $update = false)
     {
         $this->snippet = $snippet;
@@ -34,6 +35,7 @@ class EmbedlyController implements SnippetControllerInterface
 
     public function update($parameters)
     {
+		return $parameters;
     }
 
     public function preProcess($parameters)

@@ -96,7 +96,13 @@ class SnippetRepository extends EntityRepository
         return $queryBuilder;
     }
 
-    // need to be able to search for all articles attached to a snippet
+    /**
+     * Get all the Articles attached to a Snippet
+     *
+     * @param integer $id SnippetID
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
     protected function getSnippetArticles($id)
     {
         $queryBuilder = $this->getSnippetQueryBuilder('all', false)

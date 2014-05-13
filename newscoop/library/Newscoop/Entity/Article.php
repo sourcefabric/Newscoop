@@ -1323,7 +1323,7 @@ class Article implements DocumentInterface
         return $this->snippets;
     }
 
-	/**
+    /**
      * Add a Snippet to the Article
      * 
      * @param Snippet $snippet the Snippet to attach
@@ -1332,10 +1332,10 @@ class Article implements DocumentInterface
      */
     public function addSnippet(Snippet $snippet)
     {
-		if (!$this->snippets->contains($snippet)) {
-			$this->snippets->add($snippet);
-			$snippet->addArticle($this);
-		}
+        if (!$this->snippets->contains($snippet)) {
+            $this->snippets->add($snippet);
+            $snippet->addArticle($this);
+        }
 
         return $this;
     }    
