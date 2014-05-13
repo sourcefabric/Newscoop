@@ -31,6 +31,16 @@ class AuthorizeFormHandler
         $this->oauth2 = $oauth2;
     }
 
+    public function isAccepted()
+    {
+        return $this->form->getData()->getAllowAccess();
+    }
+
+    public function isRejected()
+    {
+        return !$this->form->getData()->getAllowAccess();
+    }
+
     public function process(Authorize $authorize)
     {
         $this->form->setData($authorize);
