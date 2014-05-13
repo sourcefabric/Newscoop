@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
@@ -187,6 +187,21 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $publication;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client")
+     * @ORM\JoinTable(name="user_oauth_clients",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Package\Package
+     */
+    protected $clients;
+
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -196,6 +211,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->identities = new ArrayCollection();
+        $this->clients = new ArrayCollection();
         $this->role = new Role();
         $this->is_admin = false;
         $this->is_public = false;
@@ -1233,5 +1249,45 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Add oauth client
+     *
+     * @param \Newscoop\GimmeBundle\Entity\Client $client
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function addClient(\Newscoop\GimmeBundle\Entity\Client $client)
+    {
+        $this->clients->add($client);
+
+        return $this;
+    }
+
+    /**
+     * Get oauth clients
+     *
+     * @return ArrayCollection
+     */
+    public function getClients()
+    {
+        return $this->clients;
+    }
+
+    /**
+     * Has client
+     *
+     * @param \Newscoop\GimmeBundle\Entity\Client $client
+     *
+     * @return boolean
+     */
+    public function hasClient(\Newscoop\GimmeBundle\Entity\Client $client)
+    {
+        if ($this->clients->contains($client)) {
+            return true;
+        }
+
+        return false;
     }
 }
