@@ -14,6 +14,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Exception\InvalidParametersException;
 
@@ -292,7 +293,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\ArticleAuthor"
      * )
      *
-     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"},  requirements={"authorId" = "\d+"})
      * @Method("POST|PATCH")
      * @View(serializerGroups={"list"}, statusCode=201)
      */
@@ -332,22 +333,73 @@ class AuthorsController extends FOSRestController
     /**
      * Set article authors order
      *
+     * New order must be send with form in this format
+     *
+     *     order={authorId}-{authorType},{authorId}-{authorType},{authorId}-{authorType},{authorId}-{authorType}
+     *
+     * example:
+     *
+     *     order=7-1,8-1,5-2,4-2
+     *
+     * All article author-author type pair must be send.
+     *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when successful",
-     *         404={
-     *           "Returned when the article authors are not found",
-     *         },
-     *         400="Returned when data are invalid"
+     *         200="Returned when successful"
      *     }
      * )
      *
      * @Route("/articles/{number}/{language}/authors/order.{_format}", defaults={"_format"="json"})
      * @Method("POST|PATCH")
-     * @View()
+     * @View(serializerGroups={"list"}, statusCode=200)
      */
-    public function setArticleAuthorsOrderAction($number, $language, $id)
+    public function setArticleAuthorsOrderAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
+        $articleAuthors = $em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthors($number, $language)
+            ->getResult();
+
+        $order = explode(',', $request->get('order'));
+
+        $this->reorderAuthors($em, $articleAuthors, $order);
+
+        return new Response();
+    }
+
+    /**
+     * Reorder Article Authors
+     *
+     * @param Doctrine\ORM\EntityManager $em
+     * @param array                      $articleAuthors
+     * @param array                      $order
+     *
+     * @return boolean
+     */
+    private function reorderAuthors($em, $articleAuthors, $order = array())
+    {
+        if (count($order) > 1) {
+            $counter = 0;
+            foreach ($order as $item) {
+                list($authorId, $authorTypeId) = explode("-", $item);
+
+                foreach ($articleAuthors as $articleAuthor) {
+                    if ($articleAuthor->getAuthor()->getId() == $authorId && $articleAuthor->getType()->getId() == $authorTypeId) {
+                        $articleAuthor->setOrder($counter+1);
+                        $counter++;
+                    }
+                }
+            }
+        } else {
+            $counter = 0;
+            foreach ($articleAuthors as $articleAuthor) {
+                $articleAuthor->setOrder($counter+1);
+                $counter++;
+            }
+        }
+
+        $em->flush();
+
+        return true;
     }
 }

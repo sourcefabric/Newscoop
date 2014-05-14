@@ -49,7 +49,8 @@ class ArticleAuthorRepository extends EntityRepository
             ->setParameters(array(
                 'articleNumber' => $articleNumber,
                 'languageId' => $languageId
-            ));
+            ))
+            ->orderBy('au.order', 'asc');
 
         return $qb->getQuery();
     }
