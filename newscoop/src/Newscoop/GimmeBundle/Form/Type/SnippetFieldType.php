@@ -40,13 +40,17 @@ class SnippetFieldType extends AbstractType
                 $data = $event->getData();
                 $defaultRequired = false;
                 $constraints = array();
-                if ($data->isRequired() && !$this->patch) {
-                    $defaultRequired = true;
-                    $constraints = array(
-                        new NotBlank
-                    );
+                $fieldType = null;
+                if (!is_null($data)) {
+                    $fieldType = $data->getFieldType();
+                    if ($data->isRequired() && !$this->patch) {
+                        $defaultRequired = true;
+                        $constraints = array(
+                            new NotBlank
+                        );
+                    }
                 }
-                $form->add('data', $data->getFieldType(), array(
+                $form->add('data', $fieldType, array(
                     'required' => $defaultRequired,
                     'constraints'  => $constraints,
 
