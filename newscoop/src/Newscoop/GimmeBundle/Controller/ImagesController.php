@@ -185,6 +185,10 @@ class ImagesController extends FOSRestController
 
         $images = $paginator->paginate($images);
 
+        if (array_key_exists('pagination', $articleImages)) {
+            $images['pagination'] = $articleImages['pagination'];
+        }
+
         return $images;
     }
 

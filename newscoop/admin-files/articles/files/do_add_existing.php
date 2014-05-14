@@ -11,8 +11,8 @@ if (!SecurityToken::isValid()) {
     camp_html_add_msg($translator->trans('Invalid security token!'));
 ?>
 <script type="text/javascript">
-window.close();
-window.opener.location.reload();
+parent.$.fancybox.reload = true;
+parent.$.fancybox.close();
 </script>
 <?php
 	exit;

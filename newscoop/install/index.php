@@ -7,10 +7,10 @@
  */
 
 if (!file_exists(__DIR__ . '/../vendor') && !file_exists(__DIR__.'/../vendor/autoload.php')) {
-    echo "Welcome in Newscoop Installer.<br/><br/>";
-    echo "Looks like you forget about our vendors. Please install all dependencies with Composer.";
+    echo "Welcome to Newscoop Installer!<br/><br/>";
+    echo "It doesn't look like you've installed vendors yet. Please install all dependencies using Composer.";
     echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install --no-dev</pre>";
-    echo "After that please refresh that page. Thanks!";
+    echo "When it's done, please refresh this page. Thanks!";
     die;
 }
 
@@ -28,8 +28,8 @@ foreach ($requirements as $req) {
 }
 
 if (count($missingReq) > 0) {
-    echo "Welcome in Newscoop Installer.<br/><br/>";
-    echo "Before we will show You real installer we need to fix some requirements.<br />Please read all messages and try to fix them:<br />";
+    echo "Welcome to Newscoop Installer!<br/><br/>";
+    echo "Before we will show You a real installer we need to fix some requirements first.<br />Please read all messages and try to fix them:<br />";
     echo "<pre>";
     foreach ($missingReq as $value) {
         echo $value.' <br />';
@@ -38,7 +38,7 @@ if (count($missingReq) > 0) {
     echo "You can try fix common problem with our fixer.php script, just run <br/>";
     echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
 
-    echo "After that please refresh that page. Thanks!";
+    echo "When it's done, please refresh this page. Thanks!";
     die;
 }
 
@@ -264,6 +264,7 @@ $app->get('/demo-site', function (Request $request) use ($app) {
             $data = $form->getData();
             if ($data['demo_template'] != 'no') {
                 $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
+                $app['db']->executeQuery('INSERT INTO Aliases VALUES (2,?,1)', array($request->server->get('HTTP_HOST')));
                 $app['demosite_service']->copyTemplate($data['demo_template']);
                 $app['demosite_service']->installEmptyTheme();
             }

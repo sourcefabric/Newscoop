@@ -209,20 +209,20 @@ class ThemeServiceLocalFileSystem implements IThemeService
 		if($this->cacheThemeConfigs === NULL){
 
 			$this->cacheThemeConfigs = array();
+			if (strpos($this->themesFolder, 'APPLICATION_PATH') !== false) {
+				$this->themesFolder = __DIR__ . str_replace('APPLICATION_PATH', '/../../..', $this->themesFolder);
+			}
 
             if (is_dir($this->themesFolder)) {
 				if ($dh = opendir($this->themesFolder)) {
-
 					while (($dir = readdir($dh)) !== false) {
-
                         $folder = $this->themesFolder.$dir;
-
                         if ($dir != "." && $dir != ".." && is_dir($folder)){
 							// Reading the subdirectories which contain the themes
 							if($subDh = opendir($folder)){
 								while (($file = readdir($subDh)) !== false) {
 									if ($file != "." && $file != ".."){
-										$filePath = $dir.DIR_SEP.$file.DIR_SEP.$this->themeConfigFileName;
+										$filePath = $dir.DIRECTORY_SEPARATOR.$file.DIRECTORY_SEPARATOR.$this->themeConfigFileName;
 										if(@file_exists($this->themesFolder.$filePath)){
 											$escapedPath = $this->escapePath($filePath);
 											$this->cacheThemeConfigs[crc32($escapedPath)] = $escapedPath;
@@ -237,6 +237,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 				}
 			}
 		}
+
 		return $this->cacheThemeConfigs;
 	}
 

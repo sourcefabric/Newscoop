@@ -35,7 +35,7 @@ class Item
      * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\LocalImage
      */
-    protected $image;
+    public $image;
 
     /**
      * @ORM\Column(type="integer")
@@ -293,10 +293,21 @@ class Item
 
     /**
      * Get link for Item resource
+     *
      * @return string $link Link to resource
      */
     public function getLink()
     {
         return $this->link;
+    }
+
+    /**
+     * Get clone of itself - for serializer
+     *
+     * @return self
+     */
+    public function getItem()
+    {
+        return clone $this;
     }
 }

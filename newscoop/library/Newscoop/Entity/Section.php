@@ -273,6 +273,26 @@ class Section
     }
 
     /**
+     * Get name of publication
+     *
+     * @return string
+     */
+    public function getPublicationName()
+    {
+        return $this->publication->getName();
+    }
+
+    /**
+     * Get name of Issue
+     *
+     * @return string
+     */
+    public function getIssueName()
+    {
+        return $this->issue->getName();
+    }
+
+    /**
      * String representation of this object
      *
      * @return string

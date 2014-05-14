@@ -2410,7 +2410,10 @@ DROP TABLE IF EXISTS `liveuser_userrights`;
 -- Table structure for table `liveuser_users`
 --
 
-CREATE TABLE IF NOT EXISTS `liveuser_users` (
+DROP TABLE IF EXISTS `liveuser_users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `liveuser_users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeyId` int(10) unsigned DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
@@ -2465,11 +2468,14 @@ CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
   `indexed` datetime DEFAULT NULL,
+  `registered_with_publication` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
   KEY `author_id` (`author_id`),
   KEY `indexed` (`indexed`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `liveuser_users`
@@ -3283,4 +3289,12 @@ CREATE TABLE ArticleSnippets (
   INDEX IDX_5080CDE7C53224D (ArticleId),
   INDEX IDX_5080CDEB00DA91C (SnippetId),
   PRIMARY KEY(ArticleId, SnippetId)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE user_oauth_clients (
+  user_id INT NOT NULL,
+  client_id INT NOT NULL,
+  INDEX IDX_FD402C51A76ED395 (user_id),
+  INDEX IDX_FD402C5119EB6921 (client_id),
+  PRIMARY KEY(user_id, client_id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

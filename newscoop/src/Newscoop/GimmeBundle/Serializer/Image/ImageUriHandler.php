@@ -44,6 +44,14 @@ class ImageUriHandler
             ), 'image');
 
             return $imageUri;
+        } elseif (is_object($data->image)) {
+            $image = $data->image;
+            $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
+            $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(
+                'src' => $imageSrc
+            ), 'image');
+
+            return $imageUri;
         }
     }
 }

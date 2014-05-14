@@ -55,19 +55,13 @@ foreach ($f_topic_ids as $topicIdString) {
     }
 }
 
-// add new topic 
-if ($f_search) { 
+// attach new topic
+if ($f_search) {
     $topicService = \Zend_Registry::get('container')->getService('topic');
     $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
-    if (!$tmpTopic) { 
-        $topicService->create(array(
-            'parent_id' => 0,
-            'names' => array($f_language_selected => $f_search)
-        ));
-
-        $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
+    if ($tmpTopic) {
+        $topicService->addTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
     }
-    $topicService->addTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
 }
 ?>
 

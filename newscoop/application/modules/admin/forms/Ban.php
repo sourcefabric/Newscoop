@@ -61,7 +61,7 @@ class Admin_Form_Ban extends Zend_Form
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         $this->addElement('checkbox', 'name', array(
-            'label' => $translator->trans($translator->trans('Name').":"),
+            'label' => $translator->trans($translator->trans('Username').":"),
             'required' => false,
             'order' => 10,
         ));
@@ -106,7 +106,7 @@ class Admin_Form_Ban extends Zend_Form
     {   
         $translator = \Zend_Registry::get('container')->getService('translator');
         /* @var $name Zend_Form_Element_CheckBox */
-        $this->name->setLabel($translator->trans('Name').":".strip_tags($p_commenter->getName()))
+        $this->name->setLabel($translator->trans('Username').":".strip_tags($p_commenter->getName()))
                     ->setChecked($p_values['name']);
 
         $this->email->setLabel($translator->trans('Email', array(), 'comments').":".$p_commenter->getEmail())

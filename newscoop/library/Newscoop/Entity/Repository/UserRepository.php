@@ -735,11 +735,11 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
-        if($criteria->firstResult != 0) {
+        if ($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
         }
 
-        if($criteria->maxResults != 0) {
+        if ($criteria->maxResults != 0) {
             $qb->setMaxResults($criteria->maxResults);
         }
 
@@ -753,7 +753,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!$results) {
-            return $qb;
+            return array($qb, $list->count);
         }
 
         $list->items = array_map(function ($row) {
