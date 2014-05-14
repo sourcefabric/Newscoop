@@ -345,12 +345,13 @@ class AuthorsController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when successful"
+     *         200="Returned when successful",
+     *         422="Inavlid parameters"
      *     }
      * )
      *
      * @Route("/articles/{number}/{language}/authors/order.{_format}", defaults={"_format"="json"})
-     * @Method("POST|PATCH")
+     * @Method("POST")
      * @View(serializerGroups={"list"}, statusCode=200)
      */
     public function setArticleAuthorsOrderAction(Request $request, $number, $language)
@@ -361,6 +362,10 @@ class AuthorsController extends FOSRestController
             ->getResult();
 
         $order = explode(',', $request->get('order'));
+
+        if (count($order) != count($articleAuthors)) {
+            throw new InvalidParametersException("Number of sorted article authors must be this same as number of authors");
+        }
 
         $this->reorderAuthors($em, $articleAuthors, $order);
 
