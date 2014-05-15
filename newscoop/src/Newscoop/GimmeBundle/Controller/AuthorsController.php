@@ -248,7 +248,7 @@ class AuthorsController extends FOSRestController
      * To update currently assigned article author you need provide his old and new article
      * type, it can be done with special ```link``` header value:
      *
-     *     </api/authors/types/{authorTypeId}; rel="old-author-type">,</api/authors/types/{authorTypeId}; rel="new-author-type">
+     *     </{api-endpoint}/authors/types/{authorTypeId}; rel="old-author-type">,</{api-endpoint}/authors/types/{authorTypeId}; rel="new-author-type">
      *
      *  example:
      *
@@ -258,7 +258,7 @@ class AuthorsController extends FOSRestController
      *
      *  **With header ```link``` and his value:**
      *
-     *      </api/authors/types/1; rel="old-author-type">,</api/authors/types/2; rel="new-author-type">
+     *      </{api-endpoint}/authors/types/1; rel="old-author-type">,</{api-endpoint}/authors/types/2; rel="new-author-type">
      *
      * @ApiDoc(
      *     statusCodes={
