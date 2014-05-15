@@ -68,7 +68,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\Author"
      * )
      *
-     * @Route("/authors/{id}.{_format}", defaults={"_format"="json"}, requirements={"id" = "^[0-9]"})
+     * @Route("/authors/{id}.{_format}", defaults={"_format"="json"}, requirements={"id" = "[\d]+"})
      * @Method("GET")
      * @View()
      */
@@ -85,27 +85,6 @@ class AuthorsController extends FOSRestController
 
         return $author;
     }
-
-    /**
-     * Get authors
-     *
-     * Get list of Author resources
-     *
-     * @ApiDoc(
-     *     statusCodes={
-     *         200="Returned when successful",
-     *         404={
-     *           "Returned when the authors are not found",
-     *         }
-     *     }
-     * )
-     *
-     * @Route("/authors.{_format}", defaults={"_format"="json"})
-     * @Method("GET")
-     * @View(serializerGroups={"list"})
-     */
-    public function getAuthorsAction()
-    {}
 
     /**
      * Get authors types
@@ -239,9 +218,7 @@ class AuthorsController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         404={
-     *           "Returned when the article author is not found",
-     *         }
+     *         404="Returned when the article author is not found"
      *     },
      *     output="\Newscoop\Entity\ArticleAuthor"
      * )
@@ -285,22 +262,21 @@ class AuthorsController extends FOSRestController
      *
      * @ApiDoc(
      *     statusCodes={
-     *         200="Returned when successful",
-     *         404={
-     *           "Returned when the article author is not found",
-     *         }
+     *         201="Returned when successful",
+     *         404="Returned when the article author is not found",
+     *         422="Invalid parameters"
      *     },
      *     output="\Newscoop\Entity\ArticleAuthor"
      * )
      *
-     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"},  requirements={"authorId" = "\d+"})
+     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"},  requirements={"authorId" = "[\d]+"})
      * @Method("POST|PATCH")
      * @View(serializerGroups={"list"}, statusCode=201)
      */
     public function updateArticleAuthorAction(Request $request, $number, $language, $authorId)
     {
         $em = $this->container->get('em');
-        $links = $request->attributes->get('links');
+        $links = $request->attributes->get('links', array());
 
         $oldAuthorType = null;
         $newAuthorType = null;
@@ -346,7 +322,7 @@ class AuthorsController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
-     *         422="Inavlid parameters"
+     *         422="Invalid parameters"
      *     }
      * )
      *
@@ -368,8 +344,6 @@ class AuthorsController extends FOSRestController
         }
 
         $this->reorderAuthors($em, $articleAuthors, $order);
-
-        return new Response();
     }
 
     /**
