@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Σχόλια
+        banned: null
+        anonymous: null
+        at: σε
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Πλήρες άρθρο'
+        hidden: Κρυμμένα
+        approved: Εγκεκριμμένα
+        new: Νέο
+        editarticle: 'Πηγαίνετε στην επεξεργασία άρθρου'
+        section: Ενότητα
+        comment: Σχόλιο
+        replyto: 'Απάντηση σε σχόλιο'
+        subject: Θέμα
+        ban: 'Αποκλεισμός/Αναίρεση αποκλεισμού χρήστη'
+        author: Συγγραφέας
+        date: null
+        article: Άρθρο
+        search: Αναζήτηση
+        show: Εμφάνιση
+        recommended: Προτινόμενο
+        unrecommended: 'Δεν συνιστάται'
+        editcomment: null
+        actions: Ενέργειες
+        selectstatus: 'Επιλέξτε κατάσταση'
+        deleted: Διαγραμμένο
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Ακύρωση
+        submit: Υποβολλή
+        unrecommend: 'Δεν συνιστάται'
+        recommend: Συνιστάται
+        delete: Διαγραφή
+        reply: Απάντηση
+        edit: 'Γρήγορη επεξεργασία'
+        close: Κλείσιμο
+        okay: null
+        filter: Φίλτρο
+    msg:
+        deleted: 'Το σχόλιο διαγράφηκε.'
+        commentinarticle: 'Σχόλιο $4 από $1 στο άρθρο $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Αδύνατη η πρόσβαση στο Newscoop. Παρακαλούμε ελέγξτε την σύνδεση σας.'
+            deletefromarticle: 'Το σχόλιο διαγράφηκε από $1 από το άρθρο $2 ($3) '
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Πρόκειται να διαγράψετε οριστικά ένα σχόλιο.'
+        suremultiple: null
+        first: null
+        surequestion: 'Είστε σίγουρος/η ότι θέλετε να το κάνετε;'
+        updated: 'Το σχόλιο ενημερώθηκε.'

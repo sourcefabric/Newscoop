@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Komentáře
+        banned: null
+        anonymous: null
+        at: na
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Celý článek'
+        hidden: Skrytý
+        approved: Schválený
+        new: Nový
+        editarticle: 'Jděte upravit článek'
+        section: Oddíl
+        comment: Komentář
+        replyto: 'Odpovědět na komentář'
+        subject: Předmět
+        ban: 'Zakázat/Obnovit uživatele'
+        author: Autor
+        date: null
+        article: Článek
+        search: Hledej
+        show: Zobraz
+        recommended: Doporučené
+        unrecommended: Nedoproučený
+        editcomment: null
+        actions: Činnosti
+        selectstatus: 'Vybrat status'
+        deleted: Vymazat
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Zrušit
+        submit: Podat
+        unrecommend: Nedoporučeno
+        recommend: Doporučeno
+        delete: Smazat
+        reply: Odpovědět
+        edit: 'Rychlá editace '
+        close: Zavřít
+        okay: null
+        filter: Filter
+    msg:
+        deleted: 'Komentář vymazán.'
+        commentinarticle: 'Komentář $4'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
+            deletefromarticle: 'Komentář vymazán $1 z článku $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Právě se chystáte permanentně vymazat komentář.'
+        suremultiple: null
+        first: null
+        surequestion: 'Jste si jisti, že to chcete udělat?'
+        updated: 'Komentář aktualizován.'

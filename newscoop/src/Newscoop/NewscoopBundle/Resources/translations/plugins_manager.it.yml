@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Nome
+newscoop.plugins_manager.installed_table.description: Descrizione
+newscoop.plugins_manager.installed_table.enabled: Abilitato
+newscoop.plugins_manager.installed_table.version: Versione
+newscoop.plugins_manager.installed_table.license: Licenza
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Azioni
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Rimuovi
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Carica
+newscoop:
+    datatable:
+        table:
+            info: 'Mostro voci da  _START_ a  _END_ di _TOTAL_'
+            noentries: 'Nessun elemento da mostrare'
+            filtering: 'Filtro da _MAX_ voci'
+            menu: 'Mostra _MENU_ voci'
+        label:
+            search: Cerca
+            filter: Filtro
+            processing: Elaboro...
+            last: Ultimo
+            next: Successivo
+            first: Primo
+            previous: Precedente
+            norecords: 'Nessuna voce trovata.'

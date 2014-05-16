@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Kommentare
+        banned: null
+        anonymous: null
+        at: auf
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Ganzer Artikel'
+        hidden: Verborgen
+        approved: Bewilligt
+        new: Neu
+        editarticle: 'Gehe zur Artikelbearbeitung'
+        section: Rubrik
+        comment: Kommentar
+        replyto: 'Kommentar beantworten'
+        subject: Subjekt
+        ban: 'User sperren / entsperren '
+        author: AutorIn
+        date: null
+        article: Artikel
+        search: Suche
+        show: Zeige
+        recommended: Empfohlen
+        unrecommended: 'Empfehlung zurückgenommen. '
+        editcomment: null
+        actions: Aktionen
+        selectstatus: 'Status auswählen '
+        deleted: Gelöscht
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Abbruch
+        submit: Absenden
+        unrecommend: 'Empfehlung zurücknehmen'
+        recommend: Empfehlen
+        delete: Löschen
+        reply: Antworten
+        edit: Schnellbearbeitung
+        close: Schließen
+        okay: null
+        filter: Filter
+    msg:
+        deleted: 'Kommentar gelöscht. '
+        commentinarticle: 'Kommentar $4 von $1 im Artikel $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Die Verbindung zu Newscoop kann nicht hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung. '
+            deletefromarticle: 'Kommentar gelöscht von $1 aus dem Artikel $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Sie sind im Begriff einen Kommentar permanent zu löschen. '
+        suremultiple: null
+        first: null
+        surequestion: 'Sind Sie sicher, dass Sie das tun wollen? '
+        updated: 'Kommentar aktualisiert.'

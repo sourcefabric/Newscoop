@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: null
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: null
+        approved: null
+        new: 신규
+        editarticle: null
+        section: 섹션
+        comment: null
+        replyto: null
+        subject: null
+        ban: null
+        author: null
+        date: null
+        article: 기사
+        search: 검색
+        show: 보기
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: 기능
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: 취소
+        submit: 송고
+        unrecommend: null
+        recommend: null
+        delete: 삭제
+        reply: null
+        edit: null
+        close: 닫기
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

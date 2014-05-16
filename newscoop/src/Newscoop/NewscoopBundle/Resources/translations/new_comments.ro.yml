@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Comentarii
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: Ascuns
+        approved: Aprobat
+        new: Nou
+        editarticle: null
+        section: Secţiune
+        comment: Comentariu
+        replyto: 'Răspunde la comentariu'
+        subject: 'Subiect:'
+        ban: null
+        author: 'Autor:'
+        date: null
+        article: Articol
+        search: Caută
+        show: Afişează
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: Acţiuni
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Anulează
+        submit: 'Trimite spre publicare'
+        unrecommend: null
+        recommend: null
+        delete: Şterge
+        reply: null
+        edit: null
+        close: Închide
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

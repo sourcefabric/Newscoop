@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Наслов
+newscoop.plugins_manager.installed_table.description: Опис
+newscoop.plugins_manager.installed_table.enabled: Омогућени
+newscoop.plugins_manager.installed_table.version: Верзија
+newscoop.plugins_manager.installed_table.license: Лиценца
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Акције
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Уклони
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Аплоудуј
+newscoop:
+    datatable:
+        table:
+            info: 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+            noentries: 'Нема уноса за приказ'
+            filtering: '- филтрирање међу _MAX_ записа'
+            menu: 'Прикажи _MENU_ записе'
+        label:
+            search: Тражи
+            filter: Филтер
+            processing: Обрађујем...
+            last: Последњи
+            next: Следећи
+            first: Први
+            previous: Претходни
+            norecords: 'Нема записа'
