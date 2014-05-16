@@ -1,3 +1,5 @@
+Plugins: null
+'Manage Plugins': null
 Account: Račun
 'Items per page': 'Stavki po strani'
 'Add new': 'Dodaj novi'
@@ -146,6 +148,7 @@ Localizer: Lokalizator
 'Add new publication': 'Dodaj novu publikaciju'
 'Upload new template': 'Postavi novi predložak'
 'Add new staff member': 'Dodaj novog suradnika'
+'Staff member deleted.': null
 'Add new subscriber': 'Dodaj novog pretplatnika'
 'Add new user type': 'Dodaj novu vrstu korisnika'
 'Add new article type': 'Dodaj novi vrstu članka'
@@ -189,9 +192,9 @@ Search: Traži
 'You must input a valid date.': 'Morate unijeti ispravan datum.'
 'Add new field': 'Dodaj novo polje'
 'Article automatic publishing schedule': 'Raspored automatskog objavljivanja članka'
-'Are you sure you want to delete this scheduled action?': 'Sigurno želite obrisati raspored?'
+'Are you sure you want to delete this scheduled action?': 'Jeste li sigurni da želite obrisati zakazanu radnju?'
 Unlink: 'Prekini link'
-'Are you sure you want to delete the image $1?': 'Sigurno želite obrisati sliku $1?'
+'Are you sure you want to delete the image $1?': 'Jeste li sigurni da želite obrisati sliku$1?'
 'No such issue.': 'Nema tog izdanja.'
 'Are you sure you want to delete the subscription to the publication $1?': 'Sigurno želite obrisati pretplatu na publikaciju $1?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Nemoguće je spremiti promjene u izdanju $1. Provjerite da li URL ime izdanja $2 nije upotrebljeno u publikaciji $3.'
@@ -204,13 +207,13 @@ Back: Nazad
 File: Datoteka
 'Save and Close': 'Spremi i zatvori'
 Add: Dodaj
-'Select All': 'Označi sve'
-'Select None': 'Poništi selekciju'
-'Add Event': 'Dodaj akciju'
+'Select All': 'Izaberi sve'
+'Select None': 'Izaberi nijedan'
+'Add Event': 'Dodaj događaj'
 N/A: N/A
 'On Front Page': 'Na naslovnici'
 'On Section Page': 'Na stranici rubrike'
-'Created by': Kreirao
+'Created by': 'Kreirao:'
 'Creation date': 'Datum kreiranja'
 'Publication List': 'Lista publikacija'
 'Issue List': 'Lista izdanja'
@@ -219,43 +222,63 @@ All: Sve
 duplicate: udvostruči
 move: premjesti
 Move: Premjesti
-'From:': 
-'Date:': 
-Hidden: 
-Comments: 
-Comment: 
-Approved: 
-Subject: 
-'IP address:': 
-'Email:': 
-Author: 
-'Article name': 
-'Hide article': 
-'Show article': 
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
 'Article Type Fields': 'Polja tipova članka'
 'Article Images': 'Slike članaka'
 'Log Messages': 'Log poruka'
 'Article Files': 'Datoteke članaka'
-'Article Comments': 
+'Article Comments': null
 'Are you sure you want to deactivate the subscription?': 'Sigurno želite prekinuti pretplatu?'
 'Are you sure you want to activate the subscription?': 'Sigurno želite aktivirati pretplatu?'
-Other: 
-'Time:': 
-'No events.': 
-'Default templates': 
-'System Preferences': 
-'The date must be in the future.': 
-Send: 
-'Thank you.': 
-'Please take a minute to send us an email.': 
-(optional): 
-'The URL you entered is invalid: $1': 
-Reads: 
-Plugins: 
-'Add new umember': 'Dodaj novog suradnika'
-'Your articles': 'Vaši članci'
-'Submitted articles': 'Predani članci'
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+Other: null
+'Time:': null
+'No events.': null
+'Default templates': null
+'System Preferences': null
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

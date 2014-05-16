@@ -1,4 +1,29 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Вы прыйшлі на старонку, каб назаўсёды выдаліць шматлікія паведамленні.'
+'You are about to permanently delete a message.': 'Вы прыйшлі на старонку, каб выдаліць паведамленне.'
+'Are you sure you want to do it?': null
+Approve: Зацвердзіць
+Approved.: Зацверджана
+at: на
+Attachment: 'Прымацаваны файл'
+'Ban/Unban user': 'Забараніць/дазволіць карыстальніку камэнтаваць'
+'Change selected messages status': 'Змяніць статус выдзеленых паведамленняў'
+Deleted: Выдаленае
+'Full article': 'Увесь тэкст артыкула'
+Message: Паведамленне
+'Message deleted.': 'Паведамленне выдаленае.'
+'Messages deleted.': 'Паведамленні выдаленыя.'
+'Messages status change to $1.': 'Статус паведамлення зменены на $1.'
+'Message status change to $1.': 'Статус паведамлення зменены на $1.'
+'Messages updated.': 'Паведамленні абноўленыя'
+'Message updated.': 'Паведамленне абноўленае'
+Processed: Апрацаванае
+Reply: Адказ
+'Reply to message': 'Адказаць на паведамленне'
+Star: Зорачка
+Starred: 'Пазначаныя зорачкай'
+'Unable to reach Newscoop. Please check your internet connection.': 'Немагчыма звязацца з Newscoop. Калі ласка, праверце ваша інтэрнэт-злучэнне.'
+'With document attachment': 'З прыкладзеным дакументам'
+'With image attachment': 'З прыкладзенай выявай'
+'With no attachment': 'Без ўкладання'
+'Feedback Messages': 'Адказ на паведамленні'

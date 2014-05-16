@@ -1,6 +1,6 @@
-'so that default templates can be assigned to the issue.': 
-'Once this is done, the issue can be published': 
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Essa edição não pode ser visualizada. Por favor verifique se existe um tema designado para essa publicação.'
+'so that default templates can be assigned to the issue.': null
+'Once this is done, the issue can be published': null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Esta edição não pode ser visualizada. Por favor certifique-se de que a publicação tem um tema designado.'
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Esta edição não pode ser visualisada. Por favor assegure que o template de frente está selecionado.'
 'Publish all articles:': 'Publicar todos os artigos:'
 'Publish all articles': 'Publicar todos os artigos'
@@ -59,23 +59,3 @@ Schedule: Cronograma
 'There was an error reading the issue parameter.': 'Ocorreu um erro na leitura do parametro de secção.'
 'There was an error scheduling the $1 action on $2': 'Ocorreu um erro no agendamento da tarefa de publicação $1 para $2'
 'The action scheduled on $1 could not be deleted.': 'A tarefa de publicação agendada para $1 não pode ser eliminada'
-'Front Page Template<BR><SMALL>(click to change)</SMALL>': 'Modelo para a Página Principal'
-'Single Article Template<BR><SMALL>(click to change)</SMALL>': 'Modelo para Pagina de Artigo'
-'Changing issue status': 'Alterando o estado no Número'
-'Status of the issue $1 has been changed from $2 to $3': 'O estado do número $1 foi alterado de $2 para $3'
-'Status of the issue $1 could not be changed.': 'Estado do Número $1 não pode ser alterado'
-'Updating issue': 'Actualizando Edição'
-'Changing issues details': 'Alterando detalhes da Edição'
-'The issue $1 has been successfuly changed.': 'A Edição $1 foi alterada com sucesso.'
-'The issue could not be changed.': 'A Edição não pode ser alterada'
-'Preview issue': 'Pré-Visualizar Edição'
-'This issue cannot be previewed. Please make sure it has a $1 template selected.': 'Esta Edição não pode ser prevista. Verifique se existe um modelo definido.'
-'front page': 'pagina principal'
-'Changing issue template': 'Alterando Modelo de Edição'
-'You do not have the right to change issue templates.': 'Não tem permissões para alterar Modelos de Edição'
-'Changing issue template for front page': 'Alterando Modelo de Primeira Página para Edição'
-'Changing issue template for single article': 'Alterando Modelo de Artigo'
-'The template has been successfully changed.': 'O Modelo foi alterado com sucesso'
-'Issue template for publication $1 changed to $2': 'Modelo para a Publicação $1 foi alterado para $2'
-'Issue template for single articles from $1 changed to $2': 'Modelo de Artigo foi alterado de $1 para $2'
-'The template could not be changed.': 'O Modelo não pode ser alterado'

@@ -20,7 +20,7 @@
 'Publication updated': 'Publikace aktualizována'
 'Subscriber comments moderated?': 'Moderovat předplatitelské komentáře?'
 'Public comments moderated?': 'Moderovat veřejné komentáře?'
-'Comments enabled?': 'Povolit komentáře|?'
+'Comments enabled?': 'Povolit komentáře?'
 'Comments enabled': 'Povolit komentáře|'
 'Article comments default to enabled?': 'Defaultně povolit komentáře článku?'
 'trial subscription': 'zkušební předplatné'
@@ -75,4 +75,3 @@ Currency: Měna
 'Article title': 'Titulek článku'
 'Article keywords': 'Klíčová slova článku'
 'Article topics': 'Témata článku'
-'Change publication information': 'Změnit informace o publikaci'

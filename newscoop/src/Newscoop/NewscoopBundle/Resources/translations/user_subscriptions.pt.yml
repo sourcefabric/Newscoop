@@ -1,73 +1,67 @@
-third: 
-second: 
-forth: 
-first: 
-'You must input a number greater than 0 into the Number of addresses field.': 
-'You must input a number between 0 and 255 into the Start IP address $1 field.': 
-'User IP access list management': 
-'The IP address group conflicts with another existing group.': 
-'Subscription sections': 
-'No records.': 
-'You have subscription for all available publications': 
-'Subscription type:': 
-'Start:': 
-'Start Date': 
-'Sections:': 
-'Publication:': 
-'Paid days': 
-'Paid Days:': 
-Paid: 
-'No subscriptions': 
-'Languages:': 
-'Edit all sections': 
-'Days:': 
-'Days must be number': 
-Any: 
-'Add section': 
-saved: 
-removed: 
-deleted: 
-deactivated: 
-activated: 
-'Value is required and cant be empty': 
-'That user name already exists, please choose a different login name.': 
-'That $1 already exists, please choose a different $2.': 
-'Subscriptions exist for all available publications.': 
-'Subscription IP Addresses': 
-'Subscription $1': 
-'Subscriber saved.': 
-'Subscriber management': 
-'Subscriber deleted.': 
-'Start IP': 
-'Select country': 
-'Number of addresses': 
-'Number of Addressses': 
-'No IP Addresses': 
-'IP Address added allready': 
-'IP Address $1': 
-'IP Access': 
-'Full Name': 
-'Edit subscriptions': 
-'Edit subscriber $1': 
-E-Mail: 
-'Delete subscriber $1': 
-'Creation Date': 
-'Change subscriber information': 
-'Add new IP address': 
-'Add new IP Address': 
-'Accout Name': 
-'%value% must be greater than %min%': 
-'%value% is not a valid IP Address': 
+third: null
+second: null
+forth: null
+first: null
+'You must input a number greater than 0 into the Number of addresses field.': null
+'You must input a number between 0 and 255 into the Start IP address $1 field.': null
+'User IP access list management': null
+'The IP address group conflicts with another existing group.': null
+'Subscription sections': null
+'No records.': null
+'You have subscription for all available publications': null
+'Subscription type:': null
+'Start:': null
+'Start Date': null
+'Sections:': null
+'Publication:': null
+'Paid days': null
+'Paid Days:': null
+Paid: null
+'No subscriptions': null
+'Languages:': null
+'Edit all sections': null
+'Days:': null
+'Days must be number': null
+Any: null
+'Add section': null
+saved: null
+removed: null
+deleted: null
+deactivated: null
+activated: null
+'Value is required and cant be empty': null
+'That user name already exists, please choose a different login name.': 'Nome já existente, por favor escoha um diferente.'
+'That $1 already exists, please choose a different $2.': null
+'Subscriptions exist for all available publications.': null
+'Subscription IP Addresses': null
+'Subscription $1': null
+'Subscriber saved.': null
+'Subscriber management': null
+'Subscriber deleted.': null
+'Start IP': null
+'Select country': null
+'Number of addresses': null
+'Number of Addressses': null
+'No IP Addresses': null
+'IP Address added allready': null
+'IP Address $1': null
+'IP Access': 'Acesso por IP'
+'Full Name': null
+'Edit subscriptions': null
+'Edit subscriber $1': null
+E-Mail: null
+'Delete subscriber $1': null
+'Creation Date': null
+'Change subscriber information': null
+'Add new IP address': null
+'Add new IP Address': null
+'Accout Name': null
+'%value% must be greater than %min%': null
+'%value% is not a valid IP Address': null
 'Regardless of the language': 'Apesar do idioma'
-'Individual languages': 'Idiomas '
+'Individual languages': Idiomas
 'Add sections now': 'Adicionar agora Secções'
 'Add sections later': 'Adicionar Secções posteriormente'
 'Subscription Type': 'Tipo de Assinatura'
 'Paid (payment will be confirmed later)': 'Paga (pagamento será confirmado mais tarde)'
 'Paid (confirm payment now)': 'Paga (confirme pagamente neste momento)'
-Account: Conta
-'Left to pay': 
-Active: Activo
-'Are you sure you want to delete the subscription to the publication $1?': 'Eliminar assinatura da publicação $1?'
-Trial: 'Periodo Gratuito'
-'Are you sure you want to activate the subscription?': 'Activar Assinatura'

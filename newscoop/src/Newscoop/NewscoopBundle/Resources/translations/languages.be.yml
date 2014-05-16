@@ -1,21 +1,21 @@
-'Language id not specified': 
-'No languages.': 
-'Native Name': 
-'Name taken.': 
-'Language saved.': 
-'Language removed.': 
-'Language not found.': 
-'Language is in use and cannot be removed.': 
-'Language added.': 
-'English language cannot be removed.': 
-'Edit short month names': 
-'Edit short day names': 
-'Edit month names': 
-'Edit language: $1': 
-'Edit day names': 
-'Code Page': 
-'Add new Language': 
-'Add Language': 
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
 We: Ср
 Tu: Аў
 Th: Чц
@@ -44,7 +44,7 @@ Apr: Крас
 'Are you sure you want to delete the language $1?': 'Ці Вы ўпэўнены, што хочаце выдалiць мову $1?'
 'Deleting language': 'Выдаленьне мовы'
 'The language $1 could not be deleted.': 'Мову $1 нельга выдаліць'
-'Edit language': 'Рэдагаваць мову'
+'Edit language': 'Змяніць мову'
 'You do not have the right to edit languages.': 'Вы ня маеце права рэдагаваць мову.'
 'Please enter the translation for month names.': 'Калі ласка, увядзеце пераклад для назваў месяцаў.'
 'Please enter the translation for week day names.': 'Калі ласка, увядзеце пераклад для назваў дзён тыдня.'
@@ -70,13 +70,3 @@ Sunday: Нядзеля
 'You do not have the right to add new languages.': 'Вы ня маеце права доступу для дадаваньня новых моў.'
 'There are $1 issue(s) left.': 'Засталося выпускаў: $1'
 'Native name': 'Зыходнае iмя'
-'No such language.': 'Няма такой мовы.'
-'The language $1 has been successfuly added.': 'Мова $1 была пасьпяхова выдаленая.'
-'Please check if a language with the same name does not already exist.': 'Калі ласка праверце,  што мова з такой назвай яшчэ не iснуе.'
-'The language could not be added.': 'Не ўдалося дадаць мову.'
-'Delete language': 'Выдалiць мову'
-'Updating language information': 'Абнаўленне iнфармацыi аб мове.'
-'Language information has been successfuly updated.': 'Iнфармацыя аб мове пасьпяхова абноўленая.'
-'Language information could not be updated.': 'Не атрымалася абнавiць iнфармацыю аб мове.'
-'A language with the same name already exists.': 'Мова з такой назвай ужо iснуе.'
-'Add another language': 'Даданьне iншай мовы'

@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
 Slideshows: Galerie
 'You cant update used files.': 'Nie możesz aktualizować użytych plików.'
 Source: Źródło
@@ -12,13 +12,13 @@ Feedback: Feedback
 'Approve selected': 'Wybrano akceptację'
 'Image files': 'Pliki zdjęć'
 'Fix all thumbnails': 'Popraw wszystkie miniatury'
-'You do not have the right to add files.': 'Nie masz uprawnień aby dodawać pliki.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Ten plik powinien być dostępny tylko dla tego tłumaczenia artykułu, czy dla wszystkich?'
+'You do not have the right to add files.': 'Nie masz praw aby dodawać pliki.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Czy plik powinień być dostępny do tłumaczenia tego artykułu, czy dla wszystkich tłumaczeń?'
 'Please enter a description for the file: $1.': 'Wprowadź opis dla pliku $1.'
-'Only this translation': 'Tylko te tłumaczenie'
+'Only this translation': 'Tylko to tłumaczenie'
 'No files for multi editing.': 'Brak plików do edycji.'
 'Edit files': 'Edytuj pliki'
-'Change file information': 'Zmień informacje o pliku'
+'Change file information': 'Zmień info o pliku'
 'All translations': 'Wszystkie tłumaczenia'
 'Save All': 'Zapisz wszystko'
 Files: Pliki
@@ -27,11 +27,11 @@ Files: Pliki
 'View attachment': 'Zobacz załącznik'
 'Select some items first.': 'Wybierz jakieś rzeczy wpierw'
 'Open in the browser': 'Otwórz w przeglądarce'
-'Media Archive': 'Archiwum Mediów'
-'Last modified': 'Ostatnio modyfikowane'
+'Media Archive': 'Biblioteka Mediów'
+'Last modified': 'Ostatnia modyfikacja'
 'Items deleted.': 'Usunięte pozycje.'
 'File uploaded.': 'Plik dodany.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Czy chcesz aby ten plik otwierał się w przeglądarce użytkownika, czy automatycznie się pobierał?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Czy ten plik ma się otwierać w przeglądarce czy pobierać automatycznie?'
 'Delete selected': 'Usuń wybrane'
 Created: Utworzono
 Charset: 'System znaków'
@@ -40,21 +40,23 @@ Charset: 'System znaków'
 'Attachment updated.': 'Załacznik zaktualizowany.'
 'Are you sure you want to delete selected items?': 'Na pewno chcesz usunąć zaznaczone pozycje?'
 'Add new file': 'Dodaj nowy plik'
-'You do not have the right to add images.': 'Nie masz praw aby dodawać zdjęcia.'
-'Use for all': 'Użyj do wszystkich'
-'Specify image url if you want to load it.': 'Podaj adres URL obrazka, który chcesz dodać'
+'You do not have the right to add images.': 'Nie masz praw aby dodawać zdjęcia'
+'Use for all': 'Zastosuj dla wszystkich'
+'Specify image url if you want to load it.': 'Podaj adres url do zdjęcia aby je załadować.'
 Size: Rozmiar
 'No images for multi editing.': 'Brak zdjęć do multiedycji'
 'Images updated.': 'Zdjęcia dodane.'
-'Edit images': 'Edytuj zdjęcia'
+'Edit images': 'Edytuj zdjecia'
 '$1 files uploaded.': 'Dodano plików: $1'
 'Unable to add new image.': 'Nie można dodać nowego zdjęcia.'
 'Image updated.': 'Zdjęcie zaktualizowane.'
 'Image $1 deleted.': 'Zdjęcie $1 usunięte.'
 'Image is in use, it cannot be deleted.': 'Zdjęcie w użyciu, nie może być usunięte.'
-'You must select an image file to upload.': 'Musisz wskazać plik aby go dodać.'
+'You must select an image file to upload.': 'Musisz wybrać zdjęcie nim je dodasz.'
 'Add new image': 'Dodaj nowe zdjęcie.'
 'Delete image $1': 'Usuń zdjęcie $1'
 'Used in articles': 'Używane w artykułach'
 'View image': 'Zobacz zdjęcie'
 'Change image information': 'Zmień informacje o zdjęciu'
+'Photographer URL': null
+'Add website url starting with http://': null

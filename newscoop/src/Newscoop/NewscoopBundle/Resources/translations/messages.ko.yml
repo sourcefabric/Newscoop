@@ -1,5 +1,5 @@
-Plugins: 
-'Manage Plugins': 
+Plugins: null
+'Manage Plugins': null
 Account: '아이디 '
 'Items per page': '페이지당 아이템'
 'Add new': '신규로 추가'
@@ -148,6 +148,7 @@ Localizer: 로칼라이저
 'Add new publication': '새로운 출판 추가'
 'Upload new template': '새로운 템플레이트 업로드'
 'Add new staff member': '새로운 스탭 멤버 추가'
+'Staff member deleted.': null
 'Add new subscriber': '새로운 구독자 추가 '
 'Add new user type': '새로운 사용자 타입 추가 '
 'Add new article type': '새로운 기사 타입 추가 '
@@ -221,39 +222,63 @@ All: 모두
 duplicate: 복사
 move: '이동 '
 Move: 이동
-'From:': 
-'Date:': 
-Hidden: 
-Comments: 
-Comment: 
-Approved: 
-Subject: 
-'IP address:': 
-'Email:': 
-Author: 
-'Article name': 
-'Hide article': 
-'Show article': 
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
 'Article Type Fields': '기사 타입 필드'
 'Article Images': '기사 이미지'
 'Log Messages': '로그 메시지'
 'Article Files': '기사 파일'
-'Article Comments': 
+'Article Comments': null
 'Are you sure you want to deactivate the subscription?': '구독을 비활성화합니까?'
 'Are you sure you want to activate the subscription?': '구독을 활성화 합니까?'
-Other: 
-'Time:': 
-'No events.': 
-'Default templates': 
-'System Preferences': 
-'The date must be in the future.': 
-Send: 
-'Thank you.': 
-'Please take a minute to send us an email.': 
-(optional): 
-'The URL you entered is invalid: $1': 
-Reads: 
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+Other: null
+'Time:': null
+'No events.': null
+'Default templates': null
+'System Preferences': null
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

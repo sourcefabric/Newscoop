@@ -1,68 +1,68 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Веб сајт'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Геолокација
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Нема записа'
+'No entries to show': 'Нема уноса за приказ'
+'Display _MENU_ records': 'Прикажи _MENU_ записе'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: Ниједан
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': 'Уреди своју лозинку'
+'Edit user $1': null
+'Edit subscriptions': 'Уреди претплате'
+'Edit profile': null
+'Edit permissions': 'Уреди корисничка права'
+'Create new account': 'Направи нови налог'
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
 Username: 'Корисничко име'
 'Last Name': Презиме
 'First Name': Име
-Email: Имејл
+Email: email
 'You were logged out.': 'Сада сте одјављени'
 'Newscoop Subhead': 'Newscoop поднаслов'
 Filters: Филтери
@@ -101,7 +101,7 @@ Filters: Филтери
 'User may attach topics to articles': 'Корисник може да додаје теме текстовима'
 'User may attach images to articles': 'Корисник може да качи слике уз текстове'
 'User may add special characters': 'Корисник може да додаје специјалне знакове'
-'That user name already exists, please choose a different login name.': 'Корисничко име већ постоји, смислите нешто друго.'
+'That user name already exists, please choose a different login name.': 'То корисничко име већ постоји, изаберите неко друго име.'
 'User may delete article attachments': 'Корисник може да брише атачменте уз чланке.'
 'User may change article attachments': 'Корисник може да мења атачменте уз чланке'
 'User may add article attachments': 'Корисник може да додаје атачменте уз чланке'
@@ -184,46 +184,39 @@ Miscellaneous: Разно
 'User will be notified on several events': 'Корисник ће бити обавештен о одређеним системским активностима'
 'Editor Miscellaneous Settings': 'Подешавање разних особина у едитору'
 'No such user account.': 'Нема таквог корисничког налога'
-'User Name': 'Корисничко име'
-'User management': 'Администрација корисницима'
-Set: Постави
-Update: Измени
-Rights: Права
-'IP Access': 'IP приступ'
-Staff: Особље
-'Adding new user account': 'Додавање новог корисничког налога'
-'You must select an user type.': 'Морате изабрати тип корисника'
-'The user account $1 has been created.': 'Креиран је кориснички налог за $1 '
-'Please check if an account with the same user name does not already exist.': 'Проверите да ли налог под тим корисничким именом већ не постоји'
-'You do not have the right to change user passwords.': 'Немате право да мењате корисничке лозинке'
-'Changing user password': 'Мењање корисничке лозинке'
-'The password could not be changed.': 'Лозинка не може бити промењена'
-'The password has been changed.': 'Лозинка је промењена'
-'Edit user account permissions': 'Прикажи додељена права за кориснички налог'
-'This user account does not have permissions information.': 'Овај кориснички налог нема информација о додељеним правима'
-'Updating user account permissions': 'Измена додељених права за кориснички налог'
-'User account permissions have been successfuly updated.': 'Додељена права за кориснички налог успешно су измењена'
-'User account permissions could not be updated.': 'Додељена права за кориснички налог не могу бити измењена'
-'Changing user account information': 'Мењање података за кориснички налог'
-'User account information has been changed.': 'Подаци за кориснички налог су промењени'
-'User account information could not be changed.': 'Подаци за кориснички налог не могу бити промењени'
-'Old password': 'Стара лозинка'
-'New password': 'Нова лозинка'
-'Confirm new password': 'Потврди нову лозинку'
-'Changing your password': 'Мењање ваше лозинке'
-'User $1 changed his password': 'Корисник $1 је променио лозинку'
-'Delete user account': 'Обриши кориснички налог'
-'Deleting user account': 'Брисање корисничког налога'
-'The user account $1 could not be deleted.': 'Кориснички налог $1 не може бити обрисан'
-'No such user.': 'Нема таквог корисника'
-'Delete IP Group $1': 'Обриши IP групу $1'
-'IP Access List': 'Листа приступа на основу IP адреса'
-'Adding new IP Group': 'Додавање нове групе засноване на IP адреси'
-'The IP Group could not be created.': 'IP група не може бити креирана'
-'Please check if an account with the same IP Group does not already exist.': 'Проверите да ли налог са истом IP групом већ не постоји'
-'Delete IP Group': 'Обриши IP групу'
-'You do not have the right to delete IP Groups.': 'Немате право да бришете IP групе'
-'No such IP Group.': 'Нема такве IP групе'
-'Deleting IP Group': 'Брисање IP групе'
-'The IP Group could not be deleted.': 'IP група не може бити обрисана'
-'No IP Group.': 'Нема ИП групе.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Управљање корисницима'
+    created: Направљено
+    updated: null
+    status:
+        status: Статус
+        registered: null
+        pending: null
+        deleted: Обрисано
+        active: Активна
+    table:
+        actions:
+            actions: Акције
+            edit: Уреди
+            resend_email: null
+            rename: Преименуј
+            remove: Уклони
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Обрађујем...
+    chart:
+        title: null

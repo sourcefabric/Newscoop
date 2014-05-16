@@ -1,41 +1,41 @@
-'Language id not specified': 
-'No languages.': 
-'Native Name': 
-'Name taken.': 
-'Language saved.': 
-'Language removed.': 
-'Language not found.': 
-'Language is in use and cannot be removed.': 
-'Language added.': 
-'English language cannot be removed.': 
-'Edit short month names': 
-'Edit short day names': 
-'Edit month names': 
-'Edit language: $1': 
-'Edit day names': 
-'Code Page': 
-'Add new Language': 
-'Add Language': 
-We: 
-Tu: 
-Th: 
-Su: 
-Sep: 
-Sa: 
-'Please enter the translation for week day short names.': 
-'Please enter the translation for month short names.': 
-Oct: 
-Nov: 
-Mo: 
-Mar: 
-Jun: 
-Jul: 
-Jan: 
-Fr: 
-Feb: 
-Dec: 
-Aug: 
-Apr: 
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
+We: null
+Tu: null
+Th: null
+Su: null
+Sep: null
+Sa: null
+'Please enter the translation for week day short names.': null
+'Please enter the translation for month short names.': null
+Oct: null
+Nov: null
+Mo: null
+Mar: null
+Jun: null
+Jul: null
+Jan: null
+Fr: null
+Feb: null
+Dec: null
+Aug: null
+Apr: null
 'No language.': 'Inget språk.'
 'Delete language $1': 'Radera språk $1'
 'You do not have the right to add languages.': 'Du har inte rätt att lägga till språk.'

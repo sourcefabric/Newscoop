@@ -148,6 +148,7 @@ Localizer: Localizer
 'Add new publication': 'Add new publication'
 'Upload new template': 'Upload new template'
 'Add new staff member': 'Add new staff member'
+'Staff member deleted.': 'Staff member deleted.'
 'Add new subscriber': 'Add new subscriber'
 'Add new user type': 'Add new user type'
 'Add new article type': 'Add new article type'
@@ -257,3 +258,27 @@ Reads: Reads
 'Universal List': 'Universal List'
 'Invalid security token!': 'Invalid security token!'
 Authors: Authors
+Title: Title
+'Edit country': 'Edit country'
+'Entry $1 prepared for publishing': 'Entry $1 prepared for publishing'
+'Entry deleted': 'Entry deleted'
+'Feed saved': 'Feed saved'
+'Item published': 'Item published'
+'Settings saved': 'Settings saved'
+'Self-delete is not permitted.': 'Deleting yourself is not permitted.'
+'Edit staff member $1': 'Edit staff member $1'
+'Delete staff member $1': 'Delete staff member $1'
+'Could not save user $1. Please make sure it does not already exist': 'Could not save user $1. Please make sure the account does not already exist.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Could not save user with e-mail address $1. Please make sure it does not already exist.'
+'Changing user type would prevent you to manage users. Aborted.': 'Changing user type would prevent you from managing users. Aborted.'
+'Staff member saved.': 'Staff member saved.'
+'Permissions: $1': 'Permissions: $1'
+'Change user account information': 'Change user account information'
+'Staff management': 'Staff management'
+Updated: Updated
+Options: Options
+Verified: Verified
+Confirm: Confirm
+at: at
+published: published
+unpublished: unpublished

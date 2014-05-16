@@ -55,7 +55,7 @@ height: სიმაღლე
 'The map has been removed from the article.': 'რუკა მოიხსნა სტატიიდან'
 'Point no.': 'წერტილის ნომერი'
 'Point markers': 'წერტილის მარკერი'
-None: არაფერი
+None: არცერთი
 'Map Search Example': 'რუკის ძიების მაგალით'
 'Map Preview': 'რუკის წინასწარ ნახვა'
 'Image URL': 'გამოსახულების URL'
@@ -64,4 +64,3 @@ text: ტექსტი
 image: გამოსახულება
 icon: სიმბოლო
 'Setting Map Locations': 'რუკის ლოკაციის შექმნა'
-'Based on GeoNames.org data': 'დამყარებულია GeoNames.org-ის მონაცემებზე'

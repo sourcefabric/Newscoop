@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'ايقونة العلامة المختارة'
 'add location to map': 'إضافة الموقع إلى الخريطة'
 'Video source': 'مصدر الفيديو'
@@ -39,7 +39,7 @@ Coordinates: إحداثيات
 'Setting the map name helps with map search': 'تعيين اسم الخريطة يساعد على البحث في الخريطة'
 Longitude: 'خط الطول'
 Latitude: 'خط العرض'
-Center: توسيط
+Center: الوسط
 'Last Saved Map View': 'عرض آخر خريطة محفوظة'
 'List of locations updated': 'تم تحديث قائمة المواقع'
 width: الاتساع
@@ -55,7 +55,7 @@ height: الارتفاع
 'The map has been removed from the article.': 'تمت إزالة الخريطة من المقالة.'
 'Point no.': 'رقم النقطة'
 'Point markers': 'علامات نقطة'
-None: 'لا شيء'
+None: 'لا شيئ'
 'Map Search Example': 'مثال بحث الخريطة'
 'Map Preview': 'معاينة الخريطة'
 'Image URL': 'عنوان الرابط للصورة:'

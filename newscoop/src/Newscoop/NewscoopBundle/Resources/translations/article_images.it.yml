@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Questa immagine è troppo piccola. Le immagini devono essere almeno %d×%x'
 'Slideshow rendition': 'Rendition delle gallerie di immagini'
 'Renditions reloaded': 'Rendition ricaricate'
@@ -69,3 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Data<BR><SMALL>(aaaa-mm-gg)</SMALL>
 'You must select an image file to upload.': 'Seleziona una immagine da caricare.'
 'Change image information': 'Cambia le informazioni dellimmagine'
 'You do not have the right to add images': 'Non hai il permesso di aggiungere immagini'
+'Filter by uploader...': null

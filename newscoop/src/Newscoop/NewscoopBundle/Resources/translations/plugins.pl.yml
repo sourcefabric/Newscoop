@@ -9,6 +9,6 @@ Uninstall: Odinstaluj
 'The plugin $1 was sucessfully installed.': 'Plugin $1 został zainstalowany pomyślnie.'
 'No plugins found.': 'Nie znaleziono pluginów'
 Manage: Zarządzanie
-Enabled: Aktywne
+Enabled: Właczone
 'Delete plugin': 'Usuń plugin'
-'Add new image': 'Dodaj nowy obraz'
+'Add new image': 'Dodaj nowe zdjęcie.'

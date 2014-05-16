@@ -1,6 +1,6 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: Слайд-шоу
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: Слайдшоу
 'You cant update used files.': 'Вы не можете обновить использованные файлы.'
 Source: Источник
 Local: Местный
@@ -12,8 +12,8 @@ Feedback: 'Обратная связь'
 'Approve selected': 'Принять выбранное'
 'Image files': 'Файлы изображений'
 'Fix all thumbnails': 'Исправить все thumbnails'
-'You do not have the right to add files.': 'У Вас нет прав доступа для добавления файлов.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Этот файл будет доступен для данного перевода статьи или для всех?'
+'You do not have the right to add files.': 'Вы не имеете прав доступа для добавления файлов.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Этот файл должен быть доступен только для этого перевода статьи, или для всех переводов?'
 'Please enter a description for the file: $1.': 'Введите описание файла: $1.'
 'Only this translation': 'Только этот перевод'
 'No files for multi editing.': 'Нет файлов для общего редактирования.'
@@ -27,36 +27,36 @@ Files: Файлы
 'View attachment': 'Показать прикрепленный файл'
 'Select some items first.': 'Выберите сначала несколько элементов'
 'Open in the browser': 'Открыть в браузере'
-'Media Archive': 'Медиа архив'
+'Media Archive': Медиа-архив
 'Last modified': 'Последние изменения'
 'Items deleted.': 'Элементы удалены.'
 'File uploaded.': 'Файл загружен.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Хотите ли Вы открыть этот файл в браузере или автоматически загрузить?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Вы хотите, чтобы этот файл открывался в браузере пользователя или автоматически загружался?'
 'Delete selected': 'Удалить выбранные'
-Created: Созданы
+Created: Создана
 Charset: Кодировка
 'Change attachment information': 'Изменить информацию об присоединенном файле'
 'Automatically download': 'Автоматическая загрузка'
 'Attachment updated.': 'Присоединенный файл обновлен.'
 'Are you sure you want to delete selected items?': 'Вы уверены, что хотите удалить выбранные элементы?'
 'Add new file': 'Добавить новый файл'
-'You do not have the right to add images.': 'У Вас нет прав для загрузки изображений.'
-'Use for all': 'Для всех пользователей'
-'Specify image url if you want to load it.': 'Укажите URL изображения для его загрузки.'
+'You do not have the right to add images.': 'Вы не имеете прав доступа для добавления изображений.'
+'Use for all': 'Использовать для всех'
+'Specify image url if you want to load it.': 'Укажите url изображения, если хотите загрузить его.'
 Size: Размер
 'No images for multi editing.': 'Нет изображений для многофайлового редактирования.'
 'Images updated.': 'Обновление изображений.'
 'Edit images': 'Редактировать изображения'
 '$1 files uploaded.': 'Файлы $1 загружены.'
-'Unable to add new image.': 'Невозможно добавить новое изображение.'
+'Unable to add new image.': 'Невозможно добавление нового изображения.'
 'Image updated.': 'Изображение обновлено.'
 'Image $1 deleted.': 'Изображение $1 удалено.'
 'Image is in use, it cannot be deleted.': 'Изображение используется и не может быть удалено.'
-'You must select an image file to upload.': 'Вы должны выбрать файл изображения для загрузки.'
+'You must select an image file to upload.': 'Вы должны выбрать графический файл для загрузки.'
 'Add new image': 'Добавить новое изображение'
 'Delete image $1': 'Удалить изображение $1'
 'Used in articles': 'Использована в статьях'
-'View image': 'Просмотреть изображение'
-'Change image information': 'Изменить информацию об изображении'
-'Items per page': 'Объектов на страницу'
-'Image archive': 'Архив картинок'
+'View image': 'Просмотр картинки'
+'Change image information': 'Измениить информацию об изображении'
+'Photographer URL': null
+'Add website url starting with http://': null

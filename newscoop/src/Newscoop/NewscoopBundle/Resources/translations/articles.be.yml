@@ -58,7 +58,7 @@ Files: Файлы
 'Keywords saved.': 'Ключавыя словы захаваныя'
 'Comment settings': 'Наладкі каментаваньня'
 Authors: Аўтары
-'Attach Topic To Article': 'Дадаць тэму да артыкула'
+'Attach Topic To Article': 'Прымацаваць тэму да артыкула'
 'Article saved.': 'Змесціва артыкула захаванае.'
 'Article is locked': 'Артыкул заблакаваны'
 'Actions updated.': 'Дзеянне абноўленае.'
@@ -77,12 +77,12 @@ Created: Створаная
 'Content edited': 'Запланаванае дзеянне дададзенае'
 'You must select an article language.': 'Вы павінны выбраць мову артыкула.'
 'You must select a publication.': 'Вы павінны выбраць выданне.'
-'You must select a file to upload.': 'Вы павінны выбраць файл для загрузкі.'
+'You must select a file to upload.': 'Вы павiнны выбраць файл для загрузкi.'
 'You must select a XML input file.': 'Вы павінны выбраць уваходны XML-файл'
 'You do not have the right to import XML archives.': 'У вас няма правоў доступу для імпартавання  XML архіваў.'
-'There was a problem uploading the file.': 'Здарылася памылка пры загрузцы файла.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Файл быў загружаны толькі часткова. Гэта здараецца, калі максімальна-усталяваны час загрузкі файла ніжэйшы, чым час загрузкі падобнага файла. Максімальна-усталяваны час загрузкі файлаў прапісаны ў  php.ini '
-'The file exceeds the allowed max file size.': 'Памер файла перавышае максімальна-магчымы памер файлаў'
+'There was a problem uploading the file.': 'Праблема загрузкі файла.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Загружаны файл захаваны на сервер часткова. Гэта звязана з тым, што максімальна дапушчальны час загрузкі файла пераўзыходзіць час, неабходны для загрузкі гэтага файла. Максімальны час загрузкі вызначаны ў файле php.ini'
+'The file exceeds the allowed max file size.': 'Памер гэтага файла пераўзыходзіць дапушчальны.'
 Optional: Неабавязковае
 'Input File': 'Уваходны файл'
 'Import XML': 'Імпарт XML'
@@ -95,11 +95,11 @@ Optional: Неабавязковае
 'Article could not be created.': 'Артыкул не можа быць створаны'
 '---Select article type---': '---Выберыце тып артыкула---'
 '$1 articles successfully imported.': '$1 артыкулы паспяхова імпартаваныя.'
-Saved: Захавана
+Saved: Захаванае
 'Save All': 'Захаваць усё'
 'Online Server: On': 'Сервер ён-лайн: уключаны'
 'Online Server: Off': 'Сервер ён-лайн: выключаны'
-Download: Загрузка
+Download: Загрузіць
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Вы ня можаце мець два артыкулы ў адной рубрыцы з аднолькавай назвай. Азначаная назва ўжо выкарыстоўваецца артыкулам $1.'
 'Visible to non-subscribers': 'Вiдаць ня толькi падпiсчыкам'
 'The article could not be published.': 'Артыкул ня можа быць апублiкаваны.'
@@ -125,7 +125,7 @@ Enabled: Дазволена
 Disabled: Забаронена
 Comments: Камэнтары
 'The article has already been translated into $1.': 'Артыкул ужо быў перакладены на $1.'
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
 'You do not have the right to translate articles.': 'Вы ня маеце правоў  перакладаць рубрыкі.'
 'You do not have the right to publish articles.': 'Вы ня маеце правоў  публiкаваць артыкулы.'
 'You do not have the right to move articles.': 'Вы ня маеце правоў перамяшчаць артыкулы.'
@@ -165,8 +165,8 @@ Comments: Камэнтары
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Выпуск павiнен быць створаны для выбранай мовы. Калі ласка, увядзеце назву выпуску і назву URL. '
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Рубрыка павiнна быць створаная для выбранай мовы. Калi ласка, увядзеце назву рубрыкі і назву URL.'
 'Article Type': 'Тып артыкула'
-'Show article on front page': 'Паказаць артыкул на тытульнай старонцы'
-'Show article on section page': 'Паказаць артыкул на старонцы рубрыкі'
+'Show article on front page': 'Паказаць артыкул на тытульнай старонцы '
+'Show article on section page': 'Паказаць артыкул на старонцы рубрыкi.'
 'Translate article': 'Перакласьцi артыкул'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Вы ня маеце правоў доступу для зьмяненьня гэтага артыкула. Вы можаце рэдагаваць толькi свае асабiстыя артыкулы. Калі артыкул адпраўлены, ён можа быць зьменены толькі ўпаўнаважанымі карыстальнікамі.'
 'Duplicate article': 'Дубляваць артыкул'
@@ -183,10 +183,4 @@ Comments: Камэнтары
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Немагчыма зрабіць папярэдні агляд артыкула. Пераканайцеся, ці выбраны шаблён артыкула.'
 'No such article.': 'Няма такога артыкула.'
 'No such section.': 'Няма такой рубрыкі:by '
-Reorder: 
-'No such issue.': 'Няма такога выпуску'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва <BR><SMALL>(націсьніце дзеля праўцы)</SMALL> '
-'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.': 'Немагчыма захаваць артыкул. Ён быў заблякаваны карыстальнікам $1 $2 гадзіны  і $3 хвілін таму.'
-'Back to article details': 'Назад да падрабязнасьцяў артыкула'
-'Article automatic publishing schedule': 'Расклад аўтаматычнай публікацыі артыкулаў'
-'Are you sure you want to delete this scheduled action?': 'Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?'
+Characters: null

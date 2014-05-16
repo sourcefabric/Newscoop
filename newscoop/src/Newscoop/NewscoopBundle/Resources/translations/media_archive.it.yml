@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
 Slideshows: 'Gallerie di immagini'
 'You cant update used files.': 'Non puoi aggiornare file in uso.'
 Source: Sorgente
@@ -12,13 +12,13 @@ Feedback: Feedback
 'Approve selected': 'Approva selezionati'
 'Image files': 'File immagine'
 'Fix all thumbnails': 'Aggiorna tutte le anteprime'
-'You do not have the right to add files.': 'Non hai il permesso di aggiornare i file.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Questo file deve essere reso disponibile per questa traduzione dellarticolo o per tutte?'
+'You do not have the right to add files.': 'Non si possiedono i diritti per aggiungere file.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Rendere disponibile questo file solo per questa traduzione, o per tutte?'
 'Please enter a description for the file: $1.': 'Inserisci la descrizione del file: $1'
 'Only this translation': 'Solo questa traduzione'
 'No files for multi editing.': 'Nessun file per la modifica multipla.'
 'Edit files': 'Modifica file'
-'Change file information': 'Cambia informazioni file'
+'Change file information': 'Cambia le informazioni file'
 'All translations': 'Tutte le traduzioni'
 'Save All': 'Salva tutto'
 Files: File
@@ -31,7 +31,7 @@ Files: File
 'Last modified': 'Ultima modifica'
 'Items deleted.': 'Elementi eliminati.'
 'File uploaded.': 'File caricato.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Vuoi scaricare questo file o aprirlo nel browser?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Preferisci che questo file sia aperto nel browser, o automaticamente scaricato?'
 'Delete selected': 'Elimina selezionati'
 Created: Creato
 Charset: 'Set di caratteri'
@@ -42,19 +42,21 @@ Charset: 'Set di caratteri'
 'Add new file': 'Aggiungi file'
 'You do not have the right to add images.': 'Non hai il permesso di aggiungere immagini.'
 'Use for all': 'Usa per tutti'
-'Specify image url if you want to load it.': 'Specifica lindirizzo URL dellimmagine se vuoi caricarla.'
+'Specify image url if you want to load it.': 'Se vuoi caricare unimmagine esterna indica lURL'
 Size: Dimensione
 'No images for multi editing.': 'Nessuna immagine per la modifica.'
 'Images updated.': 'Immagini aggiornate.'
-'Edit images': 'Modifica imamgine'
+'Edit images': 'Modifica immagini'
 '$1 files uploaded.': '$1 file caricati.'
-'Unable to add new image.': 'Impossibile agigungere limmagine.'
+'Unable to add new image.': 'Impossibile aggiungere la nuova immagine.'
 'Image updated.': 'Immagine aggiornata.'
 'Image $1 deleted.': 'Immagine $1 eliminata.'
 'Image is in use, it cannot be deleted.': 'Limmagine non può essere modificata perchè è in uso.'
-'You must select an image file to upload.': 'Devi selezionare un file da caricare'
+'You must select an image file to upload.': 'Seleziona una immagine da caricare.'
 'Add new image': 'Aggiungi immagine'
 'Delete image $1': 'Elimina immagine $1'
 'Used in articles': 'Usato negli articoli'
 'View image': 'Visualizza immagine'
-'Change image information': 'Cambia informazioni immagine'
+'Change image information': 'Cambia le informazioni dellimmagine'
+'Photographer URL': null
+'Add website url starting with http://': null

@@ -9,6 +9,6 @@ Uninstall: Disistalla
 'The plugin $1 was sucessfully installed.': 'Il plugin $1 è stato installato con successo.'
 'No plugins found.': 'Nessun plugin trovato.'
 Manage: Gestisci
-Enabled: Attivato
+Enabled: Abilitato
 'Delete plugin': 'Elimina plugin'
 'Add new image': 'Aggiungi immagine'

@@ -5,7 +5,7 @@ Templates: Szablony
 'Import failed!': 'Import nie powiódł się.'
 'Edit template: $1': 'Edytuj szablon: $1'
 'Set new name to': 'Ustaw nową nazwę na'
-'Rename file': 'Zmień nazwę pliku'
+'Rename file': 'Zmiana nazwy pliku'
 'Caching templates in:': 'Zapisz cache szablonów w:'
 'Caching templates finished': 'Zapisywanie cache szablonów zakończone'
 'Theme name': 'Nazwa motywu'
@@ -20,7 +20,7 @@ updated: zaktualizowany
 moved: przeniesiony
 installed: zainstalowany
 deleted: usuniety
-'You must select at least one template to perform an action.': 'Musisz wybrać przynajmniej jeden szablon aby wykonać tą akcję.'
+'You must select at least one template to perform an action.': 'Musisz wybrać co najmniej jeden szablon aby rozpoczać akcję'
 Upload: Wgraj
 'Unassign theme': 'Wyłącz ten motyw'
 'Unassign successful': 'Wyłączanie zakończyło się powodzeniem'
@@ -40,7 +40,7 @@ Unassign: Wyłącz
 'Section page template': 'Szablon strony sekcji'
 Saving..: Zapisywanie..
 'Saving settings failed.': 'Zapisywanie ustawień nie powiodło się'
-'Save All': 'Zapisz wszystkie'
+'Save All': 'Zapisz wszystko'
 'Required Newscoop version': 'Wymagana wersja Newscoopa'
 Replace: Zamień
 'New template $1 created.': 'Utworzony nowy szablon  $1.'
@@ -62,7 +62,7 @@ Export: Eksport
 'Done uploading': 'Wgrywanie zakończone'
 'Do you want to override $1?': 'Chcesz nadpisać $1?'
 'Directory is empty': 'Katalog jest pusty'
-'Directory $1 created.': 'Utworzony katalog $1'
+'Directory $1 created.': 'Folder $1 utworzony'
 Design: Projekt
 'Delete theme': 'Usuń motyw'
 'Current directory:': 'Aktualny katalog'

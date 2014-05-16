@@ -1,13 +1,13 @@
 'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 'Постоје неки фајлови који су нечитљиви тако да Newscoop није у стању да одреди да ли је $1 у употреби или не. средите то, па потом покушајте поново са брисањем.'
-'Stop current upload': 'Прекини активни аплоуд'
-'Start uploading queue': 'Почни са аплоудом реда'
-'Start upload': 'Покрени аплоуд'
+'Stop current upload': 'Прекини тренутни аплоуд'
+'Start uploading queue': 'Започни са аплоудом реда'
+'Start upload': 'Започни аплоуд'
 Size: Величина
 'Select files': 'Изабери фајлове'
 Filename: 'Назив фајла'
 'Drag files here.': 'Превуци фајлове овде.'
 'Cache lifetime, sec': 'Трајање кеша, у секундама'
-'Add files to the upload queue and click the start button.': 'додај фајлове у ред за аплоуд и кликни дугме за почетак.'
+'Add files to the upload queue and click the start button.': 'Додај фајлове у ред за аплоуд и притисни дугме за почетак.'
 'Add files': 'Додај фајлове'
 '$1 files uploaded.': '$1 фајлова аплоудовано.'
 'Replace current with:': 'Замени постојеће са:'
@@ -19,7 +19,7 @@ Filename: 'Назив фајла'
 'You may only translate one article at a time.': 'Можете превести само један по један текст'
 'You do not have the right to rename templates.': 'Немате право да преименујете шаблоне.'
 'You do not have the right to move templates.': 'Немате право да премештате шаблоне.'
-'You do not have the right to move articles.': 'Немате право премештања текстова.'
+'You do not have the right to move articles.': 'Немате право да премештате текстове.'
 'Unable to create folder.': 'Није могуће направити фолдер.'
 'Unable to $1 template.': 'Није могуће $1 шаблон.'
 'To New Name': 'У ново име'
@@ -49,8 +49,8 @@ Folder: фолдер
 'If the file you specified is a text file, you can convert its character set using the dropdown below.': 'ако је фајл који сте навели текстуални фајл, можете конвертовати његов карактер сет коришћењем падајућег менија.'
 'Directory $1 was deleted': 'директоријум $1 је обрисан'
 'Directory $1 created.': 'директоријум $1 је направљен'
-'You must select a file to upload.': 'Морате изабрати фајл за аплоуд'
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
+'You must select a file to upload.': 'Морате изабрати фајл за аплоуд.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': 'Није могуће снимити фајл $1 на путању $2.'
 Replace: Замени
 'File $1 replaced.': 'Фајл $1 замењен.'
@@ -65,7 +65,7 @@ Replace: Замени
 'Delete folder': 'Обриши фолдер'
 Folders: Фолдери
 'No folders.': 'Нема фолдера'
-Files: Фајлови
+Files: Фајлова
 'No templates.': 'Нема шаблона'
 'Create new template': 'Креирај нови шаблон'
 'Duplicate template': 'Дуплирај шаблон'
@@ -84,7 +84,3 @@ Files: Фајлови
 'Duplicate file': 'Дуплирај фајл'
 'Delete file': 'Обриши фајл'
 'Please check if the user $1 has permission to write in this directory.': 'Проверите да ли корисник $1има овлашћења да уписује у овај директоријум.'
-'The folder has been deleted.': 'Фолдер је избрисан'
-'The template has been deleted.': 'Шаблон је избрисан'
-'The template could not be deleted.': 'Шаблон не може бити избрисан'
-Save: Сними

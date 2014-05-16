@@ -9,7 +9,7 @@ More...: Mehr...
 Content: Inhalt
 Languages: Sprachen
 Countries: Länder
-Themes: Designvorlagen
+Themes: Themen
 Topics: Themen
 Configure: Konfiguration
 'Image Archive': Bildarchiv
@@ -74,7 +74,7 @@ Action: Aktion
 'Schedule a new action': 'Neue Aktion automatisieren'
 'Scheduling a new publish action': 'Neue Aktion wird automatisiert'
 'Delete scheduled publish action': 'Löschen einer automatisierten Aktion'
-Date/Time: Datum/Zeit
+Date/Time: Datum/Uhrzeit
 'You must select an action.': 'Sie müssen eine Aktion wählen.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Kein Zugriffsrecht auf die Automatisierung von Ausgaben oder Artikeln'
 'Front page': Startseite
@@ -148,6 +148,7 @@ Localizer: Lokalisierung
 'Add new publication': 'Neue Publikation hinzufügen'
 'Upload new template': 'Neues Template hochladen'
 'Add new staff member': 'Neues Personalkonto einrichten'
+'Staff member deleted.': null
 'Add new subscriber': 'Neuen Abonnenten einrichten'
 'Add new user type': 'Neuen Benutzertyp hinzufügen'
 'Add new article type': 'Neuen Artikel hinzufügen'
@@ -230,7 +231,7 @@ Approved: Bewilligt
 Subject: Subjekt
 'IP address:': 'IP Adresse'
 'Email:': 'E-Mail:'
-Author: Autor/in
+Author: AutorIn
 'Article name': Artikelname
 'Hide article': 'Verberge Artikel'
 'Show article': 'Zeige Artikel'
@@ -256,18 +257,28 @@ Reads: Gelesen
 'Publish with issue': 'Mit Ausgabe veröffentlichen'
 'Universal List': 'Universelle Liste und Suche'
 'Invalid security token!': 'Ungültiges Sicherheits-Token! '
-Authors: Autoren
-'User name': Benutzername
-'User Types': Benutzertypen
-'Subscription Default Time': 'Standard Abonement Laufzeit'
-'No such language.': 'Sprache nicht vorhanden'
-'No such infotype.': 'Infotyp nicht vorhanden'
-'No such keyword.': 'Stichwort nicht vorhanden'
-'No such country.': 'Land nicht vorhanden'
-'User may add/change user accounts and passwords': 'BenutzerIn kann Benutzerprofile hinzufügen / ändern'
-'User may delete user accounts': 'BenutzerIn kann Benutzerprofile löschen'
-'Add new user account': 'Neues Benutzerprofil hinzufügen'
-'There are $1 issue(s) left.': 'Es sind noch $1 Ausgaben vorhanden'
-'There are $1 keyword(s) left.': 'Es sind noch $1 Stichworte vorhanden'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Name (bearbeiten, bitte anklicken)'
-'New field': 'Neues Feld'
+Authors: Autoren/innen
+Title: Titel
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: auf
+published: null
+unpublished: null

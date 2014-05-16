@@ -1,7 +1,7 @@
 'Rename user': 'Змяніць імя карыстальніка'
 Campsite: 'Campsite '
 'Image Rendering': 'Апрацоўка выявы'
-'Featured Article Lists': 'Спіс Абраных Артыкулаў'
+'Featured Article Lists': 'Спісы Выбраных артыкулаў'
 'You have tried to upload an invalid backup file.': 'Няўдалая спроба загрузіць файл рэзервовай копіі.'
 'You do not have the right to manage backups.': 'У вас няма правоў доступу для кіравання рэзервовымі копіямі.'
 'Make a new backup': 'Стварыце новую рэзервовую копію'
@@ -13,11 +13,11 @@ Create: Стварыць
 Attach/Detach: Прымацаваць/Выдаліць
 'Are you sure you want to delete slideshow?': 'Вы ўпэўненыя, што жадаеце выдаліць слайд-шоў?'
 Support: Падтрымка
-'Pending articles': 'Артыкулы ў працэсе рэдагавання'
+'Pending articles': 'Незакончаныя артыкулы'
 'Manage Users': 'Кіраванне карыстальнікамі'
 'Manage User Types': 'Кіраванне тыпамі карыстальнікаў'
 'Manage User Points System': 'Кіраванне сістэмай карыстальніцкіх пунктаў'
-Last: Апошні
+Last: Апошнi
 First: Першы
 Feedback: 'Зваротная сувязь'
 'Edit your password': 'Рэдагаваць пароль'
@@ -45,7 +45,7 @@ Themes: 'Тэмы (шаблёны)'
 'Start upload': 'Пачаць запампоўку'
 Settings: Налады
 'Select files': 'Абярыце файлы'
-Reply: Адказаць
+Reply: Адказ
 'New comment added': 'Каментар дабаўлены'
 'Manage Authors': 'Кіраванне аўтарамі'
 Loading..: Загрузка...
@@ -64,7 +64,7 @@ Ban: Забаронены
 Newscoop: Newscoop
 'Your password has been reset.': 'Ваш пароль пераусталяваны.'
 'Proceed to login.': Ўвайсці.
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Добры дзень,   \n\n для аднаўлення пароля, ідзіце па спасылцы: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'На старонку ўваходу.'
 'Back to login.': 'Вярнуцца на старонку ўваходу.'
 'Back to login': 'Вярнуцца на старонку ўваходу'
@@ -113,15 +113,15 @@ Download: Загрузіць
 'Backup list is empty.': 'Спіс пусты.'
 'Are you sure you want to restore the file $1?': 'Цi Вы ўпэўнены, што жадаеце аднавіць $1?'
 'Are you sure you want to delete the file $1?': 'Цi Вы ўпэўнены, што жадаеце выдалiць файл $1?'
-'Import XML': 'Імпарт XML '
+'Import XML': 'Імпарт XML'
 'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'У вас павінны быць правы карыстальніка для дадавання/змянення выпускаў і артыкулаў для таго, каб вызначыць аўтара для артыкулаў.'
 'Select the field from which to generate the author': 'Выберыце поле са спісу для генерацыі поля аўтар'
 'Invalid or empty field $1. You must select a valid dynamic field.': 'Поле $1 – няправільнае альбо пустое. Вы павінны выбраць правільнае дынамічнае поле.'
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Немагчыма стварыць аўтара $1 для артыкула №$2 ($3) тыпу $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Паўсталі памылкі падчас усталёвак аўтара артыкулаў тыпу $1 з поля $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Аўтар паспяхова ўсталяваны для артыкулаў тыпу $1 з поля $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Артыкул быў заблакаваны $1 ($2) $3 хвілін назад.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Артыкул быў заблакаваны $1 ($2) $3 гадзін $4 хвілін назад.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 хвілін таму.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 гадзін і $4 хвілін таму.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Памылка падчас усталёвак аўтара $1 для артыкула №$2 ($3) тыпу $4.'
 'Clear system cache': 'Ачысьціць сыстэму кэшаваньня'
 'The system was unable to upload the file $1. ': 'Сыстэма ня можа загрузіць файл $1.'
@@ -152,3 +152,7 @@ Help: Дапамога
 'Please make sure that you typed the correct user name and password.': 'Калi ласка, праверце, цi правiльна Вы ўвялі лагiн і пароль.'
 'If your problem persists please contact the site administrator $1': 'Калi праблема iснуе, зьвярнецеся да адмiнiстратара сайта $1'
 Backup/Restore: 'Рэзервнае капіраванне'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

@@ -1,3 +1,18 @@
+'Rename user': null
+Campsite: null
+'Image Rendering': null
+'Featured Article Lists': null
+'You have tried to upload an invalid backup file.': null
+'You do not have the right to manage backups.': null
+'Make a new backup': null
+'Are you sure you want to make a new backup?': null
+'Security token expired. Please resubmit the form.': null
+Templates: null
+'Create slideshow': null
+Create: null
+Attach/Detach: null
+'Are you sure you want to delete slideshow?': null
+Support: null
 'Pending articles': 'Текстови на чекању'
 'Manage Users': 'Управљање корисницима'
 'Manage User Types': 'Управљање типовима корисника'
@@ -30,7 +45,7 @@ Themes: Теме
 'Start upload': 'Започни аплоуд'
 Settings: Подешавања
 'Select files': 'Изабери фајлове'
-Reply: Одговор
+Reply: Одговори
 'New comment added': 'Нови коментар додат'
 'Manage Authors': 'Управљање ауторима'
 Loading..: Учитавање...
@@ -49,7 +64,7 @@ Ban: Забрани
 Newscoop: Newscoop
 'Your password has been reset.': 'Лозинка је ресетована.'
 'Proceed to login.': 'Настави са пријављивањем.'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Здраво, \n\nза повраћај лозинке, молимо следите овај линк: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Иди на пријављивање'
 'Back to login.': 'Назад на пријављивање.'
 'Back to login': 'Назад на пријављивање'
@@ -83,7 +98,7 @@ login: пријава
 'No user is registered with this email.': 'Не постоји корисник са овим имејлом'
 'Forgot your password?': 'Заборавили сте лозинку?'
 'Email: incorrect format.': 'Имејл: погрешан формат.'
-Email: Имејл
+Email: email
 'Bad input parameters.': 'Погрешни параметри уноса.'
 'There was an error trying to delete the file $1.': 'Дошло је до грешке при покушају брисања фајла $1.'
 'The file $1 was deleted successfully.': 'Фајл $1 је успешно обрисан.'
@@ -93,7 +108,7 @@ Restore: Врати
 Mb: Мб
 'Free disk space': 'Слободно простора на диску'
 'Download file': 'Преузми фајл'
-Download: Преузимање
+Download: Преузми
 'Delete file': 'Обриши фајл'
 'Backup list is empty.': 'Листа бекапова је празна'
 'Are you sure you want to restore the file $1?': 'Да ли сте сигурни да желите да вратите фајл $1?'
@@ -105,8 +120,8 @@ Download: Преузимање
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Немогуће је направити аутора $1 за текст број $2 ($3) типа $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Дошло је до грешке при подешавању аутора за чланке типа $1коришћењем поља $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'аутор је успешно постављен за текстове типа $1коришћењем поља $2'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 минут(а).'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а).'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 минут(а)'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а)'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Грешка при подешавању аутора $1 за текст број $2 ($3) типа $4.'
 'Clear system cache': 'Обриши системски кеш'
 'The system was unable to upload the file $1. ': 'Систем није био у могуности да аплоудује фајл $1.'
@@ -137,3 +152,7 @@ Help: Помоћ
 'Please make sure that you typed the correct user name and password.': 'Проверите да ли сте исправно уписали корисничко име и лозинку'
 'If your problem persists please contact the site administrator $1': 'Ако се проблем понови контактирајте администратора сајта $1'
 Backup/Restore: Бекап/враћање
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

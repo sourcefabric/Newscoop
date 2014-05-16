@@ -1,17 +1,19 @@
-Account: 
-'Items per page': 
-'Add new': 
+Plugins: null
+'Manage Plugins': null
+Account: null
+'Items per page': null
+'Add new': null
 Home: 首页
 Logout: 注销
-More...: 
-Content: 
+More...: null
+Content: null
 Languages: 语言
 Countries: 国家
 Themes: 模版
 Topics: 主题
-Configure: 
-'Image Archive': 
-'Add Article': 
+Configure: null
+'Image Archive': null
+'Add Article': null
 Fields: 字段
 Delete: 删除
 Type: 输入
@@ -23,22 +25,22 @@ Password: 密码
 Site: 地址
 Path: 路径
 'Go up': 向上
-URL: 
-Order: 
-Hide: 
+URL: null
+Order: null
+Hide: null
 Duplicate: 复制
-Subscription: 
-expires: 
-starts: 
-before: 
-after: 
-on: 
-status: 
-active: 
-inactive: 
-Subscribers: 
-Staff: 
-'Select destination': 
+Subscription: null
+expires: null
+starts: null
+before: null
+after: null
+on: null
+status: null
+active: null
+inactive: null
+Subscribers: null
+Staff: 职员
+'Select destination': null
 'No languages': 无语言
 '---Select language---': －－选择语言－－
 'No publications': 无出版物
@@ -49,7 +51,7 @@ Staff:
 '---Select section---': －－选择区－－
 Language: 语言
 Country: 国家
-'Account name': 
+'Account name': null
 Publication: 出版物
 'Default language': 默认语言
 Subscriptions: 订阅
@@ -58,35 +60,35 @@ Number: 数字
 Section: 区
 Keywords: 关键词
 Topic: 主题
-'URL Name': 
-'Left to pay': 
-Active: 
-Trial: 
+'URL Name': null
+'Left to pay': null
+Active: null
+Trial: 试用
 Next: 下一个
 Previous: 上一个
 Translate: 翻译
 View: 查看
-'Scheduled Publishing': 
-Time: 
-Action: 
-'Schedule a new action': 
-'Scheduling a new publish action': 
-'Delete scheduled publish action': 
-Date/Time: 
-'You must select an action.': 
-'You do not have the right to schedule issues or articles for automatic publishing.': 
-'Front page': 
-'Section page': 
-'Show on front page': 
-'Remove from front page': 
-'Show on section page': 
-'Remove from section page': 
-Actions: 
-Publishing: 
-Show: 
-Remove: 
+'Scheduled Publishing': null
+Time: null
+Action: null
+'Schedule a new action': null
+'Scheduling a new publish action': null
+'Delete scheduled publish action': null
+Date/Time: '&#26085;&#26399;/&#26102;&#38388;'
+'You must select an action.': null
+'You do not have the right to schedule issues or articles for automatic publishing.': null
+'Front page': null
+'Section page': null
+'Show on front page': null
+'Remove from front page': null
+'Show on section page': null
+'Remove from section page': null
+Actions: null
+Publishing: null
+Show: null
+Remove: null
 'Article Types': 文章类型
-'Staff User Types': 
+'Staff User Types': null
 Publications: 出版物
 Issues: 问题
 Sections: 区域
@@ -94,24 +96,24 @@ Articles: 文章
 Images: 图片
 Change: 变化
 'Add new issue': 添加新论题
-'Section Template': 
-'Article Template': 
+'Section Template': null
+'Article Template': null
 'Default Language': 默认语言
 'Paid Period': 已付期
 Preview: 预览
 'You must fill in the $1 field.': 你必须填写$1字段
-Error: 
-'Invalid input: $1': 
-'Language does not exist.': 
+Error: null
+'Invalid input: $1': null
+'Language does not exist.': null
 'Publication does not exist.': 无此出版物
-'Issue does not exist.': 
+'Issue does not exist.': null
 'You must select a language.': 您必须选择一种语言
-'Section does not exist.': 
+'Section does not exist.': null
 'No articles.': 无此文字
-'Article does not exist.': 
-'Image does not exist.': 
+'Article does not exist.': null
+'Image does not exist.': null
 'Access denied': 拒绝访问
-'Invalid parameters received': 
+'Invalid parameters received': null
 'Add new article': 添加新文章
 Status: 状态
 Published: 已发布
@@ -130,23 +132,24 @@ Description: 描述
 Photographer: 摄影
 Place: 地点
 Date: 日期
-Thumbnail: 
-'In use': 
-'Additional searches': 
-'Most Recently Added': 
-'Most Recently Modified': 
-'$1 images found': 
-'Reset search conditions': 
+Thumbnail: null
+'In use': null
+'Additional searches': null
+'Most Recently Added': null
+'Most Recently Modified': null
+'$1 images found': null
+'Reset search conditions': null
 'Image number': 图片号码
 Users: 用户
-Localizer: 
+Localizer: null
 'Adding new translation': 添加新翻译
 'No more languages.': 无更多语言
-'The $1 field may only contain letters, digits and underscore (_) character.': 
+'The $1 field may only contain letters, digits and underscore (_) character.': null
 'Add new publication': 添加新发布
 'Upload new template': 上载新模版
-'Add new staff member': 
-'Add new subscriber': 
+'Add new staff member': null
+'Staff member deleted.': null
+'Add new subscriber': null
 'Add new user type': 添加新用户类型
 'Add new article type': 添加新文章类型
 'Add new country': 添加新国家
@@ -157,11 +160,11 @@ Localizer:
 'Submitted Articles': 提交文章
 Logs: 日志
 'There are $1 article(s) left.': 还有$1篇文章
-'There are $1 issues(s) left.': 
+'There are $1 issues(s) left.': null
 'There are $1 section(s) left.': 还有$1区
 'There are $1 publication(s) left.': 还有$1发布
 'There are $1 countries left.': 还有$1个国家
-'Name <SMALL>(click to edit)</SMALL>': 
+'Name <SMALL>(click to edit)</SMALL>': null
 'Add new subscription': 添加新订阅
 'You do not have the right to add subscriptions.': 你没有添加订阅的权限
 'Adding subscription': 添加订阅
@@ -170,9 +173,9 @@ Logs: 日志
 'No such subscription.': 无此订阅
 Yes: 是
 No: 否
-Close: 
+Close: null
 'No issues.': 无问题
-'Back to Edit Article': 
+'Back to Edit Article': null
 'No topics': 无主题
 'You do not have the right to add articles.': 您无权添加文章
 Start: 开始
@@ -182,91 +185,100 @@ Days: 天数
 Cancel: 取消
 Done: 完成
 OK: 成功
-Save: 
+Save: 保存
 Search: 搜索
-'Make a selection': 
-'You must input a number greater than 0 into the $1 field.': 
-'You must input a valid date.': 
+'Make a selection': null
+'You must input a number greater than 0 into the $1 field.': null
+'You must input a valid date.': null
 'Add new field': 增加新字段
-'Article automatic publishing schedule': 
-'Are you sure you want to delete this scheduled action?': 
-Unlink: 
-'Are you sure you want to delete the image $1?': 
+'Article automatic publishing schedule': null
+'Are you sure you want to delete this scheduled action?': null
+Unlink: null
+'Are you sure you want to delete the image $1?': null
 'No such issue.': 无此问题
-'Are you sure you want to delete the subscription to the publication $1?': 
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 
-GB: 
-MB: 
-KB: 
-bytes: 
-Attach: 
-Back: 
-File: 
-'Save and Close': 
+'Are you sure you want to delete the subscription to the publication $1?': 您确认要删除发布$1的订阅
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': null
+GB: null
+MB: null
+KB: null
+bytes: null
+Attach: null
+Back: null
+File: null
+'Save and Close': null
 Add: 增加
-'Select All': 
-'Select None': 
-'Add Event': 
-N/A: 
-'On Front Page': 
-'On Section Page': 
-'Created by': 
-'Creation date': 
-'Publication List': 
-'Issue List': 
-'Section List': 
-All: 
-duplicate: 
-move: 
-Move: 
-'From:': 
-'Date:': 
-Hidden: 
-Comments: 
-Comment: 
-Approved: 
-Subject: 
-'IP address:': 
-'Email:': 
-Author: 
-'Article name': 
-'Hide article': 
-'Show article': 
-'Article Type Fields': 
-'Article Images': 
-'Log Messages': 
-'Article Files': 
-'Article Comments': 
-'Are you sure you want to deactivate the subscription?': 
-'Are you sure you want to activate the subscription?': 
-Other: 
-'Time:': 
-'No events.': 
-'Default templates': 
-'System Preferences': 
-'The date must be in the future.': 
-Send: 
-'Thank you.': 
-'Please take a minute to send us an email.': 
-(optional): 
-'The URL you entered is invalid: $1': 
-Reads: 
-Plugins: 
-'User name': 用户名
-'User Types': 用户类型
-'Subscription Default Time': 默认订阅时间
-'No such language.': 无此语言
-'No such infotype.': 无此类型
-'No such keyword.': 无此关键字
-'No such country.': 无此国家
-'User may add/change user accounts and passwords': 用户可添加/删除帐户与密码
-'User may delete user accounts': 用户可删除帐户
-'Add new user account': 添加新帐户
-'There are $1 issue(s) left.': 还有$1个问题
-'There are $1 keyword(s) left.': 还有$1个关键字
-'Name<BR><SMALL>(click to edit)</SMALL>': 名称（点击编辑）
-'New field': 新字段
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+'Select All': null
+'Select None': null
+'Add Event': null
+N/A: null
+'On Front Page': null
+'On Section Page': null
+'Created by': null
+'Creation date': null
+'Publication List': null
+'Issue List': null
+'Section List': null
+All: null
+duplicate: null
+move: null
+Move: null
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
+'Article Type Fields': null
+'Article Images': null
+'Log Messages': null
+'Article Files': null
+'Article Comments': null
+'Are you sure you want to deactivate the subscription?': null
+'Are you sure you want to activate the subscription?': 您确认要激活订阅？
+Other: null
+'Time:': null
+'No events.': null
+'Default templates': null
+'System Preferences': null
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

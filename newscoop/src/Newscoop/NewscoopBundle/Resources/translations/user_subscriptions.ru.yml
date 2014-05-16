@@ -19,7 +19,7 @@ first: первый
 Paid: Оплачено
 'No subscriptions': 'Нет подписок'
 'Languages:': 'Языки:'
-'Edit all sections': 'Редактировать все рубрики:'
+'Edit all sections': 'Редактировать все рубрики'
 'Days:': 'Дни:'
 'Days must be number': 'Значение дней должно быть обозначено цифрами'
 Any: Любое
@@ -29,7 +29,7 @@ removed: перемещено
 deleted: удалено
 deactivated: деактивировано
 activated: активировано
-'Value is required and cant be empty': 'Значение обязательно для заполнения'
+'Value is required and cant be empty': 'Требуется значение, поле не может быть пустым.'
 'That user name already exists, please choose a different login name.': 'Это имя пользователя уже существует, пожалуйста, выберите другой логин.'
 'That $1 already exists, please choose a different $2.': 'Этот $1 уже существует, пожалуйста, выберите другой $2.'
 'Subscriptions exist for all available publications.': 'Есть подписка на все доступные публикации. '
@@ -58,16 +58,10 @@ E-Mail: E-mail
 'Accout Name': 'Название учетной записи'
 '%value% must be greater than %min%': 'значение %value% должно быть больше, чем %min%'
 '%value% is not a valid IP Address': '%value%  не является действительным IP адресом'
-'Regardless of the language': 'Независимо от языков'
+'Regardless of the language': 'Независимо от языка'
 'Individual languages': 'Индивидуальные языки'
 'Add sections now': 'Добавить рубрику сейчас'
 'Add sections later': 'Добавить рубрику позже'
 'Subscription Type': 'Тип подписки'
 'Paid (payment will be confirmed later)': 'Платная (оплата будет подтверждена позже)'
 'Paid (confirm payment now)': 'Платная (подтвердить оплату сейчас)'
-Account: 'Учетная запись'
-'Are you sure you want to activate the subscription?': 'Вы уверены, что хотите активировать подписку?'
-'Are you sure you want to delete the subscription to the publication $1?': 'Вы уверены, что хотите удалить подписку на публикацию $1?'
-'Left to pay': 'Осталось оплатить:ru'
-Active: 'Активно:ru'
-Trial: Пробная

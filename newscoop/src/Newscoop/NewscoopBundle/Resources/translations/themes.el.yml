@@ -20,7 +20,7 @@ updated: ενημερώθηκε
 moved: μετακινήθηκε
 installed: εγκαταστάθηκε
 deleted: διαγράφηκε
-'You must select at least one template to perform an action.': 'Πρέπει να επιλέξετε τουλάχιστον ένα πρότυπο για να πραγματοποιήσετε μια ενέργεια.'
+'You must select at least one template to perform an action.': 'Πεπει να επιλέξετε τουλάχιστον ένα πρότυπο για να πραγματοποιήσετε μια ενέργεια.'
 Upload: Ανέβασμα
 'Unassign theme': 'Αναίρεση εκχώρησης θέματος'
 'Unassign successful': 'Επιτυχής αναίρεση εκχώρησης'
@@ -62,7 +62,7 @@ Export: Εξαγωγή
 'Done uploading': 'Τέλος ανεβάσματος'
 'Do you want to override $1?': 'Θέλετε να αντικαταστήσετε το $1;'
 'Directory is empty': 'Το ευρετήριο είναι άδειο'
-'Directory $1 created.': 'Το ευρετήριο $1 δημιουργήθηκε.'
+'Directory $1 created.': 'Ο κατάλογος $1 δημιουργήθηκε.'
 Design: Σχεδιασμός
 'Delete theme': 'Διαγραφή Θέματος'
 'Current directory:': 'Τρέχον ευρετήριο'

@@ -4,11 +4,11 @@
 'You do not have the right to manage plugins.': 'Немате право управљања плагиновима'
 Version: Верзија
 'Upload Plugin': 'Аплоудуј плагин'
-Upload: Аплоуд
+Upload: Аплоудуј
 Uninstall: Деинсталирање
 'The plugin $1 was sucessfully installed.': 'Плагин $1 је успешно инсталиран'
 'No plugins found.': 'Није пронађен ниједан плагин.'
 Manage: Управљање
-Enabled: Дозвољен
+Enabled: Омогућени
 'Delete plugin': 'Обриши плагин'
-'Add new image': 'Додај нову слику'
+'Add new image': 'Додајте нову слику'

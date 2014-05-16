@@ -1,14 +1,14 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
-'Delete anyway': 
-'Reset order': 
-'Order changes will be lost. Are you sure you want to continue?': 
-'Topics order saved.': 
-'Show languages': 
-'Save order': 
-'Click to edit': 
-'Add root topic': 
-'Topic was deleted.': 
-'The topic name is already in use by another topic.': 
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
+'Delete anyway': null
+'Reset order': null
+'Order changes will be lost. Are you sure you want to continue?': null
+'Topics order saved.': null
+'Show languages': null
+'Save order': null
+'Click to edit': null
+'Add root topic': null
+'Topic was deleted.': null
+'The topic name is already in use by another topic.': null
 'You must enter a name for the topic.': '토픽에 대한 이름을 입력하시오.'
 'You must choose a language for the topic.': '토픽에 대한 언어를 선택하시오.'
 'This topic has subtopics, therefore it cannot be deleted.': '이 토픽은 서브토픽이 있읍니다. 따라서 삭제할 수 없습니다.'

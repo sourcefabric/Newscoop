@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'ليس لون'
 'No such field': 'الحقل غير موجود'
 'Color saved': 'تم حقظ اللون'
@@ -61,3 +61,44 @@ First: الأول
 'Multi-line Text with WYSIWYG': 'نص متعددة الأسطر بـ WYSIWYG'
 'URL $1 is invalid or is not an image.': 'عنوان الرابط $1 غير صحيح أو ليس صورة.'
 'URL $1 is not an image.': 'عنوان الرابط $1 ليس صورة.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: المنشور
+                actions: الاجراءات
+                actions_buttons:
+                    remove: إزالة
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: حفظ
+        PublicResources:
+            label:
+                routes: null
+                save: حفظ

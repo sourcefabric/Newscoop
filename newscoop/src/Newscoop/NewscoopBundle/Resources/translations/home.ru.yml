@@ -1,7 +1,7 @@
 'Rename user': 'Переименовать пользователя'
 Campsite: 'Campsite '
 'Image Rendering': 'Обработка изображения'
-'Featured Article Lists': 'Cписки Избранных статей'
+'Featured Article Lists': 'Списки Избранных статей'
 'You have tried to upload an invalid backup file.': 'Неудачная попытка загрузки файла резервной копии.'
 'You do not have the right to manage backups.': 'У вас нет прав доступа для управления резервными копиями.'
 'Make a new backup': 'Создайте новую резервную копию'
@@ -13,7 +13,7 @@ Create: Создать
 Attach/Detach: Прикрепить/Удалить
 'Are you sure you want to delete slideshow?': 'Вы уверены, что хотите удалить это слайд-шоу?'
 Support: Поддержка
-'Pending articles': 'Статьи в процессе редактирования'
+'Pending articles': 'Неоконченные статьи'
 'Manage Users': 'Управление пользователями'
 'Manage User Types': 'Управление типами пользователей'
 'Manage User Points System': 'Управление системой пользовательских точек'
@@ -32,12 +32,12 @@ Detail: Подробнее
 MiB: MiB
 'Download was not successful. Check please that the server is not out of disk space.': 'Неудачная попытка скачивания. Проверьте, имеется ли место на сервере.'
 'try again later': 'повторите попытку позже'
-at: в
+at: на
 'You must at least upload one file.': 'Вы обязаны загрузить не менее одного файла.'
 'Warning: the existing data and themes will be deleted!': 'Внимание: существующие данные и темы (шаблоны) будут удалены!'
 'Value is required and cant be empty': 'Требуется значение, поле не может быть пустым.'
 Upload: Загрузить
-'Update comment': 'Обновить комментарий'
+'Update comment': 'Обновить комментарии'
 'Time created': 'Время создания'
 Themes: 'Темы (Шаблоны)'
 'Stop current upload': 'Отсановить текущую загрузку'
@@ -45,7 +45,7 @@ Themes: 'Темы (Шаблоны)'
 'Start upload': 'Начать загрузку'
 Settings: Настройки
 'Select files': 'Выбрать файлы'
-Reply: Ответить
+Reply: Ответ
 'New comment added': 'Добавлен новый комментарий'
 'Manage Authors': 'Управление авторами'
 Loading..: Загрузка..
@@ -64,7 +64,7 @@ Ban: Запретить
 Newscoop: Newscoop
 'Your password has been reset.': 'Ваш пароль переустановлен.'
 'Proceed to login.': Войти.
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Добрый день, \n\n для восстановления пароля, следуйте по ссылке: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'На страницу входа.'
 'Back to login.': 'Вернуться на страницу входа.'
 'Back to login': 'Вернуться на страницу входа'
@@ -120,8 +120,8 @@ Download: Загрузить
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Невозможно создать автора $1 для статьи №$2 ($3) типа $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Возникли ошибки в процессе установки автора статей типа $1 из поля $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Автор успешно установлен для статей типа $1 из поля $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Статья была заблокирована $1 ($2) $3 минут(ы) назад.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Статья была заблокирована $1 ($2) $3 час(ов) $4 минут(ы) назад.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 минут назад.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Ошибка в процессе установки автора $1 для статьи №$2 ($3) типа $4.'
 'Clear system cache': 'Очистить систему кеширования'
 'The system was unable to upload the file $1. ': 'Система не может загрузить файл $1.'
@@ -152,3 +152,7 @@ Help: Помощь
 'Please make sure that you typed the correct user name and password.': 'Пожалуйста, убедитесь в правильности ввода логина и пароля.'
 'If your problem persists please contact the site administrator $1': 'Если проблема не решена, обратитесь к администратору сайта $1'
 Backup/Restore: 'Резервное копирование'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

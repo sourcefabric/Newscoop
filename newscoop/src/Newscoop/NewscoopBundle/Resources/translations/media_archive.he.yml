@@ -1,12 +1,62 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: 
-'You cant update used files.': 
-Source: 
-Local: 
-'Items updated.': 
-Feedback: 
-'Do you want to update unused only?': 
-'Disapprove selected': 
-'Are you sure you want to update selected items?': 
-'Approve selected': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
+'You cant update used files.': null
+Source: null
+Local: null
+'Items updated.': null
+Feedback: null
+'Do you want to update unused only?': null
+'Disapprove selected': null
+'Are you sure you want to update selected items?': null
+'Approve selected': null
+'Image files': null
+'Fix all thumbnails': null
+'You do not have the right to add files.': null
+'Should this file only be available for this translation of the article, or for all translations?': null
+'Please enter a description for the file: $1.': null
+'Only this translation': null
+'No files for multi editing.': null
+'Edit files': null
+'Change file information': null
+'All translations': null
+'Save All': null
+Files: null
+'You cant delete used files.': null
+'Do you want to delete unused only?': null
+'View attachment': null
+'Select some items first.': null
+'Open in the browser': null
+'Media Archive': null
+'Last modified': null
+'Items deleted.': null
+'File uploaded.': null
+'Do you want this file to open in the users browser, or to automatically download?': null
+'Delete selected': null
+Created: null
+Charset: null
+'Change attachment information': null
+'Automatically download': null
+'Attachment updated.': null
+'Are you sure you want to delete selected items?': null
+'Add new file': null
+'You do not have the right to add images.': null
+'Use for all': null
+'Specify image url if you want to load it.': null
+Size: null
+'No images for multi editing.': null
+'Images updated.': null
+'Edit images': null
+'$1 files uploaded.': null
+'Unable to add new image.': null
+'Image updated.': null
+'Image $1 deleted.': null
+'Image is in use, it cannot be deleted.': null
+'You must select an image file to upload.': null
+'Add new image': null
+'Delete image $1': null
+'Used in articles': null
+'View image': null
+'Change image information': null
+'Photographer URL': null
+'Add website url starting with http://': null

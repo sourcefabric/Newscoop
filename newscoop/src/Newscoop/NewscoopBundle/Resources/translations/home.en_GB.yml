@@ -152,3 +152,7 @@ Help: Help
 'Please make sure that you typed the correct user name and password.': 'Please make sure that you typed the correct user name and password.'
 'If your problem persists please contact the site administrator $1': 'If your problem persists please contact the site administrator $1'
 Backup/Restore: Backup/Restore
+'Step 2': 'Step 2'
+'Step 3': 'Step 3'
+'Add new user': 'Add new user'
+'Bad credentials': 'Bad credentials'

@@ -1,40 +1,40 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: auf
+'With no attachment': 'Ohne Anhang'
+'With image attachment': 'Mit angehängtem Bild '
+'With document attachment': 'Mit angehängtem Dokument'
+'Unable to reach Newscoop. Please check your internet connection.': 'Die Verbindung zu Newscoop kann nicht hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung. '
+Starred: 'Mit Stern versehen'
+Star: Stern
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Zeige _START_ bis _END_ von _TOTAL_ Einträgen'
+'Reply to message': 'Auf Nachricht antworten'
+Reply: Antworten
+Processed: Verarbeitet
+'No records found.': 'Keine Angaben gefunden.'
+'No entries to show': 'Keine Einträge zum Anzeigen gefunden.'
+'Messages updated.': 'Nachrichten aktualisiert. '
+'Messages status change to $1.': 'Status der Nachrichen ändern zu $1.'
+'Messages deleted.': 'Nachrichten gelöscht. '
+'Message updated.': 'Nachricht aktualisiert. '
+'Message status change to $1.': 'Status der Nachricht ändern zu $1.'
+'Message deleted.': 'Nachrichten gelöscht. '
+Message: Nachricht
+Last: Letzte
+'Full article': 'Ganzer Artikel'
+First: Erste
+'Feedback Messages': 'Feedback Nachricht'
+'Display _MENU_ records': 'Anzeigen _MENU_ Einträge'
+Deleted: Gelöscht
+'Change selected messages status': 'Status der ausgewählten Nachrichen ändern.'
+Attachment: Anhang
+Approved.: 'Genehmigt. '
+Approve: Genehmigen
+Anonymous: null
+' - filtering from _MAX_ records': 'filtert aus _MAX_ Einträgen '
 'You are about to permanently delete multiple messages.': 'Sie sind im Begriff mehrere Nachrichten permanent zu löschen. '
 'You are about to permanently delete a message.': 'Sie sind im Begriff eine Nachricht permanent zu löschen. '
 User: Benutzer
-None: Kein
+None: Keine
 'Coming from': 'von '
 'Ban/Unban user': 'User sperren / entsperren '
 Ip: IP
@@ -59,7 +59,7 @@ Unrecommend: 'Empfehlung zurücknehmen'
 'Show comment details': 'Zeige Kommentardetails'
 'Select status': 'Status auswählen '
 'Search Type': 'Suche Typ'
-'Reply to comment': 'Auf Kommentar antworten'
+'Reply to comment': 'Kommentar beantworten'
 Recommended: Empfohlen
 Recommend: Empfehlen
 'Quick edit': Schnellbearbeitung
@@ -68,18 +68,18 @@ ID: ID
 'Go to edit article': 'Gehe zur Artikelbearbeitung'
 Forum: Forum
 'For Column': 'Für Spalte'
-Email: Email
+Email: E-Mail
 'Edit acceptance criteria': 'Bearbeite Freigabekriterien'
 E-mail: E-Mail
 'Delete all comments?': 'Alle Kommentare löschen?'
 'Date Created': 'Datum erstellt'
-'Comments updated.': 'Kommtare aktualisiert. '
+'Comments updated.': 'Kommentare aktualisiert.'
 'Comments status change to $1.': 'Kommentarstatus zu $1 ändern. '
 'Comments deleted.': 'Kommentare gelöscht. '
 'Commenter $1 saved.': 'Kommentator $1 gespeichert. '
 'Commenter $1 deleted.': 'Kommentator $1 gelöscht. '
 Commenter: Kommentator
-'Comment updated.': 'Kommentar aktualisiert. '
+'Comment updated.': 'Kommentar aktualisiert.'
 'Comment status change to $1.': 'Kommentarstatus geändert zu $1.'
 'Comment id': 'Kommentar id'
 'Comment deleted.': 'Kommentar gelöscht. '
@@ -98,5 +98,3 @@ Ban: Sperre
 'Add new acceptance criteria': 'Füge neue Freigabekriterien hinzu'
 'Acceptance $1 saved.': 'Freigabe $1 gespeichert. '
 'Acceptance $1 deleted.': 'Freigabe $1 gelöscht. '
-'Unset good comment': 'Guten Kommentar zurücksetzen. '
-'Good comment': 'Guter Kommentar'

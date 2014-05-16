@@ -1,53 +1,53 @@
-default: 
-'before you can configure the section templates.': 
-'You have to assign a theme to the issue': 
-'The section number $1 was already in use.': 
-'Delete all articles written in $1 language from this section': 
-'Delete all articles and all of their translations': 
-'Delete only this section ($1)': 
-'Delete all translations of this section': 
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 
-'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 
-'Section updated': 
-'There are $1 subscriptions which will be affected.': 
-'There are $1 articles in this section.': 
-'Go To Articles': 
-'Add section to all subscriptions.': 
-'Delete section from all subscriptions.': 
-'A total of $1 subscriptions were updated.': 
-'Name<BR><SMALL>(click to see articles)</SMALL>': 
-'Delete section $1': 
-'Adding new section': 
-'You do not have the right to add sections.': 
-'The section $1 has been successfuly added.': 
-'Please check if another section with the same number or URL name does not exist already.': 
-'Delete section': 
-'You do not have the right to delete sections.': 
-'Are you sure you want to delete the section $1?': 
-'Deleting section': 
-'The section $1 has been deleted.': 
-'Configure section': 
-'The section could not be changed.': 
-'Duplicate section': 
-'The destination issue is the same as the source issue.': 
-'Error updating subscriptions.': 
-'Duplicating section': 
-'The section $1 could not be duplicated': 
-'Section $1 has been duplicated to $2. $3 of $4': 
-'You do not have the right to modify sections.': 
-'A total of $1 articles were deleted.': 
-'Duplicate Section:': 
-'Existing Section': 
-'Go to new section': 
-'Go to source section': 
-'New Section': 
-'Please select either $1 or $2.': 
-'Select destination section:': 
-OR: 
-'URL Name': 
-'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 
-Warning: 
-'You must select a section.': 
-'You must specify a name for the section.': 
-'The section could not be added.': 
-'Add new section': 
+default: null
+'before you can configure the section templates.': null
+'You have to assign a theme to the issue': null
+'The section number $1 was already in use.': null
+'Delete all articles written in $1 language from this section': null
+'Delete all articles and all of their translations': null
+'Delete only this section ($1)': null
+'Delete all translations of this section': null
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': null
+'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': null
+'Section updated': null
+'There are $1 subscriptions which will be affected.': null
+'There are $1 articles in this section.': null
+'Go To Articles': null
+'Add section to all subscriptions.': null
+'Delete section from all subscriptions.': null
+'A total of $1 subscriptions were updated.': null
+'Name<BR><SMALL>(click to see articles)</SMALL>': null
+'Delete section $1': null
+'Adding new section': null
+'You do not have the right to add sections.': null
+'The section $1 has been successfuly added.': null
+'Please check if another section with the same number or URL name does not exist already.': null
+'Delete section': null
+'You do not have the right to delete sections.': null
+'Are you sure you want to delete the section $1?': null
+'Deleting section': null
+'The section $1 has been deleted.': null
+'Configure section': null
+'The section could not be changed.': null
+'Duplicate section': null
+'The destination issue is the same as the source issue.': null
+'Error updating subscriptions.': null
+'Duplicating section': null
+'The section $1 could not be duplicated': null
+'Section $1 has been duplicated to $2. $3 of $4': null
+'You do not have the right to modify sections.': null
+'A total of $1 articles were deleted.': null
+'Duplicate Section:': null
+'Existing Section': null
+'Go to new section': null
+'Go to source section': null
+'New Section': null
+'Please select either $1 or $2.': null
+'Select destination section:': null
+OR: null
+'URL Name': null
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': null
+Warning: null
+'You must select a section.': null
+'You must specify a name for the section.': null
+'The section could not be added.': null
+'Add new section': null

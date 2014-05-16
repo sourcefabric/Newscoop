@@ -80,9 +80,9 @@ Created: Angelegt
 'You must select a file to upload.': 'Datei zum Hochladen auswählen.'
 'You must select a XML input file.': 'XML Input Datei auswählen.'
 'You do not have the right to import XML archives.': 'Keine Berechtigung um XML Archive zu importieren.'
-'There was a problem uploading the file.': 'Es gab ein Problem beim Hochladen der Datei.'
+'There was a problem uploading the file.': 'Probleme beim Hochladen der Datei.'
 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Die Datei wurde nur teilweise hochgeladen. Dies passiert wenn die Höchstdauer für das Hochladen der Datei im Vergleich zur Dateigröße zu kurz ist. Die Höchstdauer ist in php.ini festgelegt.'
-'The file exceeds the allowed max file size.': 'Die Datei überschreitet die erlaubte maximale Dateigröße.'
+'The file exceeds the allowed max file size.': 'Die Datei überschreitet die maximal zulässige Dateigröße.'
 Optional: Optional
 'Input File': 'Eingabe Datei'
 'Import XML': 'XML importieren'
@@ -99,7 +99,7 @@ Saved: Gespeichert
 'Save All': 'Alle speichern'
 'Online Server: On': 'Online Server: Ein'
 'Online Server: Off': 'Online Server: Aus'
-Download: Download
+Download: Herunterladen
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Zwei Artikel in derselben Rubrik können nicht gleich benannt werden. Der gewählte Artikelname wird bereits von Artikel $1 verwendet.'
 'Visible to non-subscribers': 'Sichtbar für Nicht-Abonnenten'
 'The article could not be published.': 'Der Artikel konnte nicht veröffentlicht werden.'
@@ -114,7 +114,7 @@ Download: Download
 'Article order changed.': 'Artikelreihenfolge geändert.'
 'Article moved.': 'Artikel verschoben.'
 'Article deleted.': 'Artikel gelöscht.'
-'Article created.': 'Artikel entsperrt.'
+'Article created.': 'Artikel erstellt.'
 '$1 toggled.': '$1 ausgewählt.'
 'Total:': 'Gesamt:'
 'Show Comments': 'Kommentare anzeigen'
@@ -129,7 +129,7 @@ Comments: Kommentare
 'You do not have the right to translate articles.': 'Keine Berechtigung Artikel zu übersetzen.'
 'You do not have the right to publish articles.': 'Keine Berechtigung Artikel zu publizieren.'
 'You do not have the right to move articles.': 'Keine Berechtigung Artikel zu verschieben.'
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
 'Publish?': 'Veröffentlichen?'
 'Publish articles': 'Artikel veröffentlichen'
 'Publish article': 'Artikel veröffentlichen'
@@ -165,8 +165,8 @@ Comments: Kommentare
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Eine Ausgabe muss für die ausgewählte Sprache angelegt werden. Bitte Namen für Ausgabe und URL angeben.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Eine Rubrik muss für die ausgewählte Sprache angelegt werden. Bitte Namen für Ausgabe und URL angeben.'
 'Article Type': Artikeltyp
-'Show article on front page': 'Artikel auf der Startseite anzeigen.'
-'Show article on section page': 'Artikel in der Rubrik anzeigen.'
+'Show article on front page': 'Artikel auf der Startseite anzeigen'
+'Show article on section page': 'Artikel in der Rubrik anzeigen'
 'Translate article': 'Artikel übersetzen.'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Keine Berechtigung, den Artikel zu ändern. Bearbeiten nur von eigenen Artikeln möglich. Bereits eingepflegte Artikel können nur von berechtigten Usern verändert werden.'
 'Duplicate article': 'Artikel duplizieren'
@@ -183,7 +183,4 @@ Comments: Kommentare
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Dieser Artikel kann nicht in der Vorschau angezeigt werden. Bitte prüfen, ob die Artikel Template ausgewählt wurde.'
 'No such article.': 'Artikel nicht vorhanden'
 'No such section.': 'Rubrik nicht vorhanden'
-'This article cannot be previewed. Please make sure the article has an issue assigned.': 'Vom Artikel kann keine Vorschau erstellt werden. Bitte stellen Sie sicher, dass er einer Ausgabe zugeordnet wurde. '
-Reorder: Nachbestellen
-Author: AutorIn
-'Are you sure you want to delete this scheduled action?': 
+Characters: null

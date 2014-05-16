@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'абраная піктаграма маркера'
 'add location to map': 'дадаць месцазнаходжанне на мапу'
 'Video source': 'Крыніца відэа'
@@ -55,7 +55,7 @@ height: вышыня
 'The map has been removed from the article.': 'Гэтая карта была выдаленая з артыкула.'
 'Point no.': 'Пункт №'
 'Point markers': 'Маркеры пункта'
-None: Ничога
+None: Ніводная
 'Map Search Example': 'Прыклад пошуку карты'
 'Map Preview': 'Папярэдні прагляд карты'
 'Image URL': 'URL выяаы'
@@ -64,5 +64,3 @@ text: тэкст
 image: выява
 icon: піктаграма
 'Setting Map Locations': 'Налады карты месцаў падзей'
-city: горад
-cc: 'цэнтр горада'

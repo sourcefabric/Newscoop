@@ -1,10 +1,10 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
 'Hide human-readable field names': 'إخفاء أسماء الحقول القابلة للقراءة من الانسان'
-'Edit and translate human-readable field names': 'تعديل أسماء الحقول القابلة للقراءة من الانسان وترجمتها'
+'Edit and translate human-readable field names': 'تعديل أسماء الحقول القابلة للقراءة من الانسام وترجمتها'
 'The template name may only contain letters and the underscore (_) character.': 'يسمح لإسم القالب فقط ان يحتوي على حروف أجنبية والحرف (_).'
 'Rename article type $1': 'إعادة تسمية نوع المقالة $ 1'
 'Invalid article type $1.': 'نوع المقالة غير الصالح $1.'
@@ -29,7 +29,7 @@ NOTHING: 'لا شيء'
 'Cycle through your articles to verify that the merge configuration is correct.': 'راجع المقالات الخاصة بك للتحقق من أن تكوين الدمج يكون صحيح.'
 'Clicking Merge will merge ($1) article(s).': 'الضغط على  دمج  سيدمج المقالة (-ات) ($1).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'لا يمكن دمج حقل $1 ($2) في حقل $3 ($4).'
---None--: 'لا شيئ'
+'--None--': 'لا شيئ'
 '(Null merge warning.)': 'تحذير الدمج الفارغ'
 '(No merge warning.)': 'لا يوجد تحذير الدمج'
 '(Duplicate warning.)': 'تحذير بالتكرار'
@@ -56,7 +56,7 @@ Merge!: ادمج!
 'Link to public page': 'اربط بصفحة عامة'
 'Go to Step 3': 'إذهب إلى الخطوة 3'
 'Go to Step 2': 'إذهب إلى الخطوة 2'
-'Display Name': 'اسم العرض'
+'Display Name': 'عرض الاسم'
 'Delete article type $1.': 'حذف نوع المقالة $1.'
 'Comments enabled?': 'هل تم تمكين التعليقات؟'
 'Back to Step 2': 'العودة إلى الخطوة 2'
@@ -72,8 +72,8 @@ Merge!: ادمج!
 'No article types.': 'لا توجد أنواع مقالات'
 'Delete article type $1': 'حذف نوع المقالة $1'
 'You do not have the right to add article types.': 'ليس لديك الحق في إضافة أنواع المقالة.'
-'Adding new article type': 'في عملية إضافة نوع جديد من مقالة'
-'The $1 field may only contain letters and underscore (_) character.': 'يسمح للحقل $1 فقط ان يحتوي على الحروف والحرف (_).'
+'Adding new article type': 'في عملية اضافة نوع جديد من المقالة'
+'The $1 field may only contain letters and underscore (_) character.': 'يسمح للحقل $1 فقط أن يحتوي على حروف أجنبية والحرف (_).'
 'The article type $1 already exists.': 'نوع المقالة $1 موجود مسبقا'
 'You do not have the right to delete article types.': 'ليس لديك الحق في حذف أنواع المقالة.'
 'The article type $1 could not be deleted.': 'لم يحذف نوع المقالة $1'

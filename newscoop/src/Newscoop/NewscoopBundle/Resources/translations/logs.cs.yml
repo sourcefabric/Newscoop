@@ -1,4 +1,4 @@
-show: 'ukázat '
+show: zobrazit
 hide: skrýt
 Title: Název
 'Resource Type:': 'Typ zdroje:'
@@ -9,4 +9,3 @@ Diff: Diff
 'Action Type:': 'Typ akce:'
 'No logs.': 'Žádné záznamy.'
 User: Uživatel
-Date/Time: Datum/Čas

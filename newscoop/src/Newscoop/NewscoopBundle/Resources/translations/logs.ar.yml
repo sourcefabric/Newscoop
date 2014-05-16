@@ -1,6 +1,6 @@
-show: إظهار
+show: عرض
 hide: إخفاء
-Title: عنوان
+Title: العنوان
 'Resource Type:': 'نوع المورد:'
 'Resource Type': 'نوع المورد'
 Resource: مورد
@@ -9,4 +9,3 @@ Diff: الفرق
 'Action Type:': 'نوع الإجراء'
 'No logs.': 'لا سجلات'
 User: المستخدم
-Date/Time: التاريخ/الوقت

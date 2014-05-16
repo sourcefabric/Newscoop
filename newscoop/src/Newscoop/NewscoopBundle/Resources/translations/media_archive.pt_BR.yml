@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
 Slideshows: Slideshows
 'You cant update used files.': 'Você não pode atualizar arquivos usados.'
 Source: Fonte
@@ -12,14 +12,14 @@ Feedback: Feedback
 'Approve selected': 'Aprovar selecionados'
 'Image files': 'Arquivos de imagem'
 'Fix all thumbnails': 'Consertar todas as miniaturas'
-'You do not have the right to add files.': 'Você não tem o direito de adicionar arquivos.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Este arquivo deve estar disponível para essa tradução do artigo, ou para todas as traduções?'
+'You do not have the right to add files.': 'Não tem permissões para anexar ficheiros.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Este ficheiro deverá estar apenas dipsonivél para esta tradução, ou para todas as traduções?'
 'Please enter a description for the file: $1.': 'Por favor digite a descrição para o arquivo: $1.'
-'Only this translation': 'Apenas essa tradução'
+'Only this translation': 'Apenas esta tradução'
 'No files for multi editing.': 'Não há arquivos para edição múltipla.'
 'Edit files': 'Editar arquivos'
-'Change file information': 'Modificar dados do arquivo'
-'All translations': 'Todas as traduções'
+'Change file information': 'Alterar as informações do ficheiro'
+'All translations': 'Todas as traduções.'
 'Save All': 'Salvar tudo'
 Files: Arquivos
 'You cant delete used files.': 'Você não pode remover arquivos usados.'
@@ -28,34 +28,35 @@ Files: Arquivos
 'Select some items first.': 'Primeiro selecione algum item.'
 'Open in the browser': 'Abrir no navegador'
 'Media Archive': 'Arquivo de mídia'
-'Last modified': 'Última modificação'
+'Last modified': 'Modificado pela última vez'
 'Items deleted.': 'Itens apagados.'
 'File uploaded.': 'Upload completo'
-'Do you want this file to open in the users browser, or to automatically download?': 'Você quer que este arquivo abra no navegador do usuário, ou que seja baixado automaticamente?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Deseja que o ficheiro seja aberto na janela do navegador ou que deva ser feita automáticamente a transferência do ficheiro?'
 'Delete selected': 'Remover selecionados'
 Created: Criado
 Charset: Charset
 'Change attachment information': 'Modificar dados do anexo'
-'Automatically download': 'Baixar automaticamente'
+'Automatically download': 'Transferir automaticamente.'
 'Attachment updated.': 'Anexo atualizado'
 'Are you sure you want to delete selected items?': 'Você tem certeza que quer remover itens selecionados?'
 'Add new file': 'Adicionar arquivo novo'
-'You do not have the right to add images.': 'Você não tem o direito de adicionar imagens.'
-'Use for all': 'Usar para todos'
-'Specify image url if you want to load it.': 'Se quer carregar a imagem especifique a url.'
+'You do not have the right to add images.': 'Nao tem permissões para adicionar imagens.'
+'Use for all': 'Usar para tudo'
+'Specify image url if you want to load it.': 'Especifique o endereço url da imagem se quer fazer o load dela.'
 Size: Tamanho
 'No images for multi editing.': 'Não há imagens para edição múltipla'
 'Images updated.': 'Imagens atualizadas'
 'Edit images': 'Editar imagens'
 '$1 files uploaded.': 'Upload de $1 arquivo(s) completado'
-'Unable to add new image.': 'Não foi possível adicionar imagem nova'
+'Unable to add new image.': 'Não foi possível adicionar novas imagens'
 'Image updated.': 'Imagem atualizada.'
 'Image $1 deleted.': 'Imagem $1 removida.'
 'Image is in use, it cannot be deleted.': 'Imagem está em uso, não pode ser removida.'
-'You must select an image file to upload.': 'Tem de selecionar um ficheiro de imagem para transferir.'
+'You must select an image file to upload.': 'Selecione uma imagem para transferir'
 'Add new image': 'Adicionar Imagem'
 'Delete image $1': 'Apagar imagem'
 'Used in articles': 'Usado no(s) artigo(s)'
 'View image': 'Ver imagem'
 'Change image information': 'Alterar informações da imagem'
-'Items per page': 'Itens por página'
+'Photographer URL': null
+'Add website url starting with http://': null

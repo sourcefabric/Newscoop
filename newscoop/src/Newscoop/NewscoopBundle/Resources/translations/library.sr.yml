@@ -1,12 +1,12 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: 'Веб код'
 'View article': 'Погледај текст'
 Source: Извор
 'Select type': 'Изабери тип'
-On: На
+On: Укључено
 Off: Искључено
-Title: Назив
+Title: Наслов
 'No video playback capabilities, please download the video below': 'Без могућности репродукције видеа, молим преузмите видео'
 'Article status set to $1 for $2 articles': 'Статус текста постављен на $1за $2 текстова'
 'Article status not set to $1 for $2 articles': 'Статус текстс није постављен на $1за $2 текстова'
@@ -18,8 +18,8 @@ Title: Назив
 '$1 Article(s) not unlocked': '$1 текст(ова) није откључано'
 '$1 Article(s) duplicated': '$1 текст(ова) дуплирано'
 'Download file': 'Преузми фајл'
-'You do not have the right to delete articles.': 'Немате право да бришете текст'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Немате право да бришете статус текста. Предат текст може бити измењен само од стране ауторизованих корисника'
+'You do not have the right to delete articles.': 'Немате право да бришете текстове.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Немате право да мењате статус текста. Предатом тексту статус може променити само овлашћени корисник.'
 'Use Map': 'Користи мапу'
 'Toggle: On Section Page': 'Измени На страни рубрике'
 'Toggle: On Front Page': 'Измени На почетној страни'
@@ -52,22 +52,22 @@ Locations: Локације
 'Loading data': Учитавање
 'Last modified': Измењено
 'Last Modified': Измењено
-Last: Последње
-First: Прво
+Last: Последњи
+First: Први
 'Filter by...': 'Филтрирај по...'
 Filter: Филтер
-Filename: 'Име фајла'
+Filename: 'Назив фајла'
 'Duplicate to another section': 'Дуплирај у другу рубрику'
 'Display _MENU_ records': 'Прикажи _MENU_ записе'
 Creator: Направио
 'Create Date': 'Датум прављења'
-'Article status set to $1': 'Статус текста постављен на $1'
+'Article status set to $1': 'Статус текста је подешен у $1'
 'Are you sure you want to delete selected articles?': 'Да ли сте сигурни да желите да обришете изабране текстове?'
 'All Sections': 'Све рубрике'
 'All Publications': 'АПИ публикације'
 'All Issues': 'Сва издања'
 Added: Додато
 'Access denied.': 'Приступ забрањен'
-'$1 toggled.': '$1 измењен'
+'$1 toggled.': '$1 измењено у спротно.'
 '$1 articles have been removed': '$1 текстова уклоњено'
 ' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'

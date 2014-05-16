@@ -3,7 +3,6 @@ Plugins: הרחבות
 Account: חשבון
 'Items per page': 'פריטים לעמוד'
 'Add new': 'הוסף חדש'
-Campsite: Newscoop
 Home: בית
 Logout: יציאה
 More...: ...עוד
@@ -126,7 +125,7 @@ Publish: פרסם
 Unpublish: 'הסר פרסום'
 Unlock: 'בטל נעילה'
 Uploaded: נטעןהתקבל
-YYYY-MM-DD: 
+YYYY-MM-DD: null
 Submit: נמסר
 Image: תמונה
 Description: הגדרה
@@ -149,6 +148,7 @@ Localizer: 'הגדרות מיקום'
 'Add new publication': 'הוסף מהדורה חדשה'
 'Upload new template': 'טעןהוסף תבנית חדשה'
 'Add new staff member': 'צור איש צוות חדש'
+'Staff member deleted.': null
 'Add new subscriber': 'צור מנוי חדש'
 'Add new user type': 'צור סוג משתמש חדש'
 'Add new article type': 'צור סוג כתבה חדש'
@@ -184,7 +184,7 @@ Days: ימים
 'Add another': 'הוסף עוד'
 Cancel: בטל
 Done: בוצא
-OK: 
+OK: null
 Save: שמור
 Search: חפש
 'Make a selection': 'בצע בחירה'
@@ -253,9 +253,32 @@ Send: שלח
 'Please take a minute to send us an email.': 'בבקשה הקדש רגע לשלוח לנו דואל'
 (optional): '(לא מחוייב)'
 'The URL you entered is invalid: $1': 'כתובת האינטרנט לא תקינה: $11'
-'There was an error logging in to the Campcaster server': 'Airtime היתה שגיאה בחיבור לשרת '
 Reads: קריאות
 'Publish with issue': 'פרסם עם מהדורה'
 'Universal List': 'רשימה אוניברסלית'
 'Invalid security token!': 'מפתח אבטחה שגוי'
 Authors: כתבים
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

@@ -1,40 +1,40 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: на
+'With no attachment': 'Без вложения'
+'With image attachment': 'С приложенным изображением'
+'With document attachment': 'С приложенным документом'
+'Unable to reach Newscoop. Please check your internet connection.': 'Невозможно связаться с Newscoop. Пожалуйста, проверьте ваше интернет-соединение.'
+Starred: 'Отмеченные звездочкой'
+Star: Звездочка
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
+'Reply to message': 'Ответить на собщение'
+Reply: Ответ
+Processed: Обработанное
+'No records found.': 'Не выбрана ни одна из записей'
+'No entries to show': 'Нет записей для просмотра'
+'Messages updated.': 'Сообщения обновлены'
+'Messages status change to $1.': 'Статус сообщения изменен на $1.'
+'Messages deleted.': 'Сообщения удалены.'
+'Message updated.': 'Сообщение обновлено'
+'Message status change to $1.': 'Статус сообщения изменен на $1.'
+'Message deleted.': 'Сообщение удалено.'
+Message: Сообщение
+Last: Последний
+'Full article': 'Полный текст статьи'
+First: Первый
+'Feedback Messages': 'Ответ на сообщения '
+'Display _MENU_ records': 'Отобразить _MENU_ записи'
+Deleted: 'Удалено '
+'Change selected messages status': 'Изменить статус выделенных сообщений'
+Attachment: 'Прикрепленный файл'
+Approved.: Утверждено
+Approve: Утвердить
+Anonymous: null
+' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'You are about to permanently delete multiple messages.': 'Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.'
 'You are about to permanently delete a message.': 'Вы пришли на страницу, чтобы удалить сообщение.'
 User: Пользователь
-None: Пусто
+None: 'Ни один'
 'Coming from': Отправлено
 'Ban/Unban user': 'Запретить/разрешить пользователю комментировать'
 Ip: Ip
@@ -73,7 +73,7 @@ Email: Email
 E-mail: E-mail
 'Delete all comments?': 'Удалить все комментарии?'
 'Date Created': 'Дата создана'
-'Comments updated.': 'Комментарии обновлены'
+'Comments updated.': 'Комментарии обновлены.'
 'Comments status change to $1.': 'Статус комментариев изменяется на $1.'
 'Comments deleted.': 'Комментарии удалены.'
 'Commenter $1 saved.': 'Комментатор $1 сохранен.'

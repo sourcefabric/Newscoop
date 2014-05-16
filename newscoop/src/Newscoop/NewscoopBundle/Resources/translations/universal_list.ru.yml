@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Использовать карту'
+Locations: Местонахождения
+Last: Последний
+First: Первый
+'Publish Schedule': 'Расписание публикаций'
+'You do not have the right to delete articles.': 'Вы не имеете прав доступа для удаления статьи.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Вы не имеете прав доступа для изменения состояние этой статьи. Будучи отправленной статья может быть изменена только уполномоченным пользователем.'
+'Toggle: On Section Page': 'Маркер На странице рубрики'
+'Toggle: On Front Page': 'Маркер На главной странице'
+'Toggle: Comments': 'Маркер Комментарии'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 минут назад.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Эта статья была заблокирована $1 ($2) $3 часов и $4 минут назад.'
+'Status: Submit': 'Статус: Отправить'
+'Status: Set New': 'Статус: Новая'
+'Status: Publish': 'Статус: Утвердить'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
+'Show / hide columns': 'Показать / скрыть колонки'
+'Select some article first.': 'Выберите сначала несколько статей.'
+'Select action': 'Выбрать действие'
+'Save order': 'Сохранить порядок следования.'
+'Reset all filters': 'Переустановить все фильтры'
+'Published before': 'Опубликованы до'
+'Published after': 'Опубликованы после'
+'Publish date': 'Дата публикации'
+'Publish Date': 'Дата опубликования'
+'Order updated.': 'Порядок обновлен.'
+'No sections found': 'Не выбрана ни одна из рубрик'
+'No records found.': 'Не выбрана ни одна из записей'
+'No publications found': 'Не выбрано ни одно из изданий'
+'No issues found': 'Не выбран ни один из выпусков'
+'No entries to show': 'Нет записей для просмотра'
+'Loading data': 'Загрузка данных'
+'Last Modified': 'Последние изменения'
+'Filter by...': 'Фильтр по...'
+Filter: Фильтр
+'Duplicate to another section': 'Дублировать в другую рубрику'
+'Display _MENU_ records': 'Отобразить _MENU_ записи'
+Creator: Создатель
+'Create Date': 'Дата создания'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Статус статьи установлен в $1'
+'Are you sure you want to delete selected articles?': 'Вы уверены, что хотите удалить выбранные файлы?'
+'All Sections': 'Все рубрики'
+'All Publications': 'Все издания'
+'All Issues': 'Все выпуски'
+'Access denied.': 'Отказано в доступе.'
+'$1 toggled.': '$1 изменено.'
+'$1 articles have been removed': '$1 статей были удалены'
+' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'

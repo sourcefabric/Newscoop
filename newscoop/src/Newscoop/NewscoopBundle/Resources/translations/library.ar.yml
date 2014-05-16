@@ -1,5 +1,5 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: 'كود الويب'
 'View article': 'عرض المقالة'
 Source: مصدر
@@ -18,8 +18,8 @@ Title: العنوان
 '$1 Article(s) not unlocked': '$1 مقالات مقفلة'
 '$1 Article(s) duplicated': 'تم تكرار $1 مقالات'
 'Download file': 'تحميل الملف'
-'You do not have the right to delete articles.': 'ليس لديك الحق في حذف مقالات.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'ليس لديك الحق في تغيير حالة المقالة هذه. عند التسليم، يمكن فقط المستخدمون المفوضون أن يغيروا المقالة.'
+'You do not have the right to delete articles.': 'ليس لديك الحق في حذف المقالات.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'ليس لديك الحق في تغيير حالة المقالة. عند التسليم، لا يمكن تغييرها إلا من مستخدمين مفوصين .'
 'Use Map': 'استخدام الخريطة'
 'Toggle: On Section Page': 'تبديل: في صفحة الأقسام '
 'Toggle: On Front Page': 'تبديل: في الصفحة الأمامية'
@@ -29,7 +29,7 @@ Title: العنوان
 'Status: Submit': 'الحالة: تسليم'
 'Status: Set New': 'الحالة: تعيين جديدا'
 'Status: Publish': 'الحالة: نشر'
-Size: 'حجم '
+Size: حجم
 'Showing _START_ to _END_ of _TOTAL_ entries': 'عرض _START_ ل_END_ من _TOTAL_ إدخالات'
 'Show / hide columns': 'إظهار/إخفاء أعمدة'
 'Select some article first.': 'تحديد مقالة ما أولا .'
@@ -39,7 +39,7 @@ Size: 'حجم '
 'Published before': 'تم النشر قبل'
 'Published after': 'تم النشر بعد'
 'Publish date': 'تاريخ الصدور'
-'Publish Schedule': 'جدول الصدور'
+'Publish Schedule': 'نشر الجدولة'
 'Publish Date': 'تاريخ الصدور'
 'Order updated.': 'تم تحديث الترتيب.'
 'Open in browser': 'فتح في المتصفح'
@@ -50,7 +50,7 @@ Size: 'حجم '
 'No entries to show': 'لا إدخالات من أجل الإظهار'
 Locations: المواقع
 'Loading data': 'في عملية تحميل البيانات'
-'Last modified': 'آخر التعديلات'
+'Last modified': 'آخر تعديل'
 'Last Modified': 'آخر التعديلات'
 Last: الأخير
 First: الأول
@@ -61,13 +61,13 @@ Filename: 'اسم الملف'
 'Display _MENU_ records': 'عرض سجلات من _MENU_'
 Creator: المؤلف
 'Create Date': 'إنشاء تاريخا'
-'Article status set to $1': 'تم تعيين حالة المقالة الى $1'
+'Article status set to $1': 'تم تعيين حالة المقالة الى $1.'
 'Are you sure you want to delete selected articles?': 'هل أنت متأكد أنك تريد حذف المقالات المختارة؟'
 'All Sections': 'جميع الأقسام'
 'All Publications': 'جميع المنشورات'
 'All Issues': 'كل الإصدارات'
 Added: 'تم الإضافة'
-'Access denied.': 'الدخول مرفوض'
+'Access denied.': 'الدخول مورقوض.'
 '$1 toggled.': 'تم تبديل $1.'
 '$1 articles have been removed': 'تم إزالة $1 مقالات'
 ' - filtering from _MAX_ records': '- تصفية من السجلات _MAX_'

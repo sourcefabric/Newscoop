@@ -1,5 +1,5 @@
 Plugins: 'وحدات قابسة'
-'Manage Plugins': 'إدارة الوحدات القابسة'
+'Manage Plugins': 'إدارة وحدات قابسة'
 Account: حساب
 'Items per page': 'عدد العناصر في كل صفحة'
 'Add new': 'إضافة جديدا'
@@ -9,7 +9,7 @@ More...: المزيد...
 Content: المحتوى
 Languages: اللغات
 Countries: الدول
-Themes: المباحث
+Themes: مواضيع
 Topics: المواضيع
 Configure: إعداد
 'Image Archive': 'أرشيف الصور'
@@ -148,6 +148,7 @@ Localizer: 'محدد الموقع'
 'Add new publication': 'إضافة منشورة جديدة'
 'Upload new template': 'رفع قالبا جديدا'
 'Add new staff member': 'إضافة عضو طاقم العمل الجديد'
+'Staff member deleted.': null
 'Add new subscriber': 'إضافة مشتركا جديدا'
 'Add new user type': 'إضافة نوع مستخدم جديد'
 'Add new article type': 'إضافة نوع جديد من المقالة'
@@ -191,9 +192,9 @@ Search: بحث
 'You must input a valid date.': 'يجب عليك إدخال تاريخا صالحا.'
 'Add new field': 'إضافة حقلا جديدا'
 'Article automatic publishing schedule': 'جدول النشر الأوتوماتي للمقالات'
-'Are you sure you want to delete this scheduled action?': 'هل أنت متأكد أن تريد أن تحذف هذا الإجراء المجدول؟'
+'Are you sure you want to delete this scheduled action?': 'هل أنت متأكد أنك تريد أن تحذف هذا الإجراء المجدول؟'
 Unlink: 'فصل الرابط'
-'Are you sure you want to delete the image $1?': 'هل أنت متأكد أن تريد أن تحذف الصورة $1؟'
+'Are you sure you want to delete the image $1?': 'هل انت متأكد أنك تريد حذف الصورة /1$/ ؟'
 'No such issue.': 'لا يوجد هذا الإصدار'
 'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أن تريد أن تحذف الإشتراك للمنشور $1؟'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'لا يمكن حفظ التغييرات للإصدار $1. يرجى التأكد ألّم يستخدم اسم العنوان $2 من قبل في منشور $3.'
@@ -253,16 +254,31 @@ Send: الإرسال
 (optional): (اختياري)
 'The URL you entered is invalid: $1': 'العنوان الإلكروني الذي أدخلته غير صالح: $1'
 Reads: يقرأ
-'Publish with issue': 'نشر مع الإصدار'
+'Publish with issue': 'النشر بالإصدار'
 'Universal List': 'قائمة عالمية'
 'Invalid security token!': 'الرمز الأمني غير صالح!'
-Authors: المؤلفات
-Cuenta: حساب
-'Items por p√°gina': 'عدد العناصر في كل صفحة'
-'No puede crear el archivo $1': 'غير قادر أن ينشئ أرشيف $1'
-'User name': 'اسم المستخدم'
-'Schedule a new publish action': 'جدولة اجراءا جديد للنشر'
-'User Types': 'أنواع المستخدم'
-'User may add/change user accounts and passwords': 'يسمح للمستخدم أن يضيف وتعدل الحسابات وكلمات السر'
-'User may delete user accounts': 'يسمح للمستخدم أن تذيل حسابات المستخدمين'
-'Add new user account': 'إضافة حساب مستخدم جديد'
+Authors: المؤلفون
+Title: العنوان
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: في
+published: null
+unpublished: null

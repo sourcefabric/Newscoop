@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'Не является цветом'
 'No such field': 'Нет такого поля'
 'Color saved': 'Цвет сохранен'
@@ -61,3 +61,44 @@ First: Первый
 'Multi-line Text with WYSIWYG': 'Тело статьи'
 'URL $1 is invalid or is not an image.': 'URL $1 неверен или не является изображением.'
 'URL $1 is not an image.': 'URL $1 не является изображением.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: Издание
+                actions: Операции
+                actions_buttons:
+                    remove: Удалить
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: Сохранить
+        PublicResources:
+            label:
+                routes: null
+                save: Сохранить

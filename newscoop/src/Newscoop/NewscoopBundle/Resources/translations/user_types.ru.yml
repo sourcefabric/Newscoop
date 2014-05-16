@@ -1,7 +1,7 @@
 get: get
 Soundcloud: SoundCloud
-Templates: 'Шаблоны '
-'Feedback Messages': 'Сообщения обратной связи'
+Templates: Шаблоны
+'Feedback Messages': 'Ответ на сообщения '
 'Article Playlists': 'Плейлисты статьи'
 'Check all': 'Проверить все'
 view: просмотр
@@ -53,7 +53,7 @@ add: добавить
 'User type deleted.': 'Тип пользователя удален.'
 'User type added.': 'Тип пользователя добавлен.'
 'User Groups': 'Группы пользователей'
-Themes: Темы
+Themes: 'Темы (Шаблоны)'
 'That type name already exists, please choose a different name.': 'Это название типа уже существует, пожалуйста, выберите другое название.'
 System: Система
 Structure: Структура
@@ -79,14 +79,3 @@ Authoring: Авторинг
 Allow: Разрешить
 'User types': 'Типы пользователей'
 'No user types.': 'Нет типов пользователей.'
-'You do not have the right to add user types.': 'Вы не имеете права добавлять типы пользователей.:ru'
-'Adding new user type': 'Добавление нового типа пользователей:ru'
-'The user type $1 has been added.': 'Тип пользователей $1 был добавлен.:ru'
-'The user type could not be added.': 'Не удалось добавить тип пользователей.:ru'
-'Please check if an user type with the same name does not already exist.': 'Пожалуйста проверьте, что тип пользователей с таким названием еще не существует.:ru'
-'Deleting user type': 'Удаление типа пользователей:ru'
-'The user type has been deleted.': 'Тип пользователей был удален.:ru'
-'The user type could not be deleted.': 'Не удалось удалить тип пользователей.:ru'
-'Updating user type permissions': 'Обновление прав типов пользователей:ru'
-'User type permissions have been successfuly updated.': 'Права типов пользователей были успешно обновлены.:ru'
-'User type permissions could not be updated.': 'Не удалось обновить права типов пользователей.:ru'

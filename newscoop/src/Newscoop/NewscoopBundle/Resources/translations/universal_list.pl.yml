@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Użyj mapy'
+Locations: Lokalizacja
+Last: Ostatni
+First: Pierwszy
+'Publish Schedule': 'Kalendarz wydawniczy'
+'You do not have the right to delete articles.': 'Nie masz praw aby usuwać artykuły.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nie masz praw aby zmieniac status artykułu. Po wysłaniu artykuł może być zmieniony tylko przez autoryzowane osoby.'
+'Toggle: On Section Page': 'Pokaż: Na stronie sekcji'
+'Toggle: On Front Page': 'Pokaż: Na stronie głównej'
+'Toggle: Comments': 'Pokaż: Komentarze'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
+'Status: Submit': 'Status: Wysłane'
+'Status: Set New': 'Status: Ustaw Nowy'
+'Status: Publish': 'Status: Opublikowany'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Pokaz _START_ do _END_ ze _TOTAL_ wpisow'
+'Show / hide columns': 'Pokaż / schowaj kolumny'
+'Select some article first.': 'Wybierz jakiś artykuł wpierw.'
+'Select action': 'Wybierz akcję'
+'Save order': 'Zapisz kolejność'
+'Reset all filters': 'Resetuj wszystkie filtry'
+'Published before': 'Opublikowany przed'
+'Published after': 'Opublikowany po'
+'Publish date': 'Data publikacji'
+'Publish Date': 'Data publiacji'
+'Order updated.': 'Kolejność zaktualizowana.'
+'No sections found': 'Nie znaleziono sekcji'
+'No records found.': 'Nie znaleziono rekordów.'
+'No publications found': 'Nie znaleziono publikacji'
+'No issues found': 'Nie znaleziono wydań'
+'No entries to show': 'Brak wpisów do pokazania'
+'Loading data': 'Ładowanie danych '
+'Last Modified': 'Ostatnia modyfikacja'
+'Filter by...': Filtruj...
+Filter: Filtrowanie
+'Duplicate to another section': 'Duplikuj do innej sekcji'
+'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
+Creator: Twórca
+'Create Date': 'Data utworzenia'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Status artykułu zmieniony na $1'
+'Are you sure you want to delete selected articles?': 'Na pewno chcesz usunąć wybrane artykuły?'
+'All Sections': 'Wszystkie sekcje'
+'All Publications': 'Wszystkie publikacje'
+'All Issues': 'Wszystkie wydania'
+'Access denied.': 'Dostęp zabroniony.'
+'$1 toggled.': '$1 toggled.'
+'$1 articles have been removed': 'Usunięto artykułów: $1'
+' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
