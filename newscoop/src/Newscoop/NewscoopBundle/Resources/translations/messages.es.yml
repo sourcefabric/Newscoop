@@ -1,5 +1,5 @@
 Plugins: Plugins
-'Manage Plugins': 'Administrar plugins'
+'Manage Plugins': 'Administrar Plugins'
 Account: Cuenta
 'Items per page': 'Items por página'
 'Add new': 'Agregar nuevo'
@@ -9,7 +9,7 @@ More...: Más...
 Content: Contenido
 Languages: Idiomas
 Countries: Países
-Themes: Plantillas
+Themes: Temas
 Topics: Tópicos
 Configure: Configurar
 'Image Archive': 'Archivo de imágenes'
@@ -74,7 +74,7 @@ Action: Acción
 'Schedule a new action': 'Programar nueva acción'
 'Scheduling a new publish action': 'Programar una nueva acción de publicación'
 'Delete scheduled publish action': 'Eliminar acción de publicación programada'
-Date/Time: Fecha/hora
+Date/Time: Fecha/Tiempo
 'You must select an action.': 'Debe seleccionar una acción.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'No tiene privilegios para programar ediciones o artículos para publicación automática.'
 'Front page': Portada
@@ -148,6 +148,7 @@ Localizer: Traductor
 'Add new publication': 'Agregar nueva publicación'
 'Upload new template': 'Subir nuevo template'
 'Add new staff member': 'Agregar nuevo miembro del equipo'
+'Staff member deleted.': null
 'Add new subscriber': 'Agregar nuevo suscriptor'
 'Add new user type': 'Agregar nuevo tipo de usuario'
 'Add new article type': 'Agregar nuevo tipo de artículo'
@@ -257,30 +258,27 @@ Reads: Impresiones
 'Universal List': 'Lista universal'
 'Invalid security token!': 'Pase de seguridad inválido'
 Authors: Autores
-Blogs: Blogs
-'Administer Blogs': 'Administrar blogs'
-'Moderate Blogs': 'Moderar blogs'
-'Blog Preferences': 'Preferencias de blog'
-Interview: Entrevista
-'Administrate Interviews': 'Administrar entrevistas'
-'Moderate Interviews': 'Moderar entrevistas'
-'Interview Guest': 'Entrevistar invitados'
-Polls: 'Encuesta '
-'Author:': 'Autor:'
-Cuenta: Cuenta
-'Items por página': 'Items por página'
-'No puede crear el archivo $1': 'No puede crear el archivo $1'
-'User name': 'Nombre de usuario'
-'User Types': 'Tipo Usuario'
-'Subscription Default Time': 'Tiempo Subscripción Normal'
-'No such language.': 'No existe idioma'
-'No such infotype.': 'No existe infotype'
-'No such keyword.': 'No existe palabra clave'
-'No such country.': 'No existe país'
-'User may add/change user accounts and passwords': 'Usuario puede agregar/cambiar cuentas y claves'
-'User may delete user accounts': 'Usuario puede borrar cuentas'
-'Add new user account': 'Agregar nueva cuenta de usuario'
-'There are $1 issue(s) left.': 'Hay $1 edicion(es) pendiente(s)'
-'There are $1 keyword(s) left.': 'Hay $1 palabras clave(s) pendiente(s)'
-'Name<BR><SMALL>(click to edit)</SMALL>': Nombre
-'New field': 'Nuevo Campo'
+Title: Tìtulo
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: en
+published: null
+unpublished: null

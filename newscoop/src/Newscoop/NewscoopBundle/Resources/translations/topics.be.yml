@@ -1,18 +1,18 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
-'Delete anyway': 
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
+'Delete anyway': null
 'Reset order': 'Пераўсталёўка парадку'
 'Order changes will be lost. Are you sure you want to continue?': 'Змены парадку былі згубленыя. Вы ўпэўненыя, што жадаеце работаць далей?'
 'Topics order saved.': 'Парадак тым захаваны.'
 'Show languages': 'Паказаць мовы'
-'Save order': 'Захаваць парадак'
+'Save order': 'Захаваць парадак выканання.'
 'Click to edit': 'Клікніце для рэдагавання'
 'Add root topic': 'Дадаць асноўную тэму'
 'Topic was deleted.': 'Тэма выдаленая.'
-'The topic name is already in use by another topic.': 'Назва гэтай тэмы ўжо выкарыстоўваецца ў iншай тэме.'
-'You must enter a name for the topic.': 'Вы павiнны ўвесьцi назву тэмы.'
+'The topic name is already in use by another topic.': 'Гэтае імя ўжо выкарыстоўваецца іншай тэмай.'
+'You must enter a name for the topic.': 'Вы павінны ўвесці назву тэмы.'
 'You must choose a language for the topic.': 'Вы павiнны выбраць мову для тэмы.'
 'This topic has subtopics, therefore it cannot be deleted.': 'Гэта тэма мае падтэму, таму яе нельга выдаліць.'
-'Add translation:': 'Дадаць пераклад:'
+'Add translation:': 'Дадаць пераклад'
 'Add subtopic:': 'Дадаць падтэму:'
 Top: Верх
 'You do not have the right to add topics.': 'Вы ня маеце права дадаваць новыя тэмы.'

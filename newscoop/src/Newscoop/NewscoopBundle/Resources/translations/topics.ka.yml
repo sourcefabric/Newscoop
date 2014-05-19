@@ -8,11 +8,11 @@
 'Click to edit': რედაქტირება
 'Add root topic': 'ფუძე თემის დამატება'
 'Topic was deleted.': 'თემა წაიშალა.'
-'The topic name is already in use by another topic.': 'თემის სახელი უკვე გამოყენებულია სხვა თემაში.'
-'You must enter a name for the topic.': 'შეიყვანეთ თემის სახელი'
+'The topic name is already in use by another topic.': 'თემის სათაური უკვე გამოყენებულია სხვა თემაზე.'
+'You must enter a name for the topic.': 'თქვენ უნდა აკრიფოთ თემის სახელი.'
 'You must choose a language for the topic.': 'აირჩიეთ თმის ენა'
 'This topic has subtopics, therefore it cannot be deleted.': 'ამ თემას აქვს ქვეთემები, შესაბამისად მისი წაშლა შეუძლებელია.'
-'Add translation:': 'თარგმნის დამატება:'
+'Add translation:': 'თარგმანის დამატება:'
 'Add subtopic:': 'ქვეთემის დამატება'
 Top: ზედა
 'You do not have the right to add topics.': 'თქვენ არ გაქვთ თემების დამატების უფლება.'

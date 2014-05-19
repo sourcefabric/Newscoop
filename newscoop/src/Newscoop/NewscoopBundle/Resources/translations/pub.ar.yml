@@ -20,7 +20,7 @@
 'Publication updated': 'تم تحديث المنشور'
 'Subscriber comments moderated?': 'هل تعليقات المشترك مشرف عليها؟'
 'Public comments moderated?': 'هل تعليقات عمومية مشرف عليها؟'
-'Comments enabled?': 'تم تمكين التعليقات؟'
+'Comments enabled?': 'هل تم تمكين التعليقات؟'
 'Comments enabled': 'تم تمكين التعليقات'
 'Article comments default to enabled?': 'تعليقات المقالة معينة افتراضيا الى ممكنة؟'
 'trial subscription': 'اشتراك تجريبي'
@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'لم يحذف الاسم المستعار $1.'
 '$1 is the default publication alias, it can not be deleted.': '$1 هو الاسم المستعار الافتراضي للنشر، لا يمكن حذفه.'
 'You do not have the right to add publications.': 'ليس لديك الحق في إضاقة منشورات.'
-'There are $1 issue(s) left.': 'تبقى $1 إصدارات.'
+'There are $1 issue(s) left.': 'تبقى $1 اصدارات'
 'Time Unit': 'وحدة الوقت'
 Currency: العملة
 'Edit languages': 'تعديل اللغات'

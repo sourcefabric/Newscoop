@@ -1,11 +1,11 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: Webcode
 'View article': 'Ukázat článek'
 Source: Zdroj
 'Select type': 'Vyber typ'
-On: Zapnout
-Off: Vypnout
+On: Vypnout
+Off: Zapnout
 Title: Název
 'No video playback capabilities, please download the video below': 'Žádné možnosti přehrání videa, prosím stáhněte si video níže'
 'Article status set to $1 for $2 articles': 'Stav článku je nastaven $1 na $2 článků'
@@ -18,18 +18,18 @@ Title: Název
 '$1 Article(s) not unlocked': '$1 článků nebylo zpřístupněno'
 '$1 Article(s) duplicated': '$1 článků bylo duplikováno'
 'Download file': 'Stáhnout soubor'
-'You do not have the right to delete articles.': 'Nemáte oprávnění odstraňovat články.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nemáte oprávnění měnit status článku. Jednou již odeslaný článek může být změněn pouze autorizovanými uživateli.'
+'You do not have the right to delete articles.': 'Nemáte právo mazat články'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nemáte oprávnění měnit status článku. Jakmile je článek podán, mohou jej měnit pouze autorizovaní uživatelé.'
 'Use Map': 'Použít mapu'
 'Toggle: On Section Page': 'Přejít do: Rubriky'
 'Toggle: On Front Page': 'Přejít na: Titulní stránku'
 'Toggle: Comments': 'Přejít na: Komentáře'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Článek uzamkl $1 ($2) před $3 minutami.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Článek uzamkl $1 ($2) před $3 hodinami a $4 minutami.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Tento článek uzamkl $1 ($2) před $3 minutami.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Tento článek uzamkl $1 ($2) před $3 hodinami a $4 minutami.'
 'Status: Submit': 'Status: Odevzdat'
 'Status: Set New': 'Status: Začít nový'
 'Status: Publish': 'Status: Publikovat'
-Size: Velikost
+Size: 'Velikost '
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
 'Show / hide columns': 'Ukázat / skrýt sloupce'
 'Select some article first.': 'Nejdříve vybrat článek.'
@@ -38,8 +38,8 @@ Size: Velikost
 'Reset all filters': 'Resetovat všechny filtry'
 'Published before': 'Publikováno před'
 'Published after': 'Publikováno po'
-'Publish date': 'Datum publikace'
-'Publish Schedule': 'Publikovat Rozpis'
+'Publish date': 'Datum publikování'
+'Publish Schedule': 'Publikační Plán'
 'Publish Date': 'Publikovat Datum'
 'Order updated.': 'Příkaz aktualizován.'
 'Open in browser': 'Otevřít v prohlížeči'
@@ -61,16 +61,13 @@ Filename: 'Název souboru'
 'Display _MENU_ records': 'Zobrazit _MENU_ záznamy'
 Creator: Vytvořil
 'Create Date': 'Datum Vytvoření'
-'Article status set to $1': 'Status článku je nastaven na $1'
+'Article status set to $1': 'Status článku nastaven na $1'
 'Are you sure you want to delete selected articles?': 'Opravdu chcete vymazat vybrané články?'
 'All Sections': 'Všechny Rubriky'
 'All Publications': 'Všechny Publikace'
 'All Issues': 'Všechna Vydání'
 Added: Přidáno
-'Access denied.': 'Vstup odepřen.'
-'$1 toggled.': '$1 přepnut.'
+'Access denied.': 'Přístup byl odepřen.'
+'$1 toggled.': '$1 vybráno.'
 '$1 articles have been removed': '$1 článků bylo odstraněno'
 ' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
-'Articles updated.': 'Články nahrány.'
-'Article(s) unlocked': 'Článek(y) odemčen(y)'
-'Article(s) duplicated': 'Článek(y) duplikován'

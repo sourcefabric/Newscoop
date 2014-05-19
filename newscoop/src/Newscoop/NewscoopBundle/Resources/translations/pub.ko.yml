@@ -1,28 +1,28 @@
-'Make sure to enter the Moderator Address below': 
-'click to see issues': 
-'Moderator Address': 
-'From Address': 
-'Use CAPTCHA to prevent spam?': 
-'Public allowed to comment?': 
-'Enable spam blocking?': 
-'The subscription settings for $1 could not be added.': 
-'The publication name you specified conflicts with publication $1.': 
-'The publication alias you specified conflicts with publication $1.': 
-'Subscription defaults': 
-'Subscription Settings by Country': 
-'Set subscription settings for a country': 
-'Set subscription settings by country': 
-'Default time periods:': 
-'Country subscription settings updated.': 
-'Country subscription settings deleted.': 
-'Change country subscription settings': 
-'Are you sure you want to delete the subscription settings for $1?': 
-'Publication updated': 
-'Subscriber comments moderated?': 
-'Public comments moderated?': 
-'Comments enabled?': 
-'Comments enabled': 
-'Article comments default to enabled?': 
+'Make sure to enter the Moderator Address below': null
+'click to see issues': null
+'Moderator Address': null
+'From Address': null
+'Use CAPTCHA to prevent spam?': null
+'Public allowed to comment?': null
+'Enable spam blocking?': null
+'The subscription settings for $1 could not be added.': null
+'The publication name you specified conflicts with publication $1.': null
+'The publication alias you specified conflicts with publication $1.': null
+'Subscription defaults': null
+'Subscription Settings by Country': null
+'Set subscription settings for a country': null
+'Set subscription settings by country': null
+'Default time periods:': null
+'Country subscription settings updated.': null
+'Country subscription settings deleted.': null
+'Change country subscription settings': null
+'Are you sure you want to delete the subscription settings for $1?': null
+'Publication updated': null
+'Subscriber comments moderated?': null
+'Public comments moderated?': null
+'Comments enabled?': null
+'Comments enabled': null
+'Article comments default to enabled?': null
 'trial subscription': '시험 구독'
 'paid subscription': '정기 구독'
 'time units': '시간 단위'
@@ -37,7 +37,7 @@
 'No publications.': 출판안됨
 'Default Site Alias': 기본사이트아리아스
 'URL Type': URL타입
-'Country<BR><SMALL>(click to edit)</SMALL>': 
+'Country<BR><SMALL>(click to edit)</SMALL>': null
 'Delete alias $1': '아리아스 $1 삭제'
 'Configure publication': '출판 구성'
 'You do not have the right to edit publication information.': '출판정보를 수정할 권한이 없습니다.'
@@ -67,7 +67,11 @@
 'The alias $1 could not be deleted.': '아리아스 $1 을 삭제할 수 없습니다. '
 '$1 is the default publication alias, it can not be deleted.': '$1 이 기본 출판 아리아스입니다. 삭제할 수 없습니다. '
 'You do not have the right to add publications.': '출판사이트를 추가할 권한이 없습니다.'
-'There are $1 issue(s) left.': '$1 이슈가 남아있습니다. '
+'There are $1 issue(s) left.': '$ 1 이슈가 남아 있슴.'
 'Time Unit': '시간 단위'
 Currency: 통화
 'Edit languages': '언어 편집'
+'Search engine optimization': null
+'Article title': null
+'Article keywords': null
+'Article topics': null

@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'Псевдонім $1 не може бути змінен.'
 '$1 is the default publication alias, it can not be deleted.': '$1 - це псевдонім публікації за замовчуванням, він не може буде видален.'
 'You do not have the right to add publications.': 'Ви не маєте прав додавати видання'
-'There are $1 issue(s) left.': 'Залишилось випусків $1'
+'There are $1 issue(s) left.': ' $1 випуск(ів) залишилось.'
 'Time Unit': 'Одиниця часу'
 Currency: Валюта
 'Edit languages': 'Редагувати мови'

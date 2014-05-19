@@ -58,7 +58,7 @@ Files: Soubory
 'Keywords saved.': 'Klíčová slova jsou uložena.'
 'Comment settings': 'Okomentovant nastavení'
 Authors: Autoři
-'Attach Topic To Article': 'K článku připojit téma'
+'Attach Topic To Article': 'Připojit Téma k Článku'
 'Article saved.': 'Článek uložen'
 'Article is locked': 'Článek je uzamčen'
 'Actions updated.': 'Akce jsou aktualizovány'
@@ -80,8 +80,8 @@ Created: Vytvořeno
 'You must select a file to upload.': 'Zvolte soubor k nahrání.'
 'You must select a XML input file.': 'Zvolte XML vstupní soubor.'
 'You do not have the right to import XML archives.': 'Nemáte oprávnění k importování XML archivy.'
-'There was a problem uploading the file.': 'Vyskytl se problé při uploadování souboru.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Nahrávaný soubor není celý. K tomuto dochází, když je překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v php.ini.'
+'There was a problem uploading the file.': 'Vyskytl se problém při nahrávání souboru.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v php.ini.'
 'The file exceeds the allowed max file size.': 'Soubor překračuje maximální povolenou velikost.'
 Optional: Volitelné
 'Input File': 'Vstupní Soubor'
@@ -113,7 +113,7 @@ Download: Stáhnout
 'Article translation created.': 'Vytvořen překlad článku.'
 'Article order changed.': 'Pořadí článku změněno.'
 'Article moved.': 'Článek přesunut.'
-'Article deleted.': 'Článek odstraněn.'
+'Article deleted.': 'Článek smazán.'
 'Article created.': 'Článek vytvořen.'
 '$1 toggled.': '$1 vybráno.'
 'Total:': 'Celkem:'
@@ -165,8 +165,8 @@ Comments: Komentáře
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Musí být vytvořeno vydání pro zvolený jazyk. Prosím zadejte název a URL název vydání.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Musí být vytvořena rubrika pro zvolený jazyk. Prosím zadejte název a URL název rubriky.'
 'Article Type': 'Typ Článku'
-'Show article on front page': 'Zobrazit článek na titulní straně'
-'Show article on section page': 'Zobrazit článek na stránce rubriky'
+'Show article on front page': 'Zobrazit článek na hlavní stránce'
+'Show article on section page': 'Zobrazit článek na stránce rubrik'
 'Translate article': 'Překlad článku'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nemáte právo změnit tento článek. Můžete pouze editova své vlastní články. Podané články mohou být změněny pouze autorizovanými uživateli.'
 'Duplicate article': 'Duplikovat článek'
@@ -183,4 +183,4 @@ Comments: Komentáře
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Článek nelze prohlédnout. Prosím ujistěte se, že má zvolenou šablonu článku.'
 'No such article.': 'Článek neexistuje'
 'No such section.': 'Rubrika neexistuje.'
-'Are you sure you want to delete this scheduled action?': 
+Characters: null

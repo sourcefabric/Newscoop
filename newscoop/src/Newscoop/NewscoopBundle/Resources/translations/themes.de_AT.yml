@@ -1,5 +1,5 @@
 'Duplicate assignment': 'Doppelte Zuordnung'
-Templates: Designvorlagen
+Templates: Templates
 'Import theme': 'Designvorlage importieren'
 'Import succeded!': 'Import erfolgreich. '
 'Import failed!': 'Import fehlgeschlagen. '
@@ -20,7 +20,7 @@ updated: Aktualisiert
 moved: verschoben
 installed: installiert
 deleted: gelöscht
-'You must select at least one template to perform an action.': 'Sie müssen mindestens ein Template auswählen um diese Aktion auszuführen.'
+'You must select at least one template to perform an action.': 'Sie müssen mindestens eine Template auswählen um eine Aktion auszuführen.'
 Upload: Upload
 'Unassign theme': 'Designvorlage entkoppeln'
 'Unassign successful': 'Entkopplung erfolgreich'
@@ -40,9 +40,9 @@ Unassign: Entkoppeln
 'Section page template': 'Rubrikenseiten Template'
 Saving..: Speichere...
 'Saving settings failed.': 'Speichern der Einstellungen fehlgeschlagen.'
-'Save All': 'Alle Speichern'
+'Save All': 'Alle speichern'
 'Required Newscoop version': 'Erforderliche Newscoop Version'
-Replace: Ersetze
+Replace: Ersetzen
 'New template $1 created.': 'Neues Template $1 angelegt. '
 'New name': 'Neuer Name'
 'Name cant be empty': 'Der Name darf nicht leer sein'
@@ -58,11 +58,11 @@ Replace: Ersetze
 'Failed unassigning theme': 'Entkoppeln der Designvorlage fehlgeschlagen. '
 Export: Exportiere
 'Error page template': 'Fehlerseiten Template'
-'Edit $1': 'Bearbeite $1'
+'Edit $1': Bearbeiten
 'Done uploading': 'Upload fertig'
 'Do you want to override $1?': 'Wollen Sie $1 überschreiben?'
 'Directory is empty': 'Verzeichnis ist leer. '
-'Directory $1 created.': 'Verzeichnis $1 erstellt. '
+'Directory $1 created.': 'Verzeichnis $1 wurde erstellt.'
 Design: Design
 'Delete theme': 'Designvorlage löschen'
 'Current directory:': 'Aktuelles Verzeichnis'

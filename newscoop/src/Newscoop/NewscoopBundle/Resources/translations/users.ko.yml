@@ -1,99 +1,99 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
-Username: 
-'Last Name': 
-'First Name': 
-Email: 
-'You were logged out.': 
-'Newscoop Subhead': 
-Filters: 
-'Add new Author': 
-'Loading Data': 
-'Delete author type': 
-'Cannot remove author type.': 
-'Cannot remove author alias.': 
-'Author alias removed.': 
-'Are you sure you want to delete this author?': 
-'Are you sure you want to delete this author alias?': 
-'All Author Types': 
-'Add author type': 
-'You do not have the permission to change authors.': 
-'Please fill at least first name and last name.': 
-'Cannot add author type, this type already exists.': 
-'Author type removed.': 
-'Author type must be at least three characters long.': 
-'Author type added.': 
-'Are you sure you want to delete this author type?': 
-'User may change authors': 
-'Unable to add new image, target directory is not writable.': 
-'Author saved.': 
-'Author deleted.': 
-'Enable Firefox spell checking by default': 
-'User may use the editor status bar': 
-'User may clear up the system cache': 
-'Another user is registered with that e-mail address, please choose a different one.': 
-'There was an error when trying to update the user info.': 
-'User may moderate comments': 
-'User may enable comments': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: null
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: null
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Send email to user:': null
+'No users found.': null
+'No records found.': null
+'No entries to show': null
+'Display _MENU_ records': null
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': null
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: null
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': null
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': null
+'Create new account': null
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: null
+'Last Name': null
+'First Name': null
+Email: null
+'You were logged out.': null
+'Newscoop Subhead': null
+Filters: null
+'Add new Author': null
+'Loading Data': null
+'Delete author type': null
+'Cannot remove author type.': null
+'Cannot remove author alias.': null
+'Author alias removed.': null
+'Are you sure you want to delete this author?': null
+'Are you sure you want to delete this author alias?': null
+'All Author Types': null
+'Add author type': null
+'You do not have the permission to change authors.': null
+'Please fill at least first name and last name.': null
+'Cannot add author type, this type already exists.': null
+'Author type removed.': null
+'Author type must be at least three characters long.': null
+'Author type added.': null
+'Are you sure you want to delete this author type?': null
+'User may change authors': null
+'Unable to add new image, target directory is not writable.': null
+'Author saved.': null
+'Author deleted.': null
+'Enable Firefox spell checking by default': null
+'User may use the editor status bar': null
+'User may clear up the system cache': null
+'Another user is registered with that e-mail address, please choose a different one.': null
+'There was an error when trying to update the user info.': null
+'User may moderate comments': null
+'User may enable comments': null
 'User may translate articles': '사용자가 기사를 번역할 수 있습니다. '
 'User may move articles': '사용자가 기사를 이동할 수있습니다.'
 'User may find and replace': '사용자가 대치할 수 있습니다.'
@@ -174,6 +174,7 @@ Filters:
 'User may change the font color': '사용자가 글자 색을 수정합니다. '
 'User may use superscripts': '사용자가 윗첨자를 사용합니다.'
 'User may use subscripts': '사용자가 아랫첨자를 사용합니다.'
+'User may backup and restore the site data': null
 Miscellaneous: 기타
 'Staff/Subscribers Management': '스탬/구독자 관리'
 'Editor Basic Settings': '에디터 기본 설정'
@@ -183,3 +184,39 @@ Miscellaneous: 기타
 'User will be notified on several events': '사용자가 여러 이벤트를 통보 받을 예정입니다. '
 'Editor Miscellaneous Settings': '에디터 기타 설정 '
 'No such user account.': '그런 아이디 없슴.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: null
+    created: null
+    updated: null
+    status:
+        status: 상태
+        registered: null
+        pending: null
+        deleted: null
+        active: 활성
+    table:
+        actions:
+            actions: 기능
+            edit: 편집
+            resend_email: null
+            rename: null
+            remove: 삭제
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: null
+    chart:
+        title: null

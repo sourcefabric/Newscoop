@@ -1,70 +1,70 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
-Username: 
-'Last Name': 
-'First Name': 
-Email: 
-'You were logged out.': 
-'Newscoop Subhead': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: Web-сайт.
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: 'Вызначэньне месца на карце'
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Паказаныя _START_ да _END_ / _TOTAL_ запісаў'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Не абрана ніводная з запісаў'
+'No entries to show': 'Няма запісаў для прагляду'
+'Display _MENU_ records': 'Адлюстраваць _MENU_ запісы'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': 'фільтраванне ад _MAX_ запісаў'
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: Ніводная
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': 'Рэдагаваць пароль'
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': 'Рэдагаваць правы доступу'
+'Create new account': 'Стварыць новы ўліковы запіс'
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: Шаблёны
+Username: 'Імя карыстальніка'
+'Last Name': null
+'First Name': null
+Email: Email
+'You were logged out.': null
+'Newscoop Subhead': 'Падзагаловак Newscoop'
 Filters: Фільтры
 'Add new Author': 'Дадаць новага аўтара'
 'Loading Data': 'Загрузка звестак'
@@ -184,22 +184,39 @@ Miscellaneous: Рознае
 'User will be notified on several events': 'Карыстальнiк будзе апавяшчацца аб некаторых падзеях'
 'Editor Miscellaneous Settings': 'Iншыя наладкі рэдактара'
 'No such user account.': 'Няма такога ўлiковага запicу карыстальнiка.'
-'User may restart the template engine': 'Карыстальнiк можа перазагрузiць рухавік шаблёнаў'
-'User Name': 'Iмя карыстальнiка'
-' management': 
-'You do not have the right to change user passwords.': 'Вы ня маеце права доступу для зьмяненьня пароляў.'
-'The password could not be changed.': 'Немагчыма зьмянiць пароль карыстальнiка.'
-'The password has been changed.': 'Пароль быў зьменены.'
-'Edit user account permissions': 'Рэдагаваць права ўлiковага запiсу карыстальнiка'
-'Old password': 'Стары пароль'
-'New password': 'Новы пароль'
-'Confirm new password': 'Пацьвердзiце новы пароль'
-'Changing your password': 'Зьмяненьне Вашага паролю.'
-'User $1 changed his password': 'Карыстальнiк $1 зьмянiў свой пароль'
-'Delete user account': 'Выдалiць улiковы запiс карыстальнiка'
-'IP Access List': 'Сьпiс IP-доступу '
-'Delete IP Group': 'Выдалiць групу IP-адрасоў'
-'You do not have the right to delete IP Groups.': 'Вы ня маеце права доступу для выдаленьня групы IP-адрасоў'
-'No such IP Group.': 'Няма такой групы IP-адрасоў'
-'User management': 'Кiраваньне карыстальнiкамi:by'
-Staff: 'Пэрсанал:by'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Кіраванне карыстальнікамі'
+    created: Створаная
+    updated: null
+    status:
+        status: Стан
+        registered: null
+        pending: null
+        deleted: Выдаленае
+        active: Актыўна
+    table:
+        actions:
+            actions: Апэрацыi
+            edit: Праўка
+            resend_email: null
+            rename: Пераназваць
+            remove: Выдалiць
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Апрацоўка...
+    chart:
+        title: null

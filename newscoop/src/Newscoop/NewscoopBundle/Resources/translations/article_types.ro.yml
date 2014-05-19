@@ -1,13 +1,13 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 
-'Edit and translate human-readable field names': 
-'The template name may only contain letters and the underscore (_) character.': 
-'Rename article type $1': 
-'Invalid article type $1.': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': null
+'Edit and translate human-readable field names': null
+'The template name may only contain letters and the underscore (_) character.': null
+'Rename article type $1': null
+'Invalid article type $1.': null
 'You cannot merge the same type into itself.': 'Nu poţi combina acelaşi tip cu el însuşi.'
 'View the source ($1) version of $2': 'Vezi versiunea ($1) a sursei pentru $2'
 'View of original ($1) $2': 'Vizualizarea originalului ($1) $2'
@@ -27,9 +27,9 @@ NOTHING: NIMIC
 'Destination Article Type': 'Tipul de articol destinaţie'
 'Delete the source article type ($1) when finished.': 'Şterge tipul de articol sursă ($1) când procedura s-a încheiat.'
 'Cycle through your articles to verify that the merge configuration is correct.': 'Navighează prin articole pentru a verifica dacă este corectă configuraţia de combinare.'
-'Clicking Merge will merge ($1) article(s).': 
+'Clicking Merge will merge ($1) article(s).': null
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Nu se poate combina un câmp $1 ($2) cu un câmp $3 ($4).'
---None--: '--Nici unul--'
+'--None--': '--Nici unul--'
 '(Null merge warning.)': '(Atenţionare de combinare invalidă).'
 '(No merge warning.)': '(Atenţionare de eşec al combinării).'
 '(Duplicate warning.)': '(Alertă de duplicare).'
@@ -56,7 +56,7 @@ Merge!: Combină!
 'Link to public page': 'Legătură spre un site public'
 'Go to Step 3': 'Mergi la pasul 3'
 'Go to Step 2': 'Mergi la pasul 2'
-'Display Name': 'Numele public'
+'Display Name': 'Nume public'
 'Delete article type $1.': 'Şterge tipul de articol $1.'
 'Comments enabled?': 'Activezi comentariile?'
 'Back to Step 2': 'Înapoi la pasul 2'
@@ -65,7 +65,7 @@ Merge!: Combină!
 'Are you sure you want to $1 the article type $2?': 'Eşti sigur că vrei să combini tipul de articol $2?'
 'Are you sure you want to $1 comments for article type $2?': 'Eşti sigur că vrei să combini comentariile pentru tipul de articol $2?'
 'Allow users without subscriptions to view the article': 'Permite utilizatorilor fără abonament să vadă articolul'
-'Add translation:': 'Adaugă traducerea:'
+'Add translation:': 'Adaugă traducere:'
 '$1 comments for article type $2': '$1 comentarii sunt la tipul de articol $2'
 '$1 comments for article type $1': '$1 comentarii sunt la tipul de articol $1'
 '$1 article type $2': '$1 tipul de articol $2'
@@ -73,7 +73,7 @@ Merge!: Combină!
 'Delete article type $1': 'Şterge tipul de articol $1'
 'You do not have the right to add article types.': 'Nu ai dreptul să adăugi tipuri de articole.'
 'Adding new article type': 'Se adaugă un tip nou de articol'
-'The $1 field may only contain letters and underscore (_) character.': 'Câmpul $1 poate să conţină numai litere şi caracterul underscore (_).'
+'The $1 field may only contain letters and underscore (_) character.': 'Câmpul $1 poate conţine doar litere sau caracterul underscore (_).'
 'The article type $1 already exists.': 'Tipul de articol $1 există deja.'
 'You do not have the right to delete article types.': 'Nu ai dreptul să ştergi tipuri de articole.'
 'The article type $1 could not be deleted.': 'Tipul de articol $1 nu poate fi şters.'

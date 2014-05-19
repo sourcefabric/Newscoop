@@ -1,42 +1,42 @@
-'No attachment': 
+'No attachment': null
 at: no
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possível acessar Newscoop. Por favor verifique a sua conexão.'
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
+'With no attachment': null
+'With image attachment': null
+'With document attachment': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possivel fazer conexão com Newscoop. Por favor verifique a sua conexão com internet.'
+Starred: null
+Star: null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando _START_ a _END_ de _TOTAL_ inscrições'
+'Reply to message': null
 Reply: Responder
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
+Processed: null
+'No records found.': 'Nenhum dado encontrado'
+'No entries to show': 'Não há registros para mostrar'
+'Messages updated.': null
+'Messages status change to $1.': null
+'Messages deleted.': null
+'Message updated.': null
+'Message status change to $1.': null
+'Message deleted.': null
+Message: null
+Last: Ultimo
 'Full article': 'Artigo inteiro'
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
+First: Primeiro
+'Feedback Messages': null
+'Display _MENU_ records': Mostrar_MENU_registros
 Deleted: Removido
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-User: 
-None: 
-'Coming from': 
-'Ban/Unban user': 
+'Change selected messages status': null
+Attachment: null
+Approved.: null
+Approve: null
+Anonymous: null
+' - filtering from _MAX_ records': '- filtrando de _MAX_ registros'
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+User: Utilizador
+None: Nenhum
+'Coming from': null
+'Ban/Unban user': null
 Ip: Ip
 'Bans can be applied to a users name, email address or IP address.': 'Proibições podem ser aplicadas no nome do usuário, endereço de email, ou endereço IP'
 'You are about to permanently delete multiple comments.': 'Você vai apagar comentários múltiplos para sempre.'
@@ -48,20 +48,20 @@ Username: 'Nome de usuário'
 'User ban settings': 'Preferências para proibição de usuários'
 'Update comment': 'Atualizar comentário'
 Unrecommended: 'Não recomendado'
-Unrecommend: 'Não recomendar'
+Unrecommend: 'Não recomendo'
 'Subject is not $1 characters long': 'Assunto não tem $1 caracteres'
 'Sort by Thread order': 'Classificar pela ordem dos tópicos'
 'Show parent comment': 'Mostrar o comentário matriz'
 'Show commenter details': 'Mostrar dados do autor do comentário'
 'Show commenter': 'Mostrar o autor do comentário'
-'Show comment user details': 
-'Show comment user': 
+'Show comment user details': null
+'Show comment user': null
 'Show comment details': 'Mostrar dados do comentário'
 'Select status': 'Selecionar status'
 'Search Type': 'Tipo de busca'
 'Reply to comment': 'Responder ao comentário'
 Recommended: Recomendado
-Recommend: Recomendar
+Recommend: Recomendo
 'Quick edit': 'Edição rápida'
 Parent: Matriz
 ID: ID
@@ -73,13 +73,13 @@ Email: Email
 E-mail: E-mail
 'Delete all comments?': 'Remover todos os comentários?'
 'Date Created': 'Data de criação'
-'Comments updated.': 'Comentários atualizados'
+'Comments updated.': 'Comentários atualizados.'
 'Comments status change to $1.': 'Status dos comentários foi modificado para $1.'
 'Comments deleted.': 'Comentários removidos'
 'Commenter $1 saved.': 'Autor do comentário $1 foi salvo.'
 'Commenter $1 deleted.': 'Autor do comentário $1 foi apagado.'
 Commenter: 'Autor do comentário'
-'Comment updated.': 'Comentário atualizado'
+'Comment updated.': 'Comentário atualizado.'
 'Comment status change to $1.': 'Status do comentário modificado para $1.'
 'Comment id': 'ID do comentário'
 'Comment deleted.': 'Comentário removido.'
@@ -93,8 +93,8 @@ Column: Coluna
 Ban: Banir
 'Are you sure you want to do it?': 'Tem certeza que quer fazer isso?'
 'Add rating': 'Dar nota'
-'Add new comment commenter': 
+'Add new comment commenter': null
 'Add new comment': 'Adicionar novo comentários'
 'Add new acceptance criteria': 'Adicionar novos critérios de aceitação'
-'Acceptance $1 saved.': 
-'Acceptance $1 deleted.': 
+'Acceptance $1 saved.': null
+'Acceptance $1 deleted.': null

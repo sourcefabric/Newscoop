@@ -19,7 +19,7 @@ first: erste
 Paid: Bezahlt
 'No subscriptions': 'Keine Abonnements'
 'Languages:': 'Sprachen: '
-'Edit all sections': 'Alle Rubriken bearbeiten'
+'Edit all sections': 'Alle Rubriken bearbeiten '
 'Days:': 'Tage: '
 'Days must be number': 'Tage müssen numerisch sein'
 Any: Alle
@@ -29,7 +29,7 @@ removed: entfernt
 deleted: gelöscht
 deactivated: deaktiviert
 activated: aktiviert
-'Value is required and cant be empty': 'Wert ist erforderlich und darf nicht leer sein. '
+'Value is required and cant be empty': 'Der Wert ist erforderlich und kann nicht leer sein. '
 'That user name already exists, please choose a different login name.': 'Der Username existiert bereits, bitte wählen Sie einen neuen Login-Namen. '
 'That $1 already exists, please choose a different $2.': 'Diese $1 existiert bereits, bitte wählen Sie eine andere $2.'
 'Subscriptions exist for all available publications.': 'Abonnements gibt es für alle verfügbaren Publikationen. '
@@ -52,7 +52,7 @@ activated: aktiviert
 E-Mail: E-Mail
 'Delete subscriber $1': 'Lösche Abonnement $1'
 'Creation Date': Erstellungsdatum
-'Change subscriber information': 'Abonnenteninformation bearbeiten'
+'Change subscriber information': 'Abonnenteninformation ändern. '
 'Add new IP address': 'Neue IP-Adresse hinzufügen'
 'Add new IP Address': 'Neue IP-Adresse hinzufügen'
 'Accout Name': Benutzerkonto
@@ -65,8 +65,3 @@ E-Mail: E-Mail
 'Subscription Type': Abonnementtyp
 'Paid (payment will be confirmed later)': 'Bezahlt (Bezahlung wird später bestätigt)'
 'Paid (confirm payment now)': 'Bezahlt (Bezahlung jetzt bestätigen)'
-'Left to pay': 'Noch zu zahlen'
-Active: Aktiv
-'Are you sure you want to delete the subscription to the publication $1?': 'Abonoment an Publikation $1 wirklich löschen?'
-Trial: Probe
-'Are you sure you want to activate the subscription?': 'Abonoment wirklich aktivieren?'

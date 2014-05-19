@@ -1,27 +1,27 @@
-'Usage at automatic statistics': 
-'Event Color': 
-'You must input a number greater than $1 and less than $2 into the $3 field.': 
-'You do not have the right to translate article types.': 
-'You do not have the right to reorder article types.': 
-'You do not have the right to reassign article type fields.': 
-'You do not have the right to manage article types.': 
-'You do not have the right to hide article types.': 
-'You do not have the right to delete article types.': 
-'Small ($1 pixels)': 
-'Medium ($1 pixels)': 
-'Large ($1 pixels)': 
-'Hide human-readable field names': 
-'Editor size': 
-'Edit and translate human-readable field names': 
-Custom: 
-'Characters limit': 
-'The template name may only contain letters and the underscore (_) character.': 
-'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 
-'The property $1 is already in use.': 
-Precision: 
-'Can not convert the field $1 from $2 to type $3.': 
-'Are you sure you want to make $1 a $2 field?': 
-'Is Content': 
+'Usage at automatic statistics': null
+'Event Color': null
+'You must input a number greater than $1 and less than $2 into the $3 field.': null
+'You do not have the right to translate article types.': null
+'You do not have the right to reorder article types.': null
+'You do not have the right to reassign article type fields.': null
+'You do not have the right to manage article types.': null
+'You do not have the right to hide article types.': null
+'You do not have the right to delete article types.': 'Nu ai dreptul să ştergi tipuri de articole.'
+'Small ($1 pixels)': null
+'Medium ($1 pixels)': null
+'Large ($1 pixels)': null
+'Hide human-readable field names': null
+'Editor size': null
+'Edit and translate human-readable field names': null
+Custom: null
+'Characters limit': null
+'The template name may only contain letters and the underscore (_) character.': null
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
+'The property $1 is already in use.': null
+Precision: null
+'Can not convert the field $1 from $2 to type $3.': null
+'Are you sure you want to make $1 a $2 field?': null
+'Is Content': null
 'Back to Article Types List': 'Înapoi la lista tipurilor de articole'
 show: arată
 hide: ascunde

@@ -1,41 +1,41 @@
-'Language id not specified': 
-'No languages.': 
-'Native Name': 
-'Name taken.': 
-'Language saved.': 
-'Language removed.': 
-'Language not found.': 
-'Language is in use and cannot be removed.': 
-'Language added.': 
-'English language cannot be removed.': 
-'Edit short month names': 
-'Edit short day names': 
-'Edit month names': 
-'Edit language: $1': 
-'Edit day names': 
-'Code Page': 
-'Add new Language': 
-'Add Language': 
-We: 
-Tu: 
-Th: 
-Su: 
-Sep: 
-Sa: 
-'Please enter the translation for week day short names.': 
-'Please enter the translation for month short names.': 
-Oct: 
-Nov: 
-Mo: 
-Mar: 
-Jun: 
-Jul: 
-Jan: 
-Fr: 
-Feb: 
-Dec: 
-Aug: 
-Apr: 
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
+We: null
+Tu: null
+Th: null
+Su: null
+Sep: null
+Sa: null
+'Please enter the translation for week day short names.': null
+'Please enter the translation for month short names.': null
+Oct: null
+Nov: null
+Mo: null
+Mar: null
+Jun: null
+Jul: null
+Jan: null
+Fr: null
+Feb: null
+Dec: null
+Aug: null
+Apr: null
 'No language.': 'Nema tog jezika'
 'Delete language $1': 'Izbriši jezik $1'
 'You do not have the right to add languages.': 'Nemate ovlasti dodavati jezike.'
@@ -69,13 +69,4 @@ Saturday: Subota
 Sunday: Nedjelja
 'You do not have the right to add new languages.': 'Nemate prava dodavati nove jezike.'
 'There are $1 issue(s) left.': 'Ostalo je $1 izdanja.'
-'The language $1 has been successfuly added.': '$1 jezik je uspješno dodan.'
-'Please check if a language with the same name does not already exist.': 'Molim provjerite da li jezik s istim nazivom već postoji.'
-'The language could not be added.': 'Jezik se ne može dodati.'
-'Delete language': 'Izbriši jezik'
-'The language $1 has been deleted.': '$1 jezik je obrisan.'
-'Updating language information': 'Ažuriranje podataka o jeziku.'
-'Language information has been successfuly updated.': 'Podaci o jeziku uspješno ažurirani.'
-'Language information could not be updated.': 'Podaci o jeziku se ne mogu ažurirani.'
-'A language with the same name already exists.': 'Jezik s istim imenom već postoji.'
 'Native name': 'Izvorno ime'

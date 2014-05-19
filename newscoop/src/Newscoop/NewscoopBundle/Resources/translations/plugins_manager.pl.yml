@@ -1,38 +1,37 @@
-'newscoop.plugins_manager.manager': 'Zarządzanie Wtyczkami'
-'newscoop.plugins_manager.legacy_manager': 'Stare Zarządzanie Wtyczkami'
-'newscoop.plugins_manager.public_plugins': 'Pluginy publiczne'
-'newscoop.plugins_manager.private_plugins': 'Pluginy prywatne'
-'newscoop.plugins_manager.install.public': 'Instaluj publiczne pluginy'
-'newscoop.plugins_manager.installed_table.name': 'Nazwa'
-'newscoop.plugins_manager.installed_table.description': 'Opis'
-'newscoop.plugins_manager.installed_table.enabled': 'Aktywny'
-'newscoop.plugins_manager.installed_table.version': 'Wersja'
-'newscoop.plugins_manager.installed_table.license': 'Licencja'
-'newscoop.plugins_manager.installed_table.installed_at': 'Data instalacji'
-'newscoop.plugins_manager.installed_table.updated_at': 'Data aktualizacji'
-'newscoop.plugins_manager.installed_table.actions': 'Akcje'
-'newscoop.plugins_manager.installed_table.update_plugin': 'Aktualizuj'
-'newscoop.plugins_manager.installed_table.remove_plugin': 'Usuń'
-'newscoop.plugins_manager.installed_table.install_plugin': 'Instaluj'
-'newscoop.plugins_manager.installed_table.plugin_installed': 'Zainstalowany'
-'newscoop.plugins_manager.upload.private': 'Wgraj plik prywatnego pluginu'
-'newscoop.plugins_manager.search_for_plugins': 'Szukaj pluginów'
-'newscoop.plugins_manager.form.package': 'Plik pluginu'
-'newscoop.plugins_manager.form.submit': 'Wgraj'
-'newscoop.plugins_manager.form.package_must_be_zip': 'Plik z pluginem musi mieć rozszerzenie "zip"'
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: 'Pluginy publiczne'
+newscoop.plugins_manager.private_plugins: 'Pluginy prywatne'
+newscoop.plugins_manager.install.public: 'Instaluj publiczne pluginy'
+newscoop.plugins_manager.installed_table.name: Nazwa
+newscoop.plugins_manager.installed_table.description: Opis
+newscoop.plugins_manager.installed_table.enabled: Aktywny
+newscoop.plugins_manager.installed_table.version: Wersja
+newscoop.plugins_manager.installed_table.license: Licencja
+newscoop.plugins_manager.installed_table.installed_at: 'Data instalacji'
+newscoop.plugins_manager.installed_table.updated_at: 'Data aktualizacji'
+newscoop.plugins_manager.installed_table.actions: Akcje
+newscoop.plugins_manager.installed_table.update_plugin: Aktualizuj
+newscoop.plugins_manager.installed_table.remove_plugin: Usuń
+newscoop.plugins_manager.installed_table.install_plugin: Instaluj
+newscoop.plugins_manager.installed_table.plugin_installed: Zainstalowany
+newscoop.plugins_manager.upload.private: 'Wgraj plik prywatnego pluginu'
+newscoop.plugins_manager.search_for_plugins: 'Szukaj pluginów'
+newscoop.plugins_manager.form.package: 'Plik pluginu'
+newscoop.plugins_manager.form.submit: Wgraj
 newscoop:
     datatable:
         table:
-          info: "Widoczne _START_ do _END_ z _TOTAL_ rekordów"
-          noentries: "Nie ma żadnych rekordów"
-          filtering: " - filtrowanie z _MAX_ rekordów"
-          menu: "Pokazuje _MENU_ rekordów"
+            info: 'Widoczne _START_ do _END_ z _TOTAL_ rekordów'
+            noentries: 'Nie ma żadnych rekordów'
+            filtering: ' - filtrowanie z _MAX_ rekordów'
+            menu: 'Pokazuje _MENU_ rekordów'
         label:
-          search: "Szukaj"
-          filter: "Filtruj"
-          processing: "Przetwarzanie..."
-          last: "Ostatni"
-          next: "Następny"
-          first: "Pierwszy"
-          previous: "Poprzedni"
-          norecords: "Nie znaleziono żadnych rekordów."
+            search: Szukaj
+            filter: Filtruj
+            processing: Przetwarzanie...
+            last: Ostatni
+            next: Następny
+            first: Pierwszy
+            previous: Poprzedni
+            norecords: 'Nie znaleziono żadnych rekordów.'

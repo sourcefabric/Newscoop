@@ -19,17 +19,17 @@ first: п’ятий
 Paid: Плата
 'No subscriptions': 'Немає підписок'
 'Languages:': 'Мови:'
-'Edit all sections': 'Редагувати всі розділи'
+'Edit all sections': 'Редагувати усі рубрики'
 'Days:': 'Дні:'
 'Days must be number': 'День має бути цифрою'
 Any: Будь-який
 'Add section': 'Додати розділ'
-saved: сбережено
+saved: збережено
 removed: прибрано
 deleted: видалено
 deactivated: деактивовано
 activated: активовано
-'Value is required and cant be empty': 'Значення обов’язкове та не може бути незаповненим'
+'Value is required and cant be empty': 'Значення обов’язкове та не може бути незаповнено.'
 'That user name already exists, please choose a different login name.': 'Цей користувач вже існує, будь ласка виберіть інший логін'
 'That $1 already exists, please choose a different $2.': '$1 вже існує, будь ласка виберіть інше $2.'
 'Subscriptions exist for all available publications.': 'Підписки існують для всіх публікацій.'

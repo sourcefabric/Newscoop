@@ -1,8 +1,8 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
 'Hide human-readable field names': 'Απόκρυψη ανθρωπίνως αναγνώσιμων ονομάτων πεδίων'
 'Edit and translate human-readable field names': 'Επεξεργασία και μετάφραση ανθρωπίνως αναγνώσιμων ονομάτων πεδίων'
 'The template name may only contain letters and the underscore (_) character.': 'Το όνομα προτύπου μπορεί να περιλαμβάνει μόνο γράμματα και τον χαρακτήρα υπογραμμισης (_).'
@@ -29,7 +29,7 @@ NOTHING: ΤΙΠΟΤΑ
 'Cycle through your articles to verify that the merge configuration is correct.': 'Περιηγηθείτε στα άρθρα σας για να επιβεβαιώστε ότι η διαμόρφωση συγχώνευσης είναι σωστή.'
 'Clicking Merge will merge ($1) article(s).': 'Κάνοντας κλίκ στη Συγχώνευση θα συγχωνευτούν άρθρα ($1).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Είναι αδύνατον να συγχωνευτεί ένα $1 αρχείο ($2) σε ένα $3 αρχείο ($4).'
---None--: --Κανένα--
+'--None--': '--Κανένα--'
 '(Null merge warning.)': '(Προειδοποίηση μηδενικής συγχώνευσης)'
 '(No merge warning.)': '(Καμία προειδοποίηση συγχώνευσης.)'
 '(Duplicate warning.)': '(Αντιγραφή προειδοποίησης.)'
@@ -75,6 +75,5 @@ Merge!: Συγχώνευση!
 'Adding new article type': 'Προσθήκη νέου τύπου άρθρου'
 'The $1 field may only contain letters and underscore (_) character.': 'Το πεδίο $1 μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).'
 'The article type $1 already exists.': 'Ο τύπος άρθρου $1 ήδη υπάρχει.'
-'You do not have the right to delete article types.': 'Δεν έχετε το δικαίωμα να διαγράψετε τύπους άρθρων.'
+'You do not have the right to delete article types.': 'Δεν έχετε το δικαίωμα διαγραφής τύπων άρθρου.'
 'The article type $1 could not be deleted.': 'Ο τύπος άρθρου $1 δεν ήταν δυνατόν να διαγραφεί.'
-'The name field may only contain letters and the underscore (_) character.': 'Το όνομα πεδίου μπορεί να περιέχει μόνο γράμματα και τον χαρακτήρα υπογράμμισης (_).'

@@ -1,7 +1,7 @@
 'Rename user': 'Μετονομασία χρήστη'
 Campsite: Campsite
 'Image Rendering': 'Απόδοση Εικόνας'
-'Featured Article Lists': 'Προτεινόμενες Λίστες Άρθρων'
+'Featured Article Lists': 'Λίστες Προτεινόμενων Άρθρων'
 'You have tried to upload an invalid backup file.': 'Προσπαθήσατε να ανεβάσετε ένα άκυρο αρχείο αντιγράφου ασφαλείας.'
 'You do not have the right to manage backups.': 'Δεν έχετε το δικαίωμα διαχείρισης αντιγράφων ασφαλείας.'
 'Make a new backup': 'Δημιουργία νέου αντιγράφου ασφαλείας'
@@ -13,12 +13,12 @@ Create: Δημιουργία
 Attach/Detach: Επισύναψη/Αφαίρεση
 'Are you sure you want to delete slideshow?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε το slideshow;'
 Support: Υποστήριξη
-'Pending articles': 'Εκκρεμή Άρθρα'
+'Pending articles': 'Εκκρεμή άρθρα'
 'Manage Users': 'Διαχείριση Χρηστών'
 'Manage User Types': 'Διαχείριση Τύπου Χρηστών'
 'Manage User Points System': 'Διαχείριση Συστήματος Σημείων Χρήστη'
-Last: 'Τελευταία '
-First: Πρώτα
+Last: Τελευταίο
+First: Πρώτο
 Feedback: Feedback
 'Edit your password': 'Επεξεργασία κωδικού πρόσβασης'
 'Edit user': 'Επεξεργασία χρήστη'
@@ -64,7 +64,7 @@ Ban: Απαγόρευση
 Newscoop: Newscoop
 'Your password has been reset.': 'Έγινε επαναφορά του κωδικού πρόσβασής σας.'
 'Proceed to login.': 'Προχωρήστε στη σύνδεση.'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Καλήσπέρα, \n\nγια ανάκτηση του κωδικού πρόσβασης, παρακαλούμε ακολουθήστε τον παρακάτω σύνδεσμο: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Πηγαίνετε στη σύνδεση'
 'Back to login.': 'Πίσω στη σύνδεση.'
 'Back to login': 'Πίσω στη σύνδεση'
@@ -80,7 +80,7 @@ Dashboard: Πίνακας
 'Your changes will be saved after login.': 'Οι αλλαγές σας θα αποθηκευτούν μετά την είσοδο.'
 'Upload backup file': 'Ανέβασμα αρχείο αντιγράφου ασφαλείας'
 'The file $1 has been uploaded successfully.': 'Το αρχείο $1 ανέβηκε επιτυχώς.'
-'Media Archive': 'Αρχείο Media'
+'Media Archive': 'Αρχείο Πολυμέσων'
 Widgets: Widgets
 'Widget info': 'Πληροφορίες Widget'
 'Widget added to dashboard.': 'Το Widget προστέθηκε στον πίνακα.'
@@ -108,7 +108,7 @@ Restore: Επαναφορά
 Mb: Mb
 'Free disk space': 'Ελεύθερος χώρος δίσκου'
 'Download file': 'Κατέβασμα αρχείου'
-Download: Κατέβασμα
+Download: Download
 'Delete file': 'Διαγραφή αρχείου'
 'Backup list is empty.': 'Η λίστα του αντιγράφου ασφαλείας είναι άδεια.'
 'Are you sure you want to restore the file $1?': 'Είστε σίγουρος/η ότι θέλετε να επαναφέρετε το αρχείο $1;'
@@ -120,8 +120,8 @@ Download: Κατέβασμα
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Ήταν αδύνατον να δημιουργηθεί ο συγγραφέας $1 για το άρθρο αρ. $2 ($3) τύπου $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Παρουσιάστηκαν σφάλματα κατά την ρύθμιση του συγγραφέα για άρθρα τύπου $1 από το πεδίο $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Ο συγγραφέας ρυθμίστηκε επιτυχώς για τα άρθρα τύπου $1 από το πεδίο $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 λεπτό/ά.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 ώρα/ες και $3 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 ώρα/ες και $4 λεπτό/ά.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Σφάλμα κατά τη ρύθμιση του συγγραφέα $1 για το άρθρο αρ. $2 ($3) τύπου $4.'
 'Clear system cache': 'Εκκαθάριση προσωρινής μνήμης'
 'The system was unable to upload the file $1. ': 'Το σύστημα δεν μπόρεσε να ανεβάσει το αρχείο $1.'
@@ -152,3 +152,7 @@ Help: Βοήθεια
 'Please make sure that you typed the correct user name and password.': 'Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.'
 'If your problem persists please contact the site administrator $1': 'Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1'
 Backup/Restore: 'Αντίγραφο ασφαλείας/ Επαναφορά'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

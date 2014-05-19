@@ -61,132 +61,133 @@ Section: বিভাগ
 Keywords: মূলশব্দ
 Topic: বিষয়
 'URL Name': 'URL-র নাম'
-'Left to pay': 
-Active: 
-Trial: 
-Next: 
-Previous: 
-Translate: 
-View: 
-'Scheduled Publishing': 
-Time: 
-Action: 
-'Schedule a new action': 
-'Scheduling a new publish action': 
-'Delete scheduled publish action': 
-Date/Time: 
-'You must select an action.': 
-'You do not have the right to schedule issues or articles for automatic publishing.': 
-'Front page': 
-'Section page': 
-'Show on front page': 
-'Remove from front page': 
-'Show on section page': 
-'Remove from section page': 
-Actions: 
-Publishing: 
-Show: 
-Remove: 
-'Article Types': 
-'Staff User Types': 
-Publications: 
-Issues: 
-Sections: 
-Articles: 
-Images: 
-Change: 
-'Add new issue': 
-'Section Template': 
-'Article Template': 
-'Default Language': 
-'Paid Period': 
-Preview: 
-'You must fill in the $1 field.': 
-Error: 
-'Invalid input: $1': 
-'Language does not exist.': 
-'Publication does not exist.': 
-'Issue does not exist.': 
-'You must select a language.': 
-'Section does not exist.': 
-'No articles.': 
-'Article does not exist.': 
-'Image does not exist.': 
-'Access denied': 
-'Invalid parameters received': 
-'Add new article': 
-Status: 
-Published: 
-'Not published': 
-Submitted: 
-New: 
-Article: 
-Publish: 
-Unpublish: 
-Unlock: 
-Uploaded: 
-YYYY-MM-DD: 
-Submit: 
-Image: 
-Description: 
-Photographer: 
-Place: 
-Date: 
-Thumbnail: 
-'In use': 
-'Additional searches': 
-'Most Recently Added': 
-'Most Recently Modified': 
-'$1 images found': 
-'Reset search conditions': 
-'Image number': 
-Users: 
-Localizer: 
-'Adding new translation': 
-'No more languages.': 
-'The $1 field may only contain letters, digits and underscore (_) character.': 
-'Add new publication': 
-'Upload new template': 
-'Add new staff member': 
-'Add new subscriber': 
-'Add new user type': 
-'Add new article type': 
-'Add new country': 
-'Add new language': 
-'View logs': 
-'Change your password': 
-'Your Articles': 
-'Submitted Articles': 
-Logs: 
-'There are $1 article(s) left.': 
-'There are $1 issues(s) left.': 
-'There are $1 section(s) left.': 
-'There are $1 publication(s) left.': 
-'There are $1 countries left.': 
-'Name <SMALL>(click to edit)</SMALL>': 
-'Add new subscription': 
-'You do not have the right to add subscriptions.': 
-'Adding subscription': 
-'Delete subscription': 
-'You do not have the right to delete subscriptions.': 
-'No such subscription.': 
-Yes: 
-No: 
-Close: 
-'No issues.': 
-'Back to Edit Article': 
-'No topics': 
-'You do not have the right to add articles.': 
-Start: 
-Days: 
-'The sections could not be added successfully. Some of them were already added !': 
-'Add another': 
-Cancel: 
-Done: 
-OK: 
-Save: 
-Search: 
-'Make a selection': 
+'Left to pay': null
+Active: null
+Trial: null
+Next: null
+Previous: null
+Translate: null
+View: null
+'Scheduled Publishing': null
+Time: null
+Action: null
+'Schedule a new action': null
+'Scheduling a new publish action': null
+'Delete scheduled publish action': null
+Date/Time: null
+'You must select an action.': null
+'You do not have the right to schedule issues or articles for automatic publishing.': null
+'Front page': null
+'Section page': null
+'Show on front page': null
+'Remove from front page': null
+'Show on section page': null
+'Remove from section page': null
+Actions: null
+Publishing: null
+Show: null
+Remove: null
+'Article Types': null
+'Staff User Types': null
+Publications: null
+Issues: null
+Sections: null
+Articles: null
+Images: null
+Change: null
+'Add new issue': null
+'Section Template': null
+'Article Template': null
+'Default Language': null
+'Paid Period': null
+Preview: null
+'You must fill in the $1 field.': null
+Error: null
+'Invalid input: $1': null
+'Language does not exist.': null
+'Publication does not exist.': null
+'Issue does not exist.': null
+'You must select a language.': null
+'Section does not exist.': null
+'No articles.': null
+'Article does not exist.': null
+'Image does not exist.': null
+'Access denied': null
+'Invalid parameters received': null
+'Add new article': null
+Status: null
+Published: null
+'Not published': null
+Submitted: null
+New: null
+Article: null
+Publish: null
+Unpublish: null
+Unlock: null
+Uploaded: null
+YYYY-MM-DD: null
+Submit: null
+Image: null
+Description: null
+Photographer: null
+Place: null
+Date: null
+Thumbnail: null
+'In use': null
+'Additional searches': null
+'Most Recently Added': null
+'Most Recently Modified': null
+'$1 images found': null
+'Reset search conditions': null
+'Image number': null
+Users: null
+Localizer: null
+'Adding new translation': null
+'No more languages.': null
+'The $1 field may only contain letters, digits and underscore (_) character.': null
+'Add new publication': null
+'Upload new template': null
+'Add new staff member': null
+'Staff member deleted.': null
+'Add new subscriber': null
+'Add new user type': null
+'Add new article type': null
+'Add new country': null
+'Add new language': null
+'View logs': null
+'Change your password': null
+'Your Articles': null
+'Submitted Articles': null
+Logs: null
+'There are $1 article(s) left.': null
+'There are $1 issues(s) left.': null
+'There are $1 section(s) left.': null
+'There are $1 publication(s) left.': null
+'There are $1 countries left.': null
+'Name <SMALL>(click to edit)</SMALL>': null
+'Add new subscription': null
+'You do not have the right to add subscriptions.': null
+'Adding subscription': null
+'Delete subscription': null
+'You do not have the right to delete subscriptions.': null
+'No such subscription.': null
+Yes: null
+No: null
+Close: null
+'No issues.': null
+'Back to Edit Article': null
+'No topics': null
+'You do not have the right to add articles.': null
+Start: null
+Days: null
+'The sections could not be added successfully. Some of them were already added !': null
+'Add another': null
+Cancel: null
+Done: null
+OK: null
+Save: null
+Search: null
+'Make a selection': null
 'You must input a number greater than 0 into the $1 field.': 'আপনাকে শূন্য থেকে অধিক নিবেশ কোরতে হবে $1 ফিল্ডে'
 'You must input a valid date.': 'একটি বৈধ তারিখ ইনপুট প্রয়োজন.'
 'Add new field': 'নতুন ক্ষেত্র যোগ করুন'
@@ -194,9 +195,9 @@ Search:
 'Are you sure you want to delete this scheduled action?': 'আপনি কি নিশ্চিত যে আপনি এই নির্ধারিত কর্ম মুছে ফেলতে চান?'
 Unlink: 'বিযুক্ত করা'
 'Are you sure you want to delete the image $1?': 'আপনি কি নিশ্চিত আপনি ইমেজ মুছে ফেলতে চান  $1?'
-'No such issue.': 
+'No such issue.': null
 'Are you sure you want to delete the subscription to the publication $1?': 'আপনি কি নিশ্চিত যে আপনি প্রকাশন থেকে সাবস্ক্রিপশন মুছে ফেলতে চান $1?'
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': null
 GB: গিগাবাইট
 MB: মেগাবাইট
 KB: কিলোবাইট
@@ -246,7 +247,7 @@ Other: অন্যান্য
 'No events.': 'নতুন কোনো কর্মকাণ্ড নেই.'
 'Default templates': 'ডিফল্ট ফর্মা'
 'System Preferences': 'সিস্টেম পছন্দ নির্বাচন করুন'
-'The date must be in the future.': 
+'The date must be in the future.': null
 Send: পাঠান
 'Thank you.': 'আপনাকে ধন্যবাদ.'
 'Please take a minute to send us an email.': 'অনুগ্রহ করে আমাদের একটি ইমেল প্রেরণ করুন.'
@@ -257,3 +258,27 @@ Reads: পাঠ্য
 'Universal List': 'ইউনিভার্সাল তালিকা'
 'Invalid security token!': 'অবৈধ নিরাপত্তা টোকেন!'
 Authors: লেখক
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

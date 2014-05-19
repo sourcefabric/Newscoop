@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Χρήση Χάρτη'
+Locations: Τοποθεσίες
+Last: Τελευταίο
+First: Πρώτο
+'Publish Schedule': 'Δημοσίευση Προγράμματος'
+'You do not have the right to delete articles.': 'Δεν έχετε το δικαίωμα να διαγράψετε άρθρα.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Μόλις ένα άρθρο υποβληθεί μπορεί να αλλάξει μόνο από εξουσιοδοτημένους χρήστες.'
+'Toggle: On Section Page': 'Εναλλαγή: Στην Σελίδα Ενότητας'
+'Toggle: On Front Page': 'Εναλλαγή: Στην Πρώτη Σελίδα'
+'Toggle: Comments': 'Εναλλαγή: Σχόλια'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 ώρα/ες και $4 λεπτό/ά.'
+'Status: Submit': 'Κατάσταση: Υποβολλή'
+'Status: Set New': 'Κατάσταση: Ορισμός Νέου'
+'Status: Publish': 'Κατάσταση: Δημοσίευση'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους'
+'Show / hide columns': 'Εμφάνιση/απόκρυψη στηλών '
+'Select some article first.': 'Επιλέξτε πρώτα κάποια άρθρα.'
+'Select action': 'Επιλογή ενέργειας'
+'Save order': 'Αποθήκευση εντολής'
+'Reset all filters': 'Επαναφορά όλων των φίλτρων'
+'Published before': 'Δημοσιεύτηκε πρίν'
+'Published after': 'Δημοσιεύτηκε μετά'
+'Publish date': 'Δημοσίευση ημερομηνίας'
+'Publish Date': 'Δημοσίευση Ημερομηνίας'
+'Order updated.': 'Η εντολή ανανεώθηκε.'
+'No sections found': 'Δεν βρέθηκαν ενότητες'
+'No records found.': 'Δεν βρέθηκαν καταχωρήσεις.'
+'No publications found': 'Δεν βρέθηκαν δημοσιεύσεις'
+'No issues found': 'Δεν βρέθηκαν τεύχη'
+'No entries to show': 'Καμία είσοδος προς προβολή'
+'Loading data': 'Φόρτωση δεδομένων'
+'Last Modified': 'Τελευταίως Τροποποιημένα'
+'Filter by...': 'Φιλτράρεται από...'
+Filter: Φίλτρο
+'Duplicate to another section': 'Αντιγραφή σε άλλη ενότητα'
+'Display _MENU_ records': 'Εμφάνιση καταχωρήσεων _MENU_ '
+Creator: Δημιουργός
+'Create Date': 'Δημιουργία Ημερομηνίας'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Η κατάσταση του άρθρου ορίστηκε σε $1'
+'Are you sure you want to delete selected articles?': 'Είστε σίγουρος/η ότι θέλετε να διαγράψετε τα επιλεγμένα άρθρα;'
+'All Sections': 'Όλες οι Ενότητες'
+'All Publications': 'Όλες οι Δημοσιεύσεις'
+'All Issues': 'Όλα τα Τεύχη'
+'Access denied.': 'Άρνηση πρόσβασης.'
+'$1 toggled.': '$1 εναλλάχθηκε.'
+'$1 articles have been removed': 'Έχουν μεταφερθεί $1 άρθρα '
+' - filtering from _MAX_ records': '-φιλτράρισμα από _MAX_ καταχωρήσεις'

@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'To není barva'
 'No such field': 'Žádné takové pole'
 'Color saved': 'Barva uložena'
@@ -61,3 +61,44 @@ First: První
 'Multi-line Text with WYSIWYG': 'Více řádkový text WYSIWYG'
 'URL $1 is invalid or is not an image.': 'URL $1 není platné, nebo se nejedná o obrázek.'
 'URL $1 is not an image.': 'URL $1 není obrázek'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: Publikace
+                actions: Činnosti
+                actions_buttons:
+                    remove: Odstranit
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: Uložit
+        PublicResources:
+            label:
+                routes: null
+                save: Uložit

@@ -1,73 +1,77 @@
-'Make sure to enter the Moderator Address below': 
-'click to see issues': 
-'Moderator Address': 
-'From Address': 
-'Use CAPTCHA to prevent spam?': 
-'Public allowed to comment?': 
-'Enable spam blocking?': 
-'The subscription settings for $1 could not be added.': 
-'The publication name you specified conflicts with publication $1.': 
-'The publication alias you specified conflicts with publication $1.': 
-'Subscription defaults': 
-'Subscription Settings by Country': 
-'Set subscription settings for a country': 
-'Set subscription settings by country': 
-'Default time periods:': 
-'Country subscription settings updated.': 
-'Country subscription settings deleted.': 
-'Change country subscription settings': 
-'Are you sure you want to delete the subscription settings for $1?': 
-'Publication updated': 
-'Subscriber comments moderated?': 
-'Public comments moderated?': 
-'Comments enabled?': 
-'Comments enabled': 
-'Article comments default to enabled?': 
-'trial subscription': 
-'paid subscription': 
-'time units': 
-'one language': 
-'all languages': 
-'Trial subscriptions': 
-'Time unit cost per one section': 
-'Paid subscriptions': 
-'Default time period': 
-'Go To Issues': 
-'Delete publication $1': 
-'No publications.': 
-'Default Site Alias': 
-'URL Type': 
-'Country<BR><SMALL>(click to edit)</SMALL>': 
-'Delete alias $1': 
-'Configure publication': 
-'You do not have the right to edit publication information.': 
-'General attributes': 
-'You do not have the right to change publication information.': 
-'The publication information could not be updated.': 
-'You do not have the right to delete publications.': 
-'Are you sure you want to delete the publication $1?': 
-'Deleting publication': 
-'There are $1 subscription(s) left.': 
-'The publication $1 could not be deleted.': 
-'The publication could not be added.': 
-'You do not have the right to manage publications.': 
-'You must select a country.': 
-'Add new alias': 
-'Alias (click to edit)': 
-'Edit aliases': 
-'Publication Aliases': 
-'Adding new alias': 
-'The site alias $1 could not be added.': 
-'Another alias with the same name exists already.': 
-'Edit alias': 
-'Editing alias': 
-'The site alias $1 could not be modified.': 
-'Are you sure you want to delete the alias $1?': 
-'Deleting alias': 
-'The alias $1 could not be deleted.': 
-'$1 is the default publication alias, it can not be deleted.': 
-'You do not have the right to add publications.': 
-'There are $1 issue(s) left.': 
-'Time Unit': 
-Currency: 
-'Edit languages': 
+'Make sure to enter the Moderator Address below': null
+'click to see issues': null
+'Moderator Address': null
+'From Address': null
+'Use CAPTCHA to prevent spam?': null
+'Public allowed to comment?': null
+'Enable spam blocking?': null
+'The subscription settings for $1 could not be added.': null
+'The publication name you specified conflicts with publication $1.': null
+'The publication alias you specified conflicts with publication $1.': null
+'Subscription defaults': null
+'Subscription Settings by Country': null
+'Set subscription settings for a country': null
+'Set subscription settings by country': null
+'Default time periods:': null
+'Country subscription settings updated.': null
+'Country subscription settings deleted.': null
+'Change country subscription settings': null
+'Are you sure you want to delete the subscription settings for $1?': null
+'Publication updated': null
+'Subscriber comments moderated?': null
+'Public comments moderated?': null
+'Comments enabled?': null
+'Comments enabled': null
+'Article comments default to enabled?': null
+'trial subscription': null
+'paid subscription': null
+'time units': null
+'one language': null
+'all languages': null
+'Trial subscriptions': null
+'Time unit cost per one section': null
+'Paid subscriptions': null
+'Default time period': null
+'Go To Issues': null
+'Delete publication $1': null
+'No publications.': null
+'Default Site Alias': null
+'URL Type': null
+'Country<BR><SMALL>(click to edit)</SMALL>': null
+'Delete alias $1': null
+'Configure publication': null
+'You do not have the right to edit publication information.': null
+'General attributes': null
+'You do not have the right to change publication information.': null
+'The publication information could not be updated.': null
+'You do not have the right to delete publications.': null
+'Are you sure you want to delete the publication $1?': null
+'Deleting publication': null
+'There are $1 subscription(s) left.': null
+'The publication $1 could not be deleted.': null
+'The publication could not be added.': null
+'You do not have the right to manage publications.': null
+'You must select a country.': null
+'Add new alias': null
+'Alias (click to edit)': null
+'Edit aliases': null
+'Publication Aliases': null
+'Adding new alias': null
+'The site alias $1 could not be added.': null
+'Another alias with the same name exists already.': null
+'Edit alias': null
+'Editing alias': null
+'The site alias $1 could not be modified.': null
+'Are you sure you want to delete the alias $1?': null
+'Deleting alias': null
+'The alias $1 could not be deleted.': null
+'$1 is the default publication alias, it can not be deleted.': null
+'You do not have the right to add publications.': null
+'There are $1 issue(s) left.': null
+'Time Unit': null
+Currency: null
+'Edit languages': null
+'Search engine optimization': null
+'Article title': null
+'Article keywords': null
+'Article topics': null

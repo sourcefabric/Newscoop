@@ -67,7 +67,7 @@ Notification: إخطار
 Log: سجل
 Layout: التخطيط
 Global: عالمي
-Files: الملفات
+Files: ملفات
 'Error: ': 'الخطأ‫:‬ '
 'Edit user type $1': '$1 تعديل نوع المستخدم'
 Deny: ارفض
@@ -79,14 +79,3 @@ Authoring: التأليف
 Allow: اسمح
 'User types': 'أنواع المستخدم'
 'No user types.': 'لا أنواع مستخدم'
-'You do not have the right to add user types.': 'ليس لديك الحق في إضافة أنواع المستخدم'
-'Adding new user type': 'في عملية إضافة نوع مستخدم جديد'
-'The user type $1 has been added.': '$1 تم إضافة نوع  المستخدم'
-'The user type could not be added.': 'لم يضف نوع المستخدم'
-'Please check if an user type with the same name does not already exist.': 'الرجاء التأكد من عدم وجود نوع مستخدم يحمل الاسم نفسه'
-'Deleting user type': 'في عملية حذف نوع المستخدم'
-'The user type has been deleted.': 'تم حذف نوع المستخدم'
-'The user type could not be deleted.': 'لم يحذف نوع المستخدم'
-'Updating user type permissions': 'في عملية حذف أذونات لأنواع المستخدم'
-'User type permissions have been successfuly updated.': 'تم تحديث الأذونات لأنواع المستخدم'
-'User type permissions could not be updated.': 'لم تحذث الأذونات لأنواع المستخدم'

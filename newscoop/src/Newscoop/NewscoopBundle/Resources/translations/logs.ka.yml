@@ -1,5 +1,5 @@
-show: ' ჩვენება'
-hide: დაფარვა
+show: ჩვენება
+hide: დამალვა
 Title: სათაური
 'Resource Type:': 'რესურსის ტიპი:'
 'Resource Type': 'რესურსის ტიპი'
@@ -9,14 +9,3 @@ Diff: შედარება
 'Action Type:': 'მოქმედების ტიპი: '
 'No logs.': 'აღრიცხვა არ არსებობს'
 User: მომხმარებელი
-Warning: გაფრთხილება
-'Severity:': 
-Severity: 
-Notice: შეტყობინება
-Info: ინფო
-Filter: ფილტრი
-Emergency: 
-Debug: გამართვა
-Critical: კრიტიკული
-Alert: შეტყობინება
-'User IP Address': 'მომხმარებლის IP მისამართი'

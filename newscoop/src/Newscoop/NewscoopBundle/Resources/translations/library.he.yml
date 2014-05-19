@@ -1,17 +1,73 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
-Webcode: 
-'View article': 
-Source: 
-'Select type': 
-On: 
-Off: 
-'Article status set to $1 for $2 articles': 
-'Article status not set to $1 for $2 articles': 
-'$1 toggled for $2 articles.': 
-'$1 not toggled for $2 articles.': 
-'$1 not toggled for $2  articles.': 
-'$1 articles have not been removed': 
-'$1 Article(s) unlocked': 
-'$1 Article(s) not unlocked': 
-'$1 Article(s) duplicated': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: null
+'View article': null
+Source: null
+'Select type': null
+On: null
+Off: null
+Title: null
+'No video playback capabilities, please download the video below': null
+'Article status set to $1 for $2 articles': null
+'Article status not set to $1 for $2 articles': null
+'$1 toggled for $2 articles.': null
+'$1 not toggled for $2 articles.': null
+'$1 not toggled for $2  articles.': null
+'$1 articles have not been removed': null
+'$1 Article(s) unlocked': null
+'$1 Article(s) not unlocked': null
+'$1 Article(s) duplicated': null
+'Download file': null
+'You do not have the right to delete articles.': null
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
+'Use Map': null
+'Toggle: On Section Page': null
+'Toggle: On Front Page': null
+'Toggle: Comments': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'Status: Submit': null
+'Status: Set New': null
+'Status: Publish': null
+Size: null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Show / hide columns': null
+'Select some article first.': null
+'Select action': null
+'Save order': null
+'Reset all filters': null
+'Published before': null
+'Published after': null
+'Publish date': null
+'Publish Schedule': null
+'Publish Date': null
+'Order updated.': null
+'Open in browser': null
+'No sections found': null
+'No records found.': null
+'No publications found': null
+'No issues found': null
+'No entries to show': null
+Locations: null
+'Loading data': null
+'Last modified': null
+'Last Modified': null
+Last: null
+First: null
+'Filter by...': null
+Filter: null
+Filename: null
+'Duplicate to another section': null
+'Display _MENU_ records': null
+Creator: null
+'Create Date': null
+'Article status set to $1': null
+'Are you sure you want to delete selected articles?': null
+'All Sections': null
+'All Publications': null
+'All Issues': null
+Added: null
+'Access denied.': null
+'$1 toggled.': null
+'$1 articles have been removed': null
+' - filtering from _MAX_ records': null

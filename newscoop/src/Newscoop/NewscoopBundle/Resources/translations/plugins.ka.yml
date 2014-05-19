@@ -9,6 +9,6 @@ Uninstall: 'ინსტალიაციის გაუქმება'
 'The plugin $1 was sucessfully installed.': '$1 პლაგინი დაყენდა.'
 'No plugins found.': 'პლაგინი არ მოიძებნა'
 Manage: მართვა
-Enabled: ჩაირთო
+Enabled: ჩართულია
 'Delete plugin': 'პლაგინის წაშლა'
-'Add new image': 'ახალი სურათის დამატება'
+'Add new image': 'ახალი გამოსახულების დამატება'

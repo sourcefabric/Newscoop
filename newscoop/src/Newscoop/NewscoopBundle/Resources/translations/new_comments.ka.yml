@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: კომენტარები
+        banned: null
+        anonymous: ანონიმური
+        at: '-ზე'
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'მთლიანი სტატია'
+        hidden: დამალული
+        approved: დადასტურებული
+        new: ახალი
+        editarticle: 'სტატიის რედაქტირებაზე გადასვლა'
+        section: სექცია
+        comment: კომენტარი
+        replyto: 'კომენტარზე პასუხის გაცემა'
+        subject: თემა
+        ban: 'მომხმარებლისთვის ბანის დადება/მოხსნა'
+        author: ავტორი
+        date: null
+        article: სტატია
+        search: ძიება
+        show: ჩვენება
+        recommended: რეკომენდირებული
+        unrecommended: არარეკომენდირებული
+        editcomment: null
+        actions: მოქმედება
+        selectstatus: 'აირჩიეთ სტატუსი'
+        deleted: წაიშალა
+        alert: null
+        searchholder: null
+    btn:
+        cancel: გაუქმება
+        submit: გაგზავნა
+        unrecommend: 'რეკომენდაციის უკუგდება'
+        recommend: 'რეკომენდაციის მიცემა'
+        delete: წაშლა
+        reply: 'პასუხის გაცემა'
+        edit: 'სწრაფი რედაქტირება'
+        close: დახურული
+        okay: null
+        filter: ფილტრი
+    msg:
+        deleted: 'კომენტარი წაიშალა.'
+        commentinarticle: '$2 ($3) სტატიის კომენტარი $4 $1-ის მიერ'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
+            deletefromarticle: '$2 ($3) სტატიის კომენტარი წაიშალა $1-ის მიერ'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'კომენტარი სამუდამოდ წაიშლება.'
+        suremultiple: null
+        first: null
+        surequestion: 'დაადასტურეთ, რომ გსურთ ამის გაკეთება.'
+        updated: 'კომენტარი განახლებულია. '

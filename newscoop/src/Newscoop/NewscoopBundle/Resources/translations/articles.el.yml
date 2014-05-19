@@ -80,8 +80,8 @@ Created: Δημιουργήθηκε
 'You must select a file to upload.': 'Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.'
 'You must select a XML input file.': 'Πρέπει να επιλέξετε ένα αρχείο εισαγωγής XML.'
 'You do not have the right to import XML archives.': 'Δεν έχετε το δικαίωμα να εισάγετε XML αρχεία.'
-'There was a problem uploading the file.': 'Υπήρξε ένα πρόβλημα ανεβάζοντας το αρχείο.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος αρχείου είναι χαμηλός σε σχέση με το μέγεθος του αρχείου που προσπαθείτε να ανεβάσετε. Ο μέγιστος χρόνος εισαγωγής έχει οριστεί σε php.ini'
+'There was a problem uploading the file.': 'Υπήρξε ένα πρόβλημα κατά το ανέβασμα του αρχείου.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Το αρχείο ανεβάστηκε μερικώς. Αυτό είναι σύνηθες όταν ο μέγιστος χρόνος ανεβάσματος ενός αρχείου είναι χαμηλός σε αντίθεση με το μέγεθος αρχείου που προσπαθείτε να εισάγετε. Ο μέγιστος χρόνος εισαγωγής  καθορίστηκε στο php.ini'
 'The file exceeds the allowed max file size.': 'Το αρχείο υπερβαίνει το επιτρεπόμενο μέγιστο μέγεθος αρχείου.'
 Optional: Προαιρετικό
 'Input File': 'Εισαγωγή Αρχείου'
@@ -99,7 +99,7 @@ Saved: Αποθηκεύτηκε
 'Save All': 'Αποθήκευση Όλων'
 'Online Server: On': 'Online Διακομιστής: On'
 'Online Server: Off': 'Online Διακομιστής: Off'
-Download: Κατέβασμα
+Download: Download
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Δεν μπορείτε να έχετε δυο άρθρα με το ίδιο όνομα στην ίδια ενότητα. Το όνομα άρθρου που ορίσατε χρησιμοποιήται ήδη από το άρθρο $1.'
 'Visible to non-subscribers': 'Ορατό σε μη-συνδρομητές'
 'The article could not be published.': 'Το άρθρο δεν μπόρεσε να δημοσιευθεί.'
@@ -183,3 +183,4 @@ Comments: Σχόλια
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο του άρθρου.'
 'No such article.': 'Δεν υπάρχει τέτοιο άρθρο.'
 'No such section.': 'Δεν υπάρχει τέτοια ενότητα.'
+Characters: null

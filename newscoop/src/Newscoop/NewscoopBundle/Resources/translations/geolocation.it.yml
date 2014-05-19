@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'Icona del marker'
 'add location to map': 'Aggiungi luogo'
 'Video source': 'Sorgente video'
@@ -39,7 +39,7 @@ Coordinates: Coordinate
 'Setting the map name helps with map search': 'Il nome della mappa aiuta con le ricerche'
 Longitude: Longitudine
 Latitude: Latitudine
-Center: Centra
+Center: Centro
 'Last Saved Map View': 'Visualizza lultima mappa salvata'
 'List of locations updated': 'Lista dei luoghi aggiornati'
 width: larghezza

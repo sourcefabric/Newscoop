@@ -1,14 +1,14 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
-'Delete anyway': 
-'Reset order': 
-'Order changes will be lost. Are you sure you want to continue?': 
-'Topics order saved.': 
-'Show languages': 
-'Save order': 
-'Click to edit': 
-'Add root topic': 
-'Topic was deleted.': 
-'The topic name is already in use by another topic.': 
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
+'Delete anyway': null
+'Reset order': null
+'Order changes will be lost. Are you sure you want to continue?': null
+'Topics order saved.': null
+'Show languages': null
+'Save order': null
+'Click to edit': null
+'Add root topic': null
+'Topic was deleted.': null
+'The topic name is already in use by another topic.': null
 'You must enter a name for the topic.': 'Morate unijeti ime za temu.'
 'You must choose a language for the topic.': 'Morate izabrati jezik za temu.'
 'This topic has subtopics, therefore it cannot be deleted.': 'Tema sadržava podtemu pa ne može biti obrisana.'

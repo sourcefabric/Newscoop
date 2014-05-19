@@ -29,7 +29,7 @@ removed: removido
 deleted: eliminado
 deactivated: desactivado
 activated: activado
-'Value is required and cant be empty': 'Valor necesari no puede estar vacío'
+'Value is required and cant be empty': 'Se requiere un valor.  No puede quedarse vacío.'
 'That user name already exists, please choose a different login name.': 'Ese nombre de usuario está en uso. Por favor escoja otro.'
 'That $1 already exists, please choose a different $2.': 'Ese $1 ya existe. Por favor escoja otro $2.'
 'Subscriptions exist for all available publications.': 'Existen subscripciones para todas las publicaciones.'
@@ -52,7 +52,7 @@ activated: activado
 E-Mail: 'Correo electrónico'
 'Delete subscriber $1': 'Eliminar subscriptor $1'
 'Creation Date': 'Fecha de creación'
-'Change subscriber information': 'Modificar datos de subscriptor'
+'Change subscriber information': 'Cambiar información de subscriptor'
 'Add new IP address': 'Añadir nueva dirección de IP'
 'Add new IP Address': 'Añadir nueva Dirección de IP'
 'Accout Name': 'Nombre de Cuenta'
@@ -65,8 +65,3 @@ E-Mail: 'Correo electrónico'
 'Subscription Type': 'Tipo de suscripción'
 'Paid (payment will be confirmed later)': 'Pagado ( pago sera confirmado luego )'
 'Paid (confirm payment now)': 'Pagado ( confirmar pago ahora )'
-'Left to pay': 'Pendiende de pago'
-Active: Activo
-'Are you sure you want to delete the subscription to the publication $1?': '¿Esta seguro que desea borrar la suscripción a la publicación $1?'
-Trial: Prueba
-'Are you sure you want to activate the subscription?': '¿Esta seguro que desea activar la suscripción?'

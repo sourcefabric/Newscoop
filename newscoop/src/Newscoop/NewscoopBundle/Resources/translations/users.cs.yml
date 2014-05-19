@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Webová stránka'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geolokace
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Nebyly nalezeny žádné záznamy.'
+'No entries to show': 'Nejsou zde žádné příspěvky k zobrazení'
+'Display _MENU_ records': 'Zobrazit _MENU_ záznamy'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
 'User renamed.': 'Uživatel přejmenován.'
 'User attributes': 'Atributy uživatele'
 'Rename user $1': 'Přejmenovat uživatele $1'
@@ -44,12 +44,12 @@ Continue:
 'Profile saved.': 'Profil uložen'
 Picture: Obrázek
 'Password updated': 'Heslo aktualizováno'
-None: Žádný
+None: Žádné
 'New confirmation email was sent to user.': 'Nový email s potvrzením byl uživateli zaslán'
 'Email is used already': 'Email je již používán'
 'Edit your password': 'Upravit heslo'
 'Edit user $1': 'Upravit uživatele $1'
-'Edit subscriptions': 'Upravit předplatné'
+'Edit subscriptions': 'Editovat předplatné'
 'Edit profile': 'Upravit profil'
 'Edit permissions': 'Upravit povolení'
 'Create new account': 'Vytvořit nový účet'
@@ -64,7 +64,7 @@ Username: 'Uživatelské jméno'
 'First Name': 'Křestní jméno'
 Email: Email
 'You were logged out.': 'Byl jste odhlášen.'
-'Newscoop Subhead': 'Podtitul Newscoop'
+'Newscoop Subhead': 'Podnadpis Newscoopu'
 Filters: Filtry
 'Add new Author': 'Přidat nového autora'
 'Loading Data': 'Nahrávat Data'
@@ -101,7 +101,7 @@ Filters: Filtry
 'User may attach topics to articles': 'Uživatel smí přikládat témata k článkům'
 'User may attach images to articles': 'Uživatel smí přikládat obrázky k článkům'
 'User may add special characters': 'Uživatel smí přidávat speciální znaky'
-'That user name already exists, please choose a different login name.': 'Uživatelské jméno již existuje, prosím zvolte jiné.'
+'That user name already exists, please choose a different login name.': 'Toto uživatlské jméno již existuje, prosím vyberte si jiné přihlašovací jméno.'
 'User may delete article attachments': 'Uživatel smí mazat přílohy článků'
 'User may change article attachments': 'Uživatel smí měnit přílohy článků'
 'User may add article attachments': 'Uživatel smí přidávat přílohy člákům'
@@ -184,45 +184,39 @@ Miscellaneous: Různé
 'User will be notified on several events': 'Uživatel bude několikrát informován'
 'Editor Miscellaneous Settings': 'Různé Nastavení Editoru'
 'No such user account.': 'Uživatelský účet neexistuje'
-'User management': 'Správa uživatelů'
-Set: Nastavit
-Update: Obnovit
-Rights: Práva
-'IP Access': 'IP přístup'
-'User Name': 'Uživatelské jméno'
-Staff: Zaměstnanci
-'Adding new user account': 'Přidání nového uživatelského účtu'
-'You must select an user type.': 'Musíte zvolit typ uživatele'
-'The user account $1 has been created.': 'Uživatelský účet $1 byl vytvořen'
-'Please check if an account with the same user name does not already exist.': 'Prosím zkontrolujte, zda účet se stejným uživatelským jménem již neexistuje'
-'You do not have the right to change user passwords.': 'Nemáte právo měnit uživatelská hesla'
-'Changing user password': 'Změna uživatelského hesla'
-'The password could not be changed.': 'Heslo nemohlo být změněno'
-'The password has been changed.': 'Heslo bylo změněno'
-'Edit user account permissions': 'Editovat práva uživatelského účtu'
-'This user account does not have permissions information.': 'Tento uživatelský účet nemá informace o právech'
-'Updating user account permissions': 'Obnova práv uživatelského účtu'
-'User account permissions have been successfuly updated.': 'Práva uživatelského účtu byla úspěšně obnovena'
-'User account permissions could not be updated.': 'Práva uživatelského účtu nemohla být obnovena'
-'Changing user account information': 'Změna informací uživatelského účtu'
-'User account information has been changed.': 'Informace uživatelského účtu byly změněny'
-'User account information could not be changed.': 'Informace uživatelského účtu nemohly být změněny'
-'Old password': 'Staré heslo'
-'New password': 'Nové heslo'
-'Confirm new password': 'Potvrďte nové heslo'
-'Changing your password': 'Změnit heslo'
-'User $1 changed his password': 'Uživatel $1 změnil své heslo'
-'Delete user account': 'Smazat uživatelský účet'
-'Deleting user account': 'Mazání uživatelského účtu'
-'The user account $1 could not be deleted.': 'Uživatelský účet $1 nemohl být smazán'
-'No such user.': 'Uživatel neexistuje'
-'Delete IP Group $1': 'Smazat IP skupinu $1 '
-'IP Access List': 'Seznam IP přístupů'
-'Adding new IP Group': 'Přidání nové IP skupiny'
-'The IP Group could not be created.': 'IP skupina nemohla být vytvořena'
-'Please check if an account with the same IP Group does not already exist.': 'Zkontrolujte prosím, zda již neexistuje účet se stejnou IP skupinou'
-'Delete IP Group': 'Smazat IP skupinu'
-'You do not have the right to delete IP Groups.': 'Nemáte právo smazat IP skupinu'
-'No such IP Group.': 'IP skupina neexistuje'
-'Deleting IP Group': 'Mazání IP skupiny'
-'The IP Group could not be deleted.': 'IP skupina nemohla být smazána'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Správa uživatelů'
+    created: Vytvořeno
+    updated: null
+    status:
+        status: Status
+        registered: null
+        pending: null
+        deleted: Vymazat
+        active: Aktivní
+    table:
+        actions:
+            actions: Činnosti
+            edit: Upravit
+            resend_email: null
+            rename: Přejmenovat
+            remove: Odstranit
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Zpracovávám...
+    chart:
+        title: null

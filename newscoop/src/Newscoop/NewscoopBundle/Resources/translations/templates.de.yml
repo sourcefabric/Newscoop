@@ -1,14 +1,14 @@
 'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 'Einige Dateien können nicht gelesen werden, daher kann Newscoop nicht bestimmen ob $1 in Gebrauch ist. Bitte ändern Sie dies, bevor Sie erneut versuchen die Template zu löschen. '
-'Stop current upload': 'Hochladen anhalten'
-'Start uploading queue': 'Warteschlange für Hochladen starten'
-'Start upload': 'Hochladen starten'
+'Stop current upload': 'Laufenden Upload abbrechen'
+'Start uploading queue': 'Upload Reihenfolge starten '
+'Start upload': 'Upload starten'
 Size: Größe
 'Select files': 'Dateien auswählen'
 Filename: Dateiname
-'Drag files here.': 'Dateien hierher ziehen.'
+'Drag files here.': 'Dateien hierher ziehen. '
 'Cache lifetime, sec': 'Cache Lifetime in Sekunden'
-'Add files to the upload queue and click the start button.': 'Dateien zur Warteschlange hinzufügen und Hochladen per Klicken starten.'
-'Add files': 'Dateien hinzufügen'
+'Add files to the upload queue and click the start button.': 'Fügen Sie Dateien zur Upload-Schlange hinzu und klicken Sie den Start Button. '
+'Add files': 'Datei hinzufügen. '
 '$1 files uploaded.': '$1 Dateien hochgeladen.'
 'Replace current with:': 'Aktuelle ersetzen durch:'
 'Edit template:': 'Template bearbeiten:'
@@ -19,7 +19,7 @@ Filename: Dateiname
 'You may only translate one article at a time.': 'Sie können nur einen Artikel gleichzeitig übersetzen.'
 'You do not have the right to rename templates.': 'Keine Berechtigung um Templates umzubenennen.'
 'You do not have the right to move templates.': 'Keine Berechtigung um Templates zu verschieben.'
-'You do not have the right to move articles.': 'Keine Berechtigung um Artikel zu verschieben.'
+'You do not have the right to move articles.': 'Keine Berechtigung Artikel zu verschieben.'
 'Unable to create folder.': 'Ordner konnte nicht erstellt werden.'
 'Unable to $1 template.': 'Nicht möglich Template zu $1.'
 'To New Name': 'Zum neuen Namen'
@@ -49,8 +49,8 @@ Folder: Ordner
 'If the file you specified is a text file, you can convert its character set using the dropdown below.': 'Wenn die gewählte Datei eine Textdatei ist, können Sie den Zeichensatz über das Dropdown Menü konvertieren.'
 'Directory $1 was deleted': 'Verzeichnis $1 wurde gelöscht.'
 'Directory $1 created.': 'Verzeichnis $1 wurde erstellt.'
-'You must select a file to upload.': 'Eine Datei zum Hochladen auswählen.'
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
+'You must select a file to upload.': 'Datei zum Hochladen auswählen.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': 'Datei $1 konnte nicht zum Pfad $2 gespeichert werden.'
 Replace: Ersetzen
 'File $1 replaced.': 'Datei $1 ersetzt.'
@@ -84,7 +84,3 @@ Files: Dateien
 'Duplicate file': 'Datei duplizieren'
 'Delete file': 'Datei löschen'
 'Please check if the user $1 has permission to write in this directory.': 'Bitte überprüfen, ob User $1 Zugriffsrechte für dieses Verzeichnis hat.'
-'The folder has been deleted.': 'Ordner wurde gelöscht'
-'The template has been deleted.': 'Template wurde gelöscht'
-'The template could not be deleted.': 'Template konnte nicht gelöscht werden'
-Save: Speichern

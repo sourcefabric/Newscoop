@@ -1,6 +1,6 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
-Webcode: 'Código web'
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: 'Código de web'
 'View article': 'Ver artigo'
 Source: Fonte
 'Select type': 'Selecionar o tipo'
@@ -18,14 +18,14 @@ Title: Título
 '$1 Article(s) not unlocked': '$1 artigo(s) não foram destrancados'
 '$1 Article(s) duplicated': '$1 artigo(s) duplicados'
 'Download file': 'Baixar arquivo'
-'You do not have the right to delete articles.': 'Você não tem o direito de apagar artigos.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Você não tem o direito de modificar o status do artigo. Uma vez entregado, o artigo pode ser modificado apenas por usuários autorizados.'
+'You do not have the right to delete articles.': 'Não tem permissões para eliminar artigos. '
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Não tem permissões para alterar o estado do artigo. Uma vez submetido apenas os utilizadores autorizados podem alterar o seu estado.'
 'Use Map': 'Usar o mapa'
 'Toggle: On Section Page': 'Alternar: Na página da seção'
 'Toggle: On Front Page': 'Alternar: Na primeira página'
 'Toggle: Comments': 'Alternar: Comentários'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': '$1 trancou o artigo ($2) $3 minuto(s) atrás.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': '$1 trancou o artigo ($2) $3 hora(s) e $4 minuto(s) atrás.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'O artigo foi trancado por $1 ($2) $3 minuto(s) atrás.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'O artigo foi trancado por $1 ($2) $3 hora(s) e $4 minuto(s) atrás.'
 'Status: Submit': 'Status: Entregar'
 'Status: Set New': 'Status: Definir novo'
 'Status: Publish': 'Status: Publicar'
@@ -39,7 +39,7 @@ Size: Tamanho
 'Published before': 'Publicado antes de'
 'Published after': 'Publicado depois de'
 'Publish date': 'Data de publicação'
-'Publish Schedule': 'Publicar cronograma'
+'Publish Schedule': 'Agendamento de publicação'
 'Publish Date': 'Data de publicação'
 'Order updated.': 'Ordem atualizada'
 'Open in browser': 'Abrir no navegador'
@@ -50,13 +50,13 @@ Size: Tamanho
 'No entries to show': 'Não há registros para mostrar'
 Locations: Localidades
 'Loading data': 'Carregando dados'
-'Last modified': 'Última vez modificado'
+'Last modified': 'Modificado pela última vez'
 'Last Modified': 'Última vez modificado'
-Last: Último
+Last: Ultimo
 First: Primeiro
 'Filter by...': 'Filtrar por...'
 Filter: Filtro
-Filename: 'Nome do arquivo'
+Filename: 'Nome de arquivo'
 'Duplicate to another section': 'Duplicar para outra seção'
 'Display _MENU_ records': Mostrar_MENU_registros
 Creator: Autor
@@ -67,7 +67,7 @@ Creator: Autor
 'All Publications': 'Todas as publicações'
 'All Issues': 'Todos os temas'
 Added: Adicionado
-'Access denied.': 'Acesso não permitido.'
-'$1 toggled.': '$1 alternado'
+'Access denied.': 'Acesso proibido.'
+'$1 toggled.': '$1 alternado.'
 '$1 articles have been removed': '$1 artigos foram removidos'
 ' - filtering from _MAX_ records': '- filtrando de _MAX_ registros'

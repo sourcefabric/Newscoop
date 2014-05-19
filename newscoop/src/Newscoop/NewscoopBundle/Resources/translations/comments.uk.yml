@@ -1,17 +1,17 @@
-'No attachment': 
+'No attachment': null
 at: на
 'With no attachment': 'При відсутності вкладень'
 'With image attachment': 'З зображенням у прікріпленні'
 'With document attachment': 'З документом у прікріпленні.'
-'Unable to reach Newscoop. Please check your internet connection.': 'Неможливо зв’язатись з NEWSCOOP. Будь ласка перевірте ваше інтернет-з’єднання '
+'Unable to reach Newscoop. Please check your internet connection.': 'Неможливо зв’язатись з Newscoop. Будь ласка, перевірте ваше інтернет-з’єднання.'
 Starred: Зірковий
 Star: Зірка
-'Showing _START_ to _END_ of _TOTAL_ entries': 
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показані від початку до кінця, від загального числа записів'
 'Reply to message': 'Відповісти на коментар'
 Reply: Відповідь
 Processed: Оброблено
-'No records found.': 
-'No entries to show': 
+'No records found.': 'Немає записів'
+'No entries to show': 'Немає записів для відображення'
 'Messages updated.': 'Повідомлення оновлено.'
 'Messages status change to $1.': 'Статус повідомленнь змінено на $1.'
 'Messages deleted.': 'Повідомлення видалені.'
@@ -19,22 +19,22 @@ Processed: Оброблено
 'Message status change to $1.': 'Статус повідомлення змінений на  $1.'
 'Message deleted.': 'Повідомлення видалено.'
 Message: Повідомлення
-Last: 
+Last: Останнє
 'Full article': 'Повна стаття'
-First: 
+First: Перше
 'Feedback Messages': 'Повідомлення зворотнього зв’язку'
-'Display _MENU_ records': 
+'Display _MENU_ records': 'Показати _MENU_ записи'
 Deleted: Видалено
 'Change selected messages status': 'Змінити статус вибраних повідомлень'
 Attachment: Прікріплення
 Approved.: Затверджено.
 Approve: Затвердження
-Anonymous: 
-' - filtering from _MAX_ records': 
+Anonymous: null
+' - filtering from _MAX_ records': 'фільтрація від _MAX_ записів'
 'You are about to permanently delete multiple messages.': 'Ви збираєтеся видалити кілька повідомлень.'
 'You are about to permanently delete a message.': 'Ви збираєтеся видалити повідомлення.'
 User: Користувач
-None: Жоден
+None: 'Ні один'
 'Coming from': 'Виходячи з'
 'Ban/Unban user': 'Дозволити / заборонити користувачу коментувати'
 Ip: IP
@@ -73,13 +73,13 @@ Email: Е-пошта
 E-mail: Е-пошта
 'Delete all comments?': 'Видалити всі коментарі'
 'Date Created': 'Дата створення'
-'Comments updated.': 'Коментарі оновлено.'
+'Comments updated.': 'Коментарії оновлено.'
 'Comments status change to $1.': 'Змінити статус коменарів на $1.'
 'Comments deleted.': 'Коментар видалено.'
 'Commenter $1 saved.': 'Коментатора $1 збережено.'
 'Commenter $1 deleted.': 'Коментатора $1 видалено.'
 Commenter: Коментар
-'Comment updated.': 'Комент оновлено.'
+'Comment updated.': 'Коментарій оновлено.'
 'Comment status change to $1.': 'Змінити статус коменаря на $1.'
 'Comment id': 'ІD коментаря'
 'Comment deleted.': 'Коментар видалено.'

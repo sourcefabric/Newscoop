@@ -1,23 +1,23 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
+'Password confirmation does not match your password.': 'Password confirmation does not match your password.'
+'Password Confirmation': 'Password Confirmation'
+Website: Website
+Twitter: Twitter
+'Save profile': 'Save profile'
+'Profile image': 'Profile image'
+Organisation: Organisation
+'Last Name Public': 'Last Name Public'
+Google+: Google+
+Geolocation: Geolocation
+Gender: Gender
+'First Name Public': 'First Name Public'
+Facebook: Facebook
+'Date of birth': 'Date of birth'
+'Allow sending emails': 'Allow sending emails'
+'About me': 'About me'
+'User with email %s is registered already.': 'User with email %s is registered already.'
+'Username is used. Please use another one.': 'Username is already used. Please use another one.'
+Continue: Continue
+'Accepting terms of use': 'Accepting terms of use'
 'send confirmation email': 'send confirmation email'
 'edit user': 'edit user'
 'delete user': 'delete user'
@@ -184,3 +184,39 @@ Miscellaneous: Miscellaneous
 'User will be notified on several events': 'User will be notified on several events'
 'Editor Miscellaneous Settings': 'Editor Miscellaneous Settings'
 'No such user account.': 'No such user account.'
+'User image (full-size)': 'User image (full-size)'
+users:
+    label:
+        title: 'Users search'
+    menu:
+        manage: 'Manage Users'
+    created: Created
+    updated: Updated
+    status:
+        status: Status
+        registered: Registered
+        pending: Pending
+        deleted: Deleted
+        active: Active
+    table:
+        actions:
+            actions: Actions
+            edit: Edit
+            resend_email: 'Resend activation email'
+            rename: Rename
+            remove: Remove
+        confirm_remove: 'Do you really want to remove this user?'
+        table_messages:
+            page: Page
+            perPageText: 'Show: '
+            pageText: 'Pages: '
+            recordCountPageBoundTemplate: '{pageLowerBound} to {pageUpperBound} of'
+            recordCountPageUnboundedTemplate: '{recordsShown} of'
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: ' (filtered from {recordsTotal} total records)'
+            recordCountText: 'Showing '
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
+            processingText: Processing...
+    chart:
+        title: 'Active Logins'

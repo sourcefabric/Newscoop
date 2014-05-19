@@ -1,5 +1,5 @@
-'The country $1 could not be created.': 
-'Country with code $1 exists already.': 
+'The country $1 could not be created.': null
+'Country with code $1 exists already.': null
 'You do not have the right to add countries.': '국가를 추가할 권한이 없습니다. '
 'Delete country': '국가 삭제'
 'You do not have the right to delete countries.': '국가를 삭제할 권한이 없습니다. '

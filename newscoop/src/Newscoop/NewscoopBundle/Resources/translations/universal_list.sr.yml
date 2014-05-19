@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Користи мапу'
+Locations: Локације
+Last: Последњи
+First: Први
+'Publish Schedule': 'Распоред објављивања'
+'You do not have the right to delete articles.': 'Немате право да бришете текстове.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Немате право да мењате статус текста. Предатом тексту статус може променити само овлашћени корисник.'
+'Toggle: On Section Page': 'Измени На страни рубрике'
+'Toggle: On Front Page': 'Измени На почетној страни'
+'Toggle: Comments': 'Измени Коментари'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 минут(а)'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Текст је закључан од стране $1 ($2) пре $3 час(ова) и $4 минут(а)'
+'Status: Submit': 'Статус: предат'
+'Status: Set New': 'Статус: нови'
+'Status: Publish': 'Статус: објављен'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+'Show / hide columns': 'Прикажи/сакри колоне'
+'Select some article first.': 'Прво изаберите неке текстове'
+'Select action': 'Изаберите акцију'
+'Save order': 'Сними редослед'
+'Reset all filters': 'Поништи све филтере'
+'Published before': 'Објављено пре'
+'Published after': 'Објављено после'
+'Publish date': 'Датум објављивања'
+'Publish Date': 'Датум објављивања'
+'Order updated.': 'Редослед измењен'
+'No sections found': 'Нема рубрика'
+'No records found.': 'Нема записа'
+'No publications found': 'Нема публикација'
+'No issues found': 'Нема издања'
+'No entries to show': 'Нема уноса за приказ'
+'Loading data': Учитавање
+'Last Modified': Измењено
+'Filter by...': 'Филтрирај по...'
+Filter: Филтер
+'Duplicate to another section': 'Дуплирај у другу рубрику'
+'Display _MENU_ records': 'Прикажи _MENU_ записе'
+Creator: Направио
+'Create Date': 'Датум прављења'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Статус текста је подешен у $1'
+'Are you sure you want to delete selected articles?': 'Да ли сте сигурни да желите да обришете изабране текстове?'
+'All Sections': 'Све рубрике'
+'All Publications': 'АПИ публикације'
+'All Issues': 'Сва издања'
+'Access denied.': 'Приступ забрањен'
+'$1 toggled.': '$1 измењено у спротно.'
+'$1 articles have been removed': '$1 текстова уклоњено'
+' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'

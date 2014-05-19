@@ -1,12 +1,12 @@
-Loading...: 
-'Latest 20 articles by popularity': 
-'Articles diagrams': 
+Loading...: 'في عملية تحميل...'
+'Latest 20 articles by popularity': null
+'Articles diagrams': null
 'Sourcefabric.org blog reader': 'قارئ المدونة لـ Sourcefabric.org'
 'Sourcefabric.org News reader': 'قارئ الأخبار من Sourcefabric.org'
 'Feed reader': 'قارئ التلقيم'
 Go: الذهاب
 'Wikipedia Search': 'البحث في ويكيبيديا'
-Files: ملقات
+Files: ملفات
 'Sourcefabric.org newsletter subscription': 'اشتراك النشرة الاخبارية لـ Sourcefabric.org'
 'Maps search': 'البحث في الخرائط'
 'Default location': 'المكان الافتراضي'
@@ -15,7 +15,7 @@ Title: العنوان
 'Sourcefabric.org dev feed reader': 'قارئ التلقيم للتطوير من Sourcefabric.org'
 'Recently Published Articles': 'مقالات تم نشرها مؤخرا'
 'Recently Modified Articles': 'مقالات تم تعديلها مؤخرا'
-'Pending Articles': 'مقالات في الانتظار'
+'Pending Articles': 'مقالات قيد انتظار'
 'Paste google generated code': 'لصاق الرمز الذي أنتجه جوجل'
 'Most Popular Articles': 'المقالات الأكثر شعبية'
 'Media files': 'ملفات الوسائط'

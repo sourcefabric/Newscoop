@@ -1,35 +1,35 @@
-third: 
-second: 
-forth: 
-first: 
-'You must input a number greater than 0 into the Number of addresses field.': 
-'You must input a number between 0 and 255 into the Start IP address $1 field.': 
-'User IP access list management': 
-'The IP address group conflicts with another existing group.': 
-'Subscription sections': 
-'No records.': 
-'You have subscription for all available publications': 
-'Subscription type:': 
-'Start:': 
-'Start Date': 
-'Sections:': 
-'Publication:': 
-'Paid days': 
-'Paid Days:': 
-Paid: 
-'No subscriptions': 
-'Languages:': 
-'Edit all sections': 
-'Days:': 
-'Days must be number': 
-Any: 
-'Add section': 
+third: null
+second: null
+forth: null
+first: null
+'You must input a number greater than 0 into the Number of addresses field.': null
+'You must input a number between 0 and 255 into the Start IP address $1 field.': null
+'User IP access list management': null
+'The IP address group conflicts with another existing group.': null
+'Subscription sections': null
+'No records.': null
+'You have subscription for all available publications': null
+'Subscription type:': null
+'Start:': null
+'Start Date': 'Почетни датум'
+'Sections:': null
+'Publication:': null
+'Paid days': null
+'Paid Days:': null
+Paid: null
+'No subscriptions': null
+'Languages:': null
+'Edit all sections': 'Уреди све рубрике'
+'Days:': null
+'Days must be number': null
+Any: null
+'Add section': null
 saved: снимљено
 removed: уклоњено
-deleted: обрисано
+deleted: обрисана
 deactivated: деактивирано
 activated: активирано
-'Value is required and cant be empty': 'Вредност је обавезна и не може бити празна'
+'Value is required and cant be empty': 'Вредност је обавезна, поље не може бити празно'
 'That user name already exists, please choose a different login name.': 'То корисничко име већ постоји, изаберите неко друго име.'
 'That $1 already exists, please choose a different $2.': 'Тај $1 већ постоји, изаберите други $2.'
 'Subscriptions exist for all available publications.': 'Претплате постоје за све доступне публикације.'
@@ -65,8 +65,3 @@ E-Mail: Имејл
 'Subscription Type': 'Тип претплате'
 'Paid (payment will be confirmed later)': 'Плаћено (уплата ће бити потврђена касније) '
 'Paid (confirm payment now)': 'Плаћено (потврди уплату сад)'
-'Are you sure you want to activate the subscription?': 'Сигурни сте да желите да активирате претплату?'
-'Left to pay': 'Преостало за плаћање'
-Active: Активно
-'Are you sure you want to delete the subscription to the publication $1?': 'Сигурни сте да желите да обришете претплате на публикацију $1?'
-Trial: Пробно

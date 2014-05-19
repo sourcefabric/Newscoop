@@ -1,12 +1,12 @@
-'You must enter a name for the topic.': 
-'Show All': 
-'Select the parent of the topic': 
-None: 
-'Add new topic': 
-'No topics have been created yet.': 
-'Topics updated.': 
-'Topic does not exist.': 
-'The topic $1 has been removed from article.': 
+'You must enter a name for the topic.': '토픽에 대한 이름을 입력하시오.'
+'Show All': null
+'Select the parent of the topic': null
+None: null
+'Add new topic': null
+'No topics have been created yet.': null
+'Topics updated.': null
+'Topic does not exist.': null
+'The topic $1 has been removed from article.': null
 'You do not have the right to detach topics from articles.': '기사에서 토픽을 띄어내기할 권한이 없습니다.'
 'You do not have the right to attach topics to articles.': '기사를 토픽에 첨부할 권한이 없습니다. '
 'Attach Topics': '토픽 첨부'

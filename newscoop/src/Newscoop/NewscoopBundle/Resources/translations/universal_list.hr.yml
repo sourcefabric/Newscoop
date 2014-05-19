@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': null
+Locations: null
+Last: Zadnji
+First: Prvi
+'Publish Schedule': 'Raspored objavljivanja'
+'You do not have the right to delete articles.': 'Nemate prava brisati članke.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nemate prava mijenjati status članka. Predatom članku status može mijenjati samo prijavljeni korisnik.'
+'Toggle: On Section Page': null
+'Toggle: On Front Page': null
+'Toggle: Comments': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'Status: Submit': null
+'Status: Set New': null
+'Status: Publish': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Show / hide columns': null
+'Select some article first.': null
+'Select action': null
+'Save order': null
+'Reset all filters': null
+'Published before': null
+'Published after': null
+'Publish date': null
+'Publish Date': null
+'Order updated.': null
+'No sections found': null
+'No records found.': null
+'No publications found': null
+'No issues found': null
+'No entries to show': null
+'Loading data': null
+'Last Modified': null
+'Filter by...': null
+Filter: null
+'Duplicate to another section': null
+'Display _MENU_ records': null
+Creator: null
+'Create Date': null
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': null
+'Are you sure you want to delete selected articles?': null
+'All Sections': null
+'All Publications': null
+'All Issues': null
+'Access denied.': null
+'$1 toggled.': null
+'$1 articles have been removed': null
+' - filtering from _MAX_ records': null

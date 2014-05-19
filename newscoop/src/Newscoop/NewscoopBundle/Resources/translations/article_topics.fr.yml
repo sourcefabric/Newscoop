@@ -1,12 +1,12 @@
-'You must enter a name for the topic.': 
-'Show All': 
-'Select the parent of the topic': 
-None: 
-'Add new topic': 
-'No topics have been created yet.': 
-'Topics updated.': 
-'Topic does not exist.': 
-'The topic $1 has been removed from article.': 
+'You must enter a name for the topic.': 'Vous devez entrer un nom pour le sujet. '
+'Show All': null
+'Select the parent of the topic': null
+None: null
+'Add new topic': null
+'No topics have been created yet.': null
+'Topics updated.': null
+'Topic does not exist.': null
+'The topic $1 has been removed from article.': null
 'You do not have the right to detach topics from articles.': 'Vous navez pas le droit de détacher des sujets darticles. '
 'You do not have the right to attach topics to articles.': 'Vous navez pas le droit dattacher des sujets aux articles. '
 'Attach Topics': 'Attacher Sujets'

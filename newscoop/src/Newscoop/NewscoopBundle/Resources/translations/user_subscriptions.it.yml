@@ -11,7 +11,7 @@ first: primo
 'You have subscription for all available publications': 'Sei già iscritto a tutte le pubblicazioni disponibili'
 'Subscription type:': 'Tipo di iscrizione'
 'Start:': 'Inizio:'
-'Start Date': 'Data dinizio'
+'Start Date': 'Data inizio'
 'Sections:': 'Sezioni:'
 'Publication:': 'Pubblicazione:'
 'Paid days': 'Giorni pagati'
@@ -19,7 +19,7 @@ first: primo
 Paid: Pagato
 'No subscriptions': 'Nessuna iscrizione'
 'Languages:': 'Lingue:'
-'Edit all sections': 'Modifica tutte le sezioni'
+'Edit all sections': 'Modifica sezioni'
 'Days:': Giorni
 'Days must be number': 'I giorni devono essere un numero'
 Any: Tutte
@@ -29,7 +29,7 @@ removed: rimosso
 deleted: eliminato
 deactivated: disattivato
 activated: attivato
-'Value is required and cant be empty': 'È obbligatorio inserire un valore non vuoto'
+'Value is required and cant be empty': 'È richiesto un valore non vuoto'
 'That user name already exists, please choose a different login name.': 'Questo nome utente è già utilizzato, scegli un altro nome per il login.'
 'That $1 already exists, please choose a different $2.': '$1 esiste già, scegli un $2 differente.'
 'Subscriptions exist for all available publications.': 'Cè già uniscrizione per ogni pubblicazione disponibile.'
@@ -52,14 +52,14 @@ activated: attivato
 E-Mail: Email
 'Delete subscriber $1': 'Elimina sottoscrittore $1'
 'Creation Date': 'Data di creazione'
-'Change subscriber information': 'Cambia informazioni sottoscrittore'
+'Change subscriber information': 'Cambia informazioni iscritto'
 'Add new IP address': 'Aggiungi indirizzo IP'
 'Add new IP Address': 'Aggiungi indirizzo IP'
 'Accout Name': 'Nome account'
 '%value% must be greater than %min%': '%value% deve essere maggiore di %min%'
 '%value% is not a valid IP Address': '%value% non è un indirizzo IP valido'
-'Regardless of the language': 'Indipendentemente dalla lingua'
-'Individual languages': 'Lingue singole'
+'Regardless of the language': 'Ignora lingue'
+'Individual languages': 'Lingue individuali'
 'Add sections now': 'Aggiungi sezione adesso'
 'Add sections later': 'Aggiungi sezione in seguito'
 'Subscription Type': 'Tipo di iscrizione'

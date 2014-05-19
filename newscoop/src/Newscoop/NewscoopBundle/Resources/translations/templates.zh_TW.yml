@@ -1,12 +1,86 @@
-'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 
-'Stop current upload': 
-'Start uploading queue': 
-'Start upload': 
-Size: 
-'Select files': 
-Filename: 
-'Drag files here.': 
-'Cache lifetime, sec': 
-'Add files to the upload queue and click the start button.': 
-'Add files': 
-'$1 files uploaded.': 
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
+'Stop current upload': null
+'Start uploading queue': null
+'Start upload': null
+Size: null
+'Select files': null
+Filename: null
+'Drag files here.': null
+'Cache lifetime, sec': null
+'Add files to the upload queue and click the start button.': null
+'Add files': null
+'$1 files uploaded.': null
+'Replace current with:': null
+'Edit template:': null
+'Changes have not been saved. Load new template without saving the current one?': null
+'to folder': null
+'You must select at least one template to perform an action.': null
+'You must select a destination folder': null
+'You may only translate one article at a time.': null
+'You do not have the right to rename templates.': null
+'You do not have the right to move templates.': null
+'You do not have the right to move articles.': null
+'Unable to create folder.': null
+'Unable to $1 template.': null
+'To New Name': null
+'These templates': null
+'The template object $1 is in use and can not be deleted.': null
+'The template object $1 could not be renamed.': null
+'Template(s) moved.': null
+'Template(s) deleted.': null
+'Template object $1 was renamed to $2': null
+'Template object $1 was deleted': null
+'Some templates could not be deleted because they are in use.': null
+'Select folder': null
+'Rename template': null
+'Rename file': null
+Rename: null
+'No folders': null
+'New Name': null
+'Move templates': null
+Folder: null
+'File cannot be read.': null
+'Are you sure you want to delete the template object $1 from folder $2?': null
+'Are you sure you want to delete the selected templates?': null
+'Template ID:': null
+'Template ID': null
+'Template $1 no longer exists!': null
+'New template $1 created': null
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
+'Directory $1 was deleted': null
+'Directory $1 created.': null
+'You must select a file to upload.': null
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
+'Unable to save the file $1 to the path $2.': null
+Replace: null
+'File $1 replaced.': null
+'The folder name cant be .. or .': null
+'The template $1 was saved successfully.': null
+'Create new folder': null
+'Upload template': null
+'You do not have the right to create new folders.': null
+'A file or folder having the name $1 already exists': null
+'You do not have the right to delete templates.': null
+'Are you sure you want to delete the folder $1 from $2?': null
+'Delete folder': null
+Folders: null
+'No folders.': null
+Files: null
+'No templates.': null
+'Create new template': null
+'Duplicate template': null
+'Edit template': null
+'The template $1 could not be created.': null
+'Template $1 was changed': null
+'Template $1 was duplicated into $2': null
+'Template charset': null
+'Select a language/character set': null
+'All languages': null
+'You do not have the right to modify templates.': null
+'Invalid template file $1': null
+'You do not have the right to create folders.': null
+'You do not have the right to upload templates.': null
+'You do not have the right to create templates.': null
+'Duplicate file': null
+'Delete file': null
+'Please check if the user $1 has permission to write in this directory.': null

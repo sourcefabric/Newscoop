@@ -1,7 +1,7 @@
 'Rename user': 'Renombrar al usuario'
 Campsite: Campsite
 'Image Rendering': 'Generación de imagen'
-'Featured Article Lists': 'Lista de articulos seleccionados'
+'Featured Article Lists': 'Listas de artículos seleccionados'
 'You have tried to upload an invalid backup file.': 'Has tratado de subir un archivo de respaldo inválido.'
 'You do not have the right to manage backups.': 'No tienes los permisos para administrar archivos de respaldo.'
 'Make a new backup': 'Haz un nueva copia de respaldo.'
@@ -54,7 +54,7 @@ Filename: 'Nombre del archivo'
 'Edit language': 'Editar idioma'
 'Drag files here.': 'Arrastrar archivos a esta área'
 'Connection interrupted': 'Se interrupió la conexión'
-Ban: Bloquear
+Ban: Restricción
 'Are you sure you want to': '¿Estás seguro de querer'
 'Add files to the upload queue and click the start button.': 'Añade archivos a la cola de carga y da clic al botón de iniciar.'
 'Add files': 'Añadir archivos'
@@ -64,7 +64,7 @@ Ban: Bloquear
 Newscoop: Newscoop
 'Your password has been reset.': 'Se ha restablecido su contraseña.'
 'Proceed to login.': 'Proceda al ingreso.'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Hola, \n\n para recuperar su contraseña, siga el siguiente enlace $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Ir al área de ingreso'
 'Back to login.': 'De vuelta al área de ingreso.'
 'Back to login': 'De vuelta al área de ingreso.'
@@ -120,8 +120,8 @@ Download: Descargar
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Incapaz de crear auto $1 para artículo no. $2 ($3) p tipo $4'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Error al poner el autor para los artículos de tipo $1 del campo $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'El autor fue exitósamente colocado en los artículos de tipo $1 del campo $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'El artículo ha sido bloqueado por $1 ($2) $3 hace minuto(s). '
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'El artículo ha sido bloqueado por $1 ($2) $3 hora(s) y hace $4 minuto(s).'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 minuto(s).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 hora(s) y $4 minuto(s).'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Error al fijar el autor $1 para el artículo no. $2 (3) del tipo $4.'
 'Clear system cache': 'Despejar el caché del sistema'
 'The system was unable to upload the file $1. ': 'El sistema fue incapaz de subir el archivo $1.'
@@ -152,3 +152,7 @@ Help: Ayuda
 'Please make sure that you typed the correct user name and password.': 'Por favor asegúrese de que escribió correctamente su nombre de usuario y contraseña.'
 'If your problem persists please contact the site administrator $1': 'Si su problema persiste favor contacte al administrador del sistema $1'
 Backup/Restore: Respaldar/Restablecer
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

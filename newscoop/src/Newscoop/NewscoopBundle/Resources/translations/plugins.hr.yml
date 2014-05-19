@@ -1,14 +1,14 @@
-'You have no installed plugins.': 
-'Some plugins have to be updated. Please press the save button.': 
-'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 
-'You do not have the right to manage plugins.': 
-Version: 
-'Upload Plugin': 
-Upload: 
-Uninstall: 
-'The plugin $1 was sucessfully installed.': 
-'No plugins found.': 
-Manage: 
-Enabled: 
-'Delete plugin': 
-'Add new image': 
+'You have no installed plugins.': null
+'Some plugins have to be updated. Please press the save button.': null
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': null
+'You do not have the right to manage plugins.': null
+Version: null
+'Upload Plugin': null
+Upload: null
+Uninstall: null
+'The plugin $1 was sucessfully installed.': null
+'No plugins found.': null
+Manage: null
+Enabled: null
+'Delete plugin': null
+'Add new image': 'Dodaj novu sliku'

@@ -26,7 +26,7 @@ Any: Każdy
 'Add section': 'Dodaj sekcję'
 saved: zapisane
 removed: usunięte
-deleted: usunięte
+deleted: usuniety
 deactivated: wyłączone
 activated: aktywowane
 'Value is required and cant be empty': 'Wartość jest wymagana i nie może być pusta.'
@@ -59,7 +59,7 @@ E-Mail: 'Adres email'
 '%value% must be greater than %min%': '%value% musi mieć więcej znaków niż %max%'
 '%value% is not a valid IP Address': '%value% nie jest prawidłowym adresem IP'
 'Regardless of the language': 'Niezależnie od języka'
-'Individual languages': 'Indiwydualne języki'
+'Individual languages': 'Indywidualne języki'
 'Add sections now': 'Dodaj sekcję'
 'Add sections later': 'Dodaj sekcję później'
 'Subscription Type': 'Typ subskrypcji'

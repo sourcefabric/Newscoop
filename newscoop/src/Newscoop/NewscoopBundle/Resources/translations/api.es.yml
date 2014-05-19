@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'No es un color'
 'No such field': 'No existe ese campo'
 'Color saved': 'Color guardado'
@@ -61,3 +61,44 @@ First: Primero
 'Multi-line Text with WYSIWYG': 'Cuerpo del artículo'
 'URL $1 is invalid or is not an image.': 'El URL $1 es inválido o no es una imagen.'
 'URL $1 is not an image.': 'El URL $1 no es una imagen.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: Publicación
+                actions: Acciones
+                actions_buttons:
+                    remove: Eliminar
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: Guardar
+        PublicResources:
+            label:
+                routes: null
+                save: Guardar

@@ -1,5 +1,7 @@
+'Rename user': null
+Campsite: null
 'Image Rendering': 'Rendering delle immagini'
-'Featured Article Lists': 'Vetrine di articoli'
+'Featured Article Lists': 'Liste di articoli in vetrina'
 'You have tried to upload an invalid backup file.': 'Il file che hai cercato di caricare non è un backup valido.'
 'You do not have the right to manage backups.': 'Non hai il permesso di gestire i backup.'
 'Make a new backup': 'Esegui un nuovo backup'
@@ -30,7 +32,7 @@ Detail: Dettagli
 MiB: MiB
 'Download was not successful. Check please that the server is not out of disk space.': 'Download fallito. Controlla che il server abbia abbastanza spazio su disco.'
 'try again later': 'ritenta più tardi'
-at: nel
+at: in
 'You must at least upload one file.': 'Devi caricare almeno un file.'
 'Warning: the existing data and themes will be deleted!': 'Attenzione: i dati ed i temi esistenti verranno eliminati!'
 'Value is required and cant be empty': 'È richiesto un valore non vuoto'
@@ -43,7 +45,7 @@ Themes: Temi
 'Start upload': 'Inizia caricamento'
 Settings: Impostazioni
 'Select files': 'Seleziona i file'
-Reply: Rispondi
+Reply: Risposta
 'New comment added': 'Commento aggiunto'
 'Manage Authors': 'Gestisci autori'
 Loading..: Caricamento...
@@ -52,7 +54,7 @@ Filename: 'Nome file'
 'Edit language': 'Modifica lingua'
 'Drag files here.': 'Trascina qui i file.'
 'Connection interrupted': 'Connessione interrotta'
-Ban: Blocca
+Ban: Blocco
 'Are you sure you want to': 'Confermi di voler'
 'Add files to the upload queue and click the start button.': 'Aggiungi file alla coda di caricamento e clicca su Inizia'
 'Add files': 'Aggiungi dei file'
@@ -62,7 +64,7 @@ Ban: Blocca
 Newscoop: Newscoop
 'Your password has been reset.': 'La tua password è stata resettata.'
 'Proceed to login.': 'Prosegui con il login.'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Salve,\n\n per il recupero della password segui questo link: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Vai al login'
 'Back to login.': 'Torna al login.'
 'Back to login': 'Torna al login'
@@ -78,7 +80,7 @@ Dashboard: Dashboard
 'Your changes will be saved after login.': 'Le tue modifiche verranno salvate dopo aver effettuato il login.'
 'Upload backup file': 'Carica un file di backup'
 'The file $1 has been uploaded successfully.': 'Il file $1 è stato caricato con successo.'
-'Media Archive': 'Archivio multimediale'
+'Media Archive': 'Archivio media'
 Widgets: Widget
 'Widget info': 'Informazioni sul widget'
 'Widget added to dashboard.': 'Widget aggiunto alla Dashboard.'
@@ -118,7 +120,7 @@ Download: Scarica
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Impossibile creare lautore $1 per larticolo n. $2 ($3) del tipo $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Si sono verificati degli errori impostando lautore per gli articoli di tipo $1 dal campo $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Lautore è stato correttamente impostato per gli articoli di tipo $1 del campo $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Larticolo è stato bloccato da $1 ($2) $3 minuti fa.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Larticolo è stato bloccato da $1($2) $3 minuti fa.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Larticolo è stato bloccato da $1 ($2) $3 ore e $4 minuti fa.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Errore dirante limpostazione dellautore $1 per larticolo n. $2 ($3) del tipo $4.'
 'Clear system cache': 'Svuota la cache di sistema'
@@ -150,3 +152,7 @@ Help: Aiuto
 'Please make sure that you typed the correct user name and password.': 'Verifica di aver digitato nome utente e password corretti.'
 'If your problem persists please contact the site administrator $1': 'Se il problema persiste, contatta lamministratore $1'
 Backup/Restore: Backup/Ripristino
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

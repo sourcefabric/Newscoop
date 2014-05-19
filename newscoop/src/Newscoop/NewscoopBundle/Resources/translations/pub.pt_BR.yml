@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'O apelido (alias) $1 não pode ser apagado.'
 '$1 is the default publication alias, it can not be deleted.': '$1 é o alias padrão da publicação, não pode ser apagado.'
 'You do not have the right to add publications.': 'Você não tem permissões para adicionar publicações.'
-'There are $1 issue(s) left.': 'Existe(m) ainda $1 edição(ões).'
+'There are $1 issue(s) left.': 'Existe(m) ainda $1 Edição(ões).'
 'Time Unit': 'Unidade de tempo'
 Currency: Moeda
 'Edit languages': 'Editar idiomas'
@@ -75,4 +75,3 @@ Currency: Moeda
 'Article title': 'Título do artigo'
 'Article keywords': 'Palavras-chaves do artigo'
 'Article topics': 'Tópicos do artigo'
-'Change publication information': 'Alterar detalhes da Publicação'

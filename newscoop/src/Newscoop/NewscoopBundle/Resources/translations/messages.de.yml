@@ -9,7 +9,7 @@ More...: Mehr...
 Content: Inhalt
 Languages: Sprachen
 Countries: Länder
-Themes: Designvorlagen
+Themes: Themen
 Topics: Themen
 Configure: Konfiguration
 'Image Archive': Bildarchiv
@@ -74,7 +74,7 @@ Action: Aktion
 'Schedule a new action': 'Neue Aktion automatisieren'
 'Scheduling a new publish action': 'Neue Aktion wird automatisiert'
 'Delete scheduled publish action': 'Löschen einer automatisierten Aktion'
-Date/Time: Datum/Zeit
+Date/Time: Datum/Uhrzeit
 'You must select an action.': 'Sie müssen eine Aktion wählen.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Kein Zugriffsrecht auf die Automatisierung von Ausgaben oder Artikeln'
 'Front page': Startseite
@@ -125,7 +125,7 @@ Publish: Veröffentlichen
 Unpublish: 'Zurück stellen'
 Unlock: Freigeben
 Uploaded: Hochgeladen
-YYYY-MM-DD: 'JJJJ-MM-TT'
+YYYY-MM-DD: JJJJ-MM-TT
 Submit: Absenden
 Image: Bild
 Description: Beschreibung
@@ -194,7 +194,7 @@ Search: Suche
 'Article automatic publishing schedule': 'Automatisierung des Artikels (Veröffentlichung und Eigenschaften)'
 'Are you sure you want to delete this scheduled action?': 'Soll diese automatisierte Aktion gelöscht werden?'
 Unlink: Entkoppeln
-'Are you sure you want to delete the image $1?': 'Soll Bild $1 gelöscht werden?'
+'Are you sure you want to delete the image $1?': 'Sind Sie sicher, dass Sie um das Bild zu löschen?'
 'No such issue.': 'Ausgabe nicht vorhanden'
 'Are you sure you want to delete the subscription to the publication $1?': 'Soll das Abonnement für die Publikation $1 gelöscht werden?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Die Änderungen für Ausgabe $1 konnte nicht gespeichert werden. Bitte prüfen Sie, dass Ausgaben URL $2 noch nicht in Publikation $3 benutzt wurde.'
@@ -210,7 +210,7 @@ Add: Hinzu
 'Select All': 'Alle auswählen'
 'Select None': 'Keine auswählen'
 'Add Event': 'Ereignis hinzufügen'
-N/A: 'N.A.'
+N/A: N.A.
 'On Front Page': 'Auf der Startseite'
 'On Section Page': 'Auf der Rubrikenseite'
 'Created by': 'Erstellt von'
@@ -231,7 +231,7 @@ Approved: Bewilligt
 Subject: Subjekt
 'IP address:': 'IP Adresse'
 'Email:': 'E-Mail:'
-Author: Autor/in
+Author: AutorIn
 'Article name': Artikelname
 'Hide article': 'Verberge Artikel'
 'Show article': 'Zeige Artikel'
@@ -245,19 +245,19 @@ Author: Autor/in
 Other: Andere
 'Time:': 'Uhrzeit:'
 'No events.': 'Keine Ereignisse.'
-'Default templates': 'Standard-Template'
+'Default templates': Standard-Template
 'System Preferences': Systemeinstellungen
 'The date must be in the future.': 'Das Datum muss in der Zukunft liegen.'
 Send: Senden
 'Thank you.': 'Vielen Dank.'
 'Please take a minute to send us an email.': 'Bitte nehmen Sie sich eine Minute, um uns eine E-Mail zu senden.'
-'(optional)': '(optional)'
+(optional): (optional)
 'The URL you entered is invalid: $1': 'Die angegebene URL ist ungültig: $1'
 Reads: Gelesen
 'Publish with issue': 'Mit Ausgabe veröffentlichen'
 'Universal List': 'Universelle Liste und Suche'
 'Invalid security token!': 'Ungültiges Sicherheits-Token! '
-Authors: Autoren
+Authors: Autoren/innen
 Title: Titel
 'Edit country': 'Land bearbeiten'
 'Entry $1 prepared for publishing': 'Eintrag $1 vorbereitet zur Publikation'
@@ -275,10 +275,10 @@ Title: Titel
 'Permissions: $1': 'Berechtigungen: $1'
 'Change user account information': 'Benutzerinformation ändern'
 'Staff management': 'Mitarbeiter Management'
-'Updated': 'Aktualisiert'
-'Options': 'Optionen'
-'Verified': 'Verifiziert'
+Updated: Aktualisiert
+Options: Optionen
+Verified: Verifiziert
 Confirm: Bestätige
-at: um
+at: auf
 published: veröffentlicht
 unpublished: unveröffentlicht

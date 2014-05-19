@@ -1,7 +1,7 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Stai per cancellare definitivamente più messaggi.'
+'You are about to permanently delete a message.': 'Stai per cancellare definitivamente un messaggio.'
+'Are you sure you want to do it?': 'Sei sicuro di volerlo fare?'
 Approve: Approva
 Approved.: Approvato
 at: in
@@ -22,7 +22,7 @@ Reply: Risposta
 'Reply to message': 'Rispondi al messaggio'
 Star: Stellina
 Starred: Evidenziato
-'Unable to reach Newscoop. Please check your internet connection.': 'Non è possibile raggiungere Newscoop. Verifica la tua connessione internet.'
+'Unable to reach Newscoop. Please check your internet connection.': 'Impossibile raggiungere Newscoop. Verifica la connessione internet.'
 'With document attachment': 'Con documento allegato'
 'With image attachment': 'Con immagine allegata'
 'With no attachment': 'Senza allegati'

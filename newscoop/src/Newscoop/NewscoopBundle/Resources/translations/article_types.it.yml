@@ -1,11 +1,11 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Nascondi i nomi dei campi'
-'Edit and translate human-readable field names': 'Modifica e traduci i nomi dei campi'
-'The template name may only contain letters and the underscore (_) character.': 'Il nome del template può contenere solo lettere e trattino basso ( _ )'
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': 'Nascondi i nomi campo'
+'Edit and translate human-readable field names': 'Modifica e traduci i nomi campo.'
+'The template name may only contain letters and the underscore (_) character.': 'Il nome del template può contenere solo lettere e trattino basso ( _ ).'
 'Rename article type $1': 'Rinomina tipo articolo $1'
 'Invalid article type $1.': 'Tipo articolo $1 non valido.'
 'You cannot merge the same type into itself.': 'Non puoi unire un tipo con sé stesso.'
@@ -29,7 +29,7 @@ NOTHING: NESSUNO
 'Cycle through your articles to verify that the merge configuration is correct.': 'Scorri gli articoli per verificare che la configurazione dellunione sia corretta.'
 'Clicking Merge will merge ($1) article(s).': 'Cliccando Unisci verranno uniti ($1) articoli.'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Impossibile unire un campo $1 ($2) in uno $3 ($4).'
---None--: --Nessuno--
+'--None--': '--Nessuno--'
 '(Null merge warning.)': '(Attenzione: unione vuota.)'
 '(No merge warning.)': '(Attenzione: nessuna unione.)'
 '(Duplicate warning.)': '(Attenzione: duplicato.)'
@@ -43,7 +43,7 @@ activate: attiva
 'You must choose a language for the article type.': 'Devi scegliere una lingua per il tipo di articolo.'
 'You do not have the right to rename article types.': 'Non si dispone dei diritti per rinominare tipi articolo.'
 'You do not have the right to merge article types.': 'Non si dispone dei diritti per unire tipi articolo.'
-'The translation could not be added.': 'La traduzione non e stata aggiunta.'
+'The translation could not be added.': 'Non è stato possibile aggiungere la traduzione.'
 'The article type $1 does not exist.': 'Il tipo articolo $1 non esiste.'
 'Template Type Name': 'Nome del tipo di template'
 Show/Hide: Mostra/Nascondi
@@ -73,7 +73,7 @@ Merge!: Unisci!
 'Delete article type $1': 'Elimina tipo articolo $1'
 'You do not have the right to add article types.': 'Non si dispone dei diritti per aggiungere i tipi articolo.'
 'Adding new article type': 'Aggiungi tipo articolo'
-'The $1 field may only contain letters and underscore (_) character.': 'Il campo $1 puo contenere solo lettere e trattino basso ( _ ).'
+'The $1 field may only contain letters and underscore (_) character.': '$1 può contenere solo lettere e trattino basso ( _ ).'
 'The article type $1 already exists.': 'Il tipo articolo $1 e gia esistente.'
-'You do not have the right to delete article types.': 'Non si dispone dei diritti per eliminare i tipi articolo.'
+'You do not have the right to delete article types.': 'Non hai il permesso di cancellare i tipi di articolo.'
 'The article type $1 could not be deleted.': 'Il tipo articolo $1 non e stato eliminato.'

@@ -1,129 +1,129 @@
-'Edit metadata': 
-Rating: 
-'Enable Rating': 
-'Blog management': 
-'View article': 
-'Select a list': 
-'Remove list': 
-'Please select a list': 
-Playlist: 
-'List updated.': 
-'List saved': 
-'List Name': 
-'List ID': 
-'Item already exists in the list': 
-'Featured Articles': 
-'Featured Article Lists': 
-'Featured Article List': 
-'Duplicate list': 
-'Duplicate article entry found': 
-'Drag here to add to list': 
-'Could not save the list': 
-'Available Articles': 
-'Are you sure you want to delete this list?': 
-'Add to list': 
-'Add list': 
-'Multi date events': 
-Slideshows: 
-'Place images': 
-'Youre not allowed to edit article.': 
-Webcode: 
-Unapproved: 
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
-'The article could not be submitted.': 
-'Submit articles': 
-'Submit article': 
-'Related Articles': 
-'Pending articles': 
-'Pending Articles': 
-'Context Box updated': 
-On: 
-Off: 
-'You do not have the right to moderate comments.': 
-'You can not schedule opposing events at the same time': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Title: 
-'There already is an article with the same name. Please change the name and try again.': 
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 
-Geolocation: 
-Newscoop: 
-'Overwrite articles with matching names': 
-'Article <i>$1</i> already exists, and was not overwritten.<br />': 
-Files: 
-'Select section:': 
-'Add another author': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Switches saved.': 
-'Keywords saved.': 
-'Comment settings': 
-Authors: 
-'Attach Topic To Article': 
-'Article saved.': 
-'Article is locked': 
-'Actions updated.': 
-'Your work has not been saved. Do you want to continue and lose your changes?': 
-Switches: 
-'No subtopics available': 
-'Newscoop Subhead': 
-Media: 
-'Last modified': 
-'Keywords &amp; Topics': 
-Info: 
-'Go to live article': 
-Created: 
-'Are you sure you want to remove the map from the article?': 
-'Scheduled action added': 
-'Content edited': 
-'You must select an article language.': 
-'You must select a publication.': 
-'You must select a file to upload.': 
-'You must select a XML input file.': 
-'You do not have the right to import XML archives.': 
-'There was a problem uploading the file.': 
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 
-'The file exceeds the allowed max file size.': 
-Optional: 
-'Input File': 
-'Import XML': 
-'File is not a valid XML file.': 
-'File does not exist.': 
-'File could not be uploaded.': 
-'File could not be read.': 
-'Error List': 
-'Bad format in XML file.': 
-'Article could not be created.': 
-'---Select article type---': 
-'$1 articles successfully imported.': 
-Saved: 
-'Save All': 
-'Online Server: On': 
-'Online Server: Off': 
-Download: 
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 
-'Visible to non-subscribers': 
-'The article could not be published.': 
-'Scheduled action deleted.': 
-'Scheduled action added.': 
-'Article(s) unlocked.': 
-'Article(s) duplicated.': 
-'Article(s) deleted.': 
-'Article status set to $1': 
-'Article unlocked.': 
-'Article translation created.': 
-'Article order changed.': 
-'Article moved.': 
-'Article deleted.': 
-'Article created.': 
-'$1 toggled.': 
-'Total:': 
-'Show Comments': 
-Locked: 
-'Invalid type: $1': 
-'Hide Comments': 
-Enabled: 
-Disabled: 
-Comments: 
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
+'Blog management': null
+'View article': null
+'Select a list': null
+'Remove list': null
+'Please select a list': null
+Playlist: null
+'List updated.': null
+'List saved': null
+'List Name': null
+'List ID': null
+'Item already exists in the list': null
+'Featured Articles': null
+'Featured Article Lists': null
+'Featured Article List': null
+'Duplicate list': null
+'Duplicate article entry found': null
+'Drag here to add to list': null
+'Could not save the list': null
+'Available Articles': null
+'Are you sure you want to delete this list?': null
+'Add to list': null
+'Add list': null
+'Multi date events': null
+Slideshows: null
+'Place images': null
+'Youre not allowed to edit article.': null
+Webcode: null
+Unapproved: null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
+'The article could not be submitted.': null
+'Submit articles': null
+'Submit article': null
+'Related Articles': null
+'Pending articles': null
+'Pending Articles': null
+'Context Box updated': null
+On: null
+Off: null
+'You do not have the right to moderate comments.': null
+'You can not schedule opposing events at the same time': null
+'Unable to reach Newscoop. Please check your internet connection.': null
+Title: null
+'There already is an article with the same name. Please change the name and try again.': null
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
+Geolocation: null
+Newscoop: null
+'Overwrite articles with matching names': null
+'Article <i>$1</i> already exists, and was not overwritten.<br />': null
+Files: null
+'Select section:': null
+'Add another author': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'Switches saved.': null
+'Keywords saved.': null
+'Comment settings': null
+Authors: null
+'Attach Topic To Article': 'Attacher Sujet à Article '
+'Article saved.': null
+'Article is locked': null
+'Actions updated.': null
+'Your work has not been saved. Do you want to continue and lose your changes?': null
+Switches: null
+'No subtopics available': null
+'Newscoop Subhead': null
+Media: null
+'Last modified': null
+'Keywords &amp; Topics': null
+Info: null
+'Go to live article': null
+Created: null
+'Are you sure you want to remove the map from the article?': null
+'Scheduled action added': null
+'Content edited': null
+'You must select an article language.': null
+'You must select a publication.': null
+'You must select a file to upload.': 'Vous devez choisir un fichier à télécharger.'
+'You must select a XML input file.': null
+'You do not have the right to import XML archives.': null
+'There was a problem uploading the file.': null
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
+'The file exceeds the allowed max file size.': null
+Optional: null
+'Input File': null
+'Import XML': null
+'File is not a valid XML file.': null
+'File does not exist.': null
+'File could not be uploaded.': null
+'File could not be read.': null
+'Error List': null
+'Bad format in XML file.': null
+'Article could not be created.': null
+'---Select article type---': null
+'$1 articles successfully imported.': null
+Saved: null
+'Save All': null
+'Online Server: On': null
+'Online Server: Off': null
+Download: null
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
+'Visible to non-subscribers': null
+'The article could not be published.': null
+'Scheduled action deleted.': null
+'Scheduled action added.': null
+'Article(s) unlocked.': null
+'Article(s) duplicated.': null
+'Article(s) deleted.': null
+'Article status set to $1': null
+'Article unlocked.': null
+'Article translation created.': null
+'Article order changed.': null
+'Article moved.': null
+'Article deleted.': null
+'Article created.': null
+'$1 toggled.': null
+'Total:': null
+'Show Comments': null
+Locked: null
+'Invalid type: $1': null
+'Hide Comments': null
+Enabled: null
+Disabled: null
+Comments: null
 'The article has already been translated into $1.': 'Larticle a déjà été traduit dans 1 $. '
 'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Vous devez mettre la publication, lédition et la section pour cet article avant que vous ne puissiez le prévoir pour la publication. Allez au menu $1  et  choisir $2 pour faire cela. '
 'You do not have the right to translate articles.': 'Vous navez pas le droit de traduire des articles. '
@@ -183,3 +183,4 @@ Comments:
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Cet article ne peut être visualisé. SVP assurez-vous que son template darticle est sélectionné.'
 'No such article.': 'Pas darticle correspondant'
 'No such section.': 'Pas une telle section.'
+Characters: null

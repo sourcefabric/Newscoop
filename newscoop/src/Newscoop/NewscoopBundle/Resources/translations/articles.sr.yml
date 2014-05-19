@@ -1,31 +1,31 @@
-'Edit metadata': 
-Rating: 
-'Enable Rating': 
-'Blog management': 
-'View article': 
-'Select a list': 
-'Remove list': 
-'Please select a list': 
-Playlist: 
-'List updated.': 
-'List saved': 
-'List Name': 
-'List ID': 
-'Item already exists in the list': 
-'Featured Articles': 
-'Featured Article Lists': 
-'Featured Article List': 
-'Duplicate list': 
-'Duplicate article entry found': 
-'Drag here to add to list': 
-'Could not save the list': 
-'Available Articles': 
-'Are you sure you want to delete this list?': 
-'Add to list': 
-'Add list': 
-'Multi date events': 
-Slideshows: 
-'Place images': 
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
+'Blog management': null
+'View article': 'Погледај текст'
+'Select a list': null
+'Remove list': null
+'Please select a list': null
+Playlist: null
+'List updated.': null
+'List saved': null
+'List Name': null
+'List ID': null
+'Item already exists in the list': null
+'Featured Articles': null
+'Featured Article Lists': null
+'Featured Article List': null
+'Duplicate list': null
+'Duplicate article entry found': null
+'Drag here to add to list': null
+'Could not save the list': null
+'Available Articles': null
+'Are you sure you want to delete this list?': null
+'Add to list': null
+'Add list': null
+'Multi date events': null
+Slideshows: null
+'Place images': null
 'Youre not allowed to edit article.': 'Немате право уређивања текста'
 Webcode: 'Веб код'
 Unapproved: Неодобрен
@@ -58,7 +58,7 @@ Files: Фајлова
 'Keywords saved.': 'Кључне речи снимљене'
 'Comment settings': 'Подешавања коментара'
 Authors: Аутори
-'Attach Topic To Article': 'Додај тему у текст'
+'Attach Topic To Article': 'Додај тему тексту'
 'Article saved.': 'Текст снимљен'
 'Article is locked': 'Текст је закључан'
 'Actions updated.': 'Акције измењене'
@@ -81,8 +81,8 @@ Created: Направљено
 'You must select a XML input file.': 'Морате изабрати XML улазни фајл.'
 'You do not have the right to import XML archives.': 'Немате право увоза XML архива.'
 'There was a problem uploading the file.': 'Дошло је до проблема при аплоуду фајла.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Фајл је само делимично аплоудован. Ово се обично дешава када је максимално време за аплоуд кратко у односу на величину фајла који покушавате да пребаците. Максимално време пребацивања се подешава у php.ini.'
-'The file exceeds the allowed max file size.': 'Фајл је већи од максимално дозвољене величине.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Фајл је делимично аплоудован. Ово се обично дешава када је макс. време за аплоуд кратко у односу на величину фајла. Максимална величина се подешава у php.ini'
+'The file exceeds the allowed max file size.': 'фајл прелази максимално дозвољену величину.'
 Optional: Опционо
 'Input File': 'Фајл за унос'
 'Import XML': 'Увези XML'
@@ -99,7 +99,7 @@ Saved: Сачувано
 'Save All': 'сачувај све'
 'Online Server: On': 'Онлајн сервер: укључен'
 'Online Server: Off': 'Онлајн сервер: искључен'
-Download: Преузимање
+Download: Преузми
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Не можете имати два текста у истој рубрици са истим именом. НАслов текста који сте унели се већ користи у тексту $1.'
 'Visible to non-subscribers': 'Видљиво не-претплатницима'
 'The article could not be published.': 'Текст не може бити објављен.'
@@ -113,8 +113,8 @@ Download: Преузимање
 'Article translation created.': 'Направљен је превод текста.'
 'Article order changed.': 'Распоред текстова је измењен.'
 'Article moved.': 'Текст је премештен.'
-'Article deleted.': 'Текст је обрисан.'
-'Article created.': 'Текст је направљен.'
+'Article deleted.': 'Текст је обрисан'
+'Article created.': 'Текст је направљен'
 '$1 toggled.': '$1 измењено у спротно.'
 'Total:': 'Укупно:'
 'Show Comments': 'Прикажи коментаре'
@@ -165,7 +165,7 @@ Comments: Коментари
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Мора бити креирано издање за одабрани језик. Унесите име издања и УРЛ име.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Мора бити креирана рубрика за одабрани језик. Унесите име рубрике и УРЛ име.'
 'Article Type': 'Тип текста'
-'Show article on front page': 'Прикажи текст на почетној страни'
+'Show article on front page': 'Прикажи текст на првој страни'
 'Show article on section page': 'Прикажи текст на страни рубрике'
 'Translate article': 'Преведи текст'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Немате право да мењате текст. Можете прегледати једино сопствене текстове, а једном предати текст може бити мењан само од стране овлашћених корисника'
@@ -178,11 +178,9 @@ Comments: Коментари
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Немате право да мењате статус текста. Предатом тексту статус може променити само овлашћени корисник.'
 'You do not have the right to delete articles.': 'Немате право да бришете текстове.'
 'You must select an article type.': 'Морате изабрати тип текста.'
-'Are you sure you want to remove the image $1 from the article?': 'Да ли сте сигурни да желите да обришете слику  $1  из текста? '
+'Are you sure you want to remove the image $1 from the article?': 'Да ли сте сигурни да желите да уконите слику $1 из текста?'
 'There was an error reading request parameters.': 'Дошло је до грешке при читању тражених параметара.'
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Текст не може бити прегелдан. Проверите да ли је одређен шаблон за приказ текста.'
 'No such article.': 'Нема таквог текста.'
 'No such section.': 'Нема те рубрике.'
-Reorder: 'Промени распоред'
-Author: аутор
-'Are you sure you want to delete this scheduled action?': ' '
+Characters: null

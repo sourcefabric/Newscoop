@@ -1,92 +1,81 @@
-get: 
+get: null
 Soundcloud: SoundCloud
-Templates: 
-'Feedback Messages': 
-'Article Playlists': 
-'Check all': 
-view: 
-undo/redo: 
-underline: 
-translate: 
-'text direction': 
-'text alignment': 
-table: 
-superscript: 
-subscript: 
-subhead: 
-strikethrough: 
-statusbar: 
-'spell checker enabled': 
-'source view': 
-publish: 
-notify: 
-moderate: 
-manage: 
-'list number': 
-'list bullet': 
-link: 
-italic: 
-indent: 
-image: 
-'horizontal rule': 
-handle: 
-guest: 
-'font size': 
-'font face': 
-'font color': 
-find/replace: 
-enlarge: 
-enable: 
-edit: 
-delete: 
-copy/cut/paste: 
-clear: 
-'character map': 
-bold: 
-attach: 
-'any resource': 
-admin: 
-add: 
-'You cant deny yourself to manage $1': 
-'You are not allowed to $1 $2.': 
-'User type saved.': 
-'User type deleted.': 
-'User type added.': 
-'User Groups': 
-Themes: 
-'That type name already exists, please choose a different name.': 
-System: 
-Structure: 
-'Search Indexer': 
-'Rich-Text Editor Preferences': 
-ReCaptcha: 
-Polls: 
-'Permissions:': 
-'Permissions updated': 
-Notification: 
-Log: 
-Layout: 
-Global: 
-Files: 
-'Error: ': 
-'Edit user type $1': 
-Deny: 
-'Delete user type $1': 
-'Can not delete a user type with assigned users.': 
-Cache: 
-Backup: 
-Authoring: 
-Allow: 
+Templates: null
+'Feedback Messages': null
+'Article Playlists': null
+'Check all': null
+view: null
+undo/redo: null
+underline: null
+translate: null
+'text direction': null
+'text alignment': null
+table: null
+superscript: null
+subscript: null
+subhead: null
+strikethrough: null
+statusbar: null
+'spell checker enabled': null
+'source view': null
+publish: null
+notify: null
+moderate: null
+manage: null
+'list number': null
+'list bullet': null
+link: null
+italic: null
+indent: null
+image: null
+'horizontal rule': null
+handle: null
+guest: null
+'font size': null
+'font face': null
+'font color': null
+find/replace: null
+enlarge: null
+enable: null
+edit: null
+delete: null
+copy/cut/paste: null
+clear: null
+'character map': null
+bold: null
+attach: null
+'any resource': null
+admin: null
+add: null
+'You cant deny yourself to manage $1': null
+'You are not allowed to $1 $2.': null
+'User type saved.': null
+'User type deleted.': null
+'User type added.': null
+'User Groups': null
+Themes: 模版
+'That type name already exists, please choose a different name.': null
+System: null
+Structure: null
+'Search Indexer': null
+'Rich-Text Editor Preferences': null
+ReCaptcha: null
+Polls: null
+'Permissions:': null
+'Permissions updated': null
+Notification: null
+Log: null
+Layout: null
+Global: null
+Files: 文件
+'Error: ': null
+'Edit user type $1': null
+Deny: null
+'Delete user type $1': null
+'Can not delete a user type with assigned users.': null
+Cache: null
+Backup: null
+Authoring: null
+Allow: null
 'User types': 用户类型
 'No user types.': 无用户类型
-'You do not have the right to add user types.': 您无权增加用户类型
-'Adding new user type': 增加新用户类型
-'The user type $1 has been added.': 用户类型$1已被添加
-'The user type could not be added.': 用户类型不能被添加
-'Please check if an user type with the same name does not already exist.': 请检查同样名称的用户类型已经存在
-'Deleting user type': 正在删除用户类型
-'The user type has been deleted.': 用户类型已删除
-'The user type could not be deleted.': 用户类型不能删除
-'Updating user type permissions': 正在更新用户类型许可
-'User type permissions have been successfuly updated.': 用户类型许可已成功更新
-'User type permissions could not be updated.': 用户类型许可不能更新

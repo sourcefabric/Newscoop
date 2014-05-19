@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Name
+newscoop.plugins_manager.installed_table.description: Beschreibung
+newscoop.plugins_manager.installed_table.enabled: Aktiviert
+newscoop.plugins_manager.installed_table.version: Version
+newscoop.plugins_manager.installed_table.license: Lizenz
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Aktionen
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Entferne
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Upload
+newscoop:
+    datatable:
+        table:
+            info: 'Zeige _START_ bis _END_ von _TOTAL_ Einträgen'
+            noentries: 'Keine Einträge zum Anzeigen gefunden.'
+            filtering: 'filtert aus _MAX_ Einträgen '
+            menu: 'Anzeigen _MENU_ Einträge'
+        label:
+            search: Suche
+            filter: Filter
+            processing: Bearbeite...
+            last: Letzte
+            next: Weiter
+            first: Erste
+            previous: Zurück
+            norecords: 'Keine Angaben gefunden.'

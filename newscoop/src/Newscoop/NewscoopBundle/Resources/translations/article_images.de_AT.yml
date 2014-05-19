@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Das Bild ist leider zu klein. Das Bild muss mindestens  %dx%d groß sein.'
 'Slideshow rendition': 'Bildzuschnitt für Bildstrecke'
 'Renditions reloaded': 'Bildzuschnitte neu geladen'
@@ -57,7 +57,7 @@ Caption: Bildlegende
 'The image number specified is already in use.': 'Die gewählte Bildnummer ist bereits vorhanden.'
 'Image $1 updated.': 'Bild $1 aktualisiert.'
 'Image $1 added.': 'Bild $1 hinzugefügt.'
-'Edit article': 'Artikel editieren'
+'Edit article': 'Artikel bearbeiten'
 'You do not have the right to attach images to articles.': 'Keine Berechtigung Bilder zu Artikeln hinzuzufügen.'
 'You do not have the right to add images.': 'Keine Berechtigung neue Bilder hinzuzufügen.'
 'Image information': Bildinformation
@@ -69,14 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Datum<BR><SMALL>(yyyy-mm-dd)</SMALL> '
 'You must select an image file to upload.': 'Eine Bilddatei zum Hochladen auswählen.'
 'Change image information': 'Bildinformation ändern'
 'You do not have the right to add images': 'Keine Berechtigung Bilder hinzuzufügen.'
-'Place: ': Ort
-'Photographer: ': FotografIn
-'Description: ': Bildlegende
-'No slideshows to attach': 'Keine Slideshows verfügbar'
-'Detach $1': '$1 entfernen'
-'Attach selected slideshows': 'Ausgewählte Slideshows anhängen'
-'No slideshows': 'Keine Slideshows angehängt'
-'Delete image $1': 'Bild $1 löschen'
-'Click one of the ': 
-'Are you sure you want to delete the image $1?': 
-'The image $1 has been added.': 'Bild $1 erfolgreich hinzugefügt'
+'Filter by uploader...': null

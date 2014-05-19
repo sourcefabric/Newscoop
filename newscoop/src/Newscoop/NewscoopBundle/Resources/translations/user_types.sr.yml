@@ -1,6 +1,6 @@
-get: 
+get: null
 Soundcloud: SoundCloud
-Templates: 
+Templates: null
 'Feedback Messages': 'Поруке са повратном информацијом'
 'Article Playlists': 'Плејлисте текстова'
 'Check all': 'Означи све'
@@ -67,7 +67,7 @@ Notification: Обавештења
 Log: Лог
 Layout: Изглед
 Global: Глобално
-Files: Фајлови
+Files: Фајлова
 'Error: ': 'Грешка:'
 'Edit user type $1': 'Уреди тип корисника $1'
 Deny: Оспори
@@ -79,14 +79,3 @@ Authoring: Ауторизовање
 Allow: Дозволи
 'User types': 'Типови корисника'
 'No user types.': 'Нема типова корисника'
-'You do not have the right to add user types.': 'Немате право да додајете типове корисника'
-'Adding new user type': 'Додавање новог типа корисника'
-'The user type $1 has been added.': 'Тип корисника $1 је додат'
-'The user type could not be added.': 'Тип корисника не може бити додат'
-'Please check if an user type with the same name does not already exist.': 'Проверите да ли тип корисника под истим именом већ непостоји'
-'Deleting user type': 'Брисање типа корисника'
-'The user type has been deleted.': 'Тип корисника је обрисан'
-'The user type could not be deleted.': 'Тип корисника не може бити обрисан'
-'Updating user type permissions': 'Мењање права додељених типу корисника'
-'User type permissions have been successfuly updated.': 'Права додељена типу корисника успешно су измењена'
-'User type permissions could not be updated.': 'Права додељена типу корисника не могу бити измењена'

@@ -1,25 +1,25 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: Слайд-шоу
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: Слайдшоу
 'You cant update used files.': 'Ви не можете оновити використовувані файли.'
 Source: Джерело
 Local: Місцевий
 'Items updated.': 'Пункти оновлені.'
-Feedback: 'Зворотній зв’язок'
+Feedback: 'Зворотній звязок'
 'Do you want to update unused only?': 'Ви хочете оновити тільки не використане?'
 'Disapprove selected': 'Відхилити вибрані'
 'Are you sure you want to update selected items?': 'Ви дійсно хочете оновити вибрані пункти?'
 'Approve selected': 'Затвердити обране'
-'Image files': 'Файли зображень'
+'Image files': 'Графічні файли'
 'Fix all thumbnails': 'Виправити всі ескізи'
-'You do not have the right to add files.': 'Ви не маєте прав додавати файли'
-'Should this file only be available for this translation of the article, or for all translations?': 'Цей файл тільки для цього перекладу статті, або для всіх перекладів?'
+'You do not have the right to add files.': 'Ви не маєте прав додавати файли.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Цей файл має бути дозволений тільки для цього перекладу, або для всіх?'
 'Please enter a description for the file: $1.': 'Будь ласка введіть опис для файлу: $1.'
-'Only this translation': 'Тільки для цього перекладу'
+'Only this translation': 'Тільки цей переклад'
 'No files for multi editing.': 'Немає файлів для мультиредагування.'
 'Edit files': 'Редагувати файли'
-'Change file information': 'Змінити інформацію файлу'
-'All translations': 'Всі переклади'
+'Change file information': 'Змінити інформацію про файл'
+'All translations': 'Усі переклади'
 'Save All': 'Зберегти все'
 Files: Файли
 'You cant delete used files.': 'Ви не можете видаляти використовувані файли.'
@@ -27,34 +27,36 @@ Files: Файли
 'View attachment': 'Переглянути прікріплення'
 'Select some items first.': 'Спочатку виберіть декілька пунктів.'
 'Open in the browser': 'Відкрити у браузері'
-'Media Archive': 'Медіа Архів'
-'Last modified': 'Останні модифіковані'
+'Media Archive': 'Медіа архів'
+'Last modified': 'Останні зміни'
 'Items deleted.': 'Пункти видалені.'
 'File uploaded.': 'Файл завантажено.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Ви хочете відкривати цей файл у браузері користувача, або автоматично завантажувати?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Ви бажаєте щоб цей файл відкривався у бразері користувача або автоматично завантажувався?'
 'Delete selected': 'Видалити вибране'
-Created: Створено
+Created: Створена
 Charset: Кодировка
 'Change attachment information': 'Змінити інформацію про прікріплення'
-'Automatically download': 'Автоматичне заванатаження'
+'Automatically download': 'Автоматичне завантаження'
 'Attachment updated.': 'Прікріплення оновлене.'
 'Are you sure you want to delete selected items?': 'Ви впевнені що хочете видалити вибрані пункти?'
 'Add new file': 'Додати новий файл'
 'You do not have the right to add images.': 'Ви не маєте прав додавати зображення.'
-'Use for all': 'Використовувати для вісх'
-'Specify image url if you want to load it.': 'Вкажіть адресу зображення, яке ви хочете завантажити.'
+'Use for all': 'Використати для всіх'
+'Specify image url if you want to load it.': 'Вкажіть посилання на зображення, якщо хочете його завантажити.'
 Size: Розмір
 'No images for multi editing.': 'Немає зображень для мульиредагування.'
 'Images updated.': 'Зображення оновлено.'
 'Edit images': 'Редагувати зображення'
 '$1 files uploaded.': '$1 файли завантажені.'
-'Unable to add new image.': 'Неможливо додати нове зображення'
+'Unable to add new image.': 'Неможливо додати нове зображення.'
 'Image updated.': 'Зображення оновлено.'
 'Image $1 deleted.': 'Зображення $1 видалено.'
 'Image is in use, it cannot be deleted.': 'Зображення використовується та не може бути видалено.'
-'You must select an image file to upload.': 'Ви маєте вибрати зображенння для завантаження.'
+'You must select an image file to upload.': 'Ви маєте вибрати зображення для завантаження.'
 'Add new image': 'Додати нове зображення'
 'Delete image $1': 'Видалити зображення $1'
 'Used in articles': 'Використовується у статтях'
 'View image': 'Переглянути зображення'
 'Change image information': 'Змінити інформацію про зображення'
+'Photographer URL': null
+'Add website url starting with http://': null

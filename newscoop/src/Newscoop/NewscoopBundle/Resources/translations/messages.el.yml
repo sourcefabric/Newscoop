@@ -9,7 +9,7 @@ More...: Περισσότερα...
 Content: Περιεχόμενο
 Languages: Γλώσσες
 Countries: Χώρες
-Themes: Πρότυπα
+Themes: Θέματα
 Topics: Θέματα
 Configure: Διαμόρφωση
 'Image Archive': 'Αρχείο Εικόνων'
@@ -148,6 +148,7 @@ Localizer: 'Τοπικός Προσαρμοστής'
 'Add new publication': 'Προσθήκη νέας δημοσίευσης'
 'Upload new template': 'Ανέβασμα νέου προτύπου'
 'Add new staff member': 'Προσθήκη νέου μέλους προσωπικού'
+'Staff member deleted.': null
 'Add new subscriber': 'Προσθήκη νέου συνδρομητή'
 'Add new user type': 'Προσθήκη νέου τύπου χρήστη'
 'Add new article type': 'Προσθήκη νέου τύπου άρθρου'
@@ -257,3 +258,27 @@ Reads: Αναγνώσεις
 'Universal List': 'Καθολική λίστα'
 'Invalid security token!': 'Άκυρο τεκμήριο ασφαλείας!'
 Authors: Συγγραφείς
+Title: Τίτλος
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: σε
+published: null
+unpublished: null

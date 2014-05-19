@@ -24,9 +24,9 @@ Paid: Zaplaceno
 'Days must be number': 'Dny musejí být číslo'
 Any: Jakékoliv
 'Add section': 'Přidat sekci'
-saved: uloženo
+saved: Uloženo
 removed: odstraněno
-deleted: vymazáno
+deleted: vymazané
 deactivated: deaktivováno
 activated: aktivováno
 'Value is required and cant be empty': 'Hodnota je požadována a nemůže zůstat nevyplněna'
@@ -52,7 +52,7 @@ activated: aktivováno
 E-Mail: Email
 'Delete subscriber $1': 'Vymazat předplatitele $1'
 'Creation Date': 'Datum vytoření'
-'Change subscriber information': 'Změnit informace předplatitele'
+'Change subscriber information': 'Změna informací registrovaného'
 'Add new IP address': 'Přidat novou IP adresu'
 'Add new IP Address': 'Přidat novou IP adresu'
 'Accout Name': 'Název účtu'
@@ -65,9 +65,3 @@ E-Mail: Email
 'Subscription Type': 'Typ předplatného'
 'Paid (payment will be confirmed later)': 'Zaplaceno (platba bude potvrzena později)'
 'Paid (confirm payment now)': 'Zaplaceno (potvrďte nyní)'
-Account: 
-'Left to pay': 'Zbývá zaplatit'
-Active: Aktivovat
-'Are you sure you want to delete the subscription to the publication $1?': 'Určite chcete smazat předplatné k publikaci $1?'
-Trial: Zkušební
-'Are you sure you want to activate the subscription?': 'Určitě chcete aktivovat předplatné?'

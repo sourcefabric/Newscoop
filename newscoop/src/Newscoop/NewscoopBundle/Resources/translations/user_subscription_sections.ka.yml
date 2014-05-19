@@ -1,5 +1,5 @@
 saved: დამახსოვრებულია
-deleted: წაშლილია
+deleted: წაიშალა
 'Subscribed sections: $1': 'გამოწერილი სექცია: $1'
 'Start Date': 'დაწყების თარიღი'
 'Select sections for subscribing': 'აირჩიეთ გამოსაწერი სექცია'
@@ -8,8 +8,8 @@ deleted: წაშლილია
 'No sections to edit': 'სექციები რედაქტირებისთვის არ არის.'
 'Edit section': 'სექციის რედაქტირება'
 'Edit all sections': 'ყველა სექციის რედაქტირება'
-'Add new subscription section': 'ახალი გამოსაწერი სექცის დაატება'
-'Add new section': 'ახალი სექციის დამატება'
+'Add new subscription section': 'ახალი გამოწერის სექციის დამატება'
+'Add new section': 'სექციის დამატება'
 'Regardless of the language': 'ენის მიუხედავად'
 'Individual languages': 'ინდივიდუალური ენა'
 'All languages': 'ყველა ენა'

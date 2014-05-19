@@ -1,3 +1,81 @@
-get: 
+get: null
 Soundcloud: SoundCloud
-Templates: 
+Templates: null
+'Feedback Messages': null
+'Article Playlists': null
+'Check all': null
+view: null
+undo/redo: null
+underline: null
+translate: null
+'text direction': null
+'text alignment': null
+table: null
+superscript: null
+subscript: null
+subhead: null
+strikethrough: null
+statusbar: null
+'spell checker enabled': null
+'source view': null
+publish: null
+notify: null
+moderate: null
+manage: null
+'list number': null
+'list bullet': null
+link: null
+italic: null
+indent: null
+image: null
+'horizontal rule': null
+handle: null
+guest: null
+'font size': null
+'font face': null
+'font color': null
+find/replace: null
+enlarge: null
+enable: null
+edit: null
+delete: null
+copy/cut/paste: null
+clear: null
+'character map': null
+bold: null
+attach: null
+'any resource': null
+admin: null
+add: null
+'You cant deny yourself to manage $1': null
+'You are not allowed to $1 $2.': null
+'User type saved.': null
+'User type deleted.': null
+'User type added.': null
+'User Groups': null
+Themes: null
+'That type name already exists, please choose a different name.': null
+System: null
+Structure: null
+'Search Indexer': null
+'Rich-Text Editor Preferences': null
+ReCaptcha: null
+Polls: null
+'Permissions:': null
+'Permissions updated': null
+Notification: null
+Log: null
+Layout: null
+Global: null
+Files: null
+'Error: ': null
+'Edit user type $1': null
+Deny: null
+'Delete user type $1': null
+'Can not delete a user type with assigned users.': null
+Cache: null
+Backup: null
+Authoring: null
+Allow: null
+'User types': null
+'No user types.': null

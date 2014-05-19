@@ -1,4 +1,4 @@
-default: domyślny
+default: domyslny
 'before you can configure the section templates.': 'wcześniej możesz skonfigurować szablony dla sekcji.'
 'You have to assign a theme to the issue': 'Musisz wybrać szablon dla tego wydania'
 'The section number $1 was already in use.': 'Numer sekcji $1 jest już w użyciu.'
@@ -35,7 +35,7 @@ default: domyślny
 'The section $1 could not be duplicated': 'Sekcja $1 nie została zduplikowana'
 'Section $1 has been duplicated to $2. $3 of $4': 'Sekcja $1 została zduplikowana do $2. $3 z $4'
 'You do not have the right to modify sections.': 'Nie masz praw aby modyfikować sekcje.'
-'A total of $1 articles were deleted.': 'Liczba usuniętych artykułów: $1'
+'A total of $1 articles were deleted.': 'Liczba usuniętych artykułów: $1.'
 'Duplicate Section:': 'Duplikuj sekcję:'
 'Existing Section': 'Istniejące sekcje:'
 'Go to new section': 'Idź do nowej sekcji'
