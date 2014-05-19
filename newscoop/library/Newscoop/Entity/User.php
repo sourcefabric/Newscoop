@@ -187,6 +187,30 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $publication;
 
     /**
+     * @ORM\Column(type="string", nullable=True, name="StrAddress")
+     * @var string
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=70, name="PostalCode")
+     * @var string
+     */
+    protected $postal;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, name="City")
+     * @var string
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=20, name="Phone")
+     * @var string
+     */
+    protected $phone;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -1233,5 +1257,101 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set street address
+     *
+     * @param string $street
+     *
+     * @return string
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Get street address
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set postal code
+     *
+     * @param string $postal
+     *
+     * @return string
+     */
+    public function setPostal($postal)
+    {
+        $this->postal = $postal;
+
+        return $this;
+    }
+
+    /**
+     * Get postal code
+     *
+     * @return string
+     */
+    public function getPostal()
+    {
+        return $this->postal;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return string
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param int $phone
+     *
+     * @return int
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return integer
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 }
