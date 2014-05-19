@@ -211,6 +211,18 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $phone;
 
     /**
+     * @ORM\Column(type="string", nullable=True, length=32, name="State")
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=21, name="CountryCode")
+     * @var string
+     */
+    protected $countryCode;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -1334,9 +1346,9 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set phone
      *
-     * @param int $phone
+     * @param string $phone
      *
-     * @return int
+     * @return string
      */
     public function setPhone($phone)
     {
@@ -1348,10 +1360,58 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Get phone
      *
-     * @return integer
+     * @return string
      */
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     *
+     * @return string
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set country code
+     *
+     * @param string $countryCode
+     *
+     * @return string
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get country code
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
     }
 }
