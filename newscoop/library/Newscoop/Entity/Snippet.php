@@ -278,6 +278,23 @@ class Snippet
 
         return $this;
     }
+
+    /**
+     * Remove an Article from the Snippet
+     * 
+     * @param Article $article the Article to remove
+     *
+     * @return Newscoop\Entity\Snippet
+     */
+    public function removeArticle(Article $article)
+    {
+        if ($this->articles->contains($article)) {
+            $article->removeSnippet($this);
+            $this->articles->remove($article);
+        }
+
+        return $this;
+    }
     
     /**
      * Getter for enabled

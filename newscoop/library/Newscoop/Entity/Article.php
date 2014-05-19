@@ -1338,5 +1338,22 @@ class Article implements DocumentInterface
         }
 
         return $this;
-    }    
+    }
+
+    /**
+     * Remove a Snippet from the Article
+     * 
+     * @param Snippet $snippet the Snippet to remove
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function removeSnippet(Snippet $snippet)
+    {
+        if ($this->snippets->contains($snippet)) {
+            $this->snippets->remove($snippet);
+            $snippet->removeArticle($this);
+        }
+
+        return $this;
+	}
 }

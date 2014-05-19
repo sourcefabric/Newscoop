@@ -258,6 +258,18 @@ class SnippetRepository extends EntityRepository
         return $queryBuilder->getQuery();
     }
 
+	public function addSnippetToArticle(Snippet $snippet, \Newscoop\Entity\Article $article)
+	{
+		$snippet->addArticle($article);
+		$this->save($snippet);
+	}
+
+	public function removeSnippetFromArticle(Snippet $snippet, \Newscoop\Entity\Article $article)
+	{
+		$snippet->removeArticle($article);
+		$this->save($snippet);
+	}
+
     public function deleteSnippet($id, $force = false)
     {
         $articles = $this->getSnippetArticles($id)->toArray();
