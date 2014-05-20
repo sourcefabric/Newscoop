@@ -187,6 +187,42 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $publication;
 
     /**
+     * @ORM\Column(type="string", nullable=True, name="StrAddress")
+     * @var string
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=70, name="PostalCode")
+     * @var string
+     */
+    protected $postal;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, name="City")
+     * @var string
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=20, name="Phone")
+     * @var string
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=32, name="State")
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=21, name="CountryCode")
+     * @var string
+     */
+    protected $countryCode;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client")
      * @ORM\JoinTable(name="user_oauth_clients",
      *      joinColumns={
@@ -199,7 +235,6 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @var Newscoop\Package\Package
      */
     protected $clients;
-
 
     /**
      * @param string $email
@@ -1252,6 +1287,20 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     }
 
     /**
+     * Set street address
+     *
+     * @param string $street
+     *
+     * @return string
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
      * Add oauth client
      *
      * @param \Newscoop\GimmeBundle\Entity\Client $client
@@ -1263,6 +1312,136 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         $this->clients->add($client);
 
         return $this;
+    }
+
+    /**
+     * Get street address
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set postal code
+     *
+     * @param string $postal
+     *
+     * @return string
+     */
+    public function setPostal($postal)
+    {
+        $this->postal = $postal;
+
+        return $this;
+    }
+
+    /**
+     * Get postal code
+     *
+     * @return string
+     */
+    public function getPostal()
+    {
+        return $this->postal;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return string
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return string
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     *
+     * @return string
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set country code
+     *
+     * @param string $countryCode
+     *
+     * @return string
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get country code
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
     }
 
     /**
