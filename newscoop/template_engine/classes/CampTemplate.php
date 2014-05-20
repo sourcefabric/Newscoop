@@ -56,7 +56,7 @@ final class CampTemplate extends Smarty
         }
 
         if (self::isDevelopment()) {
-            $this->force_compile = true;
+           // $this->force_compile = true;
         }
 
         // define dynamic uncached block

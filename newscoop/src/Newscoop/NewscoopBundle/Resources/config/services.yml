@@ -89,7 +89,7 @@ services:
 
     newscoop_newscoop.translation_listener:
         class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
-        arguments:  ['@translator', '@newscoop.cache']
+        arguments:  ['@translator', '@newscoop.cache', '@newscoop.plugins.service']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
@@ -99,7 +99,7 @@ services:
 
     newscoop_newscoop.translation_template_listener:
         class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
-        arguments:  ['@translator']
+        arguments:  ['@translator', '@newscoop.cache']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 

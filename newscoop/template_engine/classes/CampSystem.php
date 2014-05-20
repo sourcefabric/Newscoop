@@ -182,12 +182,16 @@ abstract class CampSystem
         }
         if (!is_null($p_issNr)) {
             $resourceId = new ResourceId('template_engine/classes/CampSystem');
-            /* @var $templateSearchService ITemplateSearchService */
-            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
             $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+            }
+
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+
             $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-            $template = $templateSearchService->getErrorPage($issueObj->getIssueId(),
-            $outputService->findByName('Web'));
+            $template = $templateSearchService->getErrorPage($issueObj->getIssueId(), Zend_Registry::get('webOutput'));
         }
 
         if (empty($template)) {
@@ -209,26 +213,28 @@ abstract class CampSystem
      */
     public static function GetThemePath($p_lngId, $p_pubId, $p_issNr)
     {
-    	if (empty($p_lngId) || empty($p_issNr)) {
-    	    $publication = new Publication($p_pubId);
-    		$issue = self::GetLastIssue($publication, $p_lngId);
-    		if (is_null($issue)) {
-    		    $issue = self::GetLastIssue($publication);
-    		    if (is_null($issue)) {
-    		        return null;
-    		    }
-    		}
-    		$p_issNr = array_shift($issue);
-    		$p_lngId = array_shift($issue);
-    	}
+        if (empty($p_lngId) || empty($p_issNr)) {
+            $publication = new Publication($p_pubId);
+            $issue = self::GetLastIssue($publication, $p_lngId);
+            if (is_null($issue)) {
+                $issue = self::GetLastIssue($publication);
+                if (is_null($issue)) {
+                    return null;
+                }
+            }
+            $p_issNr = array_shift($issue);
+            $p_lngId = array_shift($issue);
+        }
         $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $outputSettingIssueService IOutputSettingIssueService */
-        $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
-        /* @var $outputService IOutputService */
         $outputService = $resourceId->getService(IOutputService::NAME);
-        $output = $outputService->findByName('Web');
-        $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), $outputService->findByName('Web'));
+
+        if (!\Zend_Registry::isRegistered('webOutput')) {
+            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+        }
+
+        $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+        $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
         if(!is_null($outSetIssues))
             return $outSetIssues->getThemePath()->getPath();
         return;
@@ -300,23 +306,23 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
-    	if (!$publication->exists()) {
-    		return null;
-    	}
-    	if (empty($p_langId)) {
-    		$p_langId = $publication->getDefaultLanguageId();
-    	}
-    	$sql = 'SELECT MAX(Number) AS Number FROM Issues '
-    	. 'WHERE IdPublication = ' . (int)$publication->getPublicationId()
-    	. ' AND IdLanguage = ' . (int)$p_langId;
-    	if ($p_isPublished == true) {
-    		$sql .= " AND Published = 'Y'";
-    	}
-    	$issueNo = $g_ado_db->GetOne($sql);
-    	if (empty($issueNo)) {
-    		return null;
-    	}
-    	return array($issueNo, $p_langId);
+        if (!$publication->exists()) {
+            return null;
+        }
+        if (empty($p_langId)) {
+            $p_langId = $publication->getDefaultLanguageId();
+        }
+        $sql = 'SELECT MAX(Number) AS Number FROM Issues '
+        . 'WHERE IdPublication = ' . (int)$publication->getPublicationId()
+        . ' AND IdLanguage = ' . (int)$p_langId;
+        if ($p_isPublished == true) {
+            $sql .= " AND Published = 'Y'";
+        }
+        $issueNo = $g_ado_db->GetOne($sql);
+        if (empty($issueNo)) {
+            return null;
+        }
+        return array($issueNo, $p_langId);
     }
 
     public static function GetIssueTemplate($p_lngId, $p_pubId, $p_issNr)
@@ -330,14 +336,20 @@ abstract class CampSystem
                 return $issueTemplate;
             }
         }
+
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
+        $outputService = $resourceId->getService(IOutputService::NAME);
+
+        if (!\Zend_Registry::isRegistered('webOutput')) {
+            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+        }
+
         /* @var $templateSearchService ITemplateSearchService */
         $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-        $outputService = $resourceId->getService(IOutputService::NAME);
 
         $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
         $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
-                        $outputService->findByName('Web'));
+                        \Zend_Registry::get('webOutput'));
 
         if (empty($data)) {
             $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
@@ -361,13 +373,18 @@ abstract class CampSystem
             }
         }
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+        $resourceId = new ResourceId('template_engine/classes/CampSystem');
         $outputService = $resourceId->getService(IOutputService::NAME);
+
+        if (!\Zend_Registry::isRegistered('webOutput')) {
+            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+        }
+
+        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
         $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
         $data = $templateSearchService->getSectionPage($sectionObj->getSectionId(),
-                        $outputService->findByName('Web'));
+                        \Zend_Registry::get('webOutput'));
         if (empty($data)) {
             $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);;
         }
@@ -390,13 +407,17 @@ abstract class CampSystem
             }
         }
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
         $outputService = $resourceId->getService(IOutputService::NAME);
+
+        if (!\Zend_Registry::isRegistered('webOutput')) {
+            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+        }
+
+        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
         $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
         $data = $templateSearchService->getArticlePage($sectionObj->getSectionId(),
-                        $outputService->findByName('Web'));
+                        \Zend_Registry::get('webOutput'));
 
         if (empty($data)) {
             $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);;
