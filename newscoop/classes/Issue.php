@@ -107,6 +107,9 @@ class Issue extends DatabaseObject {
 			}
 		}
 
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+		$cacheService->clearNamespace('current_issue');
+
 		return $articlesDeleted;
 	} // fn delete
 
@@ -453,6 +456,9 @@ class Issue extends DatabaseObject {
 				$this->setProperty('Published', 'N', true);
 			}
 		}
+
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+		$cacheService->clearNamespace('current_issue');
 	} // fn setWorkflowStatus
 
 
@@ -749,15 +755,16 @@ class Issue extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		if (CampCache::IsEnabled()) {
-			$paramString = $p_publicationId . '_';
-			$paramString.= (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
-			$cacheKey = __CLASS__ . '_CurrentIssue_' . $paramString;
-			$issue = CampCache::singleton()->fetch($cacheKey);
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+		$paramString = $p_publicationId . '_' . (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
+
+        $cacheKey = $cacheService->getCacheKey(__CLASS__ . '_CurrentIssue_' . $paramString, 'current_issue');
+        if ($cacheService->contains($cacheKey)) {
+            $issue = $cacheService->fetch($cacheKey);
 			if ($issue !== false && is_object($issue)) {
 				return $issue;
 			}
-		}
+        }
 
 		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
 		. "IdPublication = $p_publicationId";
@@ -770,9 +777,7 @@ class Issue extends DatabaseObject {
 			return new Issue($p_publicationId,0,0); // type safety
 		}
 		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
-		if (CampCache::IsEnabled()) {
-			CampCache::singleton()->store($cacheKey, $issue);
-		}
+		$cacheService->save($cacheKey, $issue);
 
 		return $issue;
 	} // fn GetCurrentIssue
