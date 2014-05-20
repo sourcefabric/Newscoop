@@ -2,9 +2,9 @@
 Locations: ლოკაციები
 Last: ბოლო
 First: პირველი
-'Publish Schedule': 'გამოქვეყნების გრაფიკი'
-'You do not have the right to delete articles.': 'თქვენ არ გაქვთ ამ სტატიების წაშლის უფლება'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ სტატიის სტატუსის შეცვლის უფლება. წარდგენის შემდეგ, მხოლოდ ავტორიზებულ მომხმარებლებს აქვთ ცვლილელების შეტანის უფლება.'
+'Publish Schedule': 'პუბლიკაციის განრიგი'
+'You do not have the right to delete articles.': 'თქვენ არ გაქვთ სტატიების წაშლის ნებართვა'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის სტატუსის შეცვლის ნებართვა. სტატიის შეცვლა მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ.'
 'Toggle: On Section Page': 'ჩართე: სექციის გვერდზე'
 'Toggle: On Front Page': 'ჩართე: სექციის გვერდზე'
 'Toggle: Comments': 'ჩართე კომენტარები'

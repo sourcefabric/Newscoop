@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': '$1 ფსევდონიმი ვერ წაიშალა.'
 '$1 is the default publication alias, it can not be deleted.': '$1 არის ნაგულისხმევი პუბლიკაციის ფსევდონიმი, მისი წაშლა შეუძლებელია. '
 'You do not have the right to add publications.': 'თქვენ არ გაქვთ პუბლიკაციის დამატების ულფება.'
-'There are $1 issue(s) left.': 'დარჩენილია $1 გამოცემა(ები).'
+'There are $1 issue(s) left.': 'დარჩა $1 ნომერი/ჟურნალი/გამოშვება'
 'Time Unit': 'დროის მონაკვეთი'
 Currency: ვალუტა
 'Edit languages': 'ქვეყნების რედაქტირება'

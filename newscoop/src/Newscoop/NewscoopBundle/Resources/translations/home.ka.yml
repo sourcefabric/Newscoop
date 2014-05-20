@@ -60,7 +60,7 @@ Ban: ბანი
 'Add files': 'ფაილების დამატება'
 '%value% is more than %max% characters long': '%value% შეიცავს %max%-ზე მეტ სიმბოლოს'
 '%value% is less than %min% characters long': '%value% შეიცავს %min%-ზე ნაკლებ სიმბოლოს'
-'User name': 'მომხმარებლის სახელი'
+'User name': მომხმარებელი
 Newscoop: Newscoop
 'Your password has been reset.': 'თქვენი პაროლი გადაიტვირთვა'
 'Proceed to login.': 'განაგრძეთ ავტორიზაციისკენ'
@@ -107,7 +107,7 @@ Size: ზომა
 Restore: აღდგენა
 Mb: მბ
 'Free disk space': 'თავისუფალი სივრცე დისკზე'
-'Download file': 'ფაილის ჩამოტვირთვა'
+'Download file': 'ფაილის გადმოტვირთვა'
 Download: ჩამოქაჩვა
 'Delete file': 'ფაილის წაშლა'
 'Backup list is empty.': 'სათადარიგო სია ცარიელია.'

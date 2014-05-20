@@ -37,8 +37,8 @@ Unapproved: დაუმტკიცებელი
 'Pending articles': 'მიმდინარე სტატიები'
 'Pending Articles': 'მიმდინარე სტატიები'
 'Context Box updated': 'კონტექსტის კოლოფი განახლებულია'
-On: ჩართული
-Off: გამორთული
+On: ჩართვა
+Off: გამორთვა
 'You do not have the right to moderate comments.': 'თქვენ არ გაქვთ კომენტარების მოდერაციის უფლება'
 'You can not schedule opposing events at the same time': 'თქვენ არ შეგიძლიათ დაპირისპირებული მოვლენების ერთდროულად დაგეგმვა'
 'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
@@ -67,7 +67,7 @@ Switches: სვიჩები
 'No subtopics available': 'ქვესათაურები არ არსებობს.'
 'Newscoop Subhead': 'ნიუსქუფის ქვესათაური'
 Media: მედია
-'Last modified': 'ბოლოს მოდიფიცირებული'
+'Last modified': 'ბოლო მოდიფიკაცია'
 'Keywords &amp; Topics': 'საკვანძო სიტყვები &, სათაურები'
 Info: ინფო
 'Go to live article': 'მიმდინარე სტატეიბზე გადასვლა'
@@ -145,7 +145,7 @@ Comments: კომენტარები
 'The following articles are new; it is not possible to schedule them for automatic publishing': 'ეს სტატიები არის ახალი. შეუძლებელია მათთვის გამოცემის ავტომატური დაგეგმვა'
 'Section URL Name': 'სექციის URL'
 'Section Name': 'სექციის სახელი'
-'Publish Schedule': 'გამოქვეყნების გრაფიკი'
+'Publish Schedule': 'პუბლიკაციის განრიგი'
 'No action specified': 'მოქმედება არ არის მითითებული'
 'New section name': 'ახალი სექციის სახელი'
 'New section URL name': 'ახალი სექციის URL'
@@ -175,8 +175,8 @@ Comments: კომენტარები
 'No article types were defined. You must create an article type first.': 'სტატიის ტიპი არ არის განსაზღვრული. პირველ რიგში თქვენ უნდა შექმნათ სტატიის ტიპი.'
 'Edit article types': 'სტატიის ტიპების რედაქტირება'
 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'სტატია არ იქნა დამახსოვრებული. იგი დაილუქა $1 მიერ $2 საათისა და $3 წუთის წინ'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ სტატიის სტატუსის შეცვლის უფლება. წარდგენის შემდეგ, მხოლოდ ავტორიზებულ მომხმარებლებს აქვთ ცვლილელების შეტანის უფლება.'
-'You do not have the right to delete articles.': 'თქვენ არ გაქვთ ამ სტატიების წაშლის უფლება'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის სტატუსის შეცვლის ნებართვა. სტატიის შეცვლა მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ.'
+'You do not have the right to delete articles.': 'თქვენ არ გაქვთ სტატიების წაშლის ნებართვა'
 'You must select an article type.': 'თქვენ უნდა აირჩიოთ სტატიის ტიპი'
 'Are you sure you want to remove the image $1 from the article?': 'დარწმუნებული ხართ რომ გსურთ ამ სურათის $1 სტატიიდან წაშლა?'
 'There was an error reading request parameters.': 'მოთხოვნილი პარამეტრების წაკითხვისას დაფიქსირდა ხარვეზი.'

@@ -213,7 +213,7 @@ Add: დამატება
 N/A: N/A
 'On Front Page': 'მთავარ გვერდზე'
 'On Section Page': 'სექციის გვერდზე'
-'Created by': 'შექმნილია  მიერ'
+'Created by': 'შექმნილია # მიერ'
 'Creation date': 'შექმნის თარიღი'
 'Publication List': 'პუბლიკაციების სია'
 'Issue List': 'გამოცემების სია'
@@ -254,7 +254,7 @@ Send: გაგზავნა
 (optional): (სურვილისამებრ)
 'The URL you entered is invalid: $1': 'შეყვანილი URL არასწორია: $1'
 Reads: წაკითხვები
-'Publish with issue': 'პუბლიკაცია გამოცემასთან ერთად'
+'Publish with issue': 'გამოქვეყნება გამოცემასთან ერთად'
 'Universal List': 'უნივერსალური სია'
 'Invalid security token!': 'არასწორი უსაფრთხოების მარკერი'
 Authors: ავტორები

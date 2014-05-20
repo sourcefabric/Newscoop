@@ -4,8 +4,8 @@ Webcode: 'ქსელური კოდი'
 'View article': 'სტატიის ნახვა'
 Source: წყარო
 'Select type': 'შერჩეული ტიპი'
-On: ჩართული
-Off: გამორთული
+On: ჩართვა
+Off: გამორთვა
 Title: სათაური
 'No video playback capabilities, please download the video below': 'ვიდეოს დაკვრა შეუძლებელია, გთხოვთ გადმოქაჩოთ'
 'Article status set to $1 for $2 articles': 'სტატიის სტატუსი არის $1 $2 სტატიებისთვის'
@@ -17,9 +17,9 @@ Title: სათაური
 '$1 Article(s) unlocked': '$1 სტატია(ები) გაიხსნა'
 '$1 Article(s) not unlocked': '$1 სტატია(ები) არ გაიხსნა'
 '$1 Article(s) duplicated': '$1 სტატია(ები) გაორმაგდა'
-'Download file': 'ფაილის ჩამოტვირთვა'
-'You do not have the right to delete articles.': 'თქვენ არ გაქვთ ამ სტატიების წაშლის უფლება'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ სტატიის სტატუსის შეცვლის უფლება. წარდგენის შემდეგ, მხოლოდ ავტორიზებულ მომხმარებლებს აქვთ ცვლილელების შეტანის უფლება.'
+'Download file': 'ფაილის გადმოტვირთვა'
+'You do not have the right to delete articles.': 'თქვენ არ გაქვთ სტატიების წაშლის ნებართვა'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის სტატუსის შეცვლის ნებართვა. სტატიის შეცვლა მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ.'
 'Use Map': 'რუკის გამოყენება'
 'Toggle: On Section Page': 'ჩართე: სექციის გვერდზე'
 'Toggle: On Front Page': 'ჩართე: სექციის გვერდზე'
@@ -39,7 +39,7 @@ Size: ზომა
 'Published before': 'გამოიცა ამ დრომდე:'
 'Published after': 'გამოიცა ამ დროის შემდეგ:'
 'Publish date': 'გამოცემის თარიღი'
-'Publish Schedule': 'გამოქვეყნების გრაფიკი'
+'Publish Schedule': 'პუბლიკაციის განრიგი'
 'Publish Date': 'პუბლიკაციის თარიღი'
 'Order updated.': 'თანმიმდევრობა განახლდა.'
 'Open in browser': 'გახსენით ბრაუზერში'
@@ -50,7 +50,7 @@ Size: ზომა
 'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
 Locations: ლოკაციები
 'Loading data': 'მონაცემები იტვირთება'
-'Last modified': 'ბოლოს მოდიფიცირებული'
+'Last modified': 'ბოლო მოდიფიკაცია'
 'Last Modified': 'ბოლო მოდიფიკაცია'
 Last: ბოლო
 First: პირველი

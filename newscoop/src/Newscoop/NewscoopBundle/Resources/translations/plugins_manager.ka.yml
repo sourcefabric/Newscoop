@@ -22,10 +22,10 @@ newscoop.plugins_manager.form.submit: ატვირთვა
 newscoop:
     datatable:
         table:
-            info: '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
-            noentries: 'საჩვენებელი ჩანაწერები არ არის.'
-            filtering: '-ფილტრაცია_MAX_ ჩანაწერებიდან'
-            menu: '_MENU_ ჩანაწერების ჩვენება'
+            info: 'newscoop:datatable:table:info'
+            noentries: 'ჩანაწერები არ არის'
+            filtering: '- ფილტრაცია ხდება _MAX_ records'
+            menu: 'newscoop:datatable:table:menu'
         label:
             search: ძიება
             filter: ფილტრი
