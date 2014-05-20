@@ -56,7 +56,7 @@ final class CampTemplate extends Smarty
         }
 
         if (self::isDevelopment()) {
-           // $this->force_compile = true;
+            $this->force_compile = true;
         }
 
         // define dynamic uncached block
@@ -223,6 +223,6 @@ final class CampTemplate extends Smarty
      */
     private static function isDevelopment()
     {
-        return false;//return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
+        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }
