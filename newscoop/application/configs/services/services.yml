@@ -21,7 +21,7 @@ services:
         arguments:  ["%image%", "@em"]
     attachment:
         class:      Newscoop\Services\AttachmentService
-        arguments:  ["%attachment%", "@em", "@router"]
+        arguments:  ["%attachment%", "@em", "@router", "@user"]
     zend_auth:
         class:      Zend_Auth
         factory_class: Zend_Auth
