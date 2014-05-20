@@ -3,7 +3,7 @@ newscoop:
         save: Zapisz
     preferences:
         error:
-            cache: 'Błąd: Potrzebujesz PHP $1 aby korzystać z cacheowania szablonów.'
+            cache: 'Błąd: Potrzebujesz PHP %cache% aby korzystać z cacheowania szablonów.'
             replication: 'Replikacja bazy danych - dane niekompletne'
             maxupload: 'Niepoprawna wartość Maksymalnego Rozmiaru Plików'
             geolocation: 'Niepoprawne wartości pól geolokalizacji. Pola muszą zawierać liczby. Szerokość geograficzna nie może być > 90 i <= 90. Długość geograficzna nie może być > 180 i <= 180.'

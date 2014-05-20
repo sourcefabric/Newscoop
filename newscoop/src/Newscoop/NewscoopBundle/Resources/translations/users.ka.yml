@@ -30,7 +30,7 @@ Continue: null
 'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
 'Are you sure you want to {action}?': 'დარწმუნებული ხართ, რომ გსურთ (მოქმედება)?'
 'Active Logins': 'აქტიური ავტორიზაციები'
-' - filtering from _MAX_ records': '-ფილტრაცია_MAX_ ჩანაწერებიდან'
+' - filtering from _MAX_ records': null
 'User renamed.': 'მომხმარებელის სახელი შეცვლილია. '
 'User attributes': 'მომხმარებლის ატრიბუტები'
 'Rename user $1': '$1 მომხმარებლის სახელის შეცვლა'
