@@ -225,17 +225,15 @@ class CampURIShortNames extends CampURI
     private function _getPublication()
     {
         $alias = preg_replace('/^' . $this->getScheme() . ':\/\//', '', $this->getBase());
-        $aliasObj = new Alias($alias);
 
-        if ($aliasObj->exists()) {
-            $publication = new MetaPublication($aliasObj->getPublicationId());
-        }
+        $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');
+        $publication = $publicationService->getPublication();
 
-        if (empty($publication) || !$publication->defined()) {
+        if (!$publication) {
             throw new InvalidArgumentException("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
         }
-
-        return $publication;
+        
+        return new MetaPublication($publication->getId());
     }
 
     /**

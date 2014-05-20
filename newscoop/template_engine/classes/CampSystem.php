@@ -213,6 +213,8 @@ abstract class CampSystem
      */
     public static function GetThemePath($p_lngId, $p_pubId, $p_issNr)
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
         if (empty($p_lngId) || empty($p_issNr)) {
             $publication = new Publication($p_pubId);
             $issue = self::GetLastIssue($publication, $p_lngId);
@@ -225,7 +227,16 @@ abstract class CampSystem
             $p_issNr = array_shift($issue);
             $p_lngId = array_shift($issue);
         }
-        $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+
+
+        $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr));
+        if ($cacheService->contains($cacheKey)) {
+            $issueObj = $cacheService->fetch($cacheKey);
+        } else {
+            $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+            $cacheService->save($cacheKey, $issueObj);
+        }
+
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
         $outputService = $resourceId->getService(IOutputService::NAME);
 
