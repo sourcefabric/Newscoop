@@ -11,7 +11,7 @@ first: null
 'You have subscription for all available publications': null
 'Subscription type:': null
 'Start:': null
-'Start Date': null
+'Start Date': 'Početni datum'
 'Sections:': null
 'Publication:': null
 'Paid days': null
@@ -19,49 +19,49 @@ first: null
 Paid: null
 'No subscriptions': null
 'Languages:': null
-'Edit all sections': null
+'Edit all sections': 'Uredi sve rubrike'
 'Days:': null
 'Days must be number': null
 Any: null
 'Add section': null
-saved: null
-removed: null
-deleted: null
-deactivated: null
-activated: null
-'Value is required and cant be empty': null
-'That user name already exists, please choose a different login name.': null
-'That $1 already exists, please choose a different $2.': null
-'Subscriptions exist for all available publications.': null
-'Subscription IP Addresses': null
-'Subscription $1': null
-'Subscriber saved.': null
-'Subscriber management': null
-'Subscriber deleted.': null
-'Start IP': null
-'Select country': null
-'Number of addresses': null
-'Number of Addressses': null
-'No IP Addresses': null
-'IP Address added allready': null
-'IP Address $1': null
-'IP Access': null
-'Full Name': null
-'Edit subscriptions': null
-'Edit subscriber $1': null
-E-Mail: null
-'Delete subscriber $1': null
-'Creation Date': null
-'Change subscriber information': null
-'Add new IP address': null
-'Add new IP Address': null
-'Accout Name': null
-'%value% must be greater than %min%': null
-'%value% is not a valid IP Address': null
-'Regardless of the language': null
-'Individual languages': null
-'Add sections now': null
-'Add sections later': null
-'Subscription Type': null
-'Paid (payment will be confirmed later)': null
-'Paid (confirm payment now)': null
+saved: snimljeno
+removed: uklonjeno
+deleted: obrisana
+deactivated: deaktivirano
+activated: aktivirano
+'Value is required and cant be empty': 'Vrednost je obavezna i ne može ostati prazna'
+'That user name already exists, please choose a different login name.': 'To korisničko ime već postoji, izaberite neko drugo ime.'
+'That $1 already exists, please choose a different $2.': 'Taj $1 već postoji, izaberite drugi $2.'
+'Subscriptions exist for all available publications.': 'Pretplate postoje za sve dostupne publikacije.'
+'Subscription IP Addresses': 'Pretplatničke IP adrese'
+'Subscription $1': 'Pretplata $1'
+'Subscriber saved.': 'Pretplatnik snimljen.'
+'Subscriber management': 'Upravljanje pretplatnicima.'
+'Subscriber deleted.': 'Pretplatnik obrisan.'
+'Start IP': 'Početni IP'
+'Select country': 'Izaberi državu'
+'Number of addresses': 'Broj adresa'
+'Number of Addressses': 'Broj adresa'
+'No IP Addresses': 'Nema IP adresa'
+'IP Address added allready': 'IP adresa je već dodata'
+'IP Address $1': 'IP adresa $1'
+'IP Access': 'IP pristup'
+'Full Name': 'Puno ime'
+'Edit subscriptions': 'Uredi pretplate'
+'Edit subscriber $1': 'Uredi pretplatnika $1'
+E-Mail: E-mail
+'Delete subscriber $1': 'Obriši pretplatnika $1'
+'Creation Date': 'Datum kreiranja'
+'Change subscriber information': 'Promeni informacije o pretplatniku'
+'Add new IP address': 'Dodaj novu IP adresu'
+'Add new IP Address': 'Dodaj novu IP adresu'
+'Accout Name': 'Ime naloga'
+'%value% must be greater than %min%': '%value%ć mora biti veće od %min%'
+'%value% is not a valid IP Address': '%value% nije validna IP adresa'
+'Regardless of the language': 'Nezavisno od jezika'
+'Individual languages': 'Pojedinačni jezici'
+'Add sections now': 'Dodaj rubriku sad'
+'Add sections later': 'Dodaj rubriku kasnije'
+'Subscription Type': 'Tip pretplate'
+'Paid (payment will be confirmed later)': 'Plaćeno (uplata će biti potvrđena kasnije) '
+'Paid (confirm payment now)': 'Plaćeno (potvrdi uplatu sad)'

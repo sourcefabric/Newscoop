@@ -1,13 +1,13 @@
-Recommended: null
+Recommended: Preporučeni
 'There are no more comments': null
 'Show more comments': null
-Unrecommend: null
-'Save comment': null
-Recommend: null
-'Comment updated.': null
-'Comment saved.': null
-'Comments updated.': null
-'Post a Comment': null
-From: null
-'Reply to comment': null
-'No comments posted.': null
+Unrecommend: Nepreporučen
+'Save comment': 'Snimi komentar'
+Recommend: Preporučen
+'Comment updated.': 'Komentar izmenjen.'
+'Comment saved.': 'Komentar snimljen.'
+'Comments updated.': 'Komentari izmenjeni.'
+'Post a Comment': 'Pošalji komentar'
+From: Od
+'Reply to comment': 'Odgovorite na komentar'
+'No comments posted.': 'Nema poslatih komentara.'

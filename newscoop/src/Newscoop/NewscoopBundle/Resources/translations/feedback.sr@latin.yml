@@ -1,15 +1,15 @@
 'No attachment': null
 'You are about to permanently delete multiple messages.': null
 'You are about to permanently delete a message.': null
-'Are you sure you want to do it?': null
+'Are you sure you want to do it?': 'Siguri ste da želite to da uradite?'
 Approve: null
 Approved.: null
-at: null
+at: u
 Attachment: null
 'Ban/Unban user': null
 'Change selected messages status': null
-Deleted: null
-'Full article': null
+Deleted: Obrisano
+'Full article': 'Ceo tekst'
 Message: null
 'Message deleted.': null
 'Messages deleted.': null
@@ -18,12 +18,12 @@ Message: null
 'Messages updated.': null
 'Message updated.': null
 Processed: null
-Reply: null
+Reply: Odgovori
 'Reply to message': null
 Star: null
 Starred: null
-'Unable to reach Newscoop. Please check your internet connection.': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop nije dostupan. Proverite svoju interent vezu.'
 'With document attachment': null
 'With image attachment': null
 'With no attachment': null
-'Feedback Messages': null
+'Feedback Messages': 'Poruke sa povratnom informacijom'

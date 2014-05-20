@@ -6,61 +6,61 @@
 'No such field': null
 'Color saved': null
 'Color not saved': null
-'Topic created': null
-'The topic name is already in use by another topic.': null
-'Complex Date': null
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': null
-'Pan Map': null
-'Open large map': null
-'No news available.': null
-'Edit Polygon': null
-'Create Polygon': null
-'Communication error: ': null
-'Cant fetch news from $1': null
-Loading...: null
-Version: null
-License: null
-Homepage: null
-'Show original map': null
-'The uploaded archive does not contain an valid newscoop plugin.': null
-Map: null
-Center: null
-Title: null
-'Invalid security token.': null
-'Callback $1 is not callable.': null
-'Article translated to $4 ($5)': null
-'Article status changed from $1 to $2.': null
-'Article deleted.': null
-'Article created.': null
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
-'Article URL': null
-'Article Number': null
-'Access denied.': null
-'Publish with issue': null
-unknown: null
-Switch: null
-Numeric: null
-'The uploaded file format is unsupported.': null
-'The following fields are mandatory:': null
-'Missing value for $1': null
-'Manage Plugins': null
-'* Marked fields are mandatory.': null
-'$1 is of type $2': null
-'Invalid resize width/height.': null
-'Image type $1 is not supported.': null
-'The file uploaded is not an image.': null
-'Could not delete record from the database.': null
-'template path': null
-'short names': null
-'Unable to fetch image from remote server.': null
-Last: null
-First: null
-'Single-line Text': null
-'Multi-line Text with WYSIWYG': null
-'URL $1 is invalid or is not an image.': null
-'URL $1 is not an image.': null
+'Topic created': 'Topik kreiran'
+'The topic name is already in use by another topic.': 'Ime za topik je već u upotrebi'
+'Complex Date': 'Složen datum'
+vertices: čvorovi
+'There was a problem trying to execute the XML RPC function.': 'Došlo je do problema pri pokušaju izvršenja XML RPC funkcije'
+'The Campcaster server configuration is invalid.': 'Podešavanja Kempkaster servera su neispravna'
+'Pan Map': 'Pomeraj mapu'
+'Open large map': 'Otvori veliku mapu'
+'No news available.': 'Nema dostupnih vesti'
+'Edit Polygon': 'Uredi poligon'
+'Create Polygon': 'Napravi poligon'
+'Communication error: ': 'Greška u komunikaciji'
+'Cant fetch news from $1': 'Nije moguće preuzeti vesti sa $1'
+Loading...: Učitavanje...
+Version: Verzija
+License: Licenca
+Homepage: 'Početna strana'
+'Show original map': 'Prikaži originalnu mapu'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Arhiva aplouda ne sadrži ispravan Newscoop plagin'
+Map: Mapa
+Center: Centar
+Title: Naslov
+'Invalid security token.': 'Pogrešan sigurnosni token'
+'Callback $1 is not callable.': 'Callback $1 is not callable.'
+'Article translated to $4 ($5)': 'Tekst je preveden u $4 ($5)'
+'Article status changed from $1 to $2.': 'Status teksta je promenjen iz $1 u $2.'
+'Article deleted.': 'Tekst je obrisan.'
+'Article created.': 'Tekst je napravljen.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Tekst je kopiran u tekst $4 (publikacija $5, izdanje $6, rubrika $7).'
+'Article URL': 'URL teksta'
+'Article Number': 'Broj teksta'
+'Access denied.': 'Pristup zabranjen.'
+'Publish with issue': 'Objavi zajedno sa izdanjem'
+unknown: nepoznato
+Switch: Prekidač
+Numeric: 'Brojačna vrednost'
+'The uploaded file format is unsupported.': 'Format ulpoadovanog fajla nije podržan.'
+'The following fields are mandatory:': 'Sledeća polja su obavezna:'
+'Missing value for $1': 'Nedostaje vrednost za $1'
+'Manage Plugins': 'Upravljanje pluginovima'
+'* Marked fields are mandatory.': 'Polja označena * su obavezna'
+'$1 is of type $2': '$1 je za tip $2'
+'Invalid resize width/height.': 'Neispravne vrednosti za promenu dimenzija širina/visina'
+'Image type $1 is not supported.': 'Tip slike $1 nije podržan'
+'The file uploaded is not an image.': 'Uploadovani fajl nije slika.'
+'Could not delete record from the database.': 'Nije moguće obrisati zapis iz baze.'
+'template path': 'šablonska putanja'
+'short names': 'skraćeni nazivi'
+'Unable to fetch image from remote server.': 'Nije moguće pokupiti sliku sa udaljenog servera.'
+Last: Poslednji
+First: Prvi
+'Single-line Text': Tekst
+'Multi-line Text with WYSIWYG': 'Složen tekst'
+'URL $1 is invalid or is not an image.': 'URL $1 je neispravan ili nije slika'
+'URL $1 is not an image.': 'URL $1 nije slika.'
 client:
     added: null
     notfound: null
