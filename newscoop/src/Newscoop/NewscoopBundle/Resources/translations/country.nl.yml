@@ -3,7 +3,7 @@
 'You do not have the right to add countries.': null
 'Delete country': 'Verwijder land'
 'You do not have the right to delete countries.': null
-'Are you sure you want to delete the country $1?': 'Weet je zeker dat je het land $1 wilt verwijderen?'
+'Are you sure you want to delete the country $1?': null
 'The country $1 could not be deleted.': 'Het land $1 kon niet worden gewist.'
 'Edit country name': 'Bewerk landnaam'
 'You do not have the right to change country names.': null

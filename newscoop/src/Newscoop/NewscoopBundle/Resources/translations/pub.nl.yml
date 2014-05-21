@@ -45,7 +45,7 @@
 'You do not have the right to change publication information.': null
 'The publication information could not be updated.': 'The publicatie informatie kan niet worden geupdate.'
 'You do not have the right to delete publications.': null
-'Are you sure you want to delete the publication $1?': 'Weet je zeker dat je de publicatie $1 wilt verwijderen?'
+'Are you sure you want to delete the publication $1?': null
 'Deleting publication': 'Publicatie wordt verwijderd'
 'There are $1 subscription(s) left.': 'Er zijn $1 abonnement(en) over.'
 'The publication $1 could not be deleted.': 'De publicatie $1 kan niet worden verwijderd.'
@@ -62,7 +62,7 @@
 'Edit alias': 'Bewerk alias'
 'Editing alias': 'Alias wordt bewerkt'
 'The site alias $1 could not be modified.': 'De site alias $1 kan niet worden gewijzigd.'
-'Are you sure you want to delete the alias $1?': 'Weet je zeker dat je alias $1 wilt verwijderen?'
+'Are you sure you want to delete the alias $1?': null
 'Deleting alias': 'Alias wordt verwijderd?'
 'The alias $1 could not be deleted.': 'De alias $1 kan niet worden verwijderd.'
 '$1 is the default publication alias, it can not be deleted.': '$1 is de standaard publicatie alias, het kan niet worden verwijderd.'

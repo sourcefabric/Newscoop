@@ -17,7 +17,7 @@
 Top: Top
 'You do not have the right to add topics.': null
 'You do not have the right to delete topics.': null
-'Are you sure you want to delete the topic $1?': 'Weet je zeker dat je het $1 onderwerp wilt verwijderen?'
+'Are you sure you want to delete the topic $1?': null
 'You do not have the right to change topic name.': null
 'The topic $1 could not be deleted.': 'The onderwerp $1 kan niet worden verwijderd.'
 'Adding new topic': 'Toevoegen nieuw onderwerp'

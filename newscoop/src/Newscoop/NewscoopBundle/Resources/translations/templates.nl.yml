@@ -61,7 +61,7 @@ Replace: null
 'You do not have the right to create new folders.': null
 'A file or folder having the name $1 already exists': 'Een bestand of een map met de naam $1 bestaat al'
 'You do not have the right to delete templates.': null
-'Are you sure you want to delete the folder $1 from $2?': 'Weet je zeker dat je de mappen $1 '
+'Are you sure you want to delete the folder $1 from $2?': null
 'Delete folder': 'Verwijder map'
 Folders: Mappen
 'No folders.': 'Geen mappen.'

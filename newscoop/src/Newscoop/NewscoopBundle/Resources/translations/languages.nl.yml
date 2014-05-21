@@ -41,7 +41,7 @@ Apr: null
 'You do not have the right to add languages.': null
 'Please enter the translation for time units.': 'Voeg de vertaling voor tijdeenheid in.'
 'You do not have the right to delete languages.': null
-'Are you sure you want to delete the language $1?': 'Weet je zeker dat je de taal $1 wilt verwijderen?'
+'Are you sure you want to delete the language $1?': 'Weet u zeker dat u de taal $1 wilt verwijderen?'
 'Deleting language': 'Verwijderen taal'
 'The language $1 could not be deleted.': 'De taal $1 kon niet worden verwijderd.'
 'Edit language': 'Bewerk taal'

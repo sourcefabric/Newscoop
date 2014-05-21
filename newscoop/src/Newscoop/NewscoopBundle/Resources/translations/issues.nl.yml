@@ -29,7 +29,7 @@ Schedule: null
 'Name<BR><SMALL>(click to see sections)</SMALL>': 'Naam<BR><SMALL>(klik om de rubrieken te zien)</SMALL>'
 'Delete issue $1': 'Verwijder uitgave $1'
 'You do not have the right to change issues.': null
-'Are you sure you want to change the issue $1 status from $2 to $3?': 'Weet je zeker dat je de uitgave $1 status van $2 naar $3 wilt veranderen?'
+'Are you sure you want to change the issue $1 status from $2 to $3?': null
 'Add new translation': 'Voeg nieuwe vertaling toe'
 'You do not have the right to add issues.': null
 'The issue $1 has been successfuly added.': 'De uitgave $1 is succesvol toegevoegd.'
@@ -39,10 +39,10 @@ Schedule: null
 'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Publicatie datum<BR><SMALL>(yyyy-mm-dd)</SMALL>'
 'Front Page Template': 'Voorpagina sjabloon'
 'You do not have the right to delete issues.': null
-'Are you sure you want to delete the issue $1?': 'Wet je zeker dat je uitgave $1 wilt verwijderen?'
+'Are you sure you want to delete the issue $1?': null
 'Use the structure of the previous issue': 'Gebruik de structuur van de vorige uitgave'
 'Copy the entire structure in all languages from the previous issue except for content.': 'Kopieer de volledige structuur in alle talen van de vorige uitgave behalve de inhoud.'
-'You may modify it later if you wish.': 'Je mag het later wijzigen als je dat wilt.'
+'You may modify it later if you wish.': 'Indien gewenst kunt u dit later wijzigen.'
 'Create a new structure': 'Maak een nieuwe structuur.'
 'Create a complete new structure.': 'Maak een compleet nieuwe structuur.'
 'You must define an issue type for each language and then sections for them.': null

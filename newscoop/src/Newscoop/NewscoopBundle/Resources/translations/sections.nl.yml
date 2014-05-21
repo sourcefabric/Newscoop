@@ -23,7 +23,7 @@ default: null
 'Please check if another section with the same number or URL name does not exist already.': 'Controleer of een andere rubriek met het zelfde nummer of URL naam niet al bestaat.'
 'Delete section': 'Verwijder rubriek'
 'You do not have the right to delete sections.': null
-'Are you sure you want to delete the section $1?': 'Weet je zeker dat je rubriek $1 wilt verwijderen'
+'Are you sure you want to delete the section $1?': null
 'Deleting section': 'Rubriek wordt verwijderd'
 'The section $1 has been deleted.': 'De rubriek $1 is verwijderd.'
 'Configure section': 'Configureer rubriek'
