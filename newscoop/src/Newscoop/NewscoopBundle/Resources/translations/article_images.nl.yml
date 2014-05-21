@@ -58,15 +58,15 @@ Caption: null
 'Image $1 updated.': null
 'Image $1 added.': null
 'Edit article': 'Bewerk artikel'
-'You do not have the right to attach images to articles.': 'Je hebt niet de rechten om afbeeldingen bij artikelen te voegen'
-'You do not have the right to add images.': 'Je hebt niet de rechten om afbeeldingen toe te voegen'
+'You do not have the right to attach images to articles.': null
+'You do not have the right to add images.': null
 'Image information': 'Afbeelding informatie'
 'Attach New Image': 'Voeg nieuwe afbeelding toe'
 'Attach Image To Article': 'Voeg afbeelding bij artikel'
 'Attach Existing Image': 'Voeg bestaande afbeelding bij'
 'Add New Image': 'Voeg nieuwe afbeelding toe'
 Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Datum<BR><SMALL>(yyyy-mm-dd)</SMALL>
-'You must select an image file to upload.': 'Je moet een afbeelding bestaand selecteren om te uploaden.'
+'You must select an image file to upload.': null
 'Change image information': 'Wijzig afbeelding informatie'
-'You do not have the right to add images': 'Je hebt niet de rechten om afbeeldingen toe te voegen'
+'You do not have the right to add images': null
 'Filter by uploader...': null

@@ -12,7 +12,7 @@ Feedback: null
 'Approve selected': null
 'Image files': null
 'Fix all thumbnails': null
-'You do not have the right to add files.': 'Je hebt niet he rechten om bestanden toe te voegen.'
+'You do not have the right to add files.': null
 'Should this file only be available for this translation of the article, or for all translations?': 'Moet dit bestand alleen beschikbaar zijn voor deze vertaling of voor alle vertalingen?'
 'Please enter a description for the file: $1.': null
 'Only this translation': 'Alleen deze vertaling'
@@ -40,7 +40,7 @@ Charset: null
 'Attachment updated.': null
 'Are you sure you want to delete selected items?': null
 'Add new file': null
-'You do not have the right to add images.': 'Je hebt niet de rechten om afbeeldingen toe te voegen'
+'You do not have the right to add images.': null
 'Use for all': null
 'Specify image url if you want to load it.': null
 Size: null
@@ -52,7 +52,7 @@ Size: null
 'Image updated.': null
 'Image $1 deleted.': null
 'Image is in use, it cannot be deleted.': null
-'You must select an image file to upload.': 'Je moet een afbeelding bestaand selecteren om te uploaden.'
+'You must select an image file to upload.': null
 'Add new image': 'Voeg nieuwe afbeelding toe'
 'Delete image $1': 'Verwijder afbeelding $1'
 'Used in articles': 'Gebruikt in artikelen'

@@ -71,9 +71,9 @@ Merge!: null
 '$1 article type $2': null
 'No article types.': 'Geen artikel types.'
 'Delete article type $1': 'Verwijder artikel type $1'
-'You do not have the right to add article types.': 'Je hebt niet de rechten om artikel types toe te voegen.'
+'You do not have the right to add article types.': null
 'Adding new article type': 'Toevoegen niew artikel type'
 'The $1 field may only contain letters and underscore (_) character.': 'Het $1 veld mag alleen letters en laagstreepje (_) bevatten.'
 'The article type $1 already exists.': 'Het artikel type $1 bestaat al.'
-'You do not have the right to delete article types.': 'Je hebt niet de rechten om artikel types te verwijderen.'
+'You do not have the right to delete article types.': null
 'The article type $1 could not be deleted.': 'Het artikel type $1 kan niet worden verwijderd.'

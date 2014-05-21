@@ -6,7 +6,7 @@
 'You do not have the right to reassign article type fields.': null
 'You do not have the right to manage article types.': null
 'You do not have the right to hide article types.': null
-'You do not have the right to delete article types.': 'Je hebt niet de rechten om artikel types te verwijderen.'
+'You do not have the right to delete article types.': null
 'Small ($1 pixels)': null
 'Medium ($1 pixels)': null
 'Large ($1 pixels)': null
@@ -48,10 +48,10 @@ Show/Hide: null
 'Article type fields': 'Artikel type velden'
 'Delete field $1': 'Verwijder veld $1'
 'Adding new field': 'Toevoegen nieuw veld'
-'You do not have the right to add article type fields.': 'Je hebt niet de rechten om een artikel type veld toe te voegen.'
+'You do not have the right to add article type fields.': null
 'The field $1 already exists.': 'Het veld $1 bestaat al.'
 'The $1  must not be void and may only contain letters and underscore (_) character.': 'De $1 mag niet leeg zijn en mag alleen letters en het lage streepje (_) bevatten.'
 'Invalid field type.': 'Verkeerd veld type.'
-'You do not have the right to delete article type fields.': 'Je hebt niet de rechten om een artikel type veld te verwijderen.'
+'You do not have the right to delete article type fields.': null
 'Are you sure you want to delete the field $1?': 'Weet je zeker dat je het veld $1 wilt verwijderen?'
 'You will also delete all fields with this name from all articles of this type from all publications.': 'Je zult ook alle velden verwijderen met deze naam van alle artikelen van dit type van alle publicaties.'

@@ -9,16 +9,16 @@
 'Add root topic': null
 'Topic was deleted.': null
 'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': 'Je moet een naam invullen voor het onderwerp.'
-'You must choose a language for the topic.': 'Je moet een taal kiezen voor het onderwerp.'
+'You must enter a name for the topic.': null
+'You must choose a language for the topic.': null
 'This topic has subtopics, therefore it cannot be deleted.': 'Het onderwerp heeft deelonderwerpen, daarom kan het niet worden gewist.'
 'Add translation:': 'Voeg vertaling toe:'
 'Add subtopic:': 'Voeg deelonderwerp toe:'
 Top: Top
-'You do not have the right to add topics.': 'Je hebt niet de rechten om onderwerpen toe te voegen.'
-'You do not have the right to delete topics.': 'Je hebt niet de rechten om onderwerpen te verwijderen.'
+'You do not have the right to add topics.': null
+'You do not have the right to delete topics.': null
 'Are you sure you want to delete the topic $1?': 'Weet je zeker dat je het $1 onderwerp wilt verwijderen?'
-'You do not have the right to change topic name.': 'Je hebt niet de rechten om een onderwerp naam te wijzigen'
+'You do not have the right to change topic name.': null
 'The topic $1 could not be deleted.': 'The onderwerp $1 kan niet worden verwijderd.'
 'Adding new topic': 'Toevoegen nieuw onderwerp'
 'Deleting topic': 'Verwijderen onderwerp'

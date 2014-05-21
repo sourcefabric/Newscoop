@@ -75,8 +75,8 @@ Action: Actie
 'Scheduling a new publish action': 'Plannen van een nieuwe publicatie actie'
 'Delete scheduled publish action': 'Wis een geplande publicatie actie'
 Date/Time: Datum/Tijd
-'You must select an action.': 'Je moet een actie selecteren'
-'You do not have the right to schedule issues or articles for automatic publishing.': 'Je hebt niet de rechten om uitgaven of artikelen te plannen voor automatische publicatie.'
+'You must select an action.': null
+'You do not have the right to schedule issues or articles for automatic publishing.': null
 'Front page': Voorpagina
 'Section page': Rubriekspagina
 'Show on front page': 'Toon op voorpagina'
@@ -101,13 +101,13 @@ Change: Verschil
 'Default Language': 'Standaard Taal'
 'Paid Period': 'Abonnement Tijd'
 Preview: Voorbeeld
-'You must fill in the $1 field.': 'Je moet het $1 veld invullen.'
+'You must fill in the $1 field.': null
 Error: Fout
 'Invalid input: $1': 'Onjuiste invoer: $1'
 'Language does not exist.': 'Taal bestaat niet.'
 'Publication does not exist.': 'Publicatie bestaat niet.'
 'Issue does not exist.': 'Uitgave bestaat niet.'
-'You must select a language.': 'Je moet een taal selecteren.'
+'You must select a language.': null
 'Section does not exist.': 'Rubriek bestaat niet.'
 'No articles.': 'Geen artikelen.'
 'Article does not exist.': 'Artikel bestaat niet.'
@@ -166,10 +166,10 @@ Logs: Logboeken
 'There are $1 countries left.': 'Er zijn $1 land(en) over.'
 'Name <SMALL>(click to edit)</SMALL>': 'Naam <SMALL>(klik om te bewerken)</SMALL>'
 'Add new subscription': 'Voeg nieuw abonnement toe.'
-'You do not have the right to add subscriptions.': 'Je hebt geen rechten om abonnementen toe te voegen.'
+'You do not have the right to add subscriptions.': null
 'Adding subscription': 'Toevoegen abonnement'
 'Delete subscription': 'Verwijder abonnement'
-'You do not have the right to delete subscriptions.': 'Je hebt geen rechten om de abonnementen te verwijderen.'
+'You do not have the right to delete subscriptions.': null
 'No such subscription.': 'Abonnement bestaat niet.'
 Yes: Ja
 No: nee
@@ -177,7 +177,7 @@ Close: Sluiten
 'No issues.': 'Geen uitgaven.'
 'Back to Edit Article': 'Terug naar Bewerk Artikel'
 'No topics': 'Geen onderwerpen'
-'You do not have the right to add articles.': 'Je hebt niet de rechten om artikelen toe te voegen.'
+'You do not have the right to add articles.': null
 Start: Start
 Days: Dagen
 'The sections could not be added successfully. Some of them were already added !': 'De rubrieken konden niet worden toegevoegd omdat sommige al bestonden!'
@@ -188,8 +188,8 @@ OK: OK
 Save: Opslaan
 Search: Zoeken
 'Make a selection': 'Maak selectie'
-'You must input a number greater than 0 into the $1 field.': 'Je moet een nummer groter dan 0 in het $1 veld invoegen.'
-'You must input a valid date.': 'Je moet een geldige datum invoegen.'
+'You must input a number greater than 0 into the $1 field.': null
+'You must input a valid date.': null
 'Add new field': 'Voeg nieuw veld toe.'
 'Article automatic publishing schedule': 'Artikel automatische publicatie taak'
 'Are you sure you want to delete this scheduled action?': 'Weet je zeker dat je deze geplande taak wilt verwijderen?'

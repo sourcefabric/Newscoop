@@ -18,11 +18,11 @@ default: null
 'Name<BR><SMALL>(click to see articles)</SMALL>': 'Naam<BR><SMALL>(klik om artikelen te zien)</SMALL>'
 'Delete section $1': 'Verwijder rubriek $1'
 'Adding new section': 'Nieuwe rubriek wordt toegevoegd'
-'You do not have the right to add sections.': 'Je hebt niet de rechten om rubrieken toe te voegen'
+'You do not have the right to add sections.': null
 'The section $1 has been successfuly added.': 'De rubriek $1 is succesvol toegevoegd.'
 'Please check if another section with the same number or URL name does not exist already.': 'Controleer of een andere rubriek met het zelfde nummer of URL naam niet al bestaat.'
 'Delete section': 'Verwijder rubriek'
-'You do not have the right to delete sections.': 'Je hebt niet de rechten om rubrieken te verwijderen'
+'You do not have the right to delete sections.': null
 'Are you sure you want to delete the section $1?': 'Weet je zeker dat je rubriek $1 wilt verwijderen'
 'Deleting section': 'Rubriek wordt verwijderd'
 'The section $1 has been deleted.': 'De rubriek $1 is verwijderd.'
@@ -34,7 +34,7 @@ default: null
 'Duplicating section': 'Rubriek wordt gedupliceerd'
 'The section $1 could not be duplicated': 'De rubriek $1 kan niet worden gedupliceerd'
 'Section $1 has been duplicated to $2. $3 of $4': 'Rubriek $1 is gedupliceerd naar $2. $3 van $4'
-'You do not have the right to modify sections.': 'Je hebt niet de rechten om rubrieken aan te passen.'
+'You do not have the right to modify sections.': null
 'A total of $1 articles were deleted.': 'Een totaal van $1 articles werd verwijderd.'
 'Duplicate Section:': 'Dupliceer rubriek:'
 'Existing Section': 'Huidige rubriek'
