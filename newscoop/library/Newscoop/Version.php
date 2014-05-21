@@ -11,7 +11,7 @@ namespace Newscoop;
  */
 class Version
 {
-    const VERSION = '4.2.2';
+    const VERSION = '4.2.3';
 
     /**
      * Compare version with current Newscoop version

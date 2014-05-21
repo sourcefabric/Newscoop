@@ -1,3 +1,8 @@
+4.2.3 (May 19, 2014)
+  Improvements
+ -------------
+ - CS-5382 - Search is not working in Media Archive for Article Editor
+
 4.2.2 (May 06, 2014)
   Improvements
  -------------
