@@ -179,6 +179,10 @@ class Language extends DatabaseObject {
 	{
 	    global $g_ado_db;
 
+		if ($p_languageCode == 'legacy') {
+			return array();
+		}
+
 	    if (!$p_skipCache && CampCache::IsEnabled()) {
 	    	$paramsArray['id'] = (is_null($p_id)) ? 'null' : $p_id;
 	    	$paramsArray['language_code'] = (is_null($p_languageCode)) ? 'null' : $p_languageCode;
