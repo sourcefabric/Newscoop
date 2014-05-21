@@ -216,7 +216,14 @@ abstract class CampSystem
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 
         if (empty($p_lngId) || empty($p_issNr)) {
-            $publication = new Publication($p_pubId);
+            $cacheKey = $cacheService->getCacheKey('legacy_publication'.$p_pubId, 'publication');
+            if ($cacheService->contains($cacheKey)) {
+                $publication = $cacheService->fetch($cacheKey);
+            } else {
+                $publication = new Publication($p_pubId);
+                $cacheService->save($cacheKey, $publication);
+            }
+
             $issue = self::GetLastIssue($publication, $p_lngId);
             if (is_null($issue)) {
                 $issue = self::GetLastIssue($publication);
@@ -257,9 +264,18 @@ abstract class CampSystem
     public static function GetTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr,
             $p_artNr, $p_isPublished = true)
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
         global $g_ado_db;
         if ($p_lngId <= 0) {
-            $publication = new Publication($p_pubId);
+            $cacheKey = $cacheService->getCacheKey('legacy_publication'.$p_pubId, 'publication');
+            if ($cacheService->contains($cacheKey)) {
+                $publication = $cacheService->fetch($cacheKey);
+            } else {
+                $publication = new Publication($p_pubId);
+                $cacheService->save($cacheKey, $publication);
+            }
+            
             if (!$publication->exists()) {
                 return null;
             }

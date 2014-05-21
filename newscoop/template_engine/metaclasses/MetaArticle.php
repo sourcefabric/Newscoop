@@ -96,7 +96,15 @@ final class MetaArticle extends MetaDbObject {
     	$this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
-        $this->m_dbObject = new Article($p_languageId, $p_articleId);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey('legacy_article_'.$p_languageId.'_'.$p_articleId, 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Article($p_languageId, $p_articleId);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
+
         if ($this->m_dbObject->exists()) {
         	$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
 	        $this->m_dbObject->getArticleNumber(),
