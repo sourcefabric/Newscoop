@@ -47,8 +47,8 @@ Staff: Leiding
 '---Select publication---': '---Selecteer publicatie---'
 'No issues': 'Geen artikelen'
 '---Select issue---': '---Selecteer artikel---'
-'No sections': 'Geen secties'
-'---Select section---': '---Selecteer sectie--'
+'No sections': 'Geen rubrieken'
+'---Select section---': '---Selecteer rubriek--'
 Language: Taal
 Country: Land
 'Account name': 'Profiel naam'
@@ -57,7 +57,7 @@ Publication: Publicatie
 Subscriptions: Abonnementen
 Issue: Uitgave
 Number: Nummer
-Section: Sectie
+Section: Rubriek
 Keywords: Steekwoorden
 Topic: Onderwerp
 'URL Name': 'URL Naam'
@@ -78,11 +78,11 @@ Date/Time: Datum/Tijd
 'You must select an action.': 'Je moet een actie selecteren'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Je hebt niet de rechten om uitgaven of artikelen te plannen voor automatische publicatie.'
 'Front page': Voorpagina
-'Section page': Sectiepagina
+'Section page': Rubriekspagina
 'Show on front page': 'Toon op voorpagina'
 'Remove from front page': 'Verwijder van voorpagina'
-'Show on section page': 'Toon op sectiepagina'
-'Remove from section page': 'Verwijder van sectiepagina'
+'Show on section page': 'Toon op rubriekspagina'
+'Remove from section page': 'Verwijder van rubriekspagina'
 Actions: Acties
 Publishing: Publiceren
 Show: Tonen
@@ -91,13 +91,13 @@ Remove: Verwijderen
 'Staff User Types': 'Leidinggevende Gebruiker Types'
 Publications: Publicaties
 Issues: Uitgaven
-Sections: Secties
+Sections: Rubrieken
 Articles: Artikelen
 Images: Afbeeldingen
 Change: Verschil
 'Add new issue': 'Voeg een uitgave toe'
-'Section Template': 'Sectie Template'
-'Article Template': 'Artikel Template'
+'Section Template': Rubriekssjabloon
+'Article Template': Artikelsjabloon
 'Default Language': 'Standaard Taal'
 'Paid Period': 'Abonnement Tijd'
 Preview: Voorbeeld
@@ -108,7 +108,7 @@ Error: Fout
 'Publication does not exist.': 'Publicatie bestaat niet.'
 'Issue does not exist.': 'Uitgave bestaat niet.'
 'You must select a language.': 'Je moet een taal selecteren.'
-'Section does not exist.': 'Sectie bestaat niet.'
+'Section does not exist.': 'Rubriek bestaat niet.'
 'No articles.': 'Geen artikelen.'
 'Article does not exist.': 'Artikel bestaat niet.'
 'Image does not exist.': 'Afbeelding bestaat niet.'
@@ -161,7 +161,7 @@ Localizer: Nationaliseerder
 Logs: Logboeken
 'There are $1 article(s) left.': 'Er zijn $1 artikel(en) over.'
 'There are $1 issues(s) left.': 'Er zijn $1 uitgave(n) over.'
-'There are $1 section(s) left.': 'Er zijn $1 sectie(s) over.'
+'There are $1 section(s) left.': 'Er zijn $1 rubriek(en) over.'
 'There are $1 publication(s) left.': 'Er zijn $1 publicatie(s) over.'
 'There are $1 countries left.': 'Er zijn $1 land(en) over.'
 'Name <SMALL>(click to edit)</SMALL>': 'Naam <SMALL>(klik om te bewerken)</SMALL>'
@@ -180,7 +180,7 @@ Close: Sluiten
 'You do not have the right to add articles.': 'Je hebt niet de rechten om artikelen toe te voegen.'
 Start: Start
 Days: Dagen
-'The sections could not be added successfully. Some of them were already added !': 'De secties konden niet worden toegevoegd omdat sommige al bestonden!'
+'The sections could not be added successfully. Some of them were already added !': 'De rubrieken konden niet worden toegevoegd omdat sommige al bestonden!'
 'Add another': 'Voeg ander toe'
 Cancel: Annuleren
 Done: Klaar
@@ -212,12 +212,12 @@ Add: Toevoegen
 'Add Event': 'Voeg actie toe'
 N/A: N/A
 'On Front Page': 'Op Voorpagina'
-'On Section Page': 'Op Sectiepagina'
+'On Section Page': 'Op rubriekspagina'
 'Created by': 'Gemaakt door'
 'Creation date': 'Gemaakt op'
 'Publication List': 'Publicatie lijst'
 'Issue List': 'Uitgaven lijst'
-'Section List': 'Sectie lijst'
+'Section List': Rubrieksoverzicht
 All: Alle
 duplicate: dupliceren
 move: verplaatsen

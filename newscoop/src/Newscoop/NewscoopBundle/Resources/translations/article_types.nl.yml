@@ -47,7 +47,7 @@ activate: null
 'The article type $1 does not exist.': null
 'Template Type Name': null
 Show/Hide: null
-'Show article on section page': 'Toon artikel op sectiepagina'
+'Show article on section page': 'Toon artikel op rubriekspagina'
 'Show article on front page': 'Toon article op voorpagina'
 'Publish date': null
 Merge!: null

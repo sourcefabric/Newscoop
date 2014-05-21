@@ -26,7 +26,7 @@ Schedule: null
 'Delete issue': null
 'Click here to publish this issue': null
 'A total of $1 articles were deleted.': 'Een totaal van $1 articles werd verwijderd.'
-'Name<BR><SMALL>(click to see sections)</SMALL>': 'Naam<BR><SMALL>(klik om de secties te zien)</SMALL>'
+'Name<BR><SMALL>(click to see sections)</SMALL>': 'Naam<BR><SMALL>(klik om de rubrieken te zien)</SMALL>'
 'Delete issue $1': 'Verwijder uitgave $1'
 'You do not have the right to change issues.': 'Je hebt niet de rechten om de uitgaven te veranderen.'
 'Are you sure you want to change the issue $1 status from $2 to $3?': 'Weet je zeker dat je de uitgave $1 status van $2 naar $3 wilt veranderen?'
@@ -37,7 +37,7 @@ Schedule: null
 'Change issue details': 'Wijzig de uitgave details'
 'You do not have the right to change issue details.': 'Je hebt niet de rechten om de uitgave details te wijzigen.'
 'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Publicatie datum<BR><SMALL>(yyyy-mm-dd)</SMALL>'
-'Front Page Template': 'Voorpagina Sjabloon'
+'Front Page Template': 'Voorpagina sjabloon'
 'You do not have the right to delete issues.': 'Je hebt niet de rechten om uitgaven te verwijderen.'
 'Are you sure you want to delete the issue $1?': 'Wet je zeker dat je uitgave $1 wilt verwijderen?'
 'Use the structure of the previous issue': 'Gebruik de structuur van de vorige uitgave'
@@ -45,7 +45,7 @@ Schedule: null
 'You may modify it later if you wish.': 'Je mag het later wijzigen als je dat wilt.'
 'Create a new structure': 'Maak een nieuwe structuur.'
 'Create a complete new structure.': 'Maak een compleet nieuwe structuur.'
-'You must define an issue type for each language and then sections for them.': 'Je moet een uitgave defineren voor elke taal en dan secties voor hen.'
+'You must define an issue type for each language and then sections for them.': 'Je moet een uitgave defineren voor elke taal en dan rubrieken voor hen.'
 'Copy previous issue': 'Kopieer vorige uitgave'
 'No previous issue.': 'Geen vorige uitgave.'
 'Copy structure from issue number $1': null
@@ -53,7 +53,7 @@ Schedule: null
 'Issue Publishing Schedule': 'Uitgave Publiceer Planning'
 'Invalid Input: $1': 'Onjuiste Invoer: $1'
 'Issue Number': 'Uitgave Nummer'
-'Go To Sections': 'Ga naar Secties'
+'Go To Sections': 'Ga naar rubrieken'
 'There was an error reading the language parameter.': 'Er was een probleem bij het lezen van de taal parameter.'
 'There was an error reading the publication parameter.': 'Er was een fout bij het lezen van de publicatie parameter.'
 'There was an error reading the issue parameter.': 'Er was een fout bij het lezen van de uitgave parameter.'
