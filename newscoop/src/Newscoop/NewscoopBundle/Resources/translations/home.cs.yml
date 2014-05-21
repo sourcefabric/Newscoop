@@ -152,7 +152,7 @@ Help: Nápověda
 'Please make sure that you typed the correct user name and password.': 'Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo'
 'If your problem persists please contact the site administrator $1': 'Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora'
 Backup/Restore: Zálohovat/Obnovit
-'Step 2': null
-'Step 3': null
-'Add new user': null
+'Step 2': 'Krok 2'
+'Step 3': 'Krok 3'
+'Add new user': 'Přidat nového uživatele'
 'Bad credentials': null

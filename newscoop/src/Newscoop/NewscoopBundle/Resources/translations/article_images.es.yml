@@ -1,6 +1,6 @@
-'Display newsfeed images': null
-'Mark image': null
-'Add selected images to slideshow': null
+'Display newsfeed images': 'Desplegar imágenes de los suministros de noticias'
+'Mark image': 'Marca imagen'
+'Add selected images to slideshow': 'Agregar las imágenes seleccionadas a la presentación'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Lo siento, esa imagen es muy pequeña.  Cada imagen debe ser de al menos  %dx%d.'
 'Slideshow rendition': 'Rendición del slideshow'
 'Renditions reloaded': 'Rendiciones recargadas'

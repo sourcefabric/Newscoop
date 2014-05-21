@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': null
-'Missing thumbnails fixed.': null
+'No thumbnails were fixed.': 'No se repararon miniaturas.'
+'Missing thumbnails fixed.': 'Se han reparado las miniaturas faltantes.'
 Slideshows: Diapositivas
 'You cant update used files.': 'No puede actualizar archivos usados.'
 Source: Fuente
@@ -8,7 +8,7 @@ Local: Local
 Feedback: Retroalimentación
 'Do you want to update unused only?': '¿Desea actualizar sólo los no usados?'
 'Disapprove selected': 'Desaprobar selección'
-'Are you sure you want to update selected items?': '¿Desea actualizar esta selección?'
+'Are you sure you want to update selected items?': '¿Está seguro de querer actualizar los ítems seleccionados?'
 'Approve selected': 'Aprovar selección'
 'Image files': 'Archivos de imagen'
 'Fix all thumbnails': 'Fijar todas las viñetas'
@@ -38,7 +38,7 @@ Charset: Charset
 'Change attachment information': 'Cambiar la información del ajunto'
 'Automatically download': 'Descargar automáticamente'
 'Attachment updated.': 'Se subió el adjunto'
-'Are you sure you want to delete selected items?': '¿Está seguro de eliminar los ítems seleccionados?'
+'Are you sure you want to delete selected items?': '¿Está seguro de querer eliminar los ítems seleccionados?'
 'Add new file': 'Añadir archivo nuevo'
 'You do not have the right to add images.': 'No tiene autorización para añadir imágenes.'
 'Use for all': 'Usar en todo'
@@ -58,5 +58,5 @@ Size: Tamaño
 'Used in articles': 'Utilizado en artículos'
 'View image': 'Ver imagen'
 'Change image information': 'Cambiar información de imagen'
-'Photographer URL': null
-'Add website url starting with http://': null
+'Photographer URL': 'URL del Fotógrafo'
+'Add website url starting with http://': 'Añada el URL de un sitio web que comience por http://'

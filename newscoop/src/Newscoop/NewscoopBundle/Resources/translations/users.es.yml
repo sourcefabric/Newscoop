@@ -28,7 +28,7 @@ Continue: null
 'No records found.': 'No se encontraron registros'
 'No entries to show': 'No se encontraron entradas'
 'Display _MENU_ records': 'Desplegar registros _MENU_'
-'Are you sure you want to {action}?': null
+'Are you sure you want to {action}?': '¿Está seguro de querer {action}?'
 'Active Logins': null
 ' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'
 'User renamed.': 'Se renombró el usuario.'

@@ -41,7 +41,7 @@ Apr: abr
 'You do not have the right to add languages.': 'No tiene derecho a agregar idiomas'
 'Please enter the translation for time units.': 'Favor entre la traducción por unidad de tiempo'
 'You do not have the right to delete languages.': 'No tiene derecho a borrar idiomas'
-'Are you sure you want to delete the language $1?': '¿Esta seguro que desea borrar el idioma $1?'
+'Are you sure you want to delete the language $1?': '¿Está seguro de que desea borrar el idioma $1?'
 'Deleting language': 'Borrando idioma'
 'The language $1 could not be deleted.': 'El idioma $1 no pudo ser borrado'
 'Edit language': 'Editar idioma'
@@ -68,5 +68,5 @@ Friday: Viernes
 Saturday: Sábado
 Sunday: Domingo
 'You do not have the right to add new languages.': 'No puede añadir un nuevo idioma.'
-'There are $1 issue(s) left.': 'Queda(n) $1 edición(es).'
+'There are $1 issue(s) left.': 'Queda(n) $1 ejemplar(es).'
 'Native name': 'Nombre local'

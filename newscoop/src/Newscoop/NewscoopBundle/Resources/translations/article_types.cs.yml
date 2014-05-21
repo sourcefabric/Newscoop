@@ -1,6 +1,6 @@
-list: null
-filter: null
-'In Lists?': null
+list: seznam
+filter: filtr
+'In Lists?': 'V seznamech?'
 'Are you sure you want to $1 articles of article type $2?': null
 '$1 articles of article type $2': null
 'Hide human-readable field names': 'Skrýt pole se jmény lidí'

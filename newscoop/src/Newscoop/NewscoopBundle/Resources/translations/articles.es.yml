@@ -20,7 +20,7 @@ Playlist: 'Lista de artículos inteligente'
 'Drag here to add to list': 'Arrastra hasta aquí para agregar a la lista'
 'Could not save the list': 'No fue posible guardar la lista'
 'Available Articles': 'Artículos disponibles'
-'Are you sure you want to delete this list?': '¿Realmente deseas eliminar esta lista?'
+'Are you sure you want to delete this list?': '¿Realmente desea eliminar esta lista?'
 'Add to list': 'Añadir a lista'
 'Add list': 'Añadir lista'
 'Multi date events': 'Eventos con múltiples fechas'
@@ -44,7 +44,7 @@ Off: Apagado
 'Unable to reach Newscoop. Please check your internet connection.': 'No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.'
 Title: Tìtulo
 'There already is an article with the same name. Please change the name and try again.': 'Ya existe un archivo con ese nombre. Por favor, cámbialo e intenta de nuevo.'
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Por favor, recuerda que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambies el estado a Nuevo. Confirma el cambio de estado.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Por favor, recuerde que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambie el estado a Nuevo. Confirme el cambio de estado.'
 Geolocation: Geolocalización
 Newscoop: Newscoop
 'Overwrite articles with matching names': 'Sobreescribir artículos con nombres idénticos'

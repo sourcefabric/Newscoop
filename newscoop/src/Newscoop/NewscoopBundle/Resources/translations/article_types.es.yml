@@ -1,8 +1,8 @@
-list: null
-filter: null
-'In Lists?': null
-'Are you sure you want to $1 articles of article type $2?': null
-'$1 articles of article type $2': null
+list: lista
+filter: filtro
+'In Lists?': '¿En listas?'
+'Are you sure you want to $1 articles of article type $2?': '¿Está seguro de querer $1 los artículos del tipo $2?'
+'$1 articles of article type $2': '$1 artículos del tipo $2'
 'Hide human-readable field names': 'Ocultar nombres de campo legibles.'
 'Edit and translate human-readable field names': 'Editar y traducir nombres de campo legibles.'
 'The template name may only contain letters and the underscore (_) character.': 'El nombre de la plantilla solo puede contener letras y el caracter de guión bajo (_).'

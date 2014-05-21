@@ -1,7 +1,7 @@
 'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'Si continúa, los temas y subtemas serán desligados de sus artículos y eliminados.'
 'Delete anyway': 'Eliminar de todas formas'
 'Reset order': 'Restablecer el orden'
-'Order changes will be lost. Are you sure you want to continue?': 'Se perderan los cambios de orden.  ¿Está seguro de continuar?'
+'Order changes will be lost. Are you sure you want to continue?': 'Se perderán los cambios de orden.  ¿Está seguro de continuar?'
 'Topics order saved.': 'Se guardó el órden de los tópicos'
 'Show languages': 'Mostrar idiomas'
 'Save order': 'Almacenar orden'
@@ -17,7 +17,7 @@
 Top: Arriba
 'You do not have the right to add topics.': 'No tiene derecho para agregar temas'
 'You do not have the right to delete topics.': 'No tiene derecho para borrar temas'
-'Are you sure you want to delete the topic $1?': '¿Esta seguro que desea borar el tema $1?'
+'Are you sure you want to delete the topic $1?': '¿Está seguro de que desea borrar el tema $1?'
 'You do not have the right to change topic name.': 'No tiene derecho para cambiar nombre de tema'
 'The topic $1 could not be deleted.': 'El tema $1 no pudo ser borrado'
 'Adding new topic': 'Agregando nuevo tema'

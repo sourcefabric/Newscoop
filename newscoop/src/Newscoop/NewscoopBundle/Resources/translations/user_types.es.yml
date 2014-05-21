@@ -48,7 +48,7 @@ attach: añadir
 admin: administrador
 add: agregar
 'You cant deny yourself to manage $1': 'No puede negarse a administrar $1'
-'You are not allowed to $1 $2.': 'No puede negarse a $1 $2.'
+'You are not allowed to $1 $2.': 'Usted no tiene permiso para $1 $2.'
 'User type saved.': 'Tipo de usuario guardado.'
 'User type deleted.': 'Tipo de usuario eliminado.'
 'User type added.': 'Tipo de usuario agregado.'

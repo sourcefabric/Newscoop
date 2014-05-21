@@ -1,4 +1,4 @@
-'No attachment': null
+'No attachment': 'Žádná příloha'
 at: na
 'With no attachment': 'Bez přílohy'
 'With image attachment': 'S přílohou obrázku'
@@ -29,7 +29,7 @@ Deleted: Vymazat
 Attachment: Příloha
 Approved.: Schváleno
 Approve: Schválit
-Anonymous: null
+Anonymous: Anonymní
 ' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
 'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
 'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'

@@ -1,5 +1,5 @@
-'Display articles of filtered types': null
-'Display Articles of Filtered Types': null
+'Display articles of filtered types': 'Desplegar los artículos de los tipos filtrados'
+'Display Articles of Filtered Types': 'Desplegar Artículos de los Tipos Filtrados'
 Webcode: Webcode
 'View article': 'Ver artículo'
 Source: Fuente
@@ -62,7 +62,7 @@ Filename: 'Nombre del archivo'
 Creator: Creador
 'Create Date': 'Fecha de creación'
 'Article status set to $1': 'Se estableció el estatus del artículo en $1'
-'Are you sure you want to delete selected articles?': '¿Quiere borrar los archivos seleccionados?'
+'Are you sure you want to delete selected articles?': '¿Está seguro de querer borrar los artículos seleccionados?'
 'All Sections': 'Todas las secciones'
 'All Publications': 'Todas las publicaciones'
 'All Issues': 'Todas las ediciones'

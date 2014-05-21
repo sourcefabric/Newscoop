@@ -1,5 +1,5 @@
 'Display newsfeed images': null
-'Mark image': null
+'Mark image': 'Označit obrázek'
 'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Obrázek je příliš malý, jeho velikost musí být alespoň %dx%d'
 'Slideshow rendition': 'Ukázat slideshow'
