@@ -22,7 +22,7 @@ class ShortURL
             $publication = $publicationService->getPublication();
         } else {
             $em = \Zend_Registry::get('container')->getService('em');
-            $publication = $em->getRepository('Newscoop\Entity\Publication')->finOneById($publicationId);
+            $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneById($publicationId);
 
             if (!$publication) {
                 throw new \Exception('Publication does not exist.');
@@ -39,7 +39,7 @@ class ShortURL
             return $uri;
         }
 
-        return $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://' . $$publication->getDefaultAlias()->getName() . $uri;
+        return $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://' . $publication->getDefaultAlias()->getName() . $uri;
     }
 
     public static function GetURI($p_publicationId, $p_languageId, $p_issueNo = null, $p_sectionNo = null, $p_articleNo = null)
