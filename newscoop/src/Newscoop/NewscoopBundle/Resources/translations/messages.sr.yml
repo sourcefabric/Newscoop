@@ -9,7 +9,7 @@ More...: Даље...
 Content: Садржаји
 Languages: Језици
 Countries: Државе
-Themes: Шаблони
+Themes: Теме
 Topics: Топици
 Configure: Подешавања
 'Image Archive': 'Фото архива'
@@ -74,7 +74,7 @@ Action: Акција
 'Schedule a new action': 'Закажи нову акцију'
 'Scheduling a new publish action': 'Закажи нову акцију објављивања'
 'Delete scheduled publish action': 'Обриши заказану акцију објављивања'
-Date/Time: Датум/време
+Date/Time: Датум/час
 'You must select an action.': 'Морате изабрати акцију.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Немате право да заказујете аутоматско објављивање издања и текстова.'
 'Front page': 'Почетна страна'
@@ -148,6 +148,7 @@ Localizer: Локализатор
 'Add new publication': 'Додај нову публикацију'
 'Upload new template': 'Аплоудуј нови шаблон'
 'Add new staff member': 'Додај новог сарадника'
+'Staff member deleted.': null
 'Add new subscriber': 'додај новог претплатника'
 'Add new user type': 'Додај нови тип корисника'
 'Add new article type': 'Додај нови тип текста'
@@ -191,7 +192,7 @@ Search: Тражи
 'You must input a valid date.': 'Морате исправно унети датум'
 'Add new field': 'Додај ново поље'
 'Article automatic publishing schedule': 'Распоред аутоматског објављивања текстова'
-'Are you sure you want to delete this scheduled action?': 'Да ли сте сигурни да желите да обришете заказану акцију?'
+'Are you sure you want to delete this scheduled action?': ' '
 Unlink: 'Уклони линк'
 'Are you sure you want to delete the image $1?': 'Да ли сте сигурни да желите да обришете слику $1?'
 'No such issue.': 'Нема тог издања.'
@@ -230,7 +231,7 @@ Approved: Одобрен
 Subject: Наслов
 'IP address:': 'ИП адреса:'
 'Email:': 'Имејл:'
-Author: Аутор
+Author: аутор
 'Article name': 'Наслов текста'
 'Hide article': 'Сакри текст'
 'Show article': 'Прикажи текст'
@@ -257,9 +258,27 @@ Reads: читања
 'Universal List': 'Универзална листа'
 'Invalid security token!': 'Погрешан сигурносни симбол'
 Authors: Аутори
-'User name': 'Корисничко име'
-'User Types': 'Типови корисника'
-'Add new user account': 'Додај новог корисника'
-'Schedule a new publish action': 'Закажи нову акцију објављивања'
-'User may add/change user accounts and passwords': 'Корисник може да додаје/мења корисничке налоге и лозинке'
-'User may delete user accounts': 'Корисник може да брише корисничке налоге'
+Title: Наслов
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: у
+published: null
+unpublished: null

@@ -30,7 +30,7 @@ Title: სათაური
 'Status: Set New': 'სტატუსი: ახალი'
 'Status: Publish': 'სტატუსი: გამოცემა'
 Size: ზომა
-'Showing _START_ to _END_ of _TOTAL_ entries': 'Showing _START_ to _END_ of _TOTAL_ entries'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
 'Show / hide columns': 'სვეტების გამოჩენა/გაქრობა'
 'Select some article first.': 'აირჩიეთ სტატია'
 'Select action': 'აირჩიეთ მოქმდება'
@@ -44,10 +44,10 @@ Size: ზომა
 'Order updated.': 'თანმიმდევრობა განახლდა.'
 'Open in browser': 'გახსენით ბრაუზერში'
 'No sections found': 'სექციები ვერ მოინახა'
-'No records found.': 'ჩანაწერები ვერ მოინახა'
+'No records found.': 'ჩანაწერები ნაპოვნი არ არის.'
 'No publications found': 'პუბლიკაცია არ მოიძებნა'
 'No issues found': 'გამოცემები ვერ მოინახა'
-'No entries to show': 'ჩანაწერები არ არის'
+'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
 Locations: ლოკაციები
 'Loading data': 'მონაცემები იტვირთება'
 'Last modified': 'ბოლო მოდიფიკაცია'
@@ -58,10 +58,10 @@ First: პირველი
 Filter: ფილტრი
 Filename: 'ფაილის სახელი'
 'Duplicate to another section': 'სხვა სექციაში დუბლირება'
-'Display _MENU_ records': 'Display _MENU_ records'
+'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
 Creator: შემქმნელი
 'Create Date': 'შექმნის თარიღი'
-'Article status set to $1': 'სტატიის სტატუსი: $1'
+'Article status set to $1': 'სტატიის სტატუსი შეიცვალა - $1'
 'Are you sure you want to delete selected articles?': 'დარწმუნებული ხართ რომ გსურთ აღნიშნული სტატიების წაშლა?'
 'All Sections': 'ყველა სექცია'
 'All Publications': 'ყველა პუბლიკაცია'
@@ -70,6 +70,4 @@ Added: დაემატა
 'Access denied.': 'წვდომა აკრძალულია'
 '$1 toggled.': '$1 ჩაირთო'
 '$1 articles have been removed': '$1 სტატიები მოიხსნა'
-' - filtering from _MAX_ records': '- ფილტრაცია ხდება _MAX_ records'
-'Display newswires articles': 'ახალი ამბების სააგენტოების სტატიების ჩვენება'
-'Display Newswires': 'ახალი ამბების სააგენტოების ჩვენება'
+' - filtering from _MAX_ records': null

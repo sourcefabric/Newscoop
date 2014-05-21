@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: Web-сайт
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Геопозиционирование
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показано _START_ до _END_ / _TOTAL_ записей'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Не выбрана ни одна из записей'
+'No entries to show': 'Нет записей для просмотра'
+'Display _MENU_ records': 'Отобразить _MENU_ записи'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'
 'User renamed.': 'Пользователь переименован.'
 'User attributes': 'Атрибуты пользователя'
 'Rename user $1': 'Переименовать пользователя $1'
@@ -44,10 +44,10 @@ Continue:
 'Profile saved.': 'Профиль сохранен.'
 Picture: Аватар
 'Password updated': 'Пароль обновлен'
-None: Пусто
+None: 'Ни один'
 'New confirmation email was sent to user.': 'Новое email -подтверждение по отправлено пользователю'
 'Email is used already': 'Этот уже email используется '
-'Edit your password': 'Изменить пароль'
+'Edit your password': 'Редактировать пароль'
 'Edit user $1': 'Изменить данные пользователя $1'
 'Edit subscriptions': 'Редактировать подписки'
 'Edit profile': 'Редактировать профиль'
@@ -101,7 +101,7 @@ Filters: Фильтры
 'User may attach topics to articles': 'Пользователь может прикреплять темы к статьям'
 'User may attach images to articles': 'Пользователь может прикреплять изображения к статьям'
 'User may add special characters': 'Пользователь может добавлять специальные символы'
-'That user name already exists, please choose a different login name.': 'Это имя пользователя уже существует, пожалуйста выберите другое.'
+'That user name already exists, please choose a different login name.': 'Это имя пользователя уже существует, пожалуйста, выберите другой логин.'
 'User may delete article attachments': 'Пользователь может удалять приложения к статьям'
 'User may change article attachments': 'Пользователь может изменять приложения к статьям'
 'User may add article attachments': 'Пользователь может добавлять приложения к статьям'
@@ -184,22 +184,39 @@ Miscellaneous: Разное
 'User will be notified on several events': 'Пользователь будет уведомляться о некоторых событиях'
 'Editor Miscellaneous Settings': 'Прочие настройки редактора'
 'No such user account.': 'Нет такой учетной записи пользователя.'
-'User may restart the template engine': 'Пользователь может перезагрузить движок шаблонов'
-'User Name': 'Имя пользователя'
-' management': 
-'You do not have the right to change user passwords.': 'Вы не имеете права изменять пароли пользователей.'
-'The password could not be changed.': 'Невозможно изменит пароль пользователя.'
-'The password has been changed.': 'Пароль был изменен.'
-'Edit user account permissions': 'Редактировать права учетной записи пользователя'
-'Old password': 'Старый пароль'
-'New password': 'Новый пароль'
-'Confirm new password': 'Подтвердите новый пароль'
-'Changing your password': 'Изменение вашего пароля'
-'User $1 changed his password': 'Пользователь $1 изменил свой пароль'
-'Delete user account': 'Удалить учетную запись пользователя'
-'IP Access List': 'Список IP-доступа'
-'Delete IP Group': 'Удалить группу IP-адресов'
-'You do not have the right to delete IP Groups.': 'Вы не имеете права удаления группы IP-адресов'
-'No such IP Group.': 'Нет такой группы IP-адресов.'
-'User management': 'Управление пользователями:ru'
-Staff: 'Персонал:ru'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Управление пользователями'
+    created: Создана
+    updated: null
+    status:
+        status: Состояние
+        registered: null
+        pending: null
+        deleted: 'Удалено '
+        active: Активно
+    table:
+        actions:
+            actions: Операции
+            edit: Правка
+            resend_email: null
+            rename: Переименовать
+            remove: Удалить
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Обработка...
+    chart:
+        title: null

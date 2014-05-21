@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
 Slideshows: Slideshows
 'You cant update used files.': 'Δεν μπορείτε να ενημερώσετε χρησιμοποιημένα αρχεία.'
 Source: Πηγή
@@ -13,25 +13,25 @@ Feedback: Feedback
 'Image files': 'Αρχεία εικόνων'
 'Fix all thumbnails': 'Επιδιόρθωση όλων των thumbnails'
 'You do not have the right to add files.': 'Δεν έχετε το δικαίωμα να προσθέσετε αρχεία.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Αυτό το αρχείο να είναι διαθέσιμο μόνο για αυτή τη μετάφραση του άρθρου, ή για όλες τις μεταφράσεις;'
+'Should this file only be available for this translation of the article, or for all translations?': 'Να είναι αυτό το αρχείο διαθέσιμο μόνο για αυτή τη μετάφραση του άρθρου ή για όλες τις μεταφράσεις;'
 'Please enter a description for the file: $1.': 'Παρακαλούμε εισάγετε μια περιγραφή για το αρχείο: $1.'
 'Only this translation': 'Μόνο αυτή η μετάφραση'
 'No files for multi editing.': 'Δεν υπάρχουν αρχεία για πολλαπλή επεξεργασία.'
 'Edit files': 'Επεξεργασία αρχείων'
 'Change file information': 'Αλλαγή πληροφοριών αρχείου'
 'All translations': 'Όλες οι μεταφράσεις'
-'Save All': 'Αποθήκευση όλων'
+'Save All': 'Αποθήκευση Όλων'
 Files: Αρχεία
 'You cant delete used files.': 'Δεν μπορείτε να διαγράψετε χρησιμοποιημένα αρχεία.'
 'Do you want to delete unused only?': 'Επιθυμείτε να διαγράψετε μόνο όσα δεν χρησιμοποιούνται;'
 'View attachment': 'Προβολή συννημένου'
 'Select some items first.': 'Επιλέξτε πρώτα κάποια στοιχεία.'
-'Open in the browser': 'Άνοιγμα στο πρόγραμμα πλοήγησης'
-'Media Archive': 'Αρχείο Media'
+'Open in the browser': 'Άνοιγμα στο πρόγραμμα περιήγησης'
+'Media Archive': 'Αρχείο Πολυμέσων'
 'Last modified': 'Τελευταίως τροποποιημένα'
 'Items deleted.': 'Τα στοιχεία διαγράφτηκαν.'
 'File uploaded.': 'Το αρχείο ανέβηκε.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Επιθυμείτε αυτό το αρχείο να ανόιξει στον browser του χρήστη, ή να κατέβει αυτόματα;'
+'Do you want this file to open in the users browser, or to automatically download?': 'Θέλετε αυτό το αρχείο να ανοίξει στο πρόγραμμα περιήγησης του χρήστη ή να πραγματοποιήσει αυτόματο κατέβασμα;'
 'Delete selected': 'Διαγραφή επιλεγμένων'
 Created: Δημιουργήθηκε
 Charset: 'Σετ Χαρακτήρων'
@@ -42,7 +42,7 @@ Charset: 'Σετ Χαρακτήρων'
 'Add new file': 'Προσθήκη νέου αρχείου'
 'You do not have the right to add images.': 'Δεν έχετε το δικαίωμα να προσθέσετε εικόνες.'
 'Use for all': 'Χρήση για όλα'
-'Specify image url if you want to load it.': 'Ορίστε url εικόνας εάν θέλετε να την φορτώσετε.'
+'Specify image url if you want to load it.': 'Προσδιορίστε το url της εικόνας, σε περίπτωση φόρτωσης.'
 Size: Μέγεθος
 'No images for multi editing.': 'Καμία εικόνα για πολλαπλή επεξεργασία.'
 'Images updated.': 'Οι εικόνες ανανεώθηκαν.'
@@ -58,3 +58,5 @@ Size: Μέγεθος
 'Used in articles': 'Έχει χρησιμοποιηθεί σε άρθρα'
 'View image': 'Προβολή εικόνας'
 'Change image information': 'Αλλαγή πληροφοριών εικόνας'
+'Photographer URL': null
+'Add website url starting with http://': null

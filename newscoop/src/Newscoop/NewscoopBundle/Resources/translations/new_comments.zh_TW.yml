@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: null
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: null
+        approved: null
+        new: 新
+        editarticle: null
+        section: 區
+        comment: null
+        replyto: null
+        subject: null
+        ban: null
+        author: 作者
+        date: null
+        article: 文章
+        search: 搜索
+        show: null
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: null
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: 取消
+        submit: 提交
+        unrecommend: null
+        recommend: null
+        delete: 删除
+        reply: null
+        edit: null
+        close: 關閉
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

@@ -1,5 +1,5 @@
-show: показати
-hide: приховати
+show: Показати
+hide: Приховати
 Title: Заголовок
 'Resource Type:': 'Тип джерела:'
 'Resource Type': 'Тип джерела'
@@ -9,4 +9,3 @@ Diff: Різниця
 'Action Type:': 'Тип дії'
 'No logs.': 'Немає записів у журналі.'
 User: Користувач
-Date/Time: 'Дата /  Час:ua'

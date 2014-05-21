@@ -1,36 +1,36 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: σε
+'With no attachment': 'Χωρίς συνημμένο'
+'With image attachment': 'Με σύναψη εικόνας'
+'With document attachment': 'Με σύναψη εγγράφου'
+'Unable to reach Newscoop. Please check your internet connection.': 'Αδύνατη η πρόσβαση στο Newscoop. Παρακαλούμε ελέγξτε την σύνδεση σας.'
+Starred: Διακεκριμένα
+Star: Αστερίσκος
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους'
+'Reply to message': 'Απάντηση στο μήνυμα'
+Reply: Απάντηση
+Processed: Επεξεργασμένα
+'No records found.': 'Δεν βρέθηκαν καταχωρήσεις.'
+'No entries to show': 'Καμία είσοδος προς προβολή'
+'Messages updated.': 'Τα μηνύματα ενημερώθηκαν.'
+'Messages status change to $1.': 'Η κατάσταση του μηνύματος άλλαξε σε $1.'
+'Messages deleted.': 'Τα μηνύματα διαγράφηκαν.'
+'Message updated.': 'Το μήνυμα ενημερώθηκε.'
+'Message status change to $1.': 'Η κατάσταση μηνύματος άλλαξε σε $1.'
+'Message deleted.': 'Το μήνυμα διαγράφηκε.'
+Message: Μήνυμα
+Last: Τελευταίο
+'Full article': 'Πλήρες άρθρο'
+First: Πρώτο
+'Feedback Messages': 'Μηνύματα Feedback'
+'Display _MENU_ records': 'Εμφάνιση καταχωρήσεων _MENU_ '
+Deleted: Διαγραμμένο
+'Change selected messages status': 'Αλλαγή κατάστασης επιλεγμένων μηνυμάτων'
+Attachment: Συνημμένο
+Approved.: Εγκρίθηκε.
+Approve: Έγκριση
+Anonymous: null
+' - filtering from _MAX_ records': '-φιλτράρισμα από _MAX_ καταχωρήσεις'
 'You are about to permanently delete multiple messages.': 'Πρόκειτε να διαγράψετε οριστικά πολλά μηνύματα.'
 'You are about to permanently delete a message.': 'Πρόκειτε να διαγράψετε οριστικά ένα μήνυμα.'
 User: Χρήστης

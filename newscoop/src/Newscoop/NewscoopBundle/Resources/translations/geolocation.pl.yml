@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'Wybierz ikonę dla markera'
 'add location to map': 'dodaj lokalizacje na mapie'
 'Video source': 'Źródło wideo'
@@ -39,7 +39,7 @@ Coordinates: 'Współrzędne '
 'Setting the map name helps with map search': 'Wybranie nazwy mapy pomaga w jej przeszukiwaniu'
 Longitude: 'Długośc gegraficzna'
 Latitude: 'Szerokość geograficzna'
-Center: Wyśrodkuj
+Center: Centruj
 'Last Saved Map View': 'Ostatni zapisany widok mapy'
 'List of locations updated': 'Lista lokalizacji zaktulizowana'
 width: szerokość
@@ -55,7 +55,7 @@ height: wysokość
 'The map has been removed from the article.': 'Mapa została usunięta z artykułu.'
 'Point no.': 'Numer punktu'
 'Point markers': 'Markery punktu'
-None: Żaden
+None: Brak
 'Map Search Example': 'Przykład wyszukiwania mapy'
 'Map Preview': 'Podgląd mapy'
 'Image URL': 'URL zdjęcia'

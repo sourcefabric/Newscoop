@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Nom
+newscoop.plugins_manager.installed_table.description: Description
+newscoop.plugins_manager.installed_table.enabled: null
+newscoop.plugins_manager.installed_table.version: null
+newscoop.plugins_manager.installed_table.license: null
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Actions
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Enlever
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: null
+newscoop:
+    datatable:
+        table:
+            info: null
+            noentries: null
+            filtering: null
+            menu: null
+        label:
+            search: Recherche
+            filter: null
+            processing: null
+            last: Dernier
+            next: Suivant
+            first: Premier
+            previous: Précédent
+            norecords: null

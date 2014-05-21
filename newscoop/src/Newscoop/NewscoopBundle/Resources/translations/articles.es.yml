@@ -20,7 +20,7 @@ Playlist: 'Lista de artículos inteligente'
 'Drag here to add to list': 'Arrastra hasta aquí para agregar a la lista'
 'Could not save the list': 'No fue posible guardar la lista'
 'Available Articles': 'Artículos disponibles'
-'Are you sure you want to delete this list?': '¿Realmente deseas eliminar esta lista?'
+'Are you sure you want to delete this list?': '¿Realmente desea eliminar esta lista?'
 'Add to list': 'Añadir a lista'
 'Add list': 'Añadir lista'
 'Multi date events': 'Eventos con múltiples fechas'
@@ -42,9 +42,9 @@ Off: Apagado
 'You do not have the right to moderate comments.': 'No tienes autorización para moderar comentarios.'
 'You can not schedule opposing events at the same time': 'No puedes asignar eventos opuestos en el mismo horario'
 'Unable to reach Newscoop. Please check your internet connection.': 'No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.'
-Title: Título
+Title: Tìtulo
 'There already is an article with the same name. Please change the name and try again.': 'Ya existe un archivo con ese nombre. Por favor, cámbialo e intenta de nuevo.'
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Por favor, recuerda que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambies el estado a Nuevo. Confirma el cambio de estado.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Por favor, recuerde que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambie el estado a Nuevo. Confirme el cambio de estado.'
 Geolocation: Geolocalización
 Newscoop: Newscoop
 'Overwrite articles with matching names': 'Sobreescribir artículos con nombres idénticos'
@@ -77,12 +77,12 @@ Created: Creado
 'Content edited': 'Se editó el contenido'
 'You must select an article language.': 'Debes seleccionar un lenguaje para el artículo.'
 'You must select a publication.': 'Debes seleccionar una publicación.'
-'You must select a file to upload.': 'Debes seleccionar un archivo para subir.'
+'You must select a file to upload.': 'Debe seleccionar un archivo para cargar.'
 'You must select a XML input file.': 'Debes selecionar un archivor input XML '
 'You do not have the right to import XML archives.': 'No tienes el derecho de importar archivos XML.'
 'There was a problem uploading the file.': 'Hubo un problema al subir el archivo.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'El archivo subido fue solamente parcialemente subido. Esto es común cuando el tiempo máximo para subir un archivo es bajo en contraste con el tamaño del archivo que se está tratando de ingresar. El tiempo máximo para ingresar está especificado en php.ini  '
-'The file exceeds the allowed max file size.': 'El archivo excede el tamaño máximo permitido para un archivo.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'El archivo solo subió parcialmente. Esto es común cuando el tiempo máximo para cargar un archivo es bajo en contraste con el tamaño del archivo que se está cargando. El tiempo máximo para cargar está especificado en php.ini'
+'The file exceeds the allowed max file size.': 'El archivo sobrepasa el tamaño máximo permitido para un archivo.'
 Optional: Opciones
 'Input File': 'Archivo de entrada'
 'Import XML': 'Importar XML'
@@ -99,7 +99,7 @@ Saved: Guardado
 'Save All': 'Guardar todo'
 'Online Server: On': 'Servidor en línea: encendido'
 'Online Server: Off': 'Servidor en línea: apagado'
-Download: Bajar
+Download: Descargar
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'No puede tener dos artículos con el mismo nombre en la misma sección.  El nombre de artículo que especificó ya se está utilizando en el artículo $1. '
 'Visible to non-subscribers': 'Visible a no suscriptores'
 'The article could not be published.': 'No se pudo publicar el artículo.'
@@ -113,7 +113,7 @@ Download: Bajar
 'Article translation created.': 'Se creó la traducción del artículo.'
 'Article order changed.': 'Se cambió el orden del artículo'
 'Article moved.': 'Se movió el artículo.'
-'Article deleted.': 'Se eliminó el artículo.'
+'Article deleted.': 'Se eliminó el artículo'
 'Article created.': 'Se creó el artículo'
 '$1 toggled.': '$ seleccionados/deseleccionados'
 'Total:': 'Total:'
@@ -166,7 +166,7 @@ Comments: Comentarios
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Se debe crear una sección para el idioma seleccionado.  Por favor ingrese el nombre de la sección y del URL.'
 'Article Type': 'Tipo de artículo'
 'Show article on front page': 'Mostrar artículo en portada'
-'Show article on section page': 'Mostrar artículo en portada de sección'
+'Show article on section page': 'Mostrar artículo en página de sección'
 'Translate article': 'Traducir artículo'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'No tiene derechos para cambiar este artículo.  Solamente puede editar sus propios artículos y una vez enviado un artículo sólo puede ser cambiado por usuarios autorizados.'
 'Duplicate article': 'Duplicar articulo'
@@ -183,6 +183,4 @@ Comments: Comentarios
 'This article cannot be previewed. Please make sure it has the article template selected.': 'No se puede previsualizar este artículo.  Por favor asegúrese que seleccionó el template artículo.'
 'No such article.': 'No existe articulo'
 'No such section.': 'No existe sección'
-Reorder: 
-Author: 
-'Are you sure you want to delete this scheduled action?': 
+Characters: null

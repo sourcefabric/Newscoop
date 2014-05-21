@@ -20,7 +20,7 @@
 'Publication updated': 'Publikation aktualisiert'
 'Subscriber comments moderated?': 'Benutzerkommentare moderieren?'
 'Public comments moderated?': 'Öffentliche Kommentare moderieren?'
-'Comments enabled?': 'Kommentare aktivieren?'
+'Comments enabled?': 'Kommentare aktiviert?'
 'Comments enabled': 'Kommentare aktiviert'
 'Article comments default to enabled?': 'Artikelkommentare standardmäßig aktivieren?'
 'trial subscription': Probe-Abonnement
@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'Alias $1 konnte nicht gelöscht werden.'
 '$1 is the default publication alias, it can not be deleted.': '$1 ist der voreingestellte Alias der Publikation und kann nicht gelöscht werden.'
 'You do not have the right to add publications.': 'Keine Zugriffsrechte, um eine neue Publikation zu erstellen.'
-'There are $1 issue(s) left.': '$1 Ausgaben sind vorhanden. '
+'There are $1 issue(s) left.': 'Es sind $1 Ausgaben übrig.'
 'Time Unit': Zeiteinheit
 Currency: Währung
 'Edit languages': 'Sprachen bearbeiten'
@@ -75,4 +75,3 @@ Currency: Währung
 'Article title': Artikeltitel
 'Article keywords': Artikelschlagwörter
 'Article topics': Artikelthemen
-'Change publication information': 'Information der Publikation ändern'

@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
 Slideshows: Bildstrecken
 'You cant update used files.': 'Sie können keine Dateien im Gebrauch aktualisieren. '
 Source: Quelle
@@ -10,17 +10,17 @@ Feedback: Feedback
 'Disapprove selected': 'Ausgewählte ablehnen'
 'Are you sure you want to update selected items?': 'Wollen Sie wirklich die ausgewählten Einträge aktualisieren? '
 'Approve selected': 'Ausgewählte genehmigen'
-'Image files': 'Bilddateien '
+'Image files': Bilddateien
 'Fix all thumbnails': 'Alle Thumbnails reparieren'
-'You do not have the right to add files.': 'Sie haben keine Berechtigung Dateien hinzuzufügen. '
-'Should this file only be available for this translation of the article, or for all translations?': 'Soll diese Datei nur für diese Übersetzung des Artikels zur Verfügung stehen oder für alle Übersetzungen? '
+'You do not have the right to add files.': 'Sie haben keine Berechtigung, Dateien hinzuzufügen.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Soll diese Datei nur für diese Übersetzung des Artikels verfügbar sein oder für alle Übersetzungen?'
 'Please enter a description for the file: $1.': 'Bitte geben Sie eine Beschreibung für Datei: $1 ein. '
 'Only this translation': 'Nur diese Übersetzung'
 'No files for multi editing.': 'Keine Dateien für mehrfaches Bearbeiten.'
 'Edit files': 'Dateien bearbeiten. '
-'Change file information': 'Dateiinformation verändern. '
+'Change file information': 'Dateiinformation ändern'
 'All translations': 'Alle Übersetzungen'
-'Save All': 'Alles speichern'
+'Save All': 'Alle speichern'
 Files: Dateien
 'You cant delete used files.': 'Dateien in Gebrauch können nicht gelöscht werden.'
 'Do you want to delete unused only?': 'Nur ungenutzte löschen?'
@@ -31,30 +31,32 @@ Files: Dateien
 'Last modified': 'Zuletzt geändert'
 'Items deleted.': 'Einträge gelöscht'
 'File uploaded.': 'Datei hochgeladen'
-'Do you want this file to open in the users browser, or to automatically download?': 'Möchten Sie die Datei im Browser öffnen oder automatisch herunterladen?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Soll diese Datei im Browser geöffnet oder automatisch zum Herunterladen angeboten werden?'
 'Delete selected': 'Ausgewählte löschen'
-Created: Erstellt
+Created: Angelegt
 Charset: Schriftsatz
 'Change attachment information': 'Informationen zum Anhang ändern'
 'Automatically download': 'Automatisch herunterladen'
 'Attachment updated.': 'Anhang aktualisiert.'
 'Are you sure you want to delete selected items?': 'Wollen Sie wirklich ausgewählte Einträge löschen?'
 'Add new file': 'Neue Datei hinzufügen'
-'You do not have the right to add images.': 'Keine Berechtigung um Bilder hinzuzufügen.'
-'Use for all': 'Für alle nutzen'
-'Specify image url if you want to load it.': 'Bild URL zum Laden wählen.'
+'You do not have the right to add images.': 'Keine Berechtigung neue Bilder hinzuzufügen.'
+'Use for all': 'Für alle Bilder verwenden'
+'Specify image url if you want to load it.': 'Geben Sie die URL für das Bild an, das Sie laden wollen'
 Size: Größe
 'No images for multi editing.': 'Keine Bilder für mehrfaches Bearbeiten.'
 'Images updated.': 'Bilder aktualisiert.'
 'Edit images': 'Bilder bearbeiten'
 '$1 files uploaded.': '$1 Dateien hochgeladen.'
-'Unable to add new image.': 'Neues Bild kann nicht hochgeladen werden.'
+'Unable to add new image.': 'Neues Bild kann nicht hinzugefügt werden.'
 'Image updated.': 'Bild aktualisiert.'
 'Image $1 deleted.': 'Bild $1  gelöscht.'
 'Image is in use, it cannot be deleted.': 'Bild ist in Gebrauch und kann nicht gelöscht werden.'
-'You must select an image file to upload.': 'Bilddatei zum Hochladen auswählen.'
+'You must select an image file to upload.': 'Eine Bilddatei zum Hochladen auswählen.'
 'Add new image': 'Neues Bild hinzufügen'
 'Delete image $1': 'Bild $1 löschen'
 'Used in articles': 'In Artikeln verwendet'
 'View image': 'Bild betrachten'
 'Change image information': 'Bildinformation ändern'
+'Photographer URL': null
+'Add website url starting with http://': null

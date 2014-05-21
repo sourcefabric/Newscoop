@@ -1,6 +1,6 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
 'You cant update used files.': 'Не можете мењати фајлове који су у употреби'
 Source: Извор
 Local: Локални
@@ -13,25 +13,25 @@ Feedback: 'Повратна информација'
 'Image files': Слике
 'Fix all thumbnails': 'Поправи све уманјене верзије слика'
 'You do not have the right to add files.': 'Немате право да додајете фајлове.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Да ли овај фајл треба да буде доступан само за овај превод текста, или за све преводе?'
+'Should this file only be available for this translation of the article, or for all translations?': 'Да ли овај фајл треба да буде доступан за овај превод текста, или за све преводе?'
 'Please enter a description for the file: $1.': 'Унесите опис за фајл $1.'
 'Only this translation': 'Само овај превод'
 'No files for multi editing.': 'Нема фајлова за вишеструко уређивање'
 'Edit files': 'Уреди фајлове'
 'Change file information': 'Промени информације о фајлу'
 'All translations': 'Сви преводи'
-'Save All': 'Сними све'
-Files: Фајлови
+'Save All': 'сачувај све'
+Files: Фајлова
 'You cant delete used files.': 'Не можете брисати фајлове који су у употреби'
 'Do you want to delete unused only?': 'Да ли желите да обришете само некоришћене?'
 'View attachment': 'Погледај закачени фајл'
 'Select some items first.': 'Прво изаберите неке ставке'
 'Open in the browser': 'Отвори у претраживачу'
-'Media Archive': 'Медијска архива'
+'Media Archive': 'Архива медијских записа'
 'Last modified': Измењено
 'Items deleted.': 'Ставке избрисане'
 'File uploaded.': 'Фајл аплоудован'
-'Do you want this file to open in the users browser, or to automatically download?': 'Да ли желите да се овај фајл отвара у корисниковом претраживачу, или да се аутоматски преузима?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Да ли желите да се овај фајл отвара у претраживачу корисника, или да се аутоматски преузме?'
 'Delete selected': 'Обриши изабрано'
 Created: Направљено
 Charset: 'Карактер сет'
@@ -43,7 +43,7 @@ Charset: 'Карактер сет'
 'You do not have the right to add images.': 'Немате право да додајете слике.'
 'Use for all': 'Користи за све.'
 'Specify image url if you want to load it.': 'Одредите УРЛ слике ако желите да је учитате.'
-Size: величина
+Size: Величина
 'No images for multi editing.': 'Нема слика за вишеструко уређивање'
 'Images updated.': 'слике измењене'
 'Edit images': 'Уреди слике'
@@ -52,9 +52,11 @@ Size: величина
 'Image updated.': 'слика измењена'
 'Image $1 deleted.': 'слика $1 је обрисана.'
 'Image is in use, it cannot be deleted.': 'слика се користи и не може бити обрисана.'
-'You must select an image file to upload.': 'Морате изабрати слику за аплоуд.'
+'You must select an image file to upload.': 'Морате изабрати слику коју желите да аплоудујете.'
 'Add new image': 'Додајте нову слику'
 'Delete image $1': 'Избриши слику $1'
 'Used in articles': 'Користи се у следећим текстовима'
 'View image': 'Прикажи слику'
 'Change image information': 'Промени податке о слици'
+'Photographer URL': null
+'Add website url starting with http://': null

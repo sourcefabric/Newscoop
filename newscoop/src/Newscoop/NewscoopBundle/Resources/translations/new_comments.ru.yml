@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Комментарии
+        banned: null
+        anonymous: null
+        at: в
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Полный текст статьи'
+        hidden: Скрытый
+        approved: Утвержденный
+        new: Новая
+        editarticle: 'Перейти к редактируемой статье'
+        section: Рубрика
+        comment: Комментарий
+        replyto: 'Ответить на комментарий'
+        subject: Тема
+        ban: 'Запретить/разрешить пользователю комментировать'
+        author: Автор
+        date: null
+        article: Статья
+        search: Поиск
+        show: Показать
+        recommended: Рекомендовано
+        unrecommended: 'Не рекомендовано'
+        editcomment: null
+        actions: Операции
+        selectstatus: 'Выбрать статус'
+        deleted: 'Удалено '
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Отменить
+        submit: Отправить
+        unrecommend: 'Не рекомендовать'
+        recommend: Рекомендовать
+        delete: Удалить
+        reply: Ответ
+        edit: 'Быстрое редактирование'
+        close: Закрыть
+        okay: null
+        filter: Фильтр
+    msg:
+        deleted: 'Комментарий удален.'
+        commentinarticle: 'Комментарий $4 пользователя $1 в статье $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Невозможно связаться с Newscoop. Пожалуйста, проверьте ваше интернет-соединение.'
+            deletefromarticle: 'Комментарий удален пользователем $1 из статьи $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Вы собираетесь окончательно удалить комментарий.'
+        suremultiple: null
+        first: null
+        surequestion: 'Вы уверены, что хотите это сделать?'
+        updated: 'Комментарий обновлен.'

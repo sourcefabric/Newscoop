@@ -1,0 +1,73 @@
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: 'Web kod'
+'View article': 'Pogledaj tekst'
+Source: Izvor
+'Select type': 'Izaberi tip'
+On: Uključeno
+Off: Isključeno
+Title: Naslov
+'No video playback capabilities, please download the video below': 'Bez mogućnosti reprodukcije videa, molim daunloudujte video'
+'Article status set to $1 for $2 articles': 'Status teksta postavljen na $1 za $2 tekstova'
+'Article status not set to $1 for $2 articles': 'Status teksta nije postavljen na $1 za $2 tekstova'
+'$1 toggled for $2 articles.': '$1 promenjeno za $2 tekstova'
+'$1 not toggled for $2 articles.': '$1 nije promenjeno za $2 tekstova'
+'$1 not toggled for $2  articles.': '$1 nije promenjeno za $2 tekstova.'
+'$1 articles have not been removed': '$1 tekstova nije uklonjeno'
+'$1 Article(s) unlocked': '$1 tekst(ova) otključano'
+'$1 Article(s) not unlocked': '$1 tekst(ova) nije otključano'
+'$1 Article(s) duplicated': '$1 tekst(ova) duplirano'
+'Download file': 'Preuzmi fajl'
+'You do not have the right to delete articles.': 'Nemate pravo da brišete tekstove.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nemate pravo da menajte status teksta. Predatom tekstu status može promeniti samo ovlašćeni korisnik.'
+'Use Map': 'Koristi mapu'
+'Toggle: On Section Page': 'Izmeni Na strani rubrike'
+'Toggle: On Front Page': 'Izmeni Na početnoj strani'
+'Toggle: Comments': 'Izmeni Komentari'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 minut(a).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 čas(ova) i $4 minut(a).'
+'Status: Submit': 'Status: predaj'
+'Status: Set New': 'Status: Novi'
+'Status: Publish': 'Status: objavljen'
+Size: Veličina
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Prikazano _START_ do _END_ od _TOTAL_ unosa'
+'Show / hide columns': 'Prikaži/sakri kolone'
+'Select some article first.': 'Prvo izaberite neke tekstove'
+'Select action': 'Izaberite akciju'
+'Save order': 'Snimi redosled'
+'Reset all filters': 'Poništi sve filtere'
+'Published before': 'Objavljeno pre'
+'Published after': 'Objavljeno posle'
+'Publish date': 'Datum objavljivanja'
+'Publish Schedule': 'Raspored objavljivanja'
+'Publish Date': 'Datum objavljivanja'
+'Order updated.': 'Redosled izmenjen.'
+'Open in browser': 'Otvori u pretraživaču'
+'No sections found': 'Nema rubrika'
+'No records found.': 'Nema zapisa'
+'No publications found': 'Nema publikacija'
+'No issues found': 'Nema izdanja'
+'No entries to show': 'Nema unosa za prikaz'
+Locations: Lokacije
+'Loading data': Učitavanje
+'Last modified': Izmenjeno
+'Last Modified': Izmenjeno
+Last: Poslednji
+First: Prvi
+'Filter by...': 'Filtriraj po...'
+Filter: Filter
+Filename: 'Naziv fajla'
+'Duplicate to another section': 'Dupliraj u drugu rubriku'
+'Display _MENU_ records': 'Prikaži _MENU_ zapise'
+Creator: Napravio
+'Create Date': 'Datum pravljenja'
+'Article status set to $1': 'Status članka je podešen u $1'
+'Are you sure you want to delete selected articles?': 'Da li ste sigurni da želite da obrišete izabrane tekstove?'
+'All Sections': 'Sve rubrike'
+'All Publications': 'API publikacije'
+'All Issues': 'Sva izdanja'
+Added: Dodato
+'Access denied.': 'Pristup zabranjen.'
+'$1 toggled.': '$1 izmenjeno u suprotno.'
+'$1 articles have been removed': '$1 tekstova je uklonjeno'
+' - filtering from _MAX_ records': '- filtriranje među _MAX_ zapisa'

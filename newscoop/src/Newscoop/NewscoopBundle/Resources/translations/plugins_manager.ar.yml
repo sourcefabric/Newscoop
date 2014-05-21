@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: اسم
+newscoop.plugins_manager.installed_table.description: وصف
+newscoop.plugins_manager.installed_table.enabled: 'تم التمكين'
+newscoop.plugins_manager.installed_table.version: إصدار
+newscoop.plugins_manager.installed_table.license: ترخيص
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: الاجراءات
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: إزالة
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: رفع
+newscoop:
+    datatable:
+        table:
+            info: 'عرض _START_ ل_END_ من _TOTAL_ إدخالات'
+            noentries: 'لا إدخالات من أجل الإظهار'
+            filtering: '- تصفية من السجلات _MAX_'
+            menu: 'عرض سجلات من _MENU_'
+        label:
+            search: بحث
+            filter: التصفية
+            processing: 'في عملية المعالجة...'
+            last: الأخير
+            next: التالي
+            first: الأول
+            previous: السابق
+            norecords: 'لم يتم العثور على سجلات.'

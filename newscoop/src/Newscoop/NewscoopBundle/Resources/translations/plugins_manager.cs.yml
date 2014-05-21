@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Název
+newscoop.plugins_manager.installed_table.description: Popis
+newscoop.plugins_manager.installed_table.enabled: Zapnuto
+newscoop.plugins_manager.installed_table.version: Verze
+newscoop.plugins_manager.installed_table.license: Licence
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Činnosti
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Odstranit
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Nahrávat
+newscoop:
+    datatable:
+        table:
+            info: 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
+            noentries: 'Nejsou zde žádné příspěvky k zobrazení'
+            filtering: '- filtrováno z _MAX_ záznamů'
+            menu: 'Zobrazit _MENU_ záznamy'
+        label:
+            search: Hledej
+            filter: Filter
+            processing: Zpracovávám...
+            last: Poslední
+            next: Další
+            first: První
+            previous: Předchozí
+            norecords: 'Nebyly nalezeny žádné záznamy.'

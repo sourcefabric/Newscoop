@@ -1,3 +1,5 @@
+Plugins: null
+'Manage Plugins': null
 Account: Compte
 'Items per page': 'Articles par page'
 'Add new': Nouveau
@@ -146,6 +148,7 @@ Localizer: Traducteur
 'Add new publication': 'Ajouter nouvelle publication'
 'Upload new template': 'Télécharger un nouveau template'
 'Add new staff member': 'Ajouter un nouveau membre de staff'
+'Staff member deleted.': null
 'Add new subscriber': 'Ajouter nouvel abonné'
 'Add new user type': 'Ajouter nouveau type utlisateur'
 'Add new article type': 'Ajouter nouveau type darticle'
@@ -219,40 +222,63 @@ All: Tous
 duplicate: duplicate
 move: Déplacer
 Move: Déplacer
-'From:': 
-'Date:': 
-Hidden: 
-Comments: 
-Comment: 
-Approved: 
-Subject: 
-'IP address:': 
-'Email:': 
-Author: 
-'Article name': 
-'Hide article': 
-'Show article': 
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
 'Article Type Fields': 'Champs de Type dArticle'
 'Article Images': 'Images dArticle '
 'Log Messages': 'Messages Log'
 'Article Files': 'Fichiers d Article'
-'Article Comments': 
+'Article Comments': null
 'Are you sure you want to deactivate the subscription?': 'Etes-vous sûr de vouloir désactiver labonnement?'
 'Are you sure you want to activate the subscription?': 'Etes-vous sûr de vouloir activer labonnement?'
-Other: 
-'Time:': 
-'No events.': 
-'Default templates': 
-'System Preferences': 
-'The date must be in the future.': 
-Send: 
-'Thank you.': 
-'Please take a minute to send us an email.': 
-(optional): 
-'The URL you entered is invalid: $1': 
-Reads: 
-Plugins: 
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+Other: null
+'Time:': null
+'No events.': null
+'Default templates': null
+'System Preferences': null
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

@@ -1,0 +1,81 @@
+get: null
+Soundcloud: SoundCloud
+Templates: null
+'Feedback Messages': 'Poruke sa povratnom informacijom'
+'Article Playlists': 'Plejliste tekstova'
+'Check all': 'Označi sve'
+view: pogledaj
+undo/redo: undo/redo
+underline: podvučeno
+translate: prevedi
+'text direction': 'pravac teksta'
+'text alignment': 'poravnavanje teksta'
+table: tabela
+superscript: 'tekst u eksponentu'
+subscript: 'tekst u indeksu'
+subhead: podnaslov
+strikethrough: precrtano
+statusbar: 'statusna linija'
+'spell checker enabled': 'provera pravopisa omogućena'
+'source view': 'pregled izvora'
+publish: objavi
+notify: obavesti
+moderate: uređuj
+manage: upravljaj
+'list number': 'brojevna lista'
+'list bullet': 'lista stavki'
+link: link
+italic: italik
+indent: uvlačenje
+image: slika
+'horizontal rule': 'vodoravni lenjir'
+handle: rukovanje
+guest: gost
+'font size': 'veličina pisma'
+'font face': 'vrsta pisma'
+'font color': 'boja pisma'
+find/replace: pronađi/zameni
+enlarge: uvećaj
+enable: omogući
+edit: uredi
+delete: obriši
+copy/cut/paste: kopiraj/iseci/zalepi
+clear: očisti
+'character map': 'mapa karaktera'
+bold: crno
+attach: prikači
+'any resource': 'bilo koji resurs'
+admin: admin
+add: dodaj
+'You cant deny yourself to manage $1': 'Ne možete osporiti sebi upravljanje $1'
+'You are not allowed to $1 $2.': 'Nemate pravo da $1 $2.'
+'User type saved.': 'Tip korisnika snimljen.'
+'User type deleted.': 'Tip korisnika obrisan.'
+'User type added.': 'Tip korisnika dodat.'
+'User Groups': 'Grupe korisnika'
+Themes: Teme
+'That type name already exists, please choose a different name.': 'Takvo ime tipa već postoji, izaberite neko drugo'
+System: sistem
+Structure: Struktura
+'Search Indexer': 'Indekser pretrage'
+'Rich-Text Editor Preferences': 'Podešavanja editora teksta'
+ReCaptcha: ReCaptcha
+Polls: Ankete
+'Permissions:': 'Prava:'
+'Permissions updated': 'Prava izmenjena'
+Notification: Obaveštenja
+Log: Log
+Layout: Izgled
+Global: Globalno
+Files: Fajlova
+'Error: ': 'Greška:'
+'Edit user type $1': 'Uredi tip korisnika $1'
+Deny: Ospori
+'Delete user type $1': 'Obriši tip korisnika $1'
+'Can not delete a user type with assigned users.': 'Nije moguće obrisati tip korisnika sa dodeljenim korisnicima.'
+Cache: Keš
+Backup: Bekap
+Authoring: Autorizovanje
+Allow: Dozvoli
+'User types': 'Tipovi korisnika'
+'No user types.': 'Nema tipova korisnika'

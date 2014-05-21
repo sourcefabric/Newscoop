@@ -1,4 +1,4 @@
-'Language id not specified': 
+'Language id not specified': null
 'No languages.': 'Немає мов.'
 'Native Name': 'Місцева назва'
 'Name taken.': 'Набута назва.'
@@ -44,7 +44,7 @@ Apr: Кві
 'Are you sure you want to delete the language $1?': 'Ви впевнені що хочете видалити мову $1?'
 'Deleting language': 'Видалення мови'
 'The language $1 could not be deleted.': 'Мова $1 не може бути видалена.'
-'Edit language': 'Редагування мови'
+'Edit language': 'Редагувати мову'
 'You do not have the right to edit languages.': 'Ви не маєте прав для редагування мови.'
 'Please enter the translation for month names.': 'Будь ласка введіть переклад для назв місяців'
 'Please enter the translation for week day names.': 'Будь ласка введіть переклад для назв днів тижня.'
@@ -70,13 +70,3 @@ Sunday: Неділя
 'You do not have the right to add new languages.': 'Ви не маєте прав додавати нові мови.'
 'There are $1 issue(s) left.': ' $1 випуск(ів) залишилось.'
 'Native name': 'Місцева назва.'
-'No such language.': 
-'The language $1 has been successfuly added.': 
-'Please check if a language with the same name does not already exist.': 
-'The language could not be added.': 
-'Delete language': 
-'Updating language information': 
-'Language information has been successfuly updated.': 
-'Language information could not be updated.': 
-'A language with the same name already exists.': 
-'Add another language': 

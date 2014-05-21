@@ -9,7 +9,7 @@ More...: Більше
 Content: Контент
 Languages: Мова
 Countries: Країни
-Themes: 'Теми оформлення'
+Themes: Теми
 Topics: Теми
 Configure: Конфігурація
 'Image Archive': медіаархів
@@ -74,7 +74,7 @@ Action: Дія
 'Schedule a new action': 'Розклад нових дій'
 'Scheduling a new publish action': 'Планування нових дій з публікацією'
 'Delete scheduled publish action': 'Видалити заплановану дію'
-Date/Time: Дата/Час
+Date/Time: 'Дата /  Час:ua'
 'You must select an action.': 'Ви повинні вибрати дію'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Ви не маєте прав для планування випусків або статей для автоматичних публікацій'
 'Front page': 'Головна сторінка'
@@ -148,6 +148,7 @@ Localizer: Локалізатор
 'Add new publication': 'Додати нову публікацію'
 'Upload new template': 'Завантажити новий шаблон'
 'Add new staff member': 'Додати нового стаффера'
+'Staff member deleted.': null
 'Add new subscriber': 'Додати нового підписувача'
 'Add new user type': 'Додати новий тип користувачів'
 'Add new article type': 'Додати новий тип статей'
@@ -194,7 +195,7 @@ Search: Пошук
 'Are you sure you want to delete this scheduled action?': 'Ви впевнені що хочете видалити заплановані дії'
 Unlink: Анлинк
 'Are you sure you want to delete the image $1?': 'Ви впевнені що хочете видалити зображення  $1?'
-'No such issue.': 'Немаэ такого випуску'
+'No such issue.': 'Немає такого випуску'
 'Are you sure you want to delete the subscription to the publication $1?': 'Ви впевнені що хочете видалил підписку на публікацію $1?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Не вдалося зберегти зміни в питанні $ 1. Будь ласка, переконайтеся, що посилання випуску $2  не було використано раніше у випуску $3'
 GB: ВБ
@@ -224,7 +225,7 @@ Move: Переміщення
 'From:': 'З:'
 'Date:': 'Дата:'
 Hidden: Приховано
-Comments: Коменти
+Comments: Коментарі
 Comment: Коментар
 Approved: Дозволено
 Subject: Тема
@@ -257,3 +258,27 @@ Reads: Читати
 'Universal List': 'Універсальний список'
 'Invalid security token!': 'Недійсний маркер безпеки!'
 Authors: Автори
+Title: Заголовок
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: на
+published: null
+unpublished: null

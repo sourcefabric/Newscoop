@@ -1,0 +1,132 @@
+newscoop:
+    btn:
+        save: Guardar
+    preferences:
+        error:
+            cache: 'Inválido:  Necesita activar el PHP %cache% a fin de poder usar el sistema de cache de las plantillas'
+            replication: 'Datos de la Replicación de Bases de Datos incompletos'
+            maxupload: 'Ingresó un valor inválido para el Tamaño Máximo de Archivo'
+            geolocation: 'Error en los campos de Geolocalización. Deben contener números. La latitud no puede ser mayor que 90 ni menor que -90,  y la longitud debe estar entre 180 y -180.'
+            noaccess: 'No tiene privilegios para modificar las preferencias del sistema.'
+            latitude: 'El valor para el campo de la latitud no es válido.'
+            longitude: 'El valor en el campo de Longitud no es válido.'
+            cacheNotCleared: 'Hubo un error borrando el cache'
+        success:
+            saved: 'Se actualizaron las preferencias del sistema.'
+            cacheCleared: 'El cache ha sido borrado'
+        menu:
+            general: 'Ajustes Generales'
+            email: 'Ajustes del Correo'
+            editor: 'Ajustes del Editor'
+            geolocation: 'Configuración de la geolocalización'
+            fb: 'Configuración de Facebook'
+            media: 'Ajustes de video'
+            cache: 'Ajustes del cache'
+            other: 'Otros ajustes'
+            recaptcha: 'Ajustes de reCAPTCHA'
+        btn:
+            cleardatabasecache: 'Borra el cache actual de controladores'
+        label:
+            title: 'Preferencias de sistema'
+            header: Preferencias
+            siteonline: 'Sitio en línea:'
+            sitetitle: 'Título del sitio:'
+            metakeywords: null
+            metadescription: null
+            timezone: null
+            cacheengine: null
+            cacheenginehost: null
+            cacheengineport: null
+            cachetemplate: null
+            cacheimage: null
+            allowrecovery: null
+            secretkey: null
+            sessionlifetime: null
+            sessionlifetimemsg: null
+            separator: null
+            captcha: null
+            maxupload: null
+            maxuploadmsg: null
+            stats: null
+            smtphost: null
+            smtpport: null
+            email: null
+            emailfrom: null
+            imageratio: null
+            imagewidth: null
+            imageheight: null
+            zoom: null
+            external: null
+            usereplication: null
+            serverdb: null
+            replicationhost: null
+            replicationuser: null
+            replicationpw: null
+            replicationport: null
+            filter: null
+            cron: null
+            mysqlpath: null
+            mysqlpathmsg: null
+            latitude: null
+            longitude: null
+            zoomlevel: null
+            defaultwidth: null
+            defaultheight: null
+            css: null
+            autofocus: null
+            zoomautofocus: null
+            borderautofocus: null
+            mapprovider: null
+            mapquest: null
+            openstreet: null
+            defaultmapprovider: null
+            nominatimsearch: null
+            preflanguage: null
+            markerdir: null
+            defaultmarker: null
+            popupwidth: null
+            popupheight: null
+            youtubewidth: null
+            youtubeheight: null
+            vimeowidth: null
+            vimeoheight: null
+            flashwidth: null
+            flashheight: null
+            flashserver: null
+            flashdir: null
+            apikey: null
+            appid: null
+            fbsecret: null
+            recaptchapublickey: null
+            recaptchaprivatekey: null
+            recaptchasecure: null
+            disabled: null
+            yesoption: Si
+            nooption: No
+            geosearch: null
+            usergarbage: null
+            usergarbagedaysinfo: null
+            usergarbagedays: null
+        popover:
+            cacheengine: null
+            cacheenginehost: null
+            cacheengineport: null
+            cacheimage: null
+            cachetemplate: null
+            recovery: null
+            secret: null
+            separator: null
+            stats: null
+            zoom: null
+            ratio: 'La tasa de cambio de tamaño toma precedencia sobre cualquier valor de "Anchura para cambio de tamaño" o "Altura para cambio de tamaño" que sea fijada aquí. Si no se elije una tasa pero sí se eligen tanto la anchura como la altura, entonces Newscoop utilizará el valor que dé como resultado el tamaño de imagen más pequeño. Los ajustes por defecto definidos aquí pueden siempre ser anulados por la tasa, anchura o altura definidas en una imagen específica, en una página de edición de artículo.'
+            replication: 'Le permite configurar Newscoop para operar en dos servidores a la vez, lo cual es una característica de seguridad en caso de problemas de hardware o de red.'
+            filter: 'Ingrese las palabras clave para las plantillas que usted desee ocultar en el editor de plantillas, accesible desde la página de Administración de Plantillas. Por ejemplo, plantillas que ya no están en uso, pero que usted no desea borrar del servidor.'
+            cron: null
+            video: 'La anchura y altura por defecto de los archivos de video, tanto locales como externos, pueden ser ajustadas en esta sección; para asegurar que los videos sean desplegados correctamente en las plantillas de sus publicaciones.'
+            emailfrom: null
+            recaptcha:
+                publickey: null
+                privatekey: null
+                secure: null
+            garbage: 'Si se activa, esto permite al publicador definir un cierto número de días después de los cuales los usuarios pendientes serán borrados. Por defecto se estipulan 90 días.'
+            lifetime: null

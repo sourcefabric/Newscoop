@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Η εικόνα είναι πολύ μικρή. Πρέπει να είναι τουλάχιστον %dx%d.'
 'Slideshow rendition': 'Απόδοση Slideshow'
 'Renditions reloaded': 'Οι αποδόσεις επαναφορτώθηκαν'
@@ -69,3 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Ημερομηνία<BR><SMALL>(εεεε-μ
 'You must select an image file to upload.': 'Πρέπει να επιλέξετε ένα αρχείο εικόνας για ανέβασμα.'
 'Change image information': 'Αλλαγή πληροφοριών εικόνας'
 'You do not have the right to add images': 'Δεν έχετε το δικαίωμα προσθήκης εικόνων'
+'Filter by uploader...': null

@@ -1,7 +1,7 @@
 'Rename user': 'Přejmenovat uživatele'
 Campsite: Campsite
 'Image Rendering': 'Vykreslování obrázku'
-'Featured Article Lists': 'Zobrazit seznam článků'
+'Featured Article Lists': 'Výběr článku ze seznamů'
 'You have tried to upload an invalid backup file.': 'Pokusil jste se nahrát neplatný zálohovaný soubor.'
 'You do not have the right to manage backups.': 'Nemáte opravnění pracovat se zálohováním dat.'
 'Make a new backup': 'Vytvořit novou zálohu dat'
@@ -32,12 +32,12 @@ Detail: Detail
 MiB: MiB
 'Download was not successful. Check please that the server is not out of disk space.': 'Stažení nebylo úspěšné. Prosím zkontrolujte zda nemá server nedostatek místa na disku.'
 'try again later': 'zkuste znovu později'
-at: 'na '
+at: na
 'You must at least upload one file.': 'Musíte nahrát alespoň jeden soubor.'
 'Warning: the existing data and themes will be deleted!': 'Upozornění: existující data a náměty budou smazány!'
 'Value is required and cant be empty': 'Hodnota je požadována a nemůže zůstat nevyplněna'
 Upload: Nahrávat
-'Update comment': 'Komentář k aktualizaci'
+'Update comment': 'Aktualizovat komentář'
 'Time created': 'Čas vytvořen'
 Themes: Náměty
 'Stop current upload': 'Zastavit probíhající nahrávání'
@@ -45,7 +45,7 @@ Themes: Náměty
 'Start upload': 'Začít nahrávat'
 Settings: Nastavení
 'Select files': 'Vyberte soubor'
-Reply: Odpověď
+Reply: Odpovědět
 'New comment added': 'Přidán nový komentář'
 'Manage Authors': 'Správa Autorů'
 Loading..: Nahrávání..
@@ -64,7 +64,7 @@ Ban: Zakázat
 Newscoop: Newscoop
 'Your password has been reset.': 'Vaše heslo bylo obnoveno'
 'Proceed to login.': 'Pokračujte na přihlášení se do systému.'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Nazdárek, \n\nfor obnovení hesla, prosím mrkněte se na link: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Jděte na přihlášení se do systému.'
 'Back to login.': 'Zpět na přihlášení se do systému.'
 'Back to login': 'Zpět na přihlášení se do systému'
@@ -80,7 +80,7 @@ Dashboard: 'Hlavní panel'
 'Your changes will be saved after login.': 'Změny budou uloženy po přihlášení se do systému.'
 'Upload backup file': 'Nahrát zálohovací soubor'
 'The file $1 has been uploaded successfully.': 'Soubor $1 byl úspěšně nahrán.'
-'Media Archive': 'Archiv médií'
+'Media Archive': 'Archiv Médií'
 Widgets: Widgety
 'Widget info': 'Widget info'
 'Widget added to dashboard.': 'Wiget přidán na hlavní panel.'
@@ -113,15 +113,15 @@ Download: Stáhnout
 'Backup list is empty.': 'Záložní seznam je prázdný.'
 'Are you sure you want to restore the file $1?': 'Jste si jisti, že chcete obnovit soubor $1?'
 'Are you sure you want to delete the file $1?': 'Jste si jisti, že chcete vymazat soubor $1?'
-'Import XML': 'Importujte XML'
+'Import XML': 'Importovat XML'
 'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Musíte mít povolení přidat/změnit vydání a články, aby bylo možné určit autora pro všechny články.'
 'Select the field from which to generate the author': 'Vyberte pole, z kterého se bude vybírat autor.'
 'Invalid or empty field $1. You must select a valid dynamic field.': 'Neplatné nebo prázdné pole $1. Musíte vybrat platné funkční pole.'
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Vytvořit autora $1 pro článek číslo $2 ($3) typu $4 je nemožné.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Vyskytly se chyby v nastavení autora pro články typu $1 z pole $2. '
 'The author was set successfuly for articles of type $1 from the field $2.': 'Autor byl uspěšně nastaven pro články typu $1 z pole $2. '
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Článek byl zamčen přes $1 ($2) $3 před pár minutami.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Článek byl zamčen přes  $1 ($2) $3 hour(s) a $4 před pár minutami.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Tento článek uzamkl $1 ($2) před $3 minutami.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Tento článek uzamkl $1 ($2) před $3 hodinami a $4 minutami.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Chyba v nastavení autora $1 pro článek ($2) $3 typu $4.'
 'Clear system cache': 'Vymazat system cache'
 'The system was unable to upload the file $1. ': 'Systém byl neschopen nahrát soubor $1. '
@@ -152,3 +152,7 @@ Help: Nápověda
 'Please make sure that you typed the correct user name and password.': 'Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo'
 'If your problem persists please contact the site administrator $1': 'Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora'
 Backup/Restore: Zálohovat/Obnovit
+'Step 2': 'Krok 2'
+'Step 3': 'Krok 3'
+'Add new user': 'Přidat nového uživatele'
+'Bad credentials': null

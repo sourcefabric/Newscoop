@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': 'No existe ese tipo de archivo'
+'Multi-line Text': 'Texto multilínea'
+'Filter saved': null
+'Filter not saved': 'Filtro no guardado'
 'Not a color': 'No es un color'
 'No such field': 'No existe ese campo'
 'Color saved': 'Color guardado'
@@ -46,7 +46,7 @@ Numeric: Numérico
 'The following fields are mandatory:': 'Los siguientes campos son obligatorios:'
 'Missing value for $1': 'Valor faltante para $1'
 'Manage Plugins': 'Administrar Plugins'
-'* Marked fields are mandatory.': '* Campos marcados son obligatorios.'
+'* Marked fields are mandatory.': '* Los campos marcados son obligatorios.'
 '$1 is of type $2': '$1 es del tipo $2'
 'Invalid resize width/height.': 'Redimensión de ancho/altura inválida.'
 'Image type $1 is not supported.': 'Imagen de tipo $1 no es apoyada.'
@@ -61,3 +61,44 @@ First: Primero
 'Multi-line Text with WYSIWYG': 'Cuerpo del artículo'
 'URL $1 is invalid or is not an image.': 'El URL $1 es inválido o no es una imagen.'
 'URL $1 is not an image.': 'El URL $1 no es una imagen.'
+client:
+    added: 'El cliente fue añadido'
+    notfound: 'Cliente no encontrado'
+    removed: 'El cliente fue eliminado'
+publicresources:
+    updated: 'El recurso público ha sido actualizado'
+api:
+    configure:
+        title: 'Configurar API - recursos públicos'
+        title_content: 'Configurar API - recursos públicos'
+        tabs:
+            resources: 'Recursos Públicos'
+            clients: Clientes
+        resources:
+            info: 'Por defecto todos los recursos están protegidos por un cortafuegos, pero puede elegir los recursos que desee hacer públicos para todo el mundo.'
+            add_button: 'Añadir cliente'
+        clients:
+            table:
+                name: 'Nombre del Cliente'
+                id: 'ID del Cliente'
+                secret: Secreto
+                redirect: 'URIs para redirección'
+                publication: Publicación
+                actions: Acciones
+                actions_buttons:
+                    remove: Eliminar
+            actions:
+                remove:
+                    confirm: '¿Está seguro de que quiere eliminar a este cliente?'
+        menu: API
+    form:
+        client:
+            label:
+                name: 'Elija un nombre para su cliente:'
+                publication: 'Elija una publicación para su cliente:'
+                redirectUris: 'Elija los URI de redirección para su cliente:'
+                save: Guardar
+        PublicResources:
+            label:
+                routes: 'Elija los recursos que desee hacer públicos:'
+                save: Guardar

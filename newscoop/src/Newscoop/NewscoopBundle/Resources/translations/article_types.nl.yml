@@ -1,80 +1,79 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 
-'Edit and translate human-readable field names': 
-'The template name may only contain letters and the underscore (_) character.': 
-'Rename article type $1': 
-'Invalid article type $1.': 
-'You cannot merge the same type into itself.': 
-'View the source ($1) version of $2': 
-'View of original ($1) $2': 
-'To return to the preview click here': 
-'This is the first translation of $1': 
-'There is no article associated with the preview.': 
-'There are $1 articles associated with $2 that will be merged.': 
-'The source article type ($1) does not have any articles.': 
-'Source Article Type': 
-'Preview of $1': 
-'Preview a sample of the merge configuration.': 
-NOTHING: 
-'Merge failed.': 
-'Merge configuration for merging $1 into $2.': 
-'Merge Article Types: Step $1 of $2': 
-'Merge $1 into $2': 
-'Destination Article Type': 
-'Delete the source article type ($1) when finished.': 
-'Cycle through your articles to verify that the merge configuration is correct.': 
-'Clicking Merge will merge ($1) article(s).': 
-'Cannot merge a $1 field ($2) into a $3 field ($4).': 
---None--: 
-'(Null merge warning.)': 
-'(No merge warning.)': 
-'(Duplicate warning.)': 
-'(!) Do NOT merge $1': 
-'$1 of $2': 
-show: 
-hide: 
-deactivate: 
-activate: 
-'You must enter a name for the type.': 
-'You must choose a language for the article type.': 
-'You do not have the right to rename article types.': 
-'You do not have the right to merge article types.': 
-'The translation could not be added.': 
-'The article type $1 does not exist.': 
-'Template Type Name': 
-Show/Hide: 
-'Show article on section page': 
-'Show article on front page': 
-'Publish date': 
-Merge!: 
-'Merge types': 
-'Merge article type': 
-'Link to public page': 
-'Go to Step 3': 
-'Go to Step 2': 
-'Display Name': 
-'Delete article type $1.': 
-'Comments enabled?': 
-'Back to Step 2': 
-'Back to Step 1': 
-'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 
-'Are you sure you want to $1 the article type $2?': 
-'Are you sure you want to $1 comments for article type $2?': 
-'Allow users without subscriptions to view the article': 
-'Add translation:': 
-'$1 comments for article type $2': 
-'$1 comments for article type $1': 
-'$1 article type $2': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': null
+'Edit and translate human-readable field names': null
+'The template name may only contain letters and the underscore (_) character.': null
+'Rename article type $1': null
+'Invalid article type $1.': null
+'You cannot merge the same type into itself.': null
+'View the source ($1) version of $2': null
+'View of original ($1) $2': null
+'To return to the preview click here': null
+'This is the first translation of $1': null
+'There is no article associated with the preview.': null
+'There are $1 articles associated with $2 that will be merged.': null
+'The source article type ($1) does not have any articles.': null
+'Source Article Type': null
+'Preview of $1': null
+'Preview a sample of the merge configuration.': null
+NOTHING: null
+'Merge failed.': null
+'Merge configuration for merging $1 into $2.': null
+'Merge Article Types: Step $1 of $2': null
+'Merge $1 into $2': null
+'Destination Article Type': null
+'Delete the source article type ($1) when finished.': null
+'Cycle through your articles to verify that the merge configuration is correct.': null
+'Clicking Merge will merge ($1) article(s).': null
+'Cannot merge a $1 field ($2) into a $3 field ($4).': null
+'--None--': null
+'(Null merge warning.)': null
+'(No merge warning.)': null
+'(Duplicate warning.)': null
+'(!) Do NOT merge $1': null
+'$1 of $2': null
+show: null
+hide: null
+deactivate: null
+activate: null
+'You must enter a name for the type.': null
+'You must choose a language for the article type.': null
+'You do not have the right to rename article types.': null
+'You do not have the right to merge article types.': null
+'The translation could not be added.': null
+'The article type $1 does not exist.': null
+'Template Type Name': null
+Show/Hide: null
+'Show article on section page': 'Toon artikel op rubriekspagina'
+'Show article on front page': 'Toon article op voorpagina'
+'Publish date': null
+Merge!: null
+'Merge types': null
+'Merge article type': null
+'Link to public page': null
+'Go to Step 3': null
+'Go to Step 2': null
+'Display Name': null
+'Delete article type $1.': null
+'Comments enabled?': null
+'Back to Step 2': null
+'Back to Step 1': null
+'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': null
+'Are you sure you want to $1 the article type $2?': null
+'Are you sure you want to $1 comments for article type $2?': null
+'Allow users without subscriptions to view the article': null
+'Add translation:': 'Voeg vertaling toe:'
+'$1 comments for article type $2': null
+'$1 comments for article type $1': null
+'$1 article type $2': null
 'No article types.': 'Geen artikel types.'
 'Delete article type $1': 'Verwijder artikel type $1'
-'You do not have the right to add article types.': 'Je hebt niet de rechten om artikel types toe te voegen.'
+'You do not have the right to add article types.': null
 'Adding new article type': 'Toevoegen niew artikel type'
 'The $1 field may only contain letters and underscore (_) character.': 'Het $1 veld mag alleen letters en laagstreepje (_) bevatten.'
 'The article type $1 already exists.': 'Het artikel type $1 bestaat al.'
-'You do not have the right to delete article types.': 'Je hebt niet de rechten om artikel types te verwijderen.'
+'You do not have the right to delete article types.': null
 'The article type $1 could not be deleted.': 'Het artikel type $1 kan niet worden verwijderd.'
-'Are you sure you want to delete the article type $1?': 'Weet je zeker dat je het artikel type $1 wilt verwijderen?'

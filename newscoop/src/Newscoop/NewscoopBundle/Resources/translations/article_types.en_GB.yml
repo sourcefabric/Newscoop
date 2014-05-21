@@ -29,7 +29,7 @@ NOTHING: NOTHING
 'Cycle through your articles to verify that the merge configuration is correct.': 'Cycle through your articles to verify that the merge configuration is correct.'
 'Clicking Merge will merge ($1) article(s).': 'Clicking Merge will merge ($1) article(s).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Cannot merge a $1 field ($2) into a $3 field ($4).'
---None--: --None--
+'--None--': '--None--'
 '(Null merge warning.)': '(Null merge warning.)'
 '(No merge warning.)': '(No merge warning.)'
 '(Duplicate warning.)': '(Duplicate warning.)'

@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Strona internetowa'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geololalizacja
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Pokaz _START_ do _END_ ze _TOTAL_ wpisow'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Nie znaleziono rekordów.'
+'No entries to show': 'Brak wpisów do pokazania'
+'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
+'Are you sure you want to {action}?': null
+'Active Logins': 'Źródła logowania'
+' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
 'User renamed.': 'Nazwa użytkownika zmieniona.'
 'User attributes': 'Właściwości użytkownika'
 'Rename user $1': 'Zmień nazwę dla $1'
@@ -47,12 +47,12 @@ Picture: Zdjęcie
 None: Brak
 'New confirmation email was sent to user.': 'Nowa wiadomość email z potwierdzeniem została wysłana do użytkownika.'
 'Email is used already': 'Ten adres email jest już używany.'
-'Edit your password': 'Zmień swoje hasło.'
+'Edit your password': 'Zmień swoje hasło'
 'Edit user $1': 'Edytuj użytkownika $1'
-'Edit subscriptions': 'Edytuj subskrypce'
+'Edit subscriptions': 'Edytuj subskrybcje'
 'Edit profile': 'Edytuj profil'
-'Edit permissions': 'Edytuj uprawnienia'
-'Create new account': 'Utwórz nowe konto'
+'Edit permissions': 'Zmień uprawnienia'
+'Create new account': 'Stwórz nowe konto'
 'Comment ban settings': 'Ustawienia blokowania komentarzy'
 'Ban for user $1 saved.': 'Blokada dla użytkownika $1 została zapisana.'
 'User account is active': 'Konto użytkownika jest aktywne.'
@@ -64,7 +64,7 @@ Username: 'Nazwa użytkownika'
 'First Name': Imię
 Email: Email
 'You were logged out.': 'Zostałeś wylogowany'
-'Newscoop Subhead': 'Podrubryka Newscoopa'
+'Newscoop Subhead': 'Podtytuł Newscoop'
 Filters: Filtry
 'Add new Author': 'Dodaj nowego Autora'
 'Loading Data': 'Ładowanie danych'
@@ -101,7 +101,7 @@ Filters: Filtry
 'User may attach topics to articles': 'Użytkownik może załączać tematy do artykułów'
 'User may attach images to articles': 'Użytkownik może załączać zdjęcia do artykułów'
 'User may add special characters': 'Użytkownik może dodawać znaki specjalne'
-'That user name already exists, please choose a different login name.': 'Nazwa użytkownika już istnieje, wybierz inną'
+'That user name already exists, please choose a different login name.': 'Ta nazwa użytkownika już istnieje, wybierz inną nazwę.'
 'User may delete article attachments': 'Użytkownik może usuwać załączniki artykułów'
 'User may change article attachments': 'Użytkownik może zmieniać załączniki artykułu'
 'User may add article attachments': 'Użytkownik może załączać do artykułu'
@@ -184,38 +184,39 @@ Miscellaneous: Różne
 'User will be notified on several events': 'Używkotnik będzie informowany przy kilku zdarzeniach.'
 'Editor Miscellaneous Settings': 'Dodatkowe ustawienia edytora'
 'No such user account.': 'Brak użytkownika.'
+'User image (full-size)': null
 users:
     label:
-        title: "Wyszukiwarka uzytkowników"
+        title: 'Wyszukiwarka uzytkowników'
     menu:
-        manage: "Zarządzaj użytkownikami"
-    created: "Utworzony"
-    updated: "Zaktualizowany"
+        manage: 'Zarządzaj użytkownikami'
+    created: Utworzony
+    updated: Zaktualizowany
     status:
-        status: "Status"
-        registered: "Zarejestrowany"
-        pending: "Oczekujący"
-        deleted: "Usuniety"
-        active: "Aktywny"
+        status: Status
+        registered: Zarejestrowany
+        pending: Oczekujący
+        deleted: Usuniety
+        active: Aktywny
     table:
         actions:
-            actions: "Akcje"
-            edit: "Edytuj"
-            resend_email: "Wyślij mail aktywacyjny"
-            rename: "Zmień nazwę"
-            remove: "Usuń"
-        confirm_remove: "Na pewno chcesz usunąć tego użytkownika?"
+            actions: Akcje
+            edit: Edytuj
+            resend_email: 'Wyślij mail aktywacyjny'
+            rename: 'Zmień nazwę'
+            remove: Usuń
+        confirm_remove: 'Na pewno chcesz usunąć tego użytkownika?'
         table_messages:
-            page: "Strona"
-            perPageText: "Pokazuje: "
-            pageText: "Strony: "
-            recordCountPageBoundTemplate: "{pageLowerBound} do {pageUpperBound} z"
-            recordCountPageUnboundedTemplate: "{recordsShown} z"
-            recordCountTotalTemplate: "{recordsQueryCount} {collectionName}"
-            recordCountFilteredTemplate: " (wyszukane z {recordsTotal} wszystkich wyników)"
-            recordCountText: "Wyświetla "
-            recordCountTextTemplate: "{text} {pageTemplate} {totalTemplate} {filteredTemplate}"
-            recordCountTemplate: "<span id='dynatable-record-count-{elementId}' class='dynatable-record-count'>{textTemplate}</span>"
-            processingText: "Przetważanie..."
+            page: Strona
+            perPageText: 'Pokazuje: '
+            pageText: 'Strony: '
+            recordCountPageBoundTemplate: '{pageLowerBound} do {pageUpperBound} z'
+            recordCountPageUnboundedTemplate: '{recordsShown} z'
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: ' (wyszukane z {recordsTotal} wszystkich wyników)'
+            recordCountText: 'Wyświetla '
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
+            processingText: Przetważanie...
     chart:
-        title: "Źródła logowania"
+        title: 'Źródła logowania'

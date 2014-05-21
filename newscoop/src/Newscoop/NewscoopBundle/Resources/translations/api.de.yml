@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': 'Artikeltyp nicht vorhanden'
+'Multi-line Text': 'Mehrzeiliger Text'
+'Filter saved': 'Filter gespeichert'
+'Filter not saved': 'Filter nicht gespeichert'
 'Not a color': 'Ist keine Farbe'
 'No such field': 'Feld existiert nicht'
 'Color saved': 'Farbe gespeichert'
@@ -61,7 +61,44 @@ First: Erste
 'Multi-line Text with WYSIWYG': 'Fließtext mit WYSIWYG '
 'URL $1 is invalid or is not an image.': 'URL $1 ist ungültig oder es ist kein Bild.'
 'URL $1 is not an image.': 'Unter URL $1 ist kein Bild verfügbar.'
-'Invalid parameter given to Audioclip::editMetadata()': 'Ungültiger Parameter an Audioclip vergeben::editMetadata()'
-'File $1 does not exist': 'Datei $1 existiert nicht. '
-'Cannot update audioclip metadata on storage server': 'Update der Metadaten zum Audioclip auf dem Storage Server ist fehlgeschlagen. '
-'Cannot update audioclip metadata on Campsite': 'Update der Metadaten zum Audioclip auf Campsite ist fehlgeschlagen. '
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: Publikation
+                actions: Aktionen
+                actions_buttons:
+                    remove: Entferne
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: Speichern
+        PublicResources:
+            label:
+                routes: null
+                save: Speichern

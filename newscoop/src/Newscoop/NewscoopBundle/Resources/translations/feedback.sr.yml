@@ -1,29 +1,29 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
-Approve: 
-Approved.: 
+'No attachment': null
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+'Are you sure you want to do it?': 'Сигурни сте да желите то да урадите?'
+Approve: null
+Approved.: null
 at: у
-Attachment: 
-'Ban/Unban user': 
-'Change selected messages status': 
+Attachment: null
+'Ban/Unban user': null
+'Change selected messages status': null
 Deleted: Обрисано
 'Full article': 'Цео текст'
-Message: 
-'Message deleted.': 
-'Messages deleted.': 
-'Messages status change to $1.': 
-'Message status change to $1.': 
-'Messages updated.': 
-'Message updated.': 
-Processed: 
+Message: null
+'Message deleted.': null
+'Messages deleted.': null
+'Messages status change to $1.': null
+'Message status change to $1.': null
+'Messages updated.': null
+'Message updated.': null
+Processed: null
 Reply: Одговори
-'Reply to message': 
-Star: 
-Starred: 
+'Reply to message': null
+Star: null
+Starred: null
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop није доступан. Проверите своју интернет везу.'
-'With document attachment': 
-'With image attachment': 
-'With no attachment': 
-'Feedback Messages': 
+'With document attachment': null
+'With image attachment': null
+'With no attachment': null
+'Feedback Messages': 'Поруке са повратном информацијом'

@@ -1,0 +1,186 @@
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
+'Blog management': null
+'View article': 'Pogledaj tekst'
+'Select a list': null
+'Remove list': null
+'Please select a list': null
+Playlist: null
+'List updated.': null
+'List saved': null
+'List Name': null
+'List ID': null
+'Item already exists in the list': null
+'Featured Articles': null
+'Featured Article Lists': null
+'Featured Article List': null
+'Duplicate list': null
+'Duplicate article entry found': null
+'Drag here to add to list': null
+'Could not save the list': null
+'Available Articles': null
+'Are you sure you want to delete this list?': null
+'Add to list': null
+'Add list': null
+'Multi date events': null
+Slideshows: null
+'Place images': null
+'Youre not allowed to edit article.': 'Nemate pravo uređivanja teksta'
+Webcode: 'Web kod'
+Unapproved: Neodobren
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Ovo izdanje ne može biti prikazano. Proverite da li publikacija ima dodeljenu temu.'
+'The article could not be submitted.': 'Tekst ne može biti predat.'
+'Submit articles': 'Predaj tekstove'
+'Submit article': 'Predaj tekst'
+'Related Articles': 'Vezani tekstovi'
+'Pending articles': 'Tekstovi na čekanju'
+'Pending Articles': 'Tekstovi na čekanju'
+'Context Box updated': 'Kontekst boks izmenjen'
+On: Uključeno
+Off: Isključeno
+'You do not have the right to moderate comments.': 'Nemate pravo moderisanja komentara.'
+'You can not schedule opposing events at the same time': 'Ne možete zakazati suprotne radnje za isto vreme'
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop nije dostupan. Proverite svoju interent vezu.'
+Title: Naslov
+'There already is an article with the same name. Please change the name and try again.': 'Već postoji tekst sa istim naslovom. Promenite naziv teksta i pokušajte ponovo.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Vodite računa o tome da će sve zakazane akcije za ovaj tekst biti obrisane kada mu promenite status u novi. Molimo potvrdite izmenu statusa.'
+Geolocation: Geolokacija
+Newscoop: Newscoop
+'Overwrite articles with matching names': 'Pretabaj tekstove sa poklapajućim imenima'
+'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Tekst <i>$1</i> već postoji i nije pretaban.<br />'
+Files: Fajlova
+'Select section:': 'Izaberi rubriku:'
+'Add another author': 'Dodaj autora'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 minut(a).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Tekst je zaključan od strane $1 ($2) pre $3 čas(ova) i $4 minut(a).'
+'Switches saved.': 'Svičevi snimljeni.'
+'Keywords saved.': 'Ključne reči snimljene'
+'Comment settings': 'Podešavanje komentara'
+Authors: Autori
+'Attach Topic To Article': 'Dodaj temu tekstu'
+'Article saved.': 'Tekst snimljen'
+'Article is locked': 'Tekst je zaključan'
+'Actions updated.': 'Akcije izmenjene'
+'Your work has not been saved. Do you want to continue and lose your changes?': 'Vaš rad nije snimljen. Da li želite da nastavite i izgubite izmene koje ste uneli?'
+Switches: Svičevi
+'No subtopics available': 'Nisu dostupne pod-teme'
+'Newscoop Subhead': 'Newscoop podnaslov'
+Media: Media
+'Last modified': Izmenjeno
+'Keywords &amp; Topics': 'Ključne reči i teme'
+Info: Info
+'Go to live article': 'Idi na živi tekst '
+Created: Napravljeno
+'Are you sure you want to remove the map from the article?': 'Da li ste sigurni da želite da uklonite mapu iz teksta?'
+'Scheduled action added': 'Akcija je zakazana'
+'Content edited': 'Sadržaj je uređen'
+'You must select an article language.': 'Morate izabrati jezik teksta.'
+'You must select a publication.': 'Morate izabrati publikaciju.'
+'You must select a file to upload.': 'Morate izabrati fajl za aploud.'
+'You must select a XML input file.': 'Morate izabrati XML ulazni fajl.'
+'You do not have the right to import XML archives.': 'Nemate pravo uvoza XML arhiva.'
+'There was a problem uploading the file.': 'došlo je do problema pri uploadovanju fajla.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Fajl je delimično uploadovan. Ovo se obično dešava kad je maks. vreme za upload kratko u odnosu na veličinu fajla. Maksimalna veličina se podešava u php.ini'
+'The file exceeds the allowed max file size.': 'fajl prelazi maksimalno dozvoljenu veličinu.'
+Optional: Opciono
+'Input File': 'Fajl za unos'
+'Import XML': 'Uvezi XML'
+'File is not a valid XML file.': 'Fajl nije validan XML fajl.'
+'File does not exist.': 'Fajl ne postoji.'
+'File could not be uploaded.': 'Fajl ne može biti aploudovan.'
+'File could not be read.': 'Fajl ne može da se čita.'
+'Error List': 'Lista grešaka'
+'Bad format in XML file.': 'Loš format u XML fajlu.'
+'Article could not be created.': 'Tekst ne može biti kreiran.'
+'---Select article type---': '---Izaberi tip teksta---'
+'$1 articles successfully imported.': '$1 tekstova uspešno uvezeno.'
+Saved: Sačuvano
+'Save All': 'Sačuvaj sve'
+'Online Server: On': 'Online Server: On'
+'Online Server: Off': 'Online Server: Off'
+Download: Preuzmi
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Ne možete imati dva članka u istoj rubrici sa istim imenom. Naslov članka koji ste uneli se već koristi u članku $1.'
+'Visible to non-subscribers': 'Vidljivo ne-pretplatnicima'
+'The article could not be published.': 'Članak ne može biti objavljen.'
+'Scheduled action deleted.': 'Obrisana je zakazana akcija.'
+'Scheduled action added.': 'dodata je zakazana akcija.'
+'Article(s) unlocked.': 'Članak otključan.'
+'Article(s) duplicated.': 'Tekst(ovi) dupliran(i)'
+'Article(s) deleted.': 'Tekst(ovi) obrisan(i).'
+'Article status set to $1': 'Status članka je podešen u $1'
+'Article unlocked.': 'Članak je otključan.'
+'Article translation created.': 'Napravljen je prevod članka.'
+'Article order changed.': 'Raspored članaka je izmenjen.'
+'Article moved.': 'Članak je premešten.'
+'Article deleted.': 'Tekst je obrisan.'
+'Article created.': 'Tekst je napravljen.'
+'$1 toggled.': '$1 izmenjeno u suprotno.'
+'Total:': 'Ukupno:'
+'Show Comments': 'Prikaži komentare'
+Locked: Zaključan
+'Invalid type: $1': 'Pogrešan tip: $1'
+'Hide Comments': 'Sakri komentare'
+Enabled: Omogućeni
+Disabled: Onemogućeni
+Comments: Komentari
+'The article has already been translated into $1.': 'Tekst je već preveden na $1.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Moraš odrediti publikaciju, izdanje i rubriku za ovaj tekst pre nego što mu zakažete automatsko objavljivanje. Idite u meni $1 i izaberi $2'
+'You do not have the right to translate articles.': 'Nemate pravo da prevodite tekstove.'
+'You do not have the right to publish articles.': 'Nemate pravo da objavljujete tekstove.'
+'You do not have the right to move articles.': 'Nemate pravo da premeštate tekstove.'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'Ne možete vršiti radnju $1 na tekstovima naglašenim crvenom bojom jer ciljno izdanje nije prevedeno na odgovarajući jezik.'
+'Publish?': 'Objavi?'
+'Publish articles': 'Objavi tekstove'
+'Publish article': 'Objavi tekst'
+'Move?': 'Premesti?'
+'Move articles': 'Premesti tekstove'
+'Move article': 'Premesti tekst'
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'Mora biti kreirano izdanje za odabrani jezik, ali vi nemate pravo da kreirate izdanje.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'Mora biti kreirana rubrika za odabrani jezik, ali vi nemate pravo da kreirate rubriku.'
+'to section': 'u rubriku'
+'You must choose a language': 'Morate izabrati jezik'
+'Unable to create the section for translation $1.': 'Ne može biti kreirana rubrika za prevod  $1.'
+'Unable to create the issue for translation $1.': 'Ne može biti kreirano izdanje za prevod  $1.'
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'Sledeći tekstovi su novi; nemoguće je predvideti ih za automatsko objavljivanje'
+'Section URL Name': 'URL ime rubrike'
+'Section Name': 'Ime rubrike'
+'Publish Schedule': 'Raspored objavljivanja'
+'No action specified': 'Nije predviđena nikakva radnja'
+'New section name': 'Novo ime rubrike'
+'New section URL name': 'Novo URL ime rubrike'
+'New issue name': 'novo ime izdanja'
+'New issue URL name': 'Novo URL ime izdanja'
+'New article name': 'Novo ime teksta'
+'Issue URL Name': 'URL ime izdanja'
+'Issue Name': 'Ime izdanja'
+'Duplicate?': 'Dupliraj?'
+'Duplicate articles': 'dupliraj tekstove'
+'Article name ($1)': 'Ime teksta ($1)'
+'Article List': 'Lista tekstova'
+'Are you sure you want to remove the topic $1 from the article?': 'Da li ste sigurni da iz teksta želite da uklonite temu $1?'
+'Are you sure you want to remove the file $1 from the article?': 'Da li ste sigurni da iz teksta želite da uklonite fajl $1?'
+'Are you sure you want to remove the event scheduled on $1?': 'Da li ste sigurni da želite da uklonite zakazanu akciju za $1?'
+'Are you sure you want to delete this article?': 'Da li ste sigurni da želite da obrišete tekst?'
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Mora biti kreirano izdanje za odabrani jezik. Unesite ime izdanja i URL ime.'
+'A section must be created for the selected language.  Please enter the section name and URL name.': 'Mora biti kreirana rubrika za odabrani jezik. Unesite ime rubrike i URL ime.'
+'Article Type': 'Tip teksta'
+'Show article on front page': 'Prikaži članak na prvoj strani'
+'Show article on section page': 'Prikaži članak na strani rubrike'
+'Translate article': 'Prevedi tekst'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nemate pravo da menjate tekst. Možete pregledati jedino sopstvene tekstove, a jednom predati tekst može biti menjan samo od strane ovlašćenih korisnika'
+'Duplicate article': 'Dupliraj tekst'
+'The destination section is the same as the source section.': 'Ciljna rubrika je ista kao matična.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'Tekst ima status novi; nemoguće je zakazati akciju automatskog objavljivanja.'
+'No article types were defined. You must create an article type first.': 'Nema definisanih tipova tekstova. Morate kreirati neki.'
+'Edit article types': 'Uredi tipove tekstova'
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Tekst ne može biti snimljen. Zaključan je od strane $1 pre $2časova i $3 minuta.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nemate pravo da menajte status teksta. Predatom tekstu status može promeniti samo ovlašćeni korisnik.'
+'You do not have the right to delete articles.': 'Nemate pravo da brišete tekstove.'
+'You must select an article type.': 'Morate izabrati tip teksta.'
+'Are you sure you want to remove the image $1 from the article?': 'Da li ste sigurni da želite da uklonite sliku $1 iz članka?'
+'There was an error reading request parameters.': 'Greška pri čitanju traženih parametara.'
+'This article cannot be previewed. Please make sure it has the article template selected.': 'Tekst ne može biti pregledan. Proverite da li je odabran šablon za za prikaz teksta.'
+'No such article.': 'Nema takvog teksta.'
+'No such section.': 'Nema te rubrike.'
+Characters: null

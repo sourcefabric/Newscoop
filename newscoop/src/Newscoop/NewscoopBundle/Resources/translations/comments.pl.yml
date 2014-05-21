@@ -1,36 +1,36 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: w
+'With no attachment': 'Brak załączników.'
+'With image attachment': 'Zdjęcie dostępne w załącznikach'
+'With document attachment': 'Dokument dostępny w zalącznikach'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
+Starred: Odznaczony
+Star: Gwiazdka
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Pokaz _START_ do _END_ ze _TOTAL_ wpisow'
+'Reply to message': 'Odpowiedz na wiadomość'
+Reply: Odpowiedz
+Processed: Przetworzony
+'No records found.': 'Nie znaleziono rekordów.'
+'No entries to show': 'Brak wpisów do pokazania'
+'Messages updated.': 'Wiadomość została zaktualizowana'
+'Messages status change to $1.': 'Status wiadomości został zmieniony na $1'
+'Messages deleted.': 'Wiadomość została usunięta'
+'Message updated.': 'Wiadomość została zaktualizowana'
+'Message status change to $1.': 'Status wiadomości został zmieniony na $1'
+'Message deleted.': 'Wiadomość została usunięta'
+Message: Wiadomość
+Last: Ostatni
+'Full article': 'Pełny artykuł'
+First: Pierwszy
+'Feedback Messages': 'Wiadomość zwrotna'
+'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
+Deleted: Usunięty
+'Change selected messages status': 'Wybierz status wiadomości'
+Attachment: Zalącznik
+Approved.: Zaakceptowany
+Approve: Zaakceptuj
+Anonymous: null
+' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
 'You are about to permanently delete multiple messages.': 'Chcesz bezpowrotnie usunąć wiele wiadomości.'
 'You are about to permanently delete a message.': 'Chcesz bezpowrotnie usunąć tą wiadomość.'
 User: Użytkownik
@@ -48,7 +48,7 @@ Username: 'Nazwa użytkownika'
 'User ban settings': 'Opcje blokady użytkownika'
 'Update comment': 'Zaktualizuj komentarz'
 Unrecommended: Niepolecany
-Unrecommend: 'Nie polecaj'
+Unrecommend: 'Niepolecany '
 'Subject is not $1 characters long': 'Temat nie ma $1 znaków.'
 'Sort by Thread order': 'Sortuj według wątków.'
 'Show parent comment': 'Pokaż komentarz nadrzędny.'
@@ -73,13 +73,13 @@ Email: Email
 E-mail: Email
 'Delete all comments?': 'Usunąć wszystkie komentarze?'
 'Date Created': 'Data utworzenia'
-'Comments updated.': 'Komentarz został zaktualizowany'
+'Comments updated.': 'Komentarze uaktulnione.'
 'Comments status change to $1.': 'Status komentarza został zmieniony na $1'
 'Comments deleted.': 'Komentarz został usunięty'
 'Commenter $1 saved.': 'Komentator $1 został zapisany.'
 'Commenter $1 deleted.': 'Komentator $1 został usunięty.'
 Commenter: Komentator
-'Comment updated.': 'Komentarz został zaktualizowany'
+'Comment updated.': 'Komentarz zaktualizowany.'
 'Comment status change to $1.': 'Status komentarza został zmieniony na $1.'
 'Comment id': 'Id komentarza'
 'Comment deleted.': 'Komentarz został usunięty'

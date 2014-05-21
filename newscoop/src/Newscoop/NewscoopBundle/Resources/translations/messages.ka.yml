@@ -148,6 +148,7 @@ Localizer: ლოკალიზატორი
 'Add new publication': 'გამოცემის დამატება'
 'Upload new template': 'ახალი შაბლონის ატვირთვა'
 'Add new staff member': 'ახალი თანამშრომლის დამატება'
+'Staff member deleted.': null
 'Add new subscriber': 'ახალი ხელმომწერის დამატება'
 'Add new user type': 'ახალი მომხმარებლის ტიპის დამატება'
 'Add new article type': 'ახალი სტატიის ტიპის დამატება'
@@ -212,7 +213,7 @@ Add: დამატება
 N/A: N/A
 'On Front Page': 'მთავარ გვერდზე'
 'On Section Page': 'სექციის გვერდზე'
-'Created by': 'შექმნილია  მიერ'
+'Created by': 'შექმნილია # მიერ'
 'Creation date': 'შექმნის თარიღი'
 'Publication List': 'პუბლიკაციების სია'
 'Issue List': 'გამოცემების სია'
@@ -257,19 +258,27 @@ Reads: წაკითხვები
 'Universal List': 'უნივერსალური სია'
 'Invalid security token!': 'არასწორი უსაფრთხოების მარკერი'
 Authors: ავტორები
-'Author:': 'ავტორი:'
-'User name': მომხმარებელი
-'User Types': 'მომხმარებლის ტიპები'
-'Add new user account': 'დაამატე ახალი მომხმარებლის მონაცემის ჩანაწერი'
-'Schedule a new publish action': 'ახალი ოპერაციის დაგეგმვა'
-'Subscription Default Time': 
-'No such language.': 'ასეთი ენა არაა'
-'No such infotype.': 'ასეთი კლასი არაა'
-'No such keyword.': 'ასეთი საკვანძო სიტყვა არ არის'
-'No such country.': 'ასეთი ქვეყანა არ არსებობს'
-'User may add/change user accounts and passwords': 'მომხმარებელს შუძლია დამატება/შეცვლა  მომხმარებლის ჩანაწერის და პაროლის:ru '
-'User may delete user accounts': 'მომხმარებელს შეუძლია მომხმარებლის ჩანაწერის წაშლა'
-'There are $1 issue(s) left.': 'დარჩა $1 ნომერი/ჟურნალი/გამოშვება'
-'There are $1 keyword(s) left.': 'დარჩა $1 საკვანძო სიტყვები: ru'
-'Name<BR><SMALL>(click to edit)</SMALL>': 
-'New field': 'ახალი ველი'
+Title: სათაური
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: '-ზე'
+published: null
+unpublished: null

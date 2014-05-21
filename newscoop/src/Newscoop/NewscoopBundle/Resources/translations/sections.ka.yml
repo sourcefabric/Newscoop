@@ -44,11 +44,10 @@ default: ნაგულისხმევი
 'Please select either $1 or $2.': 'აირჩიეთ ან $1 ან $2'
 'Select destination section:': 'მონიშნე სექცია'
 OR: ან
-'URL Name': 'URL-ს სახელი'
+'URL Name': 'URL-ის სახელი'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'მითითებული სექციის ნომერი უკვე არსებობს, გთხოვთ მიუთეთ ახალი, ან შეამოწმეთ არსებულები ჩამონათვალში.'
 Warning: გაფრთხილება
 'You must select a section.': 'თქვენ უნდა მონიშნოთ სექცია'
 'You must specify a name for the section.': 'მიუთითეთ სექციის სახელი'
 'The section could not be added.': 'სექცია ვერ დაემატა.'
 'Add new section': 'სექციის დამატება'
-'Section $1 ($2) updated. (Publication: $3, Issue: $4)': 'სექცია $1 ($2) განახლდა. (პუბლიკაცია $3, გამოცემა: $4)'

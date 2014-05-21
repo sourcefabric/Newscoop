@@ -1,61 +1,61 @@
-'so that default templates can be assigned to the issue.': 
-'Once this is done, the issue can be published': 
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
-'This issue cannot be previewed. Please make sure it has the front template selected.': 
-'Publish all articles:': 
-'Publish all articles': 
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
-default: 
-'The publishing/unpublishing can not be set the same time': 
-'The publishing schedule can not be set in the past': 
-'Please assign at least one theme to the publication': 
-'Issue Theme': 
-'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 
-'The number must be unique for each issue in this publication of the same language.': 
-'The language and URL name must be unique for each issue in this publication.': 
-'Issue created.': 
-'Issue updated': 
-'Could not save the changes to the issue.': 
-'Unpublish on: $1': 
-'There are $1 articles in this issue.': 
-'The issue $1 has been deleted.': 
-Schedule: 
-'Publish on: $1': 
-'Publish Date $1': 
-'Deleted issue': 
-'Delete issue': 
-'Click here to publish this issue': 
-'A total of $1 articles were deleted.': 
-'Name<BR><SMALL>(click to see sections)</SMALL>': 
-'Delete issue $1': 
-'You do not have the right to change issues.': 
-'Are you sure you want to change the issue $1 status from $2 to $3?': 
-'Add new translation': 
-'You do not have the right to add issues.': 
-'The issue $1 has been successfuly added.': 
-'The issue could not be added.': 
-'Change issue details': 
-'You do not have the right to change issue details.': 
-'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 
-'Front Page Template': 
-'You do not have the right to delete issues.': 
-'Are you sure you want to delete the issue $1?': 
-'Use the structure of the previous issue': 
-'Copy the entire structure in all languages from the previous issue except for content.': 
-'You may modify it later if you wish.': 
-'Create a new structure': 
-'Create a complete new structure.': 
-'You must define an issue type for each language and then sections for them.': 
-'Copy previous issue': 
-'No previous issue.': 
-'Copy structure from issue number $1': 
-'Delete entry': 
-'Issue Publishing Schedule': 
-'Invalid Input: $1': 
-'Issue Number': 
-'Go To Sections': 
-'There was an error reading the language parameter.': 
-'There was an error reading the publication parameter.': 
-'There was an error reading the issue parameter.': 
-'There was an error scheduling the $1 action on $2': 
-'The action scheduled on $1 could not be deleted.': 
+'so that default templates can be assigned to the issue.': null
+'Once this is done, the issue can be published': null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
+'This issue cannot be previewed. Please make sure it has the front template selected.': null
+'Publish all articles:': null
+'Publish all articles': null
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
+default: null
+'The publishing/unpublishing can not be set the same time': null
+'The publishing schedule can not be set in the past': null
+'Please assign at least one theme to the publication': null
+'Issue Theme': null
+'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': null
+'The number must be unique for each issue in this publication of the same language.': null
+'The language and URL name must be unique for each issue in this publication.': null
+'Issue created.': null
+'Issue updated': null
+'Could not save the changes to the issue.': null
+'Unpublish on: $1': null
+'There are $1 articles in this issue.': null
+'The issue $1 has been deleted.': null
+Schedule: null
+'Publish on: $1': null
+'Publish Date $1': null
+'Deleted issue': null
+'Delete issue': null
+'Click here to publish this issue': null
+'A total of $1 articles were deleted.': null
+'Name<BR><SMALL>(click to see sections)</SMALL>': null
+'Delete issue $1': null
+'You do not have the right to change issues.': null
+'Are you sure you want to change the issue $1 status from $2 to $3?': null
+'Add new translation': null
+'You do not have the right to add issues.': null
+'The issue $1 has been successfuly added.': null
+'The issue could not be added.': null
+'Change issue details': null
+'You do not have the right to change issue details.': null
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': null
+'Front Page Template': null
+'You do not have the right to delete issues.': null
+'Are you sure you want to delete the issue $1?': null
+'Use the structure of the previous issue': null
+'Copy the entire structure in all languages from the previous issue except for content.': null
+'You may modify it later if you wish.': null
+'Create a new structure': null
+'Create a complete new structure.': null
+'You must define an issue type for each language and then sections for them.': null
+'Copy previous issue': null
+'No previous issue.': null
+'Copy structure from issue number $1': null
+'Delete entry': null
+'Issue Publishing Schedule': null
+'Invalid Input: $1': null
+'Issue Number': null
+'Go To Sections': null
+'There was an error reading the language parameter.': null
+'There was an error reading the publication parameter.': null
+'There was an error reading the issue parameter.': null
+'There was an error scheduling the $1 action on $2': null
+'The action scheduled on $1 could not be deleted.': null

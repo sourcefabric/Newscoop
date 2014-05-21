@@ -1,9 +1,72 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
-'Sorry that image is too small. Image needs to be at least %dx%d.': 
-'Slideshow rendition': 
-'Renditions reloaded': 
-'Reload renditions': 
-'Edit images': 
-'Specify image url if you want to load it.': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
+'Sorry that image is too small. Image needs to be at least %dx%d.': null
+'Slideshow rendition': null
+'Renditions reloaded': null
+'Reload renditions': null
+'Edit images': null
+'Specify image url if you want to load it.': null
+'Items: ': null
+'Attach slideshows': null
+'original size:': null
+'no caption': null
+'Video URL': null
+'Use for all': null
+'Use default': null
+'Slug must be unique': null
+Slug: null
+'Slideshow headline': null
+Slideshow: null
+'Set selected as default image': null
+'Set as default': null
+Saving...: null
+Saved: null
+'Save headline': null
+'Place Images': null
+'No renditions defined.': null
+'No images found.': null
+'No images attached to article.': null
+'No images': null
+'Next: Upload and Edit Metadata': null
+'Next: Place Images': null
+'Media Archive': null
+Location: null
+Items: null
+Item: null
+'Image files': null
+'Image Files: ': null
+Headline: null
+Finish: null
+'Edit Image Data': null
+'Edit $1': null
+'Done editing': null
+Detach: null
+Create: null
+Caption: null
+'Attached images': null
+'Attach & Place': null
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
+'Add video': null
+'Add caption': null
+'Show all': null
+'The image has been removed from the article.': null
+'Unable to add new image.': null
+'Image number $1 already exists': null
+'You do not have the right to change image information.': null
+'The image number specified is already in use.': null
+'Image $1 updated.': null
+'Image $1 added.': null
+'Edit article': null
+'You do not have the right to attach images to articles.': null
+'You do not have the right to add images.': null
+'Image information': null
+'Attach New Image': null
+'Attach Image To Article': null
+'Attach Existing Image': null
+'Add New Image': null
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: null
+'You must select an image file to upload.': null
+'Change image information': null
+'You do not have the right to add images': null
+'Filter by uploader...': null

@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'Vyberte značící ikonu'
 'add location to map': 'přidat lokaci do mapy'
 'Video source': 'Zdroj k videu'
@@ -39,7 +39,7 @@ Coordinates: Souřadnice
 'Setting the map name helps with map search': 'Zadání názvu mapy pomůže s jejím vyhledáním'
 Longitude: 'Zeměpisná délka'
 Latitude: 'Zeměpisná šířka'
-Center: Centrum
+Center: Střed
 'Last Saved Map View': 'Naposledy uložený náhled mapy'
 'List of locations updated': 'Seznam lokalit aktualizován'
 width: šířka
@@ -55,7 +55,7 @@ height: výška
 'The map has been removed from the article.': 'Mapa byla z článku odstraněna.'
 'Point no.': 'Bod č.'
 'Point markers': 'Značení bodu'
-None: Žádný
+None: Žádné
 'Map Search Example': 'Příklad vyhledání mapy'
 'Map Preview': 'Přehled map'
 'Image URL': 'URL obrázku'

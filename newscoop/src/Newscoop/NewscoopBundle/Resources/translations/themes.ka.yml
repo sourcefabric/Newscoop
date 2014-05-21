@@ -46,7 +46,7 @@ Replace: ჩანაცვლება
 'New template $1 created.': 'ახალი შაბლონი $1 შეიქმნა.'
 'New name': 'ახალი სახელი'
 'Name cant be empty': 'სახელი არ შეიძლება იყოს ცარიელი'
-'Last modified': 'ბოლოს მოდიფიცირებული'
+'Last modified': 'ბოლო მოდიფიკაცია'
 'Issue page': 'გამოცემის გვერდი'
 'Go to parent': 'საწყისზე გადასვლა'
 'Go to $1': '$1-ზე გადასვლა'
@@ -58,7 +58,7 @@ Replace: ჩანაცვლება
 'Failed unassigning theme': 'თემის მოხსნა ვერ მოხერხდა'
 Export: ექსპორტი
 'Error page template': 'გვერდის შაბლონის შეცდომა'
-'Edit $1': '$1-ის რედაქტირება'
+'Edit $1': 'რედაქტირება $1'
 'Done uploading': აიტვირთა
 'Do you want to override $1?': 'გსურთ $1-ზე გადაწერა?'
 'Directory is empty': 'დირექტორია ცარიელია'
@@ -85,8 +85,3 @@ Compatibility: შეთავსებადობა
 '$1 is not writable': '$1 არ არის ჩაწერადი'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 ფაილები $2'
-'Upload theme': 'თემის ატვირთვა'
-'Upload succeded!': 'წარმატებით აიტვირთა!'
-'Upload failed!': 'ვერ აიტვირთა!'
-'Template Id': 'შაბლონის id'
-'Edit template: $1 (Template ID: $2)': 'შაბლონის რედაქტირება: $1 (შაბოლნის ID: $2)'

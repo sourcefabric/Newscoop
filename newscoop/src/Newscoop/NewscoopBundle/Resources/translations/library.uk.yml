@@ -1,6 +1,6 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
-Webcode: Вебкод
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: Web-код
 'View article': 'Перегляд статті'
 Source: Джерело
 'Select type': 'Виберіть тип'
@@ -17,15 +17,15 @@ Title: Заголовок
 '$1 Article(s) unlocked': 'стаття $1 розблокована'
 '$1 Article(s) not unlocked': 'стаття $1 не була розблокована'
 '$1 Article(s) duplicated': 'стаття $1 продубльована'
-'Download file': 'Завантаження файлу'
-'You do not have the right to delete articles.': 'Ви не маєте прав на видалення статей.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Після відправки статті можуть бути змінені тільки авторизованим користувачам.'
+'Download file': 'Завантажити файл'
+'You do not have the right to delete articles.': 'Ви не маєте права видаляти статті.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Ви не маєте права змінювати стан статті. Відправлена стаття може бути змінена тільки уповноваженим користувачем.'
 'Use Map': 'Використовуйте мапу'
 'Toggle: On Section Page': 'Селектор: На секцію Сторінки'
 'Toggle: On Front Page': 'Селектор: На Головну'
 'Toggle: Comments': 'Селектор: Коментарі'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Стаття заблокована $1 ($2) $3 хвилин(s) тому.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Стаття заблокована $1 ($2) $3 годин і $4 хвилин(s) тому.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 хвилин тому.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 годин та $4 хвилин тому.'
 'Status: Submit': 'Статус: Відіслано'
 'Status: Set New': 'Статус: Встановити Нове'
 'Status: Publish': 'Статус: Публікації'
@@ -38,8 +38,8 @@ Size: Розмір
 'Reset all filters': 'Не використовувати фільти'
 'Published before': 'Опубліковані до'
 'Published after': 'Опубліковані після'
-'Publish date': 'Дата публікації'
-'Publish Schedule': 'Розклад публікації'
+'Publish date': 'Дата опублікування'
+'Publish Schedule': 'Розклад публікацій'
 'Publish Date': 'Дата публікації'
 'Order updated.': 'Порядок оновлено'
 'Open in browser': 'Відкити у браузері'
@@ -50,10 +50,10 @@ Size: Розмір
 'No entries to show': 'Немає записів для відображення'
 Locations: Місця
 'Loading data': 'Завантаження даних'
-'Last modified': 'змінено:'
+'Last modified': 'Останні зміни'
 'Last Modified': 'Змінено:'
-Last: Останній
-First: Перший
+Last: Останнє
+First: Перше
 'Filter by...': 'Сортувати за...'
 Filter: Фільтр
 Filename: 'Ім’я файлу'
@@ -61,13 +61,13 @@ Filename: 'Ім’я файлу'
 'Display _MENU_ records': 'Показати _MENU_ записи'
 Creator: Автор
 'Create Date': 'Дата створення'
-'Article status set to $1': 'Статус статті встановлений в $1'
+'Article status set to $1': 'Статус статті встановлено в $1'
 'Are you sure you want to delete selected articles?': 'Ви впевнені що хочете видалити вибрані статті'
 'All Sections': 'Всі секції'
 'All Publications': 'Всі публікації'
 'All Issues': 'Всі випуски'
 Added: Додано
 'Access denied.': 'Доступ заборонено'
-'$1 toggled.': ' $1 перемкнуто?'
+'$1 toggled.': '$1 змінено.'
 '$1 articles have been removed': ' $1 стаття була видалена.'
 ' - filtering from _MAX_ records': 'фільтрація від _MAX_ записів'

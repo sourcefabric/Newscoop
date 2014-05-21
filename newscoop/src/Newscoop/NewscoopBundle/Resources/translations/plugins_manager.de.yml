@@ -1,40 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Name
+newscoop.plugins_manager.installed_table.description: Beschreibung
+newscoop.plugins_manager.installed_table.enabled: Aktiviert
+newscoop.plugins_manager.installed_table.version: Version
+newscoop.plugins_manager.installed_table.license: Lizenz
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Aktionen
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Entferne
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Upload
 newscoop:
-  datatable:
-    label:
-      filter: Filter
-      first: Erste(r)
-      last: Letzte(r)
-      next: Nächste(r)
-      norecords: Keine Datensätze gefunden.
-      previous: Vorherige(r)
-      processing: In Bearbeitung...
-      search: Suche
-    table:
-      filtering: '- fltern aus_MAX_Datensätzen'
-      info: Zeigt _START_ bis _END_ von _TOTAL_ Eingaben
-      menu: Zeige _MENU_ Datensätze
-      noentries: Keine Eingabe anzuzeigen
-  plugins_manager:
-    form:
-      package: Paket muss eine Zip-Datei sein.
-      submit: Hochladen
-    install:
-      public: Neue Plugins installieren
-    installed_table:
-      actions: Aktionen
-      description: Beschreibung
-      enabled: Ermöglicht
-      install_plugin: Installieren
-      installed_at: Installiert um
-      license: Lizenz
-      name: Name
-      plugin_installed: Installiert
-      remove_plugin: Entfernen
-      update_plugin: Aktualisierung
-      updated_at: Aktualisiert um
-      version: Version
-    private_plugins: Private Plugins
-    public_plugins: Öffentliche Plugins
-    search_for_plugins: Nach Plugins suchen
-    upload:
-      private: Privates Plugin hochladen
+    datatable:
+        table:
+            info: 'Zeigt _START_ bis _END_ von _TOTAL_ Eingaben'
+            noentries: 'Keine Eingabe anzuzeigen'
+            filtering: '- fltern aus_MAX_Datensätzen'
+            menu: 'Zeige _MENU_ Datensätze'
+        label:
+            search: Suche
+            filter: Filter
+            processing: 'In Bearbeitung...'
+            last: Letzte(r)
+            next: Nächste(r)
+            first: Erste(r)
+            previous: Vorherige(r)
+            norecords: 'Keine Datensätze gefunden.'

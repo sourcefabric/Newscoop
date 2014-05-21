@@ -21,7 +21,7 @@ moved: переміщено
 installed: встановлено
 deleted: видалено
 'You must select at least one template to perform an action.': 'Ви маєте вибрати принаймні один шаблон щоб зробити це.'
-Upload: Завантажити
+Upload: Завантажувати
 'Unassign theme': 'Скасувати тему'
 'Unassign successful': 'Тема скасована успішно'
 Unassign: Відмінити
@@ -58,7 +58,7 @@ Replace: Перемістить
 'Failed unassigning theme': 'Скасування теми не вдалося'
 Export: Експорт
 'Error page template': 'Шаблон сторінки помилки'
-'Edit $1': 'Редагувати  $1'
+'Edit $1': 'Редагувати $1'
 'Done uploading': 'Завантаження завершено'
 'Do you want to override $1?': 'Бажаєте змінити  $1?'
 'Directory is empty': 'Тека пуста'
@@ -85,4 +85,3 @@ Compatibility: Сумісність
 '$1 is not writable': '$1. не може бути перезаписаний'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 файли $2'
-'Duplicate assignation': 'Дублювати призначення'

@@ -1,43 +1,43 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-User: 
-None: 
-'Coming from': 
-'Ban/Unban user': 
-Ip: 
+'No attachment': null
+at: у
+'With no attachment': null
+'With image attachment': null
+'With document attachment': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop није доступан. Проверите своју интернет везу.'
+Starred: null
+Star: null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Приказано _START_ до _END_ од _TOTAL_ уноса'
+'Reply to message': null
+Reply: Одговори
+Processed: null
+'No records found.': 'Нема записа'
+'No entries to show': 'Нема уноса за приказ'
+'Messages updated.': null
+'Messages status change to $1.': null
+'Messages deleted.': null
+'Message updated.': null
+'Message status change to $1.': null
+'Message deleted.': null
+Message: null
+Last: Последњи
+'Full article': 'Цео текст'
+First: Први
+'Feedback Messages': 'Поруке са повратном информацијом'
+'Display _MENU_ records': 'Прикажи _MENU_ записе'
+Deleted: Обрисано
+'Change selected messages status': null
+Attachment: null
+Approved.: null
+Approve: null
+Anonymous: null
+' - filtering from _MAX_ records': '- филтрирање међу _MAX_ записа'
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+User: Корисник
+None: Ниједан
+'Coming from': null
+'Ban/Unban user': null
+Ip: null
 'Bans can be applied to a users name, email address or IP address.': 'Забране могу бити примењене на корисничко име, имејл адресу или ИП адресу'
 'You are about to permanently delete multiple comments.': 'Неповратно ћете избрисати више коментара.'
 'You are about to permanently delete a comment.': 'Неповратно ћете избрисати коментар.'
@@ -48,7 +48,7 @@ Username: 'Корисничко име'
 'User ban settings': 'Подешавање забране за корисника'
 'Update comment': 'Измени коментар'
 Unrecommended: Непрепоручен
-Unrecommend: 'Не препоручи'
+Unrecommend: Непрепоручен
 'Subject is not $1 characters long': 'Наслов није дугачак $1 карактера'
 'Sort by Thread order': 'Сортирај по редоследу у дискусији'
 'Show parent comment': 'Прикажи матични коментар'
@@ -59,27 +59,27 @@ Unrecommend: 'Не препоручи'
 'Show comment details': 'Прикажи детаље коментатора'
 'Select status': 'Изабери статус'
 'Search Type': 'Тип претраге'
-'Reply to comment': 'Одговори на коментар'
+'Reply to comment': 'Одговорите на коментар'
 Recommended: Препоручени
-Recommend: Препоручи
+Recommend: Препоручен
 'Quick edit': 'Брзо уређивање'
 Parent: Матични
 ID: Ид
 'Go to edit article': 'Иди на уређивање текста'
 Forum: Форум
 'For Column': 'За колону'
-Email: имејл
+Email: email
 'Edit acceptance criteria': 'Уреди критеријум прихватљивости'
 E-mail: Имејл
 'Delete all comments?': 'Обриши све коментаре?'
 'Date Created': 'Датум креирања'
-'Comments updated.': 'Коментари измењени'
+'Comments updated.': 'Коментари измењени.'
 'Comments status change to $1.': 'Промена статуса коментара у $1.'
 'Comments deleted.': 'Коментари обрисани'
 'Commenter $1 saved.': 'Коментатор $1 сачуван.'
 'Commenter $1 deleted.': 'Коментатор $1 обрисан.'
 Commenter: Коментатор
-'Comment updated.': 'Коментатор измењен'
+'Comment updated.': 'Коментар измењен.'
 'Comment status change to $1.': 'Промена статуса коментара у $1.'
 'Comment id': 'Ид коментара'
 'Comment deleted.': 'Коментар избрисан'

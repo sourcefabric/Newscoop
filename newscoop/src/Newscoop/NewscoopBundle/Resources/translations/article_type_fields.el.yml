@@ -55,5 +55,3 @@ Show/Hide: Εμφάνιση/Απόκρυψη
 'You do not have the right to delete article type fields.': 'Δεν έχετε το δικαίωμα να διαγράψετε πεδία τύπου άρθρου.'
 'Are you sure you want to delete the field $1?': 'Είστε σίγουρος πως θέλετε να διαγράψετε το πεδίο $1?'
 'You will also delete all fields with this name from all articles of this type from all publications.': 'Θα διαγράψετε επίσης όλα τα πεδία με αυτό το όνομα από όλα τα άρθρα αυτού του τύπου από όλες τις δημοσιεύσεις.'
-'You may only use letters or the underscore (_) character.': 'Μπορείτε να χρησιμοποιήσετε μόνο γράμματα ή τον χαρακτήρα υπογράμμισης (_).'
-'You can only use letters or the underscore (_).': 'Μπορείτε να χρησιμοποιήσετε μόνο γράμματα ή τον χαρακτήρα υπογράμμισης (_).'

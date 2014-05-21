@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Назва
+newscoop.plugins_manager.installed_table.description: Опис
+newscoop.plugins_manager.installed_table.enabled: Дозволено
+newscoop.plugins_manager.installed_table.version: Версія
+newscoop.plugins_manager.installed_table.license: Ліцензія
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Дії
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Видалити
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Завантажувати
+newscoop:
+    datatable:
+        table:
+            info: 'Показані від початку до кінця, від загального числа записів'
+            noentries: 'Немає записів для відображення'
+            filtering: 'фільтрація від _MAX_ записів'
+            menu: 'Показати _MENU_ записи'
+        label:
+            search: Пошук
+            filter: Фільтр
+            processing: Обробка...
+            last: Останнє
+            next: Наступне
+            first: Перше
+            previous: Попереднє
+            norecords: 'Немає записів'

@@ -1,221 +1,222 @@
-' - filtering from _MAX_ records': ' - gefiltert aus _MAX_ Datensätzen'
-'About me': "Über mich"
-'Accepting terms of use': 'Nutzungsbedingungen akzeptieren '
-'Active Logins': "Aktive Logins"
-'Add author type': "Autorentyp hinzufügen"
-'Add new Author': "Neuen Autor hinzufügen"
-'Administrative tasks': "Administrative Aufgaben"
-'All Author Types': "Alle Urheber-Typen"
-'Allow sending emails': "Senden von E-Mails erlauben"
-'Allow user access to login to site backend': "Benutzer erlauben, sich im Backend anmelden"
-'Allow users profile to be publicly displayed': "Benutzerprofil darf öffentlich angezeigt werden"
-'Another user is registered with that e-mail address, please choose a different one': "Ein anderer Benutzer ist bereits mit dieser E-Mail-Adresse registriert, bitte wählen Sie einen andere E-Mail-Adresse."
-'Are you sure you want to delete this author alias?': "Sind Sie sicher, dass Sie diesen Autor Alias ​​löschen möchten?"
-'Are you sure you want to delete this author type?': "Sind Sie sicher, dass Sie diesen Autorentyp löschen möchten?"
-'Are you sure you want to delete this author?': "Sind Sie sicher, dass Sie diesen Autor löschen möchten?"
-'Are you sure you want to {action}?': "Sind Sie sicher, dass Sie {action} wollen?"
-'Author alias removed': "Autoren Alias ​​entfernt."
-'Author deleted': "Autor gelöscht."
-'Author saved': "Autor gespeichert."
-'Author type added': "Autorentyp hinzugefügt."
-'Author type must be at least three characters long': "Autorentyp muss mindestens drei Zeichen lang sein."
-'Author type removed': "Autorentyp entfernt."
-'Ban for user $1 saved': "Kommentarverbot für Benutzer $1 gespeichert."
-'Cannot add author type, this type already exists': "Kann Autorentyp nicht hinzufügen, dieser Autorentyp existiert bereits."
-'Cannot remove author alias': "Autoren Alias ​​kann nicht entfernt werden."
-'Cannot remove author type': "Autorentyp kann nicht entfernt werden."
-'Comment ban settings': "Kommentarverbot Einstellungen"
-'Continue': Fortsetzen
-'Create new account': "Neuen Account anlegen"
+'Password confirmation does not match your password.': null
+'Password Confirmation': 'Passwort Bestätigung'
+Website: Website
+Twitter: Twitter
+'Save profile': 'Profil speichern'
+'Profile image': Profil-Bild
+Organisation: Organisation
+'Last Name Public': 'Nachname öffentlich'
+Google+: Google+
+Geolocation: Geoinformation
+Gender: Geschlecht
+'First Name Public': 'Vorname öffentlich'
+Facebook: Facebook
 'Date of birth': Geburtsdatum
-'Delete author type': 'Autorentyp löschen '
-'Display _MENU_ records': "Anzeigen _MENU_ Datensätze"
-'Edit permissions': "Berechtigungen bearbeiten"
-'Edit profile': "Profil bearbeiten"
-'Edit subscriptions': 'Abonnement bearbeiten '
-'Edit user $1': "Benutzer $1 bearbeiten"
-'Edit your password': 'Passwort bearbeiten '
-'Editor Advanced Font Settings': 'Editor: Erweiterte Schrifteneinstellungen'
-'Editor Basic Settings': 'Editor: Grundeinstellungen'
-'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
-'Editor Table Settings': 'Editor: Tabellen-Einstellungen'
-'Email': "Email-Adresse"
-'Email is used already': "E-Mail Adresse wird bereits verwendet"
-'Enable Firefox spell checking by default': "Aktiviere Firefox Rechtschreibprüfung standardmäßig"
-'Facebook': Facebook
-'Filters': Filter
-'First Name': Vorname
-'First Name Public': "Vorname öffentlich"
-'Gender': "Geschlecht"
-'Geolocation': "Geolocation"
-'Google+': "Google+"
-'Invalid value of user type parameter': "Unzulässiger Wert von Nutzertyp Parameter"
-'Last Name': "Nachname"
-'Last Name Public': "Nachname öffentlich"
-'Loading Data': "Lade Daten"
-'Miscellaneous': "Sonstiges"
-'New confirmation email was sent to user': 'Neue E-Mail-Bestätigung wurde an Benutzer gesendet '
-'Newscoop Subhead': "Newscoop Zwischentitel"
-'No entries to show': "Es können keine Einträge angezeigt werden."
-'No records found': "Keine Datensätze gefunden."
-'No such user account': "Benutzeraccount existiert nicht."
-'No users found': "Keine Benutzer gefunden."
-'None': "Kein"
-'Organisation': "Organisation"
-'Password Confirmation': "Passwort Bestätigung"
-'Password confirmation does not match your password': 'Passwort-Bestätigung stimmt nicht mit Passwort überein. '
-'Password updated': "Kennwort aktualisiert"
-'Picture': "Bild"
-'Please fill at least first name and last name': "Bitte füllen Sie mindestens Vorname und Nachname aus."
-'Profile image': "Profil-Bild"
-'Profile saved': "Profil gespeichert."
-'Rename user $1': "Benutzer $1 umbennen"
-'Save profile': "Profil speichern"
-'Send confirm email': "Sende E-Mail-Bestätigung"
-'Send email to user:': 'Sende E-Mail an Benutzer:'
-'Showing _START_ to _END_ of _TOTAL_ entries': "Zeige _START_ bis _END_ von _TOTAL_ Eingaben"
-'Staff/Subscribers Management': "Mitarbeiter / Abonnenten-Management"
-'Templates': Templates
-'That user name already exists, please choose a different login name': Dieser Benutzername ist bereits vorhanden, bitte wählen Sie einen anderen Login-Namen.
-'The IP Group $1 has been created': 'Die IP-Gruppe $1 wurde erstellt.'
-'The IP address group $1 has been deleted': 'Die IP-Adress Gruppe $1 wurde gelöscht.'
-'The IP address group $1:$2 conflicts with another existing group': 'Die IP-Adress Gruppe $1:$2 hat einen Konflikt mit einer anderen bestehenden Gruppe. '
-'The password must be at least 6 characters long and both passwords should match': Das Passwort muss mindestens 6 Zeichen lang sein und beide Passwörter sollten übereinstimmen.
-'The password you typed is incorrect': Das von Ihnen eingegebene Kennwort ist falsch.
-'The user account could not be created': Das Benutzerkonto konnte nicht erstellt werden.
-'There was an error creating the IP address group': "Es gab einen Fehler beim Erstellen der IP-Adressgruppe."
-'There was an error when trying to update the user info': Es gab einen Fehler bei dem Versuch die Benutzerinformationen zu aktualisieren.
-'Twitter': Twitter
-'Unable to add new image, target directory is not writable': Neues Bild hinzufügen nicht möglich. Das Zielverzeichnis ist nicht beschreibbar.
-'User $1 created': Benutzer $1 erstellt
-'User $1 information was changed successfully': Informationen zum Benutzer $1 wurden erfolgreich geändert.
-'User Type': Benutzertyp
-'User account $1 was created successfully': Benutzerkonto $1 wurde erfolgreich erstellt.
-'User account $1 was deleted successfully': Benutzerkonto $1 wurde erfolgreich gelöscht.
-'User account is active': Benutzerkonto ist aktiv
-'User attributes': Benutzereigenschaften
-'User id not specified': "Benutzer-ID nicht spezifiziert"
-'User may add article attachments': Benutzer darf Artikel-Anhänge hinzufügen
-'User may add articles': Benutzer darf Artikel hinzufügen
-'User may add images': Benutzer darf Bilder hinzufügen
-'User may add languages and manage language information': Nutzer kann Sprachen hinzufügen und verwalten Sprachinformationen
-'User may add links': Benutzer darf Links hinzufügen
-'User may add special characters': Benutzer darf Sonderzeichen hinzufügen
-'User may add subheads': Benutzer darf Zwischentitel hinzufügen
-'User may add/change article types': "Benutzer darf Artikeltypen hinzufügen / ändern"
-'User may add/change country entries': "Benutzer darf Ländereinträge hinzufügen/ändern"
-'User may add/change issues': "Benutzer darf Ausgaben hinzufügen / verändern"
-'User may add/change publications': "Benutzer darf Publikationen hinzufügen / ändern"
-'User may add/change sections': "Benutzer darf Rubriken hinzufügen / ändern"
-'User may add/change staff accounts and passwords': "Benutzer darf Mitarbeiteraccounts und Passwörter hinzufügen / ändern"
-'User may add/change subscribers accounts and passwords': "Benutzer darf Abonnementkonten und Kennwörter hinzufügen / ändern"
-'User may attach images to articles': Benutzer darf Bilder zu den Artikeln hinzufügen
-'User may attach topics to articles': Benutzer darf Themen zum Artikel hinzufügen
-'User may backup and restore the site data': Benutzer darf Backup erstellen und die Daten wiederherstellen
-'User may change article attachments': "Benutzer darf Artikel-Anhänge ändern"
-'User may change articles': Benutzer darf  Artikel ändern
-'User may change authors': Benutzer darf Autoren ändern
-'User may change images': Benutzer darf Bilder ändern
-'User may change system preferences': Benutzer darf Systemeinstellungen ändern
-'User may change text alignment': Benutzer darf Textausrichtung ändern
-'User may change text direction': Benutzer darf Textrichtung ändern
-'User may change the font color': Benutzer darf die Schriftfarbe ändern
-'User may change the font face': Benutzer darf die Schriftart ändern
-'User may change the font size': Benutzer darf die Schriftgröße ändern
-'User may clear up the system cache': "Benutzer darf System-Cache bereinigen"
-'User may copy, cut, and paste': Benutzer darf kopieren, ausschneiden und einfügen
-'User may create bulleted lists': Benutzer darf Aufzählungslisten erstellen
-'User may create numbered lists': Benutzer darf nummerierte Listen erstellen
-'User may delete article attachments': "Benutzer darf Artikel-Anhänge löschen"
-'User may delete article types': Benutzer darf Artikeltypen löschen
-'User may delete articles': Benutzer darf Artikel löschen
-'User may delete country entries': Benutzer darf Ländereinträge löschen
-'User may delete images': Benutzer darf Bilder löschen
-'User may delete issues': Benutzer darf Ausgaben löschen
-'User may delete languages': Benutzer darf Sprachen löschen
-'User may delete publications': Benutzer darf Publikationen löschen
-'User may delete sections': Benutzer darf Rubriken löschen
-'User may delete staff accounts': Benutzer darf Mitarbeiteraccounts löschen
-'User may delete templates': Benutzer darf Templates löschen
-'User may enable comments': Benutzer darf Kommentare aktivieren
-'User may enlarge the editor': Benutzer darf den Editor vergrößern
-'User may find and replace': Benutzer darf suchen und ersetzen
-'User may insert horizontal rules': Benutzer darf horizontale Linien einfügen
-'User may insert images': Benutzer darf Bilder einfügen
-'User may insert tables': Benutzer darf Tabellen einfügen
-'User may manage account types': Benutzer darf Kontotypen verwalten
-'User may manage localizer': Benutzer darf Localizer verwalten
-'User may manage templates': Benutzer darf Templates verwalten
-'User may manage topics': Benutzer darf Themen verwalten
-'User may manage user subscriptions': Benutzer darf Benutzerabos verwalten
-'User may moderate comments': Benutzer darf Kommentare moderieren
-'User may move articles': Benutzer darf Artikel verschieben
-'User may publish articles': Benutzer darf Artikel veröffentlichen
-'User may set indents': Benutzer darf Zeileneinzug verwenden
-'User may translate articles': Benutzer darf Artikel übersetzen
-'User may undo/redo': Benutzer darf rückgängig machen / Aktion wiederholen
-'User may use bold': Benutzer darf fett verwenden
-'User may use italic': Benutzer darf kursiv verwenden
-'User may use strikethrough': Benutzer darf Durchstrich verwenden
-'User may use subscripts': Benutzer darf tiefgestellte Zeichen verwenden
-'User may use superscripts': Benutzer darf hochgestellte Zeichen verwenden
-'User may use the editor status bar': Benutzer darf Editor Statusleiste verwenden
-'User may use underline': Benutzer darf Unterstrich verwenden
-'User may view audit logs': Benutzer darf Audit-Protokolle anzeigen
-'User may view the HTML source': Benutzer darf den HTML-Quelltext sehen
-'User renamed': Benutzer umbenannt.
-'User saved': Benutzer gespeichert
-'User was deleted': Benutzer wurde gelöscht.
-'User will be notified on several events': Der Benutzer wird bei mehreren Events benachrichtigt
-'User with email %s is registered already': Benutzer mit E-Mail %s ist bereits registriert.
-'User with id $1 not found': Benutzer mit ID $1 nicht gefunden
-'Username': Nutzer Name
-'Username is used already': Benutzername wird bereits verwendet
-'Username is used. Please use another one.': "Benutzername wird bereits verwendet. Bitte benutzen Sie einen anderen Benutzernamen."
-'Verified profile': "Verifiziertes Profil"
-'Website': Webseite
-'You do not have the permission to change authors': Keine Berechtigung Autoren zu ändern.
-'You do not have the right to change user account information': Keine Berechtigung Benutzerkontoinformationen zu ändern.
-'You do not have the right to change user account permissions': Keine Berechtigung Benutzerkontorechte zu ändern.
-'You do not have the right to create user accounts': Keine Berechtigung Benutzerkonten zu erstellen.
-'You do not have the right to delete user accounts': Keine Berechtigung Benutzerkonten zu löschen.
-'You must select a $1': Sie müssen einen $1 zu wählen
-'You were logged out': Sie wurden abgemeldet.
+'Allow sending emails': 'Senden von E-Mails erlauben'
+'About me': 'Über mich'
+'User with email %s is registered already.': 'Ein Benutzer mit der E-Mail- Adresse %s ist schon registriert.'
+'Username is used. Please use another one.': 'Benutzername wird bereits verwendet. Bitte benutzen Sie einen anderen Benutzernamen.'
+Continue: Fortsetzen
+'Accepting terms of use': 'Nutzungsbedingungen akzeptieren '
+'send confirmation email': 'Bestätigungs-E-Mail senden'
+'edit user': 'Benutzer bearbeiten'
 'delete user': 'Benutzer löschen '
-'edit user': "Benutzer bearbeiten"
-'send confirmation email': "Bestätigungs-E-Mail senden"
+'Verified profile': 'Verifiziertes Profil'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Zeige _START_ bis _END_ von _TOTAL_ Einträgen'
+'Send email to user:': 'Sende E-Mail an Benutzer:'
+'No users found.': 'Keine Nutzer gefunden.'
+'No records found.': 'Keine Angaben gefunden.'
+'No entries to show': 'Keine Einträge zum Anzeigen gefunden.'
+'Display _MENU_ records': 'Anzeigen _MENU_ Einträge'
+'Are you sure you want to {action}?': 'Sind Sie sicher, dass Sie {action} wollen?'
+'Active Logins': 'Aktive Logins'
+' - filtering from _MAX_ records': ' - filtert aus _MAX_ Einträgen '
+'User renamed.': 'Nutzer umbenannt.'
+'User attributes': Benutzereigenschaften
+'Rename user $1': 'Benutzer $1 umbennen'
+'Username is used already': 'Benutzername wird bereits verwendet'
+'User with id $1 not found': 'Benutzer mit ID $1 nicht gefunden'
+'User was deleted.': 'Benutzer gelöscht.'
+'User saved': 'Benutzer gespeichert'
+'User id not specified': 'Benutzer-ID nicht spezifiziert'
+'User $1 created': 'Benutzer $1 erstellt'
+'Send confirm email': 'Sende E-Mail-Bestätigung'
+'Profile saved.': 'Profil gespeichert.'
+Picture: Bild
+'Password updated': 'Kennwort aktualisiert'
+None: Keine
+'New confirmation email was sent to user.': 'Neue Bestätigungsmail an Nutzer versendet.'
+'Email is used already': 'E-Mail Adresse wird bereits verwendet'
+'Edit your password': 'Passwort bearbeiten'
+'Edit user $1': 'Benutzer $1 bearbeiten'
+'Edit subscriptions': 'Abonnements bearbeiten'
+'Edit profile': 'Profil bearbeiten'
+'Edit permissions': 'Berechtigung bearbeiten'
+'Create new account': 'Neues Benutzerkonto anlegen'
+'Comment ban settings': 'Kommentarverbot Einstellungen'
+'Ban for user $1 saved.': null
+'User account is active': 'Benutzerkonto ist aktiv'
+'Allow users profile to be publicly displayed': 'Benutzerprofil darf öffentlich angezeigt werden'
+'Allow user access to login to site backend': 'Benutzer erlauben, sich im Backend anmelden'
+Templates: Templates
+Username: Benutzername
+'Last Name': Nachname
+'First Name': Vorname
+Email: E-Mail
+'You were logged out.': null
+'Newscoop Subhead': 'Newscoop Zwischentitel'
+Filters: Filter
+'Add new Author': 'Neuen Autor hinzufügen'
+'Loading Data': 'Lade Daten'
+'Delete author type': 'Autorentyp löschen '
+'Cannot remove author type.': 'Autorentyp konnte nicht entfernt werden.'
+'Cannot remove author alias.': 'Autorenalias konnte nicht entfernt werden.'
+'Author alias removed.': 'Autorenalias entfernt.'
+'Are you sure you want to delete this author?': 'Sind Sie sicher, dass Sie diesen Autor löschen möchten?'
+'Are you sure you want to delete this author alias?': 'Sind Sie sicher, dass Sie diesen Autor Alias ​​löschen möchten?'
+'All Author Types': 'Alle Urheber-Typen'
+'Add author type': 'Autorentyp hinzufügen'
+'You do not have the permission to change authors.': 'Du hast keine Berechtigung, Autoren zu ändern.'
+'Please fill at least first name and last name.': 'Bitte trage einen Vor- und Nachnamen ein.'
+'Cannot add author type, this type already exists.': 'Konnte keinen Autorentyp hinzufügen, weil dieser Typ bereits existiert.'
+'Author type removed.': 'Autorentyp entfernt.'
+'Author type must be at least three characters long.': 'Der Autorentyp muss mindestens drei Zeichen lang sein.'
+'Author type added.': 'Autorentyp hinzugefügt.'
+'Are you sure you want to delete this author type?': 'Sind Sie sicher, dass Sie diesen Autorentyp löschen möchten?'
+'User may change authors': 'Benutzer darf Autoren ändern'
+'Unable to add new image, target directory is not writable.': 'Neues Bild konnte nicht hinzugefügt werden, das Zielverzeichnis kann nicht beschrieben werden.'
+'Author saved.': 'Autor gespeichert.'
+'Author deleted.': 'Autor gelöscht.'
+'Enable Firefox spell checking by default': 'Aktiviere Firefox Rechtschreibprüfung standardmäßig'
+'User may use the editor status bar': 'Benutzer darf Editor Statusleiste verwenden'
+'User may clear up the system cache': 'Benutzer darf System-Cache bereinigen'
+'Another user is registered with that e-mail address, please choose a different one.': 'Diese E-Mail-Adresse wird von einem anderen Benutzer verwendet, bitte wähle eine andere Adresse.'
+'There was an error when trying to update the user info.': null
+'User may moderate comments': 'Benutzer darf Kommentare moderieren'
+'User may enable comments': 'Benutzer darf Kommentare aktivieren'
+'User may translate articles': 'Benutzer darf Artikel übersetzen'
+'User may move articles': 'Benutzer darf Artikel verschieben'
+'User may find and replace': 'Benutzer darf suchen und ersetzen'
+'User may change system preferences': 'Benutzer darf Systemeinstellungen ändern'
+'User may attach topics to articles': 'Benutzer darf Themen zum Artikel hinzufügen'
+'User may attach images to articles': 'Benutzer darf Bilder zu den Artikeln hinzufügen'
+'User may add special characters': 'Benutzer darf Sonderzeichen hinzufügen'
+'That user name already exists, please choose a different login name.': 'Der Username existiert bereits, bitte wählen Sie einen neuen Login-Namen. '
+'User may delete article attachments': 'Benutzer darf Artikel-Anhänge löschen'
+'User may change article attachments': 'Benutzer darf Artikel-Anhänge ändern'
+'User may add article attachments': 'Benutzer darf Artikel-Anhänge hinzufügen'
+'You do not have the right to create user accounts.': 'Du hast nicht die Berechtigung, Benutzerkonten zu erstellen.'
+'You must select a $1': 'Sie müssen einen $1 zu wählen'
+'The password must be at least 6 characters long and both passwords should match.': 'Das Passwort muss mindestens 6 Zeichen lang sein und die Passwörter müssen übereinstimmen.'
+'The user account could not be created.': 'Das Benutzerkonto konnte nicht erstellt werden.'
+'User account $1 was created successfully.': 'Benutzerkonto $1 wurde erfolgreich erstellt.'
+'You do not have the right to change user account permissions.': 'Du bist nicht berechtigt, die Benutzerrechte zu bearbeiten.'
+'You do not have the right to change user account information.': 'Du bist nicht berechtig, die Benutzerinformationen zu bearbeiten.'
+'The password you typed is incorrect.': null
+'You do not have the right to delete user accounts.': 'Du bist nicht berechtigt, Benutzerkonten zu löschen.'
+'User account $1 was deleted successfully.': 'Benutzerkonto $1 erfolreich gelöscht.'
+'The IP Group $1 has been created.': null
+'There was an error creating the IP address group.': null
+'The IP address group $1 has been deleted.': null
+'User $1 information was changed successfully.': null
+'User Type': Benutzertyp
+'The IP address group $1:$2 conflicts with another existing group.': null
+'User may add/change publications': 'Benutzer darf Publikationen hinzufügen / ändern'
+'Invalid value of user type parameter': 'Unzulässiger Wert von Nutzertyp Parameter'
+'User may delete publications': 'Benutzer darf Publikationen löschen'
+'User may add/change issues': 'Benutzer darf Ausgaben hinzufügen / verändern'
+'User may delete issues': 'Benutzer darf Ausgaben löschen'
+'User may add/change sections': 'Benutzer darf Rubriken hinzufügen / ändern'
+'User may delete sections': 'Benutzer darf Rubriken löschen'
+'User may add articles': 'Benutzer darf Artikel hinzufügen'
+'User may change articles': 'Benutzer darf  Artikel ändern'
+'User may delete articles': 'Benutzer darf Artikel löschen'
+'User may add images': 'Benutzer darf Bilder hinzufügen'
+'User may change images': 'Benutzer darf Bilder ändern'
+'User may delete images': 'Benutzer darf Bilder löschen'
+'User may delete templates': 'Benutzer darf Templates löschen'
+'User may add/change staff accounts and passwords': 'Benutzer darf Mitarbeiteraccounts und Passwörter hinzufügen / ändern'
+'User may add/change subscribers accounts and passwords': 'Benutzer darf Abonnementkonten und Kennwörter hinzufügen / ändern'
+'User may delete staff accounts': 'Benutzer darf Mitarbeiteraccounts löschen'
+'User may manage user subscriptions': 'Benutzer darf Benutzerabos verwalten'
+'User may manage account types': 'Benutzer darf Kontotypen verwalten'
+'User may add/change article types': 'Benutzer darf Artikeltypen hinzufügen / ändern'
+'User may delete article types': 'Benutzer darf Artikeltypen löschen'
+'User may manage templates': 'Benutzer darf Templates verwalten'
+'User may add/change country entries': 'Benutzer darf Ländereinträge hinzufügen/ändern'
+'User may add languages and manage language information': 'Nutzer kann Sprachen hinzufügen und verwalten Sprachinformationen'
+'User may delete languages': 'Benutzer darf Sprachen löschen'
+'User may view audit logs': 'Benutzer darf Audit-Protokolle anzeigen'
+'User may delete country entries': 'Benutzer darf Ländereinträge löschen'
+'User may manage localizer': 'Benutzer darf Localizer verwalten'
+'User may publish articles': 'Benutzer darf Artikel veröffentlichen'
+'User may manage topics': 'Benutzer darf Themen verwalten'
+'User may use bold': 'Benutzer darf fett verwenden'
+'User may use italic': 'Benutzer darf kursiv verwenden'
+'User may use underline': 'Benutzer darf Unterstrich verwenden'
+'User may use strikethrough': 'Benutzer darf Durchstrich verwenden'
+'User may change text alignment': 'Benutzer darf Textausrichtung ändern'
+'User may copy, cut, and paste': 'Benutzer darf kopieren, ausschneiden und einfügen'
+'User may undo/redo': 'Benutzer darf rückgängig machen / Aktion wiederholen'
+'User may change text direction': 'Benutzer darf Textrichtung ändern'
+'User may set indents': 'Benutzer darf Zeileneinzug verwenden'
+'User may add links': 'Benutzer darf Links hinzufügen'
+'User may add subheads': 'Benutzer darf Zwischentitel hinzufügen'
+'User may insert images': 'Benutzer darf Bilder einfügen'
+'User may view the HTML source': 'Benutzer darf den HTML-Quelltext sehen'
+'User may enlarge the editor': 'Benutzer darf den Editor vergrößern'
+'User may change the font face': 'Benutzer darf die Schriftart ändern'
+'User may change the font size': 'Benutzer darf die Schriftgröße ändern'
+'User may create bulleted lists': 'Benutzer darf Aufzählungslisten erstellen'
+'User may create numbered lists': 'Benutzer darf nummerierte Listen erstellen'
+'User may insert tables': 'Benutzer darf Tabellen einfügen'
+'User may insert horizontal rules': 'Benutzer darf horizontale Linien einfügen'
+'User may change the font color': 'Benutzer darf die Schriftfarbe ändern'
+'User may use superscripts': 'Benutzer darf hochgestellte Zeichen verwenden'
+'User may use subscripts': 'Benutzer darf tiefgestellte Zeichen verwenden'
+'User may backup and restore the site data': 'Benutzer darf Backup erstellen und die Daten wiederherstellen'
+Miscellaneous: Sonstiges
+'Staff/Subscribers Management': 'Mitarbeiter / Abonnenten-Management'
+'Editor Basic Settings': 'Editor: Grundeinstellungen'
+'Editor Advanced Font Settings': 'Editor: Erweiterte Schrifteneinstellungen'
+'Editor Table Settings': 'Editor: Tabellen-Einstellungen'
+'Administrative tasks': 'Administrative Aufgaben'
+'User will be notified on several events': 'Der Benutzer wird bei mehreren Events benachrichtigt'
+'Editor Miscellaneous Settings': 'Editor: Sonstige Einstellungen'
+'No such user account.': null
+'User image (full-size)': null
 users:
-  chart:
-    title: Aktive Logins
-  created: Erstellt
-  label:
-    title: Benutzersuche
-  menu:
-    manage: Benutzer verwalten
-  status:
-    active: Aktiv
-    deleted: Gelöscht
-    pending: Noch ausstehend (Pending)
-    registered: Registriert
-    status: Status
-  table:
-    actions:
-      actions: Aktionen
-      edit: Bearbeiten
-      remove: Entfernen
-      rename: Umbenennen
-      resend_email: "Aktivierungsmail erneut senden"
-    confirm_remove: Diesen Benutzer wirklich entfernen?
-    table_messages:
-      page: Seite
-      pageText: 'Seiten:'
-      perPageText: 'Zeige:'
-      processingText: In Arbeit ...
-      recordCountFilteredTemplate: "(aus insgesamt {recordsTotal} Einträgen gefiltert)"
-      recordCountPageBoundTemplate: '{pageLowerBound} zu {pageUpperBound} von'
-      recordCountPageUnboundedTemplate: '{recordsShown} von'
-      recordCountTemplate: "<span id='dynatable-record-count-{elementId}' class='dynatable-record-count'>{textTemplate}</span>"
-      recordCountText: "Zeige "
-      recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
-      recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
-  updated: Aktualisiert
+    label:
+        title: Benutzersuche
+    menu:
+        manage: 'Benutzer verwalten'
+    created: Erstellt
+    updated: Aktualisiert
+    status:
+        status: Status
+        registered: Registriert
+        pending: 'Noch ausstehend (Pending)'
+        deleted: Gelöscht
+        active: Aktiv
+    table:
+        actions:
+            actions: Aktionen
+            edit: Bearbeiten
+            resend_email: 'Aktivierungsmail erneut senden'
+            rename: Umbenennen
+            remove: Entfernen
+        confirm_remove: 'Diesen Benutzer wirklich entfernen?'
+        table_messages:
+            page: Seite
+            perPageText: 'Zeige:'
+            pageText: 'Seiten:'
+            recordCountPageBoundTemplate: '{pageLowerBound} zu {pageUpperBound} von'
+            recordCountPageUnboundedTemplate: '{recordsShown} von'
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: '(aus insgesamt {recordsTotal} Einträgen gefiltert)'
+            recordCountText: 'Zeige '
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
+            processingText: 'In Arbeit ...'
+    chart:
+        title: 'Aktive Logins'

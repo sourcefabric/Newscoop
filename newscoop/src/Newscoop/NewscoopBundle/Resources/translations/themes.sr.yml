@@ -1,5 +1,5 @@
-'Duplicate assignment': 
-Templates: 
+'Duplicate assignment': null
+Templates: null
 'Import theme': 'Увези тему'
 'Import succeded!': 'Успешан увоз!'
 'Import failed!': 'Увоз није успео!'
@@ -20,8 +20,8 @@ updated: измењена
 moved: премештена
 installed: инсталирана
 deleted: обрисана
-'You must select at least one template to perform an action.': 'Морате изабрати бар један шаблон да би радња била извршена.'
-Upload: Аплоуд
+'You must select at least one template to perform an action.': 'Морате изабрати најмање један шаблон да би се могла извести акција.'
+Upload: Аплоудуј
 'Unassign theme': 'Уклони тему'
 'Unassign successful': 'Уклањање успело'
 Unassign: Уклони
@@ -40,13 +40,13 @@ Unassign: Уклони
 'Section page template': 'Шаблон за приказ рубрике'
 Saving..: Снимам...
 'Saving settings failed.': 'Снимање подешавања није успело.'
-'Save All': 'Сними све'
+'Save All': 'сачувај све'
 'Required Newscoop version': 'Захтевана верзија Newscoopa'
 Replace: Замени
 'New template $1 created.': 'Нови шаблон $1креиран.'
 'New name': 'Ново име'
 'Name cant be empty': 'Име не може бити празно'
-'Last modified': 'Последња измена'
+'Last modified': Измењено
 'Issue page': 'Страна издања'
 'Go to parent': 'Иди на матични'
 'Go to $1': 'Иди на $1'
@@ -62,7 +62,7 @@ Export: Извоз
 'Done uploading': 'Аплоуд завршен'
 'Do you want to override $1?': 'Желите ли да претабате $1?'
 'Directory is empty': 'Директоријум је празан'
-'Directory $1 created.': 'Директоријум $1 креиран.'
+'Directory $1 created.': 'директоријум $1 је направљен'
 Design: Дизајн
 'Delete theme': 'Обриши тему'
 'Current directory:': 'Тренутни директоријум:'

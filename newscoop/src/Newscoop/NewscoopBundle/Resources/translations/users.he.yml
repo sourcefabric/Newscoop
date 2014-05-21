@@ -1,65 +1,222 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
-Username: 
-'Last Name': 
-'First Name': 
-Email: 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: null
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: null
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Send email to user:': null
+'No users found.': null
+'No records found.': null
+'No entries to show': null
+'Display _MENU_ records': null
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': null
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: null
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': null
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': null
+'Create new account': null
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: null
+'Last Name': null
+'First Name': null
+Email: null
+'You were logged out.': null
+'Newscoop Subhead': null
+Filters: null
+'Add new Author': null
+'Loading Data': null
+'Delete author type': null
+'Cannot remove author type.': null
+'Cannot remove author alias.': null
+'Author alias removed.': null
+'Are you sure you want to delete this author?': null
+'Are you sure you want to delete this author alias?': null
+'All Author Types': null
+'Add author type': null
+'You do not have the permission to change authors.': null
+'Please fill at least first name and last name.': null
+'Cannot add author type, this type already exists.': null
+'Author type removed.': null
+'Author type must be at least three characters long.': null
+'Author type added.': null
+'Are you sure you want to delete this author type?': null
+'User may change authors': null
+'Unable to add new image, target directory is not writable.': null
+'Author saved.': null
+'Author deleted.': null
+'Enable Firefox spell checking by default': null
+'User may use the editor status bar': null
+'User may clear up the system cache': null
+'Another user is registered with that e-mail address, please choose a different one.': null
+'There was an error when trying to update the user info.': null
+'User may moderate comments': null
+'User may enable comments': null
+'User may translate articles': null
+'User may move articles': null
+'User may find and replace': null
+'User may change system preferences': null
+'User may attach topics to articles': null
+'User may attach images to articles': null
+'User may add special characters': null
+'That user name already exists, please choose a different login name.': null
+'User may delete article attachments': null
+'User may change article attachments': null
+'User may add article attachments': null
+'You do not have the right to create user accounts.': null
+'You must select a $1': null
+'The password must be at least 6 characters long and both passwords should match.': null
+'The user account could not be created.': null
+'User account $1 was created successfully.': null
+'You do not have the right to change user account permissions.': null
+'You do not have the right to change user account information.': null
+'The password you typed is incorrect.': null
+'You do not have the right to delete user accounts.': null
+'User account $1 was deleted successfully.': null
+'The IP Group $1 has been created.': null
+'There was an error creating the IP address group.': null
+'The IP address group $1 has been deleted.': null
+'User $1 information was changed successfully.': null
+'User Type': null
+'The IP address group $1:$2 conflicts with another existing group.': null
+'User may add/change publications': null
+'Invalid value of user type parameter': null
+'User may delete publications': null
+'User may add/change issues': null
+'User may delete issues': null
+'User may add/change sections': null
+'User may delete sections': null
+'User may add articles': null
+'User may change articles': null
+'User may delete articles': null
+'User may add images': null
+'User may change images': null
+'User may delete images': null
+'User may delete templates': null
+'User may add/change staff accounts and passwords': null
+'User may add/change subscribers accounts and passwords': null
+'User may delete staff accounts': null
+'User may manage user subscriptions': null
+'User may manage account types': null
+'User may add/change article types': null
+'User may delete article types': null
+'User may manage templates': null
+'User may add/change country entries': null
+'User may add languages and manage language information': null
+'User may delete languages': null
+'User may view audit logs': null
+'User may delete country entries': null
+'User may manage localizer': null
+'User may publish articles': null
+'User may manage topics': null
+'User may use bold': null
+'User may use italic': null
+'User may use underline': null
+'User may use strikethrough': null
+'User may change text alignment': null
+'User may copy, cut, and paste': null
+'User may undo/redo': null
+'User may change text direction': null
+'User may set indents': null
+'User may add links': null
+'User may add subheads': null
+'User may insert images': null
+'User may view the HTML source': null
+'User may enlarge the editor': null
+'User may change the font face': null
+'User may change the font size': null
+'User may create bulleted lists': null
+'User may create numbered lists': null
+'User may insert tables': null
+'User may insert horizontal rules': null
+'User may change the font color': null
+'User may use superscripts': null
+'User may use subscripts': null
+'User may backup and restore the site data': null
+Miscellaneous: null
+'Staff/Subscribers Management': null
+'Editor Basic Settings': null
+'Editor Advanced Font Settings': null
+'Editor Table Settings': null
+'Administrative tasks': null
+'User will be notified on several events': null
+'Editor Miscellaneous Settings': null
+'No such user account.': null
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: null
+    created: null
+    updated: null
+    status:
+        status: מצב
+        registered: null
+        pending: null
+        deleted: null
+        active: פעיל
+    table:
+        actions:
+            actions: פעילויות
+            edit: עריכה
+            resend_email: null
+            rename: null
+            remove: הסר
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: מעבד....
+    chart:
+        title: null

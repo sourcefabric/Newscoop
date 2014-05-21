@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: ვებგვერდი
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: 'გეოგრაფიული მდებარეობა'
 Gender: სქესი
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
 'send confirmation email': 'დადასტურების ელფოსტის გაგზავნა'
 'edit user': 'მომხმარებლის რედაქტირება'
 'delete user': 'მომხმარებლის წაშლა'
 'Verified profile': 'გადამოწმებული პროფილი'
-'Showing _START_ to _END_ of _TOTAL_ entries': ' _START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
 'Send email to user:': 'მომხმარებლისთვის ელფოსტის გაგზავნა:'
 'No users found.': 'მომხმარებელი ნაპოვნი არ არის.'
-'No records found.': 'ჩანაწერი ნაპოვნი არ არის. '
-'No entries to show': 'საჩვენებელი ჩანაწერები არ არის. '
-'Display _MENU_ records': ' _MENU_ ჩანაწერების ჩვენება'
+'No records found.': 'ჩანაწერები ნაპოვნი არ არის.'
+'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
+'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
 'Are you sure you want to {action}?': 'დარწმუნებული ხართ, რომ გსურთ (მოქმედება)?'
 'Active Logins': 'აქტიური ავტორიზაციები'
-' - filtering from _MAX_ records': 'ფილტრაცია  _MAX_ ჩანაწერებიდან'
+' - filtering from _MAX_ records': null
 'User renamed.': 'მომხმარებელის სახელი შეცვლილია. '
 'User attributes': 'მომხმარებლის ატრიბუტები'
 'Rename user $1': '$1 მომხმარებლის სახელის შეცვლა'
@@ -51,9 +51,9 @@ None: არცერთი
 'Edit user $1': ' $1 მომხმარებლის რედაქტირება'
 'Edit subscriptions': 'გამოწერების რედაქტირება'
 'Edit profile': 'პროფილის რედაქტირება'
-'Edit permissions': 'დაშვებების რედაქტირება'
+'Edit permissions': 'ნებართვების რედაქტიერბა'
 'Create new account': 'ახალი ანგარიშის შექმნა'
-'Comment ban settings': 'დაბანვის პარამეტრებზე კომენტარის გაკეთება'
+'Comment ban settings': 'კომენტარის ბანის პარამეტრები'
 'Ban for user $1 saved.': 'ბანი $1 მომხმარებელზე დამახსოვრებულია.'
 'User account is active': 'მომხმარებლის ანგარიში აქტიურია'
 'Allow users profile to be publicly displayed': 'მომხმარებლის პროფილის საჯაროდ ჩვენება'
@@ -64,7 +64,7 @@ Username: 'მომხმარებლის სახელი'
 'First Name': სახელი
 Email: ელფოსტა
 'You were logged out.': 'თქვენ გამოხვედით სისტემიდან.'
-'Newscoop Subhead': 'Newscoop-ის ქვეთავი'
+'Newscoop Subhead': 'ნიუსქუფის ქვესათაური'
 Filters: ფილტრები
 'Add new Author': 'ახალი ავტორის დამატება'
 'Loading Data': 'მონაცემები იტვირთება'
@@ -101,7 +101,7 @@ Filters: ფილტრები
 'User may attach topics to articles': 'მომხმარებელს შეუძლია სტატიებზე თემების მიბმა'
 'User may attach images to articles': 'მომხმარებელს შეუძლია სტატიაზე სურათების მიბმა'
 'User may add special characters': 'მომხმარებელს შეუძლია გარდა ასოებისა სხვა სიმბოლოების დამატებაც'
-'That user name already exists, please choose a different login name.': 'ასეთი მომხმარებელი უკვე არსებობს.'
+'That user name already exists, please choose a different login name.': 'ასეთი მომხმარებელი უკვე არსებობს, შეიყვანეთ სხვა სახელი'
 'User may delete article attachments': 'მომხმარებელს შეუძლია სტატიაზე მიბმული მასალის წაშლა'
 'User may change article attachments': 'მომხმარებელს შეუძლია სტატიაზე მიბმული მასალის შეცვლა'
 'User may add article attachments': 'მომხმარებელს შეუძლია სტატიაზე მასალის მიბმა'
@@ -117,7 +117,7 @@ Filters: ფილტრები
 'User account $1 was deleted successfully.': 'მომხმარებელი $1 წაიშალა.'
 'The IP Group $1 has been created.': 'IP ჯგუფი $1 შეიქმნა'
 'There was an error creating the IP address group.': 'IP ჯგუფის შექმნისას დაფიქსირდა შეცდომა.'
-'The IP address group $1 has been deleted.': 'IP ჯგუფი $1 წაიშალა'
+'The IP address group $1 has been deleted.': '$1 IP მისამართების ჯგუფი წაიშალა'
 'User $1 information was changed successfully.': '$1 მომხმარებელის ინფორმაცია შეიცვალა'
 'User Type': 'მომხმარებლის ტიპი'
 'The IP address group $1:$2 conflicts with another existing group.': 'IP მისამართის ჯგუფი $1:$2 ემთხვევა უკვე არსებულ ჯგუფს.'
@@ -184,46 +184,39 @@ Miscellaneous: სხვადასხვა
 'User will be notified on several events': 'მომხმარებელი რამდენიმე მოვლენების დროს მიიღებს შეტყობინება'
 'Editor Miscellaneous Settings': 'რედაქტორის სხვადასხვა პარამეტრები'
 'No such user account.': 'ასეთი მომხმარებელი არ არსებობს.'
-Pending: მომდინარე
-Inactive: არააქტირუი
-'Do you really want to send confirmation email?': 'დარწმუნებული ხართ, რომ გსურთ დადასტურების ელფოსტის გაგზავნა?'
-'Do you really want to delete user?': 'ნამდვილად გსურთ მომხმარებლის წაშლა?'
-'Street address': 'ქუჩის მისამართი'
-'Second phone': 'მეორე ტელეფონი'
-'Postal code': 'საფოსტო ინდექსი'
-E-mail: იმეილი
-'Contact person': 'საკონტაქტო პირი'
-'Confirmation failed': 'არ დადასტურდა'
-'Change password': 'პაროლის შეცვლა'
-50-65: 50-65
-40-49: 40-49
-25-39: 25-39
-18-24: 18-24
-'New author $1 ($2) created.': 'ახალი ავტორი $1 ($2) შეიქმნა.'
-'Author information has been changed for $1 ($2)': 'ავტორის ინფორმაცია $1-სთვის ($2) შეიცვალა'
-'User account information changed for $1': '$1-სთვის მომხმარებლის ინფორმაცია შეიცვალა'
-'Permissions changed for user $1': '$1 მომხმარებლისთვის ნებართვები შეიცვალა.'
-'65 or over': '65-ის ან მეტი'
-Title: 
-Mr.: 
-Mrs.: 
-Ms.: 
-Dr.: 
-Male: მამრობითი
-Female: მდედრობითი
-'under 18': '18 წლამდე'
-Age: ასაკი
-'Confirm password': 'დაადასტურეთ პაროლი'
-City: ქალაქი
-State: რეგიონი
-Phone: ტელეფონი
-Fax: ფაქსი
-Employer: 'სამუშაო ადგილი'
-'Employer Type': 'სამუშაოს ტიპი'
-Corporate: კორპორაცია
-'Non-Governmental Organisation': 'არასამთავრობო ორგანიზაცია'
-'Government Agency': 'სამთავრობო ორგანიზაცია'
-Academic: 'აკადემიური ორგანიზაცია'
-Media: მედია
-Position: თანამდებობა
-'Show more user details': 'მომხმარებლის დეტალების ჩვენება'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'მომხმარებლების მართვა'
+    created: შექმნილია
+    updated: null
+    status:
+        status: სტატუსი
+        registered: null
+        pending: null
+        deleted: წაიშალა
+        active: აქტიური
+    table:
+        actions:
+            actions: მოქმედება
+            edit: რედაქტირება
+            resend_email: null
+            rename: null
+            remove: მოხსნა
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: დამუშავება...
+    chart:
+        title: 'აქტიური ავტორიზაციები'

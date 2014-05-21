@@ -1,5 +1,5 @@
 saved: Uloženo
-deleted: Vymazáno
+deleted: vymazané
 'Subscribed sections: $1': 'Předpalcené sekce: $1'
 'Start Date': 'Počáteční datum'
 'Select sections for subscribing': 'Vybrat sekce pro přeplacení '
@@ -9,9 +9,8 @@ deleted: Vymazáno
 'Edit section': 'Upravit sekci'
 'Edit all sections': 'Upravit všechny sekce'
 'Add new subscription section': 'Přidat nově přeplacenou sekci'
-'Add new section': 'Přidat novou sekci'
+'Add new section': 'Přidat novou rubriku'
 'Regardless of the language': 'Nehledě na jazyk'
 'Individual languages': 'Jednotlivé jazyky'
 'All languages': 'Všechny jazyky'
 'Paid Days': 'Zaplacené dny'
-Account: 

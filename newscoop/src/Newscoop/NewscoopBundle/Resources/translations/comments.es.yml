@@ -1,40 +1,40 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': 'Sin adjunto'
+at: en
+'With no attachment': 'Sin adjunto'
+'With image attachment': 'Con imagen adjunta'
+'With document attachment': 'Con documento adjunto'
+'Unable to reach Newscoop. Please check your internet connection.': 'No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.'
+Starred: Ponderado
+Star: Ponderación
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando de _START_ a _END_ el _TOTAL_ de entradas'
+'Reply to message': 'Responder a mensaje'
+Reply: Responder
+Processed: Procesado
+'No records found.': 'No se encontraron registros'
+'No entries to show': 'No se encontraron entradas'
+'Messages updated.': 'Mensajes actualizados'
+'Messages status change to $1.': 'El estatus del mensaje cambió a $1.'
+'Messages deleted.': 'Mensajes eliminados.'
+'Message updated.': 'Mensaje actualizado.'
+'Message status change to $1.': 'Estatus del mensaje cambió a $1.'
+'Message deleted.': 'Mensaje eliminado.'
+Message: Mensaje
+Last: Último
+'Full article': 'Artículo completo'
+First: Primero
+'Feedback Messages': 'Mensajes de retroalimentación'
+'Display _MENU_ records': 'Desplegar registros _MENU_'
+Deleted: Eliminado
+'Change selected messages status': 'Cambiar los mensajes de estatus seleccionados'
+Attachment: Adjunto
+Approved.: Aprobado
+Approve: Aprobar
+Anonymous: Anónimo
+' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'
 'You are about to permanently delete multiple messages.': 'Está a punto de eliminar múltiples mensajes de forma permanente.'
 'You are about to permanently delete a message.': 'Está a punto de eliminar un mensaje de forma permanente.'
 User: Usuario
-None: Ninguno
+None: Ninguno.
 'Coming from': Origen
 'Ban/Unban user': 'Bloquear/desbloquear usuario'
 Ip: Ip
@@ -73,13 +73,13 @@ Email: 'Correo electrónico'
 E-mail: 'Correo electrónico'
 'Delete all comments?': '¿Eliminar todos los comentarios?'
 'Date Created': 'Fecha de creación'
-'Comments updated.': 'Comentarios actualizados'
+'Comments updated.': 'Se actualizaron los comentarios.'
 'Comments status change to $1.': 'Estado de los comentarios cambió a $1'
 'Comments deleted.': 'Comentarios eliminados'
 'Commenter $1 saved.': 'Comentarista $1 guardado'
 'Commenter $1 deleted.': 'Comentarista $1 eliminado'
 Commenter: Comentarista
-'Comment updated.': 'Comentarista actualizado'
+'Comment updated.': 'Comentario actualizado'
 'Comment status change to $1.': 'Estado de comentario cambión a $1.'
 'Comment id': 'Identificación de comentario'
 'Comment deleted.': 'Comentario eliminado'

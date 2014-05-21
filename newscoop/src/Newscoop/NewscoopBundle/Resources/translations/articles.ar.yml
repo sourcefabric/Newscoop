@@ -1,3 +1,4 @@
+'Edit metadata': null
 Rating: تقييم
 'Enable Rating': 'تمكين التقييم'
 'Blog management': 'إدارة المدونة'
@@ -76,11 +77,11 @@ Created: 'تم الانشاء'
 'Content edited': 'تم تحرير المحتوى'
 'You must select an article language.': 'يجب عليك تحديد لغة المقالة.'
 'You must select a publication.': 'يجب عليك تحديد منشور.'
-'You must select a file to upload.': 'يجب عليك تحديد ملف للرفع.'
+'You must select a file to upload.': 'عليك إختار ملف للرفع.'
 'You must select a XML input file.': 'يجب عليك تحديد ملف XML للإدخال.'
 'You do not have the right to import XML archives.': 'ليس لديك الحق في استيراد أرشيفات XML.'
-'There was a problem uploading the file.': 'حدثت مشكلة في رفع الملف.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'كان جزئيا فقط رفع الملف الذي تم رفعه. وهذا أمر شائع عند الحد الأقصى للوقت لتحميل ملف منخفض على النقيض من حجم الملف الذي تحاول إدخاله. يتم تحديد أقصى وقت لإدخال في ملف php.ini'
+'There was a problem uploading the file.': 'حدثت مشكلة أثناء رفع الملف.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'كان جزئيا فقط تحميل الملف الذي تم تحميله. وهذا أمر شائع عند الحد الأقصى للوقت برفع ملف منخفض على النقيض من حجم الملف الذي تحاول الإدخال. يتم تحديد أقصى وقت لإدخال في ملف php.ini'
 'The file exceeds the allowed max file size.': 'يتجاوز الملف الحد الأقصى المسموح لحجم الملف.'
 Optional: اختياري
 'Input File': 'ملف الإدخال'
@@ -164,8 +165,8 @@ Comments: تعليقات
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'يجب إنشاء إصدار للغة المختارة. الرجاء إدخال اسم الإصدار وعنوان الرابط.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'يجب إنشاء قسم للغة المختارة. الرجاء إدخال اسم القسم وعنوان الرابط.'
 'Article Type': 'نوع المقالة'
-'Show article on front page': 'إظهار المقالة في الصفحة الرئيسية'
-'Show article on section page': 'إظهار المقالة في صفحة الأقسام'
+'Show article on front page': 'عرض المقالة في الصفحة الأمامية'
+'Show article on section page': 'عرض المقالة في صفحة الأقسام'
 'Translate article': 'ترجمة المقالة'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'ليس لديك الحق في تغيير هذه المقالة.يسمح لك تعديل فقط المقالات الخاصة بك وعند التسليم يمكن تغير المقالات فقط من مستخدمين مفوضين.'
 'Duplicate article': 'مقالة مكررة'
@@ -182,4 +183,4 @@ Comments: تعليقات
 'This article cannot be previewed. Please make sure it has the article template selected.': 'لا يمكن معاينة هذه المقالة. الرجاء التأكد أن قالب المقالة مختار.'
 'No such article.': 'لا يوجد مثل هذه المقالة.'
 'No such section.': 'لا يوجد القسم.'
-'Are you sure you want to delete this scheduled action?': 'هل أنت متأكد أنك تريد أن تحذف هذا الإجراء المجدول؟'
+Characters: null

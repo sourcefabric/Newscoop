@@ -50,7 +50,7 @@ Folder: Folder
 'Directory $1 was deleted': 'Directory $1 was deleted'
 'Directory $1 created.': 'Directory $1 created.'
 'You must select a file to upload.': 'You must select a file to upload.'
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
+'You can only replace a file with a file of the same type.  The original file is of type $1': 'You can only replace a file with a file of the same type.  The original file is of type $1'
 'Unable to save the file $1 to the path $2.': 'Unable to save the file $1 to the path $2.'
 Replace: Replace
 'File $1 replaced.': 'File $1 replaced.'

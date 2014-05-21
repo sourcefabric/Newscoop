@@ -1,10 +1,10 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Ocultar nombres de campo legibles'
-'Edit and translate human-readable field names': 'Editar y traducir nombres de campo legibles'
+list: lista
+filter: filtro
+'In Lists?': '¿En listas?'
+'Are you sure you want to $1 articles of article type $2?': '¿Está seguro de querer $1 los artículos del tipo $2?'
+'$1 articles of article type $2': '$1 artículos del tipo $2'
+'Hide human-readable field names': 'Ocultar nombres de campo legibles.'
+'Edit and translate human-readable field names': 'Editar y traducir nombres de campo legibles.'
 'The template name may only contain letters and the underscore (_) character.': 'El nombre de la plantilla solo puede contener letras y el caracter de guión bajo (_).'
 'Rename article type $1': 'Renombrar artículo tipo $1'
 'Invalid article type $1.': 'El tipo de artículo $1 es inválido.'
@@ -29,7 +29,7 @@ NOTHING: NADA
 'Cycle through your articles to verify that the merge configuration is correct.': 'Circule entre sus artículos para verificar que la configuración de la combinación es correcta.'
 'Clicking Merge will merge ($1) article(s).': 'Si hace click en combinar se combinará el o los artículo(s) ($1).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'No es posible combinar un campo $1 ($2) en un campo $3 ($4).'
---None--: --Ninguno--
+'--None--': '--Ninguno--'
 '(Null merge warning.)': '(Advertencia de combinación nula.)'
 '(No merge warning.)': '(Sin advertencia de combinación.)'
 '(Duplicate warning.)': '(Duplicar advertencia.)'
@@ -56,7 +56,7 @@ Merge!: ¡Combinar!
 'Link to public page': 'Vincular a página pública'
 'Go to Step 3': 'Ir a Paso 3'
 'Go to Step 2': 'Ir a Paso 2'
-'Display Name': 'Desplegar nombre'
+'Display Name': 'Nombre a mostrar'
 'Delete article type $1.': 'Eliminar tipo de artículo $1'
 'Comments enabled?': '¿Permitir comentarios?'
 'Back to Step 2': 'De vuelta al paso 2'
@@ -68,12 +68,12 @@ Merge!: ¡Combinar!
 'Add translation:': 'Agregar traducción:'
 '$1 comments for article type $2': '$1 comentario(s) para el tipo de artículo $2'
 '$1 comments for article type $1': '$1 comentario(s) para el tipo de artículo $1'
-'$1 article type $2': '$1 tipo de artículo $2'
+'$1 article type $2': '$1 el tipo de artículo $2'
 'No article types.': 'Sin tipo de artículo'
 'Delete article type $1': 'Borrar tipo de artículo $1'
 'You do not have the right to add article types.': 'No tiene derecho a agregar tipos de artículo.'
-'Adding new article type': 'Agregando nuevo tipo de artículo'
-'The $1 field may only contain letters and underscore (_) character.': 'El campo $1 sólo puede contener letras.'
+'Adding new article type': 'Añadir nuevo tipo de artículo'
+'The $1 field may only contain letters and underscore (_) character.': 'El campo $1 solo puede contener letras y el caracter de guión mayor (_).'
 'The article type $1 already exists.': 'El tipo de artículo $1 ya existe'
-'You do not have the right to delete article types.': 'No tiene privilegios para borrar tipos de artículo.'
+'You do not have the right to delete article types.': 'No tiene autorización para eliminar tipos de artículo.'
 'The article type $1 could not be deleted.': 'El tipo de artículo $1 no pudo ser eliminado'

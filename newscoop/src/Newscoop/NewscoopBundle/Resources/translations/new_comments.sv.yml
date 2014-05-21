@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Kommentarer
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: Gömd
+        approved: Godkänd
+        new: Ny
+        editarticle: null
+        section: Sektion
+        comment: Kommentar
+        replyto: null
+        subject: Ämne
+        ban: null
+        author: Författare
+        date: null
+        article: Artikel
+        search: Sök
+        show: Visa
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: Handlingar
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Avbryt
+        submit: Skicka
+        unrecommend: null
+        recommend: null
+        delete: Radera
+        reply: null
+        edit: null
+        close: Stäng
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

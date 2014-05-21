@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: სახელი
+newscoop.plugins_manager.installed_table.description: აღწერა
+newscoop.plugins_manager.installed_table.enabled: ჩართულია
+newscoop.plugins_manager.installed_table.version: ვერსია
+newscoop.plugins_manager.installed_table.license: ლიცენზია
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: მოქმედება
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: მოხსნა
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: ატვირთვა
+newscoop:
+    datatable:
+        table:
+            info: null
+            noentries: 'საჩვენებელი ჩანაწერები არ არის.'
+            filtering: null
+            menu: null
+        label:
+            search: ძიება
+            filter: ფილტრი
+            processing: დამუშავება...
+            last: ბოლო
+            next: შემდეგი
+            first: პირველი
+            previous: წინა
+            norecords: 'ჩანაწერები ნაპოვნი არ არის.'

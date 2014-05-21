@@ -1,12 +1,12 @@
-Loading...: 
-'Latest 20 articles by popularity': 
-'Articles diagrams': 
+Loading...: 'Nahrává se...'
+'Latest 20 articles by popularity': '20 nejnovějších článku dle popularity'
+'Articles diagrams': null
 'Sourcefabric.org blog reader': 'Sourcefabric.org blog reader'
 'Sourcefabric.org News reader': 'Sourcefabric.org News reader'
 'Feed reader': 'Feed reader'
 Go: Jít
 'Wikipedia Search': 'Hledat ve Wikipedii'
-Files: Složky
+Files: Soubory
 'Sourcefabric.org newsletter subscription': 'Předplatné informačních bulletinů na Sourcefabric.org'
 'Maps search': 'Hledat v mapách'
 'Default location': 'Výchozí lokalita'
@@ -15,7 +15,7 @@ Title: Název
 'Sourcefabric.org dev feed reader': 'Dev čtečky Sourcefabric.org'
 'Recently Published Articles': 'Nedávno publikované články'
 'Recently Modified Articles': 'Nedávno změněné články'
-'Pending Articles': 'Nedokončené články'
+'Pending Articles': 'Dosud nevyřízené články'
 'Paste google generated code': 'Vložit kód vygenerovaný googlem'
 'Most Popular Articles': 'Nejoblíbenější články'
 'Media files': 'Soubory médií'

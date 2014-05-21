@@ -1,26 +1,26 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 
-'Delete anyway': 
-'Reset order': 
-'Order changes will be lost. Are you sure you want to continue?': 
-'Topics order saved.': 
-'Show languages': 
-'Save order': 
-'Click to edit': 
-'Add root topic': 
-'Topic was deleted.': 
-'The topic name is already in use by another topic.': 'نا وی ئه و ته وه ر پێشتر به کا ر ها توه'
-'You must enter a name for the topic.': 'تۆ ئه بێ نا وی بۆ ئه و ته وه ره د ا بنێیت'
-'You must choose a language for the topic.': 'تۆ ئه بێ زما نێ بۆ ئه و ته وه ره هه ڵبژێ ریت'
-'This topic has subtopics, therefore it cannot be deleted.': 'ئه م ته وه ره ژێر ته وه ری هه یه که وا ته نا توانرێت بی سڕیته وه'
-'Add translation:': 'وه ر گێڕا نی پێ زیا د بکه'
-'Add subtopic:': 'ژێر ته وه ر زیا د بکه  : خ'
-Top: 'سه ر'
-'You do not have the right to add topics.': 'ما فی زیاد کردنی ته وه رت نی یه'
-'You do not have the right to delete topics.': 'ما فی سڕینه وه ی ته وه رت نی یه'
-'Are you sure you want to delete the topic $1?': 'دڵنیا یت له سڕینه وه ی ته وه ری $1؟خ'
-'You do not have the right to change topic name.': 'ما فی گؤڕینی نا وی ته وه رت نی یه'
-'The topic $1 could not be deleted.': 'ته وه ری  $1 ناتوان رێت بسڕ د ێته وه'
-'Adding new topic': 'ته وه ری نوێ زیا د کردن'
-'Deleting topic': 'سڕ ینه وه ی ته وه ر'
-'Change topic name': 'نا وی ته وه ره که بگۆڕه'
-'There are $1 articles using the topic.': 'ئه وه نده $1 با به ت  ته وه ر به کا ر ئه هێنن'
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
+'Delete anyway': null
+'Reset order': null
+'Order changes will be lost. Are you sure you want to continue?': null
+'Topics order saved.': null
+'Show languages': null
+'Save order': null
+'Click to edit': null
+'Add root topic': null
+'Topic was deleted.': null
+'The topic name is already in use by another topic.': null
+'You must enter a name for the topic.': null
+'You must choose a language for the topic.': null
+'This topic has subtopics, therefore it cannot be deleted.': null
+'Add translation:': null
+'Add subtopic:': null
+Top: null
+'You do not have the right to add topics.': null
+'You do not have the right to delete topics.': null
+'Are you sure you want to delete the topic $1?': null
+'You do not have the right to change topic name.': null
+'The topic $1 could not be deleted.': null
+'Adding new topic': null
+'Deleting topic': null
+'Change topic name': null
+'There are $1 articles using the topic.': null

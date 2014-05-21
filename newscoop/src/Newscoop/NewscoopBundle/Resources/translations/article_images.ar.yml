@@ -1,4 +1,6 @@
-'Display newsfeed images': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'آسف أن تلك الصورة صغيرة جدا ومن اللازم أنها تكون على الأقل %dx%d‫.‬'
 'Slideshow rendition': 'تقديم عرض الشرائح'
 'Renditions reloaded': 'تم إعادة تحميل التقديمات'
@@ -67,8 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'التاريخ <br> <SMALL> (السنة، 
 'You must select an image file to upload.': 'يجب اختيار ملف صورة للرفع'
 'Change image information': 'تغيير معلومات الصورة'
 'You do not have the right to add images': 'ليس لديك الحق في إضافة صور.'
-'Delete image $1': 'إزالة الصورة $1'
-'Click one of the ': 'اضغط على الرابط اضافة صورة من اعلى لاضافة صورة'
-'Are you sure you want to delete the image $1?': 'هل انت متأكد أنك تريد حذف الصورة /1$/ ؟'
-'The image $1 has been added.': 'تم إضافة الصورة $1'
-'Unlink image $1': 'إفصل الصورة 1$'
+'Filter by uploader...': null

@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: תגובות
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: נסתר
+        approved: מאושר
+        new: חדש
+        editarticle: null
+        section: מדור
+        comment: תגובה
+        replyto: null
+        subject: נושא
+        ban: null
+        author: כתב
+        date: null
+        article: כתבה
+        search: חפש
+        show: הראה
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: פעילויות
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: בטל
+        submit: נמסר
+        unrecommend: null
+        recommend: null
+        delete: מחק
+        reply: null
+        edit: null
+        close: סגור
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

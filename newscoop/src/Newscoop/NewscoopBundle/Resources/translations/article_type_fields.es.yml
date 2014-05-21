@@ -20,7 +20,7 @@ Custom: Opcional
 'The property $1 is already in use.': 'La propiedad $1 ya estaba en uso.'
 Precision: Precisión.
 'Can not convert the field $1 from $2 to type $3.': 'No se pudo convertir el campo $1 de $2 al tipo $3.'
-'Are you sure you want to make $1 a $2 field?': '¿Seguro que desea convertir el campo $1 al $2?'
+'Are you sure you want to make $1 a $2 field?': '¿Está seguro de que desea convertir el campo $1 al $2?'
 'Is Content': 'Es contenido'
 'Back to Article Types List': 'Regresar a lista de tipos de artículo'
 show: mostrar
@@ -53,5 +53,5 @@ Show/Hide: Mostrar/ocultar
 'The $1  must not be void and may only contain letters and underscore (_) character.': 'El $1 no debe estar vacio y solo puede contener letras y el caracter de guión mayor (_).'
 'Invalid field type.': 'Tipo de campo inválido'
 'You do not have the right to delete article type fields.': 'No tiene privilegios para eliminar campos de tipo articulo'
-'Are you sure you want to delete the field $1?': '¿Esta seguro que desea borrar el campo $1?'
+'Are you sure you want to delete the field $1?': '¿Está seguro de que desea borrar el campo $1?'
 'You will also delete all fields with this name from all articles of this type from all publications.': 'También borrará todos los campos con este nombre de todos los artículos de este tipo de todas las publicaciones'

@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': 'Tento typ článku nenalezen'
+'Multi-line Text': 'Několikařádkový text'
+'Filter saved': 'Filtr uložen'
+'Filter not saved': 'Filtr neuložen'
 'Not a color': 'To není barva'
 'No such field': 'Žádné takové pole'
 'Color saved': 'Barva uložena'
@@ -61,3 +61,44 @@ First: První
 'Multi-line Text with WYSIWYG': 'Více řádkový text WYSIWYG'
 'URL $1 is invalid or is not an image.': 'URL $1 není platné, nebo se nejedná o obrázek.'
 'URL $1 is not an image.': 'URL $1 není obrázek'
+client:
+    added: 'Klient byl přidán'
+    notfound: 'Klient nenalezen'
+    removed: 'Klient byl odstraněn'
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: Klienti
+        resources:
+            info: null
+            add_button: 'Přidat klienta'
+        clients:
+            table:
+                name: 'Jméno klienta'
+                id: 'ID klienta'
+                secret: null
+                redirect: null
+                publication: Publikace
+                actions: Činnosti
+                actions_buttons:
+                    remove: Odstranit
+            actions:
+                remove:
+                    confirm: 'Určitě chcete odstranit tohoto klienta?'
+        menu: API
+    form:
+        client:
+            label:
+                name: 'Vyber jméno pro svého klienta:'
+                publication: 'Vyber publikaci pro svého klienta:'
+                redirectUris: null
+                save: Uložit
+        PublicResources:
+            label:
+                routes: null
+                save: Uložit

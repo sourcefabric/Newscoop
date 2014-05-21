@@ -1,6 +1,6 @@
-'Edit metadata': 
-Rating: 
-'Enable Rating': 
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
 'Blog management': 'Керування блогами'
 'View article': 'Перегляд статті'
 'Select a list': 'Вибрати список'
@@ -58,7 +58,7 @@ Files: Файли
 'Keywords saved.': 'Ключові слова збережені.'
 'Comment settings': 'Налаштування коментування'
 Authors: Автори
-'Attach Topic To Article': 'Додати тему до статті'
+'Attach Topic To Article': 'Прікріпити тему до статті.'
 'Article saved.': 'Вміст статті збережено.'
 'Article is locked': 'Стаття заблокована'
 'Actions updated.': 'Дія оновлена'
@@ -80,9 +80,9 @@ Created: Створена
 'You must select a file to upload.': 'Ви маєте вибрати файл для завантаження.'
 'You must select a XML input file.': 'Ви маєте вибрати вхідний XML-файл'
 'You do not have the right to import XML archives.': 'У Вас немає прав імпортувати XML-аріхви'
-'There was a problem uploading the file.': 'Виникла помилка під час завантаження файлу'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Файл був завантажений частково. Це трапляється, коли встановлений час  для завантаження файлу нижче, ніж час потрібний на завантаження подібного файлу. Час встановлено у рнр.іні'
-'The file exceeds the allowed max file size.': 'Розмір файлу перевищує максимально дозволений розмір файлів'
+'There was a problem uploading the file.': 'Проблема завантаження файла.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Завантажений файл збережен на сервері частково. Це пов’язано з тим, що максимально дозволений час для завантаження файлу перевищує час, необхідний для завантаження цього файлу. Максимальний час завантаження визначений у файлі php.ini'
+'The file exceeds the allowed max file size.': 'Розмір цього файлу перевищує допустимий.'
 Optional: Необов’язкове
 'Input File': 'Вхідний файл'
 'Import XML': 'Імпорт XML'
@@ -99,7 +99,7 @@ Saved: Збережено
 'Save All': 'Зберегти все'
 'Online Server: On': 'Сервер онлайн: увімкнений'
 'Online Server: Off': 'Сервер онлайн: вимкнений'
-Download: Завантаження
+Download: Завантажити
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Ви не можете мати дві статті у одній рубриці з однаковою назвою. Вказана назва вже використовується статею  $1.'
 'Visible to non-subscribers': 'Видно не тільки підписчикам'
 'The article could not be published.': 'Стаття не може бути опублікована.'
@@ -165,8 +165,8 @@ Comments: Коментарі
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Випуск має бути створено для вибраної мови. Введіть назву випуску та назву посилання'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Рубрика має бути створена для вибраної мови. Введіть назву рубрики та назву посилання'
 'Article Type': 'Тип статті'
-'Show article on front page': 'Показати статтю тільки на титульній сторінці'
-'Show article on section page': 'Показати статтю на сторінці рубрики'
+'Show article on front page': 'Показати статтю на головній'
+'Show article on section page': 'Показати статтю у цьому розділі'
 'Translate article': 'Перекласти статтю'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Ви не маєте права змінювати цю статтю. Ви можете редагувати тільки власні статті та будучи відправленой, стаття може бути змінена тільки уповноваженим користувачем'
 'Duplicate article': 'Дублювати статтю'
@@ -183,10 +183,4 @@ Comments: Коментарі
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Попередній перегляд неможливий. Переконайтесь, що вибран шаблон статті.'
 'No such article.': 'Немає такої статті.'
 'No such section.': 'Немає такої рубрики:ua'
-Reorder: 
-'No such issue.': 'Немає такого випуску'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва <BR><SMALL>(редагувати)</SMALL>'
-'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.': 
-'Back to article details': 
-'Article automatic publishing schedule': 
-'Are you sure you want to delete this scheduled action?': 
+Characters: null

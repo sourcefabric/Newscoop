@@ -1,17 +1,57 @@
-'Usage at automatic statistics': 
-'Event Color': 
-'You must input a number greater than $1 and less than $2 into the $3 field.': 
-'You do not have the right to translate article types.': 
-'You do not have the right to reorder article types.': 
-'You do not have the right to reassign article type fields.': 
-'You do not have the right to manage article types.': 
-'You do not have the right to hide article types.': 
-'You do not have the right to delete article types.': 
-'Small ($1 pixels)': 
-'Medium ($1 pixels)': 
-'Large ($1 pixels)': 
-'Hide human-readable field names': 
-'Editor size': 
-'Edit and translate human-readable field names': 
-Custom: 
-'Characters limit': 
+'Usage at automatic statistics': null
+'Event Color': null
+'You must input a number greater than $1 and less than $2 into the $3 field.': null
+'You do not have the right to translate article types.': null
+'You do not have the right to reorder article types.': null
+'You do not have the right to reassign article type fields.': null
+'You do not have the right to manage article types.': null
+'You do not have the right to hide article types.': null
+'You do not have the right to delete article types.': null
+'Small ($1 pixels)': null
+'Medium ($1 pixels)': null
+'Large ($1 pixels)': null
+'Hide human-readable field names': null
+'Editor size': null
+'Edit and translate human-readable field names': null
+Custom: null
+'Characters limit': null
+'The template name may only contain letters and the underscore (_) character.': null
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
+'The property $1 is already in use.': null
+Precision: null
+'Can not convert the field $1 from $2 to type $3.': null
+'Are you sure you want to make $1 a $2 field?': null
+'Is Content': null
+'Back to Article Types List': null
+show: null
+hide: null
+'You must enter a name for the field.': null
+'You must choose a language for the field.': null
+'You do not have the right to rename article type fields.': null
+'You do not have the right to reassign a field type.': null
+'Translating field': null
+'The translation could not be added.': null
+'The field $1 does not exist.': null
+'The $1 field may only contain letters and underscore (_) character.': null
+'Template Field Name': null
+Show/Hide: null
+'Renaming article type field': null
+'Rename field': null
+'Reassign a field type': null
+'Display Name': null
+'Are you sure you want to $1 the article type field $2?': null
+'Adding new article type': null
+'Add translation:': null
+'$1 article type field $2': null
+'$1 article type $2': null
+'Top element': null
+'Article type fields': null
+'Delete field $1': null
+'Adding new field': null
+'You do not have the right to add article type fields.': null
+'The field $1 already exists.': null
+'The $1  must not be void and may only contain letters and underscore (_) character.': null
+'Invalid field type.': null
+'You do not have the right to delete article type fields.': null
+'Are you sure you want to delete the field $1?': null
+'You will also delete all fields with this name from all articles of this type from all publications.': null

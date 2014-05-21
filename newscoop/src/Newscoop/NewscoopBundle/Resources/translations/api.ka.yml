@@ -38,7 +38,7 @@ Title: სათაური
 'Article URL': 'სტატიის URL'
 'Article Number': 'სტატიის ნომერი'
 'Access denied.': 'წვდომა აკრძალულია'
-'Publish with issue': 'პუბლიკაცია გამოცემასთან ერთად'
+'Publish with issue': 'გამოქვეყნება გამოცემასთან ერთად'
 unknown: უცნობი
 Switch: გადართვა
 Numeric: რიცხვითი
@@ -61,56 +61,44 @@ First: პირველი
 'Multi-line Text with WYSIWYG': 'მრავალ-ხაზიანი ტექსტი WYSIWYG-ით'
 'URL $1 is invalid or is not an image.': '$1 URL არასწორია, ან არ არის სურათი'
 'URL $1 is not an image.': '$1 URL არ არის სურათი'
-'Author type $1 linked to author $2': 'ავტორ $2-ზე მიბმული $1 ტიპის ავტორი'
-'Author type $1 created.': 'ავტორის ტიპი $1 შეიქმნა.'
-'Author $1 $2 deleted.': 'ავტორის ტიპი $2 წაიშალა.'
-'Article type $1 deleted.': 'ავტორის ტიპი $1 წაიშალა.'
-'User type $1 deleted': 'მომხმარებლის ტიპი $1 წაშლილია'
-'User type $1 added': 'მომხმარებლის ტიპი $1 დამატებულია'
-'User permissions for $1 ($2) changed': '$1 ($2) მომხმარებლისთვის ნებართვა შეიცვალა'
-'User account $1 ($2) created': 'მოხმარებელი $1 ($2) შეიქმნა'
-'Topic $1: ($2 -> $3) updated': 'თემა $1: (2 -> $3) განახლდა'
-'Topic $1 added to article $2': 'თემა $1 დაემატა სტატია $2-ს'
-'Topic $1 ($2) deleted': 'თემა $1 ($2) წაიშალა'
-'Topic $1 ($2) added': 'თემა $1 ($2) დაემატა'
-'The user account $1 ($2) has been deleted.': 'მომხმარებელი $1 ($2) წაიშალა'
-'The image $1 ($2) has been added.': 'სურათი $1 ($2) დაემატა'
-'The default subscription time for ($1 $2:$3) has been added.': '($1 $2:$3)-სთვის საწყისი გამოწერის დრო დაემატა'
-'The article type field $1 has been renamed to $2.': 'სტატიის ტიპის ველს $1 დაერქვა $2.'
-'The article type $1 has been renamed to $2.': '$1 ტიპის სტატიის სახელი გახდა $2.'
-'The article type $1 has been deleted.': 'სტატიის ტიპი $1 წაიშალა.'
-'The article type $1 has been added.': 'სტატიის ტიპი $1 დაემატა.'
-'Section $1 ($2) deleted. (Publication: $3, Issue: $4)': 'სექცია $1 ($2) წაიშალა. (პუბლიკაცია: $3, გამოცემა: $4)'
-'Section $1 ($2) added. (Publication: $3, Issue: $4)': 'სექცია $1 ($2) დაემატა. (პუბლიკაცია: $3, გამოცემა: $4)'
-'Scheduled action deleted from Article $1': 'დაგეგმილი მოქმედება წაიშალა $1 სტატიიდან'
-'Publication $1 ($2) deleted': 'პუბლიკაცია $1 ($2) წაიშალა'
-'Publication $1 ($2) changed': 'პუბლიკაცია $1 ($2) შეიცვალა'
-'Publication $1 ($2) added': 'პუბლიკაცია $1 ($2) დაემატა'
-'Password changed for user $1 ($2)': '$1 ($2) მომხმარებლის პაროლი შეიცვალა'
-'Language $1 ($2) modified': 'ენა $1 ($2) მოდიფიცირდა'
-'Language $1 ($2) deleted': 'ენა $1 ($2) წაიშალა'
-'Language $1 ($2) added': 'ენა $1 ($2) დაემატა'
-'Issue $1 ($2) from publication $3 deleted': 'გამოცემა $1 ($2) $3 პუბლიკაციიდან წაიშალა'
-'Issue $1 ($2) added in publication $3': 'გამოცემა $1 ($2) დაემატა $3 პუბლიკაციას'
-'Image $1 unlinked from article $2': 'გამოცემა $1 ($2) დაემატა $3 პუბლიკაციას'
-'Image $1 ($2) deleted': 'სურათი $1 ($2) წაიშალა'
-'File $1 $2 deleted.': 'ფაილი $1 ($2) წაიშალა.'
-'Field $1 updated': '$1 ველი განახლდა'
-'Country $1 ($2) deleted': '$1 ($2) ქვეყანა წაიშალა'
-'Changed properties for image $1 ($2)': '$1 ($2) სურათის პარამეტრები შეიცვალა'
-'Article type field $1 deleted': '$1 სტატიის ტიპის ველი წაიშალა'
-'Article type field $1 created': '$1 სტატიის ტიპის ველი შეიქმნა'
-'Article type field $1 changed': '$1 სტატიის ტიპის ველი შეიცვალა'
-'Article type $1 translation updated': '$1 სტატიის ტიპის თარგმანი განახლდა'
-'Article topic $1 deleted from article $2': '$1 სტატიის სათაური წაიშალა $2 სტატიიდან'
-'Template $1 was moved to $2': '$1 შაბლონი გადავიდა $2-ში'
-'Template $1 was deleted': '$1 შაბლონი წაიშალა'
-'Template $1 no longer exists!': '$1 შაბლონი არ არსებობს!'
-'The IP address group $1 has been deleted.': '$1 IP მისამართების ჯგუფი წაიშალა'
-'IP Group $1 added for user $2': '$1 IP ჯგუფი დაემატა $2 მომხმარებელს'
-'Issue $1 changed status to $2': '$1 გამოცემამ შეიცვალა სტატუსი $2-ზე'
-'Image $1 linked to article $2': '$1 სურათი მიება $2 სტატიას'
-'The image $1 has been added.': '$1 სურათი დაემატა'
-'Country $1 added': '$1 ქვეყანა დაემატა'
-'Country name $1 changed': '$1 ქვეყნის სახელი შეიცვალა'
-'Template $1 uploaded': '$1 შაბლონი აიტვირთა'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                redirect: null
+                publication: პუბლიკაცია
+                actions: მოქმედება
+                actions_buttons:
+                    remove: მოხსნა
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                save: შენახვა
+        PublicResources:
+            label:
+                routes: null
+                save: შენახვა

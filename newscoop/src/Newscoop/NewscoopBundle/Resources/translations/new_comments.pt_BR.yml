@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Comentários
+        banned: null
+        anonymous: null
+        at: no
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Artigo inteiro'
+        hidden: Oculto
+        approved: Aprovado
+        new: Novo
+        editarticle: 'Ir para edição do artigo'
+        section: Seção
+        comment: Comentário
+        replyto: 'Responder ao comentário'
+        subject: Assunto
+        ban: null
+        author: Autor
+        date: null
+        article: Artigo
+        search: Procurar
+        show: Mostrar
+        recommended: Recomendado
+        unrecommended: 'Não recomendado'
+        editcomment: null
+        actions: Ações
+        selectstatus: 'Selecionar status'
+        deleted: Removido
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Cancelar
+        submit: 'Submeter à Apreciação'
+        unrecommend: 'Não recomendo'
+        recommend: Recomendo
+        delete: Apagar
+        reply: Responder
+        edit: 'Edição rápida'
+        close: Fechar
+        okay: null
+        filter: Filtro
+    msg:
+        deleted: 'Comentário removido.'
+        commentinarticle: 'Comentário $4 feito por $1 no artigo $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Não foi possivel fazer conexão com Newscoop. Por favor verifique a sua conexão com internet.'
+            deletefromarticle: '$1 apagou o comentário do artigo $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Você vai apagar o comentário para sempre.'
+        suremultiple: null
+        first: null
+        surequestion: 'Tem certeza que quer fazer isso?'
+        updated: 'Comentário atualizado.'

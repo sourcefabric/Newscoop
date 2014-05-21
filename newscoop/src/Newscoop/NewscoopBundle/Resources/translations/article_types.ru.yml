@@ -1,10 +1,10 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Скрыть названия полей удобных для восприятия человеком'
-'Edit and translate human-readable field names': 'Редактировать и перевести названия полей удобных для восприятия человеком'
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': 'Скрыть названия полей удобные для восприятия человеком'
+'Edit and translate human-readable field names': 'Редактировать и перевести названия полей удобные для восприятия человеком'
 'The template name may only contain letters and the underscore (_) character.': 'Имя шаблона может содержать только буквы и знак подчеркивания (_).'
 'Rename article type $1': 'Переименовать тип статьи $1'
 'Invalid article type $1.': 'Неправильный тип статьи $1.'
@@ -29,14 +29,14 @@ NOTHING: НИЧЕГО
 'Cycle through your articles to verify that the merge configuration is correct.': 'Прокрутить Вашу статью для проверки, что конфигурация объединения верна.'
 'Clicking Merge will merge ($1) article(s).': 'Щелчок по Объединить объединит $1 статей.'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Невозможно слить поле $1 ($2) в поле $3 ($4).'
---None--: '-- Ничего --'
+'--None--': '-- Ничего --'
 '(Null merge warning.)': '(Нет предупреждений об объединении.)'
 '(No merge warning.)': '(Нет предупреждений об объединении.)'
 '(Duplicate warning.)': '(Дублировать предупреждение.)'
 '(!) Do NOT merge $1': '(!) Не объединяйте $1'
 '$1 of $2': ' $1 из $2'
-show: показать
-hide: скрыть
+show: Показать
+hide: Спрятать
 deactivate: деактивировать
 activate: активировать
 'You must enter a name for the type.': 'Вы должны ввести название типа.'
@@ -46,7 +46,7 @@ activate: активировать
 'The translation could not be added.': 'Перевод не может быть добавлен.'
 'The article type $1 does not exist.': 'Тип статьи $1 не существует.'
 'Template Type Name': 'Название типа шаблона'
-Show/Hide: Показать/скрыть
+Show/Hide: Показать/Спрятать
 'Show article on section page': 'Показать статью на странице рубрики'
 'Show article on front page': 'Показать статью на титульной странице'
 'Publish date': 'Дата публикации'
@@ -68,12 +68,12 @@ Merge!: Объединить!
 'Add translation:': 'Добавить перевод:'
 '$1 comments for article type $2': 'Комментариев для статей типа $2: $1'
 '$1 comments for article type $1': 'Комментариев для статей типа $1: $1'
-'$1 article type $2': 'Cтатей типа $2: $1'
+'$1 article type $2': '$1 тип статей $2'
 'No article types.': 'Нет типов статей.'
 'Delete article type $1': 'Удалить тип статьи $1'
 'You do not have the right to add article types.': 'Вы не имеете права удаления типов статей.'
-'Adding new article type': 'Добавление нового типа статей'
-'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 может содержать только буквы и знак подчеркивания.'
+'Adding new article type': 'Добавление нового типа статьи'
+'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 может содержать только буквы и символ подчеркивания (_).'
 'The article type $1 already exists.': 'Тип статьи $1 уже существует.'
-'You do not have the right to delete article types.': 'Вы не имеете прав доступа для удаления типов статей.'
+'You do not have the right to delete article types.': 'У вас нет прав удалять типы статей.'
 'The article type $1 could not be deleted.': 'Невозможно удалить тип статей $1.'

@@ -1,4 +1,4 @@
-'Display newsfeed images': 
+'Display newsfeed images': null
 'Mark image': 'Адзначыць выяву'
 'Add selected images to slideshow': 'Дадаць выбраныя выявы ў слайд-шоў'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'На жаль, гэта выява занадта малая. Памер малюнкаў павінен быць па меншай меры %dx%d.'
@@ -46,6 +46,7 @@ Create: Стварыць
 Caption: Подпіс
 'Attached images': 'Прымацаваныя выявы'
 'Attach & Place': 'Прымацаваць і размясціць'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
 'Add video': 'Дадаць відеа'
 'Add caption': 'Дадаць подпіс'
 'Show all': 'Паказаць усе'
@@ -68,10 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: ' Дата<BR><SMALL>(гггг-мм-дд)</
 'You must select an image file to upload.': 'Вы павiнны выбраць графiчны файл для загрузкi.'
 'Change image information': 'Змянiць iнфармацыю аб графiчным файле'
 'You do not have the right to add images': 'Вы ня маеце права  дадаваць графiчны файл'
-'Items per page': 'Абектаў на старонцы'
-'The image $1 has been added.': 'Графiчны файл $1 быў пасьпяхова даданы.'
-'View image': 'Прагляд графiчнага файлу'
-Unlink: Адвязаць
-'Back to article details': 'Назад да падрабязнасьцяў артыкулу.'
-'Are you sure you want to delete the image $1?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл $1?'
-'Click one of the ': 
+'Filter by uploader...': null

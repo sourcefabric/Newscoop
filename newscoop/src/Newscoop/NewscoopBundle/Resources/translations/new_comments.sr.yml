@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Коментари
+        banned: null
+        anonymous: null
+        at: у
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Цео текст'
+        hidden: Сакривен
+        approved: Одобрен
+        new: Нови
+        editarticle: 'Иди на уређивање текста'
+        section: Рубрика
+        comment: Коментар
+        replyto: 'Одговорите на коментар'
+        subject: Наслов
+        ban: null
+        author: аутор
+        date: null
+        article: Текст
+        search: Тражи
+        show: Прикажи
+        recommended: Препоручени
+        unrecommended: Непрепоручен
+        editcomment: null
+        actions: Акције
+        selectstatus: 'Изабери статус'
+        deleted: Обрисано
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Батали
+        submit: Пошаљи
+        unrecommend: Непрепоручен
+        recommend: Препоручен
+        delete: Обриши
+        reply: Одговори
+        edit: 'Брзо уређивање'
+        close: Затвори
+        okay: null
+        filter: Филтер
+    msg:
+        deleted: 'Коментар избрисан'
+        commentinarticle: 'Коментатор $4 од $1 у тексту $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Newscoop није доступан. Проверите своју интернет везу.'
+            deletefromarticle: 'Коментар обрисан од стране $1 из текста $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Неповратно ћете избрисати коментар.'
+        suremultiple: null
+        first: null
+        surequestion: 'Сигурни сте да желите то да урадите?'
+        updated: 'Коментар измењен.'

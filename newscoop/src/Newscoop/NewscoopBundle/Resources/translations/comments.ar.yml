@@ -1,40 +1,40 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: في
+'With no attachment': 'بلا مرفق'
+'With image attachment': 'بمرفق صورة'
+'With document attachment': 'بمرفق وثيقة'
+'Unable to reach Newscoop. Please check your internet connection.': 'غير قادر على الوصول إلى Newscoop. يرجى التفتيش اتصالك بالإنترنت.'
+Starred: 'بعلامة نجمية'
+Star: 'علامة نجمية'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'عرض _START_ ل_END_ من _TOTAL_ إدخالات'
+'Reply to message': 'الرد على الرسالة'
+Reply: الردّ
+Processed: 'تم المعالجة'
+'No records found.': 'لم يتم العثور على سجلات.'
+'No entries to show': 'لا إدخالات من أجل الإظهار'
+'Messages updated.': 'تم تحديث الرسائل.'
+'Messages status change to $1.': 'تتغير حالة الرسائل الى $1.'
+'Messages deleted.': 'تم حذف الرسائل.'
+'Message updated.': 'تم تحديث الرسالة.'
+'Message status change to $1.': 'تتغير حالة الرسالة الى $1 .'
+'Message deleted.': 'تم حذف الرسالة'
+Message: الرسالة
+Last: الأخير
+'Full article': 'المقالة الكاملة'
+First: الأول
+'Feedback Messages': 'رسائل التغذية المرتدة'
+'Display _MENU_ records': 'عرض سجلات من _MENU_'
+Deleted: 'تم الحذف'
+'Change selected messages status': 'تغيير حالة الرسائل المحددة'
+Attachment: المرفق
+Approved.: 'موافق عليه'
+Approve: الموافقة
+Anonymous: null
+' - filtering from _MAX_ records': '- تصفية من السجلات _MAX_'
 'You are about to permanently delete multiple messages.': 'توشك أن تحذف رسائل متعددة بشكل دائم.'
 'You are about to permanently delete a message.': 'توشك أن تحذف رسالة بشكل دائم.'
 User: المستخدم
-None: 'لا شيء'
+None: 'لا شيئ'
 'Coming from': 'قادما من'
 'Ban/Unban user': 'تحريم / إزالة تحريم المستخدم'
 Ip: 'بروتوكول الإنترنت (IP)'
@@ -48,7 +48,7 @@ Username: 'اسم المستخدم'
 'User ban settings': 'إعدادات تحريم المستخدم '
 'Update comment': 'تحديث التعليق'
 Unrecommended: 'تم ازالة التوصية'
-Unrecommend: 'ازالة التوصية'
+Unrecommend: 'إلغاء التوصية'
 'Subject is not $1 characters long': 'ليس الموضوع $1 أحرف'
 'Sort by Thread order': 'الرتب حسب ترتيب المناقشة'
 'Show parent comment': 'اظهار التعليق الاصلي'
@@ -59,7 +59,7 @@ Unrecommend: 'ازالة التوصية'
 'Show comment details': 'إظهار تفاصيل التعليق'
 'Select status': 'تحديد الحالة'
 'Search Type': 'نوع البحث'
-'Reply to comment': 'الرد على التعليق'
+'Reply to comment': 'رد على التعليق'
 Recommended: 'تم التوصية'
 Recommend: التوصية
 'Quick edit': 'التعديل السريع'
@@ -79,7 +79,7 @@ E-mail: 'البريد الإلكتروني '
 'Commenter $1 saved.': 'تم حفظ المعلق $1.'
 'Commenter $1 deleted.': 'تم حذف المعلق $1.'
 Commenter: المعلق
-'Comment updated.': 'تم تحديث التعليق.'
+'Comment updated.': 'تم تحديث التعليق'
 'Comment status change to $1.': 'تغيير حالة التعليق الى $1.'
 'Comment id': 'رقم التعليق'
 'Comment deleted.': 'تم حذف التعليق.'

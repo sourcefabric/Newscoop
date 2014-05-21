@@ -1,36 +1,36 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': null
+at: in
+'With no attachment': 'Senza allegati'
+'With image attachment': 'Con immagine allegata'
+'With document attachment': 'Con documento allegato'
+'Unable to reach Newscoop. Please check your internet connection.': 'Impossibile raggiungere Newscoop. Verifica la connessione internet.'
+Starred: Evidenziato
+Star: Stellina
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostro voci da  _START_ a  _END_ di _TOTAL_'
+'Reply to message': 'Rispondi al messaggio'
+Reply: Risposta
+Processed: Processato
+'No records found.': 'Nessuna voce trovata.'
+'No entries to show': 'Nessun elemento da mostrare'
+'Messages updated.': 'Messaggi aggiornati.'
+'Messages status change to $1.': 'Stato dei messaggi cambiato in $1.'
+'Messages deleted.': 'Messaggi cancellati.'
+'Message updated.': 'Messaggi aggiornati.'
+'Message status change to $1.': 'Stato del messaggio cambiato in $1.'
+'Message deleted.': 'Messaggio cancellati.'
+Message: Messaggio
+Last: Ultimo
+'Full article': 'Articolo intero'
+First: Primo
+'Feedback Messages': 'Messaggi di feedback'
+'Display _MENU_ records': 'Mostra _MENU_ voci'
+Deleted: Cancellato
+'Change selected messages status': 'Cambia lo stato dei messaggi selezionati'
+Attachment: Allegato
+Approved.: Approvato
+Approve: Approva
+Anonymous: null
+' - filtering from _MAX_ records': 'Filtro da _MAX_ voci'
 'You are about to permanently delete multiple messages.': 'Stai per cancellare definitivamente più messaggi.'
 'You are about to permanently delete a message.': 'Stai per cancellare definitivamente un messaggio.'
 User: Utente
@@ -68,7 +68,7 @@ ID: ID
 'Go to edit article': 'Vai alla modifica articolo'
 Forum: Forum
 'For Column': 'Per colonna'
-Email: E-mail
+Email: Email
 'Edit acceptance criteria': 'Modifica i criteri di accettazione'
 E-mail: E-mail
 'Delete all comments?': 'Cancello tutti i commenti?'

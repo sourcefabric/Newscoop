@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': 'Desplegar imágenes de los suministros de noticias'
+'Mark image': 'Marca imagen'
+'Add selected images to slideshow': 'Agregar las imágenes seleccionadas a la presentación'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Lo siento, esa imagen es muy pequeña.  Cada imagen debe ser de al menos  %dx%d.'
 'Slideshow rendition': 'Rendición del slideshow'
 'Renditions reloaded': 'Rendiciones recargadas'
@@ -69,6 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: aaaa-mm-dd
 'You must select an image file to upload.': 'Debe seleccionar un archivo de imagen para cargar.'
 'Change image information': 'Cambiar información de imagen'
 'You do not have the right to add images': 'No tiene autorización  para agregar imágenes.'
-'Delete image $1': 'Borrar imagen $1'
-'Click one of the ': 
-'Are you sure you want to delete the image $1?': 
+'Filter by uploader...': null

@@ -1,4 +1,5 @@
 'Rename user': 'إعادة تسمية المستخدم'
+Campsite: null
 'Image Rendering': 'في عملية تقديم الصورة'
 'Featured Article Lists': 'قوائم مقالات مميزة'
 'You have tried to upload an invalid backup file.': 'حاولت رفع ملف نسخة احتياطية غير صالح.'
@@ -44,7 +45,7 @@ Themes: مواضيع
 'Start upload': 'بدء تحميل'
 Settings: الإعدادات
 'Select files': 'تحديد ملفات'
-Reply: رد
+Reply: الردّ
 'New comment added': 'تم إضافة تعليق جديد'
 'Manage Authors': 'إدارة مؤلقين'
 Loading..: 'تحت تحميل ...'
@@ -54,7 +55,7 @@ Filename: 'اسم الملف'
 'Drag files here.': 'اسحب الملفات هنا.'
 'Connection interrupted': 'توقّف الاتصال'
 Ban: تحريم
-'Are you sure you want to?': 'هل انت متأكد انك تريد المواصلة؟'
+'Are you sure you want to': null
 'Add files to the upload queue and click the start button.': 'أضف ملفات إلى قائمة انتظار التحميل واضغط على الزر بدء.'
 'Add files': 'إضافة ملفات'
 '%value% is more than %max% characters long': '%value% هو أكثر من %max% أحرف'
@@ -63,11 +64,11 @@ Ban: تحريم
 Newscoop: Newscoop
 'Your password has been reset.': 'تم تعيين كلمة السر الخاصة بك.'
 'Proceed to login.': 'قدم إلى الدخول'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'مرحبا، /n/n, من أجل استعادة كلمة السر، يرجى اتباع هذا الرابط: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'إذهب إلى الدخول'
 'Back to login.': 'العودة إلى الدخول'
 'Back to login': 'العودة إلى الدخول'
-'An email with instructions on how to recover your password has been sent to your inbox.': 'تم إرسال بريد إلكتروني يحتوي على تعليمات حول كيفية استعادة كلمة السر الخاصة بك إلى صندوقك البريد الوارد.'
+'An email with instructions on how to recover you password has been sent to your inbox.': null
 'Session expired.': 'انتهت الدورة.'
 Processing...: 'في عملية المعالجة...'
 Please: 'من فضلك'
@@ -151,4 +152,7 @@ Help: المساعدة
 'Please make sure that you typed the correct user name and password.': 'يرجى التحقق من إدخال اسم المستخدم وكلمة السر الصحيحين'
 'If your problem persists please contact the site administrator $1': 'إذا استمررت بمواجه المشاكل, أتصل بمدير الموقع $1'
 Backup/Restore: 'نسخ احتياطيا/استعادة'
-'Hi, n n for password recovery, please follow this link: $1': 'مرحبا، n n لاستعادة كلمة السر، يرجى اتباع هذا الرابط: $1'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

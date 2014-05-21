@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
@@ -187,6 +187,56 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     protected $publication;
 
     /**
+     * @ORM\Column(type="string", nullable=True, name="StrAddress")
+     * @var string
+     */
+    protected $street;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=70, name="PostalCode")
+     * @var string
+     */
+    protected $postal;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, name="City")
+     * @var string
+     */
+    protected $city;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=20, name="Phone")
+     * @var string
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=32, name="State")
+     * @var string
+     */
+    protected $state;
+
+    /**
+     * @ORM\Column(type="string", nullable=True, length=21, name="CountryCode")
+     * @var string
+     */
+    protected $countryCode;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\GimmeBundle\Entity\Client")
+     * @ORM\JoinTable(name="user_oauth_clients",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Package\Package
+     */
+    protected $clients;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -196,6 +246,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->identities = new ArrayCollection();
+        $this->clients = new ArrayCollection();
         $this->role = new Role();
         $this->is_admin = false;
         $this->is_public = false;
@@ -1233,5 +1284,189 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getPublication()
     {
         return $this->publication;
+    }
+
+    /**
+     * Set street address
+     *
+     * @param string $street
+     *
+     * @return string
+     */
+    public function setStreet($street)
+    {
+        $this->street = $street;
+
+        return $this;
+    }
+
+    /**
+     * Add oauth client
+     *
+     * @param \Newscoop\GimmeBundle\Entity\Client $client
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function addClient(\Newscoop\GimmeBundle\Entity\Client $client)
+    {
+        $this->clients->add($client);
+
+        return $this;
+    }
+
+    /**
+     * Get street address
+     *
+     * @return string
+     */
+    public function getStreet()
+    {
+        return $this->street;
+    }
+
+    /**
+     * Set postal code
+     *
+     * @param string $postal
+     *
+     * @return string
+     */
+    public function setPostal($postal)
+    {
+        $this->postal = $postal;
+
+        return $this;
+    }
+
+    /**
+     * Get postal code
+     *
+     * @return string
+     */
+    public function getPostal()
+    {
+        return $this->postal;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return string
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set phone
+     *
+     * @param string $phone
+     *
+     * @return string
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * Get phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     *
+     * @return string
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set country code
+     *
+     * @param string $countryCode
+     *
+     * @return string
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get country code
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * Get oauth clients
+     *
+     * @return ArrayCollection
+     */
+    public function getClients()
+    {
+        return $this->clients;
+    }
+
+    /**
+     * Has client
+     *
+     * @param \Newscoop\GimmeBundle\Entity\Client $client
+     *
+     * @return boolean
+     */
+    public function hasClient(\Newscoop\GimmeBundle\Entity\Client $client)
+    {
+        if ($this->clients->contains($client)) {
+            return true;
+        }
+
+        return false;
     }
 }

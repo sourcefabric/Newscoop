@@ -41,7 +41,7 @@ On: Włączony
 Off: Wyłączony
 'You do not have the right to moderate comments.': 'Nie masz uprawnień aby moderować komentarze.'
 'You can not schedule opposing events at the same time': 'Nie możesz zaplanować przeciwstawnych wydarzeń w tym samym czasie'
-'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć z Newscoop. Sprawdź połączenie z Internetem.'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
 Title: Tytuł
 'There already is an article with the same name. Please change the name and try again.': 'Artykuł z taką nazwą już istnieje. Zmień nazwę i spróbuj ponownie.'
 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Miej na uwadze że zaplanowana publikacja tego artykułu zostanie anulowana gdy zmienisz status na Nowy. Potwierdź zmianę statusu.'
@@ -58,7 +58,7 @@ Files: Pliki
 'Keywords saved.': 'Słowa kluczowe zapisane.'
 'Comment settings': 'Ustawienia komentarzy.'
 Authors: Autorzy
-'Attach Topic To Article': 'Dodaj temat do artykuły'
+'Attach Topic To Article': 'Dołącz Temat do Artykułu'
 'Article saved.': 'Artykuł zapisany.'
 'Article is locked': 'Artykuł jest zablokowany'
 'Actions updated.': 'Akcje uaktualnione.'
@@ -77,12 +77,12 @@ Created: Utworzono
 'Content edited': 'Edycja kontentu zakończona'
 'You must select an article language.': 'Musisz wybrać język artykułu.'
 'You must select a publication.': 'Musisz wybrać publikację.'
-'You must select a file to upload.': 'Musisz wybrać plik do wgrania.'
+'You must select a file to upload.': 'Musisz wybrać pliki do dodania.'
 'You must select a XML input file.': 'Musisz wybrać plik XML.'
 'You do not have the right to import XML archives.': 'Nie masz praw aby importować archiwa XML.'
 'There was a problem uploading the file.': 'Wystąpił błąd podczas dodawania pliku.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Plik został wgrany tylko częściowo. To typowe zjawisko kiedy maksymalny czas wgrywania pliku jest za niski do jego rozmiaru. Maksymalny czas wgrywania jest ustalony w pliku php.ini'
-'The file exceeds the allowed max file size.': 'Rozmiar pliku jest większy niż maksymalny.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Wgyrwany plik został dodany tylko w części. To częsty błąd gdy czas wgrywania pliku nie jest zgodny z jego rozmiarem. Maksymalny czas wgrywania ustalany jest w pliku php.ini'
+'The file exceeds the allowed max file size.': 'Plik jest większy od maksymalnego rozmiaru.'
 Optional: Opcjonalne
 'Input File': 'Plik wsadowy'
 'Import XML': 'Import XML'
@@ -95,7 +95,7 @@ Optional: Opcjonalne
 'Article could not be created.': 'Artykuł nie został odczytany.'
 '---Select article type---': '---Wybierz typ artykułu---'
 '$1 articles successfully imported.': 'Artykuły zaimportowane pomyślnie: $1'
-Saved: Zapisane
+Saved: Zapisano
 'Save All': 'Zapisz wszystko'
 'Online Server: On': 'Serwer Online: ON'
 'Online Server: Off': 'Serwer Online: Off'
@@ -183,3 +183,4 @@ Comments: Komentarze
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Ten artykuł nie może być podejrzany. Upewnij się, że szablon artykułu jest wybrany.'
 'No such article.': 'Brak artykułu.'
 'No such section.': 'Brak sekcji.'
+Characters: null

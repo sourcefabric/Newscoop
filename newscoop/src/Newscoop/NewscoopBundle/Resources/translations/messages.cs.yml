@@ -1,5 +1,5 @@
 Plugins: Plug-iny
-'Manage Plugins': 'Správa plug-inů'
+'Manage Plugins': 'Spravovat Pluginy'
 Account: Účet
 'Items per page': 'Položek na stránku'
 'Add new': 'Přidat nový'
@@ -9,7 +9,7 @@ More...: Více...
 Content: Obsah
 Languages: Jazyk
 Countries: Země
-Themes: Šablony
+Themes: Náměty
 Topics: Témata
 Configure: Konfiguruj
 'Image Archive': 'Archiv Obrázků'
@@ -148,6 +148,7 @@ Localizer: Lokalizátor
 'Add new publication': 'Přidat novou publikaci'
 'Upload new template': 'Nahrát novou šablonu'
 'Add new staff member': 'Přidat nového zaměstnance'
+'Staff member deleted.': null
 'Add new subscriber': 'Přidat nového předplatitele'
 'Add new user type': 'Přidat typ uživatele'
 'Add new article type': 'Přidat nový typ článku'
@@ -257,11 +258,27 @@ Reads: Přečteno
 'Universal List': 'Všeobecný přehled'
 'Invalid security token!': 'Neplatný bezpečnostní znak!'
 Authors: Autoři
-Readers: 
-'User name': 'Uživatelské jméno'
-'Schedule a new publish action': 
-'User Types': 'Uživatelské typy'
-'User may add/change user accounts and passwords': 'Uživatel může přidat/změnit uživatelské účty a hesla'
-'User may delete user accounts': 'Uživatel může mazat uživatelské účty'
-'Add new user account': 'Přidat uživatelský účet'
-'Subscription Default Time': 'Předplatné období'
+Title: Název
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: na
+published: null
+unpublished: null
