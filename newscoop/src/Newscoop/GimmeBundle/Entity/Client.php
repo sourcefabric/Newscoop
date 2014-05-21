@@ -37,6 +37,27 @@ class Client extends BaseClient
     protected $publication;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="clients", cascade={"remove"})
+     * @var array
+     */
+    protected $users;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trusted;
+
+    /**
+     * Construct Client object
+     */
+    public function __construct()
+    {
+        parent::__construct();
+        $this->users = new ArrayCollection();
+        $this->trusted = false;
+    }
+
+    /**
      * Gets the value of id.
      *
      * @return mixed
@@ -114,5 +135,53 @@ class Client extends BaseClient
     public function getRedirectUrisString()
     {
         return implode(', ', $this->redirectUris);
+    }
+
+    /**
+     * Add User to client
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return self
+     */
+    public function addUser(\Newscoop\Entity\User $user)
+    {
+        $this->users->add($user);
+
+        return $this;
+    }
+
+    /**
+     * Get all Client users
+     *
+     * @return ArrayCollection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    /**
+     * Gets trusted status.
+     *
+     * @return boolean
+     */
+    public function getTrusted()
+    {
+        return $this->trusted;
+    }
+
+    /**
+     * Sets trusted status.
+     *
+     * @param boolean $trusted App status
+     *
+     * @return self
+     */
+    public function setTrusted($trusted)
+    {
+        $this->trusted = $trusted;
+
+        return $this;
     }
 }
