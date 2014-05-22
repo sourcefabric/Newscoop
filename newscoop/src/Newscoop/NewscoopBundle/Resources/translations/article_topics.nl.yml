@@ -1,4 +1,4 @@
-'You must enter a name for the topic.': 'Je moet een naam invullen voor het onderwerp.'
+'You must enter a name for the topic.': null
 'Show All': null
 'Select the parent of the topic': null
 None: null
@@ -7,7 +7,7 @@ None: null
 'Topics updated.': null
 'Topic does not exist.': 'Onderwerp bestaat niet.'
 'The topic $1 has been removed from article.': null
-'You do not have the right to detach topics from articles.': 'Je hebt niet de rechten om onderwerpen van artikelen af te scheiden.'
-'You do not have the right to attach topics to articles.': 'Je hebt niet de rechten om onderwerpen bij artikelen toe te voegen.'
+'You do not have the right to detach topics from articles.': null
+'You do not have the right to attach topics to articles.': null
 'Attach Topics': 'Voeg onderwerp toe'
 'Attach Topic To Article': 'Voeg onderwer bij artikel'

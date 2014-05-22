@@ -19,7 +19,7 @@ Filename: null
 'You may only translate one article at a time.': null
 'You do not have the right to rename templates.': null
 'You do not have the right to move templates.': null
-'You do not have the right to move articles.': 'Je hebt niet de rechten om artikelen te verplaatsen.'
+'You do not have the right to move articles.': null
 'Unable to create folder.': null
 'Unable to $1 template.': null
 'To New Name': null
@@ -49,7 +49,7 @@ Folder: null
 'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
 'Directory $1 was deleted': null
 'Directory $1 created.': null
-'You must select a file to upload.': 'Je moet een bestand selecteren om te uploaden.'
+'You must select a file to upload.': null
 'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': null
 Replace: null
@@ -58,10 +58,10 @@ Replace: null
 'The template $1 was saved successfully.': 'Het sjabloon $1 was succesvol opgeslagen.'
 'Create new folder': 'Maak een nieuwe map'
 'Upload template': 'Upload sjabloon'
-'You do not have the right to create new folders.': 'Je hebt niet de rechten om nieuwe mappen te maken.'
+'You do not have the right to create new folders.': null
 'A file or folder having the name $1 already exists': 'Een bestand of een map met de naam $1 bestaat al'
-'You do not have the right to delete templates.': 'Je hebt niet de rechten om sjablonen te verwijderen.'
-'Are you sure you want to delete the folder $1 from $2?': 'Weet je zeker dat je de mappen $1 '
+'You do not have the right to delete templates.': null
+'Are you sure you want to delete the folder $1 from $2?': null
 'Delete folder': 'Verwijder map'
 Folders: Mappen
 'No folders.': 'Geen mappen.'
@@ -76,11 +76,11 @@ Files: Bestanden
 'Template charset': 'Sjabloon charset'
 'Select a language/character set': 'Selecteer een taal/character set'
 'All languages': 'Alle talen'
-'You do not have the right to modify templates.': 'Je hebt niet de rechten om sjablonen te wijzigen.'
+'You do not have the right to modify templates.': null
 'Invalid template file $1': 'Verkeerde sjabloon'
-'You do not have the right to create folders.': 'Je hebt geen rechten om mappen te maken.'
-'You do not have the right to upload templates.': 'Je hebt geen rechten om sjablonen te uploaden.'
-'You do not have the right to create templates.': 'Je hebt geen rechten om sjablonen te maken.'
+'You do not have the right to create folders.': null
+'You do not have the right to upload templates.': null
+'You do not have the right to create templates.': null
 'Duplicate file': 'Dupliceer bestand'
 'Delete file': 'Verwijder bestand'
 'Please check if the user $1 has permission to write in this directory.': 'Controleer of de gebruiker $1 de rechten heeft om in deze map te schrijven.'

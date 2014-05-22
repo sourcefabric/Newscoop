@@ -105,15 +105,15 @@ Filters: null
 'User may delete article attachments': 'Gebruiker mag artikel bijlagen verwijderen'
 'User may change article attachments': 'Gebruiker mag artikel bijlagen wijzigen'
 'User may add article attachments': 'Gebruiker mag artikel bijlagen toevoegen'
-'You do not have the right to create user accounts.': 'Je hebt niet de rechten om gebruikers te maken.'
-'You must select a $1': 'Je moet een $1 selecteren'
+'You do not have the right to create user accounts.': null
+'You must select a $1': null
 'The password must be at least 6 characters long and both passwords should match.': 'Het wachtwoord moet minimaal 6 tekens bevatten en beiden wachtwoorden moeten overeenkomen.'
 'The user account could not be created.': 'Het gebruiker profiel kan niet worden gemaakt.'
 'User account $1 was created successfully.': 'Gebruiker profiel $1 was succesvol gemaakt.'
-'You do not have the right to change user account permissions.': 'Je hebt niet de rechten om gebruiker profiel rechten te wijzigen.'
-'You do not have the right to change user account information.': 'Je hebt niet de rechten om gebruiker profiel informatie te wijzigen.'
-'The password you typed is incorrect.': 'Het wachtwoord dat je hebt ingevuld is onjuisht.'
-'You do not have the right to delete user accounts.': 'Je hebt niet de rechten om gebruiker profielen te verwijderen.'
+'You do not have the right to change user account permissions.': null
+'You do not have the right to change user account information.': null
+'The password you typed is incorrect.': null
+'You do not have the right to delete user accounts.': null
 'User account $1 was deleted successfully.': 'Gebruiker profiel $1 werd succesvol verwijderd.'
 'The IP Group $1 has been created.': 'De IP group $1 is gemaakt.'
 'There was an error creating the IP address group.': 'Er was een fout bij het maken van de IP adres groep'
