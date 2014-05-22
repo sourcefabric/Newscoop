@@ -17,15 +17,18 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
 
     protected $em;
 
+    protected $userService;
+
     /**
     * Constructor
     *
     * @param Zend_Auth   $zendAuth
     */
-    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em)
+    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $em, $userService)
     {
         $this->authAdapter = $authAdapter;
         $this->em = $em;
+        $this->userService = $userService;
 
         parent::__construct($httpUtils, $options);
     }
@@ -52,6 +55,10 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
         $zendAuth = \Zend_Auth::getInstance();
         $this->authAdapter->setUsername($user->getUsername())->setPassword($request->request->get('_password'))->setAdmin(true);
         $result = $zendAuth->authenticate($this->authAdapter);
+
+        $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
+        $session = $request->getSession();
+        $session->set('_security_oauth_authorize', serialize($OAuthtoken));
 
         \Article::UnlockByUser($zendAuth->getIdentity());
 

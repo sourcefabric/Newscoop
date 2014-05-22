@@ -163,10 +163,8 @@ class UsersController extends FOSRestController
         }
 
         $token = $userService->loginUser($user, 'frontend_area');
-        $OAuthtoken = $userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($token));
-        $session->set('_security_oauth_authorize', serialize($OAuthtoken));
 
         $zendAuth = \Zend_Auth::getInstance();
         $authAdapter = $this->get('auth.adapter');
