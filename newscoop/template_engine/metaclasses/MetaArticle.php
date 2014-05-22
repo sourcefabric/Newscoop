@@ -106,21 +106,28 @@ final class MetaArticle extends MetaDbObject {
         }
 
         if ($this->m_dbObject->exists()) {
-        	$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
-	        $this->m_dbObject->getArticleNumber(),
-	        $this->m_dbObject->getLanguageId());
+            $cacheKeyArticleData = $cacheService->getCacheKey(array('articleData', $this->m_dbObject->getType(), 
+                $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'article');
+            if ($cacheService->contains($cacheKeyArticleData)) {
+                $this->m_articleData = $cacheService->fetch($cacheKeyArticleData);
+            } else {
+                $this->m_articleData = new ArticleData($this->m_dbObject->getType(),
+                    $this->m_dbObject->getArticleNumber(),
+                    $this->m_dbObject->getLanguageId());
+                $cacheService->save($cacheKeyArticleData, $this->m_articleData);
+            }
 
-	        foreach ($this->m_articleData->m_columnNames as $property) {
-	            if ($property[0] != 'F') {
-	                continue;
-	            }
-	            $property = substr($property, 1);
-	            $tr_property = strtolower($property);
-	            if (array_key_exists($tr_property, $this->m_customProperties)) {
-	            	continue;
-	            }
-	            $this->m_customProperties[$tr_property] = array($property);
-	        }
+            foreach ($this->m_articleData->m_columnNames as $property) {
+                if ($property[0] != 'F') {
+                    continue;
+                }
+                $property = substr($property, 1);
+                $tr_property = strtolower($property);
+                if (array_key_exists($tr_property, $this->m_customProperties)) {
+                    continue;
+                }
+                $this->m_customProperties[$tr_property] = array($property);
+            }
         } else {
         	if (!is_null($p_languageId) || !is_null($p_articleId)) {
         		$this->m_dbObject = new Article();
@@ -219,7 +226,14 @@ final class MetaArticle extends MetaDbObject {
                 $dbProperty = $this->m_customProperties[$property][0];
                 $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
 
-                $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
+                $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+                $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $this->type_name, $dbProperty), 'articletype');
+                if ($cacheService->contains($cacheKey)) {
+                    $articleFieldType = $cacheService->fetch($cacheKey);
+                } else {
+                    $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
+                    $cacheService->save($cacheKey, $articleFieldType);
+                }
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {
                     	$context = CampTemplate::singleton()->context();
