@@ -245,6 +245,11 @@ class CampURIShortNames extends CampURI
      */
     private function _getLanguage($code, MetaPublication $publication)
     {
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'CampURIShortNameLanguage');
+        if ($cacheService->contains($cacheKey)) {
+             return $cacheService->fetch($cacheKey);
+        } else {
         $language = $publication->default_language;
         
         if (!empty($code)) {
@@ -258,7 +263,9 @@ class CampURIShortNames extends CampURI
             throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
         }
 
+			$cacheService->save($cacheKey, $language);
         return $language;
+    }
     }
 
     /**

@@ -35,19 +35,6 @@ class Language extends DatabaseObject {
 	 */
 	public function Language($p_languageId = null)
 	{
-		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-		$cacheKey = $cacheService->getCacheKey(array('language', $p_languageId), 'language');
-		if ($cacheService->contains($cacheKey)) {
-			 return unserialize($cacheService->fetch($cacheKey));
-		} else {
-			parent::DatabaseObject($this->m_columnNames);
-			if (!is_null($p_languageId)) {
-				$this->m_data['Id'] = $p_languageId;
-				$this->fetch();
-			}
-			$cacheService->save($cacheKey, serialize($this));
-		}
-
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_languageId)) {
 			$this->m_data['Id'] = $p_languageId;

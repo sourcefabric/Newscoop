@@ -17,7 +17,7 @@ final class MetaLanguage extends MetaDbObject {
     public function __construct($p_languageId = null)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('language', $p_languageId), 'language');
+        $cacheKey = $cacheService->getCacheKey(array('metaLanguage', $p_languageId), 'metaLanguage');
         if ($cacheService->contains($cacheKey)) {
              $this->m_dbObject = $cacheService->fetch($cacheKey);
         } else {
