@@ -362,7 +362,12 @@ class CampURIShortNames extends CampURI
         $this->m_publication = $this->_getPublication();
         $controller = $request->getParam('controller');
         if ($controller != 'index') {
-            $language = $controller;
+            if ($controller == 'legacy') {
+               $publication_service = \Zend_Registry::get('container')->getService('newscoop.publication_service');
+               $language = $publication_service->getPublication()->getLanguage()->getCode();
+            } else {
+               $language = $controller;
+            }
         } else {
             $language = $request->getParam('language');
         }
