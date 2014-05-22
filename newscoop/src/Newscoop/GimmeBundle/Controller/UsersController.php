@@ -21,8 +21,6 @@ use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
-use Newscoop\Entity\User;
-use FOS\OAuthServerBundle\Event\OAuthEvent;
 
 /**
  * Users Rest API Controller
