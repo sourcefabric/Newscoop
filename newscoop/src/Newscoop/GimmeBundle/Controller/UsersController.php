@@ -21,8 +21,6 @@ use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
-use Newscoop\Entity\User;
-use FOS\OAuthServerBundle\Event\OAuthEvent;
 
 /**
  * Users Rest API Controller
@@ -169,11 +167,6 @@ class UsersController extends FOSRestController
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($token));
         $session->set('_security_oauth_authorize', serialize($OAuthtoken));
-
-        $event = $this->container->get('event_dispatcher')->dispatch(
-            OAuthEvent::PRE_AUTHORIZATION_PROCESS,
-            new OAuthEvent(new User(), new Client())
-        );
 
         $zendAuth = \Zend_Auth::getInstance();
         $authAdapter = $this->get('auth.adapter');
