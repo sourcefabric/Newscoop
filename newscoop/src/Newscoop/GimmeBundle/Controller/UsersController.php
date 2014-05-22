@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Newscoop\GimmeBundle\Entity\Client;
+use Newscoop\Entity\User;
+use FOS\OAuthServerBundle\Event\OAuthEvent;
 
 /**
  * Users Rest API Controller
@@ -161,9 +164,16 @@ class UsersController extends FOSRestController
             return $response;
         }
 
-        $token = $userService->loginUser($user);
+        $token = $userService->loginUser($user, 'frontend_area');
+        $OAuthtoken = $userService->loginUser($user, 'oauth_authorize');
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($token));
+        $session->set('_security_oauth_authorize', serialize($OAuthtoken));
+
+        $event = $this->container->get('event_dispatcher')->dispatch(
+            OAuthEvent::PRE_AUTHORIZATION_PROCESS,
+            new OAuthEvent(new User(), new Client())
+        );
 
         $zendAuth = \Zend_Auth::getInstance();
         $authAdapter = $this->get('auth.adapter');
@@ -305,10 +315,76 @@ class UsersController extends FOSRestController
         return $response;
     }
 
+    /**
+     * Get user access token
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when successful",
+     *     },
+     *     parameters={
+     *         {"name"="client_id", "dataType"="string", "required"=false, "description"="User public client id"},
+     *     },
+     * )
+     *
+     * @Route("/users/access_token/{clientId}.{_format}", defaults={"_format"="json"})
+     * @Method("GET")
+     * @View(serializerGroups={"list"})
+     *
+     * @return array
+     */
+    public function getUserAccessTokenAction(Request $request, $clientId)
+    {
+        $response = new Response();
+        $session = $this->container->get('session');
+
+        $clientManager = $this->container->get('fos_oauth_server.client_manager.default');
+        $client = $clientManager->findClientByPublicId($clientId);
+        if (!($client instanceof Client)) {
+            throw new NotFoundHttpException("Client {$clientId} is not found.");
+        }
+
+        $redirectUris = $client->getRedirectUris();
+        $curlClient = new \Buzz\Client\Curl();
+        $curlClient->setTimeout(10000);
+        $strCookie = $session->getName() . '=' . $session->getId(). '; path=/';
+        $session->save();
+
+        $curlClient->setOption(CURLOPT_FOLLOWLOCATION, false);
+        $curlClient->setOption(CURLOPT_HEADER, true);
+        $curlClient->setOption(CURLOPT_COOKIE, $strCookie);
+        $browser = new \Buzz\Browser($curlClient);
+        $authUrl = $request->getUriForPath('/oauth/v2/auth');
+        $tokenUrl = $request->getUriForPath('/oauth/v2/token');
+        // post to get code
+        $result =  $browser->post($authUrl.'?client_id='.$clientId.'&redirect_uri='.$redirectUris[0].'&response_type=code');
+
+        $locationHeader = $result->getHeader('Location');
+        $code = substr($locationHeader, strpos($locationHeader, "code=") + 5);
+
+        if ($result->getStatusCode() !== 302) {
+            $response->setStatusCode(401);
+
+            return $response;
+        }
+
+        //make a post for token
+        $token = $browser->post($tokenUrl, array(
+            "Accept: application/x-www-form-urlencoded",
+        ), array(
+            "client_id" => $clientId,
+            "client_secret" => $client->getSecret(),
+            "redirect_uri" => $redirectUris[0],
+            "code" => $code,
+            "grant_type" => "authorization_code",
+        ));
+
+        return json_decode($token->getContent(), true);
+    }
+
     private function extractDomain($domain)
     {
-        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
-        {
+        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
             return $matches['domain'];
         } else {
             return $domain;
