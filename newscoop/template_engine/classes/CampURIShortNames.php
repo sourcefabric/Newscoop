@@ -246,7 +246,7 @@ class CampURIShortNames extends CampURI
     private function _getLanguage($code, MetaPublication $publication)
     {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'CampURIShortNameLanguage');
+        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'language');
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         } else {
@@ -285,14 +285,14 @@ class CampURIShortNames extends CampURI
             }
         } else {
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'Issue');
+            $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'issue');
             if ($cacheService->contains($cacheKeyGetCurrentIssue)) {
                 $issueObj = $cacheService->fetch($cacheKeyGetCurrentIssue);
             } else {
                 $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
                 $cacheService->save($cacheKeyGetCurrentIssue, $issueObj);
             }
-            $cacheKeyMetaIssue = $cacheService->getCacheKey(array('MetaIssue', $publication->identifier, $language->number, $issueObj->getIssueNumber()), 'Issue');
+            $cacheKeyMetaIssue = $cacheService->getCacheKey(array('MetaIssue', $publication->identifier, $language->number, $issueObj->getIssueNumber()), 'issue');
             if ($cacheService->contains($cacheKeyMetaIssue)) {
                 $issue = $cacheService->fetch($cacheKeyMetaIssue);
             } else {
@@ -322,12 +322,21 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        $sections = Section::GetSections($publication->identifier, $issue->number, $language->number, $name);
-        if (is_array($sections) && sizeof($sections) == 1) {
-            return new MetaSection($publication->identifier, $issue->number, $language->number, $sections[0]->getSectionNumber());
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getSection', $name, $issue, $language, $publication), 'section');
+        if ($cacheService->contains($cacheKey)) {
+             $metaSection = $cacheService->fetch($cacheKey);
+        } else {
+            $sections = Section::GetSections($publication->identifier, $issue->number, $language->number, $name);
+            if (is_array($sections) && sizeof($sections) == 1) {
+                $metaSection = new MetaSection($publication->identifier, $issue->number, $language->number, $sections[0]->getSectionNumber());
+                $cacheService->save($cacheKeyMetaIssue, $metaSection);
+            } else {
+                throw new InvalidArgumentException("Invalid section identifier in URL.", self::INVALID_SECTION);
+            }
         }
 
-        throw new InvalidArgumentException("Invalid section identifier in URL.", self::INVALID_SECTION);
+        return $metaSection;
     }
 
     /**
@@ -343,12 +352,20 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        $articleObj = new Article($language->number, $articleNo);
-        if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
-            throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
-        }
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getArticle', $articleNo, $language), 'article');
+        if ($cacheService->contains($cacheKey)) {
+             $metaArticle = $cacheService->fetch($cacheKey);
+        } else {
+            $articleObj = new Article($language->number, $articleNo);
+            if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
+                throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
+            }
 
-        return new MetaArticle($language->number, $articleObj->getArticleNumber());
+            $metaArticle = new MetaArticle($language->number, $articleObj->getArticleNumber());
+            $cacheService->save($cacheKey, $metaArticle);
+        }
+        return $metaArticle;
     }
 
     /**
