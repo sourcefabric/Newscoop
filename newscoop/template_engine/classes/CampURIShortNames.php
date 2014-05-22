@@ -245,27 +245,27 @@ class CampURIShortNames extends CampURI
      */
     private function _getLanguage($code, MetaPublication $publication)
     {
-		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'CampURIShortNameLanguage');
         if ($cacheService->contains($cacheKey)) {
-             return $cacheService->fetch($cacheKey);
+            return $cacheService->fetch($cacheKey);
         } else {
-        $language = $publication->default_language;
-        
-        if (!empty($code)) {
-            $langArray = Language::GetLanguages(null, $code);
-            if (is_array($langArray) && sizeof($langArray) == 1) {
-                $language = new MetaLanguage($langArray[0]->getLanguageId());
+            $language = $publication->default_language;
+
+            if (!empty($code)) {
+                $langArray = Language::GetLanguages(null, $code);
+                if (is_array($langArray) && sizeof($langArray) == 1) {
+                    $language = new MetaLanguage($langArray[0]->getLanguageId());
+                }
             }
-        }
 
-        if (!$language->defined()) {
-            throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
-        }
+            if (!$language->defined()) {
+                throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
+            }
 
-			$cacheService->save($cacheKey, $language);
-        return $language;
-    }
+            $cacheService->save($cacheKey, $language);
+            return $language;
+        }
     }
 
     /**
@@ -284,8 +284,21 @@ class CampURIShortNames extends CampURI
                 throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
             }
         } else {
-            $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
-            $issue = new MetaIssue($publication->identifier, $language->number, $issueObj->getIssueNumber());
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'Issue');
+            if ($cacheService->contains($cacheKeyGetCurrentIssue)) {
+                $issueObj = $cacheService->fetch($cacheKeyGetCurrentIssue);
+            } else {
+                $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
+                $cacheService->save($cacheKeyGetCurrentIssue, $issueObj);
+            }
+            $cacheKeyMetaIssue = $cacheService->getCacheKey(array('MetaIssue', $publication->identifier, $language->number, $issueObj->getIssueNumber()), 'Issue');
+            if ($cacheService->contains($cacheKeyMetaIssue)) {
+                $issue = $cacheService->fetch($cacheKeyMetaIssue);
+            } else {
+                $issue = new MetaIssue($publication->identifier, $language->number, $issueObj->getIssueNumber());
+                $cacheService->save($cacheKeyMetaIssue, $issue);
+            }
             if (!$issue->defined()) {
                 throw new InvalidArgumentException("No published issue was found.", self::INVALID_ISSUE);
             }
