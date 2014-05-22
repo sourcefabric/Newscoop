@@ -56,7 +56,6 @@ class Client extends BaseClient
         parent::__construct();
         $this->users = new ArrayCollection();
         $this->trusted = false;
-        $this->users = new ArrayCollection();
     }
 
     /**
