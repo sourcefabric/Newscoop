@@ -38,14 +38,14 @@ class Language extends DatabaseObject {
 		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
 		$cacheKey = $cacheService->getCacheKey(array('language', $p_languageId), 'language');
 		if ($cacheService->contains($cacheKey)) {
-			 return $cacheService->fetch($cacheKey);
+			 return unserialize($cacheService->fetch($cacheKey));
 		} else {
 			parent::DatabaseObject($this->m_columnNames);
 			if (!is_null($p_languageId)) {
 				$this->m_data['Id'] = $p_languageId;
 				$this->fetch();
 			}
-			$cacheService->save($cacheKey, $this);
+			$cacheService->save($cacheKey, serialize($this));
 		}
 
 		parent::DatabaseObject($this->m_columnNames);
