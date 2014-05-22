@@ -168,6 +168,9 @@ class UsersController extends FOSRestController
         $session = $request->getSession();
         $session->set('_security_frontend_area', serialize($token));
 
+        $loginSuccessHandler = $this->container->get('newscoop_newscoop.security.authentication.frontend.success_handler');
+        $loginSuccessHandler->onAuthenticationSuccess($request, $token);
+
         $zendAuth = \Zend_Auth::getInstance();
         $authAdapter = $this->get('auth.adapter');
         $authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
