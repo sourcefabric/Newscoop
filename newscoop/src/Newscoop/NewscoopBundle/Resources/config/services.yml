@@ -62,12 +62,12 @@ services:
     newscoop_newscoop.security.authentication.success_handler:
         class: %newscoop_newscoop.security.authentication.success_handler.class%
         public: false
-        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em']
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em', '@user']
 
     newscoop_newscoop.security.authentication.frontend.success_handler:
         class: %newscoop_newscoop.security.authentication.frontend.success_handler.class%
         public: false
-        arguments:  ['@security.http_utils', {}, '@auth.adapter']
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@user']
 
     newscoop_newscoop.listener.locale_listener:
         class: Newscoop\NewscoopBundle\EventListener\LocaleListener
