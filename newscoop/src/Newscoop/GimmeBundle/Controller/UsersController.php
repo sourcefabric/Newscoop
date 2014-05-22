@@ -321,9 +321,10 @@ class UsersController extends FOSRestController
      * @ApiDoc(
      *     statusCodes={
      *         200="Returned when successful",
+     *         401="Returned when unauthorized",
      *     },
      *     parameters={
-     *         {"name"="client_id", "dataType"="string", "required"=false, "description"="User public client id"},
+     *         {"name"="clientId", "dataType"="string", "required"=true, "description"="User's public client id"},
      *     },
      * )
      *
