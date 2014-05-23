@@ -21,6 +21,7 @@ use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
  * Users Rest API Controller
@@ -340,33 +341,29 @@ class UsersController extends FOSRestController
         }
 
         $redirectUris = $client->getRedirectUris();
-        $curlClient = new \Buzz\Client\Curl();
-        $curlClient->setTimeout(10000);
-        $strCookie = $session->getName() . '=' . $session->getId(). '; path=/';
-        $session->save();
-
-        $curlClient->setOption(CURLOPT_FOLLOWLOCATION, false);
-        $curlClient->setOption(CURLOPT_HEADER, true);
-        $curlClient->setOption(CURLOPT_COOKIE, $strCookie);
-        $browser = new \Buzz\Browser($curlClient);
         $authUrl = $request->getUriForPath('/oauth/v2/auth');
         $tokenUrl = $request->getUriForPath('/oauth/v2/token');
-        // post to get code
-        $result =  $browser->post($authUrl.'?client_id='.$clientId.'&redirect_uri='.$redirectUris[0].'&response_type=code');
+        // GET to get code
+        $authRequest = Request::create($authUrl, 'GET', array(
+            'client_id' => $clientId,
+            'redirect_uri' => $redirectUris[0],
+            'response_type' => 'code'
+        ), $request->cookies->all());
 
-        $locationHeader = $result->getHeader('Location');
+        $kernel = $this->get('http_kernel');
+        $codeResponse = $kernel->handle($authRequest);
+
+        $locationHeader = $codeResponse->headers->get('Location');
         $code = substr($locationHeader, strpos($locationHeader, "code=") + 5);
 
-        if ($result->getStatusCode() !== 302) {
-            $response->setStatusCode(401);
+        if ($codeResponse->getStatusCode() !== 302) {
+            $codeResponse->setStatusCode(401);
 
-            return $response;
+            return $codeResponse;
         }
 
-        //make a post for token
-        $token = $browser->post($tokenUrl, array(
-            "Accept: application/x-www-form-urlencoded",
-        ), array(
+        //make a GET to get token
+        $tokenRequest = Request::create($tokenUrl, 'GET', array(
             "client_id" => $clientId,
             "client_secret" => $client->getSecret(),
             "redirect_uri" => $redirectUris[0],
@@ -374,7 +371,9 @@ class UsersController extends FOSRestController
             "grant_type" => "authorization_code",
         ));
 
-        return json_decode($token->getContent(), true);
+        $tokenResponse = $kernel->handle($tokenRequest, HttpKernelInterface::SUB_REQUEST);
+
+        return json_decode($tokenResponse->getContent(), true);
     }
 
     private function extractDomain($domain)
