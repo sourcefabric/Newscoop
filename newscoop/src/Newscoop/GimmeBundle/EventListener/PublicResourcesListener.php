@@ -36,7 +36,8 @@ class PublicResourcesListener
             'newscoop_gimme_users_login',
             'newscoop_gimme_users_logout',
             'newscoop_gimme_users_register',
-            'newscoop_gimme_users_restorepassword'
+            'newscoop_gimme_users_restorepassword',
+            'newscoop_gimme_users_getuseraccesstoken',
         );
 
         if (in_array($route, $rootsArray)) {
