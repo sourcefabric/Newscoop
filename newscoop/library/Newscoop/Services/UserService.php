@@ -465,12 +465,12 @@ class UserService
      * Log in user
      *
      * @param Newscoop\Entity\User $user
+     * @param string               $providerKey
      *
      * @return void
      */
-    public function loginUser(User $user)
+    public function loginUser(User $user, $providerKey)
     {
-        $providerKey = 'frontend_area';
         $roles = $user->getRoles();
         $token = new UsernamePasswordToken($user, null, $providerKey, $roles);
         $this->security->setToken($token);

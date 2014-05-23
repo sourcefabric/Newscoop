@@ -1,0 +1,1 @@
+ALTER TABLE  `OAuthClient` ADD  `trusted` TINYINT( 1 ) NOT NULL;

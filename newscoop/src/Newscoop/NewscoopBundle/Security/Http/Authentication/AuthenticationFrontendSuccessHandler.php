@@ -21,16 +21,20 @@ class AuthenticationFrontendSuccessHandler extends DefaultAuthenticationSuccessH
 {
     protected $authAdapter;
 
+    protected $userService;
+
     /**
      * Constructor
      *
      * @param HttpUtils                                  $httpUtils
      * @param array                                      $options
      * @param Newscoop\Services\Auth\DoctrineAuthService $authAdapter
+     * @param UserService                                $userService
      */
-    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter)
+    public function __construct(HttpUtils $httpUtils, array $options, $authAdapter, $userService)
     {
         $this->authAdapter = $authAdapter;
+        $this->userService = $userService;
 
         parent::__construct($httpUtils, $options);
     }
@@ -49,6 +53,10 @@ class AuthenticationFrontendSuccessHandler extends DefaultAuthenticationSuccessH
         $zendAuth = \Zend_Auth::getInstance();
         $this->authAdapter->setEmail($user->getEmail())->setPassword($request->request->get('password'));
         $zendAuth->authenticate($this->authAdapter);
+
+        $OAuthtoken = $this->userService->loginUser($user, 'oauth_authorize');
+        $session = $request->getSession();
+        $session->set('_security_oauth_authorize', serialize($OAuthtoken));
 
         return parent::onAuthenticationSuccess($request, $token);
     }

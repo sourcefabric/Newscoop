@@ -40,6 +40,11 @@ class ClientType extends AbstractType
             ->addModelTransformer($transformer)
         );
 
+        $builder->add('trusted', 'checkbox', array(
+            'label' => 'api.form.client.label.trusted',
+            'required' => false
+        ));
+
         $builder->add('save', 'submit', array(
             'attr' => array('class' => 'btn btn-success pull-right'),
             'label' => 'api.form.client.label.save'
