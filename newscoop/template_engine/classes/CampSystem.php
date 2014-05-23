@@ -185,7 +185,14 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
             }
 
             $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
@@ -236,7 +243,7 @@ abstract class CampSystem
         }
 
 
-        $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr));
+        $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr), 'issue');
         if ($cacheService->contains($cacheKey)) {
             $issueObj = $cacheService->fetch($cacheKey);
         } else {
@@ -248,7 +255,23 @@ abstract class CampSystem
         $outputService = $resourceId->getService(IOutputService::NAME);
 
         if (!\Zend_Registry::isRegistered('webOutput')) {
-            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
+            $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+            if ($cacheService->contains($cacheKeyWebOutput)) {
+                \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+            } else {
+                $webOutput = $outputService->findByName('Web');
+                $cacheService->save($cacheKeyWebOutput, $webOutput);
+                \Zend_Registry::set('webOutput', $webOutput);
+            }
+        }
+
+        $cacheKeyOutSetIssues = $cacheService->getCacheKey(array('outSetIssues', $issueObj->getIssueId(), 'webOutput'));
+        if ($cacheService->contains($cacheKeyOutSetIssues)) {
+            $outSetIssues = $cacheService->fetch($cacheKeyOutSetIssues);
+        } else {
+            $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+            $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
+            $cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
         }
 
         $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
@@ -361,25 +384,32 @@ abstract class CampSystem
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         } else {
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        $outputService = $resourceId->getService(IOutputService::NAME);
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
 
-        if (!\Zend_Registry::isRegistered('webOutput')) {
-            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
-        }
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
 
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+            /* @var $templateSearchService ITemplateSearchService */
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
-        $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-        $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
-                        \Zend_Registry::get('webOutput'));
+            $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+            $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
+                \Zend_Registry::get('webOutput'));
 
-        if (empty($data)) {
-            $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
-        }
+            if (empty($data)) {
+                $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+            }
             $cacheService->save($cacheKey, $data);
-        return $data;
+            return $data;
         }
     }// fn GetIssueTemplate
 
@@ -391,24 +421,31 @@ abstract class CampSystem
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         } else {
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        $outputService = $resourceId->getService(IOutputService::NAME);
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
 
-        if (!\Zend_Registry::isRegistered('webOutput')) {
-            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
-        }
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
 
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
-        $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
-        $data = $templateSearchService->getSectionPage($sectionObj->getSectionId(),
-                        \Zend_Registry::get('webOutput'));
-        if (empty($data)) {
+            $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
+            $data = $templateSearchService->getSectionPage($sectionObj->getSectionId(),
+                \Zend_Registry::get('webOutput'));
+            if (empty($data)) {
                 $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
-        }
+            }
             $cacheService->save($cacheKey, $data);
-        return $data;
+            return $data;
         }
     }// fn GetSectionTemplate
 
@@ -420,25 +457,32 @@ abstract class CampSystem
         if ($cacheService->contains($cacheKey)) {
             return $cacheService->fetch($cacheKey);
         } else {
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        $outputService = $resourceId->getService(IOutputService::NAME);
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
 
-        if (!\Zend_Registry::isRegistered('webOutput')) {
-            \Zend_Registry::set('webOutput', $outputService->findByName('Web'));
-        }
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
 
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
-        $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
-        $data = $templateSearchService->getArticlePage($sectionObj->getSectionId(),
-                        \Zend_Registry::get('webOutput'));
+            $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
+            $data = $templateSearchService->getArticlePage($sectionObj->getSectionId(),
+                \Zend_Registry::get('webOutput'));
 
-        if (empty($data)) {
+            if (empty($data)) {
                 $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
-        }
+            }
             $cacheService->save($cacheKey, $data);
-        return $data;
-    }// fn GetArticleTemplate
+            return $data;
+        }// fn GetArticleTemplate
     }
 }// class CampSystem
 ?>
