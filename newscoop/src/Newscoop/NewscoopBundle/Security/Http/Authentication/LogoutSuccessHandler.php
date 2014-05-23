@@ -21,7 +21,7 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
      */
     public function __construct(HttpUtils $httpUtils, $targetUrl, $securityContext)
     {
-        parent::construct($httpUtils, $targetUrl);
+        parent::__construct($httpUtils, $targetUrl);
         $this->securityContext = $securityContext;
     }
 
