@@ -3,7 +3,7 @@
  * @package Newscoop\Gimme
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
  * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
- * @copyright 2012 Sourcefabric o.p.s.
+ * @copyright 2014 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
@@ -207,6 +207,7 @@ class UsersController extends FOSRestController
         $session = $request->getSession();
         $request->getSession()->invalidate();
         $session->set('_security_frontend_area', serialize($token));
+        $session->set('_security_oauth_authorize', serialize($token));
         $this->get('security.context')->setToken($token);
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();

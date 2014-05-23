@@ -1,19 +1,30 @@
 <?php
- 
+
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
- 
+
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Http\HttpUtils;
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
- 
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+
 /**
  * Custom authentication success handler
  */
 class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 {
-    protected $authAdapter;
- 
+    protected $securityContext;
+
+    /**
+     * @param HttpUtils $httpUtils
+     * @param string    $targetUrl
+     */
+    public function __construct(HttpUtils $httpUtils, $targetUrl, $securityContext)
+    {
+        parent::construct($httpUtils, $targetUrl);
+        $this->securityContext = $securityContext;
+    }
+
     /**
      * Creates a Response object to send upon a successful logout.
      *
@@ -28,6 +39,13 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
         \Article::UnlockByUser((int) $zendAuth->getIdentity());
         $zendAuth->clearIdentity();
 
+        // logout from OAuth
+        $token = new AnonymousToken(null, 'anon.');
+        $session = $request->getSession();
+        $request->getSession()->invalidate();
+        $session->set('_security_oauth_authorize', serialize($token));
+        $this->securityContext->setToken($token);
+
         setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
         return parent::onLogoutSuccess($request);
@@ -35,8 +53,7 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 
     private function extractDomain($domain)
     {
-        if(preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches))
-        {
+        if (preg_match("/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i", $domain, $matches)) {
             return $matches['domain'];
         } else {
             return $domain;
