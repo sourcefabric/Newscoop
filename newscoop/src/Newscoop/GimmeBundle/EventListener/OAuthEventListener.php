@@ -17,6 +17,8 @@ class OAuthEventListener
     {
         if ($event->getClient()->getTrusted()) {
             $event->setAuthorizedClient(true);
+
+            return true;
         }
 
         if ($user = $this->getUser($event)) {
