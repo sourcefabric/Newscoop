@@ -69,13 +69,13 @@ services:
         public: true
         arguments:  ['@security.http_utils', {}, '@auth.adapter', '@user']
 
-    newscoop_newscoop.security.backend.logout.success_handler:
-        class: %security.logout.success_handler.class%
+    newscoop_newscoop.security.logout.success_handler:
+        class: %newscoop_newscoop.security.logout.success_handler.class%
         public: false
         arguments:  ['@security.http_utils', '/', '@security.context']
 
     newscoop_newscoop.security.frontend.logout.success_handler:
-        class: %security.frontend.logout.success_handler.class%
+        class: %newscoop_newscoop.security.frontend.logout.success_handler.class%
         public: false
         arguments:  ['@security.http_utils', '/', '@security.context']
 
@@ -164,8 +164,8 @@ parameters:
     newscoop_newscoop.security.authentication.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationSuccessHandler"
     newscoop_newscoop.security.authentication.frontend.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFrontendSuccessHandler"
     security.authentication.failure_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFailedHandler"
-    security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
-    security.frontend.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\FrontendLogoutSuccessHandler"
+    newscoop_newscoop.security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
+    newscoop_newscoop.security.frontend.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\FrontendLogoutSuccessHandler"
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"
