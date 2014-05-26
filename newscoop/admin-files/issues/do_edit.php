@@ -135,13 +135,7 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
     }
 
     $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-    $cacheKey = $cacheService->getCacheKey(array(
-        'issue',
-        $issueObj->getPublicationId(),
-        $issueObj->getLanguageId(),
-        $issueObj->getIssueNumber()
-    ));
-    $cacheService->delete($cacheKey);
+    $cacheService->clearNamespace('issue');
 
 	//@New theme management
 	$link = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId();
