@@ -101,8 +101,10 @@ class AuthController extends Zend_Controller_Action
                 $this->auth->authenticate($socialAdapter);
             } else {
                 $user = $this->_helper->service('user')->getCurrentUser();
-                $token = $userService->loginUser($user);
+                $token = $userService->loginUser($user, 'frontend_area');
                 $session->set('_security_frontend_area', serialize($token));
+                $OAuthtoken = $userService->loginUser($user, 'oauth_authorize');
+                $session->set('_security_oauth_authorize', serialize($OAuthtoken));
             }
             setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
             if ($user->isPending()) {

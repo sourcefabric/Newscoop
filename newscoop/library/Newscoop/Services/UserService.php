@@ -467,7 +467,7 @@ class UserService
      * @param Newscoop\Entity\User $user
      * @param string               $providerKey
      *
-     * @return void
+     * @return UsernamePasswordToken
      */
     public function loginUser(User $user, $providerKey)
     {
