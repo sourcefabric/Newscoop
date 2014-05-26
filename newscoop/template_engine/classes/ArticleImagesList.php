@@ -41,7 +41,7 @@ class ArticleImagesList extends ListObject
             foreach ($articleImagesList as $image) {
                 $metaImagesList[] = new MetaImage($image->getImageId());
             }
-            $cacheService->save($cacheKey, $articleImagesList);
+            $cacheService->save($cacheKey, $metaImagesList);
         }
         return $metaImagesList;
 	}
