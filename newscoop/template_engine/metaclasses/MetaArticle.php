@@ -517,12 +517,21 @@ final class MetaArticle extends MetaDbObject {
         if (!$image->defined) {
             return null;
         }
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-        $image->number);
-        if (!$articleImage->exists()) {
-            return null;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleImageIndex', $this->m_dbObject->getArticleNumber(), $image->number), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $index = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+            $image->number);
+            if (!$articleImage->exists()) {
+                return null;
+            }
+            $index = $articleImage->getImageArticleIndex();
+            $cacheService->save($cacheKey, $index);
         }
-        return $articleImage->getImageArticleIndex();
+
+        return $index;
     }
 
 
