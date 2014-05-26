@@ -816,12 +816,22 @@ final class MetaArticle extends MetaDbObject {
      * @return MetaImage
      */
     public function image($p_imageIndex) {
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-        null, $p_imageIndex);
-        if (!$articleImage->exists()) {
-            return new MetaImage();
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $metaImage = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+            null, $p_imageIndex);
+            if (!$articleImage->exists()) {
+                $metaImage = new MetaImage();
+            } else {
+                $metaImage = new MetaImage($articleImage->getImageId());
+            }
+            $cacheService->save($cacheKey, $metaImage);
         }
-        return new MetaImage($articleImage->getImageId());
+
+        return $metaImage;
     }
 
     /**
