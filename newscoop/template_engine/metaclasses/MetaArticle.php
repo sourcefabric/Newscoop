@@ -532,9 +532,10 @@ final class MetaArticle extends MetaDbObject {
             $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
             $image->number);
             if (!$articleImage->exists()) {
-                return null;
+                $index = null;
+            } else {
+                $index = $articleImage->getImageArticleIndex();
             }
-            $index = $articleImage->getImageArticleIndex();
             $cacheService->save($cacheKey, $index);
         }
 
