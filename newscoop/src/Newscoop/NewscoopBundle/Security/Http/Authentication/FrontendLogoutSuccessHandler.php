@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package Newscoop\NewscoopBundle
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
+ * @copyright 2014 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 namespace Newscoop\NewscoopBundle\Security\Http\Authentication;
 
@@ -11,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 /**
  * Custom authentication success handler
  */
-class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
+class FrontendLogoutSuccessHandler extends DefaultLogoutSuccessHandler
 {
     protected $securityContext;
 
@@ -34,11 +40,8 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
      */
     public function onLogoutSuccess(Request $request)
     {
-        // Clear Zend auth
         $zendAuth = \Zend_Auth::getInstance();
         $zendAuth->clearIdentity();
-
-        $referer = $request->headers->get('referer');
         // logout from OAuth
         $token = new AnonymousToken(null, 'anon.');
         $session = $request->getSession();
@@ -48,7 +51,7 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 
         setcookie('NO_CACHE', 'NO', time()-3600, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
-        return $this->httpUtils->createRedirectResponse($request, $referer);
+        return parent::onLogoutSuccess($request);
     }
 
     private function extractDomain($domain)

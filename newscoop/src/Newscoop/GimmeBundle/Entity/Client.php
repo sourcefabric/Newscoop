@@ -44,11 +44,18 @@ class Client extends BaseClient
     protected $users;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    protected $trusted;
+
+    /**
      * Construct Client object
      */
     public function __construct()
     {
+        parent::__construct();
         $this->users = new ArrayCollection();
+        $this->trusted = false;
     }
 
     /**
@@ -153,5 +160,29 @@ class Client extends BaseClient
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Gets trusted status.
+     *
+     * @return boolean
+     */
+    public function getTrusted()
+    {
+        return $this->trusted;
+    }
+
+    /**
+     * Sets trusted status.
+     *
+     * @param boolean $trusted App status
+     *
+     * @return self
+     */
+    public function setTrusted($trusted)
+    {
+        $this->trusted = $trusted;
+
+        return $this;
     }
 }

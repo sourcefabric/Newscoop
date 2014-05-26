@@ -15,6 +15,12 @@ class OAuthEventListener
 
     public function onPreAuthorizationProcess(OAuthEvent $event)
     {
+        if ($event->getClient()->getTrusted()) {
+            $event->setAuthorizedClient(true);
+
+            return true;
+        }
+
         if ($user = $this->getUser($event)) {
             $event->setAuthorizedClient(
                 $user->hasClient($event->getClient())
