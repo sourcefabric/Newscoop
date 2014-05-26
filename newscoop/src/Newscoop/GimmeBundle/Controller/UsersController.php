@@ -346,7 +346,7 @@ class UsersController extends FOSRestController
         $user = $this->container->get('security.context')->getToken()->getUser();
         if (!$user instanceof User) {
             /**
-             * TODO Throw AccessDeniedException instead Exception (realted to bug which redirects to Auth controller
+             * TODO Throw AccessDeniedException instead of Exception (related to bug which redirects to Auth controller
              *  when AccessDeniedException is used.)
              */
             throw new \Exception('You do not have the necessary permissions.');

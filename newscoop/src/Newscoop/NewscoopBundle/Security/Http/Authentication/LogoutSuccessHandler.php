@@ -36,6 +36,7 @@ class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
     {
         // Clear Zend auth
         $zendAuth = \Zend_Auth::getInstance();
+        \Article::UnlockByUser((int) $zendAuth->getIdentity());
         $zendAuth->clearIdentity();
 
         $referer = $request->headers->get('referer');
