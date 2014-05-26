@@ -157,12 +157,20 @@ final class MetaArticle extends MetaDbObject {
         if (is_null($this->m_state) && $property != 'image_index'
         && strncasecmp('image', $property, 5) == 0 && strlen($property) > 5) {
             $imageNo = substr($property, 5);
-            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $imageNo);
-            if (!$articleImage->exists()) {
-                $this->trigger_invalid_property_error($p_property);
-                return new MetaImage();
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKey = $cacheService->getCacheKey(array('MetaImage', $this->m_dbObject->getArticleNumber(), $imageNo), 'article');
+            if ($cacheService->contains($cacheKey)) {
+                return $cacheService->fetch($cacheKey);
+            } else {
+                $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $imageNo);
+                if (!$articleImage->exists()) {
+                    $this->trigger_invalid_property_error($p_property);
+                    return new MetaImage();
+                }
+                $metaImage = new MetaImage($articleImage->getImageId());
+                $cacheService->save($cacheKey, $metaImage);
+                return $metaImage;
             }
-            return new MetaImage($articleImage->getImageId());
         }
 
         try {
