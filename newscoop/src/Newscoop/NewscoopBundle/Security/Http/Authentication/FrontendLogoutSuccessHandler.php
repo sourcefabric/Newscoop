@@ -40,6 +40,8 @@ class FrontendLogoutSuccessHandler extends DefaultLogoutSuccessHandler
      */
     public function onLogoutSuccess(Request $request)
     {
+        $zendAuth = \Zend_Auth::getInstance();
+        $zendAuth->clearIdentity();
         // logout from OAuth
         $token = new AnonymousToken(null, 'anon.');
         $session = $request->getSession();
