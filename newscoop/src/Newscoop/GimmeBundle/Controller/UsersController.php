@@ -16,11 +16,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityNotFoundException;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 use Newscoop\GimmeBundle\Entity\Client;
+use Newscoop\Entity\User;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
@@ -339,6 +341,15 @@ class UsersController extends FOSRestController
         $client = $clientManager->findClientByPublicId($clientId);
         if (!($client instanceof Client)) {
             throw new NotFoundHttpException("Client {$clientId} is not found.");
+        }
+
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        if (!$user instanceof User) {
+            /**
+             * TODO Throw AccessDeniedException instead Exception (realted to bug which redirects to Auth controller
+             *  when AccessDeniedException is used.)
+             */
+            throw new \Exception('You do not have the necessary permissions.');
         }
 
         $redirectUris = $client->getRedirectUris();
