@@ -165,9 +165,10 @@ final class MetaArticle extends MetaDbObject {
                 $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $imageNo);
                 if (!$articleImage->exists()) {
                     $this->trigger_invalid_property_error($p_property);
-                    return new MetaImage();
+                    $metaImage = new MetaImage();
+                } else {
+                    $metaImage = new MetaImage($articleImage->getImageId());
                 }
-                $metaImage = new MetaImage($articleImage->getImageId());
                 $cacheService->save($cacheKey, $metaImage);
                 return $metaImage;
             }
