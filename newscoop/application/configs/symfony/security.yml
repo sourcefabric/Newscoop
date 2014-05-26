@@ -68,6 +68,7 @@ security:
                 path: admin_logout
                 target: /admin
                 invalidate_session: false
+                success_handler: newscoop_newscoop.security.logout.success_handler
 
         frontend_area:
             pattern:    ^/
@@ -82,6 +83,7 @@ security:
                 path: /auth/logout
                 target: /
                 invalidate_session: false
+                success_handler: newscoop_newscoop.security.frontend.logout.success_handler
             anonymous:  true
 
     access_control:
