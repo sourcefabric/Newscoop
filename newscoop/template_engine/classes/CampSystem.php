@@ -154,6 +154,7 @@ abstract class CampSystem
     public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL, $p_isPublished = true)
     {
         global $g_ado_db;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         if (CampCache::IsEnabled()) {
             $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
             $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
