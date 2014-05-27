@@ -269,22 +269,29 @@ class CampURIShortNames extends CampURI
      */
     private function _getIssue($name, MetaLanguage $language, MetaPublication $publication)
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'issue');
+        if ($cacheService->contains($cacheKeyGetCurrentIssue)) {
+            $issueObj = $cacheService->fetch($cacheKeyGetCurrentIssue);
+        } else {
+            $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
+            $cacheService->save($cacheKeyGetCurrentIssue, $issueObj);
+        }
         if (!empty($name)) {
-            $issueArray = Issue::GetIssues($publication->identifier, $language->number, null, $name, null, !$this->m_preview);
-            if (is_array($issueArray) && sizeof($issueArray) == 1) {
-                $issue = new MetaIssue($publication->identifier, $language->number, $issueArray[0]->getIssueNumber());
+            $cacheKeyIssueWithName = $cacheService->getCacheKey(array('MetaIssueWithName', $publication->identifier, $language->number, $name), 'issue');
+            if ($cacheService->contains($cacheKeyIssueWithName)) {
+                $issue = $cacheService->fetch($cacheKeyIssueWithName);
             } else {
-                throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
+                //$issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
+                $issueArray = Issue::GetIssues($publication->identifier, $language->number, null, $name, null, !$this->m_preview);
+                if (is_array($issueArray) && sizeof($issueArray) == 1) {
+                    $issue = new MetaIssue($publication->identifier, $language->number, $issueArray[0]->getIssueNumber());
+                } else {
+                    throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
+                }
+                $cacheService->save($cacheKeyIssueWithName, $issue);
             }
         } else {
-            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKeyGetCurrentIssue = $cacheService->getCacheKey(array('GetCurrentIssue', $publication->identifier, $language->number), 'issue');
-            if ($cacheService->contains($cacheKeyGetCurrentIssue)) {
-                $issueObj = $cacheService->fetch($cacheKeyGetCurrentIssue);
-            } else {
-                $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
-                $cacheService->save($cacheKeyGetCurrentIssue, $issueObj);
-            }
             $cacheKeyMetaIssue = $cacheService->getCacheKey(array('MetaIssue', $publication->identifier, $language->number, $issueObj->getIssueNumber()), 'issue');
             if ($cacheService->contains($cacheKeyMetaIssue)) {
                 $issue = $cacheService->fetch($cacheKeyMetaIssue);
