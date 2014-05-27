@@ -1,35 +1,35 @@
-'Password confirmation does not match your password.': null
-'Password Confirmation': null
+'Password confirmation does not match your password.': 'Potvrzení hesla se neshoduje s Vaším heslem. '
+'Password Confirmation': 'Potvrzení hesla'
 Website: 'Webová stránka'
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
-'Last Name Public': null
-Google+: null
+Twitter: Twitter
+'Save profile': 'Uložit profil'
+'Profile image': 'Profilová fotka'
+Organisation: Organizace
+'Last Name Public': Příjmení
+Google+: Google+
 Geolocation: Geolokace
-Gender: null
-'First Name Public': null
-Facebook: null
-'Date of birth': null
-'Allow sending emails': null
-'About me': null
-'User with email %s is registered already.': null
-'Username is used. Please use another one.': null
-Continue: null
-'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
+Gender: Pohlaví
+'First Name Public': 'Křestní jméno '
+Facebook: Facebook
+'Date of birth': 'Datum narození'
+'Allow sending emails': 'Povolit posílání e-mailů'
+'About me': 'O mně'
+'User with email %s is registered already.': 'Uživatel s e-mailovou adresou %s je již registrován.'
+'Username is used. Please use another one.': 'Uživatelské jméno je již používáno. Prosím použijte jiné. '
+Continue: Pokračovat
+'Accepting terms of use': 'Souhlasím s podmínkami použití'
+'send confirmation email': 'poslat potvrzovací e-mail'
+'edit user': 'upravit uživatele'
+'delete user': 'smazat uživatele'
+'Verified profile': 'Ověřený profil'
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
-'Send email to user:': null
-'No users found.': null
+'Send email to user:': 'Poslat e-mail uživateli: '
+'No users found.': 'Uživatelé nenalezeni. '
 'No records found.': 'Nebyly nalezeny žádné záznamy.'
 'No entries to show': 'Nejsou zde žádné příspěvky k zobrazení'
 'Display _MENU_ records': 'Zobrazit _MENU_ záznamy'
-'Are you sure you want to {action}?': null
-'Active Logins': null
+'Are you sure you want to {action}?': 'Jste si jisti, že chcete  {akci}?'
+'Active Logins': 'Aktivní přihlášení'
 ' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
 'User renamed.': 'Uživatel přejmenován.'
 'User attributes': 'Atributy uživatele'
@@ -184,39 +184,39 @@ Miscellaneous: Různé
 'User will be notified on several events': 'Uživatel bude několikrát informován'
 'Editor Miscellaneous Settings': 'Různé Nastavení Editoru'
 'No such user account.': 'Uživatelský účet neexistuje'
-'User image (full-size)': null
+'User image (full-size)': 'Obrázek uživatele (plná velikost)'
 users:
     label:
-        title: null
+        title: 'Hledání uživatele'
     menu:
         manage: 'Správa uživatelů'
     created: Vytvořeno
-    updated: null
+    updated: Aktualizováno
     status:
         status: Status
-        registered: null
-        pending: null
+        registered: Registrováno
+        pending: 'Čekající na vyřízení'
         deleted: Vymazat
         active: Aktivní
     table:
         actions:
             actions: Činnosti
             edit: Upravit
-            resend_email: null
+            resend_email: 'Přeposlat aktivační e-mail'
             rename: Přejmenovat
             remove: Odstranit
-        confirm_remove: null
+        confirm_remove: 'Určitě chcete smazat tohoto uživatele? '
         table_messages:
-            page: null
-            perPageText: null
-            pageText: null
-            recordCountPageBoundTemplate: null
-            recordCountPageUnboundedTemplate: null
-            recordCountTotalTemplate: null
-            recordCountFilteredTemplate: null
-            recordCountText: null
-            recordCountTextTemplate: null
-            recordCountTemplate: null
+            page: Stránka
+            perPageText: 'Show:'
+            pageText: 'Stránky:'
+            recordCountPageBoundTemplate: '{pageLowerBound} do {pageUpperBound} z'
+            recordCountPageUnboundedTemplate: '{recordsShown} z'
+            recordCountTotalTemplate: '{recordsQueryCount} {Název kolekce}'
+            recordCountFilteredTemplate: '(filtrovaný z {recordsTotal} total records)'
+            recordCountText: Showing
+            recordCountTextTemplate: '{text} {stránkaTemplate} {totalTemplate} {filtrovaný Template}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
             processingText: Zpracovávám...
     chart:
-        title: null
+        title: 'Aktivní přihlášení'

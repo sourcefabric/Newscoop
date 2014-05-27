@@ -70,20 +70,20 @@ publicresources:
 api:
     configure:
         title: 'Konfigurace API - veřejné zdroje'
-        title_content: null
+        title_content: 'Konfigurace API - veřejné zdroje'
         tabs:
-            resources: null
+            resources: 'Veřejné zdroje'
             clients: Klienti
         resources:
-            info: null
+            info: 'Defoltně jsou všechny zdroje chráněné Firewall, ale můžete si vybrat zdroje, které zveřejníte.'
             add_button: 'Přidat klienta'
         clients:
             table:
                 name: 'Jméno klienta'
                 id: 'ID klienta'
-                secret: null
-                trusted: null
-                redirect: null
+                secret: Tajný
+                trusted: 'Důvěryhodný?'
+                redirect: 'Přesměrovat Uris'
                 publication: Publikace
                 actions: Činnosti
                 actions_buttons:
@@ -97,10 +97,10 @@ api:
             label:
                 name: 'Vyber jméno pro svého klienta:'
                 publication: 'Vyber publikaci pro svého klienta:'
-                redirectUris: null
-                trusted: null
+                redirectUris: 'Vyber přesměrování uris pro svého klienta:'
+                trusted: 'Důvěryhodný?'
                 save: Uložit
         PublicResources:
             label:
-                routes: null
+                routes: 'Vyber zdroje pro zveřejnění:'
                 save: Uložit

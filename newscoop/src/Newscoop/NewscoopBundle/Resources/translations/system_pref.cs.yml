@@ -3,130 +3,130 @@ newscoop:
         save: Uložit
     preferences:
         error:
-            cache: null
-            replication: null
-            maxupload: null
-            geolocation: null
-            noaccess: null
-            latitude: null
-            longitude: null
-            cacheNotCleared: null
+            cache: 'Neplatné: Je třeba povolit PHP %cache% k použití caching systému šablon.'
+            replication: 'Database Replication data neúplná'
+            maxupload: 'Zadána neplatná maximální velikost nahrávaného souboru'
+            geolocation: 'Chybná poloha. Musí obsahovat čísla. Rozpětí nemůže být > 90 a <-90. Rozpětí nemůže být > 180 a < -180. '
+            noaccess: 'Nemáte oprávnění měnit systémové předvolby.'
+            latitude: 'Políčko rozpětí není platné. '
+            longitude: 'Hodnota pole zeměpisné délky není platné'
+            cacheNotCleared: 'Chyba v čištění cache'
         success:
-            saved: null
-            cacheCleared: null
+            saved: 'Systémové preference aktualizovány.'
+            cacheCleared: 'Cache byla vymazána'
         menu:
-            general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
+            general: 'Obecné Nastavení'
+            email: 'Nastavení e-mailu'
+            editor: 'Nastavení Editoru'
+            geolocation: 'Nastavení geolokace'
+            fb: 'Nastavení Facebook'
+            media: 'Nastavení videa'
+            cache: 'Nastavení Cache'
+            other: 'Další nastavení'
+            recaptcha: 'Nastavení reCAPTCHA'
         btn:
             cleardatabasecache: null
         label:
             title: 'Systémové preference'
-            header: null
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
+            header: Preference
+            siteonline: 'Stránka On-line:'
+            sitetitle: 'Název Stránky:'
+            metakeywords: 'Meta Klíčová Slova Stránky'
+            metadescription: 'Meta Popis Stránky:'
+            timezone: 'Časové pásmo:'
+            cacheengine: 'Cache Engin Databáze:'
+            cacheenginehost: 'Databáze Cache Engine Host:'
+            cacheengineport: 'Databáze Cache Engine Port:'
+            cachetemplate: 'Cache Handler templatů:'
+            cacheimage: 'Imagecache Lifetime:'
+            allowrecovery: 'Obnovení hesla povoleno:'
+            secretkey: 'Tajný Klíč:'
             sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
-            maxupload: null
-            maxuploadmsg: null
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
-            emailfrom: null
-            imageratio: null
-            imagewidth: null
-            imageheight: null
-            zoom: null
-            external: null
-            usereplication: null
-            serverdb: null
-            replicationhost: null
-            replicationuser: null
-            replicationpw: null
-            replicationport: null
-            filter: null
-            cron: null
-            mysqlpath: null
-            mysqlpathmsg: null
-            latitude: null
-            longitude: null
-            zoomlevel: null
-            defaultwidth: null
-            defaultheight: null
-            css: null
-            autofocus: null
-            zoomautofocus: null
-            borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
-            nominatimsearch: null
-            preflanguage: null
-            markerdir: null
-            defaultmarker: null
-            popupwidth: null
-            popupheight: null
-            youtubewidth: null
-            youtubeheight: null
-            vimeowidth: null
-            vimeoheight: null
-            flashwidth: null
-            flashheight: null
-            flashserver: null
-            flashdir: null
-            apikey: null
-            appid: null
-            fbsecret: null
-            recaptchapublickey: null
-            recaptchaprivatekey: null
-            recaptchasecure: null
-            disabled: null
+            sessionlifetimemsg: 'podle php.ini nastavení.'
+            separator: 'Oddělovač klíčových slov:'
+            captcha: 'Počet neúspěšných loginů před zobrazením CAPTCHA:'
+            maxupload: 'Maximální velikost uploadovaného souboru:'
+            maxuploadmsg: 'Vložte hodnotu mezi 0 a %max% (maximální velikost je určena v ''php.ini''). Použijte ''K'' pro kilobyty, ''M'' pro megabyty a ''G'' pro gigabyty, bez mezer mezi hodnotou a příslušným písmenem, např. ''3M''.'
+            stats: 'Atomatický sběr statistik:'
+            smtphost: 'SMTP Host:'
+            smtpport: 'SMTP Port:'
+            email: 'SMTP e-mail z adresy:'
+            emailfrom: 'E-mailová adresa pro upozornění ze systému:'
+            imageratio: 'Poměr Změny Velikosti:'
+            imagewidth: 'Změna velikosti (Šířka):'
+            imageheight: 'Změna velikosti (Výška):'
+            zoom: 'Povolit zoom pro obrázky ve článcích?'
+            external: 'Spravovat čtenářské předplatné externě?'
+            usereplication: 'Nastavit Newscoop Replication Server?'
+            serverdb: 'Online Server Databáze Newscoopu'
+            replicationhost: 'Database Replication Host:'
+            replicationuser: 'Database Replication uživatele:'
+            replicationpw: 'Database Replication hesla:'
+            replicationport: 'Database Replication Port:'
+            filter: 'Filtrování šablon (odděleno čárkou)'
+            cron: 'Spustit naplánované úlohy zvenku?'
+            mysqlpath: 'MySQL client command path'
+            mysqlpathmsg: 'Nahrát data geo-jmén'
+            latitude: 'Zeměpisná šířka středu mapy:'
+            longitude: 'Zeměpisná délka středu mapy:'
+            zoomlevel: 'Úroveň zoomu mapy:'
+            defaultwidth: 'Výchozí šířka mapy:'
+            defaultheight: 'Výchozí výška mapy:'
+            css: 'Zahrnout CSS soubor pro zobrazeni mapy'
+            autofocus: 'Automatické zaostření pro mapu jako výchozí chování:'
+            zoomautofocus: 'Maximální zoom pro automatické zaostření:'
+            borderautofocus: 'Hranice mapy pro automatické zaostření:'
+            mapprovider: 'Povolit poskytovatele map Google Streets:'
+            mapquest: 'Povolit poskytovatele map MapQuest:'
+            openstreet: 'Povolit poskytovatele map OpenStreet:'
+            defaultmapprovider: 'Výchozí poskytovatel mapy:'
+            nominatimsearch: 'Použijte vyhledávní MapQuest Nominatim:'
+            preflanguage: 'Preferovaný jazyk adresy:'
+            markerdir: 'Adresář značek na mapě:'
+            defaultmarker: 'Výchozí značky na mapě:'
+            popupwidth: 'Minimální šířka popup mapy:'
+            popupheight: 'Minimální výška popup mapy:'
+            youtubewidth: 'Youtube výchozí šířka: '
+            youtubeheight: 'Youtube výchozí výška:'
+            vimeowidth: 'Vimeo výchozí šířka.'
+            vimeoheight: 'Vimeo výchozí výška:'
+            flashwidth: 'Výchozí šířka Flash:'
+            flashheight: 'Výchozí výška Flash:'
+            flashserver: 'Místní Flash Server:'
+            flashdir: 'Místní Flash adresář:'
+            apikey: 'API Key:'
+            appid: 'App ID:'
+            fbsecret: 'App důvěrný:'
+            recaptchapublickey: 'Veřejný klíč'
+            recaptchaprivatekey: 'Soukromý klíč'
+            recaptchasecure: 'Bezpečné url pro reCAPTCHA?'
+            disabled: vypnuto
             yesoption: Ano
             nooption: Ne
-            geosearch: null
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
+            geosearch: 'Použít lokální GeoNames vyhledávání:'
+            usergarbage: 'Odstranit zastaralá uživatelská data čekající na vyřízení?'
+            usergarbagedaysinfo: 'Definujte přesný počet dnů po kterých úživatelé čekající na vyřízení budou smazáni.'
+            usergarbagedays: 'Počet dní'
         popover:
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cacheimage: null
-            cachetemplate: null
-            recovery: null
-            secret: null
-            separator: null
-            stats: null
-            zoom: null
-            ratio: null
-            replication: null
-            filter: null
-            cron: null
-            video: null
-            emailfrom: null
+            cacheengine: 'Povoluje nebo zakazuje systém cache cache, který může zlepšit výkon Newscoop.'
+            cacheenginehost: 'Poskytněnte cache host (pro Memcache, Memcached nebo Redis)'
+            cacheengineport: 'Poskytněte cache host port (pro Memcache, Memcached nebo Redis)'
+            cacheimage: 'Čas, po který budou obrázky uloženy, od 30 sekund do nekonečna.'
+            cachetemplate: 'Vyberte DB a tím povolíte cache pro templaty.'
+            recovery: 'Zda-li uživatelé mohou dostávat připomenutí hesla e-mailem. Všimněte si, že pokud je tato funkce zapnuta a váš e-mailový účet je ohrožena, vaše Newscoop publikace může být snadno ohrožena také.'
+            secret: 'Bezpečnostní klíč, který Newscoop může použít pro integraci webových služeb a dalších pokročilých funkcí.'
+            separator: 'Specifikujte oddělovač pro klíčová slova na stránce Úprav článku (čárka nebo pomlčka).'
+            stats: 'Tato možnost umožňuje shromažďovat statistické údaje o přístupech čtenářů k publikacím na serveru. Klikněte NE pokud používáte jinou statistickou službu. Zablokováním shromažďování statistických údajů můžete snížit zatížení vašeho Newscoop serveru. '
+            zoom: 'Pokud nastavena na Ano, čtenáři mohou zvětšovat obrázky u článku na vašich stránkách publikací pomocí klikání na obrázky. Tento zoom efekt funguje pro jakýkoliv obrázek vložený v řádce s textem článku.'
+            ratio: 'Poměr velikosti má přednost před jakoukoli změnou šírky nebo změny hodnoty výšky, která je zde nastavena. Pokud není poměr nastaven, ale šířka a výška jsou nastaveny, pak Newscoop použije hodnotu, kterou zmenší velikost obrazu. Výchozí nastavení zde může být přepsáno nastavením poměru, šířky nebo výšky pro konkrétní nastavení inline obrázku v  Article Edit page.'
+            replication: 'Toto Vám umožní nastavit Newscoop na dvou serverech najednou. Jedná se o bezpečnostní opatření pro případ hardwarových nebo síťových problémů. '
+            filter: 'Zadejte klíčová slova pro templaty, které chcete skrýt v template editoru  přístupného prostřednictvím Theme Management page. Například, templaty, které již nejsou používány, ale nechcete je odstranit ze serveru.'
+            cron: 'Prostředky k používání vlastních cron plánovače pro automatické úkoly, spíše než plánovač zahrnutý v Newscoop.'
+            video: 'Přednastavená šířka a výška u externě i lokálně uveřejňovaných souborů videí může být nastavena v této sekci, pro ujištění, že videa se zobrazují správně ve vašich Publications page templates.'
+            emailfrom: 'E-mailová adresa pro upozornění ze systému. '
             recaptcha:
-                publickey: null
-                privatekey: null
-                secure: null
-            garbage: null
-            lifetime: null
+                publickey: 'Použijte to v JavaScript kódu, který slouží vašim uživatelům.'
+                privatekey: 'Použijte při komunikaci mezi vaším servrem a reCAPTCHA servrem. Ujistěte se, že je to zachováno v tajnosti.'
+                secure: 'Pokud používáte bezpečnostní url pro reCAPTCHA vyberte možnost ANO.'
+            garbage: 'Pokud povoleno, umožňuje vydavateli definovat přesný počet dnů po kterých budou uživatelé čekající na vyřízení vymazáni. Přednastaveno 90 dnů.'
+            lifetime: 'Životnost relace v sekundách. Max: 86400 (24 hodin). Min: 0 (až do uzavření prohlížeče).'
