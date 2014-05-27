@@ -66,10 +66,10 @@ client:
     notfound: 'Klient nenalezen'
     removed: 'Klient byl odstraněn'
 publicresources:
-    updated: null
+    updated: 'Veřejné zdroje byly aktualizovány'
 api:
     configure:
-        title: null
+        title: 'Konfigurace API - veřejné zdroje'
         title_content: null
         tabs:
             resources: null
