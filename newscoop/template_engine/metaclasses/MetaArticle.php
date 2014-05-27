@@ -464,7 +464,15 @@ final class MetaArticle extends MetaDbObject {
 
     protected function hasAttachments()
     {
-        $attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('hasAttachments', $this->m_dbObject->getProperty('Number')), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $attachments = $cacheService->fetch($cacheKey);
+        } else {
+			$attachments = ArticleAttachment::GetAttachmentsByArticleNumber($this->m_dbObject->getProperty('Number'));
+            $cacheService->save($cacheKey, $attachments);
+		}
+
         return (int)(sizeof($attachments) > 0);
     }
 
