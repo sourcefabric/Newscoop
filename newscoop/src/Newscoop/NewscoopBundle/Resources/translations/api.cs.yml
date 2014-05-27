@@ -82,6 +82,7 @@ api:
                 name: 'Jméno klienta'
                 id: 'ID klienta'
                 secret: null
+                trusted: 'Trusted?'
                 redirect: null
                 publication: Publikace
                 actions: Činnosti
@@ -97,6 +98,7 @@ api:
                 name: 'Vyber jméno pro svého klienta:'
                 publication: 'Vyber publikaci pro svého klienta:'
                 redirectUris: null
+                trusted: 'Trusted?'
                 save: Uložit
         PublicResources:
             label:

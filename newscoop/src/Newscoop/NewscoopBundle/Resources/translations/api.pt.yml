@@ -82,6 +82,7 @@ api:
                 name: null
                 id: null
                 secret: null
+                trusted: 'Trusted?'
                 redirect: null
                 publication: Publicação
                 actions: Acções
@@ -97,6 +98,7 @@ api:
                 name: null
                 publication: null
                 redirectUris: null
+                trusted: 'Trusted?'
                 save: Guardar
         PublicResources:
             label:
