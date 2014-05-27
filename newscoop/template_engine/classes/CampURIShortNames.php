@@ -323,7 +323,7 @@ class CampURIShortNames extends CampURI
             $sections = Section::GetSections($publication->identifier, $issue->number, $language->number, $name);
             if (is_array($sections) && sizeof($sections) == 1) {
                 $metaSection = new MetaSection($publication->identifier, $issue->number, $language->number, $sections[0]->getSectionNumber());
-                $cacheService->save($cacheKeyMetaIssue, $metaSection);
+                $cacheService->save($cacheKey, $metaSection);
             } else {
                 throw new InvalidArgumentException("Invalid section identifier in URL.", self::INVALID_SECTION);
             }
