@@ -343,7 +343,7 @@ class UsersController extends FOSRestController
             throw new NotFoundHttpException("Client {$clientId} is not found.");
         }
 
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('user')->getCurrentUser();
         if (!$user instanceof User) {
             /**
              * TODO Throw AccessDeniedException instead of Exception (related to bug which redirects to Auth controller
