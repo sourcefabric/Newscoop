@@ -82,7 +82,7 @@ api:
                 name: 'Nombre del Cliente'
                 id: 'ID del Cliente'
                 secret: Secreto
-                trusted: 'Trusted?'
+                trusted: null
                 redirect: 'URIs para redirección'
                 publication: Publicación
                 actions: Acciones
@@ -98,7 +98,7 @@ api:
                 name: 'Elija un nombre para su cliente:'
                 publication: 'Elija una publicación para su cliente:'
                 redirectUris: 'Elija los URI de redirección para su cliente:'
-                trusted: 'Trusted?'
+                trusted: null
                 save: Guardar
         PublicResources:
             label:

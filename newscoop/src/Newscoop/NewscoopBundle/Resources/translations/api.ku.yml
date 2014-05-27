@@ -82,7 +82,7 @@ api:
                 name: null
                 id: null
                 secret: null
-                trusted: 'Trusted?'
+                trusted: null
                 redirect: null
                 publication: null
                 actions: null
@@ -98,7 +98,7 @@ api:
                 name: null
                 publication: null
                 redirectUris: null
-                trusted: 'Trusted?'
+                trusted: null
                 save: null
         PublicResources:
             label:
