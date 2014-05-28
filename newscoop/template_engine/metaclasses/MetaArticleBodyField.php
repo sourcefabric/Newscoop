@@ -168,7 +168,14 @@ final class MetaArticleBodyField {
             $content .= $subtitle->content;
         }
         if ($this->m_articleTypeField->isContent()) {
-            $objectType = new ObjectType('article');
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKeyObjectType = $cacheService->getCacheKey(array('ObjectType', 'article'), 'ObjectType');
+            if ($cacheService->contains($cacheKeyObjectType)) {
+                $objectType = $cacheService->fetch($cacheKeyObjectType);
+            } else {
+                $objectType = new ObjectType('article');
+                $cacheService->save($cacheKeyObjectType, $objectType);
+            }
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {
