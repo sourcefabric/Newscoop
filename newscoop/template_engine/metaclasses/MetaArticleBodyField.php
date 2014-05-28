@@ -69,7 +69,15 @@ final class MetaArticleBodyField {
         }
         $this->m_parent_article = new Article($p_parent->language->number, $p_parent->number);
         $this->m_fieldName = $p_fieldName;
-        $this->m_articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_parent->type_name, $p_fieldName), 'articletype');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_articleTypeField = $cacheService->fetch($cacheKey);
+        } else {
+             $articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
+             $cacheService->save($cacheKey, $articleTypeField);
+             $this->m_articleTypeField = $articleTypeField;
+        }
     }
 
 
