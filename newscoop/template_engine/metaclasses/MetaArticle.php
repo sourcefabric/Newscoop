@@ -513,8 +513,21 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getCommentsEnabled()
     {
-        $publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
-        $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('publication1', $this->m_dbObject->getProperty('IdPublication')), 'publication');
+        if ($cacheService->contains($cacheKey)) {
+            $publicationObj = $cacheService->fetch($cacheKey);
+        } else {
+            $publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
+            $cacheService->save($cacheKey, $publicationObj);
+        }
+        $cacheKeyArticleType = $cacheService->getCacheKey(array('ArticleType', $this->m_dbObject->getProperty('Type')), 'articletype');
+        if ($cacheService->contains($cacheKeyArticleType)) {
+            $articleTypeObj = $cacheService->fetch($cacheKeyArticleType);
+        } else {
+            $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
+            $cacheService->save($cacheKeyArticleType, $articleTypeObj);
+        }
         return $publicationObj->commentsEnabled()
         && $articleTypeObj->commentsEnabled()
         && $this->m_dbObject->commentsEnabled();
