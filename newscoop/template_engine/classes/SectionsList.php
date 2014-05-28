@@ -27,7 +27,14 @@ class SectionsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('sectionList', $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count), 'section');
+        if ($cacheService->contains($cacheKey)) {
+            $sectionsList = $cacheService->fetch($cacheKey);
+        } else {
+          $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+            $cacheService->save($cacheKey, $sectionsList);
+        }
 	    $metaSectionsList = array();
 	    foreach ($sectionsList as $section) {
 	        $metaSectionsList[] = new MetaSection($section->getPublicationId(),
