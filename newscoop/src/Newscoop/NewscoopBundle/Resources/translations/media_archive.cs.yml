@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': null
-'Missing thumbnails fixed.': null
+'No thumbnails were fixed.': 'Nebyly opraveny žádné thumbnails.'
+'Missing thumbnails fixed.': 'Chybějící thumbnaily opraveny.'
 Slideshows: Slideshows
 'You cant update used files.': 'Nemůžete aktualizovat použité soubory.'
 Source: Zdroj
@@ -58,5 +58,5 @@ Size: 'Velikost '
 'Used in articles': 'Užívá se v článcích'
 'View image': 'Náhled obrázku'
 'Change image information': 'Změnit informace obrázku'
-'Photographer URL': null
-'Add website url starting with http://': null
+'Photographer URL': 'URL fotografa'
+'Add website url starting with http://': 'Přidat url webové stránky začínající na http://'

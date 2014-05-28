@@ -50,7 +50,7 @@ Folder: Složka
 'Directory $1 was deleted': 'Složka $1 byla odstraněna'
 'Directory $1 created.': 'Složka $1 vytvořena.'
 'You must select a file to upload.': 'Zvolte soubor k nahrání.'
-'You can only replace a file with a file of the same type.  The original file is of type $1': null
+'You can only replace a file with a file of the same type.  The original file is of type $1': 'Můžete nahradit soubor pouze souborem stejného typu. Původní typ souboru je $1'
 'Unable to save the file $1 to the path $2.': 'Nezdařilo se uložit soubor $1 do $2.     '
 Replace: Nahradit
 'File $1 replaced.': 'Soubor $1 nahrazen.'
