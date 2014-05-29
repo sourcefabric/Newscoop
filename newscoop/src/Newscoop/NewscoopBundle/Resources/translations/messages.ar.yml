@@ -9,7 +9,7 @@ More...: المزيد...
 Content: المحتوى
 Languages: اللغات
 Countries: البلدان
-Themes: النُسق
+Themes: نُسق
 Topics: الموضوعات
 Configure: إعداد
 'Image Archive': 'أرشيف الصور'
@@ -61,9 +61,9 @@ Section: القسم
 Keywords: 'الكلمات الدالة'
 Topic: موضوع
 'URL Name': 'اسم عنوان الرابط'
-'Left to pay': 'الباقي للدفع'
-Active: 'قيد التشغيل'
-Trial: تجريبي
+'Left to pay': 'المبلغ المتبقي للدفع'
+Active: منشّط
+Trial: 'اشتراك تجريبي'
 Next: التالي
 Previous: السابق
 Translate: ترجم
@@ -196,7 +196,7 @@ Search: إبحث
 Unlink: 'إفصل الرابط'
 'Are you sure you want to delete the image $1?': 'هل أنت متأكد أنك تريد أن تحذف الصورة $1؟'
 'No such issue.': 'لا يوجد مثل هذا الإصدار.'
-'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أنك تريد أن تحذف الإشتراك للمنشور $1؟'
+'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أنك تريد حذف الاشتراك الى المنشور $1 ؟'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'لا يمكن حفظ التغييرات للإصدار $1. يرجى التأكد ألّم يستخدم اسم العنوان $2 من قبل في منشور $3.'
 GB: جيجابايت
 MB: ميغابايت
@@ -241,7 +241,7 @@ Author: المؤلف
 'Article Files': 'ملفات المقال'
 'Article Comments': 'تعليقات المقال'
 'Are you sure you want to deactivate the subscription?': 'هل أنت متأكد من عطل الإشتراك؟'
-'Are you sure you want to activate the subscription?': 'هل أنت متأكد من تنشيط الإشتراك؟'
+'Are you sure you want to activate the subscription?': 'هل أنت متأكد أنك تريد تنشيط الاشتراك؟'
 Other: 'غير ذلك'
 'Time:': 'الوقت:'
 'No events.': 'لا أحداث.'
