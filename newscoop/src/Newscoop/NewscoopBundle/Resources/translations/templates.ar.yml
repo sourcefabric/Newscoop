@@ -1,20 +1,20 @@
 'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
 'Stop current upload': 'قف التحميل الحالي'
-'Start uploading queue': 'بدء تحميل قائمة الانتظار'
-'Start upload': 'بدء تحميل'
-Size: حجم
-'Select files': 'تحديد ملفات'
+'Start uploading queue': 'إبدأ قائمة الانتظار للرفع'
+'Start upload': 'إبدأ التحميل'
+Size: الحجم
+'Select files': 'حدّد ملفات'
 Filename: 'اسم الملف'
 'Drag files here.': 'اسحب الملفات هنا.'
 'Cache lifetime, sec': null
-'Add files to the upload queue and click the start button.': 'أضف ملفات إلى قائمة انتظار التحميل واضغط على الزر بدء.'
-'Add files': 'إضافة ملفات'
+'Add files to the upload queue and click the start button.': 'أضف ملفات إلى قائمة الانتظار للرفع وإضغط على الزر إبدء.'
+'Add files': 'أضف ملفات'
 '$1 files uploaded.': 'تم تحديث $1 صور(ة)'
 'Replace current with:': null
 'Edit template:': null
 'Changes have not been saved. Load new template without saving the current one?': null
 'to folder': null
-'You must select at least one template to perform an action.': 'يجب عليك أن تختار ما لا يقل عن قالب واحد لتنفيذ إجراء'
+'You must select at least one template to perform an action.': 'يجب عليك أن تختار ما لا يقل عن نموذج واحد لتنفيذ إجراء'
 'You must select a destination folder': null
 'You may only translate one article at a time.': null
 'You do not have the right to rename templates.': null
@@ -49,7 +49,7 @@ Folder: null
 'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
 'Directory $1 was deleted': null
 'Directory $1 created.': 'تم إنشاء الدليل $1'
-'You must select a file to upload.': 'عليك إختار ملف للرفع.'
+'You must select a file to upload.': 'يجب عليك تحديد ملف للرفع.'
 'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': null
 Replace: استبدال

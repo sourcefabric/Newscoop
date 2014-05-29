@@ -1,6 +1,6 @@
 get: 'حصل على'
 Soundcloud: SoundCloud
-Templates: قوالب
+Templates: نماذج
 'Feedback Messages': 'رسائل التغذية المرتدة'
 'Article Playlists': 'قوائم التشغيل للمقالة'
 'Check all': 'وضع علامة في الكل'
@@ -53,7 +53,7 @@ add: إضافة
 'User type deleted.': 'تم حذف نوع المستخدم'
 'User type added.': 'تم اضافة نوع المستخدم'
 'User Groups': 'مجموعات المستخدمين'
-Themes: مواضيع
+Themes: النُسق
 'That type name already exists, please choose a different name.': 'نوع الاسم موجود مسبقا، يرجى اختيار اسم آخر'
 System: نظام
 Structure: هيكل

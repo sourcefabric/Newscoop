@@ -1,21 +1,21 @@
-Plugins: 'وحدات قابسة'
-'Manage Plugins': 'إدارة وحدات قابسة'
+Plugins: ملحقات
+'Manage Plugins': 'إدارة ملحقات'
 Account: حساب
-'Items per page': 'عدد العناصر في كل صفحة'
-'Add new': 'إضافة جديدا'
-Home: البداية
+'Items per page': 'عدد البنود في كل صفحة'
+'Add new': 'أضف جديد'
+Home: 'الصفحة الرئيسية'
 Logout: 'تسجيل الخروج'
 More...: المزيد...
 Content: المحتوى
 Languages: اللغات
-Countries: الدول
-Themes: مواضيع
-Topics: المواضيع
+Countries: البلدان
+Themes: النُسق
+Topics: الموضوعات
 Configure: إعداد
 'Image Archive': 'أرشيف الصور'
-'Add Article': 'إضافة مقالة'
-Fields: الحقول
-Delete: حذف
+'Add Article': 'أضف مقال'
+Fields: الخانات
+Delete: إحذف
 Type: نوع
 Name: اسم
 Code: رمز
@@ -24,11 +24,11 @@ Login: 'تسجيل الدخول'
 Password: 'كلمة السر'
 Site: الموقع
 Path: المسار
-'Go up': 'ذهاب للأعلى'
+'Go up': 'إذهب للأعلى'
 URL: 'عنوان الرابط'
 Order: الترتيب
-Hide: إخفاء
-Duplicate: تكرار
+Hide: أخف
+Duplicate: كرر
 Subscription: الإشتراك
 expires: ينتهي
 starts: يبدأ
@@ -36,187 +36,187 @@ before: قبل
 after: بعد
 on: 'قيد التشغيل'
 status: الحالة
-active: 'قيد الاستخدام'
+active: 'قيد التشغيل'
 inactive: 'قيد الإيقاف'
 Subscribers: المشتركون
 Staff: 'طاقم العمل'
-'Select destination': 'اختيار المكان المقصود'
+'Select destination': 'اختر المستهدف'
 'No languages': 'لا لغات'
-'---Select language---': 'اختيار اللغة'
+'---Select language---': '---اختر لغة---'
 'No publications': 'لا منشورات'
-'---Select publication---': 'اختيار المنشور'
-'No issues': 'لا إصدارات'
-'---Select issue---': 'اختيار الإصدار'
+'---Select publication---': '---اختر منشور---'
+'No issues': 'لا أعداد'
+'---Select issue---': '---اختر عدد---'
 'No sections': 'لا أقسام'
-'---Select section---': 'اختيار القسم'
+'---Select section---': '---اختر قسم---'
 Language: اللغة
-Country: الدولة
+Country: البلد
 'Account name': 'اسم الحساب'
 Publication: المنشور
 'Default language': 'اللغة الرئيسية'
-Subscriptions: إشتراكات
-Issue: الإصدار
+Subscriptions: الإشتراكات
+Issue: العدد
 Number: الرقم
 Section: القسم
-Keywords: 'كلمات البحث'
-Topic: الموضوع
+Keywords: 'الكلمات الدالة'
+Topic: موضوع
 'URL Name': 'اسم عنوان الرابط'
 'Left to pay': 'الباقي للدفع'
-Active: 'قيد الاستخدام'
+Active: 'قيد التشغيل'
 Trial: تجريبي
 Next: التالي
 Previous: السابق
-Translate: الترجمة
-View: عرض
+Translate: ترجم
+View: إعرض
 'Scheduled Publishing': 'النشر المجدول'
 Time: الوقت
 Action: الاجراء
-'Schedule a new action': 'تعيين اجراءا جديدا'
-'Scheduling a new publish action': 'في عملية تعيين اجراءا جديدا للنشر'
-'Delete scheduled publish action': 'حذف الاجراء المجدول للنشر'
+'Schedule a new action': 'عين اجراء جديد'
+'Scheduling a new publish action': 'قيد تعيين اجراء جديد للنشر'
+'Delete scheduled publish action': 'إحذف الإجراء المجدول للنشر'
 Date/Time: التاريخ/الوقت
-'You must select an action.': 'يجب عليك أن تختار اجراءا.'
-'You do not have the right to schedule issues or articles for automatic publishing.': 'ليس لديك الحق في جدولة إصدارات أو مقالات للنشر الأوتوماتي'
-'Front page': 'الصفحة الرئيسية'
-'Section page': 'صفحة الأقسام'
-'Show on front page': 'اظهار على الصفحة الرئيسية'
-'Remove from front page': 'إزالة عن الصفحة الرئيسية'
-'Show on section page': 'اظهار على صفحة الأقسام'
-'Remove from section page': 'إزالة عن صفحة الأقسام'
+'You must select an action.': 'يجب عليك أن تختار اجراء.'
+'You do not have the right to schedule issues or articles for automatic publishing.': 'ليس لديك الحق في جدولة أعداد أو مقالات للنشر الأوتوماتي'
+'Front page': 'الصفحة الأمامية'
+'Section page': 'صفحة القسم'
+'Show on front page': 'أظهر على الصفحة الأمامية'
+'Remove from front page': 'أزل عن الصفحة الأمامية'
+'Show on section page': 'أظهر على صفحة الأقسام'
+'Remove from section page': 'أزل عن صفحة الأقسام'
 Actions: الاجراءات
 Publishing: النشر
-Show: إظهار
-Remove: إزالة
-'Article Types': 'أنواع المقالة'
+Show: أظهر
+Remove: أزل
+'Article Types': 'أنواع المقال'
 'Staff User Types': 'أنواع المستخدم من طاقم العمل'
 Publications: المنشورات
-Issues: الإصدارات
+Issues: الأعداد
 Sections: الأقسام
 Articles: المقالات
 Images: الصور
 Change: تغيير
-'Add new issue': 'إضافة إصدارا جديدا'
-'Section Template': 'قالب القسم'
-'Article Template': 'قالب المقالة'
+'Add new issue': 'أضف عدد جديد'
+'Section Template': 'نموذج القسم'
+'Article Template': 'نموذج المقال'
 'Default Language': 'اللغة الرئيسية'
-'Paid Period': 'فترة الدفع'
+'Paid Period': 'فترة للدفع'
 Preview: معاينة
-'You must fill in the $1 field.': 'يجب عليك أن تملأ الحقل $1'
+'You must fill in the $1 field.': 'يجب عليك أن تملأ الخانة $1'
 Error: خطأ
 'Invalid input: $1': 'إدخال غير صالح: $1'
 'Language does not exist.': 'اللغة غير موجودة'
-'Publication does not exist.': 'المنشورة غير موجودة'
-'Issue does not exist.': 'الإصدار غير موجود'
+'Publication does not exist.': 'المنشور غير موجود'
+'Issue does not exist.': 'العدد غير موجود'
 'You must select a language.': 'يجب عليك أن تختار لغة'
 'Section does not exist.': 'القسم غير موجود'
-'No articles.': 'لا مقالات.'
-'Article does not exist.': 'المقالة غير موجودة'
+'No articles.': 'لا مقالات'
+'Article does not exist.': 'المقال غير موجود'
 'Image does not exist.': 'الصورة غير موجودة'
-'Access denied': 'الدخول غير مقبول'
+'Access denied': 'الدخول مرفوض'
 'Invalid parameters received': 'تم إستقبال متغيرات غير صالحة'
-'Add new article': 'إضافة مقالة جديدة'
+'Add new article': 'أضف مقال جديد'
 Status: الحالة
 Published: 'تم النشر'
 'Not published': 'لم ينشر'
 Submitted: 'تم التسليم'
 New: جديد
-Article: مقالة
-Publish: نشر
-Unpublish: 'إزالة النشر'
-Unlock: 'فتح القفل'
+Article: مقال
+Publish: إنشر
+Unpublish: 'إلغ النشر'
+Unlock: 'إفتح القفل'
 Uploaded: 'تم الرفع'
 YYYY-MM-DD: 'DD-MM-YYYY (السنة - الشهر - اليوم)'
 Submit: تسليم
 Image: صورة
-Description: وصف
+Description: الوصف
 Photographer: المصوّر
 Place: المكان
 Date: التاريخ
 Thumbnail: 'الصورة المصغرة'
-'In use': 'قيد الاستعمال'
+'In use': 'قيد الإستخدام'
 'Additional searches': 'بحوث إضافية'
-'Most Recently Added': 'آخر ما أضيف'
-'Most Recently Modified': 'آخر التعديلات'
+'Most Recently Added': 'آخر إضافات'
+'Most Recently Modified': 'آخر تعديلات'
 '$1 images found': 'تم العثور على $1 صور.'
-'Reset search conditions': 'إعادة تعديل شروط البحث'
+'Reset search conditions': 'أعد تعديل شروط البحث'
 'Image number': 'رقم الصورة'
 Users: المستخدمون
-Localizer: 'محدد الموقع'
-'Adding new translation': 'في عملية إضافة ترجمة جديدة'
+Localizer: المترجم
+'Adding new translation': 'قيد الإضافة ترجمة جديدة'
 'No more languages.': 'ليس هناك المزيد من اللغات'
-'The $1 field may only contain letters, digits and underscore (_) character.': 'يسمح للحقل $1 أن يحتوي فقط على أحرف, أرقام والحرف (_)'
-'Add new publication': 'إضافة منشورة جديدة'
-'Upload new template': 'رفع قالبا جديدا'
-'Add new staff member': 'إضافة عضو طاقم العمل الجديد'
+'The $1 field may only contain letters, digits and underscore (_) character.': 'يسمح للخانة $1 أن تحتوي فقط على حروف وأرقام والحرف (_) ـ'
+'Add new publication': 'أضف منشور جديد'
+'Upload new template': 'إرفع نموذج جديد'
+'Add new staff member': 'أضف عضو طاقم العمل الجديد'
 'Staff member deleted.': null
-'Add new subscriber': 'إضافة مشتركا جديدا'
-'Add new user type': 'إضافة نوع مستخدم جديد'
-'Add new article type': 'إضافة نوع جديد من المقالة'
-'Add new country': 'إضافة دولة جديدة'
-'Add new language': 'إضافة لغة جديدة'
-'View logs': 'عرض السجلات'
-'Change your password': 'تعديل كلمة السر'
+'Add new subscriber': 'أضف مشترك جديد'
+'Add new user type': 'أضف نوع مستخدم جديد'
+'Add new article type': 'أضف نوع مقال جديد'
+'Add new country': 'أضف بلد جديد'
+'Add new language': 'أضف لغة جديدة'
+'View logs': 'إعرض السجلات'
+'Change your password': 'عدل كلمة السر'
 'Your Articles': مقالاتك
 'Submitted Articles': 'المقالات المسلّمة'
 Logs: السجلات
 'There are $1 article(s) left.': 'تبقى $1 مقالات.'
-'There are $1 issues(s) left.': 'تبقى $1 إصدارات.'
+'There are $1 issues(s) left.': 'تبقى $1 أعداد.'
 'There are $1 section(s) left.': 'تبقى $1 أقسام.'
 'There are $1 publication(s) left.': 'تبقى $1 منشورات.'
-'There are $1 countries left.': 'تبقى $1 دول.'
+'There are $1 countries left.': 'تبقى $1 بلدان.'
 'Name <SMALL>(click to edit)</SMALL>': 'الاسم <SMALL>(اضغط لتعديل)</SMALL>'
-'Add new subscription': 'إضافة إشتراكا جديدا'
-'You do not have the right to add subscriptions.': 'ليس لديك الحق في إضافة الإشتراكات'
-'Adding subscription': 'في عملية إضافة اشتراكا'
-'Delete subscription': 'حذف الإشتراك'
-'You do not have the right to delete subscriptions.': 'ليس لديك الحق في حذف الإشتراكات'
-'No such subscription.': 'لا يوجد هذا الاشتراك'
+'Add new subscription': 'أضف إشتراك جديد'
+'You do not have the right to add subscriptions.': 'ليس لديك الحق في إضافة إشتراكات'
+'Adding subscription': 'قيد الإضافة الإشتراك'
+'Delete subscription': 'إحذف الإشتراك'
+'You do not have the right to delete subscriptions.': 'ليس لديك الحق في حذف إشتراكات'
+'No such subscription.': 'لا يوجد مثل هذا الاشتراك'
 Yes: نعم
 No: لا
-Close: إغلاق
-'No issues.': 'لا إصدارات'
-'Back to Edit Article': 'العودة الى تعديل المقالة'
-'No topics': 'لا مواضيع'
-'You do not have the right to add articles.': 'ليس لديك الحق في إضافة المقالات'
+Close: أغلق
+'No issues.': 'لا أعداد.'
+'Back to Edit Article': 'العودة الى عدل المقال'
+'No topics': لاموضوعات
+'You do not have the right to add articles.': 'ليس لديك الحق في إضافة مقالات'
 Start: البداية
 Days: الأيام
-'The sections could not be added successfully. Some of them were already added !': 'لم تضف الأقسام بنجاح. كان بعض الأقسام مضافة من قبل!'
-'Add another': 'إضافة آخرا'
+'The sections could not be added successfully. Some of them were already added !': 'لم تضف الأقسام بنجاح. كان بعض الأقسام مضافة مسبقا!'
+'Add another': 'أضف آخر'
 Cancel: إلغاء
 Done: خلص
-OK: تمام
+OK: الموافقة
 Save: حفظ
-Search: بحث
+Search: إبحث
 'Make a selection': 'قم بالإختيار'
-'You must input a number greater than 0 into the $1 field.': 'يجب عليك إدخال رقما أكبر من صفر في حقل $1.'
-'You must input a valid date.': 'يجب عليك إدخال تاريخا صالحا.'
-'Add new field': 'إضافة حقلا جديدا'
+'You must input a number greater than 0 into the $1 field.': 'يجب عليك إدخال رقم أكبر من صفر في الخانة $1.'
+'You must input a valid date.': 'يجب عليك إدخال تاريخ صالح.'
+'Add new field': 'أضف خانة جديدة'
 'Article automatic publishing schedule': 'جدول النشر الأوتوماتي للمقالات'
 'Are you sure you want to delete this scheduled action?': 'هل أنت متأكد أنك تريد أن تحذف هذا الإجراء المجدول؟'
-Unlink: 'فصل الرابط'
-'Are you sure you want to delete the image $1?': 'هل انت متأكد أنك تريد حذف الصورة /1$/ ؟'
-'No such issue.': 'لا يوجد هذا الإصدار'
-'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أن تريد أن تحذف الإشتراك للمنشور $1؟'
+Unlink: 'إفصل الرابط'
+'Are you sure you want to delete the image $1?': 'هل أنت متأكد أنك تريد أن تحذف الصورة $1؟'
+'No such issue.': 'لا يوجد مثل هذا الإصدار.'
+'Are you sure you want to delete the subscription to the publication $1?': 'هل أنت متأكد أنك تريد أن تحذف الإشتراك للمنشور $1؟'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'لا يمكن حفظ التغييرات للإصدار $1. يرجى التأكد ألّم يستخدم اسم العنوان $2 من قبل في منشور $3.'
 GB: جيجابايت
 MB: ميغابايت
 KB: كيلوبايت
 bytes: بايت
-Attach: إرفاق
+Attach: أرفق
 Back: العودة
 File: ملف
-'Save and Close': 'حفظ وإغلاق'
-Add: إضافة
-'Select All': 'اختيار الجميع'
-'Select None': 'اختيار لا شئ'
-'Add Event': 'إضافة حدثا'
+'Save and Close': 'إحفظ وأغلق'
+Add: أضف
+'Select All': 'اختر الجميع'
+'Select None': 'اختر لا شئ'
+'Add Event': 'أضف حدث'
 N/A: 'غير متوفر'
-'On Front Page': 'على الصفحة الرئيسية'
+'On Front Page': 'على الصفحة الأمامية'
 'On Section Page': 'على صفحة الأقسام'
-'Created by': بقلم
+'Created by': الكاتب
 'Creation date': 'تاريخ الإنشاء'
 'Publication List': 'قائمة المنشورات'
-'Issue List': 'قائمة الإصدارات'
+'Issue List': 'قائمة الأعداد'
 'Section List': 'قائمة الأقسام'
 All: الجميع
 duplicate: تكرار
@@ -232,20 +232,20 @@ Subject: الموضوع
 'IP address:': 'عنوان بروتوكول الإنترنت:'
 'Email:': 'البريد الإلكتروني:'
 Author: المؤلف
-'Article name': 'اسم المقالة'
-'Hide article': 'إخفاء المقالة'
-'Show article': 'إظهار المقالة'
-'Article Type Fields': 'حقول لأنواع المقالة'
-'Article Images': 'صور المقالة'
+'Article name': 'اسم المقال'
+'Hide article': 'أخي المقال'
+'Show article': 'أظهر المقال'
+'Article Type Fields': 'خانات أنواع المقال'
+'Article Images': 'صور المقال'
 'Log Messages': 'رسائل السجلات'
-'Article Files': 'ملفات المقالة'
-'Article Comments': 'تعليقات المقالة'
-'Are you sure you want to deactivate the subscription?': 'هل أنت متأكد من إيقاف الإشتراك؟'
-'Are you sure you want to activate the subscription?': 'هل أنت متأكد من تفعيل الإشتراك؟'
+'Article Files': 'ملفات المقال'
+'Article Comments': 'تعليقات المقال'
+'Are you sure you want to deactivate the subscription?': 'هل أنت متأكد من عطل الإشتراك؟'
+'Are you sure you want to activate the subscription?': 'هل أنت متأكد من تنشيط الإشتراك؟'
 Other: 'غير ذلك'
 'Time:': 'الوقت:'
 'No events.': 'لا أحداث.'
-'Default templates': 'قوالب افتراضية'
+'Default templates': 'نماذج افتراضية'
 'System Preferences': 'تفضيلات النظام'
 'The date must be in the future.': 'يجب أن يقع تاريخ البدء في المستقبل'
 Send: الإرسال
@@ -253,8 +253,8 @@ Send: الإرسال
 'Please take a minute to send us an email.': 'يرجى إرسال لنا رسالة قصيرة من جلال بريد إلكتروني.'
 (optional): (اختياري)
 'The URL you entered is invalid: $1': 'العنوان الإلكروني الذي أدخلته غير صالح: $1'
-Reads: يقرأ
-'Publish with issue': 'النشر بالإصدار'
+Reads: 'عدد القراءات'
+'Publish with issue': 'إنشر مع العدد'
 'Universal List': 'قائمة عالمية'
 'Invalid security token!': 'الرمز الأمني غير صالح!'
 Authors: المؤلفون
