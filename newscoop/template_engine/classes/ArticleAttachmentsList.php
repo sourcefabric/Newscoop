@@ -24,7 +24,7 @@ class ArticleAttachmentsList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('metaAttachmentsList', $this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count), 'article');
+        $cacheKey = $cacheService->getCacheKey(array('metaAttachmentsList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'article');
         if ($cacheService->contains($cacheKey)) {
             $metaAttachmentsList = $cacheService->fetch($cacheKey);
         } else {
