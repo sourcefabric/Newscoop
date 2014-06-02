@@ -565,24 +565,31 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCount() {
-        $container = Zend_Registry::get('container');
-        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
-        $filter = array(
-            'status' => 'approved',
-            'thread' => $this->m_dbObject->getArticleNumber(),
-            'language' => $this->m_dbObject->getLanguageId(),
-        );
-        $params = array(
-            'sFilter' => $filter
-        );
-        $result = $repository->getCount($params);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
+        if ($cacheService->contains($cacheKey)) {
+            $result = $cacheService->fetch($cacheKey);
+        } else {
+            $container = Zend_Registry::get('container');
+            $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
+            $filter = array(
+                'status' => 'approved',
+                'thread' => $this->m_dbObject->getArticleNumber(),
+                'language' => $this->m_dbObject->getLanguageId(),
+            );
+            $params = array(
+                'sFilter' => $filter
+            );
+            $result = $repository->getCount($params);
+            $cacheService->save($cacheKey, $result);
+        }
         return $result;
     }
 
 
     protected function getCommentCountAllLang() {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('getCommentCountAllLang', $this->m_dbObject->getArticleNumber()), 'article');
+        $cacheKey = $cacheService->getCacheKey(array('getCommentCountAllLang', $this->m_dbObject->getArticleNumber()), 'comment');
         if ($cacheService->contains($cacheKey)) {
             $result = $cacheService->fetch($cacheKey);
         } else {
@@ -603,7 +610,7 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getRecommendedCommentCount() {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('getRecommendedCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'article');
+        $cacheKey = $cacheService->getCacheKey(array('getRecommendedCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
         if ($cacheService->contains($cacheKey)) {
             $result = $cacheService->fetch($cacheKey);
         } else {
