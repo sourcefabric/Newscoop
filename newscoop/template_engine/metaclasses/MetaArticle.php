@@ -804,9 +804,17 @@ final class MetaArticle extends MetaDbObject {
      * @return bool
      */
     public function has_image($p_imageIndex) {
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-        null, $p_imageIndex);
-        return (int)$articleImage->exists();
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('has_image', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $exists = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
+                null, $p_imageIndex);
+            $exists = (int)$articleImage->exists();
+            $cacheService->save($cacheKey, $exists);
+        }
+        return $exists;
     }
 
 
