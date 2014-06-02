@@ -728,22 +728,30 @@ final class MetaArticle extends MetaDbObject {
     }
 
     public function has_topic($p_topicName) {
-        $topic = new Topic($p_topicName);
-        if (!$topic->exists()) {
-            $this->trigger_invalid_value_error('has_topic', $p_topicName);
-            return null;
-        }
-        $articleTopics = $this->getContentCache('article_topics');
-        if (is_null($articleTopics)) {
-            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
-            $this->setContentCache('article_topics', $articleTopics);
-        }
-        foreach ($articleTopics as $articleTopic) {
-            if ($articleTopic->getTopicId() == $topic->getTopicId()) {
-                return (int)true;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('has_topic', $this->m_dbObject->getArticleNumber(), $p_topicName), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $exists = $cacheService->fetch($cacheKey);
+        } else {
+            $topic = new Topic($p_topicName);
+            if (!$topic->exists()) {
+                $this->trigger_invalid_value_error('has_topic', $p_topicName);
+                return null;
             }
+            $articleTopics = $this->getContentCache('article_topics');
+            if (is_null($articleTopics)) {
+                $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
+                $this->setContentCache('article_topics', $articleTopics);
+            }
+            foreach ($articleTopics as $articleTopic) {
+                if ($articleTopic->getTopicId() == $topic->getTopicId()) {
+                    $exists = (int)true;
+                }
+            }
+            $exists = (int)false;
+            $cacheService->save($cacheKey, $exists);
         }
-        return (int)false;
+        return $exists;
     }
 
 
