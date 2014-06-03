@@ -178,6 +178,7 @@ class IPAccess extends DatabaseObject {
             $rows = (array) $g_ado_db->GetAll($queryStr);
 
             if (empty($rows)) {
+                $cacheService->save($cacheKey, array());
                 return array();
             }
 
