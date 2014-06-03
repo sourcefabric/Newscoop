@@ -53,6 +53,8 @@ $logtext = $translator->trans('File #$1 "$2" unattached', array(
 Log::ArticleMessage($articleObj, $logtext, null, 39);
 
 $attachmentFileName = $attachmentObj->getFileName();
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('attachments');
 
 // Go back to article.
 camp_html_add_msg($translator->trans("File $1 unattached.", array('$1' => $attachmentFileName), 'article_files'), "ok");
