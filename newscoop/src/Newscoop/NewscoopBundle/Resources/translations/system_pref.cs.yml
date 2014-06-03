@@ -25,7 +25,7 @@ newscoop:
             other: 'Další nastavení'
             recaptcha: 'Nastavení reCAPTCHA'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'Smazat paměť disku'
         label:
             title: 'Systémové preference'
             header: Preference
@@ -41,7 +41,7 @@ newscoop:
             cacheimage: 'Imagecache Lifetime:'
             allowrecovery: 'Obnovení hesla povoleno:'
             secretkey: 'Tajný Klíč:'
-            sessionlifetime: null
+            sessionlifetime: 'Trvání Relace:'
             sessionlifetimemsg: 'podle php.ini nastavení.'
             separator: 'Oddělovač klíčových slov:'
             captcha: 'Počet neúspěšných loginů před zobrazením CAPTCHA:'
