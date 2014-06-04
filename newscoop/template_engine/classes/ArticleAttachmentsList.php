@@ -23,11 +23,18 @@ class ArticleAttachmentsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    $metaAttachmentsList = array();
-	    foreach ($articleAttachmentsList as $attachment) {
-	        $metaAttachmentsList[] = new MetaAttachment($attachment->getAttachmentId());
-	    }
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('metaAttachmentsList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'attachments');
+        if ($cacheService->contains($cacheKey)) {
+            $metaAttachmentsList = $cacheService->fetch($cacheKey);
+        } else {
+	        $articleAttachmentsList = ArticleAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	        $metaAttachmentsList = array();
+	        foreach ($articleAttachmentsList as $attachment) {
+	            $metaAttachmentsList[] = new MetaAttachment($attachment->getAttachmentId());
+	        }
+            $cacheService->save($cacheKey, $metaAttachmentsList);
+		}
 	    return $metaAttachmentsList;
 	}
 

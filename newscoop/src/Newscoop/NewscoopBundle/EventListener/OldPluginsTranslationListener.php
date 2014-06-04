@@ -22,47 +22,47 @@ class OldPluginsTranslationListener
 
     protected $cacheService;
 
+    protected $pluginsService;
+
     /**
      * @param Translator $translator
      */
-    public function __construct(Translator $translator, $cacheService)
+    public function __construct(Translator $translator, $cacheService, $pluginsService)
     {
         $this->translator = $translator;
         $this->cacheService = $cacheService;
+        $this->pluginsService = $pluginsService;
     }
 
     public function onRequest(GetResponseEvent $event)
     {
+        $locale = $event->getRequest()->getLocale();
+        $cacheKey = 'oldPlugins_translations_'.count($this->pluginsService->getEnabledPlugins());
+        if ($this->cacheService->contains($cacheKey)) {
+            $files = $this->cacheService->fetch($cacheKey);
+        } else {
+            $finder = new Finder();
+            $extension = $locale.'.yml';
+            $files = array();
 
-        $request = $event->getRequest();
-        $locale = $request->getLocale();
-        $finder = new Finder();
-        $extension = $locale.'.yml';
-
-        try {
             $finder->files()->in(__DIR__.'/../../../../plugins');
             $finder->files()->name('*.'.$locale.'.yml');
-            $cacheKey = 'oldPlugins_translations_'.$finder->count();
-            if ($this->cacheService->contains($cacheKey)) {
-                $files = $this->cacheService->fetch($cacheKey);
-            } else {
-                $files = array();
-                foreach ($finder as $file) {
-                    $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
-                    $files[$domain] = $file->getRealpath();
-                }
 
-                $this->cacheService->save($cacheKey, $files);
+            foreach ($finder as $file) {
+                $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
+                $files[$domain] = $file->getRealpath();
             }
 
+            $this->cacheService->save($cacheKey, $files);
+        }
+
+        try {
             if (count($files) > 0) {
                 $this->translator->addLoader('yaml', new YamlFileLoader());
-
                 foreach ($files as $key => $file) {
                     $this->translator->addResource('yaml', $file, $locale, $key);
                 }
             }
-
         } catch (\InvalidArgumentException $exception) {
             throw new \Exception('Plugins directory doesn\'t exist!');
         }

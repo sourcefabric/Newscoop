@@ -21,15 +21,33 @@ class TemplateTranslationListener
 {
     protected $translator;
 
+    protected $cacheService;
+
     /**
      * @param Translator $translator
      */
-    public function __construct(Translator $translator)
+    public function __construct(Translator $translator, $cacheService)
     {
         $this->translator = $translator;
+        $this->cacheService = $cacheService;
     }
 
-    public function onRequest(GetResponseEvent $event) {
+    /**
+     * @param  GetResponseEvent $event
+     */
+    public function onRequest(GetResponseEvent $event)
+    {
+        $cacheKey = $this->cacheService->getCacheKey('templates_translations', 'templates');
+        $templateTranslations = array();
+
+        if ($this->cacheService->contains($cacheKey)) {
+            $templateTranslations = $this->cacheService->fetch($cacheKey);
+            foreach ($templateTranslations as $translation) {
+                $this->translator->addResource('yaml', $translation[0], $translation[1], $translation[2]);
+            }
+
+            return;
+        }
 
         $request = $event->getRequest();
         $locale = $request->getLocale();
@@ -46,7 +64,10 @@ class TemplateTranslationListener
             foreach ($finder as $file) {
                 $domain = substr($file->getFileName(), 0, -1 * strlen($extension) - 1);
                 $this->translator->addResource('yaml', $file->getRealpath(), $locale, $domain);
+                $templateTranslations[] = array($file->getRealpath(), $locale, $domain);
             }
         }
+
+        $this->cacheService->save($cacheKey, $templateTranslations);
     }
 }

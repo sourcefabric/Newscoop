@@ -88,6 +88,9 @@ $columns = array('Name' => $f_name,
                  'seo' => serialize($f_seo));
 
 $created = $publicationObj->create($columns);
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('publication');
+
 if ($created) {
 	$alias->setPublicationId($publicationObj->getPublicationId());
  	camp_html_add_msg($translator->trans("Publication created.", array(), 'pub'), "ok");

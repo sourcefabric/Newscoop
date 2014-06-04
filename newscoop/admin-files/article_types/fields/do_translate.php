@@ -42,6 +42,10 @@ if ($correct) {
 	// Translate existing type
 	$field = new ArticleTypeField($f_article_type, $f_field_id);
 	$created = $field->setName($f_field_language_id, $f_field_translation_name);
+
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+	$cacheService->clearNamespace('articleTypeField');
+
 	if ($created) {
 		camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
 		exit;

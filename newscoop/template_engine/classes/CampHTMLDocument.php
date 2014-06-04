@@ -315,8 +315,15 @@ final class CampHTMLDocument
                 $smarty->campsiteVector
             );
 
-            $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
-            $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKey = $cacheService->getCacheKey(array('template', CampSite::GetURIInstance()->getThemePath(), ltrim($template, '/')), 'template');
+            if ($cacheService->contains($cacheKey)) {
+                $tpl->cache_lifetime = $cacheService->fetch($cacheKey);
+            } else {
+                $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
+                $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
+                $cacheService->save($cacheKey, $tpl->cache_lifetime);
+            }
         }
 
         try {

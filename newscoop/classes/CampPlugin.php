@@ -31,7 +31,7 @@ class CampPlugin extends DatabaseObject
 
     static protected $m_pluginsInfo = null;
 
-    public function CampPlugin($p_name = null, $p_version = null)
+    public function CampPlugin($p_name = null, $p_version = null, $enabled = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['Name'] = $p_name;
@@ -39,7 +39,12 @@ class CampPlugin extends DatabaseObject
         if (!is_null($p_version)) {
             $this->m_data['Version'] = $p_version;
         }
-        if (!is_null($p_name)) {
+
+        if (!is_null($enabled)) {
+            $this->m_data['Enabled'] = $enabled;
+        }
+
+        if (!is_null($p_name) && is_null($enabled)) {
             $this->fetch();
         }
     } // constructor
@@ -63,8 +68,6 @@ class CampPlugin extends DatabaseObject
 
     static public function GetAll($p_reload = false)
     {
-        $g_ado_db = \Zend_Registry::get('container')->get('doctrine.adodb');
-
         if (!$p_reload && is_array(self::$m_allPlugins)) {
         	return self::$m_allPlugins;
         }
@@ -77,20 +80,10 @@ class CampPlugin extends DatabaseObject
             }
         }
 
-        $CampPlugin = new CampPlugin();
-        $query = "SELECT Name FROM `" . $CampPlugin->m_dbTableName . "`";
-        try {
-            $res = $g_ado_db->execute($query);
-            if (!$res) {
-        	    return array();
-            }
-        } catch (Exception $e) {
-            return array();
-        }
-
         self::$m_allPlugins = array();
-        while ($row = $res->FetchRow()) {
-        	self::$m_allPlugins[] = new CampPlugin($row['Name']);;
+        $pluginService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
+        foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
+            self::$m_allPlugins[] = new CampPlugin($plugin->getName(), $plugin->getVersion(), $plugin->getEnabled());
         }
 
         if (!$p_reload && CampCache::IsEnabled()) {

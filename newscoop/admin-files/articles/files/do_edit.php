@@ -75,6 +75,8 @@ if ($f_content_disposition == "attachment" || empty($f_content_disposition)) {
     $attachment->setContentDisposition($f_content_disposition);
 }
 $em->flush();
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('attachments');
 // Go back to article.
 camp_html_add_msg($translator->trans("File '$1' updated.", array('$1' => $attachment->getName()), 'article_files'), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));

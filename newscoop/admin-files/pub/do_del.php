@@ -57,6 +57,8 @@ if ($subscriptionsRemaining > 0) {
 
 if ($doDelete) {
 	$publicationObj->delete();
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+	$cacheService->clearNamespace('publication');
 	camp_html_goto_page("/$ADMIN/pub");
 } else {
 	$errorMsgs[] = $translator->trans('The publication $1 could not be deleted.',

@@ -42,6 +42,8 @@ if ($defaultTime->exists()) {
 	$defaultTime->update($values);
 } else {
 	$created = $defaultTime->create($values);
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('publication');
 	if (!$created) {
     	camp_html_add_msg($translator->trans("The subscription settings for $1 could not be added.", array('$1' => $publicationObj->getName().':'.$cCountryCode), 'pub'));
     	camp_html_goto_page($backLink);

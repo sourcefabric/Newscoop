@@ -85,6 +85,10 @@ if ($correct) {
 	            $errors[] = $translator->trans('Error updating subscriptions.', array(), 'sections');
 			}
 	    }
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('section');
+
 	    camp_html_goto_page("/$ADMIN/sections/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id&Section=".$newSection->getSectionNumber());
     }
 }

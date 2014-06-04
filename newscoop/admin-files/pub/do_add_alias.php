@@ -42,6 +42,8 @@ if ($correct) {
 		$newAlias = new Alias();
 		$created = $newAlias->create(array('Name' => "$cName", "IdPublication" => "$cPub"));
 		if ($created) {
+			$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+			$cacheService->clearNamespace('publication');
 			camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$cPub");
 		}
 	}

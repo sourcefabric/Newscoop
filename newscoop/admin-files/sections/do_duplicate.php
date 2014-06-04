@@ -69,6 +69,10 @@ if ($correct) {
 	$dstPublicationObj = new Publication($f_dest_publication_id);
 	$dstIssueObj = new Issue($f_dest_publication_id, $f_language_id, $f_dest_issue_number);
 	$created = true;
+
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('section');
+
 	camp_html_goto_page("/$ADMIN/sections/duplicate_complete.php?"
 		   ."f_src_publication_id=$f_src_publication_id"
 		   ."&f_src_issue_number=$f_src_issue_number"

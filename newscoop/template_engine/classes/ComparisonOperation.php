@@ -112,6 +112,11 @@ class ComparisonOperation
 	    
 		return $this->m_rightOperand;
 	}
+
+    public function __toString()
+    {
+        return $this->getLeftOperand() .'_'. $this->getOperator()->getName() .'_'. $this->getRightOperand();
+    }
 }
 
 

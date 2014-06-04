@@ -27,6 +27,9 @@ if (!$g_user->hasPermission('ManageIssue') || !$g_user->hasPermission('Publish')
 $issueObj = new Issue($Pub, $Language, $Issue);
 $issueObj->setWorkflowStatus();
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('issue');
+
 camp_html_goto_page("/$ADMIN/issues/$f_target?Pub=$Pub&Issue=$Issue&Language=$Language");
 
 ?>

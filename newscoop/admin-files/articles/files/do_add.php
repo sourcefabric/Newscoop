@@ -149,6 +149,8 @@ if (!$attachment) {
 
 if (!$inArchive) {
     ArticleAttachment::AddFileToArticle($attachment->getId(), $articleObj->getArticleNumber());
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('attachments');
 
     $logtext = $translator->trans('File #$1 "$2" attached to article',
         array('$1' => $attachment->getId(), '$2' => $attachment->getName()), 'article_files');

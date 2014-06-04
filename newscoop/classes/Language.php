@@ -37,7 +37,7 @@ class Language extends DatabaseObject {
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		if (!is_null($p_languageId)) {
-    		$this->m_data['Id'] = $p_languageId;
+			$this->m_data['Id'] = $p_languageId;
 			$this->fetch();
 		}
 	} // constructor

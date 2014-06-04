@@ -32,6 +32,10 @@ camp_html_content_top($translator->trans("Deleted issue", array(), 'issues'), $t
 
 $issueName = htmlspecialchars($issueObj->getName());
 $numArticlesDeleted = $issueObj->delete(true, true);
+
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('issue');
+
 ?>
 
 <P>
