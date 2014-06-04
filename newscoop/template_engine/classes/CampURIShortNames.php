@@ -82,6 +82,8 @@ class CampURIShortNames extends CampURI
                 if ($template->defined()) {
                     $this->m_template = $template;
                 }
+
+                CampTemplate::singleton()->config_dir = APPLICATION_PATH . '/../themes/' . $themePath . '_conf';
             }
 
             CampTemplate::singleton()->trigger_error($e->getMessage());
