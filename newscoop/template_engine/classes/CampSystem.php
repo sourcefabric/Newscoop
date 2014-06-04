@@ -186,7 +186,7 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
                 if ($cacheService->contains($cacheKeyWebOutput)) {
                     \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
                 } else {
@@ -259,7 +259,7 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
                 if ($cacheService->contains($cacheKeyWebOutput)) {
                     \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
                 } else {
@@ -398,7 +398,7 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
                 if ($cacheService->contains($cacheKeyWebOutput)) {
                     \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
                 } else {
@@ -436,7 +436,7 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
                 if ($cacheService->contains($cacheKeyWebOutput)) {
                     \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
                 } else {
@@ -472,7 +472,7 @@ abstract class CampSystem
             $outputService = $resourceId->getService(IOutputService::NAME);
 
             if (!\Zend_Registry::isRegistered('webOutput')) {
-                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
                 if ($cacheService->contains($cacheKeyWebOutput)) {
                     \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
                 } else {
