@@ -106,7 +106,7 @@ newscoop:
             geosearch: null
             usergarbage: null
             usergarbagedaysinfo: null
-            usergarbagedays: null
+            usergarbagedays: 'تـرقيم الأيام '
         popover:
             cacheengine: null
             cacheenginehost: null
