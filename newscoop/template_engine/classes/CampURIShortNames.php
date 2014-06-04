@@ -357,7 +357,6 @@ class CampURIShortNames extends CampURI
      */
     private function setURL(Zend_Controller_Request_Abstract $request)
     {
-        file_put_contents('/tmp/smarty_config_dir.log', "setUrl called\n", FILE_APPEND);
         $this->setQueryVar('acid', null);
         $this->m_publication = $this->_getPublication();
         $controller = $request->getParam('controller');
