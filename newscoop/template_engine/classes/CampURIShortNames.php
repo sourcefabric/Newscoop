@@ -62,7 +62,7 @@ class CampURIShortNames extends CampURI
             } else {
                 $this->setURL(new Zend_Controller_Request_Http());
             }
-            
+
             $this->m_validURI = true;
             $this->validateCache(false);
         } catch (Exception $e) {
@@ -77,6 +77,8 @@ class CampURIShortNames extends CampURI
                 if ($template->defined()) {
                     $this->m_template = $template;
                 }
+
+                CampTemplate::singleton()->config_dir = APPLICATION_PATH . '/../themes/' . $themePath . '_conf';
             }
 
             CampTemplate::singleton()->trigger_error($e->getMessage());
@@ -243,7 +245,7 @@ class CampURIShortNames extends CampURI
     private function _getLanguage($code, MetaPublication $publication)
     {
         $language = $publication->default_language;
-        
+
         if (!empty($code)) {
             $langArray = Language::GetLanguages(null, $code);
             if (is_array($langArray) && sizeof($langArray) == 1) {
@@ -355,6 +357,7 @@ class CampURIShortNames extends CampURI
      */
     private function setURL(Zend_Controller_Request_Abstract $request)
     {
+        file_put_contents('/tmp/smarty_config_dir.log', "setUrl called\n", FILE_APPEND);
         $this->setQueryVar('acid', null);
         $this->m_publication = $this->_getPublication();
         $controller = $request->getParam('controller');
