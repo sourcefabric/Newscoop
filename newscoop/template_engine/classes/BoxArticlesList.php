@@ -44,12 +44,19 @@ class BoxArticlesList extends ListObject
             $languageId = $context->language->number;
         }
 
-        $preview = $context->preview;
-        $contextBox = new ContextBox(null, $context->article->number);
-        $p_parameters['context_box'] = $contextBox->getId();
-        $p_parameters['article'] = $context->article->number;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('BoxArticlesList', $context->article->number, implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'boxarticles');
+        if ($cacheService->contains($cacheKey)) {
+            $BoxArticlesList = $cacheService->fetch($cacheKey);
+        } else {
+            $contextBox = new ContextBox(null, $context->article->number);
+            $p_parameters['context_box'] = $contextBox->getId();
+            $p_parameters['article'] = $context->article->number;
 
-        $BoxArticlesList = ContextBoxArticle::GetList($p_parameters, $this->m_order, $p_start, $p_limit, $p_count);
+            $BoxArticlesList = ContextBoxArticle::GetList($p_parameters, $this->m_order, $p_start, $p_limit, $p_count);
+            $cacheService->save($cacheKey, $BoxArticlesList);
+        }
+        $preview = $context->preview;
         $metaBoxArticlesList = array();
         foreach ($BoxArticlesList as $articleNo) {
             $article = new MetaArticle($languageId, $articleNo);

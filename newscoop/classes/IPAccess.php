@@ -166,20 +166,28 @@ class IPAccess extends DatabaseObject {
 	{
         global $g_ado_db;
 
-        $ipObj = new IPAccess();
-        $intIPAddress = $ipObj->__array2int($ipObj->__string2array($p_ipAddress));
-        $queryStr = "SELECT DISTINCT(IdUser) FROM SubsByIP WHERE StartIP <= $intIPAddress "
-        . "AND $intIPAddress <= (StartIP + Addresses - 1)";
-        $rows = (array) $g_ado_db->GetAll($queryStr);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('GetUsersHavingIP', $p_ipAddress), 'users');
+        if ($cacheService->contains($cacheKey)) {
+            $users = $cacheService->fetch($cacheKey);
+        } else {
+            $ipObj = new IPAccess();
+            $intIPAddress = $ipObj->__array2int($ipObj->__string2array($p_ipAddress));
+            $queryStr = "SELECT DISTINCT(IdUser) FROM SubsByIP WHERE StartIP <= $intIPAddress "
+            . "AND $intIPAddress <= (StartIP + Addresses - 1)";
+            $rows = (array) $g_ado_db->GetAll($queryStr);
 
-        if (empty($rows)) {
-            return array();
+            if (empty($rows)) {
+                $cacheService->save($cacheKey, array());
+                return array();
+            }
+
+            $users = array();
+		    foreach ($rows as $row) {
+                $users[] = $GLOBALS['controller']->getHelper('service')->getService('user')->find($row['IdUser']);
+		    }
+            $cacheService->save($cacheKey, $users);
         }
-
-        $users = array();
-		foreach ($rows as $row) {
-            $users[] = $GLOBALS['controller']->getHelper('service')->getService('user')->find($row['IdUser']);
-		}
 
 		return $users;
 	}

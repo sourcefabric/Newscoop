@@ -154,6 +154,7 @@ abstract class CampSystem
     public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL, $p_isPublished = true)
     {
         global $g_ado_db;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         if (CampCache::IsEnabled()) {
             $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
             $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
@@ -242,43 +243,52 @@ abstract class CampSystem
             $p_lngId = array_shift($issue);
         }
 
-
-        $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr), 'issue');
-        if ($cacheService->contains($cacheKey)) {
-            $issueObj = $cacheService->fetch($cacheKey);
+        $cacheKeyThemePath = $cacheService->getCacheKey(array('getThemePath', $p_lngId, $p_pubId, $p_issNr), 'issue');
+        if ($cacheService->contains($cacheKeyThemePath)) {
+            $themePath = $cacheService->fetch($cacheKeyThemePath);
         } else {
-            $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-            $cacheService->save($cacheKey, $issueObj);
-        }
-
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        $outputService = $resourceId->getService(IOutputService::NAME);
-
-        if (!\Zend_Registry::isRegistered('webOutput')) {
-            $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
-            if ($cacheService->contains($cacheKeyWebOutput)) {
-                \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+            $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr), 'issue');
+            if ($cacheService->contains($cacheKey)) {
+                $issueObj = $cacheService->fetch($cacheKey);
             } else {
-                $webOutput = $outputService->findByName('Web');
-                $cacheService->save($cacheKeyWebOutput, $webOutput);
-                \Zend_Registry::set('webOutput', $webOutput);
+                $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+                $cacheService->save($cacheKey, $issueObj);
             }
-        }
 
-        $cacheKeyOutSetIssues = $cacheService->getCacheKey(array('outSetIssues', $issueObj->getIssueId(), 'webOutput'));
-        if ($cacheService->contains($cacheKeyOutSetIssues)) {
-            $outSetIssues = $cacheService->fetch($cacheKeyOutSetIssues);
-        } else {
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'));
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
+
+            $cacheKeyOutSetIssues = $cacheService->getCacheKey(array('outSetIssues', $issueObj->getIssueId(), 'webOutput'));
+            if ($cacheService->contains($cacheKeyOutSetIssues)) {
+                $outSetIssues = $cacheService->fetch($cacheKeyOutSetIssues);
+            } else {
+                $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+                $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
+                $cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
+            }
+
             $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
             $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
-            $cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
+            if(!is_null($outSetIssues)) {
+                $themePath = $outSetIssues->getThemePath()->getPath();
+            } else {
+                $themePath = null;
+            }
+            $cacheService->save($cacheKeyThemePath, $themePath);
         }
 
-        $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
-        $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
-        if(!is_null($outSetIssues))
-            return $outSetIssues->getThemePath()->getPath();
-        return;
+        return $themePath;
     }
 
     /**
