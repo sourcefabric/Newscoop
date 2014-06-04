@@ -22,15 +22,15 @@ Continue: null
 'edit user': null
 'delete user': null
 'Verified profile': null
-'Showing _START_ to _END_ of _TOTAL_ entries': 'عرض _START_ ل_END_ من _TOTAL_ إدخالات'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'قيد العرض _START_ لـ_END_ من _TOTAL_ إدخالات'
 'Send email to user:': null
 'No users found.': null
 'No records found.': 'لم يتم العثور على سجلات.'
 'No entries to show': 'لا إدخالات من أجل الإظهار'
-'Display _MENU_ records': 'عرض سجلات من _MENU_'
+'Display _MENU_ records': 'إعرض سجلات من _MENU_'
 'Are you sure you want to {action}?': null
 'Active Logins': null
-' - filtering from _MAX_ records': '- تصفية من السجلات _MAX_'
+' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'
 'User renamed.': 'تمة إعادة تسمية المستخدم'
 'User attributes': 'سمات المستخدم'
 'Rename user $1': '$1اعد تسمية المستخدم'
@@ -44,27 +44,27 @@ Continue: null
 'Profile saved.': 'تم حفظ الشاكلة'
 Picture: صورة
 'Password updated': 'تم تحديث كلمة السر'
-None: 'لا شيئ'
+None: 'لا شيء'
 'New confirmation email was sent to user.': 'تم ارسال بريد التاكيد للمستخدم'
 'Email is used already': 'البريد الاكتروني قيد الاستخدام '
-'Edit your password': 'تعديل كلمة السر'
+'Edit your password': 'عدل كلمة السر'
 'Edit user $1': 'تعديل المستخدم $1'
 'Edit subscriptions': 'تحرير الاشتراكات'
 'Edit profile': 'تعديل الشاكلة'
-'Edit permissions': 'تعديل الأذونات'
-'Create new account': 'إنشاء حساب جديد'
+'Edit permissions': 'عدل الأذونات'
+'Create new account': 'أنش حساب جديد'
 'Comment ban settings': 'اعدادات تحريم التعليقات'
 'Ban for user $1 saved.': 'تم تسجيل منع المستخدم $1'
 'User account is active': 'حساب المستخدم مفعل'
 'Allow users profile to be publicly displayed': 'السماح لشاكلة المستخدم أن يعرض علنا'
 'Allow user access to login to site backend': 'اسمح للمستخدم ولوج منطقة المشرف '
-Templates: قوالب
+Templates: نماذج
 Username: 'اسم المستخدم'
 'Last Name': 'اسم العائلة'
 'First Name': 'الاسم الاول'
 Email: 'بريد إلكتروني'
 'You were logged out.': 'تم تسجيل خروجك'
-'Newscoop Subhead': 'عنوان فرعي لـ Newscoop.'
+'Newscoop Subhead': 'عنوان فرعي لـ نيوسكوب.'
 Filters: 'عوامل التصفية'
 'Add new Author': 'اضف مؤلف جديد'
 'Loading Data': 'بتم تحميل البيانات'
@@ -101,7 +101,7 @@ Filters: 'عوامل التصفية'
 'User may attach topics to articles': 'يحق للمستخدم إضافة المواضيع للمقالات'
 'User may attach images to articles': 'يحق للمستخدم إضافة الصور للمقالات'
 'User may add special characters': 'يحق للمستخدم إضافة حروف خاصة'
-'That user name already exists, please choose a different login name.': 'اسم المستخدم هذا قيد الاستخدام من قبل، الرجاء اختيار اسم تسجيل دخول مختلف.'
+'That user name already exists, please choose a different login name.': 'اسم المستخدم ذلك قيد الاستخدام مسبقاً، يرجى الاختيار اسم تسجيل دخول مختلف.'
 'User may delete article attachments': 'يحق للمستخدم حذف مرفقات المقالة.'
 'User may change article attachments': 'يحق للمستخدم تعديل مرفقات المقالة.'
 'User may add article attachments': 'يحق للمستخدم إضافة مرفقات المقالة.'
