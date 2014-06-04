@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\EventDispatcher\EventDispatcher;
 use Newscoop\EventDispatcher\Events\PluginHooksEvent;
 use Newscoop\EventDispatcher\Events\CollectObjectsDataEvent;
+use Newscoop\EventDispatcher\Events\PluginPermissionsEvent;
 
 /**
  * Plugins Service
@@ -156,5 +157,25 @@ class PluginsService
         }
 
         return $pluginsDir;
+    }
+
+    /**
+     * Dispatch event for plugins permissions
+     *
+     * @param mixed $subject
+     * @param array $options
+     *
+     * @return array
+     */
+    public function collectPermissions($subject = null, $options = array())
+    {
+        $collectedPermissionsData = array();
+        $listObjectsRegistration = $this->dispatcher->dispatch('newscoop.plugins.permissions.register', new PluginPermissionsEvent($subject, $options));
+
+        foreach ($listObjectsRegistration->getPermissions() as $key => $object) {
+            $collectedPermissionsData[$key] = $object;
+        }
+
+        return $collectedPermissionsData;
     }
 }
