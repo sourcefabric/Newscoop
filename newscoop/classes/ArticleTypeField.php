@@ -979,7 +979,7 @@ class ArticleTypeField extends DatabaseObject {
              * TODO: Add clearing cache for article type field edit
              */
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']));
+            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']), 'articletype');
             if ($cacheService->contains($cacheKey)) {
                  $field = $cacheService->fetch($cacheKey);
             } else {
