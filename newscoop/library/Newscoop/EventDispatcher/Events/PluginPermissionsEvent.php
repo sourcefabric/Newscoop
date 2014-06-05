@@ -16,10 +16,9 @@ use Symfony\Component\EventDispatcher\GenericEvent as SymfonyGenericEvent;
 class PluginPermissionsEvent extends SymfonyGenericEvent
 {
     /**
-	 * Plugin permissions array
-     *
-	 * @var array
-	 */
+     * Permissions array
+     * @var array
+     */
     public $permissions = array();
 
     /**
