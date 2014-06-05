@@ -178,4 +178,62 @@ class PluginsService
 
         return $collectedPermissionsData;
     }
+
+    /**
+     * Add dynamic right
+     *
+     * @param array $right
+     * @return void
+     *
+     * @deprecated will be deprecated since version 4.5
+     */
+    public function addRight(array $right)
+    {
+        $connection = $this->em->getConnection();
+        // get next id
+        $query = $connection->query('SELECT MAX(right_id) as max FROM liveuser_rights')->fetch();
+        $lastId = (int) $query['max'];
+        $nextId = $lastId + 1;
+        $areaId = (int) $right['area_id'];
+
+        $connection->executeUpdate('INSERT IGNORE INTO liveuser_rights (right_id, area_id, right_define_name) VALUES (:next, :area, :name)', array(
+            'next' => $nextId,
+            'area' => $areaId,
+            'name' => $right['right_define_name']
+        ));
+    }
+
+    /**
+     * Save plugin permissions in Newscoop ACL
+     *
+     * @param  array  $pluginPermissions Plugin permissions
+     *
+     * @return void
+     */
+    public function savePluginPermissions(array $pluginPermissions)
+    {
+        try {
+            foreach ($pluginPermissions as $permissionArray) {
+                foreach ($permissionArray as $permission => $permissionLabel) {
+                    $pluginsService->addRight(array(
+                        'area_id' => 0,
+                        'right_define_name' => $permission,
+                        'has_implied' => 1
+                    ));
+
+                    $permissionsArray = explode('_', $permission);
+                    $values = array(
+                        'role' => 1, //give access for admin group by default
+                        'type' => 'allow',
+                        'resource' => $permissionsArray[0] . '-' . $permissionsArray[1],
+                        'action' => $permissionsArray[2]
+                    );
+
+                    $this->em->getRepository('Newscoop\Entity\Acl\Rule')->save($values);
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception("Error setting up plugin permissions", 1);
+        }
+    }
 }
