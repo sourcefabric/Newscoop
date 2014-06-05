@@ -52,7 +52,7 @@ fos_rest:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
             'Newscoop\Exception\InvalidParametersException': 422
-            'Newscoop\Exception\ResourceIsEmptyException': 204
+            'Newscoop\Exception\ResourceIsEmptyException': 404
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
