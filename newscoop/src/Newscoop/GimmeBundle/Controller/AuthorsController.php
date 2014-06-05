@@ -333,6 +333,7 @@ class AuthorsController extends FOSRestController
     public function setArticleAuthorsOrderAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
+        $authorService = $this->get('author');
         $articleAuthors = $em->getRepository('Newscoop\Entity\ArticleAuthor')
             ->getArticleAuthors($number, $language)
             ->getResult();
@@ -343,42 +344,6 @@ class AuthorsController extends FOSRestController
             throw new InvalidParametersException("Number of sorted article authors must be this same as number of authors");
         }
 
-        $this->reorderAuthors($em, $articleAuthors, $order);
-    }
-
-    /**
-     * Reorder Article Authors
-     *
-     * @param Doctrine\ORM\EntityManager $em
-     * @param array                      $articleAuthors
-     * @param array                      $order
-     *
-     * @return boolean
-     */
-    private function reorderAuthors($em, $articleAuthors, $order = array())
-    {
-        if (count($order) > 1) {
-            $counter = 0;
-            foreach ($order as $item) {
-                list($authorId, $authorTypeId) = explode("-", $item);
-
-                foreach ($articleAuthors as $articleAuthor) {
-                    if ($articleAuthor->getAuthor()->getId() == $authorId && $articleAuthor->getType()->getId() == $authorTypeId) {
-                        $articleAuthor->setOrder($counter+1);
-                        $counter++;
-                    }
-                }
-            }
-        } else {
-            $counter = 0;
-            foreach ($articleAuthors as $articleAuthor) {
-                $articleAuthor->setOrder($counter+1);
-                $counter++;
-            }
-        }
-
-        $em->flush();
-
-        return true;
+        $authorService->reorderAuthors($em, $articleAuthors, $order);
     }
 }
