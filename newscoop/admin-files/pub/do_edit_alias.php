@@ -50,6 +50,9 @@ if ($correct) {
 }
 
 if ($correct) {
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+	$cacheService->clearNamespace('publication');
+	
 	camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$f_publication_id&Alias=$f_alias_id");
 	exit;
 } else {

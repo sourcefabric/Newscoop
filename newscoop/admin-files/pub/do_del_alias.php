@@ -30,6 +30,8 @@ $errorMsgs = array();
 if ($publicationObj->getDefaultAliasId() != $Alias) {
         $aliasName = $aliasObj->getName();
 	$deleted = $aliasObj->delete();
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+	$cacheService->clearNamespace('publication');
 
 	if ($deleted) {
 		camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$Pub");

@@ -32,6 +32,8 @@ $defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
 
 $defaultTime->setTrialTime($cTrialTime);
 $defaultTime->setPaidTime($cPaidTime);
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('publication');
 camp_html_add_msg($translator->trans("Country subscription settings updated.", array(), 'pub'), "ok");
 camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$Pub&Language=$Language");
 ?>
