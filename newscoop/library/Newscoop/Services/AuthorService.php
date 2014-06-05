@@ -107,7 +107,11 @@ class AuthorService
         $this->em->remove($articleAuthor);
         $this->em->flush();
 
-        $this->reorderAuthors($em, $articleAuthors);
+        $articleAuthors = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthors($article->getNumber(), $article->getLanguageCode())
+            ->getResult();
+
+        $this->reorderAuthors($this->em, $articleAuthors);
     }
 
     /**
@@ -134,9 +138,9 @@ class AuthorService
                 }
             }
         } else {
-            $counter = 0;
+            $counter = 1;
             foreach ($articleAuthors as $articleAuthor) {
-                $articleAuthor->setOrder($counter+1);
+                $articleAuthor->setOrder($counter);
                 $counter++;
             }
         }
