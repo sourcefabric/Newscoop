@@ -41,6 +41,7 @@ class ArticleAuthor
     protected $languageId;
 
     /**
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Author")
      * @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
      * @var Newscoop\Entity\Author

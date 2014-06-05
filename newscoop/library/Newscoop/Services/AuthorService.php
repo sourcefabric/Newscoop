@@ -125,6 +125,12 @@ class AuthorService
      */
     public function reorderAuthors($em, $articleAuthors, $order = array())
     {
+        // clear current order
+        foreach ($articleAuthors as $articleAuthor) {
+            $articleAuthor->setOrder(null);
+        }
+        $em->flush();
+
         if (count($order) > 1) {
             $counter = 0;
             foreach ($order as $item) {
