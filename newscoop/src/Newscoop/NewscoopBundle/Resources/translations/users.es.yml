@@ -24,7 +24,7 @@ Continue: null
 'Verified profile': null
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando de _START_ a _END_ el _TOTAL_ de entradas'
 'Send email to user:': null
-'No users found.': null
+'No users found.': 'No se encontraron usuarios.'
 'No records found.': 'No se encontraron registros'
 'No entries to show': 'No se encontraron entradas'
 'Display _MENU_ records': 'Desplegar registros _MENU_'
@@ -187,15 +187,15 @@ Miscellaneous: Misceláneo
 'User image (full-size)': null
 users:
     label:
-        title: null
+        title: 'Búsqueda de usuarios'
     menu:
         manage: 'Administrar usuarios'
     created: Creado
     updated: null
     status:
         status: Estatus
-        registered: null
-        pending: null
+        registered: Registrado
+        pending: Pendiente
         deleted: Eliminado
         active: activo
     table:
@@ -207,7 +207,7 @@ users:
             remove: Eliminar
         confirm_remove: null
         table_messages:
-            page: null
+            page: Página
             perPageText: null
             pageText: null
             recordCountPageBoundTemplate: null

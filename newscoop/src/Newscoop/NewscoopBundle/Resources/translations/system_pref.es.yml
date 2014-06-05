@@ -33,7 +33,7 @@ newscoop:
             sitetitle: 'Título del sitio:'
             metakeywords: null
             metadescription: null
-            timezone: null
+            timezone: 'Zona horaria:'
             cacheengine: null
             cacheenginehost: null
             cacheengineport: null
