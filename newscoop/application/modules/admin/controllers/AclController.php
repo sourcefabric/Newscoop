@@ -144,7 +144,6 @@ class Admin_AclController extends Zend_Controller_Action
         // register new plugins permissions
         $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
         $collectedPermissionsData = $pluginsService->collectPermissions();
-
         foreach ($collectedPermissionsData as $pluginLabel => $permissions) {
             foreach ($permissions as $permissionKey => $permissionName) {
                 $pluginNameArray = explode('_', $permissionKey);
