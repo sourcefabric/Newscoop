@@ -39,7 +39,8 @@ class ShortURL
             return $uri;
         }
 
-        return $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://' . $publication->getDefaultAlias()->getName() . $uri;
+        $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+        return $scheme . $publication->getDefaultAlias()->getName() . $uri;
     }
 
     public static function GetURI($p_publicationId, $p_languageId, $p_issueNo = null, $p_sectionNo = null, $p_articleNo = null)
