@@ -215,7 +215,7 @@ class PluginsService
         try {
             foreach ($pluginPermissions as $permissionArray) {
                 foreach ($permissionArray as $permission => $permissionLabel) {
-                    $pluginsService->addRight(array(
+                    $this->addRight(array(
                         'area_id' => 0,
                         'right_define_name' => $permission,
                         'has_implied' => 1
