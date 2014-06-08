@@ -111,7 +111,7 @@ newscoop:
             cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
             cacheengineport: null
-            cacheimage: null
+            cacheimage: 'الوقت الذي ستستغرقه الصوره لتكون مؤقته هو، من 30 ثانية إلى لا نهائية.'
             cachetemplate: null
             recovery: null
             secret: null
@@ -123,7 +123,7 @@ newscoop:
             filter: null
             cron: null
             video: null
-            emailfrom: null
+            emailfrom: 'عنوان البريد الإلمتروني مستخدم لإخطارات النظام.'
             recaptcha:
                 publickey: null
                 privatekey: null
