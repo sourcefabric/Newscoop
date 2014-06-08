@@ -31,8 +31,8 @@ comments:
         actions: الاجراءات
         selectstatus: 'تحديد الحالة'
         deleted: 'تم الحذف'
-        alert: null
-        searchholder: null
+        alert: تنبيه.
+        searchholder: 'البحث بـ ...(الإسم، البريد الإلكتروني، الموضوع، التعليق، عنوان المقال)'
     btn:
         cancel: إلغاء
         submit: تسليم
@@ -48,11 +48,11 @@ comments:
         deleted: 'تم حذف التعليق.'
         commentinarticle: 'التعليق $4 من $1 في المقالة $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: جديد.
+            approved: 'تم الموافقه عليه.'
+            hidden: 'غير ظاهر.'
+            single: 'تم تغيير حالة التعليق إلى'
+            all: 'تم تغيير حالة التعليقات إلى'
         error:
             reach: 'غير قادر على الوصول إلى Newscoop. يرجى التفتيش اتصالك بالإنترنت.'
             deletefromarticle: 'تم جذف التعليق من $1 من المقالة $2 ($3)'

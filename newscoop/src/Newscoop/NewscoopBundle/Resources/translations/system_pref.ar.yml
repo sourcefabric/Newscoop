@@ -42,7 +42,7 @@ newscoop:
             allowrecovery: null
             secretkey: null
             sessionlifetime: null
-            sessionlifetimemsg: null
+            sessionlifetimemsg: 'وفقاً لإعدادات Php.ini'
             separator: null
             captcha: null
             maxupload: null
@@ -97,9 +97,9 @@ newscoop:
             apikey: null
             appid: null
             fbsecret: null
-            recaptchapublickey: null
+            recaptchapublickey: 'مفتاح عام.'
             recaptchaprivatekey: null
-            recaptchasecure: null
+            recaptchasecure: 'رابط آمن لاختبار reCAPTCHA؟'
             disabled: null
             yesoption: نعم
             nooption: لا
@@ -108,7 +108,7 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: 'تـرقيم الأيام '
         popover:
-            cacheengine: null
+            cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
             cacheengineport: null
             cacheimage: null

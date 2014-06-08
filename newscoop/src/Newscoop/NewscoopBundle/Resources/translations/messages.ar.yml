@@ -264,18 +264,18 @@ Title: العنوان
 'Entry deleted': null
 'Feed saved': null
 'Item published': null
-'Settings saved': null
-'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
-'Change user account information': null
+'Settings saved': 'تم حفظ الإعدادات.'
+'Self-delete is not permitted.': 'لا يسمح بالحذف الذاتي .'
+'Edit staff member $1': 'إضافة عضو لطاقم العمل 1$.'
+'Delete staff member $1': 'حذف عضو من طاقم العمل 1$.'
+'Could not save user $1. Please make sure it does not already exist': 'لم يتم حفظ المستخدم 1$ تأكد من أنه ليس موجوداً. '
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'لم يتم حفظ المستخدم ببريده الإلكتروني1$.تأكد من أنه ليس موجوداً.'
+'Changing user type would prevent you to manage users. Aborted.': 'تغيير نوع المستخدم سوف يمنعك من التحكم بالمستخدمين.تم إلغاء العملية.'
+'Staff member saved.': 'تم الحفظ لطاقم العمل.'
+'Permissions: $1': 'أذونات:1$'
+'Change user account information': 'تغيير معلومات حساب المستخدم.'
 'Staff management': null
-Updated: null
+Updated: تحديث.
 Options: null
 Verified: null
 Confirm: null
