@@ -323,7 +323,7 @@ class CampURIShortNames extends CampURI
         }
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('getSection', $name, $issue->id, $language->number, $publication), 'section');
+        $cacheKey = $cacheService->getCacheKey(array('getSection', $name, $issue->id, $language->number, $publication->identifier), 'section');
         if ($cacheService->contains($cacheKey)) {
              $metaSection = $cacheService->fetch($cacheKey);
         } else {
