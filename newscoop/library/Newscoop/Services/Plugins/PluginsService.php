@@ -170,9 +170,9 @@ class PluginsService
     public function collectPermissions($subject = null, $options = array())
     {
         $collectedPermissionsData = array();
-        $listObjectsRegistration = $this->dispatcher->dispatch('newscoop.plugins.permissions.register', new PluginPermissionsEvent($subject, $options));
+        $collectedPermissions = $this->dispatcher->dispatch('newscoop.plugins.permissions.register', new PluginPermissionsEvent($subject, $options));
 
-        foreach ($listObjectsRegistration->getPermissions() as $key => $object) {
+        foreach ($collectedPermissions->getPermissions() as $key => $object) {
             $collectedPermissionsData[$key] = $object;
         }
 

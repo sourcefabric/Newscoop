@@ -29,7 +29,13 @@ class PluginPermissionsEvent extends SymfonyGenericEvent
      */
     public function registerPermissions($name, array $permissions)
     {
-        $this->permissions[$name] = $permissions;
+        if ($this->subject === $name) {
+            $this->permissions[$this->subject] = $permissions;
+        }
+
+        if (!$this->subject) {
+            $this->permissions[$name] = $permissions;
+        }
     }
 
     /**
