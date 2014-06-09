@@ -42,7 +42,7 @@ newscoop:
             allowrecovery: null
             secretkey: null
             sessionlifetime: null
-            sessionlifetimemsg: null
+            sessionlifetimemsg: 'وفقاً لإعدادات Php.ini'
             separator: null
             captcha: null
             maxupload: null
@@ -97,21 +97,21 @@ newscoop:
             apikey: null
             appid: null
             fbsecret: null
-            recaptchapublickey: null
+            recaptchapublickey: 'مفتاح عام.'
             recaptchaprivatekey: null
-            recaptchasecure: null
+            recaptchasecure: 'رابط آمن لاختبار reCAPTCHA؟'
             disabled: null
             yesoption: نعم
             nooption: لا
             geosearch: null
             usergarbage: null
             usergarbagedaysinfo: null
-            usergarbagedays: null
+            usergarbagedays: 'تـرقيم الأيام '
         popover:
-            cacheengine: null
+            cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
             cacheengineport: null
-            cacheimage: null
+            cacheimage: 'الوقت الذي ستستغرقه الصوره لتكون مؤقته هو، من 30 ثانية إلى لا نهائية.'
             cachetemplate: null
             recovery: null
             secret: null
@@ -123,7 +123,7 @@ newscoop:
             filter: null
             cron: null
             video: null
-            emailfrom: null
+            emailfrom: 'عنوان البريد الإلمتروني مستخدم لإخطارات النظام.'
             recaptcha:
                 publickey: null
                 privatekey: null

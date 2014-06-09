@@ -148,6 +148,9 @@ if (!camp_html_has_msgs()) {
 		//@New theme management
 		camp_html_add_msg($translator->trans("Section updated", array(), 'sections'), "ok");
 	}
+
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('section');
 }
 camp_html_goto_page($editUrl);
 

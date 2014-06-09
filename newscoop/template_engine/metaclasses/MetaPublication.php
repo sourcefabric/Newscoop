@@ -20,7 +20,15 @@ final class MetaPublication extends MetaDbObject {
 
     public function __construct($p_publicationId = null)
     {
-        $this->m_dbObject = new Publication($p_publicationId);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey('legacy_publication'.$p_publicationId, 'publication');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Publication($p_publicationId);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
+
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Publication();
         }
@@ -87,11 +95,16 @@ final class MetaPublication extends MetaDbObject {
 
     protected function getDefaultSiteName()
     {
+        $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');
+        if ($publicationService->getPublicationAlias()->getId() == $this->m_dbObject->getDefaultAliasId()) {
+            return $publicationService->getPublicationAlias()->getName();
+        }
+
         $defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());
         if (!$defaultAlias->exists()) {
             return null;
         }
-        
+
         return $defaultAlias->getName();
     }
 

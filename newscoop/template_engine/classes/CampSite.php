@@ -231,9 +231,10 @@ final class CampSite extends CampSystem
     {
         static $uriInstance = null;
 
-        $alias = new Alias($_SERVER['HTTP_HOST']);
-        if ($alias->exists()) {
-            $publication = new Publication($alias->getPublicationId());
+        $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');
+        $publication = $publicationService->getPublication();
+
+        if ($publication) {
             $urlType = $publication->getUrlTypeId();
         }
 

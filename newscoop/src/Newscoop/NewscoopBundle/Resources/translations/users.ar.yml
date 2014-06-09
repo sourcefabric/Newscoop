@@ -5,13 +5,13 @@ Twitter: null
 'Save profile': null
 'Profile image': null
 Organisation: null
-'Last Name Public': null
+'Last Name Public': 'جعل إسم العائلة متاح للجميع .'
 Google+: null
 Geolocation: 'الموقع الجغرافي'
 Gender: null
 'First Name Public': null
-Facebook: null
-'Date of birth': null
+Facebook: 'فيس بوك.'
+'Date of birth': 'تاريخ الميلاد .'
 'Allow sending emails': null
 'About me': null
 'User with email %s is registered already.': null
@@ -31,7 +31,7 @@ Continue: null
 'Are you sure you want to {action}?': null
 'Active Logins': null
 ' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'
-'User renamed.': 'تمة إعادة تسمية المستخدم'
+'User renamed.': 'تمت إعادة تسمية المستخدم.'
 'User attributes': 'سمات المستخدم'
 'Rename user $1': '$1اعد تسمية المستخدم'
 'Username is used already': 'اسم المستخدم قيد الاستخدام'
@@ -187,7 +187,7 @@ Miscellaneous: متفرقات
 'User image (full-size)': null
 users:
     label:
-        title: null
+        title: 'البحث الخاص بالمستخدمين'
     menu:
         manage: 'إدارة المستخدمين'
     created: 'تم الانشاء'
@@ -219,4 +219,4 @@ users:
             recordCountTemplate: null
             processingText: 'في عملية المعالجة...'
     chart:
-        title: null
+        title: 'عمليات تسجيل الدخول النشطة'

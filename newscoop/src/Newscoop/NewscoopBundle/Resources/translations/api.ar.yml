@@ -82,7 +82,7 @@ api:
                 name: null
                 id: null
                 secret: null
-                trusted: null
+                trusted: موثوق؟
                 redirect: null
                 publication: المنشور
                 actions: الاجراءات
