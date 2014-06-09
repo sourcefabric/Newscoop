@@ -455,4 +455,28 @@ class Publication
     {
         return (array) unserialize($this->seo);
     }
+
+    /**
+     * Gets the value of urlTypeId.
+     *
+     * @return int
+     */
+    public function getUrlTypeId()
+    {
+        return $this->urlTypeId;
+    }
+    
+    /**
+     * Sets the value of urlTypeId.
+     *
+     * @param int $urlTypeId the url type id
+     *
+     * @return self
+     */
+    public function setUrlTypeId($urlTypeId)
+    {
+        $this->urlTypeId = $urlTypeId;
+
+        return $this;
+    }
 }

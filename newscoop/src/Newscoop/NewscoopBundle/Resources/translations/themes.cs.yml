@@ -20,8 +20,8 @@ updated: aktualizované
 moved: posunuté
 installed: instalováné
 deleted: vymazané
-'You must select at least one template to perform an action.': 'Musíte vybrat alespoń jednu šablonu k provedení akce.'
-Upload: Nahrát
+'You must select at least one template to perform an action.': 'Musíte zvolit alespoň jednu šablonu k provedení činnosti.'
+Upload: Nahrávat
 'Unassign theme': 'Zrušení přirazení tématu'
 'Unassign successful': 'Úspěšné zrušení přiřazení '
 Unassign: 'Zrušení přiřazení'
@@ -40,7 +40,7 @@ Unassign: 'Zrušení přiřazení'
 'Section page template': 'Stránka sekce šablon'
 Saving..: Ukládání...
 'Saving settings failed.': 'Ukládání nastavení selhalo.'
-'Save All': 'Uložit vše'
+'Save All': 'Uložit Vše'
 'Required Newscoop version': 'Požadována verze Newscoop'
 Replace: Nahradit
 'New template $1 created.': 'Nová šablona $1 vytvořena.'
@@ -58,11 +58,11 @@ Replace: Nahradit
 'Failed unassigning theme': 'Neuspěšné zrušení přiřazení tématu '
 Export: Export
 'Error page template': 'Šablona stránky chyb'
-'Edit $1': 'Upravit $1'
+'Edit $1': 'Editovat $1'
 'Done uploading': 'Nahráváni hotovo'
 'Do you want to override $1?': 'Přejete si přepsat $1?'
 'Directory is empty': 'Adresář je prázdný'
-'Directory $1 created.': 'Adresář $1 vytvořen.'
+'Directory $1 created.': 'Složka $1 vytvořena.'
 Design: Design
 'Delete theme': 'Vymazat téma'
 'Current directory:': 'Aktuální adresář:'

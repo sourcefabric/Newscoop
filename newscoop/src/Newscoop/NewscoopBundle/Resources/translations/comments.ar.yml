@@ -1,77 +1,77 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
-'You are about to permanently delete multiple messages.': 'توشك أن تحذف رسائل متعددة بشكل دائم.'
-'You are about to permanently delete a message.': 'توشك أن تحذف رسالة بشكل دائم.'
+'No attachment': null
+at: في
+'With no attachment': 'بلا مرفق'
+'With image attachment': 'بمرفق صورة'
+'With document attachment': 'بمرفق وثيقة'
+'Unable to reach Newscoop. Please check your internet connection.': 'غير قادر على الوصول إلى نيوسكوب. يرجى التحقق من اتصالك بالإنترنت.'
+Starred: 'بعلامة نجمية'
+Star: 'علامة نجمية'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'قيد العرض _START_ لـ_END_ من _TOTAL_ إدخالات'
+'Reply to message': 'الرد على الرسالة'
+Reply: رد
+Processed: 'تم المعالجة'
+'No records found.': 'لم يتم العثور على سجلات.'
+'No entries to show': 'لا إدخالات من أجل الإظهار'
+'Messages updated.': 'تم تحديث الرسائل.'
+'Messages status change to $1.': 'تتغير حالة الرسائل الى $1.'
+'Messages deleted.': 'تم حذف الرسائل.'
+'Message updated.': 'تم تحديث الرسالة.'
+'Message status change to $1.': 'تتغير حالة الرسالة الى $1 .'
+'Message deleted.': 'تم حذف الرسالة'
+Message: الرسالة
+Last: الأخير
+'Full article': 'المقالة الكاملة'
+First: الأول
+'Feedback Messages': 'رسائل التغذية المرتدة'
+'Display _MENU_ records': 'إعرض سجلات من _MENU_'
+Deleted: 'تم الحذف'
+'Change selected messages status': 'تغيير حالة الرسائل المحددة'
+Attachment: المرفق
+Approved.: 'موافق عليه'
+Approve: الموافقة
+Anonymous: null
+' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'
+'You are about to permanently delete multiple messages.': 'توشك أن تحذف رسائل متعددة بشكل دائم ـ'
+'You are about to permanently delete a message.': 'توشك أن تحذف رسالة بشكل دائم ـ'
 User: المستخدم
 None: 'لا شيء'
-'Coming from': 'قادما من'
-'Ban/Unban user': 'تحريم / إزالة تحريم المستخدم'
+'Coming from': 'قادماً من'
+'Ban/Unban user': 'حظر / إزالة حظر المستخدم'
 Ip: 'بروتوكول الإنترنت (IP)'
 'Bans can be applied to a users name, email address or IP address.': 'يمكن تطبيق التحريمات على اسم المستخدم، عنوانه البريد الإلكتروني أو عنوانه IP.'
 'You are about to permanently delete multiple comments.': 'توشك أن تحذف تعليقات متعددة بشكل دائم.'
-'You are about to permanently delete a comment.': 'توشك أن تحذف تعليقا بشكل دائم.'
+'You are about to permanently delete a comment.': 'توشك أن تحذف تعليقاًت بشكل دائم.'
 Website: 'موقع إلكتروني'
-'Value is not $1 characters long': 'ليشت القيمة $1 أحرف'
+'Value is not $1 characters long': 'ليست القيمة $1 حروف'
 Username: 'اسم المستخدم'
 'User id': 'هوية المستخدم'
-'User ban settings': 'إعدادات تحريم المستخدم '
-'Update comment': 'تحديث التعليق'
-Unrecommended: 'تم ازالة التوصية'
-Unrecommend: 'ازالة التوصية'
-'Subject is not $1 characters long': 'ليس الموضوع $1 أحرف'
-'Sort by Thread order': 'الرتب حسب ترتيب المناقشة'
-'Show parent comment': 'اظهار التعليق الاصلي'
-'Show commenter details': 'إظهار تفاصيل المعلق'
-'Show commenter': 'اظهار المعلق'
-'Show comment user details': 'اظهار تفاصيل المستخدم للتعليق'
-'Show comment user': 'اظهار مستخدم التعليق'
-'Show comment details': 'إظهار تفاصيل التعليق'
-'Select status': 'تحديد الحالة'
+'User ban settings': 'إعدادات حظر المستخدمين '
+'Update comment': 'حدّث التعليق'
+Unrecommended: 'تم إلغاء التوصية'
+Unrecommend: 'إلغاء التوصية'
+'Subject is not $1 characters long': 'ليس الموضوع $1 حروف'
+'Sort by Thread order': 'إرتب من خلال ترتيب المناقشة'
+'Show parent comment': 'أظهر التعليق الأصلي'
+'Show commenter details': 'أظهر تفاصيل المعلق'
+'Show commenter': 'أظهر المعلق'
+'Show comment user details': 'أظهر تفاصيل المستخدم للتعليق'
+'Show comment user': 'أظهر مستخدم التعليق'
+'Show comment details': 'أظهر تفاصيل التعليق'
+'Select status': 'حدد الحالة'
 'Search Type': 'نوع البحث'
 'Reply to comment': 'الرد على التعليق'
-Recommended: 'تم التوصية'
-Recommend: التوصية
+Recommended: 'موصى به'
+Recommend: 'قم بالتوصية'
 'Quick edit': 'التعديل السريع'
 Parent: أصل
 ID: هوية
-'Go to edit article': 'الذهاب إلى تعديل المقالة'
+'Go to edit article': 'إذهب إلى تعديل المقال'
 Forum: 'المنتدى للنقاش'
 'For Column': للعمود
 Email: 'بريد إلكتروني'
-'Edit acceptance criteria': 'تعديل معايير القبول'
+'Edit acceptance criteria': 'عدل معايير القبول'
 E-mail: 'البريد الإلكتروني '
-'Delete all comments?': 'حذف جميع التعليقات؟'
+'Delete all comments?': 'إحذف جميع التعليقات؟'
 'Date Created': 'تم انشاء التاريخ'
 'Comments updated.': 'تم تحديث التعليقات'
 'Comments status change to $1.': 'تغيير حالة التعليقات الى $1.'
@@ -83,18 +83,18 @@ Commenter: المعلق
 'Comment status change to $1.': 'تغيير حالة التعليق الى $1.'
 'Comment id': 'رقم التعليق'
 'Comment deleted.': 'تم حذف التعليق.'
-'Comment delete by $1 from the article $2 ($3)': 'تم جذف التعليق من $1 من المقالة $2 ($3)'
+'Comment delete by $1 from the article $2 ($3)': 'تم حذف التعليق من $1 من المقال $2 ($3)'
 'Comment Acceptance': 'قبول التعليق'
-'Comment $4 by $1 in the article $2 ($3)': 'التعليق $4 من $1 في المقالة $2 ($3)'
+'Comment $4 by $1 in the article $2 ($3)': 'التعليق $4 من $1 في المقال $2 ($3)'
 'Comment $1 saved.': 'تم الحفظ التعليق $1.'
 Column: العمود
 'Change subscriber information': 'تغيير معلومات المشترك'
 'Ban for commenter $1 saved.': 'تم حفظ تحريم للمعلق $1.'
 Ban: تحريم
-'Are you sure you want to do it?': 'هل أنت متأكد أنك تريد أن تفعل ذلك؟'
-'Add rating': 'إضافة تقييما'
-'Add new comment commenter': 'إضافة معلقا جديد'
-'Add new comment': 'اضافة تعليقا جديدا'
-'Add new acceptance criteria': 'إضافة معايير القبول الجديدة'
+'Are you sure you want to do it?': 'هل أنت متأكد أنك تريد المواصلة؟'
+'Add rating': 'أضف تقييم'
+'Add new comment commenter': 'أضف معلق جديد'
+'Add new comment': 'أضف تعليق جديد'
+'Add new acceptance criteria': 'أضف معايير القبول الجديدة'
 'Acceptance $1 saved.': 'تم حفظ القبول $1.'
 'Acceptance $1 deleted.': 'تم حذف القبول $1.'

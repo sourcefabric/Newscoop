@@ -1,37 +1,37 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 'تمة إعادة تسمية المستخدم'
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'موقع إلكتروني'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': 'جعل إسم العائلة متاح للجميع .'
+Google+: null
+Geolocation: 'الموقع الجغرافي'
+Gender: null
+'First Name Public': null
+Facebook: 'فيس بوك.'
+'Date of birth': 'تاريخ الميلاد .'
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'قيد العرض _START_ لـ_END_ من _TOTAL_ إدخالات'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'لم يتم العثور على سجلات.'
+'No entries to show': 'لا إدخالات من أجل الإظهار'
+'Display _MENU_ records': 'إعرض سجلات من _MENU_'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'
+'User renamed.': 'تمت إعادة تسمية المستخدم.'
 'User attributes': 'سمات المستخدم'
 'Rename user $1': '$1اعد تسمية المستخدم'
 'Username is used already': 'اسم المستخدم قيد الاستخدام'
@@ -44,27 +44,27 @@ Continue:
 'Profile saved.': 'تم حفظ الشاكلة'
 Picture: صورة
 'Password updated': 'تم تحديث كلمة السر'
-None: 'لا يوجد'
+None: 'لا شيء'
 'New confirmation email was sent to user.': 'تم ارسال بريد التاكيد للمستخدم'
 'Email is used already': 'البريد الاكتروني قيد الاستخدام '
-'Edit your password': 'تعديل كلمة السر'
+'Edit your password': 'عدل كلمة السر'
 'Edit user $1': 'تعديل المستخدم $1'
-'Edit subscriptions': 'تعديل الاشتراكات'
+'Edit subscriptions': 'تحرير الاشتراكات'
 'Edit profile': 'تعديل الشاكلة'
-'Edit permissions': 'تعديل الأذونات'
-'Create new account': 'إنشاء حسابا جديدا'
+'Edit permissions': 'عدل الأذونات'
+'Create new account': 'أنش حساب جديد'
 'Comment ban settings': 'اعدادات تحريم التعليقات'
 'Ban for user $1 saved.': 'تم تسجيل منع المستخدم $1'
 'User account is active': 'حساب المستخدم مفعل'
 'Allow users profile to be publicly displayed': 'السماح لشاكلة المستخدم أن يعرض علنا'
 'Allow user access to login to site backend': 'اسمح للمستخدم ولوج منطقة المشرف '
-Templates: قوالب
+Templates: نماذج
 Username: 'اسم المستخدم'
 'Last Name': 'اسم العائلة'
 'First Name': 'الاسم الاول'
-Email: 'بريد الكتروني'
+Email: 'بريد إلكتروني'
 'You were logged out.': 'تم تسجيل خروجك'
-'Newscoop Subhead': 'العنوان القرعي لـ Newscoop'
+'Newscoop Subhead': 'عنوان فرعي لـ نيوسكوب.'
 Filters: 'عوامل التصفية'
 'Add new Author': 'اضف مؤلف جديد'
 'Loading Data': 'بتم تحميل البيانات'
@@ -101,7 +101,7 @@ Filters: 'عوامل التصفية'
 'User may attach topics to articles': 'يحق للمستخدم إضافة المواضيع للمقالات'
 'User may attach images to articles': 'يحق للمستخدم إضافة الصور للمقالات'
 'User may add special characters': 'يحق للمستخدم إضافة حروف خاصة'
-'That user name already exists, please choose a different login name.': 'أسم المستخدم موجود من قبل. الرجاء اختيار أسم دخول مختلف.'
+'That user name already exists, please choose a different login name.': 'اسم المستخدم ذلك قيد الاستخدام مسبقاً، يرجى الاختيار اسم تسجيل دخول مختلف.'
 'User may delete article attachments': 'يحق للمستخدم حذف مرفقات المقالة.'
 'User may change article attachments': 'يحق للمستخدم تعديل مرفقات المقالة.'
 'User may add article attachments': 'يحق للمستخدم إضافة مرفقات المقالة.'
@@ -184,46 +184,39 @@ Miscellaneous: متفرقات
 'User will be notified on several events': 'سيتم تنبية المستخدم على العديد من الأحداث'
 'Editor Miscellaneous Settings': 'إعدادات المحرر الاخرى'
 'No such user account.': 'لا يوجد مثل حساب مستخدم'
-'User management': 'إدارة المستخدم'
-Set: تعيين
-Update: تحديث
-Rights: حقوق
-'IP Access': 'الدخول إلى بروتوكول الإنترنت'
-'User Name': 'اسم المستخدم'
-Staff: 'طاقم العمل'
-'Adding new user account': 'في عملية إضاقة حساب مستخدم جديد'
-'You must select an user type.': 'يجب إختيار نوع مستخدم'
-'The user account $1 has been created.': '$1 تم انشاء حساب المستخدم'
-'Please check if an account with the same user name does not already exist.': 'يرجى التأكد من عدم وجود حساب يحمل اسم المستخدم نفسه مسبقا'
-'You do not have the right to change user passwords.': 'ليس لديك الحق في تغيير كلمات السر للمستخدمين'
-'Changing user password': 'في عملية تغيير كلمة السرّ للمستخدم'
-'The password could not be changed.': 'لم تغير كلمة السرّ'
-'The password has been changed.': 'تم تغيير كلمة السر'
-'Edit user account permissions': 'تعديل أذنات حساب المستخدم'
-'This user account does not have permissions information.': 'ليس لدى حساب المستخدم هذا معلومات الأذنات.'
-'Updating user account permissions': 'قي عملية تحديث أذنات حساب المستخدم'
-'User account permissions have been successfuly updated.': 'تم تحديث أذنات حساب لامستخدم بجناح.'
-'User account permissions could not be updated.': 'لم تحدث أذنات حساب المستخدم'
-'Changing user account information': 'في عملية تغيير معلومات حساب المستخدم'
-'User account information has been changed.': 'تم تغيير معلومات حساب المستخدم'
-'User account information could not be changed.': 'لم تغير معلومات حساب المستخدم'
-'Old password': 'كلمة السر القديمة'
-'New password': 'كلمة السر الجديدة'
-'Confirm new password': 'يرجى التأكد كلمة السر الجديدة'
-'Changing your password': 'في تغيير كلمة السر الخاصة بك'
-'User $1 changed his password': 'بدّل المستخدم 1$ كلمة السر الخاصة به'
-'Delete user account': 'حذف حساب المستخدم'
-'Deleting user account': 'في عملية حذف حساب المستخدم'
-'The user account $1 could not be deleted.': 'لم ينشئ حاسب المستخدم $1'
-'No such user.': 'لا يوجد مثل المستخدم'
-'Delete IP Group $1': 'حذف مجموعة بروتوكول الإنترنت $1'
-'IP Access List': 'قائمة الدخول إلى بروتوكول الإنترنت'
-'Adding new IP Group': 'في قملية إضافة مجموعة جديدة من بروتوكول الإنترنت'
-'The IP Group could not be created.': 'لم تنشئ مجموعة بروتوكول الإنترنت'
-'Please check if an account with the same IP Group does not already exist.': 'الرجاء التأكد من عدم وجود حساب يحمل مجموعة بروتوكول الإنترنت نعسها من قبل.'
-'Delete IP Group': 'حذف مجموعة بروتوكول الإنترنت'
-'You do not have the right to delete IP Groups.': 'ليس لديك الحق في حذف مجموعات بروتوكول الإنترنت'
-'No such IP Group.': 'لا يوجد مثل مجموعة بروتوكول الإنترنت'
-'Deleting IP Group': 'في عملية حذف مجموعة بروتوكول الإنترنت'
-'The IP Group could not be deleted.': 'لم تحدف مجموعة بروتوكول الإنترنت'
-'No IP Group.': 'لا يوجد مجموعة بروتوكول الإنترنت'
+'User image (full-size)': null
+users:
+    label:
+        title: 'البحث الخاص بالمستخدمين'
+    menu:
+        manage: 'إدارة المستخدمين'
+    created: 'تم الانشاء'
+    updated: null
+    status:
+        status: الحالة
+        registered: null
+        pending: null
+        deleted: 'تم الحذف'
+        active: 'قيد الاستخدام'
+    table:
+        actions:
+            actions: الاجراءات
+            edit: تعديل
+            resend_email: null
+            rename: null
+            remove: إزالة
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: 'في عملية المعالجة...'
+    chart:
+        title: 'عمليات تسجيل الدخول النشطة'

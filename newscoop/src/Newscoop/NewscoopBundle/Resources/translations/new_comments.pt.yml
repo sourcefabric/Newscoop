@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Comentários
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: Oculto
+        approved: Aprovado
+        new: Novo
+        editarticle: null
+        section: Secção
+        comment: Comentário
+        replyto: null
+        subject: Assunto
+        ban: null
+        author: Autor
+        date: null
+        article: Artigo
+        search: Procurar
+        show: Mostrar
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: Acções
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Cancelar
+        submit: 'Submeter à Apreciação'
+        unrecommend: null
+        recommend: null
+        delete: Eliminar
+        reply: null
+        edit: null
+        close: Fechar
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

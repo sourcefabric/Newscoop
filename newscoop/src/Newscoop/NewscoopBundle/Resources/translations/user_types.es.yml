@@ -48,7 +48,7 @@ attach: añadir
 admin: administrador
 add: agregar
 'You cant deny yourself to manage $1': 'No puede negarse a administrar $1'
-'You are not allowed to $1 $2.': 'No puede negarse a $1 $2.'
+'You are not allowed to $1 $2.': 'Usted no tiene permiso para $1 $2.'
 'User type saved.': 'Tipo de usuario guardado.'
 'User type deleted.': 'Tipo de usuario eliminado.'
 'User type added.': 'Tipo de usuario agregado.'
@@ -60,7 +60,7 @@ Structure: Estructura
 'Search Indexer': 'Buscar índice'
 'Rich-Text Editor Preferences': 'Preferencias de editor de texto'
 ReCaptcha: ReCaptcha
-Polls: Encuestas
+Polls: 'Encuesta '
 'Permissions:': Permisos
 'Permissions updated': 'Permisos actualizados'
 Notification: Notificación
@@ -79,14 +79,3 @@ Authoring: Autoría
 Allow: Permitir
 'User types': 'Tipo de usuario'
 'No user types.': 'Sin tipo de usuario'
-'You do not have the right to add user types.': 'No tiene derecho a agregar tipo de usuario'
-'Adding new user type': 'Agregando nuevo tipo de usuario'
-'The user type $1 has been added.': 'El tipo de usuario $1 ha sido agregado.'
-'The user type could not be added.': 'El tipo de usuario no pudo ser agregado'
-'Please check if an user type with the same name does not already exist.': 'Favor revise si un tipo de usuario con el mismo nombre no existe ya'
-'Deleting user type': 'Borrando tipo de usuario'
-'The user type has been deleted.': 'El tipo de usuario ha sido borrado'
-'The user type could not be deleted.': 'El tipo de usuario no pudo ser borrado'
-'Updating user type permissions': 'Actualizando permisos de tipo de usuario'
-'User type permissions have been successfuly updated.': 'Permisos de tipo de usuario han sido actualizado con éxito'
-'User type permissions could not be updated.': 'Permisos de tipo de usuario no pudo ser actualizado'

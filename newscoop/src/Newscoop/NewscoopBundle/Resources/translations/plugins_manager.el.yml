@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Όνομα
+newscoop.plugins_manager.installed_table.description: Περιγραφή
+newscoop.plugins_manager.installed_table.enabled: Ενεργοποιήθηκε
+newscoop.plugins_manager.installed_table.version: Εκδοχή
+newscoop.plugins_manager.installed_table.license: Άδεια
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Ενέργειες
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Αφαίρεση
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Ανέβασμα
+newscoop:
+    datatable:
+        table:
+            info: 'Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους'
+            noentries: 'Καμία είσοδος προς προβολή'
+            filtering: '-φιλτράρισμα από _MAX_ καταχωρήσεις'
+            menu: 'Εμφάνιση καταχωρήσεων _MENU_ '
+        label:
+            search: Αναζήτηση
+            filter: Φίλτρο
+            processing: Επεξεργασία...
+            last: Τελευταίο
+            next: Επόμενο
+            first: Πρώτο
+            previous: Προηγούμενο
+            norecords: 'Δεν βρέθηκαν καταχωρήσεις.'

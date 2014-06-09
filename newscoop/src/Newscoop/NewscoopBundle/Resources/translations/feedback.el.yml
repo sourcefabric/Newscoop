@@ -1,7 +1,7 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Πρόκειτε να διαγράψετε οριστικά πολλά μηνύματα.'
+'You are about to permanently delete a message.': 'Πρόκειτε να διαγράψετε οριστικά ένα μήνυμα.'
+'Are you sure you want to do it?': 'Είστε σίγουρος/η ότι θέλετε να το κάνετε;'
 Approve: Έγκριση
 Approved.: Εγκρίθηκε.
 at: σε
@@ -22,7 +22,7 @@ Reply: Απάντηση
 'Reply to message': 'Απάντηση στο μήνυμα'
 Star: Αστερίσκος
 Starred: Διακεκριμένα
-'Unable to reach Newscoop. Please check your internet connection.': 'Αδύνατη η πρόσβαση στο Newscoop. Παρακαλούμε ελέγξτε τη σύνδεσή σας.'
+'Unable to reach Newscoop. Please check your internet connection.': 'Αδύνατη η πρόσβαση στο Newscoop. Παρακαλούμε ελέγξτε την σύνδεση σας.'
 'With document attachment': 'Με σύναψη εγγράφου'
 'With image attachment': 'Με σύναψη εικόνας'
 'With no attachment': 'Χωρίς συνημμένο'

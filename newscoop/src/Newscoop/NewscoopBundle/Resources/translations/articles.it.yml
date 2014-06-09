@@ -1,6 +1,6 @@
-'Edit metadata': 
-Rating: 
-'Enable Rating': 
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
 'Blog management': 'Gestione blog'
 'View article': 'Vedi articolo'
 'Select a list': 'Scegli una lista'
@@ -58,7 +58,7 @@ Files: File
 'Keywords saved.': 'Parole chiave salvate.'
 'Comment settings': 'Impostazioni commenti'
 Authors: Autori
-'Attach Topic To Article': 'Associa largomento allarticolo'
+'Attach Topic To Article': 'Allega largomento allarticolo'
 'Article saved.': 'Articolo salvato.'
 'Article is locked': 'Articolo bloccato'
 'Actions updated.': 'Articolo aggiornato.'
@@ -80,9 +80,9 @@ Created: Creato
 'You must select a file to upload.': 'Devi selezionare un file da caricare.'
 'You must select a XML input file.': 'Devi selezionare un file XML di input.'
 'You do not have the right to import XML archives.': 'Non hai il permesso di importare un archivio XML.'
-'There was a problem uploading the file.': 'Si è verificato un problema durante il caricamento del file.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Il file è stato caricato solo parzialmente, cosa che di solito succede se il tempo massimo di caricamento è troppo breve rispetto alla dimensione del file da caricare: occorre modificare questa impostazione consultare il file php.ini'
-'The file exceeds the allowed max file size.': 'Il file eccede la dimensione massima autorizzata.'
+'There was a problem uploading the file.': 'Si e verificato un problema durante il caricamento del file.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Il file e stato caricato solo parzialmente. Questo succede di solito quando il massimo tempo di upload e troppo breve per la dimensione del file. Questa impostazione si trova in php.ini'
+'The file exceeds the allowed max file size.': 'Il file eccede la dimensione massima per i file.'
 Optional: Opzionale
 'Input File': 'File di input'
 'Import XML': 'Importa XML'
@@ -165,8 +165,8 @@ Comments: Commenti
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Per la lingua selezionata occorre creare unedizione: inserisci il nome e lURL delledizione.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Per la lingua selezionata occorre creare una sezione: inserisci il nome e lURL della sezione.'
 'Article Type': 'Tipo articolo'
-'Show article on front page': 'Mostra articolo in prima pagina'
-'Show article on section page': 'Mostra articolo nella pagina della sezione'
+'Show article on front page': 'In prima pagina'
+'Show article on section page': 'In pagina di sezione'
 'Translate article': 'Traduci articolo'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Non hai il permesso di modificare larticolo. Puoi solo modificare i tuoi articoli e, una volta inviati, questi possono essere modificati solo da utenti autorizzati.'
 'Duplicate article': 'Duplica articolo'
@@ -183,3 +183,4 @@ Comments: Commenti
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Impossibile mostrare lanteprima dellarticolo. Assicurati che sia selezionato un template per larticolo selezionato.'
 'No such article.': 'Larticolo non esiste.'
 'No such section.': 'La sezione non esiste.'
+Characters: null

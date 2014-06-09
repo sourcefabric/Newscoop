@@ -1,91 +1,100 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-User: 
-None: 
-'Coming from': 
-'Ban/Unban user': 
-Ip: 
-'Bans can be applied to a users name, email address or IP address.': 
-'You are about to permanently delete multiple comments.': 
-'You are about to permanently delete a comment.': 
-Website: 
-'Value is not $1 characters long': 
-Username: 
-'User id': 
-'User ban settings': 
-'Update comment': 
-Unrecommended: 
-Unrecommend: 
-'Subject is not $1 characters long': 
-'Sort by Thread order': 
-'Show parent comment': 
-'Show commenter details': 
-'Show commenter': 
-'Show comment user details': 
-'Show comment user': 
-'Show comment details': 
-'Select status': 
-'Search Type': 
-'Reply to comment': 
-Recommended: 
-Recommend: 
-'Quick edit': 
-Parent: 
-ID: 
-'Go to edit article': 
-Forum: 
-'For Column': 
-Email: 
-'Edit acceptance criteria': 
-E-mail: 
-'Delete all comments?': 
-'Date Created': 
-'Comments updated.': 
-'Comments status change to $1.': 
-'Comments deleted.': 
-'Commenter $1 saved.': 
-'Commenter $1 deleted.': 
-Commenter: 
-'Comment updated.': 
-'Comment status change to $1.': 
-'Comment id': 
-'Comment deleted.': 
-'Comment delete by $1 from the article $2 ($3)': 
-'Comment Acceptance': 
-'Comment $4 by $1 in the article $2 ($3)': 
-'Comment $1 saved.': 
-Column: 
-'Change subscriber information': 
+'No attachment': null
+at: null
+'With no attachment': null
+'With image attachment': null
+'With document attachment': null
+'Unable to reach Newscoop. Please check your internet connection.': null
+Starred: null
+Star: null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Reply to message': null
+Reply: null
+Processed: null
+'No records found.': null
+'No entries to show': null
+'Messages updated.': null
+'Messages status change to $1.': null
+'Messages deleted.': null
+'Message updated.': null
+'Message status change to $1.': null
+'Message deleted.': null
+Message: null
+Last: Laatste
+'Full article': null
+First: Eerste
+'Feedback Messages': null
+'Display _MENU_ records': null
+Deleted: null
+'Change selected messages status': null
+Attachment: null
+Approved.: null
+Approve: null
+Anonymous: null
+' - filtering from _MAX_ records': null
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+User: Gebruiker
+None: null
+'Coming from': null
+'Ban/Unban user': null
+Ip: null
+'Bans can be applied to a users name, email address or IP address.': null
+'You are about to permanently delete multiple comments.': null
+'You are about to permanently delete a comment.': null
+Website: null
+'Value is not $1 characters long': null
+Username: null
+'User id': null
+'User ban settings': null
+'Update comment': null
+Unrecommended: null
+Unrecommend: null
+'Subject is not $1 characters long': null
+'Sort by Thread order': null
+'Show parent comment': null
+'Show commenter details': null
+'Show commenter': null
+'Show comment user details': null
+'Show comment user': null
+'Show comment details': null
+'Select status': null
+'Search Type': null
+'Reply to comment': null
+Recommended: null
+Recommend: null
+'Quick edit': null
+Parent: null
+ID: null
+'Go to edit article': null
+Forum: null
+'For Column': null
+Email: null
+'Edit acceptance criteria': null
+E-mail: null
+'Delete all comments?': null
+'Date Created': null
+'Comments updated.': null
+'Comments status change to $1.': null
+'Comments deleted.': null
+'Commenter $1 saved.': null
+'Commenter $1 deleted.': null
+Commenter: null
+'Comment updated.': null
+'Comment status change to $1.': null
+'Comment id': null
+'Comment deleted.': null
+'Comment delete by $1 from the article $2 ($3)': null
+'Comment Acceptance': null
+'Comment $4 by $1 in the article $2 ($3)': null
+'Comment $1 saved.': null
+Column: null
+'Change subscriber information': null
+'Ban for commenter $1 saved.': null
+Ban: null
+'Are you sure you want to do it?': null
+'Add rating': null
+'Add new comment commenter': null
+'Add new comment': null
+'Add new acceptance criteria': null
+'Acceptance $1 saved.': null
+'Acceptance $1 deleted.': null

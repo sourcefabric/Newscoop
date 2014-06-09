@@ -1,10 +1,10 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 
-'Edit and translate human-readable field names': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': null
+'Edit and translate human-readable field names': null
 'The template name may only contain letters and the underscore (_) character.': 'Імя шаблёну можа змяшчаць толькі літары і знак падкрэслівання (_).'
 'Rename article type $1': 'Пераіменаваць тып артыкула  $1 '
 'Invalid article type $1.': 'Няправільны тып артыкула $1.'
@@ -27,26 +27,26 @@ NOTHING: НIЧОГА
 'Destination Article Type': 'Тып вынiковага артыкула'
 'Delete the source article type ($1) when finished.': 'Выдалiць тып артыкула ($1) пасьля завяршэньня.'
 'Cycle through your articles to verify that the merge configuration is correct.': 'Пракруціць Ваш артыкул для праверкi, цi канфiгурацыя абяднаньня сулшная. '
-'Clicking Merge will merge ($1) article(s).': 
+'Clicking Merge will merge ($1) article(s).': null
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Немагчыма зьлiць поле $1 ($2) у поле $3 ($4). '
---None--: --Нічога--
+'--None--': '--Нічога--'
 '(Null merge warning.)': '(Няма папярэджаньняў аб абяднаньнi.)'
 '(No merge warning.)': '(Няма папярэджаньняў аб абяднаньнi.)'
 '(Duplicate warning.)': '(Дубляваць папярэджаньнi)'
 '(!) Do NOT merge $1': '(!) Не абядноўвайце $1'
 '$1 of $2': '$1 з $2 '
-show: паказаць
-hide: схаваць
+show: Паказаць
+hide: Схаваць
 deactivate: дэактываваць
 activate: актывіваваць
 'You must enter a name for the type.': 'Вы павiнны ўвесьцi назву тыпу.'
 'You must choose a language for the article type.': 'Вы павiнны выбраць мову для тыпу артыкула.'
 'You do not have the right to rename article types.': 'Вы ня маеце права пераймяноўваць тыпы артыкулаў.'
 'You do not have the right to merge article types.': 'Вы ня маеце права абядноўваць тыпы артыкулаў.'
-'The translation could not be added.': 'Пераклад нельга дадаць.'
+'The translation could not be added.': 'Пераклад ня можа быць даданы.'
 'The article type $1 does not exist.': 'Тып артыкула $1 не iснуе.'
 'Template Type Name': 'Назва тыпу шаблёну'
-Show/Hide: Паказаць/схаваць
+Show/Hide: Паказаць/Схаваць
 'Show article on section page': 'Паказаць артыкул на старонцы рубрыкi.'
 'Show article on front page': 'Паказаць артыкул на тытульнай старонцы '
 'Publish date': 'Дата публiкацыі '
@@ -65,14 +65,14 @@ Merge!: Абяднаць!
 'Are you sure you want to $1 the article type $2?': 'Цi Вы ўпэўнены, што хочаце $1 тыпа артыкулаў $2? '
 'Are you sure you want to $1 comments for article type $2?': 'Цi Вы ўпэўнены, што хочаце $1 камэнтары для тыпу артыкула $2?'
 'Allow users without subscriptions to view the article': 'Дазволiць карыстальнiкам без падпiскі чытаць артыкулы.'
-'Add translation:': 'Дадаць пераклад:'
+'Add translation:': 'Дадаць пераклад'
 '$1 comments for article type $2': 'Камэнтароў для артыкулаў тыпу $2: $1'
 '$1 comments for article type $1': 'Камэнтароў для артыкулаў тыпу $1: $1'
-'$1 article type $2': 'Артыкулаў тыпа $2: $1'
+'$1 article type $2': '$1 тып артыкулаў $2 '
 'No article types.': 'Няма тыпаў артыкулаў.'
 'Delete article type $1': 'Выдалiць тып артыкула $1'
 'You do not have the right to add article types.': 'Вы ня маеце права выдаляць тыпы артыкулаў.'
-'Adding new article type': 'Дадаваньне новага тыпу артыкулаў'
+'Adding new article type': 'Дадаваньне новага тыпу артыкула'
 'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 можа зьмяшчаць толькi лiтары i сымбаль падкрэсьлiваньня (_).'
 'The article type $1 already exists.': 'Тып артыкула $1 ужо iснуе. '
 'You do not have the right to delete article types.': 'Вы ня маеце права выдаляць тыпы артыкулаў.'

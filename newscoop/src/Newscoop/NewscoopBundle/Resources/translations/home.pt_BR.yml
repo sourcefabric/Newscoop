@@ -1,3 +1,11 @@
+'Rename user': null
+Campsite: null
+'Image Rendering': null
+'Featured Article Lists': null
+'You have tried to upload an invalid backup file.': null
+'You do not have the right to manage backups.': null
+'Make a new backup': null
+'Are you sure you want to make a new backup?': null
 'Security token expired. Please resubmit the form.': 'Token de segurança venceu. Por favor reinviar o formulário.'
 Templates: Templates
 'Create slideshow': 'Criar slideshow'
@@ -5,11 +13,11 @@ Create: Criar
 Attach/Detach: 'Anexar/Remover anexo'
 'Are you sure you want to delete slideshow?': 'Tem certeza que quer apagar o slideshow?'
 Support: Suporte
-'Pending articles': Artigos
+'Pending articles': 'Artigos pendentes'
 'Manage Users': 'Gerenciar usuários'
 'Manage User Types': 'Gerenciar tipos de usuários'
 'Manage User Points System': 'Gerenciar sistema de pontos de usuários'
-Last: Último
+Last: Ultimo
 First: Primeiro
 Feedback: Feedback
 'Edit your password': 'Editar sua senha'
@@ -24,7 +32,7 @@ Detail: Detalhe
 MiB: MiB
 'Download was not successful. Check please that the server is not out of disk space.': 'Falha no download. Verifique se há espaço em disco do servidor. '
 'try again later': 'tente mais tarde'
-at: em
+at: no
 'You must at least upload one file.': 'Você deve fazer upload de pelo menos um arquivo'
 'Warning: the existing data and themes will be deleted!': 'Aviso: as informações e temas serão apagados!'
 'Value is required and cant be empty': 'O valor é necessário e não pode estar vazio'
@@ -56,7 +64,7 @@ Ban: Banir
 Newscoop: Newscoop
 'Your password has been reset.': 'Sua senha foi atualizada'
 'Proceed to login.': 'Vá para o login'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Olá,  \n\nfor password recovery, por favor siga este link: $1 '
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Vá para login'
 'Back to login.': 'Voltar para login'
 'Back to login': 'Voltar para login'
@@ -112,8 +120,8 @@ Download: Baixar
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Não foi possível criar autor $1 para artigo no. $2 ($3) do tipo $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Ocorreram erros na definição do autor para artigos do tipo $1 do campo $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'O autor para artigos do tipo $1 do campo $2 foi definido.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': '$1 trancou o artigo $1 ($2) $3 minutos atrás.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': '$1 trancou o artigo $1 ($2) $3 horas e $4 minutos atrás.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'O artigo foi trancado por $1 ($2) $3 minuto(s) atrás.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'O artigo foi trancado por $1 ($2) $3 hora(s) e $4 minuto(s) atrás.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Ocorreu um erro na definição do autor $1 para o artigo no. $2 ($3) do tipo $4.'
 'Clear system cache': 'Limpar o cache do sistema'
 'The system was unable to upload the file $1. ': 'O sistema não conseguiu fazer upload do arquivo $1.'
@@ -144,3 +152,7 @@ Help: Ajuda
 'Please make sure that you typed the correct user name and password.': 'Certifique-se que introduziu o Nome de Utilizador e a Palavra-Passe correctas.'
 'If your problem persists please contact the site administrator $1': 'Se o problema persistir, contacte o Administrador de Sistema $1.'
 Backup/Restore: Backup/restaurar
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

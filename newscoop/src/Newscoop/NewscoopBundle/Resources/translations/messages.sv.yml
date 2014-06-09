@@ -1,5 +1,5 @@
-Plugins: 
-'Manage Plugins': 
+Plugins: null
+'Manage Plugins': null
 Account: Konto
 'Items per page': 'Föremål per sida'
 'Add new': 'Lägg till ny'
@@ -148,6 +148,7 @@ Localizer: Översättaren
 'Add new publication': 'Lägg till ny publikation'
 'Upload new template': 'Ladda upp ny mall'
 'Add new staff member': 'Lägg till ny stabsmedlem'
+'Staff member deleted.': null
 'Add new subscriber': 'Lägg till ny prenumerant'
 'Add new user type': 'Lägg till ny användartyp'
 'Add new article type': 'Lägg till ny artikeltyp'
@@ -241,19 +242,43 @@ Author: Författare
 'Article Comments': Artikelkommentarer
 'Are you sure you want to deactivate the subscription?': 'Är du säker att du vill avaktivera prenumerationen?'
 'Are you sure you want to activate the subscription?': 'Är du säker att du vill aktivera prenumerationen?'
-Other: 
+Other: null
 'Time:': 'Tid:'
 'No events.': 'Inga händelser.'
-'Default templates': 
+'Default templates': null
 'System Preferences': Systeminställningar
 'The date must be in the future.': 'Datumet måste vara i framtiden'
 Send: Skicka
 'Thank you.': Tack.
-'Please take a minute to send us an email.': 
+'Please take a minute to send us an email.': null
 (optional): (frivilligt)
 'The URL you entered is invalid: $1': 'Den URL du skrev in är ogiltig: $1'
-Reads: 
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

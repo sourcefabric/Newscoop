@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'значок обраних маркерів'
 'add location to map': 'додати локацію на мапу'
 'Video source': 'Джерело відео'
@@ -55,7 +55,7 @@ height: висота
 'The map has been removed from the article.': 'Мапа була видалена зі статті.'
 'Point no.': 'Номер точки'
 'Point markers': 'Маркер точки'
-None: Жоден
+None: 'Ні один'
 'Map Search Example': 'Приклад пошуку по мапі'
 'Map Preview': 'Попередній перегляд мапи'
 'Image URL': 'Посилання на зображення'

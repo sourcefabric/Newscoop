@@ -187,11 +187,17 @@ class ConfigureApiController extends Controller
         $collection = $router->getRouteCollection();
         $allRoutes = $collection->all();
 
+        // TODO:
+        // * add way to allow anonymous access for comments posting (if it's enabled in publications settings)
+        // * add way to allow anonymous access for feedback posting
+
         $apiRoutes = array();
         foreach ($allRoutes as $key => $route) {
             if (strpos($key, 'newscoop_gimme_') !== false) {
                 $routeMethods = $route->getMethods();
-                $apiRoutes[$key] = '['.$routeMethods[0].'] '.str_replace('{_format}', 'json', $route->getPath());
+                if (in_array('GET', $route->getMethods())) {
+                    $apiRoutes[$key] = '['.$routeMethods[0].'] '.str_replace('{_format}', 'json', $route->getPath());
+                }
             }
         }
 

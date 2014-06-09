@@ -1,7 +1,7 @@
 'Rename user': 'მომხმარებლის სახელის შეცვლა'
 Campsite: კემპსაიტი
 'Image Rendering': 'გამოსახულების დარენდერება'
-'Featured Article Lists': 'რჩეული სტატიების სია'
+'Featured Article Lists': 'წარმოდგენილი სტატიების სიები'
 'You have tried to upload an invalid backup file.': 'თქვენ სცადეთ აგეტვირთათ არამართებული ფაილი. '
 'You do not have the right to manage backups.': 'თქვენ არ გაქვთ უფლება მართოთ რეზერვები. '
 'Make a new backup': 'შექმენით ახალი რეზერვი'
@@ -32,7 +32,7 @@ Detail: დეტალი
 MiB: MiB
 'Download was not successful. Check please that the server is not out of disk space.': 'ვერ ჩამოიტვირთა. შეამოწმეთ გაქვთ თუ არა საკმარისი სივრცე სერვერის დისკზე'
 'try again later': 'სცადეთ მოგვიანებით'
-at: -ზე
+at: '-ზე'
 'You must at least upload one file.': 'თქვენ უნდა ატვირთოთ მინიმუმ 1 ფაილი'
 'Warning: the existing data and themes will be deleted!': 'გაფრთხილება: არსებული მონაცამები და ტემები წაიშლება!'
 'Value is required and cant be empty': 'მონაცემი აუცილებლად უნდა შეივსოს'
@@ -45,7 +45,7 @@ Themes: თემები
 'Start upload': 'ატვირთვის დაწყება'
 Settings: პარამეტრები
 'Select files': 'ფაილების არჩევა'
-Reply: პასუხი
+Reply: 'პასუხის გაცემა'
 'New comment added': 'ახალი კომენტარი დამატებულია'
 'Manage Authors': 'ავტორების მართვა'
 Loading..: იტვირთება..
@@ -60,11 +60,11 @@ Ban: ბანი
 'Add files': 'ფაილების დამატება'
 '%value% is more than %max% characters long': '%value% შეიცავს %max%-ზე მეტ სიმბოლოს'
 '%value% is less than %min% characters long': '%value% შეიცავს %min%-ზე ნაკლებ სიმბოლოს'
-'User name': 'მომხმარებლის სახელი'
+'User name': მომხმარებელი
 Newscoop: Newscoop
 'Your password has been reset.': 'თქვენი პაროლი გადაიტვირთვა'
 'Proceed to login.': 'განაგრძეთ ავტორიზაციისკენ'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'გამარჯობა, \n\nfor პაროლის აღდგენა, მიჰყევით ამ ლინკს $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'გადადით ავტორიზაციაზე'
 'Back to login.': 'უკან ავტორიზაციისკენ'
 'Back to login': 'უკან ავტორიზაციისაკენ'
@@ -98,7 +98,7 @@ login: ავტორიზაცია
 'No user is registered with this email.': 'ამ იმეილით არავინ დარეგისტრირებულა'
 'Forgot your password?': 'პაროლი დაგავიწყდათ?'
 'Email: incorrect format.': 'იმეილი: არასწორი ფორმატი.'
-Email: იმეილი
+Email: ელფოსტა
 'Bad input parameters.': 'არასწორი პარამეტრები'
 'There was an error trying to delete the file $1.': 'ფაილი $1 წაშლის დროს დაფიქსირდა შეცდომა'
 'The file $1 was deleted successfully.': 'ფაილი $1 წარმატებით წაიშალა'
@@ -107,21 +107,21 @@ Size: ზომა
 Restore: აღდგენა
 Mb: მბ
 'Free disk space': 'თავისუფალი სივრცე დისკზე'
-'Download file': 'ფაილის ჩამოტვირთვა'
-Download: ჩამოტვირთვა
+'Download file': 'ფაილის გადმოტვირთვა'
+Download: ჩამოქაჩვა
 'Delete file': 'ფაილის წაშლა'
 'Backup list is empty.': 'სათადარიგო სია ცარიელია.'
 'Are you sure you want to restore the file $1?': 'დარწმუნებული ხართ რომ გსულრთ $1 ფაილის აღდგენა?'
 'Are you sure you want to delete the file $1?': 'დარწმუნებული ხართ რომ გსურთ $1 ფაილის წაშლა'
-'Import XML': 'XML-ის იმპორტირება'
+'Import XML': 'XML ს იმპორტი'
 'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'თქვენ უნდა გქონდეთ გამოცემების და სტატიების დამატების/შეცვლის უფლება, რათა მიუთითოთ ავტორები.'
 'Select the field from which to generate the author': 'აირჩიეთ ველი რომლიდანაც გსურთ ავტორის გენერირება'
 'Invalid or empty field $1. You must select a valid dynamic field.': 'გაუქმებული ან არ არსებული $1 ველი. თქვენ უნდა აირჩიოთ არსებული დინამიური ველი'
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'ნომერ $2 ($3), $4 ტიპის სტასიითვის $1 ავტორის შექმნა შეუძლებელია.'
 'There were errors setting the author for articles of type $1 from the field $2.': '$2 ველის $1 ტიპის სტატიებზე ავტორის მითითებისას დაფიქსირდა შეცდომა.'
 'The author was set successfuly for articles of type $1 from the field $2.': '$2 ველის $1 ტიპის სტატიებზე ავტორი წარმატებით მიება.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'სტატია დაილუქა $1 ($2) მიერ $3 წუთ(ებ)ის წინ.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'სტატია დაილუქა $1 ($2) მიერ $3 საათ(ებ)ის და $4 წუთ(ებ)ის წინ.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'სტატია დალუქა მოხმარებელმა $1 ($2) $3 წუთ(ებ)ის წინ.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'სტატია დალუქა მოხმარებელმა $1 ($2) $3 საათ(ებ)ის და $4 წუთ(ებ)ის წინ.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'ნომერ $2 ($3), $4 ტიპის სტასიითვის $1 ავტორის მიბმისას დაფიქსირდა შეცდომა'
 'Clear system cache': 'გაწმინდეთ სისტუმერი კაშე'
 'The system was unable to upload the file $1. ': 'სისტემამ ვერ შეძლო $1 ფაილის ატვირთვა'
@@ -152,12 +152,7 @@ Help: დახმარება
 'Please make sure that you typed the correct user name and password.': 'გთხოვთ გადაამოწმოთ რომ სწორად შეგყავთ მომხმარებლის სახელი და პაროლი'
 'If your problem persists please contact the site administrator $1': 'თუ პრობლემა კვლავ არსებობს მიმართეთ საიტის ადმინისტრატორს $1'
 Backup/Restore: 'სარეზერვო ასლი/აღდგენა'
-'Edit subscription': 'გამოწერის რედაქტირება'
-'Edit subscriber': 'გამომწერის რედაქტირება'
-'Edit staff member': 'სტაფის წევრის რედაქტირება'
-'Edit section': 'სექციის რედაქტირება'
-'Edit all sections': 'ყველა სექციის რედაქტირება'
-'Edit access': 'წვდომის რედაქტირება'
-'Add new subscription section': 'ახალი გამოწერის სექციის დამატება'
-'Add new IP Address': 'ახალი IP მისამართის დამატება'
-'Password recovery request for $1': 'პაროლის აღდგენის მოთხოვნა $1-სთვის'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

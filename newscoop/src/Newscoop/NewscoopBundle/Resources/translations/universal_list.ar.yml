@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'استخدم الخريطة'
+Locations: المواقع
+Last: الأخير
+First: الأول
+'Publish Schedule': 'جدول النشر'
+'You do not have the right to delete articles.': 'ليس لديك الحق في حذف مقالات.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'ليس لديك الحق في تغيير حالة هذا المقال. عند التسليم، يمكن فقط المستخدمون المفوضون أن يغيروا المقال.'
+'Toggle: On Section Page': 'تبديل: في صفحة الأقسام '
+'Toggle: On Front Page': 'تبديل: في الصفحة الأمامية'
+'Toggle: Comments': 'تبديل: التعليقات'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'تم تأمين المقال من $1 ($2) $3 دقائق مضت.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'تم تأمين المقال من $1 ($2) $3 ساعة(-ات) و $4 دقائق مضت.'
+'Status: Submit': 'الحالة: تسليم'
+'Status: Set New': 'الحالة: تعيين جديد'
+'Status: Publish': 'الحالة: نشر'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'قيد العرض _START_ لـ_END_ من _TOTAL_ إدخالات'
+'Show / hide columns': 'أظهر/أخف أعمدة'
+'Select some article first.': 'حدد مقالاً ما أولا .'
+'Select action': 'حدد الإجراء'
+'Save order': 'إحفظ الترتيب'
+'Reset all filters': 'إعادة تعيين كل عوامل التصفية'
+'Published before': 'تم النشر قبل'
+'Published after': 'تم النشر بعد'
+'Publish date': 'تاريخ الصدور'
+'Publish Date': 'تاريخ الصدور'
+'Order updated.': 'تم تحديث الترتيب.'
+'No sections found': 'لم يتم العثور على أقسام'
+'No records found.': 'لم يتم العثور على سجلات.'
+'No publications found': 'لم يتم العثور على منشورات'
+'No issues found': 'لم يتم العثور على أعداد'
+'No entries to show': 'لا إدخالات من أجل الإظهار'
+'Loading data': 'قيد تحميل البيانات'
+'Last Modified': 'آخر تعديلات'
+'Filter by...': 'التصفية حسب ...'
+Filter: التصفية
+'Duplicate to another section': 'تكرار لقسم آخر'
+'Display _MENU_ records': 'إعرض سجلات من _MENU_'
+Creator: الكاتب
+'Create Date': 'أنش تاريخ'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'تم تعيين حالة المقالة الى $1.'
+'Are you sure you want to delete selected articles?': 'هل أنت متأكد أنك تريد حذف المقالات المختارة؟'
+'All Sections': 'جميع الأقسام'
+'All Publications': 'جميع المنشورات'
+'All Issues': 'جميع الآعداد'
+'Access denied.': 'الدخول مرفوض'
+'$1 toggled.': 'تم تبديل $1.'
+'$1 articles have been removed': 'تم إزالة $1 مقالات'
+' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'

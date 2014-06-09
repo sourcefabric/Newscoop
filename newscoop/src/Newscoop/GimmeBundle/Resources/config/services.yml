@@ -112,5 +112,12 @@ services:
         arguments:  ["@comment"]
         tags:
             - { name: jms_serializer.handler, type: comments_count, direction: serialization, format:json, method:getCommentsCount }
+    newscoop.gimme.oauth_event_listener:
+        class:  Newscoop\GimmeBundle\EventListener\OAuthEventListener
+        arguments:  ["@em"]
+        tags:
+            - { name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: onPreAuthorizationProcess }
+            - { name: kernel.event_listener, event: fos_oauth_server.post_authorization_process, method: onPostAuthorizationProcess }
+
 parameters:
     twig.exception_listener.class: Newscoop\GimmeBundle\EventListener\ExceptionListener

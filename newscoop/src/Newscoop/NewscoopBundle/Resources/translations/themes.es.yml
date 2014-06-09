@@ -20,8 +20,8 @@ updated: actualizado
 moved: movido
 installed: instalado
 deleted: eliminado
-'You must select at least one template to perform an action.': 'Debe seleccionar por lo menos una plantilla para realizar una acción'
-Upload: Cargar
+'You must select at least one template to perform an action.': 'Para poder realizar una acción debe seleccionar por lo menos una plantilla.'
+Upload: Subir
 'Unassign theme': 'Desasignar tema'
 'Unassign successful': 'Desasignación exitosa'
 Unassign: Desasignar
@@ -46,7 +46,7 @@ Replace: Reemplazar
 'New template $1 created.': 'Nueva plantilla $1 creada.'
 'New name': 'Nuevo nombre'
 'Name cant be empty': 'Nombre no puede estar vacío'
-'Last modified': 'Última modificación'
+'Last modified': 'Modificado por última vez'
 'Issue page': 'Página de ediciones'
 'Go to parent': 'Ir a raíz'
 'Go to $1': 'Ir a $1'
@@ -60,9 +60,9 @@ Export: Exportar
 'Error page template': 'Error de página de plantilla'
 'Edit $1': 'Editar $1'
 'Done uploading': 'Finalizó la carga'
-'Do you want to override $1?': '¿Deseas anular $1?'
+'Do you want to override $1?': '¿Desea anular $1?'
 'Directory is empty': 'Directorio vacío.'
-'Directory $1 created.': 'Directorio $1 creado.'
+'Directory $1 created.': 'Se creó el directorio $1 '
 Design: Diseño
 'Delete theme': 'Eliminar tema'
 'Current directory:': 'Directorio actual'

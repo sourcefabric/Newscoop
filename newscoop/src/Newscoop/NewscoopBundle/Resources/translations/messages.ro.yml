@@ -74,7 +74,7 @@ Action: Acţiune
 'Schedule a new action': 'Programează o acţiune nouă'
 'Scheduling a new publish action': 'Programarea unei acţiuni de publicare'
 'Delete scheduled publish action': 'Şterge acţiunea publicării programate'
-Date/Time: Data/Ora
+Date/Time: Data/Timpul
 'You must select an action.': 'Trebuie să selectezi o acţiune.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Nu ai dreptul de a selecta ediţii sau articole pentru publicare automată.'
 'Front page': 'Prima pagină'
@@ -148,6 +148,7 @@ Localizer: 'Serviciul de regionalizare'
 'Add new publication': 'Adaugă publicaţie'
 'Upload new template': 'Transferă şablon'
 'Add new staff member': 'Adaugă un membru nou al echipei'
+'Staff member deleted.': null
 'Add new subscriber': 'Adaugă abonat nou'
 'Add new user type': 'Adaugă tip de utilizator'
 'Add new article type': 'Adaugă tip de articol'
@@ -256,20 +257,28 @@ Reads: Citiri
 'Publish with issue': 'Publică cu ediția'
 'Universal List': 'Listă universală'
 'Invalid security token!': 'Jetonul de securitate e invalid!'
-'Campsite is unable to write to the file/directory $1. Please set the permissions to allow the user $2 to write to it.': 
-'Unable to add new image.': 
-'User name': 'Nume utilizator'
-'User Types': 'Tipuri de utilizatori'
-'Subscription Default Time': 'Timpul implicit de subscriere'
-'No such language.': 'Limba nu există'
-'No such infotype.': 'Tipul de informaţie nu există'
-'No such keyword.': 'Cuvântul cheie nu există'
-'No such country.': 'Ţara nu există'
-'User may add/change user accounts and passwords': 'Utilizatorul poate adăuga/modifica conturi de utilizator'
-'User may delete user accounts': 'Utilizatorul poate şterge conturi de utilizator'
-'Add new user account': 'Adaugă utilizator'
-'There are $1 issue(s) left.': 'Mai sunt $1 ediţii'
-'There are $1 keyword(s) left.': 'Mai sunt $1 cuvinte cheie'
-'Name<BR><SMALL>(click to edit)</SMALL>': Nume
-'New field': 'Câmp nou'
-Authors: 
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null

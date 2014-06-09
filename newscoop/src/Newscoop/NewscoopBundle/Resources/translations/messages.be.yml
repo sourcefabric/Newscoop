@@ -1,5 +1,5 @@
 Plugins: Плагіны
-'Manage Plugins': 'Кіраванне плагінамі'
+'Manage Plugins': 'Кіраваць  прагінамі'
 Account: 'Улiковы запiс'
 'Items per page': 'Абектаў на старонцы'
 'Add new': Дадаць
@@ -9,7 +9,7 @@ More...: Далей...
 Content: Зьмест
 Languages: Мовы
 Countries: Краiны
-Themes: Шаблёны
+Themes: 'Тэмы (шаблёны)'
 Topics: Тэмы
 Configure: Наладкі
 'Image Archive': 'Архiў графiчных файлаў'
@@ -74,7 +74,7 @@ Action: Апэрацыя
 'Schedule a new action': 'Заплянаваць новае дзеяньне'
 'Scheduling a new publish action': 'Плянаваньне новых апэрацыяў'
 'Delete scheduled publish action': 'Выдаліць заплянаваную апэрацыю'
-Date/Time: Дата/Час
+Date/Time: 'Дата/Час:by'
 'You must select an action.': 'Вы павiнны выбраць апэрацыю.'
 'You do not have the right to schedule issues or articles for automatic publishing.': 'Вы ня маеце права прызначаць аўтаматычную публікацыю артыкула'
 'Front page': 'Тытульная старонка'
@@ -148,6 +148,7 @@ Localizer: Лякалiзатар
 'Add new publication': 'Дадаць новае выданьне'
 'Upload new template': 'Загрузiць новы шаблён'
 'Add new staff member': 'Дадаваньне новага пэрсаналу'
+'Staff member deleted.': null
 'Add new subscriber': 'Дадаваньне новага падпісчыка'
 'Add new user type': 'Дадаць новы тып карыстальнiка'
 'Add new article type': 'Дадаць новы тып артыкула'
@@ -190,11 +191,11 @@ Search: Пошук
 'You must input a number greater than 0 into the $1 field.': 'Вы павiнны ўвесьцi дадатную ненулявую лiчбу ў поле $1'
 'You must input a valid date.': 'Вы павiнны ўвесьцi правiльную дату.'
 'Add new field': 'Дадаць новы тып:by'
-'Article automatic publishing schedule': 'Расклад аўтаматычных публiкацыяў артыкулаў'
-'Are you sure you want to delete this scheduled action?': 'Цi Вы ўпэўнены, што жадаеце скасаваць заплянаванае дзеяньне?  '
-Unlink: Выдалiць
-'Are you sure you want to delete the image $1?': 'Цi Вы ўпэўнены, што жадаеце выдалiць графiчны файл $1? '
-'No such issue.': 'Няма такога выпуску:by'
+'Article automatic publishing schedule': 'Расклад аўтаматычнай публікацыі артыкулаў'
+'Are you sure you want to delete this scheduled action?': 'Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?'
+Unlink: Адвязаць
+'Are you sure you want to delete the image $1?': 'Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл $1?'
+'No such issue.': 'Няма такога выпуску'
 'Are you sure you want to delete the subscription to the publication $1?': 'Цi Вы ўпэўнены, што жадаеце выдалiць падпiску на выданьне $1?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Немагчыма захаваць зьмены ў выпуску $. Пераканайцеся, што назва $2  URL выпуску не выкарыстоўвалася раней у выданьнi $3. '
 GB: ГБ
@@ -224,7 +225,7 @@ Move: Перанесьцi
 'From:': 'Ад:'
 'Date:': 'Дата:'
 Hidden: Схаваны
-Comments: Камэнтар
+Comments: Камэнтары
 Comment: Камэтары
 Approved: Зацьверджаны
 Subject: Тэма
@@ -257,19 +258,27 @@ Reads: 'Колькасьць праглядаў'
 'Universal List': 'Універсальны спіс'
 'Invalid security token!': 'Няправільны маркер бяспецы!'
 Authors: Аўтары
-'User name': Карыстальнiк
-'User Types': 'Тыпы карыстальнiкаў '
-'Add new user account': 'Дадаць новы ўлiковы запiс карыстальнiка'
-'Schedule a new publish action': 'Заплянаваць новую апэрацыю'
-'Subscription Default Time': 'Тэрмiн падпiскi па змаўчаньні:by'
-'No such language.': 'Няма такой мовы.:by'
-'No such infotype.': 'Няма такой клясы:by'
-'No such keyword.': 'Няма такога ключавога слова.:by'
-'No such country.': 'Няма такой краiны:by'
-'User may add/change user accounts and passwords': 'Карыстальнiк можа дадаваць/зьмяняць улiковыя запiсы i паролi:by'
-'User may delete user accounts': 'Карыстальнiк можа выдаляць улiковыя запiсы:by'
-'There are $1 issue(s) left.': 'Засталося $1 выпуск(аў):by'
-'There are $1 keyword(s) left.': 'Засталося $1 ключавога(-ых) слоў(ва):by'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Назва<BR><SMALL>(нацiснуць для праўкi)</SMALL>:by'
-'New field': 'Новае поле'
-'Author:': Аўтар
+Title: Загаловак
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: на
+published: null
+unpublished: null

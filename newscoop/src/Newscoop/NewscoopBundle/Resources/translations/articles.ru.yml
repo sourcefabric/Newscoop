@@ -58,7 +58,7 @@ Files: Файлы
 'Keywords saved.': 'Ключевые слова сохранены'
 'Comment settings': 'Настройки комментирования'
 Authors: Авторы
-'Attach Topic To Article': 'Добавить тему к статье'
+'Attach Topic To Article': 'Прикрепить тему к статье'
 'Article saved.': 'Содержимое статьи сохранено.'
 'Article is locked': 'Статья заблокирована'
 'Actions updated.': 'Действие обновлено.'
@@ -80,9 +80,9 @@ Created: Создана
 'You must select a file to upload.': 'Вы должны выбрать файл для загрузки.'
 'You must select a XML input file.': 'Вы должны выбрать входной XML-файл'
 'You do not have the right to import XML archives.': 'У Вас нет прав доступа для импортирования XML архивов.'
-'There was a problem uploading the file.': 'Случилась ошибка при загрузке файла.'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Файл был загружен только частично. Это случается, когда максимально-установленное время загрузки файла ниже, чем время загрузки подобного файла. максимально-установленное время загрузки файлов прописано в php.ini '
-'The file exceeds the allowed max file size.': 'Размер файла превосходит максимально-возможный размер файлов'
+'There was a problem uploading the file.': 'Проблема загрузки файла.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Загруженный файл сохранен на сервер частично. Это в связано с тем, что максимально допустимое время загрузки файла превосходит время, необходимое для загрузки этого файла. Максимальное время загрузки определено в файле  php.ini'
+'The file exceeds the allowed max file size.': 'Рамер этого файла превосходит допустимый.'
 Optional: Необязательное
 'Input File': 'Входной файл'
 'Import XML': 'Импорт XML'
@@ -99,7 +99,7 @@ Saved: Сохранено
 'Save All': 'Сохранить все'
 'Online Server: On': 'Сервер он-лайн: включен'
 'Online Server: Off': 'Сервер он-лайн: выключен'
-Download: Загрузка
+Download: Загрузить
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Вы не можете иметь две статьи в одной рубрике с одинаковым названием. Указанное название уже используется статьей $1.'
 'Visible to non-subscribers': 'Видно не только подписчикам'
 'The article could not be published.': 'Статья не может быть опубликована.'
@@ -125,7 +125,7 @@ Enabled: Разрешено
 Disabled: Запрещено
 Comments: Комментарии
 'The article has already been translated into $1.': 'Статья уже была переведена на $1.'
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
 'You do not have the right to translate articles.': 'Вы не имеете прав доступа для перевода статей.'
 'You do not have the right to publish articles.': 'Вы не имеете прав доступа для публикации статей.'
 'You do not have the right to move articles.': 'Вы не имеете прав доступа для переноса статей.'
@@ -183,10 +183,4 @@ Comments: Комментарии
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Невозможен предварительный просмотр статьи. Убедитесь, что выбран шаблон статьи.'
 'No such article.': 'Нет такой статьи.'
 'No such section.': 'Нет такой рубрики.'
-Reorder: 
-'No such issue.': 'Нет такого выпуска'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Название<BR><SMALL>(щелкните для правки)</SMALL>'
-'Could not save the article.  It has been locked by $1 $2 hours and $3 minutes ago.': 'Невозможно сохранить статью. Она была заблокирована пользователем $1 $2 часов и $3 минут назад.'
-'Back to article details': 'Назад к подробностям статьи'
-'Article automatic publishing schedule': 'Расписание автоматической публикации статей'
-'Are you sure you want to delete this scheduled action?': 'Вы уверены, что хотитее удалить эту запланированную операцию'
+Characters: null

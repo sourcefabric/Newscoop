@@ -1,7 +1,7 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': 'Žádná příloha'
+'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
+'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'
+'Are you sure you want to do it?': 'Jste si jisti, že to chcete udělat?'
 Approve: Schválit
 Approved.: Schváleno
 at: na
@@ -22,7 +22,7 @@ Reply: Odpovědět
 'Reply to message': 'Odpovědět na zprávu'
 Star: Hvězda
 Starred: 'S hvězdičkou'
-'Unable to reach Newscoop. Please check your internet connection.': 'Není možné se připojit do Newscoop. Prosím zkontrolujte internetové připojení.  '
+'Unable to reach Newscoop. Please check your internet connection.': 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
 'With document attachment': 'S přílohou dokumentu'
 'With image attachment': 'S přílohou obrázku'
 'With no attachment': 'Bez přílohy'

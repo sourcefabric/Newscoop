@@ -1,20 +1,20 @@
-'Usage at automatic statistics': 
-'Event Color': 
-'You must input a number greater than $1 and less than $2 into the $3 field.': 
-'You do not have the right to translate article types.': 
-'You do not have the right to reorder article types.': 
-'You do not have the right to reassign article type fields.': 
-'You do not have the right to manage article types.': 
-'You do not have the right to hide article types.': 
-'You do not have the right to delete article types.': 
-'Small ($1 pixels)': 
-'Medium ($1 pixels)': 
-'Large ($1 pixels)': 
-'Hide human-readable field names': 
-'Editor size': 
-'Edit and translate human-readable field names': 
-Custom: 
-'Characters limit': 
+'Usage at automatic statistics': null
+'Event Color': null
+'You must input a number greater than $1 and less than $2 into the $3 field.': null
+'You do not have the right to translate article types.': null
+'You do not have the right to reorder article types.': null
+'You do not have the right to reassign article type fields.': null
+'You do not have the right to manage article types.': null
+'You do not have the right to hide article types.': null
+'You do not have the right to delete article types.': 'Вы ня маеце права выдаляць тыпы артыкулаў.'
+'Small ($1 pixels)': null
+'Medium ($1 pixels)': null
+'Large ($1 pixels)': null
+'Hide human-readable field names': null
+'Editor size': null
+'Edit and translate human-readable field names': null
+Custom: null
+'Characters limit': null
 'The template name may only contain letters and the underscore (_) character.': 'Імя шаблёну можа змяшчаць толькі літары і знак падкрэслівання (_).'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 'Гэтае імя поля ўжо выкарыстоўваецца як базавая ўласцівасць артыкула. Змест гэтага поля не можа быць адлюстраваны ў шаблоне.'
 'The property $1 is already in use.': 'Уласцівасць  $1 ужо выкарыстоўваецца. '

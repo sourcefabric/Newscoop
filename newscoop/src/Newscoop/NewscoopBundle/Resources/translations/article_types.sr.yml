@@ -1,11 +1,11 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
 'Hide human-readable field names': 'Сакри називе поља прилагођене људима'
 'Edit and translate human-readable field names': 'Уреди и преведи називе поља прилагођене људима'
-'The template name may only contain letters and the underscore (_) character.': 'Име шаблона може садржати искључиво слова и доњу црту (_)'
+'The template name may only contain letters and the underscore (_) character.': 'Назив поља може садржати искључиво слова и доњу црту (_)'
 'Rename article type $1': 'Преименуј тип текста $1'
 'Invalid article type $1.': 'Погрешан тип текста $1'
 'You cannot merge the same type into itself.': 'Не можете спојити тип текста са самим собом'
@@ -29,7 +29,7 @@ NOTHING: НИШТА
 'Cycle through your articles to verify that the merge configuration is correct.': 'Прођите кроз текстове да проверите да ли је спајање исправно подешено.'
 'Clicking Merge will merge ($1) article(s).': 'Кликом на Споји спојићете ($1) текст(ова).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Није могуће спојити $1 поље ($2) у $3 поље ($4)'
---None--: '-- Празно --'
+'--None--': '-- Празно --'
 '(Null merge warning.)': '(Упозорење о спајању без резултата)'
 '(No merge warning.)': '(Упозорење о немогућности спајања)'
 '(Duplicate warning.)': '(Упозорење о дуплирању)'
@@ -43,10 +43,10 @@ activate: активирај
 'You must choose a language for the article type.': 'Морате изабрати језик за тип текста.'
 'You do not have the right to rename article types.': 'Немате право да преименујете типове текстова.'
 'You do not have the right to merge article types.': 'Немате право да спајате типове текстова'
-'The translation could not be added.': 'ПРевод не може бити додат.'
+'The translation could not be added.': 'Превод не може бити додат'
 'The article type $1 does not exist.': 'Тип текста $1 не постоји'
 'Template Type Name': 'Назив типа шаблона'
-Show/Hide: Прикажи/сакри
+Show/Hide: прикажи/сакри
 'Show article on section page': 'Прикажи текст на страни рубрике'
 'Show article on front page': 'Прикажи текст на првој страни'
 'Publish date': 'Датум објављивања'
@@ -56,7 +56,7 @@ Merge!: Споји!
 'Link to public page': 'Линк на страну'
 'Go to Step 3': 'Иди на корак 3'
 'Go to Step 2': 'Иди на корак 2'
-'Display Name': 'Назив који се приказује'
+'Display Name': 'Приказно име'
 'Delete article type $1.': 'Обриши тип текста $1.'
 'Comments enabled?': 'Коментари дозвољени?'
 'Back to Step 2': 'Назад на корак 2'
@@ -65,15 +65,15 @@ Merge!: Споји!
 'Are you sure you want to $1 the article type $2?': 'Да ли сте сигурни да желите да $1 тип текста $2?'
 'Are you sure you want to $1 comments for article type $2?': 'Да ли сте сигурни да желите да $1 коментара за тип текста'
 'Allow users without subscriptions to view the article': 'Дозволи корисницима без претплате да виде овај текст.'
-'Add translation:': 'Додај превод:'
+'Add translation:': 'додај превод:'
 '$1 comments for article type $2': '$1коментара за тип текста $2'
 '$1 comments for article type $1': '$1 коментара за тип текста $2'
 '$1 article type $2': '$1 тип текста $2'
 'No article types.': 'Није дефинисан ниједан тип текста'
 'Delete article type $1': 'Обриши тип текста $1'
 'You do not have the right to add article types.': 'Немате право да додајете типове текстова.'
-'Adding new article type': 'Додавање новог типа текста'
-'The $1 field may only contain letters and underscore (_) character.': 'Поље $1 може садржати искључиво слова'
+'Adding new article type': 'додавање новог типа текста'
+'The $1 field may only contain letters and underscore (_) character.': 'Поље $1 може садржати искључиво слова и доњу црту (_)'
 'The article type $1 already exists.': 'Тип текста $1 већ постоји'
-'You do not have the right to delete article types.': 'Немате право да бришете типове текстова'
+'You do not have the right to delete article types.': 'Немате право да бришете типове текстова.'
 'The article type $1 could not be deleted.': 'Тип текста $1 не може бити обрисан'

@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'რუკის გამოყენება'
+Locations: ლოკაციები
+Last: ბოლო
+First: პირველი
+'Publish Schedule': 'პუბლიკაციის განრიგი'
+'You do not have the right to delete articles.': 'თქვენ არ გაქვთ სტატიების წაშლის ნებართვა'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის სტატუსის შეცვლის ნებართვა. სტატიის შეცვლა მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ.'
+'Toggle: On Section Page': 'ჩართე: სექციის გვერდზე'
+'Toggle: On Front Page': 'ჩართე: სექციის გვერდზე'
+'Toggle: Comments': 'ჩართე კომენტარები'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'სტატია დალუქა მოხმარებელმა $1 ($2) $3 წუთ(ებ)ის წინ.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'სტატია დალუქა მოხმარებელმა $1 ($2) $3 საათ(ებ)ის და $4 წუთ(ებ)ის წინ.'
+'Status: Submit': 'სტატუსი: ჩაბარებული'
+'Status: Set New': 'სტატუსი: ახალი'
+'Status: Publish': 'სტატუსი: გამოცემა'
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
+'Show / hide columns': 'სვეტების გამოჩენა/გაქრობა'
+'Select some article first.': 'აირჩიეთ სტატია'
+'Select action': 'აირჩიეთ მოქმდება'
+'Save order': 'თანმიმდევრობის შენახვა'
+'Reset all filters': 'ფილტრების '
+'Published before': 'გამოიცა ამ დრომდე:'
+'Published after': 'გამოიცა ამ დროის შემდეგ:'
+'Publish date': 'გამოცემის თარიღი'
+'Publish Date': 'პუბლიკაციის თარიღი'
+'Order updated.': 'თანმიმდევრობა განახლდა.'
+'No sections found': 'სექციები ვერ მოინახა'
+'No records found.': 'ჩანაწერები ნაპოვნი არ არის.'
+'No publications found': 'პუბლიკაცია არ მოიძებნა'
+'No issues found': 'გამოცემები ვერ მოინახა'
+'No entries to show': 'საჩვენებელი ჩანაწერები არ არის.'
+'Loading data': 'მონაცემები იტვირთება'
+'Last Modified': 'ბოლო მოდიფიკაცია'
+'Filter by...': 'გაფილტრე ამის მიხედვით:'
+Filter: ფილტრი
+'Duplicate to another section': 'სხვა სექციაში დუბლირება'
+'Display _MENU_ records': '_MENU_ ჩანაწერების ჩვენება'
+Creator: შემქმნელი
+'Create Date': 'შექმნის თარიღი'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'სტატიის სტატუსი შეიცვალა - $1'
+'Are you sure you want to delete selected articles?': 'დარწმუნებული ხართ რომ გსურთ აღნიშნული სტატიების წაშლა?'
+'All Sections': 'ყველა სექცია'
+'All Publications': 'ყველა პუბლიკაცია'
+'All Issues': 'ყველა გამოცემა'
+'Access denied.': 'წვდომა აკრძალულია'
+'$1 toggled.': '$1 ჩაირთო'
+'$1 articles have been removed': '$1 სტატიები მოიხსნა'
+' - filtering from _MAX_ records': null

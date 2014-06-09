@@ -1,5 +1,5 @@
 Plugins: Wtyczki
-'Manage Plugins': 'Zarządzanie Wtyczkami'
+'Manage Plugins': 'Zarządzanie Pluginami'
 Account: Konto
 'Items per page': 'Rzeczy na stronie'
 'Add new': Dodaj
@@ -148,6 +148,7 @@ Localizer: Lokalizator
 'Add new publication': 'Dodaj nową publikację'
 'Upload new template': 'Dodaj nowy szablok'
 'Add new staff member': 'Dodaj członka redakcji'
+'Staff member deleted.': null
 'Add new subscriber': 'Dodaj subskrynenta'
 'Add new user type': 'Dodaj nowy typ użytkownika'
 'Add new article type': 'Dodaj nowy typ artykułu'
@@ -257,3 +258,27 @@ Reads: Przeczytano
 'Universal List': 'Uniwersalna Lista'
 'Invalid security token!': 'Niepoprawny token bezpieczeństwa!'
 Authors: Autorzy
+Title: Tytuł
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: Zaktualizowany
+Options: null
+Verified: null
+Confirm: null
+at: w
+published: null
+unpublished: null

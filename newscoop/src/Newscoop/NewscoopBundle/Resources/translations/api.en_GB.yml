@@ -61,3 +61,46 @@ First: First
 'Multi-line Text with WYSIWYG': 'Multi-line Text with WYSIWYG'
 'URL $1 is invalid or is not an image.': 'URL $1 is invalid or is not an image.'
 'URL $1 is not an image.': 'URL $1 is not an image.'
+client:
+    added: 'Client was added'
+    notfound: 'Client not found'
+    removed: 'Client was removed'
+publicresources:
+    updated: 'Public resources were updated'
+api:
+    configure:
+        title: 'Configure API - public resources'
+        title_content: 'Configure API - public resources'
+        tabs:
+            resources: 'Public Resources'
+            clients: Clients
+        resources:
+            info: 'By default all resources are protected by a firewall, but you can choose resources to make them public for everyone.'
+            add_button: 'Add Client'
+        clients:
+            table:
+                name: 'Client name'
+                id: 'Client ID'
+                secret: Secret
+                trusted: 'Trusted?'
+                redirect: 'Redirect URIs'
+                publication: Publication
+                actions: Actions
+                actions_buttons:
+                    remove: Remove
+            actions:
+                remove:
+                    confirm: 'Are you sure that you want to remove this client?'
+        menu: API
+    form:
+        client:
+            label:
+                name: 'Choose name for your client:'
+                publication: 'Choose publication for your client:'
+                redirectUris: 'Choose redirect URIs for your client:'
+                trusted: 'Trusted?'
+                save: Save
+        PublicResources:
+            label:
+                routes: 'Choose resources to make public:'
+                save: Save

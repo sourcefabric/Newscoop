@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.private_plugins: null
+newscoop.plugins_manager.install.public: null
+newscoop.plugins_manager.installed_table.name: Заголовок
+newscoop.plugins_manager.installed_table.description: Описание
+newscoop.plugins_manager.installed_table.enabled: Разрешено
+newscoop.plugins_manager.installed_table.version: Версия
+newscoop.plugins_manager.installed_table.license: Лицензия
+newscoop.plugins_manager.installed_table.installed_at: null
+newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.actions: Операции
+newscoop.plugins_manager.installed_table.update_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Удалить
+newscoop.plugins_manager.installed_table.install_plugin: null
+newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.upload.private: null
+newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.form.package: null
+newscoop.plugins_manager.form.submit: Загрузить
+newscoop:
+    datatable:
+        table:
+            info: 'Показано _START_ до _END_ / _TOTAL_ записей'
+            noentries: 'Нет записей для просмотра'
+            filtering: 'фильтрация от _MAX_ записей'
+            menu: 'Отобразить _MENU_ записи'
+        label:
+            search: Поиск
+            filter: Фильтр
+            processing: Обработка...
+            last: Последняя
+            next: Следующ.
+            first: Первая
+            previous: Предыдущ.
+            norecords: 'Не выбрана ни одна из записей'

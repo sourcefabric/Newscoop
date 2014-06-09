@@ -4,11 +4,11 @@
 'You do not have the right to manage plugins.': 'No puedes administrar los plugins.'
 Version: Versión
 'Upload Plugin': 'Cargar plugin.'
-Upload: Cargar
+Upload: Subir
 Uninstall: Desinstalar
 'The plugin $1 was sucessfully installed.': 'El plugin $1 fue instalado exitosamente.'
 'No plugins found.': 'No se encontró ningún plugin.'
 Manage: Administrar
-Enabled: Habilitado.
+Enabled: Activar
 'Delete plugin': 'Borrar el plugin.'
-'Add new image': 'Añadir nueva imagen.'
+'Add new image': 'Agregar nueva imagen'

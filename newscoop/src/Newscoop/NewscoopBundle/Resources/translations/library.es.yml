@@ -1,12 +1,12 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': 'Desplegar los artículos de los tipos filtrados'
+'Display Articles of Filtered Types': 'Desplegar Artículos de los Tipos Filtrados'
 Webcode: Webcode
 'View article': 'Ver artículo'
 Source: Fuente
 'Select type': 'Seleccione el tipo'
 On: Encendido
 Off: Apagado
-Title: Título
+Title: Tìtulo
 'No video playback capabilities, please download the video below': 'No es posible reproducir archivos de video, por favor descarga el video que aparece a continuación'
 'Article status set to $1 for $2 articles': 'El estatus del artículo sí se configuró en $1 para los $2 artículos.'
 'Article status not set to $1 for $2 articles': 'El estatus del artículo no se configuró en $1 para los $2 artículos.'
@@ -17,9 +17,9 @@ Title: Título
 '$1 Article(s) unlocked': '$1 artículo(s) no está bloqueado'
 '$1 Article(s) not unlocked': 'El/los artículo(s) $1 no están desbloqueados.'
 '$1 Article(s) duplicated': 'Se duplicó/duplicaron $1 artículo(s)'
-'Download file': 'Descargar el archivo'
-'You do not have the right to delete articles.': 'No tienes privilegios para eliminar artículos'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'No tiene privilegios para modificar el estatus de este artículo.  Una vez enviado, éste solo puede ser modificado por su autor y usuarios autorizados.'
+'Download file': 'Descargue archivo'
+'You do not have the right to delete articles.': 'No tiene privilegios para eliminar artículos.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'No tiene los privilegios para cambiar el estatus de este artículo.  Una vez enviado el artículo solo los usuarios autorizados pueden modificarlos.'
 'Use Map': 'Mapa utilizado'
 'Toggle: On Section Page': 'Mostrar/ocultar:  en sección'
 'Toggle: On Front Page': 'Mostrar/ocultar:  en portada'
@@ -38,8 +38,8 @@ Size: Tamaño
 'Reset all filters': 'Reiniciar todos los filtros'
 'Published before': 'Publicado antes'
 'Published after': 'Publicado después'
-'Publish date': 'Fecha de publicación'
-'Publish Schedule': 'Programado para publicarse'
+'Publish date': 'Publicar fecha'
+'Publish Schedule': 'Publicar horario'
 'Publish Date': 'Fecha de publicación '
 'Order updated.': 'Se actualizó el orden'
 'Open in browser': 'Abrir en navegador'
@@ -61,13 +61,13 @@ Filename: 'Nombre del archivo'
 'Display _MENU_ records': 'Desplegar registros _MENU_'
 Creator: Creador
 'Create Date': 'Fecha de creación'
-'Article status set to $1': 'Se ha asignado el estatus $1 al artículo.'
-'Are you sure you want to delete selected articles?': '¿Quiere borrar los archivos seleccionados?'
+'Article status set to $1': 'Se estableció el estatus del artículo en $1'
+'Are you sure you want to delete selected articles?': '¿Está seguro de querer borrar los artículos seleccionados?'
 'All Sections': 'Todas las secciones'
 'All Publications': 'Todas las publicaciones'
 'All Issues': 'Todas las ediciones'
 Added: Añadido
-'Access denied.': 'Acceso denegado'
-'$1 toggled.': 'Se ha(n) ocultado/mostrado $1 '
+'Access denied.': 'Acceso denegado.'
+'$1 toggled.': '$ seleccionados/deseleccionados'
 '$1 articles have been removed': 'Se han eliminado $1 artículo(s).'
 ' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'

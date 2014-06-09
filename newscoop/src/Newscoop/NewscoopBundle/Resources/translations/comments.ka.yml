@@ -1,9 +1,9 @@
-'No attachment': 
-at: -ზე
+'No attachment': null
+at: '-ზე'
 'With no attachment': 'დანართის გარეშე'
 'With image attachment': 'თანდართულია გამოსახულება'
 'With document attachment': 'თანდართულია დოკუმენტი'
-'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ გადაამოწმოთ ინტერნეტთან კავშირი.'
+'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
 Starred: 'ვარსკვლავით აღნიშნული'
 Star: ვარსკვლავი
 'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ to _END_ of _TOTAL_ ჩანაწერების ჩვენება'
@@ -30,7 +30,7 @@ Attachment: დანართი
 Approved.: დადასტურებული.
 Approve: დადასტურება
 Anonymous: ანონიმური
-' - filtering from _MAX_ records': '-ფილტრაცია_MAX_ ჩანაწერებიდან'
+' - filtering from _MAX_ records': null
 'You are about to permanently delete multiple messages.': 'თქვენ ახლა სამუდამოდ წაშლით რიგ შეტყობინებებს. '
 'You are about to permanently delete a message.': 'თქვენ ახლა სამუდამოდ წაშლით შეტყობინებას. '
 User: მომხმარებელი
@@ -61,14 +61,14 @@ Unrecommend: 'რეკომენდაციის უკუგდება'
 'Search Type': 'ძიების ტიპი'
 'Reply to comment': 'კომენტარზე პასუხის გაცემა'
 Recommended: რეკომენდირებული
-Recommend: 'რეკომენდაციის გაწევა'
+Recommend: 'რეკომენდაციის მიცემა'
 'Quick edit': 'სწრაფი რედაქტირება'
 Parent: საწყისი
 ID: ID
 'Go to edit article': 'სტატიის რედაქტირებაზე გადასვლა'
 Forum: ფორუმი
 'For Column': სვეტისთვის
-Email: იმეილი
+Email: ელფოსტა
 'Edit acceptance criteria': 'დადასტურების კრიტერიუმების რედაქტირება'
 E-mail: ელ-ფოსტა
 'Delete all comments?': 'გსურთ წაშალოთ ყველა კომენტარი? '
@@ -79,7 +79,7 @@ E-mail: ელ-ფოსტა
 'Commenter $1 saved.': 'კომენტატორი $1 შეინახა.'
 'Commenter $1 deleted.': 'კომენტატორი $1 წაიშალა.'
 Commenter: კომენტატორი
-'Comment updated.': 'კომენტარის განახლება.'
+'Comment updated.': 'კომენტარი განახლებულია. '
 'Comment status change to $1.': 'კომენტარის სტატუსი შეიცვალა: $1'
 'Comment id': 'კომენტარის id'
 'Comment deleted.': 'კომენტარი წაიშალა.'
@@ -98,7 +98,3 @@ Ban: ბანი
 'Add new acceptance criteria': 'ახალი დადასტურების კრიტერიუმის დამატება'
 'Acceptance $1 saved.': '$1 დადასტურება დამახსოვრდა.'
 'Acceptance $1 deleted.': '$1 დადასტურება წაშლილია.'
-'Delete commenter comments?': 'წაიშალოს ამ კომენტატორის კომენტარები?'
-'Comment updated by $1 to the article $2 ($3)': '$2 ($3) სტატიის კომენტარი განახლდა $1-ის მიერ'
-'Comment added by $1 to the article $2 ($3)': '$2 ($3) სტატიის კომენტარი დაემატა $1-ის მიერ'
-'Comment ban settings': 'კომენტარის ბანის პარამეტრები'

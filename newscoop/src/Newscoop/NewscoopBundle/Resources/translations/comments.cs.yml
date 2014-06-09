@@ -1,40 +1,40 @@
-'No attachment': 
-at: 
-'With no attachment': 
-'With image attachment': 
-'With document attachment': 
-'Unable to reach Newscoop. Please check your internet connection.': 
-Starred: 
-Star: 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Reply to message': 
-Reply: 
-Processed: 
-'No records found.': 
-'No entries to show': 
-'Messages updated.': 
-'Messages status change to $1.': 
-'Messages deleted.': 
-'Message updated.': 
-'Message status change to $1.': 
-'Message deleted.': 
-Message: 
-Last: 
-'Full article': 
-First: 
-'Feedback Messages': 
-'Display _MENU_ records': 
-Deleted: 
-'Change selected messages status': 
-Attachment: 
-Approved.: 
-Approve: 
-Anonymous: 
-' - filtering from _MAX_ records': 
+'No attachment': 'Žádná příloha'
+at: na
+'With no attachment': 'Bez přílohy'
+'With image attachment': 'S přílohou obrázku'
+'With document attachment': 'S přílohou dokumentu'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
+Starred: 'S hvězdičkou'
+Star: Hvězda
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Ukázat _START_ až _END_ z _TOTAL_ záznamů'
+'Reply to message': 'Odpovědět na zprávu'
+Reply: Odpovědět
+Processed: Zpracováno
+'No records found.': 'Nebyly nalezeny žádné záznamy.'
+'No entries to show': 'Nejsou zde žádné příspěvky k zobrazení'
+'Messages updated.': 'Zprávy aktualizovány'
+'Messages status change to $1.': 'Statu zpráv změněn na  $1'
+'Messages deleted.': 'Zprávy vymazány'
+'Message updated.': 'Zpráva aktualizována'
+'Message status change to $1.': 'Status zprávy změněn na  $1'
+'Message deleted.': 'Zpráva vymazána'
+Message: Zpráva;
+Last: Poslední
+'Full article': 'Celý článek'
+First: První
+'Feedback Messages': 'Feedback zpráv'
+'Display _MENU_ records': 'Zobrazit _MENU_ záznamy'
+Deleted: Vymazat
+'Change selected messages status': 'Změnit statu vybraným zprávám'
+Attachment: Příloha
+Approved.: Schváleno
+Approve: Schválit
+Anonymous: Anonymní
+' - filtering from _MAX_ records': '- filtrováno z _MAX_ záznamů'
 'You are about to permanently delete multiple messages.': 'Chystáte se trvale vymazat hromadné zprávy'
 'You are about to permanently delete a message.': 'Chystáte se permanentně vymazat zprávu'
 User: Uživatel
-None: Žádný
+None: Žádné
 'Coming from': 'Přichází od '
 'Ban/Unban user': 'Zakázat/Obnovit uživatele'
 Ip: IP
@@ -59,7 +59,7 @@ Unrecommend: Nedoporučeno
 'Show comment details': 'Ukázat detaily komentáře'
 'Select status': 'Vybrat status'
 'Search Type': 'Vyhledat typ'
-'Reply to comment': 'Odpovědět to koment'
+'Reply to comment': 'Odpovědět na komentář'
 Recommended: Doporučené
 Recommend: Doporučeno
 'Quick edit': 'Rychlá editace '
@@ -73,7 +73,7 @@ Email: Email
 E-mail: Email
 'Delete all comments?': 'Vymazat všechny komentáře?'
 'Date Created': 'Datum vytvořeno'
-'Comments updated.': 'Komentáře aktualizované.'
+'Comments updated.': 'Komentáře jsou aktualizovány.'
 'Comments status change to $1.': 'Status komentářů změněno na $1.'
 'Comments deleted.': 'Komentáře vymazány.'
 'Commenter $1 saved.': 'Komentátor $1 uložen.'

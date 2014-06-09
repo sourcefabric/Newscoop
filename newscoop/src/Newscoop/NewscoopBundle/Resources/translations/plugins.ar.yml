@@ -1,14 +1,14 @@
-'You have no installed plugins.': 'لا توجد وحدات قابسة مركبة.'
-'Some plugins have to be updated. Please press the save button.': 'يجب تحديث بعض الوحدات القابسة. يرجى ضغط الزر حفظ.'
-'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'يرجى التحقق إزالة تركيب الوحدة القابسة $1. ستحذف كل المعلومات للوحدة القابسة!'
-'You do not have the right to manage plugins.': 'ليس لديك الحق في ادارة وحدات قابسة'
+'You have no installed plugins.': 'لا توجد  ملحقات مركبة ـ'
+'Some plugins have to be updated. Please press the save button.': 'يجب تحديث بعض الملحقات. يرجى النقر الزر إحفظ ـ'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'يرجى التحقق إزالة تركيب الملحق $1. ستحذف كل البيانات للملحق!ـ'
+'You do not have the right to manage plugins.': 'ليس لديك الحق في ادارة ملحقات'
 Version: إصدار
-'Upload Plugin': 'الرفع وحدة قالسة'
-Upload: الرقع
-Uninstall: 'إزالة التركيب'
-'The plugin $1 was sucessfully installed.': 'تم تركيب الوحدة القابسة $1 بنجاح.'
-'No plugins found.': 'لا توجد وحدات قابسة.'
-Manage: إدارة
-Enabled: 'تم تمكين'
-'Delete plugin': 'حذف الوحدة القابسة'
-'Add new image': 'إضافة صورة جديدة'
+'Upload Plugin': 'إرفع الملحق'
+Upload: إرفع
+Uninstall: null
+'The plugin $1 was sucessfully installed.': 'تم تركيب الملحق $1 بنجاح ـ'
+'No plugins found.': 'لا توجد ملحقات ـ'
+Manage: أدر
+Enabled: 'تم تفعيل'
+'Delete plugin': 'إحذف الملحق'
+'Add new image': 'أضف صورة جديدة'

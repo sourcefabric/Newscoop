@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: null
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: null
+        approved: null
+        new: Nouveau
+        editarticle: null
+        section: Section
+        comment: null
+        replyto: null
+        subject: null
+        ban: null
+        author: null
+        date: null
+        article: Article
+        search: Recherche
+        show: Afficher
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: Actions
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Annuler
+        submit: Soumettre
+        unrecommend: null
+        recommend: null
+        delete: Supprimer
+        reply: null
+        edit: null
+        close: Fermer
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

@@ -1,14 +1,14 @@
-'You have no installed plugins.': 
+'You have no installed plugins.': null
 'Some plugins have to be updated. Please press the save button.': 'Патрабуецца абнаўленне некаторых плагінаў. Калі ласка, націсніце гузік «Захаваць».'
 'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Калі ласка, пацвердзіце выдаленне ўбудовы $1. Усе дадзеныя ўбудовы будуць выдаленыя!'
 'You do not have the right to manage plugins.': 'У Вас няма права доступу для кіравання ўбудовамі.'
 Version: Версія
 'Upload Plugin': 'Запампаваць убудову'
-Upload: Запампаваць
+Upload: Загрузіць
 Uninstall: Дэўсталяваць
 'The plugin $1 was sucessfully installed.': 'Убудова $1 была паспяхова ўсталяваная.'
 'No plugins found.': 'Не знойдзена ўбудоў.'
 Manage: Кіраваць
-Enabled: Уключана
+Enabled: Дазволена
 'Delete plugin': 'Выдаліць убудову'
-'Add new image': 'Дадаць новы малюнак'
+'Add new image': 'Дадаць новы графiчны файл.'

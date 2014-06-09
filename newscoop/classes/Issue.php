@@ -749,30 +749,24 @@ class Issue extends DatabaseObject {
 	{
 		global $g_ado_db;
 
-		if (CampCache::IsEnabled()) {
-			$paramString = $p_publicationId . '_';
-			$paramString.= (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
-			$cacheKey = __CLASS__ . '_CurrentIssue_' . $paramString;
-			$issue = CampCache::singleton()->fetch($cacheKey);
-			if ($issue !== false && is_object($issue)) {
-				return $issue;
-			}
-		}
-
-		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
-		. "IdPublication = $p_publicationId";
-		if (!is_null($p_languageId)) {
-			$queryStr .= " AND IdLanguage = $p_languageId";
-		}
-		$queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
-		$result = $g_ado_db->GetRow($queryStr);
-		if (empty($result)) {
-			return new Issue($p_publicationId,0,0); // type safety
-		}
-		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
-		if (CampCache::IsEnabled()) {
-			CampCache::singleton()->store($cacheKey, $issue);
-		}
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('GetCurrentIssue', $p_publicationId, $p_languageId), 'issue');
+        if ($cacheService->contains($cacheKey)) {
+            $issue = $cacheService->fetch($cacheKey);
+        } else {
+            $queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
+            . "IdPublication = $p_publicationId";
+            if (!is_null($p_languageId)) {
+                $queryStr .= " AND IdLanguage = $p_languageId";
+            }
+            $queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
+            $result = $g_ado_db->GetRow($queryStr);
+            if (empty($result)) {
+                return new Issue($p_publicationId,0,0); // type safety
+            }
+            $issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
+            $cacheService->save($cacheKey, $issue);
+        }
 
 		return $issue;
 	} // fn GetCurrentIssue

@@ -1,11 +1,11 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
-Webcode: Вэб-код
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: Web-код
 'View article': 'Прагляд артыкула'
 Source: Крыніца
 'Select type': 'Абраць тып'
-On: Уключаны
-Off: Выключаны
+On: Укл.
+Off: Выкл.
 Title: Загаловак
 'No video playback capabilities, please download the video below': 'Немагчыма прайграць відэа, калі ласка, запампуйце відэа ніжэй па спасылцы'
 'Article status set to $1 for $2 articles': 'Статут артыкула $1  устаноўлены для $2 артыкулаў'
@@ -17,14 +17,14 @@ Title: Загаловак
 '$1 Article(s) unlocked': '$1 артыкул(ы) разблакаваныя'
 '$1 Article(s) not unlocked': '$1 артыкул(ы) не разблакаваныя'
 '$1 Article(s) duplicated': '$1 артыкул(ы) дубляваныя.'
-'Download file': 'Запампаваць файл'
-'You do not have the right to delete articles.': 'У Вас няма правоў доступу для выдалення артыкулаў.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'У Вас няма правоў доступу для змены статуту артыкула. Створаны і зацверджаны артыкул можа быць зменены толькі аўтарызаваным карыстальнікам.'
+'Download file': 'Загрузіць файл'
+'You do not have the right to delete articles.': 'Вы ня маеце правоў выдаляць артыкул.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Вы ня маеце правоў зьмяняць стан гэтага артыкула.  Калі артыкул адпраўлены, ён можа быць зьменены толькі ўпаўнаважанымі карыстальнікамі.'
 'Use Map': 'Выкарыстоўваць карту'
 'Toggle: On Section Page': 'Маркер На старонцы рубрыкі'
 'Toggle: On Front Page': 'Маркер На галоўнай старонцы'
 'Toggle: Comments': 'Макер Каментары'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 хвіліны таму.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 хвілін таму.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 гадзін і $4 хвілін таму.'
 'Status: Submit': 'Статут: Адправіць'
 'Status: Set New': 'Статут: Новая'
@@ -38,8 +38,8 @@ Size: Памер
 'Reset all filters': 'Ачысціць усе фільтры'
 'Published before': 'Апублікаваныя да'
 'Published after': 'Апублікаваныя пасля'
-'Publish date': 'Дата публікацыі'
-'Publish Schedule': 'Расклад публікацыі'
+'Publish date': 'Дата публiкацыі '
+'Publish Schedule': 'Расклад публікацый'
 'Publish Date': 'Дата публікацыі'
 'Order updated.': 'Парадак абноўлены.'
 'Open in browser': 'Адкрыць у браўзэры'
@@ -52,8 +52,8 @@ Locations: Месцазнаходжання
 'Loading data': 'Загрузка даных'
 'Last modified': 'Апошнія змяненні'
 'Last Modified': 'Апошнія змяненні'
-Last: Апошняя
-First: Першая
+Last: Апошнi
+First: Першы
 'Filter by...': 'Фільтр па...'
 Filter: 'Фільтр '
 Filename: 'Імя файла'
@@ -61,13 +61,13 @@ Filename: 'Імя файла'
 'Display _MENU_ records': 'Адлюстраваць _MENU_ запісы'
 Creator: Стваральнік
 'Create Date': 'Дата стварэння'
-'Article status set to $1': 'Статут артыкула устаноўлены на $1'
+'Article status set to $1': 'Статус артыкула ўстаноўлены  ў $1 '
 'Are you sure you want to delete selected articles?': 'Вы ўпэўненыя, што жадаеце выдаліць абраныя файлы?'
 'All Sections': 'Усе рубрыкі'
 'All Publications': 'Усе выданні'
 'All Issues': 'Усе выпускі'
 Added: Даданы
 'Access denied.': 'Адмоўлена ў доступе.'
-'$1 toggled.': 'Пераключаны на $1.'
+'$1 toggled.': '$1 зьменена.'
 '$1 articles have been removed': '$1 артыкулаў былі выдаленыя'
 ' - filtering from _MAX_ records': 'фільтраванне ад _MAX_ запісаў'

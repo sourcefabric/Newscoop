@@ -1,7 +1,7 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Вы пришли на страницу, чтобы навсегда удалить множественные сообщения.'
+'You are about to permanently delete a message.': 'Вы пришли на страницу, чтобы удалить сообщение.'
+'Are you sure you want to do it?': 'Вы уверены, что хотите это сделать?'
 Approve: Утвердить
 Approved.: Утверждено
 at: на

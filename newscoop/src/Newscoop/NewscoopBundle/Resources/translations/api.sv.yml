@@ -1,55 +1,55 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
-'Not a color': 
-'No such field': 
-'Color saved': 
-'Color not saved': 
-'Topic created': 
-'The topic name is already in use by another topic.': 
-'Complex Date': 
-vertices: 
-'There was a problem trying to execute the XML RPC function.': 
-'The Campcaster server configuration is invalid.': 
-'Pan Map': 
-'Open large map': 
-'No news available.': 
-'Edit Polygon': 
-'Create Polygon': 
-'Communication error: ': 
-'Cant fetch news from $1': 
-Loading...: 
-Version: 
-License: 
-Homepage: 
-'Show original map': 
-'The uploaded archive does not contain an valid newscoop plugin.': 
-Map: 
-Center: 
-Title: 
-'Invalid security token.': 
-'Callback $1 is not callable.': 
-'Article translated to $4 ($5)': 
-'Article status changed from $1 to $2.': 
-'Article deleted.': 
-'Article created.': 
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 
-'Article URL': 
-'Article Number': 
-'Access denied.': 
-'Publish with issue': 
-unknown: 
-Switch: 
-Numeric: 
-'The uploaded file format is unsupported.': 
-'The following fields are mandatory:': 
-'Missing value for $1': 
-'Manage Plugins': 
-'* Marked fields are mandatory.': 
-'$1 is of type $2': 
-'Invalid resize width/height.': 
-'Image type $1 is not supported.': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
+'Not a color': null
+'No such field': null
+'Color saved': null
+'Color not saved': null
+'Topic created': null
+'The topic name is already in use by another topic.': null
+'Complex Date': null
+vertices: null
+'There was a problem trying to execute the XML RPC function.': null
+'The Campcaster server configuration is invalid.': null
+'Pan Map': null
+'Open large map': null
+'No news available.': null
+'Edit Polygon': null
+'Create Polygon': null
+'Communication error: ': null
+'Cant fetch news from $1': null
+Loading...: null
+Version: null
+License: null
+Homepage: null
+'Show original map': null
+'The uploaded archive does not contain an valid newscoop plugin.': null
+Map: null
+Center: null
+Title: null
+'Invalid security token.': null
+'Callback $1 is not callable.': null
+'Article translated to $4 ($5)': null
+'Article status changed from $1 to $2.': null
+'Article deleted.': null
+'Article created.': null
+'Article copied to Article $4 (publication $5, issue $6, section $7).': null
+'Article URL': null
+'Article Number': null
+'Access denied.': null
+'Publish with issue': null
+unknown: null
+Switch: null
+Numeric: null
+'The uploaded file format is unsupported.': null
+'The following fields are mandatory:': null
+'Missing value for $1': null
+'Manage Plugins': null
+'* Marked fields are mandatory.': null
+'$1 is of type $2': null
+'Invalid resize width/height.': null
+'Image type $1 is not supported.': null
 'The file uploaded is not an image.': 'Den uppladdade filen är inte en bild.'
 'Could not delete record from the database.': 'Kunde inte radera posten från databasen.'
 'template path': mallsökväg
@@ -61,3 +61,46 @@ First: Första
 'Multi-line Text with WYSIWYG': Artikeltext
 'URL $1 is invalid or is not an image.': 'URL $1 är ogiltig eller inte en bild.'
 'URL $1 is not an image.': 'URL $1 är inte en bild.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                trusted: null
+                redirect: null
+                publication: Publikation
+                actions: Handlingar
+                actions_buttons:
+                    remove: 'Ta bort'
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                trusted: null
+                save: Spara
+        PublicResources:
+            label:
+                routes: null
+                save: Spara

@@ -1,4 +1,4 @@
-default: výchozí
+default: default
 'before you can configure the section templates.': 'předtím než můžete konfigurovat šablony sekce.'
 'You have to assign a theme to the issue': 'Musíte zadat téma do vydání'
 'The section number $1 was already in use.': 'Číslo rubriky $1 se již používá.'
@@ -35,7 +35,7 @@ default: výchozí
 'The section $1 could not be duplicated': 'Rubrika $1 nelze duplikovat'
 'Section $1 has been duplicated to $2. $3 of $4': 'Rubrika $1 byla duplikována do $2. $3 z $4'
 'You do not have the right to modify sections.': 'Nemáte oprávnění upravovat rubriky.'
-'A total of $1 articles were deleted.': 'Bylo odstraněno celkem $1 článků.'
+'A total of $1 articles were deleted.': 'Celkem $1 článků odstraněno.'
 'Duplicate Section:': 'Duplikovat Rubriku:'
 'Existing Section': 'Existující Rubrika'
 'Go to new section': 'Jít na nová rubrika'
@@ -44,13 +44,10 @@ default: výchozí
 'Please select either $1 or $2.': 'Prosím vyberte $1 nebo $2.'
 'Select destination section:': 'Zvolte cílovou rubriku:'
 OR: NEBO
-'URL Name': 'URL název'
+'URL Name': 'Jméno vydání v URL'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Číslo rubriky již existuje. Prosím zvolte jinou hodnotu nebo použíjte výběr(níže) k nalezení existující rubriky.'
 Warning: Varování
 'You must select a section.': 'Zvolte rubriku.'
 'You must specify a name for the section.': 'Zadejte název rubriky.'
 'The section could not be added.': 'Rubrika nemohla být přidána'
 'Add new section': 'Přidat novou rubriku'
-'No sections.': 'Žádné rubriky'
-'Please check if another section with the same number does not already exist.': 'Prosím zkontrolujte, zda rubrika se stejným názvem již neexistuje'
-'Change section name': 'Změnit název rubriky'

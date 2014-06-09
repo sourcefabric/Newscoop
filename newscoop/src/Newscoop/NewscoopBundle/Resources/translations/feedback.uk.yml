@@ -1,4 +1,29 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Ви збираєтеся видалити кілька повідомлень.'
+'You are about to permanently delete a message.': 'Ви збираєтеся видалити повідомлення.'
+'Are you sure you want to do it?': 'Ви впевнені що хочете зробити це?'
+Approve: Затвердження
+Approved.: Затверджено.
+at: на
+Attachment: Прікріплення
+'Ban/Unban user': 'Дозволити / заборонити користувачу коментувати'
+'Change selected messages status': 'Змінити статус вибраних повідомлень'
+Deleted: Видалено
+'Full article': 'Повна стаття'
+Message: Повідомлення
+'Message deleted.': 'Повідомлення видалено.'
+'Messages deleted.': 'Повідомлення видалені.'
+'Messages status change to $1.': 'Статус повідомленнь змінено на $1.'
+'Message status change to $1.': 'Статус повідомлення змінений на  $1.'
+'Messages updated.': 'Повідомлення оновлено.'
+'Message updated.': 'Повідомлення оновлено'
+Processed: Оброблено
+Reply: Відповідь
+'Reply to message': 'Відповісти на коментар'
+Star: Зірка
+Starred: Зірковий
+'Unable to reach Newscoop. Please check your internet connection.': 'Неможливо зв’язатись з Newscoop. Будь ласка, перевірте ваше інтернет-з’єднання.'
+'With document attachment': 'З документом у прікріпленні.'
+'With image attachment': 'З зображенням у прікріпленні'
+'With no attachment': 'При відсутності вкладень'
+'Feedback Messages': 'Повідомлення зворотнього зв’язку'

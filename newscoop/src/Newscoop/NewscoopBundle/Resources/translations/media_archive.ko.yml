@@ -1,60 +1,62 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: 
-'You cant update used files.': 
-Source: 
-Local: 
-'Items updated.': 
-Feedback: 
-'Do you want to update unused only?': 
-'Disapprove selected': 
-'Are you sure you want to update selected items?': 
-'Approve selected': 
-'Image files': 
-'Fix all thumbnails': 
-'You do not have the right to add files.': 
-'Should this file only be available for this translation of the article, or for all translations?': 
-'Please enter a description for the file: $1.': 
-'Only this translation': 
-'No files for multi editing.': 
-'Edit files': 
-'Change file information': 
-'All translations': 
-'Save All': 
-Files: 
-'You cant delete used files.': 
-'Do you want to delete unused only?': 
-'View attachment': 
-'Select some items first.': 
-'Open in the browser': 
-'Media Archive': 
-'Last modified': 
-'Items deleted.': 
-'File uploaded.': 
-'Do you want this file to open in the users browser, or to automatically download?': 
-'Delete selected': 
-Created: 
-Charset: 
-'Change attachment information': 
-'Automatically download': 
-'Attachment updated.': 
-'Are you sure you want to delete selected items?': 
-'Add new file': 
-'You do not have the right to add images.': 
-'Use for all': 
-'Specify image url if you want to load it.': 
-Size: 
-'No images for multi editing.': 
-'Images updated.': 
-'Edit images': 
-'$1 files uploaded.': 
-'Unable to add new image.': 
-'Image updated.': 
-'Image $1 deleted.': 
-'Image is in use, it cannot be deleted.': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
+'You cant update used files.': null
+Source: null
+Local: null
+'Items updated.': null
+Feedback: null
+'Do you want to update unused only?': null
+'Disapprove selected': null
+'Are you sure you want to update selected items?': null
+'Approve selected': null
+'Image files': null
+'Fix all thumbnails': null
+'You do not have the right to add files.': '파일을 추가할 권한이 없습니다. '
+'Should this file only be available for this translation of the article, or for all translations?': '이 파일이 기사의 이 번역에만 해당됩니까, 아니면 모든 번역에 해당됩니까?'
+'Please enter a description for the file: $1.': null
+'Only this translation': '이 번역만 '
+'No files for multi editing.': null
+'Edit files': null
+'Change file information': '파일 정보 수정'
+'All translations': '모든 번역'
+'Save All': null
+Files: 파일
+'You cant delete used files.': null
+'Do you want to delete unused only?': null
+'View attachment': null
+'Select some items first.': null
+'Open in the browser': '브라우저에서 열기'
+'Media Archive': null
+'Last modified': null
+'Items deleted.': null
+'File uploaded.': null
+'Do you want this file to open in the users browser, or to automatically download?': '이 파일이 브라우저에서 열기를 원합니까? 자동으로 다운로드 할까요? '
+'Delete selected': null
+Created: null
+Charset: null
+'Change attachment information': null
+'Automatically download': '자동 다운로드'
+'Attachment updated.': null
+'Are you sure you want to delete selected items?': null
+'Add new file': null
+'You do not have the right to add images.': '이미지를 추가할 권한이 없습니다. '
+'Use for all': null
+'Specify image url if you want to load it.': null
+Size: null
+'No images for multi editing.': null
+'Images updated.': null
+'Edit images': null
+'$1 files uploaded.': null
+'Unable to add new image.': null
+'Image updated.': null
+'Image $1 deleted.': null
+'Image is in use, it cannot be deleted.': null
 'You must select an image file to upload.': '업로드할 이미지 파일을 선택하시오.'
 'Add new image': '새로운 이미지 추가'
 'Delete image $1': '이미지 $1 삭제'
 'Used in articles': '기사에서 사용중'
 'View image': '이미지 보기'
 'Change image information': '이미지 정보 수정'
+'Photographer URL': null
+'Add website url starting with http://': null

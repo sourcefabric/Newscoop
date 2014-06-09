@@ -1,60 +1,60 @@
-'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 
-'Stop current upload': 
-'Start uploading queue': 
-'Start upload': 
-Size: 
-'Select files': 
-Filename: 
-'Drag files here.': 
-'Cache lifetime, sec': 
-'Add files to the upload queue and click the start button.': 
-'Add files': 
-'$1 files uploaded.': 
-'Replace current with:': 
-'Edit template:': 
-'Changes have not been saved. Load new template without saving the current one?': 
-'to folder': 
-'You must select at least one template to perform an action.': 
-'You must select a destination folder': 
-'You may only translate one article at a time.': 
-'You do not have the right to rename templates.': 
-'You do not have the right to move templates.': 
-'You do not have the right to move articles.': 
-'Unable to create folder.': 
-'Unable to $1 template.': 
-'To New Name': 
-'These templates': 
-'The template object $1 is in use and can not be deleted.': 
-'The template object $1 could not be renamed.': 
-'Template(s) moved.': 
-'Template(s) deleted.': 
-'Template object $1 was renamed to $2': 
-'Template object $1 was deleted': 
-'Some templates could not be deleted because they are in use.': 
-'Select folder': 
-'Rename template': 
-'Rename file': 
-Rename: 
-'No folders': 
-'New Name': 
-'Move templates': 
-Folder: 
-'File cannot be read.': 
-'Are you sure you want to delete the template object $1 from folder $2?': 
-'Are you sure you want to delete the selected templates?': 
-'Template ID:': 
-'Template ID': 
-'Template $1 no longer exists!': 
-'New template $1 created': 
-'If the file you specified is a text file, you can convert its character set using the dropdown below.': 
-'Directory $1 was deleted': 
-'Directory $1 created.': 
-'You must select a file to upload.': 
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
-'Unable to save the file $1 to the path $2.': 
-Replace: 
-'File $1 replaced.': 
-'The folder name cant be .. or .': 
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
+'Stop current upload': null
+'Start uploading queue': null
+'Start upload': null
+Size: null
+'Select files': null
+Filename: null
+'Drag files here.': null
+'Cache lifetime, sec': null
+'Add files to the upload queue and click the start button.': null
+'Add files': null
+'$1 files uploaded.': null
+'Replace current with:': null
+'Edit template:': null
+'Changes have not been saved. Load new template without saving the current one?': null
+'to folder': null
+'You must select at least one template to perform an action.': null
+'You must select a destination folder': null
+'You may only translate one article at a time.': null
+'You do not have the right to rename templates.': null
+'You do not have the right to move templates.': null
+'You do not have the right to move articles.': '기사를 이동할 권한이 없습니다. '
+'Unable to create folder.': null
+'Unable to $1 template.': null
+'To New Name': null
+'These templates': null
+'The template object $1 is in use and can not be deleted.': null
+'The template object $1 could not be renamed.': null
+'Template(s) moved.': null
+'Template(s) deleted.': null
+'Template object $1 was renamed to $2': null
+'Template object $1 was deleted': null
+'Some templates could not be deleted because they are in use.': null
+'Select folder': null
+'Rename template': null
+'Rename file': null
+Rename: null
+'No folders': null
+'New Name': null
+'Move templates': null
+Folder: null
+'File cannot be read.': null
+'Are you sure you want to delete the template object $1 from folder $2?': null
+'Are you sure you want to delete the selected templates?': null
+'Template ID:': null
+'Template ID': null
+'Template $1 no longer exists!': null
+'New template $1 created': null
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
+'Directory $1 was deleted': null
+'Directory $1 created.': null
+'You must select a file to upload.': '업로드할 파일을 선택하시오.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
+'Unable to save the file $1 to the path $2.': null
+Replace: null
+'File $1 replaced.': null
+'The folder name cant be .. or .': null
 'The template $1 was saved successfully.': '템플레이트 $1 이 성공적으로 저장되었습니다.'
 'Create new folder': '새로운 폴더 생성'
 'Upload template': '템플레이트 업로드'

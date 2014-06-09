@@ -1,51 +1,51 @@
-'Language id not specified': 
-'No languages.': 
-'Native Name': 
-'Name taken.': 
-'Language saved.': 
-'Language removed.': 
-'Language not found.': 
-'Language is in use and cannot be removed.': 
-'Language added.': 
-'English language cannot be removed.': 
-'Edit short month names': 
-'Edit short day names': 
-'Edit month names': 
-'Edit language: $1': 
-'Edit day names': 
-'Code Page': 
-'Add new Language': 
-'Add Language': 
-We: 
-Tu: 
-Th: 
-Su: 
-Sep: 
-Sa: 
-'Please enter the translation for week day short names.': 
-'Please enter the translation for month short names.': 
-Oct: 
-Nov: 
-Mo: 
-Mar: 
-Jun: 
-Jul: 
-Jan: 
-Fr: 
-Feb: 
-Dec: 
-Aug: 
-Apr: 
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
+We: null
+Tu: null
+Th: null
+Su: null
+Sep: null
+Sa: null
+'Please enter the translation for week day short names.': null
+'Please enter the translation for month short names.': null
+Oct: null
+Nov: null
+Mo: null
+Mar: null
+Jun: null
+Jul: null
+Jan: null
+Fr: null
+Feb: null
+Dec: null
+Aug: null
+Apr: null
 'No language.': 'Geen taal.'
 'Delete language $1': 'Verwijder taal $1'
-'You do not have the right to add languages.': 'Je hebt niet de rechten om talen toe te voegen.'
+'You do not have the right to add languages.': null
 'Please enter the translation for time units.': 'Voeg de vertaling voor tijdeenheid in.'
-'You do not have the right to delete languages.': 'Je hebt niet de rechten om talen te verwijderen.'
-'Are you sure you want to delete the language $1?': 'Weet je zeker dat je de taal $1 wilt verwijderen?'
+'You do not have the right to delete languages.': null
+'Are you sure you want to delete the language $1?': 'Weet u zeker dat u de taal $1 wilt verwijderen?'
 'Deleting language': 'Verwijderen taal'
 'The language $1 could not be deleted.': 'De taal $1 kon niet worden verwijderd.'
 'Edit language': 'Bewerk taal'
-'You do not have the right to edit languages.': 'Je hebt niet de rechten om talen te bewerken.'
+'You do not have the right to edit languages.': null
 'Please enter the translation for month names.': 'Voeg een vertaling in voor de maand namen.'
 'Please enter the translation for week day names.': 'Voeg een vertaling in voor de week dag namen.'
 January: januari
@@ -67,6 +67,6 @@ Thursday: donderdag
 Friday: vrijdag
 Saturday: zaterdag
 Sunday: zondag
-'You do not have the right to add new languages.': 'Je hebt niet de rechten om nieuwe talen toe te voegen.'
+'You do not have the right to add new languages.': null
 'There are $1 issue(s) left.': 'Er zijn $1 uitgave(s) over.'
-'Native name': 
+'Native name': 'Naam in doeltaal'

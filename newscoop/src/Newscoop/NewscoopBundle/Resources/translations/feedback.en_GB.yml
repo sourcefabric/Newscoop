@@ -1,4 +1,4 @@
-'No attachment': 
+'No attachment': 'No attachment'
 'You are about to permanently delete multiple messages.': 'You are about to permanently delete multiple messages.'
 'You are about to permanently delete a message.': 'You are about to permanently delete a message.'
 'Are you sure you want to do it?': 'Are you sure you want to do it?'
@@ -13,8 +13,8 @@ Deleted: Deleted
 Message: Message
 'Message deleted.': 'Message deleted.'
 'Messages deleted.': 'Messages deleted.'
-'Messages status change to $1.': 'Messages status change to $1.'
-'Message status change to $1.': 'Message status change to $1.'
+'Messages status change to $1.': 'Messages status changed to $1.'
+'Message status change to $1.': 'Message status changed to $1.'
 'Messages updated.': 'Messages updated.'
 'Message updated.': 'Message updated.'
 Processed: Processed

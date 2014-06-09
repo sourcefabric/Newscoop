@@ -1,31 +1,31 @@
-'Edit metadata': 
-Rating: 
-'Enable Rating': 
-'Blog management': 
-'View article': 
-'Select a list': 
-'Remove list': 
-'Please select a list': 
-Playlist: 
-'List updated.': 
-'List saved': 
-'List Name': 
-'List ID': 
-'Item already exists in the list': 
-'Featured Articles': 
-'Featured Article Lists': 
-'Featured Article List': 
-'Duplicate list': 
-'Duplicate article entry found': 
-'Drag here to add to list': 
-'Could not save the list': 
-'Available Articles': 
-'Are you sure you want to delete this list?': 
-'Add to list': 
-'Add list': 
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
+'Blog management': null
+'View article': 'Ver artigo'
+'Select a list': null
+'Remove list': null
+'Please select a list': null
+Playlist: null
+'List updated.': null
+'List saved': null
+'List Name': null
+'List ID': null
+'Item already exists in the list': null
+'Featured Articles': null
+'Featured Article Lists': null
+'Featured Article List': null
+'Duplicate list': null
+'Duplicate article entry found': null
+'Drag here to add to list': null
+'Could not save the list': null
+'Available Articles': null
+'Are you sure you want to delete this list?': null
+'Add to list': null
+'Add list': null
 'Multi date events': 'Eventos de datas múltiplas'
 Slideshows: Slideshows
-'Place images': 
+'Place images': null
 'Youre not allowed to edit article.': 'Você não tem permissão de editar o artigo.'
 Webcode: 'Código de web'
 Unapproved: 'Não foi aprovado'
@@ -36,7 +36,7 @@ Unapproved: 'Não foi aprovado'
 'Related Articles': 'Artigos relacionados'
 'Pending articles': 'Artigos pendentes'
 'Pending Articles': 'Artigos pendentes'
-'Context Box updated': 
+'Context Box updated': null
 On: Ligar
 Off: Desligar
 'You do not have the right to moderate comments.': 'Você não tem o direito de moderar os comentários.'
@@ -64,8 +64,8 @@ Authors: Autores
 'Actions updated.': 'Ações atualizadas'
 'Your work has not been saved. Do you want to continue and lose your changes?': 'Seu trabalho não foi salvo. Quer continuar e perder as mudanças feitas?'
 Switches: Interruptores
-'No subtopics available': 
-'Newscoop Subhead': 
+'No subtopics available': null
+'Newscoop Subhead': null
 Media: Mídia
 'Last modified': 'Modificado pela última vez'
 'Keywords &amp; Topics': 'Palavras chaves & Tópicos'
@@ -77,12 +77,12 @@ Created: Criado
 'Content edited': 'Conteúdo editado'
 'You must select an article language.': 'Você tem que selecionar a língua do artigo.'
 'You must select a publication.': 'Você tem que selecionar uma publicação.'
-'You must select a file to upload.': 'Você tem que selecionar o arquivo para upload.'
+'You must select a file to upload.': 'Tem de selecionar um ficheiro para transferir'
 'You must select a XML input file.': 'Você tem que selecionar o arquivo de entrada XML.'
 'You do not have the right to import XML archives.': 'Você não tem o direito de importar arquivos XML.'
-'There was a problem uploading the file.': 'Ocorreu um problema com upload do arquivo.'
+'There was a problem uploading the file.': 'Ocorreu um problema durante o upload do aquivo.'
 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'O upload do arquivo foi apenas parcial. Isso acontece quando o tempo máximo para fazer upload é curto comparado com o tamanho do arquivo que você está tentando mandar. O tempo máximo do upload é definido no php.ini.'
-'The file exceeds the allowed max file size.': 'O arquivo é maior do que é permitido.'
+'The file exceeds the allowed max file size.': 'O tamanho do arquivo é maior do que permitido.'
 Optional: Opcional
 'Input File': 'Arquivo de entrada'
 'Import XML': 'Importar XML'
@@ -113,8 +113,8 @@ Download: Baixar
 'Article translation created.': 'Tradução do artigo foi criada.'
 'Article order changed.': 'Ordem de artigos foi modificada.'
 'Article moved.': 'Artigo foi movido.'
-'Article deleted.': 'Artigo foi removido.'
-'Article created.': 'Artigo foi criado.'
+'Article deleted.': 'Artigo removido.'
+'Article created.': 'Artigo criado.'
 '$1 toggled.': '$1 alternado.'
 'Total:': 'Total:'
 'Show Comments': 'Mostrar comentários'
@@ -165,7 +165,7 @@ Comments: Comentários
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Tem que existir uma edição para o idioma selecionado. Introduza o nome da edição e respectivo nome URL.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Tem de existir uma secção para o idioma selecionado. Introduza o nome da secção e respectivo nome URL.'
 'Article Type': 'Tipo de artigo'
-'Show article on front page': 'Mostrar artigo na 1ª página'
+'Show article on front page': 'Mostrar artigo na página principal'
 'Show article on section page': 'Mostrar artigo na página de seção'
 'Translate article': 'Traduzir artigo'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Não tem permissões para alterar o Estado do Artigo. Apenas pode alterar os seus artigos, mas após um artigo ser submetido apenas poderá ser alterado por Utilizadores autorizados pelo Sistema.'
@@ -183,4 +183,4 @@ Comments: Comentários
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Este artigo não pode ser prévisualizado, verifique se existe um modelo atribuido à visualização de artigos.'
 'No such article.': 'Artigo Desconhecido.'
 'No such section.': 'Secção Desconhecida.'
-'Are you sure you want to delete this scheduled action?': 
+Characters: null

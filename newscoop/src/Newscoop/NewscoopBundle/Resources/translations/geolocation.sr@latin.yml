@@ -1,0 +1,66 @@
+'Based on GeoNames.org and OpenStreetMap.org data': null
+'selected marker icon': 'izabrana marker oznaka'
+'add location to map': 'dodaj lokaciju na mapu'
+'Video source': 'Video izvor'
+'The point will be removed from all translations of the article.': 'Tačka će biti uklonjena iz svih prevoda teksta.'
+'Specify country (optional)': 'Preciziraj državu (opciono)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Izvinite, to mesto nije pronađeno. Proverite da li ste ispravno napisali ili tražite ponovo.'
+'Show search results': 'Prikaži rezultate pretrage'
+'Search for place or coordinate': 'Traži mesto ili koordinatu'
+'Return to edit': 'Nazad na uređivanje'
+'Really delete this point?': 'Zaista brisati tačku?'
+'Name and describe this location': 'Imenuj i opiši lokaciju'
+'Map size': 'Veličina mape'
+'Location label': 'Oznaka lokacije'
+'Location description:': 'Opis lokacije:'
+'Label url': 'Url oznake'
+'Hide search results': 'Sakri rezultate pretrage'
+Geo-filtering: Geo-filterisanje
+'Fill in youtube ID or link, e.g.': 'Unesite Youtube Id ili vezu, na primer '
+'Fill in vimeo ID or link, e.g': 'Unesite Vimeo Id ili vezu, na primer '
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Unesite video Id, vezu ili naziv fajla, za Youtube, Vimeo ili fleš video.'
+'Fill in location label': 'Popunite oznaku lokacije'
+'Fill in local swf flash file name or link, e.g.': 'Unesite ime ili vezu lokalnog fleš fajla, npr '
+'Fill in local flv flash file name or link, e.g.': 'Unesite ime ili vezu lokalnog .flv fajla, npr '
+'Fill in image link, like': 'Unesite link slike, kao '
+'Describe the location...': 'Opišite lokaciju...'
+'Delete location': 'Obrišite lokaciju'
+Coordinates: Koordinate
+'Change video display size': 'Promeni veličinu u kojoj se prikazuje video'
+'Change image display size': 'Promeni veličinu u kojoj se prikazuje slika'
+'Change icon of this location': 'Promeni ikonicu za ovu lokaciju'
+'Center map on location': 'Centriraj mapu na lokaciju'
+'Advanced editing': 'Napredno uređivanje'
+'Add an image to this location': 'Dodaj sliku ovoj lokaciji'
+'Add a video to this location': 'Dodaj video ovoj lokaciji'
+'Are you sure you want to quit without saving your changes?': 'Da li ste sigurni da želite da izađete bez čuvanja izmena?'
+'Map preview': 'Pregled mape'
+'Locations updated.': 'Lokacije izmenjene'
+'Setting the map name helps with map search': 'Postavljanje imena mape pomaže u pretrazi mapa'
+Longitude: 'Geografksa dužina'
+Latitude: 'Geografksa širina'
+Center: Centar
+'Last Saved Map View': 'Poslednje snimljeni položaj'
+'List of locations updated': 'Lista lokacija izmenjena'
+width: širina
+'show initial map view': 'prikaži početni položaj'
+'problem at point processing, please send error report': 'problem sa obradom tačke, molimo pošaljite izveštaj o grešci'
+'plain text': 'običan tekst'
+'html content': 'html sadržaj'
+height: visina
+'fill in map name': 'unesite naziv mape'
+'You do not have the right to remove maps from articles.': 'Nemate pravo da uklanjate mape iz teksta'
+'Video file': 'video fajl'
+'Video ID': 'Video ID'
+'The map has been removed from the article.': 'Ova mapa je uklonjena iz teksta'
+'Point no.': 'Tačka broj'
+'Point markers': Markeri
+None: Nijedan
+'Map Search Example': 'Primer pretrage mapa'
+'Map Preview': 'Pregled mape'
+'Image URL': 'URL slike'
+video: video
+text: tekst
+image: slika
+icon: ikona
+'Setting Map Locations': 'Postavljanje lokacija'

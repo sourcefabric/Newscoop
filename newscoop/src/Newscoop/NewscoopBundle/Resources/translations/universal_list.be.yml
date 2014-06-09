@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Выкарыстоўваць карту'
+Locations: Месцазнаходжання
+Last: Апошнi
+First: Першы
+'Publish Schedule': 'Расклад публікацый'
+'You do not have the right to delete articles.': 'Вы ня маеце правоў выдаляць артыкул.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Вы ня маеце правоў зьмяняць стан гэтага артыкула.  Калі артыкул адпраўлены, ён можа быць зьменены толькі ўпаўнаважанымі карыстальнікамі.'
+'Toggle: On Section Page': 'Маркер На старонцы рубрыкі'
+'Toggle: On Front Page': 'Маркер На галоўнай старонцы'
+'Toggle: Comments': 'Макер Каментары'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 хвілін таму.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Гэты артыкул быў заблакаваны $1 ($2) $3 гадзін і $4 хвілін таму.'
+'Status: Submit': 'Статут: Адправіць'
+'Status: Set New': 'Статут: Новая'
+'Status: Publish': 'Статут: Зацвердзiць'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Паказаныя _START_ да _END_ / _TOTAL_ запісаў'
+'Show / hide columns': 'Паказаць / схаваць калонкі'
+'Select some article first.': 'Выберыце спачатку некалькі артыкулаў.'
+'Select action': 'Выбраць дзеянне'
+'Save order': 'Захаваць парадак выканання.'
+'Reset all filters': 'Ачысціць усе фільтры'
+'Published before': 'Апублікаваныя да'
+'Published after': 'Апублікаваныя пасля'
+'Publish date': 'Дата публiкацыі '
+'Publish Date': 'Дата публікацыі'
+'Order updated.': 'Парадак абноўлены.'
+'No sections found': 'Не абрана ніводная з рубрык'
+'No records found.': 'Не абрана ніводная з запісаў'
+'No publications found': 'Не абрана ніводнае з выданняў'
+'No issues found': 'Не абраны ніводны з выпускаў'
+'No entries to show': 'Няма запісаў для прагляду'
+'Loading data': 'Загрузка даных'
+'Last Modified': 'Апошнія змяненні'
+'Filter by...': 'Фільтр па...'
+Filter: 'Фільтр '
+'Duplicate to another section': 'Дубляваць ў іншую рубрыку'
+'Display _MENU_ records': 'Адлюстраваць _MENU_ запісы'
+Creator: Стваральнік
+'Create Date': 'Дата стварэння'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Статус артыкула ўстаноўлены  ў $1 '
+'Are you sure you want to delete selected articles?': 'Вы ўпэўненыя, што жадаеце выдаліць абраныя файлы?'
+'All Sections': 'Усе рубрыкі'
+'All Publications': 'Усе выданні'
+'All Issues': 'Усе выпускі'
+'Access denied.': 'Адмоўлена ў доступе.'
+'$1 toggled.': '$1 зьменена.'
+'$1 articles have been removed': '$1 артыкулаў былі выдаленыя'
+' - filtering from _MAX_ records': 'фільтраванне ад _MAX_ запісаў'

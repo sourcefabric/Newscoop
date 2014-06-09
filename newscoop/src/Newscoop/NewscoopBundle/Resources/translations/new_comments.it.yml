@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Commenti
+        banned: null
+        anonymous: null
+        at: in
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Articolo intero'
+        hidden: Nascosto
+        approved: Approvato
+        new: Nuovo
+        editarticle: 'Vai alla modifica articolo'
+        section: Sezione
+        comment: Commento
+        replyto: 'Rispondi al commento'
+        subject: Oggetto
+        ban: 'Blocca/sblocca utente'
+        author: Autore
+        date: null
+        article: Articolo
+        search: Cerca
+        show: Mostra
+        recommended: Consigliato
+        unrecommended: Sconsigliato
+        editcomment: null
+        actions: Azioni
+        selectstatus: 'Scegli stato'
+        deleted: Cancellato
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Annulla
+        submit: Salva
+        unrecommend: Sconsiglia
+        recommend: Consiglia
+        delete: Elimina
+        reply: Risposta
+        edit: 'Modifica rapida'
+        close: Chiudi
+        okay: null
+        filter: Filtro
+    msg:
+        deleted: 'Commento cencellato.'
+        commentinarticle: 'Commento $4 da $1 nellarticolo $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Impossibile raggiungere Newscoop. Verifica la connessione internet.'
+            deletefromarticle: 'Cancellazione commento da $1 dallarticolo $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Stai per eliminare definitivamente un commento.'
+        suremultiple: null
+        first: null
+        surequestion: 'Sei sicuro di volerlo fare?'
+        updated: 'Commento aggiornato.'

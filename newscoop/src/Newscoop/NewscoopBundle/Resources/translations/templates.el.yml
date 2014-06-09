@@ -1,13 +1,13 @@
 'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 'Υπάρχουν κάποια αρχεία που δεν μπορούν να διαβαστούν, με αποτέλεσμα το Newscoop να μην μπορεί να καθορίσει εάν το $1 είναι σε χρήση ή όχι. Παρακαλούμε διορθώστε το και ξαναπροσπαθήστε να διαγράψετε το πρότυπο.'
 'Stop current upload': 'Διακοπή τρέχοντος ανεβάσματος'
-'Start uploading queue': 'Έναρξη ανεβάσματος ουράς'
+'Start uploading queue': 'Έναρξη ανεβάσματος ουράς '
 'Start upload': 'Έναρξη ανεβάσματος'
 Size: Μέγεθος
-'Select files': 'Επιλέξτε αρχεία'
+'Select files': 'Επιλογή αρχείων'
 Filename: 'Όνομα αρχείου'
-'Drag files here.': 'Σύρτε αρχεία εδώ.'
+'Drag files here.': 'Σύρετε τα αρχεία σας εδώ.'
 'Cache lifetime, sec': 'Διάρκεια ζωής προσωρινής μνήμης, δευτερόλεπτα'
-'Add files to the upload queue and click the start button.': 'Προσθέστε αρχεία στην ουρά ανεβάσματος και πατήστε το πλήκτρο έναρξης.'
+'Add files to the upload queue and click the start button.': 'Προσθέστε αρχεία στην ουρά ανεβάσματος και κάντε κλίκ στο κουμπί έναρξης.'
 'Add files': 'Προσθήκη αρχείων'
 '$1 files uploaded.': 'Ανέβηκαν $1 αρχεία.'
 'Replace current with:': 'Αντικατάσταση τρέχοντος με:'
@@ -50,7 +50,7 @@ Folder: Φάκελος
 'Directory $1 was deleted': 'Ο καταλογος $1 διαγράφτηκε'
 'Directory $1 created.': 'Ο κατάλογος $1 δημιουργήθηκε.'
 'You must select a file to upload.': 'Πρέπει να επιλέξετε ένα αρχείο για ανέβασμα.'
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': 'Η αποθήκευση του αρχείου $1 στη διαδρομή $2 ήταν αδύνατη.'
 Replace: Αντικατάσταση
 'File $1 replaced.': 'Το αρχείο $1 αντικαταστάθηκε.'

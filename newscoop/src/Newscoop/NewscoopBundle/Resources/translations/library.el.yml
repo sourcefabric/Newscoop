@@ -1,5 +1,5 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: Webcode
 'View article': 'Προβολή άρθρου'
 Source: Πηγή
@@ -19,13 +19,13 @@ Title: Τίτλος
 '$1 Article(s) duplicated': '$1 Άρθρο/α αντιγράφηκαν'
 'Download file': 'Κατέβασμα αρχείου'
 'You do not have the right to delete articles.': 'Δεν έχετε το δικαίωμα να διαγράψετε άρθρα.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Από την στιγμή υποβολλής ενός άρθρου, μόνο εξουσιοδοτημένοι χρήστες μπορούν να πραγματοποιήσουν αλλαγές.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Μόλις ένα άρθρο υποβληθεί μπορεί να αλλάξει μόνο από εξουσιοδοτημένους χρήστες.'
 'Use Map': 'Χρήση Χάρτη'
 'Toggle: On Section Page': 'Εναλλαγή: Στην Σελίδα Ενότητας'
 'Toggle: On Front Page': 'Εναλλαγή: Στην Πρώτη Σελίδα'
 'Toggle: Comments': 'Εναλλαγή: Σχόλια'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 λεπτό/ά.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πρίν από $3 ώρα/ες και $4 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 λεπτό/ά.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Το άρθρο κλειδώθηκε από $1 ($2) πριν από $3 ώρα/ες και $4 λεπτό/ά.'
 'Status: Submit': 'Κατάσταση: Υποβολλή'
 'Status: Set New': 'Κατάσταση: Ορισμός Νέου'
 'Status: Publish': 'Κατάσταση: Δημοσίευση'
@@ -67,7 +67,7 @@ Creator: Δημιουργός
 'All Publications': 'Όλες οι Δημοσιεύσεις'
 'All Issues': 'Όλα τα Τεύχη'
 Added: Προστέθηκε
-'Access denied.': 'Άρνηση πρόσβασης'
+'Access denied.': 'Άρνηση πρόσβασης.'
 '$1 toggled.': '$1 εναλλάχθηκε.'
 '$1 articles have been removed': 'Έχουν μεταφερθεί $1 άρθρα '
 ' - filtering from _MAX_ records': '-φιλτράρισμα από _MAX_ καταχωρήσεις'

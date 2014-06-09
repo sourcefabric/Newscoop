@@ -9,7 +9,7 @@ More...: Mais...
 Content: Conteúdo
 Languages: Idiomas
 Countries: Países
-Themes: Modelos
+Themes: Temas
 Topics: Temas
 Configure: Configurar
 'Image Archive': 'Arquivo de Imagem'
@@ -148,6 +148,7 @@ Localizer: Localizador
 'Add new publication': 'Criar Publicação'
 'Upload new template': 'Criar Modelo'
 'Add new staff member': 'Adicionar usuário (Pessoal Editorial)'
+'Staff member deleted.': null
 'Add new subscriber': 'Adicionar Assinante'
 'Add new user type': 'Criar Tipo de Usuário'
 'Add new article type': 'Criar Tipo de Artigo'
@@ -189,7 +190,7 @@ Search: Procurar
 'Make a selection': 'Efetuar seleção'
 'You must input a number greater than 0 into the $1 field.': 'Introduza um valor superior a 0 no campo $1.'
 'You must input a valid date.': 'Introduza uma data válida.'
-'Add new field': 'Adicionar campo'
+'Add new field': 'Adicionar novo Campo'
 'Article automatic publishing schedule': 'Publicação programada de artigos.'
 'Are you sure you want to delete this scheduled action?': 'Tem certeza que quer apagar a programação agendada?'
 Unlink: 'Desfazer ligação'
@@ -253,21 +254,31 @@ Send: Enviar
 (optional): (opcional)
 'The URL you entered is invalid: $1': 'O Endereço introduzido é inválido: $1'
 Reads: Leituras
-'Publish with issue': 'Publicar com a edição'
+'Publish with issue': 'Publicar com edição'
 'Universal List': 'Lista universal'
 'Invalid security token!': 'Token de segurança inválido!'
 Authors: Autores
-'User name': 'Nome de Utilizador'
-'User Types': 'Tipo de Utilizadores'
-'Subscription Default Time': 'Tempo padrão para Assinatura'
-'No such language.': 'Idioma Desconhecido'
-'No such infotype.': 'Informação-Tipo Desconhecida.'
-'No such keyword.': 'Palavra-Chave Desconhecida.'
-'No such country.': 'País Desconhecido.'
-'User may add/change user accounts and passwords': 'Permissão para Criar/Alterar Utilizadores e Palavras-Passe'
-'User may delete user accounts': 'Permissão para Apagar Utilizadores'
-'Add new user account': 'Criar Utilizador'
-'There are $1 issue(s) left.': 'Existe(m) ainda $1 Edição(ões).'
-'There are $1 keyword(s) left.': 'Existe(m) ainda $1 Palavra(s)-Chave.'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Nome <br> (Carregue para Alterar)'
-'New field': 'Novo Campo'
+Title: Título
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: no
+published: null
+unpublished: null

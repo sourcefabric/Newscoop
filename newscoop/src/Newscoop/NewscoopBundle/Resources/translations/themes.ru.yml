@@ -20,7 +20,7 @@ updated: обновлено
 moved: перемещено
 installed: установлено
 deleted: удалено
-'You must select at least one template to perform an action.': 'Вы должны выбрать по меньшей мере один шаблон для реализации действия.'
+'You must select at least one template to perform an action.': 'Вы должны выбрать по меньшей мере один шаблон чтобы произвести действие.'
 Upload: Загрузить
 'Unassign theme': 'Отменить тему (шаблон)'
 'Unassign successful': 'Тема отменена успешно'
@@ -42,7 +42,7 @@ Saving..: Сохраняется...
 'Saving settings failed.': 'Настройки сохранения не удались.'
 'Save All': 'Сохранить все'
 'Required Newscoop version': 'Требуемая версия Newscoop'
-Replace: Переместить
+Replace: 'Заменить:'
 'New template $1 created.': 'Создан новый шаблон  $1.'
 'New name': 'Новое название'
 'Name cant be empty': 'Поле названия нельзя оставлять незаполненным'
@@ -62,7 +62,7 @@ Export: Экспорт
 'Done uploading': 'Загрузка завершена'
 'Do you want to override $1?': 'Хотите заменить $1?'
 'Directory is empty': 'Директория пуста'
-'Directory $1 created.': 'Директория $1 создана.'
+'Directory $1 created.': 'Папка $1 была создана.'
 Design: Дизайн
 'Delete theme': 'Удалить тему'
 'Current directory:': 'Текущая директория:'

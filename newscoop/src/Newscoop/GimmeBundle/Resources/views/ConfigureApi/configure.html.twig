@@ -107,7 +107,7 @@
                     {{ form_start(clientForm) }}
                         {{ form_errors(clientForm) }}
 
-                        <div class="row" style="height: 105px;">
+                        <div class="row" style="height: 160px;">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <div class="form_row">
@@ -132,6 +132,13 @@
                                     {{ form_widget(clientForm.redirectUris, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                             </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    {{ form_label(clientForm.trusted) }}<br>
+                                    {{ form_errors(clientForm.trusted) }}
+                                    {{ form_widget(clientForm.trusted) }}
+                                </div>
+                            </div>
 
                             <div class="col-md-4 col-md-offset-8">
                                 <div class="form-group">
@@ -151,6 +158,7 @@
                             <th>{{ 'api.configure.clients.table.secret'|trans }}</th>
                             <th>{{ 'api.configure.clients.table.redirect'|trans }}</th>
                             <th>{{ 'api.configure.clients.table.publication'|trans }}</th>
+                            <th>{{ 'api.configure.clients.table.trusted'|trans }}</th>
                             <th>{{ 'api.configure.clients.table.actions'|trans }}</th>
                           </tr>
                         </thead>
@@ -162,6 +170,7 @@
                             <td>{{ client.secret }}</td>
                             <td>{{ client.getRedirectUrisString() }}</td>
                             <td>{{ client.publication.name }}</td>
+                            <td>{{ client.trusted ? 'Yes'|trans({}, "messages") : 'No'|trans({}, "messages") }}</td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-xs js-remove-client" data-form-id="{{ client.getPublicId() }}">
                                     <span class="glyphicon glyphicon-remove"></span> {{ 'api.configure.clients.table.actions_buttons.remove'|trans }}

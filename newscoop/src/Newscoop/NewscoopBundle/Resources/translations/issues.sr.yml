@@ -1,6 +1,6 @@
-'so that default templates can be assigned to the issue.': 
-'Once this is done, the issue can be published': 
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Ово издање не може бити прегледано. Проверите да ли публикација има додељену тему.'
+'so that default templates can be assigned to the issue.': null
+'Once this is done, the issue can be published': null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Ово издање не може бити приказано. Проверите да ли публикација има додељену тему.'
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Ово издање не може бити прегледано. Проверите да ли има додељен шаблон за приказ прве стране.'
 'Publish all articles:': 'Објави све текстове:'
 'Publish all articles': 'Објави све текстове'
@@ -59,19 +59,3 @@ Schedule: Закажи
 'There was an error reading the issue parameter.': 'Дошло је до грешке при читању параметра издања.'
 'There was an error scheduling the $1 action on $2': 'Дошло је до грешке у заказивању акције $1 за $2'
 'The action scheduled on $1 could not be deleted.': 'Акција заказана за $1 не може бити обрисана.'
-'Issue automatic publishing schedule': 'Распоред аутоматског објављивања издања'
-'Changing issue status': 'Мењање статуса издања'
-'Status of the issue $1 has been changed from $2 to $3': 'Статус издања $1 је промењен из $2 у $3'
-'Status of the issue $1 could not be changed.': 'Статус издања $1 не може бити измењен'
-'Updating issue': 'Мењање издања'
-'Changing issues details': 'Промена података о издању'
-'The issue $1 has been successfuly changed.': 'Издање $1 је успешно промењено'
-'The issue could not be changed.': 'Издање не може бити измењено'
-'Changing issue template': 'Мењање шаблона за издање'
-'You do not have the right to change issue templates.': 'Немате право да мењате шаблоне за издање'
-'Changing issue template for front page': 'Мењање шаблона издања за почетну страну'
-'Changing issue template for single article': 'Мењање шаблона издања за страну са приказом целог текста'
-'The template has been successfully changed.': 'Шаблон је успешно промењен'
-'Issue template for publication $1 changed to $2': 'Шаблон издања за публикацију $1 промењен у $2'
-'Issue template for single articles from $1 changed to $2': 'Шаблон издања за страну са текстом из $1 промењен у $2'
-'The template could not be changed.': 'Шаблон не може бити промењен'

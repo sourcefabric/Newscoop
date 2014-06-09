@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'Não é uma cor'
 'No such field': 'Este campo não existe'
 'Color saved': 'Cor salva'
@@ -29,7 +29,7 @@ Map: Mapa
 Center: Centro
 Title: Título
 'Invalid security token.': 'Token de segurança inválido.'
-'Callback $1 is not callable.': 
+'Callback $1 is not callable.': null
 'Article translated to $4 ($5)': 'Artigo traduzido para $4 ($5)'
 'Article status changed from $1 to $2.': 'Status do artigo mudou de $1 para $2.'
 'Article deleted.': 'Artigo removido.'
@@ -61,3 +61,46 @@ First: Primeiro
 'Multi-line Text with WYSIWYG': 'Corpo do artigo'
 'URL $1 is invalid or is not an image.': 'O Endereço $1 não é uma imagem ou é inválido'
 'URL $1 is not an image.': 'O Endereço $1 não é uma imagem'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                trusted: null
+                redirect: null
+                publication: Publicação
+                actions: Ações
+                actions_buttons:
+                    remove: Remover
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                trusted: null
+                save: Salvar
+        PublicResources:
+            label:
+                routes: null
+                save: Salvar

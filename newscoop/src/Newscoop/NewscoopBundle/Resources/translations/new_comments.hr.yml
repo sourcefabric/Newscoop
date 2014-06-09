@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: null
+        banned: null
+        anonymous: null
+        at: null
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: null
+        hidden: null
+        approved: null
+        new: Novi
+        editarticle: null
+        section: Rubrika
+        comment: null
+        replyto: null
+        subject: null
+        ban: null
+        author: null
+        date: null
+        article: Članak
+        search: Traži
+        show: Prikaži
+        recommended: null
+        unrecommended: null
+        editcomment: null
+        actions: Radnje
+        selectstatus: null
+        deleted: null
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Odustani
+        submit: Predaj
+        unrecommend: null
+        recommend: null
+        delete: Briši
+        reply: null
+        edit: null
+        close: Zatvori
+        okay: null
+        filter: null
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: null
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: null
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: null

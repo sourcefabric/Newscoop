@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Коментарі
+        banned: null
+        anonymous: null
+        at: на
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Повна стаття'
+        hidden: Приховано
+        approved: Дозволено
+        new: Нове
+        editarticle: 'До редагування статті'
+        section: Секція
+        comment: Коментар
+        replyto: 'Відповісти на коментар'
+        subject: Тема
+        ban: 'Дозволити / заборонити користувачу коментувати'
+        author: Автор
+        date: null
+        article: Стаття
+        search: Пошук
+        show: Показати
+        recommended: Рекомендовано
+        unrecommended: 'Не рекомендовано'
+        editcomment: null
+        actions: Дії
+        selectstatus: 'Вибрати статус'
+        deleted: Видалено
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Відмінити
+        submit: 'Ок(?)'
+        unrecommend: 'Не рекомендувати'
+        recommend: Рекомендувати
+        delete: Видалити
+        reply: Відповідь
+        edit: 'Швидка відповідь'
+        close: Закрити
+        okay: null
+        filter: Фільтр
+    msg:
+        deleted: 'Коментар видалено.'
+        commentinarticle: 'Коментар $4 на $1 у статті 2 $ ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Неможливо зв’язатись з Newscoop. Будь ласка, перевірте ваше інтернет-з’єднання.'
+            deletefromarticle: 'Коментар видалено $1 з статті $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Ви збираєтеся остаточно видалити коментар.'
+        suremultiple: null
+        first: null
+        surequestion: 'Ви впевнені що хочете зробити це?'
+        updated: 'Коментарій оновлено.'

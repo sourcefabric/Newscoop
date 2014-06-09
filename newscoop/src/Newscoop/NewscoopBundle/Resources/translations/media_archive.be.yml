@@ -1,6 +1,6 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: Слайд-шоў
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: Слайдшоў
 'You cant update used files.': 'Вы не можаце абнавіць выкарыстаныя файлы.'
 Source: Крыніца
 Local: Мясцовы
@@ -10,39 +10,39 @@ Feedback: 'Зваротная сувязь'
 'Disapprove selected': 'Не прымаць абранае'
 'Are you sure you want to update selected items?': 'Вы ўпэўненыя, што жадаеце абнавіць абраныя пункты?'
 'Approve selected': 'Прыняць абранае'
-'Image files': 'Файлы малюнкаў'
+'Image files': 'Файлы выяваў'
 'Fix all thumbnails': 'Выправіць усе эскізы'
-'You do not have the right to add files.': 'У Вас няма дазволу для дадання файлаў.'
-'Should this file only be available for this translation of the article, or for all translations?': 'Гэты файл будзе даступны для гэтага перакладу артыкула або для ўсіх?'
+'You do not have the right to add files.': 'Вы ня маеце права дадаваць файлы.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Гэты файл павiнен быць даступны толькi для гэтага перакладу цi для ўсiх перакладаў?'
 'Please enter a description for the file: $1.': 'Калі ласка, увядзіце апісанне файла: $1.'
-'Only this translation': 'Толькі гэты пераклад'
+'Only this translation': 'Толькi гэты пераклад'
 'No files for multi editing.': 'Няма файлаў для агульнага рэдагавання.'
 'Edit files': 'Рэдагаваць файлы'
-'Change file information': 'Змяніць інфармацыю аб файле'
+'Change file information': 'Зьмянiць iнфармацыю аб файле'
 'All translations': 'Усе пераклады'
-'Save All': 'Захаваць усе'
+'Save All': 'Захаваць усё'
 Files: Файлы
 'You cant delete used files.': 'Вы не можаце выдаліць  файлы, якія выкарыстоўваюцца.'
 'Do you want to delete unused only?': 'Вы жадаеце выдаліць толькі нявыкарыстаныя файлы?'
 'View attachment': 'Паказаць прымацаваны файл'
 'Select some items first.': 'Выберыце спачатку некалькі элементаў'
-'Open in the browser': 'Адкрыць у браўзэры'
-'Media Archive': 'Медыя архіў'
+'Open in the browser': 'Адкрыць у браўзэре'
+'Media Archive': Медыя-архіў
 'Last modified': 'Апошнія змяненні'
 'Items deleted.': 'Элементы выдаленыя.'
 'File uploaded.': 'Файл загружаны.'
-'Do you want this file to open in the users browser, or to automatically download?': 'Жадаеце Ці Вы адкрыць гэты файл у браўзэры або аўтаматычна запампаваць?'
+'Do you want this file to open in the users browser, or to automatically download?': 'Цi Вы жадаеце, штоб гэты файл адкрываўся ў браўзэре карыстальнiка цi аўтаматычна загружаўся'
 'Delete selected': 'Выдаліць абраныя'
-Created: Створаныя
+Created: Створаная
 Charset: Кадыроўка
 'Change attachment information': 'Змяніць інфармацыю аб далучанай файле'
 'Automatically download': 'Аўтаматычная загрузка'
 'Attachment updated.': 'Далучаны файл абноўлены.'
 'Are you sure you want to delete selected items?': 'Вы ўпэўненыя, што жадаеце выдаліць абраныя элементы?'
 'Add new file': 'Дадаць новы файл'
-'You do not have the right to add images.': 'У Вас няма правоў доступу для загрузкі малюнкаў.'
-'Use for all': 'Для ўсіх карыстальнікаў'
-'Specify image url if you want to load it.': 'Пакажыце URL малюнка для яго загрузкі.'
+'You do not have the right to add images.': 'Вы ня маеце права  дадаваць графiчныя файлы.'
+'Use for all': 'Выкарыстоўваць для ўсіх'
+'Specify image url if you want to load it.': 'Пазначце URL выявы, калі жадаеце загрузіць яе.'
 Size: Памер
 'No images for multi editing.': 'Няма малюнкаў для многофайлового рэдагавання.'
 'Images updated.': 'Абнаўленне малюнкаў.'
@@ -52,11 +52,11 @@ Size: Памер
 'Image updated.': 'Графiчны файл абноўлены.'
 'Image $1 deleted.': 'Графiчны файл $1 выдалены.'
 'Image is in use, it cannot be deleted.': 'Графiчны файл выкарыстоўваецца i ня можа быць выдалены.'
-'You must select an image file to upload.': 'Вы павiнны выбраць графiчны файл для  загрузкі.'
+'You must select an image file to upload.': 'Вы павiнны выбраць графiчны файл для загрузкi.'
 'Add new image': 'Дадаць новы графiчны файл.'
 'Delete image $1': 'Выдалiць графiчны файл $1'
 'Used in articles': 'Выкарыстана ў артыкулах'
-'View image': 'Праглядзець графiчны файл'
-'Change image information': 'Зьмянiць iнфармацыю пра графiчны файл'
-'Items per page': 'Абектаў на старонку'
-'Image archive': 'Архіў графiчных файлаў'
+'View image': 'Прагляд графiчнага файлу'
+'Change image information': 'Змянiць iнфармацыю аб графiчным файле'
+'Photographer URL': null
+'Add website url starting with http://': null

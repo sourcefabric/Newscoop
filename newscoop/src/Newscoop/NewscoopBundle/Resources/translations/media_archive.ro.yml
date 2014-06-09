@@ -1,60 +1,62 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: 
-'You cant update used files.': 
-Source: 
-Local: 
-'Items updated.': 
-Feedback: 
-'Do you want to update unused only?': 
-'Disapprove selected': 
-'Are you sure you want to update selected items?': 
-'Approve selected': 
-'Image files': 
-'Fix all thumbnails': 
-'You do not have the right to add files.': 
-'Should this file only be available for this translation of the article, or for all translations?': 
-'Please enter a description for the file: $1.': 
-'Only this translation': 
-'No files for multi editing.': 
-'Edit files': 
-'Change file information': 
-'All translations': 
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
+'You cant update used files.': null
+Source: null
+Local: null
+'Items updated.': null
+Feedback: null
+'Do you want to update unused only?': null
+'Disapprove selected': null
+'Are you sure you want to update selected items?': null
+'Approve selected': null
+'Image files': null
+'Fix all thumbnails': null
+'You do not have the right to add files.': 'Nu ai dreptul să adaugi fişiere.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Acest fişier ar trebuie să fie disponibil pentru această traducere a articolului sau pentru toate traducerile?'
+'Please enter a description for the file: $1.': null
+'Only this translation': 'Numai această traducere'
+'No files for multi editing.': null
+'Edit files': null
+'Change file information': 'Schimbă informaţiile despre fişier'
+'All translations': 'Toate traducerile'
 'Save All': 'Salvează totul'
 Files: Fișiere
 'You cant delete used files.': 'Nu se pot șterge fișiere în uz.'
-'Do you want to delete unused only?': 
+'Do you want to delete unused only?': null
 'View attachment': 'Vizualizează fișierul atașat.'
 'Select some items first.': 'Selectează căteva elemente.'
-'Open in the browser': 'Deschide în navigator.'
+'Open in the browser': 'Deschide în browser'
 'Media Archive': 'Arhivă media'
 'Last modified': 'Ultima modificare'
 'Items deleted.': 'Elemente șterse.'
 'File uploaded.': 'Fișier încărcat'
-'Do you want this file to open in the users browser, or to automatically download?': 
-'Delete selected': 
-Created: 
-Charset: 
-'Change attachment information': 
-'Automatically download': 
-'Attachment updated.': 
-'Are you sure you want to delete selected items?': 
-'Add new file': 
-'You do not have the right to add images.': 
-'Use for all': 
-'Specify image url if you want to load it.': 
-Size: 
-'No images for multi editing.': 
-'Images updated.': 
-'Edit images': 
-'$1 files uploaded.': 
-'Unable to add new image.': 
+'Do you want this file to open in the users browser, or to automatically download?': 'Vrei ca acest fişier să se deschidă în browser-ul utilizatorului, sau să se descarce automat?'
+'Delete selected': null
+Created: null
+Charset: null
+'Change attachment information': null
+'Automatically download': 'Descărcare automată'
+'Attachment updated.': null
+'Are you sure you want to delete selected items?': null
+'Add new file': null
+'You do not have the right to add images.': 'Nu ai dreptul să adaugi imagini.'
+'Use for all': null
+'Specify image url if you want to load it.': null
+Size: Mărime
+'No images for multi editing.': null
+'Images updated.': null
+'Edit images': null
+'$1 files uploaded.': null
+'Unable to add new image.': 'Nu pot sa ataşez imaginea.'
 'Image updated.': 'Imaginea a fost actualizată.'
 'Image $1 deleted.': 'Imaginea $1 a fost ştearsă.'
 'Image is in use, it cannot be deleted.': 'Imaginea este în uz, nu poate fi ştearsă.'
-'You must select an image file to upload.': 'Trebuie să selectezi o imagine pentru a o încărca în sistem.'
+'You must select an image file to upload.': 'Selectează o imagine pentru a o încărca în sistem.'
 'Add new image': 'Adaugă o imagine nouă'
 'Delete image $1': 'Şterge imaginea $1'
 'Used in articles': 'Folosită în articole'
 'View image': 'Vezi imaginea'
 'Change image information': 'Modifică informaţiile despre imagine'
+'Photographer URL': null
+'Add website url starting with http://': null

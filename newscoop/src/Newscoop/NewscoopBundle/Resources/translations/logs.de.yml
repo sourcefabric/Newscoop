@@ -1,4 +1,4 @@
-show: zeigen
+show: anzeigen
 hide: verbergen
 Title: Titel
 'Resource Type:': Ressourcentyp
@@ -9,4 +9,3 @@ Diff: Diff
 'Action Type:': 'Aktionstyp: '
 'No logs.': 'Keine Logs. '
 User: Benutzer
-Date/Time: Datum/Uhrzeit

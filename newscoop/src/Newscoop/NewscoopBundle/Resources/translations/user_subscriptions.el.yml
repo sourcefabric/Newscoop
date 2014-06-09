@@ -29,7 +29,7 @@ removed: αφαιρέθηκε
 deleted: διαγράφηκε
 deactivated: απενεργοποιήθηκε
 activated: ενεργοποιήθηκε
-'Value is required and cant be empty': 'Η αξία απαιτείται και δεν μπορεί να παραμείνει άδεια'
+'Value is required and cant be empty': 'Η αξία απαιτέιται και δεν μπορεί να παραμείνει κενή'
 'That user name already exists, please choose a different login name.': 'Το όνομα χρήστη υπάρχει ήδη, παρακαλούμε επιλέξτε διαφορετικό όνομα σύνδεσης.'
 'That $1 already exists, please choose a different $2.': '$1 υπάρχει ήδη, παρακαλούμε επιλέξτε διαφορετικό $2. '
 'Subscriptions exist for all available publications.': 'Υπάρχουν συνδρομές για όλες τις διαθέσιμες δημοσιεύσεις.'

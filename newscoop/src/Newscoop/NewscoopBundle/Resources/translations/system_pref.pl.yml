@@ -1,119 +1,132 @@
 newscoop:
-  btn:
-    save: "Zapisz"
-  preferences:
-    error:
-      cache: "Błąd: Potrzebujesz PHP $1 aby korzystać z cacheowania szablonów."
-      replication: "Replikacja bazy danych - dane niekompletne"
-      maxupload: "Niepoprawna wartość Maksymalnego Rozmiaru Plików"
-      geolocation: "Niepoprawne wartości pól geolokalizacji. Pola muszą zawierać liczby. Szerokość geograficzna nie może być > 90 i <= 90. Długość geograficzna nie może być > 180 i <= 180."
-      noaccess: "Nie masz praw aby zmieniać preferencje systemowe."
-      latitude: "Pole szerokości geograficznej jest niepoprawne."
-      longitude: "Pole długości geograficznej jest niepoprawne."
-    success:
-      saved: "Preferencje systemowe zaktualizowane."
-    menu:
-      general: "Ustawienia główne"
-      email: "Ustawienia e-mail"
-      editor: "Ustawienia edytora"
-      geolocation: "Ustawienia geolokalizacji"
-      fb: "Ustawienia Facebook"
-      media: "Ustawienia wideo"
-      cache: "Ustawienia cache"
-      other: "Inne ustawienia"
-      recaptcha: "Ustawienia reCAPTCHA"
-    label:
-      title: "Preferencje systemowe"
-      header: "Ustawienia"
-      siteonline: "Strona On-Line:"
-      sitetitle: "Tytuł strony:"
-      metakeywords: "Słowa kluczowe Meta strony:"
-      metadescription: "Opis Meta Strony:"
-      timezone: "Strefa czasowa:"
-      cacheengine: "Silnik cache bazy danych:"
-      cachetemplate: "Template Cache Handler:"
-      cacheimage: "Ważność cache zdjęć:"
-      allowrecovery: "Zezwól na odzyskiwanie hasła:"
-      secretkey: "Sekretny klucz:"
-      sessionlifetime: "Ważność sesji:"
-      sessionlifetimemsg: "nawiązująć do ustawień php.ini."
-      separator: "Separator słów kluczowych:"
-      captcha: "Liczba nieudanych logowań przed pokazaniem CAPTCHA :"
-      maxupload: "Maksymalny rozmiar plików:"
-      maxuploadmsg: "Podaj wartość pomiędzy 0 a $1 (maksymalny rozmiar znajduje się w pliku php.ini). Użyj K dla kilobajtów, M dla megabajtów i G dla gigabajtów, bez spacji pomiędzy wartością a literą, np. '3M'"
-      stats: "Zbieraj statystyki automatycznie:"
-      smtphost: "SMTP Host:"
-      smtpport: "SMTP Port:"
-      email: "SMTP Email, adres 'Od':"
-      emailfrom: "Adres Email dla powiadomień systemowych:"
-      imageratio: "Ratio pomniejszanych zdjęć:"
-      imagewidth: "Długość pomniejszanych zdjęć:"
-      imageheight: "Wysokość pomniejszanych zdjęć:"
-      zoom: "Włączyć zoom dla zdjęć w obrębie artykułu??"
-      external: "Subskrypcje czytelników zarządzane zewnętrznie?"
-      usereplication: "Ustawić Serwer Replikacji Newscoop?"
-      serverdb: "Baza danych serwera Newscoop"
-      replicationhost: "Host do replikacji bazy danych:"
-      replicationuser: "Użytkownik do replikacji bazy danych:"
-      replicationpw: "Hasło do replikacji bazy danych:"
-      replicationport: "Port do replikacji bazy danych:"
-      filter: "Maska filtra szablonów (oddzielone przecinkami)"
-      cron: "Uruchamiaj zaprogramowane zadania zewnętrznie?"
-      mysqlpath: "Ścieżka do klienta MySQL"
-      mysqlpathmsg: "by załadować dane geo-nazw"
-      latitude: "Środek szerokości geograficznej mapy:"
-      longitude: "Środek długości geograficznej mapy:"
-      zoomlevel: "Poziom zoomu mapy:"
-      defaultwidth: "Domyślna szerokość mapy:"
-      defaultheight: "Domyślna wysokość mapy:"
-      css: "Dołącz plik CSS do widoku mapy"
-      autofocus: "Domyślne zachowanie auto-zbliżenia:"
-      zoomautofocus: "Największe powiększenie dla auto-zbliżenia:"
-      borderautofocus: "Granice mapy dla auto-zbliżenia:"
-      mapprovider: "Zezwól na dostawcę Google Streets Map:"
-      mapquest: "Zezwól na dostawcę map MapQuest:"
-      openstreet: "Zezwół na dostawcę OpenStreet Map:"
-      defaultmapprovider: "Domyślny dostawca map:"
-      nominatimsearch: "Użyj szukania MapQuest Nominatim:"
-      preflanguage: "Preferred address language:"
-      markerdir: "Katalor markerów mapy:"
-      defaultmarker: "Domyślny marker mapy:"
-      popupwidth: "Minimalna szerokość popupu z mapą:"
-      popupheight: "Minimalna wysokość popupu z mapą:"
-      youtubewidth: "Domyślna szerokość Youtube:"
-      youtubeheight: "Domyślna wysokość Youtube:"
-      vimeowidth: "Domyślna szerokość Vimeo:"
-      vimeoheight: "Domyślna wysokość Vimeo:"
-      flashwidth: "Domyślna szerokość Flash:"
-      flashheight: "Domyślna wysokość Flash:"
-      flashserver: "Lokalny Serwer Flash:"
-      flashdir: "Lokalna ścieżka Flash:"
-      apikey: "Klucz API:"
-      appid: "ID aplikacji:"
-      fbsecret: "Kod sekretny aplikacji:"
-      disabled: "nieaktywne"
-      yesoption: "Tak"
-      nooption: "Nie"
-      geosearch: "Użyj wyszukiwania lokalnego GeoNames:"
-      recaptchapublickey: "Klucz publiczny"
-      recaptchaprivatekey: "Klucz prywatny"
-      recaptchasecure: "Zabezpieczone url-e dla reCAPTCHA?"
-    popover:
-      cacheengine: "Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop."
-      cacheimage: "Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności."
-      cachetemplate: "Wybierz DB aby włączyć cache dla szablonów."
-      recovery: "Użytkownicy mogą poprosić o przypomnienie hasła przez e-mail. Zauważ, że jeśli ta funkcja jest włączona, a konto e-mail jest zagrożone, publikacja Newscoop może być łatwo naruszona."
-      secret: "Klucz bezpieczeństwa, który Newscoop może wykorzystać do integracji usług internetowych i innych zaawansowanych funkcji."
-      separator: "Określa separator słów kluczowych na stronie Edycji artykułu (przecinek lub myślnik)."
-      stats: "Ta opcja pozwala na gromadzenie statystyk dostępu czytelników do publikacji na serwerze. Jeśli używasz innej usługi do statystyk, wybierz 'Nie'. Wyłaczenie zbierania statystyk może zmniejszyć obciążenie serwera Newscoop."
-      zoom: "Jeśli jest ustawiona na Tak, czytelnicy mogą powiększać obrazy artykułów w publikacjach stron, klikając na nie. Ta funkcja powiększania działa na wszelkie obrazy wstawiane do tekstu artykułu."
-      ratio: "Wskaźnik zmiany rozmiaru ma pierwszeństwo przed każdą zmianą szerokości lub wartości zmiany wysokości, który jest ustawiony tutaj. Jeśli współczynnik nie jest ustawiony, ale wysokość i szerokość są ustawione to Newscoop użyje tych ostatnich wartości, co skutkuje mniejszym rozmiarem. Domyślne ustawienia mogą być przesłonięte przez stosunek szerokości lub wysokości ustawienia dla konkretnego obrazu ustawionej na inline stronie Edycji artykułu."
-      replication: "Pozwala ustawić Newscoop aby działał na dwóch serwerach jednocześnie, co jest cechą bezpieczeństwa w przypadku sprzętu lub problemu z siecią."
-      filter: "Wprowadź słowa kluczowe dla szablonów, które chcesz ukryć przed edytorami szablonów dostępnych za pośrednictwem strony 'Szablony'. Na przykład szablony, które są już w użyciu, ale nie chcesz, aby zostały usunięte z serwera."
-      cron: "Oznacza korzystanie z własnych harmonogramów cron-a dla zadań automatycznych, zamiast harmonogramu zawartego w Newscoop."
-      video: "Domyślna szerokość i wysokość zarówno zewnętrznie, jak i lokalnie obsługiwanych plików wideo można ustawić w tej sekcji, aby upewnić się, że filmy są wyświetlane poprawnie w publikacjach szablonów stron."
-      emailfrom: "Adres e-mail używany do powiadomień z systemu."
-      recaptcha:
-        publickey: "Klucz używany w kodzie JavaScript aby uruchomic reCAPTCHA."
-        privatekey: "Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu."
-        secure: "Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak."
+    btn:
+        save: Zapisz
+    preferences:
+        error:
+            cache: 'Błąd: Potrzebujesz PHP %cache% aby korzystać z cacheowania szablonów.'
+            replication: 'Replikacja bazy danych - dane niekompletne'
+            maxupload: 'Niepoprawna wartość Maksymalnego Rozmiaru Plików'
+            geolocation: 'Niepoprawne wartości pól geolokalizacji. Pola muszą zawierać liczby. Szerokość geograficzna nie może być > 90 i <= 90. Długość geograficzna nie może być > 180 i <= 180.'
+            noaccess: 'Nie masz praw aby zmieniać preferencje systemowe.'
+            latitude: 'Pole szerokości geograficznej jest niepoprawne.'
+            longitude: 'Pole długości geograficznej jest niepoprawne.'
+            cacheNotCleared: null
+        success:
+            saved: 'Preferencje systemowe zaktualizowane.'
+            cacheCleared: null
+        menu:
+            general: 'Ustawienia główne'
+            email: 'Ustawienia e-mail'
+            editor: 'Ustawienia edytora'
+            geolocation: 'Ustawienia geolokalizacji'
+            fb: 'Ustawienia Facebook'
+            media: 'Ustawienia wideo'
+            cache: 'Ustawienia cache'
+            other: 'Inne ustawienia'
+            recaptcha: 'Ustawienia reCAPTCHA'
+        btn:
+            cleardatabasecache: null
+        label:
+            title: 'Preferencje systemowe'
+            header: Ustawienia
+            siteonline: 'Strona On-Line:'
+            sitetitle: 'Tytuł strony:'
+            metakeywords: 'Słowa kluczowe Meta strony:'
+            metadescription: 'Opis Meta Strony:'
+            timezone: 'Strefa czasowa:'
+            cacheengine: 'Silnik cache bazy danych:'
+            cacheenginehost: null
+            cacheengineport: null
+            cachetemplate: 'Template Cache Handler:'
+            cacheimage: 'Ważność cache zdjęć:'
+            allowrecovery: 'Zezwól na odzyskiwanie hasła:'
+            secretkey: 'Sekretny klucz:'
+            sessionlifetime: 'Ważność sesji:'
+            sessionlifetimemsg: 'nawiązująć do ustawień php.ini.'
+            separator: 'Separator słów kluczowych:'
+            captcha: 'Liczba nieudanych logowań przed pokazaniem CAPTCHA :'
+            maxupload: 'Maksymalny rozmiar plików:'
+            maxuploadmsg: 'Podaj wartość pomiędzy 0 a $1 (maksymalny rozmiar znajduje się w pliku php.ini). Użyj K dla kilobajtów, M dla megabajtów i G dla gigabajtów, bez spacji pomiędzy wartością a literą, np. ''3M'''
+            stats: 'Zbieraj statystyki automatycznie:'
+            smtphost: 'SMTP Host:'
+            smtpport: 'SMTP Port:'
+            email: 'SMTP Email, adres ''Od'':'
+            emailfrom: 'Adres Email dla powiadomień systemowych:'
+            imageratio: 'Ratio pomniejszanych zdjęć:'
+            imagewidth: 'Długość pomniejszanych zdjęć:'
+            imageheight: 'Wysokość pomniejszanych zdjęć:'
+            zoom: 'Włączyć zoom dla zdjęć w obrębie artykułu??'
+            external: 'Subskrypcje czytelników zarządzane zewnętrznie?'
+            usereplication: 'Ustawić Serwer Replikacji Newscoop?'
+            serverdb: 'Baza danych serwera Newscoop'
+            replicationhost: 'Host do replikacji bazy danych:'
+            replicationuser: 'Użytkownik do replikacji bazy danych:'
+            replicationpw: 'Hasło do replikacji bazy danych:'
+            replicationport: 'Port do replikacji bazy danych:'
+            filter: 'Maska filtra szablonów (oddzielone przecinkami)'
+            cron: 'Uruchamiaj zaprogramowane zadania zewnętrznie?'
+            mysqlpath: 'Ścieżka do klienta MySQL'
+            mysqlpathmsg: 'by załadować dane geo-nazw'
+            latitude: 'Środek szerokości geograficznej mapy:'
+            longitude: 'Środek długości geograficznej mapy:'
+            zoomlevel: 'Poziom zoomu mapy:'
+            defaultwidth: 'Domyślna szerokość mapy:'
+            defaultheight: 'Domyślna wysokość mapy:'
+            css: 'Dołącz plik CSS do widoku mapy'
+            autofocus: 'Domyślne zachowanie auto-zbliżenia:'
+            zoomautofocus: 'Największe powiększenie dla auto-zbliżenia:'
+            borderautofocus: 'Granice mapy dla auto-zbliżenia:'
+            mapprovider: 'Zezwól na dostawcę Google Streets Map:'
+            mapquest: 'Zezwól na dostawcę map MapQuest:'
+            openstreet: 'Zezwół na dostawcę OpenStreet Map:'
+            defaultmapprovider: 'Domyślny dostawca map:'
+            nominatimsearch: 'Użyj szukania MapQuest Nominatim:'
+            preflanguage: 'Preferred address language:'
+            markerdir: 'Katalor markerów mapy:'
+            defaultmarker: 'Domyślny marker mapy:'
+            popupwidth: 'Minimalna szerokość popupu z mapą:'
+            popupheight: 'Minimalna wysokość popupu z mapą:'
+            youtubewidth: 'Domyślna szerokość Youtube:'
+            youtubeheight: 'Domyślna wysokość Youtube:'
+            vimeowidth: 'Domyślna szerokość Vimeo:'
+            vimeoheight: 'Domyślna wysokość Vimeo:'
+            flashwidth: 'Domyślna szerokość Flash:'
+            flashheight: 'Domyślna wysokość Flash:'
+            flashserver: 'Lokalny Serwer Flash:'
+            flashdir: 'Lokalna ścieżka Flash:'
+            apikey: 'Klucz API:'
+            appid: 'ID aplikacji:'
+            fbsecret: 'Kod sekretny aplikacji:'
+            recaptchapublickey: 'Klucz publiczny'
+            recaptchaprivatekey: 'Klucz prywatny'
+            recaptchasecure: 'Zabezpieczone url-e dla reCAPTCHA?'
+            disabled: nieaktywne
+            yesoption: Tak
+            nooption: Nie
+            geosearch: 'Użyj wyszukiwania lokalnego GeoNames:'
+            usergarbage: null
+            usergarbagedaysinfo: null
+            usergarbagedays: null
+        popover:
+            cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
+            cacheenginehost: null
+            cacheengineport: null
+            cacheimage: 'Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności.'
+            cachetemplate: 'Wybierz DB aby włączyć cache dla szablonów.'
+            recovery: 'Użytkownicy mogą poprosić o przypomnienie hasła przez e-mail. Zauważ, że jeśli ta funkcja jest włączona, a konto e-mail jest zagrożone, publikacja Newscoop może być łatwo naruszona.'
+            secret: 'Klucz bezpieczeństwa, który Newscoop może wykorzystać do integracji usług internetowych i innych zaawansowanych funkcji.'
+            separator: 'Określa separator słów kluczowych na stronie Edycji artykułu (przecinek lub myślnik).'
+            stats: 'Ta opcja pozwala na gromadzenie statystyk dostępu czytelników do publikacji na serwerze. Jeśli używasz innej usługi do statystyk, wybierz ''Nie''. Wyłaczenie zbierania statystyk może zmniejszyć obciążenie serwera Newscoop.'
+            zoom: 'Jeśli jest ustawiona na Tak, czytelnicy mogą powiększać obrazy artykułów w publikacjach stron, klikając na nie. Ta funkcja powiększania działa na wszelkie obrazy wstawiane do tekstu artykułu.'
+            ratio: 'Wskaźnik zmiany rozmiaru ma pierwszeństwo przed każdą zmianą szerokości lub wartości zmiany wysokości, który jest ustawiony tutaj. Jeśli współczynnik nie jest ustawiony, ale wysokość i szerokość są ustawione to Newscoop użyje tych ostatnich wartości, co skutkuje mniejszym rozmiarem. Domyślne ustawienia mogą być przesłonięte przez stosunek szerokości lub wysokości ustawienia dla konkretnego obrazu ustawionej na inline stronie Edycji artykułu.'
+            replication: 'Pozwala ustawić Newscoop aby działał na dwóch serwerach jednocześnie, co jest cechą bezpieczeństwa w przypadku sprzętu lub problemu z siecią.'
+            filter: 'Wprowadź słowa kluczowe dla szablonów, które chcesz ukryć przed edytorami szablonów dostępnych za pośrednictwem strony ''Szablony''. Na przykład szablony, które są już w użyciu, ale nie chcesz, aby zostały usunięte z serwera.'
+            cron: 'Oznacza korzystanie z własnych harmonogramów cron-a dla zadań automatycznych, zamiast harmonogramu zawartego w Newscoop.'
+            video: 'Domyślna szerokość i wysokość zarówno zewnętrznie, jak i lokalnie obsługiwanych plików wideo można ustawić w tej sekcji, aby upewnić się, że filmy są wyświetlane poprawnie w publikacjach szablonów stron.'
+            emailfrom: 'Adres e-mail używany do powiadomień z systemu.'
+            recaptcha:
+                publickey: 'Klucz używany w kodzie JavaScript aby uruchomic reCAPTCHA.'
+                privatekey: 'Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu.'
+                secure: 'Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak.'
+            garbage: null
+            lifetime: null

@@ -1,3 +1,5 @@
+Plugins: null
+'Manage Plugins': null
 Account: Profiel
 'Items per page': Items
 'Add new': 'Voeg nieuw toe'
@@ -45,8 +47,8 @@ Staff: Leiding
 '---Select publication---': '---Selecteer publicatie---'
 'No issues': 'Geen artikelen'
 '---Select issue---': '---Selecteer artikel---'
-'No sections': 'Geen secties'
-'---Select section---': '---Selecteer sectie--'
+'No sections': 'Geen rubrieken'
+'---Select section---': '---Selecteer rubriek--'
 Language: Taal
 Country: Land
 'Account name': 'Profiel naam'
@@ -55,7 +57,7 @@ Publication: Publicatie
 Subscriptions: Abonnementen
 Issue: Uitgave
 Number: Nummer
-Section: Sectie
+Section: Rubriek
 Keywords: Steekwoorden
 Topic: Onderwerp
 'URL Name': 'URL Naam'
@@ -73,14 +75,14 @@ Action: Actie
 'Scheduling a new publish action': 'Plannen van een nieuwe publicatie actie'
 'Delete scheduled publish action': 'Wis een geplande publicatie actie'
 Date/Time: Datum/Tijd
-'You must select an action.': 'Je moet een actie selecteren'
-'You do not have the right to schedule issues or articles for automatic publishing.': 'Je hebt niet de rechten om uitgaven of artikelen te plannen voor automatische publicatie.'
+'You must select an action.': null
+'You do not have the right to schedule issues or articles for automatic publishing.': null
 'Front page': Voorpagina
-'Section page': Sectiepagina
+'Section page': Rubriekspagina
 'Show on front page': 'Toon op voorpagina'
 'Remove from front page': 'Verwijder van voorpagina'
-'Show on section page': 'Toon op sectiepagina'
-'Remove from section page': 'Verwijder van sectiepagina'
+'Show on section page': 'Toon op rubriekspagina'
+'Remove from section page': 'Verwijder van rubriekspagina'
 Actions: Acties
 Publishing: Publiceren
 Show: Tonen
@@ -89,24 +91,24 @@ Remove: Verwijderen
 'Staff User Types': 'Leidinggevende Gebruiker Types'
 Publications: Publicaties
 Issues: Uitgaven
-Sections: Secties
+Sections: Rubrieken
 Articles: Artikelen
 Images: Afbeeldingen
 Change: Verschil
 'Add new issue': 'Voeg een uitgave toe'
-'Section Template': 'Sectie Template'
-'Article Template': 'Artikel Template'
+'Section Template': Rubriekssjabloon
+'Article Template': Artikelsjabloon
 'Default Language': 'Standaard Taal'
 'Paid Period': 'Abonnement Tijd'
 Preview: Voorbeeld
-'You must fill in the $1 field.': 'Je moet het $1 veld invullen.'
+'You must fill in the $1 field.': null
 Error: Fout
 'Invalid input: $1': 'Onjuiste invoer: $1'
 'Language does not exist.': 'Taal bestaat niet.'
 'Publication does not exist.': 'Publicatie bestaat niet.'
 'Issue does not exist.': 'Uitgave bestaat niet.'
-'You must select a language.': 'Je moet een taal selecteren.'
-'Section does not exist.': 'Sectie bestaat niet.'
+'You must select a language.': null
+'Section does not exist.': 'Rubriek bestaat niet.'
 'No articles.': 'Geen artikelen.'
 'Article does not exist.': 'Artikel bestaat niet.'
 'Image does not exist.': 'Afbeelding bestaat niet.'
@@ -146,27 +148,28 @@ Localizer: Nationaliseerder
 'Add new publication': 'Voeg nieuwe publicatie toe'
 'Upload new template': 'Upload een nieuw sjabloon'
 'Add new staff member': 'Voeg nieuwe leidinggevende toe'
+'Staff member deleted.': null
 'Add new subscriber': 'Voeg nieuwe abonnement toe'
 'Add new user type': 'Voeg nieuw gebruiker type toe'
 'Add new article type': 'Voeg nieuw artikel type toe'
 'Add new country': 'Voeg nieuw land toe'
 'Add new language': 'Voeg nieuwe taal toe'
 'View logs': 'Bekijk logboek'
-'Change your password': 'Verander je wachtwoord'
-'Your Articles': 'Jouw artikelen'
+'Change your password': 'Verander uw wachtwoord'
+'Your Articles': 'Uw artikelen'
 'Submitted Articles': 'Toegevoegde actikelen'
 Logs: Logboeken
 'There are $1 article(s) left.': 'Er zijn $1 artikel(en) over.'
 'There are $1 issues(s) left.': 'Er zijn $1 uitgave(n) over.'
-'There are $1 section(s) left.': 'Er zijn $1 sectie(s) over.'
+'There are $1 section(s) left.': 'Er zijn $1 rubriek(en) over.'
 'There are $1 publication(s) left.': 'Er zijn $1 publicatie(s) over.'
 'There are $1 countries left.': 'Er zijn $1 land(en) over.'
 'Name <SMALL>(click to edit)</SMALL>': 'Naam <SMALL>(klik om te bewerken)</SMALL>'
 'Add new subscription': 'Voeg nieuw abonnement toe.'
-'You do not have the right to add subscriptions.': 'Je hebt geen rechten om abonnementen toe te voegen.'
+'You do not have the right to add subscriptions.': null
 'Adding subscription': 'Toevoegen abonnement'
 'Delete subscription': 'Verwijder abonnement'
-'You do not have the right to delete subscriptions.': 'Je hebt geen rechten om de abonnementen te verwijderen.'
+'You do not have the right to delete subscriptions.': null
 'No such subscription.': 'Abonnement bestaat niet.'
 Yes: Ja
 No: nee
@@ -174,10 +177,10 @@ Close: Sluiten
 'No issues.': 'Geen uitgaven.'
 'Back to Edit Article': 'Terug naar Bewerk Artikel'
 'No topics': 'Geen onderwerpen'
-'You do not have the right to add articles.': 'Je hebt niet de rechten om artikelen toe te voegen.'
+'You do not have the right to add articles.': null
 Start: Start
 Days: Dagen
-'The sections could not be added successfully. Some of them were already added !': 'De secties konden niet worden toegevoegd omdat sommige al bestonden!'
+'The sections could not be added successfully. Some of them were already added !': 'De rubrieken konden niet worden toegevoegd omdat sommige al bestonden!'
 'Add another': 'Voeg ander toe'
 Cancel: Annuleren
 Done: Klaar
@@ -185,15 +188,15 @@ OK: OK
 Save: Opslaan
 Search: Zoeken
 'Make a selection': 'Maak selectie'
-'You must input a number greater than 0 into the $1 field.': 'Je moet een nummer groter dan 0 in het $1 veld invoegen.'
-'You must input a valid date.': 'Je moet een geldige datum invoegen.'
+'You must input a number greater than 0 into the $1 field.': null
+'You must input a valid date.': null
 'Add new field': 'Voeg nieuw veld toe.'
 'Article automatic publishing schedule': 'Artikel automatische publicatie taak'
-'Are you sure you want to delete this scheduled action?': 'Weet je zeker dat je deze geplande taak wilt verwijderen?'
+'Are you sure you want to delete this scheduled action?': null
 Unlink: 'Verwijder relatie'
-'Are you sure you want to delete the image $1?': 'Weet je zeker dat je afbeelding $1 wilt verwijderen?'
+'Are you sure you want to delete the image $1?': null
 'No such issue.': 'Uitgave bestaat niet.'
-'Are you sure you want to delete the subscription to the publication $1?': 'Weet je zeker dat het abonnement van publicatie $1 wilt verwijderen?'
+'Are you sure you want to delete the subscription to the publication $1?': 'Weet u zeker dat u het abonnement van publicatie $1 wilt verwijderen?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Kon de wijzigingen van uitgave $1 niet opslaan. Zorg ervoor dat de uitgave URL naam $2 niet eerder werd gebruikt in publicatie $3.'
 GB: GB
 MB: MB
@@ -209,193 +212,73 @@ Add: Toevoegen
 'Add Event': 'Voeg actie toe'
 N/A: N/A
 'On Front Page': 'Op Voorpagina'
-'On Section Page': 'Op Sectiepagina'
+'On Section Page': 'Op rubriekspagina'
 'Created by': 'Gemaakt door'
 'Creation date': 'Gemaakt op'
-'Publication List': 
-'Issue List': 
-'Section List': 
-All: 
-duplicate: 
-move: 
-Move: 
-'From:': 
-'Date:': 
-Hidden: 
-Comments: 
-Comment: 
-Approved: 
-Subject: 
-'IP address:': 
-'Email:': 
-Author: 
-'Article name': 
-'Hide article': 
-'Show article': 
-'Article Type Fields': 
-'Article Images': 
-'Log Messages': 
-'Article Files': 
-'Article Comments': 
-'Are you sure you want to deactivate the subscription?': 'Weet je zeker dat je het abonnement wilt uitschakelen?'
-'Are you sure you want to activate the subscription?': 'Weet je zeker dat je het abonnement wilt activeren?'
-Other: 
-'Time:': 
-'No events.': 
-'Default templates': 
-'System Preferences': 
-'The date must be in the future.': 
-Send: 
-'Thank you.': 
-'Please take a minute to send us an email.': 
-(optional): 
-'The URL you entered is invalid: $1': 
-Reads: 
-Plugins: 
-'Cannot create file $1': 'Kan bestand $1 niet maken'
-'URL $1 is invalid or is not an image.': 'URL $1 is niet geldig of is geen afbeelding'
-'URL $1 is not an image.': 'URL $1 is geen afbeelding'
-CAMPSITE: CAMPSITE
-'You are logged in as $1': 'Je bent ingelogd as $1'
-Keyword: Zoekterm
-'Native name': 'Naam in doeltaal'
-'Code page': 'Code pagina'
-Reader: Lezer
-Access: Toegang
-Currency: Munteenheid
-'Insert Internal Link': 'Voeg interne link in'
-Translation: Vertaling
-Definition: Definitie
-'Time Unit': Tijdseenheid
-'Unit Cost': 'Eenheid kosten'
-Paid: Betaald
-Details: Eigenschappen
-'No entries.': 'Geen items.'
-'The $1 action has been scheduled on $2': 'De $1 actie wordt uitgevoerd om $2'
-'There was an error scheduling the $1 action on $2': 'Er was een probleem bij het plannen van de $1 actie om $2'
-'The action scheduled on $1 could not be deleted.': 'De geplande actie om $1 kan niet worden gewist.'
-days: dagen
-Nr: Nr
-'Add new topic': 'Voeg een onderwerp toe'
-'Delete topic': 'Verwijder onderwerp'
-'Edit languages': 'Bewerk talen'
-'Countries Subscription Default Time': 'Lands Abonnement Standaard Tijd'
-'Pay Period': 'Betaal Periode'
-Info: Informatie
-'Trial Period': 'Proefabonnement Tijd'
-'Keyword does not exist.': 'Steekwoord bestaat niet.'
-'Country does not exist.': 'Land bestaat niet.'
-'Topic does not exist.': 'Onderwerp bestaat niet.'
-'There was an error reading the language parameter.': 'Er was een probleem bij het lezen van de taal parameter.'
-'There was an error reading the publication parameter.': 'Er was een fout bij het lezen van de publicatie parameter.'
-'There was an error reading the issue parameter.': 'Er was een fout bij het lezen van de uitgave parameter.'
-'There was an error reading request parameters.': 'Er was een fout bij het lezen van de aanvraag parameters.'
-'Invalid value of user type parameter': 'Verkeerde waarde bij de gebruikerstype parameter.'
-'Invalid article identifier': 'Verkeerde artikel onderscheider'
-'Invalid destination section selected': 'Verkeerde doel sectie geselecteerd'
-'Internal error: identifiers not initialized': 'Interne fout: onderscheiders niet geïnitialiseerd'
-'Internal database error': 'Interne database fout'
-'No such article.': 'Artikel bestaat niet.'
-Field: Veld
-'Edit details': 'Bewerk details'
-'No such image.': 'Afbeelding bestaat niet.'
-Miscellaneous: Overig
-Identifier: Onderscheider
-'Preview issue': 'Toon uitgave'
-'User may add/change publications': 'Gebruiker mag publicaties toegvoegen/wijzigen'
-'User may delete publications': 'Gebruiker mag publicaties verwijderen'
-'User may add/change issues': 'Gebruiker mag uitgaven toevoegen/wijzigen'
-'User may delete issues': 'Gebruiker mag uitgaven verwijderen'
-'User may add/change sections': 'Gebruiker mag secties toevoegen/wijzigen'
-'User may delete sections': 'Gebruiker mag secties verwijderen'
-'User may add articles': 'Gebruiker mag artikelen toevoegen'
-'User may change articles': 'Gebruiker mag artikelen wijzigen'
-'User may delete articles': 'Gebruiker mag actikelen verwijderen'
-'User may add images': 'Gebruiker mag afbeeldingen toevoegen'
-'User may change images': 'Gebruiker mag afbeeldingen wijzigen'
-'User may delete images': 'Gebruiker mag afbeeldingen verwijderen'
-'User may add templates': 'Gebruiker mag sjablonen toevoegfen'
-'User may delete templates': 'Gebruiker mag sjablonen verwijderen'
-'User may add/change staff accounts and passwords': 'Gebruiker mag leidinggevende profielen en wachwoorden toevoegen/wijzigen'
-'User may add/change subscribers accounts and passwords': 'Gebruiker mag abonnement profielen en wachtwoorden toevoegen/wijzigen'
-'User may delete staff accounts': 'Gebruiker mag leidinggevende profielen verwijderen'
-'User may manage user subscriptions': 'Gebruiker mag gebruiker abonnementen beheren'
-'User may manage account types': 'Gebruiker mag profiel typen beheren'
-'User may add/change article types': 'Gebruiker mag artikel typen toevoegen/wijzigen'
-'User may delete article types': 'Gebruiker mag artikel typen verwijderen'
-'User may manage templates': 'Gebruiker mag sjablonen beheren'
-'User may add/change country entries': 'Gebruiker mag landeren toevoegen/wijzigen'
-'User may add languages and manage language information': 'Gebruiker mag talen toevoegen en taalinformatie beheren'
-'User may delete languages': 'Gebruiker mag talen verwijderen'
-'User will be notified on several events': 'Gebruiker wordt geïnformeerd over verschillende acties'
-'User may view audit logs': 'Gebruiker mag audit logboek bekijken'
-'User may add/change country names': 'Gebruiker mag landen toevoegen/verwijderen'
-'User may delete country entries': 'Gebruiker mag landen verwijderen'
-'User may manage localizer': 'Gebruiker mag nationaliseerder beheren'
-'User may manage indexer': 'Gebruiker mag indexeerder beheren'
-'User may publish articles': 'Gebruiker mag artikelen publiceren'
-'User may manage topics': 'Gebruiker mag onderwerpen beheren'
-'User may use bold': 'Gebruiker mag vet gebruiken'
-'User may use italic': 'Gebruiker mag cursief gebruiken'
-'User may use underline': 'Gebruiker mag onderstreep gebruiken'
-'User may use strikethrough': 'Gebruiker mag doorstreep gebruiker'
-'User may change text alignment': 'Gebruiker mag tekst uitvulling veranderen'
-'User may copy, cut, and paste': 'Gebruiker mag kopieren, knippen en plakken'
-'User may undo/redo': 'Gebruiker mag ongedaan maken/herhalen'
-'User may change text direction': 'Gebruiker mag tekst richting wijzigen'
-'User may set indents': 'Gebruiker mag inspringen zetten'
-'User may add links': 'Gebruiker mag links toevoegen'
-'User may add subheads': 'Gebruiker mag subtitels toevoegen'
-'User may insert images': 'Gebruiker mag afbeeldingen invoegen'
-'User may view the HTML source': 'Gebruiker mag de HTML broncode bekijken'
-'User may enlarge the editor': 'Gebruiker mag de de bewerker vergroten'
-'User may change the font face': 'Gebruiker mag het lettertype veranderen'
-'User may change the font size': 'Gebruiker mag de lettergrootte veranderen'
-'User may create bulleted lists': 'Gebruiker mag punt-lijsten maken'
-'User may create numbered lists': 'Gebruiker mag nummer-lijsten maken'
-'User may insert tables': 'Gebruiker mag tabellen maken'
-'User may insert horizontal rules': 'Gebruiker mag horizontale lijnen maken'
-'User may change the font color': 'Gebruiker mag de letterkleur veranderen'
-'User may use superscripts': 'Gebruiker mag superscript gebruiken'
-'User may use subscripts': 'Gebruiker mag subscript gebruiken'
-'User may restart the template engine': 'Gebruiker mag de sjabloonmachine herstarten'
-'Administrative tasks': 'Administratieve taken'
-'An user type with the name $1 already exists.': 'Een gebruikertype met de naam $1 bestaat al.'
-'Staff/Subscribers Management': 'Leidinggevenden/Abonnement beheer'
-'Editor Basic Settings': 'Bewerker Basis Instellingen'
-'Editor Advanced Font Settings': 'Bewerker Geavanceerde Lettertypen Instellingen'
-'Editor Table Settings': 'Bewerker Tabel Eigenschappen'
-'Editor Miscellaneous Settings': 'Bewerker Overige Instellingen'
-'Updating user types permissions': 'Aanpassen gebruiker type permissies'
-'Add new section': 'Voeg sectie toe'
-'There are $1 keywords(s) left.': 'Er zijn $1 steekwoord(en) over.'
-'User account': 'Gebruiker profiel'
-'No such user account.': 'Profiel bestaat niet.'
-'The section could not be added.': 'De sectie kon niet worden toegevoegd.'
-'The section $1 could not be deleted.': 'De sectie $1 kan niet worden verwijderd.'
-'The topic $1 could not be deleted.': 'The onderwerp $1 kan niet worden verwijderd.'
-'No subscriptions.': 'Geen abonnementen.'
-'Adding new topic': 'Toevoegen nieuw onderwerp'
-'Topic $1 added': 'Onderwerp $1 toegevoegd'
-'The topic could not be added.': 'Het onderwerp kan niet worden toegevoegd.'
-'Add another topic': 'Voeg een ander onderwerp toe'
-'Deleting topic': 'Verwijderen onderwerp'
-'There are $1 subtopics left.': 'Er zijn $1 deelonderwerpen over.'
-'Topic $1 deleted': 'Onderwerp $1 geverwijderd'
-'You do not have the right to change topic name.': 'Je hebt niet de rechten om een onderwerp naam te wijzigen'
-'Topic $1 updated': 'Onderwerp $1 bijgewerkt'
-'The topic name could not be updated.': 'De onderwerp naam kon niet worden bijgewerkt.'
-'Change topic name': 'Verander onderwerp naam'
-'Delete topic $1': 'Verwijder onderwerp $1'
-'The topic $1 has been deleted.': 'Onderwerp $1 is verwijderd.'
-'There are $1 articles using the topic.': 'Er zijn $1 artikelen met dit onderwerp.'
-'The sections were added successfully.': 'De secties waren succeswol toegevoegd.'
-'This article cannot be previewed. Please make sure it has the article template selected.': 'Dit artikel kan niet worden getoond. Zorg er voor dat een sjabloon is geselecteerd.'
-'This article cannot be previewed. Please make sure it has the front page template selected.': 'Dit artikel kan niet worden getoond. Zorg er voor het voorpagina sjabloon is geselecteerd.'
-'New Field': 'Nieuw Veld'
-'Add New Field': 'Voeg nieuw veld toe'
-'No such section.': 'Sectie bestaat niet.'
-'Publish with issue': 
-'Universal List': 
-'Invalid security token!': 
-Authors: 
+'Publication List': 'Publicatie lijst'
+'Issue List': 'Uitgaven lijst'
+'Section List': Rubrieksoverzicht
+All: Alle
+duplicate: dupliceren
+move: verplaatsen
+Move: Verplaats
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
+'Article Type Fields': null
+'Article Images': null
+'Log Messages': null
+'Article Files': null
+'Article Comments': null
+'Are you sure you want to deactivate the subscription?': null
+'Are you sure you want to activate the subscription?': null
+Other: null
+'Time:': null
+'No events.': 'Geen acties.'
+'Default templates': null
+'System Preferences': 'Systeem Voorkeuren'
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: null
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null
