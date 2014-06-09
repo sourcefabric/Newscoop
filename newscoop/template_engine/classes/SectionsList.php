@@ -32,8 +32,10 @@ class SectionsList extends ListObject
         if ($cacheService->contains($cacheKey)) {
             $sectionsList = $cacheService->fetch($cacheKey);
         } else {
-          $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-            $cacheService->save($cacheKey, $sectionsList);
+            $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+            if (count($sectionsList) > 0) {
+                $cacheService->save($cacheKey, $sectionsList);
+            }
         }
 	    $metaSectionsList = array();
 	    foreach ($sectionsList as $section) {
