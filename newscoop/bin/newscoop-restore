@@ -369,11 +369,14 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
-$fileSrcDir = "$tempDirName/public/files";
+$fileSrcDir = "$tempDirName/files";
 $imagesSrcDir = "$tempDirName/images";
+$videosSrcDir = "$tempDirName/videos";
+$pdfSrcDir = "$tempDirName/pdf";
 $configDestDir = $ETC_DIR;
 $filesDestDir = $CAMPSITE_DIR.'/public/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
+$videosDestDir = $CAMPSITE_DIR.'/public/videos';
 $templatesDirName = 'templates'; // keep for gimme template upgrade
 $themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
@@ -382,7 +385,7 @@ $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
 $pdfDir = $CAMPSITE_DIR.'/public/pdf';
 
 $destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir,
-    $compiledTemplatesDir, $pdfDir);
+    $compiledTemplatesDir, $pdfDir, $videosDestDir);
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
@@ -468,11 +471,25 @@ if (is_dir($imagesSrcDir)) {
 }
 echo "done.\n";
 
+echo " * Restoring videos...";
+flush_output($flush);
+if (is_dir($videosSrcDir)) {
+    camp_copy_files($videosSrcDir, $CAMPSITE_DIR);
+}
+echo "done.\n";
+
 echo " * Restoring file attachments...";
 flush_output($flush);
 if (is_dir($fileSrcDir)) {
     camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 }
+
+echo " * Restoring PDFs...";
+flush_output($flush);
+if (is_dir($pdfSrcDir)) {
+    camp_copy_files($pdfDir, $CAMPSITE_DIR);
+}
+
 echo "done.\n";
 flush_output($flush);
 
