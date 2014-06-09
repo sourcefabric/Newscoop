@@ -484,6 +484,8 @@ if (is_dir($fileSrcDir)) {
     camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
 }
 
+echo " * Restoring PDFs...";
+flush_output($flush);
 if (is_dir($pdfSrcDir)) {
     camp_copy_files($pdfDir, $CAMPSITE_DIR);
 }
