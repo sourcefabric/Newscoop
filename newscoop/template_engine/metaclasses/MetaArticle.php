@@ -102,7 +102,9 @@ final class MetaArticle extends MetaDbObject {
             $this->m_dbObject = $cacheService->fetch($cacheKey);
         } else {
             $this->m_dbObject = new Article($p_languageId, $p_articleId);
-            $cacheService->save($cacheKey, $this->m_dbObject);
+            if ($p_languageId && $p_articleId) {
+                $cacheService->save($cacheKey, $this->m_dbObject);
+            }
         }
 
         if ($this->m_dbObject->exists()) {
