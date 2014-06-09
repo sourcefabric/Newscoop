@@ -236,4 +236,86 @@ class PluginsService
             throw new \Exception("Error setting up plugin permissions", 1);
         }
     }
+
+    /**
+     * Get rights
+     *
+     * @param array $params
+     * @return array
+     */
+    public function getRights(array $params)
+    {
+        $connection = $this->em->getConnection();
+
+        $permission = $params['filters']['right_define_name'];
+        $query = $connection->executeQuery('SELECT right_id FROM liveuser_rights WHERE right_define_name = :permission', array(
+            'permission' => $permission
+        ));
+
+        return $query->fetch();
+    }
+
+    /**
+     * Remove right
+     *
+     * @param array $params
+     * @return void
+     */
+    public function removeRight(array $params)
+    {
+        $rightId = (int) $params['right_id'];
+
+        // get permission
+        $connection = $this->em->getConnection();
+        $query = $connection->executeQuery('SELECT right_define_name as name FROM liveuser_rights WHERE right_id  = :rightId', array(
+            'rightId' => $rightId
+        ));
+
+        $permission = $query->fetch();
+        $permission = explode('_', $permission['name']);
+
+        $rules = $this->em->getRepository('Newscoop\Entity\Acl\Rule')->findBy(array(
+            'resource' => $permission[0] . '-' . $permission[1]
+        ));
+
+        if ($rules) {
+            foreach ($rules as $key => $rule) {
+                $this->em->remove($rule);
+            }
+
+            $this->em->flush();
+        }
+
+        $connection->executeUpdate('DELETE FROM liveuser_rights WHERE right_id = :rightId', array(
+            'rightId' => $rightId
+        ));
+    }
+
+    /**
+     * Remove plugin permissions from database
+     *
+     * @param  array  $pluginPermissions Plugin permissions
+     *
+     * @return void
+     */
+    public function removePluginPermissions(array $pluginPermissions)
+    {
+        try {
+            foreach ($pluginPermissions as $permissionArray) {
+                foreach ($permissionArray as $permission => $permissionLabel) {
+                    $filter = array(
+                        "fields" => array("right_id"),
+                        "filters" => array("right_define_name" => $permission)
+                    );
+
+                    $rights = $this->getRights($filter);
+                    if (!empty($rights)) {
+                        $this->removeRight(array('right_id' => $rights['right_id']));
+                    }
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception("Error removing plugin permissions", 1);
+        }
+    }
 }
