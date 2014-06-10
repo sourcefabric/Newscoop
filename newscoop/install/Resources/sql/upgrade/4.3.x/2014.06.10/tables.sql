@@ -43,7 +43,7 @@ VALUES
 
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
-	(18, 'ID', 'string', 'frontend', 2, 1),
+	(18, 'ID', 'text', 'frontend', 2, 1),
 	(19, 'width', 'integer', 'frontend', 2, 0),
 	(20, 'height', 'integer', 'frontend', 2, 0);
 --- End of Youtube Snippet Template
@@ -55,10 +55,20 @@ VALUES
 
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
-	(21, 'ID', 'string', 'frontend', 3, 1),
+	(21, 'ID', 'text', 'frontend', 3, 1),
 	(22, 'width', 'integer', 'frontend', 3, 0),
 	(23, 'height', 'integer', 'frontend', 3, 0);
 --- Start of Vimeo Snippet Template
+
+--- Start of Generic Snippet Template
+INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
+VALUES
+	(4, 'Generic', NULL, '{{Generic}}', 0, 1, NULL, NULL, '2014-06-10 14:15:49', '2014-06-10 14:15:49');
+
+INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
+VALUES
+	(18, 'Generic', 'textarea', 'frontend', 4, 1);
+--- End of Generic Snippet Template
 
 --- Start of Embed.ly Snippet sample
 INSERT INTO `Snippets` (`Id`, `Name`, `Enabled`, `Created`, `Modified`, `TemplateId`)
