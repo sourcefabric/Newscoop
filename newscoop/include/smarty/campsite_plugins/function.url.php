@@ -27,14 +27,14 @@ function smarty_function_url($p_params, &$p_smarty)
     // gets the URL base
     $urlString = $context->url->base;
 
-    if (isset($p_params['noprotocol'])) {
-        $noprotocol = ($p_params['noprotocol'] === 'true') ? 1 : 0;
+    if (isset($p_params['useprotocol']) && ($p_params['useprotocol'] === 'false' || $p_params['useprotocol'] === 'true')) {
+        $useprotocol = ($p_params['useprotocol'] === 'true') ? true : false;
     } else {
-        $systemPref = \Zend_Registry::get('container')->get('preferences');
-        $noprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? 0 : 1;
+        $systemPref = \Zend_Registry::get('container')->get('system_preferences_service');
+        $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? true : false;
     }
 
-    if ($noprotocol) {
+    if (!$useprotocol) {
         $urlString = preg_replace('@^https?:@', '', $urlString);
     }
 
