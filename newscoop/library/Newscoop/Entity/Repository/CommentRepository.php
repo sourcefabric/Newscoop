@@ -586,10 +586,25 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
      */
     public function countByUser(User $user)
     {
-        return (int) $this->getEntityManager()
-            ->createQuery("SELECT COUNT(comment) FROM Newscoop\Entity\Comment comment WHERE comment.commenter IN (SELECT commenter.id FROM Newscoop\Entity\Comment\Commenter commenter WHERE commenter.user = :user)")
-            ->setParameter('user', $user->getId())
-            ->getSingleScalarResult();
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('commenter.id')
+            ->from('Newscoop\Entity\Comment\Commenter', 'commenter')
+            ->where('commenter.user = :commenterUserId')
+            ->setParameter('commenterUserId', $user->getId());
+        $commenterId = $qb->getQuery()->getOneOrNullResult();
+
+        if (!is_null($commenterId)) {
+            $qb->select('count(comment)')
+            ->from('Newscoop\Entity\Comment', 'comment')
+            ->where('comment.commenter = :commenterId')
+            ->setParameter('commenterId', $commenterId);
+
+            return (int) $qb->getQuery()->getSingleScalarResult();
+        } else {
+            return 0;
+        }
     }
 
     /**
