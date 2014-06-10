@@ -23,8 +23,13 @@ require_once dirname(__FILE__) . '/function.uri.php';
 function smarty_function_url($p_params, &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
+
     // gets the URL base
     $urlString = $context->url->base;
+
+    if (isset($p_params['noprotocol']) && $p_params['noprotocol']) {
+        $urlString = preg_replace('@^https?:@', '', $urlString);
+    }
 
     // appends the URI path and query values to the base
     $urlString .= smarty_function_uri($p_params, $p_smarty);
