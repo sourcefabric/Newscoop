@@ -593,13 +593,20 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             ->from('Newscoop\Entity\Comment\Commenter', 'commenter')
             ->where('commenter.user = :commenterUserId')
             ->setParameter('commenterUserId', $user->getId());
-        $commenterId = $qb->getQuery()->getOneOrNullResult();
+        $commenterId = $qb->getQuery()->getArrayResult();
 
-        if (!is_null($commenterId)) {
-            $qb->select('count(comment)')
-            ->from('Newscoop\Entity\Comment', 'comment')
-            ->where('comment.commenter = :commenterId')
-            ->setParameter('commenterId', $commenterId);
+        if (array_key_exists(0, $commenterId)) {
+            $commenterId = $commenterId[0];
+        } else {
+            return 0;
+        }
+
+        if (is_array($commenterId) && array_key_exists('id', $commenterId)) {
+            $qb = $em->createQueryBuilder();
+            $qb->select('count(comment.id)')
+                ->from('Newscoop\Entity\Comment', 'comment')
+                ->where('comment.commenter = :commenter')
+                ->setParameter('commenter', $commenterId['id']);
 
             return (int) $qb->getQuery()->getSingleScalarResult();
         } else {
