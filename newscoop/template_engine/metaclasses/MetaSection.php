@@ -30,11 +30,10 @@ final class MetaSection extends MetaDbObject {
 	);
 
 
-    public function __construct($p_publicationId = null, $p_issueNumber = null,
-                                $p_languageId = null, $p_sectionNumber = null)
+    public function __construct($p_publicationId = null, $p_issueNumber = null, $p_languageId = null, $p_sectionNumber = null)
     {
-    	$this->m_properties = self::$m_baseProperties;
-    	$this->m_customProperties = self::$m_defaultCustomProperties;
+        $this->m_properties = self::$m_baseProperties;
+        $this->m_customProperties = self::$m_defaultCustomProperties;
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         $cacheKey = $cacheService->getCacheKey(array('section', $p_publicationId, $p_issueNumber, $p_languageId, $p_sectionNumber), 'section');
@@ -42,7 +41,10 @@ final class MetaSection extends MetaDbObject {
              $this->m_dbObject = $cacheService->fetch($cacheKey);
         } else {
             $this->m_dbObject = new Section($p_publicationId, $p_issueNumber, $p_languageId, $p_sectionNumber);
-            $cacheService->save($cacheKey, $this->m_dbObject);
+
+            if ($p_publicationId && $p_issueNumber && $p_languageId && $p_sectionNumber) {
+                 $cacheService->save($cacheKey, $this->m_dbObject);
+            }
         }
 
         if (!$this->m_dbObject->exists() && !is_null($p_sectionNumber)) {

@@ -63,16 +63,7 @@ class LegacyController extends Zend_Controller_Action
         // dispatches campsite
         $campsite->dispatch();
 
-        // triggers an event before render the page.
-        // looks for preview language if any.
-        $previewLang = $campsite->event('beforeRender');
-        if (!is_null($previewLang)) {
-            require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/SyntaxError.php');
-            set_error_handler('templateErrorHandler');
-
-        } else {
-	        set_error_handler(create_function('', 'return true;'));
-        }
+        set_error_handler(create_function('', 'return true;'));
 
         // renders the site
         $campsite->render();
