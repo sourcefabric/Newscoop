@@ -28,7 +28,6 @@ function camp_exec_command($p_cmd, $p_errMsg = "",
     }
 } // fn camp_exec_command
 
-
 /**
  * So that it also works on windows in the future...
  *
@@ -40,6 +39,7 @@ function camp_readline()
         $GLOBALS['stdin'] = fopen("php://stdin", "r");
     }
     $in = fgets($GLOBALS['stdin'], 4094); // Maximum windows buffer size
+
     return $in;
 } // fn camp_readline
 
@@ -49,7 +49,7 @@ function camp_readline()
 function camp_is_empty_dir($p_dirName)
 {
     $cnt = 0;
-    if(is_dir($p_dirName) ){
+    if (is_dir($p_dirName) ) {
         $files = opendir($p_dirName);
         while ($file = @readdir($files)) {
             $cnt++;
@@ -57,12 +57,12 @@ function camp_is_empty_dir($p_dirName)
                 return false;
             }
         }
+
         return true;
     }
 
     return false;
 } // fn camp_is_empty_dir
-
 
 /**
  *
@@ -72,7 +72,7 @@ function camp_read_files($p_startDir = '.')
     $files = array();
     if (is_dir($p_startDir)) {
         $fh = opendir($p_startDir);
-        while(($file = readdir($fh)) !== false) {
+        while (($file = readdir($fh)) !== false) {
             // loop through the files, skipping . and .., and
             // recursing if necessary
             if (strcmp($file, '.') == 0 || strcmp($file, '..') == 0) {
@@ -94,7 +94,6 @@ function camp_read_files($p_startDir = '.')
 
     return $files;
 } // fn camp_read_files
-
 
 /**
  * Remove the specified directory and everything underneath it.
@@ -150,7 +149,6 @@ function camp_remove_dir($p_dirName, $p_msg = "", $p_skip = array())
     }
 } // fn camp_remove_dir
 
-
 /**
  * Recursively copy the given directory or file to the given
  * destination.
@@ -165,10 +163,9 @@ function camp_copy_files($p_src, $p_dest, $p_msg = "")
     if ($p_msg == "") {
         $p_msg = "Unable to copy file/dir $p_src to $p_dest.";
     }
-    $command = "cp -R $p_src $p_dest";
+    $command = "cp -RL $p_src $p_dest";
     camp_exec_command($command, $p_msg);
 } // fn camp_copy_files
-
 
 /**
  * Rename the given file so it has a time stamp embedded in its name.
@@ -183,11 +180,13 @@ function camp_backup_file($p_filePath, &$p_output)
 {
     if (!is_file($p_filePath)) {
         $p_output = "File $p_filePath does not exist.";
+
         return 1;
     }
     $dir_name = dirname($p_filePath);
     if (!($file_stat = @stat($p_filePath))) {
         $p_output = "Unable to read file $p_filePath data.";
+
         return 1;
     }
     $file_name = basename($p_filePath);
@@ -201,11 +200,12 @@ function camp_backup_file($p_filePath, &$p_output)
 
     if (!rename($p_filePath, "$dir_name/$new_name")) {
         $p_output = "Unable to rename file $p_filePath";
+
         return 1;
     }
+
     return 0;
 } // fn camp_backup_file
-
 
 /**
  * Tar the given source file/dir into the given destination directory and
@@ -220,25 +220,24 @@ function camp_backup_file($p_filePath, &$p_output)
  */
 function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 {
-	$output_file_name = "$p_destDir/$p_fileName.tar.gz";
+    $output_file_name = "$p_destDir/$p_fileName.tar.gz";
     $fileStr = escapeshellarg(basename($p_sourceFile));
     $source_dir = dirname($p_sourceFile);
     $currentDir = getcwd();
     chdir($source_dir);
-    $cmd = "tar czf " . escapeshellarg($output_file_name) . " $fileStr 2>&1 >/dev/null";
+    $cmd = "tar czhf " . escapeshellarg($output_file_name) . " $fileStr 2>&1 >/dev/null";
     @exec($cmd, $p_output, $result);
-	// remove false tar.gz file if partially created
-	if ($result) {
-		// catch problems for if the file is not there
-		try {
-			@unlink($output_file_name);
-		}
-		catch (Exception $exc) {}
-	}
+    // remove false tar.gz file if partially created
+    if ($result) {
+        // catch problems for if the file is not there
+        try {
+            @unlink($output_file_name);
+        } catch (Exception $exc) {}
+    }
     chdir($currentDir);
+
     return $result;
 } // fn camp_archive_file
-
 
 /**
  * Dump the given database into the file $p_destFile.  If there is an
@@ -262,22 +261,20 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     if ($password != "") {
         $cmd .= " --password=$password";
     }
-	if ($p_omitGeoNames) {
+    if ($p_omitGeoNames) {
         $cmd .= ' --ignore-table=' . $p_dbName . '.CityNames --ignore-table=' . $p_dbName . '.CityLocations';
-	}
+    }
     $cmd .= ' ' . implode(' ', $p_customParams);
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();
     @exec( sprintf( $cmd, 'mysqldump' ), $p_output, $result);
-    if( $result !== 0 ) //one more try with full path for mother russia
-    {
+    if ($result !== 0) { //one more try with full path for mother russia
         $newCmd = exec( 'which mysqldump' );
-        if( trim( $newCmd ) != '' ) {
+        if ( trim( $newCmd ) != '' ) {
             @exec( sprintf( $cmd, $newCmd ), $p_output, $result );
         }
     }
-    switch( $result )
-    {
+    switch ($result) {
         case 1	:
         case 2	: $error = "General error"; break;
         case 126 :	$error = "Command invoked cannot be executed. Permission problem or command is not an executable"; break;
@@ -290,14 +287,12 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
         @exec('cat ' . $additionalFile . '>>' .$p_destFile, $p_output, $result);
     }
 
-    if( !$error ) {
+    if (!$error) {
         return $result;
-    }
-    else {
+    } else {
        return $error;
     }
 } // fn camp_backup_database
-
 
 /**
  * Print out the given message and exit the program with an error code.
@@ -316,7 +311,6 @@ function camp_exit_with_error($p_errorStr)
     echo "\nERROR!\n$p_errorStr\n";
     exit(1);
 } // fn camp_exit_with_error
-
 
 /**
  * Connect to the MySQL database.
@@ -342,7 +336,6 @@ function camp_connect_to_database($p_dbName = "")
     mysql_query("SET NAMES 'utf8'");
 } // fn camp_connect_to_database
 
-
 /**
  * Return TRUE if the database contains no data.
  *
@@ -357,9 +350,9 @@ function camp_is_empty_database($p_dbName)
     if (!($res = mysql_query("show tables"))) {
         camp_exit_with_error("camp_is_empty_database: can't read tables");
     }
+
     return (mysql_num_rows($res) == 0);
 } // fn camp_is_empty_database
-
 
 /**
  * Drop all tables in the given database.
@@ -387,7 +380,6 @@ function camp_clean_database($p_dbName)
     }
 } // fn camp_clean_database
 
-
 /**
  * Return TRUE if the database exists.
  *
@@ -397,6 +389,7 @@ function camp_clean_database($p_dbName)
 function camp_database_exists($p_dbName)
 {
     global $g_ado_db;
+
     return $g_ado_db->hasDatabase($p_dbName);
 } // fn camp_database_exists
 
@@ -414,6 +407,7 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     if ($do_log) {
         if (!file_exists($p_log_file) || !is_writable($p_log_file)) {
             $do_log = false;
+
             return "Log file is missing or not writable!";
         }
     }
@@ -513,7 +507,6 @@ function camp_utf8_convert($p_log_file = null, &$p_skipped = array())
     return true;
 } // fn camp_utf8_convert
 
-
 /**
  * Sets the encoding to UTF8 for the given encoding in the SQL
  * dump file.
@@ -547,9 +540,9 @@ function camp_change_dump_encoding($p_inDumpFile, $p_outDumpFile,
     }
     fclose($inFile);
     fclose($outFile);
+
     return true;
 }
-
 
 /**
  * Returns the server default character set.
@@ -563,9 +556,9 @@ function camp_get_server_charset()
     if (!$row) {
         return false;
     }
+
     return $row['Value'];
 }
-
 
 /**
  * Returns true if the given charset was valid.
@@ -580,9 +573,9 @@ function camp_valid_charset($p_charset)
     if (!$row) {
         return false;
     }
+
     return true;
 }
-
 
 /**
  * Returns an array of all the database server charsets.
@@ -596,9 +589,9 @@ function camp_get_all_charsets()
     while ($row = mysql_fetch_array($res, MYSQL_ASSOC)) {
         $charsets[$row['Charset']] = $row['Description'];
     }
+
     return $charsets;
 }
-
 
 /**
  * Restores the Campsite database from the given dump file.
@@ -620,20 +613,21 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
 
     $cmdpath = 'mysql';
     exec( sprintf( $cmd, $cmdpath ), $o, $r );
-    if( $r !== 0 )
-    {
+    if ($r !== 0) {
         $testcmd = exec( "which $cmdpath" );
-        if( trim( $testcmd ) != '' ) {
+        if ( trim( $testcmd ) != '' ) {
             $cmdpath = exec( sprintf( $cmd, $testcmd ) );
         }
     }
 
     camp_exec_command( sprintf( $cmd, 'mysql' ), "Unable to import database. (Command: $cmd)",
                       true, $p_silent);
+
     return true;
 }
 
-function camp_search_db_rolls($roll_base_dir, $last_db_roll) {
+function camp_search_db_rolls($roll_base_dir, $last_db_roll)
+{
     $rolls = array(); // roll_name => roll_path
 
     $roll_dir_names = scandir($roll_base_dir);
@@ -673,7 +667,6 @@ function camp_search_db_rolls($roll_base_dir, $last_db_roll) {
 
 } // fn camp_search_db_rolls
 
-
 /**
  * Compares versions of Newscoop for upgrades
  * 3.1.0 before 3.1.x, 3.5.2 before 3.5.11
@@ -681,7 +674,8 @@ function camp_search_db_rolls($roll_base_dir, $last_db_roll) {
  * @param $p_version2
  * @return int
  */
-function camp_version_compare($p_version1, $p_version2) {
+function camp_version_compare($p_version1, $p_version2)
+{
     $version1 = "" . $p_version1;
     $version2 = "" . $p_version2;
 
@@ -717,7 +711,6 @@ function flush_output($flush)
     }
 }
 
-
 // auxiliary functions from CampInstallationBase.php, put here to not dor 'require' on all that files there
 
 /**
@@ -728,7 +721,7 @@ function flush_output($flush)
 function camp_split_sql($p_sqlFileName)
 {
     $sqlFile_raw = null;
-    if(!($sqlFile_raw = file($p_sqlFileName))) {
+    if (!($sqlFile_raw = file($p_sqlFileName))) {
         return false;
     }
 
@@ -808,7 +801,7 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
 
     $errors = 0;
     $errorQueries = array();
-    foreach($queries as $query) {
+    foreach ($queries as $query) {
         $query = trim($query);
         if (!empty($query) && ($query{0} != '#') && (0 !== strpos($query, "--"))) {
 
@@ -874,6 +867,7 @@ function camp_combine_paths($p_dirFirst, $p_dirSecond)
 
     if (0 === strpos(strtolower($p_dirSecond), "./")) {
         $p_dirSecond = substr($p_dirSecond, 2);
+
         return $p_dirFirst . DIRECTORY_SEPARATOR . $p_dirSecond;
     }
 
@@ -884,7 +878,6 @@ function camp_combine_paths($p_dirFirst, $p_dirSecond)
 
     return $p_dirFirst . DIRECTORY_SEPARATOR . $p_dirSecond;
 } // fn camp_combine_paths
-
 
 /**
  * Connects to the specified DB
@@ -918,24 +911,25 @@ function camp_connect_to_adodb($db_host, $db_username, $db_userpass, $db_databas
     }
 
     $GLOBALS['g_ado_db'] = $db_conn;
+
     return $db_conn;
 } // fn camp_connect_to_adodb
 
 function camp_readable_size($p_bytes)
 {
-	$show_size = 0 + $p_bytes;
-	$size_units = 'TiB';
+    $show_size = 0 + $p_bytes;
+    $size_units = 'TiB';
 
-	$unit_names = array('B', 'KiB', 'MiB', 'GiB');
-	foreach ($unit_names as $cur_unit) {
-		if ($show_size < 1024) {
-			$size_units = $cur_unit;
-			break;
-		}
-		$show_size = $show_size / 1024;
-	}
+    $unit_names = array('B', 'KiB', 'MiB', 'GiB');
+    foreach ($unit_names as $cur_unit) {
+        if ($show_size < 1024) {
+            $size_units = $cur_unit;
+            break;
+        }
+        $show_size = $show_size / 1024;
+    }
 
-	return number_format($show_size, 2) . ' ' . $size_units;
+    return number_format($show_size, 2) . ' ' . $size_units;
 }
 
 function camp_geodata_loaded($g_conn)
@@ -1007,4 +1001,355 @@ function camp_load_geodata($p_mysqlCmd, $p_dbConf)
     return true;
 }
 
-?>
+function camp_upgrade_database($p_dbName, $p_silent = false, $p_showRolls = false)
+{
+    global $Campsite;
+
+    $campsite_dir = $Campsite['CAMPSITE_DIR'];
+    $etc_dir = $Campsite['ETC_DIR'];
+
+    if (!camp_database_exists($p_dbName)) {
+        return "Can't upgrade database $p_dbName: it doesn't exist";
+    }
+
+    $lockFileName = __FILE__;
+    $lockFile = fopen($lockFileName, "r");
+    if ($lockFile === false) {
+        return "Unable to create single process lock control!";
+    }
+    if (!flock($lockFile, LOCK_EX | LOCK_NB)) { // do an exclusive lock
+
+        return "The upgrade process is already running.";
+    }
+
+    $old_version = ''; // what version was imported before running the upgrade
+    $old_roll = ''; // what roll was imported before running the upgrade
+    if (!($res = camp_detect_database_version($p_dbName, $old_version, $old_roll)) == 0) {
+        flock($lockFile, LOCK_UN); // release the lock
+
+        return $res;
+    }
+    $last_db_version = $old_version; // keeping the last imported version throughout the upgrade process
+    $last_db_roll = $old_roll; // keeping the last imported roll throughout the upgrade process
+
+    $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
+    $db_port = $Campsite['DATABASE_SERVER_PORT'];
+    $db_username = $Campsite['DATABASE_USER'];
+    $db_userpass = $Campsite['DATABASE_PASSWORD'];
+    $db_database = $p_dbName;
+
+    $first = true;
+    $skipped = array();
+    $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
+    usort($versions, 'camp_version_compare');
+
+    if (-1 == camp_version_compare($old_version, '3.5.x')) {
+        return "Can not upgrade from version older than 3.5.\nUpgrade into Newscoop 3.5 first.\n";
+    }
+
+    // the $db_version, $db_roll are for keeping the last imported db changes
+    // when $db_version is lesser then 3.5.x, we do not support upgrade
+    // for $db_version 3.5.x and greater, the rolls can be:
+    //     ''    ... no changes from the $db_version yet applied => apply both main and all the roll updates
+    //     '.'   ... just the main changes applied => apply just all the roll updates
+    //     roll  ... applied the main changes, plus rolls upto the given roll => apply roll updates greater then the current roll
+    // it is supposed that from 3.6.x on, we will not use db change sets in the $db_version directory itslef
+    // when (in the upgrade cycle) going to a greater version, roll is set to '', since all changes there have to be applied
+
+    foreach ($versions as $index=>$db_version) {
+        //if ($old_version > $db_version) {
+        //    continue;
+        //}
+        if (-1 == camp_version_compare($db_version, $old_version)) {
+            continue;
+        }
+
+        $last_db_version = $db_version;
+        $last_db_roll = '';
+
+        $cur_old_roll = ''; // the roll of the running version that was imported before the upgrade ($old_roll or '')
+        if ($first) {
+            $last_db_roll = $old_roll;
+            $cur_old_roll = $old_roll;
+            if (!$p_silent) {
+                $db_ver_roll_info = "$db_version";
+                if (!in_array($old_roll, array('', '.'))) {
+                    $db_ver_roll_info .= ", roll $old_roll";
+                }
+                echo "\n\t* Upgrading the database from version $db_ver_roll_info...";
+            }
+            if ($old_version < '3.4.x') {
+                $res = camp_utf8_convert(null, $skipped);
+                if ($res !== true) {
+                    flock($lockFile, LOCK_UN); // release the lock
+
+                    return $res;
+                }
+            }
+            $first = false;
+        }
+        $output = array();
+
+        $upgrade_base_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
+        $rolls = camp_search_db_rolls($upgrade_base_dir, $cur_old_roll);
+
+        $db_conf_file = $etc_dir . '/database_conf.php';
+        $install_conf_file = $etc_dir . "/install_conf.php";
+
+        // run upgrade scripts
+        $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql", "tables-post.sql");
+        foreach ($rolls as $upgrade_dir_roll => $upgrade_dir_path) {
+            $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
+            $last_db_roll = $upgrade_dir_roll;
+            if ($p_showRolls || (!$p_silent)) {
+                echo "\n<pre>\t\t * importing database roll $last_db_version / $last_db_roll</pre>\n";
+            }
+            foreach ($sql_scripts as $index=>$script) {
+                if (!is_file($upgrade_dir . $script)) {
+                    continue;
+                }
+                $error_queries = array();
+                $sq_file = $upgrade_dir . $script;
+                $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, $error_queries);
+
+                if ($err_count && ($script != "data-optional.sql")) {
+                    flock($lockFile, LOCK_UN); // release the lock
+
+                    return "$script ($db_version) errors on:\n" . implode("\n", $error_queries);
+                }
+            }
+
+            $res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+            if (0 !== $res) {
+                echo $res;
+            }
+        }
+    }
+    if (!$p_silent) {
+        echo "done.\n";
+    }
+
+    if (count($skipped) > 0 && !$p_silent) {
+        echo "
+Encountered non-critical errors while converting data to UTF-8 encoding!
+The following database queries were unsuccessful because after conversion
+text values become case insensitive. Words written in different case were
+unique before the conversion; after the conversion they are identical,
+breaking some constraints in the database.
+
+The upgrade script can not fix these issues automatically!
+
+You can continue to use the data as is and manually fix these issues
+later. The table fields that were not converted will not support case
+insensitive searches.
+
+Please save the following list of skipped queries:\n";
+        foreach ($skipped as $query) {
+            echo "$query;\n";
+        }
+        echo "-- end of queries list --\n";
+    }
+
+    //$res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+    //if (0 !== $res) {
+    //    echo $res;
+    //}
+
+    flock($lockFile, LOCK_UN); // release the lock
+
+    return 0;
+} // fn camp_upgrade_database
+
+/**
+ * Find out which version is the given database.
+ *
+ * @param string $p_dbName
+ * @param string $version
+ *
+ * @return mixed
+ */
+function camp_detect_database_version($p_dbName, &$version, &$roll = '')
+{
+    global $g_ado_db;
+    $version = '';
+
+    if (!$g_ado_db->hasDatabase($p_dbName)) {
+        return "Can't select the database $p_dbName";
+    }
+
+    if ($g_ado_db->hasTable('Versions')) {
+        $got_versions = 0;
+
+        try {
+            $sel_db_version = 'SELECT ver_value FROM Versions WHERE ver_name = "last_db_version"';
+            $version = $g_ado_db->getOne($sel_db_version);
+            if (!empty($version)) {
+                $got_versions += 1;
+            }
+        } catch (Exception $e) {
+            return "Unable to query the database $p_dbName";
+        }
+
+        try {
+            $sel_db_roll = 'SELECT ver_value FROM Versions WHERE ver_name = "last_db_roll"';
+            $roll = $g_ado_db->getOne($sel_db_roll);
+            if (!empty($roll)) {
+                $got_versions += 1;
+            }
+        } catch (Exception $e) {
+            return "Unable to query the database $p_dbName";
+        }
+
+        if (2 == $got_versions) {
+            return 0;
+        }
+    }
+
+    $roll = '';
+
+    if (!$res = mysql_query("SHOW TABLES")) {
+        return "Unable to query the database $p_dbName";
+    }
+
+    $version = "2.0.x";
+    $row = mysql_fetch_row($res);
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("ArticleTopics", "Topics")))) {
+        $version = $version < "2.1.x" ? "2.1.x" : $version;
+    }
+    if (in_array(strtolower($row[0]), array_map("strtolower", array("URLTypes", "TemplateTypes", "Templates", "Aliases",
+                                "ArticlePublish", "IssuePublish", "ArticleImages")))) {
+        $version = "2.2.x";
+
+        $res2 = mysql_query("DESC Articles PublishDate");
+        if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+            $version = "2.3.x";
+        }
+
+        $res2 = mysql_query("SHOW TABLES LIKE 'Attachments'");
+        if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+            $version = "2.4.x";
+        }
+
+        $res2 = mysql_query("DESC SubsSections IdLanguage");
+        if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+            $version = "2.5.x";
+        }
+
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ArticleTypeMetadata'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            // check for phorum_users old table
+            $chkPhorumUsers = mysql_query( "SHOW TABLES LIKE '%phorum_users%'" );
+            if ( is_resource($chkPhorumUsers) && mysql_num_rows($chkPhorumUsers) > 0 ) {
+                $version = "2.6.0";
+                if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                $row = mysql_fetch_array($res2, MYSQL_ASSOC);
+                if (!is_null($row) && strstr($row['Type'], '166') != '') {
+                    $version = "2.6.1";
+                } else {
+                    return 0;
+                }
+
+                $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.2";
+                } else {
+                    return 0;
+                }
+
+                $res2 = mysql_query("SELECT * FROM Events WHERE Id = 171");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.3";
+                } else {
+                    return 0;
+                }
+                $res2 = mysql_query("SELECT * FROM UserConfig "
+                                    . "WHERE varname = 'ExternalSubscriptionManagement'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.4";
+                }
+                $res2 = mysql_query("SELECT * from phorum_users WHERE fk_campsite_user_id IS NULL");
+                if (is_resource($res2) && mysql_num_rows($res2) == 0) {
+                    $version = "2.6.x";
+                }
+            }
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "2.7.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'liveuser_users'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            if (!$res2 = mysql_query("SELECT * FROM liveuser_users "
+                                     . "WHERE fk_user_type = 1")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                $version = "3.0.x";
+            }
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'ObjectTypes'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.1.0";
+            if (!$res2 = mysql_query("SHOW INDEX FROM ArticleIndex")) {
+                return "Unable to query the database $p_dbName";
+            }
+            while ($row = mysql_fetch_array($res2, MYSQL_ASSOC)) {
+                if (strtolower($row['Key_name']) == 'article_keyword_idx') {
+                    $version = "3.1.2";
+                    break;
+                }
+            }
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'RequestStats'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.2.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'SystemPreferences'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            if (!$res2 = mysql_query("SELECT * FROM SystemPreferences "
+            . "WHERE varname = 'CacheEngine'")) {
+                return "Unable to query the database $p_dbName";
+            }
+            if (mysql_num_rows($res2) > 0) {
+                $version = "3.3.x";
+            }
+        }
+        if (!$res2 = mysql_query("SHOW COLUMNS FROM Languages LIKE 'ShortMonth1'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.4.x";
+        }
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'Cache'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            $version = "3.5.x";
+        }
+
+        if (!$res2 = mysql_query("SHOW TABLES LIKE 'output'")) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res2) > 0) {
+            //$version = "3.6.x";
+            $version = "3.5.x";
+            $roll = '.';
+        }
+    }
+
+    return 0;
+} // fn camp_detect_database_version
