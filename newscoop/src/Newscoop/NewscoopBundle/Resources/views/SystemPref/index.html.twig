@@ -486,6 +486,10 @@
                                 </dd>
                             </dl>
                         </div>
+                        <dt class="border"><label>{{ 'newscoop.preferences.label.smartyUseProtocol'|trans }} <small id="smartyuseprotocol-popover">(?)</small></label></dt>
+                        <dd>
+                           {{ form_widget(form.smartyUseProtocol) }}
+                        </dd>
                     </dl>
                 </div>
             {% endif %}
@@ -593,5 +597,6 @@
     popover($('#recaptchasecure'), '{{ 'newscoop.preferences.popover.recaptcha.secure'|trans }}');
     popover($('#garbage'), '{{ 'newscoop.preferences.popover.garbage'|trans }}');
     popover($('#lifetime'), '{{ 'newscoop.preferences.popover.lifetime'|trans }}');
+    popover($('#smartyuseprotocol-popover'), '{{ 'newscoop.preferences.popover.smartyuseprotocol'|trans }}');
 //--></script>
 {% endblock %}
