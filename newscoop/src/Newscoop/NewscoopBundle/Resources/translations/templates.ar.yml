@@ -32,13 +32,13 @@ Filename: 'اسم الملف'
 'Template object $1 was deleted': null
 'Some templates could not be deleted because they are in use.': null
 'Select folder': null
-'Rename template': null
+'Rename template': 'إعادة تسمية نموذج.'
 'Rename file': 'اعادة تسمية الملف'
-Rename: null
-'No folders': null
-'New Name': null
-'Move templates': null
-Folder: null
+Rename: 'إعادة تسمية.'
+'No folders': 'لا وجود لملفات.'
+'New Name': 'إسم جديد.'
+'Move templates': 'قم بتحريك النماذج.'
+Folder: ملف.
 'File cannot be read.': null
 'Are you sure you want to delete the template object $1 from folder $2?': null
 'Are you sure you want to delete the selected templates?': null
@@ -51,9 +51,9 @@ Folder: null
 'Directory $1 created.': 'تم إنشاء الدليل $1'
 'You must select a file to upload.': 'يجب عليك تحديد ملف للرفع.'
 'You can only replace a file with a file of the same type.  The original file is of type $1': null
-'Unable to save the file $1 to the path $2.': null
+'Unable to save the file $1 to the path $2.': 'لم يتم حفظ الملف 1$ إلى المسار 2$'
 Replace: استبدال
-'File $1 replaced.': null
+'File $1 replaced.': 'تم إستبدال الملف 1$.'
 'The folder name cant be .. or .': null
 'The template $1 was saved successfully.': 'تم حفظ القالب $1 بنجاح.'
 'Create new folder': 'اخلق مجلد جديد'
