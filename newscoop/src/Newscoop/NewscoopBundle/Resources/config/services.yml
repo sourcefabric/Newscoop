@@ -157,9 +157,9 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
-    newscoop_newscoop.listener.permissions:
+    newscoop_newscoop.listener.access_denied:
         class: Newscoop\NewscoopBundle\EventListener\AccessDeniedExceptionListener
-        arguments:  ["@templating"]
+        arguments:  ["@translator", "@templating"]
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
