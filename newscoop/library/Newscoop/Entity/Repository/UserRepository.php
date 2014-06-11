@@ -701,9 +701,13 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->groups)) {
-            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
-            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
-            $qb->setParameter('groups', $criteria->groups);
+            $em = $this->getEntityManager();
+            $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');
+            $group = $groupRepo->findOneById($criteria->groups);
+            $users = $group->getUsers();
+            $op = $criteria->excludeGroups ? 'notIn' : 'in';
+            $qb->andWhere($qb->expr()->$op('u.id', ':userIds'));
+            $qb->setParameter('userIds', array_keys($users->toArray()));
         }
 
         if (!empty($criteria->query)) {

@@ -38,7 +38,7 @@ class Group implements \Zend_Acl_Role_Interface
     protected $role;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups", indexBy="id")
      */
     protected $users;
 
