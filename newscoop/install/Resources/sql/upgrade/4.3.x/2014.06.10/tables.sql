@@ -51,7 +51,7 @@ VALUES
 --- Start of Vimeo Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
-	(3, 'Vimeo', NULL, '<iframe src=\"//player.vimeo.com/video/{{ ID }}\" width=\"{{ width }}\" height=\"{{ height }}\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>', 1, 0, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+	(3, 'Vimeo', NULL, '<iframe src=\"//player.vimeo.com/video/{{ ID }}\" width=\"{{ width }}\" height=\"{{ height }}\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>', 1, 1, NULL, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
@@ -67,7 +67,7 @@ VALUES
 
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
-	(18, 'Generic', 'textarea', 'frontend', 4, 1);
+	(24, 'Generic', 'textarea', 'frontend', 4, 1);
 --- End of Generic Snippet Template
 
 --- Start of Embed.ly Snippet sample
