@@ -26,7 +26,15 @@ class UsersList extends PaginatedBaseList
         $list->count = $result[1];
 
         $tempList = array_map(function ($user) use ($em) {
-            $user->setPoints((int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true));
+            $update = false;
+            $userComments = (int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true);
+            if ($user->getPoints() != $userComments) {
+                $update = true;
+            }
+            $user->setPoints($userComments);
+            if ($update) {
+                $em->flush();
+            }
 
             return new \MetaUser($user);
         }, $list->items);
@@ -54,7 +62,7 @@ class UsersList extends PaginatedBaseList
             $this->criteria->groups = !empty($parameters['editor_groups']) ? array_map('intval', explode(',', $parameters['editor_groups'])) : array();
             switch ($filter) {
                 case 'active':
-                    $this->criteria->orderBy = array('comments' => 'desc');
+                    $this->criteria->orderBy = array('points' => 'desc');
                     $this->criteria->excludeGroups = true;
                     break;
 

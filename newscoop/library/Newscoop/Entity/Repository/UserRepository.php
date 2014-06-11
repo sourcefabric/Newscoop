@@ -760,7 +760,15 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         $list->items = array_map(function ($user) {
-            $user->setPoints((int) $this->getUserPoints($user, true));
+            $update = false;
+            $userComments = (int) $this->getUserPoints($user, true);
+            if ($user->getPoints() != $userComments) {
+                $update = true;
+            }
+            $user->setPoints($userComments);
+            if ($update) {
+                $this->getEntityManager()->flush();
+            }
 
             return $user;
         }, $qb->getQuery()->getResult());
