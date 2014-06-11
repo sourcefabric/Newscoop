@@ -25,13 +25,11 @@ class UsersList extends PaginatedBaseList
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
 
-        $tempList = array_map(function ($row) {
-            $user = $row[0];
-            $user->setPoints((int) $row['comments']);
+        $tempList = array_map(function ($user) use ($em) {
+            $user->setPoints((int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true));
 
             return new \MetaUser($user);
         }, $list->items);
-
         $list->items = $tempList;
 
         return $list;
