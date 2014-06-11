@@ -24,9 +24,6 @@ function smarty_function_url($p_params, &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
 
-    // gets the URL base
-    $urlString = $context->url->base;
-
     if (isset($p_params['useprotocol']) && ($p_params['useprotocol'] === 'false' || $p_params['useprotocol'] === 'true')) {
         $useprotocol = ($p_params['useprotocol'] === 'true') ? true : false;
     } else {
@@ -34,8 +31,11 @@ function smarty_function_url($p_params, &$p_smarty)
         $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? true : false;
     }
 
-    if (!$useprotocol) {
-        $urlString = preg_replace('@^https?:@', '', $urlString);
+    // gets the URL base
+    if ($useprotocol) {
+        $urlString = $context->url->base;
+    } else {
+        $urlString = $context->url->base_relative;
     }
 
     // appends the URI path and query values to the base
