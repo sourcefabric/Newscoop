@@ -243,7 +243,7 @@ class SystemPrefController extends Controller
                     // users garbage settings
                     $preferencesService->set('userGarbageActive', $data['userGarbageActive']);
                     $preferencesService->set('userGarbageDays', $data['userGarbageDays']);
-                    // smarty no protocol settings
+                    // smarty use protocol settings
                     $preferencesService->set('SmartyUseProtocol', $data['smartyUseProtocol']);
                 }
                 // General Settings
