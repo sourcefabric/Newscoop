@@ -400,8 +400,6 @@ abstract class CampURI
         return $relativeBase;
     }
 
-// fn getRelativeBase
-
     /**
      * Gets the base plus the path from the current URI.
      *
