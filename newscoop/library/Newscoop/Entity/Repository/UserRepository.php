@@ -243,23 +243,14 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return $qb->getQuery()->getSingleScalarResult();
         }
 
-        $qb->select('u, ' . $this->getUserPointsSelect());
-        $qb->orderBy('comments', 'DESC');
         $qb->addOrderBy('u.id', 'ASC');
         $qb->groupBy('u.id');
         $qb->setFirstResult($offset);
         $qb->setMaxResults($limit);
 
-        $users = array();
         $results = $qb->getQuery()->getResult();
-
-        foreach ($results as $result) {
-            $user = $result[0];
-            $user->setPoints((int) $result['comments']);
-            $users[] = $user;
-        }
-
-        return $users;
+        
+        return $results;
     }
 
     public function findVerifiedUsers($countOnly, $offset, $limit)
