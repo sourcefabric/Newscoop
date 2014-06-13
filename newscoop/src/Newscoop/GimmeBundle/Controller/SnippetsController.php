@@ -51,6 +51,7 @@ class SnippetsController extends FOSRestController
     public function getSnippetsAction(Request $request)
     {
         $show = $request->query->get('show', 'enabled');
+        $rendered = $request->query->get('rendered', 'false');
         $em = $this->container->get('em');
 
         $snippets = $em->getRepository('Newscoop\Entity\Snippet')
