@@ -37,7 +37,8 @@ class SnippetsController extends FOSRestController
      *         }
      *     },
      *     parameters={
-     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
+     *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
      *     },
      * )
      *
@@ -59,6 +60,12 @@ class SnippetsController extends FOSRestController
         $snippets = $paginator->paginate($snippets, array(
             'distinct' => false
         ));
+
+        if ($view = $request->attributes->get('_view')) {
+            if ($rendered == 'true') {
+                $view->setSerializerGroups(array('rendered'));
+            }
+        }
 
         return $snippets;
     }
