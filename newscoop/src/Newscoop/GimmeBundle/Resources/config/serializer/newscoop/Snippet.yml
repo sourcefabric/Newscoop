@@ -16,7 +16,7 @@ Newscoop\Entity\Snippet:
         fields:
             expose: true
             read_only: true
-            groups: ["details", "list"]
+            groups: ["details"]
             serialized_name: fields
             type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>
             accessor:
