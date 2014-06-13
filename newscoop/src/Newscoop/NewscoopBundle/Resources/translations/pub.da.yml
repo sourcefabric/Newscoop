@@ -1,77 +1,77 @@
 'Make sure to enter the Moderator Address below': null
-'click to see issues': null
-'Moderator Address': null
-'From Address': null
-'Use CAPTCHA to prevent spam?': null
-'Public allowed to comment?': null
-'Enable spam blocking?': null
-'The subscription settings for $1 could not be added.': null
+'click to see issues': 'klik for at se udgivelser'
+'Moderator Address': 'Moderator adresse'
+'From Address': 'Fra adresse'
+'Use CAPTCHA to prevent spam?': 'Brug CAPTCHA for at undgå spam?'
+'Public allowed to comment?': 'Tillad anonyme kommentarer?'
+'Enable spam blocking?': 'Brug spam blokering?'
+'The subscription settings for $1 could not be added.': 'Abonnements indstillingerne for $1 kunne ikke tilføjes.'
 'The publication name you specified conflicts with publication $1.': null
-'The publication alias you specified conflicts with publication $1.': null
-'Subscription defaults': null
-'Subscription Settings by Country': null
-'Set subscription settings for a country': null
-'Set subscription settings by country': null
-'Default time periods:': null
+'The publication alias you specified conflicts with publication $1.': 'Det angivne publikations alias er i brug af publikationen $1.'
+'Subscription defaults': 'Abonnements standarder'
+'Subscription Settings by Country': 'Abonnements indstillinger efter land'
+'Set subscription settings for a country': 'Rediger abonnements indstillinger for et land'
+'Set subscription settings by country': 'Rediger abonnements indstillinger efter land'
+'Default time periods:': 'Standard perioder:'
 'Country subscription settings updated.': null
 'Country subscription settings deleted.': null
 'Change country subscription settings': null
 'Are you sure you want to delete the subscription settings for $1?': null
-'Publication updated': null
+'Publication updated': 'Publikation opdateret'
 'Subscriber comments moderated?': null
 'Public comments moderated?': null
-'Comments enabled?': null
-'Comments enabled': null
+'Comments enabled?': 'Slå kommentarer til?'
+'Comments enabled': 'Kommentarer slået til'
 'Article comments default to enabled?': null
-'trial subscription': null
-'paid subscription': null
-'time units': null
-'one language': null
-'all languages': null
-'Trial subscriptions': null
+'trial subscription': 'prøve abonnement'
+'paid subscription': 'betalt abonnement'
+'time units': tidsenheder
+'one language': 'et sprog'
+'all languages': 'alle sprog'
+'Trial subscriptions': 'Prøve abonnementer'
 'Time unit cost per one section': null
-'Paid subscriptions': null
-'Default time period': null
-'Go To Issues': null
-'Delete publication $1': null
-'No publications.': null
-'Default Site Alias': null
-'URL Type': null
-'Country<BR><SMALL>(click to edit)</SMALL>': null
-'Delete alias $1': null
-'Configure publication': null
-'You do not have the right to edit publication information.': null
-'General attributes': null
-'You do not have the right to change publication information.': null
+'Paid subscriptions': 'Betalte abonnementer'
+'Default time period': 'Standard periode'
+'Go To Issues': 'Gå til udgivelser'
+'Delete publication $1': 'Slet publikationen $1'
+'No publications.': 'Ingen publikationer.'
+'Default Site Alias': 'Standard alias'
+'URL Type': 'URL type'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Land<BR><SMALL>(klik for at redigere)</SMALL>'
+'Delete alias $1': 'Slet alias $1'
+'Configure publication': 'Opsæt publikation'
+'You do not have the right to edit publication information.': 'Du har ikke rettigheder til at redigere publikationer.'
+'General attributes': 'Grundlæggende indstillinger'
+'You do not have the right to change publication information.': 'Du har ikke rettigheder til at redigere publikationer.'
 'The publication information could not be updated.': null
-'You do not have the right to delete publications.': null
+'You do not have the right to delete publications.': 'Du har ikke rettigheder til at slette publikationer.'
 'Are you sure you want to delete the publication $1?': null
-'Deleting publication': null
-'There are $1 subscription(s) left.': null
-'The publication $1 could not be deleted.': null
-'The publication could not be added.': null
-'You do not have the right to manage publications.': null
-'You must select a country.': null
-'Add new alias': null
-'Alias (click to edit)': null
-'Edit aliases': null
-'Publication Aliases': null
-'Adding new alias': null
-'The site alias $1 could not be added.': null
-'Another alias with the same name exists already.': null
-'Edit alias': null
-'Editing alias': null
-'The site alias $1 could not be modified.': null
-'Are you sure you want to delete the alias $1?': null
-'Deleting alias': null
-'The alias $1 could not be deleted.': null
-'$1 is the default publication alias, it can not be deleted.': null
-'You do not have the right to add publications.': null
-'There are $1 issue(s) left.': null
-'Time Unit': null
-Currency: null
-'Edit languages': null
-'Search engine optimization': null
-'Article title': null
-'Article keywords': null
-'Article topics': null
+'Deleting publication': 'Sletter publikation'
+'There are $1 subscription(s) left.': 'Der er $1 abonnement(er) tilbage.'
+'The publication $1 could not be deleted.': 'Publikationen $1 kunne ikke slettes.'
+'The publication could not be added.': 'Publikationen kunne ikke tilføjes.'
+'You do not have the right to manage publications.': 'Du har ikke rettigheder til at administrere publikationer.'
+'You must select a country.': 'Vælg et land.'
+'Add new alias': 'Tilføj nyt alias'
+'Alias (click to edit)': 'Alias (klik for at redigere)'
+'Edit aliases': 'Rediger alias'
+'Publication Aliases': 'Publikations alias'
+'Adding new alias': 'Tilføjer alias'
+'The site alias $1 could not be added.': 'Hjemmeside aliaset $1 kunne ikke tilføjes.'
+'Another alias with the same name exists already.': 'Der eksisterer allerede et alias med samme navn.'
+'Edit alias': 'Rediger alias'
+'Editing alias': 'Redigerer alias'
+'The site alias $1 could not be modified.': 'Hjemmeside aliaset $1 kunne ikke ændres.'
+'Are you sure you want to delete the alias $1?': 'Vil du slette aliaset $1?'
+'Deleting alias': 'Sletter alias'
+'The alias $1 could not be deleted.': 'Aliaset $1 kunne ikke slettes.'
+'$1 is the default publication alias, it can not be deleted.': '$1 er publikationens standard alias. Det kan ikke slettes.'
+'You do not have the right to add publications.': 'Du har ikke rettigheder til at tilføje publikationer.'
+'There are $1 issue(s) left.': 'Der er $1 udgivelse(r) tilbage.'
+'Time Unit': Tidsenhed
+Currency: Valuta
+'Edit languages': 'Rediger sprog'
+'Search engine optimization': 'Søgemaskine optimering'
+'Article title': 'Artikel titel'
+'Article keywords': 'Artikel nøgleord'
+'Article topics': 'Artikel emner'
