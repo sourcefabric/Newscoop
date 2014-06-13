@@ -50,7 +50,7 @@ Newscoop\Entity\Snippet:
             expose: true
             read_only: true
             type: integer
-            groups: ["details", "list"]
+            groups: ["details", "list", "rendered"]
             serialized_name: templateId
             accessor:
                 getter: getTemplateId
