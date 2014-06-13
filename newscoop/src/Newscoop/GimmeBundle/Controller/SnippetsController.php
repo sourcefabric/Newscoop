@@ -76,7 +76,7 @@ class SnippetsController extends FOSRestController
      *     parameters={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="Snippet id"},
      *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
-     *         {"name"="render", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
+     *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
      *     },
      *     output="\Newscoop\Entity\Snippet"
      * )
@@ -126,7 +126,7 @@ class SnippetsController extends FOSRestController
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
      *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
      *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
-     *         {"name"="render", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
+     *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
      *     }
      * )
      *
