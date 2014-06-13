@@ -5,13 +5,13 @@ Newscoop\Entity\Snippet:
             expose: true
             read_only: true
             type: integer
-            groups: ["details", "list"]
+            groups: ["details", "list", "rendered"]
             serialized_name: id
         name:
             expose: true
             read_only: true
             type: string
-            groups: ["details", "list"]
+            groups: ["details", "list", "rendered"]
             serialized_name: name
         fields:
             expose: true
@@ -54,3 +54,11 @@ Newscoop\Entity\Snippet:
             serialized_name: templateId
             accessor:
                 getter: getTemplateId
+        render:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["rendered"]
+            serialized_name: render
+            accessor:
+                getter: render

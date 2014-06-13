@@ -75,7 +75,8 @@ class SnippetsController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="Snippet id"},
-     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
+     *         {"name"="render", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
      *     },
      *     output="\Newscoop\Entity\Snippet"
      * )
@@ -91,6 +92,7 @@ class SnippetsController extends FOSRestController
     {
         // XXX Check if the SnippetID belongs to the articleNumber
         $show = $request->query->get('show', 'enabled');
+        $rendered = $request->query->get('rendered', 'false');
         $em = $this->container->get('em');
 
         $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
@@ -100,8 +102,10 @@ class SnippetsController extends FOSRestController
             throw new EntityNotFoundException('Result was not found.');
         }
 
-        if ($rendered) {
-            return $snippet->render();
+        if ($view = $request->attributes->get('_view')) {
+            if ($rendered == 'true') {
+                $view->setSerializerGroups(array('rendered'));
+            }
         }
 
         return $snippet;
@@ -121,7 +125,8 @@ class SnippetsController extends FOSRestController
      *     parameters={
      *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
      *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
-     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"}
+     *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
+     *         {"name"="render", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
      *     }
      * )
      *
@@ -133,6 +138,7 @@ class SnippetsController extends FOSRestController
     public function getSnippetsForArticleAction(Request $request, $number, $language)
     {
         $show = $request->query->get('show', 'enabled');
+        $rendered = $request->query->get('rendered', 'false');
         $em = $this->container->get('em');
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
         $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
@@ -151,6 +157,12 @@ class SnippetsController extends FOSRestController
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articleSnippets = $paginator->paginate($articleSnippets);
+
+        if ($view = $request->attributes->get('_view')) {
+            if ($rendered == 'true') {
+                $view->setSerializerGroups(array('rendered'));
+            }
+        }
 
         return $articleSnippets;
     }
