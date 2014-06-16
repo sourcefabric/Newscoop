@@ -1,0 +1,33 @@
+Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: false
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: id
+        templateFieldName:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: name
+        type:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: type
+        scope:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: scope
+        required:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["details", "list"]
+            serialized_name: required

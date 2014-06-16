@@ -1,0 +1,35 @@
+Newscoop\Entity\Snippet\SnippetField:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: false
+            read_only: true
+            type: integer
+            groups: ["details"]
+            serialized_name: id
+        data:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: data
+            accessor:
+                getter: getData
+    virtual_properties:
+        getFieldName:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: name
+        getFieldType:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: type
+        getFieldScope:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["scope"]
+            serialized_name: scope
