@@ -51,7 +51,7 @@ VALUES
 --- Start of Generic Snippet Template
 INSERT INTO `SnippetTemplates` (`Id`, `Name`, `Controller`, `TemplateCode`, `Favourite`, `Enabled`, `IconInactive`, `IconActive`, `Created`, `Modified`)
 VALUES
-	(4, 'Generic', NULL, '{{Generic}}', 0, 1, NULL, NULL, '2014-06-10 14:15:49', '2014-06-10 14:15:49');
+	(4, 'Generic', NULL, '{{Generic | raw}}', 0, 1, NULL, NULL, '2014-06-10 14:15:49', '2014-06-10 14:15:49');
 
 INSERT INTO `SnippetTemplateField` (`Id`, `Name`, `Type`, `Scope`, `TemplateId`, `Required`)
 VALUES
