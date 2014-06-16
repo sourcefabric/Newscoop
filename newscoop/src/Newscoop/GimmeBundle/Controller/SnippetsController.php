@@ -85,7 +85,6 @@ class SnippetsController extends FOSRestController
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="Snippet id"},
      *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
      *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"},
-     *         {"name"="includeBackend", "dataType"="string", "required"=false, "description"="Include the Backend Scope SnippetFields"}
      *     },
      *     output="\Newscoop\Entity\Snippet"
      * )
@@ -102,7 +101,6 @@ class SnippetsController extends FOSRestController
         // XXX Check if the SnippetID belongs to the articleNumber
         $show = $request->query->get('show', 'enabled');
         $rendered = $request->query->get('rendered', 'false');
-        $includeBackend = $request->query->get('includeBackend', 'false');
         $em = $this->container->get('em');
 
         $snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
@@ -113,9 +111,6 @@ class SnippetsController extends FOSRestController
         }
 
         if ($view = $request->attributes->get('_view')) {
-            if ($includeBackend == 'true') {
-                $view->setSerializerGroups(array('details', 'scope'));
-            }
             if ($rendered == 'true') {
                 $view->setSerializerGroups(array('rendered'));
             }
