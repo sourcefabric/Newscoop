@@ -32,50 +32,15 @@ class AuthorService
     }
 
     /**
-     * Get authors and users
-     *
-     * @param  string $term  Search term
-     * @param  int    $limit Max results
-     *
-     * @return array
-     */
-    public function getAuthorsAndUsers($term, $limit)
-    {
-        $qb = $this->em->createQueryBuilder();
-        $qbUsers = clone $qb;
-
-        $qb->select("trim(concat(aa.first_name, concat(' ', aa.last_name))) as name")
-            ->from('Newscoop\Entity\Author', 'aa')
-            ->where($qb->expr()->like('aa.last_name', ':term'))
-            ->orWhere($qb->expr()->like('aa.first_name', ':term'))
-            ->setParameter('term', $term . '%')
-            ->groupBy('aa.last_name', 'aa.first_name')
-            ->setMaxResults($limit);
-
-        $authorsArray = $qb->getQuery()->getArrayResult();
-
-        $qbUsers->select("trim(concat(u.first_name, concat(' ', u.last_name))) as name")
-            ->from('Newscoop\Entity\User', 'u')
-            ->where($qb->expr()->like('u.last_name', ':term'))
-            ->orWhere($qb->expr()->like('u.first_name', ':term'))
-            ->setParameter('term', $term . '%')
-            ->groupBy('u.last_name', 'u.first_name')
-            ->setMaxResults($limit);
-
-        $usersArray = $qbUsers->getQuery()->getArrayResult();
-
-        return array_merge($authorsArray, $usersArray);
-    }
-
-    /**
      * Get authors
      *
-     * @param  string $term  Search term
-     * @param  int    $limit Max results
+     * @param  string $term      Search term
+     * @param  int    $limit     Max results
+     * @param  bool   $alsoUsers Also return users
      *
      * @return array
      */
-    public function getAuthors($term = null, $limit = 0)
+    public function getAuthors($term = null, $limit = 0, $alsoUsers = false)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -95,6 +60,14 @@ class AuthorService
         }
 
         $authorsArray = $qb->getQuery()->getArrayResult();
+
+        if ($alsoUsers) {
+            $qbUsers = clone $qb;
+            $qbUsers->resetDQLPart('from');
+            $qbUsers->from('Newscoop\Entity\User', 'aa');
+            $usersArray = $qbUsers->getQuery()->getArrayResult();
+            $authorsArray = array_merge($authorsArray, $usersArray);
+        }
 
         return $authorsArray;
     }

@@ -29,11 +29,7 @@ class AuthorsController extends Controller
         $term = $request->query->get('term', null);
         $alsoUsers = $request->query->get('users', false);
 
-        if ($alsoUsers == true) {
-            $authors = $authorService->getAuthorsAndUsers($term, (int) $limit);
-        } else {
-            $authors = $authorService->getAuthors($term, (int) $limit);
-        }
+        $authors = $authorService->getAuthors($term, (int) $limit, $alsoUsers);
 
         return new JsonResponse($authors);
     }
