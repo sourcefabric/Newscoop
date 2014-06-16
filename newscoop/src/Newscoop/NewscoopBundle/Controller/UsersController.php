@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Newscoop\Entity\User;
 
 class UsersController extends Controller
@@ -24,6 +25,12 @@ class UsersController extends Controller
     public function indexAction(Request $request)
     {
         $userService = $this->get('user');
+        $blogService = $this->get('blog');
+        $user = $userService->getCurrentUser();
+        if ($blogService->isBlogger($user)) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->get('em');
 
         $registered = $userService->countBy(array('status' => User::STATUS_ACTIVE));
