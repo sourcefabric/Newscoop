@@ -25,13 +25,19 @@ class UsersList extends PaginatedBaseList
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
 
-        $tempList = array_map(function ($row) {
-            $user = $row[0];
-            $user->setPoints((int) $row['comments']);
+        $tempList = array_map(function ($user) use ($em) {
+            $update = false;
+            $userComments = (int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true);
+            if ($user->getPoints() != $userComments) {
+                $update = true;
+            }
+            $user->setPoints($userComments);
+            if ($update) {
+                $em->flush();
+            }
 
             return new \MetaUser($user);
         }, $list->items);
-
         $list->items = $tempList;
 
         return $list;
@@ -56,7 +62,7 @@ class UsersList extends PaginatedBaseList
             $this->criteria->groups = !empty($parameters['editor_groups']) ? array_map('intval', explode(',', $parameters['editor_groups'])) : array();
             switch ($filter) {
                 case 'active':
-                    $this->criteria->orderBy = array('comments' => 'desc');
+                    $this->criteria->orderBy = array('points' => 'desc');
                     $this->criteria->excludeGroups = true;
                     break;
 
@@ -71,7 +77,7 @@ class UsersList extends PaginatedBaseList
                     if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
                         $this->criteria->nameRange = range($matches[1], $matches[2]);
                     } else {
-                        CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                        \CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
                     }
                     break;
             }
