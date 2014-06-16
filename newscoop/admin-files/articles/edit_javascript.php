@@ -273,7 +273,8 @@ $(".aauthor").live('focus', function() {
           dataType: "json",
           data: {
             limit: 10,
-            term: request.term
+            term: request.term,
+            users: true
           },
           success: function (data) {
             response($.map(data, function(item) {

@@ -40,7 +40,7 @@ class AuthorService
      *
      * @return array
      */
-    public function getAuthors($term = null, $limit = 0, $alsoUsers = false)
+    public function getAuthors($term = null, $limit = null, $alsoUsers = false)
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -55,7 +55,7 @@ class AuthorService
             ->groupBy('aa.last_name', 'aa.first_name');
         }
 
-        if (is_numeric($limit) && $limit > 0) {
+        if (!is_null($limit)) {
             $qb->setMaxResults($limit);
         }
 
