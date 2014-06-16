@@ -20,7 +20,7 @@ Newscoop\Entity\Snippet:
             serialized_name: fields
             type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>
             accessor:
-                getter: getFields
+                getter: getFieldsWithoutBackend
         template:
             expose: true
             read_only: true
