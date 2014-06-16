@@ -25,9 +25,15 @@ class AuthorsController extends Controller
     {
         $authorService = $this->get('author');
 
-        $limit = $request->query->get('limit', 10);
-        $term = $request->query->get('term');
-        $authors = $authorService->getAuthors($term, (int) $limit);
+        $limit = $request->query->get('limit', 0);
+        $term = $request->query->get('term', null);
+        $alsoUsers = $request->query->get('users', false);
+
+        if ($alsoUsers == true) {
+            $authors = $authorService->getAuthorsAndUsers($term, (int) $limit);
+        } else {
+            $authors = $authorService->getAuthors($term, (int) $limit);
+        }
 
         return new JsonResponse($authors);
     }
