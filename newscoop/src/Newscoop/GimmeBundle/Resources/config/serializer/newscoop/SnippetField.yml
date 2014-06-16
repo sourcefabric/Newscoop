@@ -31,5 +31,5 @@ Newscoop\Entity\Snippet\SnippetField:
             expose: true
             read_only: true
             type: string
-            groups: ["details"]
+            groups: ["scope"]
             serialized_name: scope
