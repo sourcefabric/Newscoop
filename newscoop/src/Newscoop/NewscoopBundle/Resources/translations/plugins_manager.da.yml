@@ -1,37 +1,37 @@
-newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.manager: 'Plugin administration'
 newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
-newscoop.plugins_manager.installed_table.name: null
-newscoop.plugins_manager.installed_table.description: null
-newscoop.plugins_manager.installed_table.enabled: null
-newscoop.plugins_manager.installed_table.version: null
-newscoop.plugins_manager.installed_table.license: null
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
-newscoop.plugins_manager.installed_table.actions: null
-newscoop.plugins_manager.installed_table.update_plugin: null
-newscoop.plugins_manager.installed_table.remove_plugin: null
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
-newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
-newscoop.plugins_manager.form.submit: null
+newscoop.plugins_manager.public_plugins: 'Offentlige plugins'
+newscoop.plugins_manager.private_plugins: 'Private plugins'
+newscoop.plugins_manager.install.public: 'Installer ny plugin'
+newscoop.plugins_manager.installed_table.name: Navn
+newscoop.plugins_manager.installed_table.description: Beskrivelse
+newscoop.plugins_manager.installed_table.enabled: 'Slået til'
+newscoop.plugins_manager.installed_table.version: Version
+newscoop.plugins_manager.installed_table.license: Licens
+newscoop.plugins_manager.installed_table.installed_at: 'Installeret den'
+newscoop.plugins_manager.installed_table.updated_at: 'Opdateret den'
+newscoop.plugins_manager.installed_table.actions: Handlinger
+newscoop.plugins_manager.installed_table.update_plugin: Opdater
+newscoop.plugins_manager.installed_table.remove_plugin: Fjern
+newscoop.plugins_manager.installed_table.install_plugin: Installer
+newscoop.plugins_manager.installed_table.plugin_installed: Installeret
+newscoop.plugins_manager.upload.private: 'Upload privat plugin'
+newscoop.plugins_manager.search_for_plugins: 'Søg efter plugins'
+newscoop.plugins_manager.form.package: 'Pakken skal være en zip fil.'
+newscoop.plugins_manager.form.submit: Upload
 newscoop:
     datatable:
         table:
-            info: null
-            noentries: null
-            filtering: null
-            menu: null
+            info: 'Viser _START_ til _END_ af _TOTAL_'
+            noentries: 'Intet at vise'
+            filtering: '- filtreret fra _MAX_ opslag'
+            menu: 'Vis _MENU_ opslag'
         label:
-            search: null
-            filter: null
-            processing: null
-            last: null
-            next: null
-            first: null
-            previous: null
-            norecords: null
+            search: Søg
+            filter: Filtrér
+            processing: Arbejder...
+            last: Sidste
+            next: Næste
+            first: Første
+            previous: Forrige
+            norecords: 'Ingen opslag.'

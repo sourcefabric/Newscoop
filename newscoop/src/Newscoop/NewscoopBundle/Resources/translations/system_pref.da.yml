@@ -1,118 +1,118 @@
 newscoop:
     btn:
-        save: null
+        save: Gem
     preferences:
         error:
-            cache: null
+            cache: 'Ugyldigt: PHP %cache% skal slås til for at bruge skabelons caching.'
             replication: null
-            maxupload: null
-            geolocation: null
-            noaccess: null
-            latitude: null
-            longitude: null
-            cacheNotCleared: null
+            maxupload: 'Ugyldig værdi for maksimal størrelse på uploadede filer'
+            geolocation: 'Ugyldige Geolocation felter. Felterne skal indeholde tal. Breddegrad kan ikke være > 90 eller < -90. Længdegrad kan ikke være > 180 eller < -180.'
+            noaccess: 'Du har ikke rettigheder til at ændre systemindstillinger.'
+            latitude: 'Ugyldig breddegrad'
+            longitude: 'Ugyldig længdegrad'
+            cacheNotCleared: 'Fejl ved rensning af cache'
         success:
-            saved: null
-            cacheCleared: null
+            saved: 'Systemindstillinger opdateret.'
+            cacheCleared: 'Cache slettet'
         menu:
             general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
+            email: 'Email indstillinger'
+            editor: 'Editor indstillinger'
+            geolocation: 'Geolocation indstillinger'
+            fb: 'Facebook indstillinger'
+            media: 'Video indstillinger'
+            cache: 'Cache indstillinger'
+            other: 'Andre indstillinger'
+            recaptcha: 'reCAPTCHA indstillinger'
         btn:
             cleardatabasecache: null
         label:
-            title: null
-            header: null
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
-            sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
-            maxupload: null
+            title: 'System indstillinger'
+            header: Indstillinger
+            siteonline: 'Hjemmeside on-line:'
+            sitetitle: 'Hjemmeside titel:'
+            metakeywords: 'Hjemmeside meta nøgleord:'
+            metadescription: 'Hjemmeside meta beskrivelse:'
+            timezone: 'Tidszone:'
+            cacheengine: 'Database cache system:'
+            cacheenginehost: 'Database cache system vært:'
+            cacheengineport: 'Database cache system port:'
+            cachetemplate: 'Cache system for skabeloner:'
+            cacheimage: 'Billedcache levetid:'
+            allowrecovery: 'Tillad gendannelse af adgangskoder:'
+            secretkey: 'Hemmelig nøgle:'
+            sessionlifetime: 'Sessions levetid:'
+            sessionlifetimemsg: 'ifølge indstillinger i php.ini.'
+            separator: 'Separator for nøgleord:'
+            captcha: 'Antal mislykkede login forsøg før CAPTCHA:'
+            maxupload: 'Maksimal størrelse på uploadede filer:'
             maxuploadmsg: null
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
-            emailfrom: null
-            imageratio: null
-            imagewidth: null
-            imageheight: null
-            zoom: null
-            external: null
+            stats: 'Automatisk indsamling af statistik:'
+            smtphost: 'SMTP vært:'
+            smtpport: 'SMTP port:'
+            email: 'SMTP email ''fra'' adresse:'
+            emailfrom: 'Email adresse for beskeder fra systemet:'
+            imageratio: 'Forhold ved billedskalering:'
+            imagewidth: 'Bredde ved billedskalering:'
+            imageheight: 'Højde ved billedskalering:'
+            zoom: 'Brug zoom til billeder i artikler?'
+            external: 'Håndter abonnementer eksternt?'
             usereplication: null
-            serverdb: null
+            serverdb: 'Newscoop online server database'
             replicationhost: null
             replicationuser: null
             replicationpw: null
             replicationport: null
             filter: null
-            cron: null
-            mysqlpath: null
-            mysqlpathmsg: null
-            latitude: null
-            longitude: null
-            zoomlevel: null
-            defaultwidth: null
-            defaultheight: null
+            cron: 'Kør planlagte opgaver eksternt?'
+            mysqlpath: 'MySQL klient kommando sti'
+            mysqlpathmsg: 'for at hente geo-names data'
+            latitude: 'Breddegrad for midtpunkt på kort:'
+            longitude: 'Længdegrad for midtpunkt på kort:'
+            zoomlevel: 'Zoom niveau for kort:'
+            defaultwidth: 'Standard bredde for kort:'
+            defaultheight: 'Standard højde for kort:'
             css: null
-            autofocus: null
-            zoomautofocus: null
+            autofocus: 'Brug auto-fokus som standard for kort:'
+            zoomautofocus: 'Maksimal zoom for autofokus:'
             borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
-            nominatimsearch: null
-            preflanguage: null
+            mapprovider: 'Tillad Google Streets kort udbyder:'
+            mapquest: 'Tillad MapQuest kort udbyder:'
+            openstreet: 'Tillad OpenStreet kort udbyder:'
+            defaultmapprovider: 'Standard kort udbyder:'
+            nominatimsearch: 'Brug MapQuest Nominatim søgning:'
+            preflanguage: 'Foretrukket adresse sprog:'
             markerdir: null
-            defaultmarker: null
-            popupwidth: null
-            popupheight: null
-            youtubewidth: null
-            youtubeheight: null
-            vimeowidth: null
-            vimeoheight: null
-            flashwidth: null
-            flashheight: null
-            flashserver: null
-            flashdir: null
-            apikey: null
-            appid: null
+            defaultmarker: 'Standard kort markør:'
+            popupwidth: 'Mindste bredde for kort popup:'
+            popupheight: 'Mindste højde for kort popup:'
+            youtubewidth: 'Youtube standard bredde:'
+            youtubeheight: 'Youtube standard højde:'
+            vimeowidth: 'Vimeo standard bredde:'
+            vimeoheight: 'Vimeo standard højde:'
+            flashwidth: 'Flash standard bredde:'
+            flashheight: 'Flash standard højde:'
+            flashserver: 'Lokal Flash server:'
+            flashdir: 'Lokal Flash mappe:'
+            apikey: 'API nøgle:'
+            appid: 'App ID:'
             fbsecret: null
-            recaptchapublickey: null
-            recaptchaprivatekey: null
-            recaptchasecure: null
-            disabled: null
-            yesoption: null
-            nooption: null
-            geosearch: null
+            recaptchapublickey: 'Offentlig nøgle'
+            recaptchaprivatekey: 'Privat nøgle'
+            recaptchasecure: 'Hemmelig URL for reCAPTCHA?'
+            disabled: 'slået fra'
+            yesoption: Ja
+            nooption: Nej
+            geosearch: 'Brug lokal GeoNames søgning:'
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
         popover:
             cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cacheimage: null
-            cachetemplate: null
+            cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
+            cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'
+            cacheimage: 'Perioden billeder er i cachen, fra 30 sekunder til uendeligt.'
+            cachetemplate: 'Vælg DB for at bruge cache for skabeloner.'
             recovery: null
             secret: null
             separator: null

@@ -1,13 +1,13 @@
-Recommended: null
-'There are no more comments': null
-'Show more comments': null
-Unrecommend: null
-'Save comment': null
-Recommend: null
-'Comment updated.': null
-'Comment saved.': null
-'Comments updated.': null
-'Post a Comment': null
-From: null
-'Reply to comment': null
-'No comments posted.': null
+Recommended: Anbefalet
+'There are no more comments': 'Der er ikke flere kommentarer'
+'Show more comments': 'Vis flere kommentarer'
+Unrecommend: 'Anbefal ikke'
+'Save comment': 'Gem kommentar'
+Recommend: Anbefalet
+'Comment updated.': 'Kommentaren er opdateret.'
+'Comment saved.': 'Kommentaren er gemt.'
+'Comments updated.': 'Kommentarer opdateret'
+'Post a Comment': 'Skriv en kommentar'
+From: Fra
+'Reply to comment': 'Svar på komentaren'
+'No comments posted.': 'Der er ingen kommentarer'
