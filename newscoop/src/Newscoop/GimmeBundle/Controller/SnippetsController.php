@@ -84,7 +84,7 @@ class SnippetsController extends FOSRestController
      *     parameters={
      *         {"name"="id", "dataType"="integer", "required"=true, "description"="Snippet id"},
      *         {"name"="show", "dataType"="string", "required"=false, "description"="Define which snippets to show, 'enabled', 'disabled', 'all'. Defaults to 'enabled'"},
-     *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"}
+     *         {"name"="rendered", "dataType"="string", "required"=false, "description"="Return a Rendered Snippet"},
      *         {"name"="includeBackend", "dataType"="string", "required"=false, "description"="Include the Backend Scope SnippetFields"}
      *     },
      *     output="\Newscoop\Entity\Snippet"
