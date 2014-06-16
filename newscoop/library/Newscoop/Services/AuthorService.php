@@ -34,37 +34,42 @@ class AuthorService
     /**
      * Get authors
      *
-     * @param  string $term  Search term
-     * @param  int    $limit Max results
+     * @param  string $term      Search term
+     * @param  int    $limit     Max results
+     * @param  bool   $alsoUsers Also return users
      *
      * @return array
      */
-    public function getAuthors($term, $limit)
+    public function getAuthors($term = null, $limit = 0, $alsoUsers = false)
     {
         $qb = $this->em->createQueryBuilder();
-        $qbUsers = clone $qb;
 
         $qb->select("trim(concat(aa.first_name, concat(' ', aa.last_name))) as name")
-            ->from('Newscoop\Entity\Author', 'aa')
+            ->from('Newscoop\Entity\Author', 'aa');
+
+        if ($term !== null && trim($term) !== '') {
+            $qb
             ->where($qb->expr()->like('aa.last_name', ':term'))
             ->orWhere($qb->expr()->like('aa.first_name', ':term'))
             ->setParameter('term', $term . '%')
-            ->groupBy('aa.last_name', 'aa.first_name')
-            ->setMaxResults($limit);
+            ->groupBy('aa.last_name', 'aa.first_name');
+        }
+
+        if (is_numeric($limit) && $limit > 0) {
+            $qb->setMaxResults($limit);
+        }
 
         $authorsArray = $qb->getQuery()->getArrayResult();
 
-        $qbUsers->select("trim(concat(u.first_name, concat(' ', u.last_name))) as name")
-            ->from('Newscoop\Entity\User', 'u')
-            ->where($qb->expr()->like('u.last_name', ':term'))
-            ->orWhere($qb->expr()->like('u.first_name', ':term'))
-            ->setParameter('term', $term . '%')
-            ->groupBy('u.last_name', 'u.first_name')
-            ->setMaxResults($limit);
+        if ($alsoUsers) {
+            $qbUsers = clone $qb;
+            $qbUsers->resetDQLPart('from');
+            $qbUsers->from('Newscoop\Entity\User', 'aa');
+            $usersArray = $qbUsers->getQuery()->getArrayResult();
+            $authorsArray = array_merge($authorsArray, $usersArray);
+        }
 
-        $usersArray = $qbUsers->getQuery()->getArrayResult();
-
-        return array_merge($authorsArray, $usersArray);
+        return $authorsArray;
     }
 
     /**
