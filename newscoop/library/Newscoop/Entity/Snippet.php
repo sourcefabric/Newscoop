@@ -210,10 +210,22 @@ class Snippet
     /**
      * Getter for fields
      *
+     * @param string $includeBackend Includes the Backend Scope
+     *
      * @return Doctrine\Common\Collections\ArrayCollection
      */
-    public function getFields()
+    public function getFields($includeBackend = false)
     {
+        if (!$includeBackend) {
+            return $this->fields->filter(
+                function ($field) {
+                    if ($field->getFieldScope() == 'frontend') {
+                        return $field;
+                    }
+                }
+            );
+        }
+
         return $this->fields;
     }
     
