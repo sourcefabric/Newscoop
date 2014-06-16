@@ -93,7 +93,7 @@ class SnippetsController extends FOSRestController
      * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
-     * @View(serializerGroups={"details"})
+     * @View(serializerGroups={"details", "scopeNoBackend"})
      *
      * @return array
      */

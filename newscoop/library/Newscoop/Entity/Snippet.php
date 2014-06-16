@@ -228,6 +228,15 @@ class Snippet
 
         return $this->fields;
     }
+
+    /**
+     * Getter for fields with the Backend scope
+     *
+     * @return Doctrine\Common\Collections\ArrayCollection
+     */
+     public function getFieldsWithBackend() {
+         return $this->getFields(true);
+     }
     
     /**
      * Add Snippet fields

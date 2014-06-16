@@ -13,14 +13,22 @@ Newscoop\Entity\Snippet:
             type: string
             groups: ["details", "list", "rendered"]
             serialized_name: name
-        fields:
+        fieldsNoBackend:
             expose: true
             read_only: true
-            groups: ["details"]
+            groups: ["scopeNoBackend"]
             serialized_name: fields
             type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>
             accessor:
                 getter: getFields
+        fieldsWithBackend:
+            expose: true
+            read_only: true
+            groups: ["scope"]
+            serialized_name: fields
+            type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetField>
+            accessor:
+                getter: getFieldsWithBackend
         template:
             expose: true
             read_only: true
