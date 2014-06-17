@@ -1,0 +1,1 @@
+ALTER TABLE  `Articles` ADD INDEX  `articles_pub_issue_section_type` (  `IdPublication` ,  `IdLanguage` ,  `Published` ,  `NrIssue` ,  `NrSection` ,  `Type` );

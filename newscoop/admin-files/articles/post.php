@@ -186,5 +186,15 @@ foreach ($articleFields as $dbColumnName => $text) {
 Log::ArticleMessage($articleObj, $translator->trans('Content edited', array(), 'articles'), $g_user->getUserId(), 37);
 ArticleIndex::RunIndexer(3, 10, true);
 
+if (CampTemplateCache::factory()) {
+    CampTemplateCache::factory()->update(array(
+        'language' => $articleObj->getLanguageId(),
+        'publication' => $articleObj->getPublicationId(),
+        'issue' => $articleObj->getIssueNumber(),
+        'section' => $articleObj->getSectionNumber(),
+        'article' => $articleObj->getArticleNumber(),
+    ), !($articleObj->isPublished() || $articleObj->m_published));
+}
+
 echo json_encode($data);
 exit;
