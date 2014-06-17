@@ -787,9 +787,18 @@ final class MetaArticle extends MetaDbObject {
      * @return bool
      */
     public function has_image($p_imageIndex) {
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-        null, $p_imageIndex);
-        return (int)$articleImage->exists();
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('has_article_image', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
+
+        if ($cacheService->contains($cacheKey)) {
+            $exists = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $p_imageIndex);
+            $exists = (int)$articleImage->exists();
+            $cacheService->save($cacheKey, $exists);
+        }
+
+        return $exists;
     }
 
 
@@ -802,12 +811,29 @@ final class MetaArticle extends MetaDbObject {
      * @return MetaImage
      */
     public function image($p_imageIndex) {
-        $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-        null, $p_imageIndex);
-        if (!$articleImage->exists()) {
-            return new MetaImage();
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
+
+        if ($cacheService->contains($cacheKey)) {
+            $articleImage = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(), null, $p_imageIndex);
+            $cacheService->save($cacheKey, $articleImage);
         }
-        return new MetaImage($articleImage->getImageId());
+
+        $imageCacheKey = $cacheService->getCacheKey(array('MetaImage', $articleImage->getImageId()), 'image');
+        if ($cacheService->contains($imageCacheKey)) {
+            $metaImage = $cacheService->fetch($imageCacheKey);
+        } else {
+            if (!$articleImage->exists()) {
+                $metaImage = new MetaImage();
+            } else {
+                $metaImage = new MetaImage($articleImage->getImageId());
+            }
+            $cacheService->save($imageCacheKey, $metaImage);
+        }
+
+        return $metaImage;
     }
 
     /**

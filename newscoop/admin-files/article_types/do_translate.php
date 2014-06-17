@@ -37,6 +37,9 @@ if ($correct) {
     $type = new ArticleType($f_type_id);
     $created = $type->setName($f_type_language_id, $f_type_translation_name);
     if ($created) {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_type');
+        
         \Zend_Registry::get('container')->getService('dispatcher')
             ->dispatch('article_type.translate', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article_type' => $type

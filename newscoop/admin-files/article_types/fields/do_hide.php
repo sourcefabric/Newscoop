@@ -24,6 +24,9 @@ $errorMsgs = array();
 $articleTypeField = new ArticleTypeField($articleTypeName, $articleTypeFieldName);
 $articleTypeField->setStatus($status);
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article_type');
+
 camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 
 ?>
