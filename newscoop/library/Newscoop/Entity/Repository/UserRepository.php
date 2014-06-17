@@ -249,7 +249,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->setMaxResults($limit);
 
         $results = $qb->getQuery()->getResult();
-        
+
         return $results;
     }
 
@@ -750,21 +750,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return array($qb, $list->count);
         }
 
-        $list->items = array_map(function ($user) {
-            $update = false;
-            $userComments = (int) $this->getUserPoints($user, true);
-            if ($user->getPoints() != $userComments) {
-                $update = true;
-            }
-            $user->setPoints($userComments);
-            if ($update) {
-                $this->getEntityManager()->flush();
-            }
-
-            return $user;
-        }, $qb->getQuery()->getResult());
-
-        return $list;
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -787,3 +773,4 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere($orx);
     }
 }
+

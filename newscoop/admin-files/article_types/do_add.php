@@ -46,6 +46,8 @@ if ($correct) {
 
     if ($correct) {
         $created = $articleType->create();
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_type');
         camp_html_goto_page("/$ADMIN/article_types/fields/add.php?f_article_type=$f_name");
     }
 }

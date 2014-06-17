@@ -24,6 +24,9 @@ $articleType = new ArticleType($articleTypeName);
 if ($articleType->exists()) {
     $articleType->setCommentsEnabled(!$articleType->commentsEnabled());
 
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('article_type');
+
     \Zend_Registry::get('container')->getService('dispatcher')
         ->dispatch('article_type.comments_management', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'article_type' => $articleType,

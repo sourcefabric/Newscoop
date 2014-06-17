@@ -84,3 +84,4 @@ class UsersList extends PaginatedBaseList
         }
     }
 }
+

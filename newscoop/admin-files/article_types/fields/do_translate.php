@@ -43,6 +43,9 @@ if ($correct) {
 	$field = new ArticleTypeField($f_article_type, $f_field_id);
 	$created = $field->setName($f_field_language_id, $f_field_translation_name);
 	if ($created) {
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    	$cacheService->clearNamespace('article_type');
+    	
 		camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=". $f_article_type);
 		exit;
 	}
@@ -82,7 +85,8 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
+	<INP
+	UT TYPE="button" class="button" NAME="OK" VALUE="<?php  echo $translator->trans('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/article_types/fields/?f_article_type=<?php p($f_article_type); ?>'">
 	</DIV>
 	</TD>
 </TR>
