@@ -2829,7 +2829,7 @@ class Article extends DatabaseObject {
         switch ($leftOperand) {
         case 'keyword':
             $conditionOperation['symbol'] = 'LIKE';
-            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            $conditionOperation['right'] = $p_param->getRightOperand().'%';
             break;
         case 'onfrontpage':
             $conditionOperation['right'] = ($p_param->getRightOperand() == 1) ? 'Y' : 'N';

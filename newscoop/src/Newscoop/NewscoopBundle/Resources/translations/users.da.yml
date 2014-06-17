@@ -1,92 +1,92 @@
 'Password confirmation does not match your password.': null
-'Password Confirmation': null
-Website: null
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
+'Password Confirmation': 'Bekræftelse af adgangskode'
+Website: Website
+Twitter: Twitter
+'Save profile': 'Gem profil'
+'Profile image': Profilbillede
+Organisation: Organisation
 'Last Name Public': null
-Google+: null
-Geolocation: null
-Gender: null
+Google+: Google+
+Geolocation: 'Geo placering'
+Gender: Køn
 'First Name Public': null
-Facebook: null
-'Date of birth': null
+Facebook: Facebook
+'Date of birth': Fødselsdato
 'Allow sending emails': null
-'About me': null
+'About me': 'Om mig'
 'User with email %s is registered already.': null
-'Username is used. Please use another one.': null
-Continue: null
+'Username is used. Please use another one.': 'Brugernavnet er i brug. Vælg et andet.'
+Continue: Fortsæt
 'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Send email to user:': null
-'No users found.': null
-'No records found.': null
-'No entries to show': null
-'Display _MENU_ records': null
-'Are you sure you want to {action}?': null
-'Active Logins': null
-' - filtering from _MAX_ records': null
-'User renamed.': null
-'User attributes': null
-'Rename user $1': null
-'Username is used already': null
-'User with id $1 not found': null
-'User was deleted.': null
-'User saved': null
+'send confirmation email': 'send bekræftelses email'
+'edit user': 'rediger bruger'
+'delete user': 'Slet bruger'
+'Verified profile': 'Bekræftet profil'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'VISER _START_ til _END_ af _TOTAL_ opslag'
+'Send email to user:': 'Send email til bruger:'
+'No users found.': 'Ingen brugere fundet. '
+'No records found.': 'Ingen opslag.'
+'No entries to show': 'Intet at vise'
+'Display _MENU_ records': 'Vis _MENU_ opslag'
+'Are you sure you want to {action}?': 'Vil du {action}?'
+'Active Logins': 'Aktive logins'
+' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
+'User renamed.': 'Bruger omdøbt.'
+'User attributes': 'Bruger egenskaber'
+'Rename user $1': 'Omdøb bruger $1'
+'Username is used already': 'Brugernavnet er i brug'
+'User with id $1 not found': 'Bruger med id $1 findes ikke'
+'User was deleted.': 'Bruger slettet.'
+'User saved': 'Bruger gemt'
 'User id not specified': null
-'User $1 created': null
-'Send confirm email': null
-'Profile saved.': null
-Picture: null
-'Password updated': null
-None: null
-'New confirmation email was sent to user.': null
-'Email is used already': null
-'Edit your password': null
-'Edit user $1': null
-'Edit subscriptions': null
-'Edit profile': null
-'Edit permissions': null
-'Create new account': null
-'Comment ban settings': null
-'Ban for user $1 saved.': null
-'User account is active': null
-'Allow users profile to be publicly displayed': null
+'User $1 created': 'Bruger $1 oprettet'
+'Send confirm email': 'Send bekræftelses email'
+'Profile saved.': 'Profil gemt.'
+Picture: Billede
+'Password updated': 'Adgangskode opdateret'
+None: Ingen
+'New confirmation email was sent to user.': 'Ny bekræftelses email sendt til brugeren.'
+'Email is used already': 'Email er i brug'
+'Edit your password': 'Skift din adgangskode'
+'Edit user $1': 'Rediger bruger $1'
+'Edit subscriptions': 'Rediger abonnementer'
+'Edit profile': 'Rediger profil'
+'Edit permissions': 'Rediger rettigheder'
+'Create new account': 'Opret ny konto'
+'Comment ban settings': 'Indstillinger for kommentar blokering'
+'Ban for user $1 saved.': 'Blokering for bruger $1 blev gemt.'
+'User account is active': 'Brugerkonto er aktiv'
+'Allow users profile to be publicly displayed': 'Tillad offentlige bruger profiler'
 'Allow user access to login to site backend': null
-Templates: null
-Username: null
-'Last Name': null
-'First Name': null
-Email: null
-'You were logged out.': null
+Templates: Skabeloner
+Username: Brugernavn
+'Last Name': Efternavn
+'First Name': Fornavn
+Email: Email
+'You were logged out.': 'Du blev logget ud.'
 'Newscoop Subhead': null
-Filters: null
-'Add new Author': null
-'Loading Data': null
-'Delete author type': null
-'Cannot remove author type.': null
-'Cannot remove author alias.': null
-'Author alias removed.': null
-'Are you sure you want to delete this author?': null
-'Are you sure you want to delete this author alias?': null
-'All Author Types': null
-'Add author type': null
-'You do not have the permission to change authors.': null
-'Please fill at least first name and last name.': null
-'Cannot add author type, this type already exists.': null
-'Author type removed.': null
-'Author type must be at least three characters long.': null
-'Author type added.': null
-'Are you sure you want to delete this author type?': null
-'User may change authors': null
+Filters: Filtre
+'Add new Author': 'Tilføj ny forfatter'
+'Loading Data': 'Loader data'
+'Delete author type': 'Slet forfattertype'
+'Cannot remove author type.': 'Forfatter typen kunne ikke fjernes.'
+'Cannot remove author alias.': 'Forfatter alias kunne ikke fjernes.'
+'Author alias removed.': 'Forfatter alias fjernet.'
+'Are you sure you want to delete this author?': 'Vil du slette denne forfatter?'
+'Are you sure you want to delete this author alias?': 'Vil du slette dette forfatter alias?'
+'All Author Types': 'Alle forfatter typer'
+'Add author type': 'Tilføj forfatter type'
+'You do not have the permission to change authors.': 'Du har ikke tilladelser til at ændre forfattere.'
+'Please fill at least first name and last name.': 'Udfyld mindst fornavn og efternavn.'
+'Cannot add author type, this type already exists.': 'Forfatter type kunne ikke oprettes, typen eksisterer allerede.'
+'Author type removed.': 'Forfatter type fjernet.'
+'Author type must be at least three characters long.': 'Forfatter type skal være mindst tre tegn.'
+'Author type added.': 'Forfatter type tilføjet.'
+'Are you sure you want to delete this author type?': 'Vil du slette denne forfatter type?'
+'User may change authors': 'Bruger må ændre forffatere'
 'Unable to add new image, target directory is not writable.': null
-'Author saved.': null
-'Author deleted.': null
+'Author saved.': 'Forfatter gemt.'
+'Author deleted.': 'Forfatter slettet.'
 'Enable Firefox spell checking by default': null
 'User may use the editor status bar': null
 'User may clear up the system cache': null
@@ -98,28 +98,28 @@ Filters: null
 'User may move articles': null
 'User may find and replace': null
 'User may change system preferences': null
-'User may attach topics to articles': null
+'User may attach topics to articles': 'Bruger må tilføje emner til artikler'
 'User may attach images to articles': null
 'User may add special characters': null
 'That user name already exists, please choose a different login name.': null
 'User may delete article attachments': null
 'User may change article attachments': null
 'User may add article attachments': null
-'You do not have the right to create user accounts.': null
+'You do not have the right to create user accounts.': 'Du har ikke rettigheder til at oprette brugerkonti.'
 'You must select a $1': null
-'The password must be at least 6 characters long and both passwords should match.': null
+'The password must be at least 6 characters long and both passwords should match.': 'Adgangskoden skal være mindst 6 tegn lang og adgangskoderne skal være ens.'
 'The user account could not be created.': null
 'User account $1 was created successfully.': null
-'You do not have the right to change user account permissions.': null
-'You do not have the right to change user account information.': null
-'The password you typed is incorrect.': null
-'You do not have the right to delete user accounts.': null
+'You do not have the right to change user account permissions.': 'Du har ikke rettigheder til at redigere tilladelser for brugerkonti.'
+'You do not have the right to change user account information.': 'Du har ikke rettigheder til at redigere brugerkonti.'
+'The password you typed is incorrect.': 'Forkert adgangskode.'
+'You do not have the right to delete user accounts.': 'Du har ikke rettigheder til at slette brugerkonti.'
 'User account $1 was deleted successfully.': null
 'The IP Group $1 has been created.': null
 'There was an error creating the IP address group.': null
 'The IP address group $1 has been deleted.': null
 'User $1 information was changed successfully.': null
-'User Type': null
+'User Type': Brugertype
 'The IP address group $1:$2 conflicts with another existing group.': null
 'User may add/change publications': null
 'Invalid value of user type parameter': null
@@ -134,7 +134,7 @@ Filters: null
 'User may add images': null
 'User may change images': null
 'User may delete images': null
-'User may delete templates': null
+'User may delete templates': 'Bruger må slette skabeloner'
 'User may add/change staff accounts and passwords': null
 'User may add/change subscribers accounts and passwords': null
 'User may delete staff accounts': null
@@ -142,14 +142,14 @@ Filters: null
 'User may manage account types': null
 'User may add/change article types': null
 'User may delete article types': null
-'User may manage templates': null
+'User may manage templates': 'Bruger må administrere skabeloner'
 'User may add/change country entries': null
 'User may add languages and manage language information': null
-'User may delete languages': null
+'User may delete languages': 'Bruger må slette sprog'
 'User may view audit logs': null
 'User may delete country entries': null
 'User may manage localizer': null
-'User may publish articles': null
+'User may publish articles': 'Bruger må udgive artikler'
 'User may manage topics': null
 'User may use bold': null
 'User may use italic': null
@@ -183,40 +183,40 @@ Miscellaneous: null
 'Administrative tasks': null
 'User will be notified on several events': null
 'Editor Miscellaneous Settings': null
-'No such user account.': null
-'User image (full-size)': null
+'No such user account.': 'Bruger konto findes ikke.'
+'User image (full-size)': 'Brugerfoto (fuld størrelse)'
 users:
     label:
-        title: null
+        title: 'Bruger søgning'
     menu:
-        manage: null
-    created: null
-    updated: null
+        manage: Brugere
+    created: Oprettet
+    updated: Opdateret
     status:
-        status: null
-        registered: null
-        pending: null
-        deleted: null
-        active: null
+        status: Status
+        registered: Registreret
+        pending: Afventer
+        deleted: Slettet
+        active: Aktive
     table:
         actions:
-            actions: null
-            edit: null
-            resend_email: null
-            rename: null
-            remove: null
-        confirm_remove: null
+            actions: Handlinger
+            edit: Rediger
+            resend_email: 'Gensend aktiverings email'
+            rename: Omdøb
+            remove: Fjern
+        confirm_remove: 'Er du sikker på du vil slette brugeren?'
         table_messages:
-            page: null
-            perPageText: null
-            pageText: null
-            recordCountPageBoundTemplate: null
-            recordCountPageUnboundedTemplate: null
-            recordCountTotalTemplate: null
-            recordCountFilteredTemplate: null
-            recordCountText: null
-            recordCountTextTemplate: null
-            recordCountTemplate: null
-            processingText: null
+            page: Side
+            perPageText: 'Vis:'
+            pageText: 'Sider:'
+            recordCountPageBoundTemplate: '{pageLowerBound} til {pageUpperBound} af'
+            recordCountPageUnboundedTemplate: '{recordsShown} af'
+            recordCountTotalTemplate: '{recordsQueryCount} {collectionName}'
+            recordCountFilteredTemplate: ' ({recordsTotal} i alt)'
+            recordCountText: Viser
+            recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
+            recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
+            processingText: Arbejder...
     chart:
         title: null

@@ -1,23 +1,23 @@
-'You have reached the error page': null
-'Stack trace:': null
-'Request Parameters:': null
-'Page not found': null
-'Exception information:': null
-'Application error': null
-'An error occurred': null
-'Newscoop has encountered a problem.': null
-'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': null
-'What were you trying to do when this happened?': null
-'Description:': null
-'We are sorry for the inconvenience.': null
-'Show error details': null
-'Hide error details': null
-'Error Report': null
-'Backtrace:': null
-'Error ID:': null
-'Error Message:': null
-'Error Number:': null
-'Error String:': null
-'Software:': null
-'We are sorry, but there was a problem sending your bug report.': null
-'Simply copy and paste the error report below and send it to:': null
+'You have reached the error page': 'Du er havnet på fejl siden'
+'Stack trace:': 'Stack trace:'
+'Request Parameters:': 'Request Parameters:'
+'Page not found': 'Siden findes ikke'
+'Exception information:': 'Exception information:'
+'Application error': Programfejl
+'An error occurred': 'Der skete en fejl'
+'Newscoop has encountered a problem.': 'Newscoop er stødt på et problem.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'Beskriv hvad der skete. Det hjælper Newscoop holdet med at undersøge problemet og fastslå årsagen.'
+'What were you trying to do when this happened?': 'Hvad prøvede du at gøre da det skete?'
+'Description:': 'Beskrivelse:'
+'We are sorry for the inconvenience.': 'Vi beklager ulejligheden.'
+'Show error details': 'Vis information om fejlen'
+'Hide error details': 'Skjul information om fejlen'
+'Error Report': 'Fejl rapport'
+'Backtrace:': 'Backtrace:'
+'Error ID:': 'Fejl ID:'
+'Error Message:': 'Fejl besked:'
+'Error Number:': 'Fejl nummer:'
+'Error String:': 'Fejl streng:'
+'Software:': 'Software:'
+'We are sorry, but there was a problem sending your bug report.': 'Fejl rapporten kunne ikke sendes.'
+'Simply copy and paste the error report below and send it to:': 'Kopier nedenstående fejl rapport og send den til:'

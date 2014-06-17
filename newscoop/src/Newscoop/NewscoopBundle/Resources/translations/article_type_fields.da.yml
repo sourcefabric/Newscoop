@@ -1,57 +1,57 @@
 'Usage at automatic statistics': null
-'Event Color': null
-'You must input a number greater than $1 and less than $2 into the $3 field.': null
-'You do not have the right to translate article types.': null
-'You do not have the right to reorder article types.': null
-'You do not have the right to reassign article type fields.': null
-'You do not have the right to manage article types.': null
-'You do not have the right to hide article types.': null
-'You do not have the right to delete article types.': null
-'Small ($1 pixels)': null
-'Medium ($1 pixels)': null
-'Large ($1 pixels)': null
-'Hide human-readable field names': null
-'Editor size': null
-'Edit and translate human-readable field names': null
-Custom: null
+'Event Color': 'Farve på begivenhed'
+'You must input a number greater than $1 and less than $2 into the $3 field.': 'Indtast et tal større end $1 og mindre end $2 i $3 feltet.'
+'You do not have the right to translate article types.': 'Du har ikke rettigheder til at oversætte artikel typer.'
+'You do not have the right to reorder article types.': 'Du har ikke rettigheder til at ændre sortering for artikel typer.'
+'You do not have the right to reassign article type fields.': 'Du har ikke rettigheder til at redigere felter i artikel typer.'
+'You do not have the right to manage article types.': 'Du har ikke rettigheder til at administrere artikel typer.'
+'You do not have the right to hide article types.': 'Du har ikke rettigheder til at skjule artikel typer.'
+'You do not have the right to delete article types.': 'Du har ikke rettigheder til at slette artikel typer.'
+'Small ($1 pixels)': 'Lille ($1 pixel)'
+'Medium ($1 pixels)': 'Medium ($1 pixel)'
+'Large ($1 pixels)': 'Stor ($1 pixel)'
+'Hide human-readable field names': 'Skjul læsevenlige feltnavne'
+'Editor size': 'Editor størrelse'
+'Edit and translate human-readable field names': 'Rediger og oversæt læsevenlige feltnavne'
+Custom: Brugerdefineret
 'Characters limit': null
-'The template name may only contain letters and the underscore (_) character.': null
+'The template name may only contain letters and the underscore (_) character.': 'Skabelonens navn må kun indeholde bogstaver og underscore tegnet (_)'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
-'The property $1 is already in use.': null
-Precision: null
-'Can not convert the field $1 from $2 to type $3.': null
-'Are you sure you want to make $1 a $2 field?': null
+'The property $1 is already in use.': 'Egenskaben $1 er allerede i brug.'
+Precision: Præcision
+'Can not convert the field $1 from $2 to type $3.': 'Feltet $1 kan ikke konverteres fra type $2 til type $3.'
+'Are you sure you want to make $1 a $2 field?': 'Vil du lave $1 til et $2 felt?'
 'Is Content': null
-'Back to Article Types List': null
-show: null
-hide: null
-'You must enter a name for the field.': null
-'You must choose a language for the field.': null
-'You do not have the right to rename article type fields.': null
-'You do not have the right to reassign a field type.': null
-'Translating field': null
-'The translation could not be added.': null
-'The field $1 does not exist.': null
-'The $1 field may only contain letters and underscore (_) character.': null
-'Template Field Name': null
-Show/Hide: null
-'Renaming article type field': null
-'Rename field': null
+'Back to Article Types List': 'Tilbage til artikel type liste'
+show: vis
+hide: skjul
+'You must enter a name for the field.': 'Giv feltet et navn.'
+'You must choose a language for the field.': 'Vælg et sprog for feltet.'
+'You do not have the right to rename article type fields.': 'Du har ikke rettigheder til at omdøbe felter i artikel typer.'
+'You do not have the right to reassign a field type.': 'Du har ikke rettigheder til at ændre felt typer.'
+'Translating field': 'Oversætter felt'
+'The translation could not be added.': 'Oversættelsen kunne ikke tilføjes.'
+'The field $1 does not exist.': 'Feltet $1 findes ikke.'
+'The $1 field may only contain letters and underscore (_) character.': '$1 feltet må kun indeholde bogstaver og underscore tegnet (_).'
+'Template Field Name': 'Skabelon feltnavn'
+Show/Hide: Vis/Skjul
+'Renaming article type field': 'Omdøber artikel type felt'
+'Rename field': 'Omdøb felt'
 'Reassign a field type': null
 'Display Name': null
-'Are you sure you want to $1 the article type field $2?': null
-'Adding new article type': null
-'Add translation:': null
-'$1 article type field $2': null
-'$1 article type $2': null
+'Are you sure you want to $1 the article type field $2?': 'Vil du $1 artikel type feltet $2?'
+'Adding new article type': 'Tilføjer ny artikel type'
+'Add translation:': 'Tilføj oversættelse:'
+'$1 article type field $2': '$1 artikel type felt $2'
+'$1 article type $2': '$1 artikel type $2'
 'Top element': null
-'Article type fields': null
-'Delete field $1': null
-'Adding new field': null
-'You do not have the right to add article type fields.': null
-'The field $1 already exists.': null
-'The $1  must not be void and may only contain letters and underscore (_) character.': null
-'Invalid field type.': null
-'You do not have the right to delete article type fields.': null
-'Are you sure you want to delete the field $1?': null
-'You will also delete all fields with this name from all articles of this type from all publications.': null
+'Article type fields': 'Artikel type felter'
+'Delete field $1': 'Slet felt $1'
+'Adding new field': 'Tilføjer nyt felt'
+'You do not have the right to add article type fields.': 'Du har ikke rettigheder til at tilføje artikel type felter.'
+'The field $1 already exists.': 'Feltet $1 findes allerede.'
+'The $1  must not be void and may only contain letters and underscore (_) character.': '$1 må ikke være tom og må kun indeholde bogstaver og underscore tegnet (_).'
+'Invalid field type.': 'Ugyldig felt type.'
+'You do not have the right to delete article type fields.': 'Du har ikke rettigheder til at slette artikel type felter.'
+'Are you sure you want to delete the field $1?': 'Vil du slette feltet $1?'
+'You will also delete all fields with this name from all articles of this type from all publications.': 'Dette vil også slette alle felter med dette navn fra alle artikler af denne type fra alle publikationer.'

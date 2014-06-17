@@ -1,14 +1,14 @@
-'You have no installed plugins.': null
-'Some plugins have to be updated. Please press the save button.': null
-'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': null
-'You do not have the right to manage plugins.': null
-Version: null
-'Upload Plugin': null
-Upload: null
-Uninstall: null
-'The plugin $1 was sucessfully installed.': null
-'No plugins found.': null
-Manage: null
-Enabled: null
-'Delete plugin': null
-'Add new image': null
+'You have no installed plugins.': 'Du har ingen installerede plugins'
+'Some plugins have to be updated. Please press the save button.': 'Plugins skal opdateres. Tryk gem.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Bekræft afinstallering af plugin $1. Alle plugin data vil blive slettet.'
+'You do not have the right to manage plugins.': 'Du har ikke rettigheder til at administrere plugins.'
+Version: Version
+'Upload Plugin': 'Upload plugin'
+Upload: Upload
+Uninstall: Afinstaller
+'The plugin $1 was sucessfully installed.': 'Plugin $1 blev installeret.'
+'No plugins found.': 'Ingen plugins.'
+Manage: Administrer
+Enabled: 'Slået til'
+'Delete plugin': 'Slet plugin'
+'Add new image': 'Tilføj nyt billede'

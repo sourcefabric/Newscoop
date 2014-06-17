@@ -1,6 +1,6 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
+'No such article type': 'Brak takiego typu artykułu'
+'Multi-line Text': 'Tekst wieloliniowy'
+'Filter saved': 'Filtr został zapisany'
 'Filter not saved': null
 'Not a color': 'Wartość nie jest kolorem.'
 'No such field': 'Nie ma takiego pola'
