@@ -767,23 +767,6 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return $user;
         }, $qb->getQuery()->getResult());
 
-        $that = $this;
-        $list->items = array_map(function ($user) use ($that) {
-            $update = false;
-            $user = $user[0];
-            $userComments = (int) $that->getUserPoints($user, true);
-            if ($user->getPoints() != $userComments) {
-                $update = true;
-            }
-
-            $user->setPoints($userComments);
-            if ($update) {
-                $that->getEntityManager()->flush();
-            }
-
-            return $user;
-        }, $qb->getQuery()->getResult());
-
         return $list;
     }
 
