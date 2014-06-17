@@ -9,9 +9,6 @@
 
 namespace Newscoop\TemplateList;
 
-use Newscoop\ListResult;
-use Newscoop\TemplateList\PaginatedBaseList;
-
 /**
  * List users
  */
@@ -24,21 +21,6 @@ class UsersList extends PaginatedBaseList
         $result = $em->getRepository('Newscoop\Entity\User')->getListByCriteria($criteria, false);
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
-
-        $tempList = array_map(function ($user) use ($em) {
-            $update = false;
-            $userComments = (int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true);
-            if ($user->getPoints() != $userComments) {
-                $update = true;
-            }
-            $user->setPoints($userComments);
-            if ($update) {
-                $em->flush();
-            }
-
-            return new \MetaUser($user);
-        }, $list->items);
-        $list->items = $tempList;
 
         return $list;
     }
@@ -57,7 +39,7 @@ class UsersList extends PaginatedBaseList
         // convert your special parameters into criteria properties.
         if (array_key_exists('search', $parameters)) {
             $this->criteria->query = $parameters['search'];
-        } else if (array_key_exists('filter', $parameters)) {
+        } elseif (array_key_exists('filter', $parameters)) {
             $filter = $parameters['filter'];
             $this->criteria->groups = !empty($parameters['editor_groups']) ? array_map('intval', explode(',', $parameters['editor_groups'])) : array();
             switch ($filter) {

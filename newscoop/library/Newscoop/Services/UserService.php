@@ -9,13 +9,13 @@ namespace Newscoop\Services;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Newscoop\Entity\User;
-use Newscoop\Entity\UserAttribute;
 use Newscoop\PaginatedCollection;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\EventDispatcher\GenericEvent;
 
 /**
  * User service
@@ -72,7 +72,7 @@ class UserService
             } elseif ($this->security->getToken()) {
                 if ($this->security->getToken()->getUser()) {
                     $currentUser = $this->security->getToken()->getUser();
-                    if( $this->security->isGranted('IS_AUTHENTICATED_FULLY') ){
+                    if ( $this->security->isGranted('IS_AUTHENTICATED_FULLY') ) {
                         $this->currentUser = $currentUser;
                     } else {
                         $this->currentUser = null;
@@ -523,5 +523,22 @@ class UserService
         $this->setUserIp($userIp);
 
         return $userIp;
+    }
+
+    /**
+     * Set user points
+     *
+     * @param  GenericEvent $event
+     * @return void
+     */
+    public function setUserPoints(GenericEvent $event)
+    {
+        $params = $event->getArguments();
+        $user = $this->getCurrentUser();
+        if (array_key_exists('user', $params)) {
+            $user = $params['user'];
+        }
+
+        $this->getRepository()->getUserPoints($user, $params);
     }
 }

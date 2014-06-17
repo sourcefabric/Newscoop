@@ -29,6 +29,8 @@ services:
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth", "@security.context", "@security.encoder_factory"]
+        tags:
+            - { name: kernel.event_listener, event: user.set_points, method: setUserPoints }
     user.list:
         class:      Newscoop\Services\ListUserService
         arguments:  ["%blog%", "@em"]

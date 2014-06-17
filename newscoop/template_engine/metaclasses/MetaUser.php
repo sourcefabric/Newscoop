@@ -90,8 +90,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
         if ($this->m_dbObject->isPublic()) {
             return "<a href='{$url}'>{$name}</a>";
-        }
-        else {
+        } else {
             return $name;
         }
     }
@@ -114,6 +113,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function getCreated()
     {
         $date = $this->m_dbObject->getCreated();
+
         return $date->format('d.m.Y');
     }
 
@@ -141,13 +141,14 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $smartyObj = CampTemplate::singleton();
         $contextObj = $smartyObj->getTemplateVars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
+
         return !$country->exists() ? '' : $country->getName();
     }
 
     /**
      * Test if user has permission
      *
-     * @param string $permission
+     * @param  string  $permission
      * @return boolean
      */
     public function has_permission($permission)
@@ -184,6 +185,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function isLoggedIn()
     {
         $auth = Zend_Auth::getInstance();
+
         return $auth->hasIdentity() && $auth->getIdentity() == $this->m_dbObject->getId();
     }
 
@@ -206,8 +208,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     /**
      * Get image src
      *
-     * @param int $width
-     * @param int $height
+     * @param  int    $width
+     * @param  int    $height
      * @return string
      */
     public function image($width = 80, $height = 80, $specs = 'fit')
@@ -254,19 +256,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
             return 0;
         }
 
-        $em = \Zend_Registry::get('container')->getService('em');
-
-        $sum = 0;
-        $sum += $em->getRepository('Newscoop\Entity\Comment')
-            ->countByUser($this->m_dbObject);
-
-        $sum += $em->getRepository('Newscoop\Entity\Feedback')
-            ->countByUser($this->m_dbObject);
-
-        $sum += $em->getRepository('Newscoop\Entity\Article')
-            ->countByAuthor($this->m_dbObject);
-
-        return $sum;
+        return $this->m_dbObject->getPoints();
     }
 
     /**
@@ -276,6 +266,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     public function offsetExists($offset)
     {
         $offset = $this->m_dbObject->getAttribute($offset);
+
         return isset($offset);
     }
 
