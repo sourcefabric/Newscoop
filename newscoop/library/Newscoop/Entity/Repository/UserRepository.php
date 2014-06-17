@@ -249,7 +249,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->setMaxResults($limit);
 
         $results = $qb->getQuery()->getResult();
-        
+
         return $results;
     }
 
@@ -652,7 +652,6 @@ class UserRepository extends EntityRepository implements RepositoryInterface
      * Get user points
      *
      * @param  Newscoop\Entity\User $user
-     * @param  boolean              $onlyComments
      * @return void
      */
     public function getUserPoints(User $user, $onlyComments = false)
