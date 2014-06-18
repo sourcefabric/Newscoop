@@ -22,6 +22,12 @@ class UsersList extends PaginatedBaseList
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
 
+        $tempList = array_map(function ($user) {
+              return new \MetaUser($user);
+        }, $list->items);
+
+        $list->items = $tempList;
+
         return $list;
     }
 
@@ -66,4 +72,3 @@ class UsersList extends PaginatedBaseList
         }
     }
 }
-
