@@ -534,9 +534,13 @@ class UserService
     public function setUserPoints(GenericEvent $event)
     {
         $params = $event->getArguments();
-        $user = $this->getCurrentUser();
+        $user = null;
         if (array_key_exists('user', $params)) {
-            $user = $params['user'];
+            if (is_numeric($params['user'])) {
+                $user = $this->find($params['user']);
+            } else {
+                $user = $params['user'];
+            }
         }
 
         $this->getRepository()->getUserPoints($user);

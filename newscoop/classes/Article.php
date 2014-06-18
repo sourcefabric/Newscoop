@@ -244,9 +244,9 @@ class Article extends DatabaseObject
         $articleNumber = $g_ado_db->GetOne($queryStr);
 
         if ($articleNumber > 0) {
-            return TRUE;
+            return true;
         } else {
-            return FALSE;
+            return false;
         }
     }
 
@@ -1499,7 +1499,7 @@ class Article extends DatabaseObject
             return false;
         }
 
-        self::dispatchEvent("user.set_points", $this);
+        self::dispatchEvent("user.set_points", $this, array('user' => $this->getCreatorId()));
 
         CampCache::singleton()->clear('user');
 
