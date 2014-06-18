@@ -16,7 +16,15 @@ final class MetaImage extends MetaDbObject {
 
     public function __construct($p_imageId = null)
     {
-        $this->m_dbObject = new Image($p_imageId);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('legacy_image', $p_imageId), 'image');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Image($p_imageId);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
+
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Image();
         }

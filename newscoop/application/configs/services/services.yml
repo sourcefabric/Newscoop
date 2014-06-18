@@ -18,7 +18,7 @@ services:
         arguments:  ["@doctrine.connection"]
     image:
         class:      Newscoop\Image\ImageService
-        arguments:  ["%image%", "@em"]
+        arguments:  ["%image%", "@em", '@newscoop.cache']
     attachment:
         class:      Newscoop\Services\AttachmentService
         arguments:  ["%attachment%", "@em", "@router", "@user"]

@@ -69,6 +69,9 @@ case 'abs':
 default: ;
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 $url = "/$ADMIN/articles/index.php"
 		."?f_publication_id=".$articleObj->getPublicationId()
 		."&f_issue_number=".$articleObj->getIssueNumber()

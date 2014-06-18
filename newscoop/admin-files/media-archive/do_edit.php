@@ -41,6 +41,9 @@ $updateArray = array('Description' => $f_image_description,
 //}
 $imageObj->update($updateArray);
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('image');
+
 camp_html_add_msg($translator->trans("Image updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/edit.php?f_image_id=$f_image_id");
 ?>

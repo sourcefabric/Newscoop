@@ -147,6 +147,10 @@ class ArticleImage extends DatabaseObject {
         $image_id = $this->getImageId();
         $article_number = $this->getArticleNumber();
         $result = parent::delete();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_image');
+
         return $result;
     }
 
@@ -258,7 +262,10 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$g_ado_db->Execute($queryStr);
-	} // fn AddImageToArticle
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_image');
+	}
 
 
 	/**
@@ -315,6 +322,9 @@ class ArticleImage extends DatabaseObject {
 			}
 			$queryStr = "DELETE FROM ArticleImages WHERE IdImage=$p_imageId";
 			$g_ado_db->Execute($queryStr);
+
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheService->clearNamespace('article_image');
 		}
 	} // fn OnImageDelete
 
@@ -330,7 +340,10 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'DELETE FROM ArticleImages'
 					." WHERE NrArticle='".$p_articleNumber."'";
 		$g_ado_db->Execute($queryStr);
-	} // fn OnArticleDelete
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_image');
+	}
 
 
 	/**
@@ -349,7 +362,10 @@ class ArticleImage extends DatabaseObject {
 						." VALUES($p_destArticleNumber, ".$row['IdImage'].",".$row['Number'].")";
 			$g_ado_db->Execute($queryStr);
 		}
-	} // fn OnArticleCopy
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_image');
+	}
 
 
 	/**

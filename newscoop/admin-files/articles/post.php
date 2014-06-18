@@ -196,5 +196,8 @@ if (CampTemplateCache::factory()) {
     ), !($articleObj->isPublished() || $articleObj->m_published));
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 echo json_encode($data);
 exit;

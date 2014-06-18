@@ -776,3 +776,4 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere($orx);
     }
 }
+

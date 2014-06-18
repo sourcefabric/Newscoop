@@ -23,6 +23,9 @@ $fieldName = Input::Get('f_field_name');
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 if ($field->exists()) {
 	$field->delete();
+    
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('article_type');
 }
 camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 ?>
