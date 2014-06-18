@@ -180,14 +180,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $user = $p_comment->getCommenter()->getUser();
 
             if ($user instanceof User) {
-                $queryBuilder = $em->createQueryBuilder();
-                $query = $queryBuilder->update('Newscoop\Entity\User', 'u')
-                    ->set('u.points', $user->getPoints() - 1)
-                    ->where('u.id = ?1')
-                    ->setParameter(1, $user->getId())
-                    ->getQuery();
-
-                $query->execute();
+                $em->getRepository('Newscoop\Entity\User')->getUserPoints($user);
             }
 
             $em->remove($p_comment);
@@ -363,8 +356,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
         $em->persist($entity);
 
-        \Zend_Registry::get('container')->getService('dispatcher')
-            ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent($this));
+        $user = $commenter->getUser();
+        if ($user instanceof User) {
+            $em->getRepository('Newscoop\Entity\User')->getUserPoints($user);
+        }
 
         return $entity;
     }

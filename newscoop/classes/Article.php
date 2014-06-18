@@ -1478,10 +1478,6 @@ class Article extends DatabaseObject
                 //send out an image.published event
                 self::dispatchEvent("image.published", $this, array("user" => $user_id));
             }
-
-            self::dispatchEvent("user.set_points", $this, array(
-                'add' => true
-            ));
         }
         // Unlock the article if it changes status.
         if ( $this->getWorkflowStatus() != $p_value ) {
@@ -1503,10 +1499,13 @@ class Article extends DatabaseObject
             return false;
         }
 
+        self::dispatchEvent("user.set_points", $this);
+
         CampCache::singleton()->clear('user');
 
         $logtext = $translator->trans('Article status changed from $1 to $2.', array(
             '$1' => $this->getWorkflowDisplayString($oldStatus), '$2' => $this->getWorkflowDisplayString($p_value)), 'api');
+
         Log::ArticleMessage($this, $logtext, null, 35);
 
         return true;
