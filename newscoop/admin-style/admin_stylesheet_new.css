@@ -531,6 +531,13 @@ fieldset.controls.search .input_text {
         margin-top: 8px;
     }
 
+    .smartlist img.loading_indicator {
+        height: 16px;
+        width: 16px;
+        vertical-align: middle;
+        margin-right: 5px;
+    }
+
     .smartlist a.detach {
         margin-left: 5px;
         color: red;

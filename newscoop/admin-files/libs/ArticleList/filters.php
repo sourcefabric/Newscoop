@@ -40,12 +40,6 @@ foreach ($section_objects as $section) {
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
-$topics = array();
-foreach (Topic::GetTree() as $topic) {
-	$topic = array_pop($topic);
-	$topics[$topic->getTopicId()] = $topic->getName($this->language);
-}
-
 ?>
 <div class="filters">
 <fieldset class="filters"><legend><?php echo $translator->trans('Filter', array(), 'library'); ?></legend> <select
@@ -93,21 +87,20 @@ foreach (Topic::GetTree() as $topic) {
 </dl>
 <dl>
 	<dt><label for="filter_author"><?php echo $translator->trans('Author'); ?></label></dt>
-	<dd><select name="author">
+	<dd><select id="filter_author" name="author">
 		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach (Author::GetAuthors() as $author) { ?>
-		<option value="<?php echo htmlspecialchars($author->getName()); ?>"><?php echo htmlspecialchars($author->getName()); ?></option>
-		<?php } ?>
-	</select></dd>
+        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading authors...'); ?></option>
+	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
 </dl>
 <dl>
 	<dt><label for="filter_creator"><?php echo $translator->trans('Creator', array(), 'library'); ?></label></dt>
-	<dd><select name="creator">
+	<!-- <dd><input type="text" name="creator" id="filter_creator" /></dd> -->
+
+    <dt><select id="filter_creator" name="creator">
 		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach (Zend_Registry::get('container')->getService('user')->findBy(array(), array('last_name' => 'asc', 'first_name' => 'asc')) as $user) { ?>
-		<option value="<?php echo $user->getId(); ?>"><?php echo htmlspecialchars($user->getName()); ?></option>
-		<?php } ?>
-	</select></dd>
+        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading creators...'); ?></option>
+	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
+
 </dl>
 <dl>
 	<dt><label for="filter_status"><?php echo $translator->trans('Status'); ?></label></dt>
@@ -121,12 +114,10 @@ foreach (Topic::GetTree() as $topic) {
 </dl>
 <dl>
 	<dt><label for="filter_topic"><?php echo $translator->trans('Topic'); ?></label></dt>
-	<dd><select name="topic">
+	<dd><select id="filter_topic" name="topic">
 		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach ($topics as $id => $topic) { ?>
-		<option value="<?php echo $id; ?>"><?php echo htmlspecialchars($topic); ?></option>
-		<?php } ?>
-	</select></dd>
+        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading topics...'); ?></option>
+	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
 </dl>
 <dl>
 	<dt><label for="filter_language"><?php echo $translator->trans('Language'); ?></label></dt>
@@ -286,6 +277,11 @@ $('fieldset.filters .extra').each(function() {
                 if (label == value) {
                     $(this).show();
                     $(this).insertBefore($('select.filters', $(this).parent()));
+
+                    if ($(this).data('populated') !== true) {
+                        populate_filter($(this));
+                    }
+
                     if ($('a', $(this)).length == 0) {
                         $('<a class="detach">X</a>').appendTo($('dd', $(this)))
                             .click(function() {
@@ -328,6 +324,92 @@ $('fieldset.filters').each(function() {
             return false;
         });
 });
+
+// autocomplete
+// $('#filter_creator').autocomplete({
+//     source: "/content-api/user.json",
+//     minLength: 2,
+//     select: function( event, ui ) {
+//         log( ui.item ?
+//             "Selected: " + ui.item.value + " aka " + ui.item.id :
+//             "Nothing selected, input was " + this.value );
+//     }
+// });
+
+function populate_filter(populateObj) {
+
+    if (populateObj.data('populated') === true) {
+        return;
+    }
+
+    var filterType = populateObj.find('input, select').first().attr('id');
+
+    if (filterType === '') {
+        populateObj.find('label:first').attr('for');
+    }
+
+    switch (filterType) {
+        case 'filter_author':
+            $.ajax({
+                url: "/admin/authors/get",
+                dataType: "json",
+                success: function (data) {
+
+                    selectObj = populateObj.find('select:first');
+
+                    authorHtml = selectObj.html();
+                    for (i in data) {
+                        authorHtml += '<option value="'+ data[i].name +'">'+ data[i].name +'</option>';
+                    }
+                    selectObj.html(authorHtml);
+                    selectObj.find('option.loading_message').hide();
+                    populateObj.find('img.loading_indicator').hide();
+                    populateObj.data('populated', true);
+                }
+            });
+            break;
+        case 'filter_creator':
+            $.ajax({
+                url: "/content-api/users.json?items_per_page=100000&sort[last_name]=asc&sort[first_name]=asc",
+                dataType: "json",
+                success: function (data) {
+
+                    selectObj = populateObj.find('select:first');
+
+                    userHtml = selectObj.html();
+                    for (i in data.items) {
+                        userHtml += '<option value="'+ data.items[i].id +'">'+ data.items[i].firstName +' '+ data.items[i].lastName +'</option>';
+                    }
+                    selectObj.html(userHtml);
+                    selectObj.find('option.loading_message').hide();
+                    populateObj.find('img.loading_indicator').hide();
+                    populateObj.data('populated', true);
+                }
+            });
+            break;
+        case 'filter_topic':
+            $.ajax({
+                url: "/content-api/topics.json?items_per_page=10000&sort[title]=asc",
+                dataType: "json",
+                success: function (data) {
+
+                    selectObj = populateObj.find('select:first');
+
+                    topicHtml = selectObj.html();
+                    for (i in data.items) {
+                        topicHtml += '<option value="'+ data.items[i].id +'">'+ data.items[i].title +'</option>';
+                    }
+                    selectObj.html(topicHtml);
+                    selectObj.find('option.loading_message').hide();
+                    populateObj.find('img.loading_indicator').hide();
+                    populateObj.data('populated', true);
+                }
+            });
+            break;
+        default:
+            break;
+    }
+}
 
 }); // document.ready
 
