@@ -79,7 +79,7 @@ class ImageController extends Zend_Controller_Action
         }
 
         foreach ($this->types as $type) {
-            if (preg_match("/\.{$type}\$/i", $src)) {
+            if (preg_match("/\.{$type}\$/i", $path)) {
                 return "image/{$type}";
             }
         }
