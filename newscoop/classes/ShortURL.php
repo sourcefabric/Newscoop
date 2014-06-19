@@ -18,8 +18,17 @@ class ShortURL
     {
         $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');
 
-        if ($publicationService->getPublication()->getId() == $publicationId) {
-            $publication = $publicationService->getPublication();
+        if ($publicationService->getPublication()) {
+            if ($publicationService->getPublication()->getId() == $publicationId) {
+                $publication = $publicationService->getPublication();
+            } else {
+                $em = \Zend_Registry::get('container')->getService('em');
+                $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneById($publicationId);
+
+                if (!$publication) {
+                    throw new \Exception('Publication does not exist.');
+                }
+            }
         } else {
             $em = \Zend_Registry::get('container')->getService('em');
             $publication = $em->getRepository('Newscoop\Entity\Publication')->findOneById($publicationId);

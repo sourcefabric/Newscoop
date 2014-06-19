@@ -3,8 +3,8 @@ require_once  dirname(__FILE__) . DIR_SEP. 'TemplateCacheHandler.php';
 
 class TemplateCacheHandler_DB extends TemplateCacheHandler
 {
-    private static $m_name = 'DB',
-                   $m_description = "It allows to store template cache in a database.";
+    private static $m_name = 'DB';
+    private static $m_description = "It allows to store template cache in a database.";
     private $_ado_db;
 
     public function TemplateCacheHandler_DB()
