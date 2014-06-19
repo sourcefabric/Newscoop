@@ -107,6 +107,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
+            smartyUseProtocol: null
         popover:
             cacheengine: null
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
@@ -130,3 +131,4 @@ newscoop:
                 secure: null
             garbage: null
             lifetime: null
+            smartyuseprotocol: null
