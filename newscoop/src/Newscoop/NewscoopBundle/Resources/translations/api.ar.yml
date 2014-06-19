@@ -3,58 +3,58 @@
 'Filter saved': null
 'Filter not saved': null
 'Not a color': 'ليس لون'
-'No such field': 'الحقل غير موجود'
-'Color saved': 'تم حقظ اللون'
-'Color not saved': 'لم يمك حفظ اللون'
-'Topic created': 'تم انشاء الموضوع'
-'The topic name is already in use by another topic.': 'اسم الموضوع فيد الاستخدام من قبل من موضوع آخر.'
+'No such field': 'لا يوجد مثل هده الخانة'
+'Color saved': 'تم حفظ اللون'
+'Color not saved': 'لم يحفظ اللون'
+'Topic created': 'تم إنشاء الموضوع'
+'The topic name is already in use by another topic.': 'اسم الموضوع حالياً قيد الاستخدام من موضوع آخر.'
 'Complex Date': 'تاريخ معقد'
 vertices: القمم
-'There was a problem trying to execute the XML RPC function.': 'حدثت مشكلة في تنفيذ اجراء XML RPC.'
-'The Campcaster server configuration is invalid.': 'تكوين الخادم Campcaster غير صالح.'
+'There was a problem trying to execute the XML RPC function.': 'حدثت مشكلة أثناء تنفيذ اجراء XML RPC.'
+'The Campcaster server configuration is invalid.': 'تهيئة خادم كامبكاستر غير صالحة ـ'
 'Pan Map': 'خريطة الإنتقال'
 'Open large map': 'إفتح خريطة كبيرة'
-'No news available.': 'لا توجد أخبار.'
-'Edit Polygon': 'تعديل مضلع '
-'Create Polygon': 'إنشاء مضلع'
+'No news available.': 'لا أخبار متوفرة.'
+'Edit Polygon': 'عدل مضلع '
+'Create Polygon': 'أنش مضلع'
 'Communication error: ': 'خطأ المواصلات:'
 'Cant fetch news from $1': 'غير قادر على الحصول على  أخبار من $1'
-Loading...: 'في عملية تحميل...'
+Loading...: 'قيد التحميل'
 Version: إصدار
-License: ترخيص
+License: الترخيص
 Homepage: 'الصفحة الرئيسية'
-'Show original map': 'اظهار الخريطة الأصلية'
-'The uploaded archive does not contain an valid newscoop plugin.': 'لا يشمل الأرشيف المرفوع وحدة قابسة صالحة لـ Newscoop.'
-Map: خريطة
-Center: الوسط
+'Show original map': 'أظهر الخريطة الأصلية'
+'The uploaded archive does not contain an valid newscoop plugin.': 'لا يشمل الأرشيف المرفوع ملحق صالح لـنيوسكوب.'
+Map: الخريطة
+Center: توسيط
 Title: العنوان
 'Invalid security token.': 'الرمز الأمني غير صالح.'
 'Callback $1 is not callable.': 'إعادة النداء $1 غير قابلة للنداء'
 'Article translated to $4 ($5)': 'المقالة مترجمة الى $4 ($5)'
-'Article status changed from $1 to $2.': 'تم تغيير حالة المقالة من $1 الى $2.'
-'Article deleted.': 'تم حذف المقالة.'
-'Article created.': 'تم إنشاء المقالة.'
+'Article status changed from $1 to $2.': 'تم تغيير حالة المقال من $1 الى $2.'
+'Article deleted.': 'تم حذف المقال.'
+'Article created.': 'تم إنشاء المقال.'
 'Article copied to Article $4 (publication $5, issue $6, section $7).': 'المقالة منسوخة على المقالة $4 (منشور $5، اصدار $6، قسم $7).'
-'Article URL': 'عنوان الرابط للمقالة'
-'Article Number': 'رقم المقالة'
-'Access denied.': 'الدخول مورقوض.'
-'Publish with issue': 'النشر بالإصدار'
+'Article URL': 'عنوان الرابط للمقال'
+'Article Number': 'رقم المقال'
+'Access denied.': 'الدخول مرفوض'
+'Publish with issue': 'إنشر مع العدد'
 unknown: 'غير معروف'
 Switch: تبديل
 Numeric: رقمي
 'The uploaded file format is unsupported.': 'تنسيق الملف المرفوع غير مدعوم.'
-'The following fields are mandatory:': 'الحقول التالية ضرورية:'
+'The following fields are mandatory:': 'الخانات التالية ضرورية:'
 'Missing value for $1': 'قيمة مفقودة لـ $1'
-'Manage Plugins': 'إدارة وحدات قابسة'
-'* Marked fields are mandatory.': 'الحقول التي تحمل العلامة النجمية ضرورية'
+'Manage Plugins': 'إدارة ملحقات'
+'* Marked fields are mandatory.': 'الخانات التي تحمل العلامة النجمية ضرورية'
 '$1 is of type $2': '$1 من نوع  $2'
 'Invalid resize width/height.': 'إعادة تشكيل حجم العرض/الاتساع غير صالح.'
 'Image type $1 is not supported.': 'نوع الصورة $1 غير مدعوم'
 'The file uploaded is not an image.': 'ليس صورة الملف الذي تم رفعه'
 'Could not delete record from the database.': 'لم يحذف السجل من قاعدة البيانات.'
-'template path': 'مسار القالب'
+'template path': 'مسار النماذج'
 'short names': 'أسماء قصيرة'
-'Unable to fetch image from remote server.': 'لم يحصل عليها الصورة من الخادم اللاسلكي'
+'Unable to fetch image from remote server.': 'لم يحصل عليها الصورة من الخادم البعيد'
 Last: الأخير
 First: الأول
 'Single-line Text': 'نص بسطر واحد'
@@ -66,7 +66,7 @@ client:
     notfound: null
     removed: null
 publicresources:
-    updated: null
+    updated: 'تم تحديث الموارد العامة.'
 api:
     configure:
         title: null
@@ -75,14 +75,14 @@ api:
             resources: null
             clients: null
         resources:
-            info: null
+            info: 'وفقاً للإعدادات الإفتراضية فإن جميع الموارد محية بواسطة جدار حماية، ولكن يمكنك إختيار موارد لجعلها متاحة للجميع.'
             add_button: null
         clients:
             table:
                 name: null
                 id: null
                 secret: null
-                trusted: null
+                trusted: موثوق؟
                 redirect: null
                 publication: المنشور
                 actions: الاجراءات

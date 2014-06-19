@@ -1,106 +1,106 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
-'Filter not saved': null
-'Not a color': null
-'No such field': null
-'Color saved': null
-'Color not saved': null
-'Topic created': null
-'The topic name is already in use by another topic.': null
-'Complex Date': null
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': null
-'Pan Map': null
-'Open large map': null
-'No news available.': null
-'Edit Polygon': null
-'Create Polygon': null
-'Communication error: ': null
-'Cant fetch news from $1': null
-Loading...: null
-Version: null
-License: null
-Homepage: null
-'Show original map': null
-'The uploaded archive does not contain an valid newscoop plugin.': null
-Map: null
-Center: null
-Title: null
-'Invalid security token.': null
-'Callback $1 is not callable.': null
-'Article translated to $4 ($5)': null
-'Article status changed from $1 to $2.': null
-'Article deleted.': null
-'Article created.': null
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
-'Article URL': null
-'Article Number': null
-'Access denied.': null
-'Publish with issue': null
-unknown: null
-Switch: null
-Numeric: null
-'The uploaded file format is unsupported.': null
-'The following fields are mandatory:': null
-'Missing value for $1': null
-'Manage Plugins': null
-'* Marked fields are mandatory.': null
-'$1 is of type $2': null
-'Invalid resize width/height.': null
-'Image type $1 is not supported.': null
-'The file uploaded is not an image.': null
-'Could not delete record from the database.': null
-'template path': null
-'short names': null
-'Unable to fetch image from remote server.': null
-Last: null
-First: null
-'Single-line Text': null
-'Multi-line Text with WYSIWYG': null
-'URL $1 is invalid or is not an image.': null
-'URL $1 is not an image.': null
+'No such article type': 'Artikel typen eksisterer ikke'
+'Multi-line Text': Tekstfelt
+'Filter saved': 'Filteret blev gemt'
+'Filter not saved': 'Filteret blev ikke gemt'
+'Not a color': 'Ikke en farve'
+'No such field': 'Feltet eksisterer ikke'
+'Color saved': 'Farven blev gemt'
+'Color not saved': 'Farven blev ikke gemt'
+'Topic created': 'Emne oprettet'
+'The topic name is already in use by another topic.': 'Navnet bruges af et andet emne.'
+'Complex Date': 'Kompleks dato'
+vertices: punkter
+'There was a problem trying to execute the XML RPC function.': 'XML RPC funktionen kunne ikke køre.'
+'The Campcaster server configuration is invalid.': 'Campcaster serverens opsætning er ugyldig.'
+'Pan Map': 'Træk kort'
+'Open large map': 'Åben stort kort'
+'No news available.': 'Ingen nyheder.'
+'Edit Polygon': 'Ret Polygon'
+'Create Polygon': 'Opret polygon'
+'Communication error: ': 'Kommunikationsfejl:'
+'Cant fetch news from $1': 'Kunne ikke hente nyheder fra $1'
+Loading...: Henter...
+Version: Version
+License: Licens
+Homepage: Hjemmeside
+'Show original map': 'Vis originalt kort'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Det uploadede arkiv indeholder ikke en gyldig newscoop plugin.'
+Map: Kort
+Center: Centrér
+Title: Titel
+'Invalid security token.': 'Ugyldig sikkerheds token.'
+'Callback $1 is not callable.': 'Callback $1 kan ikke kaldes.'
+'Article translated to $4 ($5)': 'Artikel oversat til $4 ($5)'
+'Article status changed from $1 to $2.': 'Artikel status ændret fra $1 til $2.'
+'Article deleted.': 'Artikel slettet.'
+'Article created.': 'Artikel oprettet.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Artikel kopieret til artikel $4 (publikation $5, udgivelse $6, sektion $7).'
+'Article URL': 'Artikel URL'
+'Article Number': 'Artikel nummer'
+'Access denied.': 'Adgang nægtet'
+'Publish with issue': 'Publicer med udgivelsen'
+unknown: ukendt
+Switch: Skift
+Numeric: Numerisk
+'The uploaded file format is unsupported.': 'Det uploadede filformat understøttes ikke.'
+'The following fields are mandatory:': 'Disse felter er obligatoriske:'
+'Missing value for $1': 'Manglende værdi for $1'
+'Manage Plugins': 'Administrer plugins'
+'* Marked fields are mandatory.': '* markerede felter er obligatoriske.'
+'$1 is of type $2': '$1 er type $2'
+'Invalid resize width/height.': 'Ugyldig højde/bredde'
+'Image type $1 is not supported.': 'Billeder af typen $1 understøttes ikke.'
+'The file uploaded is not an image.': 'Den uploadede fil er ikke et billede.'
+'Could not delete record from the database.': 'Posten kunne ikke slettes fra databasen.'
+'template path': 'skabelon sti'
+'short names': 'korte navne'
+'Unable to fetch image from remote server.': 'Billedet kunne ikke hentes fra serveren.'
+Last: Sidste
+First: Første
+'Single-line Text': 'Enkelt linje tekst'
+'Multi-line Text with WYSIWYG': 'Tekstfelt med WYSIWYG'
+'URL $1 is invalid or is not an image.': 'URL $1 er ugyldig eller er ikke et billede.'
+'URL $1 is not an image.': 'URL $1 er ikke et billede.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Klient tilføjet'
+    notfound: 'Klienten kunne ikke findes'
+    removed: 'Klient fjernet'
 publicresources:
-    updated: null
+    updated: 'Offentlige ressourcer opdateret'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'Indstil API - offentlige ressourcer'
+        title_content: 'Indstil API - offentlige ressourcer'
         tabs:
-            resources: null
-            clients: null
+            resources: 'Offentlige ressourcer'
+            clients: Klienter
         resources:
-            info: null
-            add_button: null
+            info: 'Som standard er alle resourcer beskyttet af firewall, men du kan vælge resourcer der skal være offentligt tilgængelige.'
+            add_button: 'Tilføj klient'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
-                redirect: null
-                publication: null
-                actions: null
+                name: 'Klient navn'
+                id: 'Klient id'
+                secret: Hemmelighed
+                trusted: 'Betroet?'
+                redirect: 'URI''er til omdirigering'
+                publication: Publikation
+                actions: Handlinger
                 actions_buttons:
-                    remove: null
+                    remove: Fjern
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Er du sikker på du vil fjerne klienten?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: null
-                save: null
+                name: 'Klientens navn:'
+                publication: 'Klientens publikation:'
+                redirectUris: 'Klientens uri:'
+                trusted: 'Betroet?'
+                save: Gem
         PublicResources:
             label:
-                routes: null
-                save: null
+                routes: 'Vælg ressourcer der skal gøres offentlige:'
+                save: Gem

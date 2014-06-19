@@ -1,67 +1,67 @@
-third: null
-second: null
-forth: null
-first: null
+third: tredje
+second: anden
+forth: fjerde
+first: første
 'You must input a number greater than 0 into the Number of addresses field.': null
 'You must input a number between 0 and 255 into the Start IP address $1 field.': null
 'User IP access list management': null
 'The IP address group conflicts with another existing group.': null
 'Subscription sections': null
-'No records.': null
+'No records.': 'Ingen poster.'
 'You have subscription for all available publications': null
 'Subscription type:': null
-'Start:': null
-'Start Date': null
-'Sections:': null
-'Publication:': null
-'Paid days': null
-'Paid Days:': null
-Paid: null
-'No subscriptions': null
-'Languages:': null
-'Edit all sections': null
-'Days:': null
-'Days must be number': null
+'Start:': 'Start:'
+'Start Date': 'Start dato'
+'Sections:': 'Sektioner:'
+'Publication:': 'Publikation:'
+'Paid days': 'Betalte dage'
+'Paid Days:': 'Betalte dage:'
+Paid: Betalt
+'No subscriptions': 'Ingen abonnementer'
+'Languages:': 'Sprog:'
+'Edit all sections': 'Rediger alle sektioner'
+'Days:': 'Dage:'
+'Days must be number': 'Dage skal være et tal'
 Any: null
-'Add section': null
-saved: null
-removed: null
-deleted: null
-deactivated: null
-activated: null
-'Value is required and cant be empty': null
+'Add section': 'Tilføj sektion'
+saved: gemt
+removed: fjernet
+deleted: slettet
+deactivated: deaktiveret
+activated: aktiveret
+'Value is required and cant be empty': 'Værdien er påkrævet og kan ikke være tom'
 'That user name already exists, please choose a different login name.': null
 'That $1 already exists, please choose a different $2.': null
 'Subscriptions exist for all available publications.': null
 'Subscription IP Addresses': null
-'Subscription $1': null
-'Subscriber saved.': null
-'Subscriber management': null
-'Subscriber deleted.': null
-'Start IP': null
-'Select country': null
-'Number of addresses': null
-'Number of Addressses': null
-'No IP Addresses': null
-'IP Address added allready': null
-'IP Address $1': null
-'IP Access': null
-'Full Name': null
-'Edit subscriptions': null
-'Edit subscriber $1': null
-E-Mail: null
-'Delete subscriber $1': null
-'Creation Date': null
-'Change subscriber information': null
-'Add new IP address': null
-'Add new IP Address': null
-'Accout Name': null
-'%value% must be greater than %min%': null
-'%value% is not a valid IP Address': null
-'Regardless of the language': null
-'Individual languages': null
-'Add sections now': null
-'Add sections later': null
-'Subscription Type': null
-'Paid (payment will be confirmed later)': null
-'Paid (confirm payment now)': null
+'Subscription $1': 'Abonnement $1'
+'Subscriber saved.': 'Abonnent gemt.'
+'Subscriber management': 'Administration af abonnenter'
+'Subscriber deleted.': 'Abonnent slettet.'
+'Start IP': 'Start IP'
+'Select country': 'Vælg land'
+'Number of addresses': 'Antal adresser'
+'Number of Addressses': 'Antal adresser'
+'No IP Addresses': 'Ingen IP adresser'
+'IP Address added allready': 'IP adresse allerede tilføjet'
+'IP Address $1': 'IP adresse $1'
+'IP Access': 'IP adgang'
+'Full Name': 'Fuldt navn'
+'Edit subscriptions': 'Rediger abonnementer'
+'Edit subscriber $1': 'Rediger abonnent $1'
+E-Mail: E-Mail
+'Delete subscriber $1': 'Slet abonnent $1'
+'Creation Date': Oprettelsesdato
+'Change subscriber information': 'Ret abonnent information'
+'Add new IP address': 'Tilføj ny IP adresse'
+'Add new IP Address': 'Tilføj ny IP adresse'
+'Accout Name': Kontonavn
+'%value% must be greater than %min%': '%value% skal være større end %min%'
+'%value% is not a valid IP Address': '%value% er ikke en gyldig IP adresse'
+'Regardless of the language': 'Uanset sprog'
+'Individual languages': 'Individuelle sprog'
+'Add sections now': 'Tilføj sektioner nu'
+'Add sections later': 'Tilføj sektioner senere'
+'Subscription Type': Abonnementstype
+'Paid (payment will be confirmed later)': 'Betalt (bekræft betaling senere)'
+'Paid (confirm payment now)': 'Betalt (bekræft betaling nu)'

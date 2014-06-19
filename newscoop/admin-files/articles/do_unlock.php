@@ -30,6 +30,10 @@ if (!$articleObj->userCanModify($g_user)) {
 }
 
 $articleObj->setIsLocked(false);
+
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 camp_html_add_msg($translator->trans("Article unlocked.", array(), 'articles'), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php", "", "&Unlock=true"));
 

@@ -144,7 +144,10 @@ class CacheService
             return $this->cacheDriver->fetch($namespace);
         }
 
-        return $this->cacheDriver->save($namespace, time());
+        $value = $namespace .'|'.time();
+        $this->cacheDriver->save($namespace, $value);
+
+        return $value;
     }
 
     public function clearNamespace($namespace)

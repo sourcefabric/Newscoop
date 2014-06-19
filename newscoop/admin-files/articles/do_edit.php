@@ -173,6 +173,9 @@ if ($f_save_button == "save") {
 	}
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 ArticleIndex::RunIndexer(3, 10, true);
 
 ?>

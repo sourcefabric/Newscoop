@@ -1,16 +1,16 @@
-saved: null
-deleted: null
+saved: gemt
+deleted: slettet
 'Subscribed sections: $1': null
-'Start Date': null
+'Start Date': 'Start dato'
 'Select sections for subscribing': null
-'Sections saved': null
-'Section $1': null
-'No sections to edit': null
-'Edit section': null
-'Edit all sections': null
+'Sections saved': 'Sektioner gemt'
+'Section $1': 'Sektion $1'
+'No sections to edit': 'Ingen sektioner at redigere'
+'Edit section': 'Rediger sektion'
+'Edit all sections': 'Rediger alle sektioner'
 'Add new subscription section': null
-'Add new section': null
-'Regardless of the language': null
-'Individual languages': null
-'All languages': null
-'Paid Days': null
+'Add new section': 'Tilføj ny sektion'
+'Regardless of the language': 'Uanset sprog'
+'Individual languages': 'Individuelle sprog'
+'All languages': 'Alle sprog'
+'Paid Days': 'Betalte dage'

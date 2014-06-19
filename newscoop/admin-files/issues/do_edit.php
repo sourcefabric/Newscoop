@@ -133,6 +133,10 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
             $outputSettingIssueService->update($outSetIssue);
         }
     }
+
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('issue');
+
 	//@New theme management
 	$link = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId();
 	camp_html_add_msg($translator->trans('Issue updated', array(), 'issues'), "ok");

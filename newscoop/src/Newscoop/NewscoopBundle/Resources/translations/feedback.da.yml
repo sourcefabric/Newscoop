@@ -1,29 +1,29 @@
-'No attachment': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-'Are you sure you want to do it?': null
-Approve: null
-Approved.: null
-at: null
-Attachment: null
-'Ban/Unban user': null
-'Change selected messages status': null
-Deleted: null
-'Full article': null
-Message: null
-'Message deleted.': null
-'Messages deleted.': null
-'Messages status change to $1.': null
-'Message status change to $1.': null
-'Messages updated.': null
-'Message updated.': null
-Processed: null
-Reply: null
-'Reply to message': null
-Star: null
-Starred: null
-'Unable to reach Newscoop. Please check your internet connection.': null
-'With document attachment': null
-'With image attachment': null
-'With no attachment': null
-'Feedback Messages': null
+'No attachment': 'Ingen vedhæfning'
+'You are about to permanently delete multiple messages.': 'Du er ved at slette flere meddelelser permanent.'
+'You are about to permanently delete a message.': 'Du er ved at slette nen meddelelse permanent.'
+'Are you sure you want to do it?': 'Er du sikker på det er det du vil?'
+Approve: Godkend
+Approved.: Godkendt.
+at: på
+Attachment: Vedhæftning
+'Ban/Unban user': 'Bloker/afbloker bruger'
+'Change selected messages status': 'Skift status for valgte beskeder'
+Deleted: Slettet
+'Full article': 'Fuld artikel'
+Message: Besked
+'Message deleted.': 'Besked slettet.'
+'Messages deleted.': 'Beskeder slettet.'
+'Messages status change to $1.': 'Beskeders status ændret til $1.'
+'Message status change to $1.': 'Beskeds status ændret til $1.'
+'Messages updated.': 'Beskeder opdateret.'
+'Message updated.': 'Besked opdateret.'
+Processed: Behandlet
+Reply: Svar
+'Reply to message': 'Send svar'
+Star: Stjernemarkér
+Starred: Stjernemarkeret
+'Unable to reach Newscoop. Please check your internet connection.': 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
+'With document attachment': 'Med vedhæftet dokument'
+'With image attachment': 'Med vedhæftet billede'
+'With no attachment': 'Uden vedhæftninger'
+'Feedback Messages': 'Feedback beskeder'

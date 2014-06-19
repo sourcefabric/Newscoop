@@ -147,6 +147,10 @@ if (!is_null($f_action_workflow)) {
 		}
 
 		$articleObj->setWorkflowStatus($f_action_workflow);
+
+		$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+		$cacheService->clearNamespace('article');
+
 		camp_html_add_msg($translator->trans("Article status set to $1", array('$1' => $articleObj->getWorkflowDisplayString()), 'articles'), "ok");
 	}
 	$url = camp_html_article_url($articleObj, $f_language_id, "edit.php");

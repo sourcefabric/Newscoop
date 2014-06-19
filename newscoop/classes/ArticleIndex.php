@@ -119,7 +119,7 @@ class ArticleIndex extends DatabaseObject {
 
             foreach ($keywords as $keyword) {
                 if (strtolower($p_symbol) == 'like') {
-                    $keywordConstraint = 'KI1.Keyword LIKE ' . $g_ado_db->escape('%' . $keyword . '%');
+                    $keywordConstraint = 'KI1.Keyword LIKE ' . $g_ado_db->escape($keyword . '%');
                 } else {
                     $keywordConstraint = 'KI1.Keyword = ' . $g_ado_db->escape($keyword);
                 }

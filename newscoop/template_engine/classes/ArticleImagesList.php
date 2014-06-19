@@ -31,12 +31,29 @@ class ArticleImagesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $articleImagesList = ArticleImage::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    $metaImagesList = array();
-	    foreach ($articleImagesList as $image) {
-	        $metaImagesList[] = new MetaImage($image->getImageId());
-	    }
-	    return $metaImagesList;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array(
+            'ArticleImagesList',
+            implode('-', $this->m_constraints),
+            implode('-', $this->m_order),
+            $p_start,
+            $p_limit,
+            implode('-', $p_parameters),
+            $p_count
+        ), 'article_image');
+
+        if ($cacheService->contains($cacheKey)) {
+            $metaImagesList = $cacheService->fetch($cacheKey);
+        } else {
+            $articleImagesList = ArticleImage::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+            $metaImagesList = array();
+            foreach ($articleImagesList as $image) {
+                $metaImagesList[] = new MetaImage($image->getImageId());
+            }
+            $cacheService->save($cacheKey, $metaImagesList);
+        }
+
+        return $metaImagesList;
 	}
 
 	/**

@@ -184,7 +184,7 @@ final class CampTemplate extends Smarty
      *
      * @return void
      */
-    public function trigger_error($p_message, $p_smarty = null)
+    public static function trigger_error($p_message, $p_smarty = null)
     {
         if (!self::singleton()->m_preview) {
             return;
@@ -223,6 +223,6 @@ final class CampTemplate extends Smarty
      */
     private static function isDevelopment()
     {
-        return false;//return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
+        return defined('APPLICATION_ENV') && APPLICATION_ENV == 'development';
     }
 }
