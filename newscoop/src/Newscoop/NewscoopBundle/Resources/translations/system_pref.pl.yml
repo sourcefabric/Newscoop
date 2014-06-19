@@ -107,6 +107,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
+            smartyUseProtocol: null
         popover:
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
             cacheenginehost: null
@@ -130,3 +131,4 @@ newscoop:
                 secure: 'Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak.'
             garbage: null
             lifetime: null
+            smartyuseprotocol: null
