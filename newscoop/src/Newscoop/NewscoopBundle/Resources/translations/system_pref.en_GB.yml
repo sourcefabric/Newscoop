@@ -131,4 +131,4 @@ newscoop:
                 secure: 'If you use secure URL for reCAPTCHA choose the Yes option.'
             garbage: 'If enabled, this allows the publisher to define a certain number of days after which the pending users are deleted. By default, 90 days is set.'
             lifetime: 'Session lifetime in seconds. Max: 86400 (24 hours). Min: 0 (until the browser is closed).'
-            smartyuseprotocol: null
+            smartyuseprotocol: 'If enabled, the Smarty function url will create URLs with a protocol. By default this option is disabled to create protocol relative URLs. It is possible to override this behaviour with the useprotocol parameter for the Smarty function and specify a boolean for the desired behaviour.'
