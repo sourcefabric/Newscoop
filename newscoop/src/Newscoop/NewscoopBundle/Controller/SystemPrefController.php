@@ -157,6 +157,7 @@ class SystemPrefController extends Controller
             'recaptchaSecure' => $preferencesService->RecaptchaSecure,
             'userGarbageActive' => $preferencesService->userGarbageActive ?: 'N',
             'userGarbageDays' => $preferencesService->userGarbageDays ?: 90,
+            'smartyUseProtocol' => $preferencesService->SmartyUseProtocol,
         )
         , array(
             'cacheService' => $this->container->get('newscoop.cache')
@@ -242,6 +243,8 @@ class SystemPrefController extends Controller
                     // users garbage settings
                     $preferencesService->set('userGarbageActive', $data['userGarbageActive']);
                     $preferencesService->set('userGarbageDays', $data['userGarbageDays']);
+                    // smarty use protocol settings
+                    $preferencesService->set('SmartyUseProtocol', $data['smartyUseProtocol']);
                 }
                 // General Settings
                 $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
