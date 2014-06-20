@@ -1,100 +1,100 @@
-'No attachment': null
-at: null
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
-'Unable to reach Newscoop. Please check your internet connection.': null
-Starred: null
-Star: null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Reply to message': null
-Reply: null
-Processed: null
-'No records found.': null
-'No entries to show': null
-'Messages updated.': null
-'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
-'Message status change to $1.': null
-'Message deleted.': null
-Message: null
-Last: null
-'Full article': null
-First: null
-'Feedback Messages': null
-'Display _MENU_ records': null
-Deleted: null
-'Change selected messages status': null
-Attachment: null
-Approved.: null
-Approve: null
-Anonymous: null
-' - filtering from _MAX_ records': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-User: null
-None: null
-'Coming from': null
-'Ban/Unban user': null
-Ip: null
-'Bans can be applied to a users name, email address or IP address.': null
-'You are about to permanently delete multiple comments.': null
-'You are about to permanently delete a comment.': null
-Website: null
-'Value is not $1 characters long': null
-Username: null
-'User id': null
-'User ban settings': null
-'Update comment': null
-Unrecommended: null
-Unrecommend: null
-'Subject is not $1 characters long': null
-'Sort by Thread order': null
-'Show parent comment': null
-'Show commenter details': null
-'Show commenter': null
-'Show comment user details': null
-'Show comment user': null
-'Show comment details': null
-'Select status': null
+'No attachment': 'Ingen vedhæfning'
+at: på
+'With no attachment': 'Uden vedhæftninger'
+'With image attachment': 'Med vedhæftet billede'
+'With document attachment': 'Med vedhæftet dokument'
+'Unable to reach Newscoop. Please check your internet connection.': 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
+Starred: Stjernemarkeret
+Star: Stjernemarkér
+'Showing _START_ to _END_ of _TOTAL_ entries': 'VISER _START_ til _END_ af _TOTAL_ opslag'
+'Reply to message': 'Send svar'
+Reply: Svar
+Processed: Behandlet
+'No records found.': 'Ingen opslag.'
+'No entries to show': 'Intet at vise'
+'Messages updated.': 'Beskeder opdateret.'
+'Messages status change to $1.': 'Beskeders status ændret til $1.'
+'Messages deleted.': 'Beskeder slettet.'
+'Message updated.': 'Besked opdateret.'
+'Message status change to $1.': 'Beskeds status ændret til $1.'
+'Message deleted.': 'Besked slettet.'
+Message: Besked
+Last: Sidste
+'Full article': 'Fuld artikel'
+First: Første
+'Feedback Messages': 'Feedback beskeder'
+'Display _MENU_ records': 'Vis _MENU_ opslag'
+Deleted: Slettet
+'Change selected messages status': 'Skift status for valgte beskeder'
+Attachment: Vedhæftning
+Approved.: Godkendt.
+Approve: Godkend
+Anonymous: Anonym
+' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
+'You are about to permanently delete multiple messages.': 'Du er ved at slette flere meddelelser permanent.'
+'You are about to permanently delete a message.': 'Du er ved at slette nen meddelelse permanent.'
+User: Bruger
+None: Ingen
+'Coming from': Fra
+'Ban/Unban user': 'Bloker/afbloker bruger'
+Ip: IP
+'Bans can be applied to a users name, email address or IP address.': 'Du kan blokere et brugernavn, en email adresse eller en IP adresse.'
+'You are about to permanently delete multiple comments.': 'Du er ved at slette adskillige kommentarer permanent.'
+'You are about to permanently delete a comment.': 'Du er ved at slette en kommentar permanent.'
+Website: Website
+'Value is not $1 characters long': 'Værdien er ikke $1 tegn lang'
+Username: Brugernavn
+'User id': 'Bruger id'
+'User ban settings': 'Indstillinger for blokering af brugere'
+'Update comment': 'Opdater kommentar'
+Unrecommended: 'Ikke anbefalet'
+Unrecommend: 'Anbefal ikke'
+'Subject is not $1 characters long': 'Emnet er ikke $1 tegn langt'
+'Sort by Thread order': 'Sorter efter tråd'
+'Show parent comment': 'Vis ovenstående kommentar'
+'Show commenter details': 'Vis info om debattør'
+'Show commenter': 'Vis debattør'
+'Show comment user details': 'Vis bruger info for kommentar'
+'Show comment user': 'Vis bruger for kommentar'
+'Show comment details': 'Vis info om kommentar'
+'Select status': 'Vælg status'
 'Search Type': null
-'Reply to comment': null
-Recommended: null
-Recommend: null
-'Quick edit': null
+'Reply to comment': 'Svar på komentaren'
+Recommended: Anbefalet
+Recommend: Anbefalet
+'Quick edit': 'Hurtig redigering'
 Parent: null
-ID: null
-'Go to edit article': null
-Forum: null
+ID: ID
+'Go to edit article': 'Rediger artikel'
+Forum: Forum
 'For Column': null
-Email: null
+Email: Email
 'Edit acceptance criteria': null
-E-mail: null
-'Delete all comments?': null
-'Date Created': null
-'Comments updated.': null
-'Comments status change to $1.': null
-'Comments deleted.': null
-'Commenter $1 saved.': null
-'Commenter $1 deleted.': null
-Commenter: null
-'Comment updated.': null
-'Comment status change to $1.': null
-'Comment id': null
-'Comment deleted.': null
-'Comment delete by $1 from the article $2 ($3)': null
+E-mail: E-mail
+'Delete all comments?': 'Slet alle kommentarer?'
+'Date Created': Oprettelsesdato
+'Comments updated.': 'Kommentarer opdateret'
+'Comments status change to $1.': 'Kommentar status ændret til $1'
+'Comments deleted.': 'Kommentarer slettet'
+'Commenter $1 saved.': 'Debattør $1 gemt.'
+'Commenter $1 deleted.': 'Debattør $1 slettet.'
+Commenter: Debattør
+'Comment updated.': 'Kommentaren er opdateret.'
+'Comment status change to $1.': 'Kommentar status ændret til $1.'
+'Comment id': 'Kommentar id'
+'Comment deleted.': 'Kommentar slettet.'
+'Comment delete by $1 from the article $2 ($3)': '$1 har slettet kommentar fra artiklen $2 ($3)'
 'Comment Acceptance': null
-'Comment $4 by $1 in the article $2 ($3)': null
-'Comment $1 saved.': null
+'Comment $4 by $1 in the article $2 ($3)': 'Kommentar $4 af $1 i artiklen $2 ($3)'
+'Comment $1 saved.': 'Kommentar $1 gemt.'
 Column: null
-'Change subscriber information': null
-'Ban for commenter $1 saved.': null
-Ban: null
-'Are you sure you want to do it?': null
-'Add rating': null
-'Add new comment commenter': null
-'Add new comment': null
+'Change subscriber information': 'Ret abonnent information'
+'Ban for commenter $1 saved.': 'Blokering af debattør $1 blev gemt.'
+Ban: Bloker
+'Are you sure you want to do it?': 'Er du sikker på det er det du vil?'
+'Add rating': 'Tilføj bedømmelse'
+'Add new comment commenter': 'Tilføj debattør'
+'Add new comment': 'Tilføj kommentar'
 'Add new acceptance criteria': null
 'Acceptance $1 saved.': null
 'Acceptance $1 deleted.': null

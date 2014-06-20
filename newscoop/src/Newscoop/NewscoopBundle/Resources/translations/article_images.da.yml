@@ -1,72 +1,72 @@
-'Display newsfeed images': null
-'Mark image': null
-'Add selected images to slideshow': null
-'Sorry that image is too small. Image needs to be at least %dx%d.': null
-'Slideshow rendition': null
-'Renditions reloaded': null
-'Reload renditions': null
-'Edit images': null
-'Specify image url if you want to load it.': null
-'Items: ': null
-'Attach slideshows': null
-'original size:': null
-'no caption': null
-'Video URL': null
-'Use for all': null
-'Use default': null
-'Slug must be unique': null
-Slug: null
-'Slideshow headline': null
-Slideshow: null
-'Set selected as default image': null
-'Set as default': null
-Saving...: null
-Saved: null
-'Save headline': null
-'Place Images': null
-'No renditions defined.': null
-'No images found.': null
-'No images attached to article.': null
-'No images': null
-'Next: Upload and Edit Metadata': null
-'Next: Place Images': null
-'Media Archive': null
-Location: null
-Items: null
-Item: null
-'Image files': null
-'Image Files: ': null
-Headline: null
-Finish: null
-'Edit Image Data': null
-'Edit $1': null
-'Done editing': null
-Detach: null
-Create: null
-Caption: null
-'Attached images': null
-'Attach & Place': null
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
-'Add video': null
-'Add caption': null
-'Show all': null
-'The image has been removed from the article.': null
-'Unable to add new image.': null
-'Image number $1 already exists': null
-'You do not have the right to change image information.': null
-'The image number specified is already in use.': null
-'Image $1 updated.': null
-'Image $1 added.': null
-'Edit article': null
-'You do not have the right to attach images to articles.': null
-'You do not have the right to add images.': null
-'Image information': null
-'Attach New Image': null
-'Attach Image To Article': null
-'Attach Existing Image': null
-'Add New Image': null
-Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: null
-'You must select an image file to upload.': null
-'Change image information': null
-'You do not have the right to add images': null
-'Filter by uploader...': null
+'Display newsfeed images': 'Vis nyhedsfeed billeder'
+'Mark image': 'Vælg billede'
+'Add selected images to slideshow': 'Brug valgte billeder til galleri'
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Billedet er for lille. Det skal være mindst %dx%d.'
+'Slideshow rendition': 'Galleri gengivelse'
+'Renditions reloaded': 'Gengivelser opdateret'
+'Reload renditions': 'Opdater gengivelser'
+'Edit images': 'Rediger billeder'
+'Specify image url if you want to load it.': 'Angiv billede url hvis du vil hente det.'
+'Items: ': 'Elementer:'
+'Attach slideshows': 'Vedhæft gallerier'
+'original size:': 'original størrelse:'
+'no caption': 'ingen billedtekst'
+'Video URL': 'Video URL'
+'Use for all': 'Brug til alle'
+'Use default': 'Brug standard'
+'Slug must be unique': 'Slug skal være unik'
+Slug: Slug
+'Slideshow headline': 'Galleriets overskrift'
+Slideshow: Galleri
+'Set selected as default image': 'Brug valgte billede som standard'
+'Set as default': 'Vælg som standard'
+Saving...: Gemmer...
+Saved: Gemt
+'Save headline': 'Gem overskrift'
+'Place Images': 'Indsæt billeder'
+'No renditions defined.': 'Der er ikke defineret nogen gengivelser.'
+'No images found.': 'Ingen billeder fundet.'
+'No images attached to article.': 'Artiklen har ingen vedhæftede billeder.'
+'No images': 'Ingen billeder'
+'Next: Upload and Edit Metadata': 'Næste: Upload og rediger metadata'
+'Next: Place Images': 'Næste: Indsæt billeder'
+'Media Archive': 'Medie arkiv'
+Location: Placering
+Items: Elementer
+Item: Element
+'Image files': Billedfiler
+'Image Files: ': 'Billedfiler:'
+Headline: Overskrift
+Finish: Afslut
+'Edit Image Data': 'Rediger billed data'
+'Edit $1': 'Rediger $1'
+'Done editing': 'Afslut redigering'
+Detach: Fjern
+Create: Opret
+Caption: Billedtekst
+'Attached images': 'Vedhæftede billeder'
+'Attach & Place': 'Vedhæft & indsæt'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Tilføj video url (f.eks. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)'
+'Add video': 'Tilføj video'
+'Add caption': 'Tilføj beskrivelse'
+'Show all': 'Vis alle'
+'The image has been removed from the article.': 'Billedet blev fjernet fra artiklen.'
+'Unable to add new image.': 'Kunne ikke tilføje nyt billede.'
+'Image number $1 already exists': 'Billede nummer $1 findes allerede'
+'You do not have the right to change image information.': 'Du har ikke rettigheder til at ændre billedinformation.'
+'The image number specified is already in use.': 'Billednummeret er allerede i brug.'
+'Image $1 updated.': 'Billede $1 blev opdateret'
+'Image $1 added.': 'Billede $1 tilføjet'
+'Edit article': 'Rediger artikel'
+'You do not have the right to attach images to articles.': 'Du har ikke rettigheder til at vedhæfte billeder til artikler.'
+'You do not have the right to add images.': 'Du har ikke rettigheder til at tilføje billeder.'
+'Image information': 'Billede information'
+'Attach New Image': 'Vedhæft nyt billede'
+'Attach Image To Article': 'Vedhæft billede til artiklen'
+'Attach Existing Image': 'Vedhæft eksisterende billede'
+'Add New Image': 'Tilføj nyt billede'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Dato<BR><SMALL>(åååå-mm-dd)</SMALL>
+'You must select an image file to upload.': 'Vælg en billedfil til upload.'
+'Change image information': 'Rediger billedinformation'
+'You do not have the right to add images': 'Du har ikke rettigheder til at tilføje billeder'
+'Filter by uploader...': 'Filtrer efter uploader...'

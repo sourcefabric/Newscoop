@@ -24,20 +24,32 @@ class SectionsList extends ListObject
 	 * @param array $p_parameters
 	 * @param int &$p_count
 	 * @return array
-	 */
-	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
-	{
-	    $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    $metaSectionsList = array();
-	    foreach ($sectionsList as $section) {
-	        $metaSectionsList[] = new MetaSection($section->getPublicationId(),
-                                                  $section->getIssueNumber(),
-                                                  $section->getLanguageId(),
-                                                  $section->getSectionNumber()
-                                                 );
-	    }
-	    return $metaSectionsList;
-	}
+     */
+    protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
+    {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('sectionList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'section');
+        if ($cacheService->contains($cacheKey)) {
+            $sectionsList = $cacheService->fetch($cacheKey);
+        } else {
+            $sectionsList = Section::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+            if (count($sectionsList) > 0) {
+                $cacheService->save($cacheKey, $sectionsList);
+            }
+        }
+
+        $metaSectionsList = array();
+        foreach ($sectionsList as $section) {
+            $metaSectionsList[] = new MetaSection(
+                $section->getPublicationId(),
+                $section->getIssueNumber(),
+                $section->getLanguageId(),
+                $section->getSectionNumber()
+            );
+        }
+
+        return $metaSectionsList;
+    }
 
 	/**
 	 * Processes list constraints passed in an array.

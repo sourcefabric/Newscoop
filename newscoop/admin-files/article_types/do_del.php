@@ -30,6 +30,9 @@ if ($doDelete) {
 
 	$articleType->delete();
 
+	$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('article_type');
+
 	camp_html_goto_page("/$ADMIN/article_types/");
 } else {
 	$errorMsgs[] = $translator->trans('The article type $1 could not be deleted.', array('$1' => '<B>'.htmlspecialchars($articleTypeName).'</B>'), 'article_types');

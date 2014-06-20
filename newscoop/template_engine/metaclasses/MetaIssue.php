@@ -53,7 +53,15 @@ final class MetaIssue extends MetaDbObject {
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
-        $this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('issue', $p_publicationId, $p_languageId, $p_issueNumber), 'issue');
+        if ($cacheService->contains($cacheKey)) {
+             $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Issue($p_publicationId, $p_languageId, $p_issueNumber);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
+
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Issue();
         }
@@ -64,11 +72,19 @@ final class MetaIssue extends MetaDbObject {
     {
         $resourceId = new ResourceId(__CLASS__);
         $outSetIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
-        $outSets = $outSetIssueService->findByIssue($this->m_dbObject->getIssueId());
-        if (count($outSets) == 0) {
-            return null;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('outSets1', $this->m_dbObject->getIssueId()), 'issue');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $outSets = $outSetIssueService->findByIssue($this->m_dbObject->getIssueId());
+            if (count($outSets) == 0) {
+                return null;
+            }
+            $themePath = $outSets[0]->getThemePath()->getPath();
+            $cacheService->save($cacheKey, $themePath);
+            return $themePath;
         }
-        return $outSets[0]->getThemePath()->getPath();
     }
 
 

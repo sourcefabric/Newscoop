@@ -154,6 +154,7 @@ abstract class CampSystem
     public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL, $p_isPublished = true)
     {
         global $g_ado_db;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
         if (CampCache::IsEnabled()) {
             $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
             $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
@@ -182,12 +183,23 @@ abstract class CampSystem
         }
         if (!is_null($p_issNr)) {
             $resourceId = new ResourceId('template_engine/classes/CampSystem');
-            /* @var $templateSearchService ITemplateSearchService */
-            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
             $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
+
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+
             $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-            $template = $templateSearchService->getErrorPage($issueObj->getIssueId(),
-            $outputService->findByName('Web'));
+            $template = $templateSearchService->getErrorPage($issueObj->getIssueId(), Zend_Registry::get('webOutput'));
         }
 
         if (empty($template)) {
@@ -209,29 +221,74 @@ abstract class CampSystem
      */
     public static function GetThemePath($p_lngId, $p_pubId, $p_issNr)
     {
-    	if (empty($p_lngId) || empty($p_issNr)) {
-    	    $publication = new Publication($p_pubId);
-    		$issue = self::GetLastIssue($publication, $p_lngId);
-    		if (is_null($issue)) {
-    		    $issue = self::GetLastIssue($publication);
-    		    if (is_null($issue)) {
-    		        return null;
-    		    }
-    		}
-    		$p_issNr = array_shift($issue);
-    		$p_lngId = array_shift($issue);
-    	}
-        $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $outputSettingIssueService IOutputSettingIssueService */
-        $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
-        /* @var $outputService IOutputService */
-        $outputService = $resourceId->getService(IOutputService::NAME);
-        $output = $outputService->findByName('Web');
-        $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), $outputService->findByName('Web'));
-        if(!is_null($outSetIssues))
-            return $outSetIssues->getThemePath()->getPath();
-        return;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
+        if (empty($p_lngId) || empty($p_issNr)) {
+            $cacheKey = $cacheService->getCacheKey('legacy_publication'.$p_pubId, 'publication');
+            if ($cacheService->contains($cacheKey)) {
+                $publication = $cacheService->fetch($cacheKey);
+            } else {
+                $publication = new Publication($p_pubId);
+                $cacheService->save($cacheKey, $publication);
+            }
+
+            $issue = self::GetLastIssue($publication, $p_lngId);
+            if (is_null($issue)) {
+                $issue = self::GetLastIssue($publication);
+                if (is_null($issue)) {
+                    return null;
+                }
+            }
+            $p_issNr = array_shift($issue);
+            $p_lngId = array_shift($issue);
+        }
+
+        $cacheKeyThemePath = $cacheService->getCacheKey(array('getThemePath', $p_lngId, $p_pubId, $p_issNr), 'issue');
+        if ($cacheService->contains($cacheKeyThemePath)) {
+            $themePath = $cacheService->fetch($cacheKeyThemePath);
+        } else {
+            $cacheKey = $cacheService->getCacheKey(array('issue', $p_pubId, $p_lngId, $p_issNr), 'issue');
+            if ($cacheService->contains($cacheKey)) {
+                $issueObj = $cacheService->fetch($cacheKey);
+            } else {
+                $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+                $cacheService->save($cacheKey, $issueObj);
+            }
+
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
+
+            $cacheKeyOutSetIssues = $cacheService->getCacheKey(array('outSetIssues', $issueObj->getIssueId(), 'webOutput'));
+            if ($cacheService->contains($cacheKeyOutSetIssues)) {
+                $outSetIssues = $cacheService->fetch($cacheKeyOutSetIssues);
+            } else {
+                $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+                $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
+                $cacheService->save($cacheKeyOutSetIssues, $outSetIssues);
+            }
+
+            $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+            $outSetIssues = $outputSettingIssueService->findByIssueAndOutput($issueObj->getIssueId(), \Zend_Registry::get('webOutput'));
+            if(!is_null($outSetIssues)) {
+                $themePath = $outSetIssues->getThemePath()->getPath();
+            } else {
+                $themePath = null;
+            }
+            $cacheService->save($cacheKeyThemePath, $themePath);
+        }
+
+        return $themePath;
     }
 
     /**
@@ -240,9 +297,18 @@ abstract class CampSystem
     public static function GetTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr,
             $p_artNr, $p_isPublished = true)
     {
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
         global $g_ado_db;
         if ($p_lngId <= 0) {
-            $publication = new Publication($p_pubId);
+            $cacheKey = $cacheService->getCacheKey('legacy_publication'.$p_pubId, 'publication');
+            if ($cacheService->contains($cacheKey)) {
+                $publication = $cacheService->fetch($cacheKey);
+            } else {
+                $publication = new Publication($p_pubId);
+                $cacheService->save($cacheKey, $publication);
+            }
+            
             if (!$publication->exists()) {
                 return null;
             }
@@ -300,111 +366,134 @@ abstract class CampSystem
     {
         global $g_ado_db;
 
-    	if (!$publication->exists()) {
-    		return null;
-    	}
-    	if (empty($p_langId)) {
-    		$p_langId = $publication->getDefaultLanguageId();
-    	}
-    	$sql = 'SELECT MAX(Number) AS Number FROM Issues '
-    	. 'WHERE IdPublication = ' . (int)$publication->getPublicationId()
-    	. ' AND IdLanguage = ' . (int)$p_langId;
-    	if ($p_isPublished == true) {
-    		$sql .= " AND Published = 'Y'";
-    	}
-    	$issueNo = $g_ado_db->GetOne($sql);
-    	if (empty($issueNo)) {
-    		return null;
-    	}
-    	return array($issueNo, $p_langId);
+        if (!$publication->exists()) {
+            return null;
+        }
+        if (empty($p_langId)) {
+            $p_langId = $publication->getDefaultLanguageId();
+        }
+        $sql = 'SELECT MAX(Number) AS Number FROM Issues '
+        . 'WHERE IdPublication = ' . (int)$publication->getPublicationId()
+        . ' AND IdLanguage = ' . (int)$p_langId;
+        if ($p_isPublished == true) {
+            $sql .= " AND Published = 'Y'";
+        }
+        $issueNo = $g_ado_db->GetOne($sql);
+        if (empty($issueNo)) {
+            return null;
+        }
+        return array($issueNo, $p_langId);
     }
 
     public static function GetIssueTemplate($p_lngId, $p_pubId, $p_issNr)
     {
         global $g_ado_db;
-        if (CampCache::IsEnabled()) {
-            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr;
-            $cacheKey = __CLASS__ . '_IssueTemplate_' . $paramString;
-            $issueTemplate = CampCache::singleton()->fetch($cacheKey);
-            if ($issueTemplate !== false && !empty($issueTemplate)) {
-                return $issueTemplate;
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('GetIssueTemplate', $p_lngId, $p_pubId, $p_issNr), 'issue');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
             }
-        }
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-        $outputService = $resourceId->getService(IOutputService::NAME);
 
-        $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-        $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
-                        $outputService->findByName('Web'));
+            /* @var $templateSearchService ITemplateSearchService */
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
-        if (empty($data)) {
-            $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+            $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+            $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
+                \Zend_Registry::get('webOutput'));
+
+            if (empty($data)) {
+                $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+            }
+            $cacheService->save($cacheKey, $data);
+            return $data;
         }
-        if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($cacheKey, $data);
-        }
-        return $data;
     }// fn GetIssueTemplate
 
-    public static function GetSectionTemplate($p_lngId, $p_pubId, $p_issNr,
-            $p_sctNr)
+    public static function GetSectionTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr)
     {
         global $g_ado_db;
-        if (CampCache::IsEnabled()) {
-            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
-            $cacheKey = __CLASS__ . '_SectionTemplate_' . $paramString;
-            $sectionTemplate = CampCache::singleton()->fetch($cacheKey);
-            if ($sectionTemplate !== false && !empty($sectionTemplate)) {
-                return $sectionTemplate;
-            }
-        }
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-        $outputService = $resourceId->getService(IOutputService::NAME);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('GetSectionTemplate', $p_lngId, $p_pubId, $p_issNr, $p_sctNr), 'section');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
 
-        $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
-        $data = $templateSearchService->getSectionPage($sectionObj->getSectionId(),
-                        $outputService->findByName('Web'));
-        if (empty($data)) {
-            $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);;
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
+            }
+
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+
+            $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
+            $data = $templateSearchService->getSectionPage($sectionObj->getSectionId(),
+                \Zend_Registry::get('webOutput'));
+            if (empty($data)) {
+                $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+            }
+            $cacheService->save($cacheKey, $data);
+            return $data;
         }
-        if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($cacheKey, $data);
-        }
-        return $data;
     }// fn GetSectionTemplate
 
     public static function GetArticleTemplate($p_lngId, $p_pubId, $p_issNr,
             $p_sctNr)
     {
         global $g_ado_db;
-        if (CampCache::IsEnabled()) {
-            $paramString = $p_lngId . '_' . $p_pubId . '_' . $p_issNr . '_' . $p_sctNr;
-            $cacheKey = __CLASS__ . '_ArticleTemplate_' . $paramString;
-            $articleTemplate = CampCache::singleton()->fetch($cacheKey);
-            if ($articleTemplate !== false && !empty($articleTemplate)) {
-                return $articleTemplate;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('GetArticleTemplate', $p_lngId, $p_pubId, $p_issNr, $p_sctNr), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            $outputService = $resourceId->getService(IOutputService::NAME);
+
+            if (!\Zend_Registry::isRegistered('webOutput')) {
+                $cacheKeyWebOutput = $cacheService->getCacheKey(array('OutputService', 'Web'), 'outputservice');
+                if ($cacheService->contains($cacheKeyWebOutput)) {
+                    \Zend_Registry::set('webOutput', $cacheService->fetch($cacheKeyWebOutput));
+                } else {
+                    $webOutput = $outputService->findByName('Web');
+                    $cacheService->save($cacheKeyWebOutput, $webOutput);
+                    \Zend_Registry::set('webOutput', $webOutput);
+                }
             }
-        }
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-        $outputService = $resourceId->getService(IOutputService::NAME);
 
-        $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
-        $data = $templateSearchService->getArticlePage($sectionObj->getSectionId(),
-                        $outputService->findByName('Web'));
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
 
-        if (empty($data)) {
-            $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);;
-        }
-        if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($cacheKey, $data);
-        }
-        return $data;
-    }// fn GetArticleTemplate
+            $sectionObj = new Section($p_pubId, $p_issNr, $p_lngId, $p_sctNr);
+            $data = $templateSearchService->getArticlePage($sectionObj->getSectionId(),
+                \Zend_Registry::get('webOutput'));
+
+            if (empty($data)) {
+                $data = self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+            }
+            $cacheService->save($cacheKey, $data);
+            return $data;
+        }// fn GetArticleTemplate
+    }
 }// class CampSystem
 ?>

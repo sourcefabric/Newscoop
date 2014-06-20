@@ -107,6 +107,7 @@ newscoop:
             usergarbage: 'Odstranit zastaralá uživatelská data čekající na vyřízení?'
             usergarbagedaysinfo: 'Definujte přesný počet dnů po kterých úživatelé čekající na vyřízení budou smazáni.'
             usergarbagedays: 'Počet dní'
+            smartyUseProtocol: null
         popover:
             cacheengine: 'Povoluje nebo zakazuje systém cache cache, který může zlepšit výkon Newscoop.'
             cacheenginehost: 'Poskytněnte cache host (pro Memcache, Memcached nebo Redis)'
@@ -130,3 +131,4 @@ newscoop:
                 secure: 'Pokud používáte bezpečnostní url pro reCAPTCHA vyberte možnost ANO.'
             garbage: 'Pokud povoleno, umožňuje vydavateli definovat přesný počet dnů po kterých budou uživatelé čekající na vyřízení vymazáni. Přednastaveno 90 dnů.'
             lifetime: 'Životnost relace v sekundách. Max: 86400 (24 hodin). Min: 0 (až do uzavření prohlížeče).'
+            smartyuseprotocol: null

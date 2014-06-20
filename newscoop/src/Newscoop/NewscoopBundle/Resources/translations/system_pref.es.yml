@@ -33,7 +33,7 @@ newscoop:
             sitetitle: 'Título del sitio:'
             metakeywords: null
             metadescription: null
-            timezone: null
+            timezone: 'Zona horaria:'
             cacheengine: null
             cacheenginehost: null
             cacheengineport: null
@@ -107,6 +107,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
+            smartyUseProtocol: null
         popover:
             cacheengine: null
             cacheenginehost: null
@@ -130,3 +131,4 @@ newscoop:
                 secure: null
             garbage: 'Si se activa, esto permite al publicador definir un cierto número de días después de los cuales los usuarios pendientes serán borrados. Por defecto se estipulan 90 días.'
             lifetime: null
+            smartyuseprotocol: null

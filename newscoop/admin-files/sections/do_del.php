@@ -35,6 +35,8 @@ $f_delete_all_section_translations = ($f_delete_all_section_translations == 'Y')
 $f_delete_all_articles_translations = ($f_delete_all_articles_translations == 'Y') ? true : false;
 if ($f_delete_all_section_translations == false) {
     $numArticlesDeleted = $sectionObj->delete(true, $f_delete_all_articles_translations);
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('section');
 } else {
     $sectionTranslations = Section::GetSections($f_publication_id, $f_issue_number, null, null, $sectionObj->getName(), null);
     foreach ($sectionTranslations as $key => $sectionTranslation) {
