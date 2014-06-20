@@ -1,15 +1,15 @@
-'The country $1 could not be created.': null
-'Country with code $1 exists already.': null
-'You do not have the right to add countries.': null
-'Delete country': null
-'You do not have the right to delete countries.': null
-'Are you sure you want to delete the country $1?': null
-'The country $1 could not be deleted.': null
-'Edit country name': null
-'You do not have the right to change country names.': null
-'Changing country name': null
-'The country name $1 could not be changed': null
-'Translate country name': null
-'You do not have the right to translate country names.': null
-'The country name $1 could not be translated': null
-'Add New Country': null
+'The country $1 could not be created.': 'Landet $1 kunne ikke oprettes.'
+'Country with code $1 exists already.': 'Der findes allerede et land med koden $1.'
+'You do not have the right to add countries.': 'Du har ikke tilladelse til at tilføje lande.'
+'Delete country': 'Slet land'
+'You do not have the right to delete countries.': 'Du har ikke tilladelse til at slette lande.'
+'Are you sure you want to delete the country $1?': 'Er du sikker på du vil slette landet $1?'
+'The country $1 could not be deleted.': 'Landet $1 kunne ikke slettes.'
+'Edit country name': 'Ret landenavn'
+'You do not have the right to change country names.': 'Du har ikke tilladelse til at ændre landenavne.'
+'Changing country name': 'Retter landenavn.'
+'The country name $1 could not be changed': 'Landenavnet $1 kunne ikke rettes'
+'Translate country name': 'Oversæt landenavn'
+'You do not have the right to translate country names.': 'Du har ikke tilladelse til at oversætte landenavne.'
+'The country name $1 could not be translated': 'Landenavnet $1 kunne ikke oversættes'
+'Add New Country': 'Tilføj nyt land'

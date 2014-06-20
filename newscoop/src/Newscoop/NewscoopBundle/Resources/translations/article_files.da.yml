@@ -1,38 +1,38 @@
-'Files attached.': null
-'File $1 unattached.': null
-'Attach new file': null
-'Attach existing file': null
-'$1 file/s attached to article': null
-'File attached.': null
-'The maximum file upload size was not configured in Newscoop.': null
-'File $1 $2 unattached': null
-'File $1 $2 attached to article': null
-'Unable to add attachment.': null
-'There was a problem uploading the file.': null
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
-'The file exceeds the allowed max file size.': null
-'Please make sure you upgraded the database correctly: run $1 in a shell.': null
-'Maximum Upload Size': null
-'File Size': null
-'File Name': null
-Download: null
-'File $1 updated.': null
-'Edit article': null
-'You do not have the right to delete file attachments.': null
-'You must select a file to upload.': null
-'You do not have the right to delete files.': null
-'You do not have the right to change the article.': null
-'You do not have the right to change files.': null
-'You do not have the right to add files.': null
-'Should this file only be available for this translation of the article, or for all translations?': null
-'Please enter a description for the file.': null
-'Open in the browser': null
-'Only this translation': null
-'File information': null
-'Do you want this file to open in the users browser, or to automatically download?': null
-'Change file information': null
-'Automatically download': null
-Attachments: null
-'Attachment does not exist.': null
-'Attach File to Article': null
-'All translations': null
+'Files attached.': 'Filer vedhæftet.'
+'File $1 unattached.': 'Fil $1 fjernet.'
+'Attach new file': 'Vedhæft ny fil'
+'Attach existing file': 'Vedhæft eksisterende fil'
+'$1 file/s attached to article': '$1 fil(er) vedhæftet'
+'File attached.': 'Fil vedhæftet.'
+'The maximum file upload size was not configured in Newscoop.': 'Maksimal fil upload størrelse er ikke indstillet i Newscoop.'
+'File $1 $2 unattached': 'Fil $1 $2 fjernet.'
+'File $1 $2 attached to article': 'Fil $1 $2 vedhæftet'
+'Unable to add attachment.': 'Kunne ikke tilføje vedhæftning.'
+'There was a problem uploading the file.': 'Filen kunne ikke uploades.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Filen blev kun delvist uploadet. Dette er almindeligt når den tilladte tid til upload er lav i forhold til filens størrelse. Den tilladte tid indstilles i php.ini'
+'The file exceeds the allowed max file size.': 'Filen er for stor.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Kontroller at du har opgraderet databasen korrekt: Kør $1 i en terminal.'
+'Maximum Upload Size': 'Maksimal filstørrelse'
+'File Size': 'Fil størrelse'
+'File Name': 'Fil navn'
+Download: Download
+'File $1 updated.': 'Fil $1 opdateret.'
+'Edit article': 'Rediger artikel'
+'You do not have the right to delete file attachments.': 'Du har ikke rettigheder til at slette vedhæftede filer.'
+'You must select a file to upload.': 'Vælg fil til upload.'
+'You do not have the right to delete files.': 'Du har ikke rettigheder til at slette filer.'
+'You do not have the right to change the article.': 'Du har ikke rettigheder til at ændre artiklen.'
+'You do not have the right to change files.': 'Du har ikke rettigheder til at filer.'
+'You do not have the right to add files.': 'Du har ikke rettigheder til at tilføje filer.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Skal filen kun bruges til denne oversættelse af artiklen eller til alle oversættelser?'
+'Please enter a description for the file.': 'Giv en beskrivelse af filen.'
+'Open in the browser': 'Åben i browseren'
+'Only this translation': 'Kun denne oversættelse'
+'File information': 'Fil information'
+'Do you want this file to open in the users browser, or to automatically download?': 'Skal filen åbne i brugerens browser eller downloades automatisk?'
+'Change file information': 'Rediger fil information'
+'Automatically download': 'Download automatisk'
+Attachments: Vedhæftninger
+'Attachment does not exist.': 'Vedhæftningen findes ikke.'
+'Attach File to Article': 'Vedhæft fil'
+'All translations': 'Alle oversættelser'

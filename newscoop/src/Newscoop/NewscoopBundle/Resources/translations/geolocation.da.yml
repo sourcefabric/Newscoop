@@ -1,66 +1,66 @@
-'Based on GeoNames.org and OpenStreetMap.org data': null
-'selected marker icon': null
-'add location to map': null
-'Video source': null
-'The point will be removed from all translations of the article.': null
-'Specify country (optional)': null
-'Sorry, that place was not found. Check your spelling or search again.': null
-'Show search results': null
-'Search for place or coordinate': null
-'Return to edit': null
-'Really delete this point?': null
-'Name and describe this location': null
-'Map size': null
+'Based on GeoNames.org and OpenStreetMap.org data': 'Baseret på GeoNames.org og OpenStreetMap.org data'
+'selected marker icon': 'valgt markør ikon'
+'add location to map': 'føj placering til kort'
+'Video source': 'Video kilde'
+'The point will be removed from all translations of the article.': 'Punktet fjernes fra alle artiklens oversættelser.'
+'Specify country (optional)': 'Land (valgfrit)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Stedet kunne ikke findes. Kontroller stavningen eller søg igen.'
+'Show search results': 'Vis søgeresultater'
+'Search for place or coordinate': 'Søg efter sted eller koordinat'
+'Return to edit': 'Tilbage til redigering'
+'Really delete this point?': 'Slet punktet?'
+'Name and describe this location': 'Giv placeringen et navn og en beskrivelse'
+'Map size': 'Kort størrelse'
 'Location label': null
-'Location description:': null
+'Location description:': 'Beskrivelse:'
 'Label url': null
-'Hide search results': null
-Geo-filtering: null
-'Fill in youtube ID or link, e.g.': null
-'Fill in vimeo ID or link, e.g': null
-'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': null
+'Hide search results': 'Skjul søgeresultater'
+Geo-filtering: Geo-filtrering
+'Fill in youtube ID or link, e.g.': 'YouTube ID eller link, f.eks.'
+'Fill in vimeo ID or link, e.g': 'Vimeo ID eller link, f.eks.'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Video ID, link eller filnavn for YouTube, Vimeo eller flash video.'
 'Fill in location label': null
 'Fill in local swf flash file name or link, e.g.': null
 'Fill in local flv flash file name or link, e.g.': null
-'Fill in image link, like': null
-'Describe the location...': null
-'Delete location': null
-Coordinates: null
-'Change video display size': null
-'Change image display size': null
-'Change icon of this location': null
-'Center map on location': null
-'Advanced editing': null
-'Add an image to this location': null
-'Add a video to this location': null
-'Are you sure you want to quit without saving your changes?': null
-'Map preview': null
-'Locations updated.': null
-'Setting the map name helps with map search': null
-Longitude: null
-Latitude: null
-Center: null
-'Last Saved Map View': null
-'List of locations updated': null
-width: null
+'Fill in image link, like': 'Indtast billede link, f.eks.'
+'Describe the location...': 'Beskriv placeringen...'
+'Delete location': 'Slet placering'
+Coordinates: Koordinater
+'Change video display size': 'Skift visningsstørrelse på videoen'
+'Change image display size': 'Skift visningsstørrelse på billedet'
+'Change icon of this location': 'Skift ikon for stedet'
+'Center map on location': 'Centrér kortet på stedet'
+'Advanced editing': 'Avanceret redigering'
+'Add an image to this location': 'Føj et billede til dette sted'
+'Add a video to this location': 'Føj en video til dette sted'
+'Are you sure you want to quit without saving your changes?': 'Vil du afslutte uden at gemme dine ændringer?'
+'Map preview': 'Forhåndsvisning af kort'
+'Locations updated.': 'Steder blev opdateret.'
+'Setting the map name helps with map search': 'Det er en hjælp til kortsøgning at give kortet et navn'
+Longitude: Længdegrad
+Latitude: Breddegrad
+Center: Centrér
+'Last Saved Map View': 'Sidst gemte kort visning'
+'List of locations updated': 'Liste med opdaterede steder'
+width: bredde
 'show initial map view': null
-'problem at point processing, please send error report': null
-'plain text': null
-'html content': null
-height: null
-'fill in map name': null
-'You do not have the right to remove maps from articles.': null
-'Video file': null
-'Video ID': null
-'The map has been removed from the article.': null
-'Point no.': null
-'Point markers': null
-None: null
-'Map Search Example': null
-'Map Preview': null
-'Image URL': null
-video: null
-text: null
-image: null
-icon: null
+'problem at point processing, please send error report': 'problem ved behandling af punkt, send venligst en fejl rapport'
+'plain text': 'Ren tekst'
+'html content': 'html indhold'
+height: højde
+'fill in map name': 'udfyld kortets navn'
+'You do not have the right to remove maps from articles.': 'Du har ikke rettigheder til at fjerne kort fra artikler.'
+'Video file': 'Video fil'
+'Video ID': 'Video ID'
+'The map has been removed from the article.': 'Kortet er fjernet fra artiklen.'
+'Point no.': 'Punkt nr.'
+'Point markers': 'Punkt markører'
+None: Ingen
+'Map Search Example': 'Eksempel på kortsøgning'
+'Map Preview': 'Forhåndsvisning af kort'
+'Image URL': 'Billede URL'
+video: video
+text: tekst
+image: billede
+icon: ikon
 'Setting Map Locations': null

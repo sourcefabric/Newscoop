@@ -247,32 +247,57 @@ $('.save-button-bar input#save_and_close').click(function() {
 
 
 
-
-var authorsList = [
 <?php
-$allAuthors = Author::GetAllExistingNames();
+$allAuthors = array();
 if ($userIsBlogger) {
     $blogInfo = $blogService->getBlogInfo($g_user);
     $allAuthors = array_map(function($author) {
         return $author->getName();
     }, ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId()));
-}
+
 $quoteStringFn = create_function('&$value, $key',
     '$value = json_encode((string) $value);');
 array_walk($allAuthors, $quoteStringFn);
-echo implode(",\n", $allAuthors);
 ?>
-];
+var authorsList = [<?php echo implode(",\n", $allAuthors); ?>];
 
+$(".aauthor").autocomplete({ source: authorsList });
+
+<?php } else { ?>
 // authors autocomplete
-$(".aauthor").autocomplete({
-    source: authorsList
-});
 $(".aauthor").live('focus', function() {
     $(".aauthor").autocomplete({
-        source: authorsList
+      source: function (request, response) {
+        $.ajax({
+          url: "/admin/authors/get",
+          dataType: "json",
+          data: {
+            limit: 10,
+            term: request.term,
+            users: true
+          },
+          success: function (data) {
+            response($.map(data, function(item) {
+              return {
+                label: item.name,
+                value: item.name
+              }
+            }));
+          }
+        });
+      },
+      minLength: 1,
+      open: function () {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function () {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
     });
 });
+
+<?php } ?>
+
 
 // fancybox for popups
 $('a.iframe').each(function() {
@@ -323,8 +348,8 @@ $('#attach-images').fancybox({
         return checkChanged();
     },
     onClosed: function() {
-		window.location.reload();
-	}
+        window.location.reload();
+    }
 });
 
 $('#edit-images').fancybox({
@@ -545,8 +570,8 @@ function loadMultiDateEvents() {
             languageId : "<?php echo $article_language_use; ?>"
         },
         function(data) {
-        	var eventList = '';
-        	eventList += '<ul class="block-list">';
+            var eventList = '';
+            eventList += '<ul class="block-list">';
 
             var dispalyed_all = true;
             

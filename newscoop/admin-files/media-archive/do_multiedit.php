@@ -33,6 +33,9 @@ foreach ($_POST['image'] as $id => $values) {
     $imageObj->update($updateArray);
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('image');
+
 camp_html_add_msg($translator->trans("Images updated.", array(), 'media_archive'), "ok");
 camp_html_goto_page("/$ADMIN/media-archive/index.php");
 ?>

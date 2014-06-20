@@ -33,6 +33,8 @@ class ImageService
      */
     protected $orm;
 
+    protected $cacheService;
+
     /**
      * @var array
      */
@@ -47,10 +49,11 @@ class ImageService
      * @param array                      $config
      * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, $cacheService)
     {
         $this->config = $config;
         $this->orm = $orm;
+        $this->cacheService = $cacheService;
     }
 
     /**
@@ -129,6 +132,8 @@ class ImageService
             throw new \Exception($e->getMessage(), $e->getCode());
         }
 
+        $this->cacheService->clearNamespace('image');
+
         return $image;
     }
 
@@ -162,6 +167,9 @@ class ImageService
 
         $this->orm->remove($image);
         $this->orm->flush();
+
+        $this->cacheService->clearNamespace('article_image');
+        $this->cacheService->clearNamespace('image');
 
         return true;
     }

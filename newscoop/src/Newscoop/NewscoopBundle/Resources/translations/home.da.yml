@@ -1,158 +1,158 @@
-'Rename user': null
-Campsite: null
-'Image Rendering': null
-'Featured Article Lists': null
-'You have tried to upload an invalid backup file.': null
-'You do not have the right to manage backups.': null
-'Make a new backup': null
-'Are you sure you want to make a new backup?': null
-'Security token expired. Please resubmit the form.': null
-Templates: null
-'Create slideshow': null
-Create: null
-Attach/Detach: null
-'Are you sure you want to delete slideshow?': null
-Support: null
-'Pending articles': null
-'Manage Users': null
-'Manage User Types': null
-'Manage User Points System': null
-Last: null
-First: null
-Feedback: null
-'Edit your password': null
-'Edit user': null
-'Edit permissions': null
-Detail: null
-'Create new user': null
-'Create new account': null
-'Add feed': null
-'Upload of file $1 was not successful.': null
-'The file $1 could not be moved. Check you have enough of disk space.': null
-MiB: null
-'Download was not successful. Check please that the server is not out of disk space.': null
-'try again later': null
-at: null
-'You must at least upload one file.': null
-'Warning: the existing data and themes will be deleted!': null
-'Value is required and cant be empty': null
-Upload: null
-'Update comment': null
-'Time created': null
-Themes: null
-'Stop current upload': null
-'Start uploading queue': null
-'Start upload': null
-Settings: null
-'Select files': null
-Reply: null
-'New comment added': null
-'Manage Authors': null
-Loading..: null
-Filename: null
-'Edit user type': null
-'Edit language': null
-'Drag files here.': null
-'Connection interrupted': null
-Ban: null
-'Are you sure you want to': null
-'Add files to the upload queue and click the start button.': null
-'Add files': null
-'%value% is more than %max% characters long': null
-'%value% is less than %min% characters long': null
-'User name': null
-Newscoop: null
-'Your password has been reset.': null
-'Proceed to login.': null
+'Rename user': 'Omdøb bruger'
+Campsite: Campsite
+'Image Rendering': 'Billed udgaver'
+'Featured Article Lists': 'Fremhævede artikler'
+'You have tried to upload an invalid backup file.': 'Du prøvede at uploade en ugyldig backup fil.'
+'You do not have the right to manage backups.': 'Du har ikke rettigheder til at håndtere backups.'
+'Make a new backup': 'Lav en ny backup'
+'Are you sure you want to make a new backup?': 'Er du sikker på du vil lave en ny backup?'
+'Security token expired. Please resubmit the form.': 'Sikkerhedstoken er udløbet. Indsend formularen igen.'
+Templates: Skabeloner
+'Create slideshow': 'Opret galleri'
+Create: Opret
+Attach/Detach: Vedhæft/Fjern
+'Are you sure you want to delete slideshow?': 'Er du sikker på du vil slette galleriet?'
+Support: Support
+'Pending articles': 'Ventende artikler'
+'Manage Users': Brugere
+'Manage User Types': 'Bruger typer'
+'Manage User Points System': 'Håndter burger point systemet'
+Last: Sidste
+First: Første
+Feedback: Feedback
+'Edit your password': 'Skift din adgangskode'
+'Edit user': 'Rediger bruger'
+'Edit permissions': 'Rediger rettigheder'
+Detail: Detalje
+'Create new user': 'Opret ny bruger'
+'Create new account': 'Opret ny konto'
+'Add feed': 'Tilføj feed'
+'Upload of file $1 was not successful.': 'Upload af filen $1 fejlede.'
+'The file $1 could not be moved. Check you have enough of disk space.': 'Filen $1 kunne ikke flyttes. Kontroler at du har lagerplads nok.'
+MiB: MiB
+'Download was not successful. Check please that the server is not out of disk space.': 'Download mislykkedes. Kontroller at serveren har plads på disken.'
+'try again later': 'Prøv igen senere'
+at: på
+'You must at least upload one file.': 'Du skal uploade mindst 1 fil.'
+'Warning: the existing data and themes will be deleted!': 'Advarsel: De eksisterende data og temaer vil blive slettet!'
+'Value is required and cant be empty': 'Værdien er påkrævet og kan ikke være tom'
+Upload: Upload
+'Update comment': 'Opdater kommentar'
+'Time created': Oprettelsestidspunkt
+Themes: Temaer
+'Stop current upload': 'Stop igangværende upload'
+'Start uploading queue': 'Start upload kø'
+'Start upload': 'Start upload'
+Settings: Indstillinger
+'Select files': 'Vælg filer'
+Reply: Svar
+'New comment added': 'Ny kommentar tilføjet'
+'Manage Authors': Forfattere
+Loading..: Loader...
+Filename: Filnavn
+'Edit user type': 'Rediger bruger type'
+'Edit language': 'Rediger sprog'
+'Drag files here.': 'Træk filer hertil.'
+'Connection interrupted': 'Forbindelse afbrudt'
+Ban: Bloker
+'Are you sure you want to': 'Er du sikker på du vil'
+'Add files to the upload queue and click the start button.': 'Tilføj filer til upload køen og klik på start.'
+'Add files': 'Tilføj filer'
+'%value% is more than %max% characters long': '%value% er mere end %max% tegn lang'
+'%value% is less than %min% characters long': '%value% er mindre end %min% tegn lang'
+'User name': Brugernavn
+Newscoop: Newscoop
+'Your password has been reset.': 'Din adgangskode er blevet nulstillet.'
+'Proceed to login.': 'Gå til login.'
 'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
-'Go to login': null
-'Back to login.': null
-'Back to login': null
-'An email with instructions on how to recover you password has been sent to your inbox.': null
-'Session expired.': null
-Processing...: null
-Please: null
-'Go to dashboard': null
-'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': null
-'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': null
-'Newscoop cache was cleaned up': null
-Dashboard: null
-'Your changes will be saved after login.': null
-'Upload backup file': null
-'The file $1 has been uploaded successfully.': null
-'Media Archive': null
-Widgets: null
-'Widget info': null
-'Widget added to dashboard.': null
-'Remove widget': null
-'Please login to continue.': null
-'Add to dashboard': null
-'Add more widgets': null
-login: null
-'This link is not valid.': null
-'Recover password': null
-'Please enter your email.': null
-'Password recovery is disabled.': null
-'Password recovery': null
-'Password Recovery': null
-'No user is registered with this email.': null
-'Forgot your password?': null
-'Email: incorrect format.': null
-Email: null
-'Bad input parameters.': null
-'There was an error trying to delete the file $1.': null
-'The file $1 was deleted successfully.': null
-Size: null
-'Restore file': null
-Restore: null
-Mb: null
-'Free disk space': null
-'Download file': null
-Download: null
-'Delete file': null
-'Backup list is empty.': null
-'Are you sure you want to restore the file $1?': null
-'Are you sure you want to delete the file $1?': null
-'Import XML': null
-'You must have the permissions to add/change issues and articles in order to set the author for all articles.': null
-'Select the field from which to generate the author': null
-'Invalid or empty field $1. You must select a valid dynamic field.': null
-'Unable to create author $1 for article no. $2 ($3) of type $4.': null
+'Go to login': 'Gå til login'
+'Back to login.': 'Tilbage til login.'
+'Back to login': 'Tilbage til login'
+'An email with instructions on how to recover you password has been sent to your inbox.': 'Der er sendt en email til dig med instruktioner til at gendanne din adgangskode.'
+'Session expired.': 'Sessionen er udløbet.'
+Processing...: Arbejder...
+Please: Tak
+'Go to dashboard': 'Gå til overblik'
+'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Din browser understøtter ikke javascript eller (mere sandsynligt) du har slået javascript fra. Du skal slå javascript til for at bruge Newscoop.'
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop har opgraderet sikkerheden. For at opgradere din kontos skal du skrive din adgangskode igen.'
+'Newscoop cache was cleaned up': 'Newscoop cachen blev renset'
+Dashboard: Overblik
+'Your changes will be saved after login.': 'Dine ændringer bliver gemt efter du logger ind.'
+'Upload backup file': 'Upload backup fil'
+'The file $1 has been uploaded successfully.': 'Filen $1 blev uploadet.'
+'Media Archive': 'Medie arkiv'
+Widgets: Widgets
+'Widget info': 'Widget info'
+'Widget added to dashboard.': 'Widget føjet til overblikket.'
+'Remove widget': 'Fjern widget'
+'Please login to continue.': 'Log ind for at fortsætte.'
+'Add to dashboard': 'Tilføj til overblik'
+'Add more widgets': 'Tilføj flere widgets'
+login: 'Log ind'
+'This link is not valid.': 'Ugyldigt link'
+'Recover password': 'Gendan adgangskode'
+'Please enter your email.': 'Skriv din email adresse.'
+'Password recovery is disabled.': 'Gendannelse af adgangskoder er slået fra.'
+'Password recovery': 'Gendannelse af adgangskode'
+'Password Recovery': 'Gendannelse af adgangskode'
+'No user is registered with this email.': 'Ingen bruger er registreret med den email adresse.'
+'Forgot your password?': 'Glemt adgangskode?'
+'Email: incorrect format.': 'Email: Forkert format.'
+Email: Email
+'Bad input parameters.': 'Ugyldige input parametre'
+'There was an error trying to delete the file $1.': 'Der skete en fejl under sletning af filen $1.'
+'The file $1 was deleted successfully.': 'Filen $1 blev slettet.'
+Size: Størrelse
+'Restore file': 'Gendan fil'
+Restore: Gendan
+Mb: Mb
+'Free disk space': 'Ledig diskplads'
+'Download file': 'Hent fil'
+Download: Download
+'Delete file': 'Slet fil'
+'Backup list is empty.': 'Backup listen er tom.'
+'Are you sure you want to restore the file $1?': 'Er du sikker på du vil gendanne filen $1?'
+'Are you sure you want to delete the file $1?': 'Er du sikker på du vil slette filen $1?'
+'Import XML': 'Importer XML'
+'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Du skal have rettigheder til at tilføje/ændre udgivelser og artikler for at indstille forfatter for alle artikler.'
+'Select the field from which to generate the author': 'Vælg feltet der skal bruges til forfatter'
+'Invalid or empty field $1. You must select a valid dynamic field.': 'Ugyldigt eller tomt felt $1. Du skal vælge et gyldigt dynamisk felt.'
+'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Kunne ikke oprette forfatter $1 for artikel nr. $2 ($3) af type $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': null
 'The author was set successfuly for articles of type $1 from the field $2.': null
-'The article has been locked by $1 ($2) $3 minute(s) ago.': null
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 minutter siden.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 timer og $4 minutter siden.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': null
-'Clear system cache': null
-'The system was unable to upload the file $1. ': null
-'Please check the file you are trying to upload, it might be corrupted.': null
-'An error occured in session management. Please reload the login page.': null
-'This file is stored on disk as $1.': null
-'The system is unable to write to the directory $1.': null
-'The system was unable to read the file $1.': null
-'The system was unable to delete the directory $1.': null
-'Please check if the user $1 has permission to read this file.': null
-'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': null
-'The system was unable to write to the file $1.': null
-'The system was unable to delete the file $1.': null
-'The system was unable to create the file $1.': null
-'The system was unable to create the directory $1.': null
-'Please check if the user $1 has permission to write to this file.': null
-'Please check if the user $1 has permission to write to the directory $2.': null
-'Type the code shown above:': null
-'Please enter your user name.': null
-'Please enter your password.': null
-'Please enter the code shown in the image.': null
-'CAPTCHA code is not valid.  Please try again.': null
-'Signed in: $1': null
-Help: null
-'Please enter your user name and password': null
-'You do not have the right to access this page.': null
-'Login failed': null
-'Please make sure that you typed the correct user name and password.': null
-'If your problem persists please contact the site administrator $1': null
-Backup/Restore: null
-'Step 2': null
-'Step 3': null
-'Add new user': null
+'Clear system cache': 'Tøm systemets cache'
+'The system was unable to upload the file $1. ': 'Systemet kunne ikke uploade filen $1.'
+'Please check the file you are trying to upload, it might be corrupted.': 'Kontrollér filen du prøver at sende, den kan være beskadiget.'
+'An error occured in session management. Please reload the login page.': 'Fejl i sessionshåndteringen. Indlæs siden igen.'
+'This file is stored on disk as $1.': 'Filen er gemt på disk som $1.'
+'The system is unable to write to the directory $1.': 'Systemet kunne ikke skrive til mappen $1.'
+'The system was unable to read the file $1.': 'Systemet kunne ikke læse filen $1.'
+'The system was unable to delete the directory $1.': 'Systemet kunne ikke slette mappen $1.'
+'Please check if the user $1 has permission to read this file.': 'Kontroller om brugeren $1 har tilladelser til at læse filen.'
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Kontroller om mappen er tom og om brugeren $1 har tilladelser til at skrive til mappen $2.'
+'The system was unable to write to the file $1.': 'Systemet kunne ikke skrive til filen $1.'
+'The system was unable to delete the file $1.': 'Systemet kunne ikke slette filen $1.'
+'The system was unable to create the file $1.': 'Systemet kunne ikke oprette filen $1.'
+'The system was unable to create the directory $1.': 'Systemet kunne ikke oprette mappen $1.'
+'Please check if the user $1 has permission to write to this file.': 'Kontroller om brugeren $1 har tilladelser til at skrive til denne fil.'
+'Please check if the user $1 has permission to write to the directory $2.': 'Kontroller om brugeren $1 har tilladelser til at skrive til mappen $2.'
+'Type the code shown above:': 'Skriv den viste kode:'
+'Please enter your user name.': 'Skriv dit brugernavn.'
+'Please enter your password.': 'Skriv din adgangskode.'
+'Please enter the code shown in the image.': 'Skriv koden du ser i billedet.'
+'CAPTCHA code is not valid.  Please try again.': 'CAPTCHA koden er ugyldig. Prøv igen.'
+'Signed in: $1': 'Logget ind: $1'
+Help: Hjælp
+'Please enter your user name and password': 'Skriv brugernavn og adgangskode.'
+'You do not have the right to access this page.': 'Du har ikke rettigheder til at se denne side.'
+'Login failed': 'Login mislykkedes'
+'Please make sure that you typed the correct user name and password.': 'Kontroller at du har indtastet korrekt brugernavn og adgangskode.'
+'If your problem persists please contact the site administrator $1': 'Kontakt hjemmesidens administrator $1 hvis problemet fortsætter'
+Backup/Restore: Backup/Gendan
+'Step 2': 'Trin 2'
+'Step 3': 'Trin 3'
+'Add new user': 'Tilføj bruger'
 'Bad credentials': null

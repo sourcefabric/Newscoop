@@ -1,81 +1,81 @@
 get: null
-Soundcloud: null
-Templates: null
-'Feedback Messages': null
+Soundcloud: SoundCloud
+Templates: Skabeloner
+'Feedback Messages': 'Feedback beskeder'
 'Article Playlists': null
-'Check all': null
-view: null
+'Check all': 'Vælg alle'
+view: se
 undo/redo: null
-underline: null
-translate: null
-'text direction': null
-'text alignment': null
-table: null
-superscript: null
-subscript: null
-subhead: null
-strikethrough: null
-statusbar: null
-'spell checker enabled': null
-'source view': null
-publish: null
+underline: understreget
+translate: oversæt
+'text direction': 'tekst retning'
+'text alignment': 'tekst justering'
+table: tabel
+superscript: hævet
+subscript: sænket
+subhead: underoverskrift
+strikethrough: gennemstreget
+statusbar: statusbar
+'spell checker enabled': 'stavekontrol slået til'
+'source view': 'se kilde'
+publish: udgiv
 notify: null
 moderate: null
-manage: null
+manage: administrer
 'list number': null
 'list bullet': null
-link: null
-italic: null
-indent: null
-image: null
-'horizontal rule': null
+link: link
+italic: kursiv
+indent: indryk
+image: billede
+'horizontal rule': 'vandret linje'
 handle: null
-guest: null
-'font size': null
-'font face': null
-'font color': null
-find/replace: null
-enlarge: null
-enable: null
-edit: null
-delete: null
-copy/cut/paste: null
-clear: null
+guest: gæst
+'font size': skriftstørrelse
+'font face': skrifttype
+'font color': skriftfarve
+find/replace: søg/erstat
+enlarge: forstør
+enable: 'slå til'
+edit: rediger
+delete: slet
+copy/cut/paste: 'kopier/klip/sæt ind'
+clear: ryd
 'character map': null
-bold: null
-attach: null
+bold: fed
+attach: vedhæft
 'any resource': null
-admin: null
-add: null
+admin: admin
+add: tilføj
 'You cant deny yourself to manage $1': null
 'You are not allowed to $1 $2.': null
 'User type saved.': null
 'User type deleted.': null
 'User type added.': null
-'User Groups': null
-Themes: null
+'User Groups': 'Bruger grupper'
+Themes: Temaer
 'That type name already exists, please choose a different name.': null
-System: null
-Structure: null
-'Search Indexer': null
+System: System
+Structure: Struktur
+'Search Indexer': 'Søge indexer'
 'Rich-Text Editor Preferences': null
-ReCaptcha: null
-Polls: null
-'Permissions:': null
-'Permissions updated': null
-Notification: null
-Log: null
-Layout: null
-Global: null
-Files: null
-'Error: ': null
-'Edit user type $1': null
+ReCaptcha: ReCaptcha
+Polls: Afstemninger
+'Permissions:': 'Tilladelser:'
+'Permissions updated': 'Tilladelser opdateret'
+Notification: Besked
+Log: Log
+Layout: Layout
+Global: Global
+Files: Filer
+'Error: ': 'Fejl:'
+'Edit user type $1': 'Rediger brugertype $1'
 Deny: null
-'Delete user type $1': null
+'Delete user type $1': 'Slet brugertype $1'
 'Can not delete a user type with assigned users.': null
-Cache: null
-Backup: null
+Cache: Cache
+Backup: Backup
 Authoring: null
-Allow: null
-'User types': null
-'No user types.': null
+Allow: Tillad
+'User types': Brugertyper
+'No user types.': 'Ingen brugertyper.'

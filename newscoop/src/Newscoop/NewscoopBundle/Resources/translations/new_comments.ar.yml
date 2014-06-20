@@ -1,15 +1,15 @@
 comments:
     label:
-        comments: null
+        comments: 'إدارة التعليقات.'
         menu: تعليقات
         banned: null
         anonymous: null
         at: في
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
+        noentries: 'لم يتم العثور على إدخالات.'
+        showing: يُظهر.
+        of: مِن.
+        to: إلى
+        entries: إدخالات.
         fullarticle: 'المقالة الكاملة'
         hidden: 'مخفي '
         approved: 'موافق عليه'
@@ -60,7 +60,7 @@ comments:
             delete: null
             update: null
         sure: 'توشك أن تحذف تعليقا بشكل دائم.'
-        suremultiple: null
-        first: null
+        suremultiple: 'أنت على وشك حذف التعليقات بشكل دائم.'
+        first: 'من فضلك، قم بإختيار تعليق/تعليقات أولاً.'
         surequestion: 'هل أنت متأكد أنك تريد أن تفعل ذلك؟'
         updated: 'تم تحديث التعليق'

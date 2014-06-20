@@ -57,6 +57,9 @@ if (empty($f_name)) {
     if ($correct) {
         $old_articleType->rename($f_name);
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article_type');
+
         \Zend_Registry::get('container')->getService('dispatcher')
             ->dispatch('article_type.hide', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
                 'article_type' => $articleType,

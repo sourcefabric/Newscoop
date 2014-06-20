@@ -35,8 +35,8 @@ newscoop:
             metadescription: null
             timezone: null
             cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
+            cacheenginehost: 'قاعدة بيانات ذاكرة التخزين المؤقت الخاصة بمحرك بحث المضيف.'
+            cacheengineport: 'قاعدة بيانات ذاكرة البحث المؤقت الخاصة بمحرك بحث المنفذ.'
             cachetemplate: null
             cacheimage: null
             allowrecovery: null
@@ -51,7 +51,7 @@ newscoop:
             smtphost: null
             smtpport: null
             email: null
-            emailfrom: null
+            emailfrom: 'بريد إلكتروني من النظام من أجل الإخطارات.'
             imageratio: null
             imagewidth: null
             imageheight: null
@@ -107,12 +107,13 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: 'تـرقيم الأيام '
+            smartyUseProtocol: null
         popover:
             cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
             cacheengineport: null
             cacheimage: 'الوقت الذي ستستغرقه الصوره لتكون مؤقته هو، من 30 ثانية إلى لا نهائية.'
-            cachetemplate: null
+            cachetemplate: 'حدد DB لتمكين ذاكرة التخزين المؤقت للنماذج.'
             recovery: null
             secret: null
             separator: null
@@ -130,3 +131,4 @@ newscoop:
                 secure: null
             garbage: null
             lifetime: null
+            smartyuseprotocol: null
