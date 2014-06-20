@@ -540,7 +540,9 @@ class UserService
                 $user = $this->find($params['user']);
             }
 
-            $this->getRepository()->getUserPoints($user);
+            if ($user) {
+                $this->getRepository()->getUserPoints($user);
+            }
         }
     }
 }
