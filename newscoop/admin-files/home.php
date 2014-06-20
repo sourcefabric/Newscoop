@@ -7,14 +7,41 @@ require_once dirname(dirname(__FILE__)) . '/classes/Extension/WidgetManager.php'
 
 $translator = \Zend_Registry::get('container')->getService('translator');
 $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
+$em = \Zend_Registry::get('container')->getService('em');
 
 // install default widgets for admin
 WidgetManager::SetDefaultWidgetsAll();
 
-// add title
-echo camp_html_breadcrumbs(array(
-    array($translator->trans('Dashboard', array(), 'home'), ''),
-));
+// 7 days published articles
+
+$activeUsers = $em->getRepository('Newscoop\Entity\User')->getLatelyLoggedInUsers(7, true)->getSingleScalarResult();
+$date = new \DateTime();
+$commentsCount =  $em->getRepository('Newscoop\Entity\Comment')
+    ->createQueryBuilder('c')
+    ->andWhere('c.time_created > :date')
+    ->select('COUNT(c)')
+    ->setParameter('date', $date->modify('- 7 days'))
+    ->getQuery()
+    ->getSingleScalarResult();
+
+$newArticles = $em->getRepository('Newscoop\Entity\Article')
+    ->createQueryBuilder('a')
+    ->select('count(a)')
+    ->where('a.workflowStatus = :workflowStatus')
+    ->andWhere('a.published > :date')
+    ->setParameters(array(
+        'workflowStatus' => 'Y',
+        'date' => $date
+    ))
+    ->getQuery()
+    ->getSingleScalarResult();
+
+echo '<div class="toolbar clearfix"><span class="article-title">';
+echo $translator->trans('Dashboard', array(), 'home');
+echo '</span>';
+echo '<div style="float:right; padding: 8px;" title="Last 7 days statistics">';
+echo $translator->trans('Active users', array(), 'home').': '.$activeUsers.', '.$translator->trans('New comments', array(), 'home').': '.$commentsCount.', '.$translator->trans('Published articles', array(), 'home').': '.$newArticles.'</div>';
+echo '</div>';
 
 if (!$preferencesService->stat_ask_time) $preferencesService->stat_ask_time = '0';
 
