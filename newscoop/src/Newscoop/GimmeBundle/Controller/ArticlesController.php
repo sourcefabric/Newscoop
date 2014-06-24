@@ -20,7 +20,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
@@ -53,10 +52,6 @@ class ArticlesController extends FOSRestController
         }
 
         $em = $this->container->get('em');
-        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
-        $clean['languageId'] = $languageObject->getId();
-        $clean['articleNumber'] = $number;
-
         $inputManipulator = $this->get('newscoop.input_manipulator');
 
         if (array_key_exists('authors', $params)) {
@@ -101,26 +96,7 @@ class ArticlesController extends FOSRestController
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         // Fetch article
-        $articleObj = new \Article($clean['languageId'], $clean['articleNumber']);
-
-        if (!$articleObj->exists()) {
-            throw new NewscoopException('Article does not exist');
-        }
-
-        if (!$articleObj->userCanModify($user)) {
-            throw new AccessDeniedException('User cannot modify article.');
-        }
-
-        // Only users with a lock on the article can change it.
-        if ($articleObj->isLocked() && ($user->getUserId() != $articleObj->getLockedByUser())) {
-            $lockTime = new \DateTime($articleObj->getLockTime());
-            $now = new \DateTime("now");
-            $difference = $now->diff($lockTime);
-            $ago = $difference->format("%R%H:%I:%S");
-            $lockUser = new \User($articleObj->getLockedByUser());
-
-            throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
-        }
+        $articleObj = $this->getArticle($clean['articleNumber'], $language);
 
         $articleTypeObj = $articleObj->getArticleData();
         $articleType = new \ArticleType($articleTypeObj->m_articleTypeName);
@@ -463,15 +439,39 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
-     * @Method("PATCH")
-     * @View()
+     * Change Article status
      *
-     * @return Form
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when Article Status changed successfully"
+     *     },
+     *     parameters={
+     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"},
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
+     *         {"name"="status", "dataType"="string", "required"=true, "description"="Status code: 'N','S','M','Y'"}
+     *     }
+     * )
+     *
+     * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"})
+     * @Method("PATCH")
      */
-    public function setArticleAction(Request $request, $number, $language)
+    public function changeArticleStatus(Request $request, $number, $language, $status)
     {
-        return $this->processForm($request, $number, $language);
+        $statuses = array('N','S','M','Y');
+        if (!in_array($status, $statuses)) {
+            throw new InvalidParametersException('The provided Status is not valid, available: N, S, M, Y.');
+        }
+
+        $articleObj = $this->getArticle($number, $language);
+        $success = $articleObj->setWorkflowStatus($status);
+        $response = new Response();
+        if ($success) {
+            $response->setStatusCode(200);
+        } else {
+            $response->setStatusCode(500);
+            throw new \Exception('Setting status code failed');
+        }
+        return $response;
     }
 
     private function processForm($request, $number, $language)
@@ -505,5 +505,37 @@ class ArticlesController extends FOSRestController
         }
 
         return $form;
+    }
+
+    private function getArticle($number, $language) {
+        $em = $this->container->get('em');
+        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
+        $clean['languageId'] = $languageObject->getId();
+        $clean['articleNumber'] = $number;
+
+        $user = $this->getUser();
+        // Fetch article
+        $articleObj = new \Article($clean['languageId'], $clean['articleNumber']);
+
+        if (!$articleObj->exists()) {
+            throw new NewscoopException('Article does not exist');
+        }
+
+        if (!$articleObj->userCanModify($user)) {
+            throw new AccessDeniedException('User cannot modify article.');
+        }
+
+        // Only users with a lock on the article can change it.
+        if ($articleObj->isLocked() && ($user->getUserId() != $articleObj->getLockedByUser())) {
+            $lockTime = new \DateTime($articleObj->getLockTime());
+            $now = new \DateTime("now");
+            $difference = $now->diff($lockTime);
+            $ago = $difference->format("%R%H:%I:%S");
+            $lockUser = new \User($articleObj->getLockedByUser());
+
+            throw new NewscoopException(sprintf('Article locked by %s (%s ago)', $lockUser->getRealName(), $ago));
+        }
+
+        return $articleObj;
     }
 }
