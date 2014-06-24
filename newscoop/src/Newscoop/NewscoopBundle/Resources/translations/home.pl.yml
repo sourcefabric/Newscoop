@@ -156,3 +156,7 @@ Backup/Restore: 'Backup / Przywróć'
 'Step 3': null
 'Add new user': null
 'Bad credentials': null
+'Active users': 'Active users'
+'New comments': 'New comments'
+'Published articles': 'Published articles'
+'Last 7 days statistics': 'Last 7 days statistics'
