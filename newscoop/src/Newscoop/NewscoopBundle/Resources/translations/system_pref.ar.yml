@@ -107,6 +107,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: 'تـرقيم الأيام '
+            smartyUseProtocol: null
         popover:
             cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
@@ -130,3 +131,4 @@ newscoop:
                 secure: null
             garbage: null
             lifetime: null
+            smartyuseprotocol: null

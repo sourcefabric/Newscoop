@@ -27,6 +27,7 @@ final class MetaURL
     'url_parameters'=>'getURLParameters',
     'form_parameters'=>'getFormParameters',
     'base'=>'getBase',
+    'base_relative'=>'getRelativeBase',
     'path'=>'getPath',
     'query'=>'getQuery',
     'type'=>'getURLType',
@@ -202,6 +203,15 @@ final class MetaURL
     private function getBase()
     {
         return $this->m_uriObj->getBase();
+    } // fn getBase
+
+
+    /**
+     *
+     */
+    private function getRelativeBase()
+    {
+        return $this->m_uriObj->getRelativeBase();
     } // fn getBase
 
 

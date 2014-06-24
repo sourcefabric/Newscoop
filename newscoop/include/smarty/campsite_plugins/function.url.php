@@ -23,8 +23,20 @@ require_once dirname(__FILE__) . '/function.uri.php';
 function smarty_function_url($p_params, &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
+
+    if (isset($p_params['useprotocol']) && ($p_params['useprotocol'] === 'false' || $p_params['useprotocol'] === 'true')) {
+        $useprotocol = ($p_params['useprotocol'] === 'true') ? true : false;
+    } else {
+        $systemPref = \Zend_Registry::get('container')->get('system_preferences_service');
+        $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? true : false;
+    }
+
     // gets the URL base
-    $urlString = $context->url->base;
+    if ($useprotocol) {
+        $urlString = $context->url->base;
+    } else {
+        $urlString = $context->url->base_relative;
+    }
 
     // appends the URI path and query values to the base
     $urlString .= smarty_function_uri($p_params, $p_smarty);

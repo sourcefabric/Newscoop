@@ -46,7 +46,7 @@ Title: null
 'There already is an article with the same name. Please change the name and try again.': null
 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
 Geolocation: null
-Newscoop: null
+Newscoop: Newscoop
 'Overwrite articles with matching names': null
 'Article <i>$1</i> already exists, and was not overwritten.<br />': null
 Files: null

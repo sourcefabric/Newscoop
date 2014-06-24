@@ -61,7 +61,7 @@ Ban: null
 '%value% is more than %max% characters long': null
 '%value% is less than %min% characters long': null
 'User name': null
-Newscoop: null
+Newscoop: Newscoop
 'Your password has been reset.': null
 'Proceed to login.': null
 'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'

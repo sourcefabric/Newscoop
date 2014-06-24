@@ -65,7 +65,7 @@ class UsersList extends PaginatedBaseList
                     if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
                         $this->criteria->nameRange = range($matches[1], $matches[2]);
                     } else {
-                        \CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                        \CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter");
                     }
                     break;
             }
