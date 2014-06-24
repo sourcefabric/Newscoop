@@ -651,7 +651,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set user points
      *
-     * @param  Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User|null $user
+     * @param  string|int                $authorId
      * @return void
      */
     public function setUserPoints(User $user = null, $authorId = null)
