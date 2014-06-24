@@ -12,6 +12,11 @@ services:
         arguments:  ["@newscoop.paginator.paginator_service"]
         tags:
             - { name: kernel.event_subscriber}
+    newscoop.serializer.serializer_subscriber:
+        class: Newscoop\GimmeBundle\EventListener\SerializerSubscriber
+        arguments:  ["@service_container"]
+        tags:
+            - { name: kernel.event_subscriber}
     newscoop.paginator.pagination_extra_data_subscriber:
         class: Newscoop\GimmeBundle\EventListener\PaginationExtraDataSubscriber
         arguments:  ["@newscoop.paginator.paginator_service"]
@@ -68,8 +73,8 @@ services:
         arguments: ["@router"]
         tags:
             - { name: jms_serializer.handler, type: author, direction: serialization, format:json, method:serializeToJson }
-    newscoop.gimme.serializer.author_image_uri_handler:
-        class: Newscoop\GimmeBundle\Serializer\Author\ImageUriHandler
+    newscoop.gimme.serializer.image_image_uri_handler:
+        class: Newscoop\GimmeBundle\Serializer\Image\ImageUriHandler
         arguments:  ["@image", "@zend_router", "@newscoop_newscoop.publication_service"]
         tags:
             - { name: jms_serializer.handler, type: image_uri, direction: serialization, format:json, method:serializeToJson }
@@ -107,3 +112,12 @@ services:
         arguments:  ["@comment"]
         tags:
             - { name: jms_serializer.handler, type: comments_count, direction: serialization, format:json, method:getCommentsCount }
+    newscoop.gimme.oauth_event_listener:
+        class:  Newscoop\GimmeBundle\EventListener\OAuthEventListener
+        arguments:  ["@em"]
+        tags:
+            - { name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: onPreAuthorizationProcess }
+            - { name: kernel.event_listener, event: fos_oauth_server.post_authorization_process, method: onPostAuthorizationProcess }
+
+parameters:
+    twig.exception_listener.class: Newscoop\GimmeBundle\EventListener\ExceptionListener

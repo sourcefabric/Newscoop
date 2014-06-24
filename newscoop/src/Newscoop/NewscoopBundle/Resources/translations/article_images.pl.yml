@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sorry, te zdjęcie jest za małe. Zdjęcie musi mieć przynajmniej %d na %d'
 'Slideshow rendition': 'Galerie obrazów'
 'Renditions reloaded': 'Obrazy przeładowane'
@@ -57,7 +57,7 @@ Caption: Podpis
 'The image number specified is already in use.': 'Numer zdjęcia jest już w użyciu.'
 'Image $1 updated.': 'Zdjęcie $1 zaktualizowane.'
 'Image $1 added.': 'Zdjęcie $1 dodane.'
-'Edit article': 'Edytuj artykuł'
+'Edit article': 'Edycja artykułu'
 'You do not have the right to attach images to articles.': 'Nie masz praw aby załączać zdjęcia do artykułu.'
 'You do not have the right to add images.': 'Nie masz praw aby dodawać zdjęcia'
 'Image information': 'Informacje o zdjęciu'
@@ -69,3 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Data <BR><SMALL>(rrrr-mm-dd)</SMALL>'
 'You must select an image file to upload.': 'Musisz wybrać zdjęcie nim je dodasz.'
 'Change image information': 'Zmień informacje o zdjęciu'
 'You do not have the right to add images': 'Nie masz praw aby dodawać zdjęcia'
+'Filter by uploader...': null

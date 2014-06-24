@@ -68,10 +68,11 @@ abstract class PaginatedBaseList extends BaseList
      * @param int        $pageNumber
      * @param int        $maxResults
      * @param ListResult $list
+     * @param boolean    $useCache
      *
      * @return ListResult
      */
-    protected function paginateList($target, $pageNumber, $maxResults, $list = null)
+    protected function paginateList($target, $pageNumber, $maxResults, $list = null, $useCache = true)
     {
         if (!$list) {
             $list = new ListResult();
@@ -85,7 +86,7 @@ abstract class PaginatedBaseList extends BaseList
             $this->getCacheKey(), $this->getPageNumber()
         ), $this->getName());
 
-        if ($this->cacheService->contains($cacheId)) {
+        if ($this->cacheService->contains($cacheId) && $useCache) {
             $this->pagination = $this->cacheService->fetch($cacheId);
         } else {
             $this->pagination = $this->paginatorService->paginate($target, $pageNumber, $maxResults);

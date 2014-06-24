@@ -1,15 +1,15 @@
-'The country $1 could not be created.': 
-'Country with code $1 exists already.': 
-'You do not have the right to add countries.': 'Je hebt niet de rechten om landen toe te voegen.'
+'The country $1 could not be created.': null
+'Country with code $1 exists already.': null
+'You do not have the right to add countries.': null
 'Delete country': 'Verwijder land'
-'You do not have the right to delete countries.': 'Je hebt niet de rechten om landen te verwijderen.'
-'Are you sure you want to delete the country $1?': 'Weet je zeker dat je het land $1 wilt verwijderen?'
+'You do not have the right to delete countries.': null
+'Are you sure you want to delete the country $1?': null
 'The country $1 could not be deleted.': 'Het land $1 kon niet worden gewist.'
 'Edit country name': 'Bewerk landnaam'
-'You do not have the right to change country names.': 'Je hebt niet de rechten om de landnamen te bewerken'
+'You do not have the right to change country names.': null
 'Changing country name': 'Wijzigen landnaam'
 'The country name $1 could not be changed': 'De landnaam $1 kan niet worden gewijzigd'
 'Translate country name': 'Vertaal de landnaam'
-'You do not have the right to translate country names.': 'Je hebt niet de rechten om de landnamen te vertalen.'
+'You do not have the right to translate country names.': null
 'The country name $1 could not be translated': 'De landnaam $1 kon niet worden vertaald'
 'Add New Country': 'Voeg nieuw land toe'

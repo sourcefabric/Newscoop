@@ -1,28 +1,28 @@
-'Make sure to enter the Moderator Address below': 
-'click to see issues': 
-'Moderator Address': 
-'From Address': 
-'Use CAPTCHA to prevent spam?': 
-'Public allowed to comment?': 
-'Enable spam blocking?': 
-'The subscription settings for $1 could not be added.': 
-'The publication name you specified conflicts with publication $1.': 
-'The publication alias you specified conflicts with publication $1.': 
-'Subscription defaults': 
-'Subscription Settings by Country': 
-'Set subscription settings for a country': 
-'Set subscription settings by country': 
-'Default time periods:': 
-'Country subscription settings updated.': 
-'Country subscription settings deleted.': 
-'Change country subscription settings': 
-'Are you sure you want to delete the subscription settings for $1?': 
+'Make sure to enter the Moderator Address below': null
+'click to see issues': null
+'Moderator Address': null
+'From Address': null
+'Use CAPTCHA to prevent spam?': null
+'Public allowed to comment?': null
+'Enable spam blocking?': null
+'The subscription settings for $1 could not be added.': null
+'The publication name you specified conflicts with publication $1.': null
+'The publication alias you specified conflicts with publication $1.': null
+'Subscription defaults': null
+'Subscription Settings by Country': null
+'Set subscription settings for a country': null
+'Set subscription settings by country': null
+'Default time periods:': null
+'Country subscription settings updated.': null
+'Country subscription settings deleted.': null
+'Change country subscription settings': null
+'Are you sure you want to delete the subscription settings for $1?': null
 'Publication updated': 'Publikationen uppdaterad'
-'Subscriber comments moderated?': 
-'Public comments moderated?': 
-'Comments enabled?': 
-'Comments enabled': 
-'Article comments default to enabled?': 
+'Subscriber comments moderated?': null
+'Public comments moderated?': null
+'Comments enabled?': null
+'Comments enabled': null
+'Article comments default to enabled?': null
 'trial subscription': provprenumeration
 'paid subscription': 'betald prenumeration'
 'time units': tidsenheter
@@ -71,5 +71,7 @@
 'Time Unit': Tidsenhet
 Currency: Valuta
 'Edit languages': 'Redigera språk'
-'Select the publication': 'Välj publikation'
-'Name<BR><SMALL>(click to select the publication)</SMALL>': 'Namn<BR><SMALL>(klicka för att välja publikation)</SMALL>'
+'Search engine optimization': null
+'Article title': null
+'Article keywords': null
+'Article topics': null

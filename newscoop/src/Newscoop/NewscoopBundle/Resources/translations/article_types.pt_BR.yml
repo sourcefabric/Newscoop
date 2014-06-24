@@ -1,11 +1,11 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Esconder nomes de campos legíveis por pessoas.'
-'Edit and translate human-readable field names': 'Editar e traduzir nomes de campos legíveis por pessoas'
-'The template name may only contain letters and the underscore (_) character.': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': 'Esconder nomes de campos que podem ser lidos pelas pessoas'
+'Edit and translate human-readable field names': 'Editar e traduzir campos que podem ser lidos pelas pessoas'
+'The template name may only contain letters and the underscore (_) character.': 'O nome do template pode ter apenas letras e o underscore (_).'
 'Rename article type $1': 'Modifique o nome do artigo tipo $1'
 'Invalid article type $1.': 'Artigo tipo $1 é inválido.'
 'You cannot merge the same type into itself.': 'Você não pode fundir um tipo com si mesmo.'
@@ -20,16 +20,16 @@ filter:
 'Preview of $1': 'Visualização do $1'
 'Preview a sample of the merge configuration.': 'Visualizar amostra da configuração de fusão.'
 NOTHING: NADA
-'Merge failed.': 
+'Merge failed.': null
 'Merge configuration for merging $1 into $2.': 'Configuração de fusão para fundir $1 com $2.'
 'Merge Article Types: Step $1 of $2': 'Fundir tipos de artigos: Passo $1 de $2'
 'Merge $1 into $2': 'Fundir $1 com $2.'
-'Destination Article Type': 
+'Destination Article Type': null
 'Delete the source article type ($1) when finished.': 'Apagar o tipo do artigo fonte ($1) quando terminar.'
-'Cycle through your articles to verify that the merge configuration is correct.': 
+'Cycle through your articles to verify that the merge configuration is correct.': null
 'Clicking Merge will merge ($1) article(s).': 'Clicando no Fundir você vai fundir ($1) artigo(s).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Não é possível fundir um campo do tipo $1 ($2) com um campo do tipo $3 ($4).'
---None--: --Nenhum--
+'--None--': '--Nenhum--'
 '(Null merge warning.)': '(Aviso de fusão nulo.)'
 '(No merge warning.)': '(Sem aviso de fusão.)'
 '(Duplicate warning.)': '(Duplicar aviso.)'
@@ -43,9 +43,9 @@ activate: ativar
 'You must choose a language for the article type.': 'Você tem que escolher a língua para o tipo de arquivo.'
 'You do not have the right to rename article types.': 'Você não tem o direito de mudar o nome de tipo de arquivo.'
 'You do not have the right to merge article types.': 'Você não tem o direito de fundir tipos de artigos.'
-'The translation could not be added.': 'A tradução não pôde ser adicionada.'
+'The translation could not be added.': 'Não foi possível adicionar a tradução'
 'The article type $1 does not exist.': 'O artigo do tipo $1 não existe.'
-'Template Type Name': 
+'Template Type Name': null
 Show/Hide: Mostrar/esconder
 'Show article on section page': 'Mostrar artigo na página de seção'
 'Show article on front page': 'Mostrar artigo na página principal'
@@ -53,10 +53,10 @@ Show/Hide: Mostrar/esconder
 Merge!: Fundir!
 'Merge types': 'Tipos de fusão'
 'Merge article type': 'Fundir tipo de arquivo'
-'Link to public page': 
+'Link to public page': null
 'Go to Step 3': 'Vá para passo 3'
 'Go to Step 2': 'Vá para passo 2'
-'Display Name': 
+'Display Name': 'Mostrar nome'
 'Delete article type $1.': 'Remover artigo do tipo $1'
 'Comments enabled?': 'Comentários ativados?'
 'Back to Step 2': 'Voltar para passo 2'
@@ -72,8 +72,8 @@ Merge!: Fundir!
 'No article types.': 'Não existem Tipo de Artigos definidos'
 'Delete article type $1': 'Eliminar Tipo de Artigo $1'
 'You do not have the right to add article types.': 'Não tem permissões para adicionar Tipos de Artigos'
-'Adding new article type': 'Adicionando Tipo de Artigo'
-'The $1 field may only contain letters and underscore (_) character.': 'O nome do campo $1 só pode conter letras'
+'Adding new article type': 'Adicionando o novo tipo de artigo'
+'The $1 field may only contain letters and underscore (_) character.': 'O campo $1 pode ter apenas letras e o underscore (_).'
 'The article type $1 already exists.': 'O Tipo de Artigo $1 já existe'
-'You do not have the right to delete article types.': 'Não tem permissões para eliminar Tipo de Artigos'
+'You do not have the right to delete article types.': 'Você não tem o direito de remover tipos de artigos.'
 'The article type $1 could not be deleted.': 'Tipo de Artigo $1 não pode ser eliminado'

@@ -10,6 +10,7 @@ namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,22 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticlesListController extends FOSRestController
 {
     /**
+     * Get Articles Lists
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when articles lists found",
+     *         404={
+     *           "Returned when articles lists are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/articles-lists.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
-    public function getArticlesListAction(Request $request)
+    public function getArticlesListsAction(Request $request)
     {
         $em = $this->container->get('em');
 
@@ -42,6 +54,19 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
+     * Get list of articles from "playlist"
+     *
+     * Returns array with articles under "items" key and requested list "id" and "title"
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         200="Returned when articles found",
+     *         404={
+     *           "Returned when articles are not found",
+     *         }
+     *     }
+     * )
+     *
      * @Route("/articles-lists/{id}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})

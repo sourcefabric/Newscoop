@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: 'Management komentářů'
+        menu: Komentáře
+        banned: Zakázaný
+        anonymous: Anonym
+        at: na
+        noentries: 'Nenalezeny žádné příspěvky. '
+        showing: Náhled
+        of: z
+        to: do
+        entries: příspěvky
+        fullarticle: 'Celý článek'
+        hidden: Skrytý
+        approved: Schválený
+        new: Nový
+        editarticle: 'Jděte upravit článek'
+        section: Oddíl
+        comment: Komentář
+        replyto: 'Odpovědět na komentář'
+        subject: Předmět
+        ban: 'Zakázat/Obnovit uživatele'
+        author: Autor
+        date: 'Datum / Komentář'
+        article: Článek
+        search: Hledej
+        show: Zobraz
+        recommended: Doporučené
+        unrecommended: Nedoproučený
+        editcomment: 'Rychlá úprava komentáře'
+        actions: Činnosti
+        selectstatus: 'Vybrat status'
+        deleted: Vymazat
+        alert: Varování
+        searchholder: 'Hledat... (např. jméno, e-mail, předmět, komentář, název článku)'
+    btn:
+        cancel: Zrušit
+        submit: Podat
+        unrecommend: Nedoporučeno
+        recommend: Doporučeno
+        delete: Smazat
+        reply: Odpovědět
+        edit: 'Rychlá editace '
+        close: Zavřít
+        okay: OK
+        filter: Filter
+    msg:
+        deleted: 'Komentář vymazán.'
+        commentinarticle: 'Komentář $4'
+        status:
+            new: nový
+            approved: schváleno
+            hidden: skrytý
+            single: 'Status komentáře změnit na'
+            all: 'Status komentářů změnit na'
+        error:
+            reach: 'Nepodařilo se spojit s Newscoop. Zkontrolujte prosím své připojení k internetu.'
+            deletefromarticle: 'Komentář vymazán $1 z článku $2 ($3)'
+            statuschange: 'Chyba změny statusu komentářů'
+            delete: 'Komentář nelze smazat'
+            update: 'Pole nemůžou zůstat prázdná'
+        sure: 'Právě se chystáte permanentně vymazat komentář.'
+        suremultiple: 'Právě se chystáte permanentně vymazat komentáře. '
+        first: 'Nejdříve vyberte komentář/komentáře!'
+        surequestion: 'Jste si jisti, že to chcete udělat?'
+        updated: 'Komentář aktualizován.'

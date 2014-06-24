@@ -1,11 +1,11 @@
-get: 'حصل على'
-Soundcloud: SoundCloud
-Templates: قوالب
+get: 'إحصل على'
+Soundcloud: ساوندكلاود
+Templates: نماذج
 'Feedback Messages': 'رسائل التغذية المرتدة'
-'Article Playlists': 'قوائم التشغيل للمقالة'
-'Check all': 'وضع علامة في الكل'
-view: عرض
-undo/redo: 'إلغى/ إعادة الإجراء'
+'Article Playlists': 'قوائم التشغيل للمقالات'
+'Check all': 'ضع علامة في الكل'
+view: إعرض
+undo/redo: 'إلغاء/ إعادة الإجراء'
 underline: التسطير
 translate: ترجم
 'text direction': 'اتجاه النص'
@@ -13,20 +13,20 @@ translate: ترجم
 table: جدول
 superscript: 'الخط العلوي'
 subscript: 'الخط السفلي'
-subhead: 'عنوان قرعي'
+subhead: 'عنوان فرعي'
 strikethrough: 'التسطير الوسطي'
 statusbar: 'شريط الحالة'
-'spell checker enabled': 'تم تمكين المدقق الإملائي'
+'spell checker enabled': 'تم تمكين التدقيق الإملائي'
 'source view': 'إظهار المصدر'
 publish: نشر
-notify: اعلام
-moderate: تعديل
+notify: إعلام
+moderate: 'إشراف على'
 manage: إدارة
 'list number': 'رقم القائمة'
 'list bullet': 'قائمة تعداد نقطي'
 link: رابط
 italic: مائل
-indent: 'تحديد المسافة البادئة'
+indent: 'تعيين المسافة البادئة'
 image: صورة
 'horizontal rule': 'الخط الافقي'
 handle: سيطرة
@@ -40,7 +40,7 @@ enable: تمكين
 edit: تحرير
 delete: حذف
 copy/cut/paste: 'نسخ / قص / لصق'
-clear: انقشع
+clear: انقشاع
 'character map': 'جدول الحروف'
 bold: 'الخط الثخين الأسود'
 attach: إرفاق
@@ -53,13 +53,13 @@ add: إضافة
 'User type deleted.': 'تم حذف نوع المستخدم'
 'User type added.': 'تم اضافة نوع المستخدم'
 'User Groups': 'مجموعات المستخدمين'
-Themes: مواضيع
-'That type name already exists, please choose a different name.': 'نوع الاسم موجود مسبقا، يرجى اختيار اسم آخر'
+Themes: نُسق
+'That type name already exists, please choose a different name.': 'نوع الاسم موجود مسبقاً، يرجى اختيار اسم آخر'
 System: نظام
 Structure: هيكل
 'Search Indexer': 'البحث في المفهرس'
-'Rich-Text Editor Preferences': 'تفضيلات محرر للنص المنسق'
-ReCaptcha: 'إعادة كلمة التحقق'
+'Rich-Text Editor Preferences': 'تفضيلات محرر النص المنسق'
+ReCaptcha: ريكابتشا
 Polls: استطلاعات
 'Permissions:': أذونات
 'Permissions updated': 'تم تحديث الأذونات'
@@ -67,26 +67,15 @@ Notification: إخطار
 Log: سجل
 Layout: التخطيط
 Global: عالمي
-Files: الملفات
+Files: ملفات
 'Error: ': 'الخطأ‫:‬ '
-'Edit user type $1': '$1 تعديل نوع المستخدم'
-Deny: ارفض
-'Delete user type $1': '$1 احذف نموذج المستخدم'
-'Can not delete a user type with assigned users.': 'لا يمكن حذف نموذج مستخدم ذو مستخدمين معينين'
+'Edit user type $1': '$1 عدل نوع المستخدم'
+Deny: إرفض
+'Delete user type $1': '$1 إحذف نوع المستخدم'
+'Can not delete a user type with assigned users.': 'لا يمكن حذف نوع مستخدم ذو مستخدمين معينين'
 Cache: 'ذاكرة خبيئة'
-Backup: 'نسخ احتياطي'
+Backup: 'نسخة احتياطية'
 Authoring: التأليف
-Allow: اسمح
+Allow: السماح
 'User types': 'أنواع المستخدم'
 'No user types.': 'لا أنواع مستخدم'
-'You do not have the right to add user types.': 'ليس لديك الحق في إضافة أنواع المستخدم'
-'Adding new user type': 'في عملية إضافة نوع مستخدم جديد'
-'The user type $1 has been added.': '$1 تم إضافة نوع  المستخدم'
-'The user type could not be added.': 'لم يضف نوع المستخدم'
-'Please check if an user type with the same name does not already exist.': 'الرجاء التأكد من عدم وجود نوع مستخدم يحمل الاسم نفسه'
-'Deleting user type': 'في عملية حذف نوع المستخدم'
-'The user type has been deleted.': 'تم حذف نوع المستخدم'
-'The user type could not be deleted.': 'لم يحذف نوع المستخدم'
-'Updating user type permissions': 'في عملية حذف أذونات لأنواع المستخدم'
-'User type permissions have been successfuly updated.': 'تم تحديث الأذونات لأنواع المستخدم'
-'User type permissions could not be updated.': 'لم تحذث الأذونات لأنواع المستخدم'

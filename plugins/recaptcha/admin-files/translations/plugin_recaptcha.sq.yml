@@ -1,9 +1,0 @@
-'Enable reCAPTCHA for subscriptions': 'Aktivo reCAPTCHA per rregjistrimet'
-'Add the {{ recaptcha }} tag to your template file containing the comments/subscription form': 'Shto formen {{ recaptcha }} ne template tuaj qe permban formet e komenteve dhe te rregjistrimit'
-reCAPTCHA: reCAPTCHA
-here: ketu
-'You do not have the right to manage reCAPTCHA.': 'Ju nuk keni te drejte te administroni reCAPTCHA'
-'User may manage reCAPTCHA': 'Perdoruesi mund te administroje reCAPTCHA'
-'To use this plugin you need': 'Per te perdorur pluginin qe ju nevojitet'
-'Enter your reCAPTCHA private key': 'Shtypni celesin tuaj per reCAPTCHA'
-'Enable reCAPTCHA for comments': 'Lejoni reCAPTCHA per komentet'

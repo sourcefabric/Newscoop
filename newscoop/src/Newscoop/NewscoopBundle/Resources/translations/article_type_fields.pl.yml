@@ -55,5 +55,3 @@ Show/Hide: Pokaż/Schowaj
 'You do not have the right to delete article type fields.': 'Nie masz praw aby usuwać pola typów artykułów.'
 'Are you sure you want to delete the field $1?': 'Na pewno chcesz usunąć pole $1?'
 'You will also delete all fields with this name from all articles of this type from all publications.': 'Przy okazji usuniesz wszystkie pola z tą nazwą ze wszystkich artykułow ze wszystkich form publikacji.'
-'You may only use letters or the underscore (_) character.': 'Możesz użyc tylko liter albo podkreślnika (_).'
-'You can only use letters or the underscore (_).': 'Możesz użyc tylko liter albo podkreślnika (_).'

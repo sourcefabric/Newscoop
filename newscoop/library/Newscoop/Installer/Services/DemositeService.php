@@ -11,9 +11,9 @@ namespace Newscoop\Installer\Services;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Newscoop\Entity\Resource;
-use Newscoop\Service\IThemeManagementService;
-use Newscoop\Service\IPublicationService;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+use Symfony\Component\Process\PhpExecutableFinder;
+use Symfony\Component\Process\Process;
 
 /**
  * Demosite service
@@ -51,13 +51,27 @@ class DemositeService
         $this->filesystem->mirror($this->installDir.'/Resources/sample_data/files', $this->newscoopDir.'/public/files');
         $this->filesystem->mirror($this->installDir.'/Resources/sample_data/images', $this->newscoopDir.'/images');
 
-        $resourceId = new \Newscoop\Service\Resource\ResourceId(__CLASS__);
-        $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
-        $publicationService = $resourceId->getService(IPublicationService::NAME);
-        foreach ($themeService->getUnassignedThemes() as $theme) {
-            foreach ($publicationService->getEntities() as $publication) {
-                $themeService->assignTheme($theme, $publication);
-            }
+        $phpFinder = new PhpExecutableFinder();
+        $phpPath = $phpFinder->find();
+        if (!$phpPath) {
+            throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
+        }
+
+        $php = escapeshellarg($phpPath);
+        $newscoopConsole = escapeshellarg($this->newscoopDir.'/application/console');
+
+        $clearCache = new Process("$php $newscoopConsole cache:clear", null, null, null, 300);
+        $clearCache->run();
+
+        if (!$clearCache->isSuccessful()) {
+            throw new \RuntimeException($clearCache->getErrorOutput());
+        }
+
+        $availablePublications = new Process("$php $newscoopConsole themes:assign $templateName", null, null, null, 300);
+        $availablePublications->run();
+
+        if (!$availablePublications->isSuccessful()) {
+            throw new \RuntimeException($clearCache->getErrorOutput());
         }
 
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);

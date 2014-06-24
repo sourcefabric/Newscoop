@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Mapa utilizado'
+Locations: Ubicaciones
+Last: Último
+First: Primero
+'Publish Schedule': 'Publicar horario'
+'You do not have the right to delete articles.': 'No tiene privilegios para eliminar artículos.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'No tiene los privilegios para cambiar el estatus de este artículo.  Una vez enviado el artículo solo los usuarios autorizados pueden modificarlos.'
+'Toggle: On Section Page': 'Mostrar/ocultar:  en sección'
+'Toggle: On Front Page': 'Mostrar/ocultar:  en portada'
+'Toggle: Comments': 'Mostrar/ocultar:  comentarios'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 minuto(s).'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': '$1 ($2) bloqueó el artículo hace $3 hora(s) y $4 minuto(s).'
+'Status: Submit': 'Estatus:  enviar'
+'Status: Set New': 'Estatus:  marcar como nuevo'
+'Status: Publish': 'Estatus:  publicar'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando de _START_ a _END_ el _TOTAL_ de entradas'
+'Show / hide columns': 'Mostrar/ocultar columnas'
+'Select some article first.': 'Primero seleccionar un artículo'
+'Select action': 'Seleccionar una acción'
+'Save order': 'Almacenar orden'
+'Reset all filters': 'Reiniciar todos los filtros'
+'Published before': 'Publicado antes'
+'Published after': 'Publicado después'
+'Publish date': 'Publicar fecha'
+'Publish Date': 'Fecha de publicación '
+'Order updated.': 'Se actualizó el orden'
+'No sections found': 'No se encontraron secciones'
+'No records found.': 'No se encontraron registros'
+'No publications found': 'No se encontraron publicaciones'
+'No issues found': 'No se encontraron ediciones'
+'No entries to show': 'No se encontraron entradas'
+'Loading data': 'Cargando datos'
+'Last Modified': 'Modificado por última vez'
+'Filter by...': 'Filtrado por...'
+Filter: Filtro
+'Duplicate to another section': 'Duplicar en otra sección'
+'Display _MENU_ records': 'Desplegar registros _MENU_'
+Creator: Creador
+'Create Date': 'Fecha de creación'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Se estableció el estatus del artículo en $1'
+'Are you sure you want to delete selected articles?': '¿Está seguro de querer borrar los artículos seleccionados?'
+'All Sections': 'Todas las secciones'
+'All Publications': 'Todas las publicaciones'
+'All Issues': 'Todas las ediciones'
+'Access denied.': 'Acceso denegado.'
+'$1 toggled.': '$ seleccionados/deseleccionados'
+'$1 articles have been removed': 'Se han eliminado $1 artículo(s).'
+' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'

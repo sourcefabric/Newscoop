@@ -1,7 +1,7 @@
 'Rename user': 'Nutzer umbenennen '
 Campsite: Newscoop
 'Image Rendering': Bildwiedergabe
-'Featured Article Lists': 'Listen ausgewählter Artikel '
+'Featured Article Lists': 'Listen ausgewählter Artikel'
 'You have tried to upload an invalid backup file.': 'Sie haben versucht eine ungültige Backup-Datei hochzuladen. '
 'You do not have the right to manage backups.': 'Sie haben keine Berechtigung, um Backups zu bearbeiten. '
 'Make a new backup': 'Backup erstellen'
@@ -13,12 +13,12 @@ Create: Erstellen
 Attach/Detach: Anhängen/Entkoppeln
 'Are you sure you want to delete slideshow?': 'Sind Sie sicher, dass Sie die Bildstrecke löschen wollen?'
 Support: Support
-'Pending articles': 'Artikel in Warteschleife (Pending Articles)'
+'Pending articles': 'Eingereichte Artikel'
 'Manage Users': 'Nutzer verwalten'
 'Manage User Types': 'Nutzertypen verwalten'
 'Manage User Points System': 'Nutzer-Punktesystem verwalten'
-Last: Letzter
-First: Erster
+Last: Letzte
+First: Erste
 Feedback: Feedback
 'Edit your password': 'Passwort bearbeiten'
 'Edit user': 'Nutzer bearbeiten'
@@ -37,7 +37,7 @@ at: auf
 'Warning: the existing data and themes will be deleted!': 'Achtung: Die vorhandenen Daten und Themen werden gelöscht. '
 'Value is required and cant be empty': 'Der Wert ist erforderlich und kann nicht leer sein. '
 Upload: Upload
-'Update comment': 'Kommentar aktualisieren.'
+'Update comment': 'Kommentar aktualisieren'
 'Time created': 'Zeitpunkt angelegt. '
 Themes: Themen
 'Stop current upload': 'Laufenden Upload abbrechen'
@@ -54,7 +54,7 @@ Filename: Dateiname
 'Edit language': 'Sprache bearbeiten'
 'Drag files here.': 'Dateien hierher ziehen. '
 'Connection interrupted': 'Verbindung unterbrochen'
-Ban: 'Sperren '
+Ban: Sperre
 'Are you sure you want to': 'Sind Sie sicher, dass Sie wollen '
 'Add files to the upload queue and click the start button.': 'Fügen Sie Dateien zur Upload-Schlange hinzu und klicken Sie den Start Button. '
 'Add files': 'Datei hinzufügen. '
@@ -64,7 +64,7 @@ Ban: 'Sperren '
 Newscoop: Newscoop
 'Your password has been reset.': 'Ihr Passwort wurde zurückgesetzt. '
 'Proceed to login.': 'Weiter zum Login. '
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Hallo, \n\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Zum Login'
 'Back to login.': 'Zurück zum Login. '
 'Back to login': 'Zurück zum Login. '
@@ -120,8 +120,8 @@ Download: Herunterladen
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Autor/in $1 für Artikelnr. $2 ($3) vom Typ $4 kann nicht erstellt werden.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Fehler bei der Erstellung von Autor/in für Artikeltyp $1 vom Feld $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Autor/in für den Artikeltyp $1 vom Feld $2 wurde erfolgreich erstellt.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Der Artikel wurde vor $3 Minute(n) von $1 ($2) gesperrt.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Der Artikel wurde vor $3 Stunde(n) und $4 Minute(n) von $1 ($2) gesperrt.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Stunde(n) und $4 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Fehler bei der Erstellung von Autor/in $1 für die Artikelnr. $2 ($3) vom Typ $4.'
 'Clear system cache': 'System-Cache leeren'
 'The system was unable to upload the file $1. ': 'Das System konnte die Datei $1 nicht hochladen.'
@@ -152,4 +152,7 @@ Help: Hilfe
 'Please make sure that you typed the correct user name and password.': 'Bitte prüfen, ob Benutzername und Passwort korrekt eingegeben wurden.'
 'If your problem persists please contact the site administrator $1': 'Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.'
 Backup/Restore: Backup/Wiederherstellung
-Printdesk: Printdesk
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

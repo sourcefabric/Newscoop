@@ -1,12 +1,12 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'توشك أن تحذف رسائل متعددة بشكل دائم ـ'
+'You are about to permanently delete a message.': 'توشك أن تحذف رسالة بشكل دائم ـ'
+'Are you sure you want to do it?': 'هل أنت متأكد أنك تريد المواصلة؟'
 Approve: الموافقة
 Approved.: 'موافق عليه'
 at: في
 Attachment: المرفق
-'Ban/Unban user': 'تحريم / إزالة تحريم المستخدم'
+'Ban/Unban user': 'حظر / إزالة حظر المستخدم'
 'Change selected messages status': 'تغيير حالة الرسائل المحددة'
 Deleted: 'تم الحذف'
 'Full article': 'المقالة الكاملة'
@@ -18,11 +18,11 @@ Message: الرسالة
 'Messages updated.': 'تم تحديث الرسائل.'
 'Message updated.': 'تم تحديث الرسالة.'
 Processed: 'تم المعالجة'
-Reply: الردّ
+Reply: رد
 'Reply to message': 'الرد على الرسالة'
 Star: 'علامة نجمية'
 Starred: 'بعلامة نجمية'
-'Unable to reach Newscoop. Please check your internet connection.': 'غير قادر على الوصول إلى Newscoop. يرجى التحقق من اتصالك بالإنترنت.'
+'Unable to reach Newscoop. Please check your internet connection.': 'غير قادر على الوصول إلى نيوسكوب. يرجى التحقق من اتصالك بالإنترنت.'
 'With document attachment': 'بمرفق وثيقة'
 'With image attachment': 'بمرفق صورة'
 'With no attachment': 'بلا مرفق'

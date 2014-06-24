@@ -1,7 +1,7 @@
 get: pobierz
 Soundcloud: SoundCloud
 Templates: Szablony
-'Feedback Messages': 'Wiadomości zwrotne'
+'Feedback Messages': 'Wiadomość zwrotna'
 'Article Playlists': 'Listy artykułów'
 'Check all': 'Zaznacz wszystkie'
 view: zobacz
@@ -27,7 +27,7 @@ manage: zarządzanie
 link: link
 italic: pochylenie
 indent: wcięcie
-image: obraz
+image: zdjęcie
 'horizontal rule': 'lista pozioma'
 handle: uchwyt
 guest: gość
@@ -53,7 +53,7 @@ add: dodaj
 'User type deleted.': 'Rodzaj użytkownika usunięty.'
 'User type added.': 'Rodzaj użytkownika dodany.'
 'User Groups': 'Grupy użytkowników'
-Themes: Motywy
+Themes: Szablony
 'That type name already exists, please choose a different name.': 'Ta nazwa typu już istnieje, wybierz inną nazwę.'
 System: System
 Structure: Struktura

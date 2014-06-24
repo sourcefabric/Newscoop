@@ -56,6 +56,10 @@ class GenerateORMSchemaCommand extends Console\Command\Command
             $schema = $tool->getCreateSchemaSql($entityMetaClasses);
         }
 
+        array_walk($schema, function(&$value) {
+            $value = $value . ';';
+        });
+
         $output->writeln($schema);
     }
 }

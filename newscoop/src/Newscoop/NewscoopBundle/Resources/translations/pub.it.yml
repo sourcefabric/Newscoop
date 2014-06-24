@@ -20,7 +20,7 @@
 'Publication updated': 'Pubblicazione aggiornata'
 'Subscriber comments moderated?': 'Modera i commenti degli iscritti?'
 'Public comments moderated?': 'Modera i commenti del pubblico?'
-'Comments enabled?': 'Abilita i commenti?'
+'Comments enabled?': 'Abilita commenti?'
 'Comments enabled': 'Commenti abilitati'
 'Article comments default to enabled?': 'Abilita i commenti per default?'
 'trial subscription': 'iscrizione di prova'
@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'Non è stato possibile eliminare lalias $1.'
 '$1 is the default publication alias, it can not be deleted.': 'Non si può eliminare lalias $1 perchè è lalias di pubblicazione predefinito.'
 'You do not have the right to add publications.': 'Non hai il permesso di aggiungere pubblicazioni.'
-'There are $1 issue(s) left.': 'Sono rimaste $1 edizioni.'
+'There are $1 issue(s) left.': 'Ci sono $1 problemi rimasti.'
 'Time Unit': 'Unità di tempo'
 Currency: Valuta
 'Edit languages': 'Modifica lingue'

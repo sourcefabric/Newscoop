@@ -1,7 +1,7 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
 'Not a color': 'Не зяўляецца колерам'
 'No such field': 'Няма такога поля'
 'Color saved': 'Колер захаваны'
@@ -61,3 +61,46 @@ First: Першы
 'Multi-line Text with WYSIWYG': 'Цела артыкула'
 'URL $1 is invalid or is not an image.': 'URL $1 няправільны цi не зьяўляецца графічным файлам.'
 'URL $1 is not an image.': 'URL $1 не зьяўляецца графIчным файлам.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                trusted: null
+                redirect: null
+                publication: Выданьне
+                actions: Апэрацыi
+                actions_buttons:
+                    remove: Выдалiць
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                trusted: null
+                save: Захаваць
+        PublicResources:
+            label:
+                routes: null
+                save: Захаваць

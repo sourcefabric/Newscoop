@@ -1,0 +1,62 @@
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
+'You cant update used files.': 'Ne možete menjati fajlove koji su u upotrebi'
+Source: Izvor
+Local: Lokalni
+'Items updated.': 'Stavke izmenjene'
+Feedback: 'Povratna informacija'
+'Do you want to update unused only?': 'Da li želite da menjate samo nekorišćene?'
+'Disapprove selected': 'Nodobri izabrano'
+'Are you sure you want to update selected items?': 'Da li ste sigurni da želite da izmenite izabrane stavke?'
+'Approve selected': 'Ododbri izabrano'
+'Image files': Slike
+'Fix all thumbnails': 'Popravi sve umanjene verzije slika'
+'You do not have the right to add files.': 'Nemate pravo da dodajete fajlove.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Da li ovaj fajl treba da bude dostupan za ovaj prevod teksta, ili za sve prevode?'
+'Please enter a description for the file: $1.': 'Unesite opis za fajl $1.'
+'Only this translation': 'Samo ovaj prevod'
+'No files for multi editing.': 'Nema fajlova za višestruko uređivanje'
+'Edit files': 'Uredi fajlove'
+'Change file information': 'Promeni informacije o fajlu'
+'All translations': 'Svi prevodi'
+'Save All': 'Sačuvaj sve'
+Files: Fajlova
+'You cant delete used files.': 'Ne možete brisati fajlove koji su u upotrebi'
+'Do you want to delete unused only?': 'da liželite da obrišete samo nekorišćene?'
+'View attachment': 'Pogledaj zakačeni fajl'
+'Select some items first.': 'Prvo izaberite neke stavke'
+'Open in the browser': 'Otvori u pretraživaču'
+'Media Archive': 'Arhiva medijskih zapisa'
+'Last modified': Izmenjeno
+'Items deleted.': 'Stavke izbirsane'
+'File uploaded.': 'Fajl aploudovan'
+'Do you want this file to open in the users browser, or to automatically download?': 'Da li želite da se ovaj fajl otvara u pretraživaču korisnika, ili da se automatski preuzme?'
+'Delete selected': 'Obriši izabrano'
+Created: Napravljeno
+Charset: Charset
+'Change attachment information': 'Promeni informacije o zakačenom fajlu'
+'Automatically download': 'Automatsko preuzimanje'
+'Attachment updated.': 'Fajl je izmenjen'
+'Are you sure you want to delete selected items?': 'Da li ste sigurni d aželite da obrišete izabrane stavke?'
+'Add new file': 'Dodaj novi fajl'
+'You do not have the right to add images.': 'Nemate pravo da dodajete slike.'
+'Use for all': 'Koristi za sve.'
+'Specify image url if you want to load it.': 'Odredite URL slike ako želite da je učitate.'
+Size: Veličina
+'No images for multi editing.': 'Nema slika za višestruko uređivanje'
+'Images updated.': 'slike izmenjene.'
+'Edit images': 'Uredi slike'
+'$1 files uploaded.': '$1 fajlova aploudovano.'
+'Unable to add new image.': 'Nije moguće dodati novu sliku.'
+'Image updated.': 'slika izmenjena'
+'Image $1 deleted.': 'slika 41 je obrisana.'
+'Image is in use, it cannot be deleted.': 'slika se koristi i ne može biti obrisana.'
+'You must select an image file to upload.': 'Morate izabrati sliku koju želite da aploudujete.'
+'Add new image': 'Dodaj novu sliku'
+'Delete image $1': 'Izbriši sliku $1'
+'Used in articles': 'Koristi se u sledećim tekstovima'
+'View image': 'Prikaži sliku'
+'Change image information': 'Promeni podatke o slici'
+'Photographer URL': null
+'Add website url starting with http://': null

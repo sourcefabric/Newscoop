@@ -37,8 +37,8 @@ Unapproved: დაუმტკიცებელი
 'Pending articles': 'მიმდინარე სტატიები'
 'Pending Articles': 'მიმდინარე სტატიები'
 'Context Box updated': 'კონტექსტის კოლოფი განახლებულია'
-On: ჩართული
-Off: გამორთული
+On: ჩართვა
+Off: გამორთვა
 'You do not have the right to moderate comments.': 'თქვენ არ გაქვთ კომენტარების მოდერაციის უფლება'
 'You can not schedule opposing events at the same time': 'თქვენ არ შეგიძლიათ დაპირისპირებული მოვლენების ერთდროულად დაგეგმვა'
 'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
@@ -58,7 +58,7 @@ Files: ფაილები
 'Keywords saved.': 'საძიებო სიტყვები დამახსოვრებულია.'
 'Comment settings': 'კომენტარის პარამეტრები'
 Authors: ავტორები
-'Attach Topic To Article': 'სტატიას დაუმეტეთ სათაური'
+'Attach Topic To Article': 'მიამაგრე თემა სტატიას'
 'Article saved.': 'სტატია დამახსოვრებულია'
 'Article is locked': 'სტატია დალუქულია'
 'Actions updated.': 'მოქმედებები განახლებულია.'
@@ -67,7 +67,7 @@ Switches: სვიჩები
 'No subtopics available': 'ქვესათაურები არ არსებობს.'
 'Newscoop Subhead': 'ნიუსქუფის ქვესათაური'
 Media: მედია
-'Last modified': 'ბოლოს მოდიფიცირებული'
+'Last modified': 'ბოლო მოდიფიკაცია'
 'Keywords &amp; Topics': 'საკვანძო სიტყვები &, სათაურები'
 Info: ინფო
 'Go to live article': 'მიმდინარე სტატეიბზე გადასვლა'
@@ -77,12 +77,12 @@ Created: შექმნილია
 'Content edited': 'კონტენტი რედაქტირებულია'
 'You must select an article language.': 'თქვენ უნდა მონიშნოთ სტატიის ენა'
 'You must select a publication.': 'თქვენ უნდა მონიშნოთ გამოცემა'
-'You must select a file to upload.': 'თქვენ უნდა მონიშნოთ ფაილი ასატვირთად'
+'You must select a file to upload.': 'თქვენ უნდა მონიშნოთ ფაილი ასატვითად'
 'You must select a XML input file.': 'თქვენ უნდა მონიშნოთ XML ფაილის შესატანად'
 'You do not have the right to import XML archives.': 'თქვენ არა გაქვთ XML არქივის იმპორტირების უფლება'
-'There was a problem uploading the file.': 'შეიქმნა პრობლემა ფაილის ატვირთვისას'
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'ატვირთული ფაილი ნაწილობრივ აიტვირთა. ეს შეიძლება მომხდარიყო იმიტომ რომ ასატვირთი დრო ფაილის ზომასთან შედარებით ცოტაა. მაქსიმუმი ასატვირთი დრო მითითებულია ფაილში php.ini'
-'The file exceeds the allowed max file size.': 'ფაილი აჭარბებს დაშვებულ მაქსიმალურ ზომას'
+'There was a problem uploading the file.': 'პრობლემა იყო ფაილის ატვირთვისას.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'ატვირთული ფაილი მხოლოდ ნაწილობრივ აიტვირთა. ეს მაშინ ხდება, როცა ფაილის ასატვირთი მაქსიმალური დრო არ შეესაბამება  ფაილის ზომას, რომლის ატვირთვასაც ცდილობთ. შეტანის მაქსიმალური დრო განსაზღვრულიაphp.ini –ში '
+'The file exceeds the allowed max file size.': 'ამ ფაილის ზომა აღემატება მაქსიმალურ დასაშვებს. '
 Optional: არასავალდებული
 'Input File': 'ფაილის '
 'Import XML': 'XML ს იმპორტი'
@@ -145,7 +145,7 @@ Comments: კომენტარები
 'The following articles are new; it is not possible to schedule them for automatic publishing': 'ეს სტატიები არის ახალი. შეუძლებელია მათთვის გამოცემის ავტომატური დაგეგმვა'
 'Section URL Name': 'სექციის URL'
 'Section Name': 'სექციის სახელი'
-'Publish Schedule': 'გამოქვეყნების გრაფიკი'
+'Publish Schedule': 'პუბლიკაციის განრიგი'
 'No action specified': 'მოქმედება არ არის მითითებული'
 'New section name': 'ახალი სექციის სახელი'
 'New section URL name': 'ახალი სექციის URL'
@@ -165,8 +165,8 @@ Comments: კომენტარები
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'არჩეული ენისთვის უნდა შეიქმნას გამოცემა. გთხოვთ მიუთითოთ გამოცემის სახელი და URL.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'არჩეული ენისთვის უნდა შეიქმნას სექცია. გთხოვთ მიუთითოთ სექციის სახელი და URL.'
 'Article Type': 'სტატიის ტიპი'
-'Show article on front page': 'სტატიების მთავარ გვერდზე გამოტანა'
-'Show article on section page': 'სტატიების სექციის გვერდზე გამოტანა'
+'Show article on front page': 'სტატიის მთავარ გვერდზე ჩვენება'
+'Show article on section page': 'სტატიის სექციის გვერდზე ჩვენება'
 'Translate article': 'სტატიის თარგმნა'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის შეცვლის უფლება. თქვენ შეგიძლიათ მხოლოდ საკუთარი სტატიების რედაქტირება და წარდგენის შემდეგ მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ მათი შეცვლა.'
 'Duplicate article': 'სტატიის დუბლირება'
@@ -175,13 +175,12 @@ Comments: კომენტარები
 'No article types were defined. You must create an article type first.': 'სტატიის ტიპი არ არის განსაზღვრული. პირველ რიგში თქვენ უნდა შექმნათ სტატიის ტიპი.'
 'Edit article types': 'სტატიის ტიპების რედაქტირება'
 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'სტატია არ იქნა დამახსოვრებული. იგი დაილუქა $1 მიერ $2 საათისა და $3 წუთის წინ'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ სტატიის სტატუსის შეცვლის უფლება. წარდგენის შემდეგ, მხოლოდ ავტორიზებულ მომხმარებლებს აქვთ ცვლილელების შეტანის უფლება.'
-'You do not have the right to delete articles.': 'თქვენ არ გაქვთ ამ სტატიების წაშლის უფლება'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'თქვენ არ გაქვთ ამ სტატიის სტატუსის შეცვლის ნებართვა. სტატიის შეცვლა მხოლოდ ავტორიზებულ მომხმარებლებს შეუძლიათ.'
+'You do not have the right to delete articles.': 'თქვენ არ გაქვთ სტატიების წაშლის ნებართვა'
 'You must select an article type.': 'თქვენ უნდა აირჩიოთ სტატიის ტიპი'
 'Are you sure you want to remove the image $1 from the article?': 'დარწმუნებული ხართ რომ გსურთ ამ სურათის $1 სტატიიდან წაშლა?'
 'There was an error reading request parameters.': 'მოთხოვნილი პარამეტრების წაკითხვისას დაფიქსირდა ხარვეზი.'
 'This article cannot be previewed. Please make sure it has the article template selected.': 'ამ სტატიის დათვალიერება შეუძლებელია. გთხოვთ გადაამოწმოთ, რომ ამ სტატიის შაბლონი მითითებულია.'
 'No such article.': 'ასეთი სტატია არ არსებობს.'
 'No such section.': 'ასეთი სექცია არ არსებობს'
-'This article cannot be previewed. Please make sure it has the publication has a theme assigned.': 'ამ სტატიის დათვალიერება შეუძლებელია. გთხოვთ გადაამოწმოთ, რომ პუბლიკაციას თემა მითითებულია'
-'Pending Article': 'დაკიდული სტატია'
+Characters: null

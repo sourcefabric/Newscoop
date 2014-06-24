@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Камэнтары
+        banned: null
+        anonymous: null
+        at: на
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Увесь тэкст артыкула'
+        hidden: Схаваны
+        approved: Зацьверджаны
+        new: Новая
+        editarticle: 'Перайсці да рэдагуемага артыкулу'
+        section: Рубрыка
+        comment: Камэтары
+        replyto: 'Адказаць на камэнтар'
+        subject: Тэма
+        ban: 'Забараніць/дазволіць карыстальніку камэнтаваць'
+        author: Аўтар
+        date: null
+        article: артыкул
+        search: Пошук
+        show: Паказаць
+        recommended: Рэкамендуецца
+        unrecommended: 'Не рэкамендуецца'
+        editcomment: null
+        actions: Апэрацыi
+        selectstatus: 'Абраць статус'
+        deleted: Выдаленае
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Скасаваць
+        submit: Адправіць
+        unrecommend: 'Не рэкамендаваць'
+        recommend: Рэкамендаваць
+        delete: Выдалiць
+        reply: Адказ
+        edit: 'Хуткае рэдагаванне'
+        close: Зачынiць
+        okay: null
+        filter: 'Фільтр '
+    msg:
+        deleted: null
+        commentinarticle: null
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Немагчыма звязацца з Newscoop. Калі ласка, праверце ваша інтэрнэт-злучэнне.'
+            deletefromarticle: null
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Вы збіраецеся канчаткова выдаліць каментары.'
+        suremultiple: null
+        first: null
+        surequestion: null
+        updated: 'Каментар абноўлены.'

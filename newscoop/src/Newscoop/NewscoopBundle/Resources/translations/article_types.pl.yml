@@ -1,9 +1,9 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Schowaj ludzkie nazwy pól'
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': 'Ukryj ludzkie nazwy pól'
 'Edit and translate human-readable field names': 'Przetłumacz ludzkie nazwy pól'
 'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może tylko zawierać litery oraz podkreślnik (_)'
 'Rename article type $1': 'Zmień nazwę typu artykułu $1'
@@ -29,7 +29,7 @@ NOTHING: NIC
 'Cycle through your articles to verify that the merge configuration is correct.': 'Przejrzyj artykuły by sprawdzić, że konfiguracja łączenia jest poprawna.'
 'Clicking Merge will merge ($1) article(s).': 'Klikając Połącz połączyc ($1) artykułów.'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Nie można połączyć pola ($2) z $3, pole ($4)'
---None--: --Brak--
+'--None--': '--Brak--'
 '(Null merge warning.)': '(Ostrzeżenie o braku łączenia.)'
 '(No merge warning.)': '(Ostrzeżenie o braku łączenia.)'
 '(Duplicate warning.)': '(Ostrzeżenie o duplikacji.)'
@@ -56,7 +56,7 @@ Merge!: Połącz!
 'Link to public page': 'Linkuj do strony publicznej'
 'Go to Step 3': 'Idź do Kroku 3'
 'Go to Step 2': 'Idź do Kroku 2'
-'Display Name': 'Nazwa wyświetlana'
+'Display Name': 'Wyświetl nazwę'
 'Delete article type $1.': 'Usuń typ artykułu $1'
 'Comments enabled?': 'Komentarze aktywne?'
 'Back to Step 2': 'Powrót do Krok 2'
@@ -65,16 +65,15 @@ Merge!: Połącz!
 'Are you sure you want to $1 the article type $2?': 'Czy na pewno chcesz $1 do typu artykułu $2?'
 'Are you sure you want to $1 comments for article type $2?': 'Czy na pewno chcesz $1 komentarze do typu artykułu $2?'
 'Allow users without subscriptions to view the article': 'Zezwól użytkownikom bez subskrypcji oglądać artykul'
-'Add translation:': 'Dodaj tłumaczenia:'
+'Add translation:': 'Dodaj tłumaczenie:'
 '$1 comments for article type $2': '$1 komentarzy do typu artykułu $2'
 '$1 comments for article type $1': '$1 komentarzy do typu artykułu $2'
-'$1 article type $2': '$1 typ artykułu $2'
+'$1 article type $2': '$1 typ artykulu $2'
 'No article types.': 'Brak typów artykułów.'
 'Delete article type $1': 'Usuń typ artykułu $1'
 'You do not have the right to add article types.': 'Nie masz praw aby dodawać typy artykułów.'
-'Adding new article type': 'Dodawanie nowego typu artykułów'
-'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 może zawierać jedynie litery i znak podkreślnika (_)'
+'Adding new article type': 'Dodawanie nowego typu artykułu'
+'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 może jedynie zawierać litery oraz podkreślnik (_)'
 'The article type $1 already exists.': 'Typ artykułu $1 już istnieje.'
-'You do not have the right to delete article types.': 'Nie masz praw aby usuwać typy artykułów.'
+'You do not have the right to delete article types.': 'Nie masz uprawnień do usówania typów artykułu'
 'The article type $1 could not be deleted.': 'Typ artykułu $1 nie został usunięty.'
-'The name field may only contain letters and the underscore (_) character.': 'Nazwa pola może zawierać jedynie litery i znak podkreślnika (_)'

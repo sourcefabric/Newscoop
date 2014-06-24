@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Вибачте, але це зображення замале. Воно повинно бути принаймні %dx%d.'
 'Slideshow rendition': 'Комплект размірів слайдшоу'
 'Renditions reloaded': 'Комплект розмірів перезавантажений'
@@ -69,10 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(рррр-мм-дд)</SM
 'You must select an image file to upload.': 'Ви маєте вибрати зображення для завантаження.'
 'Change image information': 'Змінити інформацію про зображення'
 'You do not have the right to add images': 'Ви не маєте прав додавати зображення'
-'Items per page': 
-'The image $1 has been added.': 
-'View image': 
-Unlink: 
-'Back to article details': 
-'Are you sure you want to delete the image $1?': 
-'Click one of the ': 
+'Filter by uploader...': null

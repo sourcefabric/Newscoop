@@ -1,4 +1,4 @@
-default: predeterminado
+default: 'por defecto'
 'before you can configure the section templates.': 'antes de configurar las plantillas de sección.'
 'You have to assign a theme to the issue': 'Debe asignar un tema para esta edición'
 'The section number $1 was already in use.': 'El número de sección $1 ya está en uso.'
@@ -23,7 +23,7 @@ default: predeterminado
 'Please check if another section with the same number or URL name does not exist already.': 'Por favor verifique si existe otra sección con el mismo número o nombre de URL.    '
 'Delete section': 'Borrar sección'
 'You do not have the right to delete sections.': 'No tiene privilegios para borrar secciones'
-'Are you sure you want to delete the section $1?': '¿Esta seguro de querer borrar la sección $1?'
+'Are you sure you want to delete the section $1?': '¿Está seguro de querer borrar la sección $1?'
 'Deleting section': 'Borrando sección'
 'The section $1 has been deleted.': 'La sección $1 ha sido borrada'
 'Configure section': 'Configure sección'
@@ -51,6 +51,3 @@ Warning: Advertencia
 'You must specify a name for the section.': 'Debe especificar un nombre para la sección'
 'The section could not be added.': 'La sección no pudo ser agregada'
 'Add new section': 'Agregar nueva sección'
-'Please check if another section with the same number does not already exist.': 'Favor revise si otra sección con el mismo número no existe ya'
-'Change section name': 'Cambiar nombre de sección'
-'Destination section number': 'Numero de seccion destino'

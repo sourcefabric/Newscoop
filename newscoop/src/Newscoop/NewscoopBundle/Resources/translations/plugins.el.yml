@@ -9,7 +9,6 @@ Uninstall: Απεγκατάσταση
 'The plugin $1 was sucessfully installed.': 'Η πρόσθετη λειτουργία $1 εγκαταστάθηκε επιτυχώς.'
 'No plugins found.': 'Δεν βρέθηκαν πρόσθετες λειτουργίες.'
 Manage: Διαχείριση
-Enabled: Ενεργοποιημένο
+Enabled: Ενεργοποιήθηκε
 'Delete plugin': 'Διαγραφή πρόσθετης λειτουργίας'
 'Add new image': 'Προσθήκη νέας εικόνας'
-'Please confirm the plugin $1 uninstall? All plugin data will be deleted!': 'Παρακαλούμε επιβεβαιώστε το πρόσθετο $1 απεγκατάστασης. Όλα τα δεδομένα πρόσθετων θα διαγραφούν!'

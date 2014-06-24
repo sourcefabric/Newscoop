@@ -1,11 +1,11 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
-'Hide human-readable field names': 'Приховати зрозумілі людям назви полів'
-'Edit and translate human-readable field names': 'Редагувати та перекласти  зрозумілі людям назви полів'
-'The template name may only contain letters and the underscore (_) character.': 'Назва шаблону може містити тільки літери та знак підкреслювання (_)'
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
+'Hide human-readable field names': 'Приховати назву полів зручні для сприйняття людиною'
+'Edit and translate human-readable field names': 'Редагувати так перекласти назву полів зручну для сприйняття людиною'
+'The template name may only contain letters and the underscore (_) character.': 'Ім’я шаблону може містити тільки букви та знак підкреслення (_)'
 'Rename article type $1': 'Перейменувати тип статті $1'
 'Invalid article type $1.': 'Невірний тип статті $1.'
 'You cannot merge the same type into itself.': 'Ви не можете об’єднувати ідентичні типи один в одне.'
@@ -29,24 +29,24 @@ NOTHING: НІЧОГО
 'Cycle through your articles to verify that the merge configuration is correct.': 'Через ваші статті  злиття циклічне, переконайтись що конфігурація злиття є правильною.'
 'Clicking Merge will merge ($1) article(s).': 'Натиснувши кнопку Обєднати зіллються ($ 1) статті (статей).'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Не вдається злити $1 поле ($2) у  $3 поле ($4).'
---None--: --Нічого--
+'--None--': '--Нічого--'
 '(Null merge warning.)': '(Попереджень злиття немає)'
 '(No merge warning.)': '(Попередження про незлиття)'
 '(Duplicate warning.)': '(Попередження дублікацій)'
 '(!) Do NOT merge $1': '(!) Не зливаються $1'
 '$1 of $2': '$1 з $2'
-show: показати
-hide: приховати
+show: Показати
+hide: Приховати
 deactivate: деактивувати
 activate: активувати
 'You must enter a name for the type.': 'Ви маєте ввести номер типу.'
 'You must choose a language for the article type.': 'Ви маєте вибрати мову типу статті.'
 'You do not have the right to rename article types.': 'Ви не маєте права перейменовувати типи статей.'
 'You do not have the right to merge article types.': 'Ви не маєте права об’єднувати типи статей.'
-'The translation could not be added.': 'Переклад не може бути додано.'
+'The translation could not be added.': 'Переклад не може бути додан.'
 'The article type $1 does not exist.': 'Тип статті $1 не існує'
 'Template Type Name': 'Назва типу шаблону'
-Show/Hide: 'Показати / Сховати'
+Show/Hide: 'Показати / Приховати'
 'Show article on section page': 'Показати статтю у цьому розділі'
 'Show article on front page': 'Показати статтю на головній'
 'Publish date': 'Дата опублікування'
@@ -56,7 +56,7 @@ Merge!: Об’єднання!
 'Link to public page': 'Посилання на загальнодоступну сторінку'
 'Go to Step 3': 'Їти до кроку 3'
 'Go to Step 2': 'Їти до кроку 2'
-'Display Name': 'Відображене Ім’я'
+'Display Name': 'Відображена назва'
 'Delete article type $1.': 'Видалити тип статті $1.'
 'Comments enabled?': 'Дозволити коментувати?'
 'Back to Step 2': 'Назад до кроку 2'
@@ -72,8 +72,8 @@ Merge!: Об’єднання!
 'No article types.': 'Немає типів статей'
 'Delete article type $1': 'Видалити тип статті $1'
 'You do not have the right to add article types.': 'Ви не маєте прав додавати типи статей.'
-'Adding new article type': 'Додання нового типу статей'
-'The $1 field may only contain letters and underscore (_) character.': 'поле $1  має містити тільки літери та знак підкреслювання (_).'
+'Adding new article type': 'Додання нового типу статті'
+'The $1 field may only contain letters and underscore (_) character.': 'Поле $1 може містити тільки літери та символ підкреслення (_)'
 'The article type $1 already exists.': 'Тип статті $1 вже існує.'
-'You do not have the right to delete article types.': 'Ви не маєте права видаляти типи статей.'
+'You do not have the right to delete article types.': 'У Вас не має прав видаляти типи статей.'
 'The article type $1 could not be deleted.': 'Тип статті $1 не може бути видалений.'

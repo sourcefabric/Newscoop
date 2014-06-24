@@ -1,11 +1,11 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
+list: null
+filter: null
+'In Lists?': null
+'Are you sure you want to $1 articles of article type $2?': null
+'$1 articles of article type $2': null
 'Hide human-readable field names': 'Verberge von Menschen lesbare Feldnamen'
 'Edit and translate human-readable field names': 'Bearbeite und übersetze von Menschen lesbare Feldnamen'
-'The template name may only contain letters and the underscore (_) character.': 'Der Templatename darf nur Buchstaben und Unterstriche (_) enthalten.'
+'The template name may only contain letters and the underscore (_) character.': 'Der Templatename darf nur Buchstaben und den Unterstrich (_) enthalten.'
 'Rename article type $1': 'Artikeltyp $1 umbenennen'
 'Invalid article type $1.': 'Ungültiger Artikeltyp $1.'
 'You cannot merge the same type into itself.': 'Gleiche Typen können nicht zusammengeführt werden.'
@@ -29,7 +29,7 @@ NOTHING: NICHTS
 'Cycle through your articles to verify that the merge configuration is correct.': 'Gehen Sie die Artikel durch um die korrekte Zusammenführungskonfiguration zu überprüfen.'
 'Clicking Merge will merge ($1) article(s).': 'Auf Zusammenführen klicken um ($1) Artikel zusammenzuführen.'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Ein $1 Feld ($2) kann nicht mit einem $3 Feld ($4) zusammengeführt werden.'
---None--: --Keine--
+'--None--': '--Keine--'
 '(Null merge warning.)': '(Warnung: Null Zusammenführung)'
 '(No merge warning.)': '(Warnung: keine Zusammenführung)'
 '(Duplicate warning.)': (Duplizierungswarnung)
@@ -65,14 +65,14 @@ Merge!: Zusammenführen!
 'Are you sure you want to $1 the article type $2?': 'Wirklich den Artikeltyp $2 $1?'
 'Are you sure you want to $1 comments for article type $2?': 'Wirklich Kommentare für Artikeltyp $2 $1?'
 'Allow users without subscriptions to view the article': 'Usern ohne Abonnement erlauben den Artikel zu sehen.'
-'Add translation:': 'Übersetzung hinzufügen'
+'Add translation:': 'Übersetzung hinzufügen:'
 '$1 comments for article type $2': '$1 Kommentare für Artikeltyp $2'
 '$1 comments for article type $1': '$1 Kommentare für Artikeltyp $1'
-'$1 article type $2': '$1 Artikeltyp $2'
+'$1 article type $2': 'Artikeltyp $2 $1'
 'No article types.': 'Keine Artikeltypen'
 'Delete article type $1': 'Artikeltyp $1 löschen'
 'You do not have the right to add article types.': 'Keine Berechtigung Artikeltypen hinzuzufügen.'
-'Adding new article type': 'Neue Artikeltypen werden hinzugefügt'
+'Adding new article type': 'Neuer Artikeltyp wird hinzugefügt'
 'The $1 field may only contain letters and underscore (_) character.': 'Das $1 Feld darf nur Buchstaben und den Unterstrich (_) enthalten.'
 'The article type $1 already exists.': 'Artikeltyp $1 existiert bereits.'
 'You do not have the right to delete article types.': 'Keine Berechtigung Artikeltypen zu löschen.'

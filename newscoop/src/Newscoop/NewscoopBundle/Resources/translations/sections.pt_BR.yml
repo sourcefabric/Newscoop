@@ -35,7 +35,7 @@ default: padrão
 'The section $1 could not be duplicated': 'A Secção $1 não pode ser duplicada'
 'Section $1 has been duplicated to $2. $3 of $4': 'A Secção $1 foi duplicada para $2. $3 de $4'
 'You do not have the right to modify sections.': 'Não tem permissões para alterar secções.'
-'A total of $1 articles were deleted.': 'Foi(ram) eliminado(s) $1 artigo(s).'
+'A total of $1 articles were deleted.': '$1 artigos foram apagados.'
 'Duplicate Section:': 'Duplicar Secção'
 'Existing Section': 'Secção Existente'
 'Go to new section': 'Ir para nova secção'
@@ -44,13 +44,10 @@ default: padrão
 'Please select either $1 or $2.': 'Escolha $1 ou $2.'
 'Select destination section:': 'Selecione a secção de destino:'
 OR: OU
-'URL Name': 'Nome do Endereço URL'
+'URL Name': 'Nome para o URL'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'O numero de secção ja existe, indique um valor diferente ou use a caixa de dialogo para encontrar uma secção existente.'
 Warning: Aviso
 'You must select a section.': 'Selecione uma secção.'
 'You must specify a name for the section.': 'Tem de indicar um nome para a secção.'
 'The section could not be added.': 'Esta Secção não pode ser Adicionada.'
 'Add new section': 'Criar Secção'
-'Please check if another section with the same number does not already exist.': 'Verifique se já não existe uma secção com o mesmo numero.'
-'Change section name': 'Alterar nome da Secção'
-'Destination section number': 'Numero da Secção de destino'

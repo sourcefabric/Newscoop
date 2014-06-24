@@ -20,7 +20,7 @@
 'Publication updated': 'Публикација измењена'
 'Subscriber comments moderated?': 'Коментари претплатника се морају прво одобрити?'
 'Public comments moderated?': 'Коментари се прво морају одобрити?'
-'Comments enabled?': 'Омогући коментаре?'
+'Comments enabled?': 'Коментари дозвољени?'
 'Comments enabled': 'Коментари омогућени'
 'Article comments default to enabled?': 'Подразумевај да су коментари на текстове омогућени?'
 'trial subscription': 'пробна претплата'
@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'Алиас $1 не може бити обрисан.'
 '$1 is the default publication alias, it can not be deleted.': '$1 је основни алиас за публикацију, па не може бити обрисан.'
 'You do not have the right to add publications.': 'Немате право да додајете публикације.'
-'There are $1 issue(s) left.': 'Преостало је $1 издања.'
+'There are $1 issue(s) left.': 'Преостало је  $1издања.'
 'Time Unit': 'Временска јединица'
 Currency: Валута
 'Edit languages': 'Прикажи језике'
@@ -75,4 +75,3 @@ Currency: Валута
 'Article title': 'Наслов текста'
 'Article keywords': 'Кључне речи'
 'Article topics': Теме
-'The default subscription time for $1 has been added.': 'Нови период претплате за $1 додат'

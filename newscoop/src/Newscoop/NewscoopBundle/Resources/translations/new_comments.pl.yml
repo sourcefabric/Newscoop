@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: Komentarze
+        banned: null
+        anonymous: null
+        at: w
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'Pełny artykuł'
+        hidden: Ukryte
+        approved: Zaakceptowane
+        new: Nowy
+        editarticle: 'Przejdź do edycji artykulu'
+        section: Sekcja
+        comment: Komentarz
+        replyto: 'Odpowiedz na komentarz'
+        subject: Temat
+        ban: 'Zablokuj/Odblokuj użytkownika'
+        author: Autor
+        date: null
+        article: Artykuł
+        search: Szukaj
+        show: Pokaż
+        recommended: Polecany
+        unrecommended: Niepolecany
+        editcomment: null
+        actions: Akcje
+        selectstatus: 'Wybierz status'
+        deleted: Usunięty
+        alert: null
+        searchholder: null
+    btn:
+        cancel: Anuluj
+        submit: Wyślij
+        unrecommend: 'Niepolecany '
+        recommend: Poleć
+        delete: Usuń
+        reply: Odpowiedz
+        edit: 'Szybka edycja'
+        close: Zamknij
+        okay: null
+        filter: Filtrowanie
+    msg:
+        deleted: 'Komentarz został usunięty'
+        commentinarticle: 'Komentarz $4 przez $1 w artykule $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
+            deletefromarticle: 'Komentarz został usunięty z artykułu $2 przez $1 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'Chcesz bezpowrotnie usunąć wiadomość'
+        suremultiple: null
+        first: null
+        surequestion: 'Jesteś pewien że chcesz to zrobić?'
+        updated: 'Komentarz zaktualizowany.'

@@ -46,6 +46,8 @@ class UserCommentsList extends ListObject
             $comments[] = new MetaComment($comment->getId());
         }
 
+        $p_count = is_array($comments) ? count($comments) : 0;
+
         return $comments;
 	}
 

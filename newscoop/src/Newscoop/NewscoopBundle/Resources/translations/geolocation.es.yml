@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': 'Basado en los datos de GeoNames.org y OpenStreetMap.org'
 'selected marker icon': 'ícono marcador seleccionado'
 'add location to map': 'añadir locación al mapa'
 'Video source': 'Fuente de video'
@@ -55,7 +55,7 @@ height: alto
 'The map has been removed from the article.': 'Se ha removido el mapa del artículo.'
 'Point no.': 'Punto no.'
 'Point markers': 'Marcadores de punto'
-None: Ninguno
+None: Ninguno.
 'Map Search Example': 'Ejemplo de búsqueda en el mapa'
 'Map Preview': 'Previsualización de mapa'
 'Image URL': 'URL de la imagen'

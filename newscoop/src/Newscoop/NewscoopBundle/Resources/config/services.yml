@@ -1,4 +1,10 @@
 services:
+    newscoop_newscoop.listener.authentication.backend.session:
+        class: Newscoop\NewscoopBundle\EventListener\AuthenticationListener
+        arguments:  ["@user", "@router"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+
     newscoop_newscoop.routing.loader.plugins:
         class: Newscoop\NewscoopBundle\Routing\PluginsLoader
         arguments: ["@newscoop.plugins.manager", "@service_container"]
@@ -56,12 +62,22 @@ services:
     newscoop_newscoop.security.authentication.success_handler:
         class: %newscoop_newscoop.security.authentication.success_handler.class%
         public: false
-        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em']
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@em', '@user']
 
     newscoop_newscoop.security.authentication.frontend.success_handler:
         class: %newscoop_newscoop.security.authentication.frontend.success_handler.class%
+        public: true
+        arguments:  ['@security.http_utils', {}, '@auth.adapter', '@user']
+
+    newscoop_newscoop.security.logout.success_handler:
+        class: %newscoop_newscoop.security.logout.success_handler.class%
         public: false
-        arguments:  ['@security.http_utils', {}, '@auth.adapter']
+        arguments:  ['@security.http_utils', '/', '@security.context']
+
+    newscoop_newscoop.security.frontend.logout.success_handler:
+        class: %newscoop_newscoop.security.frontend.logout.success_handler.class%
+        public: false
+        arguments:  ['@security.http_utils', '/', '@security.context']
 
     newscoop_newscoop.listener.locale_listener:
         class: Newscoop\NewscoopBundle\EventListener\LocaleListener
@@ -83,7 +99,7 @@ services:
 
     newscoop_newscoop.translation_listener:
         class: Newscoop\NewscoopBundle\EventListener\OldPluginsTranslationListener
-        arguments:  ['@translator', '@newscoop.cache']
+        arguments:  ['@translator', '@newscoop.cache', '@newscoop.plugins.service']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
@@ -93,7 +109,7 @@ services:
 
     newscoop_newscoop.translation_template_listener:
         class: Newscoop\NewscoopBundle\EventListener\TemplateTranslationListener
-        arguments:  ['@translator']
+        arguments:  ['@translator', '@newscoop.cache']
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
 
@@ -148,7 +164,8 @@ parameters:
     newscoop_newscoop.security.authentication.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationSuccessHandler"
     newscoop_newscoop.security.authentication.frontend.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFrontendSuccessHandler"
     security.authentication.failure_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\AuthenticationFailedHandler"
-    security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
+    newscoop_newscoop.security.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\LogoutSuccessHandler"
+    newscoop_newscoop.security.frontend.logout.success_handler.class: "Newscoop\\NewscoopBundle\\Security\\Http\\Authentication\\FrontendLogoutSuccessHandler"
     security.authentication.listener.form.class: "Newscoop\\NewscoopBundle\\EventListener\\CaptchaUsernamePasswordFormAuthenticationListener"
     newscoop_newscoop.menu_builder.class: "Newscoop\\NewscoopBundle\\Menu\\Builder"
     newscoop_newscoop.session.storage.class: "Newscoop\\NewscoopBundle\\Session\\Storage"

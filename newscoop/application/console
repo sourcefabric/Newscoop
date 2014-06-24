@@ -60,6 +60,13 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\InstallNewscoopCommand(),
     new \Newscoop\Tools\Console\Command\CreateOAuthClientCommand(),
     new \Newscoop\Tools\Console\Command\GenerateORMSchemaCommand(),
+    new \Newscoop\Tools\Console\Command\UserGarbageCollectionCommand(),
+    new \Newscoop\Tools\Console\Command\AutopublishCommand(),
+    new \Newscoop\Tools\Console\Command\ClearOldStatisticsCommand(),
+    new \Newscoop\Tools\Console\Command\IndexerCommand(),
+    new \Newscoop\Tools\Console\Command\EventsNotifierCommand(),
+    new \Newscoop\Tools\Console\Command\SubscriptionsNotifierCommand(),
+    new \Newscoop\Tools\Console\Command\AssignThemeCommand(),
 ));
 
 $cli->run($input);

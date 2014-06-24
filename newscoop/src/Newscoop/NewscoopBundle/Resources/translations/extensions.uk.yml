@@ -1,6 +1,6 @@
-Loading...: 
-'Latest 20 articles by popularity': 
-'Articles diagrams': 
+Loading...: Завантаження...
+'Latest 20 articles by popularity': null
+'Articles diagrams': null
 'Sourcefabric.org blog reader': 'читач блогу Sourcefabric.org'
 'Sourcefabric.org News reader': 'читач новин Sourcefabric.org'
 'Feed reader': 'Читач каналів'
@@ -15,7 +15,7 @@ Title: Заголовок
 'Sourcefabric.org dev feed reader': 'читач каналів розробників Sourcefabric.org'
 'Recently Published Articles': 'Нещодавно опублікованих статей'
 'Recently Modified Articles': 'Нещодавно змінених статей'
-'Pending Articles': 'Статті в очикуванні'
+'Pending Articles': 'Незакінчені Статті'
 'Paste google generated code': 'Вставити код сгенерований google'
 'Most Popular Articles': 'Найбільш популярні статті'
 'Media files': 'Медіа файли'

@@ -1,7 +1,7 @@
 get: dostat
 Soundcloud: SoundCloud
 Templates: Šablony
-'Feedback Messages': 'Feedback zprávy'
+'Feedback Messages': 'Feedback zpráv'
 'Article Playlists': 'Seznamy článků'
 'Check all': 'Zkontrolovat vše'
 view: ukázat
@@ -53,7 +53,7 @@ add: přidat
 'User type deleted.': 'Typ uživatele vymazán.'
 'User type added.': 'Typ uživatel přidán.'
 'User Groups': 'Uživatelské skupiny'
-Themes: Témata
+Themes: Náměty
 'That type name already exists, please choose a different name.': 'Tento název typu již existuje, prosím vyberte jiný název.'
 System: Systém
 Structure: Struktura
@@ -79,14 +79,3 @@ Authoring: Authoring
 Allow: Povolit
 'User types': 'Typy uživatelů'
 'No user types.': 'Žádné typy uživatelů'
-'You do not have the right to add user types.': 'Nemáte právo přidat typy uživatelů'
-'Adding new user type': 'Přidání nového typu uživatele'
-'The user type $1 has been added.': 'Typ uživatele $1 byl přidán'
-'The user type could not be added.': 'Typ uživatele nemohl být přidán'
-'Please check if an user type with the same name does not already exist.': 'Zkontrolujte, zda již neexistuje typ uživatele se stejným názvem'
-'Deleting user type': 'Mazání typu uživatele'
-'The user type has been deleted.': 'Typ uživatele byl smazán'
-'The user type could not be deleted.': 'Typ uživatele nemohl být smazán'
-'Updating user type permissions': 'Obnovení práva typu uživatele'
-'User type permissions have been successfuly updated.': 'Práva tohoto typu uživatele byla úspěšně obnovena'
-'User type permissions could not be updated.': 'Práva tohoto typu uživatele nemohla být obnovena'

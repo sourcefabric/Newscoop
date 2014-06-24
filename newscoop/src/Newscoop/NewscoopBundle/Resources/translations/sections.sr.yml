@@ -35,7 +35,7 @@ default: подразумевано
 'The section $1 could not be duplicated': 'Рубрика  $1 не може бити дуплирана'
 'Section $1 has been duplicated to $2. $3 of $4': 'Рубрика $1 је дуплирана у $2. $3 од $4'
 'You do not have the right to modify sections.': 'Немате право да мењате рубрике.'
-'A total of $1 articles were deleted.': 'Укупно је обрисано $1 текст(ова).'
+'A total of $1 articles were deleted.': 'Укупно $1 текстова је обрисано.'
 'Duplicate Section:': 'Дуплирај рубрику:'
 'Existing Section': 'Рубрика постоји'
 'Go to new section': 'Иди у нову рубрику'
@@ -44,13 +44,10 @@ default: подразумевано
 'Please select either $1 or $2.': 'Изаберите $1 или $2.'
 'Select destination section:': 'Изаберите циљну рубрику'
 OR: ИЛИ
-'URL Name': 'УРЛ име'
+'URL Name': 'Скраћено име'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Наведени број рубрике већ постоји - изаберите другу вредност или користите падајући мени за избор постојеће рубрике.'
 Warning: Упозорење
 'You must select a section.': 'Морате изабрати рубрику'
 'You must specify a name for the section.': 'Морате унети име рубрике.'
 'The section could not be added.': 'Рубрика не може бити додата'
 'Add new section': 'Додај нову рубрику'
-'Please check if another section with the same number does not already exist.': 'Проверите да ли већ не постоји рубрика са истим бројем'
-'Short Name': 'Скраћено име'
-'Destination section number': 'Број циљне рубрике'

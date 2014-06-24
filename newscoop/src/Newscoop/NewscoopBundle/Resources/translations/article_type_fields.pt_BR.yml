@@ -1,4 +1,4 @@
-'Usage at automatic statistics': 
+'Usage at automatic statistics': null
 'Event Color': 'Cor do evento'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Você tem que digitar um número maior que $1 e menor que $2 no campo $3.'
 'You do not have the right to translate article types.': 'Você não tem o direito de traduzir tipos de artigos.'
@@ -16,12 +16,12 @@
 Custom: Customisado
 'Characters limit': 'Limite de caracteres'
 'The template name may only contain letters and the underscore (_) character.': 'O nome do template pode ter apenas letras e o underscore (_).'
-'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 
+'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
 'The property $1 is already in use.': 'A propriedade $1 já está em uso.'
 Precision: Precisão
 'Can not convert the field $1 from $2 to type $3.': 'Não é possível converter o campo $1 de $2 para o tipo $3'
 'Are you sure you want to make $1 a $2 field?': 'Tem certeza que quer transformar $1 em campo do tipo $2?'
-'Is Content': 
+'Is Content': null
 'Back to Article Types List': 'Voltar para a lista de tipos de artigos'
 show: mostrar
 hide: esconder
@@ -55,5 +55,3 @@ Show/Hide: Mostrar/esconder
 'You do not have the right to delete article type fields.': 'Não tem permissões para eliminar campos'
 'Are you sure you want to delete the field $1?': 'Eliminar campo $1?'
 'You will also delete all fields with this name from all articles of this type from all publications.': 'Irão ser eliminados todos os campos com este nome em todas as publicações'
-'Add new field': 'Adicionar novo Campo'
-'The $1  must not be void and may only contain letters.': 'O nome do Campo $1 não pode ser nulo e tem de conter apenas letras'

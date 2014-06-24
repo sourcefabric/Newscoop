@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': 'Zobrazit newsfeed obrázky'
+'Mark image': 'Označit obrázek'
+'Add selected images to slideshow': 'Přidej vybrané obrázky do slideshow'
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'Obrázek je příliš malý, jeho velikost musí být alespoň %dx%d'
 'Slideshow rendition': 'Ukázat slideshow'
 'Renditions reloaded': 'Formáty znovu nahrány'
@@ -69,7 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: 'Datum <BR><SMALL>(rrrr-mm-dd)</SMALL>'
 'You must select an image file to upload.': 'Zvolte obrázkový soubor k nahrání.'
 'Change image information': 'Změnit informace obrázku'
 'You do not have the right to add images': 'Nemáte právo přidavat obrázky'
-'Items per page': 
-'Delete image $1': 'Stazat obrázek $1'
-'Click one of the ': 
-'Are you sure you want to delete the image $1?': 
+'Filter by uploader...': 'Filtrovat dle vkladatele...'

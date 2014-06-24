@@ -1,39 +1,39 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Sito web'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geolocalizzazione
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostro voci da  _START_ a  _END_ di _TOTAL_'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Nessuna voce trovata.'
+'No entries to show': 'Nessun elemento da mostrare'
+'Display _MENU_ records': 'Mostra _MENU_ voci'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': 'Filtro da _MAX_ voci'
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
 'Username is used already': 'Lusername è già in uso'
 'User with id $1 not found': 'Lutente con ID $1 non esiste'
 'User was deleted.': 'Lutenza è stata cancellata'
@@ -47,12 +47,12 @@ Picture: Foto
 None: Nessuno
 'New confirmation email was sent to user.': 'Unaltra e-mail di conferma è stata inviata allutente'
 'Email is used already': 'Le-mail è già utilizzata'
-'Edit your password': 'Modifica la tua password'
+'Edit your password': 'Cambia la tua password'
 'Edit user $1': 'Modifica lutente $1'
-'Edit subscriptions': 'Modifica le iscrizioni'
+'Edit subscriptions': 'Modifica sottoscrizioni'
 'Edit profile': 'Modifica il profilo'
-'Edit permissions': 'Modifica i permessi'
-'Create new account': 'Crea un nuovo account'
+'Edit permissions': 'Modifica permessi'
+'Create new account': 'Crea nuovo account'
 'Comment ban settings': 'Impostazioni blocco dei commenti'
 'Ban for user $1 saved.': 'Blocco per lutente $1 attivato.'
 'User account is active': 'Laccount utente è attivo'
@@ -62,7 +62,7 @@ Templates: Template
 Username: 'Nome utente'
 'Last Name': Cognome
 'First Name': Nome
-Email: E-mail
+Email: Email
 'You were logged out.': 'Ti sei scollegato.'
 'Newscoop Subhead': 'Sottotitolo Newscoop'
 Filters: Filtri
@@ -101,7 +101,7 @@ Filters: Filtri
 'User may attach topics to articles': 'Lutente può collegare argomenti ad articoli'
 'User may attach images to articles': 'Lutente può collegare immagini ad articoli'
 'User may add special characters': 'Lutente può aggiungere caratteri speciali'
-'That user name already exists, please choose a different login name.': 'Questo nome utente esiste, scegli un nome account differente.'
+'That user name already exists, please choose a different login name.': 'Questo nome utente è già utilizzato, scegli un altro nome per il login.'
 'User may delete article attachments': 'Lutente può eliminare allegati degli articoli'
 'User may change article attachments': 'Lutente può cambiare allegati agli articoli'
 'User may add article attachments': 'Lutente può aggiungere allegati agli articoli'
@@ -184,3 +184,39 @@ Miscellaneous: Varie
 'User will be notified on several events': 'Lutente sara notificato'
 'Editor Miscellaneous Settings': 'Impostazioni varie editor'
 'No such user account.': 'Laccount non esiste.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Gestisci utenti'
+    created: Creato
+    updated: null
+    status:
+        status: Stato
+        registered: null
+        pending: null
+        deleted: Cancellato
+        active: Attivo
+    table:
+        actions:
+            actions: Azioni
+            edit: Modifica
+            resend_email: null
+            rename: null
+            remove: Rimuovi
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Elaboro...
+    chart:
+        title: null

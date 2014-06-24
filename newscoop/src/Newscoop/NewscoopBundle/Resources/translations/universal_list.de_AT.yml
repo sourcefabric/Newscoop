@@ -1,51 +1,51 @@
-'Use Map': 
-Locations: 
-Last: 
-First: 
-'Publish Schedule': 
-'You do not have the right to delete articles.': 
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 
-'Toggle: On Section Page': 
-'Toggle: On Front Page': 
-'Toggle: Comments': 
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 
-'Status: Submit': 
-'Status: Set New': 
-'Status: Publish': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Show / hide columns': 
-'Select some article first.': 
-'Select action': 
-'Save order': 
-'Reset all filters': 
-'Published before': 
-'Published after': 
-'Publish date': 
-'Publish Date': 
-'Order updated.': 
-'No sections found': 
-'No records found.': 
-'No publications found': 
-'No issues found': 
-'No entries to show': 
-'Loading data': 
-'Last Modified': 
-'Filter by...': 
-Filter: 
-'Duplicate to another section': 
-'Display _MENU_ records': 
-Creator: 
-'Create Date': 
-'Articles updated.': 
-'Article(s) unlocked': 
-'Article(s) duplicated': 
-'Article status set to $1': 
-'Are you sure you want to delete selected articles?': 
-'All Sections': 
-'All Publications': 
-'All Issues': 
-'Access denied.': 
-'$1 toggled.': 
-'$1 articles have been removed': 
-' - filtering from _MAX_ records': 
+'Use Map': 'Karte benutzen'
+Locations: Standorte
+Last: Letzte
+First: Erste
+'Publish Schedule': 'Automatisierte Veröffentlichung'
+'You do not have the right to delete articles.': 'Fehlende Zugriffsrechte für das Löschen von Artikeln.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Keine Zugriffsrechte auf die Änderung des Artikelstatus. Eingepflegte Artikel können nur mit den dazugehörigen Rechten geändert werden.'
+'Toggle: On Section Page': 'Auswählen: Auf der Rubrikseite'
+'Toggle: On Front Page': 'Auswählen: Auf der Startseite'
+'Toggle: Comments': 'Auswählen: Kommentare'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Stunde(n) und $4 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
+'Status: Submit': 'Status: anlegen'
+'Status: Set New': 'Status: auf neu setzen'
+'Status: Publish': 'Status: veröffentlichen'
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Zeige _START_ bis _END_ von _TOTAL_ Einträgen'
+'Show / hide columns': 'Spalten anzeigen / verbergen'
+'Select some article first.': 'Zuerst bitte einige Artikel aussuchen.'
+'Select action': 'Aktion auswählen'
+'Save order': 'Reihenfolge speichern'
+'Reset all filters': 'Alle Filter zurücksetzen'
+'Published before': 'Veröffentlicht vor'
+'Published after': 'Veröffentlicht nach'
+'Publish date': Veröffentlichungsdatum
+'Publish Date': Veröffentlichungsdatum
+'Order updated.': 'Reihenfolge aktualisiert'
+'No sections found': 'Keine Rubriken gefunden.'
+'No records found.': 'Keine Angaben gefunden.'
+'No publications found': 'Keine Publikationen gefunden.'
+'No issues found': 'Keine Ausgaben gefunden.'
+'No entries to show': 'Keine Einträge zum Anzeigen gefunden.'
+'Loading data': 'Daten werden geladen'
+'Last Modified': 'Zuletzt geändert'
+'Filter by...': 'Filtern nach...'
+Filter: Filter
+'Duplicate to another section': 'In eine andere Rubrik duplizieren'
+'Display _MENU_ records': 'Anzeigen _MENU_ Einträge'
+Creator: 'Erstellt von'
+'Create Date': 'Datum erstellen'
+'Articles updated.': null
+'Article(s) unlocked': null
+'Article(s) duplicated': null
+'Article status set to $1': 'Artikelstatus auf $1 gesetzt.'
+'Are you sure you want to delete selected articles?': 'Ausgewählte Artikel wirklich löschen?'
+'All Sections': 'Alle Rubriken'
+'All Publications': 'Alle Publikationen'
+'All Issues': 'Alle Ausgaben'
+'Access denied.': 'Zugang verweigert'
+'$1 toggled.': '$1 ausgewählt.'
+'$1 articles have been removed': '$ 1 Artikel wurden entfernt'
+' - filtering from _MAX_ records': 'filtert aus _MAX_ Einträgen '

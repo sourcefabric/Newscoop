@@ -1,5 +1,5 @@
 Plugins: Plug-iny
-'Manage Plugins': 'Správa plug-inů'
+'Manage Plugins': 'Spravovat Pluginy'
 Account: Účet
 'Items per page': 'Položek na stránku'
 'Add new': 'Přidat nový'
@@ -9,7 +9,7 @@ More...: Více...
 Content: Obsah
 Languages: Jazyk
 Countries: Země
-Themes: Šablony
+Themes: Náměty
 Topics: Témata
 Configure: Konfiguruj
 'Image Archive': 'Archiv Obrázků'
@@ -148,6 +148,7 @@ Localizer: Lokalizátor
 'Add new publication': 'Přidat novou publikaci'
 'Upload new template': 'Nahrát novou šablonu'
 'Add new staff member': 'Přidat nového zaměstnance'
+'Staff member deleted.': 'Zaměstnanec smazán. '
 'Add new subscriber': 'Přidat nového předplatitele'
 'Add new user type': 'Přidat typ uživatele'
 'Add new article type': 'Přidat nový typ článku'
@@ -257,11 +258,27 @@ Reads: Přečteno
 'Universal List': 'Všeobecný přehled'
 'Invalid security token!': 'Neplatný bezpečnostní znak!'
 Authors: Autoři
-Readers: 
-'User name': 'Uživatelské jméno'
-'Schedule a new publish action': 
-'User Types': 'Uživatelské typy'
-'User may add/change user accounts and passwords': 'Uživatel může přidat/změnit uživatelské účty a hesla'
-'User may delete user accounts': 'Uživatel může mazat uživatelské účty'
-'Add new user account': 'Přidat uživatelský účet'
-'Subscription Default Time': 'Předplatné období'
+Title: Název
+'Edit country': 'Editovat zemi'
+'Entry $1 prepared for publishing': 'Záznam $1 je připraven ke zveřejnění'
+'Entry deleted': 'Záznam smazán'
+'Feed saved': 'Feed uložen'
+'Item published': 'Položka zveřejněna'
+'Settings saved': 'Nastavení uloženo'
+'Self-delete is not permitted.': 'Není dovoleno smazání.'
+'Edit staff member $1': 'Editovat zaměstnance $1'
+'Delete staff member $1': 'Smazat zaměstnance $1'
+'Could not save user $1. Please make sure it does not already exist': 'Uživatel $1 nemohl být uložen. Ujistěte se, zda již neexistuje. '
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Uživatel s e-mailovou adresou $1 nemohl být uložen. Ujistěte se, zda již neexistuje.'
+'Changing user type would prevent you to manage users. Aborted.': 'Změna typu uživatele Vám zabrání spravovat uživatele. Zrušeno. '
+'Staff member saved.': 'Zaměstnanec uložen.'
+'Permissions: $1': 'Povolení: $1'
+'Change user account information': 'Změnit informace uživatelského účtu'
+'Staff management': 'Management zaměstnanců'
+Updated: Aktualizováno
+Options: Možnosti
+Verified: Ověřeno
+Confirm: Potvrdit
+at: na
+published: zveřejněno
+unpublished: nezveřejněno

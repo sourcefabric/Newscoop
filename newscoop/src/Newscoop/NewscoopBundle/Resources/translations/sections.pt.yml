@@ -1,16 +1,16 @@
-default: 
-'before you can configure the section templates.': 
-'You have to assign a theme to the issue': 
-'The section number $1 was already in use.': 
-'Delete all articles written in $1 language from this section': 
-'Delete all articles and all of their translations': 
-'Delete only this section ($1)': 
-'Delete all translations of this section': 
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 
-'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 
-'Section updated': 
-'There are $1 subscriptions which will be affected.': 
-'There are $1 articles in this section.': 
+default: null
+'before you can configure the section templates.': null
+'You have to assign a theme to the issue': null
+'The section number $1 was already in use.': null
+'Delete all articles written in $1 language from this section': null
+'Delete all articles and all of their translations': null
+'Delete only this section ($1)': null
+'Delete all translations of this section': null
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': null
+'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': null
+'Section updated': null
+'There are $1 subscriptions which will be affected.': null
+'There are $1 articles in this section.': null
 'Go To Articles': 'Ir para Artigos'
 'Add section to all subscriptions.': 'Adicionar Secção a todas as Assinaturas'
 'Delete section from all subscriptions.': 'Eliminar Secção de todas as Assinaturas'
@@ -44,13 +44,10 @@ default:
 'Please select either $1 or $2.': 'Escolha $1 ou $2.'
 'Select destination section:': 'Selecione a secção de destino:'
 OR: OU
-'URL Name': 'Nome do Endereço URL'
+'URL Name': 'Nome para o URL'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'O numero de secção ja existe, indique um valor diferente ou use a caixa de dialogo para encontrar uma secção existente.'
 Warning: Aviso
 'You must select a section.': 'Selecione uma secção.'
 'You must specify a name for the section.': 'Tem de indicar um nome para a secção.'
-'Please check if another section with the same number does not already exist.': 'Verifique se já não existe uma secção com o mesmo numero.'
-'Change section name': 'Alterar nome da Secção'
-'Destination section number': 'Numero da Secção de destino'
 'The section could not be added.': 'Esta Secção não pode ser Adicionada.'
 'Add new section': 'Criar Secção'

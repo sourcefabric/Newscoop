@@ -1,5 +1,7 @@
+'Rename user': null
+Campsite: null
 'Image Rendering': 'Відтворення зобрадже'
-'Featured Article Lists': 'Список запланованих статей'
+'Featured Article Lists': 'Списки вибраних статей'
 'You have tried to upload an invalid backup file.': 'Ви намагалися завантажити невірний файл архівної копії.'
 'You do not have the right to manage backups.': 'Ви не маєте прав керувати архівними копіями.'
 'Make a new backup': 'Створити нову архівну копію'
@@ -11,7 +13,7 @@ Create: Створити
 Attach/Detach: 'Приєднати / Від’єднати'
 'Are you sure you want to delete slideshow?': 'Ви впевнені що хочете видалити слайд-шоу?'
 Support: Підтримка
-'Pending articles': 'Очікують підтвердження'
+'Pending articles': 'Незакінчені статті'
 'Manage Users': 'Керування користувачами'
 'Manage User Types': 'Керування типами користувачів'
 'Manage User Points System': 'системою точок користувача'
@@ -35,7 +37,7 @@ at: на
 'Warning: the existing data and themes will be deleted!': 'Попередження: Існуюча дата та тема будуть видалені.'
 'Value is required and cant be empty': 'Значення обов’язкове та не може бути незаповнено.'
 Upload: Завантажувати
-'Update comment': 'Оновити коментар'
+'Update comment': 'Оновити коментарі'
 'Time created': 'Час створено'
 Themes: Теми
 'Stop current upload': 'Зупинити поточне завантаження'
@@ -43,7 +45,7 @@ Themes: Теми
 'Start upload': 'Почати завантаження'
 Settings: Налаштування
 'Select files': 'Вибрати файли'
-Reply: Повторити
+Reply: Відповідь
 'New comment added': 'Нові коментарі додані'
 'Manage Authors': 'Керування Авторами'
 Loading..: Завантаження...
@@ -62,7 +64,7 @@ Ban: Заборона
 Newscoop: Newscoop
 'Your password has been reset.': 'Ваш пароль було скинуто.'
 'Proceed to login.': Авторизуватись
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Привіт, \n\nдля відновлення паролю, будь ласка перейдіть за посиланням link: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': Увійти
 'Back to login.': 'Назад до сторінки входу.'
 'Back to login': 'Назад до сторінки входу'
@@ -118,8 +120,8 @@ Download: Завантажити
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Не вдається створити автора «$1» для статті №$2 ($3) типу $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': 'Трапилася помилка під час встановлення автора для статті $1 з поля  $2.'
 'The author was set successfuly for articles of type $1 from the field $2.': 'Автора було успішно призначени для статей типу  $1 з поля $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Стаття була заблокована $1 ($2) $3 хвилин тому.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Статя була заблокована $1 ($2) $3 годин та $4 хвилин тому.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 хвилин тому.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Ця стаття була заблокована $1 ($2) $3 годин та $4 хвилин тому.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Помилка встановлення автора $1 для статті № $2 ($3) типу $4.'
 'Clear system cache': 'Очистити системний кеш'
 'The system was unable to upload the file $1. ': 'Система не може завантажити файл $1.'
@@ -150,3 +152,7 @@ Help: Допомога
 'Please make sure that you typed the correct user name and password.': 'Будь ласка переконайтесь що ви ввели правильне імя користувача та пароль.'
 'If your problem persists please contact the site administrator $1': 'Якщо проблема не зникне, зверніться до адміністратора сайту $1'
 Backup/Restore: 'Резерв / Відновлення'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

@@ -75,11 +75,11 @@ class ManagerService
 
     /**
      * Install plugin inside Newscoop - it's a wrapper for all tasks connected with plugin installation
-     * 
-     * @param  string           $pluginName 
-     * @param  string           $version    
-     * @param  OutputInterface  $output     
-     * @param  boolean          $notify     
+     *
+     * @param string           $pluginName
+     * @param string           $version
+     * @param OutputInterface  $output
+     * @param boolean          $notify
      */
     public function installPlugin($pluginName, $version, $output, $notify = true)
     {
@@ -87,7 +87,7 @@ class ManagerService
         $this->prepareCacheDir();
 
         $pluginMeta = explode('/', $pluginName);
-        if(count($pluginMeta) !== 2) {
+        if (count($pluginMeta) !== 2) {
             throw new \Exception("Plugin name is invalid, try \"vendor/plugin-name\"", 1);
         }
 
@@ -339,9 +339,11 @@ class ManagerService
     /**
      * Reinstall plugins after Newscoop upgrade (re-add them to composer)
      */
-    public function upgrade(OutputInterface $output)
+    public function upgrade(OutputInterface $output, $doUpdate = false)
     {
-        $this->clearCache($output);
+        if ($doUpdate) {
+            $this->clearCache($output);
+        }
 
         $allPlugins = $this->pluginsService->getAllAvailablePlugins();
         $require = array();
@@ -352,15 +354,16 @@ class ManagerService
                 $require[] = $value->getName() . ' ' . $value->getVersion();
                 $update[] = $value->getName();
 
-                $details = json_decode($value->getDetails(), true);
-                if (array_key_exists('targetDir', $details)) {
-                    $filesystem = new Filesystem();
-                    if (!is_writable($this->pluginsDir.$details['targetDir'].'/')) {
-                        throw new Exception("Plugins directory must be writable: ".$this->pluginsDir, 1);
-                        
-                    }
+                if ($doUpdate) {
+                    $details = json_decode($value->getDetails(), true);
+                    if (array_key_exists('targetDir', $details)) {
+                        $filesystem = new Filesystem();
+                        if (!is_writable($this->pluginsDir.$details['targetDir'].'/')) {
+                            throw new Exception("Plugins directory must be writable: ".$this->pluginsDir, 1);
+                        }
 
-                    $filesystem->remove($this->pluginsDir.$details['targetDir'].'/');
+                        $filesystem->remove($this->pluginsDir.$details['targetDir'].'/');
+                    }
                 }
             }
         }
@@ -368,9 +371,15 @@ class ManagerService
         $require = implode(' ', $require);
         $update = implode(' ', $update);
 
-        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require ' . $require.' --no-update && php composer.phar update ' . $update.' --no-dev');
+        if ($doUpdate) {
+            $doUpdate = ' && php composer.phar update ' . $update . ' --no-dev';
+        }
+
+        $process = new Process('cd ' . $this->newsoopDir . ' && php composer.phar require ' . $require.' --no-update'.$doUpdate);
         $output->writeln('<info>require ' . $require.' --no-update</info>');
-        $output->writeln('<info>update ' . $update.' --no-dev</info>');
+        if ($doUpdate) {
+            $output->writeln('<info>update ' . $update.'</info>');
+        }
         $process->setTimeout(3600);
         $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
@@ -385,7 +394,9 @@ class ManagerService
         }
 
         $this->saveAvaiablePluginsToCacheFile();
-        $this->clearCache($output);
+        if ($doUpdate) {
+            $this->clearCache($output);
+        }
     }
 
     /**

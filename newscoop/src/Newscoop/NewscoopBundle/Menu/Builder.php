@@ -249,16 +249,22 @@ class Builder
             $issues = $this->container->get('em')->getRepository('Newscoop\Entity\Issue')->getLatestBy(array('publication' => $pubId), 10);
 
             // add content/publication/issue
+            $latestPublished = false;
             foreach ($issues as $issue) {
                 $issueId = $issue->getNumber();
                 $languageId = $issue->getLanguage()->getId();
                 $issueName = sprintf('%d. %s (%s)', $issue->getNumber(), $issue->getName(), $issue->getLanguage()->getName());
-                $this->addChild(
+                $issueChild = $this->addChild(
                     $menu[$publication->getName()],
                     $issueName,
                     array('uri' => $this->generateZendRoute('admin', array('zend_route' => array('reset_params' => true))) . "/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"
                 ))->setAttribute('rightdrop', true)
                 ->setLinkAttribute('data-toggle', 'rightdrop');
+
+                if (($issue->getWorkflowStatus() === 'Y' ? true : false) && !$latestPublished) {
+                    $issueChild->setLinkAttribute('class', 'latest-published');
+                    $latestPublished = true;
+                }
 
                 // add content/publication/issue/section
                     $firstSections = array();
@@ -805,12 +811,7 @@ class Builder
 
 
         if ($this->user->hasPermission('plugin_manager')) {
-            $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'), array('zend_route' => array(
-                    'module' => 'admin',
-                    'controller' => 'plugins',
-                    'action' => 'manage.php',
-                )
-            ));
+            $this->addChild($menu[$translator->trans('Plugins')], $translator->trans('Manage Plugins'),  array('uri' => $this->container->get('router')->generate('newscoop_newscoop_plugins_index')));
         }
 
         $enabled = \CampPlugin::GetEnabled();

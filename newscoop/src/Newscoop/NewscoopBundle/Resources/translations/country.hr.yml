@@ -1,5 +1,5 @@
-'The country $1 could not be created.': 
-'Country with code $1 exists already.': 
+'The country $1 could not be created.': null
+'Country with code $1 exists already.': null
 'You do not have the right to add countries.': 'Nemate ovlasti dodavati zemlje.'
 'Delete country': 'Izbriši zemlju.'
 'You do not have the right to delete countries.': 'Nemate ovlasti brisati zemlje.'

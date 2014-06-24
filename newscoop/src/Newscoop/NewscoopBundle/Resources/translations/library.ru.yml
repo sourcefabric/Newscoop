@@ -1,11 +1,11 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
-Webcode: Веб-код
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
+Webcode: Web-код
 'View article': 'Просмотр статьи'
 Source: Источник
 'Select type': 'Выбрать тип'
-On: Включен
-Off: Выключен
+On: Вкл.
+Off: Выкл.
 Title: Заголовок
 'No video playback capabilities, please download the video below': 'Невозможно воспроизвести видео, пожалуйста, скачайте видео ниже по ссылке'
 'Article status set to $1 for $2 articles': 'Статус статьи $1 установлен для $2 статей'
@@ -18,8 +18,8 @@ Title: Заголовок
 '$1 Article(s) not unlocked': '$1 статья(и) не разблокированы'
 '$1 Article(s) duplicated': '$1 статья(и) дублированы.'
 'Download file': 'Загрузить файл'
-'You do not have the right to delete articles.': 'У Вас нет прав доступа для удаления статей.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'У Вас нет прав доступа для смены статуса статьи. Созданная и утвержденная статья может быть изменена только авторизованным пользователем.'
+'You do not have the right to delete articles.': 'Вы не имеете прав доступа для удаления статьи.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Вы не имеете прав доступа для изменения состояние этой статьи. Будучи отправленной статья может быть изменена только уполномоченным пользователем.'
 'Use Map': 'Использовать карту'
 'Toggle: On Section Page': 'Маркер На странице рубрики'
 'Toggle: On Front Page': 'Маркер На главной странице'
@@ -38,8 +38,8 @@ Size: Размер
 'Reset all filters': 'Переустановить все фильтры'
 'Published before': 'Опубликованы до'
 'Published after': 'Опубликованы после'
-'Publish date': 'Дата опубликования'
-'Publish Schedule': 'Расписание опубликования'
+'Publish date': 'Дата публикации'
+'Publish Schedule': 'Расписание публикаций'
 'Publish Date': 'Дата опубликования'
 'Order updated.': 'Порядок обновлен.'
 'Open in browser': 'Открыть в браузере'
@@ -52,8 +52,8 @@ Locations: Местонахождения
 'Loading data': 'Загрузка данных'
 'Last modified': 'Последние изменения'
 'Last Modified': 'Последние изменения'
-Last: Последняя
-First: Первая
+Last: Последний
+First: Первый
 'Filter by...': 'Фильтр по...'
 Filter: Фильтр
 Filename: 'Имя файла'
@@ -61,13 +61,13 @@ Filename: 'Имя файла'
 'Display _MENU_ records': 'Отобразить _MENU_ записи'
 Creator: Создатель
 'Create Date': 'Дата создания'
-'Article status set to $1': 'Статус статьи установлен на $1'
+'Article status set to $1': 'Статус статьи установлен в $1'
 'Are you sure you want to delete selected articles?': 'Вы уверены, что хотите удалить выбранные файлы?'
 'All Sections': 'Все рубрики'
 'All Publications': 'Все издания'
 'All Issues': 'Все выпуски'
 Added: Добавлена
 'Access denied.': 'Отказано в доступе.'
-'$1 toggled.': 'Переключен на $1.'
+'$1 toggled.': '$1 изменено.'
 '$1 articles have been removed': '$1 статей были удалены'
 ' - filtering from _MAX_ records': 'фильтрация от _MAX_ записей'

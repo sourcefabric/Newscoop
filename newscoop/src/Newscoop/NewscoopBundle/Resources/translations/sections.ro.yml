@@ -1,12 +1,12 @@
-default: 
-'before you can configure the section templates.': 
-'You have to assign a theme to the issue': 
+default: null
+'before you can configure the section templates.': null
+'You have to assign a theme to the issue': null
 'The section number $1 was already in use.': 'Secțiunea cu numărul $1 există deja.'
-'Delete all articles written in $1 language from this section': 
-'Delete all articles and all of their translations': 
+'Delete all articles written in $1 language from this section': null
+'Delete all articles and all of their translations': null
 'Delete only this section ($1)': 'Șterge numai această secțiune ($1)'
-'Delete all translations of this section': 
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 
+'Delete all translations of this section': null
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': null
 'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 'Adresa de Internet trebuie să fie unică pentru fiecare secţiune din această ediţie.<br>Adresa de Internet specificată ($1) intră în conflict cu secţiunea $2$3. $4$5'
 'Section updated': 'Secţiunea a fost actualizată'
 'There are $1 subscriptions which will be affected.': 'Există $1 abonamente care vor fi afectate.'
@@ -35,7 +35,7 @@ default:
 'The section $1 could not be duplicated': 'Secţiunea $1 nu poate fi duplicată'
 'Section $1 has been duplicated to $2. $3 of $4': 'Secţiunea $1 a fost duplicată în $2. $3 din $4'
 'You do not have the right to modify sections.': 'Nu ai dreptul să modifici secţiunile.'
-'A total of $1 articles were deleted.': 'Au fost şterse $1 articole.'
+'A total of $1 articles were deleted.': 'Un număr de $1 articole au fost şterse.'
 'Duplicate Section:': 'Duplică secţiunea'
 'Existing Section': 'Secţiune existentă'
 'Go to new section': 'Mergi la acţiune nouă'
@@ -51,6 +51,3 @@ Warning: Atenţie!
 'You must specify a name for the section.': 'Trebuie să specifici un nume al secţiunii.'
 'The section could not be added.': 'Secţiunea nu a putut fi adăugată.'
 'Add new section': 'Adaugă secţiune'
-'Please check if another section with the same number does not already exist.': 'Verificaţi dacă există o altă secţiune cu acelaşi număr'
-'Change section name': 'Schimbă numele secţiunii'
-'Destination section number': 'Numărul secţiei destinaţie'

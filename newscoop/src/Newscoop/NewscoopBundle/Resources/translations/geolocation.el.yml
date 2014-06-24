@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'επιλεγμένο εικονίδιο δείκτη'
 'add location to map': 'προσθήκη τοποθεσίας στο χάρτη'
 'Video source': 'Πηγή βίντεο'
@@ -64,14 +64,3 @@ text: κείμενο
 image: εικόνα
 icon: εικονίδιο
 'Setting Map Locations': 'Ρύθμιση Τοποθεσιών Χάρτη'
-remove: αφαίρεση
-enable: ενεργοποίηση
-edit: επεξεργασία
-disable: απενεργοποίηση
-'close window': 'κλείσιμο παραθύρου'
-center: κέντρο
-save: αποθήκευση
-'resize article view': 'αλλαγή μεγέθους προβολής άρθρου'
-Find: Εύρεση
-'show article view': 
-'set as the article view': 

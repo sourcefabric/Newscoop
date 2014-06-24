@@ -1,7 +1,7 @@
 'Display articles of filtered types': 'Artikel mit gefilterten Typen anzeigen'
 'Display Articles of Filtered Types': 'Artikel mit gefilterten Typen anzeigen'
 Webcode: Webcode
-'View article': 'Artikel ansehen. '
+'View article': 'Artikel ansehen'
 Source: Quelle
 'Select type': 'Typ auswählen'
 On: An
@@ -18,14 +18,14 @@ Title: Titel
 '$1 Article(s) not unlocked': '$1 Artikel nicht entsperrt'
 '$1 Article(s) duplicated': '$1 Artikel dupliziert'
 'Download file': 'Datei herunterladen'
-'You do not have the right to delete articles.': 'Sie haben keine Berechtigung zum Löschen von Artikeln.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Sie haben  keine Berechtigung zum Ändern des Artikelstatus. Ein eingepflegter Artikel kann nur von autorisierten Benutzern geändert werden.'
+'You do not have the right to delete articles.': 'Fehlende Zugriffsrechte für das Löschen von Artikeln.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Keine Zugriffsrechte auf die Änderung des Artikelstatus. Eingepflegte Artikel können nur mit den dazugehörigen Rechten geändert werden.'
 'Use Map': 'Karte benutzen'
 'Toggle: On Section Page': 'Auswählen: Auf der Rubrikseite'
 'Toggle: On Front Page': 'Auswählen: Auf der Startseite'
 'Toggle: Comments': 'Auswählen: Kommentare'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Der Artikel wurde von $1 ($2) vor $3 Minute(n) gesperrt.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Der Artikel wurde von $1 ($2) vor $3 Stunde(n) und $4 Minute(n) gesperrt.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Achtung: Der Artikel ist durch $1 ($2) seit $3 Stunde(n) und $4 Minute(n) gesperrt.<br/>Du kannst die Sperrung aufheben, dabei gehen aber alle nicht gespeicherten Änderungen verloren. Bitte stelle sicher, dass $1 ($2) den Artikel nicht mehr am Bearbeiten ist.'
 'Status: Submit': 'Status: anlegen'
 'Status: Set New': 'Status: auf neu setzen'
 'Status: Publish': 'Status: veröffentlichen'
@@ -52,8 +52,8 @@ Locations: Standorte
 'Loading data': 'Daten werden geladen'
 'Last modified': 'Zuletzt geändert'
 'Last Modified': 'Zuletzt geändert'
-Last: Zuletzt
-First: Zuerst
+Last: Letzte
+First: Erste
 'Filter by...': 'Filtern nach...'
 Filter: Filter
 Filename: Dateiname
@@ -68,6 +68,6 @@ Creator: 'Erstellt von'
 'All Issues': 'Alle Ausgaben'
 Added: Hinzugefügt
 'Access denied.': 'Zugang verweigert'
-'$1 toggled.': '$1 ausgewählt'
+'$1 toggled.': '$1 ausgewählt.'
 '$1 articles have been removed': '$1 Artikel wurden entfernt'
 ' - filtering from _MAX_ records': ' - filtert aus _MAX_ Einträgen '

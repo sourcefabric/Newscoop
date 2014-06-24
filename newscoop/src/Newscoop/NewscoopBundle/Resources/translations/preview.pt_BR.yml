@@ -1,5 +1,5 @@
-line: 
-template: 
+line: null
+template: null
 'Unknown error: $1': $1
 'Unrecognized tag <em>$1</em>': 'Unrecognized tag <em>$1</em>'
 'Unknown reference <em>$1</em>': 'Unknown reference <em>$1</em>'
@@ -9,5 +9,5 @@ template:
 'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>'
 'Missing parameter <em>$1</em> in statement <em>$2</em>': 'Missing parameter <em>$1</em> in statement <em>$2</em>'
 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>'
-'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': 
-'Invalid template <em>$1</em> specified in the <em>$2</em> form': 
+'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': null
+'Invalid template <em>$1</em> specified in the <em>$2</em> form': null

@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: 'Sitio Web'
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geolocalización
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Mostrando de _START_ a _END_ el _TOTAL_ de entradas'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'No se encontraron registros'
+'No entries to show': 'No se encontraron entradas'
+'Display _MENU_ records': 'Desplegar registros _MENU_'
+'Are you sure you want to {action}?': '¿Está seguro de querer {action}?'
+'Active Logins': null
+' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'
 'User renamed.': 'Se renombró el usuario.'
 'User attributes': 'Atributos del usuario'
 'Rename user $1': 'Renombrar al usuario $1'
@@ -44,15 +44,15 @@ Continue:
 'Profile saved.': 'Se almacenó el perfil.'
 Picture: Fotografía
 'Password updated': 'Se actualizó la contraseña'
-None: Ninguno
+None: Ninguno.
 'New confirmation email was sent to user.': 'Se envió al usuario un nuevo correo de confirmación.'
 'Email is used already': 'Ese correo electrónico ya está en uso'
-'Edit your password': 'Edite su contraseña'
+'Edit your password': 'Edite su clave de acceso'
 'Edit user $1': 'Editar el usuario $1'
-'Edit subscriptions': 'Editar suscripciones'
+'Edit subscriptions': 'Editar subscripciones'
 'Edit profile': 'Editar perfil'
-'Edit permissions': 'Editar permisos'
-'Create new account': 'Crear cuenta nueva'
+'Edit permissions': 'Edite los permisos'
+'Create new account': 'Crear nueva cuenta'
 'Comment ban settings': 'Configuración para el bloqueo de comentarios'
 'Ban for user $1 saved.': 'Se registró al usuario $1 como bloqueado'
 'User account is active': 'La cuenta del usuario está activa'
@@ -64,7 +64,7 @@ Username: 'Nombre de usuario'
 'First Name': 'Primer nombre'
 Email: 'Correo electrónico'
 'You were logged out.': 'Se ha cerrado sesión.'
-'Newscoop Subhead': 'Subencabezado Newscoop'
+'Newscoop Subhead': 'Subtítulo de Newscoop'
 Filters: Filtros
 'Add new Author': 'Añadir nuevo autor'
 'Loading Data': 'Cargando los datos'
@@ -101,7 +101,7 @@ Filters: Filtros
 'User may attach topics to articles': 'El usuario puede crear tópicos para los artículos'
 'User may attach images to articles': 'El usuario puede agregar imágenes a los artículos'
 'User may add special characters': 'El usuario puede añadir caracteres especiales'
-'That user name already exists, please choose a different login name.': 'Este nombre de usuario ya existe, por favor elija una identificación diferente.'
+'That user name already exists, please choose a different login name.': 'Ese nombre de usuario está en uso. Por favor escoja otro.'
 'User may delete article attachments': 'El usuario puede eliminar adjuntos del artículo'
 'User may change article attachments': 'El usuario puede cambiar adjuntos del artículo'
 'User may add article attachments': 'El usuario puede añadir adjuntos al artículo'
@@ -184,45 +184,39 @@ Miscellaneous: Misceláneo
 'User will be notified on several events': 'Usuario sera notificado en varios eventos'
 'Editor Miscellaneous Settings': 'Preferencias misceláneas del editor'
 'No such user account.': 'No existe cuenta de usuario'
-'User management': 'Administración de usuarios '
-Set: Configurar
-Update: Actualizar
-Rights: Derechos
-'IP Access': 'Acceso por IP'
-'User Name': 'Nombre de usuario'
-Staff: Staff
-'Adding new user account': 'Agregando nueva cuenta de usuario'
-'You must select an user type.': 'Debe seleccionar un tipo de usuario'
-'The user account $1 has been created.': 'La cuenta de usuario $1 ha sido creada'
-'Please check if an account with the same user name does not already exist.': 'Favor revise si una cuenta con el mismo nombre no existe ya'
-'You do not have the right to change user passwords.': 'No tiene derechos para cambiar claves de usuario'
-'Changing user password': 'Cambiando claves de usuario'
-'The password could not be changed.': 'La clave no pudo ser cambiada'
-'The password has been changed.': 'La clave ha sido cambiada'
-'Edit user account permissions': 'Editar permisos de cuenta de usuario'
-'This user account does not have permissions information.': 'Esta cuenta de usuario no tiene información de permisos'
-'Updating user account permissions': 'Actualizando permisos de cuenta de usuario'
-'User account permissions have been successfuly updated.': 'Permisos de cuenta de usuario han sido actualizados con exito'
-'User account permissions could not be updated.': 'Permisos de cuenta de usuario no fueron actualizados'
-'Changing user account information': 'Cambiando información de cuenta de usuario'
-'User account information has been changed.': 'Información de cuenta de usuario ha sido cambiada'
-'User account information could not be changed.': 'Informacion de cuenta de usuario no pudo ser cambiada'
-'Old password': 'Clave Actual'
-'New password': 'Nueva clave'
-'Confirm new password': 'Confirmar nueva clave'
-'Changing your password': 'Cambiando su clave'
-'User $1 changed his password': 'Usuario $1 ha cambiado su clave'
-'Delete user account': 'Borrar cuenta de usuario'
-'Deleting user account': 'Borrando cuenta de usuario'
-'The user account $1 could not be deleted.': 'La cuenta de usuario $1 no pudo ser borrada'
-'No such user.': 'No existe usuario'
-'Delete IP Group $1': 'Borrar Grupo de IP $1'
-'IP Access List': 'Lista de IP de acceso'
-'Adding new IP Group': 'Agregando nuevos Grupo de IP'
-'The IP Group could not be created.': 'Grupo de IP no pudo ser creado'
-'Please check if an account with the same IP Group does not already exist.': 'Favor revisar si una cuenta con el mismo Grupo de IP no existe ya'
-'Delete IP Group': 'Borrar Grupo de IP'
-'You do not have the right to delete IP Groups.': 'No tiene derechos para borrar Grupos de IP'
-'No such IP Group.': 'No existe Grupo de IP'
-'Deleting IP Group': 'Borrando Grupo de IP'
-'The IP Group could not be deleted.': 'El Grupo de IP no pudo ser borrado'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Administrar usuarios'
+    created: Creado
+    updated: null
+    status:
+        status: Estatus
+        registered: null
+        pending: null
+        deleted: Eliminado
+        active: activo
+    table:
+        actions:
+            actions: Acciones
+            edit: Editar
+            resend_email: null
+            rename: Renombrar
+            remove: Eliminar
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Procesando...
+    chart:
+        title: null

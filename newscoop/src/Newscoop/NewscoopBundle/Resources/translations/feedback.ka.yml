@@ -1,29 +1,29 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 'ახლა თქვენ სამუდამოდ წაშლით რამდენიმე შეტყობინებას.'
-'You are about to permanently delete a message.': 'ახლა თქვენ სამუდამოდ წაშლით  შეტყობინებას.'
-'Are you sure you want to do it?': 'დარწმუნებული ხართ რომ გსურთ ამის გაკეთება?'
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'თქვენ ახლა სამუდამოდ წაშლით რიგ შეტყობინებებს. '
+'You are about to permanently delete a message.': 'თქვენ ახლა სამუდამოდ წაშლით შეტყობინებას. '
+'Are you sure you want to do it?': 'დაადასტურეთ, რომ გსურთ ამის გაკეთება.'
 Approve: დადასტურება
-Approved.: დადასტურებულია.
-at: ზე
+Approved.: დადასტურებული.
+at: '-ზე'
 Attachment: დანართი
-'Ban/Unban user': 'ბანის დადება/ბანის მოხსნა'
+'Ban/Unban user': 'მომხმარებლისთვის ბანის დადება/მოხსნა'
 'Change selected messages status': 'არჩეული შეტყობინების სტატუსის შეცვლა'
-Deleted: წაშლილი
-'Full article': 'სრული სტატია'
+Deleted: წაიშალა
+'Full article': 'მთლიანი სტატია'
 Message: შეტყობინება
-'Message deleted.': 'შეტყობინება წაშლილია.'
-'Messages deleted.': 'შეტყობინებები წაშლილია.'
-'Messages status change to $1.': 'შეტყობინებების სტატუსი იცვლება $1-ზე.'
-'Message status change to $1.': 'შეტყობინების სტატუსი იცვლება $1-ზე.'
-'Messages updated.': 'შეტყობინებები განახლებულია.'
-'Message updated.': 'შეტყობინებება განახლებულია.'
+'Message deleted.': 'შეტყობინება წაშლილია. '
+'Messages deleted.': 'შეტყობინებები წაშლილია '
+'Messages status change to $1.': 'შეტყობინებების სტატუსი იცვლება $1ზე.'
+'Message status change to $1.': 'შეტყობინების სტატუსი იცვლება $1ზე.'
+'Messages updated.': 'შეტყობინებები განახლებულია. '
+'Message updated.': 'შეტყობინება განახლებულია'
 Processed: დამუშავებულია
 Reply: 'პასუხის გაცემა'
 'Reply to message': 'შეტყობინებაზე პასუხის გაცემა'
 Star: ვარსკვლავი
-Starred: 'ვარსკვლავით მონიშნული'
-'Unable to reach Newscoop. Please check your internet connection.': ' Newscoop-თან დაკავშირება შეუძლებელია. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი. '
-'With document attachment': 'თანდართული დოკუმენტით. '
-'With image attachment': 'თანდართული გამოსახულებით'
+Starred: 'ვარსკვლავით აღნიშნული'
+'Unable to reach Newscoop. Please check your internet connection.': 'ნიუსქუფთან დაკავშირება ვერ ხერხდება. გთხოვთ შეამოწმოთ თქვენი ინტერნეტ კავშირი.'
+'With document attachment': 'თანდართულია დოკუმენტი'
+'With image attachment': 'თანდართულია გამოსახულება'
 'With no attachment': 'დანართის გარეშე'
-'Feedback Messages': 'უკუკავშირის შეტყობინებები'
+'Feedback Messages': 'შეფასების შეტყობინებები'

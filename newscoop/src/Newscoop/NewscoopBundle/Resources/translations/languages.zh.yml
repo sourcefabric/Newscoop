@@ -1,62 +1,53 @@
-'Language id not specified': 
-'No languages.': 
-'Native Name': 
-'Name taken.': 
-'Language saved.': 
-'Language removed.': 
-'Language not found.': 
-'Language is in use and cannot be removed.': 
-'Language added.': 
-'English language cannot be removed.': 
-'Edit short month names': 
-'Edit short day names': 
-'Edit month names': 
-'Edit language: $1': 
-'Edit day names': 
-'Code Page': 
-'Add new Language': 
-'Add Language': 
-We: 
-Tu: 
-Th: 
-Su: 
-Sep: 
-Sa: 
-'Please enter the translation for week day short names.': 
-'Please enter the translation for month short names.': 
-Oct: 
-Nov: 
-Mo: 
-Mar: 
-Jun: 
-Jul: 
-Jan: 
-Fr: 
-Feb: 
-Dec: 
-Aug: 
-Apr: 
+'Language id not specified': null
+'No languages.': null
+'Native Name': null
+'Name taken.': null
+'Language saved.': null
+'Language removed.': null
+'Language not found.': null
+'Language is in use and cannot be removed.': null
+'Language added.': null
+'English language cannot be removed.': null
+'Edit short month names': null
+'Edit short day names': null
+'Edit month names': null
+'Edit language: $1': null
+'Edit day names': null
+'Code Page': null
+'Add new Language': null
+'Add Language': null
+We: null
+Tu: null
+Th: null
+Su: null
+Sep: null
+Sa: null
+'Please enter the translation for week day short names.': null
+'Please enter the translation for month short names.': null
+Oct: null
+Nov: null
+Mo: null
+Mar: null
+Jun: null
+Jul: null
+Jan: null
+Fr: null
+Feb: null
+Dec: null
+Aug: null
+Apr: null
 'No language.': 无语言
 'Delete language $1': 删除语言$1
 'You do not have the right to add languages.': 您无权添加语言
 'Please enter the translation for time units.': 请输入时间单位的翻译
-'The language $1 has been successfuly added.': 已成功增加语言$1
-'Please check if a language with the same name does not already exist.': 请确认是否同样名字已经存在
-'The language could not be added.': 语言不能被添加
-'Delete language': 删除语言
 'You do not have the right to delete languages.': 您无权删除语言
 'Are you sure you want to delete the language $1?': '你确认要删除语言$1?'
 'Deleting language': 正在删除语言
-'The language $1 has been deleted.': 语言$1已被删除
 'The language $1 could not be deleted.': 语言$1不能被删除
 'Edit language': 编辑语言
 'You do not have the right to edit languages.': 您无权编辑语言
 'Please enter the translation for month names.': 请输入月份的翻译
 'Please enter the translation for week day names.': 请输入为星期的翻译
-'Updating language information': 更新语言信息
-'Language information has been successfuly updated.': 语言信息已成功更新
-'Language information could not be updated.': 语言信息不能更新
-'A language with the same name already exists.': 同样名字的语言已经存在
 January: 一月
 February: 二月
 March: 三月
@@ -76,4 +67,6 @@ Thursday: 星期四
 Friday: 星期五
 Saturday: 星期六
 Sunday: 星期日
+'You do not have the right to add new languages.': null
+'There are $1 issue(s) left.': 还有$1个问题
 'Native name': 本地名称

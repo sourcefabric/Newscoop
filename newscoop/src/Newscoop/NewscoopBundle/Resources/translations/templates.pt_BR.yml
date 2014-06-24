@@ -1,60 +1,60 @@
-'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 
-'Stop current upload': 
-'Start uploading queue': 
-'Start upload': 
-Size: 
-'Select files': 
-Filename: 
-'Drag files here.': 
-'Cache lifetime, sec': 
-'Add files to the upload queue and click the start button.': 
-'Add files': 
-'$1 files uploaded.': 
-'Replace current with:': 
-'Edit template:': 
-'Changes have not been saved. Load new template without saving the current one?': 
-'to folder': 
-'You must select at least one template to perform an action.': 
-'You must select a destination folder': 
-'You may only translate one article at a time.': 
-'You do not have the right to rename templates.': 
-'You do not have the right to move templates.': 
-'You do not have the right to move articles.': 
-'Unable to create folder.': 
-'Unable to $1 template.': 
-'To New Name': 
-'These templates': 
-'The template object $1 is in use and can not be deleted.': 
-'The template object $1 could not be renamed.': 
-'Template(s) moved.': 
-'Template(s) deleted.': 
-'Template object $1 was renamed to $2': 
-'Template object $1 was deleted': 
-'Some templates could not be deleted because they are in use.': 
-'Select folder': 
-'Rename template': 
-'Rename file': 
-Rename: 
-'No folders': 
-'New Name': 
-'Move templates': 
-Folder: 
-'File cannot be read.': 
-'Are you sure you want to delete the template object $1 from folder $2?': 
-'Are you sure you want to delete the selected templates?': 
-'Template ID:': 
-'Template ID': 
-'Template $1 no longer exists!': 
-'New template $1 created': 
-'If the file you specified is a text file, you can convert its character set using the dropdown below.': 
-'Directory $1 was deleted': 
-'Directory $1 created.': 
-'You must select a file to upload.': 
-'You can only replace a file with a file of the same type.  The original file is of type $1': 
-'Unable to save the file $1 to the path $2.': 
-Replace: 
-'File $1 replaced.': 
-'The folder name cant be .. or .': 
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
+'Stop current upload': 'Parar upload atual'
+'Start uploading queue': 'Iniciar upload da fila'
+'Start upload': 'Inicar upload'
+Size: Tamanho
+'Select files': 'Selecionar arquivos'
+Filename: 'Nome de arquivo'
+'Drag files here.': 'Arrastar arquivos aqui'
+'Cache lifetime, sec': null
+'Add files to the upload queue and click the start button.': 'Adicione arquivos para a fila de upload e clique no botão iniciar'
+'Add files': 'Adicionar arquivos'
+'$1 files uploaded.': 'Upload de $1 arquivo(s) completado'
+'Replace current with:': null
+'Edit template:': null
+'Changes have not been saved. Load new template without saving the current one?': null
+'to folder': null
+'You must select at least one template to perform an action.': 'Tem que selecionar pelo menos um template para realizar uma ação.'
+'You must select a destination folder': null
+'You may only translate one article at a time.': null
+'You do not have the right to rename templates.': null
+'You do not have the right to move templates.': null
+'You do not have the right to move articles.': 'Não tem permissão para mover artigos.'
+'Unable to create folder.': null
+'Unable to $1 template.': null
+'To New Name': null
+'These templates': null
+'The template object $1 is in use and can not be deleted.': null
+'The template object $1 could not be renamed.': null
+'Template(s) moved.': null
+'Template(s) deleted.': null
+'Template object $1 was renamed to $2': null
+'Template object $1 was deleted': null
+'Some templates could not be deleted because they are in use.': null
+'Select folder': null
+'Rename template': null
+'Rename file': 'Mudar o nome do arquivo'
+Rename: null
+'No folders': null
+'New Name': null
+'Move templates': null
+Folder: null
+'File cannot be read.': null
+'Are you sure you want to delete the template object $1 from folder $2?': null
+'Are you sure you want to delete the selected templates?': null
+'Template ID:': null
+'Template ID': null
+'Template $1 no longer exists!': null
+'New template $1 created': null
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
+'Directory $1 was deleted': null
+'Directory $1 created.': 'Diretório $1 foi criado.'
+'You must select a file to upload.': 'Tem de selecionar um ficheiro para transferir'
+'You can only replace a file with a file of the same type.  The original file is of type $1': null
+'Unable to save the file $1 to the path $2.': null
+Replace: Substituir
+'File $1 replaced.': null
+'The folder name cant be .. or .': null
 'The template $1 was saved successfully.': 'O Modelo $1 foi guardado com sucesso.'
 'Create new folder': 'Criar Pasta'
 'Upload template': 'Transferir Modelo'
@@ -65,7 +65,7 @@ Replace:
 'Delete folder': 'Eliminar pasta'
 Folders: Pastas
 'No folders.': 'Não existem pastas'
-Files: Ficheiros
+Files: Arquivos
 'No templates.': 'Não existem modelos'
 'Create new template': 'Criar Modelo'
 'Duplicate template': 'Duplicar Modelo'
@@ -82,9 +82,5 @@ Files: Ficheiros
 'You do not have the right to upload templates.': 'Não tem permissões para transferir modelos.'
 'You do not have the right to create templates.': 'Não tem permissões para criar modelos.'
 'Duplicate file': 'Duplicar ficheiro'
-'Delete file': 'Eliminar ficheiro'
+'Delete file': 'Remover arquivo'
 'Please check if the user $1 has permission to write in this directory.': 'Verifique se o utilizador $1 tem permissões para escrever na pasta.'
-'The folder has been deleted.': 'A pasta foi eliminada'
-'The template has been deleted.': 'O modelo foi eliminado'
-'The template could not be deleted.': 'O modelo não pode ser eliminado'
-Save: Gravar

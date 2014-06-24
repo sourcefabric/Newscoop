@@ -95,7 +95,7 @@
                             {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
                         </dd>
                         <dt>
-                            <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }}</label>
+                            <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }} <small id="lifetime">(?)</small></label>
                         </dt>
                         <dd>
                             {{ form_widget(form.session_lifetime, {'attr' : {'class' : 'input_text'}}) }}
@@ -157,7 +157,7 @@
                     </dd>
 
                     <div class="clear-database-cache">
-                        <button class="btn btn-small btn-danger" type="text">{{ 'newscoop.preferences.btn.cleardatabasecache'|trans }}</button>
+                        <button class="btn btn-xs btn-danger" type="text">{{ 'newscoop.preferences.btn.cleardatabasecache'|trans }}</button>
                     </div>
 
                     <dt>
@@ -473,6 +473,19 @@
                         <dd>
                            {{ form_widget(form.template_filter, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
+                        <dt class="border"><label>{{ 'newscoop.preferences.label.usergarbage'|trans }} <small id="garbage">(?)</small></label></dt>
+                        <dd>
+                           {{ form_widget(form.userGarbageActive) }}
+                        </dd>
+                        <div id="user-garbage">
+                            <dl>
+                                <dt><h4>{{ 'newscoop.preferences.label.usergarbagedaysinfo'|trans }}</h4></dt>
+                                <label>{{ 'newscoop.preferences.label.usergarbagedays'|trans }}</label>
+                                <dd>
+                                   {{ form_widget(form.userGarbageDays, {'attr' : {'class' : 'input_text' , 'style' : 'width: 81px;'}}) }}
+                                </dd>
+                            </dl>
+                        </div>
                     </dl>
                 </div>
             {% endif %}
@@ -528,6 +541,19 @@
         $("input:radio[name=preferencesform\\[use_replication\\]]:checked").change();
     });
 
+    $(function() {
+        $("input:radio[name=preferencesform\\[userGarbageActive\\]]").change(function() {
+            var garbageDiv = $('#user-garbage');
+            if ($(this).val() == 'Y') {
+                garbageDiv.show();
+            } else {
+                garbageDiv.hide();
+            }
+        });
+
+        $("input:radio[name=preferencesform\\[userGarbageActive\\]]:checked").change();
+    });
+
     $('.clear-database-cache button').click(function(e){
         e.preventDefault();
 
@@ -565,6 +591,7 @@
     popover($('#recaptchaprivatekey'), '{{ 'newscoop.preferences.popover.recaptcha.privatekey'|trans }}');
     popover($('#recaptchapublickey'), '{{ 'newscoop.preferences.popover.recaptcha.publickey'|trans }}');
     popover($('#recaptchasecure'), '{{ 'newscoop.preferences.popover.recaptcha.secure'|trans }}');
-
+    popover($('#garbage'), '{{ 'newscoop.preferences.popover.garbage'|trans }}');
+    popover($('#lifetime'), '{{ 'newscoop.preferences.popover.lifetime'|trans }}');
 //--></script>
 {% endblock %}

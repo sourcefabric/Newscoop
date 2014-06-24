@@ -1,56 +1,53 @@
-default: 
-'before you can configure the section templates.': 
-'You have to assign a theme to the issue': 
-'The section number $1 was already in use.': 
-'Delete all articles written in $1 language from this section': 
-'Delete all articles and all of their translations': 
-'Delete only this section ($1)': 
-'Delete all translations of this section': 
-'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': 
-'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': 
-'Section updated': 
-'There are $1 subscriptions which will be affected.': 
-'There are $1 articles in this section.': 
+default: null
+'before you can configure the section templates.': null
+'You have to assign a theme to the issue': null
+'The section number $1 was already in use.': null
+'Delete all articles written in $1 language from this section': null
+'Delete all articles and all of their translations': null
+'Delete only this section ($1)': null
+'Delete all translations of this section': null
+'No. of Articles<BR><SMALL>(Published/Total)</SMALL>': null
+'The URL name must be unique for all sections in this issue.<br>The URL name you specified ($1) conflicts with section $2$3. $4$5': null
+'Section updated': null
+'There are $1 subscriptions which will be affected.': null
+'There are $1 articles in this section.': null
 'Go To Articles': 'Ga naar Artikels'
-'Add section to all subscriptions.': 'Voeg sectie to aan alle abonnementen.'
-'Delete section from all subscriptions.': 'Verwijder sectie van alle abonnementen.'
+'Add section to all subscriptions.': 'Voeg rubriek to aan alle abonnementen.'
+'Delete section from all subscriptions.': 'Verwijder rubriek van alle abonnementen.'
 'A total of $1 subscriptions were updated.': 'Een totaal van $1 abonnementen werden bijgewerkt.'
 'Name<BR><SMALL>(click to see articles)</SMALL>': 'Naam<BR><SMALL>(klik om artikelen te zien)</SMALL>'
-'Delete section $1': 'Verwijder sectie $1'
-'Adding new section': 'Nieuwe sectie wordt toegevoegd'
-'You do not have the right to add sections.': 'Je hebt niet de rechten om secties toe te voegen'
-'The section $1 has been successfuly added.': 'De sectie $1 is succesvol toegevoegd.'
-'Please check if another section with the same number or URL name does not exist already.': 'Controleer of een andere sectie met het zelfde nummer of URL naam niet al bestaat.'
-'Delete section': 'Verwijder sectie'
-'You do not have the right to delete sections.': 'Je hebt niet de rechten om secties te verwijderen'
-'Are you sure you want to delete the section $1?': 'Weet je zeker dat je sectie $1 wilt verwijderen'
-'Deleting section': 'Sectie wordt verwijderd'
-'The section $1 has been deleted.': 'De sectie $1 is verwijderd.'
-'Configure section': 'Configureer sectie'
-'The section could not be changed.': 'De sectie kan niet wordt veranderd'
-'Duplicate section': 'Dupliceer sectie'
+'Delete section $1': 'Verwijder rubriek $1'
+'Adding new section': 'Nieuwe rubriek wordt toegevoegd'
+'You do not have the right to add sections.': null
+'The section $1 has been successfuly added.': 'De rubriek $1 is succesvol toegevoegd.'
+'Please check if another section with the same number or URL name does not exist already.': 'Controleer of een andere rubriek met het zelfde nummer of URL naam niet al bestaat.'
+'Delete section': 'Verwijder rubriek'
+'You do not have the right to delete sections.': null
+'Are you sure you want to delete the section $1?': null
+'Deleting section': 'Rubriek wordt verwijderd'
+'The section $1 has been deleted.': 'De rubriek $1 is verwijderd.'
+'Configure section': 'Configureer rubriek'
+'The section could not be changed.': 'De rubriek kan niet wordt veranderd'
+'Duplicate section': 'Dupliceer rubriek'
 'The destination issue is the same as the source issue.': 'De doel uitgave is de zelfde als de oorspronkelijke uitgave.'
 'Error updating subscriptions.': 'Fout bij het bijwerken van abonnementen'
-'Duplicating section': 'Sectie wordt gedupliceerd'
-'The section $1 could not be duplicated': 'De sectie $1 kan niet worden gedupliceerd'
-'Section $1 has been duplicated to $2. $3 of $4': 'Sectie $1 is gedupliceerd naar $2. $3 van $4'
-'You do not have the right to modify sections.': 'Je hebt niet de rechten om secties aan te passen.'
+'Duplicating section': 'Rubriek wordt gedupliceerd'
+'The section $1 could not be duplicated': 'De rubriek $1 kan niet worden gedupliceerd'
+'Section $1 has been duplicated to $2. $3 of $4': 'Rubriek $1 is gedupliceerd naar $2. $3 van $4'
+'You do not have the right to modify sections.': null
 'A total of $1 articles were deleted.': 'Een totaal van $1 articles werd verwijderd.'
-'Duplicate Section:': 'Depliceer Sectie:'
-'Existing Section': 'Huidige Sectie'
-'Go to new section': 'Ga naar nieuwe sectie'
-'Go to source section': 'Ga naar originiele sectie'
-'New Section': 'Nieuwe Sectie'
+'Duplicate Section:': 'Dupliceer rubriek:'
+'Existing Section': 'Huidige rubriek'
+'Go to new section': 'Ga naar nieuwe rubriek'
+'Go to source section': 'Ga naar bron rubriek'
+'New Section': 'Nieuwe rubriek'
 'Please select either $1 or $2.': 'Selecteer $1 of $2'
-'Select destination section:': 'Selecteer doel sectie:'
+'Select destination section:': 'Selecteer doel rubriek:'
 OR: OF
 'URL Name': 'URL Naam'
-'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Het ingevulde sectie nummer bestaat al, vul een andere waarde in of gebruik het veld om een bestaande waarde te vinden.'
+'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': 'Het ingevulde rubrieksnummer bestaat al, vul een andere waarde in of gebruik het veld om een bestaande waarde te vinden.'
 Warning: Waarschuwing
-'You must select a section.': 'Je moet een sectie selecteren.'
-'You must specify a name for the section.': 'Je moet een naam geven voor de sectie.'
-'The section could not be added.': 
-'Add new section': 
-'Section List': 'Sectie lijst'
-'Updating section name': 'Sectie naam wordt bijgewerkt'
-'Delete all articles from the section.': 'Verwijder alle artikelen van de sectie.'
+'You must select a section.': 'U moet een rubriek selecteren.'
+'You must specify a name for the section.': 'U moet een naam opgeven voor de rubriek.'
+'The section could not be added.': 'De rubriek kon niet worden toegevoegd.'
+'Add new section': 'Nieuwe rubriek toevoegen'

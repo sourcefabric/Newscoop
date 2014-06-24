@@ -1,7 +1,7 @@
 get: bekommen
 Soundcloud: SoundCloud
 Templates: Templates
-'Feedback Messages': 'Feedback Nachrichten'
+'Feedback Messages': 'Feedback Nachricht'
 'Article Playlists': 'Liste ausgewählter Artikel'
 'Check all': 'Alle prüfen'
 view: ansehen
@@ -27,7 +27,7 @@ manage: verwalten
 link: Link
 italic: kursiv
 indent: einrücken
-image: 'Bild '
+image: Bild
 'horizontal rule': Linie
 handle: anfassen
 guest: Gast
@@ -53,7 +53,7 @@ add: hinzufügen
 'User type deleted.': 'Benutzertyp gelöscht.'
 'User type added.': 'Benutzertyp hinzugefügt.'
 'User Groups': Benutzergruppen
-Themes: Designvorlage
+Themes: Themen
 'That type name already exists, please choose a different name.': 'Der Typenname existiert bereits, bitte wählen Sie einen anderen Namen. '
 System: System
 Structure: Struktur
@@ -79,16 +79,3 @@ Authoring: Authoring
 Allow: Erlauben
 'User types': Benutzertypen
 'No user types.': 'Keine Benutzertypen'
-unlock: entsperren
-Printdesk: Printdesk
-'You do not have the right to add user types.': 'Keine Berechtigung Benutzertypen hinzuzufügen'
-'Adding new user type': 'Neuer Benutzertyp wird hinzugefügt'
-'The user type $1 has been added.': 'Benutzertyp $1 wurde hinzugefügt'
-'The user type could not be added.': 'Benutzertyp konnte nicht hinzugefügt werden'
-'Please check if an user type with the same name does not already exist.': 'Bitte überprüfen, ob ein Benutzertyp mit demselben Namen bereits existiert'
-'Deleting user type': 'Benutzertyp wird gelöscht'
-'The user type has been deleted.': 'Benutzertyp wurde gelöscht'
-'The user type could not be deleted.': 'Benutzertyp konnte nicht gelöscht werden'
-'Updating user type permissions': 'Benutzertyprechte werden aktualisiert'
-'User type permissions have been successfuly updated.': 'Benutzertyprechte wurden erfolgreich aktualisiert'
-'User type permissions could not be updated.': 'Benutzertyprechte konnten nicht aktualisiert werden'

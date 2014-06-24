@@ -1,10 +1,10 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: 'Kod internetowy'
 'View article': 'Zobacz artykuł'
 Source: Źródło
 'Select type': 'Wybierz typ'
-On: Wlączony
+On: Włączony
 Off: Wyłączony
 Title: Tytuł
 'No video playback capabilities, please download the video below': 'Brak możliwości odtworzenia wideo, możesz pobrać wideo poniżej.'
@@ -19,13 +19,13 @@ Title: Tytuł
 '$1 Article(s) duplicated': '$1 powielonych artykuł(ów)'
 'Download file': 'Pobierz plik'
 'You do not have the right to delete articles.': 'Nie masz praw aby usuwać artykuły.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nie masz praw aby zmieniać status artykułu. Po wysłaniu artykuł może być zmieniony tylko przez autoryzowanych użytkowników.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nie masz praw aby zmieniac status artykułu. Po wysłaniu artykuł może być zmieniony tylko przez autoryzowane osoby.'
 'Use Map': 'Użyj mapy'
 'Toggle: On Section Page': 'Pokaż: Na stronie sekcji'
 'Toggle: On Front Page': 'Pokaż: Na stronie głównej'
 'Toggle: Comments': 'Pokaż: Komentarze'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 minut(y) temu.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
 'Status: Submit': 'Status: Wysłane'
 'Status: Set New': 'Status: Ustaw Nowy'
 'Status: Publish': 'Status: Opublikowany'
@@ -39,7 +39,7 @@ Size: Rozmiar
 'Published before': 'Opublikowany przed'
 'Published after': 'Opublikowany po'
 'Publish date': 'Data publikacji'
-'Publish Schedule': 'Kolejność publikacji'
+'Publish Schedule': 'Kalendarz wydawniczy'
 'Publish Date': 'Data publiacji'
 'Order updated.': 'Kolejność zaktualizowana.'
 'Open in browser': 'Otwórz w przeglądarce'
@@ -52,8 +52,8 @@ Locations: Lokalizacja
 'Loading data': 'Ładowanie danych '
 'Last modified': 'Ostatnia modyfikacja'
 'Last Modified': 'Ostatnia modyfikacja'
-Last: Ostatnie
-First: Pierwsze
+Last: Ostatni
+First: Pierwszy
 'Filter by...': Filtruj...
 Filter: Filtrowanie
 Filename: 'Nazwa pliku'
@@ -68,6 +68,6 @@ Creator: Twórca
 'All Issues': 'Wszystkie wydania'
 Added: Dodano
 'Access denied.': 'Dostęp zabroniony.'
-'$1 toggled.': 'Właczone $1'
+'$1 toggled.': '$1 toggled.'
 '$1 articles have been removed': 'Usunięto artykułów: $1'
 ' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'

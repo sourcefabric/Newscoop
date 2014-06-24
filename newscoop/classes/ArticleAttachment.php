@@ -175,7 +175,6 @@ class ArticleAttachment extends DatabaseObject {
 		$g_ado_db->Execute($queryStr);
 	} // fn RemoveAttachmentFromArticle
 
-
     /**
      * Returns an article attachments list based on the given parameters.
      *

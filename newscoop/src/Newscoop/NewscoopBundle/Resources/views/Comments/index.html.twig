@@ -113,7 +113,7 @@
                                 ({{ 'comments.label.anonymous'|trans }}) {% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}
                             {% else %}
 
-                                <a href="{{ generateZendUrl('user', 'profile', 'default') }}/{{ row.comment.commenter.user.username|striptags }}">{{ row.comment.commenter.name|striptags }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
+                                <a href="{{ generateZendUrl('user', 'profile', 'default') }}/{{ row.comment.commenter.user.username|striptags }}">{{ row.comment.commenter.user.username|striptags }}</a>{% if row.banned %} <span class="label label-danger">{{ 'comments.label.banned'|trans }}</span>{% endif %}</p>
                             {% endif %}
                             <p><a target="_blank" href="http://www.ip-adress.com/ip_tracer/{{ row.comment.commenter.ip }}">{{ row.comment.commenter.ip }}</a></p>
                             <p><a href="mailto:{{ row.comment.commenter.email }}">{{ row.comment.commenter.email }}</a></p>
@@ -129,19 +129,11 @@
                                     <span class="label label-info">{{ row.comment.source }}</span>
                                 {% endif %}
                                 <span class="commentSubject">
-                                    {% if row.comment.subject|length > 50 %}
-                                    {{ row.comment.subject|slice(0, 50) }}...
-                                {% else %}
                                     {{ row.comment.subject }}
-                                {% endif %}
                                 </span>
                             </h4>
                             <p class="commentBody">
-                                {% if row.comment.message|length > 400 %}
-                                    {{ row.comment.message|slice(0, 400) }}...
-                                {% else %}
-                                    {{ row.comment.message }}
-                                {% endif %}
+                                {{ row.comment.message }}
                             </p>
                         </div>
                         <div class="dateCommentHolderReply">

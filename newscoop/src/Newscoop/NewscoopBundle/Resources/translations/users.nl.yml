@@ -1,99 +1,99 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
-Username: 
-'Last Name': 
-'First Name': 
-Email: 
-'You were logged out.': 
-'Newscoop Subhead': 
-Filters: 
-'Add new Author': 
-'Loading Data': 
-'Delete author type': 
-'Cannot remove author type.': 
-'Cannot remove author alias.': 
-'Author alias removed.': 
-'Are you sure you want to delete this author?': 
-'Are you sure you want to delete this author alias?': 
-'All Author Types': 
-'Add author type': 
-'You do not have the permission to change authors.': 
-'Please fill at least first name and last name.': 
-'Cannot add author type, this type already exists.': 
-'Author type removed.': 
-'Author type must be at least three characters long.': 
-'Author type added.': 
-'Are you sure you want to delete this author type?': 
-'User may change authors': 
-'Unable to add new image, target directory is not writable.': 
-'Author saved.': 
-'Author deleted.': 
-'Enable Firefox spell checking by default': 
-'User may use the editor status bar': 
-'User may clear up the system cache': 
-'Another user is registered with that e-mail address, please choose a different one.': 
-'There was an error when trying to update the user info.': 
-'User may moderate comments': 
-'User may enable comments': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: null
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: null
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Send email to user:': null
+'No users found.': null
+'No records found.': null
+'No entries to show': null
+'Display _MENU_ records': null
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': null
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: null
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': null
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': null
+'Create new account': null
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: null
+'Last Name': null
+'First Name': null
+Email: null
+'You were logged out.': null
+'Newscoop Subhead': null
+Filters: null
+'Add new Author': null
+'Loading Data': null
+'Delete author type': null
+'Cannot remove author type.': null
+'Cannot remove author alias.': null
+'Author alias removed.': null
+'Are you sure you want to delete this author?': null
+'Are you sure you want to delete this author alias?': null
+'All Author Types': null
+'Add author type': null
+'You do not have the permission to change authors.': null
+'Please fill at least first name and last name.': null
+'Cannot add author type, this type already exists.': null
+'Author type removed.': null
+'Author type must be at least three characters long.': null
+'Author type added.': null
+'Are you sure you want to delete this author type?': null
+'User may change authors': null
+'Unable to add new image, target directory is not writable.': null
+'Author saved.': null
+'Author deleted.': null
+'Enable Firefox spell checking by default': null
+'User may use the editor status bar': null
+'User may clear up the system cache': null
+'Another user is registered with that e-mail address, please choose a different one.': null
+'There was an error when trying to update the user info.': null
+'User may moderate comments': null
+'User may enable comments': null
 'User may translate articles': 'Gebruiker mag artikelen vertalen'
 'User may move articles': 'Gebruiker mag artikelen verplaatsen'
 'User may find and replace': 'Gebruiker mag zoeken en vervangen'
@@ -105,15 +105,15 @@ Filters:
 'User may delete article attachments': 'Gebruiker mag artikel bijlagen verwijderen'
 'User may change article attachments': 'Gebruiker mag artikel bijlagen wijzigen'
 'User may add article attachments': 'Gebruiker mag artikel bijlagen toevoegen'
-'You do not have the right to create user accounts.': 'Je hebt niet de rechten om gebruikers te maken.'
-'You must select a $1': 'Je moet een $1 selecteren'
+'You do not have the right to create user accounts.': null
+'You must select a $1': null
 'The password must be at least 6 characters long and both passwords should match.': 'Het wachtwoord moet minimaal 6 tekens bevatten en beiden wachtwoorden moeten overeenkomen.'
 'The user account could not be created.': 'Het gebruiker profiel kan niet worden gemaakt.'
 'User account $1 was created successfully.': 'Gebruiker profiel $1 was succesvol gemaakt.'
-'You do not have the right to change user account permissions.': 'Je hebt niet de rechten om gebruiker profiel rechten te wijzigen.'
-'You do not have the right to change user account information.': 'Je hebt niet de rechten om gebruiker profiel informatie te wijzigen.'
-'The password you typed is incorrect.': 'Het wachtwoord dat je hebt ingevuld is onjuisht.'
-'You do not have the right to delete user accounts.': 'Je hebt niet de rechten om gebruiker profielen te verwijderen.'
+'You do not have the right to change user account permissions.': null
+'You do not have the right to change user account information.': null
+'The password you typed is incorrect.': null
+'You do not have the right to delete user accounts.': null
 'User account $1 was deleted successfully.': 'Gebruiker profiel $1 werd succesvol verwijderd.'
 'The IP Group $1 has been created.': 'De IP group $1 is gemaakt.'
 'There was an error creating the IP address group.': 'Er was een fout bij het maken van de IP adres groep'
@@ -121,66 +121,102 @@ Filters:
 'User $1 information was changed successfully.': 'Gebruiker $1 informatie was succesvol gewijzigd.'
 'User Type': 'Gebruiker Type'
 'The IP address group $1:$2 conflicts with another existing group.': 'De IP adres group $1:$2 conflicteert met een andere bestaande groep.'
-'User may add/change publications': 
-'Invalid value of user type parameter': 
-'User may delete publications': 
-'User may add/change issues': 
-'User may delete issues': 
-'User may add/change sections': 
-'User may delete sections': 
-'User may add articles': 
-'User may change articles': 
-'User may delete articles': 
-'User may add images': 
-'User may change images': 
-'User may delete images': 
-'User may delete templates': 
-'User may add/change staff accounts and passwords': 
-'User may add/change subscribers accounts and passwords': 
-'User may delete staff accounts': 
-'User may manage user subscriptions': 
-'User may manage account types': 
-'User may add/change article types': 
-'User may delete article types': 
-'User may manage templates': 
-'User may add/change country entries': 
-'User may add languages and manage language information': 
-'User may delete languages': 
-'User may view audit logs': 
-'User may delete country entries': 
-'User may manage localizer': 
-'User may publish articles': 
-'User may manage topics': 
-'User may use bold': 
-'User may use italic': 
-'User may use underline': 
-'User may use strikethrough': 
-'User may change text alignment': 
-'User may copy, cut, and paste': 
-'User may undo/redo': 
-'User may change text direction': 
-'User may set indents': 
-'User may add links': 
-'User may add subheads': 
-'User may insert images': 
-'User may view the HTML source': 
-'User may enlarge the editor': 
-'User may change the font face': 
-'User may change the font size': 
-'User may create bulleted lists': 
-'User may create numbered lists': 
-'User may insert tables': 
-'User may insert horizontal rules': 
-'User may change the font color': 
-'User may use superscripts': 
-'User may use subscripts': 
-'User may backup and restore the site data': 
-Miscellaneous: 
-'Staff/Subscribers Management': 
-'Editor Basic Settings': 
-'Editor Advanced Font Settings': 
-'Editor Table Settings': 
-'Administrative tasks': 
-'User will be notified on several events': 
-'Editor Miscellaneous Settings': 
-'No such user account.': 
+'User may add/change publications': 'Gebruiker mag publicaties toegvoegen/wijzigen'
+'Invalid value of user type parameter': 'Verkeerde waarde bij de gebruikerstype parameter.'
+'User may delete publications': 'Gebruiker mag publicaties verwijderen'
+'User may add/change issues': 'Gebruiker mag uitgaven toevoegen/wijzigen'
+'User may delete issues': 'Gebruiker mag uitgaven verwijderen'
+'User may add/change sections': 'Gebruiker mag rubrieken toevoegen/wijzigen'
+'User may delete sections': 'Gebruiker mag rubrieken verwijderen'
+'User may add articles': 'Gebruiker mag artikelen toevoegen'
+'User may change articles': 'Gebruiker mag artikelen wijzigen'
+'User may delete articles': 'Gebruiker mag actikelen verwijderen'
+'User may add images': 'Gebruiker mag afbeeldingen toevoegen'
+'User may change images': 'Gebruiker mag afbeeldingen wijzigen'
+'User may delete images': 'Gebruiker mag afbeeldingen verwijderen'
+'User may delete templates': 'Gebruiker mag sjablonen verwijderen'
+'User may add/change staff accounts and passwords': 'Gebruiker mag leidinggevende profielen en wachwoorden toevoegen/wijzigen'
+'User may add/change subscribers accounts and passwords': 'Gebruiker mag abonnement profielen en wachtwoorden toevoegen/wijzigen'
+'User may delete staff accounts': 'Gebruiker mag leidinggevende profielen verwijderen'
+'User may manage user subscriptions': 'Gebruiker mag gebruiker abonnementen beheren'
+'User may manage account types': 'Gebruiker mag profiel typen beheren'
+'User may add/change article types': 'Gebruiker mag artikel typen toevoegen/wijzigen'
+'User may delete article types': 'Gebruiker mag artikel typen verwijderen'
+'User may manage templates': 'Gebruiker mag sjablonen beheren'
+'User may add/change country entries': 'Gebruiker mag landeren toevoegen/wijzigen'
+'User may add languages and manage language information': 'Gebruiker mag talen toevoegen en taalinformatie beheren'
+'User may delete languages': 'Gebruiker mag talen verwijderen'
+'User may view audit logs': 'Gebruiker mag audit logboek bekijken'
+'User may delete country entries': 'Gebruiker mag landen verwijderen'
+'User may manage localizer': 'Gebruiker mag nationaliseerder beheren'
+'User may publish articles': 'Gebruiker mag artikelen publiceren'
+'User may manage topics': 'Gebruiker mag onderwerpen beheren'
+'User may use bold': 'Gebruiker mag vet gebruiken'
+'User may use italic': 'Gebruiker mag cursief gebruiken'
+'User may use underline': 'Gebruiker mag onderstreep gebruiken'
+'User may use strikethrough': 'Gebruiker mag doorstreep gebruiker'
+'User may change text alignment': 'Gebruiker mag tekst uitvulling veranderen'
+'User may copy, cut, and paste': 'Gebruiker mag kopieren, knippen en plakken'
+'User may undo/redo': 'Gebruiker mag ongedaan maken/herhalen'
+'User may change text direction': 'Gebruiker mag tekst richting wijzigen'
+'User may set indents': 'Gebruiker mag inspringen zetten'
+'User may add links': 'Gebruiker mag links toevoegen'
+'User may add subheads': 'Gebruiker mag subtitels toevoegen'
+'User may insert images': 'Gebruiker mag afbeeldingen invoegen'
+'User may view the HTML source': 'Gebruiker mag de HTML broncode bekijken'
+'User may enlarge the editor': 'Gebruiker mag de de bewerker vergroten'
+'User may change the font face': 'Gebruiker mag het lettertype veranderen'
+'User may change the font size': 'Gebruiker mag de lettergrootte veranderen'
+'User may create bulleted lists': 'Gebruiker mag punt-lijsten maken'
+'User may create numbered lists': 'Gebruiker mag nummer-lijsten maken'
+'User may insert tables': 'Gebruiker mag tabellen maken'
+'User may insert horizontal rules': 'Gebruiker mag horizontale lijnen maken'
+'User may change the font color': 'Gebruiker mag de letterkleur veranderen'
+'User may use superscripts': 'Gebruiker mag superscript gebruiken'
+'User may use subscripts': 'Gebruiker mag subscript gebruiken'
+'User may backup and restore the site data': null
+Miscellaneous: Overig
+'Staff/Subscribers Management': 'Leidinggevenden/Abonnement beheer'
+'Editor Basic Settings': 'Bewerker Basis Instellingen'
+'Editor Advanced Font Settings': 'Bewerker Geavanceerde Lettertypen Instellingen'
+'Editor Table Settings': 'Bewerker Tabel Eigenschappen'
+'Administrative tasks': 'Administratieve taken'
+'User will be notified on several events': 'Gebruiker wordt geïnformeerd over verschillende acties'
+'Editor Miscellaneous Settings': 'Bewerker Overige Instellingen'
+'No such user account.': 'Profiel bestaat niet.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: null
+    created: null
+    updated: null
+    status:
+        status: Status
+        registered: null
+        pending: null
+        deleted: null
+        active: Actief
+    table:
+        actions:
+            actions: Acties
+            edit: Bewerken
+            resend_email: null
+            rename: null
+            remove: Verwijderen
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: null
+    chart:
+        title: null

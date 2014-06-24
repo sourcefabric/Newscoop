@@ -13,6 +13,8 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Newscoop\NewscoopException;
+use Newscoop\Exception\InvalidParametersException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\GimmeBundle\Form\Type\ArticleType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -295,9 +297,6 @@ class ArticlesController extends FOSRestController
      *           "Returned when the article is not found",
      *         }
      *     },
-     *     parameters={
-     *         {"name"="number", "dataType"="integer", "required"=true, "description"="Article number"}
-     *     },
      *     filters={
      *          {"name"="language", "dataType"="string", "description"="Language code"}
      *     },
@@ -318,6 +317,10 @@ class ArticlesController extends FOSRestController
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
             ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article was not found');
+        }
 
         return $article;
     }
@@ -355,10 +358,11 @@ class ArticlesController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$article) {
-            throw NotFoundHttpException('Article was not found');
+            throw new NotFoundHttpException('Article was not found');
         }
 
-        foreach ($request->attributes->get('links') as $key => $object) {
+        $matched = false;
+        foreach ($request->attributes->get('links', array()) as $key => $object) {
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -367,6 +371,8 @@ class ArticlesController extends FOSRestController
                 $imagesService = $this->get('image');
                 $imagesService->addArticleImage($article->getNumber(), $object);
 
+                $matched = true;
+
                 continue;
             }
 
@@ -374,8 +380,15 @@ class ArticlesController extends FOSRestController
                 $attachmentService = $this->get('attachment');
                 $attachmentService->addAttachmentToArticle($article, $object);
 
+                $matched = true;
+
                 continue;
             }
+        }
+
+
+        if ($matched === false) {
+            throw new InvalidParametersException('Any supported link object not found');
         }
     }
 
@@ -392,7 +405,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
@@ -408,10 +421,11 @@ class ArticlesController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$article) {
-            throw NotFoundHttpException('Article was not found');
+            throw new NotFoundHttpException('Article was not found');
         }
 
-        foreach ($request->attributes->get('links') as $key => $object) {
+        $matched = false;
+        foreach ($request->attributes->get('links', array()) as $key => $object) {
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -424,7 +438,11 @@ class ArticlesController extends FOSRestController
 
                 if ($articleImage) {
                     $imagesService->removeArticleImage($articleImage);
+                } else {
+                    throw new InvalidParametersException('Image is not linked to article');
                 }
+
+                $matched = true;
 
                 continue;
             }
@@ -433,8 +451,14 @@ class ArticlesController extends FOSRestController
                 $attachmentService = $this->get('attachment');
                 $attachmentService->removeAttachmentFormArticle($article, $object);
 
+                $matched = true;
+
                 continue;
             }
+        }
+
+        if ($matched === false) {
+            throw new InvalidParametersException('Any supported unlink object not found');
         }
     }
 

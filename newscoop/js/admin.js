@@ -71,6 +71,13 @@ $(function() {
                         match.push(terms[i]);
                     }
                 }
+
+                if (match.length == 0) {
+                    $('form#topicsForm').keypress(function(event) { return event.keyCode != 13; });
+                } else {
+                    $('form#topicsForm').unbind("keypress");
+                }
+
                 response(match);
             },
             close: function(event, ui) {

@@ -670,7 +670,11 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $query->setParameter('user', $user->getId());
         $result = $query->getSingleResult();
-        $user->setPoints($result['comments'] + $result['articles']);
+
+        $articlesCount = $em->getRepository('Newscoop\Entity\Article')
+            ->countByAuthor($user);
+
+        $user->setPoints($result['comments'] + $articlesCount);
     }
 
     /**
@@ -703,7 +707,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->query)) {
-            $qb->andWhere("(u.username LIKE :query)");
+            $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
         }
 
@@ -731,11 +735,11 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
 
-        if($criteria->firstResult != 0) {
+        if ($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
         }
 
-        if($criteria->maxResults != 0) {
+        if ($criteria->maxResults != 0) {
             $qb->setMaxResults($criteria->maxResults);
         }
 
@@ -749,7 +753,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!$results) {
-            return $qb;
+            return array($qb, $list->count);
         }
 
         $list->items = array_map(function ($row) {

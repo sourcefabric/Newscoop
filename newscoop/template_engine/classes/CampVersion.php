@@ -17,7 +17,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_organization = 'Sourcefabric o.p.s.';
+    private $m_organization = 'Sourcefabric z.ú.';
 
     /**
      * @var string
@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.2';
+    private $m_release = '4.3';
 
     /**
      * @var string
@@ -43,11 +43,6 @@ final class CampVersion
      * @var string
      */
     private $m_releaseDate = '2013-06-10';
-
-    /**
-     * @var string
-     */
-    private $m_copyrightYear = 2013;
 
     /**
      * @var string
@@ -102,7 +97,7 @@ final class CampVersion
 
     public function getCopyright()
     {
-        $c = '&copy;&nbsp;' . $this->m_copyrightYear . '&nbsp;<a href="' . $this->m_website
+        $c = '&copy;&nbsp;' . $this->getCopyrightYear() . '&nbsp;<a href="' . $this->m_website
             . '" target="_blank">' . $this->m_organization . '</a>';
         return $c;
     }
@@ -119,7 +114,7 @@ final class CampVersion
 
     public function getCopyrightYear()
     {
-        return $this->m_copyrightYear;
+        return date("Y");
     }
 
     function getFullInfo()

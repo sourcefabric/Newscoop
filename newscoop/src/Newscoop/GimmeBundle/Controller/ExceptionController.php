@@ -31,7 +31,9 @@ class ExceptionController extends FOSExceptionController
     {
         $urlMatcher = $this->container->get('router');
         try {
-            $match = $urlMatcher->match($request->server->get('REQUEST_URI'));
+            $context = new \Symfony\Component\Routing\RequestContext($request->getPathInfo(), $request->getMethod());
+            $urlMatcher->setContext($context);
+            $match = $urlMatcher->match($context->getBaseUrl());
         } catch (\Exception $e) {
             return;
         }

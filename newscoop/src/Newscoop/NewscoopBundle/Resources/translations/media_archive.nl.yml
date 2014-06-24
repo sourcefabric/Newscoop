@@ -1,60 +1,62 @@
-'No thumbnails were fixed.': 
-'Missing thumbnails fixed.': 
-Slideshows: 
-'You cant update used files.': 
-Source: 
-Local: 
-'Items updated.': 
-Feedback: 
-'Do you want to update unused only?': 
-'Disapprove selected': 
-'Are you sure you want to update selected items?': 
-'Approve selected': 
-'Image files': 
-'Fix all thumbnails': 
-'You do not have the right to add files.': 
-'Should this file only be available for this translation of the article, or for all translations?': 
-'Please enter a description for the file: $1.': 
-'Only this translation': 
-'No files for multi editing.': 
-'Edit files': 
-'Change file information': 
-'All translations': 
-'Save All': 
-Files: 
-'You cant delete used files.': 
-'Do you want to delete unused only?': 
-'View attachment': 
-'Select some items first.': 
-'Open in the browser': 
-'Media Archive': 
-'Last modified': 
-'Items deleted.': 
-'File uploaded.': 
-'Do you want this file to open in the users browser, or to automatically download?': 
-'Delete selected': 
-Created: 
-Charset: 
-'Change attachment information': 
-'Automatically download': 
-'Attachment updated.': 
-'Are you sure you want to delete selected items?': 
-'Add new file': 
-'You do not have the right to add images.': 
-'Use for all': 
-'Specify image url if you want to load it.': 
-Size: 
-'No images for multi editing.': 
-'Images updated.': 
-'Edit images': 
-'$1 files uploaded.': 
-'Unable to add new image.': 
-'Image updated.': 
-'Image $1 deleted.': 
-'Image is in use, it cannot be deleted.': 
-'You must select an image file to upload.': 'Je moet een afbeelding bestand te selecteren om te uploaden.'
+'No thumbnails were fixed.': null
+'Missing thumbnails fixed.': null
+Slideshows: null
+'You cant update used files.': null
+Source: null
+Local: null
+'Items updated.': null
+Feedback: null
+'Do you want to update unused only?': null
+'Disapprove selected': null
+'Are you sure you want to update selected items?': null
+'Approve selected': null
+'Image files': null
+'Fix all thumbnails': null
+'You do not have the right to add files.': null
+'Should this file only be available for this translation of the article, or for all translations?': 'Moet dit bestand alleen beschikbaar zijn voor deze vertaling of voor alle vertalingen?'
+'Please enter a description for the file: $1.': null
+'Only this translation': 'Alleen deze vertaling'
+'No files for multi editing.': null
+'Edit files': null
+'Change file information': 'Bewerk bestand informatie'
+'All translations': 'Alle vertalingen'
+'Save All': null
+Files: Bestanden
+'You cant delete used files.': null
+'Do you want to delete unused only?': null
+'View attachment': null
+'Select some items first.': null
+'Open in the browser': 'Open in de browser.'
+'Media Archive': null
+'Last modified': null
+'Items deleted.': null
+'File uploaded.': null
+'Do you want this file to open in the users browser, or to automatically download?': 'Wilt u dat dit bestand opent in de browser of dat het wordt gedownload?'
+'Delete selected': null
+Created: null
+Charset: null
+'Change attachment information': null
+'Automatically download': 'Automatisch downloaden'
+'Attachment updated.': null
+'Are you sure you want to delete selected items?': null
+'Add new file': null
+'You do not have the right to add images.': null
+'Use for all': null
+'Specify image url if you want to load it.': null
+Size: null
+'No images for multi editing.': null
+'Images updated.': null
+'Edit images': null
+'$1 files uploaded.': null
+'Unable to add new image.': null
+'Image updated.': null
+'Image $1 deleted.': null
+'Image is in use, it cannot be deleted.': null
+'You must select an image file to upload.': null
 'Add new image': 'Voeg nieuwe afbeelding toe'
 'Delete image $1': 'Verwijder afbeelding $1'
 'Used in articles': 'Gebruikt in artikelen'
 'View image': 'Bekijk afbeelding'
 'Change image information': 'Wijzig afbeelding informatie'
+'Photographer URL': null
+'Add website url starting with http://': null

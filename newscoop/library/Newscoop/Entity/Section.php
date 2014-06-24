@@ -228,11 +228,13 @@ class Section
      * Set template
      *
      * @param Newscoop\Entity\Template $template
+     *
      * @return Newscoop\Entity\Section
      */
     public function setTemplate(Template $template)
     {
         $this->template = $template;
+
         return $this;
     }
 
@@ -240,11 +242,13 @@ class Section
      * Set article template
      *
      * @param Newscoop\Entity\Template $template
+     *
      * @return Newscoop\Entity\Section
      */
     public function setArticleTemplate(Template $template)
     {
         $this->articleTemplate = $template;
+
         return $this;
     }
 
@@ -266,6 +270,26 @@ class Section
     public function getNameAndLanguage()
     {
         return $this->getName() .' ('.$this->getLanguageName().')';
+    }
+
+    /**
+     * Get name of publication
+     *
+     * @return string
+     */
+    public function getPublicationName()
+    {
+        return $this->publication->getName();
+    }
+
+    /**
+     * Get name of Issue
+     *
+     * @return string
+     */
+    public function getIssueName()
+    {
+        return $this->issue->getName();
     }
 
     /**

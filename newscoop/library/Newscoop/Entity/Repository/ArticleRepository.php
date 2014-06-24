@@ -14,6 +14,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Datatable\Source as DatatableSource;
 use Newscoop\Search\RepositoryInterface;
 use Newscoop\NewscoopException\IndexException;
+use Newscoop\Entity\Article;
+use Newscoop\Entity\User;
 
 /**
  * Article repository
@@ -310,5 +312,35 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
         }
 
         return $qb->getQuery()->execute();
+    }
+
+    /**
+     * Get articles count for user if is author
+     *
+     * @param Newscoop\Entity\User $user
+     *
+     * @return int
+     */
+    public function countByAuthor(User $user)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('count(a)')
+            ->from('Newscoop\Entity\Article', 'a')
+            ->from('Newscoop\Entity\ArticleAuthor', 'aa')
+            ->from('Newscoop\Entity\User', 'u')
+            ->where('a.number = aa.articleNumber')
+            ->andWhere('a.language = aa.languageId')
+            ->andWhere('aa.author = u.author')
+            ->andwhere('u.id = :user')
+            ->andWhere($qb->expr()->in('a.type', array('news', 'blog')))
+            ->andWhere('a.workflowStatus = :status')
+            ->setParameters(array(
+                'user' => $user->getId(),
+                'status' => Article::STATUS_PUBLISHED
+            ));
+
+        $count = $qb->getQuery()->getSingleScalarResult();
+
+        return (int) $count;
     }
 }

@@ -9,6 +9,6 @@ Uninstall: Деинсталлировать
 'The plugin $1 was sucessfully installed.': 'Плагин $1 был успешно инсталлирован.'
 'No plugins found.': 'Не найдено плагинов.'
 Manage: Управлять
-Enabled: Доступен
+Enabled: Разрешено
 'Delete plugin': 'Удалить плагин'
 'Add new image': 'Добавить новое изображение'

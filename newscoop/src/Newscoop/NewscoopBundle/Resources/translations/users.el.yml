@@ -1,36 +1,36 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: Ιστοσελίδα
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Geolocation
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Εμφάνιση _START_ προς _END_ από _TOTAL_ εισόδους'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Δεν βρέθηκαν καταχωρήσεις.'
+'No entries to show': 'Καμία είσοδος προς προβολή'
+'Display _MENU_ records': 'Εμφάνιση καταχωρήσεων _MENU_ '
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': '-φιλτράρισμα από _MAX_ καταχωρήσεις'
 'User renamed.': 'Ο χρήστης μετονομάστηκε.'
 'User attributes': 'Ιδιότητες χρηστών'
 'Rename user $1': 'Μετονομασία χρήστη $1'
@@ -44,14 +44,14 @@ Continue:
 'Profile saved.': 'Το προφίλ αποθηκεύτηκε. '
 Picture: Εικόνα
 'Password updated': 'Ο κωδικός πρόσβασης ενημερώθηκε'
-None: Κανενός
+None: Κανένα
 'New confirmation email was sent to user.': 'Νέα επιβεβαίωση email εστάλη στον χρήστη.'
 'Email is used already': 'Το Email χρησιμοποιείται ήδη'
 'Edit your password': 'Επεξεργασία κωδικού πρόσβασης'
 'Edit user $1': 'Επεξεργασία χρήστη $1'
 'Edit subscriptions': 'Επεξεργασία συνδρομών'
 'Edit profile': 'Επεξεργασία προφίλ'
-'Edit permissions': 'Επεξεργασία αδειών'
+'Edit permissions': 'Επεξεργασία δικαιωμάτων'
 'Create new account': 'Δημιουργία νέου λογαριασμού'
 'Comment ban settings': 'Ρυθμίσεις απαγόρευσης σχολίων'
 'Ban for user $1 saved.': 'Η απαγόρευση για τον χρήστη $1 αποθηκεύτηκε.'
@@ -64,7 +64,7 @@ Username: 'Όνομα χρήστη'
 'First Name': Όνομα
 Email: Email
 'You were logged out.': 'Ήσασταν αποσυνδεδεμένοι'
-'Newscoop Subhead': 'Υπότιτλος Newscoop '
+'Newscoop Subhead': 'Υποκεφαλίδα Newscoop'
 Filters: Φίλτρα
 'Add new Author': 'Προσθήκη νέου Συγγραφέα'
 'Loading Data': 'Φόρτωση Δεδομένων'
@@ -184,3 +184,39 @@ Miscellaneous: Διάφορα
 'User will be notified on several events': 'Ο χρήστης θα ενημερωθεί για διάφορες εκδηλώσεις'
 'Editor Miscellaneous Settings': 'Διάφορες Ρυθμίσεις Προγράμματος Επεξεργασίας Κειμένου'
 'No such user account.': 'Δεν υπάρχει τέτοιος λογαριασμός χρήστη.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Διαχείριση Χρηστών'
+    created: Δημιουργήθηκε
+    updated: null
+    status:
+        status: Κατάσταση
+        registered: null
+        pending: null
+        deleted: Διαγραμμένο
+        active: Ενεργό
+    table:
+        actions:
+            actions: Ενέργειες
+            edit: Επεξεργασία
+            resend_email: null
+            rename: Μετονομασία
+            remove: Αφαίρεση
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Επεξεργασία...
+    chart:
+        title: null

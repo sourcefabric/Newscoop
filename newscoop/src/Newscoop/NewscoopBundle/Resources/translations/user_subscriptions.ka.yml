@@ -19,17 +19,17 @@ first: პირველი
 Paid: ფასიანი
 'No subscriptions': 'გამოწერები არ არის'
 'Languages:': 'ენები:'
-'Edit all sections': 'ყველა განყოფილების რედაქტირება'
+'Edit all sections': 'ყველა სექციის რედაქტირება'
 'Days:': 'დღეები: '
 'Days must be number': 'დღეები უნდა დაინომროს'
 Any: 'ნებისმიერი '
 'Add section': 'განყოფილების დამატება'
-saved: შენახულია
+saved: დამახსოვრებულია
 removed: მოიხსნა
 deleted: წაიშალა
 deactivated: დეაქტივირებულია
 activated: აქტივირებულია
-'Value is required and cant be empty': 'ველი აუცილებელია და ის არ უნდა იყოს ცარიელი'
+'Value is required and cant be empty': 'მონაცემი აუცილებლად უნდა შეივსოს'
 'That user name already exists, please choose a different login name.': 'ასეთი მომხმარებელი უკვე არსებობს, შეიყვანეთ სხვა სახელი'
 'That $1 already exists, please choose a different $2.': 'ეგ $1 უკვე არსებობს, გთხოვთ აირჩიოთ სხვა $2'
 'Subscriptions exist for all available publications.': 'გამოწერა არსებობს ყველა არსებული პუბლიკაციისთვის.'
@@ -59,7 +59,7 @@ E-Mail: იმეილი
 '%value% must be greater than %min%': ' %value% უნდა იყოს მეტი ვიდრე %min%'
 '%value% is not a valid IP Address': '%value% არ არის სწორი IP მისამართი'
 'Regardless of the language': 'ენის მიუხედავად'
-'Individual languages': 'ინდივიდუალური ენები'
+'Individual languages': 'ინდივიდუალური ენა'
 'Add sections now': 'სექციის ახლა დამატება'
 'Add sections later': 'სექციის მოგვიანებით დამატება'
 'Subscription Type': 'გამოწერის ტიპი'

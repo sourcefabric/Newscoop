@@ -1,4 +1,4 @@
-'Language id not specified': 
+'Language id not specified': null
 'No languages.': 'Нема језика.'
 'Native Name': 'Изворно име'
 'Name taken.': 'Име је већ у употреби'
@@ -70,13 +70,3 @@ Sunday: недеља
 'You do not have the right to add new languages.': 'Немате право да додајете нове језике.'
 'There are $1 issue(s) left.': 'Преостало је  $1издања.'
 'Native name': 'Изворно име'
-'The language $1 has been successfuly added.': 'Језик $1 успешно је додат'
-'Please check if a language with the same name does not already exist.': 'Проверите да ли језик са истим именом већ не постоји'
-'The language could not be added.': 'Језик не може бити додат'
-'Delete language': 'Обриши језик'
-'The language $1 has been deleted.': 'Језик $1 је додат'
-'Updating language information': 'Мењање података о језику'
-'Language information has been successfuly updated.': 'Подаци о језику су успешно промењени'
-'Language information could not be updated.': 'Подаци о језику не могу бити измењени'
-'A language with the same name already exists.': 'Језик под тим именом већ постоји'
-'Add another language': 'Додај нови језик'

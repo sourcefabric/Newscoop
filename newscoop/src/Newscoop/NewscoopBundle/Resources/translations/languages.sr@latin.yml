@@ -1,0 +1,72 @@
+'Language id not specified': null
+'No languages.': 'Nema jezika.'
+'Native Name': 'Izvorno ime'
+'Name taken.': 'Ime je već u upotrebi'
+'Language saved.': 'Jezik snimljen.'
+'Language removed.': 'Jezik uklonjen.'
+'Language not found.': 'Jezik nije pronađen.'
+'Language is in use and cannot be removed.': 'Jezik je u uupotrebi i ne može biti uklonjen.'
+'Language added.': 'Jezik dodat.'
+'English language cannot be removed.': 'Engleski jezik ne može biti uklonjen.'
+'Edit short month names': 'Uredi skraćena imana meseci'
+'Edit short day names': 'Uredi skraćena imena dana'
+'Edit month names': 'Uredi imena meseci'
+'Edit language: $1': 'Uredi jezik: $1'
+'Edit day names': 'Uredi imena dana'
+'Code Page': 'Kodna strana'
+'Add new Language': 'Dodaj novi jezik'
+'Add Language': 'Dodaj jezik'
+We: sr
+Tu: ut
+Th: če
+Su: ne
+Sep: sep
+Sa: su
+'Please enter the translation for week day short names.': 'Molimo unesite prevode za skraćenice imena dana u nedelji'
+'Please enter the translation for month short names.': 'Molimo unesite prevode za skraćenice imena meseci'
+Oct: okt
+Nov: nov
+Mo: po
+Mar: mar
+Jun: jun
+Jul: jul
+Jan: jan
+Fr: pe
+Feb: feb
+Dec: dec
+Aug: avg
+Apr: apr
+'No language.': 'Nema jezika.'
+'Delete language $1': 'Obriši jezik $1'
+'You do not have the right to add languages.': 'Nemate pravo da dodajete jezike.'
+'Please enter the translation for time units.': 'Unesite prevod vremenskih jedinica.'
+'You do not have the right to delete languages.': 'Nemate pravo da brišete jezike'
+'Are you sure you want to delete the language $1?': 'Sigurni ste da želite da obrišete jezik $1?'
+'Deleting language': 'Brisanje jezika'
+'The language $1 could not be deleted.': 'Jezik $1 ne može biti obrisan'
+'Edit language': 'Uredi jezik'
+'You do not have the right to edit languages.': 'Nemate pravo da uređujete jezike'
+'Please enter the translation for month names.': 'Unesi prevode za imena meseci'
+'Please enter the translation for week day names.': 'Unesi prevode za imena dana'
+January: januar
+February: februar
+March: mart
+April: april
+May: maj
+June: jun
+July: jul
+August: avgust
+September: septembar
+October: oktobar
+November: novembar
+December: decembar
+Monday: ponedeljak
+Tuesday: utorak
+Wednesday: sreda
+Thursday: četvrtak
+Friday: petak
+Saturday: subota
+Sunday: nedelja
+'You do not have the right to add new languages.': 'Nemate pravo da dodajete nove jezike'
+'There are $1 issue(s) left.': 'Preostalo je $1 izdanja.'
+'Native name': 'Izvorno ime'

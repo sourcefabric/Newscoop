@@ -103,6 +103,7 @@ class FinishService
     public function saveCronjobs()
     {
         $binDirectory = realpath($this->newscoopDir.'/bin');
+        $appDirectory = realpath($this->newscoopDir.'/application/console');
 
         $crontab = new Crontab();
 
@@ -134,6 +135,11 @@ class FinishService
         $job = new Job();
         $job->setMinute('0')->setHour('5')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
             ->setCommand($binDirectory.'/newscoop-autopublish');
+        $crontab->addJob($job);
+
+        $job = new Job();
+        $job->setMinute('30')->setHour('0')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+            ->setCommand($appDirectory.' user:garbage');
         $crontab->addJob($job);
         $crontab->write();
 

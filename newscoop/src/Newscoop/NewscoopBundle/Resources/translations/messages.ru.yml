@@ -1,7 +1,7 @@
 Plugins: Плагины
-'Manage Plugins': 'Управление плагинами'
+'Manage Plugins': 'Управлять прагинами'
 Account: 'Учетная запись'
-'Items per page': 'Объектов на странице'
+'Items per page': 'Объектов на страницу'
 'Add new': Добавить
 Home: Главная
 Logout: Выход
@@ -148,6 +148,7 @@ Localizer: Локализатор
 'Add new publication': 'Добавить новое издание'
 'Upload new template': 'Загрузить новый шаблон'
 'Add new staff member': 'Добавление нового члена персонала'
+'Staff member deleted.': null
 'Add new subscriber': 'Добавление нового подписчика'
 'Add new user type': 'Добавить новый тип пользователей'
 'Add new article type': 'Добавить новый тип статей'
@@ -189,12 +190,12 @@ Search: Поиск
 'Make a selection': Выделить
 'You must input a number greater than 0 into the $1 field.': 'Вы должны ввести положительное ненулевое число в поле $1'
 'You must input a valid date.': 'Вы должны ввести правильную дату.'
-'Add new field': 'Добавить новый тип:ru'
-'Article automatic publishing schedule': 'Расписание автоматических публикаций статей'
-'Are you sure you want to delete this scheduled action?': 'Вы уверены, что хотите удалить запланированное действие?'
-Unlink: Удалить
+'Add new field': 'Добавить новый тип'
+'Article automatic publishing schedule': 'Расписание автоматической публикации статей'
+'Are you sure you want to delete this scheduled action?': 'Вы уверены, что хотитее удалить эту запланированную операцию'
+Unlink: Отвязать
 'Are you sure you want to delete the image $1?': 'Вы уверены, что хотите удалить картинку $1?'
-'No such issue.': 'Нет такого выпуска.:ru'
+'No such issue.': 'Нет такого выпуска'
 'Are you sure you want to delete the subscription to the publication $1?': 'Вы уверены, что хотите удалить подписку на издание $1?'
 'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Невозможно сохранить изменения в  выпуске $1, Убедитесь, что название $2 URL выпуска не использовалось ранее в издании $3.'
 GB: GB
@@ -257,19 +258,27 @@ Reads: 'Количество просмотров'
 'Universal List': 'Универсальный список'
 'Invalid security token!': 'Неверный маркер безопасности!'
 Authors: Авторы
-'Author:': 'Автор:'
-'User name': Пользователь
-'User Types': 'Типы пользователей'
-'Add new user account': 'Добавить новую учетную запись пользователя'
-'Schedule a new publish action': 'Запланировать новую операцию'
-'Subscription Default Time': 'Время подписки по умолчанию:ru'
-'No such language.': 'Нет такого языка.:ru'
-'No such infotype.': 'Нет такого класса:ru'
-'No such keyword.': 'Нет такого ключевого слова.:ru'
-'No such country.': 'Нет такой страны.:ru'
-'User may add/change user accounts and passwords': 'Пользователь может добавлять/изменять учетные записи и пароли:ru'
-'User may delete user accounts': 'Пользователь может удалять учетные записи:ru'
-'There are $1 issue(s) left.': 'Осталось $1 выпуск(ов):ru'
-'There are $1 keyword(s) left.': 'Осталось $1 ключевое(-ых) слов(о):ru'
-'Name<BR><SMALL>(click to edit)</SMALL>': 'Название<BR><SMALL>(Щелкнуть для правки)</SMALL>:ru'
-'New field': 'Новое поле'
+Title: Заголовок
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: на
+published: null
+unpublished: null

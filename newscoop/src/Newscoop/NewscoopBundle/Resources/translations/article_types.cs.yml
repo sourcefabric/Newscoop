@@ -1,8 +1,8 @@
-list: 
-filter: 
-'In Lists?': 
-'Are you sure you want to $1 articles of article type $2?': 
-'$1 articles of article type $2': 
+list: seznam
+filter: filtr
+'In Lists?': 'V seznamech?'
+'Are you sure you want to $1 articles of article type $2?': 'Jste si jist, že chcete $1 články jako typ článku $2? '
+'$1 articles of article type $2': '$1 články typu článku $2'
 'Hide human-readable field names': 'Skrýt pole se jmény lidí'
 'Edit and translate human-readable field names': 'Uprav a přelož pole se jmény lidí'
 'The template name may only contain letters and the underscore (_) character.': 'Jméno šablony může obsahovat písmena a podtržítko (_).'
@@ -29,7 +29,7 @@ NOTHING: NIC
 'Cycle through your articles to verify that the merge configuration is correct.': 'Projít znovu články a ověřit, že nastavení vnoření je správné.'
 'Clicking Merge will merge ($1) article(s).': 'Kliknutím na Vnořit se vnoří ($1) článků.'
 'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Nezdařilo se vnořit $1 pole ($2) do $3 pole ($4).'
---None--: --Žádné--
+'--None--': '--Žádné--'
 '(Null merge warning.)': '(Nulové varování o vnoření.)'
 '(No merge warning.)': '(Žádné varování o vnoření.)'
 '(Duplicate warning.)': '(Duplikovat varování.)'
@@ -56,7 +56,7 @@ Merge!: Vnořit!
 'Link to public page': 'Navázat na hlavní stánku'
 'Go to Step 3': 'Jít na Krok 3'
 'Go to Step 2': 'Jít na Krok 2'
-'Display Name': Popisky
+'Display Name': Popisek
 'Delete article type $1.': 'Odstranit typ článku $1.'
 'Comments enabled?': 'Povolit komentáře?'
 'Back to Step 2': 'Zpět na Krok 2'
@@ -72,8 +72,8 @@ Merge!: Vnořit!
 'No article types.': 'Žádný typ článku'
 'Delete article type $1': 'Smazat typ článku $1'
 'You do not have the right to add article types.': 'Nemáte práva přidat typ článku'
-'Adding new article type': 'Přidat typ článku'
-'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 může obsahovat pouze písmena'
+'Adding new article type': 'Přidává se nový typ článku'
+'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 smí obsahovat pouze písmena a podtržítko (_).'
 'The article type $1 already exists.': 'Tento typ článku už existuje'
-'You do not have the right to delete article types.': 'Nemáte práva mazat typ článku'
+'You do not have the right to delete article types.': 'Nemáte oprávnění vymazat tento typ článků.'
 'The article type $1 could not be deleted.': 'Typ článku $1 nemohl být smazán'

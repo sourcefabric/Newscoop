@@ -1,5 +1,5 @@
-'Display articles of filtered types': 
-'Display Articles of Filtered Types': 
+'Display articles of filtered types': null
+'Display Articles of Filtered Types': null
 Webcode: 'Codice web'
 'View article': 'Vedi articolo'
 Source: Sorgente
@@ -17,15 +17,15 @@ Title: Titolo
 '$1 Article(s) unlocked': '$1 articoli sbloccati'
 '$1 Article(s) not unlocked': '$1 articoli non sbloccati'
 '$1 Article(s) duplicated': '$1 articoli duplicati'
-'Download file': Scarica
+'Download file': 'Scarica file'
 'You do not have the right to delete articles.': 'Non hai il permesso di eliminare articoli.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Non hai il permesso di cambiare lo stato dellarticolo. Una volta inoltrato, solo un utente autorizzato lo può cambiare.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'non si dispone dNon hai il permesso di cambiare lo stato dellarticolo: una volta inviato, larticolo può essere modificato solo da utenti autorizzati.'
 'Use Map': 'Usa mappa'
 'Toggle: On Section Page': 'Abilita Nella pagina di sezione'
 'Toggle: On Front Page': 'Abilita In prima pagina'
 'Toggle: Comments': 'Abilita Commenti'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Articolo bloccato da $1 ($2) $3 minuti fa.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Articolo bloccato da $1 ($2) $3 ore e $4 minuti fa.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Larticolo è stato bloccato da $1($2) $3 minuti fa.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Larticolo è stato bloccato da $1 ($2) $3 ore e $4 minuti fa.'
 'Status: Submit': 'Stato: Inoltrato'
 'Status: Set New': 'Stato: Nuovo'
 'Status: Publish': 'Stato: Pubblicato'
@@ -38,8 +38,8 @@ Size: Dimensione
 'Reset all filters': 'resetta i filtri'
 'Published before': 'Pubblicato prima'
 'Published after': 'Pubblicato dopo'
-'Publish date': 'Data pubblicazione'
-'Publish Schedule': 'Programma pubblicazione'
+'Publish date': 'Data di pubblicazione'
+'Publish Schedule': 'Programmazione della pubblicazione'
 'Publish Date': 'Data pubblicazione'
 'Order updated.': 'Ordine cambiato.'
 'Open in browser': 'Apri nel browser'
@@ -61,13 +61,13 @@ Filename: 'Nome file'
 'Display _MENU_ records': 'Mostra _MENU_ voci'
 Creator: Creatore
 'Create Date': 'Data creazione'
-'Article status set to $1': 'Stato articolo impostato a $1'
+'Article status set to $1': 'Stato dellarticolo impostato a  $1'
 'Are you sure you want to delete selected articles?': 'Vuoi davvero eliminare gli articoli selezionati?'
 'All Sections': 'Tutte le sezioni'
 'All Publications': 'Tutte le pubblicazioni'
 'All Issues': 'Tutte le edizioni'
 Added: Aggiunto
 'Access denied.': 'Accesso negato.'
-'$1 toggled.': '$1 attivato.'
+'$1 toggled.': '$1 modificato.'
 '$1 articles have been removed': 'sono stati eliminati $1 articoli'
 ' - filtering from _MAX_ records': 'Filtro da _MAX_ voci'

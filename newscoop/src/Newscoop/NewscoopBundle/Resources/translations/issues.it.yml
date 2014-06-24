@@ -1,10 +1,10 @@
 'so that default templates can be assigned to the issue.': 'in modo che il template predefinito possa essere assegnato alledizione.'
 'Once this is done, the issue can be published': 'Quando sarà stato fatto, ledizione potrà essere pubblicata'
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Non posso mostrare lanteprima delledizione. Verifica che la pubblicazione abbia un tema assegnato.'
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Non è possibile vedere lanteprima di questa edizione. Verifica che sia stato assegnato un tema a questa pubblicazione.'
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Non posso mostrare lanteprima delledizione. Verifica che sia stato scelto il template di prima pagina.'
 'Publish all articles:': 'Pubblica tutti gli articoli:'
 'Publish all articles': 'Pubblica tutti gli articoli'
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
 default: predefinito
 'The publishing/unpublishing can not be set the same time': 'Pubblicazione e rimozione non possono avere lo stesso orario.'
 'The publishing schedule can not be set in the past': 'La pubblicazione non può essere impostata nel passato.'

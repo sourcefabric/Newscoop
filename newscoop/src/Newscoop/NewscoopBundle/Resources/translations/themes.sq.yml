@@ -1,2 +1,87 @@
-'Duplicate assignment': 
-Templates: 
+'Duplicate assignment': null
+Templates: null
+'Import theme': null
+'Import succeded!': null
+'Import failed!': null
+'Edit template: $1': null
+'Set new name to': null
+'Rename file': null
+'Caching templates in:': null
+'Caching templates finished': null
+'Theme name': null
+'Theme is assigned and can not be deleted': null
+'Theme export was not successful. Check please that the server is not out of disk space.': null
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': null
+zip: null
+version: null
+uploaded: null
+updated: null
+'or higher': null
+moved: null
+installed: null
+deleted: null
+'You must select at least one template to perform an action.': null
+Upload: null
+'Unassign theme': null
+'Unassign successful': null
+Unassign: null
+'Theme version': null
+'Theme settings updated.': null
+'Theme settings saved.': null
+'Theme name / version': null
+'Theme management': null
+'Theme $1': null
+'The file $1 is empty.': null
+'Template object $1 was renamed to $2.': null
+'Template object $1 was deleted.': null
+'Template $1 was duplicated into $2.': null
+'Template $1 $2.': null
+'Something broke': null
+'Section page template': null
+Saving..: null
+'Saving settings failed.': null
+'Save All': null
+'Required Newscoop version': null
+Replace: null
+'New template $1 created.': null
+'New name': null
+'Name cant be empty': null
+'Last modified': null
+'Issue page': null
+'Go to parent': null
+'Go to $1': null
+'Geo Filtering': null
+'Front page template': null
+'File size': null
+'File name': null
+'File $1 was replaced.': null
+'Failed unassigning theme': null
+Export: null
+'Error page template': null
+'Edit $1': null
+'Done uploading': null
+'Do you want to override $1?': null
+'Directory is empty': null
+'Directory $1 created.': null
+Design: null
+'Delete theme': null
+'Current directory:': null
+'Create folder': null
+'Create file': null
+'Copy to available themes': null
+'Copied successfully': null
+Compatibility: null
+'Click to enlarge': null
+'Choose destination': null
+'Cant override directory $1.': null
+'Cache Lifetime': null
+'Browse for the theme': null
+'Assigned successfully': null
+'Article page template': null
+'Article page': null
+'Are you sure you want to unassign this theme?': null
+'Are you sure you want to delete this theme?': null
+'Add to publication': null
+'$1 is not writable': null
+'$1 $2': null
+'$1 files $2': null

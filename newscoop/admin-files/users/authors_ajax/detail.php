@@ -199,11 +199,9 @@ if ($id > 0) {
     <fieldset class="frame">
       <div class="authorThumb">
       <?php
-      if ( isset($author) && is_object($author) && is_numeric($author->getImage())) {
-          $image = new Image($author->getImage());
-          echo '<img src="' . $image->getThumbnailUrl() . '"/>';
-      } else {
-          echo '<img src="" width="100" height="120" alt="" />';
+      if (isset($author) && is_object($author) && is_numeric($author->getImage())) {
+          $metaImage = new \MetaImage($author->getImage());
+          echo $author->getImage() != 0 ? '<img src="' .$metaImage->getImageUrl(110, 130). '"/>' : '';
       }
       ?>
       </div>
@@ -217,6 +215,11 @@ if ($id > 0) {
           <input type="text" name="lang_last_name" id="lang_last_name" maxlength="35" class="input_text" value="<?php echo $lang_last_name; ?>" emsg="<?php echo $translator->trans('Please enter the last name', array(), 'authors'); ?>" style="width:170px;" />
         </li>
         <li>&nbsp;</li>
+        <?php
+            if (isset($author) && is_object($author) && $author->getImage() != 0) {
+              echo '<li><button><a href="#user-image" id="user-image-btn">'.$translator->trans("User image (full-size)", array(), "users").'</a></button></li>';
+            }
+          ?>
         <li>
           <input type="file" name="file" size="32" class="input_file" />
         </li>
@@ -271,6 +274,19 @@ if ($id > 0) {
       </ul>
     </fieldset>
   </div>
+  <?php
+    $requestSymfony = \Zend_Registry::get('container')->getService('request');
+    $zendRouter = \Zend_Registry::get('container')->getService('zend_router');
+    $publicationMetadata = $requestSymfony->attributes->get('_newscoop_publication_metadata');
+    $baseUrl = $requestSymfony->getScheme().'://'.$publicationMetadata['alias']['name'];
+    $metaImage = new \MetaImage($author->getImage());
+    $baseImage = $baseUrl.'/'.$metaImage->filerpath;
+  ?>
+  <div id="user-image" style="display:none">
+    <img id="original-image" src="<?php echo '/'.$metaImage->filerpath; ?>" width="100%" height="100%"/><br>
+    <label><b><?php echo $translator->trans("URL"); ?>: </b></label><br>
+    <input onclick="this.select();" class="input_text" value="<?php echo $baseImage ?>" style="width:99%"type="text"/>
+  </div>
   <?php } ?>
 
   <fieldset class="frame" style="margin-bottom:0;">
@@ -281,6 +297,15 @@ if ($id > 0) {
     </ul>
   </fieldset>
 </div>
+
+<script>
+$(function() {
+    $("a#user-image-btn").fancybox({
+        'onStart': function() { $("#user-image").css("display","block"); },
+        'onClosed': function() { $("#user-image").css("display","none"); }
+    });
+});
+</script>
 
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/load_tinymce.php");

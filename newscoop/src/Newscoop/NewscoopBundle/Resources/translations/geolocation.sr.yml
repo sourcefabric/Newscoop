@@ -1,4 +1,4 @@
-'Based on GeoNames.org and OpenStreetMap.org data': 
+'Based on GeoNames.org and OpenStreetMap.org data': null
 'selected marker icon': 'Изабрана маркер ознака'
 'add location to map': 'додај локације на мапу'
 'Video source': 'Видео извор'
@@ -55,7 +55,7 @@ height: висина
 'The map has been removed from the article.': 'Ова мапа је уклоњена из текста'
 'Point no.': 'Тачка број'
 'Point markers': Маркери
-None: Нема
+None: Ниједан
 'Map Search Example': 'Примери претраге мапа'
 'Map Preview': 'Преглед мапе'
 'Image URL': 'УРЛ слике'

@@ -1,39 +1,39 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: Веб-сейт
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: Геопозіціонування
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Показані від початку до кінця, від загального числа записів'
+'Send email to user:': null
+'No users found.': null
+'No records found.': 'Немає записів'
+'No entries to show': 'Немає записів для відображення'
+'Display _MENU_ records': 'Показати _MENU_ записи'
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': 'фільтрація від _MAX_ записів'
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
 'Username is used already': 'І’мя користувача вже використовується'
 'User with id $1 not found': 'Користувача з ID $1 не знайдено.'
 'User was deleted.': 'Користувач видалений.'
@@ -44,15 +44,15 @@ Continue:
 'Profile saved.': 'Профіль збережений.'
 Picture: Зображення
 'Password updated': 'Пароль оновлений'
-None: Жоден
+None: 'Ні один'
 'New confirmation email was sent to user.': 'Новий лист для підтвердження відісланий користувачу.'
 'Email is used already': 'електрона адреса вже використовується'
-'Edit your password': 'Редагувати свій пароль'
+'Edit your password': 'Відредагуйте свій пароль'
 'Edit user $1': 'Редагувати користувача  $1'
 'Edit subscriptions': 'Редагувати підписки'
 'Edit profile': 'Редагувати профіль'
-'Edit permissions': 'Редагувати права'
-'Create new account': 'Створити новий акаунт'
+'Edit permissions': 'Редагування прав'
+'Create new account': 'Створити новий обліковий запис'
 'Comment ban settings': 'Налаштування коментаря заборони'
 'Ban for user $1 saved.': 'Заборона для користувача $1 збережена'
 'User account is active': 'Акаунт користувача активний.'
@@ -64,7 +64,7 @@ Username: 'Ім’я користувача'
 'First Name': Ім’я
 Email: Е-пошта
 'You were logged out.': 'Ви вийшли з системи.'
-'Newscoop Subhead': 'Підзаголовок Newscoop '
+'Newscoop Subhead': 'Підзаголовок Newscoop'
 Filters: Фільтри
 'Add new Author': 'Додати нового автора'
 'Loading Data': 'Завантаження даних'
@@ -101,7 +101,7 @@ Filters: Фільтри
 'User may attach topics to articles': 'Користувач може вказувати теми для статей'
 'User may attach images to articles': 'Користувач може прікріпляти зображення до статей'
 'User may add special characters': 'Користувач може додавати спеціальні символи'
-'That user name already exists, please choose a different login name.': 'Ім’я користувача вже існує, будь ласка виберіть інше.'
+'That user name already exists, please choose a different login name.': 'Цей користувач вже існує, будь ласка виберіть інший логін'
 'User may delete article attachments': 'Користувач може видаляти прікріплення у статтях'
 'User may change article attachments': 'Користувач може змінювати прікріплення у статтях'
 'User may add article attachments': 'Користувач може додавати прікріплення у статті'
@@ -184,3 +184,39 @@ Miscellaneous: Різне
 'User will be notified on several events': 'Користувача буде повідомлено про декілька подій'
 'Editor Miscellaneous Settings': 'Редагувати різні налаштування'
 'No such user account.': 'Немає такої акаунту користувача.'
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: 'Керування користувачами'
+    created: Створена
+    updated: null
+    status:
+        status: Статус
+        registered: null
+        pending: null
+        deleted: Видалено
+        active: Активно
+    table:
+        actions:
+            actions: Дії
+            edit: Редагувати
+            resend_email: null
+            rename: null
+            remove: Видалити
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: Обробка...
+    chart:
+        title: null

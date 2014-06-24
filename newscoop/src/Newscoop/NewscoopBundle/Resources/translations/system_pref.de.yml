@@ -1,127 +1,132 @@
 newscoop:
-  btn:
-    save: Speichern
-  preferences:
     btn:
-      cleardatabasecache: Lösche aktuellen Treiber-Cache
-    error:
-      cache: "Ungültig: PHP %cache% muss aktiviert sein, um das Template Caching System benutzen zu können."
-      cacheNotCleared: Fehler bei der Cache-Bereinigung
-      geolocation: Geolocation-Felder ungültig. Es müssen Zahlen enthalten sein. Breitengrad kann nicht >90 and < -90 sein. Längengrad kann nicht > 180 und < -180 sein.
-      latitude: "Wert im Feld Breitengrad ist ungültig."
-      longitude: "Wert im Feld Längengrad ist ungültig. "
-      maxupload: Der Wert der Max Upload Datengröße ist ungültig
-      noaccess: "Sie haben keine Berechtigung, die Systemeinstellungen zu ändern. "
-      replication: "Daten der Datenbank Replikation unvollständig"
-    label:
-      allowrecovery: "Wiederherstellung des Passwortes erlauben:"
-      apikey: "API-Key:"
-      appid: "App ID:"
-      autofocus: "Karten-Autofocus als Standardverhalten:"
-      borderautofocus: "Kartenrand für Autofocus:"
-      cacheengine: "Database Cache Engine:"
-      cacheenginehost: "Datenbank Cache Engine Host:"
-      cacheengineport: "Datenbank Cache-Engine-Port:"
-      cacheimage: "Imagecache Lifetime: "
-      cachetemplate: "Template Cache Handler:"
-      captcha: "Anzahl der Login-Versuche, bevor CAPTCHA angezeigt wird:"
-      cron: "Zeitgesteuerte Aufgabe extern durchführen?"
-      css: Füge CSS Datei für Kartenansicht ein
-      defaultheight: "Standardkartenhöhe:"
-      defaultmapprovider: "Standard Karten Provider: "
-      defaultmarker: "Standard Map Marker:"
-      defaultwidth: "Standardkartenbreite:"
-      disabled: deaktiviert
-      email: "SMTP Email von Adresse:"
-      emailfrom: "Email-Adresse für System-Benachrichtigungen "
-      external: Abonnements werden extern bearbeitet?
-      fbsecret: "App Secret:"
-      filter: "Templates Filter Maske (durch Komma getrennt) "
-      flashdir: "Lokales Flash-Verzeichnis:"
-      flashheight: "Flash Standard-Höhe:"
-      flashserver: "Lokaler Flash-Server:"
-      flashwidth: "Flash Standard-Breite:"
-      geosearch: "Lokale GeoNamen Suche benutzen:"
-      header: Einstellungen
-      imageheight: "Neue Bildhöhe:"
-      imageratio: "Änderung der Bildgröße im Verhältnis:"
-      imagewidth: "Neue Bildbreite:"
-      latitude: "Kartenmitte Breitengrad:"
-      longitude: "Kartenmitte Längengrad:"
-      mapprovider: "Google Streets Map Provider erlauben: "
-      mapquest: "MapQuest Map Provider erlauben: "
-      markerdir: "Map Marker Verzeichnis:"
-      maxupload: "Maximale Upload-Datengröße:"
-      maxuploadmsg: "Geben Sie einen Wert zwischen 0 und %max% (die maximale Größe ist in der Datei 'php.ini' angegeben). Benutzen sie 'K' für Kilobytes, 'M' für Megabytes und 'G' für Gigabytes, ohne Leerraum zwischen den Werten und den entsprechenden Buchstaben, z.B. '3M'. "
-      metadescription: "Meta Description:"
-      metakeywords: "Meta Keywords:"
-      mysqlpath: MySQL client command path
-      mysqlpathmsg: um Geodaten zu laden
-      nominatimsearch: "MapQuest Nominatim Suche benutzen: "
-      nooption: Nein
-      openstreet: "OpenStreet Map Provider erlauben: "
-      popupheight: Min. Höhe für Karten-Popup
-      popupwidth: "Min. Breite für Karten-Popup:"
-      preflanguage: "Sprache für Adressangaben: "
-      recaptchaprivatekey: Privater Schlüssel
-      recaptchapublickey: Öffentlicher Schlüssel
-      recaptchasecure: Sichere URL für reCAPTCHA?
-      replicationhost: "Database Replication Host: "
-      replicationport: "Database Replication Port: "
-      replicationpw: "Database Replication Passwort: "
-      replicationuser: "Database Replication Nutzer: "
-      secretkey: "Geheimschlüssel:"
-      separator: "Keyword Trenner: "
-      serverdb: Newscoop Online Server Datenbank
-      sessionlifetime: Lebensdauer einer Session
-      sessionlifetimemsg: entsprechend der php.ini Einstellungen.
-      siteonline: "Online Seite:"
-      sitetitle: "Title:"
-      smtphost: "SMTP Host: "
-      smtpport: "SMTP Port: "
-      stats: "Automatische Sammlung von Statistiken:"
-      timezone: "Zeitzone:"
-      title: Systemeinstellungen
-      usereplication: Einstellen eines Newscoop Replication Server?
-      vimeoheight: "Vimeo Standard-Höhe:"
-      vimeowidth: "Vimeo Standard-Breite:"
-      yesoption: Ja
-      youtubeheight: Youtube Standard-Höhe
-      youtubewidth: "Youtube Standard-Breite:"
-      zoom: Zoom möglich für Bilder im Artikel?
-      zoomautofocus: "Maximaler Zoom für Autofocus:"
-      zoomlevel: "Karten-Zoomlevel:"
-    menu:
-      cache: Cache-Einstelllungen
-      editor: Editor Einstellungen
-      email: E-Mail Einstellungen
-      fb: Facebook Einstellungen
-      general: Allgemeine Einstellungen
-      geolocation: Geolocation Einstellungen
-      media: Video-Einstellungen
-      other: Andere Einstellungen
-      recaptcha: reCAPTCHA Einstellungen
-    popover:
-      cacheengine: "Ermöglicht oder verhindert das APC Caching, welches die Leistung von Newscoop verbessern kann."
-      cacheenginehost: "Cache-Host eingeben (für Memcache, Memcached oder Redis)"
-      cacheengineport: "Cache-Host-Ports eingeben (für Memcache, Memcached oder Redis)"
-      cacheimage: "Die Zeit, in der Bilder gecached werden, von 30 Sekunden bis unendlich."
-      cachetemplate: Wählen Sie DB um Template Caching zu ermöglichen.
-      cron: "Der Cron-Zeitplaner des Servers soll für automatisierte Aufgaben gebraucht werden, nicht der Newscoop-Zeitplaner."
-      emailfrom: "Die E-Mail-Adresse, die für Benachrichtigungen aus dem System gebraucht wird."
-      filter: "Wenn Sie Keywords für Templates vor dem Template Editor verbergen wollen, geben Sie diese in der Theme Management Seite ein. Zum Beispiel für Templates, die nicht mehr in Gebrauch sind, die sie aber nicht vom Server löschen wollen."
-      ratio: "Das Beibehalten des Größenverhältnisses hat Vorrang vor Änderungen der Breite oder Höhe. Falls kein Größenverhältnis festgelegt ist, wird Newscoop den Wert benutzen, der zu einer kleineren Bildgröße führt. Die Standardeinstellungen können überschrieben werden durch Einstellungen von Größenverhältnis, Breite oder Höhe eines spezifischen Inline-Bildes im Artikel Editor. "
-      recaptcha:
-        privatekey: Nutzen Sie dies für die Kommunikation zwischen Ihrem Server und dem reCAPTCHA-Server. Achten Sie dabei auf Geheimhaltung.
-        publickey: "Benutzen Sie dies im JavaScript Code, der Ihren Nutzern bereitgestellt wird."
-        secure: "Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja"
-      recovery: "Ob Nutzer via E-Mail eine Passwort-Erinnerung erhalten können. Beachten Sie, dass falls diese Funktion aktiviert ist und Ihr E-Mail-Konto gefährdet ist, kann dies auch zu einer Gefährdung für Ihre Newscoop-Publikation werden."
-      replication: "Ermöglicht es Ihnen, Newscoop so einzustellen, dass es aus Sicherheitsgründen oder wegen Netzwerkproblemen auf zwei Servern gleichzeitig läuft."
-      secret: "Der Sicherheitsschlüssel, den Newscoop für die Integration von Webdiensten und anderen modernen Funktionen nutzen kann. "
-      separator: Spezifizieren Sie den Trenner für Keywords im Artikel Editor (Komma oder Bindestrich).
-      stats: "Mit dieser Option aktivieren Sie die Sammlung von Statistiken über den Zugriff von Lesern Ihrer Publikationen. Klicken Sie Nein falls Sie ein externes Statistiktool nutzen, weil das Sammeln von Statisiken eine Belastung für Ihren Newscoop-Server darstellt."
-      video: "Die Standardbreite und -höhe von extern oder lokal gehosteten Videodateien kann hier eingestellt werden, damit die Videos in den Templates ihrer Publikation korrekt abgespielt werden."
-      zoom: "Wenn hier Ja eingestellt ist, können die Leser das Bild durch Klick auf das Bild vergrößern. Dieses Zooming-Element funktioniert bei jedem Inline-Bild innerhalb des Artikeltextes."
-    success:
-      cacheCleared: Cache wurde gelöscht
-      saved: Systemeinstellungen aktualisiert.
+        save: Speichern
+    preferences:
+        error:
+            cache: 'Ungültig: Sie müssen PHP %cache% aktivieren um den Template Cache nutzen zu könnenn.'
+            replication: 'Daten für Datenbankreplikation unvollständig'
+            maxupload: 'Ungültiger Wert für maximale Dateigröße zum Hochladen eingegeben.'
+            geolocation: 'Geolocation-Felder ungültig. Es müssen Zahlen enthalten sein. Breitengrad kann nicht >90 and < -90 sein. Längengrad kann nicht > 180 und < -180 sein.'
+            noaccess: 'Keine Berechtigung Systemeinstellungen zu verändern.'
+            latitude: 'Wert im Feld Breitengrad ist ungültig.'
+            longitude: 'Wert im Feld Längengrad ist ungültig. '
+            cacheNotCleared: 'Fehler bei der Cache-Bereinigung'
+        success:
+            saved: 'Systemeinstellungen aktualisiert.'
+            cacheCleared: 'Cache wurde gelöscht'
+        menu:
+            general: 'Allgemeine Einstellungen'
+            email: 'E-Mail Einstellungen'
+            editor: 'Einstellungen bearbeiten'
+            geolocation: 'Geostandort Einstellungen'
+            fb: 'Facebook Einstellungen'
+            media: Video-Einstellungen
+            cache: Cache-Einstelllungen
+            other: 'Andere Einstellungen'
+            recaptcha: 'reCAPTCHA Einstellungen'
+        btn:
+            cleardatabasecache: 'Lösche aktuellen Treiber-Cache'
+        label:
+            title: Systemeinstellungen
+            header: Einstellungen
+            siteonline: 'Seite Online:'
+            sitetitle: 'Seitentitel:'
+            metakeywords: 'Metaschlagwörter der Seite:'
+            metadescription: 'Metabeschreibung der Seite:'
+            timezone: 'Zeitzone:'
+            cacheengine: 'Datenbank Cache Engine:'
+            cacheenginehost: 'Datenbank Cache Engine Host:'
+            cacheengineport: 'Datenbank Cache-Engine-Port:'
+            cachetemplate: 'newscoop:preferences:label:cachetemplate'
+            cacheimage: 'Bildcache Lebensdauer:'
+            allowrecovery: 'Passwortwiederherstellung zulassen:'
+            secretkey: 'Geheimer Schlüssel:'
+            sessionlifetime: 'Dauer der Sitzung:'
+            sessionlifetimemsg: 'entsprechend der php.ini Einstellungen.'
+            separator: 'Trennzeichen für Schlagwörter:'
+            captcha: 'Anzahl fehlgeschlagener Loginversuche bevor CAPTCHA angezeigt wird:'
+            maxupload: 'Maximale Dateigröße zum Hochladen:'
+            maxuploadmsg: 'Geben Sie einen Wert zwischen 0 und %max% (die maximale Größe ist in der Datei ''php.ini'' angegeben). Benutzen sie ''K'' für Kilobytes, ''M'' für Megabytes und ''G'' für Gigabytes, ohne Leerraum zwischen den Werten und den entsprechenden Buchstaben, z.B. ''3M''. '
+            stats: 'Automatische Sammlung von Statistiken'
+            smtphost: 'newscoop:preferences:label:smtphost'
+            smtpport: 'newscoop:preferences:label:smtpport'
+            email: 'SMTP Email von Adresse:'
+            emailfrom: 'Email-Adresse für System-Benachrichtigungen '
+            imageratio: 'Bildratio verändern:'
+            imagewidth: 'Bildbreite verändern:'
+            imageheight: 'Bildhöhe verändern:'
+            zoom: 'Zoom aktiviert für Bilder im Artikelinhalt?'
+            external: 'Abonnements extern verwalten?'
+            usereplication: 'Newscoop Replication Server erstellen?'
+            serverdb: 'Newscoop Online Server Datenbank'
+            replicationhost: 'Host Datenbankreplikation:'
+            replicationuser: 'User Datenbankreplikation:'
+            replicationpw: 'Passwort Datenbankreplikation:'
+            replicationport: 'Port Datenbankreplikation:'
+            filter: 'Filtermaske Templates (durch Kommas getrennt)'
+            cron: 'Geplante Aufgaben extern ausführen?'
+            mysqlpath: 'MySQL Client Befehlspfad'
+            mysqlpathmsg: 'um Geo-Namen Daten zu laden'
+            latitude: 'Kartenmitte Breitengrad:'
+            longitude: 'Kartenmitte Längengrad:'
+            zoomlevel: 'Kartenzoom:'
+            defaultwidth: 'Karte Standardbreite:'
+            defaultheight: 'Karte Standardhöhe:'
+            css: 'CSS-Datei bei Kartenansicht einschließen. '
+            autofocus: 'Karten Auto-Focus als Standard-Verhalten. '
+            zoomautofocus: 'Maximaler Zoom für Auto-Schärfe'
+            borderautofocus: 'Kartengrenze für Auto-Focus:'
+            mapprovider: 'Google Streets Kartenprovider zulassen:'
+            mapquest: 'MapQuest Kartenprovider zulassen:'
+            openstreet: 'OpenStreet Kartenprovider zulassen:'
+            defaultmapprovider: 'Standard Kartenprovider:'
+            nominatimsearch: 'MapQuest Nominatim Suche benutzen: '
+            preflanguage: 'Sprache für Adressangaben: '
+            markerdir: 'Kartenmarkierung Verzeichnis:'
+            defaultmarker: 'Standard Kartenmarkierung:'
+            popupwidth: 'Kartenpopup Mindestbreite:'
+            popupheight: 'Kartenpopup Mindesthöhe:'
+            youtubewidth: 'Youtube Standardbreite:'
+            youtubeheight: 'Youtube Standardhöhe:'
+            vimeowidth: 'Vimeo Standardbreite:'
+            vimeoheight: 'Vimeo Standardhöhe:'
+            flashwidth: 'Flash Standardbreite:'
+            flashheight: 'Flash Standardhöhe:'
+            flashserver: 'Lokaler Flash Server:'
+            flashdir: 'Lokales Flash Verzeichnis:'
+            apikey: 'API Schlüssel:'
+            appid: 'newscoop:preferences:label:appid'
+            fbsecret: 'App Secret: '
+            recaptchapublickey: 'Öffentlicher Schlüssel'
+            recaptchaprivatekey: 'Privater Schlüssel'
+            recaptchasecure: 'Sichere URL für reCAPTCHA?'
+            disabled: deaktiviert
+            yesoption: Ja
+            nooption: Nein
+            geosearch: 'Lokale GeoNamen Suche benutzen:'
+            usergarbage: null
+            usergarbagedaysinfo: null
+            usergarbagedays: null
+        popover:
+            cacheengine: 'Ermöglicht oder verhindert das APC Caching, welches die Leistung von Newscoop verbessern kann.'
+            cacheenginehost: 'Cache-Host eingeben (für Memcache, Memcached oder Redis)'
+            cacheengineport: 'Cache-Host-Ports eingeben (für Memcache, Memcached oder Redis)'
+            cacheimage: 'Die Zeit, in der Bilder gecached werden, von 30 Sekunden bis unendlich.'
+            cachetemplate: 'Wählen Sie DB um Template Caching zu ermöglichen.'
+            recovery: 'Ob Nutzer via E-Mail eine Passwort-Erinnerung erhalten können. Beachten Sie, dass falls diese Funktion aktiviert ist und Ihr E-Mail-Konto gefährdet ist, kann dies auch zu einer Gefährdung für Ihre Newscoop-Publikation werden.'
+            secret: 'Der Sicherheitsschlüssel, den Newscoop für die Integration von Webdiensten und anderen modernen Funktionen nutzen kann. '
+            separator: 'Spezifizieren Sie den Trenner für Keywords im Artikel Editor (Komma oder Bindestrich).'
+            stats: 'Mit dieser Option aktivieren Sie die Sammlung von Statistiken über den Zugriff von Lesern Ihrer Publikationen. Klicken Sie Nein falls Sie ein externes Statistiktool nutzen, weil das Sammeln von Statisiken eine Belastung für Ihren Newscoop-Server darstellt.'
+            zoom: 'Wenn hier Ja eingestellt ist, können die Leser das Bild durch Klick auf das Bild vergrößern. Dieses Zooming-Element funktioniert bei jedem Inline-Bild innerhalb des Artikeltextes.'
+            ratio: 'Das Beibehalten des Größenverhältnisses hat Vorrang vor Änderungen der Breite oder Höhe. Falls kein Größenverhältnis festgelegt ist, wird Newscoop den Wert benutzen, der zu einer kleineren Bildgröße führt. Die Standardeinstellungen können überschrieben werden durch Einstellungen von Größenverhältnis, Breite oder Höhe eines spezifischen Inline-Bildes im Artikel Editor. '
+            replication: 'Ermöglicht es Ihnen, Newscoop so einzustellen, dass es aus Sicherheitsgründen oder wegen Netzwerkproblemen auf zwei Servern gleichzeitig läuft.'
+            filter: 'Wenn Sie Keywords für Templates vor dem Template Editor verbergen wollen, geben Sie diese in der Theme Management Seite ein. Zum Beispiel für Templates, die nicht mehr in Gebrauch sind, die sie aber nicht vom Server löschen wollen.'
+            cron: 'Der Cron-Zeitplaner des Servers soll für automatisierte Aufgaben gebraucht werden, nicht der Newscoop-Zeitplaner.'
+            video: 'Die Standardbreite und -höhe von extern oder lokal gehosteten Videodateien kann hier eingestellt werden, damit die Videos in den Templates ihrer Publikation korrekt abgespielt werden.'
+            emailfrom: 'Die E-Mail-Adresse, die für Benachrichtigungen aus dem System gebraucht wird.'
+            recaptcha:
+                publickey: 'Benutzen Sie dies im JavaScript Code, der Ihren Nutzern bereitgestellt wird.'
+                privatekey: 'Nutzen Sie dies für die Kommunikation zwischen Ihrem Server und dem reCAPTCHA-Server. Achten Sie dabei auf Geheimhaltung.'
+                secure: 'Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja'
+            garbage: null
+            lifetime: null

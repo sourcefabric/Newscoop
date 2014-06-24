@@ -13,6 +13,7 @@ use Newscoop\Entity\User;
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Translation;
 use Newscoop\Entity\Article;
+use Newscoop\Services\UserService;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -27,12 +28,14 @@ class AttachmentService
      * @param array         $config
      * @param EntityManager $em
      * @param Router        $router
+     * @param UserService   $userService
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $em, Router $router)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $em, Router $router, UserService $userService)
     {
         $this->config = $config;
         $this->em = $em;
         $this->router = $router;
+        $this->userService = $userService;
     }
 
     /**
@@ -154,6 +157,7 @@ class AttachmentService
 
     private function fillAttachment(Attachment $attachment, $attributes)
     {
+        $user = $this->userService->getCurrentUser();
         $attributes = array_merge(array(
             'language' => null,
             'name' => null,
@@ -166,8 +170,12 @@ class AttachmentService
             'user' => null,
             'updated' => new \DateTime(),
             'source' => 'local',
-            'status' => 'unaproved',
+            'status' => 'unapproved',
         ), $attributes);
+
+        if ($user->hasPermission('AddFile') || $user->hasPermission('ChangeFile')) {
+            $attributes['status'] = 'approved';
+        }
 
         if (!is_null($attributes['language'])) {
             $attachment->setLanguage($attributes['language']);

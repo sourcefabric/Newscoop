@@ -1,172 +1,128 @@
-'Password confirmation does not match your password.': 
-'Password Confirmation': 
-Website: 
-Twitter: 
-'Save profile': 
-'Profile image': 
-Organisation: 
-'Last Name Public': 
-Google+: 
-Geolocation: 
-Gender: 
-'First Name Public': 
-Facebook: 
-'Date of birth': 
-'Allow sending emails': 
-'About me': 
-'User with email %s is registered already.': 
-'Username is used. Please use another one.': 
-Continue: 
-'Accepting terms of use': 
-'send confirmation email': 
-'edit user': 
-'delete user': 
-'Verified profile': 
-'Showing _START_ to _END_ of _TOTAL_ entries': 
-'Send email to user:': 
-'No users found.': 
-'No records found.': 
-'No entries to show': 
-'Display _MENU_ records': 
-'Are you sure you want to {action}?': 
-'Active Logins': 
-' - filtering from _MAX_ records': 
-'User renamed.': 
-'User attributes': 
-'Rename user $1': 
-'Username is used already': 
-'User with id $1 not found': 
-'User was deleted.': 
-'User saved': 
-'User id not specified': 
-'User $1 created': 
-'Send confirm email': 
-'Profile saved.': 
-Picture: 
-'Password updated': 
-None: 
-'New confirmation email was sent to user.': 
-'Email is used already': 
-'Edit your password': 
-'Edit user $1': 
-'Edit subscriptions': 
-'Edit profile': 
-'Edit permissions': 
-'Create new account': 
-'Comment ban settings': 
-'Ban for user $1 saved.': 
-'User account is active': 
-'Allow users profile to be publicly displayed': 
-'Allow user access to login to site backend': 
-Templates: 
-Username: 
-'Last Name': 
-'First Name': 
-Email: 
-'You were logged out.': 
-'Newscoop Subhead': 
-Filters: 
-'Add new Author': 
-'Loading Data': 
-'Delete author type': 
-'Cannot remove author type.': 
-'Cannot remove author alias.': 
-'Author alias removed.': 
-'Are you sure you want to delete this author?': 
-'Are you sure you want to delete this author alias?': 
-'All Author Types': 
-'Add author type': 
-'You do not have the permission to change authors.': 
-'Please fill at least first name and last name.': 
-'Cannot add author type, this type already exists.': 
-'Author type removed.': 
-'Author type must be at least three characters long.': 
-'Author type added.': 
-'Are you sure you want to delete this author type?': 
-'User may change authors': 
-'Unable to add new image, target directory is not writable.': 
-'Author saved.': 
-'Author deleted.': 
-'Enable Firefox spell checking by default': 
-'User may use the editor status bar': 
-'User may clear up the system cache': 
-'Another user is registered with that e-mail address, please choose a different one.': 
-'There was an error when trying to update the user info.': 
-'User may moderate comments': 
-'User may enable comments': 
-'User may translate articles': 
-'User may move articles': 
-'User may find and replace': 
-'User may change system preferences': 
-'User may attach topics to articles': 
-'User may attach images to articles': 
-'User may add special characters': 
-'That user name already exists, please choose a different login name.': 
-'User may delete article attachments': 
-'User may change article attachments': 
-'User may add article attachments': 
+'Password confirmation does not match your password.': null
+'Password Confirmation': null
+Website: null
+Twitter: null
+'Save profile': null
+'Profile image': null
+Organisation: null
+'Last Name Public': null
+Google+: null
+Geolocation: null
+Gender: null
+'First Name Public': null
+Facebook: null
+'Date of birth': null
+'Allow sending emails': null
+'About me': null
+'User with email %s is registered already.': null
+'Username is used. Please use another one.': null
+Continue: null
+'Accepting terms of use': null
+'send confirmation email': null
+'edit user': null
+'delete user': null
+'Verified profile': null
+'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Send email to user:': null
+'No users found.': null
+'No records found.': null
+'No entries to show': null
+'Display _MENU_ records': null
+'Are you sure you want to {action}?': null
+'Active Logins': null
+' - filtering from _MAX_ records': null
+'User renamed.': null
+'User attributes': null
+'Rename user $1': null
+'Username is used already': null
+'User with id $1 not found': null
+'User was deleted.': null
+'User saved': null
+'User id not specified': null
+'User $1 created': null
+'Send confirm email': null
+'Profile saved.': null
+Picture: null
+'Password updated': null
+None: null
+'New confirmation email was sent to user.': null
+'Email is used already': null
+'Edit your password': null
+'Edit user $1': null
+'Edit subscriptions': null
+'Edit profile': null
+'Edit permissions': null
+'Create new account': null
+'Comment ban settings': null
+'Ban for user $1 saved.': null
+'User account is active': null
+'Allow users profile to be publicly displayed': null
+'Allow user access to login to site backend': null
+Templates: null
+Username: null
+'Last Name': null
+'First Name': null
+Email: null
+'You were logged out.': null
+'Newscoop Subhead': null
+Filters: null
+'Add new Author': null
+'Loading Data': null
+'Delete author type': null
+'Cannot remove author type.': null
+'Cannot remove author alias.': null
+'Author alias removed.': null
+'Are you sure you want to delete this author?': null
+'Are you sure you want to delete this author alias?': null
+'All Author Types': null
+'Add author type': null
+'You do not have the permission to change authors.': null
+'Please fill at least first name and last name.': null
+'Cannot add author type, this type already exists.': null
+'Author type removed.': null
+'Author type must be at least three characters long.': null
+'Author type added.': null
+'Are you sure you want to delete this author type?': null
+'User may change authors': null
+'Unable to add new image, target directory is not writable.': null
+'Author saved.': null
+'Author deleted.': null
+'Enable Firefox spell checking by default': null
+'User may use the editor status bar': null
+'User may clear up the system cache': null
+'Another user is registered with that e-mail address, please choose a different one.': null
+'There was an error when trying to update the user info.': null
+'User may moderate comments': null
+'User may enable comments': null
+'User may translate articles': null
+'User may move articles': null
+'User may find and replace': null
+'User may change system preferences': null
+'User may attach topics to articles': null
+'User may attach images to articles': null
+'User may add special characters': null
+'That user name already exists, please choose a different login name.': null
+'User may delete article attachments': null
+'User may change article attachments': null
+'User may add article attachments': null
 'You do not have the right to create user accounts.': 您无权建立新帐户
 'You must select a $1': 你必须选择一个$1
 'The password must be at least 6 characters long and both passwords should match.': 密码至少6个字符，两次密码要相同
 'The user account could not be created.': 此帐户不能创建
-'User account $1 was created successfully.': 
+'User account $1 was created successfully.': null
 'You do not have the right to change user account permissions.': 您无权改变帐户许可
 'You do not have the right to change user account information.': 您无权修改帐户信息
 'The password you typed is incorrect.': 密码输入正确
 'You do not have the right to delete user accounts.': 您无权删除帐户
-'User account $1 was deleted successfully.': 
+'User account $1 was deleted successfully.': null
 'The IP Group $1 has been created.': IP组$1已建立
-'There was an error creating the IP address group.': 
+'There was an error creating the IP address group.': null
 'The IP address group $1 has been deleted.': IP地址组$1已被删除
-'User $1 information was changed successfully.': 
-'User Type': 
-'The IP address group $1:$2 conflicts with another existing group.': 
-'User management': 用户管理
-Set: 设置
-Update: 更新
-Rights: 权限
-'IP Access': IP入口
-'User Name': 用户名
-Staff: 职员
-'Adding new user account': 正在增加新帐户
-'You must select an user type.': 你必须选择一个用户类型
-'The user account $1 has been created.': 帐户$1已产生
-'Please check if an account with the same user name does not already exist.': 请检查是否同样的用户名已存在
-'You do not have the right to change user passwords.': 您无权修改密码
-'Changing user password': 正在改变密码
-'The password could not be changed.': 密码不能改变
-'The password has been changed.': 密码已改变
-'User may manage templates': 
-'User may add/change country entries': 
-'Edit user account permissions': 编辑帐户许可
-'This user account does not have permissions information.': 此帐户无许可信息
-'Updating user account permissions': 更新帐户许可
-'User account permissions have been successfuly updated.': 帐户许可已成功更新
-'User account permissions could not be updated.': 帐户许可不能更新
-'Changing user account information': 正在改变帐户信息
-'User account information has been changed.': 帐户信息已被改变
-'User account information could not be changed.': 帐户信息不能改变
-'Old password': 旧密码
-'New password': 新密码
-'Confirm new password': 确认新密码
-'Changing your password': 正在改变您的密码
-'User $1 changed his password': 用户$1改变了密码
-'Delete user account': 删除帐户
-'Deleting user account': 正在删除帐户
-'The user account $1 could not be deleted.': 帐户$1不能删除
-'No such user.': 无此用户
-'Delete IP Group $1': 删除IP组$1
-'IP Access List': IP访问列表
-'Adding new IP Group': 正在添加新IP组
-'The IP Group could not be created.': IP组不能建立
-'Please check if an account with the same IP Group does not already exist.': 请检查是否具有同样IP组的用户已经存在
-'Delete IP Group': 删除IP组
-'You do not have the right to delete IP Groups.': 您无权删除IP组
-'No such IP Group.': 无此IP组
-'Deleting IP Group': 正在删除IP组
-'The IP Group could not be deleted.': IP组不能被删除
+'User $1 information was changed successfully.': null
+'User Type': null
+'The IP address group $1:$2 conflicts with another existing group.': null
 'User may add/change publications': 用户可以添加/改变发布
-'Invalid value of user type parameter': 
+'Invalid value of user type parameter': null
 'User may delete publications': 用户可以删除发布
 'User may add/change issues': 用户可以添加/变化问题
 'User may delete issues': 用户可以删除问题
@@ -179,13 +135,15 @@ Staff: 职员
 'User may change images': 用户可替换图片
 'User may delete images': 用户可删除图片
 'User may delete templates': 用户可删除模版
-'User may add/change staff accounts and passwords': 
-'User may add/change subscribers accounts and passwords': 
-'User may delete staff accounts': 
+'User may add/change staff accounts and passwords': null
+'User may add/change subscribers accounts and passwords': null
+'User may delete staff accounts': null
 'User may manage user subscriptions': 用户可管理用户订阅
 'User may manage account types': 用户可管理帐户类型
 'User may add/change article types': 用户可添加/变化文章类型
 'User may delete article types': 用户可删除文章类型
+'User may manage templates': null
+'User may add/change country entries': null
 'User may add languages and manage language information': 用户可添加/管理语言信息
 'User may delete languages': 用户可删除语言
 'User may view audit logs': 用户可查看日志
@@ -193,35 +151,72 @@ Staff: 职员
 'User may manage localizer': 用户可管理本地
 'User may publish articles': 用户可发布文章
 'User may manage topics': 用户可管理主题
-'User may use bold': 
-'User may use italic': 
-'User may use underline': 
-'User may use strikethrough': 
-'User may change text alignment': 
-'User may copy, cut, and paste': 
-'User may undo/redo': 
-'User may change text direction': 
-'User may set indents': 
-'User may add links': 
-'User may add subheads': 
-'User may insert images': 
-'User may view the HTML source': 
-'User may enlarge the editor': 
-'User may change the font face': 
-'User may change the font size': 
-'User may create bulleted lists': 
-'User may create numbered lists': 
-'User may insert tables': 
-'User may insert horizontal rules': 
-'User may change the font color': 
-'User may use superscripts': 
-'User may use subscripts': 
-Miscellaneous: 
-'Staff/Subscribers Management': 
-'Editor Basic Settings': 
-'Editor Advanced Font Settings': 
-'Editor Table Settings': 
-'Administrative tasks': 
+'User may use bold': null
+'User may use italic': null
+'User may use underline': null
+'User may use strikethrough': null
+'User may change text alignment': null
+'User may copy, cut, and paste': null
+'User may undo/redo': null
+'User may change text direction': null
+'User may set indents': null
+'User may add links': null
+'User may add subheads': null
+'User may insert images': null
+'User may view the HTML source': null
+'User may enlarge the editor': null
+'User may change the font face': null
+'User may change the font size': null
+'User may create bulleted lists': null
+'User may create numbered lists': null
+'User may insert tables': null
+'User may insert horizontal rules': null
+'User may change the font color': null
+'User may use superscripts': null
+'User may use subscripts': null
+'User may backup and restore the site data': null
+Miscellaneous: null
+'Staff/Subscribers Management': null
+'Editor Basic Settings': null
+'Editor Advanced Font Settings': null
+'Editor Table Settings': null
+'Administrative tasks': null
 'User will be notified on several events': 用户将被告知
-'Editor Miscellaneous Settings': 
+'Editor Miscellaneous Settings': null
 'No such user account.': 无此帐户
+'User image (full-size)': null
+users:
+    label:
+        title: null
+    menu:
+        manage: null
+    created: null
+    updated: null
+    status:
+        status: 状态
+        registered: null
+        pending: null
+        deleted: null
+        active: null
+    table:
+        actions:
+            actions: null
+            edit: 编辑
+            resend_email: null
+            rename: null
+            remove: null
+        confirm_remove: null
+        table_messages:
+            page: null
+            perPageText: null
+            pageText: null
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
+            recordCountTotalTemplate: null
+            recordCountFilteredTemplate: null
+            recordCountText: null
+            recordCountTextTemplate: null
+            recordCountTemplate: null
+            processingText: null
+    chart:
+        title: null

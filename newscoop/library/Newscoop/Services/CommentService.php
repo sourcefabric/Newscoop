@@ -224,6 +224,10 @@ class CommentService
      */
     public function isBanned($commenter)
     {
+        if ($commenter->getUser() != null) {
+            $commenter->setName($commenter->getUser()->getUsername());
+        }
+
         $publication = $this->publicationService->getPublication();
         $results = $this->em->getRepository('Newscoop\Entity\Comment\Acceptance')->isBanned($commenter, $publication);
         $result = count(array_intersect(array(true), $results));

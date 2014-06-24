@@ -1,5 +1,5 @@
-'Make sure to enter the Moderator Address below': 
-'click to see issues': 
+'Make sure to enter the Moderator Address below': null
+'click to see issues': null
 'Moderator Address': 'Adresa moderatorului'
 'From Address': 'Adresa de la care se trimite'
 'Use CAPTCHA to prevent spam?': 'Vrei să foloseşti CAPTCHA pentru a opri mesajele nesolicitate?'
@@ -20,7 +20,7 @@
 'Publication updated': 'Publicaţia a fost actualizată'
 'Subscriber comments moderated?': 'Comentariile abonaţilor se moderează?'
 'Public comments moderated?': 'Comentariile publice se moderează?'
-'Comments enabled?': 'Se activează comentariile ?'
+'Comments enabled?': 'Activezi comentariile?'
 'Comments enabled': 'Comentariile au fost activate'
 'Article comments default to enabled?': 'Preferinţa din oficiu pentru comentariile la articole se stabileşte la active?'
 'trial subscription': 'abonament de probă'
@@ -71,4 +71,7 @@
 'Time Unit': 'Unitatea de timp'
 Currency: Monedă
 'Edit languages': 'Modifică limbile'
-'Change publication information': 'Modifică informaţia despre publicaţie'
+'Search engine optimization': null
+'Article title': null
+'Article keywords': null
+'Article topics': null

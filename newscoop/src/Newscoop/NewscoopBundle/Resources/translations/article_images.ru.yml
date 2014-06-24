@@ -1,6 +1,6 @@
-'Display newsfeed images': 
-'Mark image': 
-'Add selected images to slideshow': 
+'Display newsfeed images': null
+'Mark image': null
+'Add selected images to slideshow': null
 'Sorry that image is too small. Image needs to be at least %dx%d.': 'К сожалению, это изображение слишком мало. Размер изображений должен быть по меньшей мере %dx%d.'
 'Slideshow rendition': 'Комплект размеров слайд-шоу'
 'Renditions reloaded': 'Комплект размеров  перезагружен'
@@ -46,6 +46,7 @@ Create: Создать
 Caption: Подпись
 'Attached images': 'Прикрепленные изображения'
 'Attach & Place': 'Прикрепить и разместить'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
 'Add video': 'Добавить видео'
 'Add caption': 'Добавить подпись'
 'Show all': 'Показать все'
@@ -68,10 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Дата<BR><SMALL>(гггг-мм-дд)</SM
 'You must select an image file to upload.': 'Вы должны выбрать графический файл для загрузки.'
 'Change image information': 'Измениить информацию об изображении'
 'You do not have the right to add images': 'Вы не имеете прав доступа к добавлению изображения'
-'Items per page': 'Объектов на страницу'
-'The image $1 has been added.': 'Картинка $1 была успешно добавлена.'
-'View image': 'Просмотр картинки'
-Unlink: Отвязать
-'Back to article details': 'Назад к подробностям статьи'
-'Are you sure you want to delete the image $1?': 'Вы уверены, что хотите удалить картинку $1?'
-'Click one of the ': 
+'Filter by uploader...': null

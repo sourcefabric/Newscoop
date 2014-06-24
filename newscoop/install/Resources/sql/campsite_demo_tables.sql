@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.35, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: newscoop
+-- Host: localhost    Database: newscoop43demo
 -- ------------------------------------------------------
--- Server version 5.5.31-0ubuntu0.13.04.1
+-- Server version 5.5.35-0ubuntu0.12.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,10 +25,10 @@ DROP TABLE IF EXISTS `Aliases`;
 CREATE TABLE `Aliases` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` char(128) NOT NULL DEFAULT '',
-  `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
+  `IdPublication` int(10) unsigned DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `ArticleAttachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ArticleAttachments` (
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_attachment_id` int(10) unsigned NOT NULL DEFAULT '0',
-  UNIQUE KEY `article_attachment_index` (`fk_article_number`,`fk_attachment_id`),
+  `fk_article_number` int(11) NOT NULL,
+  `fk_attachment_id` int(11) NOT NULL,
+  PRIMARY KEY (`fk_article_number`,`fk_attachment_id`),
   KEY `fk_article_number` (`fk_article_number`),
   KEY `fk_attachment_id` (`fk_attachment_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -65,20 +65,42 @@ CREATE TABLE `ArticleAuthors` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `ArticleImageCaptions`
+--
+
+DROP TABLE IF EXISTS `ArticleImageCaptions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ArticleImageCaptions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdLanguage` int(11) NOT NULL,
+  `IdImage` int(11) NOT NULL,
+  `NrArticle` int(11) NOT NULL,
+  `caption` varchar(255) NOT NULL,
+  `articleImage_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `imageId` (`IdImage`,`NrArticle`,`IdLanguage`),
+  KEY `IDX_1E9BFCA410F3034D6CB384EF` (`IdImage`,`NrArticle`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `ArticleImages`
 --
 
 DROP TABLE IF EXISTS `ArticleImages`;
-
-CREATE TABLE ArticleImages (
-  id INT AUTO_INCREMENT NOT NULL,
-  NrArticle INT NOT NULL,
-  Number INT DEFAULT NULL,
-  is_default TINYINT(1) DEFAULT NULL,
-  IdImage INT DEFAULT NULL,
-  INDEX IDX_A9426E241D447EDE (IdImage),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ArticleImages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `NrArticle` int(11) NOT NULL,
+  `Number` int(11) DEFAULT NULL,
+  `is_default` tinyint(1) DEFAULT NULL,
+  `IdImage` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A9426E241D447EDE` (`IdImage`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `ArticleIndex`
@@ -138,6 +160,22 @@ CREATE TABLE `ArticleRendition` (
   KEY `IDX_794B8A6C3DA5256D` (`image_id`),
   KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `ArticleSnippets`
+--
+
+DROP TABLE IF EXISTS `ArticleSnippets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ArticleSnippets` (
+  `ArticleId` int(11) NOT NULL,
+  `SnippetId` int(11) NOT NULL,
+  PRIMARY KEY (`ArticleId`,`SnippetId`),
+  KEY `IDX_5080CDE7C53224D` (`ArticleId`),
+  KEY `IDX_5080CDEB00DA91C` (`SnippetId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -232,22 +270,24 @@ DROP TABLE IF EXISTS `Attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Attachments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_language_id` int(10) unsigned DEFAULT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_language_id` int(11) DEFAULT NULL,
   `file_name` varchar(255) DEFAULT NULL,
   `extension` varchar(50) DEFAULT NULL,
   `mime_type` varchar(255) DEFAULT NULL,
   `content_disposition` enum('attachment') DEFAULT NULL,
   `http_charset` varchar(50) DEFAULT NULL,
-  `size_in_bytes` bigint(20) unsigned DEFAULT NULL,
+  `size_in_bytes` bigint(20) DEFAULT NULL,
   `fk_description_id` int(11) DEFAULT NULL,
-  `fk_user_id` int(10) unsigned DEFAULT NULL,
-  `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `time_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `Source` enum('local','feedback') NOT NULL DEFAULT 'local',
-  `Status` enum('unapproved','approved') NOT NULL DEFAULT 'approved',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `fk_user_id` int(11) DEFAULT NULL,
+  `last_modified` datetime NOT NULL,
+  `time_created` datetime NOT NULL,
+  `Source` varchar(255) NOT NULL,
+  `Status` varchar(255) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `FK_C158750178917F82` (`fk_description_id`),
+  KEY `IDX_C1587501EB0716C0` (`fk_language_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +302,7 @@ CREATE TABLE `AuthorAliases` (
   `fk_author_id` int(11) unsigned NOT NULL,
   `alias` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -331,7 +371,7 @@ CREATE TABLE `Authors` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `authors_name_ukey` (`first_name`,`last_name`),
   FULLTEXT KEY `authors_name_skey` (`first_name`,`last_name`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,6 +410,42 @@ CREATE TABLE `Cache` (
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
   KEY `expired` (`expired`),
   KEY `template` (`template`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `CityLocations`
+--
+
+DROP TABLE IF EXISTS `CityLocations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityLocations` (
+  `id` int(10) unsigned NOT NULL,
+  `city_type` varchar(10) DEFAULT NULL,
+  `population` int(10) unsigned NOT NULL,
+  `position` point NOT NULL,
+  `elevation` int(11) DEFAULT NULL,
+  `country_code` char(2) NOT NULL,
+  `time_zone` varchar(1023) NOT NULL,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `position` (`position`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `CityNames`
+--
+
+DROP TABLE IF EXISTS `CityNames`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `CityNames` (
+  `fk_citylocations_id` int(10) NOT NULL,
+  `city_name` varchar(1024) NOT NULL,
+  `name_type` varchar(10) NOT NULL,
+  KEY `fk_citylocations_id` (`fk_citylocations_id`),
+  KEY `city_name` (`city_name`(32))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -502,34 +578,36 @@ CREATE TABLE `FailedLoginAttempts` (
 --
 
 DROP TABLE IF EXISTS `Images`;
-
-CREATE TABLE Images (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Location VARCHAR(255) NOT NULL,
-  ImageFileName VARCHAR(80) DEFAULT NULL,
-  ThumbnailFileName VARCHAR(80) DEFAULT NULL,
-  TimeCreated DATETIME DEFAULT NULL,
-  LastModified DATETIME DEFAULT NULL,
-  URL VARCHAR(255) DEFAULT NULL,
-  Description VARCHAR(255) DEFAULT NULL,
-  width INT DEFAULT NULL,
-  height INT DEFAULT NULL,
-  Photographer VARCHAR(255) DEFAULT NULL,
-  photographer_url VARCHAR(255) DEFAULT NULL,
-  Place VARCHAR(255) DEFAULT NULL,
-  Date VARCHAR(255) DEFAULT NULL,
-  ContentType VARCHAR(255) NOT NULL,
-  is_updated_storage INT NOT NULL,
-  Source VARCHAR(255) DEFAULT NULL,
-  Status VARCHAR(255) NOT NULL,
-  UploadedByUser INT DEFAULT NULL,
-  INDEX IDX_E7B3BB5C447C15B9 (UploadedByUser),
-  INDEX is_updated_storage (is_updated_storage),
-  INDEX Description (Description),
-  INDEX Photographer (Photographer),
-  INDEX Place (Place),
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Images` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Location` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ImageFileName` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ThumbnailFileName` varchar(80) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `TimeCreated` datetime DEFAULT NULL,
+  `LastModified` datetime DEFAULT NULL,
+  `URL` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `width` int(11) DEFAULT NULL,
+  `height` int(11) DEFAULT NULL,
+  `Photographer` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `photographer_url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Place` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ContentType` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `is_updated_storage` int(11) NOT NULL,
+  `Source` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Status` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `UploadedByUser` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IDX_E7B3BB5C447C15B9` (`UploadedByUser`),
+  KEY `is_updated_storage` (`is_updated_storage`),
+  KEY `Description` (`Description`),
+  KEY `Photographer` (`Photographer`),
+  KEY `Place` (`Place`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `IssuePublish`
@@ -685,7 +763,7 @@ CREATE TABLE `LocationContents` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `location_contents_poi_name` (`poi_name`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -706,7 +784,7 @@ CREATE TABLE `Locations` (
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   SPATIAL KEY `locations_poi_location` (`poi_location`)
-) ENGINE=MyISAM AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -726,7 +804,7 @@ CREATE TABLE `Log` (
   `priority` smallint(1) unsigned NOT NULL DEFAULT '6',
   PRIMARY KEY (`id`),
   KEY `priority` (`priority`)
-) ENGINE=MyISAM AUTO_INCREMENT=648 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -745,7 +823,7 @@ CREATE TABLE `MapLocationLanguages` (
   PRIMARY KEY (`id`),
   KEY `map_location_languages_maplocation_id` (`fk_maplocation_id`),
   KEY `map_location_languages_content_id` (`fk_content_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -782,7 +860,7 @@ CREATE TABLE `MapLocations` (
   KEY `map_locations_point_id` (`fk_location_id`),
   KEY `map_locations_map_id` (`fk_map_id`),
   KEY `map_locations_poi_style_idx` (`poi_style`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -809,7 +887,7 @@ CREATE TABLE `Maps` (
   PRIMARY KEY (`id`),
   KEY `maps_article_number` (`fk_article_number`),
   KEY `maps_map_name` (`MapName`(64))
-) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -836,6 +914,113 @@ CREATE TABLE `Multimedia` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `OAuthAccessToken`
+--
+
+DROP TABLE IF EXISTS `OAuthAccessToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthAccessToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_DDE10DD55F37A13B` (`token`),
+  KEY `IDX_DDE10DD519EB6921` (`client_id`),
+  KEY `IDX_DDE10DD55C1FD3F4` (`IdPublication`),
+  KEY `IDX_DDE10DD5A76ED395` (`user_id`),
+  CONSTRAINT `FK_DDE10DD519EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `OAuthAuthCode`
+--
+
+DROP TABLE IF EXISTS `OAuthAuthCode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthAuthCode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `redirect_uri` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_3DD60F725F37A13B` (`token`),
+  KEY `IDX_3DD60F7219EB6921` (`client_id`),
+  KEY `IDX_3DD60F725C1FD3F4` (`IdPublication`),
+  KEY `IDX_3DD60F72A76ED395` (`user_id`),
+  CONSTRAINT `FK_3DD60F7219EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `OAuthClient`
+--
+
+DROP TABLE IF EXISTS `OAuthClient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthClient` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `random_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `redirect_uris` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `secret` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `allowed_grant_types` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_4128BE95C1FD3F4` (`IdPublication`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `OAuthPublicApiResources`
+--
+
+DROP TABLE IF EXISTS `OAuthPublicApiResources`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthPublicApiResources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `OAuthRefreshToken`
+--
+
+DROP TABLE IF EXISTS `OAuthRefreshToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthRefreshToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4A42604C5F37A13B` (`token`),
+  KEY `IDX_4A42604C19EB6921` (`client_id`),
+  KEY `IDX_4A42604C5C1FD3F4` (`IdPublication`),
+  KEY `IDX_4A42604CA76ED395` (`user_id`),
+  CONSTRAINT `FK_4A42604C19EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `ObjectTypes`
 --
 
@@ -855,22 +1040,24 @@ CREATE TABLE `ObjectTypes` (
 --
 
 DROP TABLE IF EXISTS `Plugins`;
-
-CREATE TABLE Plugins (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(256) NOT NULL,
-  Details LONGTEXT NOT NULL,
-  type INT NOT NULL,
-  installed_with INT NOT NULL,
-  Description LONGTEXT NOT NULL,
-  Version VARCHAR(256) NOT NULL,
-  author VARCHAR(256) NOT NULL,
-  license VARCHAR(256) NOT NULL,
-  Enabled TINYINT(1) NOT NULL,
-  installed_at DATETIME NOT NULL,
-  updated_at DATETIME DEFAULT NULL,
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Plugins` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `Details` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `installed_with` int(11) NOT NULL,
+  `Description` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Version` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `author` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `license` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `Enabled` tinyint(1) NOT NULL,
+  `installed_at` datetime NOT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `Publications`
@@ -906,7 +1093,7 @@ CREATE TABLE `Publications` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Alias` (`IdDefaultAlias`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -922,7 +1109,7 @@ CREATE TABLE `RequestObjects` (
   `request_count` int(11) NOT NULL DEFAULT '0',
   `last_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`object_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -984,7 +1171,7 @@ CREATE TABLE `Sections` (
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`IdLanguage`,`Name`),
   UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`),
   UNIQUE KEY `section_unique` (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`)
-) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1000,6 +1187,45 @@ CREATE TABLE `Sessions` (
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `SnippetTemplates`
+--
+
+DROP TABLE IF EXISTS `SnippetTemplates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SnippetTemplates` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Controller` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Parameters` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Template` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Favourite` tinyint(1) NOT NULL,
+  `IconInactive` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `IconActive` longtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `Snippets`
+--
+
+DROP TABLE IF EXISTS `Snippets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Snippets` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Parameters` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `Snippet` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `TemplateId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UNIQ_1457978AF846113F` (`TemplateId`),
+  CONSTRAINT `SnippetTemplate` FOREIGN KEY (`TemplateId`) REFERENCES `SnippetTemplates` (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1051,7 +1277,7 @@ CREATE TABLE `SubsSections` (
   `NoticeSent` enum('N','Y') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`),
   UNIQUE KEY `IdSubscription` (`IdSubscription`,`SectionNumber`,`IdLanguage`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1059,62 +1285,23 @@ CREATE TABLE `SubsSections` (
 --
 
 DROP TABLE IF EXISTS `Subscriptions`;
-CREATE TABLE Subscriptions (
-  Id INT AUTO_INCREMENT NOT NULL,
-  ToPay NUMERIC(10, 0) NOT NULL,
-  Type VARCHAR(255) NOT NULL,
-  Currency VARCHAR(255) NOT NULL,
-  Active VARCHAR(255) NOT NULL,
-  IdUser INT DEFAULT NULL,
-  IdSubscription INT DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  INDEX IDX_B709C1F4F9C28DE1 (IdUser),
-  INDEX IDX_B709C1F4303CB8FA (IdSubscription),
-  INDEX IDX_B709C1F45C1FD3F4 (IdPublication),
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
---
--- Table structure for table `SubscriptionArticle`
---
-
-DROP TABLE IF EXISTS `SubscriptionArticle`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE SubscriptionArticle (
-  id INT AUTO_INCREMENT NOT NULL,
-  article_number INT NOT NULL,
-  language_id INT DEFAULT NULL,
-  StartDate DATE NOT NULL,
-  Days INT NOT NULL,
-  PaidDays INT NOT NULL,
-  NoticeSent VARCHAR(255) NOT NULL,
-  IdSubscription INT DEFAULT NULL,
-  INDEX IDX_DBC6BEEA303CB8FA (IdSubscription),
-  INDEX IDX_DBC6BEEAFC5788D482F1BAF4 (article_number, language_id),
-  INDEX IDX_DBC6BEEA82F1BAF4 (language_id), PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
---
--- Table structure for table `SubscriptionIssue`
---
-
-DROP TABLE IF EXISTS `SubscriptionIssue`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE SubscriptionIssue (
-  id INT AUTO_INCREMENT NOT NULL,
-  issue_number INT NOT NULL,
-  language_id INT DEFAULT NULL,
-  StartDate DATE NOT NULL,
-  Days INT NOT NULL,
-  PaidDays INT NOT NULL,
-  NoticeSent VARCHAR(255) NOT NULL,
-  IdSubscription INT DEFAULT NULL,
-  INDEX IDX_DBC6BGGA303CB8FA (IdSubscription),
-  INDEX IDX_DBC6BGGAFC5788D482F1BAF4 (issue_number, language_id),
-  INDEX IDX_DBC6BGGA82F1BAF4 (language_id), PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+CREATE TABLE `Subscriptions` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `ToPay` decimal(10,0) NOT NULL,
+  `Type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Currency` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `Active` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `IdUser` int(11) DEFAULT NULL,
+  `IdSubscription` int(11) DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IDX_B709C1F4F9C28DE1` (`IdUser`),
+  KEY `IDX_B709C1F4303CB8FA` (`IdSubscription`),
+  KEY `IDX_B709C1F45C1FD3F4` (`IdPublication`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `SystemPreferences`
@@ -1130,7 +1317,7 @@ CREATE TABLE `SystemPreferences` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `varname` (`varname`)
-) ENGINE=MyISAM AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=128 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1163,7 +1350,7 @@ CREATE TABLE `Templates` (
   `CacheLifetime` int(11) DEFAULT '0',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=1660 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=97 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1226,7 +1413,7 @@ CREATE TABLE `Topics` (
   PRIMARY KEY (`id`),
   KEY `node_left` (`node_left`),
   KEY `node_right` (`node_right`)
-) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1244,7 +1431,7 @@ CREATE TABLE `Translations` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `phrase_language_index` (`phrase_id`,`fk_language_id`),
   KEY `phrase_id` (`phrase_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1277,7 +1464,7 @@ CREATE TABLE `Versions` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ver_name` (`ver_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1340,11 +1527,11 @@ DROP TABLE IF EXISTS `Xdebate`;
 CREATE TABLE `Xdebate` (
   `NrArticle` int(11) NOT NULL,
   `IdLanguage` int(11) NOT NULL,
+  `Fteaser` mediumblob,
   `Fpro_title` varchar(255) DEFAULT NULL,
   `Fpro_text` mediumblob,
   `Fcontra_title` varchar(255) DEFAULT NULL,
   `Fcontra_text` mediumblob,
-  `Fteaser` mediumblob,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1357,11 +1544,11 @@ DROP TABLE IF EXISTS `Xlink`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Xlink` (
-  `NrArticle` int(10) unsigned NOT NULL,
-  `IdLanguage` int(10) unsigned NOT NULL,
-  `Furl` varchar(255) NOT NULL,
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Furl_address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1372,13 +1559,13 @@ DROP TABLE IF EXISTS `Xnews`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Xnews` (
-  `NrArticle` int(10) unsigned NOT NULL,
-  `IdLanguage` int(10) unsigned NOT NULL,
-  `Fdeck` mediumblob NOT NULL,
-  `Ffull_text` mediumblob NOT NULL,
-  `Fhighlight` tinyint(1) NOT NULL,
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Fhighlight` tinyint(1) NOT NULL DEFAULT '0',
+  `Fdeck` mediumblob,
+  `Ffull_text` mediumblob,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1389,11 +1576,11 @@ DROP TABLE IF EXISTS `Xpage`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Xpage` (
-  `NrArticle` int(10) unsigned NOT NULL,
-  `IdLanguage` int(10) unsigned NOT NULL,
-  `Ffull_text` mediumblob NOT NULL,
+  `NrArticle` int(11) NOT NULL,
+  `IdLanguage` int(11) NOT NULL,
+  `Ffull_text` mediumblob,
   PRIMARY KEY (`NrArticle`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1420,7 +1607,7 @@ DROP TABLE IF EXISTS `acl_role`;
 CREATE TABLE `acl_role` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1438,7 +1625,7 @@ CREATE TABLE `acl_rule` (
   `action` varchar(80) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_id` (`role_id`,`resource`,`action`)
-) ENGINE=MyISAM AUTO_INCREMENT=336 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=395 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1451,9 +1638,9 @@ DROP TABLE IF EXISTS `article_datetimes`;
 CREATE TABLE `article_datetimes` (
   `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
-  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 24:00',
   `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
+  `end_date` date DEFAULT NULL COMMENT 'NULL = no end',
   `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
   `article_id` int(10) unsigned NOT NULL,
   `article_type` varchar(166) NOT NULL,
@@ -1488,7 +1675,7 @@ CREATE TABLE `audit_event` (
   `created` datetime NOT NULL,
   `is_public` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=506 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1496,36 +1683,36 @@ CREATE TABLE `audit_event` (
 --
 
 DROP TABLE IF EXISTS `comment`;
-
-CREATE TABLE comment (
-  id INT AUTO_INCREMENT NOT NULL,
-  fk_parent_id INT DEFAULT NULL,
-  fk_thread_id INT NOT NULL,
-  subject VARCHAR(140) NOT NULL,
-  message VARCHAR(255) NOT NULL,
-  thread_level VARCHAR(4) NOT NULL,
-  thread_order VARCHAR(4) NOT NULL,
-  status VARCHAR(2) NOT NULL,
-  ip VARCHAR(39) NOT NULL,
-  time_created DATETIME NOT NULL,
-  time_updated DATETIME NOT NULL,
-  likes VARCHAR(4) NOT NULL,
-  dislikes VARCHAR(4) NOT NULL,
-  recommended VARCHAR(1) NOT NULL,
-  indexed DATETIME DEFAULT NULL,
-  source VARCHAR(60) NULL DEFAULT NULL,
-  fk_comment_commenter_id INT DEFAULT NULL,
-  fk_forum_id INT DEFAULT NULL,
-  fk_language_id INT DEFAULT NULL,
-  INDEX IDX_9474526C8A5657F3 (fk_comment_commenter_id),
-  INDEX IDX_9474526C1BE4F90E (fk_forum_id),
-  INDEX IDX_9474526C13231DE0 (fk_parent_id),
-  INDEX IDX_9474526C83C99789 (fk_thread_id),
-  INDEX IDX_9474526CEB0716C0 (fk_language_id),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-ALTER TABLE comment ADD CONSTRAINT FK_9474526C13231DE0 FOREIGN KEY (fk_parent_id) REFERENCES comment (id) ON DELETE SET NULL;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_parent_id` int(11) DEFAULT NULL,
+  `fk_thread_id` int(11) NOT NULL,
+  `subject` varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+  `message` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `thread_level` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
+  `thread_order` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
+  `status` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+  `ip` varchar(39) COLLATE utf8_unicode_ci NOT NULL,
+  `time_created` datetime NOT NULL,
+  `time_updated` datetime NOT NULL,
+  `likes` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
+  `dislikes` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
+  `recommended` varchar(1) COLLATE utf8_unicode_ci NOT NULL,
+  `indexed` datetime DEFAULT NULL,
+  `source` varchar(60) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fk_comment_commenter_id` int(11) DEFAULT NULL,
+  `fk_forum_id` int(11) DEFAULT NULL,
+  `fk_language_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_9474526C8A5657F3` (`fk_comment_commenter_id`),
+  KEY `IDX_9474526C1BE4F90E` (`fk_forum_id`),
+  KEY `IDX_9474526C13231DE0` (`fk_parent_id`),
+  KEY `IDX_9474526C83C99789` (`fk_thread_id`),
+  KEY `IDX_9474526CEB0716C0` (`fk_language_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `comment_acceptance`
@@ -1563,7 +1750,7 @@ CREATE TABLE `comment_commenter` (
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1577,8 +1764,9 @@ CREATE TABLE `context_articles` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `fk_context_id` int(10) NOT NULL,
   `fk_article_no` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `article_number` (`fk_article_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1591,8 +1779,9 @@ DROP TABLE IF EXISTS `context_boxes`;
 CREATE TABLE `context_boxes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `fk_article_no` int(10) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `article_number` (`fk_article_no`)
+) ENGINE=MyISAM AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1619,7 +1808,7 @@ CREATE TABLE `feedback` (
   `attachment_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1738,7 +1927,7 @@ CREATE TABLE `liveuser_rights` (
 DROP TABLE IF EXISTS `liveuser_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `liveuser_users` (
+CREATE TABLE `liveuser_users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `KeyId` int(10) unsigned DEFAULT NULL,
   `Name` varchar(255) DEFAULT NULL,
@@ -1793,11 +1982,12 @@ CREATE TABLE IF NOT EXISTS `liveuser_users` (
   `subscriber` int(10) DEFAULT NULL,
   `author_id` int(10) unsigned DEFAULT NULL,
   `indexed` datetime DEFAULT NULL,
+  `registered_with_publication` int(11) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`),
   KEY `author_id` (`author_id`),
   KEY `indexed` (`indexed`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1853,7 +2043,7 @@ CREATE TABLE `output_section` (
   `fk_error_page_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_section_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1874,7 +2064,7 @@ CREATE TABLE `output_theme` (
   `fk_error_page_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_publication_id`,`fk_theme_path_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1893,7 +2083,7 @@ CREATE TABLE `package` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_DE686795989D9B62` (`slug`),
   KEY `IDX_DE686795FD656AA1` (`rendition_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1945,7 +2135,7 @@ CREATE TABLE `package_item` (
   PRIMARY KEY (`id`),
   KEY `IDX_A45640D6F44CABFF` (`package_id`),
   KEY `IDX_A45640D63DA5256D` (`image_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1960,7 +2150,7 @@ CREATE TABLE `playlist` (
   `name` varchar(256) NOT NULL,
   `notes` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`id_playlist`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1976,7 +2166,7 @@ CREATE TABLE `playlist_article` (
   `article_no` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id_playlist_article`),
   UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2004,7 +2194,7 @@ CREATE TABLE `plugin_blog_blog` (
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`blog_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2031,7 +2221,7 @@ CREATE TABLE `plugin_blog_comment` (
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2058,7 +2248,7 @@ CREATE TABLE `plugin_blog_entry` (
   `feature` varchar(255) NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`entry_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2219,7 +2409,7 @@ CREATE TABLE `plugin_debate_vote` (
   `added` datetime NOT NULL,
   PRIMARY KEY (`id_vote`),
   UNIQUE KEY `fk_debate_nr` (`fk_debate_nr`,`fk_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2259,7 +2449,6 @@ CREATE TABLE `plugin_poll` (
   `nr_of_votes_overall` int(10) unsigned NOT NULL,
   `percentage_of_votes_overall` float unsigned NOT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `reset_token` varchar(40) NOT NULL DEFAULT '',
   PRIMARY KEY (`poll_nr`,`fk_language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2394,7 +2583,7 @@ CREATE TABLE `rating` (
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2428,7 +2617,7 @@ CREATE TABLE `resource` (
   `path` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `path` (`path`)
-) ENGINE=MyISAM AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=86 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2543,103 +2732,23 @@ CREATE TABLE `webcode` (
   PRIMARY KEY (`webcode`),
   UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-CREATE TABLE OAuthAccessToken (
-  id INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE user_oauth_clients (
+  user_id INT NOT NULL,
   client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_DDE10DD55F37A13B (token),
-  INDEX IDX_DDE10DD519EB6921 (client_id),
-  INDEX IDX_DDE10DD55C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
+  INDEX IDX_FD402C51A76ED395 (user_id),
+  INDEX IDX_FD402C5119EB6921 (client_id),
+  PRIMARY KEY(user_id, client_id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
-CREATE TABLE OAuthAuthCode (
-  id INT AUTO_INCREMENT NOT NULL,
-  client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  redirect_uri LONGTEXT NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_3DD60F725F37A13B (token),
-  INDEX IDX_3DD60F7219EB6921 (client_id),
-  INDEX IDX_3DD60F725C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-CREATE TABLE OAuthClient (
-  id INT AUTO_INCREMENT NOT NULL,
-  random_id VARCHAR(255) NOT NULL,
-  redirect_uris LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
-  secret VARCHAR(255) NOT NULL,
-  allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
-  name VARCHAR(255) NOT NULL,
-  IdPublication INT DEFAULT NULL,
-  INDEX IDX_4128BE95C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-CREATE TABLE OAuthPublicApiResources (
-  id INT AUTO_INCREMENT NOT NULL,
-  resource VARCHAR(255) NOT NULL,
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-CREATE TABLE OAuthRefreshToken (
-  id INT AUTO_INCREMENT NOT NULL,
-  client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_4A42604C5F37A13B (token),
-  INDEX IDX_4A42604C19EB6921 (client_id),
-  INDEX IDX_4A42604C5C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-ALTER TABLE OAuthAccessToken ADD CONSTRAINT FK_DDE10DD519EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
-ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
-ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
-
----
---- Snippets
----
-DROP TABLE IF EXISTS `Snippets`;
-CREATE TABLE Snippets (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Parameters LONGTEXT NOT NULL,
-  Snippet LONGTEXT NOT NULL,
-  TemplateId INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_1457978AF846113F (TemplateId),
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-DROP TABLE IF EXISTS `SnippetTemplates`;
-CREATE TABLE SnippetTemplates (
-  Id INT AUTO_INCREMENT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Controller VARCHAR(255) NOT NULL,
-  Parameters LONGTEXT NOT NULL,
-  Template LONGTEXT NOT NULL,
-  Favourite TINYINT(1) NOT NULL,
-  IconInactive LONGTEXT NOT NULL,
-  IconActive LONGTEXT NOT NULL,
-  PRIMARY KEY(Id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
-
-DROP TABLE IF EXISTS `ArticleSnippets`;
-CREATE TABLE ArticleSnippets (
-  ArticleId INT NOT NULL,
-  SnippetId INT NOT NULL,
-  INDEX IDX_5080CDE7C53224D (ArticleId),
-  INDEX IDX_5080CDEB00DA91C (SnippetId),
-  PRIMARY KEY(ArticleId, SnippetId)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+-- Dump completed on 2014-05-07 10:22:40

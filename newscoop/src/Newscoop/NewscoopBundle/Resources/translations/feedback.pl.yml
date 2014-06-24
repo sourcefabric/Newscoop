@@ -1,7 +1,7 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': 'Chcesz bezpowrotnie usunąć wiele wiadomości.'
+'You are about to permanently delete a message.': 'Chcesz bezpowrotnie usunąć tą wiadomość.'
+'Are you sure you want to do it?': 'Jesteś pewien że chcesz to zrobić?'
 Approve: Zaakceptuj
 Approved.: Zaakceptowany
 at: w
@@ -22,7 +22,7 @@ Reply: Odpowiedz
 'Reply to message': 'Odpowiedz na wiadomość'
 Star: Gwiazdka
 Starred: Odznaczony
-'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć się z Newscoopem. Sprawdź swoje połączenie internetowe.'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
 'With document attachment': 'Dokument dostępny w zalącznikach'
 'With image attachment': 'Zdjęcie dostępne w załącznikach'
 'With no attachment': 'Brak załączników.'

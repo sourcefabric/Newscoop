@@ -1,11 +1,11 @@
-'No such article type': 
-'Multi-line Text': 
-'Filter saved': 
-'Filter not saved': 
-'Not a color': 
-'No such field': 
-'Color saved': 
-'Color not saved': 
+'No such article type': null
+'Multi-line Text': null
+'Filter saved': null
+'Filter not saved': null
+'Not a color': null
+'No such field': null
+'Color saved': null
+'Color not saved': null
 'Topic created': 'Топик креиран'
 'The topic name is already in use by another topic.': 'Име за топик је већ у употреби'
 'Complex Date': 'Сложен датум'
@@ -61,3 +61,46 @@ First: Први
 'Multi-line Text with WYSIWYG': 'Сложен текст'
 'URL $1 is invalid or is not an image.': 'УРЛ $1је неисправан или није слика'
 'URL $1 is not an image.': 'УРЛ $1 није слика.'
+client:
+    added: null
+    notfound: null
+    removed: null
+publicresources:
+    updated: null
+api:
+    configure:
+        title: null
+        title_content: null
+        tabs:
+            resources: null
+            clients: null
+        resources:
+            info: null
+            add_button: null
+        clients:
+            table:
+                name: null
+                id: null
+                secret: null
+                trusted: null
+                redirect: null
+                publication: Публикација
+                actions: Акције
+                actions_buttons:
+                    remove: Уклони
+            actions:
+                remove:
+                    confirm: null
+        menu: null
+    form:
+        client:
+            label:
+                name: null
+                publication: null
+                redirectUris: null
+                trusted: null
+                save: Сними
+        PublicResources:
+            label:
+                routes: null
+                save: Сними

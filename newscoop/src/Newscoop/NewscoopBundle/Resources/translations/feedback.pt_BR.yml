@@ -1,4 +1,29 @@
-'No attachment': 
-'You are about to permanently delete multiple messages.': 
-'You are about to permanently delete a message.': 
-'Are you sure you want to do it?': 
+'No attachment': null
+'You are about to permanently delete multiple messages.': null
+'You are about to permanently delete a message.': null
+'Are you sure you want to do it?': 'Tem certeza que quer fazer isso?'
+Approve: null
+Approved.: null
+at: no
+Attachment: null
+'Ban/Unban user': null
+'Change selected messages status': null
+Deleted: Removido
+'Full article': 'Artigo inteiro'
+Message: null
+'Message deleted.': null
+'Messages deleted.': null
+'Messages status change to $1.': null
+'Message status change to $1.': null
+'Messages updated.': null
+'Message updated.': null
+Processed: null
+Reply: Responder
+'Reply to message': null
+Star: null
+Starred: null
+'Unable to reach Newscoop. Please check your internet connection.': 'Não foi possivel fazer conexão com Newscoop. Por favor verifique a sua conexão com internet.'
+'With document attachment': null
+'With image attachment': null
+'With no attachment': null
+'Feedback Messages': null

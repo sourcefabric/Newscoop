@@ -73,13 +73,19 @@ class LinkRequestListener
             $linkParams = explode(';', trim($link));
             $resource   = array_shift($linkParams);
             $resource   = preg_replace('/<|>/', '', $resource);
+            $tempRequest = Request::create($resource);
 
             try {
-                $route = $this->urlMatcher->match($resource);
+                $route = $this->urlMatcher->match($tempRequest->getRequestUri());
             } catch (\Exception $e) {
                 // If we don't have a matching route we return the original Link header
                 continue;
             }
+
+            if (strpos($route['_route'], 'newscoop_gimme_') === false) {
+                return;
+            }
+
             $stubRequest->attributes->replace($route);
 
             if (false === $controller = $this->resolver->getController($stubRequest)) {

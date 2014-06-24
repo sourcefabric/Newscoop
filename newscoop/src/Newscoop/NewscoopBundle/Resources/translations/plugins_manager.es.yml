@@ -1,0 +1,37 @@
+newscoop.plugins_manager.manager: null
+newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.public_plugins: 'Plugins públicos'
+newscoop.plugins_manager.private_plugins: 'Plugins privados'
+newscoop.plugins_manager.install.public: 'Instalar nuevos plugins'
+newscoop.plugins_manager.installed_table.name: Nombre
+newscoop.plugins_manager.installed_table.description: Descripción
+newscoop.plugins_manager.installed_table.enabled: Activar
+newscoop.plugins_manager.installed_table.version: Versión
+newscoop.plugins_manager.installed_table.license: Licencia
+newscoop.plugins_manager.installed_table.installed_at: 'Instalado En'
+newscoop.plugins_manager.installed_table.updated_at: 'Actualizado En'
+newscoop.plugins_manager.installed_table.actions: Acciones
+newscoop.plugins_manager.installed_table.update_plugin: Actualización
+newscoop.plugins_manager.installed_table.remove_plugin: Eliminar
+newscoop.plugins_manager.installed_table.install_plugin: Instalar
+newscoop.plugins_manager.installed_table.plugin_installed: Instalado
+newscoop.plugins_manager.upload.private: 'Cargar plugin privado'
+newscoop.plugins_manager.search_for_plugins: 'Buscar plugins'
+newscoop.plugins_manager.form.package: 'El paquete debe ser un archivo zip.'
+newscoop.plugins_manager.form.submit: Subir
+newscoop:
+    datatable:
+        table:
+            info: 'Mostrando de _START_ a _END_ el _TOTAL_ de entradas'
+            noentries: 'No se encontraron entradas'
+            filtering: '-filtrando desde archivos _MAX_'
+            menu: 'Desplegar registros _MENU_'
+        label:
+            search: Buscar
+            filter: Filtro
+            processing: Procesando...
+            last: Último
+            next: Próximo
+            first: Primero
+            previous: Previo
+            norecords: 'No se encontraron registros'

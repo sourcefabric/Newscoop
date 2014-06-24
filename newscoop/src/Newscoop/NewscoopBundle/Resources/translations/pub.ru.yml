@@ -20,7 +20,7 @@
 'Publication updated': 'Издание обновлено'
 'Subscriber comments moderated?': 'Модерировать комментарии подписчика?'
 'Public comments moderated?': 'Модерировать комментарии посторонних?'
-'Comments enabled?': 'Разрешить комментарии?'
+'Comments enabled?': 'Комментарии разрещены?'
 'Comments enabled': 'Комментарии разрешены'
 'Article comments default to enabled?': 'Разрешить по умолчанию комментарии к статьям?'
 'trial subscription': 'пробная подписка'
@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': 'Псевдоним $1 не может быть изменен.'
 '$1 is the default publication alias, it can not be deleted.': '$1 - это псевдоним публикации по умолчанию, он не может быть удален.'
 'You do not have the right to add publications.': 'Вы не имеете прав доступа для добавления нового издания.'
-'There are $1 issue(s) left.': 'Отсалось выпусков: $1'
+'There are $1 issue(s) left.': 'Осталось выпусков: $1'
 'Time Unit': 'Единица времени'
 Currency: Валюта
 'Edit languages': 'Редактировать языки'

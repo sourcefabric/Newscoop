@@ -171,7 +171,7 @@ class PreferencesType extends AbstractType
             'required' => true
         ))
         ->add('session_lifetime', 'integer', array(
-            'attr' => array('maxlength' => '4', 'max' => '99999', 'min' => 0),
+            'attr' => array('maxlength' => '5', 'max' => '86400', 'min' => 0),
             'error_bubbling' => true,
             'required' => true
         ))
@@ -428,6 +428,20 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
+        ))
+        ->add('userGarbageActive', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption', 
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
+        ))
+        ->add('userGarbageDays', 'integer', array(
+            'attr' => array('max' => 999, 'min' => 1),
+            'required' => true
         ));
     }
 

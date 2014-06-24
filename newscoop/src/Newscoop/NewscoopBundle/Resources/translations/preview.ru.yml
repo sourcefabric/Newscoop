@@ -11,6 +11,3 @@ template: шаблон
 'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Неверный оператор <em>$1</em> параметра <em>$2</em> в выражении <em>$3</em>'
 'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': 'Неверный  аттрибут <em>$1</em> параметра <em>$2</em>, <em>$3</em> параметр'
 'Invalid template <em>$1</em> specified in the <em>$2</em> form': 'Неправильный шаблон <em>$1</em> определенный в <em>$2</em> форме'
-'Unknown error: <em>$1</em>': 'Неизвестная ошибка: <em>$1</em>'
-'Invalid parameter value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': 'Недопустимое значение <em>$1</em> параметра <em>$2</em> в утверждении <em>$3</em>'
-' line': черта

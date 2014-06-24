@@ -23,7 +23,9 @@ class ItemsLinkHandler
     }
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
-    {   
-        return $uri = $this->router->generate('newscoop_gimme_slideshows_getslideshowitems', array('id' => $data->id), true);
+    {
+        return $uri = $this->router->generate('newscoop_gimme_slideshows_getslideshowitems', array(
+            'id' => $data->id
+        ), true);
     }
 }

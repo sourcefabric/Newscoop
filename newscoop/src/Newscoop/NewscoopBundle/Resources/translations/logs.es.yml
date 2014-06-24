@@ -1,6 +1,6 @@
 show: mostrar
 hide: ocultar
-Title: Título
+Title: Tìtulo
 'Resource Type:': 'Tipo de recurso:'
 'Resource Type': 'Tipo de recurso'
 Resource: Recurso
@@ -9,4 +9,3 @@ Diff: Diff
 'Action Type:': 'Tipo de Acción:'
 'No logs.': 'Sin logs.'
 User: Usuario
-Date/Time: Fecha/Tiempo

@@ -37,7 +37,7 @@ at: w
 'Warning: the existing data and themes will be deleted!': 'Uwaga: istniejące dane i szablony mogą zostać usunięte. '
 'Value is required and cant be empty': 'Wartość jest wymagana i nie może być pusta.'
 Upload: Wgraj
-'Update comment': 'Zmień komentarz'
+'Update comment': 'Zaktualizuj komentarz'
 'Time created': 'Data utworzenia'
 Themes: Szablony
 'Stop current upload': 'Zatrzymaj aktualne przesyłanie.'
@@ -64,7 +64,7 @@ Ban: Blokada
 Newscoop: Newscoop
 'Your password has been reset.': 'Twoje hasło zostało zresetowane.'
 'Proceed to login.': 'Przejdź do logowania'
-'Hi, \n\nfor password recovery, please follow this link: $1': 'Cześć, \n\naby odzyskać hasło przejdź na tą stronę: $1'
+'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
 'Go to login': 'Przejdź do logowania'
 'Back to login.': 'Wróć do logowania'
 'Back to login': 'Wróć do logowania'
@@ -80,7 +80,7 @@ Dashboard: Panel
 'Your changes will be saved after login.': 'Twoje zmiany zostaną zapisane po zalogowaniu.'
 'Upload backup file': 'Wgraj plik kopii zapasowej'
 'The file $1 has been uploaded successfully.': 'Plik $1 został dodany pomyślnie.'
-'Media Archive': 'Archiwum Mediów'
+'Media Archive': 'Biblioteka Mediów'
 Widgets: Widgety
 'Widget info': 'Informacje o widgecie'
 'Widget added to dashboard.': 'Widget został dodany do panelu.'
@@ -113,15 +113,15 @@ Download: Pobierz
 'Backup list is empty.': 'Lista backuou jest pusta'
 'Are you sure you want to restore the file $1?': 'Czy na pewno chcesz przywrócić plik $1?'
 'Are you sure you want to delete the file $1?': 'Czy na pewno chcesz usunąć plik $1?'
-'Import XML': 'Improtuj XML'
+'Import XML': 'Import XML'
 'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Musisz posiadać uprawnienia do dodawania/zmieniania publikacji aby ustawić autorów dla wszystkich artykułów.'
 'Select the field from which to generate the author': 'Wybierz pole, z którego wygenerować autora'
 'Invalid or empty field $1. You must select a valid dynamic field.': 'Niepoprawne albo puste pole $1. Musisz wybrać porawne pole dynamiczne.'
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Nie można utworzyć autora $1 do artykułu numer $2 ($3) typu $4.'
 'There were errors setting the author for articles of type $1 from the field $2.': "Wystąpił\_błąd podczas ustawiania autora dla artykułu typu $1 z pola $2."
 'The author was set successfuly for articles of type $1 from the field $2.': 'Pomyślnie ustawiono autora dla artykułu typu $1 z pola $2.'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 minut(y) temu.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł został zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 minut(y) temu.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artykuł zostal zablokowany przez $1 ($2) $3 godziny i $4 minut(y) temu.'
 'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Błąd przy tworzeniu autora $1 do artykułu numer $2 ($3) typu $4.'
 'Clear system cache': 'Oczyść cache systemowy'
 'The system was unable to upload the file $1. ': 'System nie mógł dodać pliku $1.'
@@ -152,3 +152,7 @@ Help: Pomoc
 'Please make sure that you typed the correct user name and password.': 'Upewnij się, że podana nazwa i hasła są poprawne'
 'If your problem persists please contact the site administrator $1': 'Jeśli problem występuje ponownie skontaktuj się z administratorem $1'
 Backup/Restore: 'Backup / Przywróć'
+'Step 2': null
+'Step 3': null
+'Add new user': null
+'Bad credentials': null

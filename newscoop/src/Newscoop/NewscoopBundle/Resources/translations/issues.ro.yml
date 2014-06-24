@@ -1,15 +1,15 @@
-'so that default templates can be assigned to the issue.': 
-'Once this is done, the issue can be published': 
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 
-'This issue cannot be previewed. Please make sure it has the front template selected.': 
-'Publish all articles:': 
-'Publish all articles': 
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 
-default: 
-'The publishing/unpublishing can not be set the same time': 
-'The publishing schedule can not be set in the past': 
-'Please assign at least one theme to the publication': 
-'Issue Theme': 
+'so that default templates can be assigned to the issue.': null
+'Once this is done, the issue can be published': null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
+'This issue cannot be previewed. Please make sure it has the front template selected.': null
+'Publish all articles:': null
+'Publish all articles': null
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
+default: null
+'The publishing/unpublishing can not be set the same time': null
+'The publishing schedule can not be set in the past': null
+'Please assign at least one theme to the publication': null
+'Issue Theme': null
 'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 'Valorile pe care încerci să le impui intră în conflict cu numărul $1$2. $3 ($4)$5.'
 'The number must be unique for each issue in this publication of the same language.': 'Numărul trebuie să fie unic pentru fiecare ediţie din această publicaţie în aceeaşi limbă.'
 'The language and URL name must be unique for each issue in this publication.': 'Limba şi adresa de Internet trebuie să fie unice pentru fiecare ediţiei a acestei publicaţii.'
@@ -59,23 +59,3 @@ Schedule: Programează
 'There was an error reading the issue parameter.': 'O eroare s-a produs în timpul interpretării parametrului ediţiei.'
 'There was an error scheduling the $1 action on $2': 'S-a produs o eroare la programarea acţiunii $1 la $2'
 'The action scheduled on $1 could not be deleted.': 'Acţiunea programată la $1 nu a putut fi ştearsă.'
-'Front Page Template<BR><SMALL>(click to change)</SMALL>': 'Şablonul paginii principale'
-'Single Article Template<BR><SMALL>(click to change)</SMALL>': 'Şablonul pentru afişarea articolelor'
-'Changing issue status': 'Modific starea ediţiei'
-'Status of the issue $1 has been changed from $2 to $3': 'Starea ediţiei $1 a fost schimbată de la $2 la $3'
-'Status of the issue $1 could not be changed.': 'Starea ediţiei $1 nu poate fi schimbată'
-'Updating issue': 'Modific ediţia'
-'Changing issues details': 'Modific ediţia'
-'The issue $1 has been successfuly changed.': 'Ediţia $1 a fost modificată cu succes'
-'The issue could not be changed.': 'Ediţia nu poate fi modificată'
-'Preview issue': 'Vizualizare ediţie'
-'This issue cannot be previewed. Please make sure it has a $1 template selected.': 'Ediţia nu poate fi vizualizată. Verificaţi dacă şablonul paginii principale a fost specificat.'
-'front page': 'pagina principală'
-'Changing issue template': 'Modific şablonul ediţiei'
-'You do not have the right to change issue templates.': 'Nu aveţi dreptul să modificaţi şablonul ediţiei'
-'Changing issue template for front page': 'Modific şablonul pentru pagina principală a ediţiei'
-'Changing issue template for single article': 'Modific şablonul pentru afişarea articolului'
-'The template has been successfully changed.': 'Şablonul a fost modificat cu succes'
-'Issue template for publication $1 changed to $2': 'Şablonul ediţiei din publicaţia $1 a fost schimbat la $2'
-'Issue template for single articles from $1 changed to $2': 'Şablonul pentru afişarea articolului din publicaţia $1 a fost schimbat la $2'
-'The template could not be changed.': 'Şablonul nu poate fi schimbat'

@@ -1,0 +1,66 @@
+comments:
+    label:
+        comments: null
+        menu: تعليقات
+        banned: null
+        anonymous: null
+        at: في
+        noentries: null
+        showing: null
+        of: null
+        to: null
+        entries: null
+        fullarticle: 'المقالة الكاملة'
+        hidden: 'مخفي '
+        approved: 'موافق عليه'
+        new: جديد
+        editarticle: 'الذهاب إلى تعديل المقالة'
+        section: القسم
+        comment: التعليق
+        replyto: 'رد على التعليق'
+        subject: الموضوع
+        ban: 'تحريم / إزالة تحريم المستخدم'
+        author: المؤلف
+        date: null
+        article: مقالة
+        search: بحث
+        show: إظهار
+        recommended: 'تم التوصية'
+        unrecommended: 'تم ازالة التوصية'
+        editcomment: null
+        actions: الاجراءات
+        selectstatus: 'تحديد الحالة'
+        deleted: 'تم الحذف'
+        alert: null
+        searchholder: null
+    btn:
+        cancel: إلغاء
+        submit: تسليم
+        unrecommend: 'إلغاء التوصية'
+        recommend: التوصية
+        delete: حذف
+        reply: الردّ
+        edit: 'التعديل السريع'
+        close: إغلاق
+        okay: null
+        filter: التصفية
+    msg:
+        deleted: 'تم حذف التعليق.'
+        commentinarticle: 'التعليق $4 من $1 في المقالة $2 ($3)'
+        status:
+            new: null
+            approved: null
+            hidden: null
+            single: null
+            all: null
+        error:
+            reach: 'غير قادر على الوصول إلى Newscoop. يرجى التفتيش اتصالك بالإنترنت.'
+            deletefromarticle: 'تم جذف التعليق من $1 من المقالة $2 ($3)'
+            statuschange: null
+            delete: null
+            update: null
+        sure: 'توشك أن تحذف تعليقا بشكل دائم.'
+        suremultiple: null
+        first: null
+        surequestion: 'هل أنت متأكد أنك تريد أن تفعل ذلك؟'
+        updated: 'تم تحديث التعليق'

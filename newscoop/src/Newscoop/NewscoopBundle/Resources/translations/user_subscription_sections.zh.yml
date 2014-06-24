@@ -1,16 +1,16 @@
-saved: 
-deleted: 
-'Subscribed sections: $1': 
-'Start Date': 
-'Select sections for subscribing': 
-'Sections saved': 
-'Section $1': 
-'No sections to edit': 
-'Edit section': 
-'Edit all sections': 
-'Add new subscription section': 
-'Add new section': 
-'Regardless of the language': 
-'Individual languages': 
-'All languages': 
+saved: null
+deleted: null
+'Subscribed sections: $1': null
+'Start Date': null
+'Select sections for subscribing': null
+'Sections saved': null
+'Section $1': null
+'No sections to edit': null
+'Edit section': null
+'Edit all sections': null
+'Add new subscription section': null
+'Add new section': 添加新区
+'Regardless of the language': null
+'Individual languages': null
+'All languages': 所有语言
 'Paid Days': 已付时间

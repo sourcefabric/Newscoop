@@ -484,7 +484,7 @@ class ImageService
     {
         $query = $this->orm->getRepository('Newscoop\Image\ArticleImage')
             ->createQueryBuilder('i')
-            ->select('COUNT(i)')
+            ->select('MAX(i.number)')
             ->where('i.articleNumber = :articleNumber')
             ->getQuery();
 

@@ -51,6 +51,7 @@ fos_rest:
     exception:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
+            'Newscoop\Exception\InvalidParametersException': 422
             'Newscoop\Exception\ResourceIsEmptyException': 204
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
@@ -60,7 +61,8 @@ fos_rest:
             'Newscoop\Exception\ResourceNotModifiedException': 304
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
-            'Newscoop\Exception\ResourceIsEmptyException': false
+            'Newscoop\Exception\InvalidParametersException': true
+            'Newscoop\Exception\ResourceIsEmptyException': true
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
             'Doctrine\ORM\EntityNotFoundException': true
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
@@ -84,6 +86,9 @@ jms_serializer:
         directories:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Comment:
+                namespace_prefix: Newscoop\Entity\Comment
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
             Newscoop_Package:
                 namespace_prefix: Newscoop\Package
