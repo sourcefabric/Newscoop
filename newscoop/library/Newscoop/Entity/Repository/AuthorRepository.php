@@ -8,18 +8,21 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime;
-use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
 use Newscoop\Datatable\Source as DatatableSource;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Author repository
  */
 class AuthorRepository extends DatatableSource
 {
-
+    /**
+     * Get Author by Id
+     *
+     * @param integer $id
+     *
+     * @return Query
+     */
     public function getAuthor($id)
     {
         $em = $this->getEntityManager();
@@ -31,7 +34,34 @@ class AuthorRepository extends DatatableSource
             ->setParameter('id', $id);
 
         $query = $queryBuilder->getQuery();
-        
+
         return $query;
+    }
+
+    /**
+     * Perform a query
+     *
+     * @param string $query
+     * @param array  $sort
+     *
+     * @return Query
+     */
+    public function searchAuthors($query, $sort = array())
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->getRepository('Newscoop\Entity\Author')->createQueryBuilder('a');
+        $orX = $qb->expr()->orx();
+
+        $orX->add($qb->expr()->like('a.first_name', $qb->expr()->literal("%{$query}%")));
+        $orX->add($qb->expr()->like('a.last_name', $qb->expr()->literal("%{$query}%")));
+        $qb->andWhere($orX);
+
+        if ((!empty($sort)) && is_array($sort)) {
+            foreach ($sort as $sortColumn => $sortDir) {
+                $qb->addOrderBy('a.'.$sortColumn, $sortDir);
+            }
+        }
+
+        return $qb->getQuery();
     }
 }

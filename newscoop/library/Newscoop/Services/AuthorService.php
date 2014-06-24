@@ -7,9 +7,12 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User,
-    Newscoop\Entity\Author;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Exception\ResourcesConflictException;
+use Newscoop\Entity\Article;
+use Newscoop\Entity\ArticleAuthor;
+use Newscoop\Entity\Author;
+use Newscoop\Entity\AuthorType;
 
 /**
  * Author service
@@ -85,5 +88,112 @@ class AuthorService
         }
 
         return $authors;
+    }
+
+    /**
+     * Add author with type to article
+     *
+     * @param Article       $article
+     * @param Author        $author
+     * @param ArticleAuthor $authorType
+     *
+     * @return ArticleAuthor
+     */
+    public function addAuthorToArticle(Article $article, Author $author, AuthorType $authorType)
+    {
+        $articleAuthor = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthor($article->getNumber(), $article->getLanguageCode(), $author->getId(), $authorType->getId())
+            ->getOneOrNullResult();
+
+        if (!is_null($articleAuthor)) {
+            throw new ResourcesConflictException("Author with this type is already attached to article", 409);
+        }
+
+        $articleAuthors = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthors($article->getNumber(), $article->getLanguageCode())
+            ->getArrayResult();
+
+        $articleAuthor = new ArticleAuthor();
+        $articleAuthor->setArticle($article);
+        $articleAuthor->setAuthor($author);
+        $articleAuthor->setType($authorType);
+        $articleAuthor->setOrder(count($articleAuthors)+1);
+
+        $this->em->persist($articleAuthor);
+        $this->em->flush();
+
+        return $articleAuthor;
+    }
+
+
+    /**
+     * Remove author with type from article
+     *
+     * @param Article       $article
+     * @param Author        $author
+     * @param ArticleAuthor $authorType
+     *
+     * @return ArticleAuthor
+     */
+    public function removeAuthorFromArticle(Article $article, Author $author, AuthorType $authorType)
+    {
+        $articleAuthor = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthor($article->getNumber(), $article->getLanguageCode(), $author->getId(), $authorType->getId())
+            ->getOneOrNullResult();
+
+        if (!$articleAuthor) {
+            throw new ResourcesConflictException("Author with this type is not attached to article", 409);
+        }
+
+        $this->em->remove($articleAuthor);
+        $this->em->flush();
+
+        $articleAuthors = $this->em->getRepository('Newscoop\Entity\ArticleAuthor')
+            ->getArticleAuthors($article->getNumber(), $article->getLanguageCode())
+            ->getResult();
+
+        $this->reorderAuthors($this->em, $articleAuthors);
+    }
+
+    /**
+     * Reorder Article Authors
+     *
+     * @param Doctrine\ORM\EntityManager $em
+     * @param array                      $articleAuthors
+     * @param array                      $order
+     *
+     * @return boolean
+     */
+    public function reorderAuthors($em, $articleAuthors, $order = array())
+    {
+        // clear current order
+        foreach ($articleAuthors as $articleAuthor) {
+            $articleAuthor->setOrder(null);
+        }
+        $em->flush();
+
+        if (count($order) > 1) {
+            $counter = 0;
+            foreach ($order as $item) {
+                list($authorId, $authorTypeId) = explode("-", $item);
+
+                foreach ($articleAuthors as $articleAuthor) {
+                    if ($articleAuthor->getAuthor()->getId() == $authorId && $articleAuthor->getType()->getId() == $authorTypeId) {
+                        $articleAuthor->setOrder($counter+1);
+                        $counter++;
+                    }
+                }
+            }
+        } else {
+            $counter = 1;
+            foreach ($articleAuthors as $articleAuthor) {
+                $articleAuthor->setOrder($counter);
+                $counter++;
+            }
+        }
+
+        $em->flush();
+
+        return true;
     }
 }

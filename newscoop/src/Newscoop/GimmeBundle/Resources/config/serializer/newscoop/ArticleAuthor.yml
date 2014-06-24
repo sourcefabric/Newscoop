@@ -1,0 +1,20 @@
+Newscoop\Entity\ArticleAuthor:
+    exclusion_policy: ALL
+    exclude: false
+    properties:
+        author:
+            expose: true
+            read_only: true
+            serialized_name: author
+            groups: ["list", "details"]
+            since_version: 1.1
+        type:
+            expose: true
+            serialized_name: type
+            groups: ["list", "details"]
+            since_version: 1.1
+        order:
+            expose: true
+            serialized_name: order
+            groups: ["list", "details"]
+            since_version: 1.1
