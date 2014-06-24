@@ -649,14 +649,21 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     }
 
     /**
-     * Get user points
+     * Set user points
      *
-     * @param  Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User|null $user
+     * @param  string|int                $authorId
      * @return void
      */
-    public function getUserPoints(User $user, $onlyComments = false)
+    public function setUserPoints(User $user = null, $authorId = null)
     {
         $em = $this->getEntityManager();
+
+        if (!is_null($authorId)) {
+            $user = $em->getRepository('Newscoop\Entity\User')
+                ->findOneByAuthor($authorId);
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
@@ -665,14 +672,15 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $query->setParameter('user', $user->getId());
         $result = $query->getSingleResult();
 
-        if ($onlyComments) {
-            return $result['comments'];
-        }
-
         $articlesCount = $em->getRepository('Newscoop\Entity\Article')
             ->countByAuthor($user);
 
-        $user->setPoints($result['comments'] + $articlesCount);
+        $total = (int) $result['comments'] + $articlesCount;
+
+        if ($user) {
+            $user->setPoints($total);
+            $em->flush();
+        }
     }
 
     /**
@@ -761,7 +769,9 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return array($qb, $list->count);
         }
 
-        return $qb->getQuery()->getResult();
+        $list->items = $qb->getQuery()->getResult();
+
+        return $list;
     }
 
     /**
