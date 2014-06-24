@@ -678,12 +678,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         if ($user) {
             $user->setPoints($total);
+            $em->flush();
         }
-
-        // set points for user who is author of article
-        // find user by author and set points
-
-        $em->flush();
     }
 
     /**
