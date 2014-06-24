@@ -1446,6 +1446,7 @@ class Article extends DatabaseObject
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $em = \Zend_Registry::get('container')->getService('em');
         $p_value = strtoupper($p_value);
         if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N') && ($p_value != 'M')) {
             return false;
@@ -1499,7 +1500,11 @@ class Article extends DatabaseObject
             return false;
         }
 
-        self::dispatchEvent("user.set_points", $this, array('user' => $this->getCreatorId()));
+        $result = $em->getRepository('Newscoop\Entity\Article')->getArticle($this->getArticleNumber(), $this->getLanguageId())->getResult();
+        $article = $result[0];
+        foreach ($article->getArticleAuthors() as $author) {
+            self::dispatchEvent("user.set_points", $this, array('authorId' => $author->getId()));
+        }
 
         CampCache::singleton()->clear('user');
 

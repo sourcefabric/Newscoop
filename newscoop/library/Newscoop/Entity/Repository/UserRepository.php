@@ -649,14 +649,20 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     }
 
     /**
-     * Get user points
+     * Set user points
      *
      * @param  Newscoop\Entity\User $user
      * @return void
      */
-    public function getUserPoints(User $user)
+    public function setUserPoints(User $user = null, $authorId = null)
     {
         $em = $this->getEntityManager();
+
+        if (!is_null($authorId)) {
+            $user = $em->getRepository('Newscoop\Entity\User')
+                ->findOneByAuthor($authorId);
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
@@ -669,7 +675,13 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->countByAuthor($user);
 
         $total = (int) $result['comments'] + $articlesCount;
-        $user->setPoints($total);
+
+        if ($user) {
+            $user->setPoints($total);
+        }
+
+        // set points for user who is author of article
+        // find user by author and set points
 
         $em->flush();
     }
