@@ -19,7 +19,8 @@ if ($articleObj->userCanModify($g_user) && $locked && !$inViewMode) {
               echo $translator->trans('The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.', array(
                   '$1' => '<b>'.htmlspecialchars($lockUserObj->getRealName()),
                   '$2' => htmlspecialchars($lockUserObj->getUserName()).'</b>',
-                  '$3' => $timeDiff['hours'], $timeDiff['minutes']), 'articles');
+                  '$3' => $timeDiff['hours'],
+                  '$4' => $timeDiff['minutes']), 'articles');
           } else {
               echo $translator->trans('The article has been locked by $1 ($2) $3 minute(s) ago.', array(
                   '$1' => '<b>'.htmlspecialchars($lockUserObj->getRealName()),
@@ -40,6 +41,7 @@ if ($articleObj->userCanModify($g_user) && $locked && !$inViewMode) {
 </div>
 <?php
     camp_html_copyright_notice();
+
     return;
 }
 
@@ -60,7 +62,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 
         $seoFields = $publicationObj->getSeo();
         $articleEndLink = $articleObj->getSEOURLEnd($seoFields, $articleObj->getLanguageId());
-        if(strlen($articleEndLink) > 0) {
+        if (strlen($articleEndLink) > 0) {
             $previewLinkURL .= $articleEndLink;
         }
 
@@ -69,8 +71,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
         }
     }
 } else {
-    if (isset($publicationObj) && (0 < $f_publication_id) && (0 < $f_issue_number) && (0 < $f_section_number))
-    {
+    if (isset($publicationObj) && (0 < $f_publication_id) && (0 < $f_issue_number) && (0 < $f_section_number)) {
         $doPreviewLink = 'preview';
         $previewLinkURL = "/$ADMIN/articles/preview.php?f_publication_id=$f_publication_id"
             . "&f_issue_number=$f_issue_number&f_section_number=$f_section_number"
@@ -164,9 +165,9 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       </ul>
       <?php if ($inEditMode) { ?>
       <script type="text/javascript">
-      $(function() {
+      $(function () {
           // update displayed datetime
-          $('input:hidden.datetime').change(function() {
+          $('input:hidden.datetime').change(function () {
               $('span.' + $(this).attr('name')).text($(this).val());
           }).next().css('vertical-align', 'middle')
           .css('margin-top', '-3px')
@@ -179,7 +180,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <fieldset class="plain">
         <ul>
         <?php
-        
+
         foreach ($dbColumns as $dbColumn) {
             // Single line text fields
             if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
@@ -226,7 +227,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 style="width:70%;height:100%;"
                 class="input_text"
                 <?php print $spellcheck ?>><?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?></textarea>
-            <?php 
+            <?php
             } else {
                 print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
             }
@@ -414,17 +415,16 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <!-- BEGIN Article Playlist table -->
       <?php require('edit_playlist.php'); ?>
       <!-- END Article Playlist table -->
-      
-      
+
       <!-- BEGIN Multi date table -->
-      <?php 
+      <?php
       if ($hasMultiDates) {
           echo '
   <script type="text/javascript">
     window.has_multidates = true;
   </script>';
-      	require('edit_multidate_box.php');
-      }       
+          require 'edit_multidate_box.php';
+      }
       ?>
       <!-- END Multi date table -->
 
@@ -432,18 +432,18 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
 
       <!-- New plugins hooks -->
-      <?php 
+      <?php
       echo \Zend_Registry::get('container')->getService('newscoop.plugins.service')
         ->renderPluginHooks('newscoop_admin.interface.article.edit.sidebar', null, array(
-            'article' => $articleObj, 
+            'article' => $articleObj,
             'edit_mode' => $f_edit_mode
         ));
       ?>
 
   </div>
   <script type="text/javascript">
-  $(document).ready(function() {
-    $('.sidebar .articlebox').each(function() {
+  $(document).ready(function () {
+    $('.sidebar .articlebox').each(function () {
         var box = $(this);
         var title = box.attr('title');
 
@@ -461,7 +461,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     });
 
     // init tabs
-    $('.sidebar .tabs').each(function() {
+    $('.sidebar .tabs').each(function () {
         $(this).tabs();
         $(this).closest('.padded').addClass('inner-tabs');
     });

@@ -180,7 +180,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             $user = $p_comment->getCommenter()->getUser();
 
             if ($user instanceof User) {
-                $em->getRepository('Newscoop\Entity\User')->getUserPoints($user);
+                $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
             }
 
             $em->remove($p_comment);
@@ -358,7 +358,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
         $user = $commenter->getUser();
         if ($user instanceof User) {
-            $em->getRepository('Newscoop\Entity\User')->getUserPoints($user);
+            $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
         }
 
         return $entity;

@@ -121,6 +121,10 @@ function camp_get_permission_list()
     	}
     }
 
+    $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
+    $collectedPermissionsData = $pluginsService->collectPermissions();
+    $rights = array_merge($collectedPermissionsData, $rights);
+
     return $rights;
 } // fn camp_get_permission_list
 

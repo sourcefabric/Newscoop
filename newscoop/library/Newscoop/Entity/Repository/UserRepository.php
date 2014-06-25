@@ -649,14 +649,21 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     }
 
     /**
-     * Get user points
+     * Set user points
      *
-     * @param  Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User|null $user
+     * @param  string|int                $authorId
      * @return void
      */
-    public function getUserPoints(User $user)
+    public function setUserPoints(User $user = null, $authorId = null)
     {
         $em = $this->getEntityManager();
+
+        if (!is_null($authorId)) {
+            $user = $em->getRepository('Newscoop\Entity\User')
+                ->findOneByAuthor($authorId);
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
@@ -669,9 +676,11 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->countByAuthor($user);
 
         $total = (int) $result['comments'] + $articlesCount;
-        $user->setPoints($total);
 
-        $em->flush();
+        if ($user) {
+            $user->setPoints($total);
+            $em->flush();
+        }
     }
 
     /**
@@ -698,9 +707,18 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->groups)) {
-            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
-            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
-            $qb->setParameter('groups', $criteria->groups);
+            $em = $this->getEntityManager();
+            $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');
+            $users = array();
+            foreach($criteria->groups as $groupId) {
+                $group = $groupRepo->findOneById($groupId);
+                if ($group instanceof \Newscoop\Entity\User\Group) {
+                    $users = array_unique(array_merge($users, array_keys($group->getUsers()->toArray())), SORT_REGULAR);
+                }
+            }
+            $op = $criteria->excludeGroups ? 'notIn' : 'in';
+            $qb->andWhere($qb->expr()->$op('u.id', ':userIds'));
+            $qb->setParameter('userIds', $users);
         }
 
         if (!empty($criteria->query)) {

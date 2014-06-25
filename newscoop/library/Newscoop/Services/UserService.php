@@ -526,23 +526,29 @@ class UserService
     }
 
     /**
-     * Set user points
+     * Update user points
      *
      * @param  GenericEvent $event
      * @return void
      */
-    public function setUserPoints(GenericEvent $event)
+    public function updateUserPoints(GenericEvent $event)
     {
         $params = $event->getArguments();
         $user = null;
+        $authorId = null;
         if (array_key_exists('user', $params)) {
+            $user = $params['user'];
             if (is_numeric($params['user'])) {
                 $user = $this->find($params['user']);
-            } else {
-                $user = $params['user'];
             }
         }
 
-        $this->getRepository()->getUserPoints($user);
+        if (array_key_exists('authorId', $params)) {
+            $authorId = $params['authorId'];
+        }
+
+        if ($user || $authorId) {
+            $this->getRepository()->setUserPoints($user, $authorId);
+        }
     }
 }

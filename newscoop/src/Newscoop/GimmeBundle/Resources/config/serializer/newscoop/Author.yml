@@ -2,21 +2,31 @@ Newscoop\Entity\Author:
     exclusion_policy: ALL
     exclude: false
     properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            serialized_name: id
+            access_type: public_method
+            groups: ["list", "details"]
         biography:
             expose: true
             read_only: true
             type: string
             serialized_name: biography
             access_type: public_method
+            groups: ["list", "details"]
         first_name:
             expose: true
             type: string
             serialized_name: firstName
+            groups: ["list", "details"]
         last_name:
             expose: true
             read_only: true
             type: string
             serialized_name: lastName
+            groups: ["list", "details"]
         image:
             expose: true
             read_only: true
@@ -24,3 +34,4 @@ Newscoop\Entity\Author:
             serialized_name: image
             accessor: 
                 getter: getView
+            groups: ["list", "details"]
