@@ -14,7 +14,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\Connection;
 use Newscoop\Installer\Services;
 
@@ -144,7 +143,7 @@ class InstallNewscoopCommand extends Console\Command\Command
 
         $finishService->saveCronjobs();
         $output->writeln('<info>Cronjobs are saved.<info>');
-        $finishService->generateProxies();
+        //$finishService->generateProxies();
         $finishService->reloadRenditions();
         $finishService->installAssets();
         $output->writeln('<info>Assets are installed.<info>');
