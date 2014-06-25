@@ -49,7 +49,7 @@ class TopicRepository extends DatatableSource
             ->createQueryBuilder('t');
 
         $queryBuilder
-        ->where($queryBuilder->expr()->like('t.name', ':term'))
+            ->where($queryBuilder->expr()->like('t.name', ':term'))
             ->setParameter('term', $name.'%')
             ->orderBy('t.name', 'ASC');
 
