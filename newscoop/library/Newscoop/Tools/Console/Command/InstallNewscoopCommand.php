@@ -52,7 +52,7 @@ class InstallNewscoopCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getApplication()->getKernel()->getContainer();
-        $output->writeln('<info>Welcome in Newscoop Installer.<info>');
+        $output->writeln('<info>Welcome to Newscoop Installer.<info>');
 
         $symfonyRequirements = new \SymfonyRequirements();
         $requirements = $symfonyRequirements->getRequirements();
