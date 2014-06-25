@@ -265,7 +265,6 @@ $app->get('/demo-site', function (Request $request) use ($app) {
             $data = $form->getData();
             if ($data['demo_template'] != 'no') {
                 $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                $app['db']->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($request->server->get('HTTP_HOST')));
                 $app['demosite_service']->copyTemplate($data['demo_template']);
                 $app['demosite_service']->installEmptyTheme();
             }

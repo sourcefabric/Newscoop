@@ -123,7 +123,7 @@ class DatabaseService
      * @param Connection $connection
      * @param string     $host
      */
-    public function installSampleData($connection)
+    public function installSampleData($connection, $host = null)
     {
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
         $errors = $this->importDB($sqlFile, $connection);
@@ -133,6 +133,8 @@ class DatabaseService
 
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
         $errors = $this->importDB($sqlFile, $connection);
+
+        $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
     }
 
     /**
