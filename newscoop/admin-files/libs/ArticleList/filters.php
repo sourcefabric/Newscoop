@@ -338,7 +338,7 @@ $('input.select2').each(function() {
     }
 
     $(this).select2({
-        minimumInputLength: 2,
+        minimumInputLength: 1,
         ajax: {
             url: $(this).data('contenturl'),
             dataType: 'json',
@@ -350,7 +350,7 @@ $('input.select2').each(function() {
         formatSelection: selectionFormatProcessor,
         formatNoMatches: function() { return "<?php echo $translator->trans('No matches.', array(), 'library'); ?>"; },
         formatSearching: function() { return "<?php echo $translator->trans('Searching...', array(), 'library'); ?>"; },
-        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input: $1 characters', array('$1' => 2), 'library'); ?>"; }
+        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input: $1 characters', array('$1' => 1), 'library'); ?>"; }
     });
 });
 
