@@ -87,20 +87,11 @@ $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array()
 </dl>
 <dl>
 	<dt><label for="filter_author"><?php echo $translator->trans('Author'); ?></label></dt>
-	<dd><select id="filter_author" name="author">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading authors...'); ?></option>
-	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
+	<dd><input type="hidden" name="author" id="filter_author" class="select2" data-placeholder="<?php echo $translator->trans('Search for authors', array(), 'author'); ?>" data-contenturl="/admin/authors/get" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_creator"><?php echo $translator->trans('Creator', array(), 'library'); ?></label></dt>
-	<!-- <dd><input type="text" name="creator" id="filter_creator" /></dd> -->
-
-    <dt><select id="filter_creator" name="creator">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading creators...'); ?></option>
-	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
-
+	<dd><input type="hidden" name="creator" id="filter_creator" class="select2" data-placeholder="<?php echo $translator->trans('Search for creators', array(), 'library'); ?>" data-contenturl="/admin/users/load" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_status"><?php echo $translator->trans('Status'); ?></label></dt>
@@ -114,10 +105,7 @@ $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array()
 </dl>
 <dl>
 	<dt><label for="filter_topic"><?php echo $translator->trans('Topic'); ?></label></dt>
-	<dd><select id="filter_topic" name="topic">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-        <option value="" class="loading_message" selected><?php echo $translator->trans('Loading topics...'); ?></option>
-	</select><img src="/admin-style/loading.gif" height="16" width="16" class="loading_indicator"></dd>
+    <dd><input type="hidden" name="topic" id="filter_topic" class="select2" data-placeholder="<?php echo $translator->trans('Search for topics', array(), 'topics'); ?>" data-contenturl="/admin/topics/get" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_language"><?php echo $translator->trans('Language'); ?></label></dt>
@@ -134,6 +122,8 @@ $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array()
 <!-- /.smartlist-filters -->
 
 		<?php if (!self::$renderFilters) { ?>
+<link type="text/css" rel="stylesheet" href="/js/select2/select2.css"></link>
+<script type="text/javascript" src="/js/select2/select2.js"></script>
 <script type="text/javascript">
 
 function handleArgs() {
@@ -278,11 +268,7 @@ $('fieldset.filters .extra').each(function() {
                     $(this).show();
                     $(this).insertBefore($('select.filters', $(this).parent()));
 
-                    if ($(this).data('populated') !== true) {
-                        populate_filter($(this));
-                    }
-
-                    if ($('a', $(this)).length == 0) {
+                    if ($('a.detach', $(this)).length == 0) {
                         $('<a class="detach">X</a>').appendTo($('dd', $(this)))
                             .click(function() {
                                 $(this).parents('dl').hide();
@@ -326,90 +312,47 @@ $('fieldset.filters').each(function() {
 });
 
 // autocomplete
-// $('#filter_creator').autocomplete({
-//     source: "/content-api/user.json",
-//     minLength: 2,
-//     select: function( event, ui ) {
-//         log( ui.item ?
-//             "Selected: " + ui.item.value + " aka " + ui.item.id :
-//             "Nothing selected, input was " + this.value );
-//     }
-// });
+$('input.select2').each(function() {
 
-function populate_filter(populateObj) {
+    // Default processors
+    var idProcessor  = function (data) { return data.id; };
+    var resultFormatProcessor = function (data) { return data.name };
+    var selectionFormatProcessor = function (data) { return data.name; };
+    var paramProcessor = function (term, page) { return { term: term, limit: 10 }; };
+    var resultsProcessor = function (data, page) { return {results: data}; };
 
-    if (populateObj.data('populated') === true) {
-        return;
-    }
-
-    var filterType = populateObj.find('input, select').first().attr('id');
-
-    if (filterType === '') {
-        populateObj.find('label:first').attr('for');
-    }
-
-    switch (filterType) {
-        case 'filter_author':
-            $.ajax({
-                url: "/admin/authors/get",
-                dataType: "json",
-                success: function (data) {
-
-                    selectObj = populateObj.find('select:first');
-
-                    authorHtml = selectObj.html();
-                    for (i in data) {
-                        authorHtml += '<option value="'+ data[i].name +'">'+ data[i].name +'</option>';
-                    }
-                    selectObj.html(authorHtml);
-                    selectObj.find('option.loading_message').hide();
-                    populateObj.find('img.loading_indicator').hide();
-                    populateObj.data('populated', true);
-                }
-            });
-            break;
+    switch ($(this).attr('id')) {
         case 'filter_creator':
-            $.ajax({
-                url: "/content-api/users.json?items_per_page=100000&sort[last_name]=asc&sort[first_name]=asc",
-                dataType: "json",
-                success: function (data) {
-
-                    selectObj = populateObj.find('select:first');
-
-                    userHtml = selectObj.html();
-                    for (i in data.items) {
-                        userHtml += '<option value="'+ data.items[i].id +'">'+ data.items[i].firstName +' '+ data.items[i].lastName +'</option>';
-                    }
-                    selectObj.html(userHtml);
-                    selectObj.find('option.loading_message').hide();
-                    populateObj.find('img.loading_indicator').hide();
-                    populateObj.data('populated', true);
-                }
-            });
+            resultFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
+            selectionFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
+            resultsProcessor = function (data, page) { return {results: data.records}; };
+            paramProcessor = function (term, page) { return { queries : { search_name: term }, perPage: 10 }; };
             break;
         case 'filter_topic':
-            $.ajax({
-                url: "/content-api/topics.json?items_per_page=10000&sort[title]=asc",
-                dataType: "json",
-                success: function (data) {
-
-                    selectObj = populateObj.find('select:first');
-
-                    topicHtml = selectObj.html();
-                    for (i in data.items) {
-                        topicHtml += '<option value="'+ data.items[i].id +'">'+ data.items[i].title +'</option>';
-                    }
-                    selectObj.html(topicHtml);
-                    selectObj.find('option.loading_message').hide();
-                    populateObj.find('img.loading_indicator').hide();
-                    populateObj.data('populated', true);
-                }
-            });
+            break;
+        case 'filter_author':
+            idProcessor  = function (data) { return data.name; };
             break;
         default:
             break;
     }
-}
+
+    $(this).select2({
+        minimumInputLength: 2,
+        ajax: {
+            url: $(this).data('contenturl'),
+            dataType: 'json',
+            data: paramProcessor,
+            results: resultsProcessor
+        },
+        id: idProcessor,
+        formatResult: resultFormatProcessor,
+        formatSelection: selectionFormatProcessor,
+        formatNoMatches: function() { return "<?php echo $translator->trans('No matches.', array(), 'library'); ?>"; },
+        formatSearching: function() { return "<?php echo $translator->trans('Searching...', array(), 'library'); ?>"; },
+        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input: $1 characters', array('$1' => 2), 'library'); ?>"; }
+    });
+});
 
 }); // document.ready
 

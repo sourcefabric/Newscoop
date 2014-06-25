@@ -708,6 +708,12 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
         }
 
+        if (!empty($criteria->query_name)) {
+            $qb->andWhere($qb->expr()->orX("(u.last_name LIKE :query)", "(u.first_name LIKE :query)"));
+            $qb->setParameter('query', trim($criteria->query_name, '%') . '%');
+            $qb->groupBy('u.last_name', 'u.first_name');
+        }
+
         if (!empty($criteria->nameRange)) {
             $this->addNameRangeWhere($qb, $criteria->nameRange);
         }
@@ -728,7 +734,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $list = new ListResult();
         $countQb = clone $qb;
-        $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+        $countQb->select('COUNT(u)')->resetDQLPart('groupBy');
+        $list->count = (int) $countQb->getQuery()->getSingleScalarResult();
 
         if ($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
