@@ -1500,10 +1500,10 @@ class Article extends DatabaseObject
             return false;
         }
 
-        $result = $em->getRepository('Newscoop\Entity\Article')->getArticle($this->getArticleNumber(), $this->getLanguageId())->getResult();
-        $article = $result[0];
-        foreach ($article->getArticleAuthors() as $author) {
-            self::dispatchEvent("user.set_points", $this, array('authorId' => $author->getId()));
+        $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($this->getLanguageId());
+        $authors = $em->getRepository('Newscoop\Entity\ArticleAuthor')->getArticleAuthors($this->getArticleNumber(), $language->getCode())->getArrayResult();
+        foreach ($authors as $author) {
+            self::dispatchEvent("user.set_points", $this, array('authorId' => $author['fk_author_id']));
         }
 
         CampCache::singleton()->clear('user');
