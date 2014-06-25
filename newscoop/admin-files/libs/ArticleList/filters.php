@@ -318,7 +318,7 @@ $('input.select2').each(function() {
     var idProcessor  = function (data) { return data.id; };
     var resultFormatProcessor = function (data) { return data.name };
     var selectionFormatProcessor = function (data) { return data.name; };
-    var paramProcessor = function (term, page) { return { term: term, limit: 10 }; };
+    var paramProcessor = function (term, page) { return { term: term, limit: 20 }; };
     var resultsProcessor = function (data, page) { return {results: data}; };
 
     switch ($(this).attr('id')) {
@@ -326,7 +326,7 @@ $('input.select2').each(function() {
             resultFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
             selectionFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
             resultsProcessor = function (data, page) { return {results: data.records}; };
-            paramProcessor = function (term, page) { return { queries : { search_name: term }, perPage: 10 }; };
+            paramProcessor = function (term, page) { return { queries : { search_name: term }, perPage: 20 }; };
             break;
         case 'filter_topic':
             break;
@@ -350,7 +350,7 @@ $('input.select2').each(function() {
         formatSelection: selectionFormatProcessor,
         formatNoMatches: function() { return "<?php echo $translator->trans('No matches.', array(), 'library'); ?>"; },
         formatSearching: function() { return "<?php echo $translator->trans('Searching...', array(), 'library'); ?>"; },
-        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input: $1 characters', array('$1' => 1), 'library'); ?>"; }
+        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input of characters: $1', array('$1' => 1), 'library'); ?>"; }
     });
 });
 
