@@ -839,7 +839,6 @@ final class MetaArticle extends MetaDbObject {
      */
     public function image($p_imageIndex) {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-<<<<<<< HEAD
         $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
 
         if ($cacheService->contains($cacheKey)) {
@@ -861,22 +860,6 @@ final class MetaArticle extends MetaDbObject {
             $cacheService->save($imageCacheKey, $metaImage);
         }
 
-=======
-        $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article');
-        if ($cacheService->contains($cacheKey)) {
-            $metaImage = $cacheService->fetch($cacheKey);
-        } else {
-            $articleImage = new ArticleImage($this->m_dbObject->getArticleNumber(),
-            null, $p_imageIndex);
-            if (!$articleImage->exists()) {
-                $metaImage = new MetaImage();
-            } else {
-                $metaImage = new MetaImage($articleImage->getImageId());
-            }
-            $cacheService->save($cacheKey, $metaImage);
-        }
-
->>>>>>> 58588671809c287be7cac99135d2673f3ecc2f89
         return $metaImage;
     }
 
