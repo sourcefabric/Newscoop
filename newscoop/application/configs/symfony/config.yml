@@ -52,7 +52,7 @@ fos_rest:
         codes:
             'Newscoop\Exception\ResourcesConflictException': 409
             'Newscoop\Exception\InvalidParametersException': 422
-            'Newscoop\Exception\ResourceIsEmptyException': 204
+            'Newscoop\Exception\ResourceIsEmptyException': 404
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\EntityNotFoundException': 404
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
@@ -72,7 +72,7 @@ fos_oauth_server:
     service:
         options:
             supported_scopes: standard_access
-    db_driver: orm       # Driver availables: orm, mongodb, or propel
+    db_driver: orm
     client_class:        Newscoop\GimmeBundle\Entity\Client
     access_token_class:  Newscoop\GimmeBundle\Entity\AccessToken
     refresh_token_class: Newscoop\GimmeBundle\Entity\RefreshToken

@@ -141,6 +141,17 @@ class Admin_AclController extends Zend_Controller_Action
             'undoredo' => $translator->trans('undo/redo', array(), 'user_types'),
         );
 
+        // register new plugins permissions
+        $pluginsService = \Zend_Registry::get('container')->get('newscoop.plugins.service');
+        $collectedPermissionsData = $pluginsService->collectPermissions();
+        foreach ($collectedPermissionsData as $pluginLabel => $permissions) {
+            foreach ($permissions as $permissionKey => $permissionName) {
+                $pluginNameArray = explode('_', $permissionKey);
+                $this->resources['plugins'][$pluginNameArray[0] . '-' . $pluginNameArray[1]] = $pluginLabel;
+                break;
+            }
+        }
+
         $this->_helper->contextSwitch()
             ->addActionContext('edit', 'json')
             ->initContext();
@@ -151,7 +162,7 @@ class Admin_AclController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         $role = $this->_getParam('user', false)
@@ -162,6 +173,7 @@ class Admin_AclController extends Zend_Controller_Action
             $values = $this->getRequest()->getPost();
             if ($this->isBlocker($values)) {
                 $this->view->error = $translator->trans("You cant deny yourself to manage $1", array('$1' => $this->getResourceName($this->resource)), 'user_types');
+
                 return;
             }
 
@@ -185,7 +197,7 @@ class Admin_AclController extends Zend_Controller_Action
     /**
      * Test if adding rule would block current user to manage users/types
      *
-     * @param array $values
+     * @param  array $values
      * @return bool
      */
     private function isBlocker(array $values)
@@ -207,7 +219,7 @@ class Admin_AclController extends Zend_Controller_Action
     /**
      * Get translated resource name
      *
-     * @param string $resource
+     * @param  string $resource
      * @return string
      */
     private function getResourceName($resource)

@@ -62,10 +62,12 @@ class NewscoopExtension extends \Twig_Extension
             new \Twig_SimpleFunction('renderHook', array($this, 'renderHook')),
             new \Twig_SimpleFunction('getSystemPref', "\Zend_Registry::get('container')->getService('system_preferences_service')->get"),
             new \Twig_SimpleFunction('generateZendUrl', array($this, 'generateZendUrl')),
+            new \Twig_SimpleFunction('hasPermission', array($this, 'hasPermission')),
         );
     }
 
-    public function getBreadcrumbsArray($currentMenuItem) {
+    public function getBreadcrumbsArray($currentMenuItem)
+    {
         $manipulator = new \Knp\Menu\Util\MenuManipulator();
 
         return $manipulator->getBreadcrumbsArray($currentMenuItem);
@@ -86,8 +88,8 @@ class NewscoopExtension extends \Twig_Extension
     {
         $fontsDirectory = __DIR__.'/../../../../include/captcha/';
         $aFonts = array(
-            $fontsDirectory.'fonts/VeraBd.ttf', 
-            $fontsDirectory.'fonts/VeraIt.ttf', 
+            $fontsDirectory.'fonts/VeraBd.ttf',
+            $fontsDirectory.'fonts/VeraIt.ttf',
             $fontsDirectory.'fonts/Vera.ttf'
         );
         $oVisualCaptcha = new \PhpCaptcha($aFonts, 200, 60);
@@ -100,6 +102,23 @@ class NewscoopExtension extends \Twig_Extension
     {
         echo $this->container->get('newscoop.plugins.service')
             ->renderPluginHooks($hookName, null, $params);
+    }
+
+    /**
+     * Checks if user has permission
+     *
+     * @param string $permissionName Permission name
+     *
+     * @return boolean
+     */
+    public function hasPermission($permissionName = null)
+    {
+        $user = $this->container->get('user')->getCurrentUser();
+        if ($user->hasPermission($permissionName)) {
+            return true;
+        }
+
+        return false;
     }
 
     public function getName()

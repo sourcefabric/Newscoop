@@ -636,6 +636,7 @@ class CampGetImage
         }
         else {
             $function($t, $p_target);
+            imagedestroy($t);
             return $this->sendCachedImage();
         }
     }

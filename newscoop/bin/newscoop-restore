@@ -374,20 +374,24 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
-$fileSrcDir = "$tempDirName/public/files";
+$fileSrcDir = "$tempDirName/files";
 $imagesSrcDir = "$tempDirName/images";
+$videosSrcDir = "$tempDirName/videos";
+$pdfSrcDir = "$tempDirName/pdf";
 $configDestDir = $ETC_DIR;
 $filesDestDir = $CAMPSITE_DIR.'/public/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
+$videosDestDir = $CAMPSITE_DIR.'/public/videos';
 $templatesDirName = 'templates'; // keep for gimme template upgrade
 $themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 $themesDestDir = $CAMPSITE_DIR.'/'.$themesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
 $pdfDir = $CAMPSITE_DIR.'/public/pdf';
+$destination = $CAMPSITE_DIR . '/public';
 
 $destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir,
-    $compiledTemplatesDir, $pdfDir);
+    $compiledTemplatesDir, $pdfDir, $videosDestDir);
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
@@ -473,11 +477,27 @@ if (is_dir($imagesSrcDir)) {
 }
 echo "done.\n";
 
+echo " * Restoring videos...";
+flush_output($flush);
+if (is_dir($videosSrcDir)) {
+    camp_copy_files($videosSrcDir, $destination);
+}
+echo "done.\n";
+
 echo " * Restoring file attachments...";
 flush_output($flush);
 if (is_dir($fileSrcDir)) {
-	camp_copy_files($fileSrcDir, $CAMPSITE_DIR);
+	camp_copy_files($fileSrcDir, $destination);
 }
+echo "done.\n";
+//flush_output($flush);
+
+echo " * Restoring PDFs...";
+flush_output($flush);
+if (is_dir($pdfSrcDir)) {
+    camp_copy_files($pdfSrcDir, $destination);
+}
+
 echo "done.\n";
 flush_output($flush);
 
@@ -547,7 +567,13 @@ if ($dbVersion < '2.6.0') {
     exit(1);
 }
 
-// TODO: run upgrade script if needed
+// Upgrade the database
+echo " * Upgrading (if necessary)...";
+flush_output($flush);
+$res = camp_upgrade_database($destDbName);
+if ($res !== 0) {
+    camp_exit_with_error($res);
+}
 
 // replace $campsite by $gimme
 echo " * Upgrading templates...";

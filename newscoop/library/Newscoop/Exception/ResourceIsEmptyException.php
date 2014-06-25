@@ -10,6 +10,17 @@ namespace Newscoop\Exception;
 use Newscoop\NewscoopException;
 
 /**
+ * Empty resource exception
  */
 class ResourceIsEmptyException extends NewscoopException
-{}
+{
+    /**
+     * Constructor.
+     *
+     * @param string $message The internal exception message
+     */
+    public function __construct($message = null)
+    {
+        parent::__construct($message, 204);
+    }
+}
