@@ -87,7 +87,7 @@ $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array()
 </dl>
 <dl>
 	<dt><label for="filter_author"><?php echo $translator->trans('Author'); ?></label></dt>
-	<dd><input type="hidden" name="author" id="filter_author" class="select2" data-placeholder="<?php echo $translator->trans('Search for authors', array(), 'author'); ?>" data-contenturl="/admin/authors/get" /></dd>
+	<dd><input type="hidden" name="author" id="filter_author" class="select2" data-placeholder="<?php echo $translator->trans('Search for authors', array(), 'authors'); ?>" data-contenturl="/admin/authors/get" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_creator"><?php echo $translator->trans('Creator', array(), 'library'); ?></label></dt>
