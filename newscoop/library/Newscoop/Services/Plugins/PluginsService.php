@@ -318,5 +318,4 @@ class PluginsService
             throw new \Exception("Error removing plugin permissions", 1);
         }
     }
->>>>>>> c0a63e17b500a5351182006c6ca43bf454644195
 }
