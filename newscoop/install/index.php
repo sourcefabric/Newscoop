@@ -42,7 +42,6 @@ if (count($missingReq) > 0) {
     die;
 }
 
-use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -264,7 +263,7 @@ $app->get('/demo-site', function (Request $request) use ($app) {
             $data = $form->getData();
             if ($data['demo_template'] != 'no') {
                 $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                $app['db']->executeQuery('INSERT INTO Aliases VALUES (2,?,1)', array($request->server->get('HTTP_HOST')));
+                $app['db']->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($request->server->get('HTTP_HOST')));
                 $app['demosite_service']->copyTemplate($data['demo_template']);
                 $app['demosite_service']->installEmptyTheme();
             }
@@ -292,6 +291,5 @@ $app->get('/post-process', function (Request $request) use ($app) {
 $app->get('/finish', function (Silex\Application $app) {
     return $app['twig']->render('index.twig', array());
 });
-
 
 $app->run();

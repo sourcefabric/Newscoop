@@ -9,8 +9,6 @@
 namespace Newscoop\Installer\Services;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Newscoop\Entity\Resource;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -71,7 +69,7 @@ class DemositeService
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {
-            throw new \RuntimeException($clearCache->getErrorOutput());
+            throw new \RuntimeException($availablePublications->getErrorOutput());
         }
 
         $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
