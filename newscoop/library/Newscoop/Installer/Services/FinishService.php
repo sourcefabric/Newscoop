@@ -70,7 +70,7 @@ class FinishService
         $reloadRenditions = new Process("$php $newscoopConsole renditions:reload", null, null, null, 300);
         $reloadRenditions->run();
         if (!$reloadRenditions->isSuccessful()) {
-            throw new \RuntimeException($reloadRenditions->getErrorOutput());
+            throw new \RuntimeException('An error occurred when executing the Reload renditions command.');
         }
     }
 

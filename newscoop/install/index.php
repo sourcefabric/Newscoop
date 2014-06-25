@@ -192,6 +192,8 @@ $app->get('/prepare', function (Request $request) use ($app) {
 
             } else {
                 $app['session']->getFlashBag()->add('danger', '<p>There is already a database named <i>' . $app['db']->getDatabase() . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.');
+
+                return $app->redirect($app['url_generator']->generate('prepare'));
             }
 
             // redirect somewhere
