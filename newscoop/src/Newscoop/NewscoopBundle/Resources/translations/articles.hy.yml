@@ -42,7 +42,7 @@ Off: null
 'You do not have the right to moderate comments.': null
 'You can not schedule opposing events at the same time': null
 'Unable to reach Newscoop. Please check your internet connection.': null
-Title: null
+Title: Վերնագիր
 'There already is an article with the same name. Please change the name and try again.': null
 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
 Geolocation: null
@@ -113,8 +113,8 @@ Download: null
 'Article translation created.': null
 'Article order changed.': null
 'Article moved.': null
-'Article deleted.': null
-'Article created.': null
+'Article deleted.': 'Հոդվածը ջնջված է'
+'Article created.': 'Հոդվածը ստեղծված է'
 '$1 toggled.': null
 'Total:': null
 'Show Comments': null

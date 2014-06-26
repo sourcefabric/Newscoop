@@ -1,6 +1,6 @@
 newscoop:
     btn:
-        save: null
+        save: Պահպանել
     preferences:
         error:
             cache: null

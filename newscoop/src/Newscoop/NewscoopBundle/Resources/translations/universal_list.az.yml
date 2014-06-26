@@ -1,39 +1,39 @@
-'Use Map': null
-Locations: null
+'Use Map': 'Xəritə İstifadə Et'
+Locations: Məkanlar
 Last: null
 First: null
 'Publish Schedule': null
 'You do not have the right to delete articles.': null
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
-'Toggle: On Section Page': null
-'Toggle: On Front Page': null
-'Toggle: Comments': null
+'Toggle: On Section Page': 'Keçid: Seçim Səhifəsində'
+'Toggle: On Front Page': 'Keçid: Ön Səhifədə'
+'Toggle: Comments': 'Keçid: Şərhlər'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': null
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
-'Status: Submit': null
-'Status: Set New': null
-'Status: Publish': null
+'Status: Submit': 'Status: Daxil Et'
+'Status: Set New': 'Status: Yenisini Yaz'
+'Status: Publish': 'Status: Nümayiş'
 'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Show / hide columns': null
-'Select some article first.': null
-'Select action': null
-'Save order': null
-'Reset all filters': null
-'Published before': null
-'Published after': null
+'Show / hide columns': 'Sütunları göstər / gizlə'
+'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
+'Select action': 'Addımı seç'
+'Save order': 'Sifarişi saxla'
+'Reset all filters': 'Bütün filtrləri sıfırla'
+'Published before': 'Əvvəl nümayiş olunub'
+'Published after': 'Sonra nümayiş olunub'
 'Publish date': null
-'Publish Date': null
-'Order updated.': null
-'No sections found': null
+'Publish Date': 'Nümayiş Tarixi'
+'Order updated.': 'Sifariş yeniləndi.'
+'No sections found': 'Bölmə tapılmadı'
 'No records found.': null
-'No publications found': null
-'No issues found': null
+'No publications found': 'Nümayiş tapılmadı'
+'No issues found': 'Məsələ tapılmadı'
 'No entries to show': null
-'Loading data': null
-'Last Modified': null
-'Filter by...': null
-Filter: null
-'Duplicate to another section': null
+'Loading data': 'Məlumatın yüklənməsi'
+'Last Modified': 'Son Quraşdırılan'
+'Filter by...': 'Filtr xüsusiyyəti...'
+Filter: 'Filtrə Et'
+'Duplicate to another section': 'Başqa bölməyə duplikat hazırla'
 'Display _MENU_ records': null
 Creator: null
 'Create Date': null

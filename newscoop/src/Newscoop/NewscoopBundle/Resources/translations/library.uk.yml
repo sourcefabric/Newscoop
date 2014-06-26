@@ -71,3 +71,7 @@ Added: Додано
 '$1 toggled.': '$1 змінено.'
 '$1 articles have been removed': ' $1 стаття була видалена.'
 ' - filtering from _MAX_ records': 'фільтрація від _MAX_ записів'
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

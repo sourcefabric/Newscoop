@@ -71,7 +71,7 @@ Added: Hinzugefügt
 '$1 toggled.': '$1 ausgewählt.'
 '$1 articles have been removed': '$1 Artikel wurden entfernt'
 ' - filtering from _MAX_ records': ' - filtert aus _MAX_ Einträgen '
-'Search for creators': 'Nach Ersteller suchen'
-'No matches.': 'Keine Treffer gefunden.'
-'Searching...': 'Suchen...'
-'Minimum input of characters: $1': 'Mindestanzahl von Zeichen: $1'
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

@@ -65,8 +65,8 @@ Tuesday: null
 Wednesday: null
 Thursday: null
 Friday: null
-Saturday: null
-Sunday: null
-'You do not have the right to add new languages.': null
-'There are $1 issue(s) left.': null
-'Native name': null
+Saturday: Şənbə
+Sunday: Bazar
+'You do not have the right to add new languages.': 'Yeni dil əlavə etməyə ixtiyarın yoxdur.'
+'There are $1 issue(s) left.': 'Geriyə $1 məsələ(lər) qalıb.'
+'Native name': 'Əsl adı'

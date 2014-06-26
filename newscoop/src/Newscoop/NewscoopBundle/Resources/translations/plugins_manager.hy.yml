@@ -12,7 +12,7 @@ newscoop.plugins_manager.installed_table.installed_at: null
 newscoop.plugins_manager.installed_table.updated_at: null
 newscoop.plugins_manager.installed_table.actions: null
 newscoop.plugins_manager.installed_table.update_plugin: null
-newscoop.plugins_manager.installed_table.remove_plugin: null
+newscoop.plugins_manager.installed_table.remove_plugin: Հեռացնել
 newscoop.plugins_manager.installed_table.install_plugin: null
 newscoop.plugins_manager.installed_table.plugin_installed: null
 newscoop.plugins_manager.upload.private: null
@@ -30,8 +30,8 @@ newscoop:
             search: null
             filter: null
             processing: null
-            last: null
+            last: Վերջին
             next: null
-            first: null
+            first: Առաջին
             previous: null
             norecords: null

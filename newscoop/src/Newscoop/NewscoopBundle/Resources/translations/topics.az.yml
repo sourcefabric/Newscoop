@@ -4,7 +4,7 @@
 'Order changes will be lost. Are you sure you want to continue?': null
 'Topics order saved.': null
 'Show languages': null
-'Save order': null
+'Save order': 'Sifarişi saxla'
 'Click to edit': null
 'Add root topic': null
 'Topic was deleted.': null
@@ -24,3 +24,4 @@ Top: null
 'Deleting topic': null
 'Change topic name': null
 'There are $1 articles using the topic.': null
+'Search for topics': null
