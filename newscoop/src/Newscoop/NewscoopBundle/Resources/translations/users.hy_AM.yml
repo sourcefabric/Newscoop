@@ -204,7 +204,7 @@ users:
             edit: null
             resend_email: null
             rename: null
-            remove: null
+            remove: Հեռացնել
         confirm_remove: null
         table_messages:
             page: null

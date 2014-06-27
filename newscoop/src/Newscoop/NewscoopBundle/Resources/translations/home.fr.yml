@@ -9,7 +9,7 @@ Campsite: null
 'Security token expired. Please resubmit the form.': null
 Templates: null
 'Create slideshow': null
-Create: null
+Create: Créer
 Attach/Detach: null
 'Are you sure you want to delete slideshow?': null
 Support: null
@@ -36,7 +36,7 @@ at: null
 'You must at least upload one file.': null
 'Warning: the existing data and themes will be deleted!': null
 'Value is required and cant be empty': null
-Upload: null
+Upload: Téléchargement
 'Update comment': null
 'Time created': null
 Themes: Templates
@@ -49,7 +49,7 @@ Reply: null
 'New comment added': null
 'Manage Authors': null
 Loading..: null
-Filename: null
+Filename: 'Nom du fichier'
 'Edit user type': null
 'Edit language': 'Editer langue'
 'Drag files here.': null
@@ -98,7 +98,7 @@ login: null
 'No user is registered with this email.': null
 'Forgot your password?': null
 'Email: incorrect format.': null
-Email: null
+Email: Courriel
 'Bad input parameters.': null
 'There was an error trying to delete the file $1.': null
 'The file $1 was deleted successfully.': null
@@ -152,8 +152,8 @@ Help: Aide
 'Please make sure that you typed the correct user name and password.': 'Assurez vous svp que vous avez correctement tapé le nom dutlisateur et le mot de passe.'
 'If your problem persists please contact the site administrator $1': 'Si votre problème persiste contactez svp ladministrateur du site $1.'
 Backup/Restore: null
-'Step 2': null
-'Step 3': null
+'Step 2': 'Étape 2'
+'Step 3': 'Étape 3'
 'Add new user': null
 'Bad credentials': null
 'Active users': null

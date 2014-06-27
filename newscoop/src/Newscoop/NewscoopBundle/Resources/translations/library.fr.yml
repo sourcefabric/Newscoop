@@ -6,7 +6,7 @@ Source: null
 'Select type': null
 On: null
 Off: null
-Title: null
+Title: Titre
 'No video playback capabilities, please download the video below': null
 'Article status set to $1 for $2 articles': null
 'Article status not set to $1 for $2 articles': null
@@ -56,10 +56,10 @@ Last: Dernier
 First: Premier
 'Filter by...': null
 Filter: null
-Filename: null
+Filename: 'Nom du fichier'
 'Duplicate to another section': null
 'Display _MENU_ records': null
-Creator: null
+Creator: Créateur
 'Create Date': null
 'Article status set to $1': null
 'Are you sure you want to delete selected articles?': null
