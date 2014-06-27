@@ -54,6 +54,7 @@ class AuthorService
             $qb
             ->where($qb->expr()->like('aa.last_name', ':term'))
             ->orWhere($qb->expr()->like('aa.first_name', ':term'))
+            ->orWhere($qb->expr()->like('concat(aa.first_name, concat(\' \', aa.last_name))', ':term'))
             ->setParameter('term', $term . '%')
             ->groupBy('aa.last_name', 'aa.first_name');
         }
