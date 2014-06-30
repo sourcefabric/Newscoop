@@ -1,12 +1,12 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
-'Filter not saved': null
-'Not a color': null
-'No such field': null
-'Color saved': null
-'Color not saved': null
-'Topic created': null
+'No such article type': 'Belə məqalə növü yoxdur'
+'Multi-line Text': 'Çox zolaqlı Mətn'
+'Filter saved': 'Filter saxlandı'
+'Filter not saved': 'Filter saxlanmadı'
+'Not a color': Rəngsiz
+'No such field': 'Belə sahə yoxdur'
+'Color saved': 'Rəng saxlandı'
+'Color not saved': 'Rəng saxlanmadı'
+'Topic created': 'Mövzu yaradıldı'
 'The topic name is already in use by another topic.': null
 'Complex Date': null
 vertices: null

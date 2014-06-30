@@ -26,7 +26,7 @@ First: Premier
 'Display _MENU_ records': null
 Deleted: null
 'Change selected messages status': null
-Attachment: null
+Attachment: 'Pièce jointe'
 Approved.: null
 Approve: null
 Anonymous: null
@@ -68,9 +68,9 @@ ID: null
 'Go to edit article': null
 Forum: null
 'For Column': null
-Email: null
+Email: Courriel
 'Edit acceptance criteria': null
-E-mail: null
+E-mail: Courriel
 'Delete all comments?': null
 'Date Created': null
 'Comments updated.': null

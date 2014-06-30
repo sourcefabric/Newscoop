@@ -27,7 +27,7 @@ manage: null
 link: null
 italic: null
 indent: null
-image: null
+image: image
 'horizontal rule': null
 handle: null
 guest: null

@@ -226,8 +226,8 @@ Move: Déplacer
 'Date:': null
 Hidden: null
 Comments: null
-Comment: null
-Approved: null
+Comment: Commentaire
+Approved: Approuvé
 Subject: null
 'IP address:': null
 'Email:': null
@@ -258,7 +258,7 @@ Reads: null
 'Universal List': null
 'Invalid security token!': null
 Authors: null
-Title: null
+Title: Titre
 'Edit country': null
 'Entry $1 prepared for publishing': null
 'Entry deleted': null
@@ -282,4 +282,4 @@ Confirm: null
 at: null
 published: null
 unpublished: null
-nopermissions: 'You don''t have permissions to access this resource.'
+nopermissions: null

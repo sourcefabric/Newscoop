@@ -67,7 +67,7 @@
 'The alias $1 could not be deleted.': null
 '$1 is the default publication alias, it can not be deleted.': null
 'You do not have the right to add publications.': null
-'There are $1 issue(s) left.': null
+'There are $1 issue(s) left.': 'Geriyə $1 məsələ(lər) qalıb.'
 'Time Unit': null
 Currency: null
 'Edit languages': null

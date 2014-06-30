@@ -1,63 +1,63 @@
-'Display articles of filtered types': null
-'Display Articles of Filtered Types': null
+'Display articles of filtered types': 'Filtrlənmiş məqalə növlərini göstər'
+'Display Articles of Filtered Types': 'Filtrlənmiş Məqalə Növlərini Göstər'
 Webcode: null
 'View article': null
-Source: null
-'Select type': null
+Source: Mənbə
+'Select type': 'Növü seç'
 On: null
 Off: null
 Title: null
-'No video playback capabilities, please download the video below': null
-'Article status set to $1 for $2 articles': null
-'Article status not set to $1 for $2 articles': null
-'$1 toggled for $2 articles.': null
-'$1 not toggled for $2 articles.': null
-'$1 not toggled for $2  articles.': null
-'$1 articles have not been removed': null
-'$1 Article(s) unlocked': null
-'$1 Article(s) not unlocked': null
-'$1 Article(s) duplicated': null
+'No video playback capabilities, please download the video below': 'Videonun oxunma imkanı yoxdur, lütfən, aşağıdakı videonu endir'
+'Article status set to $1 for $2 articles': '$2 məqalə üçün status $1 olaraq təyin edildi'
+'Article status not set to $1 for $2 articles': '$2 məqalə üçün status $1 olaraq təyin edilmədi'
+'$1 toggled for $2 articles.': '$1 $2 məqalə üçün köçürüldü.'
+'$1 not toggled for $2 articles.': '$1 $2 məqalə üçün köçürülmədi.'
+'$1 not toggled for $2  articles.': '$1 $2 məqalə üçün köçürülmədi.'
+'$1 articles have not been removed': '$1 məqalə xaric edilməmişdir'
+'$1 Article(s) unlocked': '$1 Məqalə(lər)nin kilidi açıldı'
+'$1 Article(s) not unlocked': '$1 Məqalə(lər)nin kilidi açılmadı'
+'$1 Article(s) duplicated': '$1 Məqalə(lər)nin buplikatı hazılandı'
 'Download file': null
 'You do not have the right to delete articles.': null
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
-'Use Map': null
-'Toggle: On Section Page': null
-'Toggle: On Front Page': null
-'Toggle: Comments': null
+'Use Map': 'Xəritə İstifadə Et'
+'Toggle: On Section Page': 'Keçid: Seçim Səhifəsində'
+'Toggle: On Front Page': 'Keçid: Ön Səhifədə'
+'Toggle: Comments': 'Keçid: Şərhlər'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': null
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
-'Status: Submit': null
-'Status: Set New': null
-'Status: Publish': null
+'Status: Submit': 'Status: Daxil Et'
+'Status: Set New': 'Status: Yenisini Yaz'
+'Status: Publish': 'Status: Nümayiş'
 Size: null
 'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Show / hide columns': null
-'Select some article first.': null
-'Select action': null
-'Save order': null
-'Reset all filters': null
-'Published before': null
-'Published after': null
+'Show / hide columns': 'Sütunları göstər / gizlə'
+'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
+'Select action': 'Addımı seç'
+'Save order': 'Sifarişi saxla'
+'Reset all filters': 'Bütün filtrləri sıfırla'
+'Published before': 'Əvvəl nümayiş olunub'
+'Published after': 'Sonra nümayiş olunub'
 'Publish date': null
 'Publish Schedule': null
-'Publish Date': null
-'Order updated.': null
+'Publish Date': 'Nümayiş Tarixi'
+'Order updated.': 'Sifariş yeniləndi.'
 'Open in browser': null
-'No sections found': null
+'No sections found': 'Bölmə tapılmadı'
 'No records found.': null
-'No publications found': null
-'No issues found': null
+'No publications found': 'Nümayiş tapılmadı'
+'No issues found': 'Məsələ tapılmadı'
 'No entries to show': null
-Locations: null
-'Loading data': null
+Locations: Məkanlar
+'Loading data': 'Məlumatın yüklənməsi'
 'Last modified': null
-'Last Modified': null
+'Last Modified': 'Son Quraşdırılan'
 Last: null
 First: null
-'Filter by...': null
-Filter: null
+'Filter by...': 'Filtr xüsusiyyəti...'
+Filter: 'Filtrə Et'
 Filename: null
-'Duplicate to another section': null
+'Duplicate to another section': 'Başqa bölməyə duplikat hazırla'
 'Display _MENU_ records': null
 Creator: null
 'Create Date': null
@@ -71,3 +71,7 @@ Added: null
 '$1 toggled.': null
 '$1 articles have been removed': null
 ' - filtering from _MAX_ records': null
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

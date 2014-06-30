@@ -109,6 +109,10 @@ class UsersController extends Controller
                 $criteria->query = $queries['search'];
             }
 
+            if (array_key_exists('search_name', $queries)) {
+                $criteria->query_name = $queries['search_name'];
+            }
+
             if (array_key_exists('filter', $queries)) {
                 if ($queries['filter'] == 'active') {
                     $criteria->lastLoginDays = 30;

@@ -52,7 +52,7 @@
         "yzalis\/crontab":"1.0.x-dev",
         "imagine\/imagine":"v0.5.0",
         "symfony\/twig-bridge":"~2.3",
-        "excelwebzone\/recaptcha-bundle":"dev-master#4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
+        "newscoop\/recaptcha-bundle":"2.2",
         "friendsofsymfony\/oauth-server-bundle":"1.4.0",
         "newscoop\/plugins-installer":"v0.2",
         "nelmio\/api-doc-bundle":"dev-master"
