@@ -43,7 +43,7 @@ newscoop:
             secretkey: null
             sessionlifetime: null
             sessionlifetimemsg: null
-            separator: null
+            separator: 'Açar söz ayırıcı'
             captcha: null
             maxupload: null
             maxuploadmsg: null

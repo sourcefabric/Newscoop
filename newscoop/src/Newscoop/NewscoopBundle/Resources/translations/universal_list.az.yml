@@ -1,15 +1,15 @@
 'Use Map': 'Xəritə İstifadə Et'
 Locations: Məkanlar
-Last: null
-First: null
-'Publish Schedule': null
-'You do not have the right to delete articles.': null
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
+Last: Son
+First: İlk
+'Publish Schedule': 'Planı Nümayiş Et'
+'You do not have the right to delete articles.': 'Məqalə silməyə ixtiyarın yoxdur.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Bu məqalənin statusunu dəyişməyə ixtiyarın yoxdur. Məqalə daxil edildikdən sonra yalnız səlahiyyətli istifadəçilər tərəfindən dəyişdirilə bilər.'
 'Toggle: On Section Page': 'Keçid: Seçim Səhifəsində'
 'Toggle: On Front Page': 'Keçid: Ön Səhifədə'
 'Toggle: Comments': 'Keçid: Şərhlər'
-'The article has been locked by $1 ($2) $3 minute(s) ago.': null
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Məqalə $3 dəqiqə əvvəl $1 ($2) tərəfindən kilidlənib.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Məqalə $3 saat $4 dəqiqə əvvəl $1 ($2) tərəfindən kilidlənib.'
 'Status: Submit': 'Status: Daxil Et'
 'Status: Set New': 'Status: Yenisini Yaz'
 'Status: Publish': 'Status: Nümayiş'
@@ -21,7 +21,7 @@ First: null
 'Reset all filters': 'Bütün filtrləri sıfırla'
 'Published before': 'Əvvəl nümayiş olunub'
 'Published after': 'Sonra nümayiş olunub'
-'Publish date': null
+'Publish date': 'Nümayiş tarixi'
 'Publish Date': 'Nümayiş Tarixi'
 'Order updated.': 'Sifariş yeniləndi.'
 'No sections found': 'Bölmə tapılmadı'
@@ -40,12 +40,12 @@ Creator: null
 'Articles updated.': null
 'Article(s) unlocked': null
 'Article(s) duplicated': null
-'Article status set to $1': null
+'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
 'Are you sure you want to delete selected articles?': null
 'All Sections': null
 'All Publications': null
 'All Issues': null
-'Access denied.': null
-'$1 toggled.': null
+'Access denied.': 'Giriş qadağandır.'
+'$1 toggled.': '$1 keçirildi.'
 '$1 articles have been removed': null
 ' - filtering from _MAX_ records': null

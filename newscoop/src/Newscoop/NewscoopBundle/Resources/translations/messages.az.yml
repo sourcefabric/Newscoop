@@ -1,5 +1,5 @@
 Plugins: null
-'Manage Plugins': null
+'Manage Plugins': 'Plaqinləri Quraşdır'
 Account: null
 'Items per page': null
 'Add new': null
@@ -225,7 +225,7 @@ Move: null
 'From:': null
 'Date:': null
 Hidden: null
-Comments: null
+Comments: Şərhlər
 Comment: null
 Approved: null
 Subject: null
@@ -254,11 +254,11 @@ Send: null
 (optional): null
 'The URL you entered is invalid: $1': null
 Reads: null
-'Publish with issue': null
+'Publish with issue': 'Maddə ilə nümayiş et'
 'Universal List': null
 'Invalid security token!': null
-Authors: null
-Title: null
+Authors: Müəlliflər
+Title: Başlıq
 'Edit country': null
 'Entry $1 prepared for publishing': null
 'Entry deleted': null

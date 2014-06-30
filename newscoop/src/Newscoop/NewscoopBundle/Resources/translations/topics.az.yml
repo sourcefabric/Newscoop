@@ -8,11 +8,11 @@
 'Click to edit': null
 'Add root topic': null
 'Topic was deleted.': null
-'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': null
+'The topic name is already in use by another topic.': 'Təklif edilən mövzu adı başqa mövzuda istifadə edilir.'
+'You must enter a name for the topic.': 'Mövzu üçün ad daxil etməlisən.'
 'You must choose a language for the topic.': null
 'This topic has subtopics, therefore it cannot be deleted.': null
-'Add translation:': null
+'Add translation:': 'Tərcümə Əlavə Et:'
 'Add subtopic:': null
 Top: null
 'You do not have the right to add topics.': null

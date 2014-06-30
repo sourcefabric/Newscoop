@@ -1,6 +1,6 @@
 'so that default templates can be assigned to the issue.': null
 'Once this is done, the issue can be published': null
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Bu məsələyə ön baxış etmək mümkün deyil. Lütfən, nəşrə təyin edilmiş mövzunun mövcudluğuna əmin ol.'
 'This issue cannot be previewed. Please make sure it has the front template selected.': null
 'Publish all articles:': null
 'Publish all articles': null

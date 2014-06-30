@@ -1,7 +1,7 @@
 'No attachment': null
 'You are about to permanently delete multiple messages.': null
 'You are about to permanently delete a message.': null
-'Are you sure you want to do it?': null
+'Are you sure you want to do it?': 'Bunu etmək istədiyinə əminsən?'
 Approve: null
 Approved.: null
 at: null
@@ -22,7 +22,7 @@ Reply: null
 'Reply to message': null
 Star: null
 Starred: null
-'Unable to reach Newscoop. Please check your internet connection.': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
 'With document attachment': null
 'With image attachment': null
 'With no attachment': null
