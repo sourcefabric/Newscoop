@@ -235,8 +235,11 @@ $app->get('/process', function (Request $request) use ($app) {
         if ($form->isValid()) {
             $data = $form->getData();
             $app['session']->set('main_config', $data);
+            $app['database_service']->installDatabaseSchema($app['db'], $request->server->get('HTTP_HOST'), $data['site_title']);
+            $app['demosite_service']->installEmptyTheme();
+            $app['demosite_service']->copyTemplate();
 
-            return $app->redirect($app['url_generator']->generate('demo-site'));
+            return $app->redirect($app['url_generator']->generate('post-process'));
         }
     }
 
@@ -244,39 +247,6 @@ $app->get('/process', function (Request $request) use ($app) {
 })
 ->assert('_method', 'POST|GET')
 ->bind('process');
-
-$app->get('/demo-site', function (Request $request) use ($app) {
-    $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
-
-    $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
-        ->add('demo_template', 'choice', array(
-            'choices'   => array(
-                array('no'   => 'No thanks')
-            )+array_map(function ($template, $key) {
-                return array($key => $template['name']);
-            }, $app['database_service']->sampleTemplates, array_keys($app['database_service']->sampleTemplates)),
-            'expanded'  => true,
-        ))
-        ->getForm();
-
-    if ('POST' == $request->getMethod()) {
-        $form->bind($request);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            if ($data['demo_template'] != 'no') {
-                $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                $app['demosite_service']->copyTemplate($data['demo_template']);
-                $app['demosite_service']->installEmptyTheme();
-            }
-
-            return $app->redirect($app['url_generator']->generate('post-process'));
-        }
-    }
-
-    return $app['twig']->render('demo.twig', array('form' => $form->createView()));
-})
-->assert('_method', 'POST|GET')
-->bind('demo-site');
 
 $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->saveCronjobs();

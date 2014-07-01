@@ -30,32 +30,32 @@ comments:
         editcomment: null
         actions: null
         selectstatus: null
-        deleted: null
-        alert: null
-        searchholder: null
+        deleted: Silindi
+        alert: Xəbərdarlıq
+        searchholder: 'Axtar... (məsələn, ad, email, başlıq, şərh, məqalə adı)'
     btn:
-        cancel: null
-        submit: null
-        unrecommend: null
-        recommend: null
-        delete: null
-        reply: null
+        cancel: 'Ləğv et'
+        submit: Göndər
+        unrecommend: 'Tövsiyyə Etmə'
+        recommend: 'Tövsiyyə Et'
+        delete: Sil
+        reply: 'Cavab yaz'
         edit: null
         close: null
         okay: null
         filter: null
     msg:
-        deleted: null
-        commentinarticle: null
+        deleted: 'Şərh silindi.'
+        commentinarticle: '$2 ($3) məqaləsində $1 tərəfindən $4 şərhi'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: yeni
+            approved: təsdiqləndi
+            hidden: gizli
+            single: 'Şərh statusu belə dəyişdi'
+            all: 'Şərhlərin statusu belə dəyişdi'
         error:
-            reach: null
-            deletefromarticle: null
+            reach: 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
+            deletefromarticle: 'Şərh $2 ($3) məqaləsindən $1 tərəfindən silindi'
             statuschange: null
             delete: null
             update: null

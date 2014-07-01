@@ -121,9 +121,20 @@ class DatabaseService
      * Fill database with sample data
      *
      * @param Connection $connection
+     */
+    public function installSampleData($connection)
+    {
+        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
+        $errors = $this->importDB($sqlFile, $connection);
+    }
+
+    /**
+     * Install database schema
+     *
+     * @param Connection $connection
      * @param string     $host
      */
-    public function installSampleData($connection, $host = null)
+    public function installDatabaseSchema($connection, $host = null, $publicationName = null)
     {
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
         $errors = $this->importDB($sqlFile, $connection);
@@ -131,10 +142,8 @@ class DatabaseService
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_prepare.sql';
         $errors = $this->importDB($sqlFile, $connection);
 
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
-        $errors = $this->importDB($sqlFile, $connection);
-
         $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
+        $connection->executeQuery("INSERT IGNORE INTO Publications VALUES (1,?,1,'D',0.00,0.00,'',0,0,2,2,NULL,1,1,0,0,1,0,0,'','',NULL,'a:1:{s:4:\"name\";s:2:\"on\";}')", array($publicationName));
     }
 
     /**

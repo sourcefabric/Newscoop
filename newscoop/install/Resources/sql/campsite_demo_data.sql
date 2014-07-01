@@ -496,16 +496,6 @@ INSERT INTO `Plugins` VALUES (7,'poll','',0,0,'','0.3.1','','',1,'0000-00-00 00:
 UNLOCK TABLES;
 
 --
--- Dumping data for table `Publications`
---
-
-LOCK TABLES `Publications` WRITE;
-/*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
-INSERT INTO `Publications` VALUES (1,'Sample Publication',1,'D',0.00,0.00,'',0,0,2,2,NULL,1,1,0,0,1,0,0,'','',NULL,'a:1:{s:4:\"name\";s:2:\"on\";}');
-/*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `RequestObjects`
 --
 

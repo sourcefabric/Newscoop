@@ -19,7 +19,7 @@ Filename: null
 'You may only translate one article at a time.': null
 'You do not have the right to rename templates.': null
 'You do not have the right to move templates.': null
-'You do not have the right to move articles.': null
+'You do not have the right to move articles.': 'Məqalələri köçürməyə ixtiyarın yoxdur.'
 'Unable to create folder.': null
 'Unable to $1 template.': null
 'To New Name': null
@@ -49,7 +49,7 @@ Folder: null
 'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
 'Directory $1 was deleted': null
 'Directory $1 created.': null
-'You must select a file to upload.': null
+'You must select a file to upload.': 'Yükləmək üçün fayl seçməlisən.'
 'You can only replace a file with a file of the same type.  The original file is of type $1': null
 'Unable to save the file $1 to the path $2.': null
 Replace: null
@@ -65,7 +65,7 @@ Replace: null
 'Delete folder': null
 Folders: null
 'No folders.': null
-Files: null
+Files: Fayllar
 'No templates.': null
 'Create new template': null
 'Duplicate template': null

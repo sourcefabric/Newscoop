@@ -7,100 +7,100 @@
 'Color saved': 'Rəng saxlandı'
 'Color not saved': 'Rəng saxlanmadı'
 'Topic created': 'Mövzu yaradıldı'
-'The topic name is already in use by another topic.': null
-'Complex Date': null
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': null
-'Pan Map': null
-'Open large map': null
-'No news available.': null
-'Edit Polygon': null
-'Create Polygon': null
-'Communication error: ': null
-'Cant fetch news from $1': null
-Loading...: null
-Version: null
-License: null
-Homepage: null
-'Show original map': null
-'The uploaded archive does not contain an valid newscoop plugin.': null
-Map: null
-Center: null
-Title: null
-'Invalid security token.': null
-'Callback $1 is not callable.': null
-'Article translated to $4 ($5)': null
-'Article status changed from $1 to $2.': null
-'Article deleted.': null
-'Article created.': null
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
-'Article URL': null
-'Article Number': null
-'Access denied.': null
-'Publish with issue': null
-unknown: null
-Switch: null
-Numeric: null
-'The uploaded file format is unsupported.': null
-'The following fields are mandatory:': null
-'Missing value for $1': null
-'Manage Plugins': null
-'* Marked fields are mandatory.': null
-'$1 is of type $2': null
-'Invalid resize width/height.': null
-'Image type $1 is not supported.': null
-'The file uploaded is not an image.': null
-'Could not delete record from the database.': null
-'template path': null
-'short names': null
-'Unable to fetch image from remote server.': null
-Last: null
-First: null
-'Single-line Text': null
-'Multi-line Text with WYSIWYG': null
-'URL $1 is invalid or is not an image.': null
-'URL $1 is not an image.': null
+'The topic name is already in use by another topic.': 'Təklif edilən mövzu adı başqa mövzuda istifadə edilir.'
+'Complex Date': 'Əlavə Məlumatlı Tarix'
+vertices: zirvələr
+'There was a problem trying to execute the XML RPC function.': 'XML RPC əməliyyatının icrasında problem yarandı.'
+'The Campcaster server configuration is invalid.': 'Airtime server konfiqurasiyası səhvdir.'
+'Pan Map': 'Panoramik Xəritə'
+'Open large map': 'Böyük xəritəni aç'
+'No news available.': 'Hal-hazırda xəbər yoxdur.'
+'Edit Polygon': 'Çoxbucaqlını Dəyiş'
+'Create Polygon': 'Çoxbucaqlı Yarat'
+'Communication error: ': 'Ünsiyyət xətası:'
+'Cant fetch news from $1': 'Xəbər $1-dən(dan) endirilə bilmir'
+Loading...: Yüklənir...
+Version: Versiya
+License: Lisenziya
+Homepage: 'Baş səhifə'
+'Show original map': 'Orijinal xəritəni göstər'
+'The uploaded archive does not contain an valid newscoop plugin.': 'Yüklənmiş arxivdə qüvvədə olan newscoop plaqini yoxdur.'
+Map: Xəritə
+Center: Mərkəz
+Title: Başlıq
+'Invalid security token.': 'Səhv təhlükəsizlik nişanı.'
+'Callback $1 is not callable.': '$1 istiqamətində geriyə zəng mümkün deyil.'
+'Article translated to $4 ($5)': 'Məqalə $4 ($5) dilinə tərcümə edildi'
+'Article status changed from $1 to $2.': 'Məqalə başlığı $1 variantından $2 variantına dəyişdirildi.'
+'Article deleted.': 'Məqalə silindi.'
+'Article created.': 'Məqalə yaradıldı.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'Məqalə $4 Məqaləsinə köçürüldü (nəşr $5, maddə $6, bölmə $7).'
+'Article URL': 'Məqalə URL-i'
+'Article Number': 'Məqalə Nömrəsi'
+'Access denied.': 'Giriş qadağandır.'
+'Publish with issue': 'Maddə ilə nümayiş et'
+unknown: naməlum
+Switch: Keç
+Numeric: Rəqəmsal
+'The uploaded file format is unsupported.': 'Yüklənmiş fayl növü dəstəklənmir.'
+'The following fields are mandatory:': 'Növbəti sahələr məcburidir:'
+'Missing value for $1': '$1 üçün dəyər çatmır'
+'Manage Plugins': 'Plaqinləri Quraşdır'
+'* Marked fields are mandatory.': '* ilə işarələnmiş sahələr məcburidir.'
+'$1 is of type $2': '$1 $2-nin növüdür'
+'Invalid resize width/height.': 'Enin/uzunun ölçüsünün dəyişilməsində səhv.'
+'Image type $1 is not supported.': '$1 şəkil növü dəstəklənmir.'
+'The file uploaded is not an image.': 'Yüklənmiş fayl şəkil deyil.'
+'Could not delete record from the database.': 'Yazı məlumat bazasından silinə bilmədi.'
+'template path': 'nümunənin istiqaməti'
+'short names': 'qısa adlar'
+'Unable to fetch image from remote server.': 'Şəkil serverdən endirilə bilmədi.'
+Last: Son
+First: İlk
+'Single-line Text': 'Bir sətirli Mətn'
+'Multi-line Text with WYSIWYG': 'WYSIWYG ilə çox sətirli Mətn'
+'URL $1 is invalid or is not an image.': '$1 URL-i səhvdir və ya şəkil deyil.'
+'URL $1 is not an image.': '$1 URL-i şəkil deyil.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Sifarişçi əlavə edildi'
+    notfound: 'Sifarişçi tapılmadı'
+    removed: 'Sifarişçi xaric edildi'
 publicresources:
-    updated: null
+    updated: 'İctimai vəsait yeniləndi'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'API - ictimai vəsaiti konfiqurasiya et'
+        title_content: 'API - ictimai vəsaiti konfiqurasiya et'
         tabs:
-            resources: null
-            clients: null
+            resources: 'İctimai Vəsaitlər'
+            clients: Sifarişçilər
         resources:
-            info: null
-            add_button: null
+            info: 'Mövcud halda bütün vəsaitlər qoruyucu divar tərəfindən qorunur, amma sən istədiyin vəsaitləri ictimailəşdirmək üçün seçə bilərsən.'
+            add_button: 'Sifarişçi Əlavə Et'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
+                name: 'Sifarişçi adı'
+                id: 'Sifarişçi id-si'
+                secret: Sirr
                 trusted: null
-                redirect: null
-                publication: null
-                actions: null
+                redirect: 'Urisi Başqa Yerə Yönəlt'
+                publication: Nəşr
+                actions: Addımlar
                 actions_buttons:
-                    remove: null
+                    remove: 'Xaric Et'
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Bu sifarişçini xaric etmək istədiyinə əminsən?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
+                name: 'Sifarişçin üçün ad seç:'
+                publication: 'Sifarişçin üçün nəşr seç:'
+                redirectUris: 'Sifarişçin üçün yönü dəyişilmiş urisi seç:'
                 trusted: null
-                save: null
+                save: Saxla
         PublicResources:
             label:
-                routes: null
-                save: null
+                routes: 'İctimailəşdirmək üçün vəsait seç:'
+                save: Saxla
