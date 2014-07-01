@@ -18,20 +18,6 @@ class DatabaseService
 {
     protected $logger;
     public $errorQueries = array();
-    public $sampleTemplates = array(
-        'set_quetzal' => array(
-            'name' => 'Quetzal',
-            'description' => 'Quetzal<br/>Theme for Newscoop Version 4'
-        ),
-        'set_rockstar' => array(
-            'name' => 'Rockstar',
-            'description' => 'Rockstar<br/>Theme for Newscoop Version 4'
-        ),
-        'set_the_new_custodian' => array(
-            'name' => 'The New Custodian',
-            'description' => 'The New Custodian<br/>Theme for Newscoop Version 4'
-        ),
-    );
 
     /**
      * @param object $logger
@@ -74,9 +60,10 @@ class DatabaseService
     {
         // import database from sql file
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_core.sql';
-        $errors = $this->importDB($sqlFile, $connection);
 
-        if ($errors > 0) {
+        try {
+            $connection->exec(file_get_contents($sqlFile));
+        } catch (\Exception $e) {
             return false;
         }
 
