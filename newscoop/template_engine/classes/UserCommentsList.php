@@ -133,6 +133,27 @@ class UserCommentsList extends ListObject
 	                   $parameters['commenters'] = $commenter_ids;
 	                }
                     break;
+                case 'status':
+                    $validValues = \Newscoop\Entity\Comment::$status_enum;
+
+                    if (is_array($value)) {
+                        foreach ($value AS $parameterKey => $parameterValue) {
+                            if (!in_array($parameterValue, $validValues)) {
+                                throw new \InvalidValueException("CommentsList Property '$parameter' has invalid value");
+                            } else {
+                                $value[$parameterKey] = array_search($parameterValue, $validValues);
+                            }
+                        }
+
+                        $parameters[$parameter] = $value;
+
+                    } elseif (!in_array($value, $validValues)) {
+                        throw new \InvalidValueException("CommentsList Property '$parameter' has invalid value");
+                    } else {
+                        $parameters[$parameter] = array(array_search($value, $validValues));
+                    }
+
+                    break;
 	            default:
 	                throw new \InvalidArgumentException("CommentsList Property '$parameter' invalid");
 	        }
