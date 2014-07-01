@@ -134,13 +134,11 @@ class InstallNewscoopCommand extends Console\Command\Command
         $databaseService->installDatabaseSchema($connection, $input->getArgument('alias'), $input->getArgument('site_title'));
         $output->writeln('<info>Database schema has been processed successfully.<info>');
         $demositeService->installEmptyTheme();
-        $demositeService->copyTemplate();
         $output->writeln('<info>Empty theme has been installed successfully.<info>');
 
         $finishService->saveCronjobs();
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
-        $finishService->reloadRenditions();
         $finishService->installAssets();
         $output->writeln('<info>Assets have been installed successfully<info>');
         $finishService->saveInstanceConfig(array(

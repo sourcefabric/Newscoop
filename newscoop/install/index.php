@@ -237,7 +237,6 @@ $app->get('/process', function (Request $request) use ($app) {
             $app['session']->set('main_config', $data);
             $app['database_service']->installDatabaseSchema($app['db'], $request->server->get('HTTP_HOST'), $data['site_title']);
             $app['demosite_service']->installEmptyTheme();
-            $app['demosite_service']->copyTemplate();
 
             return $app->redirect($app['url_generator']->generate('post-process'));
         }
@@ -251,7 +250,6 @@ $app->get('/process', function (Request $request) use ($app) {
 $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
-    $app['finish_service']->reloadRenditions();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
 
     return $app['twig']->render('post-process.twig', array());
