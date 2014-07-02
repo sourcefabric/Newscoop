@@ -70,7 +70,7 @@ class AuthorService
             $qbUsers->resetDQLPart('from');
             $qbUsers->from('Newscoop\Entity\User', 'aa');
             $usersArray = $qbUsers->getQuery()->getArrayResult();
-            $authorsArray = array_merge($authorsArray, $usersArray);
+            $authorsArray = array_unique(array_merge($authorsArray, $usersArray), SORT_REGULAR);
         }
 
         return $authorsArray;
