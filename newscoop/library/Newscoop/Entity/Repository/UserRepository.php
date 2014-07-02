@@ -316,7 +316,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     {
         $commentsCount = "(SELECT COUNT(c)";
         $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
-        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u AND c.status = 0) as comments";
 
         return "{$commentsCount}";
     }
@@ -710,7 +710,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             $em = $this->getEntityManager();
             $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');
             $users = array();
-            foreach($criteria->groups as $groupId) {
+            foreach ($criteria->groups as $groupId) {
                 $group = $groupRepo->findOneById($groupId);
                 if ($group instanceof \Newscoop\Entity\User\Group) {
                     $users = array_unique(array_merge($users, array_keys($group->getUsers()->toArray())), SORT_REGULAR);
@@ -801,4 +801,3 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere($orx);
     }
 }
-
