@@ -174,6 +174,10 @@ class CommentService
         $conditions = $qb->expr()->andx();
         $conditions->add($qb->expr()->in("c.commenter", $params["commenters"]));
 
+        if (array_key_exists('status', $params)) {
+            $conditions->add($qb->expr()->in("c.status", $params['status']));
+        }
+
         $qb->where($conditions);
 
         foreach ($order as $column => $direction) {
