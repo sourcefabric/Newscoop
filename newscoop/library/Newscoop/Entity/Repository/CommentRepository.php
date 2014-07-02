@@ -177,16 +177,17 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     {
         $em = $this->getEntityManager();
         if ($p_status == 'deleted') {
-            $user = $p_comment->getCommenter()->getUser();
-
-            if ($user instanceof User) {
-                $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
-            }
-
             $em->remove($p_comment);
         } else {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);
+        }
+
+        $em->flush();
+        $user = $p_comment->getCommenter()->getUser();
+
+        if ($user instanceof User) {
+            $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
         }
     }
 
