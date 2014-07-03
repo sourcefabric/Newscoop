@@ -664,6 +664,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
                 ->findOneByAuthor($authorId);
         }
 
+        if (!$user) {
+            return false;
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
