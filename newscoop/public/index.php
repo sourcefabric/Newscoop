@@ -38,7 +38,7 @@ if (php_sapi_name() !== 'cli' &&
 // check if this is installation
 if (php_sapi_name() !== 'cli' &&
     !defined('INSTALL') &&
-    (file_exists(APPLICATION_PATH . '/../conf/installation.php'))
+    (!file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))
 ) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     if (strpos($subdir, 'install') === false) {

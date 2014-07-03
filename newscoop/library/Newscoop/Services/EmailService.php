@@ -80,7 +80,6 @@ class EmailService
         $smarty = $this->templatesService->getSmarty();
         $smarty->assign('user', new \MetaUser($user));
         $smarty->assign('token', $this->tokenService->generateToken($user, 'email.confirm'));
-        $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
         $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
         $message = $this->templatesService->fetchTemplate("email_confirm.tpl");
         $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
@@ -98,7 +97,6 @@ class EmailService
         $smarty = $this->templatesService->getSmarty();
         $smarty->assign('user', new \MetaUser($user));
         $smarty->assign('token', $this->tokenService->generateToken($user, 'password.restore'));
-        $smarty->assign('publication', $this->publicationService->getPublicationAlias()->getName());
         $smarty->assign('site', $this->publicationService->getPublicationAlias()->getName());
         $message = $this->templatesService->fetchTemplate("email_password-restore.tpl");
         $this->send($this->placeholdersService->get('subject'), $message, $user->getEmail(), $this->preferencesService->EmailFromAddress);
@@ -160,7 +158,7 @@ class EmailService
      */
     public function sendCommentNotification(Comment $comment, Article $article, array $authors, User $user = null)
     {
-        $emails = array_unique(array_filter(array_map(function($author) {
+        $emails = array_unique(array_filter(array_map(function ($author) {
             return $author->getEmail();
         }, $authors)));
 

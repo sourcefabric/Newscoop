@@ -9,7 +9,6 @@
 namespace Newscoop\Tools\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Newscoop\Service\IThemeManagementService;
@@ -43,14 +42,14 @@ class AssignThemeCommand extends ContainerAwareCommand
             foreach ($themeService->getUnassignedThemes() as $theme) {
                 if (strpos($theme->getPath(), $themeToSet) !== false) {
                     foreach ($publications as $publication) {
-                        $themeService->assignTheme($theme, $publication);
+                        $themeService->assignTheme($theme, $publication, true);
                     }
                 }
             }
         } else {
             foreach ($themeService->getUnassignedThemes() as $theme) {
                 foreach ($publications as $publication) {
-                    $themeService->assignTheme($theme, $publication);
+                    $themeService->assignTheme($theme, $publication, true);
                 }
             }
         }

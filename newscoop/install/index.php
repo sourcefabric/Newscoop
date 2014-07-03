@@ -42,7 +42,6 @@ if (count($missingReq) > 0) {
     die;
 }
 
-use Symfony\Component\HttpFoundation\Response;
 use Silex\Provider\FormServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -193,6 +192,8 @@ $app->get('/prepare', function (Request $request) use ($app) {
 
             } else {
                 $app['session']->getFlashBag()->add('danger', '<p>There is already a database named <i>' . $app['db']->getDatabase() . '</i>.</p><p>If you are sure to overwrite it, check <i>Yes</i> for the option below. If not, just change the <i>Database Name</i> and continue.');
+
+                return $app->redirect($app['url_generator']->generate('prepare'));
             }
 
             // redirect somewhere
@@ -234,8 +235,10 @@ $app->get('/process', function (Request $request) use ($app) {
         if ($form->isValid()) {
             $data = $form->getData();
             $app['session']->set('main_config', $data);
+            $app['database_service']->installDatabaseSchema($app['db'], $request->server->get('HTTP_HOST'), $data['site_title']);
+            $app['demosite_service']->installEmptyTheme();
 
-            return $app->redirect($app['url_generator']->generate('demo-site'));
+            return $app->redirect($app['url_generator']->generate('post-process'));
         }
     }
 
@@ -244,44 +247,9 @@ $app->get('/process', function (Request $request) use ($app) {
 ->assert('_method', 'POST|GET')
 ->bind('process');
 
-$app->get('/demo-site', function (Request $request) use ($app) {
-    $app['dispatcher']->dispatch('newscoop.installer.demo_site', new GenericEvent());
-
-    $form = $app['form.factory']->createNamedBuilder('demo_site', 'form', array())
-        ->add('demo_template', 'choice', array(
-            'choices'   => array(
-                array('no'   => 'No thanks')
-            )+array_map(function ($template, $key) {
-                return array($key => $template['name']);
-            }, $app['database_service']->sampleTemplates, array_keys($app['database_service']->sampleTemplates)),
-            'expanded'  => true,
-        ))
-        ->getForm();
-
-    if ('POST' == $request->getMethod()) {
-        $form->bind($request);
-        if ($form->isValid()) {
-            $data = $form->getData();
-            if ($data['demo_template'] != 'no') {
-                $app['database_service']->installSampleData($app['db'], $request->server->get('HTTP_HOST'));
-                $app['db']->executeQuery('INSERT INTO Aliases VALUES (2,?,1)', array($request->server->get('HTTP_HOST')));
-                $app['demosite_service']->copyTemplate($data['demo_template']);
-                $app['demosite_service']->installEmptyTheme();
-            }
-
-            return $app->redirect($app['url_generator']->generate('post-process'));
-        }
-    }
-
-    return $app['twig']->render('demo.twig', array('form' => $form->createView()));
-})
-->assert('_method', 'POST|GET')
-->bind('demo-site');
-
 $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
-    $app['finish_service']->reloadRenditions();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
 
     return $app['twig']->render('post-process.twig', array());
@@ -292,6 +260,5 @@ $app->get('/post-process', function (Request $request) use ($app) {
 $app->get('/finish', function (Silex\Application $app) {
     return $app['twig']->render('index.twig', array());
 });
-
 
 $app->run();
