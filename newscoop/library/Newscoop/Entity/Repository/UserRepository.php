@@ -662,6 +662,18 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         if (!is_null($authorId)) {
             $user = $em->getRepository('Newscoop\Entity\User')
                 ->findOneByAuthor($authorId);
+
+            if (!$user) {
+                $author = $em->getRepository('Newscoop\Entity\Author')->findOneById($authorId);
+
+                $user = $em->getRepository('Newscoop\Entity\User')->findOneBy(array(
+                    'first_name' => $author->getFirstName(),
+                    'last_name' => $author->getLastName(),
+                ));
+
+                $user->setAuthor($author);
+                $em->flush();
+            }
         }
 
         $query = $this->createQueryBuilder('u')
