@@ -28,7 +28,7 @@ Path: null
 URL: null
 Order: null
 Hide: null
-Duplicate: null
+Duplicate: 'Surətini çıxar'
 Subscription: null
 expires: null
 starts: null
@@ -219,7 +219,7 @@ N/A: null
 'Issue List': null
 'Section List': null
 All: null
-duplicate: null
+duplicate: 'surətini çıxar'
 move: null
 Move: null
 'From:': null
@@ -279,7 +279,7 @@ Updated: null
 Options: null
 Verified: null
 Confirm: null
-at: null
+at: burada
 published: null
 unpublished: null
 nopermissions: null
