@@ -102,7 +102,7 @@
                         <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{% if pagination.getCurrentPageNumber == 1 %}
                             {{ row.index }}.
                         {% elseif pagination.getCurrentPageNumber != 1 %}
-                           {{ (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber - 1)) +  row.index }}
+                           {{ (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber - 1)) +  row.index }}.
                         {% endif %}</span>
                     </td>
                     <td>
