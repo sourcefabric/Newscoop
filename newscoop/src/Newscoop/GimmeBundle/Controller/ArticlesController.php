@@ -96,7 +96,7 @@ class ArticlesController extends FOSRestController
         $translator = \Zend_Registry::get('container')->getService('translator');
 
         // Fetch article
-        $articleObj = $this->getArticle($clean['articleNumber'], $language);
+        $articleObj = $this->getArticle($number, $language);
 
         $articleTypeObj = $articleObj->getArticleData();
         $articleType = new \ArticleType($articleTypeObj->m_articleTypeName);
@@ -112,7 +112,7 @@ class ArticlesController extends FOSRestController
         if (array_key_exists('fields', $params)) {
             foreach ($params['fields'] as $key => $value) {
                 if (!in_array($key, $notBodyFields)) {
-                    $clean['F'.$key.'_'.$clean['articleNumber']] = $value;
+                    $clean['F'.$key.'_'.$number] = $value;
                 } else {
                     $clean['F'.$key] = $value;
                 }
@@ -124,7 +124,7 @@ class ArticlesController extends FOSRestController
         $articleFields = array();
         foreach ($dbColumns as $dbColumn) {
             if ($dbColumn->getType() == \ArticleTypeField::TYPE_BODY) {
-                $dbColumnParam = $dbColumn->getName() . '_' . $clean['articleNumber'];
+                $dbColumnParam = $dbColumn->getName() . '_' . $number;
             } else {
                 $dbColumnParam = $dbColumn->getName();
             }
@@ -205,7 +205,7 @@ class ArticlesController extends FOSRestController
             if ($articleObj->commentsEnabled() != $commentsEnabled) {
                 $articleObj->setCommentsEnabled($commentsEnabled);
                 $repository = $em->getRepository('Newscoop\Entity\Comment');
-                $repository->setArticleStatus($clean['articleNumber'], $clean['languageId'], $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
+                $repository->setArticleStatus($number, $clean['languageId'], $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
                 $repository->flush();
             }
             $articleObj->setCommentsLocked($commentStatus == "locked");
@@ -510,12 +510,10 @@ class ArticlesController extends FOSRestController
     private function getArticle($number, $language) {
         $em = $this->container->get('em');
         $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
-        $clean['languageId'] = $languageObject->getId();
-        $clean['articleNumber'] = $number;
 
         $user = $this->getUser();
         // Fetch article
-        $articleObj = new \Article($clean['languageId'], $clean['articleNumber']);
+        $articleObj = new \Article($languageObject->getId(), $number);
 
         if (!$articleObj->exists()) {
             throw new NewscoopException('Article does not exist');
