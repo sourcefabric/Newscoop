@@ -1,12 +1,12 @@
-'No attachment': null
-at: null
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
+'No attachment': 'Əlavə edilmiş fayl yoxdur'
+at: burada
+'With no attachment': 'Əlavə faylsız'
+'With image attachment': 'Şəkil əlavəsi ilə'
+'With document attachment': 'Sənəd əlavəsi ilə'
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
-Starred: null
-Star: null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
+Starred: Ulduzlu
+Star: Ulduz
+'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Reply to message': null
 Reply: null
 Processed: null

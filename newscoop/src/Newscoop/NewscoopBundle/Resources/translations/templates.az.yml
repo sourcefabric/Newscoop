@@ -68,11 +68,11 @@ Folders: null
 Files: Fayllar
 'No templates.': null
 'Create new template': null
-'Duplicate template': null
+'Duplicate template': 'Nümunənin surətini çıxar'
 'Edit template': null
 'The template $1 could not be created.': null
 'Template $1 was changed': null
-'Template $1 was duplicated into $2': null
+'Template $1 was duplicated into $2': '$1 nümunəsinin $2 kimi surəti çıxarıldı'
 'Template charset': null
 'Select a language/character set': null
 'All languages': null
@@ -81,6 +81,6 @@ Files: Fayllar
 'You do not have the right to create folders.': null
 'You do not have the right to upload templates.': null
 'You do not have the right to create templates.': null
-'Duplicate file': null
+'Duplicate file': 'Faylın surətini çıxar'
 'Delete file': null
 'Please check if the user $1 has permission to write in this directory.': null

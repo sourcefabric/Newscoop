@@ -28,15 +28,15 @@ default: null
 'The section $1 has been deleted.': null
 'Configure section': null
 'The section could not be changed.': null
-'Duplicate section': null
+'Duplicate section': 'Bölmənin surətini çıxar'
 'The destination issue is the same as the source issue.': null
 'Error updating subscriptions.': null
-'Duplicating section': null
-'The section $1 could not be duplicated': null
-'Section $1 has been duplicated to $2. $3 of $4': null
+'Duplicating section': 'Bölmənin surətinin çıxarılması'
+'The section $1 could not be duplicated': '$1 bölməsinin surəti çıxarıla bilmədi'
+'Section $1 has been duplicated to $2. $3 of $4': '$1 bölməsinin $2 daxilinə surəti çıxarıldı. $4 içindən $3'
 'You do not have the right to modify sections.': null
 'A total of $1 articles were deleted.': null
-'Duplicate Section:': null
+'Duplicate Section:': 'Bölmənin Surətini Çıxar:'
 'Existing Section': null
 'Go to new section': null
 'Go to source section': null

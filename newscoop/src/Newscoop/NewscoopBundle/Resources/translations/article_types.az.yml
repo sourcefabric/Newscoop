@@ -32,7 +32,7 @@ NOTHING: 'HEÇ NƏ'
 '--None--': '--Heç biri--'
 '(Null merge warning.)': '(Boş birləşmə xəbərdarlığı.)'
 '(No merge warning.)': '(Baş verməyən birləşmə xəbərdarlığı.)'
-'(Duplicate warning.)': '(Dublikat xəbərdarlığı.)'
+'(Duplicate warning.)': '(Surət çıxarma xəbərdarlığı.)'
 '(!) Do NOT merge $1': '(!) $1 üçün birləşmə əməliyyatı ETMƏ'
 '$1 of $2': '$2-nin $1-i'
 show: göstər
