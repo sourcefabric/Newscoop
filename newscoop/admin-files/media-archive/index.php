@@ -51,6 +51,7 @@ camp_html_content_top($translator->trans('Media Archive', array(), 'media_archiv
     echo $this->view->partial('slideshow-list.phtml', array(
         'slideshows' => $this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, 0)),
         'pages' => $paginator->count(),
+        'articlePage' => false,
     )); ?>
 </div>
 
