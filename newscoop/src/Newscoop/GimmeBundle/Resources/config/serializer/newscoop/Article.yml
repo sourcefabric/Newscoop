@@ -150,3 +150,11 @@ Newscoop\Entity\Article:
             groups: ["list", "details"]
             serialized_name: comments_locked
             since_version: 1.1
+    virtual_properties:
+        getWorkflowStatus:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: status
+            accessor:
+                getter: getWorkflowStatus
