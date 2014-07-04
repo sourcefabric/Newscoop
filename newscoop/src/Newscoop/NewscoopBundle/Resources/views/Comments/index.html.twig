@@ -63,6 +63,7 @@
         {{ form_rest(searchForm) }}
     </form>
 
+    {% if pagination.getTotalItemCount > 0 %}
     <div class="row" id="paging">
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
@@ -82,6 +83,7 @@
             </div>
             <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
     </div>
+    {% endif %}
     <div class="table-responsive">
         <table class="table" id="commentsTable">
             <thead>
