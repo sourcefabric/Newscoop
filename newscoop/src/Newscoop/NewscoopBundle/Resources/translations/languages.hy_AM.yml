@@ -51,22 +51,22 @@ Apr: null
 January: null
 February: null
 March: null
-April: null
-May: null
-June: null
+April: ապրիլ
+May: մայիս
+June: հունիս
 July: null
-August: null
-September: null
-October: null
-November: null
-December: null
-Monday: null
-Tuesday: null
-Wednesday: null
-Thursday: null
-Friday: null
-Saturday: null
-Sunday: null
+August: օգոստոս
+September: սեպտեմբեր
+October: հոկտեմբեր
+November: նոյեմբեր
+December: դեկտեմբեր
+Monday: երկուշաբթի
+Tuesday: երեքշաբթի
+Wednesday: չորեքշաբթի
+Thursday: հինգշաբթի
+Friday: ուրբաթ
+Saturday: շաբաթ
+Sunday: կիրակի
 'You do not have the right to add new languages.': null
 'There are $1 issue(s) left.': null
 'Native name': null

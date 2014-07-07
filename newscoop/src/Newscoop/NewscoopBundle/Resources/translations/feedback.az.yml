@@ -17,9 +17,9 @@ Message: null
 'Message status change to $1.': null
 'Messages updated.': null
 'Message updated.': null
-Processed: null
-Reply: null
-'Reply to message': null
+Processed: 'İcra edildi'
+Reply: 'Cavab yaz'
+'Reply to message': 'Mesaja cavab yaz'
 Star: Ulduz
 Starred: Ulduzlu
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'

@@ -25,7 +25,7 @@ Continue: null
 'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Send email to user:': null
 'No users found.': null
-'No records found.': null
+'No records found.': 'Yazı tapılmadı.'
 'No entries to show': null
 'Display _MENU_ records': null
 'Are you sure you want to {action}?': null
