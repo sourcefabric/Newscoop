@@ -21,7 +21,7 @@ To make sure if everything went fine you can go to:
 
 You should see Apache2 Welcome page as shown below.
 
-<img src="https://www.dropbox.com/s/ak94w43zwjryb11/Zrzut%20ekranu%202014-07-07%2016.19.29.png" width="690" height="590">
+<img src="https://dl.dropboxusercontent.com/u/35759363/Newscoop%20images/Zrzut%20ekranu%202014-07-07%2016.19.29.png" width="690" height="590">
 
 If you can see this page then everything works as expected.
 
