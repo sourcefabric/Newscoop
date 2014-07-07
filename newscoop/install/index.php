@@ -78,8 +78,6 @@ $app['finish_service'] = $app->share(function () use ($app) {
     return new Services\FinishService();
 });
 
-$app['dispatcher']->addListener('newscoop.installer.bootstrap', $app['bootstrap_service']->makeDirectoriesWritable());
-
 $app->before(function (Request $request) use ($app) {
     if ($request->request->has('db_config') || $app['session']->has('db_data')) {
         $requestDbConfig = $request->request->get('db_config');
@@ -99,7 +97,7 @@ $app->before(function (Request $request) use ($app) {
 }, Silex\Application::EARLY_EVENT);
 
 $app->get('/', function (Silex\Application $app) use ($symfonyRequirements, $requirements) {
-    $app['dispatcher']->dispatch('newscoop.installer.bootstrap', new GenericEvent());
+    $app['bootstrap_service']->makeDirectoriesWritable();
 
     $directories = $app['bootstrap_service']->checkDirectories();
     if ($directories !== true) {
@@ -145,8 +143,6 @@ $app->get('/license', function (Request $request) use ($app) {
 ->bind('license');
 
 $app->get('/prepare', function (Request $request) use ($app) {
-    $app['dispatcher']->dispatch('newscoop.installer.prepare', new GenericEvent());
-
     $form = $app['form.factory']->createNamedBuilder('db_config', 'form', array(
             'server_name' => 'localhost',
             'database_name' => 'newscoop',
@@ -209,8 +205,6 @@ $app->get('/prepare', function (Request $request) use ($app) {
 ->bind('prepare');
 
 $app->get('/process', function (Request $request) use ($app) {
-    $app['dispatcher']->dispatch('newscoop.installer.process', new GenericEvent());
-
     $form = $app['form.factory']->createNamedBuilder('main_config', 'form', array())
         ->add('site_title', null, array('constraints' => array(new Assert\NotBlank())))
         ->add(
