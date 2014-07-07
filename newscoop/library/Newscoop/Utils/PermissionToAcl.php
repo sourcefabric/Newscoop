@@ -65,7 +65,7 @@ class PermissionToAcl
     /**
      * Translate permission to resource - action pair
      *
-     * @param string $perm
+     * @param  string                   $perm
      * @return array
      * @throws InvalidArgumentException
      */
@@ -84,6 +84,7 @@ class PermissionToAcl
             $perm_ary = array_map('ucfirst', $perm_ary);
             $resource = $perm_ary[0] . '-' . $perm_ary[1];
             $action = $perm_ary[2];
+
             return self::format($resource, $action);
         }
 
@@ -91,6 +92,7 @@ class PermissionToAcl
         foreach (self::$resources as $resource) {
             if (strpos($perm, $resource) !== FALSE) {
                 $action = str_replace($resource, '', $perm);
+
                 return self::format($resource, $action);
             }
         }
@@ -102,6 +104,7 @@ class PermissionToAcl
                 if (isset(self::$rename[$resource])) {
                     $resource = self::$rename[$resource];
                 }
+
                 return self::format($resource, $action);
             }
         }
@@ -112,8 +115,8 @@ class PermissionToAcl
     /**
      * Format for return
      *
-     * @param string $resource
-     * @param string $action
+     * @param  string $resource
+     * @param  string $action
      * @return array
      */
     private static function format($resource, $action)

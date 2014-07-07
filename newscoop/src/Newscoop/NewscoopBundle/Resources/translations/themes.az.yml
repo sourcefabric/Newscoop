@@ -1,4 +1,4 @@
-'Duplicate assignment': null
+'Duplicate assignment': 'Təyinatın surətini çıxar'
 Templates: null
 'Import theme': null
 'Import succeded!': null
@@ -34,19 +34,19 @@ Unassign: null
 'The file $1 is empty.': null
 'Template object $1 was renamed to $2.': null
 'Template object $1 was deleted.': null
-'Template $1 was duplicated into $2.': null
+'Template $1 was duplicated into $2.': '$1 nümunəsinin $2 daxilinə surəti çıxarıldı.'
 'Template $1 $2.': null
 'Something broke': null
 'Section page template': null
 Saving..: null
 'Saving settings failed.': null
-'Save All': null
+'Save All': 'Hamısını Saxla'
 'Required Newscoop version': null
 Replace: null
 'New template $1 created.': null
 'New name': null
 'Name cant be empty': null
-'Last modified': null
+'Last modified': 'Son redaktələr'
 'Issue page': null
 'Go to parent': null
 'Go to $1': null
@@ -58,7 +58,7 @@ Replace: null
 'Failed unassigning theme': null
 Export: null
 'Error page template': null
-'Edit $1': null
+'Edit $1': '$1-a dəyişiklik et'
 'Done uploading': null
 'Do you want to override $1?': null
 'Directory is empty': null

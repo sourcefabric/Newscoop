@@ -1,5 +1,8 @@
-<?php $this->headScript()->appendFile($this->baseUrl('js/underscore.js')); ?>
-<?php $this->headScript()->appendFile($this->baseUrl('js/backbone.js')); ?>
+<?php if (!$this->articlePage) {
+    $this->headScript()->appendFile($this->baseUrl('js/underscore.js'));
+    $this->headScript()->appendFile($this->baseUrl('js/backbone.js'));
+}
+?>
 <?php $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); ?>
 <?php $translator = \Zend_Registry::get('container')->getService('translator'); ?>
 <div id="slideshow-app">

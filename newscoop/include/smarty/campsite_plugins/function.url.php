@@ -23,19 +23,28 @@ require_once dirname(__FILE__) . '/function.uri.php';
 function smarty_function_url($p_params, &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
+    $validValues = array('true', 'false', 'http', 'https');
 
-    if (isset($p_params['useprotocol']) && ($p_params['useprotocol'] === 'false' || $p_params['useprotocol'] === 'true')) {
-        $useprotocol = ($p_params['useprotocol'] === 'true') ? true : false;
+    if (isset($p_params['useprotocol']) && in_array($p_params['useprotocol'], $validValues)) {
+        $useprotocol = $p_params['useprotocol'];
     } else {
         $systemPref = \Zend_Registry::get('container')->get('system_preferences_service');
-        $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? true : false;
+        $useprotocol = ($systemPref->get('SmartyUseProtocol') === 'Y') ? 'true' : 'false';
     }
 
-    // gets the URL base
-    if ($useprotocol) {
-        $urlString = $context->url->base;
-    } else {
-        $urlString = $context->url->base_relative;
+    switch ($useprotocol) {
+        case 'true':
+                $urlString = $context->url->base;
+            break;
+        case 'false':
+                $urlString = $context->url->base_relative;
+            break;
+        case 'http':
+                $urlString = 'http:'. $context->url->base_relative;
+            break;
+        case 'https':
+                $urlString = 'https:'. $context->url->base_relative;
+            break;
     }
 
     // appends the URI path and query values to the base

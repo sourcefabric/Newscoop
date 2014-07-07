@@ -19,6 +19,7 @@
 -- Table structure for table `Aliases`
 --
 
+
 DROP TABLE IF EXISTS `Aliases`;
 
 CREATE TABLE IF NOT EXISTS `Aliases` (
@@ -2182,6 +2183,7 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `context_articles`;
 
 -- Tables for context box
 CREATE TABLE IF NOT EXISTS `context_articles` (
@@ -2191,6 +2193,7 @@ CREATE TABLE IF NOT EXISTS `context_articles` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `context_boxes`;
 
 CREATE TABLE IF NOT EXISTS `context_boxes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -3004,6 +3007,7 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 DROP TABLE IF EXISTS `audit_event`;
+
 CREATE TABLE IF NOT EXISTS `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
@@ -3018,6 +3022,7 @@ CREATE TABLE IF NOT EXISTS `audit_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_attribute`;
+
 CREATE TABLE IF NOT EXISTS `user_attribute` (
   `user_id` int(11) unsigned NOT NULL,
   `attribute` varchar(255) NOT NULL,
@@ -3026,6 +3031,7 @@ CREATE TABLE IF NOT EXISTS `user_attribute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_points_index`;
+
 CREATE TABLE IF NOT EXISTS `user_points_index` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
@@ -3036,6 +3042,7 @@ CREATE TABLE IF NOT EXISTS `user_points_index` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_token`;
+
 CREATE TABLE IF NOT EXISTS `user_token` (
   `user_id` int(11) unsigned NOT NULL,
   `action` varchar(40) NOT NULL,
@@ -3045,6 +3052,7 @@ CREATE TABLE IF NOT EXISTS `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ingest_feed`;
+
 CREATE TABLE IF NOT EXISTS `ingest_feed` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -3054,6 +3062,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ingest_feed_entry`;
+
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `feed_id` int(11) unsigned NOT NULL,
@@ -3077,6 +3086,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_identity`;
+
 CREATE TABLE IF NOT EXISTS `user_identity` (
   `provider` varchar(80) NOT NULL,
   `provider_user_id` varchar(255) NOT NULL,
@@ -3086,6 +3096,7 @@ CREATE TABLE IF NOT EXISTS `user_identity` (
 
 
 DROP TABLE IF EXISTS `article_datetimes`;
+
 CREATE TABLE `article_datetimes` (
   `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
@@ -3110,6 +3121,7 @@ CREATE TABLE `article_datetimes` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `ArticleRendition`;
+
 CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   `image_id` int(11) NOT NULL,
   `rendition_id` varchar(255) NOT NULL,
@@ -3123,6 +3135,7 @@ CREATE TABLE IF NOT EXISTS `ArticleRendition` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package`;
+
 CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rendition_id` varchar(255) DEFAULT NULL,
@@ -3137,6 +3150,7 @@ CREATE TABLE IF NOT EXISTS `package` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_article`;
+
 CREATE TABLE IF NOT EXISTS `package_article` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -3145,6 +3159,7 @@ CREATE TABLE IF NOT EXISTS `package_article` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_article_package`;
+
 CREATE TABLE IF NOT EXISTS `package_article_package` (
   `article_id` int(11) NOT NULL,
   `package_id` int(11) NOT NULL,
@@ -3156,6 +3171,7 @@ CREATE TABLE IF NOT EXISTS `package_article_package` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_item`;
+
 CREATE TABLE IF NOT EXISTS `package_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `package_id` int(11) DEFAULT NULL,
@@ -3172,6 +3188,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `rendition`;
+
 CREATE TABLE IF NOT EXISTS `rendition` (
   `name` varchar(255) NOT NULL,
   `width` int(11) NOT NULL,
@@ -3190,6 +3207,8 @@ ALTER TABLE `package_article_package`
   ADD CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE;
 
+DROP TABLE IF EXISTS `webcode`;
+
 CREATE TABLE IF NOT EXISTS `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,
@@ -3197,6 +3216,8 @@ CREATE TABLE IF NOT EXISTS `webcode` (
   PRIMARY KEY (`webcode`),
   UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `OAuthAccessToken`;
 
 CREATE TABLE OAuthAccessToken (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3210,6 +3231,8 @@ CREATE TABLE OAuthAccessToken (
   INDEX IDX_DDE10DD55C1FD3F4 (IdPublication),
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `OAuthAuthCode`;
 
 CREATE TABLE OAuthAuthCode (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3225,6 +3248,8 @@ CREATE TABLE OAuthAuthCode (
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `OAuthClient`;
+
 CREATE TABLE OAuthClient (
   id INT AUTO_INCREMENT NOT NULL,
   random_id VARCHAR(255) NOT NULL,
@@ -3237,11 +3262,15 @@ CREATE TABLE OAuthClient (
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `OAuthPublicApiResources`;
+
 CREATE TABLE OAuthPublicApiResources (
   id INT AUTO_INCREMENT NOT NULL,
   resource VARCHAR(255) NOT NULL,
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `OAuthRefreshToken`;
 
 CREATE TABLE OAuthRefreshToken (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3261,6 +3290,7 @@ ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client
 ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 
 DROP TABLE IF EXISTS `Snippets`;
+
 CREATE TABLE Snippets (
   Id INT AUTO_INCREMENT NOT NULL,
   Name VARCHAR(255) NOT NULL,
@@ -3272,6 +3302,7 @@ CREATE TABLE Snippets (
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `SnippetTemplates`;
+
 CREATE TABLE SnippetTemplates (
   Id INT AUTO_INCREMENT NOT NULL,
   Name VARCHAR(255) NOT NULL,
@@ -3287,6 +3318,7 @@ CREATE TABLE SnippetTemplates (
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
 DROP TABLE IF EXISTS `ArticleSnippets`;
+
 CREATE TABLE ArticleSnippets (
   ArticleId INT NOT NULL,
   SnippetId INT NOT NULL,
@@ -3294,6 +3326,8 @@ CREATE TABLE ArticleSnippets (
   INDEX IDX_5080CDEB00DA91C (SnippetId),
   PRIMARY KEY(ArticleId, SnippetId)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `user_oauth_clients`;
 
 CREATE TABLE user_oauth_clients (
   user_id INT NOT NULL,

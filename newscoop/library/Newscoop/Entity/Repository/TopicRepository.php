@@ -30,8 +30,34 @@ class TopicRepository extends DatatableSource
 
         $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $topicsCount);
-        
+
         return $query;
+    }
+
+    /**
+     * Gets a list of topics matching the parameter name
+     *
+     * @param  string $name  Name to search for
+     * @param  mixed  $limit Limit results
+     *
+     * @return mixed       Returns array with topics or null
+     */
+    public function getTopicsByName($name, $limit = null)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Topic')
+            ->createQueryBuilder('t');
+
+        $queryBuilder
+            ->where($queryBuilder->expr()->like('t.name', ':term'))
+            ->setParameter('term', $name.'%')
+            ->orderBy('t.name', 'ASC');
+
+        if (!is_null($limit)) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        return $queryBuilder->getQuery();
     }
 
     /**

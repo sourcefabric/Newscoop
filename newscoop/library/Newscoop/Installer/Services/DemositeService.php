@@ -9,8 +9,6 @@
 namespace Newscoop\Installer\Services;
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Newscoop\Entity\Resource;
 use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
@@ -42,15 +40,8 @@ class DemositeService
      *
      * @param string $templateName Choosen template name
      */
-    public function copyTemplate($templateName)
+    public function copyTemplate($templateName = 'empty')
     {
-        // copies template files to corresponding directory
-        $source = $this->installDir.'/Resources/sample_templates/'.$templateName.'/';
-        $target = $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED.'/'.$templateName;
-        $this->filesystem->mirror($source, $target);
-        $this->filesystem->mirror($this->installDir.'/Resources/sample_data/files', $this->newscoopDir.'/public/files');
-        $this->filesystem->mirror($this->installDir.'/Resources/sample_data/images', $this->newscoopDir.'/images');
-
         $phpFinder = new PhpExecutableFinder();
         $phpPath = $phpFinder->find();
         if (!$phpPath) {
@@ -71,10 +62,8 @@ class DemositeService
         $availablePublications->run();
 
         if (!$availablePublications->isSuccessful()) {
-            throw new \RuntimeException($clearCache->getErrorOutput());
+            throw new \RuntimeException($availablePublications->getErrorOutput());
         }
-
-        $this->filesystem->mirror($this->installDir.'/Resources/sample_templates', $this->templatesDir.'/'.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
     }
 
     /**

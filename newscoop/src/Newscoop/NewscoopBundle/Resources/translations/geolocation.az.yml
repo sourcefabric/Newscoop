@@ -1,26 +1,26 @@
-'Based on GeoNames.org and OpenStreetMap.org data': null
-'selected marker icon': null
-'add location to map': null
-'Video source': null
-'The point will be removed from all translations of the article.': null
-'Specify country (optional)': null
-'Sorry, that place was not found. Check your spelling or search again.': null
-'Show search results': null
-'Search for place or coordinate': null
-'Return to edit': null
-'Really delete this point?': null
-'Name and describe this location': null
-'Map size': null
-'Location label': null
-'Location description:': null
-'Label url': null
-'Hide search results': null
-Geo-filtering: null
-'Fill in youtube ID or link, e.g.': null
-'Fill in vimeo ID or link, e.g': null
-'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': null
-'Fill in location label': null
-'Fill in local swf flash file name or link, e.g.': null
+'Based on GeoNames.org and OpenStreetMap.org data': 'GeoNames.org və OpenStreetMap.org məlumatlarına əsaslanmışdır'
+'selected marker icon': 'seçilmiş marker işarəsi'
+'add location to map': 'məkanı xəritəyə əlavə et'
+'Video source': 'Videonun mənbəyi'
+'The point will be removed from all translations of the article.': 'Ünvan məqalənin bütün tərcümələrindən xaric ediləcək.'
+'Specify country (optional)': 'Ölkəni bildir (könüllü)'
+'Sorry, that place was not found. Check your spelling or search again.': 'Üzr istəyirik, məkan tapılmadı. Tələffüzünü yoxla və ya yenidən axtar.'
+'Show search results': 'Axtarış nəticələrini göstər'
+'Search for place or coordinate': 'Məkan və ya koordinasiya axtar'
+'Return to edit': 'Dəyişiklik səhifəsinə qayıt'
+'Really delete this point?': 'Bu ünvanı həqiqətən silirsən?'
+'Name and describe this location': 'Məkana ad və izah ver'
+'Map size': 'Xəritə ölçüsü'
+'Location label': 'Məkan pəncərəsi'
+'Location description:': 'Məkanın izahı:'
+'Label url': 'Pəncərə url-i'
+'Hide search results': 'Axtarış nəticələrini gizlə'
+Geo-filtering: Geo-filtrə
+'Fill in youtube ID or link, e.g.': 'Youtube ID və ya linkini yaz.'
+'Fill in vimeo ID or link, e.g': 'Vimeo ID və ya linkini yaz.'
+'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'YouTube, Vimeo və ya fləş video üçün video ID, link və ya fayl adını daxil et.'
+'Fill in location label': 'Məkanın pəncərəsini doldur'
+'Fill in local swf flash file name or link, e.g.': 'Yerli swf fləş fayl adını və ya linkini daxil et.'
 'Fill in local flv flash file name or link, e.g.': null
 'Fill in image link, like': null
 'Describe the location...': null
@@ -39,7 +39,7 @@ Coordinates: null
 'Setting the map name helps with map search': null
 Longitude: null
 Latitude: null
-Center: null
+Center: Mərkəz
 'Last Saved Map View': null
 'List of locations updated': null
 width: null
@@ -55,7 +55,7 @@ height: null
 'The map has been removed from the article.': null
 'Point no.': null
 'Point markers': null
-None: null
+None: 'Heç biri'
 'Map Search Example': null
 'Map Preview': null
 'Image URL': null

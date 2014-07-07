@@ -7,7 +7,7 @@ Twitter: null
 Organisation: null
 'Last Name Public': null
 Google+: null
-Geolocation: null
+Geolocation: Xəritə
 Gender: null
 'First Name Public': null
 Facebook: null
@@ -22,7 +22,7 @@ Continue: null
 'edit user': null
 'delete user': null
 'Verified profile': null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Send email to user:': null
 'No users found.': null
 'No records found.': null
@@ -44,7 +44,7 @@ Continue: null
 'Profile saved.': null
 Picture: null
 'Password updated': null
-None: null
+None: 'Heç biri'
 'New confirmation email was sent to user.': null
 'Email is used already': null
 'Edit your password': null
@@ -59,12 +59,12 @@ None: null
 'Allow users profile to be publicly displayed': null
 'Allow user access to login to site backend': null
 Templates: null
-Username: null
+Username: 'İstifadəçi adı'
 'Last Name': null
 'First Name': null
-Email: null
+Email: Email
 'You were logged out.': null
-'Newscoop Subhead': null
+'Newscoop Subhead': 'Newscoop Bölmə Başlığı'
 Filters: null
 'Add new Author': null
 'Loading Data': null

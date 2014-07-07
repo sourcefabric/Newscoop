@@ -12,7 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\User\Group;
-use Newscoop\Entity\Author;
 use Newscoop\View\UserView;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -267,7 +266,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set username
      *
-     * @param string $username
+     * @param  string               $username
      * @return Newscoop\Entity\User
      */
     public function setUsername($username)
@@ -292,7 +291,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set password
      *
-     * @param string $password
+     * @param  string               $password
      * @return Newscoop\Entity\User
      */
     public function setPassword($password)
@@ -310,7 +309,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Check password
      *
-     * @param string $password
+     * @param  string $password
      * @return bool
      */
     public function checkPassword($password)
@@ -318,6 +317,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
         if (sizeof(explode(self::HASH_SEP, $this->password)) != 3) { // fallback
             if ($this->password == sha1($password)) { // update old password on success
                 $this->setPassword($password);
+
                 return TRUE;
             }
 
@@ -336,6 +336,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getSalt()
     {
         list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
+
         return $salt;
     }
 
@@ -359,8 +360,8 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Get random string
      *
-     * @param int $length
-     * @param string $allowed_chars
+     * @param  int    $length
+     * @param  string $allowed_chars
      * @return string
      */
     final public function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
@@ -376,12 +377,13 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set first name
      *
-     * @param string $first_name
+     * @param  string               $first_name
      * @return Newscoop\Entity\User
      */
     public function setFirstName($first_name)
     {
         $this->first_name = (string) $first_name;
+
         return $this;
     }
 
@@ -398,12 +400,13 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set last name
      *
-     * @param string $last_name
+     * @param  string               $last_name
      * @return Newscoop\Entity\User
      */
     public function setLastName($last_name)
     {
         $this->last_name = (string) $last_name;
+
         return $this;
     }
 
@@ -436,13 +439,13 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      */
     public function getRealName()
     {
-        return (string)  $this->first_name.' '.$this->last_name;
+        return (string) $this->first_name.' '.$this->last_name;
     }
 
     /**
      * Set status
      *
-     * @param int $status
+     * @param  int                  $status
      * @return Newscoop\Entity\User
      */
     public function setStatus($status)
@@ -506,7 +509,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set email
      *
-     * @param string $email
+     * @param  string               $email
      * @return Newscoop\Entity\User
      */
     public function setEmail($email)
@@ -549,7 +552,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set admin switch
      *
-     * @param bool $admin
+     * @param  bool                 $admin
      * @return Newscoop\Entity\User
      */
     public function setAdmin($admin)
@@ -572,7 +575,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set user is public
      *
-     * @param bool $public
+     * @param  bool                 $public
      * @return Newscoop\Entity\User
      */
     public function setPublic($public = true)
@@ -605,7 +608,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set points
      *
-     * @param int $points
+     * @param  int                  $points
      * @return Newscoop\Entity\User
      */
     public function setPoints($points)
@@ -614,7 +617,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
             throw new \InvalidArgumentException("Points must be an integer: '$points'");
         }
 
-        $this->points = $points;
+        $this->points = $points < 0 ? 0 : $points;
 
         return $this;
     }
@@ -690,7 +693,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     public function getRoles()
     {
         $roles = array();
-        foreach($this->groups as $group) {
+        foreach ($this->groups as $group) {
             $roles[] = strtoupper(str_replace(" ", "_", $group->getName()));
         }
 
@@ -700,7 +703,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set role
      *
-     * @param Newscoop\Entity\Acl\Role $role
+     * @param  Newscoop\Entity\Acl\Role $role
      * @return Newscoop\Entity\User
      */
     public function setRole(Role $role)
@@ -723,8 +726,8 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Add attribute
      *
-     * @param string $name
-     * @param string $value
+     * @param  string               $name
+     * @param  string               $value
      * @return Newscoop\Entity\User
      */
     public function addAttribute($name, $value)
@@ -741,8 +744,8 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Get attribute
      *
-     * @param string $name
-     * @param string $value
+     * @param  string $name
+     * @param  string $value
      * @return mixed
      */
     public function getAttribute($name)
@@ -803,7 +806,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set image
      *
-     * @param string $image
+     * @param  string               $image
      * @return Newscoop\Entity\User
      */
     public function setImage($image)
@@ -826,9 +829,9 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Check permissions
      *
-     * @param string $permission
-     * @param string $resource
-     * @param string $action
+     * @param  string $permission
+     * @param  string $resource
+     * @param  string $action
      * @return bool
      */
     public function hasPermission($permission, $resource = null, $action = null)
@@ -840,12 +843,12 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
 
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
-            if (!$resource && !$action){
+            if (!$resource && !$action) {
                 list($resource, $action) = PermissionToAcl::translate($permission);
             }
 
-            if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-                if (!$resource && !$action){
+            if ($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
+                if (!$resource && !$action) {
                     return \SaaS::singleton()->hasPermission($permission);
                 }
 
@@ -862,7 +865,6 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     {
        return $this->commenters;
     }
-
 
     /**
      * Get a User's comments which are associated with his User account.
@@ -933,7 +935,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set subscriber
      *
-     * @param integer $subscriber
+     * @param  integer              $subscriber
      * @return Newscoop\Entity\User
      */
     public function setSubscriber($subscriber)
@@ -956,7 +958,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set password reset token
      *
-     * @param integer $resetToken
+     * @param  integer $resetToken
      * @return string
      */
     public function setResetToken($resetToken)
@@ -979,7 +981,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set author
      *
-     * @param Newscoop\Entity\Author $author
+     * @param  Newscoop\Entity\Author $author
      * @return Newscoop\Entity\User
      */
     public function setAuthor(Author $author = null)
@@ -1042,7 +1044,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      * @param string $firstName
      * @param string $lastName
      * @param string $image
-     * @param array $attributes
+     * @param array  $attributes
      */
     public function updateProfile($username, $password, $firstName, $lastName, $image, array $attributes)
     {
@@ -1078,7 +1080,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * Get edit view
      *
-     * @param Zend_View_Abstract $view
+     * @param  Zend_View_Abstract $view
      * @return object
      */
     public function getEditView(Zend_View_Abstract $view)
@@ -1114,7 +1116,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * Get DataTable view
      *
-     * @param Zend_View_Abstract $view
+     * @param  Zend_View_Abstract $view
      * @return object
      */
     public function getDataTableView(Zend_View_Abstract $view)
@@ -1158,8 +1160,8 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * Get url for given action
      *
-     * @param string $action
-     * @param Zend_View_Abstract $view
+     * @param  string             $action
+     * @param  Zend_View_Abstract $view
      * @return string
      */
     private function getViewUrl($action, Zend_View_Abstract $view)
@@ -1177,7 +1179,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
      *
      * Rename user
      *
-     * @param string $username
+     * @param  string $username
      * @return void
      */
     public function rename($username)
@@ -1241,7 +1243,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Set lastLogin
      *
-     * @param DateTime $lastLogin
+     * @param  DateTime $lastLogin
      * @return void
      */
     public function setLastLogin(\DateTime $lastLogin = null)
@@ -1254,7 +1256,7 @@ class User implements \Zend_Acl_Role_Interface, UserInterface, \Serializable, Eq
     /**
      * Get lastLogin
      *
-     * @param DateTime $lastLogin
+     * @param  DateTime $lastLogin
      * @return void
      */
     public function getLastLogin()

@@ -71,6 +71,11 @@ class LinkRequestListener
 
         foreach ($links as $idx => $link) {
             $linkParams = explode(';', trim($link));
+            $resourceType = null;
+            if (count($linkParams) > 1) {
+                $resourceType = trim(preg_replace('/<|>/', '', $linkParams[1]));
+                $resourceType = str_replace("\"", "", str_replace("rel=", "", $resourceType));
+            }
             $resource   = array_shift($linkParams);
             $resource   = preg_replace('/<|>/', '', $resource);
             $tempRequest = Request::create($resource);
@@ -92,7 +97,7 @@ class LinkRequestListener
                 continue;
             }
 
-            // Make sure @ParamConverter and friends are handled
+            // Make sure @ParamConverter is handled
             $subEvent = new FilterControllerEvent(
                 $event->getKernel(),
                 $controller,
@@ -111,9 +116,15 @@ class LinkRequestListener
                     continue;
                 }
 
-                $links[$idx] = $result;
+                $links[$idx] = array(
+                    'object' => $result,
+                    'resourceType' => $resourceType
+                );
             } catch (\Exception $e) {
-                $links[$idx] = $e;
+                $links[$idx] = array(
+                    'object' => $e,
+                    'resourceType' => 'exception'
+                );
 
                 continue;
             }

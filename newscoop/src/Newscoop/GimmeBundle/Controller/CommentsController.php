@@ -171,6 +171,13 @@ class CommentsController extends FOSRestController
     /**
      * Create new comment
      *
+     * **Comment available statuses:**
+     *
+     *     APPROVED - 0
+     *     PENDING  - 1
+     *     HIDDEN   - 2
+     *     DELETED  - 3
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when comment created succesfuly"

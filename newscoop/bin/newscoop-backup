@@ -178,15 +178,36 @@ if (!$silent) {
 	echo " * Backing up file attachments...";
 	flush_output($flush);
 }
+
 camp_copy_files("$html_dir/public/files", $backupDirFullPath);
 if (!$silent) {
 	echo "done.\n";
 }
 
 if (!$silent) {
+    echo " * Backing up videos...";
+    flush_output($flush);
+}
+
+camp_copy_files("$html_dir/public/videos", $backupDirFullPath);
+if (!$silent) {
+    echo "done.\n";
+}
+
+if (!$silent) {
+    echo " * Backing up PDFs...";
+    flush_output($flush);
+}
+camp_copy_files("$html_dir/public/pdf", $backupDirFullPath);
+if (!$silent) {
+    echo "done.\n";
+}
+
+if (!$silent) {
 	echo " * Backing up configuration files...";
 	flush_output($flush);
 }
+
 camp_copy_files("$ETC_DIR", $backupDirFullPath);
 if (!$silent) {
 	echo "done.\n";

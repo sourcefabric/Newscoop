@@ -40,12 +40,6 @@ foreach ($section_objects as $section) {
 $sectionsNo = is_array($sections) ? sizeof($sections) : 0;
 $menuSectionTitle = $sectionsNo > 0 ? $translator->trans('All Sections', array(), 'library') : $translator->trans('No sections found', array(), 'library');
 
-$topics = array();
-foreach (Topic::GetTree() as $topic) {
-	$topic = array_pop($topic);
-	$topics[$topic->getTopicId()] = $topic->getName($this->language);
-}
-
 ?>
 <div class="filters">
 <fieldset class="filters"><legend><?php echo $translator->trans('Filter', array(), 'library'); ?></legend> <select
@@ -93,21 +87,11 @@ foreach (Topic::GetTree() as $topic) {
 </dl>
 <dl>
 	<dt><label for="filter_author"><?php echo $translator->trans('Author'); ?></label></dt>
-	<dd><select name="author">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach (Author::GetAuthors() as $author) { ?>
-		<option value="<?php echo htmlspecialchars($author->getName()); ?>"><?php echo htmlspecialchars($author->getName()); ?></option>
-		<?php } ?>
-	</select></dd>
+	<dd><input type="hidden" name="author" id="filter_author" class="select2" data-placeholder="<?php echo $translator->trans('Search for authors', array(), 'authors'); ?>" data-contenturl="/admin/authors/get" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_creator"><?php echo $translator->trans('Creator', array(), 'library'); ?></label></dt>
-	<dd><select name="creator">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach (Zend_Registry::get('container')->getService('user')->findBy(array(), array('last_name' => 'asc', 'first_name' => 'asc')) as $user) { ?>
-		<option value="<?php echo $user->getId(); ?>"><?php echo htmlspecialchars($user->getName()); ?></option>
-		<?php } ?>
-	</select></dd>
+	<dd><input type="hidden" name="creator" id="filter_creator" class="select2" data-placeholder="<?php echo $translator->trans('Search for creators', array(), 'library'); ?>" data-contenturl="/admin/users/load" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_status"><?php echo $translator->trans('Status'); ?></label></dt>
@@ -121,12 +105,7 @@ foreach (Topic::GetTree() as $topic) {
 </dl>
 <dl>
 	<dt><label for="filter_topic"><?php echo $translator->trans('Topic'); ?></label></dt>
-	<dd><select name="topic">
-		<option value=""><?php echo $translator->trans('All'); ?></option>
-		<?php foreach ($topics as $id => $topic) { ?>
-		<option value="<?php echo $id; ?>"><?php echo htmlspecialchars($topic); ?></option>
-		<?php } ?>
-	</select></dd>
+    <dd><input type="hidden" name="topic" id="filter_topic" class="select2" data-placeholder="<?php echo $translator->trans('Search for topics', array(), 'topics'); ?>" data-contenturl="/admin/topics/get" /></dd>
 </dl>
 <dl>
 	<dt><label for="filter_language"><?php echo $translator->trans('Language'); ?></label></dt>
@@ -143,6 +122,8 @@ foreach (Topic::GetTree() as $topic) {
 <!-- /.smartlist-filters -->
 
 		<?php if (!self::$renderFilters) { ?>
+<link type="text/css" rel="stylesheet" href="/js/select2/select2.css"></link>
+<script type="text/javascript" src="/js/select2/select2.js"></script>
 <script type="text/javascript">
 
 function handleArgs() {
@@ -286,7 +267,8 @@ $('fieldset.filters .extra').each(function() {
                 if (label == value) {
                     $(this).show();
                     $(this).insertBefore($('select.filters', $(this).parent()));
-                    if ($('a', $(this)).length == 0) {
+
+                    if ($('a.detach', $(this)).length == 0) {
                         $('<a class="detach">X</a>').appendTo($('dd', $(this)))
                             .click(function() {
                                 $(this).parents('dl').hide();
@@ -327,6 +309,49 @@ $('fieldset.filters').each(function() {
             tables[smartlistId].fnDraw(true);
             return false;
         });
+});
+
+// autocomplete
+$('input.select2').each(function() {
+
+    // Default processors
+    var idProcessor  = function (data) { return data.id; };
+    var resultFormatProcessor = function (data) { return data.name };
+    var selectionFormatProcessor = function (data) { return data.name; };
+    var paramProcessor = function (term, page) { return { term: term, limit: 20 }; };
+    var resultsProcessor = function (data, page) { return {results: data}; };
+
+    switch ($(this).attr('id')) {
+        case 'filter_creator':
+            resultFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
+            selectionFormatProcessor = function (data) { return (data.first_name + ' ' + data.last_name).trim(); };
+            resultsProcessor = function (data, page) { return {results: data.records}; };
+            paramProcessor = function (term, page) { return { queries : { search_name: term }, perPage: 20 }; };
+            break;
+        case 'filter_topic':
+            break;
+        case 'filter_author':
+            idProcessor  = function (data) { return data.name; };
+            break;
+        default:
+            break;
+    }
+
+    $(this).select2({
+        minimumInputLength: 1,
+        ajax: {
+            url: $(this).data('contenturl'),
+            dataType: 'json',
+            data: paramProcessor,
+            results: resultsProcessor
+        },
+        id: idProcessor,
+        formatResult: resultFormatProcessor,
+        formatSelection: selectionFormatProcessor,
+        formatNoMatches: function() { return "<?php echo $translator->trans('No matches.', array(), 'library'); ?>"; },
+        formatSearching: function() { return "<?php echo $translator->trans('Searching...', array(), 'library'); ?>"; },
+        formatInputTooShort: function() { return  "<?php echo $translator->trans('Minimum input of characters: $1', array('$1' => 1), 'library'); ?>"; }
+    });
 });
 
 }); // document.ready

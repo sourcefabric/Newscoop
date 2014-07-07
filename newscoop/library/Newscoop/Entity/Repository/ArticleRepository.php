@@ -7,8 +7,6 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Newscoop\Datatable\Source as DatatableSource;
@@ -220,7 +218,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get articles for indexing
      *
-     * @param int $limit
+     * @param  int   $limit
      * @return array
      */
     public function getIndexBatch($limit = 50)
@@ -238,7 +236,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get articles for indexing
      *
-     * @param int $count Number of articles to index
+     * @param int   $count  Number of articles to index
      * @param array $filter Filter to apply to articles
      *
      * @return array
@@ -268,7 +266,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
     /**
      * Set indexed now
      *
-     * @param array $articles
+     * @param  array $articles
      * @return void
      */
     public function setIndexedNow(array $articles)
@@ -306,7 +304,7 @@ class ArticleRepository extends DatatableSource implements RepositoryInterface
 
             foreach ($articles AS $article) {
                 $articleNumbers[] = $article->getNumber();
-    		}
+            }
 
             $qb = $qb->where($qb->expr()->in('a.number',  $articleNumbers));
         }

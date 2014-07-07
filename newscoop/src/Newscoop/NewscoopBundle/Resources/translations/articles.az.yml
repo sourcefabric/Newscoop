@@ -1,186 +1,186 @@
-'Edit metadata': null
-Rating: null
-'Enable Rating': null
-'Blog management': null
-'View article': null
-'Select a list': null
-'Remove list': null
-'Please select a list': null
-Playlist: null
-'List updated.': null
-'List saved': null
-'List Name': null
-'List ID': null
-'Item already exists in the list': null
-'Featured Articles': null
-'Featured Article Lists': null
-'Featured Article List': null
-'Duplicate list': null
-'Duplicate article entry found': null
-'Drag here to add to list': null
-'Could not save the list': null
-'Available Articles': null
-'Are you sure you want to delete this list?': null
-'Add to list': null
-'Add list': null
-'Multi date events': null
-Slideshows: null
-'Place images': null
-'Youre not allowed to edit article.': null
-Webcode: null
-Unapproved: null
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
-'The article could not be submitted.': null
-'Submit articles': null
-'Submit article': null
-'Related Articles': null
-'Pending articles': null
-'Pending Articles': null
-'Context Box updated': null
-On: null
-Off: null
-'You do not have the right to moderate comments.': null
-'You can not schedule opposing events at the same time': null
-'Unable to reach Newscoop. Please check your internet connection.': null
-Title: null
-'There already is an article with the same name. Please change the name and try again.': null
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
-Geolocation: null
+'Edit metadata': 'Meta-məlumatı dəyiş'
+Rating: Qiymətləndirmə
+'Enable Rating': 'Qiymətləndirməyə İcazə Ver'
+'Blog management': 'Bloqun idarə edilməsi'
+'View article': 'Məqaləyə bax'
+'Select a list': 'Siyahı seç'
+'Remove list': 'Siyahını xaric et'
+'Please select a list': 'Lütfən, siyahı seç'
+Playlist: Pleylist
+'List updated.': 'Siyahı yeniləndi.'
+'List saved': 'Siyahı saxlandı'
+'List Name': 'Siyahı Adı'
+'List ID': 'Siyahı ID-si'
+'Item already exists in the list': 'Element artıq siyahıdadır'
+'Featured Articles': 'Seçilmiş Məqalələr'
+'Featured Article Lists': 'Seçilmiş Məqalə Siyahıları'
+'Featured Article List': 'Seçilmiş Məqalə Siyahısı'
+'Duplicate list': 'Siyahının surətini çıxar'
+'Duplicate article entry found': 'Məqalə girişinin surəti tapıldı'
+'Drag here to add to list': 'Siyahıya əlavə etmək üçün bura sürüşdür'
+'Could not save the list': 'Siyahı saxlana bilmədi'
+'Available Articles': 'Mövcud Məqalələr'
+'Are you sure you want to delete this list?': 'Bu siyahını silmək istədiyinə əminsən?'
+'Add to list': 'Siyahıya əlavə et'
+'Add list': 'Siyahı əlavə et'
+'Multi date events': 'Bir neçə günlük tədbirlər'
+Slideshows: Slayd-şoular
+'Place images': 'Şəkilləri yerləşdir'
+'Youre not allowed to edit article.': 'Məqaləni dəyişməyə ixtiyarın yoxdur.'
+Webcode: Vebşifrə
+Unapproved: Təsdiqlənməmiş
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Bu məsələyə ön baxış etmək mümkün deyil. Lütfən, nəşrə təyin edilmiş mövzunun mövcudluğuna əmin ol.'
+'The article could not be submitted.': 'Məqalə daxil edilə bilmədi.'
+'Submit articles': 'Məqalə daxil et'
+'Submit article': 'Məqalə daxil et'
+'Related Articles': 'Uyğun Məqalələr'
+'Pending articles': 'Gözləmədəki məqalələr'
+'Pending Articles': 'Gözləmədəki Məqalələr'
+'Context Box updated': 'Kontekst Qutusu yeniləndi'
+On: Açıq
+Off: Qapalı
+'You do not have the right to moderate comments.': 'Şərhləri idarə etməyə ixtiyarın yoxdur.'
+'You can not schedule opposing events at the same time': 'Ziddiyyət təşkil edən tədbirləri eyni vaxta planlaşdıra bilməzsən'
+'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
+Title: Başlıq
+'There already is an article with the same name. Please change the name and try again.': 'Eyndi adlı məqalə artıq mövcuddur. Lütfən, adı dəyiş və yenidən sına.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Lütfən, nəzərə al ki, bu məqaləyə Yeni dövlət quraşdırdıqda məqaləyə aid olan nümayiş edilmiş bütün tədbirlər silinəcək. Lütfən, dövlət dəyişikliyini təsdiqlə.'
+Geolocation: Xəritə
 Newscoop: Newscoop
-'Overwrite articles with matching names': null
-'Article <i>$1</i> already exists, and was not overwritten.<br />': null
-Files: null
-'Select section:': null
-'Add another author': null
-'The article has been locked by $1 ($2) $3 minute(s) ago.': null
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
-'Switches saved.': null
-'Keywords saved.': null
-'Comment settings': null
-Authors: null
-'Attach Topic To Article': null
-'Article saved.': null
-'Article is locked': null
-'Actions updated.': null
-'Your work has not been saved. Do you want to continue and lose your changes?': null
-Switches: null
-'No subtopics available': null
-'Newscoop Subhead': null
-Media: null
-'Last modified': null
-'Keywords &amp; Topics': null
-Info: null
-'Go to live article': null
-Created: null
-'Are you sure you want to remove the map from the article?': null
-'Scheduled action added': null
-'Content edited': null
-'You must select an article language.': null
-'You must select a publication.': null
-'You must select a file to upload.': null
-'You must select a XML input file.': null
-'You do not have the right to import XML archives.': null
-'There was a problem uploading the file.': null
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
-'The file exceeds the allowed max file size.': null
-Optional: null
-'Input File': null
-'Import XML': null
-'File is not a valid XML file.': null
-'File does not exist.': null
-'File could not be uploaded.': null
-'File could not be read.': null
-'Error List': null
-'Bad format in XML file.': null
-'Article could not be created.': null
-'---Select article type---': null
-'$1 articles successfully imported.': null
-Saved: null
-'Save All': null
-'Online Server: On': null
-'Online Server: Off': null
-Download: null
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
-'Visible to non-subscribers': null
-'The article could not be published.': null
-'Scheduled action deleted.': null
-'Scheduled action added.': null
-'Article(s) unlocked.': null
-'Article(s) duplicated.': null
-'Article(s) deleted.': null
-'Article status set to $1': null
-'Article unlocked.': null
-'Article translation created.': null
-'Article order changed.': null
-'Article moved.': null
-'Article deleted.': null
-'Article created.': null
-'$1 toggled.': null
-'Total:': null
-'Show Comments': null
-Locked: null
-'Invalid type: $1': null
-'Hide Comments': null
-Enabled: null
-Disabled: null
-Comments: null
-'The article has already been translated into $1.': null
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
-'You do not have the right to translate articles.': null
-'You do not have the right to publish articles.': null
-'You do not have the right to move articles.': null
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
-'Publish?': null
-'Publish articles': null
-'Publish article': null
-'Move?': null
-'Move articles': null
-'Move article': null
-'An issue must be created for the selected language but you do not have the right to create an issue.': null
-'A section must be created for the selected language but you do not have the right to create a section.': null
-'to section': null
-'You must choose a language': null
-'Unable to create the section for translation $1.': null
-'Unable to create the issue for translation $1.': null
-'The following articles are new; it is not possible to schedule them for automatic publishing': null
-'Section URL Name': null
-'Section Name': null
-'Publish Schedule': null
-'No action specified': null
-'New section name': null
-'New section URL name': null
-'New issue name': null
-'New issue URL name': null
-'New article name': null
-'Issue URL Name': null
-'Issue Name': null
-'Duplicate?': null
-'Duplicate articles': null
-'Article name ($1)': null
-'Article List': null
-'Are you sure you want to remove the topic $1 from the article?': null
-'Are you sure you want to remove the file $1 from the article?': null
-'Are you sure you want to remove the event scheduled on $1?': null
-'Are you sure you want to delete this article?': null
-'An issue must be created for the selected language.  Please enter the issue name and URL name.': null
-'A section must be created for the selected language.  Please enter the section name and URL name.': null
-'Article Type': null
-'Show article on front page': null
-'Show article on section page': null
-'Translate article': null
-'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': null
-'Duplicate article': null
-'The destination section is the same as the source section.': null
-'The article is new; it is not possible to schedule it for automatic publishing.': null
-'No article types were defined. You must create an article type first.': null
-'Edit article types': null
-'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': null
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
-'You do not have the right to delete articles.': null
-'You must select an article type.': null
-'Are you sure you want to remove the image $1 from the article?': null
-'There was an error reading request parameters.': null
-'This article cannot be previewed. Please make sure it has the article template selected.': null
-'No such article.': null
-'No such section.': null
+'Overwrite articles with matching names': 'Məqalələri uyğun adlarla yenidən yaz'
+'Article <i>$1</i> already exists, and was not overwritten.<br />': '<i>$1</i> məqaləsi artıq mövcuddur və yenidən yazılbayıb.<br />'
+Files: Fayllar
+'Select section:': 'Bölmə seç:'
+'Add another author': 'Başqa müəllif əlavə et'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Məqalə $3 dəqiqə əvvəl $1 ($2) tərəfindən kilidlənib.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Məqalə $3 saat $4 dəqiqə əvvəl $1 ($2) tərəfindən kilidlənib.'
+'Switches saved.': 'Dəyişikliklər saxlandı.'
+'Keywords saved.': 'Açar sözlər saxlandı.'
+'Comment settings': 'Şərh parametrləri'
+Authors: Müəlliflər
+'Attach Topic To Article': 'Məqaləyə Mövzu Əlavə Et'
+'Article saved.': 'Məqalə saxlandı.'
+'Article is locked': 'Məqalə kilidləndi'
+'Actions updated.': 'Fəaliyyətlər yeniləndi.'
+'Your work has not been saved. Do you want to continue and lose your changes?': 'Gördüyün iş saxlanmadı. Davam etmək və dəyişikliklərini itirmək istəyirsən?'
+Switches: Dəyişikliklər
+'No subtopics available': 'Alt mövzu mövcud deyil'
+'Newscoop Subhead': 'Newscoop Bölmə Başlığı'
+Media: Mətbuat
+'Last modified': 'Son redaktələr'
+'Keywords &amp; Topics': 'Açar Sözlər &amp; Mövzular'
+Info: Məlumat
+'Go to live article': 'Canlı məqaləyə keç'
+Created: Yaradıldı
+'Are you sure you want to remove the map from the article?': 'Xəritəni məqalədən xaric etmək istədiyinə əminsən?'
+'Scheduled action added': 'Planlaşdırılmış fəaliyyət əlavə edildi'
+'Content edited': 'Məzmun dəyişdirildi'
+'You must select an article language.': 'Məqaləyə dil seçməlisən.'
+'You must select a publication.': 'Nəşr seçməlisən.'
+'You must select a file to upload.': 'Yükləmək üçün fayl seçməlisən.'
+'You must select a XML input file.': 'XML giriş faylı seçməlisən.'
+'You do not have the right to import XML archives.': 'XML arxivini daxil etməyə ixtiyarın yoxdur.'
+'There was a problem uploading the file.': 'Faylın yüklənməsi ilə bağlı problem var idi.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Fayl yarımçıq yüklənmişdir. Adətən bu hadisə yükləmək istədiyiniz faylın ölçüsü ilə onun yüklənəcəyi zaman arasında tərs mütənasiblik olduqda baş verir. Faylın maksimal yüklənmə zamanı php.ini-də təqdim edilir'
+'The file exceeds the allowed max file size.': 'Faylın ölçüsü icazə verilən maksimal ölçünü keçir.'
+Optional: Könüllü
+'Input File': 'Giriş Faylı'
+'Import XML': 'XML Daxil Et'
+'File is not a valid XML file.': 'Bu düzgün XML fayl deyil.'
+'File does not exist.': 'Fayl mövcud deyil.'
+'File could not be uploaded.': 'Fayl yüklənə bilmədi.'
+'File could not be read.': 'Fayl oxuna bilmədi.'
+'Error List': 'Xəta Siyahısı'
+'Bad format in XML file.': 'XML faylda pis format.'
+'Article could not be created.': 'Məqalə yaradıla bilmədi.'
+'---Select article type---': '---Məqalə növünü seç---'
+'$1 articles successfully imported.': '$1 məqalələr uğurla daxil edildi.'
+Saved: Saxlandı
+'Save All': 'Hamısını Saxla'
+'Online Server: On': 'Onlayn Server: Açıq'
+'Online Server: Off': 'Onlayn Server: Qapalı'
+Download: Endir
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Eyni bölmədə eyni adlı iki məqaləyə sahib ola bilməzsən. Təklif etdiyin məqalə adı artıq $1 məqaləsi tərəfindən istifadədədir.'
+'Visible to non-subscribers': 'Abunə olmayanlara görünür'
+'The article could not be published.': 'Məqalə nümayiş etdirilə bilmədi.'
+'Scheduled action deleted.': 'Planlaşdırılmış fəaliyyət silindi.'
+'Scheduled action added.': 'Planlaşdırılmış fəaliyyət əlavə edildi.'
+'Article(s) unlocked.': 'Məqalə(lər) kilidi açıldı.'
+'Article(s) duplicated.': 'Məqalə(lər)in surəti çıxarıldı.'
+'Article(s) deleted.': 'Məqalə(lər) silindi.'
+'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
+'Article unlocked.': 'Məqalənin kilidi açıldı.'
+'Article translation created.': 'Məqalə tərcüməsi yaradıldı.'
+'Article order changed.': 'Məqalə sıralaması dəyişdirildi.'
+'Article moved.': 'Məqalə köçürüldü.'
+'Article deleted.': 'Məqalə silindi.'
+'Article created.': 'Məqalə yaradıldı.'
+'$1 toggled.': '$1 keçirildi.'
+'Total:': 'Cəmi:'
+'Show Comments': 'Şərhləri Göstər'
+Locked: Kilidləndi
+'Invalid type: $1': 'Səhv növ: $1'
+'Hide Comments': 'Şərhləri Gizlə'
+Enabled: 'İcazə Verildi'
+Disabled: 'Qadağa Edildi'
+Comments: Şərhlər
+'The article has already been translated into $1.': 'Məqalə artıq $1 dilinə tərcümə edilib.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Məqalənin nəşrini planlamazdan əvvəl onun üçün nəşr, məsələ və bölmə seçməlisən. $1 menyusuna get və bunu etmək üçün $2 seç.'
+'You do not have the right to translate articles.': 'Məqalələri tərcümə etməyə ixtiyarın yoxdur.'
+'You do not have the right to publish articles.': 'Məqalələri nümayiş etdirməyə ixtiyarın yoxdur.'
+'You do not have the right to move articles.': 'Məqalələri köçürməyə ixtiyarın yoxdur.'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'Son çatma məsələsi münasib dilə tərcümə edilməmiş qırmızı işarələnmiş məqalələri $1 bilməzsən.'
+'Publish?': 'Nümayiş edirsən?'
+'Publish articles': 'Məqalələri nümayiş et'
+'Publish article': 'Məqaləni nümayiş et'
+'Move?': 'Köçürürsən?'
+'Move articles': 'Məqalələri köçür'
+'Move article': 'Məqaləni köçür'
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'Seçilmiş dil üçün məsələ yaradılmalıdır, amma sənin bunu etməyə ixtiyarın yoxdur.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'Seçilmiş dil üçün bölmə yaradılmalıdır, amma sənin bunu etməyə ixtiyarın yoxdur.'
+'to section': bölməyə
+'You must choose a language': 'Dil seçməlisən'
+'Unable to create the section for translation $1.': '$1 tərcüməsi üçün bölmə yaratmaq mümkün deyil.'
+'Unable to create the issue for translation $1.': '$1 tərcüməsi üçün məsələ yaratmaq mümkün deyil.'
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'Növbəti məqalələr yenidir; onları avtomatik nəşr üçün planlaşdırmaq mümkün deyil'
+'Section URL Name': 'Bölmənin URL Adı'
+'Section Name': 'Bölmə Adı'
+'Publish Schedule': 'Planı Nümayiş Et'
+'No action specified': 'Heç bir fəaliyyət qeyd edilmir'
+'New section name': 'Yeni bölmə adı'
+'New section URL name': 'Yeni bölmə URL adı'
+'New issue name': 'Yeni məsələ adı'
+'New issue URL name': 'Yeni məsələ URL adı'
+'New article name': 'Yeni məqalə adı'
+'Issue URL Name': 'Məsələ URL Adı'
+'Issue Name': 'Məsələ Adı'
+'Duplicate?': 'Surəti çıxarılsın?'
+'Duplicate articles': 'Məqalələrin surətini çıxar'
+'Article name ($1)': 'Məqalə adı ($1)'
+'Article List': 'Məqalə Siyahısı'
+'Are you sure you want to remove the topic $1 from the article?': '$1 mövzusunu məqalədən xaric etmək istədiyinə əminsən?'
+'Are you sure you want to remove the file $1 from the article?': '$1 faylını məqalədən xaric etmək istədiyinə əminsən?'
+'Are you sure you want to remove the event scheduled on $1?': '$1 tarixinə planlaşdırılmış tədbiri xaric etmək istədiyinə əminsən?'
+'Are you sure you want to delete this article?': 'Bu məqaləni silmək istədiyinə əminsən?'
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Seçilmiş dil üçün məsələ yaradılmalıdır. Lütfən, məsələ adını və URL adını daxil et.'
+'A section must be created for the selected language.  Please enter the section name and URL name.': 'Seçilmiş dil üçün bölmə yaradılmalıdır. Lütfən, bölmə adı və URL adını daxil et.'
+'Article Type': 'Məqalə Növü'
+'Show article on front page': 'Ön səhifədə məqalə göstər'
+'Show article on section page': 'Bölmə səhifəsində məqalə göstər'
+'Translate article': 'Məqaləni tərcümə et'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Bu məqaləni dəyişməyə ixtiyarın yoxdur. Sən yalnız öz məqalələrinə dəyişiklik edə bilərsən və bu əməliyyat edildikdən sonra səlahiyyətli istifadəçilər bunu dəyişə bilərlər.'
+'Duplicate article': 'Məqalənin surətini çıxar'
+'The destination section is the same as the source section.': 'Son çatma ünvanı mənbə ünvünı ilə eynidir.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'Məqalə yenidir; onu avtomatik nəşrə planlaşdırmaq mümkün deyil.'
+'No article types were defined. You must create an article type first.': 'Heç bir məqalə növü müəyyən edilmədi. İlk olaraq məqalə növü yaratmalısan.'
+'Edit article types': 'Məqalə növlərini dəyiş'
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Məqalə saxlana bilmədi. O $2 saat $3 dəqiqə əvvəl $1 tərəfindən kilidlənib.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Bu məqalənin statusunu dəyişməyə ixtiyarın yoxdur. Məqalə daxil edildikdən sonra yalnız səlahiyyətli istifadəçilər tərəfindən dəyişdirilə bilər.'
+'You do not have the right to delete articles.': 'Məqalə silməyə ixtiyarın yoxdur.'
+'You must select an article type.': 'Məqalə növü seçməlisən.'
+'Are you sure you want to remove the image $1 from the article?': '$1 şəklini məqalədən xaric etmək istədiyinə əminsən?'
+'There was an error reading request parameters.': 'Soruğu parametrlərinin oxunmasında xəta baş verdi.'
+'This article cannot be previewed. Please make sure it has the article template selected.': 'Məqaləyə ön baxış etmək mümkün deyil. Lütfən, ona məxsus seçilmiş məqalə nümunəsinin mövcudluğuna əmin ol.'
+'No such article.': 'Belə məqalə yoxdur.'
+'No such section.': 'Belə bölmə yoxdur.'
 Characters: null

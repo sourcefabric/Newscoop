@@ -8,7 +8,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected $_view;
 
-
     /**
      * Legacy admin bootstrap
      */
@@ -51,7 +50,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         include_once 'HTML/QuickForm/group.php';
 
         if (php_sapi_name() !== 'cli') {
-            set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
+            set_error_handler(function ($p_number, $p_string, $p_file, $p_line) {
                 error_log(sprintf('Newscoop error: %s in %s:%d', $p_string, $p_file, $p_line));
 
                 global $Campsite;
@@ -98,6 +97,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         global $Campsite;
 
+        $translator = Zend_Registry::get('container')->getService('translator');
+
         $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : $translator->trans('Newscoop', array(), 'home') . $Campsite['VERSION'];
 
         $view = $this->getResource('view');
@@ -111,8 +112,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initFlashMessenger()
     {
         $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-        if ($flashMessenger->hasMessages())
-        {
+        if ($flashMessenger->hasMessages()) {
             $view = $this->getResource('view');
             $view->messages = $flashMessenger->getMessages();
         }
