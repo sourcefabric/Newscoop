@@ -35,7 +35,8 @@ if (count($missingReq) > 0) {
         echo $value.' <br />';
     }
     echo "</pre>";
-    echo "You can try fix common problem with our fixer.php script, just run <br/>";
+    echo "Your php.ini config file path: <strong>" . php_ini_loaded_file() ?: "File couldn't be found." . "</strong><br/>";
+    echo "You can try to fix common problems by running our fixer.php script: <br/>";
     echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
 
     echo "When it's done, please refresh this page. Thanks!";
@@ -150,11 +151,19 @@ $app->get('/prepare', function (Request $request) use ($app) {
         ))
         ->add('server_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('server_port', null, array('required' => false))
+        ->add('user_name_fill', null, array(
+            'attr' => array('style' => 'display: none'),
+            'label' => false
+        ))
+        ->add('user_password_fill', 'password', array(
+            'attr' => array('style' => 'display: none'),
+            'label' => false
+        ))
         ->add('user_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('user_password', 'password', array('constraints' => array(new Assert\NotBlank())))
         ->add('database_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('override_database', 'choice', array(
-            'choices'   => array('override_database'   => 'Override database'),
+            'choices'   => array('override_database'   => 'Overwrite existing database?'),
             'multiple'  => true,
             'expanded'  => true,
         ))
