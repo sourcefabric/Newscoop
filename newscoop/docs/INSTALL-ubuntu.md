@@ -133,7 +133,8 @@ and copy in the information below.
 and then from the command line:
 
 	sudo a2dissite 000-default
-	sudo service apache2 reload
+	sudo a2enmod rewrite
+	sudo service apache2 restart
 
 
 Go to http://localhost and you will see Newscoop Installer
