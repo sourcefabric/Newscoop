@@ -108,7 +108,7 @@ This will take some time depending on your internet connection speed. When cloni
 
 The term Virtual Host refers to the practice of running more than one web site (such as company1.example.com and company2.example.com) on a single machine. Virtual hosts can be "IP-based", meaning that you have a different IP address for every web site, or "name-based", meaning that you have multiple names running on each IP address. The fact that they are running on the same physical server is not apparent to the end user. - [Apache2 docs][vhosts]
 
-Create the file `/etc/apache2/sites-available/newscoop`
+Create the file `/etc/apache2/sites-available/newscoop.conf`
 
 	sudo nano /etc/apache2/sites-available/newscoop.conf
 
