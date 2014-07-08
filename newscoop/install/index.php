@@ -246,6 +246,7 @@ $app->get('/process', function (Request $request) use ($app) {
 $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
+    $app['finish_service']->installAssets();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
 
     return $app['twig']->render('post-process.twig', array());

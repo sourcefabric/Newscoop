@@ -53,7 +53,7 @@ Afterwards, we want to run a simple security script that will remove some danger
 ### Step 3 - Install PHP
 ...
 
-	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-curl php5-gd curl
+	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-gd curl
 
 We will also need to change the way Apache serves files when some resource is requested. Currently when you request any resource from web server it will first look for `index.html` then for others. We will have to change this behaviour to firstly read `index.php`. To do this we have to modify `dir.conf` file:
 
@@ -116,23 +116,14 @@ and copy in the information below.
 
 	<VirtualHost *:80>
 			DocumentRoot /var/www/Newscoop/newscoop
-			ServerName localhost #www.example.com
+			ServerName localhost
 			ServerAdmin foo@bar.org
-
-			ErrorLog ${APACHE_LOG_DIR}/error.log
-			CustomLog ${APACHE_LOG_DIR}/access.log
-
-			<Directory /var/www/Newscoop/newscoop>
-				    DirectoryIndex index.php
-				    AllowOverride all
-				    Order allow,deny
-				    Allow from all
-	  		</Directory>
 	</VirtualHost>
 
 and then from the command line:
 
 	sudo a2dissite 000-default
+	sudo a2ensite newscoop
 	sudo a2enmod rewrite
 	sudo service apache2 restart
 
