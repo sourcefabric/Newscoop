@@ -1,4 +1,4 @@
-# Newscoop Ubuntu 14.04 Install Guide
+# Newscoop Ubuntu 14.04 Install Guide [Advanced]
 
 This guide will help you install the latest Newscoop version without any knowledge about Apache, MySQL, PHP or any other technologies.
 
@@ -53,7 +53,7 @@ Afterwards, we want to run a simple security script that will remove some danger
 ### Step 3 - Install PHP
 ...
 
-	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-curl php5-gd
+	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-curl php5-gd curl
 
 We will also need to change the way Apache serves files when some resource is requested. Currently when you request any resource from web server it will first look for `index.html` then for others. We will have to change this behaviour to firstly read `index.php`. To do this we have to modify `dir.conf` file:
 
@@ -76,6 +76,11 @@ When you are done, hit `CTRL + o` to save changes and `CTRL + x` to exit nano ed
 You will need to restart the Apache2 server afterwards so the configuration can refresh:
 
 	sudo service apache2 restart
+
+By default `www` folder will be owned by `root` we have to change this so `www-data` user can own it which is much safer and don't complicate things much.
+
+	sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx /var/www/
+	sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx /var/www/
 
 ### Install Git
 
@@ -105,31 +110,36 @@ The term Virtual Host refers to the practice of running more than one web site (
 
 Create the file `/etc/apache2/sites-available/newscoop`
 
-	sudo nano /etc/apache2/sites-available/newscoop
+	sudo nano /etc/apache2/sites-available/newscoop.conf
 
 and copy in the information below.
 
 	<VirtualHost *:80>
-	   DocumentRoot /var/www/Newscoop/newscoop
-	   ServerName localhost #www.example.com
-	   ServerAdmin foo@bar.org
+			DocumentRoot /var/www/Newscoop/newscoop
+			ServerName localhost #www.example.com
+			ServerAdmin foo@bar.org
 
-	   ErrorLog ${APACHE_LOG_DIR}/error.log
-	   CustomLog ${APACHE_LOG_DIR}/access.log
+			ErrorLog ${APACHE_LOG_DIR}/error.log
+			CustomLog ${APACHE_LOG_DIR}/access.log
 
-	  <Directory /var/www/Newscoop/newscoop>
-	      DirectoryIndex index.php
-	      AllowOverride all
-	      Order allow,deny
-	      Allow from all
-	  </Directory>
+			<Directory /var/www/Newscoop/newscoop>
+				    DirectoryIndex index.php
+				    AllowOverride all
+				    Order allow,deny
+				    Allow from all
+	  		</Directory>
 	</VirtualHost>
 
 and then from the command line:
 
 	sudo a2dissite 000-default
-	sudo a2ensite newscoop
-	sudo a2enmod rewrite php5
-	sudo service apache2 restart
+	sudo service apache2 reload
+
+
+Go to http://localhost and you will see Newscoop Installer
+
+<img src="https://dl.dropboxusercontent.com/u/35759363/Newscoop%20images/Zrzut%20ekranu%202014-07-08%2013.37.16.png" width="570" height="141">
+
+Follow instructions in Installer to complete the installation.
 
 [vhosts]: http://httpd.apache.org/docs/2.2/vhosts/

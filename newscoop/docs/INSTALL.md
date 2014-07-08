@@ -8,6 +8,7 @@
 - Dual core CPU recommended
 - 1 GB RAM minimum (with [swap][swap]), 2 GB recommended
 - 32 bit or 64 bit operating system
+- 512 MB minimum free disk space
 
 ### Software Requirements
 
