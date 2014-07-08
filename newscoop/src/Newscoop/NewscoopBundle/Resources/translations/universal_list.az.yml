@@ -13,7 +13,7 @@ First: İlk
 'Status: Submit': 'Status: Daxil Et'
 'Status: Set New': 'Status: Yenisini Yaz'
 'Status: Publish': 'Status: Nümayiş'
-'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Show / hide columns': 'Sütunları göstər / gizlə'
 'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
 'Select action': 'Addımı seç'
@@ -25,21 +25,21 @@ First: İlk
 'Publish Date': 'Nümayiş Tarixi'
 'Order updated.': 'Sifariş yeniləndi.'
 'No sections found': 'Bölmə tapılmadı'
-'No records found.': null
+'No records found.': 'Yazı tapılmadı.'
 'No publications found': 'Nümayiş tapılmadı'
 'No issues found': 'Məsələ tapılmadı'
-'No entries to show': null
+'No entries to show': 'Nümayiş üçün giriş yoxdur'
 'Loading data': 'Məlumatın yüklənməsi'
 'Last Modified': 'Son Quraşdırılan'
 'Filter by...': 'Filtr xüsusiyyəti...'
 Filter: 'Filtrə Et'
-'Duplicate to another section': 'Başqa bölməyə duplikat hazırla'
-'Display _MENU_ records': null
+'Duplicate to another section': 'Başqa bölməyə surətini çıxar'
+'Display _MENU_ records': '_MENYU_ yazılarını göstər'
 Creator: null
 'Create Date': null
 'Articles updated.': null
 'Article(s) unlocked': null
-'Article(s) duplicated': null
+'Article(s) duplicated': 'Məqalə(lər)in surəti çıxarıldı'
 'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
 'Are you sure you want to delete selected articles?': null
 'All Sections': null
@@ -48,4 +48,4 @@ Creator: null
 'Access denied.': 'Giriş qadağandır.'
 '$1 toggled.': '$1 keçirildi.'
 '$1 articles have been removed': null
-' - filtering from _MAX_ records': null
+' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'

@@ -8,20 +8,20 @@
 'Color not saved': 'Գույնը պահպանված չէ'
 'Topic created': null
 'The topic name is already in use by another topic.': null
-'Complex Date': null
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': null
+'Complex Date': 'Բարդ գրառումով ամսաթիվ'
+vertices: Գագաթներ
+'There was a problem trying to execute the XML RPC function.': 'Հայտնաբերվել է տեխնիկական խնդիր XML RPC ֆունկցիան կատարելիս'
+'The Campcaster server configuration is invalid.': 'Campcaster սերվերի կոնֆիգուրացիան թերի է'
 'Pan Map': null
 'Open large map': null
 'No news available.': 'Այս պահին նորություններ առկա չեն'
-'Edit Polygon': null
-'Create Polygon': null
+'Edit Polygon': 'Խմբագրել բազմանկյունը'
+'Create Polygon': 'Ստեղծել բազմանկյուն'
 'Communication error: ': 'Հաղորդակցման սխալ'
 'Cant fetch news from $1': null
 Loading...: 'Բեռնվում է...'
 Version: null
-License: null
+License: Արտոնագիր
 Homepage: 'Գլխավոր էջ'
 'Show original map': 'Ցույց տալ նախնական քարտեզը'
 'The uploaded archive does not contain an valid newscoop plugin.': null
@@ -62,9 +62,9 @@ First: Առաջին
 'URL $1 is invalid or is not an image.': null
 'URL $1 is not an image.': null
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Բաժանորդը ավելացված է'
+    notfound: 'Բաժանորդը գտնված չէ'
+    removed: 'Բաժանորդը հեռացված է'
 publicresources:
     updated: null
 api:
@@ -72,20 +72,20 @@ api:
         title: null
         title_content: null
         tabs:
-            resources: null
-            clients: null
+            resources: 'Հանրային ռեսուրսներ'
+            clients: Բաժանորդներ
         resources:
             info: null
-            add_button: null
+            add_button: 'Ավելացնել բաժանորդ'
         clients:
             table:
-                name: null
+                name: 'Բաժանորդի անունը'
                 id: null
                 secret: Գաղտնի
                 trusted: 'Վստահելի՞ է'
                 redirect: null
                 publication: Հրապարակում
-                actions: null
+                actions: Գործողություններ
                 actions_buttons:
                     remove: Հեռացնել
             actions:

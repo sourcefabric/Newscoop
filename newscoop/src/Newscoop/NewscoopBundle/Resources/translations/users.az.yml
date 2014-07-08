@@ -1,6 +1,6 @@
 'Password confirmation does not match your password.': null
 'Password Confirmation': null
-Website: null
+Website: Vebsayt
 Twitter: null
 'Save profile': null
 'Profile image': null
@@ -22,15 +22,15 @@ Continue: null
 'edit user': null
 'delete user': null
 'Verified profile': null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Send email to user:': null
 'No users found.': null
-'No records found.': null
-'No entries to show': null
-'Display _MENU_ records': null
+'No records found.': 'Yazı tapılmadı.'
+'No entries to show': 'Nümayiş üçün giriş yoxdur'
+'Display _MENU_ records': '_MENYU_ yazılarını göstər'
 'Are you sure you want to {action}?': null
 'Active Logins': null
-' - filtering from _MAX_ records': null
+' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
 'User renamed.': null
 'User attributes': null
 'Rename user $1': null

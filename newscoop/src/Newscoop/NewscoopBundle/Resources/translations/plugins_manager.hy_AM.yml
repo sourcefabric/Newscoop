@@ -4,13 +4,13 @@ newscoop.plugins_manager.public_plugins: null
 newscoop.plugins_manager.private_plugins: null
 newscoop.plugins_manager.install.public: null
 newscoop.plugins_manager.installed_table.name: null
-newscoop.plugins_manager.installed_table.description: null
+newscoop.plugins_manager.installed_table.description: Նկարագիր
 newscoop.plugins_manager.installed_table.enabled: null
 newscoop.plugins_manager.installed_table.version: null
-newscoop.plugins_manager.installed_table.license: null
+newscoop.plugins_manager.installed_table.license: Արտոնագիր
 newscoop.plugins_manager.installed_table.installed_at: null
 newscoop.plugins_manager.installed_table.updated_at: null
-newscoop.plugins_manager.installed_table.actions: null
+newscoop.plugins_manager.installed_table.actions: Գործողություններ
 newscoop.plugins_manager.installed_table.update_plugin: null
 newscoop.plugins_manager.installed_table.remove_plugin: Հեռացնել
 newscoop.plugins_manager.installed_table.install_plugin: null

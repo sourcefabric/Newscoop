@@ -108,7 +108,7 @@ Restore: null
 Mb: null
 'Free disk space': null
 'Download file': null
-Download: null
+Download: Ներբեռնում
 'Delete file': null
 'Backup list is empty.': null
 'Are you sure you want to restore the file $1?': null
@@ -157,6 +157,6 @@ Backup/Restore: null
 'Add new user': null
 'Bad credentials': null
 'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
+'New comments': 'Նոր մեկնաբանություններ'
+'Published articles': 'Հրապարակված հոդվածներ'
+'Last 7 days statistics': 'Վերջին 7 օրվա վիճակագրությունը'

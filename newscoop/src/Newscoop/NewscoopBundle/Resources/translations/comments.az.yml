@@ -1,48 +1,48 @@
-'No attachment': null
-at: null
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
+'No attachment': 'Əlavə edilmiş fayl yoxdur'
+at: burada
+'With no attachment': 'Əlavə faylsız'
+'With image attachment': 'Şəkil əlavəsi ilə'
+'With document attachment': 'Sənəd əlavəsi ilə'
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
-Starred: null
-Star: null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Reply to message': null
-Reply: null
-Processed: null
-'No records found.': null
-'No entries to show': null
-'Messages updated.': null
-'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
-'Message status change to $1.': null
-'Message deleted.': null
-Message: null
+Starred: Ulduzlu
+Star: Ulduz
+'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
+'Reply to message': 'Mesaja cavab yaz'
+Reply: 'Cavab yaz'
+Processed: 'İcra edildi'
+'No records found.': 'Yazı tapılmadı.'
+'No entries to show': 'Nümayiş üçün giriş yoxdur'
+'Messages updated.': 'Mesajlar yeniləndi.'
+'Messages status change to $1.': 'Mesajların statusu $1 olaraq təyin edildi.'
+'Messages deleted.': 'Mesajlar silindi.'
+'Message updated.': 'Mesaj yeniləndi.'
+'Message status change to $1.': 'Mesaj statusu $1 olaraq təyin edildi.'
+'Message deleted.': 'Mesaj silindi.'
+Message: Mesaj
 Last: Son
-'Full article': null
+'Full article': 'Tam məqalə'
 First: İlk
-'Feedback Messages': null
-'Display _MENU_ records': null
-Deleted: null
-'Change selected messages status': null
-Attachment: null
-Approved.: null
-Approve: null
-Anonymous: null
-' - filtering from _MAX_ records': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-User: null
+'Feedback Messages': 'Rəy Mesajları'
+'Display _MENU_ records': '_MENYU_ yazılarını göstər'
+Deleted: Silindi
+'Change selected messages status': 'Seçilmiş mesajların statusunu dəyiş'
+Attachment: 'Əlavə fayl'
+Approved.: Təsdiqləndi.
+Approve: 'Təsdiq et'
+Anonymous: Anonim
+' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
+'You are about to permanently delete multiple messages.': 'Çoxsaylı mesajları həmişəlik silmək ərəfəsindəsən.'
+'You are about to permanently delete a message.': 'Mesajı həmişəlik silmək ərəfəsindəsən.'
+User: İstifadəçi
 None: 'Heç biri'
-'Coming from': null
-'Ban/Unban user': null
-Ip: null
-'Bans can be applied to a users name, email address or IP address.': null
-'You are about to permanently delete multiple comments.': null
-'You are about to permanently delete a comment.': null
-Website: null
-'Value is not $1 characters long': null
+'Coming from': 'Göndərənin ünvanı'
+'Ban/Unban user': 'İstifadəçini Kilidlə/Kilidini Aç'
+Ip: Ip
+'Bans can be applied to a users name, email address or IP address.': 'Kilid istifadəçi adı, email ünvan və IP ünvana tətbiq edilə bilər.'
+'You are about to permanently delete multiple comments.': 'Çoxsaylı şərhləri həmişəlik silmək ərəfəsindəsən.'
+'You are about to permanently delete a comment.': 'Şərhi həmişəlik silmək ərəfəsindəsən.'
+Website: Vebsayt
+'Value is not $1 characters long': 'Dəyər $1 uzunluqda işarədən ibarət deyil'
 Username: 'İstifadəçi adı'
 'User id': 'İstifadəçi Id-si'
 'User ban settings': 'İstifadəçi kilid parametrləri'
@@ -53,20 +53,20 @@ Unrecommend: 'Tövsiyyə Etmə'
 'Sort by Thread order': 'Keçid sıralaması ilə yerləşdir'
 'Show parent comment': 'Mənbə şərhi göstər'
 'Show commenter details': 'Şərh edənin məlumatlarını göstər'
-'Show commenter': null
-'Show comment user details': null
-'Show comment user': null
-'Show comment details': null
-'Select status': null
-'Search Type': null
+'Show commenter': 'Şərh edəni göstər'
+'Show comment user details': 'Şərhin istifadəçisinin məlumatlarını göstər'
+'Show comment user': 'Şərhin istifadəçisini göstər'
+'Show comment details': 'Şərh məlumatlarını göstər'
+'Select status': 'Status seç'
+'Search Type': 'Axtarış Növü'
 'Reply to comment': 'Şərhə cavab yaz'
 Recommended: 'Tövsiyyə Olunur'
 Recommend: 'Tövsiyyə Et'
-'Quick edit': null
-Parent: null
-ID: null
-'Go to edit article': null
-Forum: null
+'Quick edit': 'Tez dəyiş'
+Parent: Mənbə
+ID: ID
+'Go to edit article': 'Məqaləni dəyişməyə keç'
+Forum: Forum
 'For Column': 'Sütun Üçün'
 Email: Email
 'Edit acceptance criteria': 'Qəbul kriteriyasını dəyiş'

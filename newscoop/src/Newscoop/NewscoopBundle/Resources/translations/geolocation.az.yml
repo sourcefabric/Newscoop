@@ -21,22 +21,22 @@ Geo-filtering: Geo-filtrə
 'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'YouTube, Vimeo və ya fləş video üçün video ID, link və ya fayl adını daxil et.'
 'Fill in location label': 'Məkanın pəncərəsini doldur'
 'Fill in local swf flash file name or link, e.g.': 'Yerli swf fləş fayl adını və ya linkini daxil et.'
-'Fill in local flv flash file name or link, e.g.': null
-'Fill in image link, like': null
-'Describe the location...': null
-'Delete location': null
-Coordinates: null
-'Change video display size': null
-'Change image display size': null
-'Change icon of this location': null
-'Center map on location': null
-'Advanced editing': null
-'Add an image to this location': null
-'Add a video to this location': null
-'Are you sure you want to quit without saving your changes?': null
-'Map preview': null
-'Locations updated.': null
-'Setting the map name helps with map search': null
+'Fill in local flv flash file name or link, e.g.': 'Yerli flv fləş fayl adını və ya linkini daxil et.'
+'Fill in image link, like': 'Şəkil linkini belə doldur'
+'Describe the location...': 'Məkanı izah et...'
+'Delete location': 'Məkanı sil'
+Coordinates: Koordinatlar
+'Change video display size': 'Videonun nümayiş ölçüsünü dəyiş'
+'Change image display size': 'Şəklin nümayiş ölçüsünü dəyiş'
+'Change icon of this location': 'Bu məkanın işarəsini dəyiş'
+'Center map on location': 'Xəritəni məkana uyğun olaraq mərkəzləşdir'
+'Advanced editing': 'Hərtərəfli dəyişiklik'
+'Add an image to this location': 'Bu məkana şəkil əlavə et'
+'Add a video to this location': 'Bu məkana video əlavə et'
+'Are you sure you want to quit without saving your changes?': 'Dəyişiklikləri yadda saxlamadan bitirmək istədiyinə əminsən?'
+'Map preview': 'Xəritəyə ön baxış'
+'Locations updated.': 'Məkanlar yeniləndi.'
+'Setting the map name helps with map search': 'Xəritəyə ad təyin etməklə xəritə axtarışı asanlaşır'
 Longitude: null
 Latitude: null
 Center: Mərkəz

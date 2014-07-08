@@ -15,9 +15,9 @@
 'Error Report': 'Xəta Hesabatı:'
 'Backtrace:': 'Xəta yoxlaması:'
 'Error ID:': 'Xəta ID-si:'
-'Error Message:': null
-'Error Number:': null
-'Error String:': null
-'Software:': null
-'We are sorry, but there was a problem sending your bug report.': null
-'Simply copy and paste the error report below and send it to:': null
+'Error Message:': 'Xəta Mesajı:'
+'Error Number:': 'Xəta Nömrəsi:'
+'Error String:': 'Xəta Cərgəsi:'
+'Software:': 'Proqram:'
+'We are sorry, but there was a problem sending your bug report.': 'Üzr istəyirik, amma sənin bloq hesabatının göndərilməsi ilə bağlı problem var idi.'
+'Simply copy and paste the error report below and send it to:': 'Sadəcə xəta hesabatını köçürüb aşağı yapışdır və bura göndər:'

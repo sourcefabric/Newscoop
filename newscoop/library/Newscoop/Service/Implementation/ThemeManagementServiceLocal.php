@@ -9,7 +9,6 @@
 namespace Newscoop\Service\Implementation;
 
 use Newscoop\Entity\ArticleTypeField;
-use Doctrine\ORM\Query;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Output\OutputSettingsTheme;
 use Newscoop\Entity\Output\OutputSettingsIssue;
@@ -21,7 +20,6 @@ use Newscoop\Service\Error\ThemeErrors;
 use Newscoop\Service\IOutputService;
 use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Entity\Resource;
-use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\Model\SearchTheme;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Entity\Output;
@@ -31,7 +29,6 @@ use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\IArticleTypeService;
 use Newscoop\Utils\Validation;
 use Newscoop\Service\Model\Search\Search;
-
 
 /**
  * Provides the management services implementation for the themes.
@@ -104,23 +101,22 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $configs = array();
 
         $length = strlen(self::FOLDER_UNASSIGNED);
-        foreach ($allConfigs as $id => $config){
-            if(strncmp($config, self::FOLDER_UNASSIGNED, $length) == 0){
+        foreach ($allConfigs as $id => $config) {
+            if (strncmp($config, self::FOLDER_UNASSIGNED, $length) == 0) {
                 $configs[$id] = $config;
             }
         }
 
         $themes = $this->loadThemes($configs);
-        if($search !== NULL){
+        if ($search !== NULL) {
             $themes = $this->filterThemes($search, $themes);
         }
 
         return $themes;
     }
 
-    function getUnassignedThemes(SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    public function getUnassignedThemes(SearchTheme $search = NULL, $offset = 0, $limit = -1)
     {
-
         return $this->trim($this->getUnassignedThemesData($search), $offset, $limit);
     }
 
@@ -128,12 +124,12 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Provides the count of the entities that can be associated with the provided search.
      *
      * @param Newscoop\Service\Model\Search\Search $search
-     *		The search criteria, not null.
+     *                                                     The search criteria, not null.
      *
      * @return int
-     *		The entities count.
+     *             The entities count.
      */
-    function getCountUnassignedThemes(Search $search = NULL)
+    public function getCountUnassignedThemes(Search $search = NULL)
     {
         return count($this->getUnassignedThemesData($search));
     }
@@ -141,10 +137,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     private function getThemesData($publication, SearchTheme $search = NULL)
     {
         Validation::notEmpty($publication, 'publication');
-        if($publication instanceof Publication){
+        if ($publication instanceof Publication) {
             Validation::notEmpty($publication->getId(), 'publication.id');
             $publicationId = $publication->getId();
-        } else  {
+        } else {
             $publicationId = $publication;
         }
 
@@ -153,34 +149,35 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         $pubFolder = self::FOLDER_PUBLICATION_PREFIX.$publicationId;
         $length = strlen($pubFolder);
-        foreach ($allConfigs as $id => $config){
-            if(strncmp($config, $pubFolder, $length) == 0){
+        foreach ($allConfigs as $id => $config) {
+            if (strncmp($config, $pubFolder, $length) == 0) {
                 $configs[$id] = $config;
             }
         }
 
         $themes = $this->loadThemes($configs);
-        if($search !== NULL){
+        if ($search !== NULL) {
             $themes = $this->filterThemes($search, $themes);
         }
+
         return $themes;
     }
 
-    function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    public function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
     {
         return $this->trim($this->getThemesData($publication,$search), $offset, $limit);
     }
 
-    function getCountThemes($publication, SearchTheme $search = NULL)
+    public function getCountThemes($publication, SearchTheme $search = NULL)
     {
         return count($this->getThemesData($publication, $search));
     }
 
-    function getTemplates($theme)
+    public function getTemplates($theme)
     {
         Validation::notEmpty($theme, 'theme');
 
-        if($theme instanceof Theme){
+        if ($theme instanceof Theme) {
             $themePath = $theme->getPath();
         } else {
             $themePath = $theme;
@@ -189,10 +186,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $resources = array();
         $folder = $this->toFullPath($themePath);
         if (is_dir($folder)) {
-            if($dh = opendir($folder)){
+            if ($dh = opendir($folder)) {
                 while (($file = readdir($dh)) !== false) {
-                    if ($file != "." && $file != ".."){
-                        if(pathinfo($file, PATHINFO_EXTENSION) === self::FILE_TEMPLATE_EXTENSION){
+                    if ($file != "." && $file != "..") {
+                        if (pathinfo($file, PATHINFO_EXTENSION) === self::FILE_TEMPLATE_EXTENSION) {
                             $rsc = new Resource();
                             $rsc->setName($file);
                             $rsc->setPath($themePath.$file);
@@ -207,25 +204,25 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         return $resources;
     }
 
-    function findOutputSetting(Theme $theme, Output $output)
+    public function findOutputSetting(Theme $theme, Output $output)
     {
         Validation::notEmpty($theme, 'theme');
         Validation::notEmpty($output, 'output');
 
         $xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
-        if($xml != NULL){
+        if ($xml != NULL) {
             $nodes = $this->getNodes($xml, self::TAG_OUTPUT);
             foreach ($nodes as $node) {
                 /* @var $node \SimpleXMLElement */
                 try {
                     $outputName = $this->readAttribute($node, self::ATTR_OUTPUT_NAME);
-                    if($output->getName() == $outputName){
+                    if ($output->getName() == $outputName) {
                         $oset = $this->loadOutputSetting($node, $theme->getPath());
                         $oset->setOutput($output);
 
                         return $oset;
                     }
-                }catch(FailedException $e){
+                } catch (FailedException $e) {
                     // Nothing to do.
                 }
             }
@@ -234,60 +231,56 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         return NULL;
     }
 
-    function getOutputSettings(Theme $theme)
+    public function getOutputSettings(Theme $theme)
     {
         Validation::notEmpty($theme, 'theme');
 
         return $this->loadOutputSettings($theme->getPath());
     }
 
-
     /**
      * @author mihaibalaceanu
-     * @param \Newscoop\Entity\Theme $theme
+     * @param  \Newscoop\Entity\Theme $theme
      * @return object
      */
-    function getArticleTypes(Theme $theme)
+    public function getArticleTypes(Theme $theme)
     {
         Validation::notEmpty($theme, 'theme');
         $xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
         $ret = new \stdClass;
         // getting the article types
-        foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType )
-        {
+        foreach ( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType ) {
 
             $artTypeName = (string) $this->readAttribute($artType, self::ATTR_ARTICLE_TYPE_NAME);
             // set article type name on return array
             $ret->$artTypeName = new \stdClass;
             // getting the article type fields
-            foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField )
-            {
-                try
-                {
+            foreach ( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField ) {
+                try {
                     $ret->{$artTypeName}->{(string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_NAME]} = (object) array
                     (
                     self::ATTR_ARTICLE_TYPE_FILED_TYPE   => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_TYPE],
                     self::ATTR_ARTICLE_TYPE_FILED_LENGTH => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_LENGTH],
                     );
-                }
-                catch (\Exception $e){}
+                } catch (\Exception $e) {}
             }
         }
+
         return $ret;
     }
 
     /* --------------------------------------------------------------- */
 
-    function exportTheme($theme, $p_errorMsg = '')
+    public function exportTheme($theme, $p_errorMsg = '')
     {
         $error_prefix = (empty($p_errorMsg)) ? '' : $p_errorMsg . "\n";
 
         Validation::notEmpty($theme, 'theme');
-        if(!($theme instanceof Theme)){
+        if (!($theme instanceof Theme)) {
             $theme = $this->findById($theme);
         }
 
-        if( !file_exists( $xpth = $this->toFullPath(self::FOLDER_EXPORTS ) ) ) {
+        if ( !file_exists( $xpth = $this->toFullPath(self::FOLDER_EXPORTS ) ) ) {
             mkdir( $xpth );
         }
 
@@ -311,9 +304,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $addedDirs = array();
         foreach ($iterator as $key=>$value) {
             $fname = substr($key, $themePathLength);
-            if(strlen($fname) > 0 && !in_array(basename($fname), array('.', '..')) ) {
-                if( !in_array(dirname($fname),$addedDirs) ) {
-                    if(!$zip->addEmptyDir(dirname($fname))) {
+            if (strlen($fname) > 0 && !in_array(basename($fname), array('.', '..')) ) {
+                if ( !in_array(dirname($fname),$addedDirs) ) {
+                    if (!$zip->addEmptyDir(dirname($fname))) {
                         return false;
                     }
                     $addedDirs[]=dirname($fname);
@@ -329,7 +322,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         return $zipFilePath;
     }
 
-    function installTheme($filePath){
+    public function installTheme($filePath)
+    {
         Validation::notEmpty($filePath, 'filePath');
 
         $zip = new \ZipArchive;
@@ -340,19 +334,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $themePath = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED.'/');
             $zip->extractTo(realpath($this->toFullPath($themePath)));
             $zip->close();
+
             return true;
         } else {
             return false;
         }
     }
 
-    function updateTheme(Theme $theme)
+    public function updateTheme(Theme $theme)
     {
         Validation::notEmpty($theme, 'theme');
         $allConfigs = $this->findAllThemesConfigPaths();
 
         $config = $allConfigs[$theme->getId()];
-        if(!isset($config)){
+        if (!isset($config)) {
             throw new \Exception("Unknown theme id '.$theme->getId().' to update.");
         }
         // We have to check if there is no other theme by the new theme name.
@@ -361,9 +356,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         unset($inFolder[$theme->getId()]);
 
         $themes = $this->loadThemes($inFolder);
-        foreach($themes as $th){
+        foreach ($themes as $th) {
             /* @var $th Theme */
-            if(trim($th->getName()) === trim($theme->getName())){
+            if (trim($th->getName()) === trim($theme->getName())) {
                 throw new DuplicateNameException();
             }
         }
@@ -378,25 +373,26 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $xml->asXML($this->toFullPath($theme, $this->themeConfigFileName));
     }
 
-    function removeTheme($theme)
+    public function removeTheme($theme)
     {
         Validation::notEmpty($theme, 'theme');
-        if(!($theme instanceof Theme)){
+        if (!($theme instanceof Theme)) {
             $theme = $this->findById($theme);
         }
         $themePath = $theme->getPath();
         $themes = array();
-        if(!$this->getOutputSettingIssueService()->isThemeUsed($themePath, $themes)){
+        if (!$this->getOutputSettingIssueService()->isThemeUsed($themePath, $themes)) {
             $this->rrmdir($this->toFullPath($themePath));
             $this->getSyncResourceService()->clearAllFor($themePath);
             // Reset the theme configs cache so also the new theme will be avaialable
             $this->cacheThemeConfigs = NULL;
+
             return true;
         }
         throw new RemoveThemeException(implode(', ', $themes));
     }
 
-    function copyToUnassigned(Theme $theme)
+    public function copyToUnassigned(Theme $theme)
     {
         Validation::notEmpty($theme, 'theme');
 
@@ -409,7 +405,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $newThemeFolder = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED."/");
         try {
             $this->copy($this->toFullPath($theme), $this->themesFolder.$newThemeFolder);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             rmdir($newThemeFolder);
             throw $e;
         }
@@ -418,16 +414,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         return $this->loadThemeByPath($newThemeFolder);
     }
 
-    function assignTheme(Theme $theme, Publication $publication)
+    public function assignTheme(Theme $theme, Publication $publication, $cli = false)
     {
         Validation::notEmpty($theme, 'theme');
         Validation::notEmpty($publication, 'publication');
 
         // We have to check if there is no other theme by the new theme name.
-        foreach($this->getThemes($publication) as $th){
+        foreach ($this->getThemes($publication) as $th) {
             /* @var $th Theme */
-            if (trim($th->getName()) === trim($theme->getName())){
+            if (trim($th->getName()) === trim($theme->getName())) {
                 if ($this->getThemePublication($th) != NULL) {
+                    if ($cli) {
+                        return false;
+                    }
+
                     throw new DuplicateNameException();
                 } else {
                     $thPath = $th->getPath();
@@ -438,8 +438,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         $themeFolder = $this->getNewThemeFolder(self::FOLDER_PUBLICATION_PREFIX.$publication->getId().'/');
         $themeFullFolder = $this->toFullPath($themeFolder);
-        try
-        {
+        try {
             $this->copy($this->toFullPath($theme), $themeFullFolder);
 
             // Reset the theme configs cache so also the new theme will be avaialable
@@ -453,7 +452,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
             // Persist the coresponding ouput settings theme to the database
             $outSets = $this->loadOutputSettings($themeFolder);
-            foreach($outSets as $outSet){
+            foreach ($outSets as $outSet) {
                 /* @var $outSet OutputSettings */
                 $qb = $em->createQueryBuilder();
                 $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
@@ -465,7 +464,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 $qb->setParameter('output', $outSet->getOutput());
                 $result = $qb->getQuery()->getResult();
 
-                if(count($result) > 0){
+                if (count($result) > 0) {
                     $outTh = $result[0];
                 } else {
                     $outTh = new OutputSettingsTheme();
@@ -487,23 +486,22 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 $em->persist($outTh);
             }
             $em->flush();
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             $this->rrmdir($themeFullFolder);
             throw $e;
         }
+
         return $this->loadThemeByPath($themeFolder);
     }
 
-    function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)
+    public function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)
     {
         Validation::notEmpty($outputSettings, 'outputSettings');
         Validation::notEmpty($theme, 'theme');
 
         // We update the XML config file with the new output setting.
         $xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
-        if($xml == NULL){
+        if ($xml == NULL) {
             throw new \Exception("Unknown theme path '.$theme->gePath().' to assign to.");
         }
         $outNode = NULL;
@@ -518,10 +516,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             /* @var $node \SimpleXMLElement */
             // We remove all the childens node that contain the template pages.
             $toRemove = array();
-            foreach ($node->children() as $kid){
+            foreach ($node->children() as $kid) {
                 $toRemove[] = $kid->getName();
             }
-            foreach ($toRemove as $name){
+            foreach ($toRemove as $name) {
                 unset($node->$name);
             }
         }
@@ -548,11 +546,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $q->setParameter(1, $theme->getPath());
         $result = $q->getQuery()->getResult();
         // If there are results than it means that the theme belongs to a publication
-        if(count($result) > 0){
+        if (count($result) > 0) {
             $updated = FALSE;
-            foreach ($result as $outTh){
+            foreach ($result as $outTh) {
                 /* @var $outTh Newscoop\Entity\Output\OutputSettingsTheme */
-                if($outTh->getOutput() == $outputSettings->getOutput()){
+                if ($outTh->getOutput() == $outputSettings->getOutput()) {
                     $this->syncOutputSettings($outTh, $outputSettings);
                     $em->persist($outTh);
                     $em->flush();
@@ -560,7 +558,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     break;
                 }
             }
-            if(!$updated){
+            if (!$updated) {
                 $pathRsc = new Resource();
                 $pathRsc->setName(self::THEME_PATH_RSC_NAME);
                 $pathRsc->setPath($themeFolder);
@@ -593,7 +591,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      *
      * @return string the generated xml
      */
-    function assignArticleTypes($articleTypes, Theme $theme)
+    public function assignArticleTypes($articleTypes, Theme $theme)
     {
         Validation::notEmpty($articleTypes, 'articleTypes');
         Validation::notEmpty($theme, 'theme');
@@ -606,28 +604,26 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
          * @param string $fieldName field name doh
          * @return ArticleTypeField|null
          */
-        $getFieldByName = function( $parentType, $fieldName ) use( $artServ, &$artCache )
-        {
-            if( !isset( $artCache[ $parentType.$fieldName ] ) )
-            {
+        $getFieldByName = function ($parentType, $fieldName) use ($artServ, &$artCache) {
+            if ( !isset( $artCache[ $parentType.$fieldName ] ) ) {
                 $artType = $artServ->findTypeByName( $parentType );
-                if( $artType ) {
+                if ($artType) {
                     $artCache[ $parentType.$fieldName ] = $artServ->findFieldByName( $artType, $fieldName );
                 }
             }
+
             return $artCache[ $parentType.$fieldName ];
         };
 
         $xml = $this->loadXML( ( $xmlFileName = $this->toFullPath($theme, $this->themeConfigFileName ) ) );
-        if( $xml == NULL ) {
+        if ($xml == NULL) {
             throw new \Exception( "Unknown theme path '.$theme->gePath().' to assign to." );
         }
 
         $updatedTypes = array(); // used to check duplicate names for types
         $safeTypeCounter = null;
         // parse the mapping array
-        foreach( $articleTypes as $typeName => $type )
-        {
+        foreach ($articleTypes as $typeName => $type) {
             $articleXPath = '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$typeName.'\')]';
 
             $fieldNodes = $xml->xpath("$articleXPath/*");
@@ -636,10 +632,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
             $safeFieldCounter = null;
 
-            if( count($fieldNodes) )
-            {
-                foreach( $fieldNodes as $fieldNode )
-                {
+            if ( count($fieldNodes) ) {
+                foreach ($fieldNodes as $fieldNode) {
                     if(
                         ( !isset( $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] )
                             || !( $updateField = $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] ) )
@@ -649,36 +643,34 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
                     $updateFieldName = $updateField['name'];
                     // checking for duplicates
-                    if( isset( $updatedFields[ $updateFieldName ] ) ) {
+                    if ( isset( $updatedFields[ $updateFieldName ] ) ) {
                         $updateFieldName = $updateField['name'].(++$safeFieldCounter);
                     }
                     $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] = $updateFieldName;
                     $updatedFields[$updateFieldName] = true;
 
-
                     $theField = $getFieldByName( $updateField['parentType'], $updateField['name'] );
                     /* @var $theField ArticleTypeField */
-                    if( $theField )
-                    {
+                    if ($theField) {
                         $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_LENGTH] = $theField->getLength();
                         $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getType();
                     }
                 } // end foreach fieldNodes
             }
 
-            if( $type['ignore'] ) {
+            if ($type['ignore']) {
                 continue;
             }
             // set new article type node
             $typeNode = $xml->xpath( $articleXPath );
-            if( !( $typeNode = current( $typeNode ) ) ) {
+            if ( !( $typeNode = current( $typeNode ) ) ) {
                 continue;
             }
             /* @var $typeNode SimpleXMLElement */
 
             $updateTypeName = $type['name'];
             // checking for duplicates
-            if( isset( $updatedTypes[ $updateTypeName ] ) ) {
+            if ( isset( $updatedTypes[ $updateTypeName ] ) ) {
                 $updateTypeName = $type['name'].(++$safeTypeCounter);
             }
             $typeNode[self::ATTR_ARTICLE_TYPE_NAME] = $updateTypeName;
@@ -695,13 +687,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Provides the dictrine entity manager.
      *
      * @return Doctrine\ORM\EntityManager
-     * 		The doctrine entity manager.
+     *                                    The doctrine entity manager.
      */
     protected function getManager()
     {
-        if($this->em === NULL){
+        if ($this->em === NULL) {
             $this->em = \Zend_Registry::get('container')->getService('em');
         }
+
         return $this->em;
     }
 
@@ -709,13 +702,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Provides the ouput service.
      *
      * @return Newscoop\Service\IOutputService
-     *		The service service to be used.
+     *                                         The service service to be used.
      */
     protected function getOutputService()
     {
         if ($this->outputService === NULL) {
             $this->outputService = $this->getResourceId()->getService(IOutputService::NAME);
         }
+
         return $this->outputService;
     }
 
@@ -723,13 +717,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Provides the Output setting issue service.
      *
      * @return Newscoop\Service\IOutputSettingIssueService
-     * 		The output setting issue service to be used by this controller.
+     *                                                     The output setting issue service to be used by this controller.
      */
     protected function getOutputSettingIssueService()
     {
         if ($this->outputSettingIssueService === NULL) {
             $this->outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
         }
+
         return $this->outputSettingIssueService;
     }
 
@@ -737,13 +732,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Provides the sync resource service.
      *
      * @return Newscoop\Service\ISyncResourceService
-     *		The sync resource service to be used.
+     *                                               The sync resource service to be used.
      */
     protected function getSyncResourceService()
     {
         if ($this->syncResourceService === NULL) {
             $this->syncResourceService = $this->getResourceId()->getService(ISyncResourceService::NAME);
         }
+
         return $this->syncResourceService;
     }
 
@@ -755,9 +751,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      */
     public function getArticleTypeService()
     {
-        if( $this->articleTypeService === NULL ) {
+        if ($this->articleTypeService === NULL) {
             $this->articleTypeService = $this->getResourceId()->getService(IArticleTypeService::NAME);
         }
+
         return $this->articleTypeService;
     }
 
@@ -767,27 +764,27 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Load all the output settings from the specified path.
      *
      * @param \SimpleXMLElement $node
-     * 		The node from which to load, *(not null not empty).
+     *                                The node from which to load, *(not null not empty).
      *
-     * @param string $themePath
-     * 		The theme path from where to load the output settings, *(not null not empty).
+     * @param  string $themePath
+     *                           The theme path from where to load the output settings, *(not null not empty).
      * @return array
-     * 		The array containing all the found output settings, not null.
+     *                          The array containing all the found output settings, not null.
      */
     protected function loadOutputSettings($themePath)
     {
         $outputs = array();
         $xml = $this->loadXML($this->toFullPath($themePath, $this->themeConfigFileName));
-        if($xml != NULL){
+        if ($xml != NULL) {
             $nodes = $this->getNodes($xml, self::TAG_OUTPUT);
-            foreach ($nodes as $node){
+            foreach ($nodes as $node) {
                 /* @var $node \SimpleXMLElement */
-                try{
+                try {
                     // First we have to search if there is an ouput
                     // registered with the name specifed in the XML.
                     $outputName = $this->readAttribute($node, self::ATTR_OUTPUT_NAME);
                     $output = $this->getOutputService()->findByName($outputName);
-                    if($output != NULL){
+                    if ($output != NULL) {
                         $oset = $this->loadOutputSetting($node, $themePath);
                         $oset->setOutput($output);
 
@@ -795,13 +792,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     } else {
                         $this->getErrorHandler()->warning(ThemeErrors::OUTPUT_MISSING, $outputName);
                     }
-                }catch(XMLMissingAttribueException $e){
+                } catch (XMLMissingAttribueException $e) {
                     $this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, self::ATTR_OUTPUT_NAME, self::TAG_OUTPUT);
-                }catch(FailedException $e){
+                } catch (FailedException $e) {
                     // Nothing to do.
                 }
             }
         }
+
         return $outputs;
     }
 
@@ -809,15 +807,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Load the output setting from the provided xml node.
      *
      * @param \SimpleXMLElement $nodeOutput
-     * 		The node from which to load, *(not null not empty).
+     *                                      The node from which to load, *(not null not empty).
      *
-     * @param string $themePath
-     * 		The theme path to construct the resource path based on, *(not null not empty).
+     * @param  string                          $themePath
+     *                                                    The theme path to construct the resource path based on, *(not null not empty).
      * @throws FailedException
-     * 		Thrown if the output setting has failed to be obtained, this exception will not contain any message, the resons of failure
-     * 		will be looged in the error handler.
+     *                                                   Thrown if the output setting has failed to be obtained, this exception will not contain any message, the resons of failure
+     *                                                   will be looged in the error handler.
      * @return \Newscoop\Entity\OutputSettings
-     * 		The loaded output setting, not null.
+     *                                                   The loaded output setting, not null.
      */
     protected function loadOutputSetting(\SimpleXMLElement $nodeOutput, $themePath)
     {
@@ -834,39 +832,40 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /**
      * Reads the resources from an output tag.
      *
-     * @param \SimpleXMLElement $parent
-     * 		The parent output node to read the resources from, *(not null not empty).
-     * @param string $tagName
-     * 		The tag name containing the resource, *(not null not empty).
-     * @param string $themePath
-     * 		The theme path to construct the resource path based on, *(not null not empty).
-     * @param string $name
-     * 		The name of the created resource based on the found tag, *(not null not empty).
+     * @param  \SimpleXMLElement         $parent
+     *                                              The parent output node to read the resources from, *(not null not empty).
+     * @param  string                    $tagName
+     *                                              The tag name containing the resource, *(not null not empty).
+     * @param  string                    $themePath
+     *                                              The theme path to construct the resource path based on, *(not null not empty).
+     * @param  string                    $name
+     *                                              The name of the created resource based on the found tag, *(not null not empty).
      * @throws FailedException
-     * 		Thrown if the resource has failed to be obtained, this exception will not contain any message, the resons of failure
-     * 		will be looged in the error handler.
+     *                                             Thrown if the resource has failed to be obtained, this exception will not contain any message, the resons of failure
+     *                                             will be looged in the error handler.
      * @return \Newscoop\Entity\Resource
-     * 		The obtained resource, not null.
+     *                                             The obtained resource, not null.
      */
     protected function loadOutputResource(\SimpleXMLElement $parent, $tagName, $themePath)
     {
         $nodes = $this->getNodes($parent, $tagName);
-        if(count($nodes) == 0){
+        if (count($nodes) == 0) {
             $this->getErrorHandler()->error(ThemeErrors::XML_MISSING_TAG, $tagName, $parent->getName());
             throw new FailedException();
         }
-        if(count($nodes) > 1){
+        if (count($nodes) > 1) {
             $this->getErrorHandler()->error(ThemeErrors::XML_TO_MANY_TAGS, $tagName, $parent->getName(), 1);
             throw new FailedException();
         }
         $node = $nodes[0];
         /* @var $node \SimpleXMLElement */
-        try{
+        try {
             $rsc = new Resource();
             $rsc->setName($tagName);
             $rsc->setPath($this->escapePath($themePath.$this->readAttribute($node, self::ATTR_PAGE_SRC)));
+
             return $rsc;
-        }catch(XMLMissingAttribueException $e){
+        } catch (XMLMissingAttribueException $e) {
             $this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, $e->getAttributeName(), $tagName);
             throw new FailedException();
         }
@@ -877,23 +876,24 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * This method also checks if the resource path is compatible with the theme path
      * meaning that the resource needs to be placed in the theme.
      *
-     * @param Resource $rsc
-     * 		The resource to extract the relative path from, not null.
-     * @param string $themePath
-     * 		The theme path, not null.
+     * @param  Resource  $rsc
+     *                              The resource to extract the relative path from, not null.
+     * @param  string    $themePath
+     *                              The theme path, not null.
      * @throws Exception
-     * 		In case the resource does not belong to the theme.
+     *                             In case the resource does not belong to the theme.
      * @return string
-     * 		The relative [path in regards with the theme path for the resource.
+     *                             The relative [path in regards with the theme path for the resource.
      */
     protected function getRelativePath(Resource $rsc, $themePath)
     {
         $path = $rsc->getPath();
         $lenght = strlen($themePath);
-        if(strncmp($path, $themePath, $lenght) != 0){
+        if (strncmp($path, $themePath, $lenght) != 0) {
             throw new \Exception("The resource path '.$path.' is not for the provided theme path '.$themePath.'.");
         }
         $path = substr($path, $lenght);
+
         return $path;
     }
 
@@ -904,14 +904,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * For instance if the config is in a publication folder than this method will return all the configs for that
      * publicatio.
      *
-     * @param string $config
-     * 		The config path to be searched for, not null.
+     * @param  string $config
+     *                        The config path to be searched for, not null.
      * @param array @configs
-     * 		The array containing as key the id of the theme config (index) and as a value the relative
-     * 		path of the theme configuration XML file for all configurations to be filtered, not null.
+     *                        The array containing as key the id of the theme config (index) and as a value the relative
+     *                        path of the theme configuration XML file for all configurations to be filtered, not null.
      * @return array
-     * 		The array containing as key the id of the theme config (index) and as a value the relative
-     * 		path of the theme configuration XML file for all configurations that are iun the same folder, not null can be empty.
+     *                       The array containing as key the id of the theme config (index) and as a value the relative
+     *                       path of the theme configuration XML file for all configurations that are iun the same folder, not null can be empty.
      */
     protected function filterThemesConfigPathsInSameFolder($config, array $allConfigs)
     {
@@ -922,8 +922,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         $inFolder = array();
         $length = strlen($rPath);
-        foreach ($allConfigs as $id => $cnf){
-            if(strncmp($cnf, $rPath, $length) == 0){
+        foreach ($allConfigs as $id => $cnf) {
+            if (strncmp($cnf, $rPath, $length) == 0) {
                 $inFolder[$id] = $cnf;
             }
         }
@@ -936,9 +936,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     /**
      * Copies from the from output settings to the to output settings all the pages (front, article ...).
      * @param Newscoop\Entity\OutputSettings $to
-     * 		The output setting to copy to, *(not null not empty).
+     *                                             The output setting to copy to, *(not null not empty).
      * @param Newscoop\Entity\OutputSettings $from
-     * 		The output setting to copy from, *(not null not empty).
+     *                                             The output setting to copy from, *(not null not empty).
      */
     protected function syncOutputSettings(OutputSettings $to, OutputSettings $from)
     {
@@ -953,11 +953,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /**
      * Provides a new folder (Automatically created) to place a new theme.
-     * @param str $inFolder
-     * 		The folder wehere to place the new theme folder, this has to be relative to the
-     * 		themes folder.
+     * @param  str $inFolder
+     *                       The folder wehere to place the new theme folder, this has to be relative to the
+     *                       themes folder.
      * @return str
-     * 		The relative theme path.
+     *                      The relative theme path.
      */
     protected function getNewThemeFolder($inFolder)
     {
@@ -967,11 +967,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if (is_dir($fullfodler)) {
             if ($dh = opendir($fullfodler)) {
                 while (($dir = readdir($dh)) !== false) {
-                    if ($dir != "." && $dir != ".." && is_dir($fullfodler.$dir)){
-                        if(strncmp($dir, self::FOLDER_THEME_PREFIX, $length) == 0){
+                    if ($dir != "." && $dir != ".." && is_dir($fullfodler.$dir)) {
+                        if (strncmp($dir, self::FOLDER_THEME_PREFIX, $length) == 0) {
                             $themeNr = substr($dir, $length);
-                            if(is_numeric($themeNr)){
-                                $number_test = ((int)$themeNr) + 1;
+                            if (is_numeric($themeNr)) {
+                                $number_test = ((int) $themeNr) + 1;
                                 if ($number < $number_test) {
                                     $number = $number_test;
                                 }
@@ -988,6 +988,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $themeFolder = $inFolder.self::FOLDER_THEME_PREFIX.$number.'/';
         $themeFullFolder = $this->toFullPath($themeFolder);
         @mkdir($themeFullFolder);
+
         return $themeFolder;
     }
 
@@ -995,22 +996,21 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Copies recursivelly the folder content from src to destination.
      *
      * @param string $src
-     * 		The source folder, *(not null not empty).
+     *                    The source folder, *(not null not empty).
      * @param string $dst
-     * 		the destination folder, *(not null not empty).
+     *                    the destination folder, *(not null not empty).
      */
     protected function copy($src, $dst)
     {
         $dir = opendir($src);
-        if(!file_exists($dst)) {
+        if (!file_exists($dst)) {
             mkdir($dst);
         }
-        while(false !== ( $file = readdir($dir)) ) {
+        while (false !== ( $file = readdir($dir)) ) {
             if (( $file != '.' ) && ( $file != '..' )) {
                 if ( is_dir($src . '/' . $file) ) {
                     $this->copy( rtrim($src, DIR_SEP).DIR_SEP.$file, rtrim($dst, DIR_SEP).DIR_SEP.$file);
-                }
-                else {
+                } else {
                     $cpres = copy( rtrim($src, DIR_SEP).DIR_SEP.$file, rtrim($dst, DIR_SEP).DIR_SEP.$file );
                 }
             }
@@ -1022,7 +1022,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
      * Deletes recursivelly the folder content from dir.
      *
      * @param string $dir
-     * 		The floder to be deleted, *(not null not empty).
+     *                    The floder to be deleted, *(not null not empty).
      */
     protected function rrmdir($dir)
     {
@@ -1030,9 +1030,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $objects = scandir($dir);
             foreach ($objects as $object) {
                 if ($object != "." && $object != "..") {
-                    if (filetype($dir."/".$object) == "dir"){
+                    if (filetype($dir."/".$object) == "dir") {
                         $this->rrmdir($dir."/".$object);
-                    }  else {
+                    } else {
                         unlink($dir."/".$object);
                     }
                 }
@@ -1044,11 +1044,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /**
      * Get the publication of a theme, and optionally output
-     * @param Theme $theme
-   	 * @param Output $output
-   	 * @return Publication
+     * @param  Theme       $theme
+     * @param  Output      $output
+     * @return Publication
      */
-    function getThemePublication($theme, $output=null)
+    public function getThemePublication($theme, $output=null)
     {
         $pathRsc = $this->getSyncResourceService()->getThemePath($theme->getPath());
         $em = $this->getManager();
@@ -1056,8 +1056,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
         $qb->where('th.themePath = :themePath');
         $qb->setParameter('themePath', $pathRsc);
-        if (!is_null($output))
-        {
+        if (!is_null($output)) {
             $qb->andWhere('th.output = :output');
             $qb->setParameter('output', $output);
         }
@@ -1065,6 +1064,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if ($result) {
             return $result->getPublication();
         }
+
         return null;
     }
 }
