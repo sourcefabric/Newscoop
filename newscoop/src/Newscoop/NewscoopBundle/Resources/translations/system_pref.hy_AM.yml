@@ -101,8 +101,8 @@ newscoop:
             recaptchaprivatekey: null
             recaptchasecure: null
             disabled: null
-            yesoption: null
-            nooption: null
+            yesoption: Այո
+            nooption: Ոչ
             geosearch: null
             usergarbage: null
             usergarbagedaysinfo: null

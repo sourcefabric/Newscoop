@@ -83,7 +83,7 @@ Date/Time: null
 'Remove from front page': null
 'Show on section page': null
 'Remove from section page': null
-Actions: null
+Actions: Գործունեություններ
 Publishing: null
 Show: null
 Remove: Հեռացնել
@@ -127,10 +127,10 @@ Unlock: null
 Uploaded: null
 YYYY-MM-DD: null
 Submit: null
-Image: null
-Description: null
-Photographer: null
-Place: null
+Image: Պատկեր
+Description: Նկարագիր
+Photographer: Լուսանկարիչ
+Place: Վայր
 Date: Ամսաթիվ
 Thumbnail: null
 'In use': null
@@ -156,7 +156,7 @@ Localizer: null
 'Add new language': null
 'View logs': null
 'Change your password': null
-'Your Articles': null
+'Your Articles': 'Ձեր հոդվածները'
 'Submitted Articles': null
 Logs: null
 'There are $1 article(s) left.': null
@@ -171,9 +171,9 @@ Logs: null
 'Delete subscription': null
 'You do not have the right to delete subscriptions.': null
 'No such subscription.': null
-Yes: null
-No: null
-Close: null
+Yes: Այո
+No: Ոչ
+Close: Փակել
 'No issues.': null
 'Back to Edit Article': null
 'No topics': null
@@ -225,15 +225,15 @@ Move: null
 'From:': null
 'Date:': null
 Hidden: null
-Comments: null
+Comments: Մեկնաբանություններ
 Comment: null
 Approved: null
 Subject: null
 'IP address:': null
 'Email:': null
-Author: null
-'Article name': null
-'Hide article': null
+Author: Հեղինակ
+'Article name': 'Հոդվածի անունը'
+'Hide article': 'Թաքցնել հոդվածը'
 'Show article': null
 'Article Type Fields': null
 'Article Images': null
@@ -242,14 +242,14 @@ Author: null
 'Article Comments': null
 'Are you sure you want to deactivate the subscription?': null
 'Are you sure you want to activate the subscription?': null
-Other: null
+Other: Այլ
 'Time:': null
-'No events.': null
+'No events.': 'Միջոցառումներ չկան'
 'Default templates': null
 'System Preferences': null
 'The date must be in the future.': null
-Send: null
-'Thank you.': null
+Send: Ուղարկել
+'Thank you.': Շնորհակալություն
 'Please take a minute to send us an email.': null
 (optional): null
 'The URL you entered is invalid: $1': null

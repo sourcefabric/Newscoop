@@ -14,8 +14,8 @@
 'Edit language: $1': null
 'Edit day names': null
 'Code Page': null
-'Add new Language': null
-'Add Language': null
+'Add new Language': 'Ավելացնել նոր լեզու'
+'Add Language': 'Ավելացնել լեզու'
 We: null
 Tu: null
 Th: null
@@ -48,25 +48,25 @@ Apr: null
 'You do not have the right to edit languages.': null
 'Please enter the translation for month names.': null
 'Please enter the translation for week day names.': null
-January: null
-February: null
-March: null
-April: null
-May: null
-June: null
-July: null
-August: null
-September: null
-October: null
-November: null
-December: null
-Monday: null
-Tuesday: null
-Wednesday: null
-Thursday: null
-Friday: null
-Saturday: null
-Sunday: null
+January: հունվար
+February: փետրվար
+March: մարտ
+April: ապրիլ
+May: մայիս
+June: հունիս
+July: հուլիս
+August: օգոստոս
+September: սեպտեմբեր
+October: հոկտեմբեր
+November: նոյեմբեր
+December: դեկտեմբեր
+Monday: երկուշաբթի
+Tuesday: երեքշաբթի
+Wednesday: չորեքշաբթի
+Thursday: հինգշաբթի
+Friday: ուրբաթ
+Saturday: շաբաթ
+Sunday: կիրակի
 'You do not have the right to add new languages.': null
 'There are $1 issue(s) left.': null
 'Native name': null
