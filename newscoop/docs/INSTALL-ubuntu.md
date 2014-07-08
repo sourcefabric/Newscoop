@@ -29,27 +29,63 @@ If you can see this page then everything works as expected.
 
 ...
 
+	sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+
+
+You will be asked to enter MySQL "root" password:
+
+<img src="https://dl.dropboxusercontent.com/u/35759363/Newscoop%20images/Zrzut%20ekranu%202014-07-08%2010.18.04.png" width="571" height="444">
+
+Type strong one and hit `ENTER` button. It will ask you to confirm it:
+
+<img src="https://dl.dropboxusercontent.com/u/35759363/Newscoop%20images/Zrzut%20ekranu%202014-07-08%2010.19.50.png" width="554" height="439">
+
+Type the same password you typed in the step above and hit `ENTER` button. MySQL server is installed now.
+
+First, we need to tell MySQL to create its database directory structure where it will store its information. You can do this by typing:
+
+	sudo mysql_install_db
+
+Afterwards, we want to run a simple security script that will remove some dangerous defaults and lock down access to our database system a little bit. Start the interactive script by running: (this step is optional but for better security it is recommended to run this script and follow instructions in it)
+
+	sudo mysql_secure_installation
+
 ### Step 3 - Install PHP
 ...
 
-Install PHP extra extensions
+	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-curl php5-gd
 
-    sudo apt-get install php5-intl php5-curl
+We will also need to change the way Apache serves files when some resource is requested. Currently when you request any resource from web server it will first look for `index.html` then for others. We will have to change this behaviour to firstly read `index.php`. To do this we have to modify `dir.conf` file:
 
-You will need to restart the server afterwards:
+	sudo nano /etc/apache2/mods-enabled/dir.conf
+
+This file content will look like this:
+
+	<IfModule mod_dir.c>
+    	DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+	</IfModule>
+
+We want to move `index.php` to the first position, so the file will look like:
+
+	<IfModule mod_dir.c>
+    	DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+	</IfModule>
+
+When you are done, hit `CTRL + o` to save changes and `CTRL + x` to exit nano editor.
+
+You will need to restart the Apache2 server afterwards so the configuration can refresh:
 
 	sudo service apache2 restart
 
-
 ### Install Git
 
-    apt-get install git
+    sudo apt-get install git
 
 ### Install Subversion
 
 Subversion is required to install Smarty bundle. Without subversion you will get an error: `Package could not be downloaded, sh: 1: svn: not found.` while installing Newscoop vendors. You won't be able to finish Newscoop installation properly.
 
-    apt-get install subversion
+    sudo apt-get install subversion
 
 
 ### Download/Clone Latest Newscoop Repository Files Using Git
@@ -63,7 +99,7 @@ This will take some time depending on your internet connection speed. When cloni
 
 <img src="https://dl.dropboxusercontent.com/u/35759363/Newscoop%20images/Zrzut%20ekranu%202014-07-07%2017.47.28.png" width="455" height="120">
 
-### Set up VirtualHost in Apache2 configuration
+### Set up Virtual Host in Apache2 configuration
 
 The term Virtual Host refers to the practice of running more than one web site (such as company1.example.com and company2.example.com) on a single machine. Virtual hosts can be "IP-based", meaning that you have a different IP address for every web site, or "name-based", meaning that you have multiple names running on each IP address. The fact that they are running on the same physical server is not apparent to the end user. - [Apache2 docs][vhosts]
 

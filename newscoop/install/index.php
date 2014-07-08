@@ -151,14 +151,6 @@ $app->get('/prepare', function (Request $request) use ($app) {
         ))
         ->add('server_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('server_port', null, array('required' => false))
-        ->add('user_name_fill', null, array(
-            'attr' => array('style' => 'display: none'),
-            'label' => false
-        ))
-        ->add('user_password_fill', 'password', array(
-            'attr' => array('style' => 'display: none'),
-            'label' => false
-        ))
         ->add('user_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('user_password', 'password', array('constraints' => array(new Assert\NotBlank())))
         ->add('database_name', null, array('constraints' => array(new Assert\NotBlank())))
