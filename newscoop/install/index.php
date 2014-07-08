@@ -35,7 +35,7 @@ if (count($missingReq) > 0) {
         echo $value.' <br />';
     }
     echo "</pre>";
-    $phpFile = php_ini_loaded_file() ?: "File couldn't be found."
+    $phpFile = php_ini_loaded_file() ?: "File couldn't be found.";
     echo "Your php.ini config file path: <strong>" . $phpFile . "</strong><br/><br/>";
     echo "You can try to fix common problems by running our fixer.php script: <br/>";
     echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
