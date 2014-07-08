@@ -14,8 +14,8 @@
 'Edit language: $1': null
 'Edit day names': null
 'Code Page': null
-'Add new Language': null
-'Add Language': null
+'Add new Language': 'Ավելացնել նոր լեզու'
+'Add Language': 'Ավելացնել լեզու'
 We: null
 Tu: null
 Th: null
@@ -48,13 +48,13 @@ Apr: null
 'You do not have the right to edit languages.': null
 'Please enter the translation for month names.': null
 'Please enter the translation for week day names.': null
-January: null
-February: null
-March: null
+January: հունվար
+February: փետրվար
+March: մարտ
 April: ապրիլ
 May: մայիս
 June: հունիս
-July: null
+July: հուլիս
 August: օգոստոս
 September: սեպտեմբեր
 October: հոկտեմբեր

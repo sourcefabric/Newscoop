@@ -28,13 +28,13 @@ First: İlk
 'No records found.': 'Yazı tapılmadı.'
 'No publications found': 'Nümayiş tapılmadı'
 'No issues found': 'Məsələ tapılmadı'
-'No entries to show': null
+'No entries to show': 'Nümayiş üçün giriş yoxdur'
 'Loading data': 'Məlumatın yüklənməsi'
 'Last Modified': 'Son Quraşdırılan'
 'Filter by...': 'Filtr xüsusiyyəti...'
 Filter: 'Filtrə Et'
 'Duplicate to another section': 'Başqa bölməyə surətini çıxar'
-'Display _MENU_ records': null
+'Display _MENU_ records': '_MENYU_ yazılarını göstər'
 Creator: null
 'Create Date': null
 'Articles updated.': null
@@ -48,4 +48,4 @@ Creator: null
 'Access denied.': 'Giriş qadağandır.'
 '$1 toggled.': '$1 keçirildi.'
 '$1 articles have been removed': null
-' - filtering from _MAX_ records': null
+' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'

@@ -200,7 +200,7 @@ users:
         active: null
     table:
         actions:
-            actions: null
+            actions: Գործողություններ
             edit: null
             resend_email: null
             rename: null

@@ -29,7 +29,7 @@ Deleted: null
 Attachment: null
 Approved.: null
 Approve: null
-Anonymous: null
+Anonymous: Անանուն
 ' - filtering from _MAX_ records': null
 'You are about to permanently delete multiple messages.': null
 'You are about to permanently delete a message.': null
@@ -59,7 +59,7 @@ Unrecommend: null
 'Show comment details': null
 'Select status': null
 'Search Type': null
-'Reply to comment': null
+'Reply to comment': 'Պատասխանել մեկնաբանությանը։'
 Recommended: null
 Recommend: null
 'Quick edit': null
@@ -73,13 +73,13 @@ Email: null
 E-mail: null
 'Delete all comments?': null
 'Date Created': null
-'Comments updated.': null
+'Comments updated.': 'Մեկնաբանությունները թարմացված են։'
 'Comments status change to $1.': null
 'Comments deleted.': null
 'Commenter $1 saved.': null
 'Commenter $1 deleted.': null
 Commenter: null
-'Comment updated.': null
+'Comment updated.': 'Մեկնաբանությունը թարմացված է։'
 'Comment status change to $1.': null
 'Comment id': null
 'Comment deleted.': null

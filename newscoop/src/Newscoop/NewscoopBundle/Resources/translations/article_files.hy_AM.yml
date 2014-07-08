@@ -1,7 +1,7 @@
 'Files attached.': null
 'File $1 unattached.': null
-'Attach new file': null
-'Attach existing file': null
+'Attach new file': 'Կցել նոր ֆայլ'
+'Attach existing file': 'Կցել գոյություն ունեցող ֆայլ'
 '$1 file/s attached to article': null
 'File attached.': null
 'The maximum file upload size was not configured in Newscoop.': null
@@ -13,9 +13,9 @@
 'The file exceeds the allowed max file size.': null
 'Please make sure you upgraded the database correctly: run $1 in a shell.': null
 'Maximum Upload Size': null
-'File Size': null
-'File Name': null
-Download: null
+'File Size': 'Ֆայլի չափը'
+'File Name': 'Ֆայլի անունը'
+Download: Ներբեռնում
 'File $1 updated.': null
 'Edit article': 'Խմբագրել հոդված'
 'You do not have the right to delete file attachments.': null
