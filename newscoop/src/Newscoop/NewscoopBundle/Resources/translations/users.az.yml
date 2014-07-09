@@ -1,82 +1,82 @@
-'Password confirmation does not match your password.': null
-'Password Confirmation': null
+'Password confirmation does not match your password.': 'Təsdiqləmək istədiyiniz şifrə ilə təqdim etdiyiniz uyğun deyil.'
+'Password Confirmation': 'Şifrənin Təsdiqi'
 Website: Vebsayt
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
-'Last Name Public': null
-Google+: null
+Twitter: Twitter
+'Save profile': 'Profili saxla'
+'Profile image': 'Profil şəkli'
+Organisation: Təşkilat
+'Last Name Public': 'İctimai Soyad'
+Google+: Google+
 Geolocation: Xəritə
-Gender: null
-'First Name Public': null
-Facebook: null
-'Date of birth': null
-'Allow sending emails': null
-'About me': null
-'User with email %s is registered already.': null
-'Username is used. Please use another one.': null
-Continue: null
-'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
+Gender: Gender
+'First Name Public': 'İctimai Ad'
+Facebook: Facebook
+'Date of birth': 'Doğum tarixi'
+'Allow sending emails': 'Email göndərməni aktiv et'
+'About me': Haqqında
+'User with email %s is registered already.': '%s emailli istifadəçi artıq qeydiyyatdan keçib.'
+'Username is used. Please use another one.': 'Bu istifadəçi adı istifadədədir. Lütfən, başqasını seç.'
+Continue: 'Davam et'
+'Accepting terms of use': 'Qaydaların qəbulu'
+'send confirmation email': 'təsdiq emaili göndər'
+'edit user': 'istifadəçini dəyiş'
+'delete user': 'istifadəçini sil'
+'Verified profile': 'Yoxlanmış profil'
 'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
-'Send email to user:': null
-'No users found.': null
+'Send email to user:': 'Bu istifadəçiyə email göndər:'
+'No users found.': 'İstifadəçi tapılmadı.'
 'No records found.': 'Yazı tapılmadı.'
 'No entries to show': 'Nümayiş üçün giriş yoxdur'
 'Display _MENU_ records': '_MENYU_ yazılarını göstər'
-'Are you sure you want to {action}?': null
-'Active Logins': null
+'Are you sure you want to {action}?': '{action} istədiyinə əminsən?'
+'Active Logins': 'Aktiv Girişlər'
 ' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
-'User renamed.': null
-'User attributes': null
-'Rename user $1': null
-'Username is used already': null
-'User with id $1 not found': null
-'User was deleted.': null
-'User saved': null
-'User id not specified': null
-'User $1 created': null
-'Send confirm email': null
-'Profile saved.': null
-Picture: null
-'Password updated': null
+'User renamed.': 'İstifadəçi adını dəyişib.'
+'User attributes': 'İstifadəçi atributları'
+'Rename user $1': '$1 adlı istifadəçinin adını dəyiş'
+'Username is used already': 'Bu istifadəçi adı artıq istifadədədir'
+'User with id $1 not found': '$1 id-li istifadəçi tapılmadı'
+'User was deleted.': 'İstifadəçi silinmişdir.'
+'User saved': 'İstifadəçi saxlandı'
+'User id not specified': 'İstifadəçi id-si qeyd edilməyib'
+'User $1 created': '$1 adlı istifadəçi yaradılıb'
+'Send confirm email': 'Təsdiq emaili göndər'
+'Profile saved.': 'Profil saxlandı.'
+Picture: Şəkil
+'Password updated': 'Şifrə yeniləndi'
 None: 'Heç biri'
-'New confirmation email was sent to user.': null
-'Email is used already': null
+'New confirmation email was sent to user.': 'Yeni təsdiq emaili istifadəçiyə göndərildi.'
+'Email is used already': 'Email artıq istifadədədir'
 'Edit your password': 'Parolunu dəyiş'
-'Edit user $1': null
-'Edit subscriptions': null
-'Edit profile': null
+'Edit user $1': '$1 adlı istifadəçini dəyiş'
+'Edit subscriptions': 'Abunəlikləri dəyiş'
+'Edit profile': 'Profili dəyiş'
 'Edit permissions': 'İcazələri dəyiş'
 'Create new account': 'Yeni hesab yarat'
-'Comment ban settings': null
-'Ban for user $1 saved.': null
-'User account is active': null
-'Allow users profile to be publicly displayed': null
-'Allow user access to login to site backend': null
+'Comment ban settings': 'Şərh kilid parametrləri'
+'Ban for user $1 saved.': '$1 adlı istifadəçi üçün kilid saxlandı.'
+'User account is active': 'İstifadəçi hesabı aktivdir'
+'Allow users profile to be publicly displayed': 'İstifadəçi profilinin ictimai nümayişinə icazə ver'
+'Allow user access to login to site backend': 'İstifadəçinin sayt panelinin girişinə icazə ver.'
 Templates: Üzlük
 Username: 'İstifadəçi adı'
-'Last Name': null
-'First Name': null
+'Last Name': Soyad
+'First Name': Ad
 Email: Email
-'You were logged out.': null
+'You were logged out.': 'Sən sistemdən çıxmısan.'
 'Newscoop Subhead': 'Newscoop Bölmə Başlığı'
-Filters: null
-'Add new Author': null
-'Loading Data': null
-'Delete author type': null
-'Cannot remove author type.': null
-'Cannot remove author alias.': null
-'Author alias removed.': null
-'Are you sure you want to delete this author?': null
-'Are you sure you want to delete this author alias?': null
-'All Author Types': null
-'Add author type': null
-'You do not have the permission to change authors.': null
+Filters: Filtrlər
+'Add new Author': 'Yeni Müəllif əlavə et'
+'Loading Data': 'Yüklənən Məlumat'
+'Delete author type': 'Müəllif növünü sil'
+'Cannot remove author type.': 'Müəllif növünün xaric edilməsi alınmır.'
+'Cannot remove author alias.': 'Müəllif ləqəbinin xaric edilməsi alınmır.'
+'Author alias removed.': 'Müəllif ləqəbi xaric edildi.'
+'Are you sure you want to delete this author?': 'Bu müəllifi silmək istədiyinə əminsən?'
+'Are you sure you want to delete this author alias?': 'Bu müəllif ləqəbini silmək istədiyinə əminsən?'
+'All Author Types': 'Bütün Müəllif Növləri'
+'Add author type': 'Müəllif növü əlavə et'
+'You do not have the permission to change authors.': 'Müəllifləri dəyişməyə icazən yoxdur.'
 'Please fill at least first name and last name.': null
 'Cannot add author type, this type already exists.': null
 'Author type removed.': null
@@ -101,7 +101,7 @@ Filters: null
 'User may attach topics to articles': null
 'User may attach images to articles': null
 'User may add special characters': null
-'That user name already exists, please choose a different login name.': null
+'That user name already exists, please choose a different login name.': 'O istifadəçi adı artıq mövcuddur, lütfən, başqa giriş adı seç.'
 'User may delete article attachments': null
 'User may change article attachments': null
 'User may add article attachments': null

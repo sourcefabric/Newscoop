@@ -1,27 +1,27 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
-'Delete anyway': null
-'Reset order': null
-'Order changes will be lost. Are you sure you want to continue?': null
-'Topics order saved.': null
-'Show languages': null
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'Davam etsən, mövzu və bütün altmövzular bütün məqalələrdən çıxarılacaq və silinəcək.'
+'Delete anyway': Silinsin
+'Reset order': 'Sifarişi sıfırla'
+'Order changes will be lost. Are you sure you want to continue?': 'Sifariş dəyişiklikləri itəcək. Davam etmək istədiyinə əminsən?'
+'Topics order saved.': 'Mövzuların sıralaması saxlandı.'
+'Show languages': 'Dilləri göstər'
 'Save order': 'Sifarişi saxla'
-'Click to edit': null
-'Add root topic': null
-'Topic was deleted.': null
+'Click to edit': 'Dəyişmək üçün kliklə'
+'Add root topic': 'Əsas mövzunu əlavə et'
+'Topic was deleted.': 'Mövzu silindi.'
 'The topic name is already in use by another topic.': 'Təklif edilən mövzu adı başqa mövzuda istifadə edilir.'
 'You must enter a name for the topic.': 'Mövzu üçün ad daxil etməlisən.'
-'You must choose a language for the topic.': null
-'This topic has subtopics, therefore it cannot be deleted.': null
+'You must choose a language for the topic.': 'Sən mövzu üçün dil seçməlisən.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Bu mövzunun alt mövzuları olduğu üçün silinə bilməz.'
 'Add translation:': 'Tərcümə Əlavə Et:'
-'Add subtopic:': null
-Top: null
-'You do not have the right to add topics.': null
-'You do not have the right to delete topics.': null
-'Are you sure you want to delete the topic $1?': null
-'You do not have the right to change topic name.': null
-'The topic $1 could not be deleted.': null
-'Adding new topic': null
-'Deleting topic': null
-'Change topic name': null
-'There are $1 articles using the topic.': null
+'Add subtopic:': 'Alt mövzu əlavə et:'
+Top: Üst
+'You do not have the right to add topics.': 'Mövzu əlavə etməyə ixtiyarın yoxdur.'
+'You do not have the right to delete topics.': 'Mövzuları silməyə ixtiyarın yoxdur.'
+'Are you sure you want to delete the topic $1?': '$1 adlı mövzunu silmək istədiyinə əminsən?'
+'You do not have the right to change topic name.': 'Mövzu adını dəyişməyə ixtiyarın yoxdur.'
+'The topic $1 could not be deleted.': '$1 adlı mövzu silinə bilmədi.'
+'Adding new topic': 'Yeni mövzu əlavə et'
+'Deleting topic': 'Mövzunun silinməsi'
+'Change topic name': 'Mövzu adını dəyiş'
+'There are $1 articles using the topic.': 'Mövzunu istifadə edən $1 məqalə mövcuddur.'
 'Search for topics': null

@@ -1,87 +1,87 @@
 'Duplicate assignment': 'Təyinatın surətini çıxar'
 Templates: Üzlük
-'Import theme': null
-'Import succeded!': null
-'Import failed!': null
-'Edit template: $1': null
-'Set new name to': null
-'Rename file': null
-'Caching templates in:': null
-'Caching templates finished': null
-'Theme name': null
-'Theme is assigned and can not be deleted': null
-'Theme export was not successful. Check please that the server is not out of disk space.': null
-'The theme can not be unassigned because it is in use by issues ($1) in this publication': null
-zip: null
-version: null
-uploaded: null
-updated: null
-'or higher': null
-moved: null
-installed: null
-deleted: null
-'You must select at least one template to perform an action.': null
+'Import theme': 'Mövzu idxal et'
+'Import succeded!': 'İdxal uğurla bitdi!'
+'Import failed!': 'İdxal alınmadı!'
+'Edit template: $1': 'Nümunəni dəyiş: $1'
+'Set new name to': 'Buna yeni ad quraşdır'
+'Rename file': 'Faylın adını dəyiş'
+'Caching templates in:': 'Nümunələrin burada keşlənməsi:'
+'Caching templates finished': 'Nümunələrin keşlənməsi bitdi'
+'Theme name': 'Mövzu adı'
+'Theme is assigned and can not be deleted': 'Mövzu təyin edilib və silinə bilməz'
+'Theme export was not successful. Check please that the server is not out of disk space.': 'Mövzu ixracı uğursuz oldu. Serverin disk yaddaşından kənarda olmadığını yoxla.'
+'The theme can not be unassigned because it is in use by issues ($1) in this publication': 'Mövzu bu nəşrdəki məsələlər ($1) tərəfindən istifadədə olduğu üçün təyinatının ləğvi mümkün deyil.'
+zip: zip
+version: versiya
+uploaded: yükləndi
+updated: yeniləndi
+'or higher': 'daha üstün'
+moved: 'yeri dəyişdirildi'
+installed: quraşdırıldı
+deleted: silindi
+'You must select at least one template to perform an action.': 'Fəaliyyət həyata keçirmək üçün ən azı bir nümunə seçməlisən.'
 Upload: Yüklə
-'Unassign theme': null
-'Unassign successful': null
-Unassign: null
-'Theme version': null
-'Theme settings updated.': null
-'Theme settings saved.': null
-'Theme name / version': null
-'Theme management': null
-'Theme $1': null
-'The file $1 is empty.': null
-'Template object $1 was renamed to $2.': null
-'Template object $1 was deleted.': null
+'Unassign theme': 'Mövzunun təyinatını ləğv et'
+'Unassign successful': 'Təyinatın ləğvi uğurludur'
+Unassign: 'Təyinatı ləğv et'
+'Theme version': 'Mövzu versiyası'
+'Theme settings updated.': 'Mövzu parametrləri yeniləndi.'
+'Theme settings saved.': 'Mövzu parametrləri saxlandı.'
+'Theme name / version': 'Mövzu adı / versiyası'
+'Theme management': 'Mövzu idarəçiliyi'
+'Theme $1': 'Mövzu $1'
+'The file $1 is empty.': '$1 faylı boşdur.'
+'Template object $1 was renamed to $2.': '$1 nümunə vasitəsinin adı dəyişdirilərək $2 oldu.'
+'Template object $1 was deleted.': '$1 nümunə vasitəsi silindi.'
 'Template $1 was duplicated into $2.': '$1 nümunəsinin $2 daxilinə surəti çıxarıldı.'
-'Template $1 $2.': null
-'Something broke': null
-'Section page template': null
-Saving..: null
-'Saving settings failed.': null
+'Template $1 $2.': '$1 $2 Nümunəsi.'
+'Something broke': 'Nə isə qırıldı'
+'Section page template': 'Bölmə səhifə nümunəsi'
+Saving..: Saxlanır..
+'Saving settings failed.': 'Parametrlərin saxlanması alınmadı.'
 'Save All': 'Hamısını Saxla'
-'Required Newscoop version': null
-Replace: null
-'New template $1 created.': null
-'New name': null
-'Name cant be empty': null
+'Required Newscoop version': 'Tələb edilən Newscoop versiyası'
+Replace: Əvəzlə
+'New template $1 created.': '$1 yeni nümunəsi yaradıldı.'
+'New name': 'Yeni ad'
+'Name cant be empty': 'Ad boş saxlana bilməz'
 'Last modified': 'Son redaktələr'
-'Issue page': null
-'Go to parent': null
-'Go to $1': null
-'Geo Filtering': null
-'Front page template': null
-'File size': null
-'File name': null
-'File $1 was replaced.': null
-'Failed unassigning theme': null
-Export: null
-'Error page template': null
+'Issue page': 'Məsələ səhifəsi'
+'Go to parent': 'Mənbəyə keç'
+'Go to $1': '$1 keç'
+'Geo Filtering': 'Geo Filtrləmə'
+'Front page template': 'Ön səhifə nümunəsi'
+'File size': 'Faylın ölçüsü'
+'File name': 'Faylın adı'
+'File $1 was replaced.': '$1 faylı əvəz edildi.'
+'Failed unassigning theme': 'Mövzunun təyinatını geri götürmək mümkün olmadı'
+Export: İxrac
+'Error page template': 'Xəta səhifə nümunəsi'
 'Edit $1': '$1-a dəyişiklik et'
-'Done uploading': null
-'Do you want to override $1?': null
-'Directory is empty': null
-'Directory $1 created.': null
-Design: null
-'Delete theme': null
-'Current directory:': null
-'Create folder': null
-'Create file': null
-'Copy to available themes': null
-'Copied successfully': null
-Compatibility: null
-'Click to enlarge': null
-'Choose destination': null
-'Cant override directory $1.': null
-'Cache Lifetime': null
-'Browse for the theme': null
-'Assigned successfully': null
-'Article page template': null
-'Article page': null
-'Are you sure you want to unassign this theme?': null
-'Are you sure you want to delete this theme?': null
-'Add to publication': null
-'$1 is not writable': null
-'$1 $2': null
-'$1 files $2': null
+'Done uploading': 'Yeniləmə bitdi'
+'Do you want to override $1?': '$1 faylını yenidən yazmaq istəyirsən?'
+'Directory is empty': 'Direktoriya boşdur'
+'Directory $1 created.': '$1 kataloqu yaradılmışdır.'
+Design: Dizayn
+'Delete theme': 'Üzlüyü sil'
+'Current directory:': 'Hazırkı kataloq:'
+'Create folder': 'Qovluq yarat'
+'Create file': 'Fayl yarat'
+'Copy to available themes': 'Mövcud mövzulara köçür'
+'Copied successfully': 'Müvəffəqiyyətlə köçürüldü'
+Compatibility: Uyğunluq
+'Click to enlarge': 'Genişləndirmək üçün kliklə'
+'Choose destination': 'Son ünvanı seç'
+'Cant override directory $1.': '$1 kataloqu yenidən yazıla bilmir.'
+'Cache Lifetime': 'Keşin Yaşama Müddəti'
+'Browse for the theme': 'Mövzu üçün axtar'
+'Assigned successfully': 'Müvəffəqiyyətlə təyin edildi'
+'Article page template': 'Məqalə səhifə nümunəsi'
+'Article page': 'Məqalə səhifəsi'
+'Are you sure you want to unassign this theme?': 'Bu mövzunun təyini geri almaq istədiyinə əminsən?'
+'Are you sure you want to delete this theme?': 'Bu mövzunu silmək istədiyinə əminsən?'
+'Add to publication': 'Nəşrini əlavə et'
+'$1 is not writable': '$1 yazılan deyil'
+'$1 $2': '$1 $2'
+'$1 files $2': '$1 fayl $2'

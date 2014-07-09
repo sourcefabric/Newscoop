@@ -37,8 +37,8 @@ Filter: 'Filtrə Et'
 'Display _MENU_ records': '_MENYU_ yazılarını göstər'
 Creator: Yaradıcı
 'Create Date': 'Yaranma Tarixi'
-'Articles updated.': null
-'Article(s) unlocked': null
+'Articles updated.': 'Məqalələr yeniləndi.'
+'Article(s) unlocked': 'Məqalə(lər)in kilidi açıldı'
 'Article(s) duplicated': 'Məqalə(lər)in surəti çıxarıldı'
 'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
 'Are you sure you want to delete selected articles?': 'Seçilmiş məqalələri silmək istədiyinə əminsən?'

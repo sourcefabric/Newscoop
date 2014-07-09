@@ -49,29 +49,29 @@
 'Deleting publication': 'Nəşrin silinməsi'
 'There are $1 subscription(s) left.': '$1 abunəlik(lər) hələ ki qalıb.'
 'The publication $1 could not be deleted.': '$1 nəşri silinə bilmədi.'
-'The publication could not be added.': null
-'You do not have the right to manage publications.': null
-'You must select a country.': null
-'Add new alias': null
-'Alias (click to edit)': null
-'Edit aliases': null
-'Publication Aliases': null
-'Adding new alias': null
-'The site alias $1 could not be added.': null
-'Another alias with the same name exists already.': null
-'Edit alias': null
-'Editing alias': null
-'The site alias $1 could not be modified.': null
-'Are you sure you want to delete the alias $1?': null
-'Deleting alias': null
-'The alias $1 could not be deleted.': null
-'$1 is the default publication alias, it can not be deleted.': null
-'You do not have the right to add publications.': null
+'The publication could not be added.': 'Nəşr əlavə edilə bilmədi.'
+'You do not have the right to manage publications.': 'Nəşrlərə dəyişiklik etməyə ixtiyarın yoxdur.'
+'You must select a country.': 'Ölkə seçməlisən.'
+'Add new alias': 'Yeni ləqəb əlavə et'
+'Alias (click to edit)': 'Ləqəb (dəyişmək üçün kliklə)'
+'Edit aliases': 'Ləqəbləri dəyiş'
+'Publication Aliases': 'Nəşr Ləqəbləri'
+'Adding new alias': 'Yeni ləqəb əlavəsi'
+'The site alias $1 could not be added.': '$1 sayt ləqəbi əlavə edilə bilmədi.'
+'Another alias with the same name exists already.': 'Eyni adlı başqa ləqəb artıq mövcuddur.'
+'Edit alias': 'Ləqəbi dəyiş'
+'Editing alias': 'Ləqəbin dəyişilməsi'
+'The site alias $1 could not be modified.': '$1 sayt ləqəbi dəyişdirilə bilmədi.'
+'Are you sure you want to delete the alias $1?': '$1 ləqəbini silmək istədiyinə əminsən?'
+'Deleting alias': 'Ləqəbin silinməsi'
+'The alias $1 could not be deleted.': '$1 ləqəbi silinə bilmədi.'
+'$1 is the default publication alias, it can not be deleted.': '$1 ilkin nəşr ləqəbidir, bu silinə bilməz.'
+'You do not have the right to add publications.': 'Nəşr əlavə etməyə ixtiyarın yoxdur.'
 'There are $1 issue(s) left.': 'Geriyə $1 məsələ(lər) qalıb.'
-'Time Unit': null
-Currency: null
-'Edit languages': null
-'Search engine optimization': null
-'Article title': null
-'Article keywords': null
-'Article topics': null
+'Time Unit': 'Zaman Vahidi'
+Currency: Valyuta
+'Edit languages': 'Dilləri dəyiş'
+'Search engine optimization': 'Axtarış sistemlərinin optimizasiyası'
+'Article title': 'Məqalə başlığı'
+'Article keywords': 'Məqalənin açar sözləri'
+'Article topics': 'Məqalə başlıqları'
