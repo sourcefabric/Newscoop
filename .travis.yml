@@ -11,7 +11,7 @@ before_script:
   - echo "127.0.0.1 newscoop.dev" | sudo tee -a /etc/hosts
   - sudo a2enmod rewrite
   - sudo service apache2 restart
-  - mysql -e 'create database newscoop;' -uroot
+  - mysql -e 'create database newscoop; use newscoop;' -uroot
   - cd newscoop/
   - composer install --prefer-dist
   - ./application/console newscoop:install --fix --database_name newscoop --database_user root

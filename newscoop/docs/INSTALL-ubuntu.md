@@ -55,24 +55,6 @@ Afterwards, we want to run a simple security script that will remove some danger
 
 	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-gd curl
 
-We will also need to change the way Apache serves files when some resource is requested. Currently when you request any resource from web server it will first look for `index.html` then for others. We will have to change this behaviour to firstly read `index.php`. To do this we have to modify `dir.conf` file:
-
-	sudo nano /etc/apache2/mods-enabled/dir.conf
-
-This file content will look like this:
-
-	<IfModule mod_dir.c>
-    	DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
-	</IfModule>
-
-We want to move `index.php` to the first position, so the file will look like:
-
-	<IfModule mod_dir.c>
-    	DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
-	</IfModule>
-
-When you are done, hit `CTRL + o` to save changes and `CTRL + x` to exit nano editor.
-
 You will need to restart the Apache2 server afterwards so the configuration can refresh:
 
 	sudo service apache2 restart
