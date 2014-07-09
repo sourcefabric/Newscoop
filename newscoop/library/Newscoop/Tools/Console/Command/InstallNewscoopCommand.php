@@ -109,7 +109,6 @@ class InstallNewscoopCommand extends Console\Command\Command
         $connection = DriverManager::getConnection($dbParams);
         try {
             $connection->connect();
-            $databaseService->saveDatabaseConfiguration($connection);
             if ($connection->getDatabase() === null) {
                 $databaseService->createNewscoopDatabase($connection);
             }
@@ -127,6 +126,7 @@ class InstallNewscoopCommand extends Console\Command\Command
         if (count($tables) == 0 || $input->getOption('database_override')) {
             $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
+            $databaseService->saveDatabaseConfiguration($connection);
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
