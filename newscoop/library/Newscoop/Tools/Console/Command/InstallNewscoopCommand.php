@@ -138,7 +138,7 @@ class InstallNewscoopCommand extends Console\Command\Command
 
         $finishService->saveCronjobs();
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
-        $finishService->generateProxies();
+        //$finishService->generateProxies();
         $finishService->installAssets();
         $output->writeln('<info>Assets have been installed successfully<info>');
         $finishService->saveInstanceConfig(array(
