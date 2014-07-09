@@ -38,7 +38,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={expose=true}, "/articles.{_format}", defaults={"_format"="json"})
+     * @Route(options={"expose"=true}, "/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -77,7 +77,7 @@ class ArticlesController extends FOSRestController
      *     output="\Newscoop\Entity\Article"
      * )
      *
-     * @Route(options={expose=true}, "/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Route(options={"expose"=true}, "/articles/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -131,7 +131,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={expose=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route(options={"expose"=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("LINK")
      * @View(statusCode=201)
      *
@@ -230,7 +230,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={expose=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route(options={"expose"=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
@@ -309,7 +309,7 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * @Route(options={expose=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route(options={"expose"=true}, "/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("PATCH")
      * @View()
      *
