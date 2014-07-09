@@ -29,7 +29,7 @@ class ConfigureApiController extends Controller
     /**
      * @param Request $request
      *
-     * @Route("/admin/configure-api", name="configure_api")
+     * @Route(options={expose=false}, "/admin/configure-api", name="configure_api")
      * @Method("GET|POST")
      * @Template()
      *

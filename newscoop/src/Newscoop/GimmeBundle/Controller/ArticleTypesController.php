@@ -30,7 +30,7 @@ class ArticleTypesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articleTypes.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/articleTypes.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -64,7 +64,7 @@ class ArticleTypesController extends FOSRestController
      *     output="\Newscoop\Entity\ArticleTypeField"
      * )
      *
-     * @Route("/articleTypes/{name}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/articleTypes/{name}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      */
