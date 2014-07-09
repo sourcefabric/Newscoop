@@ -89,7 +89,7 @@ class SnippetsController extends FOSRestController
      *     output="\Newscoop\Entity\Snippet"
      * )
      *
-     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details", "scopeNoBackend"})
@@ -188,7 +188,7 @@ class SnippetsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\SnippetType"
      * )
      *
-     * @Route("/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Route("/articles/{articleNumber}/{languageCode}/snippets.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
@@ -210,7 +210,7 @@ class SnippetsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST|PATCH")
      * @View()
@@ -238,7 +238,7 @@ class SnippetsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Route("/snippets/article/{articleNumber}/{languageCode}/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("DELETE")
      * @View(statusCode=204)
