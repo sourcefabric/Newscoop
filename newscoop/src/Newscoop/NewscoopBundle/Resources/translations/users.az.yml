@@ -47,18 +47,18 @@ Picture: null
 None: 'Heç biri'
 'New confirmation email was sent to user.': null
 'Email is used already': null
-'Edit your password': null
+'Edit your password': 'Parolunu dəyiş'
 'Edit user $1': null
 'Edit subscriptions': null
 'Edit profile': null
-'Edit permissions': null
-'Create new account': null
+'Edit permissions': 'İcazələri dəyiş'
+'Create new account': 'Yeni hesab yarat'
 'Comment ban settings': null
 'Ban for user $1 saved.': null
 'User account is active': null
 'Allow users profile to be publicly displayed': null
 'Allow user access to login to site backend': null
-Templates: null
+Templates: Üzlük
 Username: 'İstifadəçi adı'
 'Last Name': null
 'First Name': null

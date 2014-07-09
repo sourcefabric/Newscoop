@@ -1,15 +1,15 @@
 'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
-'Stop current upload': null
-'Start uploading queue': null
-'Start upload': null
-Size: null
-'Select files': null
-Filename: null
-'Drag files here.': null
+'Stop current upload': 'Mövcud yükləməni saxla'
+'Start uploading queue': 'Növbədəkiləri yükləməyə başla'
+'Start upload': 'Yükləməyə başla'
+Size: Ölçü
+'Select files': 'Fayl seç'
+Filename: 'Fayl adı'
+'Drag files here.': 'Faylları bura köçür.'
 'Cache lifetime, sec': null
-'Add files to the upload queue and click the start button.': null
-'Add files': null
-'$1 files uploaded.': null
+'Add files to the upload queue and click the start button.': 'Faylları növbəyə daxil et və başla düyməsini kliklə.'
+'Add files': 'Fayl əlavə et'
+'$1 files uploaded.': '$1 faylı yükləndi.'
 'Replace current with:': null
 'Edit template:': null
 'Changes have not been saved. Load new template without saving the current one?': null
@@ -82,5 +82,5 @@ Files: Fayllar
 'You do not have the right to upload templates.': null
 'You do not have the right to create templates.': null
 'Duplicate file': 'Faylın surətini çıxar'
-'Delete file': null
+'Delete file': 'Faylı sil'
 'Please check if the user $1 has permission to write in this directory.': null

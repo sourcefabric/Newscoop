@@ -35,17 +35,17 @@ First: İlk
 Filter: 'Filtrə Et'
 'Duplicate to another section': 'Başqa bölməyə surətini çıxar'
 'Display _MENU_ records': '_MENYU_ yazılarını göstər'
-Creator: null
-'Create Date': null
+Creator: Yaradıcı
+'Create Date': 'Yaranma Tarixi'
 'Articles updated.': null
 'Article(s) unlocked': null
 'Article(s) duplicated': 'Məqalə(lər)in surəti çıxarıldı'
 'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
-'Are you sure you want to delete selected articles?': null
-'All Sections': null
-'All Publications': null
-'All Issues': null
+'Are you sure you want to delete selected articles?': 'Seçilmiş məqalələri silmək istədiyinə əminsən?'
+'All Sections': 'Bütün Bölmələr'
+'All Publications': 'Bütün Nümayişlər'
+'All Issues': 'Bütün Məsələlər'
 'Access denied.': 'Giriş qadağandır.'
 '$1 toggled.': '$1 keçirildi.'
-'$1 articles have been removed': null
+'$1 articles have been removed': '$1 məqalə xaric edilib'
 ' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'

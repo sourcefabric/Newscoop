@@ -1,37 +1,37 @@
 newscoop.plugins_manager.manager: null
 newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
-newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
-newscoop.plugins_manager.installed_table.name: null
-newscoop.plugins_manager.installed_table.description: null
-newscoop.plugins_manager.installed_table.enabled: null
-newscoop.plugins_manager.installed_table.version: null
-newscoop.plugins_manager.installed_table.license: null
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
-newscoop.plugins_manager.installed_table.actions: null
-newscoop.plugins_manager.installed_table.update_plugin: null
-newscoop.plugins_manager.installed_table.remove_plugin: null
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
-newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
-newscoop.plugins_manager.form.submit: null
+newscoop.plugins_manager.public_plugins: 'İctimai plaqinlər'
+newscoop.plugins_manager.private_plugins: 'Şəxsi plaqinlər'
+newscoop.plugins_manager.install.public: 'Yeni plaqinləri quraşdır'
+newscoop.plugins_manager.installed_table.name: Ad
+newscoop.plugins_manager.installed_table.description: İzah
+newscoop.plugins_manager.installed_table.enabled: Aktivləşdirildi
+newscoop.plugins_manager.installed_table.version: Versiya
+newscoop.plugins_manager.installed_table.license: Lisenziya
+newscoop.plugins_manager.installed_table.installed_at: 'Bu vaxt Quraşdırılıb'
+newscoop.plugins_manager.installed_table.updated_at: 'Bu vaxt Yüklənib'
+newscoop.plugins_manager.installed_table.actions: Addımlar
+newscoop.plugins_manager.installed_table.update_plugin: Yenilə
+newscoop.plugins_manager.installed_table.remove_plugin: 'Xaric Et'
+newscoop.plugins_manager.installed_table.install_plugin: Quraşdır
+newscoop.plugins_manager.installed_table.plugin_installed: Quraşdırıldı
+newscoop.plugins_manager.upload.private: 'Şəxsi plaqin yüklə'
+newscoop.plugins_manager.search_for_plugins: 'Plaqin axtar'
+newscoop.plugins_manager.form.package: 'Paket zip fayl olmalıdır.'
+newscoop.plugins_manager.form.submit: Yüklə
 newscoop:
     datatable:
         table:
-            info: null
-            noentries: null
-            filtering: null
-            menu: null
+            info: BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
+            noentries: 'Nümayiş üçün firiş yoxdur'
+            filtering: '- _MAX_ yazılarından filterləmə'
+            menu: '_MENYU_ yazılarını göstər'
         label:
-            search: null
-            filter: null
-            processing: null
-            last: null
-            next: null
-            first: null
-            previous: null
-            norecords: null
+            search: Axtar
+            filter: Filtr
+            processing: İcradadır...
+            last: Son
+            next: Növbəti
+            first: İlk
+            previous: Əvvəlki
+            norecords: 'Yazı tapılmadı.'

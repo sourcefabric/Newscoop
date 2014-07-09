@@ -1,6 +1,6 @@
 get: null
 Soundcloud: null
-Templates: null
+Templates: Üzlük
 'Feedback Messages': 'Rəy Mesajları'
 'Article Playlists': null
 'Check all': null
@@ -27,7 +27,7 @@ manage: null
 link: null
 italic: null
 indent: null
-image: null
+image: şəkil
 'horizontal rule': null
 handle: null
 guest: null
@@ -53,7 +53,7 @@ add: null
 'User type deleted.': null
 'User type added.': null
 'User Groups': null
-Themes: null
+Themes: Mövzular
 'That type name already exists, please choose a different name.': null
 System: null
 Structure: null

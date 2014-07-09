@@ -29,7 +29,7 @@ removed: null
 deleted: null
 deactivated: null
 activated: null
-'Value is required and cant be empty': null
+'Value is required and cant be empty': 'Dəyər vacibdir və boş saxlanıla bilməz'
 'That user name already exists, please choose a different login name.': null
 'That $1 already exists, please choose a different $2.': null
 'Subscriptions exist for all available publications.': null

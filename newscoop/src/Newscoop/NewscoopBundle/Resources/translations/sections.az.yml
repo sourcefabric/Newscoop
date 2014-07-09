@@ -1,4 +1,4 @@
-default: null
+default: mövcud
 'before you can configure the section templates.': null
 'You have to assign a theme to the issue': null
 'The section number $1 was already in use.': null
@@ -35,7 +35,7 @@ default: null
 'The section $1 could not be duplicated': '$1 bölməsinin surəti çıxarıla bilmədi'
 'Section $1 has been duplicated to $2. $3 of $4': '$1 bölməsinin $2 daxilinə surəti çıxarıldı. $4 içindən $3'
 'You do not have the right to modify sections.': null
-'A total of $1 articles were deleted.': null
+'A total of $1 articles were deleted.': 'Ümumilikdə $1 məqalə silinib.'
 'Duplicate Section:': 'Bölmənin Surətini Çıxar:'
 'Existing Section': null
 'Go to new section': null
@@ -44,7 +44,7 @@ default: null
 'Please select either $1 or $2.': null
 'Select destination section:': null
 OR: null
-'URL Name': null
+'URL Name': 'URL Adı'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': null
 Warning: null
 'You must select a section.': null
