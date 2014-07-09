@@ -37,7 +37,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\Author"
      * )
      *
-     * @Route("/author/{id}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/author/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
@@ -68,7 +68,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\Author"
      * )
      *
-     * @Route("/authors/{id}.{_format}", defaults={"_format"="json"}, requirements={"id" = "[\d]+"})
+     * @Route(options={expose=true}, "/authors/{id}.{_format}", defaults={"_format"="json"}, requirements={"id" = "[\d]+"})
      * @Method("GET")
      * @View()
      */
@@ -100,7 +100,7 @@ class AuthorsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/authors/types.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/authors/types.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -131,7 +131,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\AuthorType"
      * )
      *
-     * @Route("/authors/types/{id}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/authors/types/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      */
@@ -166,7 +166,7 @@ class AuthorsController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/search/authors.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/search/authors.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -195,8 +195,8 @@ class AuthorsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/authors.{_format}", defaults={"_format"="json"})
-     * @Route("/authors/article/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/articles/{number}/{language}/authors.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/authors/article/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -223,8 +223,8 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\ArticleAuthor"
      * )
      *
-     * @Route("/articles/{number}/{language}/authors/{id}.{_format}", defaults={"_format"="json"})
-     * @Route("/authors/{id}/article/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/articles/{number}/{language}/authors/{id}.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/authors/{id}/article/{number}/{language}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -269,7 +269,7 @@ class AuthorsController extends FOSRestController
      *     output="\Newscoop\Entity\ArticleAuthor"
      * )
      *
-     * @Route("/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"},  requirements={"authorId" = "[\d]+"})
+     * @Route(options={expose=true}, "/articles/{number}/{language}/authors/{authorId}.{_format}", defaults={"_format"="json"},  requirements={"authorId" = "[\d]+"})
      * @Method("POST|PATCH")
      * @View(serializerGroups={"list"}, statusCode=201)
      */
@@ -326,7 +326,7 @@ class AuthorsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/authors/order.{_format}", defaults={"_format"="json"})
+     * @Route(options={expose=true}, "/articles/{number}/{language}/authors/order.{_format}", defaults={"_format"="json"})
      * @Method("POST")
      * @View(serializerGroups={"list"}, statusCode=200)
      */
