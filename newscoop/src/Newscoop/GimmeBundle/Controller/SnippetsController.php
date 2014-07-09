@@ -42,7 +42,7 @@ class SnippetsController extends FOSRestController
      *     },
      * )
      *
-     * @Route("/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -90,7 +90,7 @@ class SnippetsController extends FOSRestController
      * )
      *
      * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
-     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details", "scopeNoBackend"})
      *
@@ -138,8 +138,8 @@ class SnippetsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/snippets.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/snippets.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/snippets/article/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -189,7 +189,7 @@ class SnippetsController extends FOSRestController
      * )
      *
      * @Route("/snippets.{_format}", defaults={"_format"="json"})
-     * @Route("/articles/{articleNumber}/{languageCode}/snippets.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -211,7 +211,7 @@ class SnippetsController extends FOSRestController
      * )
      *
      * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
-     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{articleNumber}/{languageCode}/snippets/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST|PATCH")
      * @View()
      *
@@ -239,7 +239,7 @@ class SnippetsController extends FOSRestController
      * )
      *
      * @Route("/snippets/{snippetId}.{_format}", defaults={"_format"="json"})
-     * @Route("/snippets/article/{articleNumber}/{languageCode}/{snippetId}.{_format}", defaults={"_format"="json"})
+     * @Route("/snippets/article/{articleNumber}/{languageCode}/{snippetId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("DELETE")
      * @View(statusCode=204)
      */
