@@ -39,7 +39,7 @@ class UsersController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/users.{_format}", defaults={"_format"="json"})
+     * @Route("/users.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -77,7 +77,7 @@ class UsersController extends FOSRestController
      *     output="\Newscoop\Entity\User"
      * )
      *
-     * @Route(options={"expose"=true}, "/users/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/users/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -122,7 +122,7 @@ class UsersController extends FOSRestController
      *     },
      * )
      *
-     * @Route(options={"expose"=true}, "/users/login.{_format}", defaults={"_format"="json"})
+     * @Route("/users/login.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View(statusCode=200)
      *
@@ -198,7 +198,7 @@ class UsersController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/users/logout.{_format}", defaults={"_format"="json"})
+     * @Route("/users/logout.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View(statusCode=200)
      */
@@ -231,7 +231,7 @@ class UsersController extends FOSRestController
      *     },
      * )
      *
-     * @Route(options={"expose"=true}, "/users/register.{_format}", defaults={"_format"="json"})
+     * @Route("/users/register.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -282,7 +282,7 @@ class UsersController extends FOSRestController
      *     },
      * )
      *
-     * @Route(options={"expose"=true}, "/users/restore-password.{_format}", defaults={"_format"="json"})
+     * @Route("/users/restore-password.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -326,7 +326,7 @@ class UsersController extends FOSRestController
      *     },
      * )
      *
-     * @Route(options={"expose"=true}, "/users/access_token/{clientId}.{_format}", defaults={"_format"="json"})
+     * @Route("/users/access_token/{clientId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *

@@ -36,7 +36,7 @@ class CommentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/comments.{_format}", defaults={"_format"="json"})
+     * @Route("/comments.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -73,7 +73,7 @@ class CommentsController extends FOSRestController
      *     output="\Newscoop\Entity\Comment"
      * )
      *
-     * @Route(options={"expose"=true}, "/comments/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -112,9 +112,9 @@ class CommentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/articles/{number}/{language}/comments/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
-     * @Route(options={"expose"=true}, "/comments/article/{number}/{language}/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
-     * @Route(options={"expose"=true}, "/comments/article/{number}/{language}/{order}/recommended.{_format}", defaults={"_format"="json", "order"="chrono"}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
+     * @Route("/articles/{number}/{language}/comments/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
+     * @Route("/comments/article/{number}/{language}/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
+     * @Route("/comments/article/{number}/{language}/{order}/recommended.{_format}", defaults={"_format"="json", "order"="chrono"}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -185,7 +185,7 @@ class CommentsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route(options={"expose"=true}, "/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/article/{articleNumber}/{languageCode}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -206,8 +206,8 @@ class CommentsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\CommentType"
      * )
      *
-     * @Route(options={"expose"=true}, "/comments/{commentId}.{_format}", defaults={"_format"="json"})
-     * @Route(options={"expose"=true}, "/comments/article/{article}/{language}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/{commentId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/comments/article/{article}/{language}/{commentId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST|PATCH")
      * @View()
      *
@@ -233,8 +233,8 @@ class CommentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/comments/{commentId}.{_format}", defaults={"_format"="json"})
-     * @Route(options={"expose"=true}, "/comments/article/{articleNumber}/{languageCode}/{commentId}.{_format}", defaults={"_format"="json"})
+     * @Route("/comments/{commentId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/comments/article/{articleNumber}/{languageCode}/{commentId}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("DELETE")
      * @View(statusCode=204)
      *

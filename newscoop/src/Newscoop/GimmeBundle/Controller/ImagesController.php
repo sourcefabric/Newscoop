@@ -38,7 +38,7 @@ class ImagesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/images.{_format}", defaults={"_format"="json"})
+     * @Route("/images.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -75,7 +75,7 @@ class ImagesController extends FOSRestController
      *     },
      * )
      *
-     * @Route(options={"expose"=true}, "/search/images.{_format}", defaults={"_format"="json"})
+     * @Route("/search/images.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -117,7 +117,7 @@ class ImagesController extends FOSRestController
      *     output="\Newscoop\Image\LocalImage"
      * )
      *
-     * @Route(options={"expose"=true}, "/images/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/images/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -154,7 +154,7 @@ class ImagesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/articles/{number}/{language}/images.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/images.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -208,7 +208,7 @@ class ImagesController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\ImageType"
      * )
      *
-     * @Route(options={"expose"=true}, "/images.{_format}", defaults={"_format"="json"})
+     * @Route("/images.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -235,7 +235,7 @@ class ImagesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/images/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/images/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST|PATCH")
      * @View()
      *
@@ -261,7 +261,7 @@ class ImagesController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/images/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/images/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("DELETE")
      * @View(statusCode=204)
      *
