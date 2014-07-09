@@ -32,7 +32,7 @@ class SlideshowsController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/slideshows/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/slideshows/{id}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      */

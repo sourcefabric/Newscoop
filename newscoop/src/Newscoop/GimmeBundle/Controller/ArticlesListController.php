@@ -30,7 +30,7 @@ class ArticlesListController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/articles-lists.{_format}", defaults={"_format"="json"})
+     * @Route("/articles-lists.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -67,7 +67,7 @@ class ArticlesListController extends FOSRestController
      *     }
      * )
      *
-     * @Route(options={"expose"=true}, "/articles-lists/{id}/articles.{_format}", defaults={"_format"="json"})
+     * @Route("/articles-lists/{id}/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
