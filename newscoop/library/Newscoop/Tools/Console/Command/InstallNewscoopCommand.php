@@ -130,7 +130,7 @@ class InstallNewscoopCommand extends Console\Command\Command
             $databaseService->saveDatabaseConfiguration($connection);
             $command = $this->getApplication()->find('cache:clear');
             $arguments = array(
-                '--verbose'
+                'command' => 'cache:clear'
             );
 
             $inputCache = new ArrayInput($arguments);

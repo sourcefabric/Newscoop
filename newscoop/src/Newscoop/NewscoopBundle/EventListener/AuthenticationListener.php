@@ -29,7 +29,7 @@ class AuthenticationListener
     /**
      * Contruct AuthenticationListener object
      *
-     * @param UserService $userService User service
+     * @param UserService $userService   User service
      * @param UserService $routerService Symfony router
      */
     public function __construct(UserService $userService, Router $router)
@@ -40,6 +40,10 @@ class AuthenticationListener
 
     public function onRequest(GetResponseEvent $event)
     {
+        if (php_sapi_name() == "cli") {
+            return false;
+        }
+
         if (HttpKernel::MASTER_REQUEST != $event->getRequestType()) {
             // don't do anything if it's not the master request
             return;
