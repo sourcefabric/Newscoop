@@ -125,9 +125,8 @@ class InstallNewscoopCommand extends Console\Command\Command
 
         $tables = $connection->fetchAll('SHOW TABLES', array());
         if (count($tables) == 0 || $input->getOption('database_override')) {
-            try {$databaseService->fillNewscoopDatabase($connection);
+            $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
-
             $databaseService->saveDatabaseConfiguration($connection);
             $command = $this->getApplication()->find('cache:clear');
             $arguments = array(
@@ -137,7 +136,6 @@ class InstallNewscoopCommand extends Console\Command\Command
 
             $inputCache = new ArrayInput($arguments);
             $command->run($inputCache, $output);
-        } catch (\Exception $e) { ladybug_dump($e);die;}
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }

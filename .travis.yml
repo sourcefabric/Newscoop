@@ -15,7 +15,7 @@ before_script:
   - sudo cp -r dependencies/include/* newscoop/include/
   - cd newscoop/
   - composer install --prefer-dist
-  - ./application/console newscoop:install --fix --database_name newscoop --database_user root --database_override
+  - ./application/console newscoop:install --fix --database_name newscoop --database_user root
   - sudo php upgrade.php
   - ./application/console oauth:create-client testclient newscoop.dev newscoop.dev --test
   - cd ..

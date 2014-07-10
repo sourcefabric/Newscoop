@@ -25,7 +25,7 @@ class CacheService
      *
      * @param \Newscoop\NewscoopBundle\Services\SystemPreferencesService $systemPreferences
      */
-    public function __construct()
+    public function __construct($systemPreferences)
     {
         if (php_sapi_name() === 'cli') {
             $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
@@ -34,7 +34,6 @@ class CacheService
         }
 
         try {
-            $systemPreferences = \Zend_Registry::get('container')->getService('system_preferences_service');
             switch ($systemPreferences->get('DBCacheEngine', 'Array')) {
                 case 'apc':
                     $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache();
