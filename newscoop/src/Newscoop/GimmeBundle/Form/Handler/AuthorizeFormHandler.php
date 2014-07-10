@@ -15,8 +15,9 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use OAuth2\OAuth2;
 use OAuth2\OAuth2ServerException;
 use OAuth2\OAuth2RedirectException;
+use FOS\OAuthServerBundle\Form\Handler\AuthorizeFormHandler as BaseAuthorizeFormHandler;
 
-class AuthorizeFormHandler
+class AuthorizeFormHandler extends BaseAuthorizeFormHandler
 {
     protected $request;
     protected $form;
@@ -25,8 +26,7 @@ class AuthorizeFormHandler
 
     public function __construct(Form $form, Request $request, SecurityContextInterface $context, OAuth2 $oauth2)
     {
-        $this->form = $form;
-        $this->request = $request;
+        parent::__construct($form, $request)
         $this->context = $context;
         $this->oauth2 = $oauth2;
     }
