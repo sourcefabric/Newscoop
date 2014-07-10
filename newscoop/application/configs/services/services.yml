@@ -199,7 +199,6 @@ services:
         class: Newscoop\Services\ListPaginatorService
     newscoop.cache:
         class: Newscoop\Services\CacheService
-        arguments: ["@system_preferences_service"]
     user.garbage:
         class: Newscoop\Services\GarbageCollectionService
         arguments: ["@em"]
