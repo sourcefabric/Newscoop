@@ -26,7 +26,7 @@ class AuthorizeFormHandler extends BaseAuthorizeFormHandler
 
     public function __construct(Form $form, Request $request, SecurityContextInterface $context, OAuth2 $oauth2)
     {
-        parent::__construct($form, $request)
+        parent::__construct($form, $request);
         $this->context = $context;
         $this->oauth2 = $oauth2;
     }
