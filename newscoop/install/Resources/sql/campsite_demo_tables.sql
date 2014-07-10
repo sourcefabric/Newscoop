@@ -977,7 +977,7 @@ CREATE TABLE `OAuthClient` (
   `allowed_grant_types` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `IdPublication` int(11) DEFAULT NULL,
-  `trusted` TINYINT( 1 ) NOT NULL,
+  `trusted` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_4128BE95C1FD3F4` (`IdPublication`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
