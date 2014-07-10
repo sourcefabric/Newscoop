@@ -116,6 +116,7 @@ class InstallNewscoopCommand extends Console\Command\Command
         } catch (\Exception $e) {
             if ($e->getCode() == '1049') {
                 $databaseService->createNewscoopDatabase($connection);
+                $connection->connect();
             } elseif (strpos($e->getMessage(), 'database exists') === false) {
                 throw $e;
             }
@@ -135,6 +136,7 @@ class InstallNewscoopCommand extends Console\Command\Command
 
             $inputCache = new ArrayInput($arguments);
             $command->run($inputCache, $output);
+            $databaseService->saveDatabaseConfiguration($connection);
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
