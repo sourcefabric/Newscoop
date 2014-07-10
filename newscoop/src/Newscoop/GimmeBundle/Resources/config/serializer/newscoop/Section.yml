@@ -5,19 +5,19 @@ Newscoop\Entity\Section:
             expose: true
             read_only: true
             type: integer
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: number
         name:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: title
         publication:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             accessor:
                 getter: getPublicationName
             serialized_name: publicationName
@@ -26,7 +26,7 @@ Newscoop\Entity\Section:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             accessor:
                 getter: getIssueName
             serialized_name: issueName

@@ -1,0 +1,70 @@
+Newscoop\Entity\Feedback:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
+        user:
+            expose: true
+            read_only: true
+            access_type: public_method
+            groups: ["details"]
+            serialized_name: user
+        section:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: section
+        publication:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: publication
+        article:
+            expose: true
+            read_only: true
+            groups: ["details"]
+            serialized_name: article
+        message:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: message
+        url:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: url
+        subject:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: subject
+        status:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: status
+        time_created:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: created
+        time_updated:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: updated
+        attachment_type:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: attachment_type
+        attachment_id:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: attachment_id

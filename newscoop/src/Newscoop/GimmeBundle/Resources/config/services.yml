@@ -37,7 +37,7 @@ services:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     newscoop.gimme.listener.public_resources:
         class: Newscoop\GimmeBundle\EventListener\PublicResourcesListener
-        arguments:  ["@em", "@fos_oauth_server.server", "@security.context"]
+        arguments:  ["@em", "@fos_oauth_server.server", "@security.context", "@newscoop.publication_service"]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onRequest }
     newscoop.gimme.listener.format_json:

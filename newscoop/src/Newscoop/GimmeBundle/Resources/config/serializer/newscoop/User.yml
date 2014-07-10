@@ -5,42 +5,42 @@ Newscoop\Entity\User:
             expose: true
             read_only: true
             type: integer
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: id
         username:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: username
         email:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: email
         first_name:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: firstName
         last_name:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: lastName
         image:
             expose: true
             read_only: true
             type: string
-            groups: ["list"]
+            groups: ["list", "details"]
             serialized_name: image
         attributes:
             expose: true
             read_only: true
             type: array
-            groups: ["list"]
+            groups: ["list", "details"]
             access_type: public_method
             serialized_name: attributes

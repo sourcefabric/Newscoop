@@ -105,45 +105,40 @@ class EmailService
     /**
      * Send email
      *
-     * @param string      $placeholder
+     * @param string      $subject
      * @param string      $message
      * @param string      $to
      * @param string|null $from
-     * @param string|null $attachmentDir
+     * @param string|null $attachmentPath
      *
      * @return void
      * @throws Exception when error sending email
      */
-    public function send($placeholder, $message, $to, $from = null, $attachmentDir = null)
+    public function send($subject, $message, $to, $from = null, $attachmentPath = null)
     {
         if (empty($from)) {
             $from = 'no-reply@' . $this->publicationService->getPublicationAlias()->getName();
         }
 
-        try {
-
-            $messageToSend = \Swift_Message::newInstance();
-
-            if (is_array($to)) {
-                if (array_key_exists('moderator', $to)) {
-                    $messageToSend->addBcc($to['moderator']);
-                    unset($to['moderator']);
-                }
+        $messageToSend = \Swift_Message::newInstance();
+        
+        if (is_array($to)) {
+            if (array_key_exists('moderator', $to)) {
+                $messageToSend->addBcc($to['moderator']);
+                unset($to['moderator']);
             }
-
-            $messageToSend->setSubject($placeholder)
-                ->setFrom($from)
-                ->setTo($to)
-                ->setBody($message, 'text/html');
-
-            if ($attachmentDir) {
-                $messageToSend->attach(\Swift_Attachment::fromPath($attachmentDir));
-            }
-
-            $this->mailer->send($messageToSend);
-        } catch (\Exception $exception) {
-            throw new \Exception("Error sending email.", 1);
         }
+
+        $messageToSend->setSubject($subject)
+            ->setFrom($from)
+            ->setTo($to)
+            ->setBody($message, 'text/html');
+
+        if ($attachmentPath && file_exists($attachmentPath)) {
+            $messageToSend->attach(\Swift_Attachment::fromPath($attachmentPath));
+        }
+
+        $this->mailer->send($messageToSend);
     }
 
     /**

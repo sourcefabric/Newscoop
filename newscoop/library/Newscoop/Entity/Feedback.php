@@ -19,36 +19,36 @@ use DateTime, Newscoop\Entity\User;
 class Feedback
 {
     /**
-     * @ORM\Id 
+     * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
     protected $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     protected $user;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     protected $section;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     protected $publication;
-    
+
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article", fetch="EAGER")
      * @ORM\JoinColumns({
      *     @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),
      *     @ORM\JoinColumn(name="article_language", referencedColumnName="IdLanguage")
@@ -56,19 +56,19 @@ class Feedback
      * @var Newscoop\Entity\Article
      */
     protected $article;
-    
+
     /**
      * @ORM\Column(length=2048)
      * @var text
      */
     protected $message;
-    
+
     /**
      * @ORM\Column(length=128)
      * @var string
      */
     protected $url;
-    
+
     /**
      * @ORM\Column(length=128)
      * @var string
@@ -101,29 +101,34 @@ class Feedback
      * @var string to code mapper for attachment_type
      */
     static $attachment_type_enum = array('none', 'image', 'document');
-    
+
     /**
      * @ORM\Column(length=1)
      * @var int
      */
     protected $attachment_type;
-    
+
     /**
      * @ORM\Column(type="integer")
      * @var int
      */
     protected $attachment_id;
 
+    public function __construct()
+    {
+        $this->setTimeCreated(new \DateTime());
+    }
 
     /**
      * Set id
      *
-     * @param int $p_id
+     * @param int $id
+     *
      * @return Newscoop\Entity\User
      */
-    public function setId($p_id)
+    public function setId($id)
     {
-        $this->id = $p_id;
+        $this->id = $id;
     }
 
     /**
@@ -181,7 +186,7 @@ class Feedback
     {
         return $this->time_updated;
     }
-    
+
     /**
      * Set url.
      *
@@ -204,7 +209,7 @@ class Feedback
     {
         return $this->url;
     }
-    
+
     /**
      * Set subject.
      *
@@ -250,7 +255,7 @@ class Feedback
     {
         return $this->message;
     }
-    
+
     /**
      * Set user
      *
@@ -273,7 +278,7 @@ class Feedback
     {
         return $this->user;
     }
-    
+
     /**
      * Set section
      *
@@ -296,7 +301,7 @@ class Feedback
     {
         return $this->section;
     }
-    
+
     /**
      * Set publication
      *
@@ -319,7 +324,7 @@ class Feedback
     {
         return $this->publication;
     }
-    
+
     /**
      * Set article
      *
@@ -364,7 +369,7 @@ class Feedback
     {
         return self::$status_enum[$this->status];
     }
-    
+
     /**
      * Set attachment type
      *
@@ -386,7 +391,7 @@ class Feedback
     {
         return self::$attachment_type_enum[$this->attachment_type];
     }
-    
+
     /**
      * Set attachment_id
      *

@@ -67,6 +67,7 @@ client:
   removed: 'Client was removed'
 publicresources: 
   updated: 'Public resources was updated'
+  anonymous_feedback: 'Allow anonymous feedbacks'
 api:
   configure:
     title: 'Configure API - public resources'
@@ -76,6 +77,7 @@ api:
       clients: 'Clients'
     resources:
       info: 'By default all resources are protected by firewall, but you can choose resources to make them public for everyone.'
+      publicComments: 'To allow anonymous comments go to specific publication configure page.'
       add_button: 'Add Client'
     clients:
       table:

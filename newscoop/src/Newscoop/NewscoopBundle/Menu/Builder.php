@@ -57,8 +57,8 @@ class Builder
 
     public function mainMenu($modern = false)
     {
-        $translator = $this->container->get('translator');
         $this->user = $this->container->getService('user')->getCurrentUser();
+        $translator = $this->container->get('translator');        
         $this->preparePrivileges();
 
         $menu = $this->factory->createItem('root');
@@ -199,14 +199,13 @@ class Builder
             array('uri' => $this->container->get('router')->generate('newscoop_newscoop_comments_index'))
         );
 
-        $this->addChild($menu, $translator->trans('Feedback', array(), 'home'), array('zend_route' => array(
-                'module' => 'admin',
-                'controller' => 'feedback',
-                'action' => 'index',
-            ),
-            'resource' => 'feedback',
-            'privilege' => 'manage',
-        ));
+        $this->addChild(
+            $menu,
+            $translator->trans('Feedback', array(), 'home'),
+            array(
+                'uri' => $this->container->get('router')->generate('newscoop_newscoop_feedback_index')
+            )
+        );
 
         $this->addChild($menu, $translator->trans('Media Archive', array(), 'home'), array('zend_route' => array(
                 'module' => 'admin',

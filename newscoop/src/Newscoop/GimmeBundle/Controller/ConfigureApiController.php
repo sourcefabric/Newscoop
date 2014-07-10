@@ -184,6 +184,7 @@ class ConfigureApiController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $router = $this->container->get('router');
+        $translator = $this->container->get('translator');
         $collection = $router->getRouteCollection();
         $allRoutes = $collection->all();
 
@@ -192,6 +193,8 @@ class ConfigureApiController extends Controller
         // * add way to allow anonymous access for feedback posting
 
         $apiRoutes = array();
+        $apiRoutes['newscoop_gimme_feedbacks_createfeedback'] = $translator->trans('publicresources.anonymous_feedback', array(), 'api');
+
         foreach ($allRoutes as $key => $route) {
             if (strpos($key, 'newscoop_gimme_') !== false) {
                 $routeMethods = $route->getMethods();

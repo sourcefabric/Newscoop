@@ -24,14 +24,8 @@ use Newscoop\Service\IOutputSettingIssueService;
 abstract class CampSystem
 {
 
-    /**
-     *
-     */
     abstract protected function dispatch();
 
-    /**
-     *
-     */
     abstract protected function render();
 
     /**
@@ -410,7 +404,6 @@ abstract class CampSystem
 
             /* @var $templateSearchService ITemplateSearchService */
             $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-
             $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
             $data = $templateSearchService->getFrontPage($issueObj->getIssueId(),
                 \Zend_Registry::get('webOutput'));

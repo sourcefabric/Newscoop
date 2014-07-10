@@ -141,7 +141,7 @@ class AttachmentsController extends FOSRestController
     }
 
     /**
-     * Delete image
+     * Delete attachment
      *
      * @ApiDoc(
      *     statusCodes={
