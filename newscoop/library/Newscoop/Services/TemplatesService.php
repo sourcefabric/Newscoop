@@ -20,6 +20,10 @@ class TemplatesService
 
     public function __construct()
     {
+        if (php_sapi_name() == "cli") {
+            return false;
+        }
+
         $this->smarty = \CampTemplate::singleton();
         $this->smarty->assign('gimme', $this->smarty->context());
         $this->preconfigureSmarty();

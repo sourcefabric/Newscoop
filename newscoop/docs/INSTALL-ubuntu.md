@@ -53,7 +53,7 @@ Afterwards, we want to run a simple security script that will remove some danger
 ### Step 3 - Install PHP
 ...
 
-	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-gd curl
+	sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt php5-intl php5-curl php5-gd curl
 
 You will need to restart the Apache2 server afterwards so the configuration can refresh:
 

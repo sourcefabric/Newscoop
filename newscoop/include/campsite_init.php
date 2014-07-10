@@ -15,6 +15,10 @@ if (!isset($GLOBALS['g_campsiteDir'])) {
     $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 }
 
+if (php_sapi_name() == "cli") {
+    return false;
+}
+
 // redirects to the installation process if necessary
 if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
         || !file_exists($GLOBALS['g_campsiteDir'].'/conf/database_conf.php')) {

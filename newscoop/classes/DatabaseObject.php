@@ -63,19 +63,6 @@ class DatabaseObject
 	 */
 	var $m_oldKeyValues = array();
 
-	/**
-	 * If true it will use the caching feature
-	 *
-	 * @var bool
-	 */
-	private static $m_useCache = null;
-
-	/**
-	 * The default engine to use
-	 * @var string
-	 */
-	private static $m_cacheEngine = null;
-
     /** @var EventDispatcher */
     protected static $eventDispatcher = null;
 
@@ -92,15 +79,7 @@ class DatabaseObject
 	 *
 	 */
 	public function DatabaseObject($p_columnNames = null)
-	{	
-		$preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
-
-		if (is_null(self::$m_useCache)) {
-			self::$m_useCache = ($preferencesService->SiteCacheEnabled == 'Y') ? true : false;
-			if (self::$m_useCache) {
-				self::$m_cacheEngine = $preferencesService->CacheEngine;
-			}
-		}
+	{
 	    if (!is_null($p_columnNames)) {
 	    	$this->setColumnNames($p_columnNames);
 	    }
@@ -1000,7 +979,7 @@ class DatabaseObject
 	 */
 	public function GetUseCache()
 	{
-		return DatabaseObject::$m_useCache;
+		return false;
 	}
 
 
@@ -1013,7 +992,7 @@ class DatabaseObject
 	 */
 	public function SetUseCache($p_useCache)
 	{
-		DatabaseObject::$m_useCache = $p_useCache;
+		return false;
 	}
 
 
