@@ -112,9 +112,9 @@ class CommentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/comments/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
-     * @Route("/comments/article/{number}/{language}/{order}.{_format}", defaults={"_format"="json", "order"="chrono"})
-     * @Route("/comments/article/{number}/{language}/{order}/recommended.{_format}", defaults={"_format"="json", "order"="chrono"}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
+     * @Route("/articles/{number}/{language}/comments/{order}.{_format}", defaults={"_format"="json", "order"="chrono"}, options={"expose"=true})
+     * @Route("/comments/article/{number}/{language}/{order}.{_format}", defaults={"_format"="json", "order"="chrono"}, options={"expose"=true})
+     * @Route("/comments/article/{number}/{language}/{order}/recommended.{_format}", defaults={"_format"="json", "order"="chrono"}, options={"expose"=true}, name="newscoop_gimme_comments_getcommentsforarticle_recommended")
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
