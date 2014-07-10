@@ -51,9 +51,7 @@ class AuthorizeController extends BaseAuthorizeController
                 ->finishClientAuthorization(true, $user, $request, $scope);
         }
 
-        $authorize = new Authorize();
-
-        if (($response = $formHandler->process($authorize)) !== false) {
+        if (($response = $formHandler->process()) !== false) {
             $this->processSuccess($user, $formHandler, $request);
         }
 
