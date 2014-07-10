@@ -41,9 +41,12 @@ class AuthorizeFormHandler extends BaseAuthorizeFormHandler
         return !$this->form->getData()->getAllowAccess();
     }
 
-    public function process(Authorize $authorize)
+    public function process()
     {
-        $this->form->setData($authorize);
+        $this->form->setData(new Authorize(
+            $this->request->request->has('accepted'),
+            $this->request->query->all()
+        ));
 
         if ($this->request->getMethod() == 'POST') {
             $this->form->handleRequest($this->request);
