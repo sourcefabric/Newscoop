@@ -23,12 +23,19 @@ class ArticleTopicsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
-	    $metaTopicsList = array();
-	    foreach ($articleTopicsList as $topic) {
-	        $metaTopicsList[] = new MetaTopic($topic);
-	    }
-	    return $metaTopicsList;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTopicsList', implode('-', $this->m_constraints), implode('-', $this->m_order), $p_start, $p_limit, $p_count), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $metaTopicsList = $cacheService->fetch($cacheKey);
+        } else {
+            $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+            $metaTopicsList = array();
+            foreach ($articleTopicsList as $topic) {
+                $metaTopicsList[] = new MetaTopic($topic);
+            }
+            $cacheService->save($cacheKey, $metaTopicsList);
+        }
+        return $metaTopicsList;
 	}
 
 	/**

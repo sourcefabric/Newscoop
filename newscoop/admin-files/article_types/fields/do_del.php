@@ -23,7 +23,7 @@ $fieldName = Input::Get('f_field_name');
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 if ($field->exists()) {
 	$field->delete();
-    
+
     $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
     $cacheService->clearNamespace('article_type');
 }
