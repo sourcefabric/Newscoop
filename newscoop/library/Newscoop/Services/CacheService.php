@@ -59,7 +59,11 @@ class CacheService
                     $this->cacheDriver->setMemcached($memcached);
                     break;
                 case 'xcache':
-                    $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache();
+                    if (ini_get('xcache.var_size')) {
+                        $this->cacheDriver = new \Doctrine\Common\Cache\XcacheCache();
+                    } else {
+                        $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
+                    }
                     break;
                 case 'redis':
                     $redis = new \Redis();
