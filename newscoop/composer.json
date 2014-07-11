@@ -24,7 +24,7 @@
         "silex\/silex":"~1.1",
         "doctrine\/orm":">=2.2.3,<2.4-dev",
         "doctrine\/doctrine-bundle":"1.2.*",
-        "twig\/extensions":"1.0.*",
+        "twig\/extensions":"1.1.*",
         "symfony\/assetic-bundle":"2.3.*",
         "symfony\/swiftmailer-bundle":"2.3.*",
         "symfony\/monolog-bundle":"2.3.*",
