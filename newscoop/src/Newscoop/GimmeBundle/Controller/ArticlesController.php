@@ -241,7 +241,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticles")
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -279,7 +279,7 @@ class ArticlesController extends FOSRestController
      *     output="\Newscoop\Entity\Article"
      * )
      *
-     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_getarticle")
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -333,7 +333,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_linkarticle")
      * @Method("LINK")
      * @View(statusCode=201)
      *
@@ -432,7 +432,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true}, name="newscoop_gimme_articles_unlinkarticle")
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
@@ -524,7 +524,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true})
+     * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_changearticlestatus")
      * @Method("PATCH")
      */
     public function changeArticleStatus(Request $request, $number, $language, $status)
