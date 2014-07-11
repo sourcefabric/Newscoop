@@ -40,7 +40,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json", "language"="en"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_patcharticle")
      * @Method("PATCH")
      */
     public function patchArticleAction(Request $request, $number, $language)
