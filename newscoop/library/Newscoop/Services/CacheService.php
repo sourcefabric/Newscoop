@@ -34,7 +34,7 @@ class CacheService
         }
 
         try {
-            switch ($systemPreferences->get('DBCacheEngine', 'array')) {
+            switch ($systemPreferences->get('DBCacheEngine', 'Array')) {
                 case 'apc':
                     $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache();
                     break;

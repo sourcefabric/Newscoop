@@ -37,30 +37,30 @@ Coordinates: Koordinatlar
 'Map preview': 'Xəritəyə ön baxış'
 'Locations updated.': 'Məkanlar yeniləndi.'
 'Setting the map name helps with map search': 'Xəritəyə ad təyin etməklə xəritə axtarışı asanlaşır'
-Longitude: null
-Latitude: null
+Longitude: Uzunluq
+Latitude: En
 Center: Mərkəz
-'Last Saved Map View': null
-'List of locations updated': null
-width: null
-'show initial map view': null
-'problem at point processing, please send error report': null
-'plain text': null
-'html content': null
-height: null
-'fill in map name': null
-'You do not have the right to remove maps from articles.': null
-'Video file': null
-'Video ID': null
-'The map has been removed from the article.': null
-'Point no.': null
-'Point markers': null
+'Last Saved Map View': 'Son Xəritə Görüntüsü'
+'List of locations updated': 'Yenilənmiş məkan siyahısı'
+width: həcm
+'show initial map view': 'ilkin xəritə görünüşünü göstər'
+'problem at point processing, please send error report': 'məkan əməliyyatında problem var, lütfən, xəta hesabatı göndər'
+'plain text': 'adi yazı'
+'html content': 'html məzmun'
+height: uzunluq
+'fill in map name': 'xəritənin adını yaz'
+'You do not have the right to remove maps from articles.': 'Xəritələri məqalədən xaric etməyə ixtiyarın yoxdur.'
+'Video file': 'Video faylı'
+'Video ID': 'Video ID-si'
+'The map has been removed from the article.': 'Xəritə məqalədən xaric edildi.'
+'Point no.': 'Ünvan nöm.'
+'Point markers': 'Ünvan markerləri'
 None: 'Heç biri'
-'Map Search Example': null
-'Map Preview': null
-'Image URL': null
-video: null
-text: null
-image: null
-icon: null
-'Setting Map Locations': null
+'Map Search Example': 'Xəritə Axtarış Nümunələri'
+'Map Preview': 'Xəritə görüntüsü'
+'Image URL': 'Şəkil URLi'
+video: video
+text: yazı
+image: şəkil
+icon: ikon
+'Setting Map Locations': 'Xəritə Məkanlarını Quraşdırılması'

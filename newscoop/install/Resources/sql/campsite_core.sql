@@ -3254,6 +3254,7 @@ CREATE TABLE OAuthClient (
   allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
   name VARCHAR(255) NOT NULL,
   IdPublication INT DEFAULT NULL,
+  trusted TINYINT(1) NOT NULL,
   INDEX IDX_4128BE95C1FD3F4 (IdPublication),
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;

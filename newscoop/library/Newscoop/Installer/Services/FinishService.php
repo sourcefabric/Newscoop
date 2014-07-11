@@ -90,7 +90,7 @@ class FinishService
         $assetsInstall = new Process("$php $newscoopConsole assets:install $this->newscoopDir/public", null, null, null, 300);
         $assetsInstall->run();
         if (!$assetsInstall->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the assets install command.');
+            throw new \RuntimeException($assetsInstall->getErrorOutput());
         }
     }
 

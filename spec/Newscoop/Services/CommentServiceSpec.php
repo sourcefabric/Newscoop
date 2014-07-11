@@ -3,23 +3,23 @@
 namespace spec\Newscoop\Services;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class CommentServiceSpec extends ObjectBehavior
 {
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Newscoop\Services\CommentService');
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
-     * @param \Doctrine\ORM\EntityRepository $repository
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \Doctrine\ORM\Query\Expr $expr
-     * @param \Doctrine\ORM\AbstractQuery $query
+     * @param \Doctrine\ORM\EntityManager           $em
+     * @param \Doctrine\ORM\EntityRepository        $repository
+     * @param \Doctrine\ORM\QueryBuilder            $queryBuilder
+     * @param \Doctrine\ORM\Query\Expr              $expr
+     * @param \Doctrine\ORM\AbstractQuery           $query
+     * @param \Newscoop\Services\PublicationService $publicationService
      */
-    function let($em, $repository, $queryBuilder, $expr, $query)
+    public function let($em, $repository, $queryBuilder, $expr, $query)
     {
         $em
             ->getRepository('Newscoop\Entity\Comment\Acceptance')
@@ -35,13 +35,13 @@ class CommentServiceSpec extends ObjectBehavior
         $queryBuilder->setParameters(array("name" => null, "email" => null, "ip" => null))->willReturn($queryBuilder);
         $queryBuilder->getQuery()->willReturn($query);
 
-        $this->beConstructedWith($em);
+        $this->beConstructedWith($em, $publicationService);
     }
 
     /**
      * @param \Newscoop\Entity\Repository\CommentRepository $commentRepository
      */
-    function it_should_get_all_replies($commentRepository)
+    public function it_should_get_all_replies($commentRepository)
     {
         $commentRepository->getDirectReplies(33)->willReturn(array(20));
         $commentRepository->getDirectReplies(20)->willReturn(array());
@@ -51,7 +51,7 @@ class CommentServiceSpec extends ObjectBehavior
     /**
      * @param \Newscoop\Entity\Comment\Commenter $commenter
      */
-    function it_should_check_if_user_is_banned($commenter)
+    public function it_should_check_if_user_is_banned($commenter)
     {
         $this->isBanned($commenter)->shouldReturn(false);
     }
