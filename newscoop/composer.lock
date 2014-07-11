@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a22e39d618eccd1478dbedfd814d454f",
+    "hash": "5112916ce6772676bda05a4abddc35d7",
     "packages": [
         {
             "name": "behat/behat",
@@ -74,12 +74,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/CommonContexts.git",
-                "reference": "b9f0dc44d415e94a03152ca6413c89e21889ab56"
+                "reference": "570fb7b5abae498c21c2e39cad9c557b7c8ce7e0"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Behat/CommonContexts/zipball/570fb7b5abae498c21c2e39cad9c557b7c8ce7e0",
-                "reference": "b9f0dc44d415e94a03152ca6413c89e21889ab56",
+                "reference": "570fb7b5abae498c21c2e39cad9c557b7c8ce7e0",
                 "shasum": ""
             },
             "require": {
@@ -140,7 +140,7 @@
                 "Context",
                 "Symfony2"
             ],
-            "time": "2013-03-07 16:08:49"
+            "time": "2014-05-07 08:29:47"
         },
         {
             "name": "behat/gherkin",
@@ -724,7 +724,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -743,7 +743,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1195,7 +1195,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/92d9934f2fca1da15178c91239576ae26e505e60",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/f7f3c2e66c9e60e6cc5b40298880588af52edf56",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -3506,7 +3506,8 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
+                    "email": "aharvey@php.net",
+                    "role": "Lead"
                 },
                 {
                     "name": "Bernhard Schussek",
@@ -4123,12 +4124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "ca69dbba43c3240f808c968771f7ad673c499118"
+                "reference": "ea45769aaba270d05010bb36c23e25ad6fceb55a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/ca69dbba43c3240f808c968771f7ad673c499118",
-                "reference": "ca69dbba43c3240f808c968771f7ad673c499118",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ea45769aaba270d05010bb36c23e25ad6fceb55a",
+                "reference": "ea45769aaba270d05010bb36c23e25ad6fceb55a",
                 "shasum": ""
             },
             "require": {
@@ -4225,7 +4226,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-10 09:13:00"
+            "time": "2014-07-11 09:32:34"
         },
         {
             "name": "twig/extensions",
@@ -4334,26 +4335,23 @@
         },
         {
             "name": "willdurand/js-translation-bundle",
-            "version": "1.2.x-dev",
+            "version": "1.2.0",
             "target-dir": "Bazinga/ExposeTranslationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaJsTranslationBundle.git",
-                "reference": "dee69aa0a1424a067c4608a3278e07cfba903ae7"
+                "reference": "61fa1a3ada45fa42e22b960f128877127c3c6875"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/dee69aa0a1424a067c4608a3278e07cfba903ae7",
-                "reference": "dee69aa0a1424a067c4608a3278e07cfba903ae7",
+                "url": "https://api.github.com/repos/willdurand/BazingaJsTranslationBundle/zipball/61fa1a3ada45fa42e22b960f128877127c3c6875",
+                "reference": "61fa1a3ada45fa42e22b960f128877127c3c6875",
                 "shasum": ""
             },
             "require": {
                 "symfony/console": "~2.1",
                 "symfony/finder": "~2.1",
                 "symfony/framework-bundle": "~2.1"
-            },
-            "replace": {
-                "willdurand/expose-translation-bundle": "1.2.*"
             },
             "require-dev": {
                 "symfony/browser-kit": "~2.1",
@@ -4362,7 +4360,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -4387,7 +4385,7 @@
                 "symfony",
                 "translation"
             ],
-            "time": "2014-01-31 09:56:04"
+            "time": "2013-12-27 02:17:05"
         },
         {
             "name": "willdurand/jsonp-callback-validator",
@@ -4421,7 +4419,7 @@
             ],
             "authors": [
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
@@ -4661,7 +4659,8 @@
             "authors": [
                 {
                     "name": "Chris Boulton",
-                    "homepage": "http://github.com/chrisboulton"
+                    "homepage": "http://github.com/chrisboulton",
+                    "role": "Original developer"
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
