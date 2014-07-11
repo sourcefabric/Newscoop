@@ -628,6 +628,9 @@ function camp_set_author(ArticleTypeField $p_sourceField, &$p_errors)
         }
     }
 
+    $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+    $cacheService->clearNamespace('authors');
+
     return count($p_errors);
 }
 

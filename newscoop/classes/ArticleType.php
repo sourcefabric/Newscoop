@@ -42,7 +42,7 @@ class ArticleType {
 	public function ArticleType($p_articleType)
 	{
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_articleType), 'articleTypeField');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_articleType), 'article_type');
         if ($cacheService->contains($cacheKey)) {
             $this->m_metadata = $cacheService->fetch($cacheKey);
         } else {

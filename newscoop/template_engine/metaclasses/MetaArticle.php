@@ -238,7 +238,7 @@ final class MetaArticle extends MetaDbObject {
                 $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
 
                 $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-                $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $this->type_name, $dbProperty), 'articletype');
+                $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $this->type_name, $dbProperty), 'article_type');
                 if ($cacheService->contains($cacheKey)) {
                     $articleFieldType = $cacheService->fetch($cacheKey);
                 } else {
@@ -524,7 +524,7 @@ final class MetaArticle extends MetaDbObject {
             $cacheService->save($cacheKey, $publicationObj);
         }
 
-        $cacheKeyArticleType = $cacheService->getCacheKey(array('ArticleType', $this->m_dbObject->getProperty('Type')), 'articletype');
+        $cacheKeyArticleType = $cacheService->getCacheKey(array('ArticleType', $this->m_dbObject->getProperty('Type')), 'article_type');
         if ($cacheService->contains($cacheKeyArticleType)) {
             $articleTypeObj = $cacheService->fetch($cacheKeyArticleType);
         } else {

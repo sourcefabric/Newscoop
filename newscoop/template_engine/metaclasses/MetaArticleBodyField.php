@@ -76,7 +76,7 @@ final class MetaArticleBodyField {
             $cacheService->save($cacheKeyArticle, $this->m_parent_article);
         }
         $this->m_fieldName = $p_fieldName;
-        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_parent->type_name, $p_fieldName), 'articletype');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_parent->type_name, $p_fieldName), 'article_type');
         if ($cacheService->contains($cacheKey)) {
             $this->m_articleTypeField = $cacheService->fetch($cacheKey);
         } else {

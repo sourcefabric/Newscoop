@@ -63,6 +63,10 @@ if ($f_search) {
         $topicService->addTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
     }
 }
+
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 ?>
 
 <script type="text/javascript">
