@@ -10,11 +10,8 @@
 
 $f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
-
 require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
 $translator = \Zend_Registry::get('container')->getService('translator');
-
-
 
 $success = false;
 $message = $translator->trans('Access denied.', array(), 'library'); // default error
@@ -25,8 +22,6 @@ $notAffectedArticles = 0;;
 
 $message = '';
 $errorMessage = '';
-
-
 
 $articleCodes = array();
 $flatArticleCodes = array();
@@ -39,20 +34,23 @@ foreach ($f_items as $articleCode) {
 }
 
 /*
-function returnJson($status = 'true', $message = 'Articles updated.', $hiperlink = '') {
-	$returnJson = array();
-	$returnJson['status'] = $status;
-	$returnJson['message'] = $message;
-	$returnJson['hiperlink'] = $hiperlink;
-	return json_encode($returnJson);
+function returnJson($status = 'true', $message = 'Articles updated.', $hiperlink = '')
+{
+    $returnJson = array();
+    $returnJson['status'] = $status;
+    $returnJson['message'] = $message;
+    $returnJson['hiperlink'] = $hiperlink;
+
+    return json_encode($returnJson);
 }
 */
 
-function prepareContextBoxItems($f_params) {
+function prepareContextBoxItems($f_params)
+{
     GLOBAL $f_language_selected;
     $myItems = array();
     $return = array();
-    if(array_key_exists('relatedArticles', $f_params)) {
+    if (array_key_exists('relatedArticles', $f_params)) {
         $f_items = $f_params['relatedArticles'];
     } else {
         $f_items = array();
@@ -60,38 +58,42 @@ function prepareContextBoxItems($f_params) {
     $f_article_id = $f_params['articleId'];
 
     $splitItems = explode('&', $f_items);
-    foreach($splitItems as $splitItem) {
+    foreach ($splitItems as $splitItem) {
         $labelId = explode('=', $splitItem);
-        if(count($labelId) > 1) {
+        if (count($labelId) > 1) {
             $myItems[] = $labelId[1];
         }
     }
     $f_items = $myItems;
     $return['f_related_items'] = $myItems;
     $return['f_article_id'] = $f_article_id;
+
     return $return;
 }
 
+function buildMessage($status, $no, $message)
+{
+    $messageArray = array();
+    $messageArray['status'] = $status;
+    $messageArray['no'] = $no;
+    $messageArray['textMessage'] = $message;
 
-function buildMessage($status, $no, $message) {
-	$messageArray = array();
-	$messageArray['status'] = $status;
-	$messageArray['no'] = $no;
-	$messageArray['textMessage'] = $message;
-	return $messageArray;
+    return $messageArray;
 
 }
 
-function returnJson($affectedNo, $message, $notAffectedNo, $errorMessage, $hiperlink) {
-	$returnJson = array();
-	$returnJson['hiperlink'] = $hiperlink;
+function returnJson($affectedNo, $message, $notAffectedNo, $errorMessage, $hiperlink)
+{
+    $returnJson = array();
+    $returnJson['hiperlink'] = $hiperlink;
 
-	$returnJson['messages'][] = buildMessage('affected', $affectedNo, $message);
-	$returnJson['messages'][] = buildMessage('notAffected', $notAffectedNo, $errorMessage);
-	return json_encode($returnJson);
+    $returnJson['messages'][] = buildMessage('affected', $affectedNo, $message);
+    $returnJson['messages'][] = buildMessage('notAffected', $notAffectedNo, $errorMessage);
+
+    return json_encode($returnJson);
 }
 
-switch($f_action) {
+switch ($f_action) {
 case 'delete':
     if (!$g_user->hasPermission('DeleteArticle')) {
         $success = false;
@@ -102,19 +104,19 @@ case 'delete':
     $notAffectedArticles = 0;
     foreach ($articleCodes as $articleCode) {
         $article = new Article($articleCode['language_id'], $articleCode['article_id']);
+        $creatorId = $article->getCreatorId();
         if ($article->delete()) {
+            \Zend_Registry::get('container')->getService('dispatcher')
+                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('user' => $creatorId)));
             $success = true;
             $affectedArticles += 1;
         } else {
-        	$notAffectedArticles += 1;
+            $notAffectedArticles += 1;
         }
     }
 
-
-
     $message = $translator->trans("$1 articles have been removed", array('$1' => $affectedArticles), 'library');
     $errorMessage = $translator->trans("$1 articles have not been removed", array('$1' => $notAffectedArticles), 'library');
-
 
     break;
 case "workflow_publish":
@@ -129,13 +131,12 @@ case "workflow_publish":
             $success = true;
             $affectedArticles += 1;
         } else {
-        	$notAffectedArticles += 1;
+            $notAffectedArticles += 1;
         }
     }
 
     $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("Published"), '$2' => $affectedArticles), 'library');
     $errorMessage = $translator->trans("Article status not set to $1 for $2 articles", array('$1' => $translator->trans("Published"), '$2' => $notAffectedArticles), 'library');
-
 
     break;
 case 'workflow_submit':
@@ -146,16 +147,15 @@ case 'workflow_submit':
                 $success = true;
                 $affectedArticles += 1;
             } else {
-	        	$notAffectedArticles += 1;
-	        }
+                $notAffectedArticles += 1;
+            }
         } else {
-        	$notAffectedArticles += 1;
+            $notAffectedArticles += 1;
         }
     }
 
     $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("Submitted"), '$2' => $affectedArticles), 'library');
     $errorMessage = $translator->trans("Article status not set to $1 for $2 articles", array('$1' => $translator->trans("Submitted"), '$2' => $notAffectedArticles), 'library');
-
 
     break;
 case 'workflow_new':
@@ -167,11 +167,11 @@ case 'workflow_new':
                 $success = true;
                 $affectedArticles += 1;
             } else {
-	        	$notAffectedArticles += 1;
-	        }
+                $notAffectedArticles += 1;
+            }
         } else {
-	        	$notAffectedArticles += 1;
-	        }
+                $notAffectedArticles += 1;
+            }
     }
 
     $message = $translator->trans("Article status set to $1 for $2 articles", array('$1' => $translator->trans("New"), '$2' => $affectedArticles), 'library');
@@ -186,10 +186,10 @@ case 'switch_onfrontpage':
                 $success = true;
                 $affectedArticles += 1;
             } else {
-	        	$notAffectedArticles += 1;
-	        }
+                $notAffectedArticles += 1;
+            }
         } else {
-        	$notAffectedArticles += 1;
+            $notAffectedArticles += 1;
         }
     }
 
@@ -199,8 +199,8 @@ case 'switch_onfrontpage':
     break;
 case 'switch_onsectionpage':
 
-	$affectedArticles = 0;
-	$notAffectedArticles = 0;
+    $affectedArticles = 0;
+    $notAffectedArticles = 0;
 
     foreach ($articleCodes as $articleCode) {
         $articleObj = new Article($articleCode['language_id'], $articleCode['article_id']);
@@ -209,16 +209,15 @@ case 'switch_onsectionpage':
                 $success = true;
                 $affectedArticles += 1;
             } else {
-            	$notAffectedArticles += 1;
+                $notAffectedArticles += 1;
             }
         } else {
-        	$notAffectedArticles += 1;
+            $notAffectedArticles += 1;
         }
     }
 
     $message = $translator->trans("$1 toggled for $2 articles.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;", '$2' => $affectedArticles), 'library');
     $errorMessage = $translator->trans("$1 not toggled for $2  articles.", array('$1' => "&quot;".$translator->trans("On Section Page")."&quot;", '$2' => $notAffectedArticles), 'library');
-
 
     break;
 case 'switch_comments':
@@ -229,7 +228,7 @@ case 'switch_comments':
                 $success = true;
                 $affectedArticles += 1;
             } else {
-            	$notAffectedArticles += 1;
+                $notAffectedArticles += 1;
             }
         } else {
             $notAffectedArticles += 1;
@@ -248,7 +247,7 @@ case 'unlock':
             $success = true;
             $affectedArticles += 1;
         } else {
-           	$notAffectedArticles += 1;
+               $notAffectedArticles += 1;
         }
     }
 
@@ -285,7 +284,7 @@ case 'move':
         $argsStr .= '&f_article_code[]=' . $articleCode;
     }
 
-	return returnJson(0, '', 0, '',  $Campsite['WEBSITE_URL'] . "/admin/articles/duplicate.php?".$argsStr);
+    return returnJson(0, '', 0, '',  $Campsite['WEBSITE_URL'] . "/admin/articles/duplicate.php?".$argsStr);
     break;
 
 case 'publish_schedule':
@@ -295,13 +294,14 @@ case 'publish_schedule':
     foreach ($flatArticleCodes as $articleCode) {
         $argsStr .= '&f_article_code[]=' . $articleCode;
     }
+
     return returnJson(0, '', 0, '',  $Campsite['WEBSITE_URL'] . "/admin/articles/multi_autopublish.php?".$argsStr);
     break;
 case 'context_box_update':
 
-	$contextContent = prepareContextBoxItems($f_params);
+    $contextContent = prepareContextBoxItems($f_params);
 
-	$articleObj = new Article($f_language_selected, $contextContent['f_article_id']);
+    $articleObj = new Article($f_language_selected, $contextContent['f_article_id']);
     if ($articleObj->userCanModify($g_user)) {
         $contextBoxObj = new ContextBox(null, $contextContent['f_article_id']);
         $contextId = $contextBoxObj->getId();
@@ -309,8 +309,8 @@ case 'context_box_update':
         ContextBoxArticle::saveList($contextId, $relatedItems);
     }
 
-	return json_encode(array(200));
-	break;
+    return json_encode(array(200));
+    break;
 
 case 'context_box_preview_article':
     $return = array();
@@ -322,36 +322,37 @@ case 'context_box_preview_article':
     }
 
     $articleId = $f_params['articleId'];
-    if(!is_numeric($articleId)) {
-    	$articleIdArray = explode('_', $articleId);
-    	$articleId = $articleIdArray[1];
+    if (!is_numeric($articleId)) {
+        $articleIdArray = explode('_', $articleId);
+        $articleId = $articleIdArray[1];
     }
 
     $articleObj = new Article($f_language_selected, $articleId);
 
-	$articleInfo = array();
-	$articleData = $articleObj->getArticleData();
-	// Get article type fields.
-	$dbColumns = $articleData->getUserDefinedColumns(false, true);
-	foreach ($dbColumns as $dbColumn) {
-		if(htmlspecialchars($dbColumn->getDisplayName(0)) == 'full_text') {
-			if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
-	            $value = $articleData->getProperty($dbColumn->getName()) ? $translator->trans('On', array(), 'library') : $translator->trans('Off', array(), 'library');
-	            $return['body'] = $value;
-	        } else {
-	            $return['body'] = $articleData->getProperty($dbColumn->getName());
-	        }
-		}
-	}
+    $articleInfo = array();
+    $articleData = $articleObj->getArticleData();
+    // Get article type fields.
+    $dbColumns = $articleData->getUserDefinedColumns(false, true);
+    foreach ($dbColumns as $dbColumn) {
+        if (htmlspecialchars($dbColumn->getDisplayName(0)) == 'full_text') {
+            if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+                $value = $articleData->getProperty($dbColumn->getName()) ? $translator->trans('On', array(), 'library') : $translator->trans('Off', array(), 'library');
+                $return['body'] = $value;
+            } else {
+                $return['body'] = $articleData->getProperty($dbColumn->getName());
+            }
+        }
+    }
 
     $return['title'] = $articleObj->getTitle();
     $return['articleId'] = $articleId;
     $return['date'] = $articleObj->getCreationDate();
 
-    if(!array_key_exists('body', $return)) {
-    	$return['date'] = $articleObj->getCreationDate();
+    if (!array_key_exists('body', $return)) {
+        $return['date'] = $articleObj->getCreationDate();
     }
       $return['code'] = 200;
+
     return $return;
     break;
 
@@ -360,7 +361,7 @@ case 'context_box_load_list':
     $items = array();
 
     $articleId = $f_params['articleId'];
-    if(!is_numeric($articleId)) {
+    if (!is_numeric($articleId)) {
         $articleIdArray = explode('_', $articleId);
         $articleId = $articleIdArray[1];
     }
@@ -369,8 +370,8 @@ case 'context_box_load_list':
     $contextId = $contextBoxObj->getId();
     $contextArticleIds = $contextBoxObj->getArticlesList();
 
-    foreach($contextArticleIds as $contextArticleId) {
-    	$articleObj = new Article($f_language_selected, $contextArticleId);
+    foreach ($contextArticleIds as $contextArticleId) {
+        $articleObj = new Article($f_language_selected, $contextArticleId);
         $item['title'] = $articleObj->getTitle();
         $item['articleId'] = 'article_'.$contextArticleId;
         $item['date'] = $articleObj->getCreationDate();
@@ -380,11 +381,10 @@ case 'context_box_load_list':
 
     $return['items'] = $items;
     $return['code'] = 200;
+
     return $return;
     break;
 }
-
-
 
 if ($f_target == 'art_ofp') {
     $value = ($f_value == 'Yes') ? true : false;
@@ -398,7 +398,7 @@ if ($f_target == 'art_osp') {
 }
 if ($f_target == 'art_status') {
     if (in_array($f_value, array('Published', 'Submitted', 'New'))) {
-        switch($f_value) {
+        switch ($f_value) {
         case 'New': $f_value = 'N'; break;
         case 'Published': $f_value = 'Y'; break;
         case 'Submitted': $f_value = 'S'; break;
@@ -430,8 +430,8 @@ if ($f_target == 'art_status') {
     }
 }
 
-if($affectedArticles == 0 && $success) {
-	$affectedArticles = 1;
+if ($affectedArticles == 0 && $success) {
+    $affectedArticles = 1;
 }
 
 return returnJson($affectedArticles, $message, $notAffectedArticles, $errorMessage, $hiperlink);

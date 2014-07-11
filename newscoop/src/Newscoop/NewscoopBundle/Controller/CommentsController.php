@@ -18,6 +18,7 @@ use Newscoop\Entity\Comment;
 use Newscoop\NewscoopBundle\Form\Type\CommentsFilterType;
 use Newscoop\NewscoopBundle\Form\Type\CommentSearchType;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Comments controller.
@@ -31,6 +32,13 @@ class CommentsController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $userService = $this->get('user');
+        $blogService = $this->get('blog');
+        $user = $userService->getCurrentUser();
+        if ($blogService->isBlogger($user)) {
+            throw new AccessDeniedException();
+        }
+
         $em = $this->container->get('em');
         $translator = $this->container->get('translator');
         $imageService = $this->container->get('image');

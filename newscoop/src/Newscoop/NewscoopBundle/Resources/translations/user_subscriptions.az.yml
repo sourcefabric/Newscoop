@@ -1,67 +1,67 @@
-third: null
-second: null
-forth: null
-first: null
-'You must input a number greater than 0 into the Number of addresses field.': null
-'You must input a number between 0 and 255 into the Start IP address $1 field.': null
-'User IP access list management': null
-'The IP address group conflicts with another existing group.': null
-'Subscription sections': null
-'No records.': null
-'You have subscription for all available publications': null
-'Subscription type:': null
-'Start:': null
-'Start Date': null
-'Sections:': null
-'Publication:': null
-'Paid days': null
-'Paid Days:': null
-Paid: null
-'No subscriptions': null
-'Languages:': null
-'Edit all sections': null
-'Days:': null
-'Days must be number': null
-Any: null
-'Add section': null
-saved: null
-removed: null
-deleted: null
-deactivated: null
-activated: null
-'Value is required and cant be empty': null
-'That user name already exists, please choose a different login name.': null
-'That $1 already exists, please choose a different $2.': null
-'Subscriptions exist for all available publications.': null
-'Subscription IP Addresses': null
-'Subscription $1': null
-'Subscriber saved.': null
-'Subscriber management': null
-'Subscriber deleted.': null
-'Start IP': null
-'Select country': null
-'Number of addresses': null
-'Number of Addressses': null
-'No IP Addresses': null
-'IP Address added allready': null
-'IP Address $1': null
-'IP Access': null
-'Full Name': null
-'Edit subscriptions': null
-'Edit subscriber $1': null
-E-Mail: null
-'Delete subscriber $1': null
-'Creation Date': null
-'Change subscriber information': null
-'Add new IP address': null
-'Add new IP Address': null
-'Accout Name': null
-'%value% must be greater than %min%': null
-'%value% is not a valid IP Address': null
-'Regardless of the language': null
-'Individual languages': null
-'Add sections now': null
-'Add sections later': null
-'Subscription Type': null
-'Paid (payment will be confirmed later)': null
-'Paid (confirm payment now)': null
+third: üçüncü
+second: ikinci
+forth: dördüncü
+first: birinci
+'You must input a number greater than 0 into the Number of addresses field.': 'Ünvanların Sayı sahəsinə 0-dan böyük rəqəm daxil etməlisən.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'IP Başlat $1 ünvan sahəsinə 0-la 255 arasında bir rəqəm daxil etməlisən.'
+'User IP access list management': 'İstifadəçinin IP giriş siyahı idarəçiliyi'
+'The IP address group conflicts with another existing group.': 'IP ünvan qrupu digər mövcud qrupla uyğunsuzdur.'
+'Subscription sections': 'Abunəlik bölmələri'
+'No records.': 'Yazı yoxdur.'
+'You have subscription for all available publications': 'Bütün mövcud nəşrlər üçün abunəliyin var'
+'Subscription type:': 'Abunəlik növü:'
+'Start:': 'Başla:'
+'Start Date': 'Başlama Tarixi'
+'Sections:': 'Bölmələr:'
+'Publication:': 'Nəşr:'
+'Paid days': 'Ödənmiş günlər'
+'Paid Days:': 'Ödənmiş Günlər:'
+Paid: Ödənmiş
+'No subscriptions': 'Abunəlik yoxdur'
+'Languages:': 'Dillər:'
+'Edit all sections': 'Bütün bölmələri dəyiş'
+'Days:': 'Günlər:'
+'Days must be number': 'Günlər rəqəmlərdən ibarət olmalıdır'
+Any: 'Hər hansı'
+'Add section': 'Bölmə əlavə et'
+saved: yaddaşda
+removed: çıxarıldı
+deleted: silindi
+deactivated: 'deaktivasiya edildi'
+activated: aktivləşdirildi
+'Value is required and cant be empty': 'Dəyər vacibdir və boş saxlanıla bilməz'
+'That user name already exists, please choose a different login name.': 'O istifadəçi adı artıq mövcuddur, lütfən, başqa giriş adı seç.'
+'That $1 already exists, please choose a different $2.': 'O $1 artıq mövcuddur, lütfən, başqa $1 seç.'
+'Subscriptions exist for all available publications.': 'Abunəlik bütün mövcud nəşrlər üçün keçərlidir.'
+'Subscription IP Addresses': 'Abunəlik IP Ünvanları'
+'Subscription $1': '$1 Abunəlik'
+'Subscriber saved.': 'Abunə saxlandı.'
+'Subscriber management': 'Abunə idarəçiliyi'
+'Subscriber deleted.': 'Abunə silindi.'
+'Start IP': 'Başlama IP-si'
+'Select country': 'Ölkə seç'
+'Number of addresses': 'Ünvanların sayı'
+'Number of Addressses': 'Ünvanların Sayı'
+'No IP Addresses': 'IP Ünvan Yoxdur'
+'IP Address added allready': 'IP Ünvan artıq əlavə edilib'
+'IP Address $1': '$1 IP Ünvan'
+'IP Access': 'IP Giriş'
+'Full Name': 'Tam Ad'
+'Edit subscriptions': 'Abunəlikləri dəyiş'
+'Edit subscriber $1': '$1 abunəsini dəyiş'
+E-Mail: Email
+'Delete subscriber $1': '$1 abunəsini sil'
+'Creation Date': 'Yaradılma Tarixi'
+'Change subscriber information': 'Abunə məlumatını dəyiş'
+'Add new IP address': 'Yeni IP ünvan əlavə et'
+'Add new IP Address': 'Yeni IP Ünvan əlavə et'
+'Accout Name': 'Hesab Adı'
+'%value% must be greater than %min%': '%value% %min%-dən böyük olmalıdır'
+'%value% is not a valid IP Address': '%value% düzgün IP Ünvan deyil'
+'Regardless of the language': 'Dildən asılı olmayaraq'
+'Individual languages': 'Şəxsi dillər'
+'Add sections now': 'İndi bölmə əlavə et'
+'Add sections later': 'Bölmələri daha sonra əlavə et'
+'Subscription Type': 'Abunəlik Növü'
+'Paid (payment will be confirmed later)': 'Ödənişli (ödəniş bir az sonra təsdiqlənəcək)'
+'Paid (confirm payment now)': 'Ödənişli (ödənişi indi təsdiqlə)'

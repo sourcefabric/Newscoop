@@ -9,9 +9,6 @@
 
 namespace Newscoop\TemplateList;
 
-use Newscoop\ListResult;
-use Newscoop\TemplateList\PaginatedBaseList;
-
 /**
  * List users
  */
@@ -25,11 +22,8 @@ class UsersList extends PaginatedBaseList
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
 
-        $tempList = array_map(function ($row) {
-            $user = $row[0];
-            $user->setPoints((int) $row['comments']);
-
-            return new \MetaUser($user);
+        $tempList = array_map(function ($user) {
+              return new \MetaUser($user);
         }, $list->items);
 
         $list->items = $tempList;
@@ -51,12 +45,12 @@ class UsersList extends PaginatedBaseList
         // convert your special parameters into criteria properties.
         if (array_key_exists('search', $parameters)) {
             $this->criteria->query = $parameters['search'];
-        } else if (array_key_exists('filter', $parameters)) {
+        } elseif (array_key_exists('filter', $parameters)) {
             $filter = $parameters['filter'];
             $this->criteria->groups = !empty($parameters['editor_groups']) ? array_map('intval', explode(',', $parameters['editor_groups'])) : array();
             switch ($filter) {
                 case 'active':
-                    $this->criteria->orderBy = array('comments' => 'desc');
+                    $this->criteria->orderBy = array('points' => 'desc');
                     $this->criteria->excludeGroups = true;
                     break;
 
@@ -71,7 +65,7 @@ class UsersList extends PaginatedBaseList
                     if (preg_match('/([a-z])-([a-z])/', $filter, $matches)) {
                         $this->criteria->nameRange = range($matches[1], $matches[2]);
                     } else {
-                        CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter", $p_smarty);
+                        \CampTemplate::singleton()->trigger_error("invalid parameter $filter in filter");
                     }
                     break;
             }

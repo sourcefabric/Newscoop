@@ -3,31 +3,31 @@
 namespace spec\Newscoop\Services;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Newscoop\Entity\Attachment;
 use Newscoop\Entity\Translation;
 use Newscoop\Entity\Language;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Newscoop\Services\UserService;
 
 class AttachmentServiceSpec extends ObjectBehavior
 {
-    function let($die, \Doctrine\ORM\EntityManager $em, \Symfony\Component\Routing\Router $router)
+    public function let($die, \Doctrine\ORM\EntityManager $em, \Symfony\Component\Routing\Router $router, UserService $userService)
     {
         $this->beConstructedWith(array(
             'file_base_url' => "files/",
             'file_directory' => realpath(__DIR__ . '/../../../newscoop/public/files').'/',
             'file_num_dirs_level_1' => 1000,
             'file_num_dirs_level_2' => 1000,
-        ), $em, $router);
+        ), $em, $router, $userService);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Newscoop\Services\AttachmentService');
     }
 
-    function it_should_return_path_for_attachment()
+    public function it_should_return_path_for_attachment()
     {
         $this->getStorageLocation(new Attachment())
             ->shouldBe(realpath(__DIR__ . '/../../../newscoop/public/files').'/0000/0000/000000000');
@@ -41,7 +41,7 @@ class AttachmentServiceSpec extends ObjectBehavior
 
     }
 
-    function it_should_upload_attachment()
+    public function it_should_upload_attachment()
     {
         $filesystem = new Filesystem();
 
@@ -53,7 +53,7 @@ class AttachmentServiceSpec extends ObjectBehavior
         $this->upload($uploadedFile, 'Test file', $language, array());
     }
 
-    function it_should_update_attachment()
+    public function it_should_update_attachment()
     {
         $filesystem = new Filesystem();
 
@@ -63,7 +63,8 @@ class AttachmentServiceSpec extends ObjectBehavior
         $language = new Language();
         $attachment = new Attachment();
 
-        $description = new Translation();
+        $phraseId = 1;
+        $description = new Translation($phraseId);
         $description->setLanguage($language);
         $description->setTranslationText('Description text');
         $attachment->setDescription($description);
@@ -71,14 +72,14 @@ class AttachmentServiceSpec extends ObjectBehavior
         $this->upload($uploadedFile, 'Test file - updated', $language, array(), $attachment);
     }
 
-    function it_should_remove_attachemnt()
+    public function it_should_remove_attachemnt()
     {
         $attachment = new Attachment();
 
         $this->remove($attachment);
     }
 
-    function it_should_generate_attachment_url()
+    public function it_should_generate_attachment_url()
     {
         $attachment = new Attachment();
         $attachment->setName('testfile.pdf')->setId(34);

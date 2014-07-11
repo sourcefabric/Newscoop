@@ -1,0 +1,285 @@
+Plugins: null
+'Manage Plugins': null
+Account: null
+'Items per page': null
+'Add new': null
+Home: null
+Logout: null
+More...: null
+Content: null
+Languages: null
+Countries: null
+Themes: null
+Topics: null
+Configure: null
+'Image Archive': null
+'Add Article': null
+Fields: null
+Delete: null
+Type: null
+Name: null
+Code: null
+Edit: null
+Login: null
+Password: null
+Site: null
+Path: null
+'Go up': null
+URL: null
+Order: null
+Hide: null
+Duplicate: null
+Subscription: null
+expires: null
+starts: null
+before: null
+after: null
+on: null
+status: null
+active: null
+inactive: null
+Subscribers: null
+Staff: null
+'Select destination': null
+'No languages': null
+'---Select language---': null
+'No publications': null
+'---Select publication---': null
+'No issues': null
+'---Select issue---': null
+'No sections': null
+'---Select section---': null
+Language: null
+Country: null
+'Account name': null
+Publication: Հրապարակում
+'Default language': null
+Subscriptions: null
+Issue: null
+Number: null
+Section: null
+Keywords: null
+Topic: null
+'URL Name': null
+'Left to pay': null
+Active: null
+Trial: null
+Next: null
+Previous: null
+Translate: null
+View: null
+'Scheduled Publishing': null
+Time: null
+Action: null
+'Schedule a new action': null
+'Scheduling a new publish action': null
+'Delete scheduled publish action': null
+Date/Time: null
+'You must select an action.': null
+'You do not have the right to schedule issues or articles for automatic publishing.': null
+'Front page': null
+'Section page': null
+'Show on front page': null
+'Remove from front page': null
+'Show on section page': null
+'Remove from section page': null
+Actions: null
+Publishing: null
+Show: null
+Remove: Հեռացնել
+'Article Types': null
+'Staff User Types': null
+Publications: null
+Issues: null
+Sections: null
+Articles: null
+Images: null
+Change: null
+'Add new issue': null
+'Section Template': null
+'Article Template': null
+'Default Language': null
+'Paid Period': null
+Preview: null
+'You must fill in the $1 field.': null
+Error: null
+'Invalid input: $1': null
+'Language does not exist.': null
+'Publication does not exist.': null
+'Issue does not exist.': null
+'You must select a language.': null
+'Section does not exist.': null
+'No articles.': null
+'Article does not exist.': null
+'Image does not exist.': null
+'Access denied': null
+'Invalid parameters received': null
+'Add new article': null
+Status: null
+Published: null
+'Not published': null
+Submitted: null
+New: null
+Article: null
+Publish: null
+Unpublish: null
+Unlock: null
+Uploaded: null
+YYYY-MM-DD: null
+Submit: null
+Image: null
+Description: null
+Photographer: null
+Place: null
+Date: null
+Thumbnail: null
+'In use': null
+'Additional searches': null
+'Most Recently Added': null
+'Most Recently Modified': null
+'$1 images found': null
+'Reset search conditions': null
+'Image number': null
+Users: null
+Localizer: null
+'Adding new translation': null
+'No more languages.': null
+'The $1 field may only contain letters, digits and underscore (_) character.': null
+'Add new publication': null
+'Upload new template': null
+'Add new staff member': null
+'Staff member deleted.': null
+'Add new subscriber': null
+'Add new user type': null
+'Add new article type': null
+'Add new country': null
+'Add new language': null
+'View logs': null
+'Change your password': null
+'Your Articles': null
+'Submitted Articles': null
+Logs: null
+'There are $1 article(s) left.': null
+'There are $1 issues(s) left.': null
+'There are $1 section(s) left.': null
+'There are $1 publication(s) left.': null
+'There are $1 countries left.': null
+'Name <SMALL>(click to edit)</SMALL>': null
+'Add new subscription': null
+'You do not have the right to add subscriptions.': null
+'Adding subscription': null
+'Delete subscription': null
+'You do not have the right to delete subscriptions.': null
+'No such subscription.': null
+Yes: null
+No: null
+Close: null
+'No issues.': null
+'Back to Edit Article': null
+'No topics': null
+'You do not have the right to add articles.': null
+Start: null
+Days: null
+'The sections could not be added successfully. Some of them were already added !': null
+'Add another': null
+Cancel: null
+Done: null
+OK: null
+Save: Պահպանել
+Search: null
+'Make a selection': null
+'You must input a number greater than 0 into the $1 field.': null
+'You must input a valid date.': null
+'Add new field': null
+'Article automatic publishing schedule': null
+'Are you sure you want to delete this scheduled action?': null
+Unlink: null
+'Are you sure you want to delete the image $1?': null
+'No such issue.': null
+'Are you sure you want to delete the subscription to the publication $1?': null
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': null
+GB: null
+MB: null
+KB: null
+bytes: null
+Attach: null
+Back: null
+File: null
+'Save and Close': null
+Add: null
+'Select All': null
+'Select None': null
+'Add Event': null
+N/A: null
+'On Front Page': null
+'On Section Page': null
+'Created by': null
+'Creation date': null
+'Publication List': null
+'Issue List': null
+'Section List': null
+All: null
+duplicate: null
+move: null
+Move: null
+'From:': null
+'Date:': null
+Hidden: null
+Comments: null
+Comment: null
+Approved: null
+Subject: null
+'IP address:': null
+'Email:': null
+Author: null
+'Article name': null
+'Hide article': null
+'Show article': null
+'Article Type Fields': null
+'Article Images': null
+'Log Messages': null
+'Article Files': null
+'Article Comments': null
+'Are you sure you want to deactivate the subscription?': null
+'Are you sure you want to activate the subscription?': null
+Other: null
+'Time:': null
+'No events.': null
+'Default templates': null
+'System Preferences': null
+'The date must be in the future.': null
+Send: null
+'Thank you.': null
+'Please take a minute to send us an email.': null
+(optional): null
+'The URL you entered is invalid: $1': null
+Reads: null
+'Publish with issue': null
+'Universal List': null
+'Invalid security token!': null
+Authors: null
+Title: Վերնագիր
+'Edit country': null
+'Entry $1 prepared for publishing': null
+'Entry deleted': null
+'Feed saved': null
+'Item published': null
+'Settings saved': null
+'Self-delete is not permitted.': null
+'Edit staff member $1': null
+'Delete staff member $1': null
+'Could not save user $1. Please make sure it does not already exist': null
+'Could not save user with e-mail address $1. Please make sure it does not already exist': null
+'Changing user type would prevent you to manage users. Aborted.': null
+'Staff member saved.': null
+'Permissions: $1': null
+'Change user account information': null
+'Staff management': null
+Updated: null
+Options: null
+Verified: null
+Confirm: null
+at: null
+published: null
+unpublished: null
+nopermissions: null

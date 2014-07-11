@@ -11,7 +11,6 @@ namespace Newscoop\Installer\Services;
 use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Newscoop\Entity\User;
 use Crontab\Crontab;
 use Crontab\Job;
@@ -91,7 +90,7 @@ class FinishService
         $assetsInstall = new Process("$php $newscoopConsole assets:install $this->newscoopDir/public", null, null, null, 300);
         $assetsInstall->run();
         if (!$assetsInstall->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the assets install command.');
+            throw new \RuntimeException($assetsInstall->getErrorOutput());
         }
     }
 
@@ -173,7 +172,6 @@ class FinishService
             $salt,
             hash(User::HASH_ALGO, $salt . $config['recheck_user_password']),
         ));
-
 
         $sql = "UPDATE liveuser_users SET Password = ?, EMail = ?, time_updated = NOW(), time_created = NOW(), status = '1', is_admin = '1' WHERE id = 1";
         $stmt = $connection->prepare($sql);

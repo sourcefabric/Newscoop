@@ -36,7 +36,7 @@ class ImageUriHandler
             )).'/'.$data->image;
 
             return $imageUri;
-        } elseif (property_exists($data, 'imageId')) {
+        } elseif (property_exists($data, 'imageId') && $data->imageId) {
             $image = $this->imageService->find($data->imageId);
             $imageSrc = $this->imageService->getSrc($image->getPath(), $image->getWidth(), $image->getHeight());
             $imageUri = $this->publicationAliasName . $this->zendRouter->assemble(array(

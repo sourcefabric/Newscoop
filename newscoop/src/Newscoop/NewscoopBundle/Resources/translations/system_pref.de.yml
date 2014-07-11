@@ -107,6 +107,7 @@ newscoop:
             usergarbage: null
             usergarbagedaysinfo: null
             usergarbagedays: null
+            smartyUseProtocol: null
         popover:
             cacheengine: 'Ermöglicht oder verhindert das APC Caching, welches die Leistung von Newscoop verbessern kann.'
             cacheenginehost: 'Cache-Host eingeben (für Memcache, Memcached oder Redis)'
@@ -130,3 +131,4 @@ newscoop:
                 secure: 'Falls Sie eine sichere URL für reCAPTCHA benutzen, wählen Sie die Option Ja'
             garbage: null
             lifetime: null
+            smartyuseprotocol: null

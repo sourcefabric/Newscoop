@@ -215,7 +215,7 @@ abstract class CampURI
             $uriString = preg_replace('/[\\\"\\\'][\\s]*javascript:(.*)[\\\"\\\']/',
                     '""', $uriString);
         }
-        
+
         $this->parse($uriString);
         $this->m_queryArray = array_merge($this->m_queryArray,
                 CampRequest::GetInput('POST'));
@@ -383,6 +383,22 @@ abstract class CampURI
     }
 
 // fn getBase
+
+    /**
+     * Gets the relative URI base, it is '//', host and (if exists) port.
+     *
+     * @return string $relativeBase
+     *      The relative URI base
+     */
+    public function getRelativeBase()
+    {
+        $relativeBase = '//' . $this->m_host;
+        if (is_numeric($this->m_port)) {
+            $relativeBase .= ':' . $this->m_port;
+        }
+
+        return $relativeBase;
+    }
 
     /**
      * Gets the base plus the path from the current URI.

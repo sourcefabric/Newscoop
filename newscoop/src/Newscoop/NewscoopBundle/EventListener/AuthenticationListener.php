@@ -29,7 +29,7 @@ class AuthenticationListener
     /**
      * Contruct AuthenticationListener object
      *
-     * @param UserService $userService User service
+     * @param UserService $userService   User service
      * @param UserService $routerService Symfony router
      */
     public function __construct(UserService $userService, Router $router)

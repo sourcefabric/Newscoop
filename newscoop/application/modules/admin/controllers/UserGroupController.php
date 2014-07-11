@@ -21,7 +21,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $this->view->groups = $this->repository->findAll();
 
@@ -33,7 +33,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
     }
 
     public function addAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = $this->getForm()->setMethod('post')->setAction('');
         $group = new Group;
@@ -54,7 +54,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
     }
 
     public function editAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = $this->getForm();
         $group = $this->_helper->entity('Newscoop\Entity\User\Group', 'group');
@@ -100,12 +100,12 @@ class Admin_UserGroupController extends Zend_Controller_Action
     }
 
     public function deleteAction()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $groupId = $this->getRequest()->getParam('group', 0);
         $group = $this->repository->find($groupId);
         $users = $group->getUsers();
-        
+
         if (count($users) == 0) {
             $this->repository->delete($groupId);
             $this->_helper->flashMessenger->addMessage($translator->trans('User type deleted.', array(), 'user_types'));
@@ -121,7 +121,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
      * @return Zend_Form
      */
     private function getForm()
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $form = new Zend_Form;
 

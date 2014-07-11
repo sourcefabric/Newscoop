@@ -442,6 +442,16 @@ class PreferencesType extends AbstractType
         ->add('userGarbageDays', 'integer', array(
             'attr' => array('max' => 999, 'min' => 1),
             'required' => true
+        ))
+        ->add('smartyUseProtocol', 'choice', array(
+            'choices'   => array(
+                'Y' => 'newscoop.preferences.label.yesoption',
+                'N' => 'newscoop.preferences.label.nooption'
+            ),
+            'error_bubbling' => true,
+            'multiple' => false,
+            'expanded' => true,
+            'required' => true,
         ));
     }
 

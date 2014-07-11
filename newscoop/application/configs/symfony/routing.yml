@@ -14,8 +14,12 @@ _bazinga_exposetranslation:
     resource: "@BazingaExposeTranslationBundle/Resources/config/routing/routing.yml"
 fos_oauth_server_token:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+    options:
+        expose: true
 fos_oauth_server_authorize:
     resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+    options:
+        expose: true
 oauth_login:
     pattern:   /oauth/v2/auth_login
     defaults:  { _controller: NewscoopGimmeBundle:Oauth:login }

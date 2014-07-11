@@ -19,6 +19,7 @@
 -- Table structure for table `Aliases`
 --
 
+
 DROP TABLE IF EXISTS `Aliases`;
 
 CREATE TABLE IF NOT EXISTS `Aliases` (
@@ -1637,7 +1638,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(65,'CollectStatistics','Y','2011-06-13 09:19:05'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-06-13 09:19:05'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-06-13 09:19:05'),(49,'MapPopupHeightMin','150','2011-06-13 09:19:05'),(50,'MapVideoWidthYouTube','320','2011-06-13 09:19:05'),(51,'MapVideoHeightYouTube','240','2011-06-13 09:19:05'),(52,'MapVideoWidthVimeo','320','2011-06-13 09:19:05'),(53,'MapVideoHeightVimeo','180','2011-06-13 09:19:05'),(54,'MapVideoWidthFlash','320','2011-06-13 09:19:05'),(55,'MapVideoHeightFlash','240','2011-06-13 09:19:05'),(56,'MapVideoWidthFlv','320','2011-06-13 09:19:05'),(57,'MapVideoHeightFlv','240','2011-06-13 09:19:05'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(61,'MapAutoFocusDefault','1','2011-06-13 09:19:05'),(62,'MapAutoFocusMaxZoom','10','2011-06-13 09:19:05'),(63,'MapAutoFocusBorder','50','2011-06-13 09:19:05'),(64,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-06-13 09:19:05'),(79,'GeoSearchLocalGeonames','1','2013-02-06 14:00:00'),(80,'GeoSearchMapquestNominatim','1','2013-02-06 14:00:00'), (81, 'EmailFromAddress', null, '2013-02-06 14:00:00'), (82, 'EmailContact', null, '2013-02-06 14:00:00');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(65,'CollectStatistics','Y','2011-06-13 09:19:05'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-06-13 09:19:05'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-06-13 09:19:05'),(49,'MapPopupHeightMin','150','2011-06-13 09:19:05'),(50,'MapVideoWidthYouTube','320','2011-06-13 09:19:05'),(51,'MapVideoHeightYouTube','240','2011-06-13 09:19:05'),(52,'MapVideoWidthVimeo','320','2011-06-13 09:19:05'),(53,'MapVideoHeightVimeo','180','2011-06-13 09:19:05'),(54,'MapVideoWidthFlash','320','2011-06-13 09:19:05'),(55,'MapVideoHeightFlash','240','2011-06-13 09:19:05'),(56,'MapVideoWidthFlv','320','2011-06-13 09:19:05'),(57,'MapVideoHeightFlv','240','2011-06-13 09:19:05'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(61,'MapAutoFocusDefault','1','2011-06-13 09:19:05'),(62,'MapAutoFocusMaxZoom','10','2011-06-13 09:19:05'),(63,'MapAutoFocusBorder','50','2011-06-13 09:19:05'),(64,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-06-13 09:19:05'),(79,'GeoSearchLocalGeonames','1','2013-02-06 14:00:00'),(80,'GeoSearchMapquestNominatim','1','2013-02-06 14:00:00'), (81, 'EmailFromAddress', null, '2013-02-06 14:00:00'), (82, 'EmailContact', null, '2013-02-06 14:00:00'), (83, 'SmartyUseProtocol', 'Y', null);
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2178,6 +2179,7 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `context_articles`;
 
 -- Tables for context box
 CREATE TABLE IF NOT EXISTS `context_articles` (
@@ -2187,6 +2189,7 @@ CREATE TABLE IF NOT EXISTS `context_articles` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `context_boxes`;
 
 CREATE TABLE IF NOT EXISTS `context_boxes` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -3000,6 +3003,7 @@ UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 DROP TABLE IF EXISTS `audit_event`;
+
 CREATE TABLE IF NOT EXISTS `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
@@ -3014,6 +3018,7 @@ CREATE TABLE IF NOT EXISTS `audit_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_attribute`;
+
 CREATE TABLE IF NOT EXISTS `user_attribute` (
   `user_id` int(11) unsigned NOT NULL,
   `attribute` varchar(255) NOT NULL,
@@ -3022,6 +3027,7 @@ CREATE TABLE IF NOT EXISTS `user_attribute` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_points_index`;
+
 CREATE TABLE IF NOT EXISTS `user_points_index` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
@@ -3032,6 +3038,7 @@ CREATE TABLE IF NOT EXISTS `user_points_index` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_token`;
+
 CREATE TABLE IF NOT EXISTS `user_token` (
   `user_id` int(11) unsigned NOT NULL,
   `action` varchar(40) NOT NULL,
@@ -3041,6 +3048,7 @@ CREATE TABLE IF NOT EXISTS `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ingest_feed`;
+
 CREATE TABLE IF NOT EXISTS `ingest_feed` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
@@ -3050,6 +3058,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ingest_feed_entry`;
+
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `feed_id` int(11) unsigned NOT NULL,
@@ -3073,6 +3082,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user_identity`;
+
 CREATE TABLE IF NOT EXISTS `user_identity` (
   `provider` varchar(80) NOT NULL,
   `provider_user_id` varchar(255) NOT NULL,
@@ -3082,6 +3092,7 @@ CREATE TABLE IF NOT EXISTS `user_identity` (
 
 
 DROP TABLE IF EXISTS `article_datetimes`;
+
 CREATE TABLE `article_datetimes` (
   `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
@@ -3106,6 +3117,7 @@ CREATE TABLE `article_datetimes` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `ArticleRendition`;
+
 CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   `image_id` int(11) NOT NULL,
   `rendition_id` varchar(255) NOT NULL,
@@ -3119,6 +3131,7 @@ CREATE TABLE IF NOT EXISTS `ArticleRendition` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package`;
+
 CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rendition_id` varchar(255) DEFAULT NULL,
@@ -3133,6 +3146,7 @@ CREATE TABLE IF NOT EXISTS `package` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_article`;
+
 CREATE TABLE IF NOT EXISTS `package_article` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -3141,6 +3155,7 @@ CREATE TABLE IF NOT EXISTS `package_article` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_article_package`;
+
 CREATE TABLE IF NOT EXISTS `package_article_package` (
   `article_id` int(11) NOT NULL,
   `package_id` int(11) NOT NULL,
@@ -3152,6 +3167,7 @@ CREATE TABLE IF NOT EXISTS `package_article_package` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `package_item`;
+
 CREATE TABLE IF NOT EXISTS `package_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `package_id` int(11) DEFAULT NULL,
@@ -3168,6 +3184,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
 -- --------------------------------------------------------
 
 DROP TABLE IF EXISTS `rendition`;
+
 CREATE TABLE IF NOT EXISTS `rendition` (
   `name` varchar(255) NOT NULL,
   `width` int(11) NOT NULL,
@@ -3186,6 +3203,8 @@ ALTER TABLE `package_article_package`
   ADD CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE;
 
+DROP TABLE IF EXISTS `webcode`;
+
 CREATE TABLE IF NOT EXISTS `webcode` (
   `webcode` varchar(10) NOT NULL,
   `article_number` int(10) unsigned NOT NULL,
@@ -3193,6 +3212,8 @@ CREATE TABLE IF NOT EXISTS `webcode` (
   PRIMARY KEY (`webcode`),
   UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `OAuthAccessToken`;
 
 CREATE TABLE OAuthAccessToken (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3206,6 +3227,8 @@ CREATE TABLE OAuthAccessToken (
   INDEX IDX_DDE10DD55C1FD3F4 (IdPublication),
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `OAuthAuthCode`;
 
 CREATE TABLE OAuthAuthCode (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3221,6 +3244,8 @@ CREATE TABLE OAuthAuthCode (
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
+DROP TABLE IF EXISTS `OAuthClient`;
+
 CREATE TABLE OAuthClient (
   id INT AUTO_INCREMENT NOT NULL,
   random_id VARCHAR(255) NOT NULL,
@@ -3229,15 +3254,20 @@ CREATE TABLE OAuthClient (
   allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
   name VARCHAR(255) NOT NULL,
   IdPublication INT DEFAULT NULL,
+  trusted TINYINT(1) NOT NULL,
   INDEX IDX_4128BE95C1FD3F4 (IdPublication),
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `OAuthPublicApiResources`;
 
 CREATE TABLE OAuthPublicApiResources (
   id INT AUTO_INCREMENT NOT NULL,
   resource VARCHAR(255) NOT NULL,
   PRIMARY KEY(id)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `OAuthRefreshToken`;
 
 CREATE TABLE OAuthRefreshToken (
   id INT AUTO_INCREMENT NOT NULL,
@@ -3257,6 +3287,7 @@ ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client
 ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
 
 DROP TABLE IF EXISTS `Snippets`;
+
 CREATE TABLE Snippets (
   Id INT AUTO_INCREMENT NOT NULL,
   Name VARCHAR(255) NOT NULL,
@@ -3268,6 +3299,7 @@ CREATE TABLE Snippets (
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `SnippetTemplates`;
+
 CREATE TABLE SnippetTemplates (
   Id INT AUTO_INCREMENT NOT NULL,
   Name VARCHAR(255) NOT NULL,
@@ -3283,6 +3315,7 @@ CREATE TABLE SnippetTemplates (
 ALTER TABLE Snippets ADD CONSTRAINT SnippetTemplate FOREIGN KEY (TemplateId) REFERENCES SnippetTemplates (Id);
 
 DROP TABLE IF EXISTS `ArticleSnippets`;
+
 CREATE TABLE ArticleSnippets (
   ArticleId INT NOT NULL,
   SnippetId INT NOT NULL,
@@ -3290,6 +3323,8 @@ CREATE TABLE ArticleSnippets (
   INDEX IDX_5080CDEB00DA91C (SnippetId),
   PRIMARY KEY(ArticleId, SnippetId)
 ) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS `user_oauth_clients`;
 
 CREATE TABLE user_oauth_clients (
   user_id INT NOT NULL,

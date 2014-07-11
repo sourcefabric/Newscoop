@@ -1,38 +1,38 @@
-'Files attached.': null
-'File $1 unattached.': null
-'Attach new file': null
-'Attach existing file': null
-'$1 file/s attached to article': null
-'File attached.': null
-'The maximum file upload size was not configured in Newscoop.': null
-'File $1 $2 unattached': null
-'File $1 $2 attached to article': null
-'Unable to add attachment.': null
-'There was a problem uploading the file.': null
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
-'The file exceeds the allowed max file size.': null
-'Please make sure you upgraded the database correctly: run $1 in a shell.': null
-'Maximum Upload Size': null
-'File Size': null
-'File Name': null
-Download: null
-'File $1 updated.': null
-'Edit article': null
-'You do not have the right to delete file attachments.': null
-'You must select a file to upload.': null
-'You do not have the right to delete files.': null
-'You do not have the right to change the article.': null
-'You do not have the right to change files.': null
-'You do not have the right to add files.': null
-'Should this file only be available for this translation of the article, or for all translations?': null
-'Please enter a description for the file.': null
-'Open in the browser': null
-'Only this translation': null
-'File information': null
-'Do you want this file to open in the users browser, or to automatically download?': null
-'Change file information': null
-'Automatically download': null
-Attachments: null
-'Attachment does not exist.': null
-'Attach File to Article': null
-'All translations': null
+'Files attached.': 'Fayllar əlavə edildi.'
+'File $1 unattached.': 'Əlavə edilmiş $1 faylı çıxarıldı.'
+'Attach new file': 'Yeni fayl əlavə et'
+'Attach existing file': 'Mövcud faylı əlavə et'
+'$1 file/s attached to article': 'Məqaləyə $1 fayl əlavə edildi'
+'File attached.': 'Fayl əlavə edildi.'
+'The maximum file upload size was not configured in Newscoop.': 'Newscoop-da yüklənəcək faylın maksimal ölçüsü quraşdırılmayıb.'
+'File $1 $2 unattached': 'Əlavə edilmiş $1 $2 faylı çıxarıldı'
+'File $1 $2 attached to article': '$1 $2 faylı məqaləyə əlavə edildi'
+'Unable to add attachment.': 'Əlavə fayl daxil etmək mümkün deyil.'
+'There was a problem uploading the file.': 'Faylın yüklənməsi ilə bağlı problem var idi.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'Fayl yarımçıq yüklənmişdir. Adətən bu hadisə yükləmək istədiyiniz faylın ölçüsü ilə onun yüklənəcəyi zaman arasında tərs mütənasiblik olduqda baş verir. Faylın maksimal yüklənmə zamanı php.ini-də təqdim edilir'
+'The file exceeds the allowed max file size.': 'Faylın ölçüsü icazə verilən maksimal ölçünü keçir.'
+'Please make sure you upgraded the database correctly: run $1 in a shell.': 'Lütfən, məlumat bazasını düzgün təkmilləşdirdiyinə əmin ol: $1 çərçivədə işə salınsın.'
+'Maximum Upload Size': 'Maksimal Yükləmə Ölçüsü'
+'File Size': 'Faylın Ölçüsü'
+'File Name': 'Faylın Adı'
+Download: Endir
+'File $1 updated.': '$1 faylı yeniləndi.'
+'Edit article': 'Məqaləni dəyiş'
+'You do not have the right to delete file attachments.': 'Əlavə edilmiş faylları silmək ixtiyarın yoxdur.'
+'You must select a file to upload.': 'Yükləmək üçün fayl seçməlisən.'
+'You do not have the right to delete files.': 'Faylları silməyə ixtiyarın yoxdur.'
+'You do not have the right to change the article.': 'Məqaləni dəyişməyə ixtiyarın yoxdur.'
+'You do not have the right to change files.': 'Faylları dəyişməyə ixtiyarın yoxdur.'
+'You do not have the right to add files.': 'Fayl əlavə etməyə ixtiyarın yoxdur.'
+'Should this file only be available for this translation of the article, or for all translations?': 'Bu fayl məqalənin yalnız mövcud tərcüməsinə, yoxsa bütün tərcümələrinə aiddir?'
+'Please enter a description for the file.': 'Lütfən, fayl üçün izahat yazın.'
+'Open in the browser': 'Brauzerdə aç'
+'Only this translation': 'Yalnız bu tərcümə'
+'File information': 'Fayl məlumatı'
+'Do you want this file to open in the users browser, or to automatically download?': 'Bu faylın istifadəçi brauzerdə açılmasını, yoxsa avtomatik endirilməsini istəyirsən?'
+'Change file information': 'Fayl məlumatını dəyiş'
+'Automatically download': 'Avtomatik endirilmə'
+Attachments: 'Əlavə fayllar'
+'Attachment does not exist.': 'Əlavə fayl mövcud deyil.'
+'Attach File to Article': 'Məqaləyə Fayl Əlavə Et'
+'All translations': 'Bütün tərcümələr'

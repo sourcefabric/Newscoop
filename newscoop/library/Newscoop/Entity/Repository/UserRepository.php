@@ -35,8 +35,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Save user
      *
-     * @param Newscoop\Entity\User $user
-     * @param array $values
+     * @param  Newscoop\Entity\User $user
+     * @param  array                $values
      * @return void
      */
     public function save($user, array $values)
@@ -81,8 +81,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set user properties
      *
-     * @param Newscoop\Entity\User $user
-     * @param array $values
+     * @param  Newscoop\Entity\User $user
+     * @param  array                $values
      * @return void
      */
     private function setProperties(User $user, array $values)
@@ -97,8 +97,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set user attributes
      *
-     * @param Newscoop\Entity\User $user
-     * @param array $attributes
+     * @param  Newscoop\Entity\User $user
+     * @param  array                $attributes
      * @return void
      */
     private function setAttributes(User $user, array $attributes)
@@ -116,8 +116,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set user types
      *
-     * @param Newscoop\Entity\User $user
-     * @param array $types
+     * @param  Newscoop\Entity\User $user
+     * @param  array                $types
      * @return void
      */
     private function setUserTypes(User $user, array $types)
@@ -131,9 +131,9 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Test if property value is unique
      *
-     * @param string $property
-     * @param string $value
-     * @param int $id
+     * @param  string $property
+     * @param  string $value
+     * @param  int    $id
      * @return bool
      */
     public function isUnique($property, $value, $id = null)
@@ -221,10 +221,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Find active members of community
      *
-     * @param bool $countOnly
-     * @param int $offset
-     * @param int $limit
-     * @param array $editorRoles
+     * @param  bool      $countOnly
+     * @param  int       $offset
+     * @param  int       $limit
+     * @param  array     $editorRoles
      * @return array|int
      */
     public function findActiveUsers($countOnly, $offset, $limit, array $editorRoles)
@@ -243,29 +243,21 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return $qb->getQuery()->getSingleScalarResult();
         }
 
-        $qb->select('u, ' . $this->getUserPointsSelect());
-        $qb->orderBy('comments', 'DESC');
         $qb->addOrderBy('u.id', 'ASC');
         $qb->groupBy('u.id');
         $qb->setFirstResult($offset);
         $qb->setMaxResults($limit);
 
-        $users = array();
         $results = $qb->getQuery()->getResult();
 
-        foreach ($results as $result) {
-            $user = $result[0];
-            $user->setPoints((int) $result['comments']);
-            $users[] = $user;
-        }
-
-        return $users;
+        return $results;
     }
 
     public function findVerifiedUsers($countOnly, $offset, $limit)
     {
         if ($countOnly) {
             $qb = $this->getEntityManager()->createQuery('SELECT COUNT(u.id) FROM Newscoop\Entity\User u JOIN u.attributes a WHERE a.attribute = \'is_verified\' AND a.value = 1');
+
             return $qb->getSingleScalarResult();
         }
 
@@ -293,7 +285,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get editor ids
      *
-     * @param array $editorRoles
+     * @param  array $editorRoles
      * @return array
      */
     private function getEditorIds(array $editorRoles)
@@ -308,9 +300,10 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->innerJoin('u.groups', 'g', Expr\Join::WITH, $expr->in('g.id', $editorRoles))
             ->getQuery();
 
-        $ids = array_map(function($row) {
+        $ids = array_map(function ($row) {
             return (int) $row['id'];
         }, $query->getResult());
+
         return $ids;
     }
 
@@ -323,7 +316,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     {
         $commentsCount = "(SELECT COUNT(c)";
         $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
-        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u AND c.status = 0) as comments";
 
         return "{$commentsCount}";
     }
@@ -341,8 +334,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         if ($countOnly) {
             $qb->select('COUNT(u.id)');
-        }
-        else {
+        } else {
             $qb->select('u');
         }
 
@@ -392,7 +384,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $outerAnd = $qb->expr()->andx();
 
-        for($i=0; $i < count($keywords); $i++) {
+        for ($i=0; $i < count($keywords); $i++) {
             $innerOr = $qb->expr()->orx();
             for ($j=0; $j < count($attributes); $j++) {
                 $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'$keywords[$i]%'"));
@@ -418,7 +410,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get random list of users
      *
-     * @param int $limit
+     * @param  int   $limit
      * @return array
      */
     public function getRandomList($limit)
@@ -441,9 +433,9 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get editors
      *
-     * @param int $blogRole
-     * @param int $limit
-     * @param int $offset
+     * @param  int   $blogRole
+     * @param  int   $limit
+     * @param  int   $offset
      * @return array
      */
     public function findEditors($blogRole, $limit, $offset)
@@ -470,7 +462,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get editors count
      *
-     * @param int $blogRole
+     * @param  int $blogRole
      * @return int
      */
     public function getEditorsCount($blogRole)
@@ -512,7 +504,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Get users count for given criteria
      *
-     * @param array $criteria
+     * @param  array $criteria
      * @return int
      */
     public function countBy(array $criteria)
@@ -540,7 +532,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Delete user
      *
-     * @param Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User $user
      * @return void
      */
     public function delete(User $user)
@@ -561,7 +553,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Remove user attributes
      *
-     * @param Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User $user
      * @return void
      */
     private function removeAttributes(User $user)
@@ -593,7 +585,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Set indexed now
      *
-     * @param array $users
+     * @param  array $users
      * @return void
      */
     public function setIndexedNow(array $users)
@@ -603,7 +595,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\User u SET u.indexed = CURRENT_TIMESTAMP() WHERE u.id IN (:users)')
-            ->setParameter('users', array_map(function($user) { return $user->getId(); }, $users))
+            ->setParameter('users', array_map(function ($user) { return $user->getId(); }, $users))
             ->execute();
     }
 
@@ -652,17 +644,30 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             ->getQuery();
 
         $query->setParameter('status', User::STATUS_ACTIVE);
+
         return $query->getSingleScalarResult();
     }
 
     /**
-     * Get user points
+     * Set user points
      *
-     * @param Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User|null $user
+     * @param  string|int                $authorId
      * @return void
      */
-    public function getUserPoints(User $user)
+    public function setUserPoints(User $user = null, $authorId = null)
     {
+        $em = $this->getEntityManager();
+
+        if (!is_null($authorId)) {
+            $user = $em->getRepository('Newscoop\Entity\User')
+                ->findOneByAuthor($authorId);
+        }
+
+        if (!$user) {
+            return false;
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
@@ -674,13 +679,18 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $articlesCount = $em->getRepository('Newscoop\Entity\Article')
             ->countByAuthor($user);
 
-        $user->setPoints($result['comments'] + $articlesCount);
+        $total = (int) $result['comments'] + $articlesCount;
+
+        if ($user) {
+            $user->setPoints($total);
+            $em->flush();
+        }
     }
 
     /**
      * Get list for given criteria
      *
-     * @param Newscoop\User\UserCriteria $criteria
+     * @param  Newscoop\User\UserCriteria $criteria
      * @return Newscoop\ListResult
      */
     public function getListByCriteria(UserCriteria $criteria, $results = true)
@@ -701,14 +711,29 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->groups)) {
-            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
-            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
-            $qb->setParameter('groups', $criteria->groups);
+            $em = $this->getEntityManager();
+            $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');
+            $users = array();
+            foreach ($criteria->groups as $groupId) {
+                $group = $groupRepo->findOneById($groupId);
+                if ($group instanceof \Newscoop\Entity\User\Group) {
+                    $users = array_unique(array_merge($users, array_keys($group->getUsers()->toArray())), SORT_REGULAR);
+                }
+            }
+            $op = $criteria->excludeGroups ? 'notIn' : 'in';
+            $qb->andWhere($qb->expr()->$op('u.id', ':userIds'));
+            $qb->setParameter('userIds', $users);
         }
 
         if (!empty($criteria->query)) {
             $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
+        }
+
+        if (!empty($criteria->query_name)) {
+            $qb->andWhere($qb->expr()->orX("(u.last_name LIKE :query)", "(u.first_name LIKE :query)"));
+            $qb->setParameter('query', trim($criteria->query_name, '%') . '%');
+            $qb->groupBy('u.last_name', 'u.first_name');
         }
 
         if (!empty($criteria->nameRange)) {
@@ -731,9 +756,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $list = new ListResult();
         $countQb = clone $qb;
-        $list->count = (int) $countQb->select('COUNT(DISTINCT u)')->getQuery()->getSingleScalarResult();
-
-        $qb->select('DISTINCT u, ' . $this->getUserPointsSelect());
+        $countQb->select('COUNT(u)')->resetDQLPart('groupBy');
+        $list->count = (int) $countQb->getQuery()->getSingleScalarResult();
 
         if ($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
@@ -756,12 +780,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return array($qb, $list->count);
         }
 
-        $list->items = array_map(function ($row) {
-            $user = $row[0];
-            $user->setPoints((int) $row['comments']);
-
-            return $user;
-        }, $qb->getQuery()->getResult());
+        $list->items = $qb->getQuery()->getResult();
 
         return $list;
     }
@@ -769,8 +788,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     /**
      * Add name first letter where condition to query builder
      *
-     * @param Doctrine\ORM\QueryBuilder $qb
-     * @param array $letters
+     * @param  Doctrine\ORM\QueryBuilder $qb
+     * @param  array                     $letters
      * @return void
      */
     private function addNameRangeWhere($qb, array $letters)

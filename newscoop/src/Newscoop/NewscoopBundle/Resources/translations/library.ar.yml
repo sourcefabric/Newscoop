@@ -71,3 +71,7 @@ Added: 'تم الإضافة'
 '$1 toggled.': 'تم تبديل $1.'
 '$1 articles have been removed': 'تم إزالة $1 مقالات'
 ' - filtering from _MAX_ records': '- قيد التصفية من السجلات _MAX_'
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

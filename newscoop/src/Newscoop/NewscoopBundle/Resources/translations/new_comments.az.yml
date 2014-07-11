@@ -1,66 +1,66 @@
 comments:
     label:
-        comments: null
-        menu: null
-        banned: null
-        anonymous: null
-        at: null
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
-        fullarticle: null
-        hidden: null
-        approved: null
-        new: null
-        editarticle: null
-        section: null
-        comment: null
-        replyto: null
-        subject: null
-        ban: null
-        author: null
-        date: null
-        article: null
-        search: null
-        show: null
-        recommended: null
-        unrecommended: null
-        editcomment: null
-        actions: null
-        selectstatus: null
-        deleted: null
-        alert: null
-        searchholder: null
+        comments: 'Şərhlərin idarəsi'
+        menu: Şərhlər
+        banned: Kilidləndi
+        anonymous: Anonim
+        at: burada
+        noentries: 'Giriş tapılmadı.'
+        showing: Göstərilir
+        of: buradan
+        to: buraya
+        entries: girişlər
+        fullarticle: 'Tam məqalə'
+        hidden: Gizli
+        approved: Təsdiqlənib
+        new: Yeni
+        editarticle: 'Məqaləni dəyişməyə keç'
+        section: Bölmə
+        comment: Şərh
+        replyto: 'Şərhə cavab yaz'
+        subject: Başlıq
+        ban: 'İstifadəçini Kilidlə/Kilidini Aç'
+        author: Müəllif
+        date: 'Tarix / Şərh'
+        article: Məqalə
+        search: Axtar
+        show: Göstər
+        recommended: 'Tövsiyyə Olunur'
+        unrecommended: 'Tövsiyyə Edilmədi'
+        editcomment: 'Tez şərhin dəyişilməsi'
+        actions: Addımlar
+        selectstatus: 'Status seç'
+        deleted: Silindi
+        alert: Xəbərdarlıq
+        searchholder: 'Axtar... (məsələn, ad, email, başlıq, şərh, məqalə adı)'
     btn:
-        cancel: null
-        submit: null
-        unrecommend: null
-        recommend: null
-        delete: null
-        reply: null
-        edit: null
-        close: null
-        okay: null
-        filter: null
+        cancel: 'Ləğv et'
+        submit: Göndər
+        unrecommend: 'Tövsiyyə Etmə'
+        recommend: 'Tövsiyyə Et'
+        delete: Sil
+        reply: 'Cavab yaz'
+        edit: 'Tez dəyiş'
+        close: Bağla
+        okay: Oldu
+        filter: Filt
     msg:
-        deleted: null
-        commentinarticle: null
+        deleted: 'Şərh silindi.'
+        commentinarticle: '$2 ($3) məqaləsində $1 tərəfindən $4 şərhi'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: yeni
+            approved: təsdiqləndi
+            hidden: gizli
+            single: 'Şərh statusu belə dəyişdi'
+            all: 'Şərhlərin statusu belə dəyişdi'
         error:
-            reach: null
-            deletefromarticle: null
-            statuschange: null
-            delete: null
-            update: null
-        sure: null
-        suremultiple: null
-        first: null
-        surequestion: null
-        updated: null
+            reach: 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
+            deletefromarticle: 'Şərh $2 ($3) məqaləsindən $1 tərəfindən silindi'
+            statuschange: 'Şərh statusunun dəyişilməsi xətası'
+            delete: 'Bu şərh silinə bilmədi'
+            update: 'Bölmələri boş qoymaq olmaz'
+        sure: 'Şərhi həmişəlik silmək ərəfəsindəsən.'
+        suremultiple: 'Şərhləri həmişəlik silmək ərəfəsindəsən.'
+        first: 'Lütfən, əvvəl şərhi/şərhləri seç!'
+        surequestion: 'Bunu etmək istədiyinə əminsən?'
+        updated: 'Şərh yeniləndi.'

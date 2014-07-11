@@ -10,20 +10,20 @@ Filename: 'اسم الملف'
 'Add files to the upload queue and click the start button.': 'أضف ملفات إلى قائمة الانتظار للرفع وإضغط على الزر إبدء.'
 'Add files': 'أضف ملفات'
 '$1 files uploaded.': 'تم تحديث $1 صور(ة)'
-'Replace current with:': null
+'Replace current with:': 'إستبدال الحالي بـ'
 'Edit template:': null
-'Changes have not been saved. Load new template without saving the current one?': null
-'to folder': null
+'Changes have not been saved. Load new template without saving the current one?': 'لم يتم حفظ التغييرات.هل تريد تنزيل النماذج الجديدة بدون حفظ الحالية؟'
+'to folder': 'إلى ملف.'
 'You must select at least one template to perform an action.': 'يجب عليك أن تختار ما لا يقل عن نموذج واحد لتنفيذ إجراء'
 'You must select a destination folder': null
-'You may only translate one article at a time.': null
-'You do not have the right to rename templates.': null
-'You do not have the right to move templates.': null
+'You may only translate one article at a time.': 'يمكنك أن تقوم بترجمة مقال واحد في كل مرة فقط.'
+'You do not have the right to rename templates.': 'لا تملك التفويض لإعادة تسمية النماذج.'
+'You do not have the right to move templates.': 'لا تملك التفويض لإعادة تسمية النماذج.'
 'You do not have the right to move articles.': 'ليس لديك الحق في نقل مقالات.'
-'Unable to create folder.': null
+'Unable to create folder.': 'غير قادر على إنشاء ملف.'
 'Unable to $1 template.': null
 'To New Name': null
-'These templates': null
+'These templates': 'هذه النماذج.'
 'The template object $1 is in use and can not be deleted.': null
 'The template object $1 could not be renamed.': null
 'Template(s) moved.': null
@@ -32,17 +32,17 @@ Filename: 'اسم الملف'
 'Template object $1 was deleted': null
 'Some templates could not be deleted because they are in use.': null
 'Select folder': null
-'Rename template': null
+'Rename template': 'إعادة تسمية نموذج.'
 'Rename file': 'اعادة تسمية الملف'
-Rename: null
-'No folders': null
-'New Name': null
-'Move templates': null
-Folder: null
+Rename: 'إعادة تسمية.'
+'No folders': 'لا وجود لملفات.'
+'New Name': 'إسم جديد.'
+'Move templates': 'قم بتحريك النماذج.'
+Folder: ملف.
 'File cannot be read.': null
 'Are you sure you want to delete the template object $1 from folder $2?': null
 'Are you sure you want to delete the selected templates?': null
-'Template ID:': null
+'Template ID:': 'هوية النموذج.'
 'Template ID': null
 'Template $1 no longer exists!': null
 'New template $1 created': null
@@ -51,9 +51,9 @@ Folder: null
 'Directory $1 created.': 'تم إنشاء الدليل $1'
 'You must select a file to upload.': 'يجب عليك تحديد ملف للرفع.'
 'You can only replace a file with a file of the same type.  The original file is of type $1': null
-'Unable to save the file $1 to the path $2.': null
+'Unable to save the file $1 to the path $2.': 'لم يتم حفظ الملف 1$ إلى المسار 2$'
 Replace: استبدال
-'File $1 replaced.': null
+'File $1 replaced.': 'تم إستبدال الملف 1$.'
 'The folder name cant be .. or .': null
 'The template $1 was saved successfully.': 'تم حفظ القالب $1 بنجاح.'
 'Create new folder': 'اخلق مجلد جديد'

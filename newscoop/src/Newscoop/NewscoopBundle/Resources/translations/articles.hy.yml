@@ -1,0 +1,186 @@
+'Edit metadata': null
+Rating: null
+'Enable Rating': null
+'Blog management': null
+'View article': null
+'Select a list': null
+'Remove list': null
+'Please select a list': null
+Playlist: null
+'List updated.': null
+'List saved': null
+'List Name': null
+'List ID': null
+'Item already exists in the list': null
+'Featured Articles': null
+'Featured Article Lists': null
+'Featured Article List': null
+'Duplicate list': null
+'Duplicate article entry found': null
+'Drag here to add to list': null
+'Could not save the list': null
+'Available Articles': null
+'Are you sure you want to delete this list?': null
+'Add to list': null
+'Add list': null
+'Multi date events': null
+Slideshows: null
+'Place images': null
+'Youre not allowed to edit article.': null
+Webcode: null
+Unapproved: null
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
+'The article could not be submitted.': null
+'Submit articles': null
+'Submit article': null
+'Related Articles': null
+'Pending articles': null
+'Pending Articles': null
+'Context Box updated': null
+On: null
+Off: null
+'You do not have the right to moderate comments.': null
+'You can not schedule opposing events at the same time': null
+'Unable to reach Newscoop. Please check your internet connection.': null
+Title: Վերնագիր
+'There already is an article with the same name. Please change the name and try again.': null
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
+Geolocation: null
+Newscoop: Newscoop
+'Overwrite articles with matching names': null
+'Article <i>$1</i> already exists, and was not overwritten.<br />': null
+Files: null
+'Select section:': null
+'Add another author': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
+'Switches saved.': null
+'Keywords saved.': null
+'Comment settings': null
+Authors: null
+'Attach Topic To Article': null
+'Article saved.': null
+'Article is locked': null
+'Actions updated.': null
+'Your work has not been saved. Do you want to continue and lose your changes?': null
+Switches: null
+'No subtopics available': null
+'Newscoop Subhead': null
+Media: null
+'Last modified': null
+'Keywords &amp; Topics': null
+Info: null
+'Go to live article': null
+Created: null
+'Are you sure you want to remove the map from the article?': null
+'Scheduled action added': null
+'Content edited': null
+'You must select an article language.': null
+'You must select a publication.': null
+'You must select a file to upload.': null
+'You must select a XML input file.': null
+'You do not have the right to import XML archives.': null
+'There was a problem uploading the file.': null
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
+'The file exceeds the allowed max file size.': null
+Optional: null
+'Input File': null
+'Import XML': null
+'File is not a valid XML file.': null
+'File does not exist.': null
+'File could not be uploaded.': null
+'File could not be read.': null
+'Error List': null
+'Bad format in XML file.': null
+'Article could not be created.': null
+'---Select article type---': null
+'$1 articles successfully imported.': null
+Saved: null
+'Save All': null
+'Online Server: On': null
+'Online Server: Off': null
+Download: null
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
+'Visible to non-subscribers': null
+'The article could not be published.': null
+'Scheduled action deleted.': null
+'Scheduled action added.': null
+'Article(s) unlocked.': null
+'Article(s) duplicated.': null
+'Article(s) deleted.': null
+'Article status set to $1': null
+'Article unlocked.': null
+'Article translation created.': null
+'Article order changed.': null
+'Article moved.': null
+'Article deleted.': 'Հոդվածը ջնջված է'
+'Article created.': 'Հոդվածը ստեղծված է'
+'$1 toggled.': null
+'Total:': null
+'Show Comments': null
+Locked: null
+'Invalid type: $1': null
+'Hide Comments': null
+Enabled: null
+Disabled: null
+Comments: null
+'The article has already been translated into $1.': null
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
+'You do not have the right to translate articles.': null
+'You do not have the right to publish articles.': null
+'You do not have the right to move articles.': null
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
+'Publish?': null
+'Publish articles': null
+'Publish article': null
+'Move?': null
+'Move articles': null
+'Move article': null
+'An issue must be created for the selected language but you do not have the right to create an issue.': null
+'A section must be created for the selected language but you do not have the right to create a section.': null
+'to section': null
+'You must choose a language': null
+'Unable to create the section for translation $1.': null
+'Unable to create the issue for translation $1.': null
+'The following articles are new; it is not possible to schedule them for automatic publishing': null
+'Section URL Name': null
+'Section Name': null
+'Publish Schedule': null
+'No action specified': null
+'New section name': null
+'New section URL name': null
+'New issue name': null
+'New issue URL name': null
+'New article name': null
+'Issue URL Name': null
+'Issue Name': null
+'Duplicate?': null
+'Duplicate articles': null
+'Article name ($1)': null
+'Article List': null
+'Are you sure you want to remove the topic $1 from the article?': null
+'Are you sure you want to remove the file $1 from the article?': null
+'Are you sure you want to remove the event scheduled on $1?': null
+'Are you sure you want to delete this article?': null
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': null
+'A section must be created for the selected language.  Please enter the section name and URL name.': null
+'Article Type': null
+'Show article on front page': null
+'Show article on section page': null
+'Translate article': null
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': null
+'Duplicate article': null
+'The destination section is the same as the source section.': null
+'The article is new; it is not possible to schedule it for automatic publishing.': null
+'No article types were defined. You must create an article type first.': null
+'Edit article types': null
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': null
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
+'You do not have the right to delete articles.': null
+'You must select an article type.': null
+'Are you sure you want to remove the image $1 from the article?': null
+'There was an error reading request parameters.': null
+'This article cannot be previewed. Please make sure it has the article template selected.': null
+'No such article.': null
+'No such section.': null
+Characters: null

@@ -1,86 +1,86 @@
-'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': null
-'Stop current upload': null
-'Start uploading queue': null
-'Start upload': null
-Size: null
-'Select files': null
-Filename: null
-'Drag files here.': null
-'Cache lifetime, sec': null
-'Add files to the upload queue and click the start button.': null
-'Add files': null
-'$1 files uploaded.': null
-'Replace current with:': null
-'Edit template:': null
-'Changes have not been saved. Load new template without saving the current one?': null
-'to folder': null
-'You must select at least one template to perform an action.': null
-'You must select a destination folder': null
-'You may only translate one article at a time.': null
-'You do not have the right to rename templates.': null
-'You do not have the right to move templates.': null
-'You do not have the right to move articles.': null
-'Unable to create folder.': null
-'Unable to $1 template.': null
-'To New Name': null
-'These templates': null
-'The template object $1 is in use and can not be deleted.': null
-'The template object $1 could not be renamed.': null
-'Template(s) moved.': null
-'Template(s) deleted.': null
-'Template object $1 was renamed to $2': null
-'Template object $1 was deleted': null
-'Some templates could not be deleted because they are in use.': null
-'Select folder': null
-'Rename template': null
-'Rename file': null
-Rename: null
-'No folders': null
-'New Name': null
-'Move templates': null
-Folder: null
-'File cannot be read.': null
-'Are you sure you want to delete the template object $1 from folder $2?': null
-'Are you sure you want to delete the selected templates?': null
-'Template ID:': null
-'Template ID': null
-'Template $1 no longer exists!': null
-'New template $1 created': null
-'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
-'Directory $1 was deleted': null
-'Directory $1 created.': null
-'You must select a file to upload.': null
-'You can only replace a file with a file of the same type.  The original file is of type $1': null
-'Unable to save the file $1 to the path $2.': null
-Replace: null
-'File $1 replaced.': null
-'The folder name cant be .. or .': null
-'The template $1 was saved successfully.': null
-'Create new folder': null
-'Upload template': null
-'You do not have the right to create new folders.': null
-'A file or folder having the name $1 already exists': null
-'You do not have the right to delete templates.': null
-'Are you sure you want to delete the folder $1 from $2?': null
-'Delete folder': null
-Folders: null
-'No folders.': null
-Files: null
-'No templates.': null
-'Create new template': null
-'Duplicate template': null
-'Edit template': null
-'The template $1 could not be created.': null
-'Template $1 was changed': null
-'Template $1 was duplicated into $2': null
-'Template charset': null
-'Select a language/character set': null
-'All languages': null
-'You do not have the right to modify templates.': null
-'Invalid template file $1': null
-'You do not have the right to create folders.': null
-'You do not have the right to upload templates.': null
-'You do not have the right to create templates.': null
-'Duplicate file': null
-'Delete file': null
-'Please check if the user $1 has permission to write in this directory.': null
+'There are some files which can not be readed so Newscoop was not able to determine whether $1 is in use or not. Please fix this, then try to delete the template again.': 'Bəzi faylların oxunması mümkün deyil, ona görə də Newscoop $1 faylının istifadədə olub olmamasını müəyyənləşdirə bilmir. Lütfən, bu halı aradan qaldırın, daha sonra isə nümunəni yenidən silməyə cəhd et.'
+'Stop current upload': 'Mövcud yükləməni saxla'
+'Start uploading queue': 'Növbədəkiləri yükləməyə başla'
+'Start upload': 'Yükləməyə başla'
+Size: Ölçü
+'Select files': 'Fayl seç'
+Filename: 'Fayl adı'
+'Drag files here.': 'Faylları bura köçür.'
+'Cache lifetime, sec': 'Keşin yaşama müddəti, saniyə'
+'Add files to the upload queue and click the start button.': 'Faylları növbəyə daxil et və başla düyməsini kliklə.'
+'Add files': 'Fayl əlavə et'
+'$1 files uploaded.': '$1 faylı yükləndi.'
+'Replace current with:': 'Mövcud olanı bununla dəyiş:'
+'Edit template:': 'Nümunəni dəyiş:'
+'Changes have not been saved. Load new template without saving the current one?': 'Dəyişikliklər saxlanmadı. Mövcud olanı saxlamamaq şərti ilə yeni nümunə yükləyirsən?'
+'to folder': qovluğa
+'You must select at least one template to perform an action.': 'Fəaliyyət həyata keçirmək üçün ən azı bir nümunə seçməlisən.'
+'You must select a destination folder': 'Son ünvan qovluğu seçməlisən'
+'You may only translate one article at a time.': 'Hər cəhddə yalnız bir məqalə tərcümə etməlisən.'
+'You do not have the right to rename templates.': 'Nümunələrin adını dəyişməyə ixtiyarın yoxdur.'
+'You do not have the right to move templates.': 'Nümunələrin yerini dəyişməyə ixtiyarın yoxdur.'
+'You do not have the right to move articles.': 'Məqalələri köçürməyə ixtiyarın yoxdur.'
+'Unable to create folder.': 'Qovluq yaratmağa imkan vermə.'
+'Unable to $1 template.': 'Nümunəni $1 imkan vermə.'
+'To New Name': 'Yeni Ada'
+'These templates': 'Bu nümunələr'
+'The template object $1 is in use and can not be deleted.': '$1 nümunə vasitəsi istifadədədir və silinə bilməz.'
+'The template object $1 could not be renamed.': '$1 nümunə vasitəsinin adı dəyişdirilə bilmədi.'
+'Template(s) moved.': 'Nümunə(lər)in yeri dəyişdirildi.'
+'Template(s) deleted.': 'Nümunə(lər) silindi.'
+'Template object $1 was renamed to $2': '$1 nümunə vasitəsinin adı $2 olaraq təyin edildi'
+'Template object $1 was deleted': '$1 nümunə vasitəsi silindi'
+'Some templates could not be deleted because they are in use.': 'Bəzi nümunələr istifadədə olduqları üçün silinə bilmədi.'
+'Select folder': 'Qovluq seç'
+'Rename template': 'Nümunənin adını dəyiş'
+'Rename file': 'Faylın adını dəyiş'
+Rename: 'Adını dəyiş'
+'No folders': 'Qovluq yoxdur'
+'New Name': 'Yeni Ad'
+'Move templates': 'Nümunələrin yerini dəyiş'
+Folder: Qovluq
+'File cannot be read.': 'Fayl oxuna bilmir.'
+'Are you sure you want to delete the template object $1 from folder $2?': '$1 nümunə vasitəsini $2 qovluğundan silmək istədiyinə əminsən?'
+'Are you sure you want to delete the selected templates?': 'Seçilmiş nümunələri silmək istədiyinə əminsən?'
+'Template ID:': 'Nümunə ID-si:'
+'Template ID': 'Nümunə ID-si'
+'Template $1 no longer exists!': '$1 nümunəsi artıq mövcud deyil'
+'New template $1 created': 'Yeni $1 nümunəsi yaradıldı'
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': 'Qeyd etdiyin fayl yazıdan ibarətdirsə, onun işarələrini açılan menyu istifadə edərək konvertasiya edə bilərsən.'
+'Directory $1 was deleted': '$1 kataloqu silinmişdir'
+'Directory $1 created.': '$1 kataloqu yaradılmışdır.'
+'You must select a file to upload.': 'Yükləmək üçün fayl seçməlisən.'
+'You can only replace a file with a file of the same type.  The original file is of type $1': 'Sən yalnız eyni növlü faylları əvəz edə bilərsən. Orijinal fayl $1 növündəndir'
+'Unable to save the file $1 to the path $2.': '$1 faylını $2 istiqamətindən saxlamaq mümkün deyil.'
+Replace: Əvəzlə
+'File $1 replaced.': '$1 faylı əvəz edildi.'
+'The folder name cant be .. or .': 'Qovluq adı .. və ya . ola bilməz'
+'The template $1 was saved successfully.': '$1 nümunəsi müvəffəqiyyətlə saxlandı.'
+'Create new folder': 'Yeni qovluq yarat'
+'Upload template': 'Nümunəni yüklə'
+'You do not have the right to create new folders.': 'Yeni qovluq yaratmağa ixtiyarın yoxdur.'
+'A file or folder having the name $1 already exists': '$1 adına sahib fayl və ya qovluq artıq mövcuddur'
+'You do not have the right to delete templates.': 'Nümunələri silməyə ixtiyarın yoxdur.'
+'Are you sure you want to delete the folder $1 from $2?': '$1 qovluğunu $2 daxilindən silmək istədiyinə əminsən?'
+'Delete folder': 'Qovluğu sil'
+Folders: Qovluqlar
+'No folders.': 'Qovluq yoxdur.'
+Files: Fayllar
+'No templates.': 'Nümunə yoxdur.'
+'Create new template': 'Yeni nümunə yarat'
+'Duplicate template': 'Nümunənin surətini çıxar'
+'Edit template': 'Nümunəni dəyiş'
+'The template $1 could not be created.': '$1 nümunəsi yaradıla bilmədi.'
+'Template $1 was changed': '$1 nümunəsi dəyişdirilmişdir.'
+'Template $1 was duplicated into $2': '$1 nümunəsinin $2 kimi surəti çıxarıldı'
+'Template charset': 'Nümunə simvol dəsti'
+'Select a language/character set': 'Dil/işarə qrupunu seç'
+'All languages': 'Bütün dillər'
+'You do not have the right to modify templates.': 'Nümunələrə dəyişiklik etməyə ixtiyarın yoxdur.'
+'Invalid template file $1': 'Xətalı nümunə faylı - $1'
+'You do not have the right to create folders.': 'Qovluq yaratmağa ixtiyarın yoxdur.'
+'You do not have the right to upload templates.': 'Nümunələri yükləməyə ixtiyarın yoxdur.'
+'You do not have the right to create templates.': 'Nümunə yaratmağa ixtiyarın yoxdur.'
+'Duplicate file': 'Faylın surətini çıxar'
+'Delete file': 'Faylı sil'
+'Please check if the user $1 has permission to write in this directory.': '$1 adlı istifadəçinin bu kataloqda yazmağa icazəsi olub olmamasını yoxla.'

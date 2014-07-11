@@ -1,14 +1,14 @@
-'You have no installed plugins.': null
-'Some plugins have to be updated. Please press the save button.': null
-'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': null
-'You do not have the right to manage plugins.': null
-Version: null
-'Upload Plugin': null
-Upload: null
-Uninstall: null
-'The plugin $1 was sucessfully installed.': null
-'No plugins found.': null
-Manage: null
-Enabled: null
-'Delete plugin': null
-'Add new image': null
+'You have no installed plugins.': 'Quraşdırılmış plaqinin yoxdur.'
+'Some plugins have to be updated. Please press the save button.': 'Bəzi plaqinlər yenilənməlidir. Lütfən, saxla düyməsini kliklə.'
+'Please confirm the plugin $1 uninstall. All plugin data will be deleted!': 'Lütfən, $1 plaqininin yığışdırılmasını təsdiqlə. Bütün plaqin məlumatı silinəcək!'
+'You do not have the right to manage plugins.': 'Plaqinləri idarə etməyə ixtiyarın yoxdur.'
+Version: Versiya
+'Upload Plugin': 'Plqain Yüklə'
+Upload: Yüklə
+Uninstall: Yığışdır
+'The plugin $1 was sucessfully installed.': '$1 plaqini müvəffəqiyyətlə quraşdırıldı.'
+'No plugins found.': 'Plaqin tapılmadı.'
+Manage: 'İdarə et'
+Enabled: 'İcazə Verildi'
+'Delete plugin': 'Plaqini sil'
+'Add new image': 'Yeni şəkil əlavə et'

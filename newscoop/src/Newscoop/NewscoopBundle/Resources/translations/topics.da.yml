@@ -1,26 +1,27 @@
-'If you continue, topic and all subtopics will be detached from all articles, and deleted.': null
-'Delete anyway': null
-'Reset order': null
-'Order changes will be lost. Are you sure you want to continue?': null
-'Topics order saved.': null
-'Show languages': null
-'Save order': null
-'Click to edit': null
-'Add root topic': null
-'Topic was deleted.': null
-'The topic name is already in use by another topic.': null
-'You must enter a name for the topic.': null
-'You must choose a language for the topic.': null
-'This topic has subtopics, therefore it cannot be deleted.': null
-'Add translation:': null
-'Add subtopic:': null
-Top: null
-'You do not have the right to add topics.': null
-'You do not have the right to delete topics.': null
-'Are you sure you want to delete the topic $1?': null
-'You do not have the right to change topic name.': null
-'The topic $1 could not be deleted.': null
-'Adding new topic': null
-'Deleting topic': null
-'Change topic name': null
-'There are $1 articles using the topic.': null
+'If you continue, topic and all subtopics will be detached from all articles, and deleted.': 'Hvis du fortsætter bliver emnet og dets underemner fjernet fra alle artikler og slettet.'
+'Delete anyway': 'Slet alligevel'
+'Reset order': 'Nulstil sortering'
+'Order changes will be lost. Are you sure you want to continue?': 'Sortering vil gå tabt. Fortsæt alligevel?'
+'Topics order saved.': 'Emne sorteringen er gemt.'
+'Show languages': 'Vis sprog'
+'Save order': 'Gem sortering'
+'Click to edit': 'Klik for at redigere'
+'Add root topic': 'Tilføj rod emne'
+'Topic was deleted.': 'Emnet blev slettet'
+'The topic name is already in use by another topic.': 'Navnet bruges af et andet emne.'
+'You must enter a name for the topic.': 'Du skal give emnet et navn.'
+'You must choose a language for the topic.': 'Du skal vælge et sprog for emnet.'
+'This topic has subtopics, therefore it cannot be deleted.': 'Emnet kan ikke slettes fordi det har underemner.'
+'Add translation:': 'Tilføj oversættelse:'
+'Add subtopic:': 'Tilføj underemne:'
+Top: Top
+'You do not have the right to add topics.': 'Du har ikke rettigheder til at tilføje emner.'
+'You do not have the right to delete topics.': 'Du har ikke rettigheder til at slette emner.'
+'Are you sure you want to delete the topic $1?': 'Er du sikker på du vil slette emnet $1?'
+'You do not have the right to change topic name.': 'Du har ikke rettigheder til at ændre navn på emner.'
+'The topic $1 could not be deleted.': 'Emnet $1 kunne ikke slettes.'
+'Adding new topic': 'Tilføjer nyt emne'
+'Deleting topic': 'Sletter emne'
+'Change topic name': 'Omdøb emne'
+'There are $1 articles using the topic.': 'Emnet bruges i $1 artikler.'
+'Search for topics': null

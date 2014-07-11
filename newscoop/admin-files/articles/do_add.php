@@ -103,21 +103,29 @@ if (count($conflictingArticles) > 0) {
     $conflictingArticle = array_pop($conflictingArticles);
     $conflictingArticleLink = camp_html_article_url($conflictingArticle, $conflictingArticle->getLanguageId(), 'edit.php');
     camp_html_add_msg($translator->trans("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.",
-     	array('$1' => "<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"), 'articles'));
+         array('$1' => "<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"), 'articles'));
     camp_html_goto_page($backLink);
 } else {
     $articleObj->create($f_article_type, $f_article_name, $publication_id, $issue_number, $section_number);
 }
 
 if ($articleObj->exists()) {
-    $author = $this->_helper->service('user')->getCurrentUser()->getAuthorId();
+    $em = $this->_helper->service('em');
+    $currentUser = $this->_helper->service('user')->getCurrentUser();
+    $author = $currentUser->getAuthorId();
+    $articleObj->setCreatorId($g_user->getUserId());
     if (empty($author)) {
-        $articleObj->setCreatorId($g_user->getUserId());
         $authorObj = new Author($g_user->getRealName());
         if (!$authorObj->exists()) {
             $authorData = Author::ReadName($g_user->getRealName());
             $authorData['email'] = $g_user->getEmail();
             $authorObj->create($authorData);
+        } else {
+            $authorUser = $em->getRepository('Newscoop\Entity\Author')
+                ->findOneById($authorObj->getId());
+
+            $currentUser->setAuthor($authorUser);
+            $em->flush();
         }
     } else {
         $authorObj = new Author($author);
@@ -140,4 +148,3 @@ if ($articleObj->exists()) {
 } else {
     camp_html_display_error($translator->trans("Could not create article.", array(), 'articles'));
 }
-?>

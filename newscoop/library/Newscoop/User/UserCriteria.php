@@ -84,4 +84,9 @@ class UserCriteria extends Criteria
      * @var string
      */
     public $query;
+
+    /**
+     * @var integer
+     */
+    public $publication;
 }

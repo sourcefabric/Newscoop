@@ -1,73 +1,77 @@
-'Display articles of filtered types': null
-'Display Articles of Filtered Types': null
-Webcode: null
-'View article': null
-Source: null
-'Select type': null
-On: null
-Off: null
-Title: null
-'No video playback capabilities, please download the video below': null
+'Display articles of filtered types': 'Vis filtrerede artikel typer'
+'Display Articles of Filtered Types': 'Vis filtrerede artikel typer'
+Webcode: Webkode
+'View article': 'Se artikel'
+Source: Kilde
+'Select type': 'Vælg type'
+On: Til
+Off: Fra
+Title: Titel
+'No video playback capabilities, please download the video below': 'Videoen kan ikke afspilles. Gem videoen nedenfor.'
 'Article status set to $1 for $2 articles': null
 'Article status not set to $1 for $2 articles': null
-'$1 toggled for $2 articles.': null
-'$1 not toggled for $2 articles.': null
-'$1 not toggled for $2  articles.': null
-'$1 articles have not been removed': null
-'$1 Article(s) unlocked': null
-'$1 Article(s) not unlocked': null
-'$1 Article(s) duplicated': null
-'Download file': null
-'You do not have the right to delete articles.': null
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
-'Use Map': null
-'Toggle: On Section Page': null
-'Toggle: On Front Page': null
-'Toggle: Comments': null
-'The article has been locked by $1 ($2) $3 minute(s) ago.': null
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
-'Status: Submit': null
-'Status: Set New': null
-'Status: Publish': null
-Size: null
-'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Show / hide columns': null
-'Select some article first.': null
-'Select action': null
-'Save order': null
-'Reset all filters': null
-'Published before': null
-'Published after': null
-'Publish date': null
-'Publish Schedule': null
-'Publish Date': null
-'Order updated.': null
-'Open in browser': null
-'No sections found': null
-'No records found.': null
-'No publications found': null
-'No issues found': null
-'No entries to show': null
-Locations: null
-'Loading data': null
-'Last modified': null
-'Last Modified': null
-Last: null
-First: null
-'Filter by...': null
-Filter: null
-Filename: null
-'Duplicate to another section': null
-'Display _MENU_ records': null
-Creator: null
-'Create Date': null
-'Article status set to $1': null
-'Are you sure you want to delete selected articles?': null
-'All Sections': null
-'All Publications': null
-'All Issues': null
-Added: null
-'Access denied.': null
-'$1 toggled.': null
-'$1 articles have been removed': null
-' - filtering from _MAX_ records': null
+'$1 toggled for $2 articles.': '$1 ændret for $2 artikler.'
+'$1 not toggled for $2 articles.': '$1 er ikke ændet for $2 artikler.'
+'$1 not toggled for $2  articles.': '$1 er ikke ændet for $2 artikler.'
+'$1 articles have not been removed': '$1 artikler blev ikke slettet'
+'$1 Article(s) unlocked': '$1 artikler låst op'
+'$1 Article(s) not unlocked': '$1 artikler blev ikke låst op'
+'$1 Article(s) duplicated': '$1 artikler dubleret'
+'Download file': 'Hent fil'
+'You do not have the right to delete articles.': 'Du har ikke tilladelse til at slette artikler'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Du har ikke tilladelse til at ændre artiklens status. Når en artikel er indsendt kan den kun ændres af autoriserede brugere.'
+'Use Map': 'Brug kort'
+'Toggle: On Section Page': 'Skift: Vis på sektions side'
+'Toggle: On Front Page': 'Skift: Vis på forside'
+'Toggle: Comments': 'Skift: Kommentarer'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 minutter siden.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 timer og $4 minutter siden.'
+'Status: Submit': 'Status: Indsend'
+'Status: Set New': 'Status: Ny'
+'Status: Publish': 'Status: Udgiv'
+Size: Størrelse
+'Showing _START_ to _END_ of _TOTAL_ entries': 'VISER _START_ til _END_ af _TOTAL_ opslag'
+'Show / hide columns': 'Vis/skjul kolonner'
+'Select some article first.': 'Vælg artikler først'
+'Select action': 'Vælg handling'
+'Save order': 'Gem sortering'
+'Reset all filters': 'Nulstil alle filtre'
+'Published before': 'Udgivet før'
+'Published after': 'Udgivet efter'
+'Publish date': 'Udgivelses dato'
+'Publish Schedule': 'Planlagt udgivelse'
+'Publish Date': 'Udgivelses dato'
+'Order updated.': 'Sortering opdateret.'
+'Open in browser': 'Åben i browser'
+'No sections found': 'Ingen sektioner'
+'No records found.': 'Ingen opslag.'
+'No publications found': 'Ingen publikationer'
+'No issues found': 'Ingen udgivelser'
+'No entries to show': 'Intet at vise'
+Locations: Steder
+'Loading data': 'Henter data'
+'Last modified': 'Sidst ændret'
+'Last Modified': 'Sidst ændret'
+Last: Sidste
+First: Første
+'Filter by...': 'Filtrér efter...'
+Filter: Filtrér
+Filename: Filnavn
+'Duplicate to another section': 'Kopier til en anden sektion'
+'Display _MENU_ records': 'Vis _MENU_ opslag'
+Creator: Forfatter
+'Create Date': Oprettelsesdato
+'Article status set to $1': 'Artikel status sat til $1'
+'Are you sure you want to delete selected articles?': 'Er du sikker på du vil slette de valgte artikler?'
+'All Sections': 'Alle sektioner'
+'All Publications': 'Alle publikationer'
+'All Issues': 'Alle udgivelser'
+Added: Tilføjet
+'Access denied.': 'Adgang nægtet'
+'$1 toggled.': '$1 skiftet.'
+'$1 articles have been removed': '$1 artikler blev slettet'
+' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

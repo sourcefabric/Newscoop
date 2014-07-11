@@ -975,11 +975,8 @@ class ArticleTypeField extends DatabaseObject {
 	    $rows = $g_ado_db->GetAll($query);
 	    $fields = array();
 	    foreach ($rows as $row) {
-            /**
-             * TODO: Add clearing cache for article type field edit
-             */
             $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']), 'articletype');
+            $cacheKey = $cacheService->getCacheKey(array('article_type_field', $row['type_name'], $row['field_name']), 'article_type');
             if ($cacheService->contains($cacheKey)) {
                  $field = $cacheService->fetch($cacheKey);
             } else {

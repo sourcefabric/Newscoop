@@ -16,17 +16,18 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 /**
  * @package Campsite
  */
-class Article extends DatabaseObject {
+class Article extends DatabaseObject
+{
     /**
      * The column names used for the primary key.
      * @var array
      */
-    var $m_keyColumnNames = array('Number',
+    public $m_keyColumnNames = array('Number',
                                   'IdLanguage');
 
-    var $m_dbTableName = 'Articles';
+    public $m_dbTableName = 'Articles';
 
-    var $m_columnNames = array(
+    public $m_columnNames = array(
         // int - Publication ID
         'IdPublication',
 
@@ -78,11 +79,11 @@ class Article extends DatabaseObject {
         'object_id',
         'rating_enabled');
 
-    var $m_languageName = null;
+    public $m_languageName = null;
 
-    var $m_cacheUpdate = false;
+    public $m_cacheUpdate = false;
 
-    var $m_published;
+    public $m_published;
 
     private static $s_defaultOrder = array(array('field'=>'byPublication', 'dir'=>'ASC'),
                                            array('field'=>'byIssue', 'dir'=>'DESC'),
@@ -90,7 +91,7 @@ class Article extends DatabaseObject {
                                            array('field'=>'bySectionOrder', 'dir'=>'ASC'));
 
     private static $s_regularParameters = array('idpublication'=>'Articles.IdPublication',
-    											'publication'=>'Articles.IdPublication',
+                                                'publication'=>'Articles.IdPublication',
                                                 'nrissue'=>'Articles.NrIssue',
                                                 'issue'=>'Articles.NrIssue',
                                                 'nrsection'=>'Articles.NrSection',
@@ -119,7 +120,7 @@ class Article extends DatabaseObject {
      *
      * @param int $p_languageId
      * @param int $p_articleNumber
-     *		Not required when creating an article.
+     *                             Not required when creating an article.
      */
     public function Article($p_languageId = null, $p_articleNumber = null)
     {
@@ -156,24 +157,24 @@ class Article extends DatabaseObject {
      * at the same time.
      *
      * @param string $p_dbColumnName
-     *      The name of the column that is to be updated.
+     *                               The name of the column that is to be updated.
      *
      * @param string $p_value
-     *      The value to set.
+     *                        The value to set.
      *
      * @param boolean $p_commit
-     *      If set to true, the value will be written to the database immediately.
-     *      If set to false, the value will not be written to the database.
-     *      Default is true.
+     *                          If set to true, the value will be written to the database immediately.
+     *                          If set to false, the value will not be written to the database.
+     *                          Default is true.
      *
      * @param boolean $p_isSql
-     *      Set this to TRUE if p_value consists of SQL commands.
-     *      There is no way to know what the result of the command is,
-     *      so we will need to refetch the value from the database in
-     *      order to update the internal variable's value.
+     *                         Set this to TRUE if p_value consists of SQL commands.
+     *                         There is no way to know what the result of the command is,
+     *                         so we will need to refetch the value from the database in
+     *                         order to update the internal variable's value.
      *
      * @return boolean
-     *      TRUE on success, FALSE on error.
+     *                 TRUE on success, FALSE on error.
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
@@ -182,6 +183,7 @@ class Article extends DatabaseObject {
             $this->m_cacheUpdate = true;
         }
         $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
+
         return $status;
     }
 
@@ -189,11 +191,11 @@ class Article extends DatabaseObject {
      * Fetch a single record from the database for the given key.
      *
      * @param array $p_recordSet
-     *      If the record has already been fetched and we just need to
-     *      assign the data to the object's internal member variable.
+     *                           If the record has already been fetched and we just need to
+     *                           assign the data to the object's internal member variable.
      *
      * @return boolean
-     *      TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public function fetch($p_recordSet = null, $p_forceExists = false)
     {
@@ -208,6 +210,7 @@ class Article extends DatabaseObject {
             settype($this->m_data['LockUser'], 'integer');
             settype($this->m_data['ArticleOrder'], 'integer');
         }
+
         return $res;
     }
 
@@ -215,20 +218,20 @@ class Article extends DatabaseObject {
      * Check if an article with the same name exists in the translation destination
      *
      * @param string $p_translation_title
-     *      the desired title for the translated article
-     * @param int $p_translation_language
-     * 		the id of the translation language
+     *                                       the desired title for the translated article
+     * @param int    $p_translation_language
+     *                                       the id of the translation language
      *
      * @return boolean
-     *      TRUE if an article with the same name exists, FALSE otherwise
+     *                 TRUE if an article with the same name exists, FALSE otherwise
      */
     public function translationTitleExists($p_translation_title, $p_translation_language)
     {
-    	global $g_ado_db;
+        global $g_ado_db;
 
-		$idPublication =  $this->m_data['IdPublication'];
-		$nrIssue = $this->m_data['NrIssue'];
-		$nrSection = $this->m_data['NrSection'];
+        $idPublication =  $this->m_data['IdPublication'];
+        $nrIssue = $this->m_data['NrIssue'];
+        $nrSection = $this->m_data['NrSection'];
 
 
         $where = " WHERE IdPublication = $idPublication AND NrIssue = $nrIssue"
@@ -240,10 +243,10 @@ class Article extends DatabaseObject {
 
         $articleNumber = $g_ado_db->GetOne($queryStr);
 
-        if ( $articleNumber > 0 ) {
-        	return TRUE;
+        if ($articleNumber > 0) {
+            return true;
         } else {
-        	return FALSE;
+            return false;
         }
     }
 
@@ -264,11 +267,11 @@ class Article extends DatabaseObject {
      * of these parameters are present.  Otherwise, the article will remain
       * unplaced.
      *
-     * @param string $p_articleType
-     * @param string $p_name
-     * @param int $p_publicationId
-     * @param int $p_issueNumber
-     * @param int $p_sectionNumber
+     * @param  string $p_articleType
+     * @param  string $p_name
+     * @param  int    $p_publicationId
+     * @param  int    $p_issueNumber
+     * @param  int    $p_sectionNumber
      * @return void
      */
     public function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
@@ -293,9 +296,9 @@ class Article extends DatabaseObject {
             && ($p_publicationId > 0)
             && ($p_issueNumber > 0)
             && ($p_sectionNumber > 0) ) {
-            $values['IdPublication'] = (int)$p_publicationId;
-            $values['NrIssue'] = (int)$p_issueNumber;
-            $values['NrSection'] = (int)$p_sectionNumber;
+            $values['IdPublication'] = (int) $p_publicationId;
+            $values['NrIssue'] = (int) $p_issueNumber;
+            $values['NrSection'] = (int) $p_sectionNumber;
         }
         $values['ShortName'] = $this->m_data['Number'];
         $values['Type'] = $p_articleType;
@@ -347,29 +350,30 @@ class Article extends DatabaseObject {
 
         $queryStr = 'UPDATE AutoId SET ArticleId=LAST_INSERT_ID(ArticleId + 1)';
         $g_ado_db->Execute($queryStr);
+
         return $g_ado_db->insert_id() ?: 1;
     } // fn __generateArticleNumber
 
     /**
      * Create a copy of this article.
      *
-     * @param int $p_destPublicationId -
-     *		The destination publication ID.
-     * @param int $p_destIssueNumber -
-     *		The destination issue number.
-     * @param int $p_destSectionNumber -
-     * 		The destination section number.
-     * @param int $p_userId -
-     *		The user creating the copy.  If null, keep the same user ID as the original.
-     * @param mixed $p_copyTranslations -
-     *		If false (default), only this article will be copied.
-     * 		If true, all translations will be copied.
-     *		If an array is passed, the translations given will be copied.
-     *		Any translations that do not exist will be ignored.
+     * @param int   $p_destPublicationId -
+     *                                   The destination publication ID.
+     * @param int   $p_destIssueNumber   -
+     *                                   The destination issue number.
+     * @param int   $p_destSectionNumber -
+     *                                   The destination section number.
+     * @param int   $p_userId            -
+     *                                   The user creating the copy.  If null, keep the same user ID as the original.
+     * @param mixed $p_copyTranslations  -
+     *                                   If false (default), only this article will be copied.
+     *                                   If true, all translations will be copied.
+     *                                   If an array is passed, the translations given will be copied.
+     *                                   Any translations that do not exist will be ignored.
      *
      * @return Article
-     *     If $p_copyTranslations is TRUE or an array, return an array of newly created articles.
-     *     If $p_copyTranslations is FALSE, return the new Article.
+     *                 If $p_copyTranslations is TRUE or an array, return an array of newly created articles.
+     *                 If $p_copyTranslations is FALSE, return the new Article.
      */
     public function copy($p_destPublicationId = 0, $p_destIssueNumber = 0,
                          $p_destSectionNumber = 0, $p_userId = null,
@@ -405,18 +409,17 @@ class Article extends DatabaseObject {
         $newArticleNumber = $this->__generateArticleNumber();
 
         // geo-map copying
-        if (0 < count($copyArticles))
-        {
+        if (0 < count($copyArticles)) {
             $map_user_id = $p_userId;
             if (is_null($map_user_id)) {
                 $map_user_id = $this->m_data['IdUser'];
             }
 
-            $map_artilce_src = (int)$this->m_data['Number'];
-            $map_artilce_dest = (int)$newArticleNumber;
+            $map_artilce_src = (int) $this->m_data['Number'];
+            $map_artilce_dest = (int) $newArticleNumber;
             $map_translations = array();
             foreach ($copyArticles as $copyMe) {
-                $map_translations[] = (int)$copyMe->m_data['IdLanguage'];
+                $map_translations[] = (int) $copyMe->m_data['IdLanguage'];
             }
             Geo_Map::OnArticleCopy($map_artilce_src, $map_artilce_dest, $map_translations, $map_user_id);
         }
@@ -427,11 +430,11 @@ class Article extends DatabaseObject {
         foreach ($copyArticles as $copyMe) {
             // Construct the duplicate article object.
             $articleCopy = new Article();
-            $articleCopy->m_data['IdPublication'] = (int)$p_destPublicationId;
-            $articleCopy->m_data['NrIssue'] = (int)$p_destIssueNumber;
-            $articleCopy->m_data['NrSection'] = (int)$p_destSectionNumber;
-            $articleCopy->m_data['IdLanguage'] = (int)$copyMe->m_data['IdLanguage'];
-            $articleCopy->m_data['Number'] = (int)$newArticleNumber;
+            $articleCopy->m_data['IdPublication'] = (int) $p_destPublicationId;
+            $articleCopy->m_data['NrIssue'] = (int) $p_destIssueNumber;
+            $articleCopy->m_data['NrSection'] = (int) $p_destSectionNumber;
+            $articleCopy->m_data['IdLanguage'] = (int) $copyMe->m_data['IdLanguage'];
+            $articleCopy->m_data['Number'] = (int) $newArticleNumber;
             $values = array();
             // Copy some attributes
             $values['ShortName'] = $newArticleNumber;
@@ -510,11 +513,11 @@ class Article extends DatabaseObject {
      * one section to another.
      *
      * @param int $p_destPublicationId -
-     *		The destination publication ID.
-     * @param int $p_destIssueNumber -
-     *		The destination issue number.
+     *                                 The destination publication ID.
+     * @param int $p_destIssueNumber   -
+     *                                 The destination issue number.
      * @param int $p_destSectionNumber -
-     * 		The destination section number.
+     *                                 The destination section number.
      *
      * @return boolean
      */
@@ -525,19 +528,19 @@ class Article extends DatabaseObject {
 
         $columns = array();
         if ($this->m_data["IdPublication"] != $p_destPublicationId) {
-            $columns["IdPublication"] = (int)$p_destPublicationId;
+            $columns["IdPublication"] = (int) $p_destPublicationId;
         }
         if ($this->m_data["NrIssue"] != $p_destIssueNumber) {
-            $columns["NrIssue"] = (int)$p_destIssueNumber;
+            $columns["NrIssue"] = (int) $p_destIssueNumber;
         }
         if ($this->m_data["NrSection"] != $p_destSectionNumber) {
-            $columns["NrSection"] = (int)$p_destSectionNumber;
+            $columns["NrSection"] = (int) $p_destSectionNumber;
         }
         $success = false;
         if (count($columns) > 0) {
             $success = $this->update($columns);
             if ($success) {
-            	$this->setWorkflowStatus($this->getWorkflowStatus());
+                $this->setWorkflowStatus($this->getWorkflowStatus());
                 $g_ado_db->Execute('LOCK TABLES Articles WRITE');
                 $articleOrder = $g_ado_db->GetOne('SELECT MAX(ArticleOrder) + 1 FROM Articles');
                 $this->setProperty('ArticleOrder', $articleOrder);
@@ -545,6 +548,7 @@ class Article extends DatabaseObject {
                 $this->positionAbsolute(1);
             }
         }
+
         return $success;
     } // fn move
 
@@ -592,9 +596,9 @@ class Article extends DatabaseObject {
      * Create a copy of the article, but make it a translation
      * of the current one.
      *
-     * @param int $p_languageId
-     * @param int $p_userId
-     * @param string $p_name
+     * @param  int     $p_languageId
+     * @param  int     $p_userId
+     * @param  string  $p_name
      * @return Article
      */
     public function createTranslation($p_languageId, $p_userId, $p_name)
@@ -651,7 +655,6 @@ class Article extends DatabaseObject {
 
         return $articleCopy;
     } // fn createTranslation
-
 
     /**
      * Delete article from database.  This will
@@ -713,8 +716,7 @@ class Article extends DatabaseObject {
         if (count($this->getLanguages()) <= 1) {
             // unlink the article-map pointers
             Geo_Map::OnArticleDelete($this->m_data['Number']);
-        }
-        else {
+        } else {
             // removing non-last translation of the map poi contents
             Geo_Map::OnLanguageDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
         }
@@ -735,21 +737,20 @@ class Article extends DatabaseObject {
             Log::ArticleMessage($tmpObj, $translator->trans('Article deleted.', array(), 'api'), null, 32);
         }
         $this->m_cacheUpdate = true;
+
         return $deleted;
     } // fn delete
-
 
     /**
      * Get the time the article was locked.
      *
      * @return string
-     *		In the form of YYYY-MM-DD HH:MM:SS
+     *                In the form of YYYY-MM-DD HH:MM:SS
      */
     public function getLockTime()
     {
         return $this->m_data['LockTime'];
     } // fn getLockTime
-
 
     /**
      * Return TRUE if the article is locked, FALSE if it isnt.
@@ -764,14 +765,13 @@ class Article extends DatabaseObject {
         }
     } // fn isLocked
 
-
     /**
      * Lock or unlock the article.
      *
      * Locking the article requires the user ID parameter.
      *
-     * @param boolean $p_lock
-     * @param int $p_userId
+     * @param  boolean $p_lock
+     * @param  int     $p_userId
      * @return void
      */
     public function setIsLocked($p_lock, $p_userId = null)
@@ -800,15 +800,15 @@ class Article extends DatabaseObject {
      * Return an array of Language objects, one for each
      * language the article is written in.
      *
-     * @param boolean $p_excludeCurrent
-     *      If true, exclude the current language from the list.
-     * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bynumber, byname, byenglish_name, bycode
-     *      order_direction can take one of the following values:
-     *        asc, desc
+     * @param  boolean $p_excludeCurrent
+     *                                   If true, exclude the current language from the list.
+     * @param  array   $p_order
+     *                                   The array of order directives in the format:
+     *                                   array('field'=>field_name, 'dir'=>order_direction)
+     *                                   field_name can take one of the following values:
+     *                                   bynumber, byname, byenglish_name, bycode
+     *                                   order_direction can take one of the following values:
+     *                                   asc, desc
      * @return array
      */
     public function getLanguages($p_excludeCurrent = false, array $p_order = array(),
@@ -840,6 +840,7 @@ class Article extends DatabaseObject {
              $queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
          }
          $languages = DbObjectArray::Create('Language', $queryStr);
+
         return $languages;
     } // fn getLanguages
 
@@ -849,7 +850,7 @@ class Article extends DatabaseObject {
      * type of language the article is written in.
      *
      * @param int $p_articleNumber
-     * 		Optional. Use this if you call this function statically.
+     *                             Optional. Use this if you call this function statically.
      *
      * @return array
      */
@@ -865,6 +866,7 @@ class Article extends DatabaseObject {
          $queryStr = 'SELECT * FROM Articles '
                      ." WHERE Number=$articleNumber";
          $articles = DbObjectArray::Create('Article', $queryStr);
+
         return $articles;
     } // fn getTranslations
 
@@ -882,6 +884,7 @@ class Article extends DatabaseObject {
             $language = new Language($this->m_data['IdLanguage']);
             $this->m_languageName = $language->getNativeName();
         }
+
         return $this->m_languageName;
     } // fn getLanguageName
 
@@ -910,6 +913,7 @@ class Article extends DatabaseObject {
                 return $sections[0];
             }
         }
+
         return $section;
     } // fn getSection
 
@@ -919,11 +923,11 @@ class Article extends DatabaseObject {
      * relative to its current position.
      *
      * @param string $p_direction -
-     * 		Can be "up" or "down".  "Up" means towards the beginning of the list,
-     * 		and "down" means towards the end of the list.
+     *                            Can be "up" or "down".  "Up" means towards the beginning of the list,
+     *                            and "down" means towards the end of the list.
      *
      * @param int $p_spacesToMove -
-     *		The number of spaces to move the article.
+     *                            The number of spaces to move the article.
      *
      * @return boolean
      */
@@ -966,6 +970,7 @@ class Article extends DatabaseObject {
             $destRow = $g_ado_db->GetRow($queryStr);
             if (!$destRow) {
                 $g_ado_db->Execute('UNLOCK TABLES');
+
                 return false;
             }
         }
@@ -996,13 +1001,13 @@ class Article extends DatabaseObject {
 
         // Re-fetch this article to get the updated article order.
         $this->fetch();
+
         return true;
     } // fn positionRelative
 
-
     /**
      * Move the article to the given position (i.e. reorder the article).
-     * @param int $p_moveToPosition
+     * @param  int     $p_moveToPosition
      * @return boolean
      */
     public function positionAbsolute($p_moveToPosition = 1)
@@ -1024,6 +1029,7 @@ class Article extends DatabaseObject {
         $destRow = $g_ado_db->GetRow($queryStr);
         if (!$destRow) {
             $g_ado_db->Execute('UNLOCK TABLES');
+
             return false;
         }
         if ($destRow['ArticleOrder'] == $this->m_data['ArticleOrder']) {
@@ -1032,6 +1038,7 @@ class Article extends DatabaseObject {
             // Move the destination down one.
             $destArticle = new Article($destRow['IdLanguage'], $destRow['Number']);
             $destArticle->positionRelative("down", 1);
+
             return true;
         }
         if ($destRow['ArticleOrder'] > $this->m_data['ArticleOrder']) {
@@ -1070,7 +1077,6 @@ class Article extends DatabaseObject {
         return true;
     } // fn positionAbsolute
 
-
     /**
      * Return true if the given user has permission to modify the content of this article.
      *
@@ -1098,7 +1104,6 @@ class Article extends DatabaseObject {
         }
     } // fn userCanModify
 
-
     /**
      * Get the name of the dynamic article type table.
      *
@@ -1108,7 +1113,6 @@ class Article extends DatabaseObject {
     {
         return 'X'.$this->m_data['Type'];
     } // fn getArticleTypeTableName
-
 
     /**
      * Get the publication ID of the publication that contains this article.
@@ -1123,22 +1127,20 @@ class Article extends DatabaseObject {
         return 0;
     } // fn getPublicationId
 
-
     /**
      * Set the publication ID.
      *
-     * @param int $p_value
+     * @param  int     $p_value
      * @return boolean
      */
     public function setPublicationId($p_value)
     {
         if (is_numeric($p_value)) {
-            return $this->setProperty('IdPublication', (int)$p_value);
+            return $this->setProperty('IdPublication', (int) $p_value);
         } else {
             return false;
         }
     } // fn setPublicationId
-
 
     /**
      * Get the issue that the article resides within.
@@ -1154,22 +1156,20 @@ class Article extends DatabaseObject {
         return 0;
     } // fn getIssueNumber
 
-
     /**
      * Set the issue number.
      *
-     * @param int $p_value
+     * @param  int     $p_value
      * @return boolean
      */
     public function setIssueNumber($p_value)
     {
         if (is_numeric($p_value)) {
-            return $this->setProperty('NrIssue', (int)$p_value);
+            return $this->setProperty('NrIssue', (int) $p_value);
         } else {
             return false;
         }
     } // fn setIssueNumber
-
 
     /**
      * Get the section number that contains this article.
@@ -1185,22 +1185,20 @@ class Article extends DatabaseObject {
         return 0;
     } // fn getSectionNumber
 
-
     /**
      * Set the section number.
      *
-     * @param int $p_value
+     * @param  int     $p_value
      * @return boolean
      */
     public function setSectionNumber($p_value)
     {
         if (is_numeric($p_value)) {
-            return $this->setProperty('NrSection', (int)$p_value);
+            return $this->setProperty('NrSection', (int) $p_value);
         } else {
             return false;
         }
     } // fn setSectionNumber
-
 
     /**
      * Return the language the article was written in.
@@ -1215,7 +1213,6 @@ class Article extends DatabaseObject {
 
         return 0;
     } // fn getLanguageId
-
 
     /**
      * Return the article number.  The article number is
@@ -1235,7 +1232,6 @@ class Article extends DatabaseObject {
         return 0;
     } // fn getArticleNumber
 
-
     /**
      * Get the title of the article.
      *
@@ -1246,7 +1242,6 @@ class Article extends DatabaseObject {
         return $this->m_data['Name'];
     } // fn getTitle
 
-
     /**
      * Alias for getTitle().
      *
@@ -1256,7 +1251,6 @@ class Article extends DatabaseObject {
     {
         return $this->m_data['Name'];
     } // fn getName
-
 
     /**
      * Set the title of the article.
@@ -1270,7 +1264,6 @@ class Article extends DatabaseObject {
         return parent::setProperty('Name', $p_title);
     } // fn setTitle
 
-
     /**
      * Get the article type.
      * @return string
@@ -1280,7 +1273,6 @@ class Article extends DatabaseObject {
         return $this->m_data['Type'];
     } // fn getType
 
-
     /**
      * Get the logged in language's translation of the article type.
      * @return string
@@ -1289,6 +1281,7 @@ class Article extends DatabaseObject {
     {
         $type = $this->getType();
         $typeObj = new ArticleType($type);
+
         return $typeObj->getDisplayName($p_languageId);
     }
 
@@ -1299,27 +1292,27 @@ class Article extends DatabaseObject {
      */
     public function getCreatorId()
     {
-        return (int)$this->m_data['IdUser'];
+        return (int) $this->m_data['IdUser'];
     } // fn getCreatorId
 
 
     /**
      * Set the user ID of the user who created this article.
      *
-     * @param int $p_value
+     * @param  int     $p_value
      * @return boolean
      */
     public function setCreatorId($p_value)
     {
-        return parent::setProperty('IdUser', (int)$p_value);
+        return parent::setProperty('IdUser', (int) $p_value);
     } // fn setCreatorId
 
 
     /**
      * Set the ID of the author who wrote this article.
      *
-     * @param int $p_value
-     * @param int $order
+     * @param  int     $p_value
+     * @param  int     $order
      * @return boolean
      */
     public function setAuthor(Author $p_author, $order = 0)
@@ -1362,7 +1355,7 @@ class Article extends DatabaseObject {
     /**
      * Set whether the article should appear on the front page.
      *
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setOnFrontPage($p_value)
@@ -1384,7 +1377,7 @@ class Article extends DatabaseObject {
 
     /**
      * Set whether the article will appear on the section page.
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setOnSectionPage($p_value)
@@ -1400,7 +1393,7 @@ class Article extends DatabaseObject {
      *   'N' = "New"
      *
      * @return string
-     * 		Can be 'Y', 'S', or 'N'.
+     *                Can be 'Y', 'S', or 'N'.
      */
     public function getWorkflowStatus()
     {
@@ -1413,7 +1406,7 @@ class Article extends DatabaseObject {
      * This can be called statically or as a member function.
      * If called statically, you must pass in a parameter.
      *
-     * @param string $p_value
+     * @param  string $p_value
      * @return string
      */
     public function getWorkflowDisplayString($p_value = null)
@@ -1445,7 +1438,7 @@ class Article extends DatabaseObject {
      *     'S' = 'Submitted'
      *     'N' = 'New'
      *
-     * @param string $p_value
+     * @param  string  $p_value
      * @return boolean
      */
     public function setWorkflowStatus($p_value)
@@ -1453,6 +1446,7 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
         $translator = \Zend_Registry::get('container')->getService('translator');
+        $em = \Zend_Registry::get('container')->getService('em');
         $p_value = strtoupper($p_value);
         if ( ($p_value != 'Y') && ($p_value != 'S') && ($p_value != 'N') && ($p_value != 'M')) {
             return false;
@@ -1481,7 +1475,7 @@ class Article extends DatabaseObject {
             $article_images = ArticleImage::GetImagesByArticleNumber($this->getArticleNumber());
             foreach ($article_images as $article_image) {
                 $image = $article_image->getImage();
-                $user_id = (int)$image->getUploadingUserId();
+                $user_id = (int) $image->getUploadingUserId();
                 //send out an image.published event
                 self::dispatchEvent("image.published", $this, array("user" => $user_id));
             }
@@ -1506,11 +1500,19 @@ class Article extends DatabaseObject {
             return false;
         }
 
+        $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($this->getLanguageId());
+        $authors = $em->getRepository('Newscoop\Entity\ArticleAuthor')->getArticleAuthors($this->getArticleNumber(), $language->getCode())->getArrayResult();
+        foreach ($authors as $author) {
+            self::dispatchEvent("user.set_points", $this, array('authorId' => $author['fk_author_id']));
+        }
+
         CampCache::singleton()->clear('user');
 
         $logtext = $translator->trans('Article status changed from $1 to $2.', array(
             '$1' => $this->getWorkflowDisplayString($oldStatus), '$2' => $this->getWorkflowDisplayString($p_value)), 'api');
+
         Log::ArticleMessage($this, $logtext, null, 35);
+
         return true;
     } // fn setWorkflowStatus
 
@@ -1528,7 +1530,7 @@ class Article extends DatabaseObject {
     /**
      * Set the date the article was published, parameter must be in the
      * form YYYY-MM-DD.
-     * @param string $p_value
+     * @param  string  $p_value
      * @return boolean
      */
     public function setPublishDate($p_value)
@@ -1552,7 +1554,7 @@ class Article extends DatabaseObject {
     /**
      * Set the date the article was created, parameter must be in the
      * form YYYY-MM-DD.
-     * @param string $p_value
+     * @param  string  $p_value
      * @return boolean
      */
     public function setCreationDate($p_value)
@@ -1576,6 +1578,7 @@ class Article extends DatabaseObject {
             $str = substr($t, 0, 4).'-'.substr($t, 4, 2)
                    .'-'.substr($t, 6, 2).' '.substr($t, 8, 2)
                    .':'.substr($t, 10, 2).':'.substr($t, 12);
+
             return $str;
         } else {
             return $this->m_data['time_updated'];
@@ -1591,11 +1594,13 @@ class Article extends DatabaseObject {
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $keywords = $this->m_data['Keywords'];
         $keywordSeparator = $preferencesService->KeywordSeparator;
+
         return str_replace(",", $keywordSeparator, $keywords);
     } // fn getKeywords
 
 
-    public function getReads() {
+    public function getReads()
+    {
         if (!$this->exists()) {
             return null;
         }
@@ -1603,12 +1608,13 @@ class Article extends DatabaseObject {
             return 0;
         }
         $requestObject = new RequestObject($this->m_data['object_id']);
+
         return $requestObject->getRequestCount();
     }
 
 
     /**
-     * @param string $p_value
+     * @param  string  $p_value
      * @return boolean
      */
     public function setKeywords($p_value)
@@ -1647,7 +1653,7 @@ class Article extends DatabaseObject {
     /**
      * Set whether this article is viewable by non-subscribers.
      *
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setIsPublic($p_value)
@@ -1697,9 +1703,9 @@ class Article extends DatabaseObject {
 
     public function getSEOURLEnd(array $seoFields, $languageId)
     {
-    	$urlEnd = '';
-    	foreach ($seoFields as $field => $value) {
-    		switch ($field) {
+        $urlEnd = '';
+        foreach ($seoFields as $field => $value) {
+            switch ($field) {
                 case 'name':
                     if ($text = trim($this->getName())) {
                         $urlEnd .= $urlEnd ? '-' . $text : $text;
@@ -1716,11 +1722,12 @@ class Article extends DatabaseObject {
                         $urlEnd .= $urlEnd ? '-' . $topic->getName($languageId) : $topic->getName($languageId);
                     }
                     break;
-    		}
-    	}
+            }
+        }
         $urlEnd = preg_replace('/[\\\\,\/\.\?"\+&%:#]/', '', trim($urlEnd));
-    	$urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
-		return $urlEnd;
+        $urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
+
+        return $urlEnd;
     }
 
 
@@ -1759,12 +1766,13 @@ class Article extends DatabaseObject {
     /**
      * Set whether comments are enabled for this article.
      *
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setCommentsEnabled($p_value)
     {
         $p_value = $p_value ? '1' : '0';
+
         return $this->setProperty('comments_enabled', $p_value);
     } // fn setCommentsEnabled
 
@@ -1781,12 +1789,13 @@ class Article extends DatabaseObject {
     /**
      * Set whether rating is enabled for this article.
      *
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setRatingEnabled($p_value)
     {
         $p_value = $p_value ? '1' : '0';
+
         return $this->setProperty('rating_enabled', $p_value);
     } // fn setRatingEnabled
 
@@ -1807,12 +1816,13 @@ class Article extends DatabaseObject {
      * If TRUE, this means that comments cannot be added to
      * the article.
      *
-     * @param boolean $p_value
+     * @param  boolean $p_value
      * @return boolean
      */
     public function setCommentsLocked($p_value)
     {
         $p_value = $p_value ? '1' : '0';
+
         return $this->setProperty('comments_locked', $p_value);
     } // fn setCommentsLocked
 
@@ -1878,6 +1888,7 @@ class Article extends DatabaseObject {
                 'article' => null,
             ));
         }
+
         return $res;
     }
 
@@ -1887,18 +1898,18 @@ class Article extends DatabaseObject {
      * in the given publication, issue, section, language.
      *
      * @param int $p_articleNr
-     *      The article number
+     *                             The article number
      * @param int $p_publicationId
-     *      The publication identifier
+     *                             The publication identifier
      * @param int $p_issueNr
-     *      The issue number
+     *                             The issue number
      * @param int $p_sectionNr
-     *      The section number
+     *                             The section number
      * @param int $p_languageId
-     *      The language identifier
+     *                             The language identifier
      *
      * @return object|null
-     *      An article object on success, null on failure
+     *                     An article object on success, null on failure
      */
     public static function GetByNumber($p_articleNr, $p_publicationId, $p_issueNr,
                                        $p_sectionNr, $p_languageId)
@@ -1922,10 +1933,10 @@ class Article extends DatabaseObject {
      * in the given publication / issue / section / language.
      *
      * @param string $p_name
-     * @param int $p_publicationId
-     * @param int $p_issueId
-     * @param int $p_sectionId
-     * @param int $p_languageId
+     * @param int    $p_publicationId
+     * @param int    $p_issueId
+     * @param int    $p_sectionId
+     * @param int    $p_languageId
      *
      * @return array
      */
@@ -1975,9 +1986,9 @@ class Article extends DatabaseObject {
     /**
      * Return the number of unique (language-independant) articles
      * according to the given parameters.
-     * @param int $p_publicationId
-     * @param int $p_issueId
-     * @param int $p_sectionId
+     * @param  int $p_publicationId
+     * @param  int $p_issueId
+     * @param  int $p_sectionId
      * @return int
      */
     public static function GetNumUniqueArticles($p_publicationId = null, $p_issueId = null,
@@ -1999,6 +2010,7 @@ class Article extends DatabaseObject {
             $queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
         }
         $result = $g_ado_db->GetOne($queryStr);
+
         return $result;
     } // fn GetNumUniqueArticles
 
@@ -2044,8 +2056,8 @@ class Article extends DatabaseObject {
      * The first element is an array of submitted articles.
      * The second element is the total number of submitted articles.
      *
-     * @param int $p_start
-     * @param int $p_upperLimit
+     * @param  int   $p_start
+     * @param  int   $p_upperLimit
      * @return array
      */
     public static function GetSubmittedArticles($p_start = 0, $p_upperLimit = 20)
@@ -2079,11 +2091,11 @@ class Article extends DatabaseObject {
     /**
      * Get the articles that have no publication/issue/section.
      *
-     * @param int $p_start
-     * @param int $p_maxRows
+     * @param  int   $p_start
+     * @param  int   $p_maxRows
      * @return array
-     *     An array of two elements:
-     *     An array of articles and the total number of articles.
+     *                         An array of two elements:
+     *                         An array of articles and the total number of articles.
      */
     public static function GetUnplacedArticles($p_start = 0, $p_maxRows = 20)
     {
@@ -2125,6 +2137,7 @@ class Article extends DatabaseObject {
                      .' FROM Articles, Languages '
                      .' WHERE Articles.IdLanguage = Languages.Id';
          $languages = DbObjectArray::Create('Language', $queryStr);
+
         return $languages;
     } // fn GetAllLanguages
 
@@ -2136,24 +2149,24 @@ class Article extends DatabaseObject {
      * the given language.
      *
      * @param int $p_publicationId -
-     *		The publication ID.
+     *                             The publication ID.
      *
      * @param int $p_issueNumber -
-     *		The issue number.
+     *                           The issue number.
      *
      * @param int $p_sectionNumber -
-     *		The section number.
+     *                             The section number.
      *
      * @param int $p_languageId -
-     *		The language ID.
+     *                          The language ID.
      *
      * @param array $p_sqlOptions
      *
      * @param boolean $p_countOnly
      *
      * @return array
-     *     Return an array of Article objects with indexes in sequential order
-     *     starting from zero.
+     *               Return an array of Article objects with indexes in sequential order
+     *               starting from zero.
      */
     public static function GetArticles($p_publicationId = null, $p_issueNumber = null,
                                        $p_sectionNumber = null, $p_languageId = null,
@@ -2194,6 +2207,7 @@ class Article extends DatabaseObject {
 
         if ($p_countOnly) {
             $count = $g_ado_db->GetOne($queryStr);
+
             return $count;
         } else {
             if (is_null($p_sqlOptions)) {
@@ -2205,6 +2219,7 @@ class Article extends DatabaseObject {
             }
             $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
             $articles = DbObjectArray::Create('Article', $queryStr);
+
             return $articles;
         }
     } // fn GetArticles
@@ -2224,28 +2239,28 @@ class Article extends DatabaseObject {
      * article, but counted as three articles in GetArticles().
      *
      * @param int $p_publicationId -
-     *		The publication ID.
+     *                             The publication ID.
      *
      * @param int $p_issueNumber -
-     *		The issue number.
+     *                           The issue number.
      *
      * @param int $p_sectionNumber -
-     *		The section number.
+     *                             The section number.
      *
      * @param int $p_languageId -
-     *		The language ID.
+     *                          The language ID.
      *
      * @param int $p_preferredLanguage -
-     *		If specified, list the articles in this language before others.
+     *                                 If specified, list the articles in this language before others.
      *
      * @param array $p_sqlOptions
      *
      * @param boolean $p_countOnly
-     * 		Whether to run just the number of articles that match the
-     * 		search criteria.
+     *                             Whether to run just the number of articles that match the
+     *                             search criteria.
      *
      * @return array
-     *     Return an array of Article objects.
+     *               Return an array of Article objects.
      */
     public static function GetArticlesGrouped($p_publicationId = null,
                                               $p_issueNumber = null,
@@ -2284,6 +2299,7 @@ class Article extends DatabaseObject {
 
         if ($p_countOnly) {
             $count = $g_ado_db->GetOne($queryStr1);
+
             return $count;
         }
 
@@ -2332,14 +2348,15 @@ class Article extends DatabaseObject {
         unset($p_sqlOptions['LIMIT']);
         $queryStr2 = DatabaseObject::ProcessOptions($queryStr2, $p_sqlOptions);
         $articles = DbObjectArray::Create('Article', $queryStr2);
+
         return $articles;
     } // fn GetUniqueArticles
 
 
     /**
      * Return the number of articles of the given type.
-     * @param string $p_type
-     *		Article Type
+     * @param  string $p_type
+     *                        Article Type
      * @return int
      */
     public static function GetNumArticlesOfType($p_type)
@@ -2348,6 +2365,7 @@ class Article extends DatabaseObject {
         if (!$articleType->exists()) {
             return false;
         }
+
         return $articleType->getNumArticles();
     } // fn GetNumArticlesOfType
 
@@ -2364,13 +2382,14 @@ class Article extends DatabaseObject {
         global $g_ado_db;
         $sql = "SELECT * FROM Articles WHERE Type = " . $g_ado_db->escape($p_type);
         $articles = DbObjectArray::Create('Article', $sql);
+
         return $articles;
     } // fn GetArticlesOfType
 
 
     /**
      * Get the $p_max number of the most recently published articles.
-     * @param int $p_max
+     * @param  int   $p_max
      * @return array
      */
     public static function GetRecentArticles($p_max)
@@ -2380,13 +2399,14 @@ class Article extends DatabaseObject {
                    ." ORDER BY PublishDate DESC"
                    ." LIMIT $p_max";
         $result = DbObjectArray::Create('Article', $queryStr);
+
         return $result;
     } // fn GetRecentArticles
 
 
     /**
      * Get the $p_max number of the most recently modified articles.
-     * @param int $p_max
+     * @param  int   $p_max
      * @return array
      */
     public static function GetRecentlyModifiedArticles($p_max)
@@ -2395,6 +2415,7 @@ class Article extends DatabaseObject {
                    ." ORDER BY time_updated DESC"
                    ." LIMIT $p_max";
         $result = DbObjectArray::Create('Article', $queryStr);
+
         return $result;
     } // fn GetRecentlyModifiedArticles
 
@@ -2406,8 +2427,8 @@ class Article extends DatabaseObject {
      *
      *
      * @return mixed
-     *      array of issue publication dates
-     *      null if query does not match any issue
+     *               array of issue publication dates
+     *               null if query does not match any issue
      */
     public static function GetPublicationDates($p_publicationId,
                            $p_languageId,
@@ -2439,7 +2460,7 @@ class Article extends DatabaseObject {
 
     /**
      * Unlock all articles by the given user.
-     * @param int $p_userId
+     * @param  int  $p_userId
      * @return void
      */
     public static function UnlockByUser($p_userId)
@@ -2454,20 +2475,20 @@ class Article extends DatabaseObject {
     /**
      * Returns an articles list based on the given parameters.
      *
-     * @param array $p_parameters
-     *    An array of ComparisonOperation objects
-     * @param string $p_order
-     *    An array of columns and directions to order by
+     * @param array   $p_parameters
+     *                              An array of ComparisonOperation objects
+     * @param string  $p_order
+     *                              An array of columns and directions to order by
      * @param integer $p_start
-     *    The record number to start the list
+     *                              The record number to start the list
      * @param integer $p_limit
-     *    The offset. How many records from $p_start will be retrieved.
+     *                              The offset. How many records from $p_start will be retrieved.
      * @param integer $p_count
-     *    The total count of the elements; this count is computed without
-     *    applying the start ($p_start) and limit parameters ($p_limit)
+     *                              The total count of the elements; this count is computed without
+     *                              applying the start ($p_start) and limit parameters ($p_limit)
      *
      * @return array $articlesList
-     *    An array of Article objects
+     *               An array of Article objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false, $returnObjs = true)
@@ -2523,15 +2544,15 @@ class Article extends DatabaseObject {
                     $isNullCond = Article::$s_regularParameters[$leftOperand]
                                 . ' IS NULL';
                     $selectClauseObj->addConditionalWhere($isNullCond);
-                } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=' ) {
-					$selectClauseObj->addConditionalWhere($whereCondition);
+                } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=') {
+                    $selectClauseObj->addConditionalWhere($whereCondition);
                 } elseif ($leftOperand == 'workflow_status'
                 && isset($comparisonOperation['pending'])) {
                     $selectClauseObj->addConditionalWhere('Articles.NrIssue = 0');
                     $selectClauseObj->addConditionalWhere('Articles.NrSection = 0');
                     $selectClauseObj->addWhere($whereCondition);
                 } else {
-                	$selectClauseObj->addWhere($whereCondition);
+                    $selectClauseObj->addWhere($whereCondition);
                 }
             } elseif ($leftOperand == 'matchalltopics') {
                 // set the matchAllTopics flag
@@ -2609,9 +2630,7 @@ class Article extends DatabaseObject {
                 }
             } elseif ($leftOperand == 'insection') {
                 $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
-            }
-            elseif ($leftOperand == 'complex_date')
-            {
+            } elseif ($leftOperand == 'complex_date') {
                 /* @var $param ComparisonOperation */
                 $fieldName = key(($roper = $param->getRightOperand()));
                 $searchValues = array();
@@ -2627,8 +2646,7 @@ class Article extends DatabaseObject {
                     $whereCondition = "Articles.Number IN (\n$sqlQuery)";
                     $selectClauseObj->addWhere($whereCondition);
                 }
-            }
-            else {
+            } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
                 $sqlQuery = self::ProcessCustomField($comparisonOperation, $languageId);
@@ -2679,10 +2697,10 @@ class Article extends DatabaseObject {
         }
         if (count($otherTables) > 0) {
             foreach ($otherTables as $table=>$fields) {
-            	$joinType = 'LEFT JOIN';
-            	if (isset($fields['__JOIN'])) {
-            		$joinType = $fields['__JOIN'];
-            	}
+                $joinType = 'LEFT JOIN';
+                if (isset($fields['__JOIN'])) {
+                    $joinType = $fields['__JOIN'];
+                }
                 if (isset($fields['__TABLE_ALIAS'])) {
                     $tableAlias = $fields['__TABLE_ALIAS'];
                     $tableJoin = "\n    $joinType $table AS $tableAlias \n";
@@ -2773,6 +2791,7 @@ class Article extends DatabaseObject {
         global $g_ado_db;
 
         $sql = 'SELECT COUNT(*) FROM Articles';
+
         return $g_ado_db->GetOne($sql);
     }
 
@@ -2813,6 +2832,7 @@ class Article extends DatabaseObject {
         if (count($queries) == 0) {
             return null;
         }
+
         return implode("        union\n", $queries);
     }
 
@@ -2829,7 +2849,7 @@ class Article extends DatabaseObject {
         switch ($leftOperand) {
         case 'keyword':
             $conditionOperation['symbol'] = 'LIKE';
-            $conditionOperation['right'] = '%'.$p_param->getRightOperand().'%';
+            $conditionOperation['right'] = $p_param->getRightOperand().'%';
             break;
         case 'onfrontpage':
             $conditionOperation['right'] = ($p_param->getRightOperand() == 1) ? 'Y' : 'N';
@@ -2845,7 +2865,7 @@ class Article extends DatabaseObject {
             $conditionOperation['right'] = 'true';
             break;
         case 'topic':
-            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            $conditionOperation['right'] = (string) $p_param->getRightOperand();
             break;
         case 'published':
             if (strtolower($p_param->getRightOperand()) == 'true') {
@@ -2855,7 +2875,7 @@ class Article extends DatabaseObject {
             break;
         case 'workflow_status':
             $conditionOperation['symbol'] = '=';
-            switch(strtolower($p_param->getRightOperand())) {
+            switch (strtolower($p_param->getRightOperand())) {
             case 'pending':
                 $conditionOperation['pending'] = true;
             case 'new':
@@ -2890,7 +2910,7 @@ class Article extends DatabaseObject {
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
-            $conditionOperation['right'] = (string)$p_param->getRightOperand();
+            $conditionOperation['right'] = (string) $p_param->getRightOperand();
             break;
         }
 
@@ -2906,9 +2926,9 @@ class Article extends DatabaseObject {
     /**
      * Returns a select query for obtaining the articles that have the given topics
      *
-     * @param array $p_TopicIds
-     * @param array $p_typeAttributes
-     * @param bool $p_negate
+     * @param  array  $p_TopicIds
+     * @param  array  $p_typeAttributes
+     * @param  bool   $p_negate
      * @return string
      */
     private static function BuildTopicSelectClause(array $p_TopicIds,
@@ -2940,6 +2960,7 @@ class Article extends DatabaseObject {
                           . " WHERE " . $typeAttribute->getName()
                           . "$notCondition IN (" . implode(', ', $topicIds) . ")\n";
         }
+
         return $selectClause;
     }
 
@@ -2948,15 +2969,15 @@ class Article extends DatabaseObject {
      * Performs a search against the article content using the given
      * keywords. Returns the list of articles matching the given criteria.
      *
-     * @param string $p_searchPhrase
-     * @param string $p_fieldName - may be 'title' or 'author'
-     * @param bool $p_matchAll - true if all keyword have to match
-     * @param array $p_constraints
-     * @param array $p_order
-     * @param int $p_start - return results starting from the given order number
-     * @param int $p_limit - return at most $p_limit rows
-     * @param int $p_count - sets $p_count to the total number of rows in the search
-     * @param bool $p_countOnly - if true returns only the total number of rows
+     * @param  string $p_searchPhrase
+     * @param  string $p_fieldName    - may be 'title' or 'author'
+     * @param  bool   $p_matchAll     - true if all keyword have to match
+     * @param  array  $p_constraints
+     * @param  array  $p_order
+     * @param  int    $p_start        - return results starting from the given order number
+     * @param  int    $p_limit        - return at most $p_limit rows
+     * @param  int    $p_count        - sets $p_count to the total number of rows in the search
+     * @param  bool   $p_countOnly    - if true returns only the total number of rows
      * @return array
      */
     public static function SearchByKeyword($p_searchPhrase,
@@ -2981,6 +3002,7 @@ class Article extends DatabaseObject {
         $searchQuery = ArticleIndex::SearchQuery($p_searchPhrase);
         if (empty($searchQuery)) {
             $p_count = 0;
+
             return array();
         }
         $selectClauseObj->addJoin("INNER JOIN ($searchQuery) AS search ON Articles.Number = search.NrArticle"
@@ -3037,6 +3059,7 @@ class Article extends DatabaseObject {
         }
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
+
         return $articlesList;
     }
 
@@ -3045,17 +3068,17 @@ class Article extends DatabaseObject {
      * Processes an order directive coming from template tags.
      *
      * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bynumber, byname, bydate, bycreationdate, bypublishdate,
-     *        bypublication, byissue, bysection, bylanguage, bysectionorder,
-     *        bypopularity, bycomments
-     *      order_direction can take one of the following values:
-     *        asc, desc
+     *                       The array of order directives in the format:
+     *                       array('field'=>field_name, 'dir'=>order_direction)
+     *                       field_name can take one of the following values:
+     *                       bynumber, byname, bydate, bycreationdate, bypublishdate,
+     *                       bypublication, byissue, bysection, bylanguage, bysectionorder,
+     *                       bypopularity, bycomments
+     *                       order_direction can take one of the following values:
+     *                       asc, desc
      *
      * @return array
-     *      The array containing processed values of the condition
+     *               The array containing processed values of the condition
      */
     private static function ProcessListOrder(array $p_order, array &$p_otherTables = array(),
     &$p_whereConditions = array())
@@ -3083,8 +3106,8 @@ class Article extends DatabaseObject {
                     $dbField = 'Articles.PublishDate';
                     break;
                 case 'bylastupdate':
-                	$dbField = 'Articles.time_updated';
-                	break;
+                    $dbField = 'Articles.time_updated';
+                    break;
                 case 'bypublication':
                     $dbField = 'Articles.IdPublication';
                     break;
@@ -3109,7 +3132,7 @@ class Article extends DatabaseObject {
                     break;
                 case 'bycomments':
                     //@todo change this with DOCTRINE2 when refactor
-		            $dbField = 'comments_counter.comments_count';
+                    $dbField = 'comments_counter.comments_count';
                     $joinTable = "(SELECT COUNT(*) AS comments_count, `fk_thread_id` AS `fk_article_number`, fk_language_id \n"
                                . "    FROM `comment` `c` \n"
                                . "    WHERE c.status = 0 \n"
@@ -3120,7 +3143,7 @@ class Article extends DatabaseObject {
                     break;
                 case 'bylastcomment':
                     //@todo change this with DOCTRINE2 when refactor
-        		    $dbField = 'comment_ids.last_comment_id';
+                    $dbField = 'comment_ids.last_comment_id';
                     $joinTable = "(SELECT MAX(id) AS last_comment_id, `fk_thread_id` AS `fk_article_number`, fk_language_id \n"
                                . "    FROM comment c \n"
                                . "    WHERE c.status = 0 \n"
@@ -3145,10 +3168,12 @@ class Article extends DatabaseObject {
                 $order[] = array('field'=>$dbField, 'dir'=>$direction);
             }
         }
+
         return $order;
     }
 
-    public static function CheckCustomOrder($p_field) {
+    public static function CheckCustomOrder($p_field)
+    {
         $res = array('status' => false, 'field_type' => '', 'field_name' => '', 'default_value' => null);
 
         $field_parts = explode('.', $p_field);
@@ -3183,7 +3208,7 @@ class Article extends DatabaseObject {
      * @param string $p_defaultValue
      *
      * @return string
-     *      The string containing processed values of the condition
+     *                The string containing processed values of the condition
      */
     private static function GetCustomOrder($p_fieldType, $p_articleType, $p_fieldName, $p_defaultValue)
     {
@@ -3218,14 +3243,12 @@ class Article extends DatabaseObject {
             $p_defaultValue = 0 + $p_defaultValue;
             // if no table/row is find, the default value is used, this is done numerically
             $res_query = '(SELECT 0 + COALESCE((' . $queries_str . '), ' . $p_defaultValue . '))';
-        }
-        elseif ('cs' == $p_fieldType) {
+        } elseif ('cs' == $p_fieldType) {
             // <p> tag is removed, since it can be the initial tag at text area fields
             $p_defaultValue = str_replace('\'', '\'\'', $p_defaultValue);
             // if no table/row is find, the default value is used, this is done case sensitive
             $res_query = '(SELECT REPLACE(COALESCE((' . $queries_str . '), \'' . $p_defaultValue . '\'), "<p>", ""))';
-        }
-        else { // 'ci'
+        } else { // 'ci'
             // <p> tag is removed, since it can be the initial tag at text area fields
             $p_defaultValue = strtolower(str_replace('\'', '\'\'', $p_defaultValue));
             // if no table/row is find, the default value is used, this is done case insensitive
@@ -3239,15 +3262,15 @@ class Article extends DatabaseObject {
      * Performs a search against the given article field using the given
      * keywords. Returns the list of articles matching the given criteria.
      *
-     * @param array $p_keywords
-     * @param string $p_fieldName - may be 'title' or 'author'
-     * @param bool $p_matchAll - true if all keyword have to match
-     * @param array $p_constraints
-     * @param array $p_order
-     * @param int $p_start - return results starting from the given order number
-     * @param int $p_limit - return at most $p_limit rows
-     * @param int $p_count - sets $p_count to the total number of rows in the search
-     * @param bool $p_countOnly - if true returns only the total number of rows
+     * @param  array  $p_keywords
+     * @param  string $p_fieldName   - may be 'title' or 'author'
+     * @param  bool   $p_matchAll    - true if all keyword have to match
+     * @param  array  $p_constraints
+     * @param  array  $p_order
+     * @param  int    $p_start       - return results starting from the given order number
+     * @param  int    $p_limit       - return at most $p_limit rows
+     * @param  int    $p_count       - sets $p_count to the total number of rows in the search
+     * @param  bool   $p_countOnly   - if true returns only the total number of rows
      * @return array
      */
     public static function SearchByField(array $p_keywords,
@@ -3358,6 +3381,7 @@ class Article extends DatabaseObject {
         }
         $countQuery = $countClauseObj->buildQuery();
         $p_count = $g_ado_db->GetOne($countQuery);
+
         return $articlesList;
     }
 
@@ -3367,15 +3391,15 @@ class Article extends DatabaseObject {
      * Processes an order directive for the article translations list.
      *
      * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bynumber, byname, byenglish_name, bycode
-     *      order_direction can take one of the following values:
-     *        asc, desc
+     *                       The array of order directives in the format:
+     *                       array('field'=>field_name, 'dir'=>order_direction)
+     *                       field_name can take one of the following values:
+     *                       bynumber, byname, byenglish_name, bycode
+     *                       order_direction can take one of the following values:
+     *                       asc, desc
      *
      * @return array
-     *      The array containing processed values of the condition
+     *               The array containing processed values of the condition
      */
     private static function ProcessLanguageListOrder(array $p_order)
     {
@@ -3403,6 +3427,7 @@ class Article extends DatabaseObject {
             }
             $order[] = array('field'=>$dbField, 'dir'=>$direction);
         }
+
         return $order;
     }
 

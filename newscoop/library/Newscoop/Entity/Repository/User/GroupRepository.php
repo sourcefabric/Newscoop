@@ -19,8 +19,8 @@ class GroupRepository extends EntityRepository
     /**
      * Save group
      *
-     * @param Newscoop\Entity\User\Group $group
-     * @param array $values
+     * @param  Newscoop\Entity\User\Group $group
+     * @param  array                      $values
      * @return void
      */
     public function save(Group $group, array $values)
@@ -42,7 +42,7 @@ class GroupRepository extends EntityRepository
     /**
      * Delete group
      *
-     * @param int $id
+     * @param  int  $id
      * @return void
      */
     public function delete($id)

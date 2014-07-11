@@ -241,7 +241,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles.{_format}", defaults={"_format"="json"})
+     * @Route("/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -279,7 +279,7 @@ class ArticlesController extends FOSRestController
      *     output="\Newscoop\Entity\Article"
      * )
      *
-     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -304,6 +304,21 @@ class ArticlesController extends FOSRestController
     /**
      * Link resource with Article entity
      *
+     * **article authors headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/authors/7; rel="author">,</api/authors/types/4; rel="author-type">"
+     *
+     * **attachments headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/attachments/1; rel="attachment">"
+     *
+     * **images headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/images/1; rel="image">"
+     *
      * @ApiDoc(
      *     statusCodes={
      *         201="Returned when successful",
@@ -318,7 +333,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("LINK")
      * @View(statusCode=201)
      *
@@ -338,7 +353,10 @@ class ArticlesController extends FOSRestController
         }
 
         $matched = false;
-        foreach ($request->attributes->get('links', array()) as $key => $object) {
+        foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
+            $resourceType = $objectArray['resourceType'];
+            $object = $objectArray['object'];
+
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -360,6 +378,24 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+            if ($object instanceof \Newscoop\Entity\Author) {
+                $authorService = $this->get('author');
+                $authorType = false;
+                foreach ($request->attributes->get('links') as $key => $tempObjectArray) {
+                    if ($tempObjectArray['object'] instanceof \Newscoop\Entity\AuthorType) {
+                        $authorType = $tempObjectArray['object'];
+                    }
+                }
+
+                if ($authorType) {
+                    $authorService->addAuthorToArticle($article, $object, $authorType);
+
+                    $matched = true;
+                }
+
+                continue;
+            }
         }
 
 
@@ -371,6 +407,21 @@ class ArticlesController extends FOSRestController
     /**
      * Unlink resource from Article
      *
+     * **article authors headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/authors/7; rel="author">,</api/authors/types/4; rel="author-type">"
+     *
+     * **attachments headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/attachments/1; rel="attachment">"
+     *
+     * **images headers**:
+     *
+     *     header name: "link"
+     *     header value: "</api/images/1; rel="image">"
+     *
      * @ApiDoc(
      *     statusCodes={
      *         204="Returned when successful",
@@ -381,7 +432,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("UNLINK")
      * @View(statusCode=204)
      *
@@ -401,7 +452,10 @@ class ArticlesController extends FOSRestController
         }
 
         $matched = false;
-        foreach ($request->attributes->get('links', array()) as $key => $object) {
+        foreach ($request->attributes->get('links', array()) as $key => $objectArray) {
+            $resourceType = $objectArray['resourceType'];
+            $object = $objectArray['object'];
+
             if ($object instanceof \Exception) {
                 throw $object;
             }
@@ -431,6 +485,24 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+            if ($object instanceof \Newscoop\Entity\Author) {
+                $authorService = $this->get('author');
+                $authorType = false;
+                foreach ($request->attributes->get('links') as $key => $tempObjectArray) {
+                    if ($tempObjectArray['object'] instanceof \Newscoop\Entity\AuthorType) {
+                        $authorType = $tempObjectArray['object'];
+                    }
+                }
+
+                if ($authorType) {
+                    $authorService->removeAuthorFromArticle($article, $object, $authorType);
+
+                    $matched = true;
+                }
+
+                continue;
+            }
         }
 
         if ($matched === false) {
@@ -452,7 +524,7 @@ class ArticlesController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"})
+     * @Route("/articles/{number}/{language}/{status}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true})
      * @Method("PATCH")
      */
     public function changeArticleStatus(Request $request, $number, $language, $status)
@@ -466,7 +538,7 @@ class ArticlesController extends FOSRestController
         $success = $articleObj->setWorkflowStatus($status);
         $response = new Response();
         if ($success) {
-            $response->setStatusCode(200);
+            $response->setStatusCode(201);
         } else {
             $response->setStatusCode(500);
             throw new \Exception('Setting status code failed');
