@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Newscoop\GimmeBundle\Entity\PublicApiResource;
 
 /**
  * Create oauth client
@@ -54,8 +55,12 @@ class CreateOAuthClientCommand extends Console\Command\Command
         $client->setPublication($publication);
 
         if ($input->getOption('test')) {
+            $publicResource = new PublicApiResource();
+            $publicResource->setResource('newscoop_gimme_users_getuseraccesstoken');
+            $em->persist($publicResource);
             $client->setRandomId('svdg45ew371vtsdgd29fgvwe5v');
             $client->setSecret('h48fgsmv0due4nexjsy40jdf3sswwr');
+            $client->setTrusted(true);
         }
 
         $clientManager->updateClient($client);
