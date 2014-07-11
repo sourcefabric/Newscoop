@@ -45,9 +45,13 @@ echo '</div>';
 
 if (!$preferencesService->stat_ask_time) $preferencesService->stat_ask_time = '0';
 
+$address = $_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'];
 if (!$preferencesService->installation_id) {
-    $installationId = sha1($_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'].mt_rand());
-    $preferencesService->installation_id = $installationId;
+    $preferencesService->installation_id = sha1($address . mt_rand());
+}
+
+if (!$preferencesService->SiteSecretKey) {
+    $preferencesService->SiteSecretKey = sha1($address . mt_rand());
 }
 
 $request_only = false;
@@ -80,7 +84,7 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
 
 <?php if (!empty($actionMsg)) { ?>
 <script type="text/javascript">
-$(function() {
+$(function () {
     <?php if ($res == 'OK') { ?>
     flashMessage('<?php echo $actionMsg; ?>', null, true);
     <?php } else { ?>
@@ -119,7 +123,7 @@ if (!$request_only) {
 <div class="clear"></div>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.cookie.js" type="text/javascript"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function () {
     $('#dummy_stat_link').fancybox({
         showCloseButton: true,
         overlayShow: true,
@@ -127,14 +131,14 @@ $(document).ready(function() {
         hideOnContentClick: false,
         enableEscapeButton: false,
         centerOnScroll: true,
-        onClosed: function() {
-            $.getJSON("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>", function(data) {
+        onClosed: function () {
+            $.getJSON("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>", function (data) {
                 window.location.reload();
             });
         },
         overlayOpacity: 0.8,
         overlayColor: '#666',
-        onStart: function(){
+        onStart: function () {
             $("#fancybox-overlay").css({
                 'background-color': '#666',
                 opacity: 0.8,
@@ -142,7 +146,7 @@ $(document).ready(function() {
             }).show();
         }
     }).trigger('click');
-    
+
     $('.context').widgets({
         localizer: {
             remove: '<?php echo $translator->trans('Remove widget', array(), 'home'); ?>',

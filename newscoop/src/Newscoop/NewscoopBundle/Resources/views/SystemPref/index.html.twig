@@ -92,7 +92,7 @@
                             <label>{{ 'newscoop.preferences.label.secretkey'|trans }} <small id="secret">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text', 'disabled': 'disabled'}}) }} 
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }} <small id="lifetime">(?)</small></label>

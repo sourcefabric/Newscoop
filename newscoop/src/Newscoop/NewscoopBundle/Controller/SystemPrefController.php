@@ -113,8 +113,8 @@ class SystemPrefController extends Controller
             'smtp_port' => $preferencesService->SMTPPort,
             'email_from' => $preferencesService->EmailFromAddress,
             'image_ratio' => $preferencesService->EditorImageRatio,
-            'image_width' => (int)$preferencesService->EditorImageResizeWidth,
-            'image_height' => (int)$preferencesService->EditorImageResizeHeight,
+            'image_width' => (int) $preferencesService->EditorImageResizeWidth,
+            'image_height' => (int) $preferencesService->EditorImageResizeHeight,
             'zoom' => $preferencesService->EditorImageZoom,
             'use_replication_host' => $preferencesService->DBReplicationHost,
             'use_replication_user' => $preferencesService->DBReplicationUser,
@@ -123,9 +123,9 @@ class SystemPrefController extends Controller
             'use_replication_port' => $preferencesService->DBReplicationPort,
             'template_filter' => $preferencesService->TemplateFilter,
             'mysql_client_command_path' => $mysql_client_command_path,
-            'center_latitude_default' => (float)$preferencesService->MapCenterLatitudeDefault,
-            'center_longitude_default' => (float)$preferencesService->MapCenterLongitudeDefault,
-            'map_display_resolution_default' => (int)$preferencesService->MapDisplayResolutionDefault,
+            'center_latitude_default' => (float) $preferencesService->MapCenterLatitudeDefault,
+            'center_longitude_default' => (float) $preferencesService->MapCenterLongitudeDefault,
+            'map_display_resolution_default' => (int) $preferencesService->MapDisplayResolutionDefault,
             'map_view_width_default' => $preferencesService->MapViewWidthDefault,
             'map_view_height_default' => $preferencesService->MapViewHeightDefault,
             'map_auto_focus_default' => $preferencesService->MapAutoFocusDefault == '0' ? false : true,
@@ -212,7 +212,7 @@ class SystemPrefController extends Controller
                     return $geolocationSettings;
                 }
 
-                if($hasManagePermission) {
+                if ($hasManagePermission) {
                     // DB Caching
                     $databaseCacheSettings = $this->databaseCache($data['cache_engine'], $data['cache_engine_host'], $data['cache_engine_port']);
 
@@ -226,7 +226,7 @@ class SystemPrefController extends Controller
                         return $templateCacheSettings;
                     }
 
-                    $replicationSettings = $this->useReplication($data['use_replication_user'], $data['use_replication_host'], $data['use_replication_password'], 
+                    $replicationSettings = $this->useReplication($data['use_replication_user'], $data['use_replication_host'], $data['use_replication_password'],
                         $data['use_replication'], $data['use_replication_port'], $translator);
 
                     if ($replicationSettings instanceof RedirectResponse) {
@@ -247,8 +247,8 @@ class SystemPrefController extends Controller
                     $preferencesService->set('SmartyUseProtocol', $data['smartyUseProtocol']);
                 }
                 // General Settings
-                $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'], 
-                    $data['secret_key'], $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
+                $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'],
+                    $data['session_lifetime'], $data['separator'], $data['captcha'], $data['mysql_client_command_path']);
                 //Facebook
                 $this->facebook($data['facebook_appid'], $data['facebook_appsecret']);
                 //ReCaptcha
@@ -297,7 +297,8 @@ class SystemPrefController extends Controller
      *
      * @return void|RedirectResponse
      */
-    private function databaseCache($cache_engine, $cache_engine_host, $cache_engine_port) {
+    private function databaseCache($cache_engine, $cache_engine_host, $cache_engine_port)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->set('DBCacheEngine', $cache_engine);
         $preferencesService->set('DBCacheEngineHost', $cache_engine_host);
@@ -312,7 +313,8 @@ class SystemPrefController extends Controller
      *
      * @return void|RedirectResponse
      */
-    private function templateCache($cache_template, $translator) {
+    private function templateCache($cache_template, $translator)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
 
         if ($preferencesService->TemplateCacheHandler !=  $cache_template && $cache_template) {
@@ -345,7 +347,8 @@ class SystemPrefController extends Controller
      *
      * @return void|RedirectResponse
      */
-    private function useReplication($user, $host, $password, $use_replication, $port, $translator) {
+    private function useReplication($user, $host, $password, $use_replication, $port, $translator)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
 
         if ($use_replication == 'Y') {
@@ -374,12 +377,13 @@ class SystemPrefController extends Controller
     /**
      * Defines and sets max upload file size
      *
-     * @param string $max_size                                     Max upload file size
+     * @param string                                   $max_size   Max upload file size
      * @param Symfony\Component\Translation\Translator $translator Translator
      *
      * @return void|RedirectResponse
      */
-    private function maxUpload($max_size, $translator) {
+    private function maxUpload($max_size, $translator)
+    {
         $max_upload_filesize_bytes = trim($max_size);
         $preferencesService = $this->container->get('system_preferences_service');
 
@@ -403,11 +407,11 @@ class SystemPrefController extends Controller
      *
      * @return void|RedirectResponse
      */
-    private function geolocation($latitude, $longitude, $geoLocation, $translator) {
-
+    private function geolocation($latitude, $longitude, $geoLocation, $translator)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
 
-        if ($latitude > 90 || $latitude < -90 || 
+        if ($latitude > 90 || $latitude < -90 ||
             $longitude > 180 || $longitude < -180) {
 
             $this->get('session')->getFlashBag()->add('error', $translator->trans('newscoop.preferences.error.geolocation', array(), 'system_pref'));
@@ -435,7 +439,8 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function facebook($appId, $secret) {
+    private function facebook($appId, $secret)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->facebook_appid = strip_tags($appId);
         $preferencesService->facebook_appsecret = strip_tags($secret);
@@ -450,7 +455,8 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function recaptcha($publicKey, $privateKey, $secure) {
+    private function recaptcha($publicKey, $privateKey, $secure)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->RecaptchaPublicKey = strip_tags($publicKey);
         $preferencesService->RecaptchaPrivateKey = strip_tags($privateKey);
@@ -464,7 +470,8 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function collectStats($automatic_collection){
+    private function collectStats($automatic_collection)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->CollectStatistics = $automatic_collection;
     }
@@ -472,12 +479,13 @@ class SystemPrefController extends Controller
     /**
      * Sets SMTP options
      *
-     * @param string $host      SMTP host
-     * @param int    $port      SMTP port
+     * @param string $host SMTP host
+     * @param int    $port SMTP port
      *
      * @return void
      */
-    private function smtpConfiguration($host, $port) {
+    private function smtpConfiguration($host, $port)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->SMTPHost = strip_tags($host);
         $preferencesService->SMTPPort = $port;
@@ -493,7 +501,8 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function imageResizing($ratio, $image_width, $image_height, $zoom) {
+    private function imageResizing($ratio, $image_width, $image_height, $zoom)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->EditorImageRatio = $ratio;
         $preferencesService->EditorImageResizeWidth = $image_width;
@@ -508,7 +517,8 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function templateFilter($template_filter) {
+    private function templateFilter($template_filter)
+    {
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->TemplateFilter = strip_tags($template_filter);
     }
@@ -524,7 +534,6 @@ class SystemPrefController extends Controller
      * @param int    $cache_image               Image cache lifetime
      * @param string $allow_recovery            Password recovery
      * @param string $emailFrom                 Email address for system notifications
-     * @param string $secret_key                Newscoop secret key
      * @param int    $session_lifetime          Session lifetime
      * @param string $separator                 Keyword separator
      * @param int    $captcha                   Number of failed login attempts before showing CAPTCHA
@@ -532,19 +541,18 @@ class SystemPrefController extends Controller
      *
      * @return void
      */
-    private function generalSettings($siteOnline, $title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery, 
-        $emailFrom, $secret_key, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
+    private function generalSettings($siteOnline, $title, $meta_keywords, $meta_description, $timezone, $cache_image, $allow_recovery,
+        $emailFrom, $session_lifetime, $separator, $captcha, $mysql_client_command_path) {
 
         $preferencesService = $this->container->get('system_preferences_service');
         $preferencesService->SiteOnline = strip_tags($siteOnline);
         $preferencesService->SiteTitle = strip_tags($title);
         $preferencesService->SiteMetaKeywords = strip_tags($meta_keywords);
         $preferencesService->SiteMetaDescription = strip_tags($meta_description);
-        $preferencesService->TimeZone = (string)$timezone;
+        $preferencesService->TimeZone = (string) $timezone;
         $preferencesService->ImagecacheLifetime = $cache_image;
         $preferencesService->PasswordRecovery = $allow_recovery;
         $preferencesService->EmailFromAddress = $emailFrom;
-        $preferencesService->SiteSecretKey = strip_tags($secret_key);
         $preferencesService->SiteSessionLifeTime = $session_lifetime;
         $preferencesService->KeywordSeparator = strip_tags($separator);
         $preferencesService->LoginFailedAttemptsNum = $captcha;
