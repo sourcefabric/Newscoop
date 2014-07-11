@@ -9,7 +9,7 @@
 namespace Newscoop\Services;
 
 /**
- * Templates service
+ *  Templates service
  */
 class TemplatesService
 {

@@ -34,10 +34,12 @@ class CampTemplateCache
                 $handlerObj = new $className;
                 if ($handlerObj->isSupported()) {
                     $handlers[$p_handlerName] = $handlerObj;
+
                     return $handlerObj;
                 }
             }
         }
+
         return null;
     }
 
@@ -72,8 +74,7 @@ class CampTemplateCache
                     'description'=>$cacheHandler->description());
             }
         }
+
         return $handlers;
     }
 }
-
-?>

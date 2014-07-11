@@ -16,6 +16,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Newscoop\Installer\Services;
+use Symfony\Component\Console\Input\ArrayInput;
 
 define("DIR_SEP", DIRECTORY_SEPARATOR);
 
@@ -127,6 +128,14 @@ class InstallNewscoopCommand extends Console\Command\Command
             $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
             $databaseService->saveDatabaseConfiguration($connection);
+            $command = $this->getApplication()->find('cache:clear');
+            $arguments = array(
+                'command' => 'cache:clear',
+                '--no-warmup' => true
+            );
+
+            $inputCache = new ArrayInput($arguments);
+            $command->run($inputCache, $output);
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
@@ -139,6 +148,7 @@ class InstallNewscoopCommand extends Console\Command\Command
         $finishService->saveCronjobs();
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
+        $output->writeln('<info>Proxies have been generated successfully<info>');
         $finishService->installAssets();
         $output->writeln('<info>Assets have been installed successfully<info>');
         $finishService->saveInstanceConfig(array(
