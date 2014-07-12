@@ -71,7 +71,7 @@ Added: 'Əlavə Edildi'
 '$1 toggled.': '$1 keçirildi.'
 '$1 articles have been removed': '$1 məqalə xaric edilib'
 ' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
-'Search for creators': null
-'No matches.': null
-Searching...: null
-'Minimum input of characters: $1': null
+'Search for creators': 'Yaradıcı axtar'
+'No matches.': 'Uyğun olan yoxdur.'
+Searching...: Axtarılır...
+'Minimum input of characters: $1': 'Minimal giriş işarəsi: $1'

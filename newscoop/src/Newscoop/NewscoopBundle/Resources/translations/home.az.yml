@@ -156,7 +156,7 @@ Backup/Restore: Ehtiyat/Arxiv
 'Step 3': 'Addım 3'
 'Add new user': 'Yeni  istifadəi əlavə et'
 'Bad credentials': 'Pis məlumat'
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
+'Active users': 'Aktiv istifadəçilər'
+'New comments': 'Yeni şərhlər'
+'Published articles': 'Nümayiş edilmiş məqalələr'
+'Last 7 days statistics': 'Son 7 günün statistikası'

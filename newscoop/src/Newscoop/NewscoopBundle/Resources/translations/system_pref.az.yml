@@ -104,31 +104,31 @@ newscoop:
             yesoption: Bəli
             nooption: Xeyr
             geosearch: 'Yerli GeoAd Axtarışını İstifadə Et:'
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            usergarbage: 'Köhnəlmiş istifadəçi məlumatını xaric edirsən?'
+            usergarbagedaysinfo: 'Gözləmədə olan istifadəçilərin neçə gündən sonra silinməsini silinəcəyini təyin edin.'
+            usergarbagedays: 'Günlərin sayı'
+            smartyUseProtocol: 'Smarty tərəfindən hazırlanmış mütləq URL-lər üçün protokol istifadə edirsən?'
         popover:
             cacheengine: 'Newscoop-un performansını inkişaf etdirə biləcək sistem keş keşini aktiv və ya deaktiv edir.'
             cacheenginehost: 'Keş evini təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
             cacheengineport: 'Keş ev portunu təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
             cacheimage: 'Şəkillərin keşə yollanacağı vaxt 30 saniyədən sonsuza qədərdir.'
             cachetemplate: 'Nümunələr üçün keşi aktivləşdirmək üçün DB seç.'
-            recovery: null
-            secret: null
-            separator: null
-            stats: null
-            zoom: null
-            ratio: null
-            replication: null
-            filter: null
-            cron: null
-            video: null
+            recovery: 'İstifadəçilər email vasitəsilə şifrə xatırlatması ala bilərlərmi?! Nəzərə al ki, bu funksiya aktivləşdirilsə, eyni zamanda da sənin emailin təhlükə altında olsa, Newscoop da öz növbəsində təhlükə altına keçəcək.'
+            secret: 'Veb xidmətlərin və digər geniş xüsusiyyətlərin inteqrasiyası üçün Newscoop-un istifadə edəcəyi təhlükəsizlik şifrəsi.'
+            separator: 'Məqalənin Dəyişilmə səhifəsindəki Açarsöz üçün ayırıcı təyin et (vergül və ya defis).'
+            stats: 'Bu seçim serverdəki nəşrlərə oxucu girişinin statistikasının toplanmasını aktivləşdirir. Əgər tamamilə başqa mənbədən olan statistika xidmətini istifadə edirsənsə, Yox düyməsini klikləyə bilərsən. Nəzərə al ki, statistika toplanmasının deaktivasiya edilməsi Newscoop serverində yüklənməni azaldacaqdır.'
+            zoom: 'Bəli seçimini etsən, oxucular məqalə tərkibindəki şəkilləri klikləməklə onların ölçüsünü böyüdə bilərlər. Yaxınlaşdırma xüsusiyyəti məqalə mətni daxilində yerləşdirilən istənilən şəkil üçün keçərlidir.'
+            ratio: 'Ölçülərin uyğunlaşdırılması burada qeyd olunan Dəyişdirilən Uzunluq və Dəyişdirilən En ölçülərinə uyğun aparılır. Əgər nisbət göstərilibsə və eyni zamanda Uzunluq və En də göstərilibsə Newscoop avtomatik olaraq daha kiçik ölçünü seçəcək. Standart ölçüləri yeni yaradılan nisbətlə dəyişməklə mükündür, bunu Yazını Dəyiş səhifəsində etmək olar.'
+            replication: 'Avadanlıq və şəbəkə problemləri yarandığı hallarda təhlükəsizlik göstəricisi olaraq Newscoop-un iki serverdə eyni zamanda əməliyyat həyata keçirməyə imkan yaradır.'
+            filter: 'Mövzu İdarəçiliyi səhifəsi tərəfindən əldə edilə bilən nümunələrin nümunə dəyişmə səhifəsindən gizləmək üçün açar sözləri daxil et. Məsələn, artıq istifadədə olmayan, amma serverdən silmək istəmədiyin nümunələr.'
+            cron: 'Newscoop-un zamanlaması əvəzinə serverin zaman planlaşdırıcısını istifadə etmək deməkdir'
+            video: 'Nümayiş səhifə nümunələrində videoların düzgün ölçüdə göstərilməsi üçün bu bölmədə kənardan və ya daxildən əlavə edilmiş video faylların eni və hündürlüyü quraşdırıla bilər. '
             emailfrom: 'Email ünvan sistem xəbərdarlıqları üçün istifadə edildi.'
             recaptcha:
                 publickey: 'Bunu istifadəçilərinə təqdim edilmiş JavaScript şifrəsində istifadə et.'
                 privatekey: 'Öz serverinlə reCAPTCHA serveri arasında əlaqə yaradan zaman bunu istifadə et. Bunu sirr saxladığına əmin ol.'
                 secure: 'reCAPTCHA üçün təhlükəsiz url istifadə etmək istəsən, Bəli seçimini et.'
-            garbage: null
-            lifetime: null
-            smartyuseprotocol: null
+            garbage: 'Aktivləşdirildikdə bu gözləmədə olan istifadəçilərin neçə gündən sonra silinəcəyini təyin edəcəkdir. İlkin olaraq 90 gün quraşdırılmışdır.'
+            lifetime: 'Sessiyanın saniyələrlə yaşama müddəti. Maksimum: 86400 (24 saat). Minimum: 0 (brauzer bağlanana qədər.'
+            smartyuseprotocol: 'Aktivləşdirilsə, Smarty funksiyası  protokol əsaslı URL yaradacaq. Standart olaraq protokola bağlı URL yaratma funksiyası söndürülüb. Bunu dəyişdirmək mümkündür, bunun üçün istifadəçi protokolunu Smarty funksiyası üçün dəyişdirib lazım olan formaya salmaq olar. '
