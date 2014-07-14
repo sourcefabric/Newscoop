@@ -5,16 +5,16 @@ Twitter: Twitter
 'Save profile': 'Gem profil'
 'Profile image': Profilbillede
 Organisation: Organisation
-'Last Name Public': null
+'Last Name Public': 'Offentligt efternavn'
 Google+: Google+
 Geolocation: 'Geo placering'
 Gender: Køn
-'First Name Public': null
+'First Name Public': 'Offentligt fornavn'
 Facebook: Facebook
 'Date of birth': Fødselsdato
-'Allow sending emails': null
+'Allow sending emails': 'Tillad at sende emails'
 'About me': 'Om mig'
-'User with email %s is registered already.': null
+'User with email %s is registered already.': 'Der er allerede registreret en bruger med emailen %s.'
 'Username is used. Please use another one.': 'Brugernavnet er i brug. Vælg et andet.'
 Continue: Fortsæt
 'Accepting terms of use': null
@@ -38,7 +38,7 @@ Continue: Fortsæt
 'User with id $1 not found': 'Bruger med id $1 findes ikke'
 'User was deleted.': 'Bruger slettet.'
 'User saved': 'Bruger gemt'
-'User id not specified': null
+'User id not specified': 'Bruger id er ikke angivet'
 'User $1 created': 'Bruger $1 oprettet'
 'Send confirm email': 'Send bekræftelses email'
 'Profile saved.': 'Profil gemt.'
@@ -64,7 +64,7 @@ Username: Brugernavn
 'First Name': Fornavn
 Email: Email
 'You were logged out.': 'Du blev logget ud.'
-'Newscoop Subhead': null
+'Newscoop Subhead': 'Newscoop underoverskrift'
 Filters: Filtre
 'Add new Author': 'Tilføj ny forfatter'
 'Loading Data': 'Loader data'
@@ -93,96 +93,96 @@ Filters: Filtre
 'Another user is registered with that e-mail address, please choose a different one.': null
 'There was an error when trying to update the user info.': null
 'User may moderate comments': null
-'User may enable comments': null
-'User may translate articles': null
-'User may move articles': null
-'User may find and replace': null
-'User may change system preferences': null
+'User may enable comments': 'Bruger må slå kommentarer til'
+'User may translate articles': 'Bruger må oversætte artikler'
+'User may move articles': 'Bruger må flytte artikler'
+'User may find and replace': 'Bruger må søge og erstatte'
+'User may change system preferences': 'Bruger må ændre systemindstillinger'
 'User may attach topics to articles': 'Bruger må tilføje emner til artikler'
-'User may attach images to articles': null
+'User may attach images to articles': 'Bruger må vedhæfte billeder til artikler'
 'User may add special characters': null
-'That user name already exists, please choose a different login name.': null
-'User may delete article attachments': null
-'User may change article attachments': null
-'User may add article attachments': null
+'That user name already exists, please choose a different login name.': 'Brugernavnet eksisterer allerede. Vælg et andet login navn.'
+'User may delete article attachments': 'Bruger må slette vedhæftninger fra artikler'
+'User may change article attachments': 'Bruger må redigere vedhæftninger til artikler'
+'User may add article attachments': 'Bruger må tilføje vedhæftninger til artikler'
 'You do not have the right to create user accounts.': 'Du har ikke rettigheder til at oprette brugerkonti.'
-'You must select a $1': null
+'You must select a $1': 'Du skal vælge en $1'
 'The password must be at least 6 characters long and both passwords should match.': 'Adgangskoden skal være mindst 6 tegn lang og adgangskoderne skal være ens.'
-'The user account could not be created.': null
-'User account $1 was created successfully.': null
+'The user account could not be created.': 'Brugerkontoen kunne ikke oprettes.'
+'User account $1 was created successfully.': 'Brugerkontoen $1 blev oprettet.'
 'You do not have the right to change user account permissions.': 'Du har ikke rettigheder til at redigere tilladelser for brugerkonti.'
 'You do not have the right to change user account information.': 'Du har ikke rettigheder til at redigere brugerkonti.'
 'The password you typed is incorrect.': 'Forkert adgangskode.'
 'You do not have the right to delete user accounts.': 'Du har ikke rettigheder til at slette brugerkonti.'
-'User account $1 was deleted successfully.': null
-'The IP Group $1 has been created.': null
-'There was an error creating the IP address group.': null
-'The IP address group $1 has been deleted.': null
+'User account $1 was deleted successfully.': 'Brugerkontoen $1 blev slettet.'
+'The IP Group $1 has been created.': 'IP gruppen $1 blev oprettet.'
+'There was an error creating the IP address group.': 'IP-adresse gruppen kunne ikke oprettes.'
+'The IP address group $1 has been deleted.': 'IP-adresse gruppen $1 blev slettet.'
 'User $1 information was changed successfully.': null
 'User Type': Brugertype
 'The IP address group $1:$2 conflicts with another existing group.': null
-'User may add/change publications': null
-'Invalid value of user type parameter': null
-'User may delete publications': null
-'User may add/change issues': null
-'User may delete issues': null
-'User may add/change sections': null
-'User may delete sections': null
-'User may add articles': null
-'User may change articles': null
-'User may delete articles': null
-'User may add images': null
-'User may change images': null
-'User may delete images': null
+'User may add/change publications': 'Bruger må tilføje/redigere publikationer'
+'Invalid value of user type parameter': 'Ugyldig værdi for brugertype parameter'
+'User may delete publications': 'Bruger må slette publikationer'
+'User may add/change issues': 'Bruger må tilføje/redigere udgivelser'
+'User may delete issues': 'Bruger må slette udgivelser'
+'User may add/change sections': 'Bruger må tilføje/redigere sektioner'
+'User may delete sections': 'Bruger må slette sektioner'
+'User may add articles': 'Bruger må tilføje artikler'
+'User may change articles': 'Bruger må redigere artikler'
+'User may delete articles': 'Bruger må slette artikler'
+'User may add images': 'Bruger må tilføje billeder'
+'User may change images': 'Bruger må redigere billeder'
+'User may delete images': 'Bruger må slette billeder'
 'User may delete templates': 'Bruger må slette skabeloner'
 'User may add/change staff accounts and passwords': null
 'User may add/change subscribers accounts and passwords': null
-'User may delete staff accounts': null
-'User may manage user subscriptions': null
-'User may manage account types': null
-'User may add/change article types': null
-'User may delete article types': null
+'User may delete staff accounts': 'Bruger må slette redaktions konti'
+'User may manage user subscriptions': 'Bruger må administrere bruger abonnementer'
+'User may manage account types': 'Bruger må administrere kontotyper'
+'User may add/change article types': 'Bruger må tilføje og administrere artikeltyper'
+'User may delete article types': 'Bruger må slette artikeltyper'
 'User may manage templates': 'Bruger må administrere skabeloner'
-'User may add/change country entries': null
-'User may add languages and manage language information': null
+'User may add/change country entries': 'Bruger må tilføje og administrere lande'
+'User may add languages and manage language information': 'Bruger må tilføje og administrere sprog'
 'User may delete languages': 'Bruger må slette sprog'
 'User may view audit logs': null
-'User may delete country entries': null
-'User may manage localizer': null
+'User may delete country entries': 'Bruger må slette lande'
+'User may manage localizer': 'Bruger må administrere oversætteren'
 'User may publish articles': 'Bruger må udgive artikler'
-'User may manage topics': null
-'User may use bold': null
-'User may use italic': null
-'User may use underline': null
-'User may use strikethrough': null
-'User may change text alignment': null
-'User may copy, cut, and paste': null
-'User may undo/redo': null
-'User may change text direction': null
-'User may set indents': null
-'User may add links': null
-'User may add subheads': null
-'User may insert images': null
-'User may view the HTML source': null
-'User may enlarge the editor': null
-'User may change the font face': null
-'User may change the font size': null
-'User may create bulleted lists': null
-'User may create numbered lists': null
-'User may insert tables': null
-'User may insert horizontal rules': null
-'User may change the font color': null
-'User may use superscripts': null
-'User may use subscripts': null
-'User may backup and restore the site data': null
-Miscellaneous: null
+'User may manage topics': 'Bruger må administrere emner'
+'User may use bold': 'Bruger må bruge fed'
+'User may use italic': 'Bruger må bruge kursiv'
+'User may use underline': 'Bruger må bruge understreg'
+'User may use strikethrough': 'Bruger må bruge gennemstreg'
+'User may change text alignment': 'Bruger må ændre tekstjustering'
+'User may copy, cut, and paste': 'Bruger må anvende kopier, klip og indsæt'
+'User may undo/redo': 'Bruger må fortryde/gentage'
+'User may change text direction': 'Bruger må ændre skriftretning'
+'User may set indents': 'Bruger målave indrykninger'
+'User may add links': 'Bruger må indsætte links'
+'User may add subheads': 'Bruger må indsætte underoverskrifter'
+'User may insert images': 'Bruger må indsætte billeder'
+'User may view the HTML source': 'Bruger må se HTML kilden'
+'User may enlarge the editor': 'Bruger må forstørre editoren'
+'User may change the font face': 'Bruger må ændre skrifttypen'
+'User may change the font size': 'Bruger må ændre skriftstørrelsen'
+'User may create bulleted lists': 'Bruger må lave lister'
+'User may create numbered lists': 'Bruger må lave nummererede lister'
+'User may insert tables': 'Bruger må indsætte tabeller'
+'User may insert horizontal rules': 'Bruger må indsætte horisontale linjer'
+'User may change the font color': 'Bruger må ændre skriftfarven'
+'User may use superscripts': 'Bruger må bruge hævet skrift'
+'User may use subscripts': 'Bruger må bruge sænket skrift'
+'User may backup and restore the site data': 'Bruger må lave og gendanne backup af hjemmesiden'
+Miscellaneous: Diverse
 'Staff/Subscribers Management': null
-'Editor Basic Settings': null
-'Editor Advanced Font Settings': null
-'Editor Table Settings': null
-'Administrative tasks': null
+'Editor Basic Settings': 'Grundlæggende editor indstillinger'
+'Editor Advanced Font Settings': 'Avancerede skrifttype indstillinger'
+'Editor Table Settings': 'Tabel indstillinger'
+'Administrative tasks': 'Administrative opgaver'
 'User will be notified on several events': null
-'Editor Miscellaneous Settings': null
+'Editor Miscellaneous Settings': 'Diverse editor indstillinger'
 'No such user account.': 'Bruger konto findes ikke.'
 'User image (full-size)': 'Brugerfoto (fuld størrelse)'
 users:
@@ -219,4 +219,4 @@ users:
             recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
             processingText: Arbejder...
     chart:
-        title: null
+        title: 'Aktive logins'
