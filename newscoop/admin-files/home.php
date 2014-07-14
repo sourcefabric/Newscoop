@@ -45,15 +45,6 @@ echo '</div>';
 
 if (!$preferencesService->stat_ask_time) $preferencesService->stat_ask_time = '0';
 
-$address = $_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'];
-if (!$preferencesService->installation_id) {
-    $preferencesService->installation_id = sha1($address . mt_rand());
-}
-
-if (!$preferencesService->SiteSecretKey) {
-    $preferencesService->SiteSecretKey = sha1($address . mt_rand());
-}
-
 $request_only = false;
 if (!$preferencesService->support_send && (int) $preferencesService->stat_ask_time <= time() && empty($_SESSION['statDisplayed'])) {
     $statUrl = $Campsite['WEBSITE_URL'].'/admin/support/popup';
