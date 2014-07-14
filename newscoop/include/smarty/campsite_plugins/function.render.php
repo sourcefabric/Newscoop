@@ -65,7 +65,7 @@ function smarty_function_render($p_params, &$p_smarty)
             } else {
                 $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
                 $smarty->cache_lifetime = (int)$template->getCacheLifetime();
-                $cacheService->save($cacheKey, $tpl->cache_lifetime);
+                $cacheService->save($cacheKey, $smarty->cache_lifetime);
             }
         } elseif ($p_params['cache'] == 'off') {
            $smarty->caching = 0;

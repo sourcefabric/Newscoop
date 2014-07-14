@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5112916ce6772676bda05a4abddc35d7",
+    "hash": "f7cc46a586bae5c2914e22841c84db47",
     "packages": [
         {
             "name": "behat/behat",
@@ -724,7 +724,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -743,7 +743,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -1195,7 +1195,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/f7f3c2e66c9e60e6cc5b40298880588af52edf56",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/92d9934f2fca1da15178c91239576ae26e505e60",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -2448,7 +2448,7 @@
                     "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
                 },
                 {
-                    "name": "VĂ­tor BrandĂŁo",
+                    "name": "Vítor Brandão",
                     "email": "vitor@noiselabs.org",
                     "homepage": "http://noiselabs.org"
                 }
@@ -3506,8 +3506,7 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net",
-                    "role": "Lead"
+                    "email": "aharvey@php.net"
                 },
                 {
                     "name": "Bernhard Schussek",
@@ -4419,7 +4418,7 @@
             ],
             "authors": [
                 {
-                    "name": "William DURAND",
+                    "name": "William Durand",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
@@ -4695,7 +4694,7 @@
                 "symfony/filesystem": "~2.1"
             },
             "suggest": {
-                "phpspec/nyan-formatters": "~1.0 â Adds Nyan formatters"
+                "phpspec/nyan-formatters": "~1.0 – Adds Nyan formatters"
             },
             "bin": [
                 "bin/phpspec"
