@@ -26,6 +26,13 @@ $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
+$updated = false;
+
+$articleObj = new Article($f_language_selected, $f_article_number);
+if (!$articleObj->exists()) {
+    camp_html_display_error(getGS('No such article.'), $BackLink);
+    exit;
+}
 
 if (!Input::IsValid()) {
 	camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString())), null, true);
@@ -40,6 +47,7 @@ if (!$g_user->hasPermission('AttachTopicToArticle')) {
 // delete
 foreach ($articleTopics as $topic) {
     if (!in_array($topic->getTopicId(), $f_topic_ids)) {
+        $updated = true;
         ArticleTopic::RemoveTopicFromArticle($topic->getTopicId(), $f_article_number);
     } else {
         unset($f_topic_ids[array_search($topic->getTopicId(), $f_topic_ids)]);
@@ -51,6 +59,7 @@ foreach ($f_topic_ids as $topicIdString) {
     // Verify topic exists
     $tmpTopic = new Topic($topicIdString);
     if ($tmpTopic->exists()) {
+        $updated = true;
         ArticleTopic::AddTopicToArticle($topicIdString, $f_article_number);
     }
 }
@@ -60,9 +69,16 @@ if ($f_search) {
     $topicService = \Zend_Registry::get('container')->getService('topic');
     $tmpTopic = $topicService->getTopicByIdOrName($f_search, $f_language_selected);
     if ($tmpTopic) {
+        $updated = true;
         $topicService->addTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
     }
 }
+
+if ($updated) {
+    // Make sure that the time_updated timestamp is updated
+    $articleObj->setProperty('time_updated', 'NOW()', true, true);
+}
+
 ?>
 
 <script type="text/javascript">
