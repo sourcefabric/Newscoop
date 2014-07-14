@@ -39,7 +39,7 @@ class PlaylistRepository extends EntityRepository
      * @param bool $publishedOnly
      */
     public function articles(Playlist $playlist, Language $lang = null,
-    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true)
+    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $onlyQuery = false)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
@@ -52,6 +52,15 @@ class PlaylistRepository extends EntityRepository
         .       " ORDER BY pa.id "
         );
 
+        $query->setParameter(1, $playlist);
+        if (!is_null($lang)) {
+            $query->setParameter(2, $lang->getId());
+        }
+
+        if ($onlyQuery) {
+            return $query;
+        }
+
         if (!is_null($limit)) {
             $query->setMaxResults($limit);
         }
@@ -59,10 +68,6 @@ class PlaylistRepository extends EntityRepository
             $query->setFirstResult($offset);
         }
 
-        $query->setParameter(1, $playlist);
-        if (!is_null($lang)) {
-            $query->setParameter(2, $lang->getId());
-        }
         $rows = $query->getResult();
         return $rows;
     }
