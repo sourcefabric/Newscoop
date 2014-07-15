@@ -108,21 +108,28 @@ final class MetaArticle extends MetaDbObject {
         }
 
         if ($this->m_dbObject->exists()) {
-        	$this->m_articleData = new ArticleData($this->m_dbObject->getType(),
-	        $this->m_dbObject->getArticleNumber(),
-	        $this->m_dbObject->getLanguageId());
+            $cacheKeyArticleData = $cacheService->getCacheKey(array('articleData', $this->m_dbObject->getType(), 
+                $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'article');
+            if ($cacheService->contains($cacheKeyArticleData)) {
+                $this->m_articleData = $cacheService->fetch($cacheKeyArticleData);
+            } else {
+                $this->m_articleData = new ArticleData($this->m_dbObject->getType(),
+                    $this->m_dbObject->getArticleNumber(),
+                    $this->m_dbObject->getLanguageId());
+                $cacheService->save($cacheKeyArticleData, $this->m_articleData);
+            }
 
-	        foreach ($this->m_articleData->m_columnNames as $property) {
-	            if ($property[0] != 'F') {
-	                continue;
-	            }
-	            $property = substr($property, 1);
-	            $tr_property = strtolower($property);
-	            if (array_key_exists($tr_property, $this->m_customProperties)) {
-	            	continue;
-	            }
-	            $this->m_customProperties[$tr_property] = array($property);
-	        }
+            foreach ($this->m_articleData->m_columnNames as $property) {
+                if ($property[0] != 'F') {
+                    continue;
+                }
+                $property = substr($property, 1);
+                $tr_property = strtolower($property);
+                if (array_key_exists($tr_property, $this->m_customProperties)) {
+                    continue;
+                }
+                $this->m_customProperties[$tr_property] = array($property);
+            }
         } else {
         	if (!is_null($p_languageId) || !is_null($p_articleId)) {
         		$this->m_dbObject = new Article();
@@ -230,7 +237,14 @@ final class MetaArticle extends MetaDbObject {
                 $dbProperty = $this->m_customProperties[$property][0];
                 $fieldValue = $this->m_articleData->getProperty('F'.$dbProperty);
 
-                $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
+                $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+                $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $this->type_name, $dbProperty), 'article_type');
+                if ($cacheService->contains($cacheKey)) {
+                    $articleFieldType = $cacheService->fetch($cacheKey);
+                } else {
+                    $articleFieldType = new ArticleTypeField($this->type_name, $dbProperty);
+                    $cacheService->save($cacheKey, $articleFieldType);
+                }
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_BODY) {
                     if (is_null($this->getContentCache($property))) {
                     	$context = CampTemplate::singleton()->context();
@@ -509,10 +523,16 @@ final class MetaArticle extends MetaDbObject {
             $publicationObj = new Publication($this->m_dbObject->getProperty('IdPublication'));
             $cacheService->save($cacheKey, $publicationObj);
         }
-        $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
-        return $publicationObj->commentsEnabled()
-        && $articleTypeObj->commentsEnabled()
-        && $this->m_dbObject->commentsEnabled();
+
+        $cacheKeyArticleType = $cacheService->getCacheKey(array('ArticleType', $this->m_dbObject->getProperty('Type')), 'article_type');
+        if ($cacheService->contains($cacheKeyArticleType)) {
+            $articleTypeObj = $cacheService->fetch($cacheKeyArticleType);
+        } else {
+            $articleTypeObj = new ArticleType($this->m_dbObject->getProperty('Type'));
+            $cacheService->save($cacheKeyArticleType, $articleTypeObj);
+        }
+
+        return $publicationObj->commentsEnabled() && $articleTypeObj->commentsEnabled() && $this->m_dbObject->commentsEnabled();
     }
 
 
@@ -547,48 +567,69 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCount() {
-        $container = Zend_Registry::get('container');
-        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
-        $filter = array(
-            'status' => 'approved',
-            'thread' => $this->m_dbObject->getArticleNumber(),
-            'language' => $this->m_dbObject->getLanguageId(),
-        );
-        $params = array(
-            'sFilter' => $filter
-        );
-        $result = $repository->getCount($params);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
+        if ($cacheService->contains($cacheKey)) {
+            $result = $cacheService->fetch($cacheKey);
+        } else {
+            $container = Zend_Registry::get('container');
+            $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
+            $filter = array(
+                'status' => 'approved',
+                'thread' => $this->m_dbObject->getArticleNumber(),
+                'language' => $this->m_dbObject->getLanguageId(),
+            );
+            $params = array(
+                'sFilter' => $filter
+            );
+            $result = $repository->getCount($params);
+            $cacheService->save($cacheKey, $result);
+        }
         return $result;
     }
 
 
     protected function getCommentCountAllLang() {
-        $container = Zend_Registry::get('container');
-        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
-        $filter = array(
-            'status' => 'approved',
-            'thread' => $this->m_dbObject->getArticleNumber(),
-        );
-        $params = array(
-            'sFilter' => $filter
-        );
-        $result = $repository->getCount($params);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getCommentCountAllLang', $this->m_dbObject->getArticleNumber()), 'comment');
+        if ($cacheService->contains($cacheKey)) {
+            $result = $cacheService->fetch($cacheKey);
+        } else {
+            $container = Zend_Registry::get('container');
+            $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
+            $filter = array(
+                'status' => 'approved',
+                'thread' => $this->m_dbObject->getArticleNumber(),
+            );
+            $params = array(
+                'sFilter' => $filter
+            );
+            $result = $repository->getCount($params);
+            $cacheService->save($cacheKey, $result);
+        }
         return $result;
     }
 
     protected function getRecommendedCommentCount() {
-        $container = Zend_Registry::get('container');
-        $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
-        $filter = array(
-            'status' => 'approved',
-            'thread' => $this->m_dbObject->getArticleNumber(),
-            'language' => $this->m_dbObject->getLanguageId(),
-            'recommended' => '1'
-        );
-        $params = array(
-            'sFilter' => $filter
-        );
-        $result = $repository->getCount($params);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getRecommendedCommentCount', $this->m_dbObject->getArticleNumber(), $this->m_dbObject->getLanguageId()), 'comment');
+        if ($cacheService->contains($cacheKey)) {
+            $result = $cacheService->fetch($cacheKey);
+        } else {
+            $container = Zend_Registry::get('container');
+            $repository = $container->get('em')->getRepository('Newscoop\Entity\Comment');
+            $filter = array(
+                'status' => 'approved',
+                'thread' => $this->m_dbObject->getArticleNumber(),
+                'language' => $this->m_dbObject->getLanguageId(),
+                'recommended' => '1'
+            );
+            $params = array(
+                'sFilter' => $filter
+            );
+            $result = $repository->getCount($params);
+            $cacheService->save($cacheKey, $result);
+        }
         return $result;
     }
 
@@ -710,22 +751,30 @@ final class MetaArticle extends MetaDbObject {
     }
 
     public function has_topic($p_topicName) {
-        $topic = new Topic($p_topicName);
-        if (!$topic->exists()) {
-            $this->trigger_invalid_value_error('has_topic', $p_topicName);
-            return null;
-        }
-        $articleTopics = $this->getContentCache('article_topics');
-        if (is_null($articleTopics)) {
-            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
-            $this->setContentCache('article_topics', $articleTopics);
-        }
-        foreach ($articleTopics as $articleTopic) {
-            if ($articleTopic->getTopicId() == $topic->getTopicId()) {
-                return (int)true;
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('has_topic', $this->m_dbObject->getArticleNumber(), $p_topicName), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $exists = $cacheService->fetch($cacheKey);
+        } else {
+            $topic = new Topic($p_topicName);
+            if (!$topic->exists()) {
+                $this->trigger_invalid_value_error('has_topic', $p_topicName);
+                return null;
             }
+            $articleTopics = $this->getContentCache('article_topics');
+            if (is_null($articleTopics)) {
+                $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
+                $this->setContentCache('article_topics', $articleTopics);
+            }
+            foreach ($articleTopics as $articleTopic) {
+                if ($articleTopic->getTopicId() == $topic->getTopicId()) {
+                    $exists = (int)true;
+                }
+            }
+            $exists = (int)false;
+            $cacheService->save($cacheKey, $exists);
         }
-        return (int)false;
+        return $exists;
     }
 
 
@@ -815,6 +864,7 @@ final class MetaArticle extends MetaDbObject {
      */
     public function has_image($p_imageIndex) {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
         $cacheKey = $cacheService->getCacheKey(array('has_article_image', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
 
         if ($cacheService->contains($cacheKey)) {
@@ -839,6 +889,7 @@ final class MetaArticle extends MetaDbObject {
      */
     public function image($p_imageIndex) {
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+
         $cacheKey = $cacheService->getCacheKey(array('ArticleImage', $this->m_dbObject->getArticleNumber(), $p_imageIndex), 'article_image');
 
         if ($cacheService->contains($cacheKey)) {

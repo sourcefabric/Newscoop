@@ -750,7 +750,7 @@ class Issue extends DatabaseObject {
 		global $g_ado_db;
 
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKey = $cacheService->getCacheKey(array('GetCurrentIssue', $p_publicationId, $p_languageId), 'issue');
+        $cacheKey = $cacheService->getCacheKey(array('current_issue', $p_publicationId, $p_languageId), 'issue');
         if ($cacheService->contains($cacheKey)) {
             $issue = $cacheService->fetch($cacheKey);
         } else {

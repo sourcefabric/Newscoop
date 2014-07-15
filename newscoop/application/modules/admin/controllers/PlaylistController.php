@@ -133,6 +133,10 @@ class Admin_PlaylistController extends Zend_Controller_Action
 
             $this->view->playlistId = $playlist->getId();
             $this->view->playlistName = $playlist->getName();
+
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheService->clearNamespace('boxarticles');
+
         } else {
             $this->view->error = $playlist->getFile().":".$playlist->getLine()." ".$playlist->getMessage();
         }
