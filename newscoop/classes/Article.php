@@ -184,6 +184,9 @@ class Article extends DatabaseObject
         }
         $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
+
         return $status;
     }
 
@@ -1634,7 +1637,9 @@ class Article extends DatabaseObject
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $keywordsSeparator = $preferencesService->KeywordSeparator;
         $p_value = str_replace($keywordsSeparator, ",", $p_value);
-        CampCache::singleton()->clear('user');
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
 
         return parent::setProperty('Keywords', $p_value);
     } // fn setKeywords
