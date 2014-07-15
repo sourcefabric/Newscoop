@@ -119,7 +119,6 @@ final class MetaAuthor extends MetaDbObject
         if ($cacheService->contains($cacheKey)) {
             $metaUser = $cacheService->fetch($cacheKey);
         } else {
-            $this->m_dbObject = new Author($p_idOrName, $p_type);
             $user = \Zend_Registry::get('container')->getService('user')->findByAuthor($this->m_dbObject->getId());
             $metaUser = new \MetaUser($user);
             $cacheService->save($cacheKey, $metaUser);
