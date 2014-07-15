@@ -1,5 +1,5 @@
-newscoop.plugins_manager.manager: null
-newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.manager: 'Plaqin idarəçisi'
+newscoop.plugins_manager.legacy_manager: 'Varislik Plaqin İdarəçisi'
 newscoop.plugins_manager.public_plugins: 'İctimai plaqinlər'
 newscoop.plugins_manager.private_plugins: 'Şəxsi plaqinlər'
 newscoop.plugins_manager.install.public: 'Yeni plaqinləri quraşdır'

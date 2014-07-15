@@ -88,8 +88,13 @@ class ArticlesListController extends FOSRestController
             throw new NotFoundHttpException('Result was not found.');
         }
 
-        $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesForPlaylist($publication, $id);
+        $playlistArticles = $em->getRepository('Newscoop\Entity\Playlist')
+            ->articles($playlist, null, true, null, null, true, true)->getResult();
+
+        $articles = array();
+        foreach ($playlistArticles as $playlistArticle) {
+            $articles[] = $playlistArticle->getArticle();
+        }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(

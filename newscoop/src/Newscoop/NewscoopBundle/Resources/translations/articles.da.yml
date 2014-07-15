@@ -54,7 +54,7 @@ Files: Filer
 'Add another author': 'Tilføj en forfatter'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 minutter siden.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 timer og $4 minutter siden.'
-'Switches saved.': null
+'Switches saved.': 'Indstillinger gemt.'
 'Keywords saved.': 'Nøgleord er gemt'
 'Comment settings': 'Indstillinger for kommentarer'
 Authors: Forfattere
@@ -63,9 +63,9 @@ Authors: Forfattere
 'Article is locked': 'Artiklen er låst'
 'Actions updated.': 'Handlinger opdateret.'
 'Your work has not been saved. Do you want to continue and lose your changes?': 'Dit arbejde er ikke gemt. Vil du fortsætte og miste dine ændringer?'
-Switches: null
+Switches: Indstillinger
 'No subtopics available': 'Ingen tilgængelige underemner'
-'Newscoop Subhead': null
+'Newscoop Subhead': 'Newscoop underoverskrift'
 Media: Medier
 'Last modified': 'Sidst ændret'
 'Keywords &amp; Topics': 'Nøgleord & Emner'

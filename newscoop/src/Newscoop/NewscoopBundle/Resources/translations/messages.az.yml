@@ -282,4 +282,4 @@ Confirm: Təsdiq
 at: burada
 published: 'nümayiş edildi'
 unpublished: 'nümayiş dayandırıldı'
-nopermissions: null
+nopermissions: 'Bu ehtiyata girişinə icazən yoxdur.'

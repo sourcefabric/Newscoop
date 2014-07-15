@@ -1,11 +1,11 @@
-get: null
+get: hent
 Soundcloud: SoundCloud
 Templates: Skabeloner
 'Feedback Messages': 'Feedback beskeder'
-'Article Playlists': null
+'Article Playlists': 'Artikle playlister'
 'Check all': 'Vælg alle'
 view: se
-undo/redo: null
+undo/redo: fortryd/gentag
 underline: understreget
 translate: oversæt
 'text direction': 'tekst retning'
@@ -19,7 +19,7 @@ statusbar: statusbar
 'spell checker enabled': 'stavekontrol slået til'
 'source view': 'se kilde'
 publish: udgiv
-notify: null
+notify: underret
 moderate: null
 manage: administrer
 'list number': null
@@ -49,12 +49,12 @@ admin: admin
 add: tilføj
 'You cant deny yourself to manage $1': null
 'You are not allowed to $1 $2.': null
-'User type saved.': null
-'User type deleted.': null
-'User type added.': null
+'User type saved.': 'Brugertype gemt.'
+'User type deleted.': 'Brugertype slettet.'
+'User type added.': 'Brugertype tilføjet.'
 'User Groups': 'Bruger grupper'
 Themes: Temaer
-'That type name already exists, please choose a different name.': null
+'That type name already exists, please choose a different name.': 'Det valgte typenavn eksisterer allerede, vælg venligst et andet navn.'
 System: System
 Structure: Struktur
 'Search Indexer': 'Søge indexer'
@@ -70,12 +70,12 @@ Global: Global
 Files: Filer
 'Error: ': 'Fejl:'
 'Edit user type $1': 'Rediger brugertype $1'
-Deny: null
+Deny: Afvis
 'Delete user type $1': 'Slet brugertype $1'
-'Can not delete a user type with assigned users.': null
+'Can not delete a user type with assigned users.': 'En brugertype med brugere kan ikke slettes.'
 Cache: Cache
 Backup: Backup
-Authoring: null
+Authoring: Redigerer
 Allow: Tillad
 'User types': Brugertyper
 'No user types.': 'Ingen brugertyper.'
