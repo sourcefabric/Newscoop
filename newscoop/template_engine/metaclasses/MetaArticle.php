@@ -756,24 +756,23 @@ final class MetaArticle extends MetaDbObject {
         if ($cacheService->contains($cacheKey)) {
             $exists = $cacheService->fetch($cacheKey);
         } else {
+            $exists = (int)false;
             $topic = new Topic($p_topicName);
             if (!$topic->exists()) {
                 $this->trigger_invalid_value_error('has_topic', $p_topicName);
                 return null;
             }
-            $articleTopics = $this->getContentCache('article_topics');
-            if (is_null($articleTopics)) {
-                $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
-                $this->setContentCache('article_topics', $articleTopics);
-            }
+
+            $articleTopics = ArticleTopic::GetArticleTopics($this->m_dbObject->getArticleNumber());
             foreach ($articleTopics as $articleTopic) {
                 if ($articleTopic->getTopicId() == $topic->getTopicId()) {
                     $exists = (int)true;
                 }
             }
-            $exists = (int)false;
+
             $cacheService->save($cacheKey, $exists);
         }
+
         return $exists;
     }
 
