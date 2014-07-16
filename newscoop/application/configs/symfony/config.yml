@@ -149,12 +149,6 @@ nelmio_api_doc:
     request_listener:
         enabled:              false
 
-ewz_recaptcha:
-    public_key:
-    private_key:
-    enabled: true
-    locale_key: kernel.default_locale
-
 parameters:
     smarty.class: "CampTemplate"
     templating.engine.smarty.class: "Newscoop\\Smarty\\SmartyEngine"
@@ -164,3 +158,9 @@ ewz_recaptcha:
     private_key:  6LeVFuASAAAAAGhz6dWgsO6WVGY_pcg_7wAt61eQ
     secure:       false
     locale_key:   kernel.default_locale
+
+jms_i18n_routing:
+    default_locale: en
+    locales: [en, pl]
+    catalogue: routes
+    strategy: custom
