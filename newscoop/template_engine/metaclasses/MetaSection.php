@@ -47,6 +47,15 @@ final class MetaSection extends MetaDbObject {
             }
         }
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('section', $p_publicationId, $p_issueNumber, $p_languageId, $p_sectionNumber), 'section');
+        if ($cacheService->contains($cacheKey)) {
+             $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Section($p_publicationId, $p_issueNumber, $p_languageId, $p_sectionNumber);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
+
         if (!$this->m_dbObject->exists() && !is_null($p_sectionNumber)) {
             $this->m_dbObject = new Section();
         }

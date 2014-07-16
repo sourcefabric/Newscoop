@@ -1,134 +1,134 @@
 newscoop:
     btn:
-        save: null
+        save: Saxla
     preferences:
         error:
-            cache: null
-            replication: null
-            maxupload: null
-            geolocation: null
-            noaccess: null
-            latitude: null
-            longitude: null
-            cacheNotCleared: null
+            cache: 'Səhv: Nümunə arxivləşdirmə sistemini istifadə etmək üçün PHP %cache% aktivləşdirməlisən.'
+            replication: 'Məlumat Bazası Cavabı məlumatı tam deyil'
+            maxupload: 'Səhv Maksimal Fayl Yükləmə Ölçü dəyəri daxil edilib'
+            geolocation: 'Səhv Geoməkan sahələri. Rəqəmlərdən ibarət olmalıdır. Eni 90-dan çox -90-dan az ola bilməz, Uzunluğu isə 180-dən böyük, -180-dən kiçik ola bilməz.'
+            noaccess: 'Sistem seçimlərini dəyişməyə ixtiyarın yoxdur.'
+            latitude: 'En sahə dəyəri düzgün deyil.'
+            longitude: 'Hündürlük sahə dəyəri düzgün deyil.'
+            cacheNotCleared: 'Keşin təmizlənməsində xəta var idi'
         success:
-            saved: null
-            cacheCleared: null
+            saved: 'Sistem seçimləri yeniləndi.'
+            cacheCleared: 'Keş təmizləndi'
         menu:
-            general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
-            media: null
-            cache: null
-            other: null
-            recaptcha: null
+            general: 'Ümumi Parametrlər'
+            email: 'Email Parametləri'
+            editor: 'Redaktor Seçimləri'
+            geolocation: 'Geoməkan Seçimləri'
+            fb: 'Facebook Seçimləri'
+            media: 'Video Seçimlər'
+            cache: 'Keş Seçimləri'
+            other: 'Digər Seçimlər'
+            recaptcha: 'reCAPTCHA seçimləri'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'drayverin keş yaddaşını təmizlə'
         label:
-            title: null
-            header: null
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
-            sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
-            maxupload: null
-            maxuploadmsg: null
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
-            emailfrom: null
-            imageratio: null
-            imagewidth: null
-            imageheight: null
-            zoom: null
-            external: null
-            usereplication: null
-            serverdb: null
-            replicationhost: null
-            replicationuser: null
-            replicationpw: null
-            replicationport: null
-            filter: null
-            cron: null
-            mysqlpath: null
-            mysqlpathmsg: null
-            latitude: null
-            longitude: null
-            zoomlevel: null
-            defaultwidth: null
-            defaultheight: null
-            css: null
-            autofocus: null
-            zoomautofocus: null
-            borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
-            nominatimsearch: null
-            preflanguage: null
-            markerdir: null
-            defaultmarker: null
-            popupwidth: null
-            popupheight: null
-            youtubewidth: null
-            youtubeheight: null
-            vimeowidth: null
-            vimeoheight: null
-            flashwidth: null
-            flashheight: null
-            flashserver: null
-            flashdir: null
-            apikey: null
-            appid: null
-            fbsecret: null
-            recaptchapublickey: null
-            recaptchaprivatekey: null
-            recaptchasecure: null
-            disabled: null
-            yesoption: null
-            nooption: null
-            geosearch: null
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            title: 'Sistem Seçimləri'
+            header: Seçimlər
+            siteonline: 'Sayt On-Layn:'
+            sitetitle: 'Sayt başlığı:'
+            metakeywords: 'Sayt Meta Açar Sözlər:'
+            metadescription: 'Sayt Meta İzahı:'
+            timezone: 'Vaxt bölgəsi:'
+            cacheengine: 'Məlumat Baza Keş Sistemi:'
+            cacheenginehost: 'Məlumat Baza Keş Sistem Evi:'
+            cacheengineport: 'Məlumat Baza Keş Sistem Portu:'
+            cachetemplate: 'Nümunə Keş Nizamlayıcısı:'
+            cacheimage: 'Şəkilkeş HəyatMüddəti:'
+            allowrecovery: 'Şifrə bərpasını aktivləşdir:'
+            secretkey: 'Sirr Açarı:'
+            sessionlifetime: 'Sessiya Yaşama Müddəti:'
+            sessionlifetimemsg: 'php.ini parametrlərinə əsasən.'
+            separator: 'Açar söz ayırıcı'
+            captcha: 'CAPTCHA nümayişindən əvvəl giriş xətalarının sayı:'
+            maxupload: 'Maksimal fayl yükləmə ölçüsü:'
+            maxuploadmsg: '0 və %max% arasında dəyər daxil et (maksimal ölçü ''php.ini''-də qeyd edilib). Lütfən, rəqəmlə dəyər arasında boşluq saxlamamaq şərti ilə kilobaytlar üçün ''K'', müqabayt üçün ''M'' və giqabayt üçün ''G'' istifadə et. Nümunə: ''3M'''
+            stats: 'Statistikanın avtomatik yığımı:'
+            smtphost: 'SMTP Evi:'
+            smtpport: 'SMTP Portu:'
+            email: 'Bu ünvandan SMTP Email:'
+            emailfrom: 'Sistem haqqında xəbərdarlıq üçün email ünvan:'
+            imageratio: 'Şəklin Ölçüdəyişmə Əmsalı:'
+            imagewidth: 'Şəklin Ölçüdəyişmə Genişliyi:'
+            imageheight: 'Şəklin Ölçüdəyişmə Hündürlüyü:'
+            zoom: 'Məqalə tərkibindəki şəkillərin daha böyük görüntüsünə icazə verilir?'
+            external: 'Oxucu abunəlikləri kənardan idarə edilib?'
+            usereplication: 'Newscoop Cavab Serverini Quraşdırırsan?'
+            serverdb: 'Onlayn Newscoop Server Məlumat Bazası'
+            replicationhost: 'Məlumat Bazası Cavab Evi:'
+            replicationuser: 'Məlumat Bazası Cavab İstifadəçisi:'
+            replicationpw: 'Məlumat Bazası Cavab Şifrəsi:'
+            replicationport: 'Məlumat Bazası Cavab Portu:'
+            filter: 'Nümunələrin kiltr maskası (vergüllə ayrılmış)'
+            cron: 'Planlaşdırılmış işlər kənardan həyata keçirilsin?'
+            mysqlpath: 'MySQL müştəri komandası istiqaməti'
+            mysqlpathmsg: 'geo-ad məlumatlarını yükləmək üçün'
+            latitude: 'Xəritə Mərkəzinin Eni:'
+            longitude: 'Xəritə Mərkəzinin Uzunluğu:'
+            zoomlevel: 'Xəritə Böyütmə Səviyyəsi:'
+            defaultwidth: 'Xəritənin Mövcud Eni:'
+            defaultheight: 'Xəritənin Mövcud Hündürlüyü:'
+            css: 'Xəritə görünüşü üçün CSS faylı əlavə et'
+            autofocus: 'Xəritənin avto fokuslanması mümkün addım kimi:'
+            zoomautofocus: 'Avto fokuslama üçün maksimal böyütmə:'
+            borderautofocus: 'Avto fokuslama üçün xəritə çərçivəsi:'
+            mapprovider: 'Google Küçə Xəritə Provayderinə İcazə Ver:'
+            mapquest: 'MapQuest Xəritə Provayderinə İcazə Ver:'
+            openstreet: 'OpenStreet Xəritə Provayderinə İcazə Ver:'
+            defaultmapprovider: 'Mövcud Xəritə Provayderi:'
+            nominatimsearch: 'MapQuest Nominatim Axtarışını İstifadə Et:'
+            preflanguage: 'Üstünlük verilən ünvan dili:'
+            markerdir: 'Xəritə Marker Kataloqu:'
+            defaultmarker: 'İlkin Xəritə Markeri:'
+            popupwidth: 'Xəritə Popup-ın Minimal Eni:'
+            popupheight: 'Xəritə Popup-un Minimal Hündürlüyü:'
+            youtubewidth: 'Youtube-un Mövcud Eni:'
+            youtubeheight: 'Youtube-un Mövcud Hündürlüyü:'
+            vimeowidth: 'Vimeo-nun Mövcud Eni:'
+            vimeoheight: 'Vimeo-nun Mövcud Hündürlüyü:'
+            flashwidth: 'Flash-in Mövcud Eni:'
+            flashheight: 'Flash-in Mövcud Hündürlüyü:'
+            flashserver: 'Yerli Flash Serveri:'
+            flashdir: 'Yerli Flash Kataloqu:'
+            apikey: 'APİ açar:'
+            appid: 'Tətbiqetmə İD:'
+            fbsecret: 'Proqram Sirri:'
+            recaptchapublickey: 'İctimai açar'
+            recaptchaprivatekey: 'Şəxsi açar'
+            recaptchasecure: 'reCAPTCHA üçün təhlükəsizlik url-i?'
+            disabled: 'deaktivasiya edildi'
+            yesoption: Bəli
+            nooption: Xeyr
+            geosearch: 'Yerli GeoAd Axtarışını İstifadə Et:'
+            usergarbage: 'Köhnəlmiş istifadəçi məlumatını xaric edirsən?'
+            usergarbagedaysinfo: 'Gözləmədə olan istifadəçilərin neçə gündən sonra silinməsini silinəcəyini təyin edin.'
+            usergarbagedays: 'Günlərin sayı'
+            smartyUseProtocol: 'Smarty tərəfindən hazırlanmış mütləq URL-lər üçün protokol istifadə edirsən?'
         popover:
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cacheimage: null
-            cachetemplate: null
-            recovery: null
-            secret: null
-            separator: null
-            stats: null
-            zoom: null
-            ratio: null
-            replication: null
-            filter: null
-            cron: null
-            video: null
-            emailfrom: null
+            cacheengine: 'Newscoop-un performansını inkişaf etdirə biləcək sistem keş keşini aktiv və ya deaktiv edir.'
+            cacheenginehost: 'Keş evini təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
+            cacheengineport: 'Keş ev portunu təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
+            cacheimage: 'Şəkillərin keşə yollanacağı vaxt 30 saniyədən sonsuza qədərdir.'
+            cachetemplate: 'Nümunələr üçün keşi aktivləşdirmək üçün DB seç.'
+            recovery: 'İstifadəçilər email vasitəsilə şifrə xatırlatması ala bilərlərmi?! Nəzərə al ki, bu funksiya aktivləşdirilsə, eyni zamanda da sənin emailin təhlükə altında olsa, Newscoop da öz növbəsində təhlükə altına keçəcək.'
+            secret: 'Veb xidmətlərin və digər geniş xüsusiyyətlərin inteqrasiyası üçün Newscoop-un istifadə edəcəyi təhlükəsizlik şifrəsi.'
+            separator: 'Məqalənin Dəyişilmə səhifəsindəki Açarsöz üçün ayırıcı təyin et (vergül və ya defis).'
+            stats: 'Bu seçim serverdəki nəşrlərə oxucu girişinin statistikasının toplanmasını aktivləşdirir. Əgər tamamilə başqa mənbədən olan statistika xidmətini istifadə edirsənsə, Yox düyməsini klikləyə bilərsən. Nəzərə al ki, statistika toplanmasının deaktivasiya edilməsi Newscoop serverində yüklənməni azaldacaqdır.'
+            zoom: 'Bəli seçimini etsən, oxucular məqalə tərkibindəki şəkilləri klikləməklə onların ölçüsünü böyüdə bilərlər. Yaxınlaşdırma xüsusiyyəti məqalə mətni daxilində yerləşdirilən istənilən şəkil üçün keçərlidir.'
+            ratio: 'Ölçülərin uyğunlaşdırılması burada qeyd olunan Dəyişdirilən Uzunluq və Dəyişdirilən En ölçülərinə uyğun aparılır. Əgər nisbət göstərilibsə və eyni zamanda Uzunluq və En də göstərilibsə Newscoop avtomatik olaraq daha kiçik ölçünü seçəcək. Standart ölçüləri yeni yaradılan nisbətlə dəyişməklə mükündür, bunu Yazını Dəyiş səhifəsində etmək olar.'
+            replication: 'Avadanlıq və şəbəkə problemləri yarandığı hallarda təhlükəsizlik göstəricisi olaraq Newscoop-un iki serverdə eyni zamanda əməliyyat həyata keçirməyə imkan yaradır.'
+            filter: 'Mövzu İdarəçiliyi səhifəsi tərəfindən əldə edilə bilən nümunələrin nümunə dəyişmə səhifəsindən gizləmək üçün açar sözləri daxil et. Məsələn, artıq istifadədə olmayan, amma serverdən silmək istəmədiyin nümunələr.'
+            cron: 'Newscoop-un zamanlaması əvəzinə serverin zaman planlaşdırıcısını istifadə etmək deməkdir'
+            video: 'Nümayiş səhifə nümunələrində videoların düzgün ölçüdə göstərilməsi üçün bu bölmədə kənardan və ya daxildən əlavə edilmiş video faylların eni və hündürlüyü quraşdırıla bilər. '
+            emailfrom: 'Email ünvan sistem xəbərdarlıqları üçün istifadə edildi.'
             recaptcha:
-                publickey: null
-                privatekey: null
-                secure: null
-            garbage: null
-            lifetime: null
-            smartyuseprotocol: null
+                publickey: 'Bunu istifadəçilərinə təqdim edilmiş JavaScript şifrəsində istifadə et.'
+                privatekey: 'Öz serverinlə reCAPTCHA serveri arasında əlaqə yaradan zaman bunu istifadə et. Bunu sirr saxladığına əmin ol.'
+                secure: 'reCAPTCHA üçün təhlükəsiz url istifadə etmək istəsən, Bəli seçimini et.'
+            garbage: 'Aktivləşdirildikdə bu gözləmədə olan istifadəçilərin neçə gündən sonra silinəcəyini təyin edəcəkdir. İlkin olaraq 90 gün quraşdırılmışdır.'
+            lifetime: 'Sessiyanın saniyələrlə yaşama müddəti. Maksimum: 86400 (24 saat). Minimum: 0 (brauzer bağlanana qədər.'
+            smartyuseprotocol: 'Aktivləşdirilsə, Smarty funksiyası  protokol əsaslı URL yaradacaq. Standart olaraq protokola bağlı URL yaratma funksiyası söndürülüb. Bunu dəyişdirmək mümkündür, bunun üçün istifadəçi protokolunu Smarty funksiyası üçün dəyişdirib lazım olan formaya salmaq olar. '

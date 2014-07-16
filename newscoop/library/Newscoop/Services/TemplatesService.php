@@ -9,7 +9,7 @@
 namespace Newscoop\Services;
 
 /**
- * Templates service
+ *  Templates service
  */
 class TemplatesService
 {
@@ -55,6 +55,7 @@ class TemplatesService
     {
         $uri = \CampSite::GetURIInstance();
         $this->smarty->addTemplateDir(realpath(APPLICATION_PATH . '/../themes/' . $uri->getThemePath()));
+        $this->smarty->config_dir = (realpath(APPLICATION_PATH . '/../themes/' . $uri->getThemePath() . '_conf'));
 
         // reverse templates dir order
         $this->smarty->setTemplateDir(array_reverse($this->smarty->getTemplateDir()));

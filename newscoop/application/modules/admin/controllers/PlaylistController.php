@@ -102,7 +102,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $playlistId = $this->_request->getParam('id', null);
         if (is_numeric($playlistId)) {
             $playlist->setId($playlistId);
-            $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false, true, true);
+            $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
             $this->view->code = 200;
         }
     }
@@ -133,6 +133,10 @@ class Admin_PlaylistController extends Zend_Controller_Action
 
             $this->view->playlistId = $playlist->getId();
             $this->view->playlistName = $playlist->getName();
+
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheService->clearNamespace('boxarticles');
+
         } else {
             $this->view->error = $playlist->getFile().":".$playlist->getLine()." ".$playlist->getMessage();
         }

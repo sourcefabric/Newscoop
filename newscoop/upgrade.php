@@ -29,7 +29,6 @@ if (!is_writable(__DIR__.'/log')) {
     die;
 }
 
-
 require_once __DIR__.'/vendor/autoload.php';
 require_once __DIR__.'/conf/database_conf.php';
 
@@ -71,9 +70,25 @@ $app->get('/', function (Silex\Application $app) {
     $response = $app['upgrade_service']->upgradeDatabase($oldVersions);
     $newVersions = $app['upgrade_service']->getDBVersion();
 
+    if (php_sapi_name() == "cli") {
+        if (is_array($response)) {
+            foreach ($response as $key => $error) {
+                echo "Error with query: " . $error . "\n";
+            }
+
+            echo "Upgrade process ended up with some errors. \n";
+
+            return false;
+        }
+
+        echo "Your Newscoop instance is upgraded from " . $oldVersions['dbInfo'] . " to " . $newVersions['dbInfo'] . " without errors. \n";
+
+        return true;
+    }
+
     if (is_array($response)) {
         return $app['twig']->render('upgrade/errors.twig', array(
-            'errors' => $response, 
+            'errors' => $response,
             'oldVersions' => $oldVersions,
             'newVersions' => $newVersions,
         ));
@@ -83,7 +98,7 @@ $app->get('/', function (Silex\Application $app) {
         'newVersions' => $newVersions,
         'oldVersions' => $oldVersions,
     ));
-    
+
 });
 
 $app->run();

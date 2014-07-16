@@ -14,9 +14,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\Connection;
 use Newscoop\Installer\Services;
+use Symfony\Component\Console\Input\ArrayInput;
 
 define("DIR_SEP", DIRECTORY_SEPARATOR);
 
@@ -41,8 +41,7 @@ class InstallNewscoopCommand extends Console\Command\Command
             ->addOption('database_password', null, InputOption::VALUE_REQUIRED, 'Database password')
             ->addOption('database_server_port', null, InputOption::VALUE_OPTIONAL, 'Database server port', '3306')
             ->addOption('database_override', null, InputOption::VALUE_NONE, 'Override existing database')
-            ->addArgument('demo_template', InputArgument::OPTIONAL, 'Choose demo publication from: "quetzal, rockstar, the_new_custodian, no_demo"', 'quetzal')
-            ->addArgument('site_title', InputArgument::OPTIONAL, 'Publication name', 'Newscoop newspaper')
+            ->addArgument('site_title', InputArgument::OPTIONAL, 'Publication name', 'Newscoop publication')
             ->addArgument('user_email', InputArgument::OPTIONAL, 'Admin email', 'admin@newscoop.dev')
             ->addArgument('user_password', InputArgument::OPTIONAL, 'Admin user password', 'password');
     }
@@ -53,7 +52,7 @@ class InstallNewscoopCommand extends Console\Command\Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getApplication()->getKernel()->getContainer();
-        $output->writeln('<info>Welcome in Newscoop Installer.<info>');
+        $output->writeln('<info>Welcome to Newscoop Installer.<info>');
 
         $symfonyRequirements = new \SymfonyRequirements();
         $requirements = $symfonyRequirements->getRequirements();
@@ -122,38 +121,42 @@ class InstallNewscoopCommand extends Console\Command\Command
             }
         }
 
-        $output->writeln('<info>Connected with database.<info>');
+        $output->writeln('<info>Successfully connected to database.<info>');
 
         $tables = $connection->fetchAll('SHOW TABLES', array());
         if (count($tables) == 0 || $input->getOption('database_override')) {
             $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
             $databaseService->saveDatabaseConfiguration($connection);
+            $command = $this->getApplication()->find('cache:clear');
+            $arguments = array(
+                'command' => 'cache:clear',
+                '--no-warmup' => true
+            );
+
+            $inputCache = new ArrayInput($arguments);
+            $command->run($inputCache, $output);
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
-        $output->writeln('<info>Database is created successfully.<info>');
 
-        if ($input->getArgument('demo_template') != 'no_demo') {
-            $databaseService->installSampleData($connection, $input->getArgument('alias'));
-            $output->writeln('<info>Sample data installed successfully.<info>');
-           // $demositeService->copyTemplate('set_'.$input->getArgument('demo_template'));
-           // $demositeService->installEmptyTheme();
-            $output->writeln('<info>Template installed successfully.<info>');
-        }
+        $databaseService->installDatabaseSchema($connection, $input->getArgument('alias'), $input->getArgument('site_title'));
+        $output->writeln('<info>Database schema has been processed successfully.<info>');
+        $demositeService->installEmptyTheme();
+        $output->writeln('<info>Empty theme has been installed successfully.<info>');
 
         $finishService->saveCronjobs();
-        $output->writeln('<info>Cronjobs are saved.<info>');
+        $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
-        $finishService->reloadRenditions();
+        $output->writeln('<info>Proxies have been generated successfully<info>');
         $finishService->installAssets();
-        $output->writeln('<info>Assets are installed.<info>');
+        $output->writeln('<info>Assets have been installed successfully<info>');
         $finishService->saveInstanceConfig(array(
             'site_title' => $input->getArgument('site_title'),
             'user_email' => $input->getArgument('user_email'),
             'recheck_user_password' => $input->getArgument('user_password')
         ), $connection);
-        $output->writeln('<info>Config is saved.<info>');
+        $output->writeln('<info>Config have been saved successfully.<info>');
 
         $output->writeln('<info>Newscoop is installed.<info>');
     }

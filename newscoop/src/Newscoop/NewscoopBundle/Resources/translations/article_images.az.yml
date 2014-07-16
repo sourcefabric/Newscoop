@@ -1,72 +1,72 @@
-'Display newsfeed images': null
-'Mark image': null
-'Add selected images to slideshow': null
-'Sorry that image is too small. Image needs to be at least %dx%d.': null
-'Slideshow rendition': null
-'Renditions reloaded': null
-'Reload renditions': null
-'Edit images': null
-'Specify image url if you want to load it.': null
-'Items: ': null
-'Attach slideshows': null
-'original size:': null
-'no caption': null
-'Video URL': null
-'Use for all': null
-'Use default': null
-'Slug must be unique': null
-Slug: null
-'Slideshow headline': null
-Slideshow: null
-'Set selected as default image': null
-'Set as default': null
-Saving...: null
-Saved: null
-'Save headline': null
-'Place Images': null
-'No renditions defined.': null
-'No images found.': null
-'No images attached to article.': null
-'No images': null
-'Next: Upload and Edit Metadata': null
-'Next: Place Images': null
-'Media Archive': null
-Location: null
-Items: null
-Item: null
-'Image files': null
-'Image Files: ': null
-Headline: null
-Finish: null
-'Edit Image Data': null
-'Edit $1': null
-'Done editing': null
-Detach: null
-Create: null
-Caption: null
-'Attached images': null
-'Attach & Place': null
-'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': null
-'Add video': null
-'Add caption': null
-'Show all': null
-'The image has been removed from the article.': null
-'Unable to add new image.': null
-'Image number $1 already exists': null
-'You do not have the right to change image information.': null
-'The image number specified is already in use.': null
-'Image $1 updated.': null
-'Image $1 added.': null
-'Edit article': null
-'You do not have the right to attach images to articles.': null
-'You do not have the right to add images.': null
-'Image information': null
-'Attach New Image': null
-'Attach Image To Article': null
-'Attach Existing Image': null
-'Add New Image': null
-Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: null
-'You must select an image file to upload.': null
-'Change image information': null
-'You do not have the right to add images': null
-'Filter by uploader...': null
+'Display newsfeed images': 'Xəbər zolağı şəkillərini nümayiş et'
+'Mark image': 'Şəkil seç'
+'Add selected images to slideshow': 'Seçilmiş şəkilləri slayd-şouya əlavə et'
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Təəssüflər olsun ki, şəkil çox kiçikdir. Şəklin ölçüsü ən az %dx%d olmalıdır.'
+'Slideshow rendition': 'Slayd-şounun ifası'
+'Renditions reloaded': 'İfalar yenidən yükləndi'
+'Reload renditions': 'İfaları yenidən yüklə'
+'Edit images': 'Şəkilləri dəyiş'
+'Specify image url if you want to load it.': 'Şəkli yükləmək istəyirsənsə, onun url-ini müəyyən et.'
+'Items: ': 'Elementlər:'
+'Attach slideshows': 'Slayd-şouları əlavə et'
+'original size:': 'orijinal ölçü:'
+'no caption': başlıqsız
+'Video URL': 'Video URL-i'
+'Use for all': 'Hamısı üçün istifadə et'
+'Use default': 'Mövcud olanı istifadə et'
+'Slug must be unique': 'Başlıq unikal olmalıdır'
+Slug: Başlıq
+'Slideshow headline': 'Slayd-şou əsas başlığı'
+Slideshow: Slayd-şou
+'Set selected as default image': 'Seçilmiş şəkli ilkin variant kimi quraşdır'
+'Set as default': 'İlkin variant kimi quraşdır'
+Saving...: Saxlanır...
+Saved: Saxlandı
+'Save headline': 'Əsas başlığı saxla'
+'Place Images': 'Şəkil Yerləşdir'
+'No renditions defined.': 'Heç bir ifa müəyyən edilmədi.'
+'No images found.': 'Şəkil tapılmadı.'
+'No images attached to article.': 'Məqaləyə şəkil əlavə edilməyib.'
+'No images': 'Şəkil yoxdur'
+'Next: Upload and Edit Metadata': 'Növbəti: Meta-məlumatı Yüklə və Dəyiş'
+'Next: Place Images': 'Növbəti: Şəkil Yerləşdir'
+'Media Archive': 'Mətbuat Arxivi'
+Location: Məkan
+Items: Elementlər
+Item: Element
+'Image files': 'Şəkil faylları'
+'Image Files: ': 'Şəkil Faylları:'
+Headline: 'Əsas başlıq'
+Finish: Bitir
+'Edit Image Data': 'Şəkil Haqqında Məlumatı Dəyiş'
+'Edit $1': '$1-a dəyişiklik et'
+'Done editing': 'Dəyişiklik yerinə yetirildi'
+Detach: Çıxar
+Create: Yarat
+Caption: Sərlövhə
+'Attached images': 'Şəkil əlavə et'
+'Attach & Place': 'Əlavə et & Yerləşdir'
+'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Videonun url-ini əlavə et (nümunə: Vimeo üçün http://vimeo.com/25083275, YouTube üçün http://youtu.be/1XsPVO61e9w)'
+'Add video': 'Video yüklə'
+'Add caption': 'Sərlövhə əlavə et'
+'Show all': Göstər
+'The image has been removed from the article.': 'Şəkil məqalədən silinib.'
+'Unable to add new image.': 'Yeni şəkil əlavə etmək mümkün deyil.'
+'Image number $1 already exists': '$1 adlı şəkil artıq istifadə olunub.'
+'You do not have the right to change image information.': 'Şəkil haqqında məlumatı dəyişməyə ixtiyarın yoxdur.'
+'The image number specified is already in use.': 'Bu saylı şəkil artıq istifadədədir.'
+'Image $1 updated.': '$1 şəkil yeniləndi.'
+'Image $1 added.': '$1 şəkil yükləndi '
+'Edit article': 'Məqaləni dəyiş'
+'You do not have the right to attach images to articles.': 'Məqaləyə şəkil əlavə etməyə ixtiyarın yoxdur.'
+'You do not have the right to add images.': 'Şəkil əlavə etməyə ixtiyarın yoxdur.'
+'Image information': 'Şəkil məlumatı'
+'Attach New Image': 'Yeni şəkil yüklə'
+'Attach Image To Article': 'Yazıya şəkil əlavə et'
+'Attach Existing Image': 'Hazır şəkili əlavə et'
+'Add New Image': 'Yeni şəkil əlavə et'
+Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Tarix<BR><SMALL>(il-ay-gün)</SMALL>
+'You must select an image file to upload.': 'Yükləmək üçün şəkil seçməlisiniz.'
+'Change image information': 'Şəkil məlumatını dəyiş'
+'You do not have the right to add images': 'Şəkil əlavə etməyə ixtiyarın yoxdur'
+'Filter by uploader...': 'Yükləyən tərəfindən filtrləmə...'

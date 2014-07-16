@@ -71,3 +71,7 @@ Added: Añadido
 '$1 toggled.': '$ seleccionados/deseleccionados'
 '$1 articles have been removed': 'Se han eliminado $1 artículo(s).'
 ' - filtering from _MAX_ records': '-filtrando desde archivos _MAX_'
+'Search for creators': null
+'No matches.': null
+Searching...: null
+'Minimum input of characters: $1': null

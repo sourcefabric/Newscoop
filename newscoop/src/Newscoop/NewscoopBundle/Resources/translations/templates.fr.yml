@@ -4,7 +4,7 @@
 'Start upload': null
 Size: null
 'Select files': null
-Filename: null
+Filename: 'Nom du fichier'
 'Drag files here.': null
 'Cache lifetime, sec': null
 'Add files to the upload queue and click the start button.': null

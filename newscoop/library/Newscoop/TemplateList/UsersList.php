@@ -9,9 +9,6 @@
 
 namespace Newscoop\TemplateList;
 
-use Newscoop\ListResult;
-use Newscoop\TemplateList\PaginatedBaseList;
-
 /**
  * List users
  */
@@ -25,19 +22,10 @@ class UsersList extends PaginatedBaseList
         $list = $this->paginateList($result[0], null, $criteria->maxResults, null, false);
         $list->count = $result[1];
 
-        $tempList = array_map(function ($user) use ($em) {
-            $update = false;
-            $userComments = (int) $em->getRepository('Newscoop\Entity\User')->getUserPoints($user, true);
-            if ($user->getPoints() != $userComments) {
-                $update = true;
-            }
-            $user->setPoints($userComments);
-            if ($update) {
-                $em->flush();
-            }
-
-            return new \MetaUser($user);
+        $tempList = array_map(function ($user) {
+              return new \MetaUser($user);
         }, $list->items);
+
         $list->items = $tempList;
 
         return $list;

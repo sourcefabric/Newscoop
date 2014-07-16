@@ -41,7 +41,15 @@ class ArticleType {
 	 */
 	public function ArticleType($p_articleType)
 	{
-        $this->m_metadata = new ArticleTypeField($p_articleType, 'NULL');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_articleType), 'article_type');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_metadata = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_metadata = new ArticleTypeField($p_articleType, 'NULL');
+            $cacheService->save($cacheKey, $this->m_metadata);
+        }
+        
 		$this->m_name = $this->m_metadata->getArticleType();
         $this->m_dbTableName = 'X' . $this->m_name;
 

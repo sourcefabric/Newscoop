@@ -10,7 +10,7 @@
     "version":"4.3",
     "license":"GPL-3.0",
     "authors":[
-        
+
     ],
     "repositories":[
         {
@@ -24,7 +24,7 @@
         "silex\/silex":"~1.1",
         "doctrine\/orm":">=2.2.3,<2.4-dev",
         "doctrine\/doctrine-bundle":"1.2.*",
-        "twig\/extensions":"1.0.*",
+        "twig\/extensions":"1.1.*",
         "symfony\/assetic-bundle":"2.3.*",
         "symfony\/swiftmailer-bundle":"2.3.*",
         "symfony\/monolog-bundle":"2.3.*",
@@ -35,7 +35,7 @@
         "bombayworks\/zendframework1":"1.11.*",
         "friendsofsymfony\/rest-bundle":"0.13.*@dev",
         "behat\/behat":"2.5.1",
-        "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
+        "behat\/common-contexts":"1.2.*@dev",
         "kriswallsmith\/buzz":">=0.7",
         "knplabs\/knp-paginator-bundle":"v2.3.2",
         "jms\/serializer-bundle":"0.12.0",
@@ -46,13 +46,13 @@
         "knplabs\/knp-menu":"2.0.*@dev",
         "raulfraile\/ladybug-bundle":"0.*@dev",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
-        "willdurand\/expose-translation-bundle":"1.2.0",
+        "willdurand\/js-translation-bundle":"1.2.0",
         "recaptcha\/php5":"v1.0.0",
         "knplabs\/packagist-api":"v1.1",
         "yzalis\/crontab":"1.0.x-dev",
         "imagine\/imagine":"v0.5.0",
         "symfony\/twig-bridge":"~2.3",
-        "excelwebzone\/recaptcha-bundle":"dev-master#4e89f571e785e6d529ff90d5b2d24dc4d971f3c5",
+        "newscoop\/recaptcha-bundle":"2.2",
         "friendsofsymfony\/oauth-server-bundle":"1.4.0",
         "newscoop\/plugins-installer":"v0.2",
         "nelmio\/api-doc-bundle":"dev-master"
@@ -60,7 +60,7 @@
     "require-dev":{
         "phpunit\/phpunit":"~4.0",
         "phpspec\/phpspec":"2.0.*@dev",
-        "liip\/rmt":"1.0.*"
+        "liip/rmt": "dev-master"
     },
     "autoload":{
         "psr-0":{

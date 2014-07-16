@@ -29,6 +29,8 @@ if (!$articleObj->exists()) {
 foreach ((array) $_POST['item'] as $attachmentId) {
     ArticleAttachment::AddFileToArticle((int) $attachmentId, $articleObj->getArticleNumber());
 }
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('attachments');
 $logtext = $translator->trans('$1 file/s attached to article', array('$1' => sizeof($_POST['item'])), 'article_files');
 Log::ArticleMessage($articleObj, $logtext, null, 38, TRUE);
 

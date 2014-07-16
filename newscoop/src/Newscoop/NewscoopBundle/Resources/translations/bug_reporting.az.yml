@@ -1,23 +1,23 @@
-'You have reached the error page': null
-'Stack trace:': null
-'Request Parameters:': null
-'Page not found': null
-'Exception information:': null
-'Application error': null
-'An error occurred': null
-'Newscoop has encountered a problem.': null
-'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': null
-'What were you trying to do when this happened?': null
-'Description:': null
-'We are sorry for the inconvenience.': null
-'Show error details': null
-'Hide error details': null
-'Error Report': null
-'Backtrace:': null
-'Error ID:': null
-'Error Message:': null
-'Error Number:': null
-'Error String:': null
-'Software:': null
-'We are sorry, but there was a problem sending your bug report.': null
-'Simply copy and paste the error report below and send it to:': null
+'You have reached the error page': 'Xətalı səhifəyə daxil oldun'
+'Stack trace:': 'Xəta zolağı:'
+'Request Parameters:': 'Parametrlər üçün tələb göndər:'
+'Page not found': 'Səhifə tapılmadı'
+'Exception information:': 'İstisna məlumat:'
+'Application error': 'Proqram xətası'
+'An error occurred': 'Xəta baş verdi'
+'Newscoop has encountered a problem.': 'Newscoop problem ilə üzləşib.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'Newscoop komandasına dəstək olmaq məqsədilə baş vermiş hadisə haqqında yazmaq üçün bir neçə dəqiqəni istifadə edib izah verməlisən.'
+'What were you trying to do when this happened?': 'Bu baş verdikdə nə etməyi düşünürsən?'
+'Description:': 'İzah:'
+'We are sorry for the inconvenience.': 'Narahatlıq üçün üzr istəyirik.'
+'Show error details': 'Xəta məlumatlarını göstər'
+'Hide error details': 'Xəta məlumatlarını gizlə'
+'Error Report': 'Xəta Hesabatı:'
+'Backtrace:': 'Xəta yoxlaması:'
+'Error ID:': 'Xəta ID-si:'
+'Error Message:': 'Xəta Mesajı:'
+'Error Number:': 'Xəta Nömrəsi:'
+'Error String:': 'Xəta Cərgəsi:'
+'Software:': 'Proqram:'
+'We are sorry, but there was a problem sending your bug report.': 'Üzr istəyirik, amma sənin bloq hesabatının göndərilməsi ilə bağlı problem var idi.'
+'Simply copy and paste the error report below and send it to:': 'Sadəcə xəta hesabatını köçürüb aşağı yapışdır və bura göndər:'

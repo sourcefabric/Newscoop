@@ -316,7 +316,7 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     {
         $commentsCount = "(SELECT COUNT(c)";
         $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
-        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u AND c.status = 0) as comments";
 
         return "{$commentsCount}";
     }
@@ -649,14 +649,25 @@ class UserRepository extends EntityRepository implements RepositoryInterface
     }
 
     /**
-     * Get user points
+     * Set user points
      *
-     * @param  Newscoop\Entity\User $user
+     * @param  Newscoop\Entity\User|null $user
+     * @param  string|int                $authorId
      * @return void
      */
-    public function getUserPoints(User $user, $onlyComments = false)
+    public function setUserPoints(User $user = null, $authorId = null)
     {
         $em = $this->getEntityManager();
+
+        if (!is_null($authorId)) {
+            $user = $em->getRepository('Newscoop\Entity\User')
+                ->findOneByAuthor($authorId);
+        }
+
+        if (!$user) {
+            return false;
+        }
+
         $query = $this->createQueryBuilder('u')
             ->select('u.id, ' . $this->getUserPointsSelect())
             ->where('u.id = :user')
@@ -665,14 +676,15 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $query->setParameter('user', $user->getId());
         $result = $query->getSingleResult();
 
-        if ($onlyComments) {
-            return $result['comments'];
-        }
-
         $articlesCount = $em->getRepository('Newscoop\Entity\Article')
             ->countByAuthor($user);
 
-        $user->setPoints($result['comments'] + $articlesCount);
+        $total = (int) $result['comments'] + $articlesCount;
+
+        if ($user) {
+            $user->setPoints($total);
+            $em->flush();
+        }
     }
 
     /**
@@ -699,14 +711,29 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         }
 
         if (!empty($criteria->groups)) {
-            $op = $criteria->excludeGroups ? 'NOT IN' : 'IN';
-            $qb->andWhere("u.id {$op} (SELECT _u.id FROM Newscoop\Entity\User\Group g INNER JOIN g.users _u WHERE g.id IN (:groups))");
-            $qb->setParameter('groups', $criteria->groups);
+            $em = $this->getEntityManager();
+            $groupRepo = $em->getRepository('Newscoop\Entity\User\Group');
+            $users = array();
+            foreach ($criteria->groups as $groupId) {
+                $group = $groupRepo->findOneById($groupId);
+                if ($group instanceof \Newscoop\Entity\User\Group) {
+                    $users = array_unique(array_merge($users, array_keys($group->getUsers()->toArray())), SORT_REGULAR);
+                }
+            }
+            $op = $criteria->excludeGroups ? 'notIn' : 'in';
+            $qb->andWhere($qb->expr()->$op('u.id', ':userIds'));
+            $qb->setParameter('userIds', $users);
         }
 
         if (!empty($criteria->query)) {
             $qb->andWhere($qb->expr()->orX("(u.username LIKE :query)", "(u.email LIKE :query)"));
             $qb->setParameter('query', '%' . trim($criteria->query, '%') . '%');
+        }
+
+        if (!empty($criteria->query_name)) {
+            $qb->andWhere($qb->expr()->orX("(u.last_name LIKE :query)", "(u.first_name LIKE :query)"));
+            $qb->setParameter('query', trim($criteria->query_name, '%') . '%');
+            $qb->groupBy('u.last_name', 'u.first_name');
         }
 
         if (!empty($criteria->nameRange)) {
@@ -729,7 +756,8 @@ class UserRepository extends EntityRepository implements RepositoryInterface
 
         $list = new ListResult();
         $countQb = clone $qb;
-        $list->count = (int) $countQb->select('COUNT(u)')->getQuery()->getSingleScalarResult();
+        $countQb->select('COUNT(u)')->resetDQLPart('groupBy');
+        $list->count = (int) $countQb->getQuery()->getSingleScalarResult();
 
         if ($criteria->firstResult != 0) {
             $qb->setFirstResult($criteria->firstResult);
@@ -752,7 +780,9 @@ class UserRepository extends EntityRepository implements RepositoryInterface
             return array($qb, $list->count);
         }
 
-        return $qb->getQuery()->getResult();
+        $list->items = $qb->getQuery()->getResult();
+
+        return $list;
     }
 
     /**
@@ -775,4 +805,3 @@ class UserRepository extends EntityRepository implements RepositoryInterface
         $qb->andWhere($orx);
     }
 }
-

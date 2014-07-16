@@ -57,8 +57,10 @@ switch ($f_action) {
 			camp_html_add_msg($translator->trans("You do not have the right to delete articles.", array(), 'articles'));
 			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
 		} else {
+			$creatorId = $articleObj->getCreatorId();
 			$articleObj->delete();
-			
+			\Zend_Registry::get('container')->getService('dispatcher')
+                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('user' => $creatorId)));
 			if ($f_publication_id > 0) {
 				$url = "/$ADMIN/articles/index.php"
 						."?f_publication_id=$f_publication_id"

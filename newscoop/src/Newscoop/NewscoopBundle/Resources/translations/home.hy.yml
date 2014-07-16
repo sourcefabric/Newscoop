@@ -17,8 +17,8 @@ Support: null
 'Manage Users': null
 'Manage User Types': null
 'Manage User Points System': null
-Last: null
-First: null
+Last: Վերջին
+First: Առաջին
 Feedback: null
 'Edit your password': null
 'Edit user': null
@@ -61,7 +61,7 @@ Ban: null
 '%value% is more than %max% characters long': null
 '%value% is less than %min% characters long': null
 'User name': null
-Newscoop: null
+Newscoop: Newscoop
 'Your password has been reset.': null
 'Proceed to login.': null
 'Hi, \n\nfor password recovery, please follow this link: $1': 'Hi, \n\nfor password recovery, please follow this link: $1'
@@ -156,3 +156,7 @@ Backup/Restore: null
 'Step 3': null
 'Add new user': null
 'Bad credentials': null
+'Active users': null
+'New comments': null
+'Published articles': null
+'Last 7 days statistics': null

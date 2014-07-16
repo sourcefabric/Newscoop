@@ -67,9 +67,23 @@ final class MetaArticleBodyField {
         foreach ($this->m_subtitles as $subtitle) {
             $this->m_sutitlesNames[] = $subtitle->name;
         }
-        $this->m_parent_article = new Article($p_parent->language->number, $p_parent->number);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKeyArticle = $cacheService->getCacheKey(array('Article', $p_parent->type_name, $p_fieldName), 'article');
+        if ($cacheService->contains($cacheKeyArticle)) {
+            $this->m_parent_article = $cacheService->fetch($cacheKeyArticle);
+        } else {
+            $this->m_parent_article = new Article($p_parent->type_name, $p_fieldName);
+            $cacheService->save($cacheKeyArticle, $this->m_parent_article);
+        }
         $this->m_fieldName = $p_fieldName;
-        $this->m_articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
+        $cacheKey = $cacheService->getCacheKey(array('ArticleTypeField', $p_parent->type_name, $p_fieldName), 'article_type');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_articleTypeField = $cacheService->fetch($cacheKey);
+        } else {
+             $articleTypeField = new ArticleTypeField($p_parent->type_name, $p_fieldName);
+             $cacheService->save($cacheKey, $articleTypeField);
+             $this->m_articleTypeField = $articleTypeField;
+        }
     }
 
 
@@ -160,7 +174,14 @@ final class MetaArticleBodyField {
             $content .= $subtitle->content;
         }
         if ($this->m_articleTypeField->isContent()) {
-            $objectType = new ObjectType('article');
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKeyObjectType = $cacheService->getCacheKey(array('ObjectType', 'article'), 'ObjectType');
+            if ($cacheService->contains($cacheKeyObjectType)) {
+                $objectType = $cacheService->fetch($cacheKeyObjectType);
+            } else {
+                $objectType = new ObjectType('article');
+                $cacheService->save($cacheKeyObjectType, $objectType);
+            }
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {

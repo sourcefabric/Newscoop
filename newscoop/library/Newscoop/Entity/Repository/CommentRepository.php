@@ -8,7 +8,6 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
@@ -36,10 +35,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Get comments for article
      *
-     * @param  int $article  Article number
-     * @param  string $language Language code in format "en" for example.
+     * @param int    $article  Article number
+     * @param string $language Language code in format "en" for example.
      *
-     * @return Doctrine\ORM\Query           Query
+     * @return Doctrine\ORM\Query Query
      */
     public function getArticleComments($article, $language, $recommended = false, $getDeleted = true)
     {
@@ -120,8 +119,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Method for setting status
      *
-     * @param array $p_comment_ids
-     * @param string $p_status
+     * @param  array  $p_comment_ids
+     * @param  string $p_status
      * @return void
      */
     public function setStatus(array $p_comment_ids, $p_status)
@@ -133,11 +132,13 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
                 $comments[] = $one_comment;
             }
         }
+
         if ('deleted' == $p_status) {
             foreach ($comments as $one_comment) {
                 $one_comment->setParent();
             }
         }
+
         foreach ($comments as $one_comment) {
             $this->setCommentStatus($one_comment, $p_status);
         }
@@ -146,8 +147,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Method for setting status per article
      *
-     * @param int $p_article
-     * @param string $p_status
+     * @param  int    $p_article
+     * @param  string $p_status
      * @return void
      */
     public function setArticleStatus($p_article, $p_language, $p_status)
@@ -168,8 +169,8 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
     /**
      * Method for setting status for a comment
-     * @param \Newscoop\Entity\Comment $p_comment
-     * @param  string $p_status
+     * @param  \Newscoop\Entity\Comment $p_comment
+     * @param  string                   $p_status
      * @return void
      */
     private function setCommentStatus(Comment $p_comment, $p_status)
@@ -180,6 +181,17 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         } else {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);
+        }
+
+        $em->flush();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
+
+        $user = $p_comment->getCommenter()->getUser();
+
+        if ($user instanceof User) {
+            $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
         }
     }
 
@@ -349,14 +361,19 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
         $em->persist($entity);
 
+        $user = $commenter->getUser();
+        if ($user instanceof User) {
+            $em->getRepository('Newscoop\Entity\User')->setUserPoints($user);
+        }
+
         return $entity;
     }
 
     /**
      * Get data for table
      *
-     * @param array $p_params
-     * @param array $cols
+     * @param  array     $p_params
+     * @param  array     $cols
      * @return Comment[]
      */
     public function getData(array $p_params, array $p_cols)
@@ -404,8 +421,9 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $qb->where($andx);
         // limit
         if (isset($p_params['iDisplayLength'])) {
-            $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
+            $qb->setFirstResult((int) $p_params['iDisplayStart'])->setMaxResults((int) $p_params['iDisplayLength']);
         }
+
         return $qb->getQuery()->getResult();
     }
 
@@ -437,14 +455,15 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
 
         $qb->where($andx);
         $qb->select('COUNT(e)');
+
         return $qb->getQuery()->getSingleScalarResult();
     }
 
     /**
      * Build where condition
      *
-     * @param array $cols
-     * @param string $search
+     * @param  array                   $cols
+     * @param  string                  $search
      * @return Doctrine\ORM\Query\Expr
      */
     protected function buildWhere(array $p_cols, $p_search, $qb = null, $andx = null)
@@ -454,6 +473,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $orx->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
         $orx->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
         $orx->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
+
         return $andx->add($orx);
     }
 
@@ -489,6 +509,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
             }
             $andx->add($orx);
         }
+
         return $andx;
     }
 
@@ -571,9 +592,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         $commentIds = $query->getArrayResult();
 
         $clearCommentIds = array();
-        foreach($commentIds as $key => $value) {
+        foreach ($commentIds as $key => $value) {
             $clearCommentIds[] = $value['id'];
         }
+
         return $clearCommentIds;
     }
 
@@ -646,7 +668,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
     /**
      * Set indexed now
      *
-     * @param array $comments
+     * @param  array $comments
      * @return void
      */
     public function setIndexedNow(array $comments)
@@ -656,7 +678,7 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         }
 
         $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\Comment c SET c.indexed = CURRENT_TIMESTAMP() WHERE c.id IN (:comments)')
-            ->setParameter('comments', array_map(function($comment) { return $comment->getId(); }, $comments))
+            ->setParameter('comments', array_map(function ($comment) { return $comment->getId(); }, $comments))
             ->execute();
     }
 

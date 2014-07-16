@@ -107,7 +107,16 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
     $blogService = Zend_Registry::get('container')->getService('blog');
     $blogInfo = $blogService->getBlogInfo($g_user);
     if (!empty($f_article_author)) {
+        $em = Zend_Registry::get('container')->getService('em');
+        $dispatcher = Zend_Registry::get('container')->getService('dispatcher');
+        $language = $em->getRepository('Newscoop\Entity\Language')->findOneById($articleObj->getLanguageId());
+        $authors = $em->getRepository('Newscoop\Entity\ArticleAuthor')->getArticleAuthors($articleObj->getArticleNumber(), $language->getCode())->getArrayResult();
+
         ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+        foreach ($authors as $author) {
+            $dispatcher->dispatch("user.set_points", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('authorId' => $author['fk_author_id'])));
+        }
+
         $i = 0;
         foreach ($f_article_author as $author) {
             $authorObj = new Author($author);
@@ -136,6 +145,7 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 
             if (isset($articleAuthorObj) && !$articleAuthorObj->exists()) {
                 $articleAuthorObj->create();
+                $dispatcher->dispatch("user.set_points", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('authorId' => $articleAuthorObj->getAuthorId())));
             }
 
             $i++;
@@ -197,7 +207,10 @@ if (CampTemplateCache::factory()) {
 }
 
 $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('authors');
 $cacheService->clearNamespace('article');
+$cacheService->clearNamespace('article_type');
+$cacheService->clearNamespace('boxarticles');
 
 echo json_encode($data);
 exit;

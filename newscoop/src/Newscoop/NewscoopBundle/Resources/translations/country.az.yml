@@ -1,15 +1,15 @@
-'The country $1 could not be created.': null
-'Country with code $1 exists already.': null
-'You do not have the right to add countries.': null
-'Delete country': null
-'You do not have the right to delete countries.': null
-'Are you sure you want to delete the country $1?': null
-'The country $1 could not be deleted.': null
-'Edit country name': null
-'You do not have the right to change country names.': null
-'Changing country name': null
-'The country name $1 could not be changed': null
-'Translate country name': null
-'You do not have the right to translate country names.': null
-'The country name $1 could not be translated': null
-'Add New Country': null
+'The country $1 could not be created.': '$1 ölkəsi yaradıla bilmədi.'
+'Country with code $1 exists already.': '$1 kodlu ölkə artıq mövcuddur.'
+'You do not have the right to add countries.': 'Ölkə əlavə etməyə ixtiyarın yoxdur.'
+'Delete country': 'Ölkəni sil'
+'You do not have the right to delete countries.': 'Ölkələri silməyə ixtiyarın yoxdur.'
+'Are you sure you want to delete the country $1?': '$1 adlı ölkəni silmək istədiyinə əminsən?'
+'The country $1 could not be deleted.': '$1 adlı ölkə silinə bilmədi.'
+'Edit country name': 'Ölkə adını dəyiş'
+'You do not have the right to change country names.': 'Ölkə adlarını dəıyişməyə ixtiyarın yoxdur.'
+'Changing country name': 'Ölkə adının dəyişilməsi'
+'The country name $1 could not be changed': '$1 adlı ölkənin adına dəyişiklik edilə bilinməz'
+'Translate country name': 'Ölkə adını tərcümə et'
+'You do not have the right to translate country names.': 'Ölkə adlarını tərcümə etməyə ixtiyarın yoxdur.'
+'The country name $1 could not be translated': '$1 adlı ölkənin adı tərcümə edilə bilmədi'
+'Add New Country': 'Yeni Ölkə Əlavə Et'

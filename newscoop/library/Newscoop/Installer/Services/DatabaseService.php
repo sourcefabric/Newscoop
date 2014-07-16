@@ -18,20 +18,6 @@ class DatabaseService
 {
     protected $logger;
     public $errorQueries = array();
-    public $sampleTemplates = array(
-        'set_quetzal' => array(
-            'name' => 'Quetzal',
-            'description' => 'Quetzal<br/>Theme for Newscoop Version 4'
-        ),
-        'set_rockstar' => array(
-            'name' => 'Rockstar',
-            'description' => 'Rockstar<br/>Theme for Newscoop Version 4'
-        ),
-        'set_the_new_custodian' => array(
-            'name' => 'The New Custodian',
-            'description' => 'The New Custodian<br/>Theme for Newscoop Version 4'
-        ),
-    );
 
     /**
      * @param object $logger
@@ -74,9 +60,10 @@ class DatabaseService
     {
         // import database from sql file
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_core.sql';
-        $errors = $this->importDB($sqlFile, $connection);
 
-        if ($errors > 0) {
+        try {
+            $connection->exec(file_get_contents($sqlFile));
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -121,18 +108,26 @@ class DatabaseService
      * Fill database with sample data
      *
      * @param Connection $connection
-     * @param string     $host
      */
     public function installSampleData($connection)
+    {
+        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
+        $errors = $this->importDB($sqlFile, $connection);
+    }
+
+    /**
+     * Install database schema
+     *
+     * @param Connection $connection
+     * @param string     $host
+     */
+    public function installDatabaseSchema($connection, $host = null, $publicationName = null)
     {
         $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_tables.sql';
         $errors = $this->importDB($sqlFile, $connection);
 
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_prepare.sql';
-        $errors = $this->importDB($sqlFile, $connection);
-
-        $sqlFile =  __DIR__ . '/../../../../install/Resources/sql/campsite_demo_data.sql';
-        $errors = $this->importDB($sqlFile, $connection);
+        $connection->executeQuery('INSERT IGNORE INTO Aliases VALUES (2,?,1)', array($host));
+        $connection->executeQuery("INSERT IGNORE INTO Publications VALUES (1,?,1,'D',0.00,0.00,'',0,0,2,2,NULL,1,1,0,0,1,0,0,'','',NULL,'a:1:{s:4:\"name\";s:2:\"on\";}')", array($publicationName));
     }
 
     /**

@@ -63,15 +63,27 @@
         {{ form_rest(searchForm) }}
     </form>
 
+    {% if pagination.getTotalItemCount > 0 %}
     <div class="row" id="paging">
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
+                    {% set pages = (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber)) %}
+                    {% set startRange = (pagination.getCurrentPageNumber * pagination.getItemNumberPerPage) - pagination.getItemNumberPerPage + 1 %}
                     {{ 'comments.label.showing'|trans }}
-                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                    {% if pagination.getCurrentPageNumber == 1 %}
+                        {{ pagination.getCurrentPageNumber }}
+                    {% elseif pagination.getCurrentPageNumber < ((pagination.getTotalItemCount / pagination.getItemNumberPerPage)|round ) %}
+                        {{ startRange }}
+                    {% elseif pagination.getTotalItemCount < (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber)) %}
+                        {{ startRange }}
+                        {% set pages = pagination.getTotalItemCount %}
+                    {% endif %}
+                    {{ 'comments.label.to'|trans }} {{ pages }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
                 </div>
             </div>
             <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
     </div>
+    {% endif %}
     <div class="table-responsive">
         <table class="table" id="commentsTable">
             <thead>
@@ -87,7 +99,11 @@
                 {% for row in commentsArray %}
                 <tr id="use-hover">
                     <td style="width: 3%; ">
-                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{{ row.index }}.</span>
+                        <input type="checkbox" name="index[]" value="{{ row.comment.id }}" class="table-checkbox"><span class="index">{% if pagination.getCurrentPageNumber == 1 %}
+                            {{ row.index }}.
+                        {% elseif pagination.getCurrentPageNumber != 1 %}
+                           {{ (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber - 1)) +  row.index }}.
+                        {% endif %}</span>
                     </td>
                     <td>
                         <div class="commentUserHolder">
@@ -223,7 +239,15 @@
             <div class="col-xs-3 col-sm-4 col-md-5">
                 <div class="dataTables_info" id="commentsTable_info">
                     {{ 'comments.label.showing'|trans }}
-                    {% if pagination.getItems|length == 0 %} 0 {% else %} 1 {% endif %} {{ 'comments.label.to'|trans }} {{ pagination.getItems|length }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
+                    {% if pagination.getCurrentPageNumber == 1 %}
+                        {{ pagination.getCurrentPageNumber }}
+                    {% elseif pagination.getCurrentPageNumber < ((pagination.getTotalItemCount / pagination.getItemNumberPerPage)|round ) %}
+                        {{ startRange }}
+                    {% elseif pagination.getTotalItemCount < (pagination.getItemNumberPerPage * (pagination.getCurrentPageNumber)) %}
+                        {{ startRange }}
+                        {% set pages = pagination.getTotalItemCount %}
+                    {% endif %}
+                    {{ 'comments.label.to'|trans }} {{ pages }} {{ 'comments.label.of'|trans }} {{ pagination.getTotalItemCount }} {{ 'comments.label.entries'|trans }}.
                 </div>
             </div>
             <div class="col-xs-9 col-sm-8 col-md-7 text-right"></div>
