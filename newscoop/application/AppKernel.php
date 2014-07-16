@@ -34,6 +34,7 @@ class AppKernel extends Kernel
             new Bazinga\ExposeTranslationBundle\BazingaExposeTranslationBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
+            new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new Newscoop\ZendBridgeBundle\NewscoopZendBridgeBundle(),
             new Newscoop\NewscoopBundle\NewscoopNewscoopBundle(),
         );
