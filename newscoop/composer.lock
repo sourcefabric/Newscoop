@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f7cc46a586bae5c2914e22841c84db47",
+    "hash": "ab9c33138ac2979670db95281aa5e514",
     "packages": [
         {
             "name": "behat/behat",
@@ -724,7 +724,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -1195,7 +1195,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/92d9934f2fca1da15178c91239576ae26e505e60",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/f7f3c2e66c9e60e6cc5b40298880588af52edf56",
                 "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
                 "shasum": ""
             },
@@ -1283,12 +1283,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "47b70a8057af4bcbaee9f8aa3d5d55dedbb5b371"
+                "reference": "617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/47b70a8057af4bcbaee9f8aa3d5d55dedbb5b371",
-                "reference": "47b70a8057af4bcbaee9f8aa3d5d55dedbb5b371",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef",
+                "reference": "617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1324,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-07-07 19:18:08"
+            "time": "2014-07-14 14:32:07"
         },
         {
             "name": "imagine/imagine",
@@ -1489,12 +1489,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/metadata.git",
-                "reference": "72091ba2666d6d1fef8bd04281e0afa00b97621b"
+                "reference": "22b72455559a25777cfd28c4ffda81ff7639f353"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/72091ba2666d6d1fef8bd04281e0afa00b97621b",
-                "reference": "72091ba2666d6d1fef8bd04281e0afa00b97621b",
+                "url": "https://api.github.com/repos/schmittjoh/metadata/zipball/22b72455559a25777cfd28c4ffda81ff7639f353",
+                "reference": "22b72455559a25777cfd28c4ffda81ff7639f353",
                 "shasum": ""
             },
             "require": {
@@ -1533,7 +1533,7 @@
                 "xml",
                 "yaml"
             ],
-            "time": "2014-07-08 16:40:08"
+            "time": "2014-07-12 07:13:19"
         },
         {
             "name": "jms/parser-lib",
@@ -2249,12 +2249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nelmio/NelmioApiDocBundle.git",
-                "reference": "b9b453c8578a9334080fbdc16bff92e7cb488561"
+                "reference": "c03d35bee448ad29838b7f1dc0e23831d6c7e3bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/b9b453c8578a9334080fbdc16bff92e7cb488561",
-                "reference": "b9b453c8578a9334080fbdc16bff92e7cb488561",
+                "url": "https://api.github.com/repos/nelmio/NelmioApiDocBundle/zipball/c03d35bee448ad29838b7f1dc0e23831d6c7e3bc",
+                "reference": "c03d35bee448ad29838b7f1dc0e23831d6c7e3bc",
                 "shasum": ""
             },
             "require": {
@@ -2315,7 +2315,7 @@
                 "documentation",
                 "rest"
             ],
-            "time": "2014-07-09 08:29:17"
+            "time": "2014-07-14 19:24:21"
         },
         {
             "name": "newscoop/plugins-installer",
@@ -2448,7 +2448,7 @@
                     "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
                 },
                 {
-                    "name": "Vítor Brandão",
+                    "name": "VĂ­tor BrandĂŁo",
                     "email": "vitor@noiselabs.org",
                     "homepage": "http://noiselabs.org"
                 }
@@ -3506,7 +3506,8 @@
                 },
                 {
                     "name": "Adam Harvey",
-                    "email": "aharvey@php.net"
+                    "email": "aharvey@php.net",
+                    "role": "Lead"
                 },
                 {
                     "name": "Bernhard Schussek",
@@ -3660,12 +3661,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "80f2946ede8275fa86358d28e8b3fcf453525062"
+                "reference": "2799cd07c721660c9e1067d6d79ecc7e74dfb5a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/80f2946ede8275fa86358d28e8b3fcf453525062",
-                "reference": "80f2946ede8275fa86358d28e8b3fcf453525062",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/2799cd07c721660c9e1067d6d79ecc7e74dfb5a4",
+                "reference": "2799cd07c721660c9e1067d6d79ecc7e74dfb5a4",
                 "shasum": ""
             },
             "require": {
@@ -3701,7 +3702,7 @@
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-07-07 09:25:53"
+            "time": "2014-07-09 09:39:28"
         },
         {
             "name": "silex/silex",
@@ -4064,12 +4065,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle.git",
-                "reference": "8555303e89445133442d4f687d2773b21751d101"
+                "reference": "bff639d4cbe9787272967f4cb3e3accdfbb2653c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/8555303e89445133442d4f687d2773b21751d101",
-                "reference": "8555303e89445133442d4f687d2773b21751d101",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/bff639d4cbe9787272967f4cb3e3accdfbb2653c",
+                "reference": "bff639d4cbe9787272967f4cb3e3accdfbb2653c",
                 "shasum": ""
             },
             "require": {
@@ -4115,7 +4116,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2014-06-21 16:10:01"
+            "time": "2014-07-09 09:12:30"
         },
         {
             "name": "symfony/symfony",
@@ -4123,12 +4124,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "ea45769aaba270d05010bb36c23e25ad6fceb55a"
+                "reference": "ace5a29867c218cb0bc4dc379a7aa549e7e1aea5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/ea45769aaba270d05010bb36c23e25ad6fceb55a",
-                "reference": "ea45769aaba270d05010bb36c23e25ad6fceb55a",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/ace5a29867c218cb0bc4dc379a7aa549e7e1aea5",
+                "reference": "ace5a29867c218cb0bc4dc379a7aa549e7e1aea5",
                 "shasum": ""
             },
             "require": {
@@ -4225,7 +4226,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-11 09:32:34"
+            "time": "2014-07-15 19:58:41"
         },
         {
             "name": "twig/extensions",
@@ -4233,12 +4234,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions.git",
-                "reference": "bf468657a804624f131e87544b5081659987c054"
+                "reference": "b713aaf5c9487244051082430a42fa917431bf66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/bf468657a804624f131e87544b5081659987c054",
-                "reference": "bf468657a804624f131e87544b5081659987c054",
+                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/b713aaf5c9487244051082430a42fa917431bf66",
+                "reference": "b713aaf5c9487244051082430a42fa917431bf66",
                 "shasum": ""
             },
             "require": {
@@ -4273,7 +4274,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2014-07-09 12:56:37"
+            "time": "2014-07-14 05:04:35"
         },
         {
             "name": "twig/twig",
@@ -4315,7 +4316,7 @@
                     "role": "Lead Developer"
                 },
                 {
-                    "name": "Armin Ronacher",
+                    "name": "Armin Ronacher2",
                     "email": "armin.ronacher@active-4.com",
                     "role": "Project Founder"
                 },
@@ -4418,7 +4419,7 @@
             ],
             "authors": [
                 {
-                    "name": "William Durand",
+                    "name": "William DURAND",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
@@ -4527,23 +4528,24 @@
     "packages-dev": [
         {
             "name": "liip/rmt",
-            "version": "1.0.4",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/liip/RMT.git",
-                "reference": "62df1d5173a85721a3cd7abdd5ac4622ee02a492"
+                "reference": "202a8a02171e710dacc96d888b3947a5ac1532e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/liip/RMT/zipball/62df1d5173a85721a3cd7abdd5ac4622ee02a492",
-                "reference": "62df1d5173a85721a3cd7abdd5ac4622ee02a492",
+                "url": "https://api.github.com/repos/liip/RMT/zipball/202a8a02171e710dacc96d888b3947a5ac1532e5",
+                "reference": "202a8a02171e710dacc96d888b3947a5ac1532e5",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "symfony/console": "~2.0",
                 "symfony/process": "~2.0",
-                "symfony/yaml": "~2.0"
+                "symfony/yaml": "~2.0",
+                "vierbergenlars/php-semver": "3.0.0-rc2"
             },
             "bin": [
                 "RMT"
@@ -4580,7 +4582,7 @@
                 "vcs tag",
                 "version"
             ],
-            "time": "2014-04-03 20:45:34"
+            "time": "2014-07-15 08:27:43"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -4694,7 +4696,7 @@
                 "symfony/filesystem": "~2.1"
             },
             "suggest": {
-                "phpspec/nyan-formatters": "~1.0 – Adds Nyan formatters"
+                "phpspec/nyan-formatters": "~1.0 â Adds Nyan formatters"
             },
             "bin": [
                 "bin/phpspec"
@@ -4795,6 +4797,58 @@
                 "stub"
             ],
             "time": "2014-07-09 08:25:15"
+        },
+        {
+            "name": "vierbergenlars/php-semver",
+            "version": "3.0.0-rc2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vierbergenlars/php-semver.git",
+                "reference": "4dc35f3804f3b127ad557b8b2255c03204dec951"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vierbergenlars/php-semver/zipball/4dc35f3804f3b127ad557b8b2255c03204dec951",
+                "reference": "4dc35f3804f3b127ad557b8b2255c03204dec951",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "simpletest/simpletest": "1.1.*"
+            },
+            "bin": [
+                "bin/semver",
+                "bin/update-versions"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "vierbergenlars\\SemVer\\": "src/",
+                    "vierbergenlars\\LibJs\\": "src/"
+                },
+                "classmap": [
+                    "src/vierbergenlars/SemVer/internal.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lars Vierbergen",
+                    "email": "vierbergenlars@gmail.com"
+                }
+            ],
+            "description": "The Semantic Versioner for PHP",
+            "keywords": [
+                "semantic",
+                "semver",
+                "versioning"
+            ],
+            "time": "2013-12-21 17:10:13"
         }
     ],
     "aliases": [
@@ -4812,7 +4866,8 @@
         "raulfraile/ladybug-bundle": 20,
         "yzalis/crontab": 20,
         "nelmio/api-doc-bundle": 20,
-        "phpspec/phpspec": 20
+        "phpspec/phpspec": 20,
+        "liip/rmt": 20
     },
     "platform": {
         "php": ">=5.3.3"
