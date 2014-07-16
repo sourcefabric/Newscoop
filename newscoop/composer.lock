@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4a427b82dbdb70a9a62bfdad99160227",
+    "hash": "fd4afb0c4956a670a44aea6ff35035f0",
     "packages": [
         {
             "name": "behat/behat",
@@ -4306,16 +4306,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.17",
+            "version": "2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357"
+                "reference": "91e32f810bc9bb39f4fd104abc1de7c0b9cafd8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/c02f56f7948f2699c8cc8b118c7faeb13470e357",
-                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/91e32f810bc9bb39f4fd104abc1de7c0b9cafd8f",
+                "reference": "91e32f810bc9bb39f4fd104abc1de7c0b9cafd8f",
                 "shasum": ""
             },
             "require": {
@@ -4412,7 +4412,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-07 12:59:36"
+            "time": "2014-07-16 13:02:06"
         },
         {
             "name": "twig/extensions",
