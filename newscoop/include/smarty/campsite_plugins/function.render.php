@@ -58,8 +58,15 @@ function smarty_function_render($p_params, &$p_smarty)
         $smarty->campsiteVector = $campsiteVector;
 
         if (empty($p_params['cache'])) {
-            $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
-            $smarty->cache_lifetime = (int)$template->getCacheLifetime();
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheKey = $cacheService->getCacheKey(array('template', CampSite::GetURIInstance()->getThemePath(), $p_params['file']), 'template');
+            if ($cacheService->contains($cacheKey)) {
+                $smarty->cache_lifetime = $cacheService->fetch($cacheKey);
+            } else {
+                $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
+                $smarty->cache_lifetime = (int)$template->getCacheLifetime();
+                $cacheService->save($cacheKey, $smarty->cache_lifetime);
+            }
         } elseif ($p_params['cache'] == 'off') {
            $smarty->caching = 0;
         } else {

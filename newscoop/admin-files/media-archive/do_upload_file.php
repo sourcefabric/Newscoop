@@ -46,6 +46,9 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
     }
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('attachment');
+
 if ($result) {
     camp_html_add_msg($translator->trans('$1 files uploaded.', array('$1' => $nrOfFiles), 'media_archive'), "ok");
     camp_html_goto_page("/$ADMIN/media-archive/multiedit_file.php");

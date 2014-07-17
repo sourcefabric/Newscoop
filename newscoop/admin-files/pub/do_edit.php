@@ -122,7 +122,8 @@ $updated = $publicationObj->update($columns);
 if ($updated) {
     $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
     $cacheService->clearNamespace('publication');
-    
+    $cacheService->clearNamespace('templates_translations');
+
 	camp_html_add_msg($translator->trans("Publication updated", array(), 'pub'), "ok");
 } else {
 	$errorMsg = $translator->trans('The publication information could not be updated.', array(), 'pub');

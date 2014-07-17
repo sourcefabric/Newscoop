@@ -29,7 +29,15 @@ function smarty_block_list_articles($p_params, $p_content, &$p_smarty, &$p_repea
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('ArticlesList');
-        $articlesList = new ArticlesList($start, $p_params);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('articlesList', $start, implode('-', $p_params)), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $articlesList = $cacheService->fetch($cacheKey);
+        } else {
+            $articlesList = new ArticlesList($start, $p_params);
+            $cacheService->save($cacheKey, $articlesList);
+        }
+
         if ($articlesList->isEmpty()) {
             $campContext->setCurrentList($articlesList, array());
             $campContext->resetCurrentList();

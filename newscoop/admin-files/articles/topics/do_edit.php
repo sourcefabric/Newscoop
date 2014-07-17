@@ -79,6 +79,9 @@ if ($updated) {
     $articleObj->setProperty('time_updated', 'NOW()', true, true);
 }
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('article');
+
 ?>
 
 <script type="text/javascript">
