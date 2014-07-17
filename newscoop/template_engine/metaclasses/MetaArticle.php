@@ -263,7 +263,8 @@ final class MetaArticle extends MetaDbObject {
                     $fieldValue = $this->getContentCache($property);
                 }
                 if ($articleFieldType->getType() == ArticleTypeField::TYPE_TOPIC) {
-                    $fieldValue = new MetaTopic($fieldValue);
+                     $fieldValue = TopicName::GetTopicNames($fieldValue);//new MetaTopic($fieldValue);
+                     $fieldValue = $fieldValue[$this->m_dbObject->getProperty('IdLanguage')];
                 }
                 return $fieldValue;
             } catch (InvalidPropertyException $e) {
