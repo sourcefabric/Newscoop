@@ -32,7 +32,9 @@ master:
             tag-prefix: ''         # No more prefix for tags
     pre-release-actions:
         bin/UpdateApplicationVersionCurrentVersion.php: ~
+        composer-update: ~
         changelog-update:          # Update a CHANGELOG file before the release
-            file: newscoop/DETAILED-CHANGELOG.txt
+            file: DETAILED-CHANGELOG.txt
             format: semantic
+            dump-commits: true
         vcs-commit: ~              # Commit the CHANGELOG
