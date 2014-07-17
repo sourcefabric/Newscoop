@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ab9c33138ac2979670db95281aa5e514",
+    "hash": "d7319fbbed6881e53fa5fba5cb7f169a",
     "packages": [
         {
             "name": "behat/behat",
@@ -1275,7 +1275,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-03-11 22:42:27"
+            "time": "2014-07-08 18:26:17"
         },
         {
             "name": "hybridauth/hybridauth",
@@ -1283,12 +1283,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef"
+                "reference": "3d0aaa583eda953e699488b226ecdbb6389a7734"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef",
-                "reference": "617351d3d7e5bf28ff5d464376d3fd26a5a5e5ef",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/3d0aaa583eda953e699488b226ecdbb6389a7734",
+                "reference": "3d0aaa583eda953e699488b226ecdbb6389a7734",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1324,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-07-14 14:32:07"
+            "time": "2014-07-16 16:04:33"
         },
         {
             "name": "imagine/imagine",
@@ -2448,7 +2448,7 @@
                     "homepage": "https://github.com/noiselabs/SmartyBundle/contributors"
                 },
                 {
-                    "name": "VĂ­tor BrandĂŁo",
+                    "name": "Vítor Brandão",
                     "email": "vitor@noiselabs.org",
                     "homepage": "http://noiselabs.org"
                 }
@@ -4120,16 +4120,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "2.3.x-dev",
+            "version": "v2.3.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "ace5a29867c218cb0bc4dc379a7aa549e7e1aea5"
+                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/ace5a29867c218cb0bc4dc379a7aa549e7e1aea5",
-                "reference": "ace5a29867c218cb0bc4dc379a7aa549e7e1aea5",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/c02f56f7948f2699c8cc8b118c7faeb13470e357",
+                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357",
                 "shasum": ""
             },
             "require": {
@@ -4226,7 +4226,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-15 19:58:41"
+            "time": "2014-07-07 12:59:36"
         },
         {
             "name": "twig/extensions",
@@ -4696,7 +4696,7 @@
                 "symfony/filesystem": "~2.1"
             },
             "suggest": {
-                "phpspec/nyan-formatters": "~1.0 â Adds Nyan formatters"
+                "phpspec/nyan-formatters": "~1.0 – Adds Nyan formatters"
             },
             "bin": [
                 "bin/phpspec"
