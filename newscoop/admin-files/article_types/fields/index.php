@@ -137,10 +137,16 @@ $color_list = array(
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
-    <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
-	</TD>
-    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><?php  echo $translator->trans("Add new field"); ?></A></B>
-	</TD>
+    <?php
+        if (!empty($articleTypeName))  {
+            echo '
+                <TD><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" ><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/add.png" BORDER="0"></A></TD>
+                <TD><B><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" >';
+                putGS("Add new field");
+                echo '</A></B></TD>
+            ';
+        }
+    ?>
 	<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);"
                ONCLICK="if (allShown == 0) {
