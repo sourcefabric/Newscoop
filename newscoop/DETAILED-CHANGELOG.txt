@@ -1,0 +1,6 @@
+
+VERSION 4  FIRST NEWSCOOP 4.3 ALPHA, INSTALLABLE, WITH ALMOST ALL FEATURES, ALMOST READY TO FREEZE, ENJOY
+=========================================================================================================
+
+   Version 4.3 - First Newscoop 4.3 alpha, installable, with almost all features, almost ready to freeze, enjoy
+      17/07/2014 22:14  4.3.0-alpha  initial release
