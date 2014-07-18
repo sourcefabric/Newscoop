@@ -38,7 +38,7 @@ class PluginsService
      * Avaiable plugins
      * @var Collection
      */
-    protected $avaiablePlugins;
+    protected $availablePlugins;
 
     /**
      * @param Newscoop\EventDispatcher\EventDispatcher $dispatcher
@@ -52,11 +52,11 @@ class PluginsService
 
     public function getAllAvailablePlugins()
     {
-        if ($this->avaiablePlugins) {
-            return $this->avaiablePlugins;
+        if ($this->availablePlugins) {
+            return $this->availablePlugins;
         }
 
-        return $this->avaiablePlugins = $this->em->getRepository('Newscoop\Entity\Plugin')->findAll();
+        return $this->availablePlugins = $this->em->getRepository('Newscoop\Entity\Plugin')->findAll();
     }
 
     public function getEnabledPlugins()
@@ -65,20 +65,20 @@ class PluginsService
         $expr = $eb->eq('enabled', true);
         $criteria = new Criteria($expr);
 
-        $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
+        $availablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
 
-        return $avaiablePlugins->matching($criteria);
+        return $availablePlugins->matching($criteria);
     }
 
-    public function getPluginByCriteria($criteria, $id)
+    public function getPluginByCriteria($criteria, $needle)
     {
         $eb = new ExpressionBuilder();
-        $expr = $eb->eq($criteria, intval($id));
+        $expr = $eb->eq($criteria, $needle);
         $criteria = new Criteria($expr);
 
-        $avaiablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
+        $availablePlugins = new ArrayCollection($this->getAllAvailablePlugins());
 
-        return $avaiablePlugins->matching($criteria);
+        return $availablePlugins->matching($criteria);
     }
 
     /**

@@ -251,7 +251,16 @@ class ArticleList extends BaseList
 		. '&amp;f_language_selected=' . $article->getLanguageId();
         $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow=' . $article->getWorkflowStatus()
         . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
-		$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
+
+		$pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
+
+		if ($pluginService->isEnabled('terwey/plugin-newscoop-articleeditscreen')) {
+			$router = \Zend_Registry::get('container')->getService('router');
+			$language = new Language($article->getLanguageId());
+			$articleLink = $router->generate('newscoop_admin_aes').'#/'.$language->getCode().'/'.$article->getArticleNumber();
+		} else {
+			$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
+		}
 		$previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
 		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.$translator->trans('Preview').'">'.$translator->trans('Preview').'</a>';
         $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
