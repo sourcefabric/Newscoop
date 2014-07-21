@@ -1,29 +1,29 @@
 'No attachment': 'Əlavə edilmiş fayl yoxdur'
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
+'You are about to permanently delete multiple messages.': 'Çoxsaylı mesajları həmişəlik silmək ərəfəsindəsən.'
+'You are about to permanently delete a message.': 'Mesajı həmişəlik silmək ərəfəsindəsən.'
 'Are you sure you want to do it?': 'Bunu etmək istədiyinə əminsən?'
-Approve: null
-Approved.: null
+Approve: 'Təsdiq et'
+Approved.: Təsdiqləndi.
 at: burada
-Attachment: null
-'Ban/Unban user': null
-'Change selected messages status': null
-Deleted: null
-'Full article': null
-Message: null
-'Message deleted.': null
-'Messages deleted.': null
-'Messages status change to $1.': null
-'Message status change to $1.': null
-'Messages updated.': null
-'Message updated.': null
-Processed: null
-Reply: null
-'Reply to message': null
+Attachment: 'Əlavə fayl'
+'Ban/Unban user': 'İstifadəçini Kilidlə/Kilidini Aç'
+'Change selected messages status': 'Seçilmiş mesajların statusunu dəyiş'
+Deleted: Silindi
+'Full article': 'Tam məqalə'
+Message: Mesaj
+'Message deleted.': 'Mesaj silindi.'
+'Messages deleted.': 'Mesajlar silindi.'
+'Messages status change to $1.': 'Mesajların statusu $1 olaraq təyin edildi.'
+'Message status change to $1.': 'Mesaj statusu $1 olaraq təyin edildi.'
+'Messages updated.': 'Mesajlar yeniləndi.'
+'Message updated.': 'Mesaj yeniləndi.'
+Processed: 'İcra edildi'
+Reply: 'Cavab yaz'
+'Reply to message': 'Mesaja cavab yaz'
 Star: Ulduz
 Starred: Ulduzlu
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
 'With document attachment': 'Sənəd əlavəsi ilə'
 'With image attachment': 'Şəkil əlavəsi ilə'
 'With no attachment': 'Əlavə faylsız'
-'Feedback Messages': null
+'Feedback Messages': 'Rəy Mesajları'

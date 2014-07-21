@@ -7,10 +7,10 @@
         "publication"
     ],
     "homepage":"http:\/\/www.sourcefabric.org\/en\/newscoop\/",
-    "version":"4.3",
+    "version": "4.3.0-alpha",
     "license":"GPL-3.0",
     "authors":[
-        
+
     ],
     "repositories":[
         {
@@ -20,11 +20,11 @@
     ],
     "require":{
         "php":">=5.3.3",
-        "symfony\/symfony":"2.3.*",
+        "symfony\/symfony":"2.3.17",
         "silex\/silex":"~1.1",
         "doctrine\/orm":">=2.2.3,<2.4-dev",
         "doctrine\/doctrine-bundle":"1.2.*",
-        "twig\/extensions":"1.0.*",
+        "twig\/extensions":"1.1.*",
         "symfony\/assetic-bundle":"2.3.*",
         "symfony\/swiftmailer-bundle":"2.3.*",
         "symfony\/monolog-bundle":"2.3.*",
@@ -35,7 +35,7 @@
         "bombayworks\/zendframework1":"1.11.*",
         "friendsofsymfony\/rest-bundle":"0.13.*@dev",
         "behat\/behat":"2.5.1",
-        "behat\/common-contexts":"dev-master#b9f0dc44d415e94a03152ca6413c89e21889ab56",
+        "behat\/common-contexts":"1.2.*@dev",
         "kriswallsmith\/buzz":">=0.7",
         "knplabs\/knp-paginator-bundle":"v2.3.2",
         "jms\/serializer-bundle":"0.12.0",
@@ -46,7 +46,7 @@
         "knplabs\/knp-menu":"2.0.*@dev",
         "raulfraile\/ladybug-bundle":"0.*@dev",
         "friendsofsymfony\/jsrouting-bundle":"~1.1",
-        "willdurand\/expose-translation-bundle":"1.2.0",
+        "willdurand\/js-translation-bundle":"1.2.0",
         "recaptcha\/php5":"v1.0.0",
         "knplabs\/packagist-api":"v1.1",
         "yzalis\/crontab":"1.0.x-dev",
@@ -60,7 +60,7 @@
     "require-dev":{
         "phpunit\/phpunit":"~4.0",
         "phpspec\/phpspec":"2.0.*@dev",
-        "liip\/rmt":"1.0.*"
+        "liip/rmt": "dev-master"
     },
     "autoload":{
         "psr-0":{

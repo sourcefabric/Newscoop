@@ -1,11 +1,11 @@
 show: göstər
 hide: gizlə
 Title: Başlıq
-'Resource Type:': null
-'Resource Type': null
-Resource: null
-Diff: null
-'Broken data': null
-'Action Type:': null
-'No logs.': null
-User: null
+'Resource Type:': 'Mənbə Növü:'
+'Resource Type': 'Mənbə Növü'
+Resource: Mənbə
+Diff: Fərq
+'Broken data': 'Sındırılmış məlumat'
+'Action Type:': 'Addım Növü:'
+'No logs.': 'Giriş yoxdur.'
+User: İstifadəçi

@@ -4,11 +4,10 @@
  */
 
 require_once(__DIR__ . '/../conf/install_conf.php');
-require_once('cache/CacheEngine.php');
+require_once 'cache/CacheEngine.php';
 
 define('CACHE_SERIAL_HEADER', "<?php\n/*");
 define('CACHE_SERIAL_FOOTER', "*/\n?".">");
-
 
  /**
   * @package Campsite
@@ -53,7 +52,6 @@ final class CampCache
 
     private static $m_missKeys = array();
 
-
     /**
      * CampCache class constructor.
      * @deprecated from 4.3, removed in 4.4, use newscoop.cache service
@@ -73,6 +71,7 @@ final class CampCache
         if (is_null($this->m_cacheEngine) || !$this->m_cacheEngine->isSupported()) {
             self::$m_enabled = false;
             $preferencesService->DBCacheEngine = '';
+
             return;
         } else {
             self::$m_enabled = true;
@@ -88,12 +87,10 @@ final class CampCache
         }
     } // fn __construct
 
-
     public static function initialized()
     {
         return !is_null(self::$m_instance);
     }
-
 
     /**
      * Singleton function that returns the global class object.
@@ -106,9 +103,9 @@ final class CampCache
             $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
             self::$m_instance = new CampCache($preferencesService->DBCacheEngine);
         }
+
         return self::$m_instance;
     } // fn singleton
-
 
     /**
      * Alias for the store() method.
@@ -125,13 +122,12 @@ final class CampCache
      *    $p_ttl The ttl for the object in cache
      *
      * @return boolean
-     *    TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public function add($p_key, $p_data, $p_ttl = 0)
     {
         return $this->store($p_key, $p_data, $p_ttl);
     } // fn add
-
 
     /**
      * Fetch an object from cache.
@@ -140,7 +136,7 @@ final class CampCache
      *    The cache key of the object
      *
      * @return mixed
-     *    The unserialized data.
+     *               The unserialized data.
      */
     public function fetch($p_key)
     {
@@ -157,12 +153,12 @@ final class CampCache
             } else {
                 self::$m_missKeys[$p_key]++;
             }
+
             return false;
         }
 
         return $this->unserialize($serial);
     } // fn fetch
-
 
     /**
      * Store the given data into cache.
@@ -175,7 +171,7 @@ final class CampCache
      *    $p_ttl The ttl for the object in cache
      *
      * @return boolean
-     *    TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public function store($p_key, $p_data, $p_ttl = 0)
     {
@@ -188,7 +184,6 @@ final class CampCache
         return $this->m_cacheEngine->storeValue($this->genKey($p_key), $p_data, $p_ttl);
     } // fn fetch
 
-
     /**
      * Remove the object with given cache key from cache.
      *
@@ -196,7 +191,7 @@ final class CampCache
      *    $p_key The cache key for the object.
      *
      * @return boolean
-     *    TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public function delete($p_key)
     {
@@ -207,7 +202,6 @@ final class CampCache
         return $this->m_cacheEngine->deleteValue($this->genKey($p_key));
     } // fn delete
 
-
     /**
      * Clears the cache.
      *
@@ -216,7 +210,7 @@ final class CampCache
      *            otherwise the system cache (cached files) will be.
      *
      * @return boolean
-     *    TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public function clear($p_type = null)
     {
@@ -231,7 +225,6 @@ final class CampCache
         }
     } // fn clear
 
-
     /**
      * Retrieves cache information and metadata from the cache store.
      *
@@ -240,8 +233,8 @@ final class CampCache
      *            be returned, otherwise system cache information.
      *
      * @return mixed
-     *    array Cached data and metadata
-     *    boolean FALSE on failure
+     *               array Cached data and metadata
+     *               boolean FALSE on failure
      */
     public function info($p_type = null)
     {
@@ -249,25 +242,25 @@ final class CampCache
             return false;
         }
         $type = $p_type == 'user' ? CacheEngine::CACHE_VALUES_INFO : CacheEngine::CACHE_PAGES_INFO;
+
         return $this->m_cacheEngine->getInfo($type);
     } // fn info
-
 
     /**
      * Retrieves shared memory allocation information.
      *
      * @return mixed
-     *    array Shared memory allocation data
-     *    boolean FALSE on failure
+     *               array Shared memory allocation data
+     *               boolean FALSE on failure
      */
     public function meminfo()
     {
         if (!self::$m_enabled) {
             return false;
         }
+
         return $this->m_cacheEngine->getMemInfo();
     } // fn meminfo
-
 
     /**
      * Serializes the given data.
@@ -276,13 +269,12 @@ final class CampCache
      *    $p_data The data to be serialized
      *
      * @return string
-     *    The serialized data
+     *                The serialized data
      */
     private function serialize($p_data)
     {
         return CACHE_SERIAL_HEADER.base64_encode(serialize($p_data)).CACHE_SERIAL_FOOTER;
     } // fn serialize
-
 
     /**
      * Unserializes the given serialized data.
@@ -291,13 +283,12 @@ final class CampCache
      *    $p_serial The serialized data
      *
      * @return mixed
-     *    The unserialized data
+     *               The unserialized data
      */
     private function unserialize($p_serial)
     {
         return unserialize(base64_decode(substr($p_serial, strlen(CACHE_SERIAL_HEADER), -strlen(CACHE_SERIAL_FOOTER))));
     } // fn unserialize
-
 
     /**
      * Generates the hash key for a cache object.
@@ -306,7 +297,7 @@ final class CampCache
      *    $p_data The database object key to hashing
      *
      * @return string
-     *    The hash key
+     *                The hash key
      */
     private function genKey($p_data)
     {
@@ -319,37 +310,32 @@ final class CampCache
         return $this->m_key;
     } // fn genKey
 
-
     public static function GetStoreRequests()
     {
         return self::$m_storeRequests;
     }
-
 
     public static function GetFetchRequests()
     {
         return self::$m_fetchRequests;
     }
 
-
     public static function GetHits()
     {
         return self::$m_hits;
     }
-
 
     public static function GetMissKeys()
     {
         return self::$m_missKeys;
     }
 
-
     /**
      * Returns true if the given cache engine was supported
      *
      * @param $p_cacheEngine
      * @return boolean
-     *      TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public static function IsSupported($p_cacheEngine = null)
     {
@@ -367,20 +353,19 @@ final class CampCache
         }
     }
 
-
-
     /**
      * Returns true if the given cache engine was enabled
      *
      * @param $p_cacheEngine
      * @return boolean
-     *      TRUE on success, FALSE on failure
+     *                 TRUE on success, FALSE on failure
      */
     public static function IsEnabled($p_cacheEngine = null)
     {
         /**
          * @deprecated from 4.3, removed in 4.4, use newscoop.cache service
          */
+
         return false;
     }
 }

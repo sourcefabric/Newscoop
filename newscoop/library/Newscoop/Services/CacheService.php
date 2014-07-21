@@ -27,8 +27,14 @@ class CacheService
      */
     public function __construct($systemPreferences)
     {
+        if (php_sapi_name() === 'cli') {
+            $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
+
+            return;
+        }
+
         try {
-            switch ($systemPreferences->get('DBCacheEngine', 'array')) {
+            switch ($systemPreferences->get('DBCacheEngine', 'Array')) {
                 case 'apc':
                     $this->cacheDriver = new \Doctrine\Common\Cache\ApcCache();
                     break;

@@ -1,7 +1,7 @@
 comments:
     label:
         comments: null
-        menu: null
+        menu: Մեկնաբանություններ
         banned: null
         anonymous: null
         at: null
@@ -17,10 +17,10 @@ comments:
         editarticle: null
         section: null
         comment: null
-        replyto: null
+        replyto: 'Պատասխանել մեկնաբանությանը։'
         subject: null
         ban: null
-        author: null
+        author: Հեղինակ
         date: null
         article: null
         search: null
@@ -28,7 +28,7 @@ comments:
         recommended: null
         unrecommended: null
         editcomment: null
-        actions: null
+        actions: Գործունեություններ
         selectstatus: null
         deleted: null
         alert: null
@@ -41,7 +41,7 @@ comments:
         delete: null
         reply: null
         edit: null
-        close: null
+        close: Փակել
         okay: null
         filter: null
     msg:
@@ -63,4 +63,4 @@ comments:
         suremultiple: null
         first: null
         surequestion: null
-        updated: null
+        updated: 'Մեկնաբանությունը թարմացված է։'

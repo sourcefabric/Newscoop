@@ -35,7 +35,9 @@ if (count($missingReq) > 0) {
         echo $value.' <br />';
     }
     echo "</pre>";
-    echo "You can try fix common problem with our fixer.php script, just run <br/>";
+    $phpFile = php_ini_loaded_file() ?: "File couldn't be found.";
+    echo "Your php.ini config file path: <strong>" . $phpFile . "</strong><br/><br/>";
+    echo "You can try to fix common problems by running our fixer.php script: <br/>";
     echo "<pre>sudo php ". realpath(__DIR__."/../scripts/fixer.php")."</pre>";
 
     echo "When it's done, please refresh this page. Thanks!";
@@ -154,7 +156,7 @@ $app->get('/prepare', function (Request $request) use ($app) {
         ->add('user_password', 'password', array('constraints' => array(new Assert\NotBlank())))
         ->add('database_name', null, array('constraints' => array(new Assert\NotBlank())))
         ->add('override_database', 'choice', array(
-            'choices'   => array('override_database'   => 'Override database'),
+            'choices'   => array('override_database'   => 'Overwrite existing database?'),
             'multiple'  => true,
             'expanded'  => true,
         ))
@@ -244,6 +246,7 @@ $app->get('/process', function (Request $request) use ($app) {
 $app->get('/post-process', function (Request $request) use ($app) {
     $app['finish_service']->saveCronjobs();
     $app['finish_service']->generateProxies();
+    $app['finish_service']->installAssets();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
 
     return $app['twig']->render('post-process.twig', array());

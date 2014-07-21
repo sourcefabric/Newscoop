@@ -43,6 +43,8 @@ class FinishService
             throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
         }
 
+        exec('rm -rf '.$this->newscoopDir.'/cache/*', $output, $code);
+
         $php = escapeshellarg($phpPath);
         $doctrine = escapeshellarg($this->newscoopDir.'/scripts/doctrine.php');
         $generateProxies = new Process("$php $doctrine orm:generate-proxies", null, null, null, 300);
@@ -90,7 +92,7 @@ class FinishService
         $assetsInstall = new Process("$php $newscoopConsole assets:install $this->newscoopDir/public", null, null, null, 300);
         $assetsInstall->run();
         if (!$assetsInstall->isSuccessful()) {
-            throw new \RuntimeException('An error occurred when executing the assets install command.');
+            throw new \RuntimeException($assetsInstall->getErrorOutput());
         }
     }
 
@@ -177,6 +179,16 @@ class FinishService
         $stmt = $connection->prepare($sql);
         $stmt->bindValue(1, $password);
         $stmt->bindValue(2, $config['user_email']);
+        $stmt->execute();
+
+        $sql = "UPDATE SystemPreferences SET value = ? WHERE varname = 'SiteSecretKey'";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
+        $stmt->execute();
+
+        $sql = "INSERT INTO SystemPreferences (`varname`, `value`, `last_modified`) VALUES ('installation_id', ?, NOW())";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindValue(1, sha1($config['site_title'] . mt_rand()));
         $stmt->execute();
     }
 }

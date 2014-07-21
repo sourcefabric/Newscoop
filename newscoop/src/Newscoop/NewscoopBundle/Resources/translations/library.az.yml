@@ -17,7 +17,7 @@ Title: Başlıq
 '$1 Article(s) unlocked': '$1 Məqalə(lər)nin kilidi açıldı'
 '$1 Article(s) not unlocked': '$1 Məqalə(lər)nin kilidi açılmadı'
 '$1 Article(s) duplicated': '$1 Məqalə(lər)nin surəti çıxarıldı'
-'Download file': null
+'Download file': 'Faylı endir'
 'You do not have the right to delete articles.': 'Məqalə silməyə ixtiyarın yoxdur.'
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Bu məqalənin statusunu dəyişməyə ixtiyarın yoxdur. Məqalə daxil edildikdən sonra yalnız səlahiyyətli istifadəçilər tərəfindən dəyişdirilə bilər.'
 'Use Map': 'Xəritə İstifadə Et'
@@ -29,7 +29,7 @@ Title: Başlıq
 'Status: Submit': 'Status: Daxil Et'
 'Status: Set New': 'Status: Yenisini Yaz'
 'Status: Publish': 'Status: Nümayiş'
-Size: null
+Size: Ölçü
 'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
 'Show / hide columns': 'Sütunları göstər / gizlə'
 'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
@@ -42,12 +42,12 @@ Size: null
 'Publish Schedule': 'Planı Nümayiş Et'
 'Publish Date': 'Nümayiş Tarixi'
 'Order updated.': 'Sifariş yeniləndi.'
-'Open in browser': null
+'Open in browser': 'Brauzerdə aç'
 'No sections found': 'Bölmə tapılmadı'
-'No records found.': null
+'No records found.': 'Yazı tapılmadı.'
 'No publications found': 'Nümayiş tapılmadı'
 'No issues found': 'Məsələ tapılmadı'
-'No entries to show': null
+'No entries to show': 'Nümayiş üçün giriş yoxdur'
 Locations: Məkanlar
 'Loading data': 'Məlumatın yüklənməsi'
 'Last modified': 'Son redaktələr'
@@ -56,22 +56,22 @@ Last: Son
 First: İlk
 'Filter by...': 'Filtr xüsusiyyəti...'
 Filter: 'Filtrə Et'
-Filename: null
+Filename: 'Fayl adı'
 'Duplicate to another section': 'Başqa bölməyə surətini çıxar'
-'Display _MENU_ records': null
-Creator: null
-'Create Date': null
+'Display _MENU_ records': '_MENYU_ yazılarını göstər'
+Creator: Yaradıcı
+'Create Date': 'Yaranma Tarixi'
 'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
-'Are you sure you want to delete selected articles?': null
-'All Sections': null
-'All Publications': null
-'All Issues': null
-Added: null
+'Are you sure you want to delete selected articles?': 'Seçilmiş məqalələri silmək istədiyinə əminsən?'
+'All Sections': 'Bütün Bölmələr'
+'All Publications': 'Bütün Nümayişlər'
+'All Issues': 'Bütün Məsələlər'
+Added: 'Əlavə Edildi'
 'Access denied.': 'Giriş qadağandır.'
 '$1 toggled.': '$1 keçirildi.'
-'$1 articles have been removed': null
-' - filtering from _MAX_ records': null
-'Search for creators': null
-'No matches.': null
-Searching...: null
-'Minimum input of characters: $1': null
+'$1 articles have been removed': '$1 məqalə xaric edilib'
+' - filtering from _MAX_ records': '- _MAX_ yazılarından filtrləmə'
+'Search for creators': 'Yaradıcı axtar'
+'No matches.': 'Uyğun olan yoxdur.'
+Searching...: Axtarılır...
+'Minimum input of characters: $1': 'Minimal giriş işarəsi: $1'

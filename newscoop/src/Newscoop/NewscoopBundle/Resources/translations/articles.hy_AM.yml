@@ -99,7 +99,7 @@ Saved: null
 'Save All': null
 'Online Server: On': null
 'Online Server: Off': null
-Download: null
+Download: Ներբեռնում
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
 'Visible to non-subscribers': null
 'The article could not be published.': null
@@ -123,7 +123,7 @@ Locked: null
 'Hide Comments': null
 Enabled: null
 Disabled: null
-Comments: null
+Comments: Մեկնաբանություններ
 'The article has already been translated into $1.': null
 'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
 'You do not have the right to translate articles.': null

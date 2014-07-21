@@ -33,18 +33,6 @@ foreach ($f_items as $articleCode) {
     $groupedArticleCodes[$articleId][$languageId] = $languageId;
 }
 
-/*
-function returnJson($status = 'true', $message = 'Articles updated.', $hiperlink = '')
-{
-    $returnJson = array();
-    $returnJson['status'] = $status;
-    $returnJson['message'] = $message;
-    $returnJson['hiperlink'] = $hiperlink;
-
-    return json_encode($returnJson);
-}
-*/
-
 function prepareContextBoxItems($f_params)
 {
     GLOBAL $f_language_selected;
@@ -307,6 +295,9 @@ case 'context_box_update':
         $contextId = $contextBoxObj->getId();
         $relatedItems = array_filter($contextContent['f_related_items'], 'is_numeric');
         ContextBoxArticle::saveList($contextId, $relatedItems);
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('boxarticles');
     }
 
     return json_encode(array(200));

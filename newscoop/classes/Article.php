@@ -184,6 +184,9 @@ class Article extends DatabaseObject
         }
         $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
+
         return $status;
     }
 
@@ -336,6 +339,9 @@ class Article extends DatabaseObject
             $this->m_data['Number'],
             $this->m_data['IdLanguage']);
         $articleData->create();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
 
         Log::ArticleMessage($this, $translator->trans('Article created.', array(), 'api'), null, 31, TRUE);
     } // fn create
@@ -499,6 +505,9 @@ class Article extends DatabaseObject
                 '$6' => $articleCopy->getIssueNumber(), '$7' =>$articleCopy->getSectionNumber()), 'api');
         }
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
+
         Log::ArticleMessage($copyMe, $logtext, null, 155);
         if ($p_copyTranslations) {
             return $newArticles;
@@ -548,6 +557,9 @@ class Article extends DatabaseObject
                 $this->positionAbsolute(1);
             }
         }
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
 
         return $success;
     } // fn move
@@ -734,6 +746,8 @@ class Article extends DatabaseObject
         $deleted = parent::delete();
 
         if ($deleted) {
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheService->clearNamespace('article');
             Log::ArticleMessage($tmpObj, $translator->trans('Article deleted.', array(), 'api'), null, 32);
         }
         $this->m_cacheUpdate = true;
@@ -1506,7 +1520,8 @@ class Article extends DatabaseObject
             self::dispatchEvent("user.set_points", $this, array('authorId' => $author['fk_author_id']));
         }
 
-        CampCache::singleton()->clear('user');
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
 
         $logtext = $translator->trans('Article status changed from $1 to $2.', array(
             '$1' => $this->getWorkflowDisplayString($oldStatus), '$2' => $this->getWorkflowDisplayString($p_value)), 'api');
@@ -1622,7 +1637,9 @@ class Article extends DatabaseObject
         $preferencesService = \Zend_Registry::get('container')->getService('system_preferences_service');
         $keywordsSeparator = $preferencesService->KeywordSeparator;
         $p_value = str_replace($keywordsSeparator, ",", $p_value);
-        CampCache::singleton()->clear('user');
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('article');
 
         return parent::setProperty('Keywords', $p_value);
     } // fn setKeywords

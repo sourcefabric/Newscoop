@@ -51,10 +51,16 @@ class AuthorizeController extends BaseAuthorizeController
                 ->finishClientAuthorization(true, $user, $request, $scope);
         }
 
-        $authorize = new Authorize();
+        if (($response = $formHandler->process()) !== false) {
+            if (true === $this->container->get('session')->get('_fos_oauth_server.ensure_logout')) {
+                $this->container->get('security.context')->setToken(null);
+                $this->container->get('session')->invalidate();
+            }
 
-        if (($response = $formHandler->process($authorize)) !== false) {
-            $this->processSuccess($user, $formHandler, $request);
+            $this->container->get('event_dispatcher')->dispatch(
+                OAuthEvent::POST_AUTHORIZATION_PROCESS,
+                new OAuthEvent($user, $this->getClient(), $formHandler->isAccepted())
+            );
         }
 
         $templatesService = $this->container->get('newscoop.templates.service');
@@ -62,25 +68,5 @@ class AuthorizeController extends BaseAuthorizeController
         $smarty->assign('client', $client);
 
         return new Response($templatesService->fetchTemplate('oauth_authorize.tpl'));
-    }
-
-    /**
-     * @param UserInterface        $user
-     * @param AuthorizeFormHandler $formHandler
-     * @param Request              $request
-     *
-     * @return Response
-     */
-    protected function processSuccess(UserInterface $user, AuthorizeFormHandler $formHandler, Request $request)
-    {
-        if (true === $this->container->get('session')->get('_fos_oauth_server.ensure_logout')) {
-            $this->container->get('security.context')->setToken(null);
-            $this->container->get('session')->invalidate();
-        }
-
-        $this->container->get('event_dispatcher')->dispatch(
-            OAuthEvent::POST_AUTHORIZATION_PROCESS,
-            new OAuthEvent($user, $this->getClient(), $formHandler->isAccepted())
-        );
     }
 }
