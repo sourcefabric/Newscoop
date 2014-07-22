@@ -13,7 +13,7 @@ First: İlk
 'Status: Submit': 'Status: Daxil Et'
 'Status: Set New': 'Status: Yenisini Yaz'
 'Status: Publish': 'Status: Nümayiş'
-'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
+'Showing _START_ to _END_ of _TOTAL_ entries': TOTAL_girişin_START_başlayaraq_END_kimi_nümayişi
 'Show / hide columns': 'Sütunları göstər / gizlə'
 'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
 'Select action': 'Addımı seç'

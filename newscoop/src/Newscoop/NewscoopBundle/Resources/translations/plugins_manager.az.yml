@@ -22,7 +22,7 @@ newscoop.plugins_manager.form.submit: Yüklə
 newscoop:
     datatable:
         table:
-            info: BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
+            info: TOTAL_girişin_START_başlayaraq_END_kimi_nümayişi
             noentries: 'Nümayiş üçün firiş yoxdur'
             filtering: '- _MAX_ yazılarından filterləmə'
             menu: '_MENU_ yazılarını göstər'
