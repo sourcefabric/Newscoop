@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d7319fbbed6881e53fa5fba5cb7f169a",
+    "hash": "c5c2f333851c8b63362eab3a763310a8",
     "packages": [
         {
             "name": "behat/behat",
@@ -388,7 +388,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -439,7 +439,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -534,7 +534,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -743,9 +743,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -804,7 +804,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1275,7 +1275,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-07-08 18:26:17"
+            "time": "2013-03-11 22:42:27"
         },
         {
             "name": "hybridauth/hybridauth",
@@ -1283,12 +1283,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "3d0aaa583eda953e699488b226ecdbb6389a7734"
+                "reference": "dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/3d0aaa583eda953e699488b226ecdbb6389a7734",
-                "reference": "3d0aaa583eda953e699488b226ecdbb6389a7734",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c",
+                "reference": "dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c",
                 "shasum": ""
             },
             "require": {
@@ -1324,7 +1324,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-07-16 16:04:33"
+            "time": "2014-07-21 14:43:28"
         },
         {
             "name": "imagine/imagine",
@@ -1520,9 +1520,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1777,12 +1777,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpMenu.git",
-                "reference": "532a4ad323be54da77179022474e873d307e524c"
+                "reference": "ca591b2fd7021c2608c22cfe5ad54eec66c1acee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/532a4ad323be54da77179022474e873d307e524c",
-                "reference": "532a4ad323be54da77179022474e873d307e524c",
+                "url": "https://api.github.com/repos/KnpLabs/KnpMenu/zipball/ca591b2fd7021c2608c22cfe5ad54eec66c1acee",
+                "reference": "ca591b2fd7021c2608c22cfe5ad54eec66c1acee",
                 "shasum": ""
             },
             "require": {
@@ -1833,7 +1833,7 @@
                 "menu",
                 "tree"
             ],
-            "time": "2014-06-20 09:37:12"
+            "time": "2014-07-18 10:01:56"
         },
         {
             "name": "knplabs/knp-menu-bundle",
@@ -2177,12 +2177,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28"
+                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
-                "reference": "8228d1ee833dbec710161ac179d1fb9ff6cd6f28",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/61145103b6521d04c0386d1ea6899437df9d45e2",
+                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2",
                 "shasum": ""
             },
             "require": {
@@ -2229,8 +2229,7 @@
                 {
                     "name": "Jordi Boggiano",
                     "email": "j.boggiano@seld.be",
-                    "homepage": "http://seld.be",
-                    "role": "Developer"
+                    "homepage": "http://seld.be"
                 }
             ],
             "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
@@ -2240,7 +2239,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-06-30 13:24:53"
+            "time": "2014-07-19 19:11:34"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2347,7 +2346,7 @@
             ],
             "authors": [
                 {
-                    "name": "Pawel Mikolajczuk",
+                    "name": "Paweł Mikołajczuk",
                     "email": "pawel.mikolajczuk@sourcefabric.org"
                 }
             ],
@@ -2506,7 +2505,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.com/",
+                    "homepage": "http://marco-pivetta.com/",
                     "role": "Developer"
                 }
             ],
@@ -2561,7 +2560,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.io/",
+                    "homepage": "http://ocramius.github.com/",
                     "role": "Developer"
                 }
             ],
@@ -2929,12 +2928,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "39989b72a0ef50405307288a1493cbe0e7e5a605"
+                "reference": "dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/39989b72a0ef50405307288a1493cbe0e7e5a605",
-                "reference": "39989b72a0ef50405307288a1493cbe0e7e5a605",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5",
+                "reference": "dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5",
                 "shasum": ""
             },
             "require": {
@@ -2995,7 +2994,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-07-07 11:51:41"
+            "time": "2014-07-21 22:48:47"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3179,7 +3178,7 @@
                 {
                     "name": "Raul Fraile",
                     "email": "raulfraile@gmail.com",
-                    "homepage": "http://www.raulfb.com/",
+                    "homepage": "http://www.raulfrailebeneyto.com/",
                     "role": "Developer"
                 }
             ],
@@ -4120,16 +4119,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.17",
+            "version": "2.3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357"
+                "reference": "9572918064b10704975506c7a4bb2a41aa0307ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/c02f56f7948f2699c8cc8b118c7faeb13470e357",
-                "reference": "c02f56f7948f2699c8cc8b118c7faeb13470e357",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/9572918064b10704975506c7a4bb2a41aa0307ac",
+                "reference": "9572918064b10704975506c7a4bb2a41aa0307ac",
                 "shasum": ""
             },
             "require": {
@@ -4226,7 +4225,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-07 12:59:36"
+            "time": "2014-07-18 09:07:06"
         },
         {
             "name": "twig/extensions",
@@ -4282,12 +4281,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513"
+                "reference": "5fd428ed7603ea63998716995c123c99648aab26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/11ea5976e38413a7a65cd2e0e2b1da9d969af513",
-                "reference": "11ea5976e38413a7a65cd2e0e2b1da9d969af513",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/5fd428ed7603ea63998716995c123c99648aab26",
+                "reference": "5fd428ed7603ea63998716995c123c99648aab26",
                 "shasum": ""
             },
             "require": {
@@ -4316,7 +4315,7 @@
                     "role": "Lead Developer"
                 },
                 {
-                    "name": "Armin Ronacher2",
+                    "name": "Armin Ronacher",
                     "email": "armin.ronacher@active-4.com",
                     "role": "Project Founder"
                 },
@@ -4331,7 +4330,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-07 12:54:10"
+            "time": "2014-07-08 13:46:25"
         },
         {
             "name": "willdurand/js-translation-bundle",
@@ -4419,7 +4418,7 @@
             ],
             "authors": [
                 {
-                    "name": "William DURAND",
+                    "name": "William Durand",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
@@ -4590,12 +4589,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "07b195e1eee19ee99cd9432983e1fb39adacdde1"
+                "reference": "2281569ebc146c3844a9a1b4e31032aa512c2c78"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/07b195e1eee19ee99cd9432983e1fb39adacdde1",
-                "reference": "07b195e1eee19ee99cd9432983e1fb39adacdde1",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/2281569ebc146c3844a9a1b4e31032aa512c2c78",
+                "reference": "2281569ebc146c3844a9a1b4e31032aa512c2c78",
                 "shasum": ""
             },
             "require": {
@@ -4631,7 +4630,7 @@
                     "email": "mike.vanriel@naenius.com"
                 }
             ],
-            "time": "2014-04-26 10:10:44"
+            "time": "2014-07-19 06:49:33"
         },
         {
             "name": "phpspec/php-diff",
@@ -4746,24 +4745,24 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "9c50ad6efa1c6eb8844f876a8508043a776ee45c"
+                "reference": "328484c88ed3cd7d1980b624bb98fa635f212ec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/9c50ad6efa1c6eb8844f876a8508043a776ee45c",
-                "reference": "9c50ad6efa1c6eb8844f876a8508043a776ee45c",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/328484c88ed3cd7d1980b624bb98fa635f212ec9",
+                "reference": "328484c88ed3cd7d1980b624bb98fa635f212ec9",
                 "shasum": ""
             },
             "require": {
                 "phpdocumentor/reflection-docblock": "~2.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "2.0.*"
+                "phpspec/phpspec": "~2.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -4796,7 +4795,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2014-07-09 08:25:15"
+            "time": "2014-07-18 21:26:55"
         },
         {
             "name": "vierbergenlars/php-semver",
@@ -4856,6 +4855,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "symfony/symfony": 20,
         "friendsofsymfony/rest-bundle": 20,
         "behat/common-contexts": 20,
         "guzzle/guzzle": 20,
@@ -4869,6 +4869,7 @@
         "phpspec/phpspec": 20,
         "liip/rmt": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3"
     },
