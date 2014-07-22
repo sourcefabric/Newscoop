@@ -75,5 +75,4 @@ regGS(" - filtering from _MAX_ records", "- _MAX_ yazılarından filtrləmə");
 regGS("Search for creators", "Yaradıcı axtar");
 regGS("No matches.", "Uyğun olan yoxdur.");
 regGS("Searching...", "Axtarılır...");
-regGS("Minimum input of characters", "$1");
 ?>

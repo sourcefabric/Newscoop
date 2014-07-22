@@ -273,7 +273,7 @@ regGS("Could not save user $1. Please make sure it does not already exist", "$1 
 regGS("Could not save user with e-mail address $1. Please make sure it does not already exist", "$1 email ünvanlı istifadəçini yadda saxlaya bilmədik. Lütfən, bu istifadəçinin əvvəlcədən olub olmadığını yoxla.");
 regGS("Changing user type would prevent you to manage users. Aborted.", "İstifadəçi növlərinin dəyişilməsi istifadəçiləri idarə etmə imkanını əlindən alar. Ləğv edildi.");
 regGS("Staff member saved.", "Komanda üzvü saxlandı.");
-regGS("Permissions", "$1");
+regGS("Permissions: $1", "İcazələr: $1");
 regGS("Change user account information", "İstifadəçi hesab məlumatlarını dəyiş");
 regGS("Staff management", "Komanda idarəçiliyi");
 regGS("Updated", "Yeniləndi");
@@ -284,5 +284,4 @@ regGS("at", "burada");
 regGS("published", "nümayiş edildi");
 regGS("unpublished", "nümayiş dayandırıldı");
 regGS("nopermissions", "Bu ehtiyata girişinə icazən yoxdur.");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "\\'$1\\' şəklini xaric etmək istədiyinə əminsən?");
 ?>

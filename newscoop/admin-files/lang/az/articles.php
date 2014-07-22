@@ -69,7 +69,7 @@ regGS("No subtopics available", "Alt mövzu mövcud deyil");
 regGS("Newscoop Subhead", "Newscoop Bölmə Başlığı");
 regGS("Media", "Mətbuat");
 regGS("Last modified", "Son redaktələr");
-regGS("Keywords &amp; Topics", "Açar Sözlər & Mövzular");
+regGS("Keywords &amp; Topics", "Açar Sözlər &amp; Mövzular");
 regGS("Info", "Məlumat");
 regGS("Go to live article", "Canlı məqaləyə keç");
 regGS("Created", "Yaradıldı");
@@ -185,7 +185,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Belə məqalə yoxdur.");
 regGS("No such section.", "Belə bölmə yoxdur.");
 regGS("Characters", "İşarələr");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "\\'$1\\' mövzusunu məqalədən xaric etmək istədiyinə əminsən?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "\\'$1\\' faylını məqalədən xaric etmək istədiyinə əminsən?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "\\'$1\\' şəklini məqalədən xaric etmək istədiyinə əminsən?");
 ?>
