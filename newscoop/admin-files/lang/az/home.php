@@ -64,7 +64,7 @@ regGS("User name", "İstifadəçi adı");
 regGS("Newscoop", "Newscoop");
 regGS("Your password has been reset.", "Sənin şifrən yenilənmişdir.");
 regGS("Proceed to login.", "Giriş üçün başla.");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Salam, \\n\\nfor şifrənin bərpası, lütfən, bu linkə keç: $1");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Salam, \n\nfor şifrənin bərpası, lütfən, bu linkə keç: $1");
 regGS("Go to login", "Girişə keç");
 regGS("Back to login.", "Girişə qayıt.");
 regGS("Back to login", "Girişə qayıt");
@@ -160,4 +160,5 @@ regGS("Active users", "Aktiv istifadəçilər");
 regGS("New comments", "Yeni şərhlər");
 regGS("Published articles", "Nümayiş edilmiş məqalələr");
 regGS("Last 7 days statistics", "Son 7 günün statistikası");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Salam, \\n\\nfor şifrənin bərpası, lütfən, bu linkə keç: $1");
 ?>

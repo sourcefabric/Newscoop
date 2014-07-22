@@ -1,4 +1,5 @@
 <?php 
+regGS("(max. $1 characters)", "");
 regGS("Display newsfeed images", "Xəbər zolağı şəkillərini nümayiş et");
 regGS("Mark image", "Şəkil seç");
 regGS("Add selected images to slideshow", "Seçilmiş şəkilləri slayd-şouya əlavə et");
@@ -47,7 +48,7 @@ regGS("Create", "Yarat");
 regGS("Caption", "Sərlövhə");
 regGS("Attached images", "Şəkil əlavə et");
 regGS("Attach & Place", "Əlavə et & Yerləşdir");
-regGS("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", "Videonun url-ini əlavə et (nümunə", "Vimeo üçün http://vimeo.com/25083275, YouTube üçün http://youtu.be/1XsPVO61e9w)");
+regGS("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", "Videonun url-ini əlavə et (nümunə");
 regGS("Add video", "Video yüklə");
 regGS("Add caption", "Sərlövhə əlavə et");
 regGS("Show all", "Göstər");
