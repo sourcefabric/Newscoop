@@ -67,7 +67,7 @@ regGS("Attach New Image", "Yeni şəkil yüklə");
 regGS("Attach Image To Article", "Yazıya şəkil əlavə et");
 regGS("Attach Existing Image", "Hazır şəkili əlavə et");
 regGS("Add New Image", "Yeni şəkil əlavə et");
-regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Tarix<BR><SMALL>(il-ay-gün)</SMALL>");
+regGS("Date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Tarix<BR><SMALL>(yyyy-mm-dd)</SMALL>");
 regGS("You must select an image file to upload.", "Yükləmək üçün şəkil seçməlisiniz.");
 regGS("Change image information", "Şəkil məlumatını dəyiş");
 regGS("You do not have the right to add images", "Şəkil əlavə etməyə ixtiyarın yoxdur");
