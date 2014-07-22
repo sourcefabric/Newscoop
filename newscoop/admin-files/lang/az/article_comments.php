@@ -1,15 +1,15 @@
 <?php 
-regGS("Recommended", "");
-regGS("There are no more comments", "");
-regGS("Show more comments", "");
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
-regGS("Comment saved.", "");
-regGS("Comments updated.", "");
-regGS("Post a Comment", "");
-regGS("From", "");
-regGS("Reply to comment", "");
-regGS("No comments posted.", "");
+regGS("Recommended", "Tövsiyyə Olunur");
+regGS("There are no more comments", "Başqa şərh yoxdur");
+regGS("Show more comments", "Daha çox şərh göstər");
+regGS("Unrecommend", "Tövsiyyə Etmə");
+regGS("Save comment", "Şərhi saxla");
+regGS("Recommend", "Tövsiyyə Et");
+regGS("Comment updated.", "Şərh yeniləndi.");
+regGS("Comment saved.", "Şərh saxlandı.");
+regGS("Comments updated.", "Şərhlər yeniləndi.");
+regGS("Post a Comment", "Şərh Yaz");
+regGS("From", "Göndərən");
+regGS("Reply to comment", "Şərhə cavab yaz");
+regGS("No comments posted.", "Şərh yazılmayıb.");
 ?>

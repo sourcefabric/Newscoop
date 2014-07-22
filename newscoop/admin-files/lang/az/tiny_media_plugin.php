@@ -1,5 +1,5 @@
 <?php 
-regGS("Select", "");
-regGS("No Media Files Found", "");
-regGS("Insert media file", "");
+regGS("Select", "Seç");
+regGS("No Media Files Found", "Mətbuat Faylları Tapılmadı");
+regGS("Insert media file", "Mətbuat faylı daxil et");
 ?>
