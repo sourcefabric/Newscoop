@@ -58,12 +58,12 @@ Unrecommend: 'Anbefal ikke'
 'Show comment user': 'Vis bruger for kommentar'
 'Show comment details': 'Vis info om kommentar'
 'Select status': 'Vælg status'
-'Search Type': null
+'Search Type': 'Søg type'
 'Reply to comment': 'Svar på komentaren'
 Recommended: Anbefalet
 Recommend: Anbefalet
 'Quick edit': 'Hurtig redigering'
-Parent: null
+Parent: Forælder
 ID: ID
 'Go to edit article': 'Rediger artikel'
 Forum: Forum
