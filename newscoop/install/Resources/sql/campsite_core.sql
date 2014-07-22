@@ -3213,78 +3213,110 @@ CREATE TABLE IF NOT EXISTS `webcode` (
   UNIQUE KEY `article_language` (`article_number`,`language_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `OAuthAccessToken`;
-
-CREATE TABLE OAuthAccessToken (
-  id INT AUTO_INCREMENT NOT NULL,
-  client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_DDE10DD55F37A13B (token),
-  INDEX IDX_DDE10DD519EB6921 (client_id),
-  INDEX IDX_DDE10DD55C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
-
-DROP TABLE IF EXISTS `OAuthAuthCode`;
-
-CREATE TABLE OAuthAuthCode (
-  id INT AUTO_INCREMENT NOT NULL,
-  client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  redirect_uri LONGTEXT NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_3DD60F725F37A13B (token),
-  INDEX IDX_3DD60F7219EB6921 (client_id),
-  INDEX IDX_3DD60F725C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+--
+-- Table structure for table `OAuthClient`
+--
 
 DROP TABLE IF EXISTS `OAuthClient`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthClient` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `random_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `redirect_uris` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `secret` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `allowed_grant_types` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `trusted` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_4128BE95C1FD3F4` (`IdPublication`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE OAuthClient (
-  id INT AUTO_INCREMENT NOT NULL,
-  random_id VARCHAR(255) NOT NULL,
-  redirect_uris LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
-  secret VARCHAR(255) NOT NULL,
-  allowed_grant_types LONGTEXT NOT NULL COMMENT '(DC2Type:array)',
-  name VARCHAR(255) NOT NULL,
-  IdPublication INT DEFAULT NULL,
-  trusted TINYINT(1) NOT NULL,
-  INDEX IDX_4128BE95C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+DROP TABLE IF EXISTS `OAuthAccessToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthAccessToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_DDE10DD55F37A13B` (`token`),
+  KEY `IDX_DDE10DD519EB6921` (`client_id`),
+  KEY `IDX_DDE10DD55C1FD3F4` (`IdPublication`),
+  KEY `IDX_DDE10DD5A76ED395` (`user_id`),
+  CONSTRAINT `FK_DDE10DD519EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-DROP TABLE IF EXISTS `OAuthPublicApiResources`;
+--
+-- Table structure for table `OAuthAuthCode`
+--
 
-CREATE TABLE OAuthPublicApiResources (
-  id INT AUTO_INCREMENT NOT NULL,
-  resource VARCHAR(255) NOT NULL,
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+DROP TABLE IF EXISTS `OAuthAuthCode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthAuthCode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `redirect_uri` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_3DD60F725F37A13B` (`token`),
+  KEY `IDX_3DD60F7219EB6921` (`client_id`),
+  KEY `IDX_3DD60F725C1FD3F4` (`IdPublication`),
+  KEY `IDX_3DD60F72A76ED395` (`user_id`),
+  CONSTRAINT `FK_3DD60F7219EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `OAuthRefreshToken`
+--
 
 DROP TABLE IF EXISTS `OAuthRefreshToken`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthRefreshToken` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `expires_at` int(11) DEFAULT NULL,
+  `scope` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `IdPublication` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_4A42604C5F37A13B` (`token`),
+  KEY `IDX_4A42604C19EB6921` (`client_id`),
+  KEY `IDX_4A42604C5C1FD3F4` (`IdPublication`),
+  KEY `IDX_4A42604CA76ED395` (`user_id`),
+  CONSTRAINT `FK_4A42604C19EB6921` FOREIGN KEY (`client_id`) REFERENCES `OAuthClient` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-CREATE TABLE OAuthRefreshToken (
-  id INT AUTO_INCREMENT NOT NULL,
-  client_id INT NOT NULL,
-  token VARCHAR(255) NOT NULL,
-  expires_at INT DEFAULT NULL,
-  scope VARCHAR(255) DEFAULT NULL,
-  IdPublication INT DEFAULT NULL,
-  UNIQUE INDEX UNIQ_4A42604C5F37A13B (token),
-  INDEX IDX_4A42604C19EB6921 (client_id),
-  INDEX IDX_4A42604C5C1FD3F4 (IdPublication),
-  PRIMARY KEY(id)
-) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
 
-ALTER TABLE OAuthAccessToken ADD CONSTRAINT FK_DDE10DD519EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
-ALTER TABLE OAuthAuthCode ADD CONSTRAINT FK_3DD60F7219EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
-ALTER TABLE OAuthRefreshToken ADD CONSTRAINT FK_4A42604C19EB6921 FOREIGN KEY (client_id) REFERENCES OAuthClient (id);
+--
+-- Table structure for table `OAuthPublicApiResources`
+--
+
+DROP TABLE IF EXISTS `OAuthPublicApiResources`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `OAuthPublicApiResources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `resource` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 DROP TABLE IF EXISTS `Snippets`;
 

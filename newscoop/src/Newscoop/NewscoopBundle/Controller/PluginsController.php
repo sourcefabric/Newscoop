@@ -92,7 +92,7 @@ class PluginsController extends Controller
         $pluginService = $this->container->get('newscoop.plugins.service');
         $pluginsManager = $this->container->get('newscoop.plugins.manager');
 
-        $plugin = $pluginService->getPluginByCriteria('id', $pluginId)->first();
+        $plugin = $pluginService->getPluginByCriteria('id', intval($pluginId))->first();
         $em = $this->container->get('em');
         if ($action == 'enable') {
             $plugin->setEnabled(true);
