@@ -68,11 +68,11 @@ final class MetaArticleBodyField {
             $this->m_sutitlesNames[] = $subtitle->name;
         }
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-        $cacheKeyArticle = $cacheService->getCacheKey(array('Article', $p_parent->type_name, $p_fieldName), 'article');
+        $cacheKeyArticle = $cacheService->getCacheKey(array('Article', $p_parent->language->number, $p_parent->number), 'article');
         if ($cacheService->contains($cacheKeyArticle)) {
             $this->m_parent_article = $cacheService->fetch($cacheKeyArticle);
         } else {
-            $this->m_parent_article = new Article($p_parent->type_name, $p_fieldName);
+            $this->m_parent_article = new Article($p_parent->language->number, $p_parent->number);
             $cacheService->save($cacheKeyArticle, $this->m_parent_article);
         }
         $this->m_fieldName = $p_fieldName;
