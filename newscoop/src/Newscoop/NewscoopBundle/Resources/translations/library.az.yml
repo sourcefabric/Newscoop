@@ -30,7 +30,7 @@ Title: Başlıq
 'Status: Set New': 'Status: Yenisini Yaz'
 'Status: Publish': 'Status: Nümayiş'
 Size: Ölçü
-'Showing _START_ to _END_ of _TOTAL_ entries': BÜTÜN_girişlərin_BAŞDAN_SONA_kimi_nümayişi
+'Showing _START_ to _END_ of _TOTAL_ entries': TOTAL_girişin_START_başlayaraq_END_kimi_nümayişi
 'Show / hide columns': 'Sütunları göstər / gizlə'
 'Select some article first.': 'Əvvəlcə bir neçə məqalə seç.'
 'Select action': 'Addımı seç'
@@ -58,7 +58,7 @@ First: İlk
 Filter: 'Filtrə Et'
 Filename: 'Fayl adı'
 'Duplicate to another section': 'Başqa bölməyə surətini çıxar'
-'Display _MENU_ records': '_MENYU_ yazılarını göstər'
+'Display _MENU_ records': '_MENU_ yazılarını göstər'
 Creator: Yaradıcı
 'Create Date': 'Yaranma Tarixi'
 'Article status set to $1': 'Məqalə statusu $1 olaraq təyin edildi'
