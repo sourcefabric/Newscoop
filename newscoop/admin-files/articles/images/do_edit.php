@@ -79,7 +79,7 @@ if ($g_user->hasPermission('AttachImageToArticle')) {
 }
 
 $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
-$cacheService->clearNamespace('article_image');
+$cacheService->clearNamespace('image');
 
 camp_html_add_msg($translator->trans("Image '$1' updated.", array('$1' => $imageObj->getDescription()), 'article_images'), "ok");
 
