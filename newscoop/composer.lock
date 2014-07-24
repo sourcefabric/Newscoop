@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c5c2f333851c8b63362eab3a763310a8",
+    "hash": "8ea1b6d1974c7fef94fcfa13b301f7b2",
     "packages": [
         {
             "name": "behat/behat",
@@ -388,9 +388,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -534,9 +534,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1278,6 +1278,53 @@
             "time": "2013-03-11 22:42:27"
         },
         {
+            "name": "hellogerard/jobby",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hellogerard/jobby.git",
+                "reference": "37c4ae52c6da690e81865430cde856dec61b4b24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hellogerard/jobby/zipball/37c4ae52c6da690e81865430cde856dec61b4b24",
+                "reference": "37c4ae52c6da690e81865430cde856dec61b4b24",
+                "shasum": ""
+            },
+            "require": {
+                "mtdowling/cron-expression": "1.0.x",
+                "php": ">=5.3.0",
+                "swiftmailer/swiftmailer": "~5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jobby": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gerard Sychay",
+                    "email": "hellogerard@gmail.com",
+                    "homepage": "https://github.com/hellogerard"
+                },
+                {
+                    "name": "Michael Contento",
+                    "homepage": "https://github.com/michaelcontento"
+                }
+            ],
+            "description": "Manage all your cron jobs without modifying crontab. Handles locking, logging, error emails, and more.",
+            "homepage": "https://github.com/hellogerard/jobby",
+            "time": "2014-07-21 20:11:26"
+        },
+        {
             "name": "hybridauth/hybridauth",
             "version": "dev-master",
             "source": {
@@ -1623,9 +1670,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1693,9 +1740,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2240,6 +2287,47 @@
                 "psr-3"
             ],
             "time": "2014-07-19 19:11:34"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "a47ac8d5ec15049013792401af5a4d13e3dbe7f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/a47ac8d5ec15049013792401af5a4d13e3dbe7f6",
+                "reference": "a47ac8d5ec15049013792401af5a4d13e3dbe7f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Cron": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2013-11-23 19:48:39"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2928,12 +3016,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5"
+                "reference": "e243de0b5264da8454105455bda0881f5b2ac972"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5",
-                "reference": "dcfd677eaab418a2e96590d4e6a4ac4e2283d1b5",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/e243de0b5264da8454105455bda0881f5b2ac972",
+                "reference": "e243de0b5264da8454105455bda0881f5b2ac972",
                 "shasum": ""
             },
             "require": {
@@ -2994,7 +3082,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-07-21 22:48:47"
+            "time": "2014-07-22 22:57:02"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3839,12 +3927,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "1471619d856da006a4de443355d6339325b3f46e"
+                "reference": "e27c50e6f768aecbc46666994ccc9b2f77fd8ade"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/1471619d856da006a4de443355d6339325b3f46e",
-                "reference": "1471619d856da006a4de443355d6339325b3f46e",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/e27c50e6f768aecbc46666994ccc9b2f77fd8ade",
+                "reference": "e27c50e6f768aecbc46666994ccc9b2f77fd8ade",
                 "shasum": ""
             },
             "require": {
@@ -3870,13 +3958,11 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "name": "Chris Corbyn"
                 },
                 {
-                    "name": "Chris Corbyn"
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Swiftmailer, free feature-rich PHP mailer",
@@ -3885,7 +3971,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2014-07-03 13:54:59"
+            "time": "2014-07-22 15:44:41"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -4123,12 +4209,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "9572918064b10704975506c7a4bb2a41aa0307ac"
+                "reference": "4dbe0e1c349c30b6ecb6254f61966d72a53357d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/9572918064b10704975506c7a4bb2a41aa0307ac",
-                "reference": "9572918064b10704975506c7a4bb2a41aa0307ac",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/4dbe0e1c349c30b6ecb6254f61966d72a53357d8",
+                "reference": "4dbe0e1c349c30b6ecb6254f61966d72a53357d8",
                 "shasum": ""
             },
             "require": {
@@ -4210,14 +4296,12 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "The Symfony PHP framework",
@@ -4225,7 +4309,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-18 09:07:06"
+            "time": "2014-07-23 15:11:31"
         },
         {
             "name": "twig/extensions",
@@ -4866,6 +4950,7 @@
         "raulfraile/ladybug-bundle": 20,
         "yzalis/crontab": 20,
         "nelmio/api-doc-bundle": 20,
+        "hellogerard/jobby": 20,
         "phpspec/phpspec": 20,
         "liip/rmt": 20
     },

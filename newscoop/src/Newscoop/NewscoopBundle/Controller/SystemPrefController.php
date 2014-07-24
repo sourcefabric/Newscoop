@@ -39,6 +39,12 @@ class SystemPrefController extends Controller
             ->getQuery()
             ->getOneOrNullResult();
 
+        $jobs = $em->getRepository('Newscoop\Entity\CronJob')
+            ->createQueryBuilder('j')
+            ->select('j.id', 'j.name', 'j.enabled')
+            ->getQuery()
+            ->getArrayResult();
+
         $hasManagePermission = false;
 
         if (\SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
@@ -267,6 +273,7 @@ class SystemPrefController extends Controller
             'mysql_client_command_path' => $mysql_client_command_path,
             'map_marker_source_default' => $default_marker_source,
             'map_marker_source_selected' => $preferencesService->MapMarkerSourceDefault,
+            'jobs' => $jobs
         );
     }
 
@@ -281,6 +288,46 @@ class SystemPrefController extends Controller
 
         try {
             $cacheDriver->deleteAll();
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
+     * @Route("/admin/preferences/job/enable/{id}", options={"expose"=true})
+     */
+    public function enableJobAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
+
+        try {
+            if (!$job->getIsActive()) {
+                $job->setIsActive(true);
+                $em->flush();
+            }
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
+     * @Route("/admin/preferences/job/disable/{id}", options={"expose"=true})
+     */
+    public function disableJobAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
+
+        try {
+            if ($job->getIsActive()) {
+                $job->setIsActive(false);
+                $em->flush();
+            }
         } catch (Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
         }
