@@ -46,7 +46,7 @@ Folder: Mappe
 'Template ID': 'Skabelon ID'
 'Template $1 no longer exists!': 'Skabelon $1 findes ikke længere!'
 'New template $1 created': 'Ny skabelon $1 oprettet'
-'If the file you specified is a text file, you can convert its character set using the dropdown below.': null
+'If the file you specified is a text file, you can convert its character set using the dropdown below.': 'Hvis den valgte fil er en tekstfil kan du konvertere dens tegnsæt med nedenstående menu.'
 'Directory $1 was deleted': 'Mappen $1 blev slettet'
 'Directory $1 created.': 'Mappen $1 oprettet.'
 'You must select a file to upload.': 'Vælg fil til upload.'
@@ -74,7 +74,7 @@ Files: Filer
 'Template $1 was changed': 'Skabelonen $1 blev ændret'
 'Template $1 was duplicated into $2': 'Skabelonen $1 blev kopieret til $2'
 'Template charset': null
-'Select a language/character set': null
+'Select a language/character set': 'Vælg sprog/tegnsæt'
 'All languages': 'Alle sprog'
 'You do not have the right to modify templates.': 'Du har ikke rettigheder til at redigere skabeloner.'
 'Invalid template file $1': 'Ugyldig skabelon fil $1'

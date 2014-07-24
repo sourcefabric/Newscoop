@@ -14,7 +14,7 @@
 'Editor size': 'Editor størrelse'
 'Edit and translate human-readable field names': 'Rediger og oversæt læsevenlige feltnavne'
 Custom: Brugerdefineret
-'Characters limit': null
+'Characters limit': 'Tegn begrænsning'
 'The template name may only contain letters and the underscore (_) character.': 'Skabelonens navn må kun indeholde bogstaver og underscore tegnet (_)'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': null
 'The property $1 is already in use.': 'Egenskaben $1 er allerede i brug.'
@@ -44,7 +44,7 @@ Show/Hide: Vis/Skjul
 'Add translation:': 'Tilføj oversættelse:'
 '$1 article type field $2': '$1 artikel type felt $2'
 '$1 article type $2': '$1 artikel type $2'
-'Top element': null
+'Top element': Topelement
 'Article type fields': 'Artikel type felter'
 'Delete field $1': 'Slet felt $1'
 'Adding new field': 'Tilføjer nyt felt'

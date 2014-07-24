@@ -41,7 +41,7 @@ edit: rediger
 delete: slet
 copy/cut/paste: 'kopier/klip/sæt ind'
 clear: ryd
-'character map': null
+'character map': tegnoversigt
 bold: fed
 attach: vedhæft
 'any resource': null

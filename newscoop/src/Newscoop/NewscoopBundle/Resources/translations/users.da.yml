@@ -100,7 +100,7 @@ Filters: Filtre
 'User may change system preferences': 'Bruger må ændre systemindstillinger'
 'User may attach topics to articles': 'Bruger må tilføje emner til artikler'
 'User may attach images to articles': 'Bruger må vedhæfte billeder til artikler'
-'User may add special characters': null
+'User may add special characters': 'Bruger må tilføje specialtegn'
 'That user name already exists, please choose a different login name.': 'Brugernavnet eksisterer allerede. Vælg et andet login navn.'
 'User may delete article attachments': 'Bruger må slette vedhæftninger fra artikler'
 'User may change article attachments': 'Bruger må redigere vedhæftninger til artikler'

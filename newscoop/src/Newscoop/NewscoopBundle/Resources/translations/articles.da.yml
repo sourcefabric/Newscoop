@@ -129,20 +129,20 @@ Comments: Kommentarer
 'You do not have the right to translate articles.': 'Du har ikke rettigheder til at oversætte artikler.'
 'You do not have the right to publish articles.': 'Du har ikke rettigheder til at udgive artikler.'
 'You do not have the right to move articles.': 'Du har ikke rettigheder til at flytte artikler.'
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'Du kan ikke $1 artiklerne markeret med rød. Destinations udgivelsen er ikke oversat til det relevante sprog.'
 'Publish?': 'Udgiv?'
 'Publish articles': 'Udgiv artikler'
 'Publish article': 'Udgiv artikel'
 'Move?': 'Flyt?'
 'Move articles': 'Flyt artikler'
 'Move article': 'Flyt artikel'
-'An issue must be created for the selected language but you do not have the right to create an issue.': null
-'A section must be created for the selected language but you do not have the right to create a section.': null
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'Der skal oprettes en udgivelse for det valgte sprog, men du har ikke rettigheder til at oprette udgivelser.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'Der skal oprettes en sektion for det valgte sprog, men du har ikke rettigheder til at oprette sektioner.'
 'to section': 'til sektion'
 'You must choose a language': 'Vælg et sprog'
 'Unable to create the section for translation $1.': 'Kunne ikke oprette sektionen til oversættelse $1.'
 'Unable to create the issue for translation $1.': 'Kunne ikke oprette udgivelsen til oversættelse $1.'
-'The following articles are new; it is not possible to schedule them for automatic publishing': null
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'De følgende artikler er nye og kan ikke planlægges til automatisk udgivelse'
 'Section URL Name': 'Sektions URL navn'
 'Section Name': 'Sektions navn'
 'Publish Schedule': 'Planlagt udgivelse'
@@ -170,8 +170,8 @@ Comments: Kommentarer
 'Translate article': 'Oversæt artikel'
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Du har ikke rettigheder til at ændre artiklen. Du må kun redigere dine egne artikler, og når en artikel er indsendt, kan den kun ændres af autoriserede brugere.'
 'Duplicate article': 'Kopier artikel'
-'The destination section is the same as the source section.': null
-'The article is new; it is not possible to schedule it for automatic publishing.': null
+'The destination section is the same as the source section.': 'Kilde sektion og destinations sektion er identiske.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'Artiklen er ny. Den kan ikke planlægges til automatisk udgivelse.'
 'No article types were defined. You must create an article type first.': 'Ingen artikel typer defineret. Du skal oprette en artikel type først.'
 'Edit article types': 'Rediger artikel typer'
 'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Artiklen kunne ikke gemmes. Den har været låst af $1 for $2 timer og $3 minutter siden.'
@@ -183,4 +183,4 @@ Comments: Kommentarer
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Forhåndsvisning af artiklen er ikke mulig. Kontroller at artikel skabelonen er valgt.'
 'No such article.': 'Artiklen findes ikke.'
 'No such section.': 'Sektionen findes ikke.'
-Characters: null
+Characters: Tegn
