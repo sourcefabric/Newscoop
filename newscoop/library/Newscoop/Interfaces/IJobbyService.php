@@ -14,7 +14,7 @@ namespace Newscoop\Interfaces;
 interface IJobbyService
 {
     /**
-     * Add Cron job details to database
+     * Add cron job details to database
      *
      * @param string $jobName Cron job name
      * @param array  $config  Array with job configuration
@@ -33,14 +33,14 @@ interface IJobbyService
     public function registerJob($jobName, array $config);
 
     /**
-     * Run Jobby manager which will start all enabled cronjobs
+     * Add cron job which will be executed later to Jobby library
      *
      * @param string $jobName Job name
      * @param array  $config  Array with job configuration
      *
      * @return void
      */
-    public function addJobbyJob($jobName, array config);
+    public function addJobbyJob($jobName, array $config);
 
     /**
      * Run Jobby manager which will start all enabled cronjobs
