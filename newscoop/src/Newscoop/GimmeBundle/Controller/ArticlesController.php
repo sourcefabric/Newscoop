@@ -28,6 +28,97 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ArticlesController extends FOSRestController
 {
     /**
+     * Create Article
+     *
+     * @ApiDoc(
+     *     statusCodes={
+     *         201="Returned when Article is created"
+     *     },
+     *     parameters={
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
+     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"}
+     *         {"name"="section", "dataType"="integer", "required"=true, "description"="Section number"}
+     *         {"name"="articleType", "dataType"="integer", "required"=true, "description"="Article Type number"}
+     *     }
+     * )
+     *
+     * @Route("/articles/create/{language}/{issue}/{section}/{articleType}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
+     * @Method("POST")
+     */
+    public function createArticleAction(Request $request, $language, $issue, $section, $articleType)
+    {
+        $content = $this->get("request")->getContent();
+        if (!empty($content)) {
+            $params = json_decode($content, true); // 2nd param to get as array
+        }
+
+        if (!array_key_exists('title', $params)) {
+            throw new \Exception('Article title is missing');
+        }
+
+        // Create article
+        $em = $this->container->get('em');
+        $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
+
+        // Fetch article
+        $articleObj = new \Article($languageObject->getId());
+
+        // the following is mostly a copy from admin-files/articles/do_add.php
+
+        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
+
+        $conflictingArticles = Article::GetByName($params['title'], $publication, $issue, $section, null, true);
+        if (count($conflictingArticles) > 0) {
+            $conflictingArticle = array_pop($conflictingArticles);
+            $conflictingArticleLink = camp_html_article_url($conflictingArticle, $conflictingArticle->getLanguageId(), 'edit.php');
+            throw new \Exception($translator->trans("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.",
+                array('$1' => $conflictingArticle->getNumber() ." ".$conflictingArticle->getName()."</a>"), 'articles'));
+        } else {
+            $articleObj->create($articleType, $params['title'], $publication, $issue, $section);
+        }
+
+        if ($articleObj->exists()) {
+            $em = $this->_helper->service('em');
+            $currentUser = $this->getUser();
+            $author = $currentUser->getAuthorId();
+            $articleObj->setCreatorId($currentUser->getUserId());
+            if (empty($author)) {
+                $authorObj = new Author($currentUser->getRealName());
+                if (!$authorObj->exists()) {
+                    $authorData = Author::ReadName($currentUser->getRealName());
+                    $authorData['email'] = $currentUser->getEmail();
+                    $authorObj->create($authorData);
+                } else {
+                    $authorUser = $em->getRepository('Newscoop\Entity\Author')
+                        ->findOneById($authorObj->getId());
+
+                    $currentUser->setAuthor($authorUser);
+                    $em->flush();
+                }
+            } else {
+                $authorObj = new Author($author);
+            }
+
+            if ($authorObj->exists()) {
+                $articleObj->setAuthor($authorObj);
+            }
+
+            $articleObj->setIsPublic(true);
+            if ($publication_id > 0) {
+                $commentDefault = $publicationObj->commentsArticleDefaultEnabled();
+                $articleObj->setCommentsEnabled($commentDefault);
+            }
+
+            //camp_html_add_msg($translator->trans("Article created.", array(), 'articles'), "ok");
+            //camp_html_goto_page(camp_html_article_url($articleObj, $languageObject->getId(), "edit.php"), false);
+            ArticleIndex::RunIndexer(3, 10, true);
+            //exit();
+        } else {
+            throw new \Exception($translator->trans("Could not create article.", array(), 'articles'));
+        }
+    }
+
+    /**
      * Write Article
      *
      * @ApiDoc(
