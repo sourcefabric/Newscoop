@@ -35,7 +35,7 @@ class CollectObjectsDataEvent extends SymfonyGenericEvent
      * @param array $listObject
      */
     public function registerListObject($name, array $listObject)
-    {   
+    {
         $this->listObjects[$name] = $listObject;
     }
 
