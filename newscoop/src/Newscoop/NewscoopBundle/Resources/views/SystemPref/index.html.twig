@@ -188,6 +188,8 @@
                     <tr>
                       <th class="font-fix">#</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.cronjob'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.prevRun'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.nextRun'|trans }}</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.enabled'|trans }}</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.options'|trans }}</th>
                     </tr>
@@ -197,6 +199,8 @@
                         <tr>
                           <td class="font-fix">{{ loop.index }}</td>
                           <td class="font-fix">{{ job.name }}</td>
+                          <td class="font-fix">{{ job.prevRun }}</td>
+                          <td class="font-fix">{{ job.nextRun }}</td>
                           <td class="font-fix job-status{{ job.id }}">{% if job.enabled %}<span class="font-fix label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>{% else %}<span class="font-fix label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>{% endif %}</td>
                           <td class="font-fix job-options{{ job.id }}">
                             {% if job.enabled %}<button type="button" job-id="{{ job.id }}" class="disable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>{% else %}<button type="button" job-id="{{ job.id }}" class="enable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>{% endif %}</button></td>

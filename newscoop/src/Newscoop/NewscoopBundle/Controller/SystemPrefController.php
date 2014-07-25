@@ -26,6 +26,7 @@ class SystemPrefController extends Controller
     {
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
+        $schedulerService = $this->container->get('newscoop.scheduler');
 
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
@@ -41,9 +42,14 @@ class SystemPrefController extends Controller
 
         $jobs = $em->getRepository('Newscoop\Entity\CronJob')
             ->createQueryBuilder('j')
-            ->select('j.id', 'j.name', 'j.enabled')
+            ->select('j.id', 'j.name', 'j.enabled', 'j.schedule')
             ->getQuery()
             ->getArrayResult();
+
+        foreach ($jobs as $key => $job) {
+            $jobs[$key]['nextRun'] = $schedulerService->getNextRunDate($job['schedule']);
+            $jobs[$key]['prevRun'] = $schedulerService->getPreviousRunDate($job['schedule']);
+        }
 
         $hasManagePermission = false;
 

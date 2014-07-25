@@ -119,6 +119,8 @@ newscoop:
       options: "Options"
       info: "Info:"
       infodesc: "These settings will help you to manage background jobs easly by enabling/disabling selected job(s)."
+      prevRun: "Previous run date"
+      nextRun: "Next run date"
     popover:
       cacheengine: "Enables or disables system cache cache, which can improve Newscoop performance."
       cacheenginehost: "Provide cache host (for Memcache, Memcached or Redis)"

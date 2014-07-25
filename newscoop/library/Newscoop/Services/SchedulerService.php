@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Newscoop\Interfaces\ISchedulerService;
 use Newscoop\Entity\CronJob;
 use Jobby\Jobby;
+use Cron\CronExpression;
 
 /**
  * Scheduler Service to handle Jobby which is a PHP cron job manager
@@ -67,5 +68,25 @@ class SchedulerService implements ISchedulerService
     public function run()
     {
         $this->jobby->run();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNextRunDate($schedule, $currentTime = 'now', $nth = 0, $allowCurrentDate = false)
+    {
+        $cron = CronExpression::factory($schedule);
+
+        return $cron->getNextRunDate($currentTime, $nth, $allowCurrentDate)->format('Y-m-d H:i:s');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getPreviousRunDate($schedule, $currentTime = 'now', $nth = 0, $allowCurrentDate = false)
+    {
+        $cron = CronExpression::factory($schedule);
+
+        return $cron->getPreviousRunDate($currentTime, $nth, $allowCurrentDate)->format('Y-m-d H:i:s');
     }
 }

@@ -48,4 +48,37 @@ interface ISchedulerService
      * @return void
      */
     public function run();
+
+    /**
+     * Get a next run date relative to the current date or a specific date
+     *
+     * @param string          $schedule         Cron job schedule expression
+     * @param string|DateTime $currentTime      (optional) Relative calculation date
+     * @param int             $nth              (optional) Number of matches to skip before returning a
+     *                                          matching next run date.  0, the default, will return the current
+     *                                          date and time if the next run date falls on the current date and
+     *                                          time.  Setting this value to 1 will skip the first match and go to
+     *                                          the second match.  Setting this value to 2 will skip the first 2
+     *                                          matches and so on.
+     * @param bool            $allowCurrentDate (optional) Set to TRUE to return the
+     *                                          current date if it matches the cron expression
+     *
+     * @return string
+     * @throws RuntimeExpression on too many iterations
+     */
+    public function getNextRunDate($schedule, $currentTime = 'now', $nth = 0, $allowCurrentDate = false);
+
+    /**
+     * Get a previous run date relative to the current date or a specific date
+     *
+     * @param string          $schedule         Cron job schedule expression
+     * @param string|DateTime $currentTime      (optional) Relative calculation date
+     * @param int             $nth              (optional) Number of matches to skip before returning
+     * @param bool            $allowCurrentDate (optional) Set to TRUE to return the
+     *                                          current date if it matches the cron expression
+     *
+     * @return string
+     * @throws RuntimeExpression on too many iterations
+     */
+    public function getPreviousRunDate($schedule, $currentTime = 'now', $nth = 0, $allowCurrentDate = false);
 }

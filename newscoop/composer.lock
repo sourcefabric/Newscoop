@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ea1b6d1974c7fef94fcfa13b301f7b2",
+    "hash": "eb83b09d7e463388d509e66b249dfbb6",
     "packages": [
         {
             "name": "behat/behat",
@@ -254,6 +254,72 @@
                 "framework"
             ],
             "time": "2012-10-16 23:37:45"
+        },
+        {
+            "name": "dflydev/doctrine-orm-service-provider",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-doctrine-orm-service-provider.git",
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "~2.3",
+                "php": ">=5.3.3",
+                "pimple/pimple": "1.*@dev"
+            },
+            "require-dev": {
+                "cilex/cilex": "1.*@dev",
+                "cilex/console-service-provider": "@dev",
+                "silex/silex": "1.*@dev"
+            },
+            "suggest": {
+                "dflydev/psr0-resource-locator-service-provider": "1.0.*@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\Cilex\\Provider\\DoctrineOrm": "src",
+                    "Dflydev\\Pimple\\Provider\\DoctrineOrm": "src",
+                    "Dflydev\\Silex\\Provider\\DoctrineOrm": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Doctrine ORM Service Provider",
+            "keywords": [
+                "cilex",
+                "doctrine",
+                "orm",
+                "pimple",
+                "silex"
+            ],
+            "time": "2013-12-11 22:49:54"
         },
         {
             "name": "doctrine/annotations",
@@ -1330,12 +1396,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/hybridauth/hybridauth.git",
-                "reference": "dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c"
+                "reference": "cc9229d870c678cc3f37db6174649f3257c597b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c",
-                "reference": "dbed9a8f4b9cc1c1ea26cb689dafc4e58db0ca3c",
+                "url": "https://api.github.com/repos/hybridauth/hybridauth/zipball/cc9229d870c678cc3f37db6174649f3257c597b5",
+                "reference": "cc9229d870c678cc3f37db6174649f3257c597b5",
                 "shasum": ""
             },
             "require": {
@@ -1371,7 +1437,7 @@
                 "twitter",
                 "yahoo"
             ],
-            "time": "2014-07-21 14:43:28"
+            "time": "2014-07-24 21:04:28"
         },
         {
             "name": "imagine/imagine",
@@ -2697,9 +2763,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2747,9 +2813,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -4043,15 +4109,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
+                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
-                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
+                "reference": "d4d85d6055b87f394d941b45ddd3a9173e1e3d2a",
                 "shasum": ""
             },
             "require": {
+                "ext-intl": "*",
                 "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
@@ -4082,7 +4149,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 10:06:38"
+            "time": "2014-07-25 09:58:17"
         },
         {
             "name": "symfony/monolog-bundle",
@@ -4209,12 +4276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "4dbe0e1c349c30b6ecb6254f61966d72a53357d8"
+                "reference": "c548bd861a0576c631e6977e16ad0cfa314457e5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/4dbe0e1c349c30b6ecb6254f61966d72a53357d8",
-                "reference": "4dbe0e1c349c30b6ecb6254f61966d72a53357d8",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/c548bd861a0576c631e6977e16ad0cfa314457e5",
+                "reference": "c548bd861a0576c631e6977e16ad0cfa314457e5",
                 "shasum": ""
             },
             "require": {
@@ -4309,7 +4376,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-07-23 15:11:31"
+            "time": "2014-07-25 09:23:56"
         },
         {
             "name": "twig/extensions",
@@ -4317,16 +4384,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions.git",
-                "reference": "b713aaf5c9487244051082430a42fa917431bf66"
+                "reference": "8699f809b53d44c4fda19095b43927c268b7ccd5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/b713aaf5c9487244051082430a42fa917431bf66",
-                "reference": "b713aaf5c9487244051082430a42fa917431bf66",
+                "url": "https://api.github.com/repos/fabpot/Twig-extensions/zipball/8699f809b53d44c4fda19095b43927c268b7ccd5",
+                "reference": "8699f809b53d44c4fda19095b43927c268b7ccd5",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "~1.12"
+            },
+            "require-dev": {
+                "symfony/translation": "~2.3"
+            },
+            "suggest": {
+                "symfony/translation": "Allow the time_diff output to be translated"
             },
             "type": "library",
             "extra": {
@@ -4346,9 +4419,7 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Common additional features for Twig that do not directly belong in core",
@@ -4357,7 +4428,7 @@
                 "i18n",
                 "text"
             ],
-            "time": "2014-07-14 05:04:35"
+            "time": "2014-07-25 08:23:51"
         },
         {
             "name": "twig/twig",
@@ -4940,6 +5011,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "symfony/symfony": 20,
+        "silex/silex": 20,
         "friendsofsymfony/rest-bundle": 20,
         "behat/common-contexts": 20,
         "guzzle/guzzle": 20,
@@ -4951,6 +5023,7 @@
         "yzalis/crontab": 20,
         "nelmio/api-doc-bundle": 20,
         "hellogerard/jobby": 20,
+        "pimple/pimple": 20,
         "phpspec/phpspec": 20,
         "liip/rmt": 20
     },
