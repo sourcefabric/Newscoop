@@ -35,27 +35,20 @@ class ArticlesController extends FOSRestController
      *         201="Returned when Article is created"
      *     },
      *     parameters={
-     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"}
-     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"}
-     *         {"name"="section", "dataType"="integer", "required"=true, "description"="Section number"}
-     *         {"name"="articleType", "dataType"="integer", "required"=true, "description"="Article Type number"}
+     *         {"name"="language", "dataType"="string", "required"=true, "description"="Language code"},
+     *         {"name"="publication", "dataType"="integer", "required"=true, "description"="Publication ID"},
+     *         {"name"="issue", "dataType"="integer", "required"=true, "description"="Issue number"},
+     *         {"name"="section", "dataType"="integer", "required"=true, "description"="Section number"},
+     *         {"name"="articleType", "dataType"="string", "required"=true, "description"="Article Type name"},
+     *         {"name"="articleTitle", "dataType"="string", "required"=true, "description"="Article name"},
      *     }
      * )
      *
-     * @Route("/articles/create/{language}/{issue}/{section}/{articleType}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
+     * @Route("/articles/create/{language}/{publication}/{issue}/{section}/{articleType}/{articleTitle}.{_format}", defaults={"_format"="json", "language"="en"}, options={"expose"=true}, name="newscoop_gimme_articles_createarticle")
      * @Method("POST")
      */
-    public function createArticleAction(Request $request, $language, $issue, $section, $articleType)
+    public function createArticleAction(Request $request, $language, $publication, $issue, $section, $articleType, $articleTitle)
     {
-        $content = $this->get("request")->getContent();
-        if (!empty($content)) {
-            $params = json_decode($content, true); // 2nd param to get as array
-        }
-
-        if (!array_key_exists('title', $params)) {
-            throw new \Exception('Article title is missing');
-        }
-
         // Create article
         $em = $this->container->get('em');
         $languageObject = $em->getRepository('Newscoop\Entity\Language')->findOneByCode($language);
@@ -63,27 +56,24 @@ class ArticlesController extends FOSRestController
         // Fetch article
         $articleObj = new \Article($languageObject->getId());
 
-        // the following is mostly a copy from admin-files/articles/do_add.php
+        // This is here if we decide to later use default Publication anyway
+        //$publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
 
-        $publication = $this->get('newscoop_newscoop.publication_service')->getPublication()->getId();
-
-        $conflictingArticles = Article::GetByName($params['title'], $publication, $issue, $section, null, true);
+        $conflictingArticles = \Article::GetByName($articleTitle, $publication, $issue, $section, null, true);
         if (count($conflictingArticles) > 0) {
             $conflictingArticle = array_pop($conflictingArticles);
             $conflictingArticleLink = camp_html_article_url($conflictingArticle, $conflictingArticle->getLanguageId(), 'edit.php');
-            throw new \Exception($translator->trans("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.",
-                array('$1' => $conflictingArticle->getNumber() ." ".$conflictingArticle->getName()."</a>"), 'articles'));
+            throw new \Exception("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article ".$conflictingArticle->getArticleNumber() ." '".$conflictingArticle->getName()."'");
         } else {
-            $articleObj->create($articleType, $params['title'], $publication, $issue, $section);
+            $articleObj->create($articleType, $articleTitle, $publication, $issue, $section);
         }
 
         if ($articleObj->exists()) {
-            $em = $this->_helper->service('em');
             $currentUser = $this->getUser();
             $author = $currentUser->getAuthorId();
             $articleObj->setCreatorId($currentUser->getUserId());
             if (empty($author)) {
-                $authorObj = new Author($currentUser->getRealName());
+                $authorObj = new \Author($currentUser->getRealName());
                 if (!$authorObj->exists()) {
                     $authorData = Author::ReadName($currentUser->getRealName());
                     $authorData['email'] = $currentUser->getEmail();
@@ -96,7 +86,7 @@ class ArticlesController extends FOSRestController
                     $em->flush();
                 }
             } else {
-                $authorObj = new Author($author);
+                $authorObj = new \Author($author);
             }
 
             if ($authorObj->exists()) {
@@ -109,12 +99,20 @@ class ArticlesController extends FOSRestController
                 $articleObj->setCommentsEnabled($commentDefault);
             }
 
-            //camp_html_add_msg($translator->trans("Article created.", array(), 'articles'), "ok");
-            //camp_html_goto_page(camp_html_article_url($articleObj, $languageObject->getId(), "edit.php"), false);
-            ArticleIndex::RunIndexer(3, 10, true);
-            //exit();
+            $response = new Response();
+            $response->setStatusCode(201);
+
+            $response->headers->set(
+                'X-Location',
+                $this->generateUrl('newscoop_gimme_articles_getarticle', array(
+                    'number' => $articleObj->getArticleNumber(),
+                ), true)
+            );
+
+            \ArticleIndex::RunIndexer(3, 10, true);
+            return $response;
         } else {
-            throw new \Exception($translator->trans("Could not create article.", array(), 'articles'));
+            throw new \Exception("Could not create article.");
         }
     }
 
