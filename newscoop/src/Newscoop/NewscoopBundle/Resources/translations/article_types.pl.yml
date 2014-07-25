@@ -1,8 +1,8 @@
-list: null
-filter: null
-'In Lists?': null
-'Are you sure you want to $1 articles of article type $2?': null
-'$1 articles of article type $2': null
+list: lista
+filter: filtr
+'In Lists?': 'Znajduje się na liście?'
+'Are you sure you want to $1 articles of article type $2?': 'Jesteś pewien że chcesz $1 artykułów z typu artykułu $2?'
+'$1 articles of article type $2': '$1 artykułów z typu artykułu $2'
 'Hide human-readable field names': 'Ukryj ludzkie nazwy pól'
 'Edit and translate human-readable field names': 'Przetłumacz ludzkie nazwy pól'
 'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może tylko zawierać litery oraz podkreślnik (_)'

@@ -184,7 +184,7 @@ Miscellaneous: Różne
 'User will be notified on several events': 'Używkotnik będzie informowany przy kilku zdarzeniach.'
 'Editor Miscellaneous Settings': 'Dodatkowe ustawienia edytora'
 'No such user account.': 'Brak użytkownika.'
-'User image (full-size)': null
+'User image (full-size)': 'Obraz użytkownika (pełen rozmiar)'
 users:
     label:
         title: 'Wyszukiwarka uzytkowników'

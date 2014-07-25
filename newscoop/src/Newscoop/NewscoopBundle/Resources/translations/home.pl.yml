@@ -152,11 +152,11 @@ Help: Pomoc
 'Please make sure that you typed the correct user name and password.': 'Upewnij się, że podana nazwa i hasła są poprawne'
 'If your problem persists please contact the site administrator $1': 'Jeśli problem występuje ponownie skontaktuj się z administratorem $1'
 Backup/Restore: 'Backup / Przywróć'
-'Step 2': null
-'Step 3': null
-'Add new user': null
-'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
+'Step 2': 'Krok 2'
+'Step 3': 'Krok 3'
+'Add new user': 'Dodaj nowego użytkownika'
+'Bad credentials': 'Hasło lub login jest nieprawidłowe'
+'Active users': 'Aktywni użytkownicy'
+'New comments': 'Nowe komentarze'
+'Published articles': 'Opublikowane artykuły'
+'Last 7 days statistics': 'Statystyki z ostatnich 7 dni'

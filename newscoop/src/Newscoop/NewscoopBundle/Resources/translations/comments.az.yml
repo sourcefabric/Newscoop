@@ -6,7 +6,7 @@ at: burada
 'Unable to reach Newscoop. Please check your internet connection.': 'Newscoop-a keçmək mümkün deyil. Lütfən, internet bağlantını yoxla.'
 Starred: Ulduzlu
 Star: Ulduz
-'Showing _START_ to _END_ of _TOTAL_ entries': TOTAL_girişin_START_başlayaraq_END_kimi_nümayişi
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Ümumilikdə _TOTAL_ girişin _START_-dan/dən _END_-a/ə qaydasında nümayişi'
 'Reply to message': 'Mesaja cavab yaz'
 Reply: 'Cavab yaz'
 Processed: 'İcra edildi'

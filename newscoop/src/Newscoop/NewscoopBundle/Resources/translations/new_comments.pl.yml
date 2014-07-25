@@ -1,15 +1,15 @@
 comments:
     label:
-        comments: null
+        comments: 'Zarządzanie komentarzami'
         menu: Komentarze
-        banned: null
-        anonymous: null
+        banned: Zablokowany
+        anonymous: Anonim
         at: w
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
+        noentries: 'Nie znaleziono wyników.'
+        showing: Pokazuje
+        of: z
+        to: do
+        entries: wyników
         fullarticle: 'Pełny artykuł'
         hidden: Ukryte
         approved: Zaakceptowane
@@ -21,17 +21,17 @@ comments:
         subject: Temat
         ban: 'Zablokuj/Odblokuj użytkownika'
         author: Autor
-        date: null
+        date: 'Data / Komentarz'
         article: Artykuł
         search: Szukaj
         show: Pokaż
         recommended: Polecany
         unrecommended: Niepolecany
-        editcomment: null
+        editcomment: 'Szybka edycja'
         actions: Akcje
         selectstatus: 'Wybierz status'
         deleted: Usunięty
-        alert: null
+        alert: Uwaga
         searchholder: null
     btn:
         cancel: Anuluj
@@ -42,15 +42,15 @@ comments:
         reply: Odpowiedz
         edit: 'Szybka edycja'
         close: Zamknij
-        okay: null
+        okay: Ok
         filter: Filtrowanie
     msg:
         deleted: 'Komentarz został usunięty'
         commentinarticle: 'Komentarz $4 przez $1 w artykule $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
+            new: nowy
+            approved: zatwierdzony
+            hidden: ukryty
             single: null
             all: null
         error:

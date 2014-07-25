@@ -13,7 +13,7 @@ newscoop:
             cacheNotCleared: null
         success:
             saved: 'Preferencje systemowe zaktualizowane.'
-            cacheCleared: null
+            cacheCleared: 'Pamięć podręczna została wyczyszczona'
         menu:
             general: 'Ustawienia główne'
             email: 'Ustawienia e-mail'
@@ -25,7 +25,7 @@ newscoop:
             other: 'Inne ustawienia'
             recaptcha: 'Ustawienia reCAPTCHA'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'Wyczyść aktualnie używaną pamięć podręczną'
         label:
             title: 'Preferencje systemowe'
             header: Ustawienia
