@@ -301,12 +301,14 @@ class SystemPrefController extends Controller
     public function enableJobAction(Request $request, $id)
     {
         $em = $this->get('em');
+        $cacheService = $this->get('newscoop.cache');
         $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
 
         try {
-            if (!$job->getIsActive()) {
-                $job->setIsActive(true);
+            if (!$job->getEnabled()) {
+                $job->setEnabled(true);
                 $em->flush();
+                $cacheService->clearNamespace('cronjobs');
             }
         } catch (Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
@@ -321,12 +323,14 @@ class SystemPrefController extends Controller
     public function disableJobAction(Request $request, $id)
     {
         $em = $this->get('em');
+        $cacheService = $this->get('newscoop.cache');
         $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
 
         try {
-            if ($job->getIsActive()) {
-                $job->setIsActive(false);
+            if ($job->getEnabled()) {
+                $job->setEnabled(false);
                 $em->flush();
+                $cacheService->clearNamespace('cronjobs');
             }
         } catch (Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
