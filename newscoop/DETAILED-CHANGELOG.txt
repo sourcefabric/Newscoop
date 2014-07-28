@@ -3,6 +3,8 @@ VERSION 4  FIRST NEWSCOOP 4.3 ALPHA, INSTALLABLE, WITH ALMOST ALL FEATURES, ALMO
 =========================================================================================================
 
    Version 4.3 - First Newscoop 4.3 alpha, released with liip/rmt, close to code freeze, first weekly release, enjoy
+      28/07/2014 13:41  4.3.0-alpha3  fix broken alpha2 release (missing comma in last commit).
+         99aae92 fix missing comma in login api
       28/07/2014 12:56  4.3.0-alpha2  Newscoop 4.3-alpha2 weekly release, performance fixes, support for _target_path in api login, fix for serbian language, ui for article image captions, updated translations
          9390282 update rmt release script
          557b6f5 update lock before release
