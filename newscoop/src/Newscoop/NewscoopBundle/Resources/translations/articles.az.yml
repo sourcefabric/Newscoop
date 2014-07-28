@@ -184,8 +184,6 @@ Comments: Şərhlər
 'No such article.': 'Belə məqalə yoxdur.'
 'No such section.': 'Belə bölmə yoxdur.'
 Characters: İşarələr
-<<<<<<< HEAD
-=======
 articles:
     images:
         edit:
@@ -206,4 +204,3 @@ articles:
                 article_specific: null
                 global: null
                 other_captions: null
->>>>>>> c72f0478a66eae1ac95f36c2fa1fe03be8baa3c4
