@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6b2ece541d03c90277a864e9808758e6",
+    "hash": "ff6a4dc6d0d5b20b691b3423850a1825",
     "packages": [
         {
             "name": "behat/behat",
@@ -111,7 +111,7 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -254,6 +254,72 @@
                 "framework"
             ],
             "time": "2012-10-16 23:37:45"
+        },
+        {
+            "name": "dflydev/doctrine-orm-service-provider",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-doctrine-orm-service-provider.git",
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-doctrine-orm-service-provider/zipball/cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "reference": "cbb2e4022ad46675d7406398c024191c6f3539f0",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": "~2.3",
+                "php": ">=5.3.3",
+                "pimple/pimple": "1.*@dev"
+            },
+            "require-dev": {
+                "cilex/cilex": "1.*@dev",
+                "cilex/console-service-provider": "@dev",
+                "silex/silex": "1.*@dev"
+            },
+            "suggest": {
+                "dflydev/psr0-resource-locator-service-provider": "1.0.*@dev"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\Cilex\\Provider\\DoctrineOrm": "src",
+                    "Dflydev\\Pimple\\Provider\\DoctrineOrm": "src",
+                    "Dflydev\\Silex\\Provider\\DoctrineOrm": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Doctrine ORM Service Provider",
+            "keywords": [
+                "cilex",
+                "doctrine",
+                "orm",
+                "pimple",
+                "silex"
+            ],
+            "time": "2013-12-11 22:49:54"
         },
         {
             "name": "doctrine/annotations",
@@ -429,7 +495,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan H. Wage",
+                    "name": "Jonathan Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -526,7 +592,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -733,9 +799,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -794,7 +860,7 @@
                 {
                     "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1265,7 +1331,54 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-07-08 18:26:17"
+            "time": "2013-03-11 22:42:27"
+        },
+        {
+            "name": "hellogerard/jobby",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hellogerard/jobby.git",
+                "reference": "37c4ae52c6da690e81865430cde856dec61b4b24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hellogerard/jobby/zipball/37c4ae52c6da690e81865430cde856dec61b4b24",
+                "reference": "37c4ae52c6da690e81865430cde856dec61b4b24",
+                "shasum": ""
+            },
+            "require": {
+                "mtdowling/cron-expression": "1.0.x",
+                "php": ">=5.3.0",
+                "swiftmailer/swiftmailer": "~5.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Jobby": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gerard Sychay",
+                    "email": "hellogerard@gmail.com",
+                    "homepage": "https://github.com/hellogerard"
+                },
+                {
+                    "name": "Michael Contento",
+                    "homepage": "https://github.com/michaelcontento"
+                }
+            ],
+            "description": "Manage all your cron jobs without modifying crontab. Handles locking, logging, error emails, and more.",
+            "homepage": "https://github.com/hellogerard/jobby",
+            "time": "2014-07-21 20:11:26"
         },
         {
             "name": "hybridauth/hybridauth",
@@ -1426,12 +1539,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdorn/sql-formatter.git",
-                "reference": "017b6628e7a3a96cfd9f96ec1531b974d1dea2b7"
+                "reference": "ff0515fa8ce7d97d6cba279e8ed9d51d3eaa0316"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/017b6628e7a3a96cfd9f96ec1531b974d1dea2b7",
-                "reference": "017b6628e7a3a96cfd9f96ec1531b974d1dea2b7",
+                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/ff0515fa8ce7d97d6cba279e8ed9d51d3eaa0316",
+                "reference": "ff0515fa8ce7d97d6cba279e8ed9d51d3eaa0316",
                 "shasum": ""
             },
             "require": {
@@ -1471,7 +1584,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2014-07-08 22:36:13"
+            "time": "2014-07-28 13:45:38"
         },
         {
             "name": "jms/metadata",
@@ -1510,9 +1623,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1613,9 +1726,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1683,9 +1796,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -1865,7 +1978,7 @@
                     "email": "stof@notk.org"
                 },
                 {
-                    "name": "Knplabs",
+                    "name": "KnpLabs",
                     "homepage": "http://knplabs.com"
                 },
                 {
@@ -2167,12 +2280,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2"
+                "reference": "40dda4876d45602d7b9b0b5109027f51e291d64b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/61145103b6521d04c0386d1ea6899437df9d45e2",
-                "reference": "61145103b6521d04c0386d1ea6899437df9d45e2",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/40dda4876d45602d7b9b0b5109027f51e291d64b",
+                "reference": "40dda4876d45602d7b9b0b5109027f51e291d64b",
                 "shasum": ""
             },
             "require": {
@@ -2203,7 +2316,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.10.x-dev"
+                    "dev-master": "1.11.x-dev"
                 }
             },
             "autoload": {
@@ -2229,7 +2342,48 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-07-19 19:11:34"
+            "time": "2014-07-28 11:23:37"
+        },
+        {
+            "name": "mtdowling/cron-expression",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mtdowling/cron-expression.git",
+                "reference": "a47ac8d5ec15049013792401af5a4d13e3dbe7f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mtdowling/cron-expression/zipball/a47ac8d5ec15049013792401af5a4d13e3dbe7f6",
+                "reference": "a47ac8d5ec15049013792401af5a4d13e3dbe7f6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Cron": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "CRON for PHP: Calculate the next or previous run date and determine if a CRON expression is due",
+            "keywords": [
+                "cron",
+                "schedule"
+            ],
+            "time": "2013-11-23 19:48:39"
         },
         {
             "name": "nelmio/api-doc-bundle",
@@ -2336,7 +2490,7 @@
             ],
             "authors": [
                 {
-                    "name": "Pawel Mikolajczuk",
+                    "name": "Paweł Mikołajczuk",
                     "email": "pawel.mikolajczuk@sourcefabric.org"
                 }
             ],
@@ -2550,7 +2704,7 @@
                 {
                     "name": "Marco Pivetta",
                     "email": "ocramius@gmail.com",
-                    "homepage": "http://ocramius.github.io/",
+                    "homepage": "http://ocramius.github.com/",
                     "role": "Developer"
                 }
             ],
@@ -2599,9 +2753,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -2649,9 +2803,9 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "http://jmsyst.com",
+                    "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -3168,7 +3322,7 @@
                 {
                     "name": "Raul Fraile",
                     "email": "raulfraile@gmail.com",
-                    "homepage": "http://www.raulfb.com/",
+                    "homepage": "http://www.raulfrailebeneyto.com/",
                     "role": "Developer"
                 }
             ],
@@ -3650,12 +3804,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioGeneratorBundle.git",
-                "reference": "2799cd07c721660c9e1067d6d79ecc7e74dfb5a4"
+                "reference": "5e7f2bb38976cbc91282efe3d1abc1a4701871c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/2799cd07c721660c9e1067d6d79ecc7e74dfb5a4",
-                "reference": "2799cd07c721660c9e1067d6d79ecc7e74dfb5a4",
+                "url": "https://api.github.com/repos/sensiolabs/SensioGeneratorBundle/zipball/5e7f2bb38976cbc91282efe3d1abc1a4701871c0",
+                "reference": "5e7f2bb38976cbc91282efe3d1abc1a4701871c0",
                 "shasum": ""
             },
             "require": {
@@ -3685,13 +3839,11 @@
             "authors": [
                 {
                     "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "This bundle generates code for you",
-            "time": "2014-07-09 09:39:28"
+            "time": "2014-07-28 10:40:05"
         },
         {
             "name": "silex/silex",
@@ -4272,12 +4424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26"
+                "reference": "7d1577ff3c563aff7c447302d57756fd40fc675b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/5fd428ed7603ea63998716995c123c99648aab26",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7d1577ff3c563aff7c447302d57756fd40fc675b",
+                "reference": "7d1577ff3c563aff7c447302d57756fd40fc675b",
                 "shasum": ""
             },
             "require": {
@@ -4321,7 +4473,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-08 13:46:25"
+            "time": "2014-07-28 13:12:00"
         },
         {
             "name": "willdurand/js-translation-bundle",
@@ -4409,7 +4561,7 @@
             ],
             "authors": [
                 {
-                    "name": "William DURAND",
+                    "name": "William Durand",
                     "email": "william.durand1@gmail.com",
                     "homepage": "http://www.willdurand.fr"
                 }
@@ -4847,6 +4999,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "symfony/symfony": 20,
+        "silex/silex": 20,
         "friendsofsymfony/rest-bundle": 20,
         "behat/common-contexts": 20,
         "guzzle/guzzle": 20,
@@ -4857,6 +5010,8 @@
         "raulfraile/ladybug-bundle": 20,
         "yzalis/crontab": 20,
         "nelmio/api-doc-bundle": 20,
+        "hellogerard/jobby": 20,
+        "pimple/pimple": 20,
         "phpspec/phpspec": 20
     },
     "prefer-stable": false,

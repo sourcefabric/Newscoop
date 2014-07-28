@@ -2,6 +2,7 @@
 /**
  * @package Newscoop
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -49,6 +50,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Newscoop\Installer\Services;
 use Symfony\Component\Validator\Constraints as Assert;
+use Dflydev\Silex\Provider\DoctrineOrm\DoctrineOrmServiceProvider;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\SessionServiceProvider());
@@ -85,22 +87,42 @@ $app->before(function (Request $request) use ($app) {
         $requestDbConfig = $request->request->get('db_config');
         $sessionDbData = $app['session']->get('db_data');
         $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
-            'db.options' => array(
-                'driver'    => 'pdo_mysql',
-                'host'      => $requestDbConfig['server_name'] ? : $sessionDbData['server_name'],
-                'dbname'    => $requestDbConfig['database_name'] ? : $sessionDbData['database_name'],
-                'user'      => $requestDbConfig['user_name'] ? : $sessionDbData['user_name'],
-                'password'  => $requestDbConfig['user_password'] ? : $sessionDbData['user_password'],
-                'port'      => $requestDbConfig['server_port'] ? : $sessionDbData['server_port'],
-                'charset'   => 'utf8',
-            )
+            'dbs.options' => array (
+                'default' => array(
+                    'driver'    => 'pdo_mysql',
+                    'host'      => $requestDbConfig['server_name'] ? : $sessionDbData['server_name'],
+                    'dbname'    => $requestDbConfig['database_name'] ? : $sessionDbData['database_name'],
+                    'user'      => $requestDbConfig['user_name'] ? : $sessionDbData['user_name'],
+                    'password'  => $requestDbConfig['user_password'] ? : $sessionDbData['user_password'],
+                    'port'      => $requestDbConfig['server_port'] ? : $sessionDbData['server_port'],
+                    'charset'   => 'utf8',
+                )
+            ),
         ));
+
+        $app->register(new DoctrineOrmServiceProvider, array(
+            "orm.proxies_dir" => __DIR__."/../library/Proxy",
+            "orm.em.options" => array(
+                "mappings" => array(
+                    array(
+                        "type" => "annotation",
+                        "namespace" => "Newscoop\Entity",
+                        "path" => __DIR__."/../library/Newscoop/Entity",
+                        "use_simple_annotation_reader" => false
+                    ),
+                ),
+            ),
+        ));
+
+        // call scheduler service only when database info is in session or request
+        $app['scheduler_service'] = $app->share(function () use ($app) {
+            return new Newscoop\Services\SchedulerService($app['orm.em']);
+        });
     }
 }, Silex\Application::EARLY_EVENT);
 
 $app->get('/', function (Silex\Application $app) use ($symfonyRequirements, $requirements) {
     $app['bootstrap_service']->makeDirectoriesWritable();
-
     $directories = $app['bootstrap_service']->checkDirectories();
     if ($directories !== true) {
         return $app['twig']->render('botstrap_errors.twig', array('directories' => $directories));
@@ -244,7 +266,7 @@ $app->get('/process', function (Request $request) use ($app) {
 ->bind('process');
 
 $app->get('/post-process', function (Request $request) use ($app) {
-    $app['finish_service']->saveCronjobs();
+    $app['finish_service']->saveCronjobs($app['scheduler_service']);
     $app['finish_service']->generateProxies();
     $app['finish_service']->installAssets();
     $app['finish_service']->saveInstanceConfig($app['session']->get('main_config'), $app['db']);
