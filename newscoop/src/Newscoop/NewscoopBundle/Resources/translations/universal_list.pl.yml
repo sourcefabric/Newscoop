@@ -37,9 +37,9 @@ Filter: Filtrowanie
 'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
 Creator: Twórca
 'Create Date': 'Data utworzenia'
-'Articles updated.': null
-'Article(s) unlocked': null
-'Article(s) duplicated': null
+'Articles updated.': 'Artykuły zaktualizowane.'
+'Article(s) unlocked': 'Artykuł(y) odblokowany(e)'
+'Article(s) duplicated': 'Artykuł(y) skopiowany(e)'
 'Article status set to $1': 'Status artykułu zmieniony na $1'
 'Are you sure you want to delete selected articles?': 'Na pewno chcesz usunąć wybrane artykuły?'
 'All Sections': 'Wszystkie sekcje'

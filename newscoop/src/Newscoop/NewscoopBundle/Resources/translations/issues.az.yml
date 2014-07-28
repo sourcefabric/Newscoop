@@ -36,7 +36,7 @@ Schedule: Cədvəl
 'The issue could not be added.': 'Yenisi əlavə oluna bilməz.'
 'Change issue details': 'Məsələ məlumatlarını dəyiş'
 'You do not have the right to change issue details.': 'Məsələ məlumatlarını dəyişməyə ixtiyarın yoxdur.'
-'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Nümayiş tarixi<BR><SMALL>(yyyy-mm-dd)</SMALL>'
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Nümayiş tarixi<BR><SMALL>(iiii-aa-gg)</SMALL>'
 'Front Page Template': 'Baş səhifənin üzlüyü'
 'You do not have the right to delete issues.': 'Məsələləri silməyə ixtiyarın yoxdur.'
 'Are you sure you want to delete the issue $1?': '$1 məsələsini silmək istədiyinə əminsən?'

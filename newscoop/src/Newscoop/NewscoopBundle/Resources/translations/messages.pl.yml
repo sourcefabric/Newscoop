@@ -148,7 +148,7 @@ Localizer: Lokalizator
 'Add new publication': 'Dodaj nową publikację'
 'Upload new template': 'Dodaj nowy szablok'
 'Add new staff member': 'Dodaj członka redakcji'
-'Staff member deleted.': null
+'Staff member deleted.': 'Członek zespołu został usunięty.'
 'Add new subscriber': 'Dodaj subskrynenta'
 'Add new user type': 'Dodaj nowy typ użytkownika'
 'Add new article type': 'Dodaj nowy typ artykułu'
@@ -259,27 +259,27 @@ Reads: Przeczytano
 'Invalid security token!': 'Niepoprawny token bezpieczeństwa!'
 Authors: Autorzy
 Title: Tytuł
-'Edit country': null
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
-'Feed saved': null
-'Item published': null
-'Settings saved': null
-'Self-delete is not permitted.': null
-'Edit staff member $1': null
-'Delete staff member $1': null
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
-'Staff member saved.': null
-'Permissions: $1': null
-'Change user account information': null
-'Staff management': null
+'Edit country': 'Edytuj kraj'
+'Entry $1 prepared for publishing': 'Wpis $1 został przygotowany do publikacji'
+'Entry deleted': 'Wpis został usunięty'
+'Feed saved': 'Kanał został zapisany'
+'Item published': 'Element został opublikowany'
+'Settings saved': 'Ustawienia zostały zapisane'
+'Self-delete is not permitted.': 'Nie możesz usunąć sam siebie.'
+'Edit staff member $1': 'Edytuj $1'
+'Delete staff member $1': 'Usuń $1 z załogi'
+'Could not save user $1. Please make sure it does not already exist': 'Nie można utworzyć członka załogi, wygląda na to że $1 już istnieje'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Nie można utworzyć użytkownika z adresem email: $1. Wygląda na to że ktoś już używa tego adresu'
+'Changing user type would prevent you to manage users. Aborted.': 'Zmiana typu użytkownika pozbawi cię możliwości zarządzania użytkownikami. Przerwano.'
+'Staff member saved.': 'Członek załogi został zapisany.'
+'Permissions: $1': 'Uprawnienia: $1'
+'Change user account information': 'Zmień informacje o użytkowniku'
+'Staff management': Załoga
 Updated: Zaktualizowany
-Options: null
-Verified: null
-Confirm: null
+Options: Opcje
+Verified: Zweryfikowany
+Confirm: Potwierdź
 at: w
-published: null
-unpublished: null
-nopermissions: null
+published: opublikowany
+unpublished: nieopublikowany
+nopermissions: 'Nie masz wystarczających uprawnień.'

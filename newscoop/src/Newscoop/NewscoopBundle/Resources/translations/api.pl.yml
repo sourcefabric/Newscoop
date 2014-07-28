@@ -1,7 +1,7 @@
 'No such article type': 'Brak takiego typu artykułu'
 'Multi-line Text': 'Tekst wieloliniowy'
 'Filter saved': 'Filtr został zapisany'
-'Filter not saved': null
+'Filter not saved': 'Filtr nie został zapisany'
 'Not a color': 'Wartość nie jest kolorem.'
 'No such field': 'Nie ma takiego pola'
 'Color saved': 'Kolor zapisany'
@@ -40,8 +40,8 @@ Title: Tytuł
 'Access denied.': 'Dostęp zabroniony.'
 'Publish with issue': 'Opublikuj z wydaniem'
 unknown: nieznane
-Switch: Zamień
-Numeric: Numeryczne
+Switch: Przełącznik
+Numeric: Liczbowy
 'The uploaded file format is unsupported.': 'Format wgranego pliku nie jest obsługiwany.'
 'The following fields are mandatory:': 'Poniższe pola są obowiązkowe:'
 'Missing value for $1': 'Brakująca wartość dla $1'
@@ -62,45 +62,45 @@ First: Pierwszy
 'URL $1 is invalid or is not an image.': 'URL $1 jest niepoprawny albo nie jest obrazkiem.'
 'URL $1 is not an image.': 'URL $1 nie jest zdjęciem'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Klient został dodany'
+    notfound: 'Nie ma takiego klienta'
+    removed: 'Klient został usunięty'
 publicresources:
-    updated: null
+    updated: 'Zasoby publiczne zostały zaktualizowane'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'Konfiguracja API - zasoby publiczne'
+        title_content: 'Konfiguracja API - zasoby publiczne'
         tabs:
-            resources: null
-            clients: null
+            resources: 'Zasoby Publiczne'
+            clients: Klienci
         resources:
-            info: null
-            add_button: null
+            info: 'Domyślnie wszystkie zasoby są strzeżone przez firewall, możesz jednak zdecydować które z nich będą publiczne (dostępne bez uwierzytelniania) dla wszystkich. '
+            add_button: 'Dodaj klienta'
         clients:
             table:
-                name: null
-                id: null
-                secret: null
-                trusted: null
-                redirect: null
+                name: 'Nazwa klienta'
+                id: 'Id klienta'
+                secret: 'sekretny kod'
+                trusted: 'Zaufany?'
+                redirect: 'Adresy przekierowań'
                 publication: Publikacja
                 actions: Akcje
                 actions_buttons:
                     remove: Usuń
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Jesteś pewien że chcesz usunąć tego klienta?'
+        menu: API
     form:
         client:
             label:
-                name: null
-                publication: null
-                redirectUris: null
-                trusted: null
+                name: 'Podaj nazwę dla klienta:'
+                publication: 'Wybierz publikację klienta:'
+                redirectUris: 'Wybierz adresy przekierowań dla klienta:'
+                trusted: 'Zaufany?'
                 save: Zapisz
         PublicResources:
             label:
-                routes: null
+                routes: 'Wybierz publiczne zasoby:'
                 save: Zapisz

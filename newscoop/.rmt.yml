@@ -26,7 +26,9 @@ _default:
 # BRANCH SPECIFIC CONFIG
 #  On master, we override the general config
 master:
-    version-generator: semantic # More complex versionning (semantic)
+    version-generator:
+        semantic:
+            allow-label: true
     version-persister:
         vcs-tag:
             tag-prefix: ''         # No more prefix for tags

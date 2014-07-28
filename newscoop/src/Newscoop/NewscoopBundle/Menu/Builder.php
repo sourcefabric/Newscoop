@@ -395,10 +395,10 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 2', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 2', array(), 'article_types')]->setDisplay(false);
         }
 
-        $status = $this->addChild($menu[$translator->trans('Merge article types', array(), 'article_types')], $translator->trans('Step 3', array(), 'home'), array('zend_route' => array(
+        $status = $this->addChild($menu[$translator->trans('Merge article types', array(), 'article_types')], $translator->trans('Step 3', array(), 'article_types'), array('zend_route' => array(
                 'module' => 'admin',
                 'controller' => 'article_types',
                 'action' => 'merge3.php',
@@ -409,7 +409,7 @@ class Builder
         ));
 
         if ($status) {
-            $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 3', array(), 'home')]->setDisplay(false);
+            $menu[$translator->trans('Merge article types', array(), 'article_types')][$translator->trans('Step 3', array(), 'article_types')]->setDisplay(false);
         }
 
         if ($this->user->hasPermission('ManageCountries') || $this->user->hasPermission('DeleteCountries')) {

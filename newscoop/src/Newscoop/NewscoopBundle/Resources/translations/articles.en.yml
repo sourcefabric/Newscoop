@@ -184,3 +184,23 @@ Comments: Comments
 'No such article.': 'No such article.'
 'No such section.': 'No such section.'
 'Characters': 'Characters'
+articles:
+    images:
+        edit:
+            edit_image_metadata: Edit image metadata
+            save: Save
+            form:
+                use: Use
+                number: Number
+                caption: Caption
+                status_approved: Approved
+                status_unapproved: Unapproved
+                status: Status
+                description: Description
+                photographer: Photographer
+                photographer_url: Photographer URL
+                place: Place
+                date: Date
+                article_specific: Article specific
+                global: Global
+                other_captions: Other Captions

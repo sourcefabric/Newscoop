@@ -1,5 +1,5 @@
-'Display articles of filtered types': null
-'Display Articles of Filtered Types': null
+'Display articles of filtered types': 'Wyświetl również artykuły ukrytych typów'
+'Display Articles of Filtered Types': 'Wyświetl również artykuły ukrytych typów'
 Webcode: 'Kod internetowy'
 'View article': 'Zobacz artykuł'
 Source: Źródło
@@ -71,7 +71,7 @@ Added: Dodano
 '$1 toggled.': '$1 toggled.'
 '$1 articles have been removed': 'Usunięto artykułów: $1'
 ' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
-'Search for creators': null
-'No matches.': null
-Searching...: null
-'Minimum input of characters: $1': null
+'Search for creators': 'Szukaj po twórcach'
+'No matches.': 'Brak wyników.'
+Searching...: Szukam....
+'Minimum input of characters: $1': 'Minimalna liczba znaków to: $1'

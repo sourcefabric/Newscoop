@@ -73,7 +73,7 @@ class NewscoopExtension extends \Twig_Extension
         return $manipulator->getBreadcrumbsArray($currentMenuItem);
     }
 
-    public function generateZendUrl($controller, $action, $module = 'admin', $params = array())
+    public function generateZendUrl($controller, $action, $module = 'admin', $params = array(), $name = 'default', $encode = true)
     {
         $zendRouter = $this->container->get('zend_router');
 
@@ -81,7 +81,7 @@ class NewscoopExtension extends \Twig_Extension
             'module' => $module,
             'controller' => $controller,
             'action' => $action,
-        ), $params), 'default', true);
+        ), $params), $name, true, $encode);
     }
 
     public function getReCaptchaImage()

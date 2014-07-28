@@ -142,7 +142,16 @@ if ($articleObj->exists()) {
     }
 
     camp_html_add_msg($translator->trans("Article created.", array(), 'articles'), "ok");
-    camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"), false);
+
+    $pluginService = \Zend_Registry::get('container')->getService('newscoop.plugins.service');
+    if ($pluginService->isEnabled('terwey/plugin-newscoop-articleeditscreen')) {
+        $router = \Zend_Registry::get('container')->getService('router');
+        $language = new Language($articleObj->getLanguageId());
+        $articleLink = $router->generate('newscoop_admin_aes').'#/'.$language->getCode().'/'.$articleObj->getArticleNumber();
+    } else {
+        $articleLink = camp_html_article_url($articleObj, $f_language_id, "edit.php");
+    }
+    camp_html_goto_page($articleLink, false);
     ArticleIndex::RunIndexer(3, 10, true);
     exit();
 } else {

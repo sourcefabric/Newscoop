@@ -123,6 +123,7 @@
     </script>
 </head>
 <body class="container admin-font-size">
+{% block admin_page_menu_bar %}
 {% include "NewscoopNewscoopBundle::admin_menu.html.twig" %}
 {% set breadcrumbsMenu = knp_menu_get('breadcrumb') %}
 {% set breadcrumbsMenuArray = getBreadcrumbsArray(breadcrumbsMenu) %}
@@ -141,6 +142,8 @@
         </ol>
     </div>
 {% endif %}
+{% endblock %}
+
 {% block admin_page_title_box %}
 <div class="toolbar row"><span class="article-title">
     {% block admin_page_title_content %}{% endblock %}
@@ -151,6 +154,7 @@
 {% block admin_content %}{% endblock %}
 </div>
 
+{% block admin_page_footer_box %}
 <div class="footer row">
     <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists. 
     <br />
@@ -158,3 +162,4 @@
     <a href="{{ NewscoopVersion.getWebURL() }}" target="_blank">{{ NewscoopVersion.getOrganization() }}</a> {{ NewscoopVersion.getPackage() }} is distributed under {{ NewscoopVersion.getLicense() }}   
 </div>
 </body>
+{% endblock %}
