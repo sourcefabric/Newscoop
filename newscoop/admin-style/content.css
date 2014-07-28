@@ -1250,3 +1250,17 @@ dl.slideshow-preview figure > div > * {
     background-color: #4e9a06;
     border: none;
 }
+
+#article-image-edit-thumbnail,
+#article-image-edit-form {
+    float: left;
+    padding: 13px 0 13px 13px;
+}
+
+.caption-reuse > input {
+    float: left;
+}
+
+#article-image-edit-form .caption-reuse > button {
+    margin-top: 6px;
+}

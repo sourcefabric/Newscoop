@@ -81,7 +81,7 @@ CREATE TABLE `ArticleImageCaptions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `imageId` (`IdImage`,`NrArticle`,`IdLanguage`),
   KEY `IDX_1E9BFCA410F3034D6CB384EF` (`IdImage`,`NrArticle`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
