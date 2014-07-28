@@ -4424,12 +4424,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26"
+                "reference": "7d1577ff3c563aff7c447302d57756fd40fc675b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/5fd428ed7603ea63998716995c123c99648aab26",
-                "reference": "5fd428ed7603ea63998716995c123c99648aab26",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7d1577ff3c563aff7c447302d57756fd40fc675b",
+                "reference": "7d1577ff3c563aff7c447302d57756fd40fc675b",
                 "shasum": ""
             },
             "require": {
@@ -4473,7 +4473,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-07-08 13:46:25"
+            "time": "2014-07-28 13:12:00"
         },
         {
             "name": "willdurand/js-translation-bundle",
