@@ -119,6 +119,7 @@ class UsersController extends FOSRestController
      *     parameters={
      *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
      *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
+     *         {"name"="_target_path", "dataType"="string", "required"=false, "description"="Target path to which user will be redirected after login."}
      *     },
      * )
      *
@@ -135,6 +136,7 @@ class UsersController extends FOSRestController
         $em = $this->container->get('em');
         $username = $request->get('username');
         $password = $request->get('password');
+        $targetPath = $request->get('_target_path');
         $response = new Response();
         if (!$username || !$password) {
             $response->setStatusCode(400);
@@ -181,7 +183,7 @@ class UsersController extends FOSRestController
         $response->setStatusCode(200);
         $response->headers->set(
             'X-Location',
-            $this->generateUrl('newscoop_gimme_users_getuser', array(
+            $targetPath ? $request->getUriForPath($targetPath) : $this->generateUrl('newscoop_gimme_users_getuser', array(
                 'id' => $user->getId()
             ), true)
         );
