@@ -4,6 +4,9 @@
 {% block admin_page_title_content %}{{ 'newscoop.preferences.label.header'|trans }}{% endblock %}
 {% block admin_stylesheets %}
 <link rel="stylesheet" href="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/css/bootstrap.css">
+<style>
+    .font-fix { font-size: 12px;}
+</style>
 {% endblock %}
 {% block admin_scripts %}
 <script type="text/javascript" src="{{ Newscoop['WEBSITE_URL'] }}/bundles/newscoopnewscoop/js/popover.js"></script>
@@ -31,6 +34,7 @@
             <li class="active"><a href="#general_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
             <li><a href="#cache_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.cache'|trans }}</a></li>
             {% if hasManagePermission %}
+                <li><a href="#cronjob_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.cronjob'|trans }}</a></li>
                 <li><a href="#email_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.email'|trans }}</a></li>
                 <li><a href="#editor_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.editor'|trans }}</a></li>
                 <li><a href="#media_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.media'|trans }}</a></li>
@@ -176,6 +180,39 @@
                 </dl>
             </div>
             {% if hasManagePermission %}
+            <div class="tab-pane" id="cronjob_settings">
+                <h3>{{ 'newscoop.preferences.menu.cronjob'|trans }}</h3>
+                <span class="font-fix label label-info">{{ 'newscoop.preferences.label.info'|trans }}</span> <span class="font-fix">{{ 'newscoop.preferences.label.infodesc'|trans }}</span><br><br>
+                <table class="table table-striped">
+                {% if jobs %}
+                  <thead>
+                    <tr>
+                      <th class="font-fix">#</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.cronjob'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.prevRun'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.nextRun'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.enabled'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.options'|trans }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                        {% for job in jobs %}
+                            <tr>
+                              <td class="font-fix">{{ loop.index }}</td>
+                              <td class="font-fix">{{ job.name }}</td>
+                              <td class="font-fix">{{ job.prevRun }}</td>
+                              <td class="font-fix">{{ job.nextRun }}</td>
+                              <td class="font-fix job-status{{ job.id }}">{% if job.enabled %}<span class="font-fix label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>{% else %}<span class="font-fix label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>{% endif %}</td>
+                              <td class="font-fix job-options{{ job.id }}">
+                                {% if job.enabled %}<button type="button" job-id="{{ job.id }}" class="disable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>{% else %}<button type="button" job-id="{{ job.id }}" class="enable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>{% endif %}</button></td>
+                            </tr>
+                        {% endfor %}
+                  </tbody>
+                {% else %}
+                    <span class="font-fix">{{ 'newscoop.preferences.label.norecords'|trans }}</span>
+                {% endif %}
+                </table>
+            </div>
             <div class="tab-pane" id="email_settings">
                 <h3>{{ 'newscoop.preferences.menu.email'|trans }}</h3>
                 <dl>
@@ -192,7 +229,7 @@
                         {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
                     </dd>
                 </dl>
-            </div>        
+            </div>
             <div class="tab-pane" id="editor_settings">
                 <h3>{{ 'newscoop.preferences.menu.editor'|trans }}</h3>
                 <dl>
@@ -571,6 +608,52 @@
                 },
                 error: function (rq, status, error) {
                     flashMessage('{{ 'newscoop.preferences.error.cacheNotCleared'|trans}}', "error");
+                }
+            });
+        });
+    });
+
+    $('button.disable-cron').live('click', function(e){
+        e.preventDefault();
+
+        var that = $(this);
+        var jobId = that.attr('job-id');
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_systempref_disablejob', {id: jobId }),
+                success: function (data) {
+                    $('.job-options' + jobId).html('');
+                    $('.job-options' + jobId).append('<button type="button" job-id="'+jobId+'" class="enable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>');
+                    $(".job-status" + jobId).html('');
+                    $(".job-status" + jobId).append('<span class="font-fix label label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>')
+                    flashMessage('{{ 'newscoop.preferences.success.jobdisabled'|trans}}');
+                },
+                error: function (rq, status, error) {
+                    flashMessage('{{ 'newscoop.preferences.error.joberror'|trans}}', "error");
+                }
+            });
+        });
+    });
+
+    $('button.enable-cron').live('click', function(e){
+        e.preventDefault();
+
+        var that = $(this);
+        var jobId = that.attr('job-id');
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_systempref_enablejob', {id: jobId }),
+                success: function (data) {
+                    $('.job-options' + jobId).html('');
+                    $('.job-options' + jobId).append('<button type="button" job-id="'+jobId+'" class="disable-cron btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>');
+                    $(".job-status" + jobId).html('');
+                    $(".job-status" + jobId).append('<span class="font-fix label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>')
+                    flashMessage('{{ 'newscoop.preferences.success.jobenabled'|trans}}');
+                },
+                error: function (rq, status, error) {
+                    flashMessage('{{ 'newscoop.preferences.error.joberror'|trans}}', "error");
                 }
             });
         });

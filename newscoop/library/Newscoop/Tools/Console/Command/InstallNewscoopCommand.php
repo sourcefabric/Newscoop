@@ -53,7 +53,6 @@ class InstallNewscoopCommand extends Console\Command\Command
     {
         $container = $this->getApplication()->getKernel()->getContainer();
         $output->writeln('<info>Welcome to Newscoop Installer.<info>');
-
         $symfonyRequirements = new \SymfonyRequirements();
         $requirements = $symfonyRequirements->getRequirements();
 
@@ -144,8 +143,8 @@ class InstallNewscoopCommand extends Console\Command\Command
         $output->writeln('<info>Database schema has been processed successfully.<info>');
         $demositeService->installEmptyTheme();
         $output->writeln('<info>Empty theme has been installed successfully.<info>');
-
-        $finishService->saveCronjobs();
+        $schedulerService = $container->get('newscoop.scheduler');
+        $finishService->saveCronjobs($schedulerService);
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
         $output->writeln('<info>Proxies have been generated successfully<info>');

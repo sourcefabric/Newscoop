@@ -26,6 +26,7 @@ class SystemPrefController extends Controller
     {
         $em = $this->container->get('em');
         $preferencesService = $this->container->get('system_preferences_service');
+        $schedulerService = $this->container->get('newscoop.scheduler');
 
         $locations = $em->getRepository('Newscoop\NewscoopBundle\Entity\CityLocations')
             ->createQueryBuilder('a')
@@ -38,6 +39,17 @@ class SystemPrefController extends Controller
             ->select('count(a)')
             ->getQuery()
             ->getOneOrNullResult();
+
+        $jobs = $em->getRepository('Newscoop\Entity\CronJob')
+            ->createQueryBuilder('j')
+            ->select('j.id', 'j.name', 'j.enabled', 'j.schedule')
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach ($jobs as $key => $job) {
+            $jobs[$key]['nextRun'] = $schedulerService->getNextRunDate($job['schedule']);
+            $jobs[$key]['prevRun'] = $schedulerService->getPreviousRunDate($job['schedule']);
+        }
 
         $hasManagePermission = false;
 
@@ -267,6 +279,7 @@ class SystemPrefController extends Controller
             'mysql_client_command_path' => $mysql_client_command_path,
             'map_marker_source_default' => $default_marker_source,
             'map_marker_source_selected' => $preferencesService->MapMarkerSourceDefault,
+            'jobs' => $jobs
         );
     }
 
@@ -281,6 +294,50 @@ class SystemPrefController extends Controller
 
         try {
             $cacheDriver->deleteAll();
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
+     * @Route("/admin/preferences/job/enable/{id}", options={"expose"=true})
+     */
+    public function enableJobAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $cacheService = $this->get('newscoop.cache');
+        $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
+
+        try {
+            if (!$job->getEnabled()) {
+                $job->setEnabled(true);
+                $em->flush();
+                $cacheService->clearNamespace('cronjobs');
+            }
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
+     * @Route("/admin/preferences/job/disable/{id}", options={"expose"=true})
+     */
+    public function disableJobAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $cacheService = $this->get('newscoop.cache');
+        $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
+
+        try {
+            if ($job->getEnabled()) {
+                $job->setEnabled(false);
+                $em->flush();
+                $cacheService->clearNamespace('cronjobs');
+            }
         } catch (Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
         }

@@ -27,6 +27,8 @@ class CacheService
      */
     public function __construct($systemPreferences)
     {
+        // TODO: should be solved in diffrent way because we cannot use cache in console commands
+        // for now it solves cache issues for cli
         if (php_sapi_name() === 'cli') {
             $this->cacheDriver = new \Doctrine\Common\Cache\ArrayCache();
 

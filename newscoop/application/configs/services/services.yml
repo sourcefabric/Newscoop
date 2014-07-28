@@ -206,6 +206,9 @@ services:
     newscoop.filesystem:
         class: Newscoop\Services\FilesystemService
         arguments: ["@em"]
+    newscoop.scheduler:
+        class: Newscoop\Services\SchedulerService
+        arguments: ["@em"]
 
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml
     # search_indexer:
