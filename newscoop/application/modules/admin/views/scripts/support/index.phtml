@@ -38,7 +38,7 @@ $this->placeholder('title')->set($translator->trans('Support Feedback', array(),
 
     <p><i><?php echo $translator->trans('By clicking on Yes, help Newscoop button, I agree to $1', array('$1' => '<a target="_blank" href="http://www.sourcefabric.org/en/about/policy/">Sourcefabric\'s privacy policy</a>'), 'support'); ?></i></p>
     
-    <form method="post" id="support_send_form" action="<?php echo $this->url(array('controller' => 'support', 'action' => $this->action), 'default'); ?>">
+    <form method="post" id="support_send_form" action="<?php echo $this->url(array('controller' => 'support', 'action' => $this->action), 'admin'); ?>">
         <input type="hidden" id="stat_ask_time" name="stat_ask_time" value="7 days" />
         <input type="hidden" id="support_send" name="support_send" value="<?php echo($this->support_send); ?>">
         <input type="button" style="font-size: 12px; float: right;" class="save-button yes" value="<?php echo $this->escape($translator->trans('Yes, help Newscoop', array(), 'support')); ?>">

@@ -1,13 +1,13 @@
-line: null
-template: null
-'Unknown error: $1': null
-'Unrecognized tag <em>$1</em>': null
-'Unknown reference <em>$1</em>': null
-'Invalid property <em>$1</em> of object <em>$2</em>': null
-'Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>': null
-'Invalid parameter <em>$1</em> in statement <em>$2</em>': null
-'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': null
-'Missing parameter <em>$1</em> in statement <em>$2</em>': null
-'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': null
-'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': null
-'Invalid template <em>$1</em> specified in the <em>$2</em> form': null
+line: sətir
+template: nümunə
+'Unknown error: $1': $1
+'Unrecognized tag <em>$1</em>': 'Tanınmayan <em>$1</em> teqi'
+'Unknown reference <em>$1</em>': 'Naməlum <em>$1</em> rəyi'
+'Invalid property <em>$1</em> of object <em>$2</em>': '<em>$2</em> obyektinə aid <em>$1</em> üçün səhv ünvan'
+'Invalid value <em>$1</em> of property <em>$2</em> of object <em>$3</em>': '<em>$3</em> obyektinin <em>$2</em> ünvanına aid <em>$1</em> üçün səhv dəyər'
+'Invalid parameter <em>$1</em> in statement <em>$2</em>': '<em>$2</em> ifadəsinin <em>$1</em> səhv parametri'
+'Invalid value <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': '<em>$3</em> ifadəsində <em>$2</em> parametrinin <em>$1</em> səhv dəyəri'
+'Missing parameter <em>$1</em> in statement <em>$2</em>': '<em>$2</em> ifadəsində <em>$1</em> çatışmayan parametri'
+'Invalid operator <em>$1</em> of parameter <em>$2</em> in statement <em>$3</em>': '<em>$3</em> ifadəsində <em>$2</em> parametrinin <em>$1</em> səhv operatoru'
+'Invalid attribute <em>$1</em> in statement <em>$2</em>, <em>$3</em> parameter': '<em>$3</em>parametri, <em>$2</em> ifadəsində <em>$1</em> səhv atributu'
+'Invalid template <em>$1</em> specified in the <em>$2</em> form': '<em>$2</em> formasinda səciyyələnmiş <em>$1</em> səhv nümunəsi'

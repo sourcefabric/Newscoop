@@ -234,6 +234,9 @@ class CommentsController extends Controller
 
                 $em->getRepository('Newscoop\Entity\Comment')->setStatus($comments, $status);
                 $em->flush();
+
+                $cacheService = $this->container->get('newscoop.cache');
+                $cacheService->clearNamespace('comment');
             } catch (\Exception $e) {
                 return new JsonResponse(array('message' => $e->getMessage()));
             }

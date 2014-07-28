@@ -1,0 +1,635 @@
+
+VERSION 4  FIRST NEWSCOOP 4.3 ALPHA, INSTALLABLE, WITH ALMOST ALL FEATURES, ALMOST READY TO FREEZE, ENJOY
+=========================================================================================================
+
+   Version 4.3 - First Newscoop 4.3 alpha, released with liip/rmt, close to code freeze, first weekly release, enjoy
+      17/07/2014 22:28  4.3.0-alpha  initial release
+         c8e45e9 move RMT to newscoop dir
+         4bcc122 Merge pull request #764 from sourcefabric/pre_alpha_fixes
+         974f7ec update composer
+         0804611 fix plugin manager - enabled/disabled method
+         709f59f Merge pull request #763 from terwey/editorBundle
+         cf4691a Merge pull request #761 from ahilles107/plugins_fixes
+         32b0372 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         ee3573d Merge pull request #762 from terwey/pluginManager
+         8c21b2e remove unwanted comment
+         758bb52 Implements a rudimentary way to check if the AES plugin is Enabled, if so, use a different URL
+         2b7d80e Removes the unneccesary intval
+         5ece6d9 Merge branch 'patch-1' of https://github.com/acalisma/Newscoop
+         30dd7b8 improve install sql, fix issue with not existing publication
+         e0016cb Merge pull request #760 from ahilles107/performance
+         97ed06d don't cache user object - it's serialized only with id, fix caching has_topic
+         5fe2578 Merge pull request #758 from ahilles107/protect_dirs
+         ead17a2 deny access to logs and cache directory
+         aad748b Merge pull request #752 from takeit/master
+         d124619 Merge pull request #757 from takeit/v4.3
+         19129ca composer.lock fix update
+         c392a92 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into v4.3
+         875a223 Merge pull request #742 from ahilles107/performance_3
+         933a490 fix fetching user from metaauthor
+         144eaaa clear comments cache on comment hide
+         cf1c2cc Merge pull request #719 from snurolss/master
+         a6c9fa0 clear chace after modyfing article property
+         7ba5511 improve cache clearing for comments
+         dd8eda1 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into performance_3
+         25318b8 improve cache clearing
+         c0b8245 Merge pull request #754 from ahilles107/master
+         2764ef7 Merge pull request #756 from takeit/installer
+         adaf1c3 autoId table fix when fresh install
+         cf8f28f autoId table fix when fresh install
+         1d4a693 Update MetaArticle.php
+         e7338dc updated translation resources
+         e355fe8 updated translation resources
+         1656fb4 add url, issue, section to article resource in api, fix playlist articles resource, fix statistics collection popup
+         0c1e205 fix cachekey in ArticlesList
+         72b11b3 fix wrong var name, add lock file
+         eff39d8 move secret key and installation id to install process
+         90b2350 Merge pull request #753 from m038/WOBS-2944
+         cd7f2ca WOBS-2944: Updates time_updated field for articles when toppics are changed
+         ccc346a oauth2 command change
+         7a4aa45 updated translation resources
+         43fd8f7 access token from CLI fix
+         1f7b6c2 secret key fix
+         cffe294 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into performance_3
+         9df5260 Merge pull request #751 from takeit/master
+         eca40d6 remove line
+         fe39312 README.md update
+         ce4be60 behat fix
+         35bcd48 composer update
+         812fcf3 fix cache key in theme translations listener
+         3f877ad Merge pull request #749 from terwey/jsRouteFix
+         2042c19 Merge pull request #750 from takeit/master
+         23f7754 removed not used notification controller and improve upgrade script for cli
+         b9139c2 add cached objects clearing
+         f467dc3 Merge pull request #744 from takeit/master
+         47f8f31 specs fix
+         ddb3cba revert
+         5b91642 final CLI Newscoop installer fix 2
+         4a236b5 final CLI Newscoop installer fix
+         a917b43 updated translation resources
+         1484d9c oauth tables fix
+         b48fb38 oauth table fix
+         f135085 Exposes the oAuth Route
+         5f095d3 fix authorize controller
+         b70d4d1 fix
+         47ab1d0 strict standard fix
+         b910204 typo fix
+         d7010d9 authorize form fix
+         7be9a75 cahce fix
+         82917c1 Merge pull request #748 from terwey/jsRouteFix
+         6ce7946 Exposes the newscoop_gimme_comments_getcommentsforarticle_1 route
+         9de9c63 cache fix try
+         f1cf069 Merge branch 'performance_3' of https://github.com/ahilles107/Newscoop into performance_3
+         3248df9 fixes when using CLI
+         76f64d6 travis recheck 2
+         a20e302 travis recheck
+         a77353f updated translation resources
+         72ca07d travis another test
+         011ca5e Merge pull request #747 from terwey/jsRouteFix
+         2c28054 The order is important to Route, this corrects it.
+         74c018f travis test3
+         84160a9 Merge pull request #746 from terwey/jsRouteFix
+         76b6aff travis test2
+         b645620 Properly quotes the word expose
+         da98c6a Merge pull request #745 from terwey/jsRouteFix
+         ea96f5f Unexposes the DefaultController
+         c8982ed Unexposes the ConfigureAPIController
+         5bcf3ee Adds the expose=true option to the Route because the routing.yml from FOSRestBundle doesn't leak this information through to the JSRoutingBundle
+         1328a3d travis test
+         d440dc0 updated translation resources
+         2b3d55f travis check
+         92953b1 fix
+         659e89b install assets fix
+         8ef76f4 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         717dcaf travis revert
+         e0e8b2e travis check2
+         fc763c3 travis check
+         fd5521c fix
+         35baa63 install guide improvemement
+         c5b9048 fixes
+         f51be49 install doc update
+         46bf6a8 ubuntu documentation improvement and installer fix
+         7b01380 Merge branch 'master' of github.com:sourcefabric/Newscoop
+         b9a7080 fix user points, disable caching on cli for now
+         a93ab54 updated translation resources
+         d16726c updated translation resources
+         e0a4230 newscoop ubuntu install guide improve
+         c01d18c doc image fix
+         879e184 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         e9012f6 installer fixes and documentation
+         30b11f3 Merge branch 'clean_performance_improvements' of https://github.com/ahilles107/Newscoop into performance_3
+         d28891e some fixes
+         0078fbc Merge pull request #740 from takeit/master
+         16b31cf get rid off dispatching unused events
+         cb0e494 CS-5455 - JS being loaded twice
+         4f0aa76 added dot
+         67c7b76 hide comments status bar when no comments
+         6888a4e revert to master
+         d0ae62b Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         b1aad08 CS-5055 - Numbers of comment is showing 1.,2.,.3, even user is on the second or third page of comments list
+         23fc539 updated translation resources
+         fdc64cf updated translation resources
+         21ce7ce Merge pull request #729 from takeit/master
+         c4c321c Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         9f6219a Merge pull request #738 from takeit/points
+         e1c1487 user points fix when no connection between author and user
+         55cae5c assign author to user if its not assigned to properly count points
+         d2801cc assign author to user if its not assigned to properly count points
+         9fdc9a8 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         d61ba45 Merge pull request #737 from takeit/points
+         afb030d WOBS-3326 - Hidden comment is a part of points in profile
+         c497fad remove diplucates from authors search
+         95f9d27 WOBS-3326 - Hidden comment is a part of points in profile
+         b31387b remove diplucates from authors search
+         dda5c4e Merge pull request #736 from m038/WOBS-3327
+         de0593b WOBS-3327: Adds parameter status to list_user_comments
+         a6130a9 remove uneccessary methods from installer
+         46333e6 fix cs
+         63f5e54 CS-5445 - Simpler Installer
+         e3053ff installer first phase
+         4f9a063 updated translation resources
+         74c9e9e Merge pull request #734 from m038/CS-5033
+         fc0d872 CS-5033: Fixes typo
+         ee83ecb Merge pull request #733 from m038/CS-5033
+         8b9485c Merge pull request #732 from m038/CS-5432
+         6292d02 CS-5033: Adds functionality to use specific protocol in smarty
+         aba106e Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         6e08ffd CS-5432: Adds searching for full name
+         600d0bd updated translation resources
+         0e04f53 Merge pull request #731 from m038/CS-5444
+         0319449 CS-5444: Changes tagged version to one corresponding with previous commit hash (2.1 doesn't work)
+         481195c updated translation resources
+         8bdfcf1 Merge pull request #730 from m038/CS-5444
+         0d637df CS-5444: Fixes issue with missing composer depedencies
+         62807d4 fixes
+         f8e2fa5 Database override message alert shows up in next step, should show up in /install/prepare
+         350a407 travis check v4
+         f762da1 travis check v3
+         ebb9244 travis check v2
+         3c428bb CS-5432: Fixes translations and displays 20 instead of 10 results in select2 autocomplete
+         eb45dd0 travis check
+         0953ce1 CS-5432: Fixes indentation
+         857404e CS-5432: Set mimimum of search characters to 1
+         e0b014d CS-5432: Fixes translation domain typo
+         5205f86 Merge remote-tracking branch 'upstream/master' into CS-5432
+         4d07639 CS-5432: Adds autocomplete functionality for topics, authors and creators in universal search
+         0600c4f When overriding already existing database the Integrity constraint violation occurs
+         d801898 fixes
+         70c3b6e Invalid catalog name: 1046 No database selected fix
+         4f05ea3 updated translation resources
+         b3c683d updated translation resources
+         3628497 merge fix
+         c0a63e1 resolve merge conflict
+         2ca0d9e Merge pull request #728 from takeit/sql-optimize
+         23b3a08 Merge branch 'master' of github.com:sourcefabric/Newscoop
+         003f21e Merge branch 'CS-5413' of https://github.com/terwey/Newscoop
+         d23f03e updated translation resources
+         fa6de54 user points fix for authors
+         08c53a5 user points fix for authors
+         6929da9 Merge pull request #685 from terwey/patch-5
+         daa280b Merge pull request #667 from ahilles107/CS-5332_author_related_resources
+         c79b3c2 Merge pull request #727 from ahilles107/fun_friday
+         3a5a39d Merge branch 'sql-optimize' of https://github.com/takeit/Newscoop
+         35c07e1 Merge pull request #708 from takeit/v4.3
+         c611367 documentation block fix
+         5d4ee2b remove comments
+         a3c3cc2 add/remove user points also for authors of the articles
+         753384d Merge branch 'WOBS-3298' of https://github.com/terwey/Newscoop
+         f7633b8 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into sql-optimize
+         408d15f updated translation resources
+         fb15f38 Merge branch 'fun_friday' of https://github.com/ahilles107/Newscoop into v4.3
+         fb7f3ed add short stats for dashboard
+         8d32f5a Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         853c1f7 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into v4.3
+         9ae1fb9 remove points when article is deleted
+         11f8a5f user points fix if
+         d0375b2 user points fix
+         7bc0aab CS-5432: Optimizes backend universal search by only loading lists when filter is selected by user
+         146b8b7 updated translation resources
+         c4c4bf5 updated translation resources
+         e28bf92 Merge remote-tracking branch 'upstream/master' into CS-5432
+         e67f94f updated translation resources
+         613966e Merge pull request #725 from ahilles107/fix_performance
+         b4e1544 small fixes already done on tw production
+         c68e88b Merge pull request #714 from m038/CS-5033
+         884f0f1 userlist fix
+         1a78dd7 points fix
+         eb7e7af merge fixes
+         3ae8868 Rewrite/Optimize saving users points v2
+         16d6d3d Merge pull request #723 from ahilles107/fix_performance
+         d990395 CS-5435 - Rewrite/Optimize saving users points
+         6e342d9 Merge branch 'sql-optimize' of https://github.com/takeit/Newscoop into fix_performance
+         ae3e5fb small fixes
+         5647c9d apply most important cachings and clearing in respective actions
+         4cc0f71 merge fix
+         d5aecfd merge master
+         d8c8bb5 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into sql-optimize
+         89e997c Merge pull request #716 from ahilles107/fix_performance
+         12d7a37 authors fixes
+         2b330a3 Merge pull request #2 from m038/CS-5432
+         4eaa37f Merge remote-tracking branch 'rafal/sql-optimize' into CS-5432
+         7740bc4 CS-5432: Merges methods and adds parameter for users results
+         cf909c5 CS-5432: Adds method for only retrieving authors
+         555ee8b authors fix
+         d2320fd permissions fixes
+         6216131 Merge branch 'master' of https://github.com/sourcefabric/Newscoop into sql-optimize
+         9ad3000 CS-5433 - Adding authors to article overloads
+         c2bf511 updated translation resources
+         79a287f Merge pull request #720 from takeit/sql-optimize
+         bc72ba9 CS-5033: Refrasing of system preferences text
+         e195999 CS-5424 - [slow query] very slow articles query
+         8aaa3ee CS-5033: Removed comment on advice from Paweł
+         dde5e89 CS-5033: Makes comment more consistent with preference name
+         bca9085 Update ContainerAwareUnitTestCase.php
+         9a4f75f Update FieldsHandler.php
+         1825ff6 remove ordering by points on the fly
+         9df3638 Update post-install.sh
+         c8ecce7 Update phpunit.bootstrap.php
+         a007407 Loops through the groups if multiple
+         24de91a add temporary users_points updating
+         f12b2de remove distinct
+         67f7f4c Merge pull request #718 from m038/CS-5424
+         3e3b609 improve users listing
+         f0fe82f updated translation resources
+         f64507c CS-5033: Adds methods in template engine classes for protocol relative urls
+         1cbd8c9 Removes the sub-query to improve speed
+         f4911c5 Merge remote-tracking branch 'upstream/master' into CS-5424
+         59e03db CS-5424: Adds index to Id field in KeywordIndex table
+         d1d627b Removes the DISTINCT from the COUNT query, there can never be multiple returns anyway
+         db34ffe Merge branch 'master' of https://github.com/sourcefabric/Newscoop into v4.3
+         d39f9bd access denied message
+         3bf9951 fix countByUser function queries
+         dc5e277 Merge pull request #715 from terwey/WOBS-3298
+         e8042dc access denied exception listener
+         9c77a42 Fixes WOBS-3298
+         1c55bd4 CS-5033: Adds SmartyUseProtocol system preference to upgrade procedure
+         26a4b7e CS-5033: Changes service name and changes smarty parameter to be consistent with system preference
+         a0d28f7 CS-5033: Adds systempreference for protocol in Smarty generated urls
+         b0c8859 CS-5033: Adds option to disable protocol for generating urls
+         d760488 CS-5422- Backup / restore scripts are outdated and doesn't work properly
+         c5d85af Merge pull request #712 from ahilles107/fix_performance
+         2b7cce3 improve sections caching
+         a60c17a improve sections caching
+         ab4e9dd remove plugin permissions when uninstall plugin action is taken
+         cb426fd cache only filled sections list
+         75aafa2 Merge branch 'master' of github.com:sourcefabric/Newscoop into fix_performance
+         1442bfb updated translation resources
+         20f3bef Merge branch 'master' of https://github.com/sourcefabric/Newscoop into v4.3
+         e4d9ddb fetch only given plugin permissions instead of all plugins permissions
+         3a09654 disable buggy templates checking
+         390ef48 updated translation resources
+         2e77cd1 updated translation resources
+         dd2b355 table alert, twig extension for permissions
+         86fc20e Merge pull request #711 from terwey/CS-5411
+         4e12cc1 plugins service fix
+         80f635e Fixes the ShortURL problem
+         b389fcc updated translation resources
+         683a830 Merge pull request #706 from terwey/CS-5411
+         5742b88 setting up plugins permissions in backend
+         05db143 [api] fix update of article-author type
+         9f68024 fix authors reordering
+         f638613 CS-5410: use 404 code for responses without items
+         c699d25 doc block fix
+         6df0aab doc block fix
+         7a1a2a3 [CS-5401] reorder article authors after removing one
+         4a45e55 updated translation resources
+         60fc6b7 Support for new plugins permissions (ACL)
+         a4428a5 merge
+         01d7165 Support for new plugins permissions (ACL)
+         5858867 Clears the cache for the Attachment CacheKey
+         a400be2 Bugfixes
+         d0b1a26 Caches the hasAttachment() result in the MetaArticle and the ArticleAttachmentsList
+         44a2647 Caches the has_image in the MetaArticle
+         a0abb16 Caches the MetaImage
+         926361f Bugfixes
+         6930fa4 Bug
+         5694042 Caches the ArticleImagesList
+         b834779 Caches the ArticleImageIndex
+         d905ef6 Caches another MetaImage object
+         010c972 Fixes a small bug in caching the ArticleImage
+         e4ae2ca Caches the MetaImage for the Article
+         e5b82f5 Adds a namespace to the ArticleTypeField cachekey
+         c374a8f Adds a namespace to the OutputService cachekey
+         b41fb3a Caches the CurrentIssue
+         5f05e4e Fixes a bug where an array is included
+         d64ab58 Implements a __toString on the ComparisonOperation object
+         0ed232f Caches the Themepath for the Issue
+         e6d7ba9 Caches the IssueThemePath
+         4b97055 Caches the Publication inside the MetaArticle's getCommentsEnabled
+         a74be11 Caches the sectionList
+         b052625 Also cache the Issue if a name is known
+         99f7db1 Small fix
+         7401ca8 Fixes a bug where in GetInvalidURLTemplate the cacheService was undefined
+         fdbaa6f Clears the cache for the Publication, Alias, Issue and Section objects
+         0edba49 Caches the WebOutput Issue information
+         23524e8 Caches the GetCurrentIssue, GetSection and corrects namespaces
+         105302d Caches the GetIssueTemplate and GetSectionTemplate in the CampSystem
+         444aef6 Caches the GetCurrentIssue and MetaIssue object
+         074767a cache objects in metaclasses
+         331d243 implement database cache to most used objects
+         e3a4000 revert camptemplate
+         251dff1 improve translations listeners
+         d412e65 Don't fetch all plugins one by one
+         59d4b67 Merge pull request #13 from terwey/optimise
+         1498690 Merge pull request #703 from m038/CS-5404
+         1bcb798 updated translation resources
+         2a2bba6 Caches the Template Cachelifetime inside the smarty render
+         c548da1 Caches the MetaImage
+         9e89c61 Caches the Templates Cachelifetime
+         f3b32a4 Caches the Template cacheLifetime
+         7e0c0df Caches the metaBoxArticlesList
+         96a416f Fixes a bug in the IPAccess caching
+         2ba861e Clears the cache for the Attachment CacheKey
+         3f2d7cd updated translation resources
+         8564db1 caches the Article in the MetaArticleBodyField
+         c4c9f6d Caches the ArticleList in the block.list_articles
+         bb9be4a Caches the Articlelists
+         58832e7 Caches the MetaUser for the MetaAuthor
+         26c9ff4 Namespace
+         5384906 Caches the counting of comments
+         d878859 Caches the has_topic
+         3bd9e13 Caches the ArticleTopicList
+         16b17b5 Bugfixes
+         bffbbb1 Caches the MetaTopic
+         40f64ff Caches the Language object inside the smarty_modifier_camp_date_format
+         4cfe179 Caches the has_image in the MetaArticle
+         18b73c0 Caches the CurrentIssue
+         e4eaab2 Caches the Authors
+         c2bccb1 Caches the IPAccess information
+         9004f90 Fixes a bug where an array is included
+         f821689 Implements a __toString on the ComparisonOperation object
+         c25aa22 updated translation resources
+         f124522 updated translation resources
+         e2d012e Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         f2abcf2 Caches the Themepath for the Issue
+         ab269f6 CS-5404: Removes values for id field
+         412c7ad Caches the IssueThemePath
+         df2c40e Caches the articleTypeObj
+         57a145b Caches the sectionList
+         b8f1549 Caches the ObjectType
+         baba9b8 Caches the ArticleTypeField
+         2e9ea1c Also cache the Issue if a name is known
+         454115c Caches the hasAttachment() result in the MetaArticle and the ArticleAttachmentsList
+         31c5060 updated translation resources
+         88fa297 Small fix
+         32613a5 Merge pull request #700 from takeit/v4.3
+         e5cfd9e regisster controller fix
+         10a970d updated translation resources
+         83372ef access token fix
+         c7d0032 access token fix
+         f5ee732 updated translation resources
+         0a13187 updated translation resources
+         be040d4 updated translation resources
+         90101b2 Fixes a bug where in GetInvalidURLTemplate the cacheService was undefined
+         bb5eee6 Merge pull request #692 from takeit/v4.3
+         7ac687f merge tw-temp to master
+         3ee6883 Merge pull request #696 from takeit/temp
+         2f3b5cf logout from zend
+         2627fb3 fixes
+         7346873 logout handlers
+         45a22d0 fb login fix
+         5d9276b add clearing cache for objects modify actions
+         69b5132 Bugfixes
+         de0ef96 Bug
+         1603826 Caches the ArticleImagesList
+         8045985 logout handlers
+         658f2d6 Caches the ArticleImageIndex
+         a160ea9 Caches another MetaImage object
+         1354266 Fixes a small bug in caching the ArticleImage
+         3ff2df6 Caches the MetaImage for the Article
+         6ef006f Merge branch 'optimise' of https://github.com/terwey/Newscoop into clean_performance_improvements
+         dc8b2a7 Caches some more objects in the CampSystem
+         2a710c6 Adds caching to the ArticleType
+         12b6610 Merge pull request #695 from takeit/temp
+         2a22c8e added public resource route
+         f6a067a Merge pull request #694 from takeit/temp
+         9aaa650 typo fix
+         82a09b0 services.yml update
+         4a697f0 services.yml update
+         004b3d6 Merge pull request #693 from takeit/temp
+         2d4dabf frontend success logout handler
+         7c78b26 frontend success logout handler
+         e553c9e removed curl, replaced by symofny request -response handle
+         e6599bf removed curl, replaced by symofny request -response handle
+         ff284ba duplicate property assign removed
+         e703441 call frontend success handler via API
+         2bf670b fixes
+         77b8088 Merge branch 'master' of github.com:sourcefabric/Newscoop into v4.3
+         de61548 fix
+         57df494 Implements caching in the MetaArticle
+         f2ea5de call frontend success handler via API
+         f2d0daa Implements more caching
+         6ca0e86 fixes
+         509eb82 Removes the old CampCache and implements the new Caching mechanism in the CampSystem
+         e0a6968 Adds more caching to CampURIShortNames
+         c07054a removed listener not implemented yet in tw-temp
+         efcd805 api doc fix
+         bd8bfdb oauth cherry pick
+         e6a4137 cherry picked
+         c6fdb45 Create trusted property for API apps
+         3ca2875 cherry pick
+         fb9deea added route to trusted & fixes
+         a6bff36 Adds caching to the ArticleTypeField
+         3a32e5e Merge branch 'tw-temp' of github.com:sourcefabric/Newscoop into temp
+         596b617 api doc fix
+         640da8a Getting user access token by API and automatically log in to oauthprovider
+         24b73a9 More descriptive keys for the caching
+         88fbfa1 Fixes the serialization and unserialization of the Object
+         4fe1246 Caches the Language Class object
+         df35fe5 Fixes the loading of the 'legacy' Language at the source
+         b228c24 Checks in the Language class if the languageCode provided is Legacy and then returns an empty array
+         586f230 updated translation resources
+         9d4f38d Merge branch 'master' of github.com:sourcefabric/Newscoop into clean_performance_improvements
+         2a0683f updated translation resources
+         c1c013f Create trusted property for API apps
+         f811de8 WOBS-3261 - Adding new client for api access doesn't work
+         3e56daa Implements the cacheService for the MetaAttachment
+         21eba07 Implements the cacheService for the MetaLanguage
+         f21c4e6 updated translation resources
+         69737cf cache objects in metaclasses
+         859a82b updated translation resources
+         901c491 updated translation resources
+         029ba32 updated translation resources
+         701a0a8 implement database cache to most used objects
+         9fbbbaf updated translation resources
+         9380710 Merge pull request #691 from takeit/v4.3
+         a2f18c0 WOBS-3258 - TW: Attachments should be automatically approved in media archive again
+         d3caabe updated translation resources
+         dbd220b revert camptemplate
+         07dc467 improve translations listeners
+         38b02de Don't fetch all plugins one by one
+         7f1ed64 Merge pull request #689 from takeit/v4.3
+         bec1381 merge fix
+         051746c set up user address properties
+         1365088 changes needed for memberships support
+         23d11c7 updated translation resources
+         9f9e9b8 updated translation resources
+         b417402 [api][docs] improve docs
+         298e387 [api][docs] improve docs
+         080a5f7 Merge branch 'master' of github.com:sourcefabric/Newscoop into CS-5332_author_related_resources
+         b4b47f9 [new_api_resource] add checking order parameter
+         5cf3fd6 [new_api_resource] implement articleauthors sorting
+         c92e1c2 Merge pull request #687 from danielhjames/master
+         813f2ab Fix broken link to wiki
+         26df764 Merge pull request #686 from ahilles107/oauth_remember_access
+         4a5d665 [api] add missing create tables
+         6aa4c60 [api] remember user access for client
+         e36e83c CS-4908
+         5397816 Merge pull request #684 from takeit/v4.3
+         13838a8 Merge branch 'master' of github.com:sourcefabric/Newscoop into v4.3
+         ac7e40c CS-4874 - Add / at the end of folder name in htaccess template file & CS-5368-Restore of backup is brake on back-end or terminal
+         7a4abda Merge pull request #681 from ahilles107/CS-4688_duplicated_sections
+         2256ba8 Merge pull request #682 from ahilles107/CS-4691_slideshows
+         a342a0f [api_resource] CS-4691: Slideshow hasn't attribute for source of image/video
+         dcad2c6 [api_resource] revert public to protected
+         0a96fbd [api resource] add publication name and issue name to section response
+         1889e88 Clear cache before using db with command, add real error output.
+         f170a21 Merge pull request #676 from takeit/v4.3
+         cb04a80 assign theme improvement
+         43a5365 improve assign theme command to assign selected theme
+         a0b931b languages fix in demo table
+         2e031ca description fix
+         abe8930 hungarian and az languages
+         877eeb9 CS-5334 - Upgrade SQL needed for new localizations
+         3fc3937 CS-4899 - Install process is not working
+         8a86b12 http_response_code fix and remove community ticker from demo data as it causes some problems
+         311e434 added demo data to community ticket table
+         382666b Merge branch 'master' of github.com:sourcefabric/Newscoop into v4.3
+         3c9e3e3 changed info to release
+         73062aa added community ticker table structure to demo data
+         a8fbfac alias fix
+         dd621e9 revert
+         a76d575 README update
+         6ddef6f release fixes
+         157ea4b add default site alias
+         bb1d20c Merge pull request #677 from ahilles107/CS-5328_better_error_pages
+         0416dac CS-5328: convert tabs to spaces
+         9f6d63a CS-5328: On newscoop side error the http code shouldn't be 200 to avoid caching by proxy
+         c5b1a30 command name change
+         3f9549b remove em in fetch publications command
+         c5448e2 console command to fetch publications
+         9141212 fixing typos
+         4f6b9bb fix templates installer
+         40b1ea8 [api] Get pagination only when exists.
+         d766767 demo data
+         869f08a [wip] prepare sorting
+         4e4ecb1 CS-4944 - Installer fails as users table is missing
+         4f69dd3 merge tw-temp to master
+         d609945 Merge branch 'master' of github.com:sourcefabric/Newscoop into v4.3
+         f61fdbd test
+         240fdd1 remove pagination from array
+         a18ceec revert pagination for article images.
+         32c7e6c Merge pull request #671 from takeit/temp
+         6720ab3 [new_api] CS-5332: unlink article author from article
+         65a971b [api resource] CS-5332 add article author type update
+         03188ed [api] CS-5332 - add authors search
+         8589c80 WOBS-3215 - Invalid security token is showed during attach images process after life time
+         331a275 [api] CS-5332 - add authorstypes and articlesauthors
+         3e646c8 Merge pull request #670 from takeit/temp
+         c718d59 attach topic on  enter button fix - dont do anything if no topic found
+         d43e28e Merge pull request #669 from takeit/temp
+         2be7621 attach topic on enter hit, don't add new one
+         bb6c0ab Merge pull request #666 from takeit/temp
+         120a074 add missing resources proposal
+         cfc97a3 authors resources
+         664e260 Merge pull request #659 from ahilles107/plugins_manager
+         5a8a598 [WOBS-3211] - Article editor is showing Fatal error after life time
+         6531d84 added more fields for original image in image block
+         7eb84a8 added more fields for original image in image block
+         c511275 Merge pull request #663 from takeit/temp
+         84a445e user profile fix
+         ee2f2df fix author route name.
+         e062b38 Merge pull request #662 from takeit/temp
+         e0439b1 Merge branch 'tw-temp' of github.com:sourcefabric/Newscoop into temp
+         c2d9f1b extend session lifetime form input to enter max 24 hours
+         009c71b Merge pull request #658 from ahilles107/api_docs
+         c0446bf [api_docs] fix error handling in article types and articles controllers
+         b3081b9 [api_docs] add api docs to missing controller
+         1028268 Merge pull request #657 from takeit/temp
+         eb580db fix
+         a3425ba authentication listener fixes
+         13f3ccc typo fix
+         8047c57 backend session listener
+         d456d86 session expiration fix
+         f6cc150 Merge pull request #655 from takeit/temp
+         b9b9a50 WOBS-3189 - Fix the slider: Users comments on user profile pages
+         65898ef [plugins manager] improve upgrade command, fix checking if private plugin is installed, make new plugins manager default
+         07f83fb Merge pull request #654 from ahilles107/CS-4922_images_search
+         52e632a [api fix] fix fetching highest number of attached to article image
+         4438b38 Merge pull request #652 from ahilles107/CS-4922_images_search
+         9cd9d5d [api change] change unlink route to have language in it
+         62480a4 CS-4922: query param is not required
+         8f3c524 CS-4922: images search, insert image polish translation, fix in linking objects to article
+         e42060e Merge pull request #651 from terwey/patch-4
+         23bdf42 Update GenerateORMSchemaCommand.php
+         81821c2 CS-4922: fix in image uri handler and start for images search controller
+         bd111a8 Merge pull request #646 from takeit/temp
+         300e868 Merge branch 'tw-temp' of github.com:sourcefabric/Newscoop into temp
+         b052535 Merge pull request #649 from ahilles107/CS-4996
+         6cd43da CS-4996: Provide image for comment author (commenter object is added to comment response)
+         43f96ca Merge pull request #648 from ahilles107/CS-5330_api_expand
+         8093fb0 support query param expand to change serialization group to details. error handling improvement
+         8795cef Merge pull request #647 from ahilles107/fix_api_error_handling
+         22b772f remove unwanted translation entity change
+         20fa2bb fix exceptions handling for api
+         4d195d5 ban fix
+         a6f5ee5 Change First name and Last name in user ban settings
+         a278049 [WOBS-3151] - Support Community TagesWoche | added info about publication that user registered with
+         b778ec0 Merge pull request #645 from ahilles107/CS-5329
+         ccf99c9 accept also full urls for linked resources
+         d4aaf21 Merge pull request #640 from takeit/temp
+         2ca3a7f Merge pull request #643 from m038/WOBS-3177-tw-temp
+         ef2704e Merge pull request #642 from m038/WOBS-3177
+         b070ccb WOBS-3177: Adds missing code to core for this feature
+         f0244d3 fixes
+         89bf25c WOBS-3177: Adds missing code to core for this feature
+         63b7614 Merge pull request #641 from ahilles107/master
+         727826c Merge branch 'tw-temp' of github.com:sourcefabric/Newscoop
+         d4f6acf [WOBS-3180] - Users list pagination doesn't work properly
+         93a9d99 Merge pull request #639 from takeit/tw-temp
+         a8b646d FilesystemService & attachments name sanitization
+         e7f9179 Merge pull request #637 from m038/WOBS-3117
+         c5570cb Merge pull request #638 from m038/WOBS-3117-tmp
+         6839187 WOBS-3117: Partially restores previous verion of entity
+         7602161 WOBS-3117: Partially restores previous verion of entity
+         b1b1050 Merge pull request #636 from takeit/tw-temp
+         d8a1d84 revert changes
+         7df38a7 Merge pull request #634 from ahilles107/cleaning
+         2793188 revert current versions
+         86990ba Merge branch 'tw-temp' of github.com:sourcefabric/Newscoop into cleaning
+         28a9d7e Merge pull request #635 from takeit/tw-temp
+         993f08e translation fixes
+         b3e8f16 remove unwanted getId method
+         d34e5a9 [WOBS-3132] - Attached files don’t show up on backside of articles
+         727c465 Merge pull request #633 from takeit/tw-temp
+         605911d [WOBS-3179] - Change commenter name to username in backend
+         ad54d05 cleaning
+         ad2471d [WOBS-3178] - Remove limitation from displaying comments text in backend
+         840ec33 Merge pull request #632 from takeit/tw-temp
+         a7c5f34 removed int
+         1683da4 [WOBS-3152] - Number of contributions "Beiträge" does not seem correct
+         011c607 Merge pull request #631 from takeit/tw-temp
+         f157cee [WOBS-3132] - Attached files don’t show up on backside of articles
+         b4026f4 Merge pull request #630 from takeit/tw-temp
+         cfdcb87 [WOBS-3149] - character count for body text is missing (improvements)
+         a982970 Merge pull request #629 from takeit/tw-temp
+         60e6de0 hide button when no image
+         b6b894d [WOBS-3169] - Author's picture in biography tab & [WOBS-3148] - User image limit
+         debedaa Merge pull request #628 from takeit/tw-temp
+         01af2cc menu improvement and fix
+         907739c Merge branch 'master' of github.com:sourcefabric/Newscoop
+         bee38e3 Release of new version 4.2.16
+         053411c Release of new version 4.2.15
+         f97a10d Release of new version 4.2.14
+         f48527c Release of new version 4.2.13
+         e895461 Release of new version 4.2.12
+         702ad9d Release of new version 4.2.11
+         f8f1918 Release of new version 4.2.10
+         9f1fe1c Merge pull request #626 from takeit/css
+         26df94f css image fix
+         8c0e8a3 Merge pull request #625 from ahilles107/fixes
+         3d84ac8 Merge branch 'attachments' of github.com:ahilles107/Newscoop into v4.3
+         e84066a Merge branch 'attachments' of github.com:ahilles107/Newscoop into v4.3
+
+   Version 4.3 - First Newscoop 4.3 alpha, installable, with almost all features, almost ready to freeze, enjoy
+      17/07/2014 22:14  4.3.0-alpha  initial release

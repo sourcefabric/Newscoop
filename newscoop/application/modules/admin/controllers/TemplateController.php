@@ -262,6 +262,9 @@ class Admin_TemplateController extends Zend_Controller_Action
                 $this->_helper->entity->flushManager();
             }
 
+            $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+            $cacheService->clearNamespace('template');
+
             $this->_helper->flashMessenger($translator->trans("Template $1 $2.", array('$1' => basename($key), '$2' => $translator->trans('updated', array(), 'themes')), 'themes'));
             $this->_redirect(urldecode($this->_getParam('next')), array(
                 'prependBase' => false,

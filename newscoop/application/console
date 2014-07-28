@@ -67,6 +67,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\EventsNotifierCommand(),
     new \Newscoop\Tools\Console\Command\SubscriptionsNotifierCommand(),
     new \Newscoop\Tools\Console\Command\AssignThemeCommand(),
+    new \Newscoop\Tools\Console\Command\SchedulerManagerCommand(),
 ));
 
 $cli->run($input);

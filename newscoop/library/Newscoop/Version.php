@@ -12,7 +12,7 @@ namespace Newscoop;
  */
 class Version
 {
-    const VERSION = '4.3';
+    const VERSION = '4.3.0-alpha';
 
     const API_VERSION = '1.1';
 

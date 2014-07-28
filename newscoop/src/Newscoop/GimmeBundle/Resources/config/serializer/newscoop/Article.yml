@@ -47,6 +47,18 @@ Newscoop\Entity\Article:
                 getter: getLanguageCode
                 setter: setLanguageCode
             serialized_name: language
+        section:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: section
+            since_version: 1.1
+        issue:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: issue
+            since_version: 1.1
         published:
             expose: true
             read_only: true
@@ -149,4 +161,11 @@ Newscoop\Entity\Article:
             read_only: true
             groups: ["list", "details"]
             serialized_name: comments_locked
+            since_version: 1.1
+    virtual_properties:
+        getObject:
+            expose: true
+            groups: ["list", "details"]
+            type: article_url
+            serialized_name: url
             since_version: 1.1

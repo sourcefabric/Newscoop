@@ -18,7 +18,7 @@ class FieldsHandler
 
     public function serializeToJson(JsonSerializationVisitor $visitor, $data, $type)
     {
-        $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../../newscoop/');
+        $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../');
 
         $articleData = new \ArticleData($data->type, $data->number, $data->languageId);
         if (count($articleData->getUserDefinedColumns()) == 0) {

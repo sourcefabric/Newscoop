@@ -56,6 +56,7 @@ class CreateOAuthClientCommand extends Console\Command\Command
         if ($input->getOption('test')) {
             $client->setRandomId('svdg45ew371vtsdgd29fgvwe5v');
             $client->setSecret('h48fgsmv0due4nexjsy40jdf3sswwr');
+            $client->setTrusted(true);
         }
 
         $clientManager->updateClient($client);

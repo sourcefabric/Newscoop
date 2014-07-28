@@ -53,7 +53,6 @@ class InstallNewscoopCommand extends Console\Command\Command
     {
         $container = $this->getApplication()->getKernel()->getContainer();
         $output->writeln('<info>Welcome to Newscoop Installer.<info>');
-
         $symfonyRequirements = new \SymfonyRequirements();
         $requirements = $symfonyRequirements->getRequirements();
 
@@ -125,9 +124,8 @@ class InstallNewscoopCommand extends Console\Command\Command
 
         $tables = $connection->fetchAll('SHOW TABLES', array());
         if (count($tables) == 0 || $input->getOption('database_override')) {
-            try {$databaseService->fillNewscoopDatabase($connection);
+            $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
-
             $databaseService->saveDatabaseConfiguration($connection);
             $command = $this->getApplication()->find('cache:clear');
             $arguments = array(
@@ -137,7 +135,6 @@ class InstallNewscoopCommand extends Console\Command\Command
 
             $inputCache = new ArrayInput($arguments);
             $command->run($inputCache, $output);
-        } catch (\Exception $e) { ladybug_dump($e);die;}
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
@@ -146,10 +143,11 @@ class InstallNewscoopCommand extends Console\Command\Command
         $output->writeln('<info>Database schema has been processed successfully.<info>');
         $demositeService->installEmptyTheme();
         $output->writeln('<info>Empty theme has been installed successfully.<info>');
-
-        $finishService->saveCronjobs();
+        $schedulerService = $container->get('newscoop.scheduler');
+        $finishService->saveCronjobs($schedulerService);
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
+        $output->writeln('<info>Proxies have been generated successfully<info>');
         $finishService->installAssets();
         $output->writeln('<info>Assets have been installed successfully<info>');
         $finishService->saveInstanceConfig(array(

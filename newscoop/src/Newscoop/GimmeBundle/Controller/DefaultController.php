@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class DefaultController extends FOSRestController
 {
     /**
-     * @Route("/.{_format}", defaults={"_format"="json"})
+     * @Route("/.{_format}", defaults={"_format"="json"}, options={"expose"=false})
      * @Method("OPTION")
      * @View()
      */

@@ -1,61 +1,61 @@
-'so that default templates can be assigned to the issue.': null
-'Once this is done, the issue can be published': null
+'so that default templates can be assigned to the issue.': 'deməli o mövcud nümunələr məsələyə təyin edilə bilər.'
+'Once this is done, the issue can be published': 'Bu tamamlanan kimi məsələ nəşr edilə bilər'
 'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Bu məsələyə ön baxış etmək mümkün deyil. Lütfən, nəşrə təyin edilmiş mövzunun mövcudluğuna əmin ol.'
-'This issue cannot be previewed. Please make sure it has the front template selected.': null
-'Publish all articles:': null
-'Publish all articles': null
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
-default: null
-'The publishing/unpublishing can not be set the same time': null
-'The publishing schedule can not be set in the past': null
-'Please assign at least one theme to the publication': null
-'Issue Theme': null
-'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': null
-'The number must be unique for each issue in this publication of the same language.': null
-'The language and URL name must be unique for each issue in this publication.': null
-'Issue created.': null
-'Issue updated': null
-'Could not save the changes to the issue.': null
-'Unpublish on: $1': null
-'There are $1 articles in this issue.': null
-'The issue $1 has been deleted.': null
-Schedule: null
-'Publish on: $1': null
-'Publish Date $1': null
-'Deleted issue': null
-'Delete issue': null
-'Click here to publish this issue': null
-'A total of $1 articles were deleted.': null
-'Name<BR><SMALL>(click to see sections)</SMALL>': null
-'Delete issue $1': null
-'You do not have the right to change issues.': null
-'Are you sure you want to change the issue $1 status from $2 to $3?': null
-'Add new translation': null
-'You do not have the right to add issues.': null
-'The issue $1 has been successfuly added.': null
-'The issue could not be added.': null
-'Change issue details': null
-'You do not have the right to change issue details.': null
-'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': null
-'Front Page Template': null
-'You do not have the right to delete issues.': null
-'Are you sure you want to delete the issue $1?': null
-'Use the structure of the previous issue': null
-'Copy the entire structure in all languages from the previous issue except for content.': null
-'You may modify it later if you wish.': null
-'Create a new structure': null
-'Create a complete new structure.': null
-'You must define an issue type for each language and then sections for them.': null
-'Copy previous issue': null
-'No previous issue.': null
-'Copy structure from issue number $1': null
-'Delete entry': null
-'Issue Publishing Schedule': null
-'Invalid Input: $1': null
-'Issue Number': null
-'Go To Sections': null
-'There was an error reading the language parameter.': null
-'There was an error reading the publication parameter.': null
-'There was an error reading the issue parameter.': null
-'There was an error scheduling the $1 action on $2': null
-'The action scheduled on $1 could not be deleted.': null
+'This issue cannot be previewed. Please make sure it has the front template selected.': 'Məsələyə ön baxış etmək mümkün deyil. Onun ön nümunəyə sahib olduğuna əmin ol.'
+'Publish all articles:': 'Bütün məqalələri nümayiş et:'
+'Publish all articles': 'Bütün məqalələri nümayiş et'
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 'Bütün məqalələrin nümayişini dayandır. YOX düyməsi seçilsə, yalnız Məsələ ilə Nümayişi mümkün olan məqalələr nümayiş ediləcək.'
+default: mövcud
+'The publishing/unpublishing can not be set the same time': 'Nümayiş və nümayişin dayandırılması eyni zamanda baş verə bilməz'
+'The publishing schedule can not be set in the past': 'Nümayişin planlaşdırılması keçmiş zamanda ola bilməz'
+'Please assign at least one theme to the publication': 'Lütfən, nümayiş üçün ən azı bir mövzu təyin et'
+'Issue Theme': 'Məsələ Mövzusu'
+'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 'Quraşdırmaq istədiyin dəyərlər $1$2 ilə mübahisəlidir. $3 ($4)$5.'
+'The number must be unique for each issue in this publication of the same language.': 'Eyni tərcümənin nəşrlərində hər məsələ üçün özünəməxsus say olmalıdır.'
+'The language and URL name must be unique for each issue in this publication.': 'Bu nəşrdin hər məsələsi üçün ayrıca dil və URL adı olmalıdır.'
+'Issue created.': 'Say hazırdır.'
+'Issue updated': 'Say yeniləndi'
+'Could not save the changes to the issue.': ' Bu məsələyə aid dəyişikliklər saxlanmadı.'
+'Unpublish on: $1': 'Bu tarixdə nümayişi dayandır: $1'
+'There are $1 articles in this issue.': 'Bu məsələdə $1 məqalə var.'
+'The issue $1 has been deleted.': '$1 məsələsi silinmişdir.'
+Schedule: Cədvəl
+'Publish on: $1': '$1 -də dərc et'
+'Publish Date $1': '$1 tarixini çap et'
+'Deleted issue': 'Silinmiş yazı'
+'Delete issue': 'Sayı sil'
+'Click here to publish this issue': 'Bu məsələni nümayiş etmək üçün kliklə'
+'A total of $1 articles were deleted.': 'Ümumilikdə $1 məqalə silinib.'
+'Name<BR><SMALL>(click to see sections)</SMALL>': 'Ad<BR><SMALL>(bölmələri görmək üçün kliklə)</SMALL>'
+'Delete issue $1': '$1 sayını sil'
+'You do not have the right to change issues.': 'Məsələləri dəyişməyə ixtiyarın yoxdur.'
+'Are you sure you want to change the issue $1 status from $2 to $3?': '$1 məsələsinin statusunu $2 variantından $3 variantına dəyişmək istədiyinə əminsən?'
+'Add new translation': 'Yeni tərcümə əlavə et'
+'You do not have the right to add issues.': 'Məsələ əlavə etməyə ixtiyarın yoxdur.'
+'The issue $1 has been successfuly added.': '$1 məsələsi müvəffəqiyyətlə əlavə edilmişdir.'
+'The issue could not be added.': 'Yenisi əlavə oluna bilməz.'
+'Change issue details': 'Məsələ məlumatlarını dəyiş'
+'You do not have the right to change issue details.': 'Məsələ məlumatlarını dəyişməyə ixtiyarın yoxdur.'
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Nümayiş tarixi<BR><SMALL>(yyyy-mm-dd)</SMALL>'
+'Front Page Template': 'Baş səhifənin üzlüyü'
+'You do not have the right to delete issues.': 'Məsələləri silməyə ixtiyarın yoxdur.'
+'Are you sure you want to delete the issue $1?': '$1 məsələsini silmək istədiyinə əminsən?'
+'Use the structure of the previous issue': 'Əvvəlki məsələnin strukturunu istifadə et'
+'Copy the entire structure in all languages from the previous issue except for content.': 'Əvvəlki məsələdən tərkib xaric olmaqla bütün dillərin daxili strukturunu köçür.'
+'You may modify it later if you wish.': 'Əgər istəsən, bunu daha sonra quraşdıra bilərsən.'
+'Create a new structure': 'Yeni quruluş yarat'
+'Create a complete new structure.': 'Tamamilə yeni quruluş yarat.'
+'You must define an issue type for each language and then sections for them.': 'Sən əvvəlcə hər dil üçün məsələ müəyyən etməli, daha sonra isə onlar üçün bölmə seçməlisən.'
+'Copy previous issue': 'Əvvəlki məsələni köçür'
+'No previous issue.': 'Əvvəlki məsələ yoxdur.'
+'Copy structure from issue number $1': '$1 saylı məsələnin strukturunu köçür'
+'Delete entry': 'Girişi sil'
+'Issue Publishing Schedule': 'Məsələnin Nümayiş Qrafiki'
+'Invalid Input: $1': 'Səhv Giriş: $1'
+'Issue Number': 'Məsələnin Nömrəsi'
+'Go To Sections': 'Bölmələrə Get'
+'There was an error reading the language parameter.': 'Dil parametrlənin oxunmasında xəta baş verdi.'
+'There was an error reading the publication parameter.': 'Nümayiş parametrlərinin oxunmasında xəta baş verdi.'
+'There was an error reading the issue parameter.': 'Məsələ parametrlərinin oxunmasında xəta baş verdi.'
+'There was an error scheduling the $1 action on $2': '$1 addımının $2 tarixdə planlaşdırılmasında xəta baş verdi'
+'The action scheduled on $1 could not be deleted.': '$1 tarixinə planlaşdırılmış addım silinə bilmədi.'

@@ -207,7 +207,10 @@ if (CampTemplateCache::factory()) {
 }
 
 $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('authors');
 $cacheService->clearNamespace('article');
+$cacheService->clearNamespace('article_type');
+$cacheService->clearNamespace('boxarticles');
 
 echo json_encode($data);
 exit;

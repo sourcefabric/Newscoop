@@ -184,6 +184,10 @@ class CommentRepository extends DatatableSource implements RepositoryInterface
         }
 
         $em->flush();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
+
         $user = $p_comment->getCommenter()->getUser();
 
         if ($user instanceof User) {

@@ -15,7 +15,7 @@ newscoop:
             saved: 'Systemindstillinger opdateret.'
             cacheCleared: 'Cache slettet'
         menu:
-            general: null
+            general: 'Generelle indstillinger'
             email: 'Email indstillinger'
             editor: 'Editor indstillinger'
             geolocation: 'Geolocation indstillinger'
@@ -130,5 +130,5 @@ newscoop:
                 privatekey: null
                 secure: null
             garbage: null
-            lifetime: null
+            lifetime: 'Sessions livstid i sekunder. Max 86400 (24 timer). Min: 0 (indtil browseren lukkes).'
             smartyuseprotocol: null

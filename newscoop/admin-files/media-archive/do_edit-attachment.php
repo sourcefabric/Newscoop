@@ -35,5 +35,8 @@ $attachment->setContentDisposition($f_content_disposition);
 
 $em->flush();
 
+$cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+$cacheService->clearNamespace('attachment');
+
 camp_html_add_msg($translator->trans('Attachment updated.', array(), 'media_archive'), 'ok');
 camp_html_goto_page("/$ADMIN/media-archive/edit-attachment.php?f_attachment_id=".$attachment->getId());

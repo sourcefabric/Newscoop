@@ -4,11 +4,11 @@ Slideshows: Gallerier
 'You cant update used files.': 'Du kan ikke opdatere filer i brug.'
 Source: Kilde
 Local: Lokal
-'Items updated.': null
+'Items updated.': 'Elementer opdateret.'
 Feedback: Feedback
-'Do you want to update unused only?': null
+'Do you want to update unused only?': 'Vil du kun opdatere ubrugte?'
 'Disapprove selected': 'Afvis valgte'
-'Are you sure you want to update selected items?': null
+'Are you sure you want to update selected items?': 'Vil du opdatere de valgte elementer?'
 'Approve selected': 'Godkend valgte'
 'Image files': Billedfiler
 'Fix all thumbnails': 'Reparer alle thumbnails'
@@ -25,7 +25,7 @@ Files: Filer
 'You cant delete used files.': 'Du kan ikke slette filer i brug.'
 'Do you want to delete unused only?': 'Vil du kun slette ubrugte?'
 'View attachment': 'Se vedhæftning'
-'Select some items first.': null
+'Select some items first.': 'Vælg først elementer.'
 'Open in the browser': 'Åben i browseren'
 'Media Archive': 'Medie arkiv'
 'Last modified': 'Sidst ændret'

@@ -1,4 +1,27 @@
 Newscoop\Entity\Issue:
     exclusion_policy: ALL
-    exclude: true
-    access_type: public_method
+    properties:
+        number:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list", "details"]
+            serialized_name: number
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list", "details"]
+            serialized_name: title
+        workflowStatus:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: workflowStatus
+        shortName:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: shortName

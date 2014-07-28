@@ -61,8 +61,11 @@ You will need to restart the Apache2 server afterwards so the configuration can 
 
 By default `www` folder will be owned by `root` we have to change this so `www-data` user can own it which is much safer and don't complicate things much.
 
-	sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx /var/www/
-	sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx /var/www/
+	sudo chown -R www-data:www-data /var/www
+
+We will also modify permissions and make sure that access is permitted to the general web directory.
+
+	sudo chmod -R 755 /var/www
 
 ### Install Git
 
@@ -100,6 +103,9 @@ and copy in the information below.
 			DocumentRoot /var/www/Newscoop/newscoop
 			ServerName localhost
 			ServerAdmin foo@bar.org
+			<Directory /var/www/Newscoop/newscoop>
+                	AllowOverride All
+        	</Directory>
 	</VirtualHost>
 
 and then from the command line:

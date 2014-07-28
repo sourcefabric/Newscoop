@@ -20,8 +20,8 @@ Geo-filtering: Geo-filtrering
 'Fill in vimeo ID or link, e.g': 'Vimeo ID eller link, f.eks.'
 'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Video ID, link eller filnavn for YouTube, Vimeo eller flash video.'
 'Fill in location label': null
-'Fill in local swf flash file name or link, e.g.': null
-'Fill in local flv flash file name or link, e.g.': null
+'Fill in local swf flash file name or link, e.g.': 'Udfyld filnavn på lokal swf flash fil eller link, f.eks.'
+'Fill in local flv flash file name or link, e.g.': 'Udfyld filnavn på lokal flv flash fil eller link, f.eks.'
 'Fill in image link, like': 'Indtast billede link, f.eks.'
 'Describe the location...': 'Beskriv placeringen...'
 'Delete location': 'Slet placering'

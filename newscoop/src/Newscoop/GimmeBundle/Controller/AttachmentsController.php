@@ -37,7 +37,7 @@ class AttachmentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/attachments.{_format}", defaults={"_format"="json"})
+     * @Route("/attachments.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      *
@@ -74,7 +74,7 @@ class AttachmentsController extends FOSRestController
      *     output="\Newscoop\Entity\Attachment"
      * )
      *
-     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"details"})
      *
@@ -105,7 +105,7 @@ class AttachmentsController extends FOSRestController
      *     input="\Newscoop\GimmeBundle\Form\Type\AttachmentType"
      * )
      *
-     * @Route("/attachments.{_format}", defaults={"_format"="json"})
+     * @Route("/attachments.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST")
      * @View()
      *
@@ -129,7 +129,7 @@ class AttachmentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("POST|PATCH")
      * @View()
      *
@@ -155,7 +155,7 @@ class AttachmentsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"})
+     * @Route("/attachments/{number}.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("DELETE")
      * @View(statusCode=204)
      *

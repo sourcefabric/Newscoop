@@ -18,7 +18,14 @@ final class MetaTopic extends MetaDbObject {
 
     public function __construct($topicIdOrName = null)
     {
-        $this->m_dbObject = new Topic($topicIdOrName);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('MetaTopic', $topicIdOrName), 'article');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Topic($topicIdOrName);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Topic();
         }

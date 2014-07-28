@@ -55,7 +55,14 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_only
 
     $formattedDate = strftime($p_format, $p_unixtime);
     if ($p_replaceCount > 0) {
-    	$languageObj = new Language($campsite->language->number);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('languageObj', $campsite->language->number), 'language');
+        if ($cacheService->contains($cacheKey)) {
+            $languageObj = $cacheService->fetch($cacheKey);
+        } else {
+            $languageObj = new Language($campsite->language->number);
+            $cacheService->save($cacheKey, $languageObj);
+        }
         if (!$languageObj->exists()) {
             $languageObj = new Language(1);
         }

@@ -3,14 +3,14 @@
 namespace spec\Newscoop\Image;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Newscoop\Entity\User;
+use Newscoop\Services\CacheService;
 
 class ImageServiceSpec extends ObjectBehavior
 {
-    function let($die, \Doctrine\ORM\EntityManager $em)
+    public function let($die, \Doctrine\ORM\EntityManager $em, CacheService $cacheService)
     {
         $this->beConstructedWith(array(
             'image_path' =>  realpath(__DIR__ . '/../../../newscoop/images/').'/',
@@ -20,21 +20,21 @@ class ImageServiceSpec extends ObjectBehavior
             'cache_url' => 'images/cache',
             'thumbnail_prefix' => 'cms-thumb-',
             'image_prefix' => 'cms-image-',
-        ), $em);
+        ), $em, $cacheService);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Newscoop\Image\ImageService');
     }
 
-    function it_gives_you_src()
+    public function it_gives_you_src()
     {
         $image = 'images/picture.jpg';
         $this->getSrc($image, 300, 300)->shouldBe('300x300/fit/' . rawurlencode(str_replace('/', '|', $image)));
     }
 
-    function it_upload_new_image()
+    public function it_upload_new_image()
     {
         $filesystem = new Filesystem();
 
@@ -46,7 +46,7 @@ class ImageServiceSpec extends ObjectBehavior
         $this->upload($uploadedFile, array('user' => $user))->shouldHaveType('Newscoop\Image\LocalImage');
     }
 
-    function letgo()
+    public function letgo()
     {
         $filesystem = new Filesystem();
         $filesystem->remove(realpath(__DIR__.'/../../../newscoop/images/cms-image-000000000.jpg'));

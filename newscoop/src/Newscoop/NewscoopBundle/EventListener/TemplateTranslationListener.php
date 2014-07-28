@@ -37,7 +37,9 @@ class TemplateTranslationListener
      */
     public function onRequest(GetResponseEvent $event)
     {
-        $cacheKey = $this->cacheService->getCacheKey('templates_translations', 'templates');
+        $request = $event->getRequest();
+        $locale = $request->getLocale();
+        $cacheKey = $this->cacheService->getCacheKey(array('templates_translations', \CampSite::GetURIInstance()->getThemePath(), $locale), 'templates_translations');
         $templateTranslations = array();
 
         if ($this->cacheService->contains($cacheKey)) {
@@ -49,8 +51,6 @@ class TemplateTranslationListener
             return;
         }
 
-        $request = $event->getRequest();
-        $locale = $request->getLocale();
         $filesystem = new Filesystem();
         $dir = __DIR__.'/../../../../themes/'.\CampSite::GetURIInstance()->getThemePath().'translations';
 

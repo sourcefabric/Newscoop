@@ -82,7 +82,7 @@ api:
                 name: 'Sifarişçi adı'
                 id: 'Sifarişçi id-si'
                 secret: Sirr
-                trusted: null
+                trusted: 'İnanırsınız?'
                 redirect: 'Urisi Başqa Yerə Yönəlt'
                 publication: Nəşr
                 actions: Addımlar
@@ -98,7 +98,7 @@ api:
                 name: 'Sifarişçin üçün ad seç:'
                 publication: 'Sifarişçin üçün nəşr seç:'
                 redirectUris: 'Sifarişçin üçün yönü dəyişilmiş urisi seç:'
-                trusted: null
+                trusted: 'İnanırsınız?'
                 save: Saxla
         PublicResources:
             label:

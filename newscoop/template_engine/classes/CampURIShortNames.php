@@ -67,7 +67,7 @@ class CampURIShortNames extends CampURI
             } else {
                 $this->setURL(new Zend_Controller_Request_Http());
             }
-            
+
             $this->m_validURI = true;
             $this->validateCache(false);
         } catch (Exception $e) {
@@ -245,20 +245,27 @@ class CampURIShortNames extends CampURI
      */
     private function _getLanguage($code, MetaPublication $publication)
     {
-        $language = $publication->default_language;
-        
-        if (!empty($code)) {
-            $langArray = Language::GetLanguages(null, $code);
-            if (is_array($langArray) && sizeof($langArray) == 1) {
-                $language = new MetaLanguage($langArray[0]->getLanguageId());
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('CampURIShortNameLanguage', $code, $publication), 'language');
+        if ($cacheService->contains($cacheKey)) {
+            return $cacheService->fetch($cacheKey);
+        } else {
+            $language = $publication->default_language;
+
+            if (!empty($code)) {
+                $langArray = Language::GetLanguages(null, $code);
+                if (is_array($langArray) && sizeof($langArray) == 1) {
+                    $language = new MetaLanguage($langArray[0]->getLanguageId());
+                }
             }
-        }
 
-        if (!$language->defined()) {
-            throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
-        }
+            if (!$language->defined()) {
+                throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
+            }
 
-        return $language;
+            $cacheService->save($cacheKey, $language);
+            return $language;
+        }
     }
 
     /**
@@ -352,12 +359,20 @@ class CampURIShortNames extends CampURI
             return null;
         }
 
-        $articleObj = new Article($language->number, $articleNo);
-        if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
-            throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
-        }
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('getArticle', $articleNo, $language), 'article');
+        if ($cacheService->contains($cacheKey)) {
+             $metaArticle = $cacheService->fetch($cacheKey);
+        } else {
+            $articleObj = new Article($language->number, $articleNo);
+            if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
+                throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
+            }
 
-        return new MetaArticle($language->number, $articleObj->getArticleNumber());
+            $metaArticle = new MetaArticle($language->number, $articleObj->getArticleNumber());
+            $cacheService->save($cacheKey, $metaArticle);
+        }
+        return $metaArticle;
     }
 
     /**
@@ -391,7 +406,12 @@ class CampURIShortNames extends CampURI
         $this->m_publication = $this->_getPublication();
         $controller = $request->getParam('controller');
         if ($controller != 'index') {
-            $language = $controller;
+            if ($controller == 'legacy') {
+               $publication_service = \Zend_Registry::get('container')->getService('newscoop.publication_service');
+               $language = $publication_service->getPublication()->getLanguage()->getCode();
+            } else {
+               $language = $controller;
+            }
         } else {
             $language = $request->getParam('language');
         }
@@ -404,6 +424,7 @@ class CampURIShortNames extends CampURI
 
             $webcode = trim(trim($request->getParam('webcode'), '@+'));
             $article = Zend_Registry::get('container')->getService('webcode')->findArticleByWebcode($webcode);
+            $article_no = null;
             if ($article) {
                 $article_no = $article->getNumber();
                 $webcodeLanguageId = $article->getLanguageId();

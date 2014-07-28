@@ -30,7 +30,7 @@ class SectionsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/sections.{_format}", defaults={"_format"="json"})
+     * @Route("/sections.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */
@@ -68,7 +68,7 @@ class SectionsController extends FOSRestController
      *     }
      * )
      *
-     * @Route("/sections/{number}/{language}/articles.{_format}", defaults={"_format"="json"})
+     * @Route("/sections/{number}/{language}/articles.{_format}", defaults={"_format"="json"}, options={"expose"=true})
      * @Method("GET")
      * @View(serializerGroups={"list"})
      */

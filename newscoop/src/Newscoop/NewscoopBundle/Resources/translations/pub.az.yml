@@ -1,77 +1,77 @@
-'Make sure to enter the Moderator Address below': null
-'click to see issues': null
-'Moderator Address': null
-'From Address': null
-'Use CAPTCHA to prevent spam?': null
-'Public allowed to comment?': null
-'Enable spam blocking?': null
-'The subscription settings for $1 could not be added.': null
-'The publication name you specified conflicts with publication $1.': null
-'The publication alias you specified conflicts with publication $1.': null
-'Subscription defaults': null
-'Subscription Settings by Country': null
-'Set subscription settings for a country': null
-'Set subscription settings by country': null
-'Default time periods:': null
-'Country subscription settings updated.': null
-'Country subscription settings deleted.': null
-'Change country subscription settings': null
-'Are you sure you want to delete the subscription settings for $1?': null
-'Publication updated': null
-'Subscriber comments moderated?': null
-'Public comments moderated?': null
+'Make sure to enter the Moderator Address below': 'İdarəçinin Ünvanını aşağıda qeyd etdiyinə əmin ol'
+'click to see issues': 'məsələlərə baxmaq üçün kliklə'
+'Moderator Address': 'İdarəçinin Ünvanı'
+'From Address': 'Bu Ünvandan'
+'Use CAPTCHA to prevent spam?': 'Spamın qarşısını almaq üçün CAPTCHA istifadə edilsin?'
+'Public allowed to comment?': 'Şərh yazmağa hamının icazəsi var?'
+'Enable spam blocking?': 'Spam kilidləməsini aktivləşdirirsən?'
+'The subscription settings for $1 could not be added.': '$1 üçün abunəlik parametrləri əlavə edilə bilmədi.'
+'The publication name you specified conflicts with publication $1.': 'Sənin xüsusi olaraq qeyd etdiyin nəşrlə $1 nəşri arasında uyğunsuzluq var.'
+'The publication alias you specified conflicts with publication $1.': 'Sənin xüsusi olaraq qeyd etdiyin nəşr ləqəbi $1 nəşri arasında uyğunsuzluq var.'
+'Subscription defaults': 'Abunəliyin ilkin göstəriciləri'
+'Subscription Settings by Country': 'Ölkə tərəfindən Abunəlik Parametrləri'
+'Set subscription settings for a country': 'Ölkə üçün abunəlik parametrlərini quraşdır'
+'Set subscription settings by country': 'Ölkəyə görə abunəlik parametrlərini quraşdır'
+'Default time periods:': 'Mövcud zaman kəsiyi:'
+'Country subscription settings updated.': 'Ölkə abunəlik parametrləri yeniləndi.'
+'Country subscription settings deleted.': 'Ölkə abunəlik parametrləri silindi.'
+'Change country subscription settings': 'Ölkə abunəlik parametrlərini dəyiş'
+'Are you sure you want to delete the subscription settings for $1?': '$1 üçün abunəlik parametrlərini silmək istədiyinə əminsən?'
+'Publication updated': 'Nəşr yeniləndi'
+'Subscriber comments moderated?': 'Abunə şərhləri yoxlanıb?'
+'Public comments moderated?': 'İctimai şərhləri yoxlanıb?'
 'Comments enabled?': 'Şərhə icazə var?'
-'Comments enabled': null
-'Article comments default to enabled?': null
-'trial subscription': null
-'paid subscription': null
-'time units': null
-'one language': null
-'all languages': null
-'Trial subscriptions': null
-'Time unit cost per one section': null
-'Paid subscriptions': null
-'Default time period': null
-'Go To Issues': null
-'Delete publication $1': null
-'No publications.': null
-'Default Site Alias': null
-'URL Type': null
-'Country<BR><SMALL>(click to edit)</SMALL>': null
-'Delete alias $1': null
-'Configure publication': null
-'You do not have the right to edit publication information.': null
-'General attributes': null
-'You do not have the right to change publication information.': null
-'The publication information could not be updated.': null
-'You do not have the right to delete publications.': null
-'Are you sure you want to delete the publication $1?': null
-'Deleting publication': null
-'There are $1 subscription(s) left.': null
-'The publication $1 could not be deleted.': null
-'The publication could not be added.': null
-'You do not have the right to manage publications.': null
-'You must select a country.': null
-'Add new alias': null
-'Alias (click to edit)': null
-'Edit aliases': null
-'Publication Aliases': null
-'Adding new alias': null
-'The site alias $1 could not be added.': null
-'Another alias with the same name exists already.': null
-'Edit alias': null
-'Editing alias': null
-'The site alias $1 could not be modified.': null
-'Are you sure you want to delete the alias $1?': null
-'Deleting alias': null
-'The alias $1 could not be deleted.': null
-'$1 is the default publication alias, it can not be deleted.': null
-'You do not have the right to add publications.': null
+'Comments enabled': 'Şərhlər aktivləşdirildi'
+'Article comments default to enabled?': 'Məqalə şərhləri aktivləşdirilsin?'
+'trial subscription': 'sınaq abunəlik'
+'paid subscription': 'ödənişli abunəlik'
+'time units': 'zaman vahidləri'
+'one language': 'bir dil'
+'all languages': 'bütün dillər'
+'Trial subscriptions': 'Sınaq abunəlikləri'
+'Time unit cost per one section': 'Hər bölmə üçün zaman vahidi dəyəri'
+'Paid subscriptions': 'Ödənişli abunəliklər'
+'Default time period': 'Mövcud zaman kəsiyi'
+'Go To Issues': 'Məsələlərə Keç'
+'Delete publication $1': '$1 nəşrini sil'
+'No publications.': 'Nəşr yoxdur.'
+'Default Site Alias': 'Mövcud Sayt Ləqəbləri'
+'URL Type': 'URL Növü'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Ölkə<BR><SMALL>(dəyişmək üçün kliklə)</SMALL>'
+'Delete alias $1': '$1 ləqəbini sil'
+'Configure publication': 'Nəşri konfiqurasiya et'
+'You do not have the right to edit publication information.': 'Nəşr məlumatını dəyişməyə ixtiyarın yoxdur.'
+'General attributes': 'Ümumi atributlar'
+'You do not have the right to change publication information.': 'Nəşr məlumatını dəyişməyə ixtiyarın yoxdur.'
+'The publication information could not be updated.': 'Nəşr məlumatı yenilənə bilmədi.'
+'You do not have the right to delete publications.': 'Nəşrləri silməyə ixtiyarın yoxdur.'
+'Are you sure you want to delete the publication $1?': '$1 nəşrini silmək istədiyinə əminsən?'
+'Deleting publication': 'Nəşrin silinməsi'
+'There are $1 subscription(s) left.': '$1 abunəlik(lər) hələ ki qalıb.'
+'The publication $1 could not be deleted.': '$1 nəşri silinə bilmədi.'
+'The publication could not be added.': 'Nəşr əlavə edilə bilmədi.'
+'You do not have the right to manage publications.': 'Nəşrlərə dəyişiklik etməyə ixtiyarın yoxdur.'
+'You must select a country.': 'Ölkə seçməlisən.'
+'Add new alias': 'Yeni ləqəb əlavə et'
+'Alias (click to edit)': 'Ləqəb (dəyişmək üçün kliklə)'
+'Edit aliases': 'Ləqəbləri dəyiş'
+'Publication Aliases': 'Nəşr Ləqəbləri'
+'Adding new alias': 'Yeni ləqəb əlavəsi'
+'The site alias $1 could not be added.': '$1 sayt ləqəbi əlavə edilə bilmədi.'
+'Another alias with the same name exists already.': 'Eyni adlı başqa ləqəb artıq mövcuddur.'
+'Edit alias': 'Ləqəbi dəyiş'
+'Editing alias': 'Ləqəbin dəyişilməsi'
+'The site alias $1 could not be modified.': '$1 sayt ləqəbi dəyişdirilə bilmədi.'
+'Are you sure you want to delete the alias $1?': '$1 ləqəbini silmək istədiyinə əminsən?'
+'Deleting alias': 'Ləqəbin silinməsi'
+'The alias $1 could not be deleted.': '$1 ləqəbi silinə bilmədi.'
+'$1 is the default publication alias, it can not be deleted.': '$1 ilkin nəşr ləqəbidir, bu silinə bilməz.'
+'You do not have the right to add publications.': 'Nəşr əlavə etməyə ixtiyarın yoxdur.'
 'There are $1 issue(s) left.': 'Geriyə $1 məsələ(lər) qalıb.'
-'Time Unit': null
-Currency: null
-'Edit languages': null
-'Search engine optimization': null
-'Article title': null
-'Article keywords': null
-'Article topics': null
+'Time Unit': 'Zaman Vahidi'
+Currency: Valyuta
+'Edit languages': 'Dilləri dəyiş'
+'Search engine optimization': 'Axtarış sistemlərinin optimizasiyası'
+'Article title': 'Məqalə başlığı'
+'Article keywords': 'Məqalənin açar sözləri'
+'Article topics': 'Məqalə başlıqları'

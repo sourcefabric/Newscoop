@@ -96,8 +96,10 @@ final class MetaPublication extends MetaDbObject {
     protected function getDefaultSiteName()
     {
         $publicationService = \Zend_Registry::get('container')->getService('newscoop.publication_service');
-        if ($publicationService->getPublicationAlias()->getId() == $this->m_dbObject->getDefaultAliasId()) {
-            return $publicationService->getPublicationAlias()->getName();
+        if ($publicationService->getPublicationAlias()) {
+            if ($publicationService->getPublicationAlias()->getId() == $this->m_dbObject->getDefaultAliasId()) {
+                return $publicationService->getPublicationAlias()->getName();
+            }
         }
 
         $defaultAlias = new Alias($this->m_dbObject->getDefaultAliasId());

@@ -61,6 +61,9 @@ class CommentService
         // save persisted comment object
         $this->em->flush();
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
+
         return $comment;
     }
 
@@ -80,6 +83,9 @@ class CommentService
         // save persisted comment object
         $this->em->flush();
 
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
+
         return $comment;
     }
 
@@ -94,6 +100,9 @@ class CommentService
     {
         $comment->setStatus('deleted');
         $this->em->flush();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
 
         return $comment;
     }
@@ -112,6 +121,9 @@ class CommentService
         $this->$method($params);
 
         $this->em->flush();
+
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheService->clearNamespace('comment');
     }
 
     /**

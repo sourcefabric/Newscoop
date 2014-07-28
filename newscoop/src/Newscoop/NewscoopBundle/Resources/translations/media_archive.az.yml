@@ -1,62 +1,62 @@
-'No thumbnails were fixed.': null
-'Missing thumbnails fixed.': null
+'No thumbnails were fixed.': 'Heç bir eskiz düzəldilməyib.'
+'Missing thumbnails fixed.': 'Yerdə qalan eskizlər düzəldi.'
 Slideshows: Slayd-şoular
-'You cant update used files.': null
+'You cant update used files.': 'İstifadə edilmiş faylları yeniləyə bilməzsən.'
 Source: Mənbə
-Local: null
-'Items updated.': null
-Feedback: null
-'Do you want to update unused only?': null
-'Disapprove selected': null
-'Are you sure you want to update selected items?': null
-'Approve selected': null
+Local: Yerli
+'Items updated.': 'Elementlər yekləndi.'
+Feedback: Şərh
+'Do you want to update unused only?': 'Yalnış istifadə edilməmişləri yeniləmək istəyirsən?'
+'Disapprove selected': 'Təsdiqlənməmiş seçilib'
+'Are you sure you want to update selected items?': 'Seçilmiş elementləri yeniləmək istədiyinə əminsən?'
+'Approve selected': 'Təsdiqlənmiş seçilib'
 'Image files': 'Şəkil faylları'
-'Fix all thumbnails': null
+'Fix all thumbnails': 'Bütün eskizləri düzəlt'
 'You do not have the right to add files.': 'Fayl əlavə etməyə ixtiyarın yoxdur.'
 'Should this file only be available for this translation of the article, or for all translations?': 'Bu fayl məqalənin yalnız mövcud tərcüməsinə, yoxsa bütün tərcümələrinə aiddir?'
-'Please enter a description for the file: $1.': null
+'Please enter a description for the file: $1.': 'Lütfən, fayl üçün izah daxil et: $1.'
 'Only this translation': 'Yalnız bu tərcümə'
-'No files for multi editing.': null
-'Edit files': null
+'No files for multi editing.': 'Çoxsaylı dəyişiklik üçün fayl yoxdur.'
+'Edit files': 'Faylları dəyiş'
 'Change file information': 'Fayl məlumatını dəyiş'
 'All translations': 'Bütün tərcümələr'
 'Save All': 'Hamısını Saxla'
 Files: Fayllar
-'You cant delete used files.': null
-'Do you want to delete unused only?': null
-'View attachment': null
-'Select some items first.': null
+'You cant delete used files.': 'İstifadə edilmiş faylları silə bilərsən.'
+'Do you want to delete unused only?': 'Yalnız istifadə edilməmişləri silmək istəyirsən?'
+'View attachment': 'Əlavə fayla bax'
+'Select some items first.': 'Əvvəl bəzi elementləri seç.'
 'Open in the browser': 'Brauzerdə aç'
 'Media Archive': 'Mətbuat Arxivi'
 'Last modified': 'Son redaktələr'
-'Items deleted.': null
-'File uploaded.': null
+'Items deleted.': 'Elementlər silindi.'
+'File uploaded.': 'Fayl yükləndi.'
 'Do you want this file to open in the users browser, or to automatically download?': 'Bu faylın istifadəçi brauzerdə açılmasını, yoxsa avtomatik endirilməsini istəyirsən?'
-'Delete selected': null
+'Delete selected': 'Seçilmişi sil'
 Created: Yaradıldı
-Charset: null
-'Change attachment information': null
+Charset: Şifrələmə
+'Change attachment information': 'Əlavə fayl məlumatını dəyiş'
 'Automatically download': 'Avtomatik endirilmə'
-'Attachment updated.': null
-'Are you sure you want to delete selected items?': null
-'Add new file': null
+'Attachment updated.': 'Əlavə edilmiş fayl yeniləndi.'
+'Are you sure you want to delete selected items?': 'Seçilmiş elementləri silmək istədiyinə əminsən?'
+'Add new file': 'Yeni fayl əlavə et'
 'You do not have the right to add images.': 'Şəkil əlavə etməyə ixtiyarın yoxdur.'
 'Use for all': 'Hamısı üçün istifadə et'
 'Specify image url if you want to load it.': 'Şəkli yükləmək istəyirsənsə, onun url-ini müəyyən et.'
-Size: null
-'No images for multi editing.': null
-'Images updated.': null
+Size: Ölçü
+'No images for multi editing.': 'Çoxsaylı dəyişiklik üçün şəkil yoxdur.'
+'Images updated.': 'Şəkillər yeniləndi.'
 'Edit images': 'Şəkilləri dəyiş'
-'$1 files uploaded.': null
+'$1 files uploaded.': '$1 faylı yükləndi.'
 'Unable to add new image.': 'Yeni şəkil əlavə etmək mümkün deyil.'
-'Image updated.': null
-'Image $1 deleted.': null
-'Image is in use, it cannot be deleted.': null
+'Image updated.': 'Şəkil yeniləndi.'
+'Image $1 deleted.': '$1 şəkli silindi.'
+'Image is in use, it cannot be deleted.': 'Şəkil istifadədədir, o silinə bilməz.'
 'You must select an image file to upload.': 'Yükləmək üçün şəkil seçməlisiniz.'
-'Add new image': null
-'Delete image $1': null
-'Used in articles': null
-'View image': null
+'Add new image': 'Yeni şəkil əlavə et'
+'Delete image $1': '$1 şəklini sil'
+'Used in articles': 'Məqalələrdə istifadə edilib'
+'View image': 'Şəkilə bax'
 'Change image information': 'Şəkil məlumatını dəyiş'
-'Photographer URL': null
-'Add website url starting with http://': null
+'Photographer URL': 'Fotoqraf URL-i'
+'Add website url starting with http://': 'http:// ilə başlayan yeni vebsayt urı-i'

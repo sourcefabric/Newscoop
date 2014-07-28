@@ -22,7 +22,7 @@ Paid: Betalt
 'Edit all sections': 'Rediger alle sektioner'
 'Days:': 'Dage:'
 'Days must be number': 'Dage skal være et tal'
-Any: null
+Any: Alle
 'Add section': 'Tilføj sektion'
 saved: gemt
 removed: fjernet
@@ -30,7 +30,7 @@ deleted: slettet
 deactivated: deaktiveret
 activated: aktiveret
 'Value is required and cant be empty': 'Værdien er påkrævet og kan ikke være tom'
-'That user name already exists, please choose a different login name.': null
+'That user name already exists, please choose a different login name.': 'Brugernavnet eksisterer allerede. Vælg et andet login navn.'
 'That $1 already exists, please choose a different $2.': null
 'Subscriptions exist for all available publications.': null
 'Subscription IP Addresses': null

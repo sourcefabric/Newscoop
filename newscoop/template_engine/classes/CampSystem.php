@@ -459,8 +459,7 @@ abstract class CampSystem
         }
     }// fn GetSectionTemplate
 
-    public static function GetArticleTemplate($p_lngId, $p_pubId, $p_issNr,
-            $p_sctNr)
+    public static function GetArticleTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr)
     {
         global $g_ado_db;
         $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');

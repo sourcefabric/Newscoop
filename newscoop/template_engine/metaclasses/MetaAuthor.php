@@ -51,7 +51,14 @@ final class MetaAuthor extends MetaDbObject
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
 
-        $this->m_dbObject = new Author($p_idOrName, $p_type);
+        $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
+        $cacheKey = $cacheService->getCacheKey(array('MetaAuthor', $p_idOrName, $p_type), 'author');
+        if ($cacheService->contains($cacheKey)) {
+            $this->m_dbObject = $cacheService->fetch($cacheKey);
+        } else {
+            $this->m_dbObject = new Author($p_idOrName, $p_type);
+            $cacheService->save($cacheKey, $this->m_dbObject);
+        }
         if (!$this->m_dbObject->exists()) {
             $this->m_dbObject = new Author();
         }
@@ -108,6 +115,7 @@ final class MetaAuthor extends MetaDbObject
     protected function getUser()
     {
         $user = \Zend_Registry::get('container')->getService('user')->findByAuthor($this->m_dbObject->getId());
+
         return new \MetaUser($user);
     }
 
