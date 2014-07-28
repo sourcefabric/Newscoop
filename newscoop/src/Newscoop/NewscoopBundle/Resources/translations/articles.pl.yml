@@ -187,20 +187,20 @@ Characters: Znaków
 articles:
     images:
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Edytuj metadane zdjęcia'
+            save: Zapisz
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
-                article_specific: null
-                global: null
-                other_captions: null
+                use: Użyj
+                number: Numer
+                caption: Podpis
+                status_approved: Zatwierdzony
+                status_unapproved: Odrzucony
+                status: Status
+                description: Opis
+                photographer: Fotograf
+                photographer_url: 'Adres URL fotografa'
+                place: Miejsce
+                date: Data
+                article_specific: 'Specyficzne dla artykułu'
+                global: Ogólne
+                other_captions: 'Inne podpisy'

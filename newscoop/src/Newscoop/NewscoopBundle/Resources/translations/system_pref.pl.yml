@@ -10,7 +10,7 @@ newscoop:
             noaccess: 'Nie masz praw aby zmieniać preferencje systemowe.'
             latitude: 'Pole szerokości geograficznej jest niepoprawne.'
             longitude: 'Pole długości geograficznej jest niepoprawne.'
-            cacheNotCleared: null
+            cacheNotCleared: 'Podczas czyszczenia pamięci podręcznej wystąpił błąd'
         success:
             saved: 'Preferencje systemowe zaktualizowane.'
             cacheCleared: 'Pamięć podręczna została wyczyszczona'
@@ -106,7 +106,7 @@ newscoop:
             geosearch: 'Użyj wyszukiwania lokalnego GeoNames:'
             usergarbage: null
             usergarbagedaysinfo: null
-            usergarbagedays: null
+            usergarbagedays: 'Liczba dni'
             smartyUseProtocol: null
         popover:
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'

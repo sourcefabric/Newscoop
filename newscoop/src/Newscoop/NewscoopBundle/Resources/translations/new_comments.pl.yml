@@ -32,7 +32,7 @@ comments:
         selectstatus: 'Wybierz status'
         deleted: Usunięty
         alert: Uwaga
-        searchholder: null
+        searchholder: 'Szukaj... (np. imię, email, temat, treść komentarza, tytuł artykułu)'
     btn:
         cancel: Anuluj
         submit: Wyślij
@@ -51,16 +51,16 @@ comments:
             new: nowy
             approved: zatwierdzony
             hidden: ukryty
-            single: null
-            all: null
+            single: 'Status komentarza został zmieniony na'
+            all: 'Status komentarzy został zmieniony na'
         error:
             reach: 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
             deletefromarticle: 'Komentarz został usunięty z artykułu $2 przez $1 ($3)'
-            statuschange: null
-            delete: null
-            update: null
+            statuschange: 'Wystąpił błąd podczas zmieniania statusu dla kometarza'
+            delete: 'Nie można usunąć tego komentarza'
+            update: 'Pola nie mogą być puste'
         sure: 'Chcesz bezpowrotnie usunąć wiadomość'
-        suremultiple: null
-        first: null
+        suremultiple: 'Zamierzasz bezpowrotnie usunąć wybrane komentarze.'
+        first: 'Musisz najpierw wybrać komentarz/komentarze!'
         surequestion: 'Jesteś pewien że chcesz to zrobić?'
         updated: 'Komentarz zaktualizowany.'
