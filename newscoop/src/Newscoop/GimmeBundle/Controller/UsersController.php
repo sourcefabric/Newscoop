@@ -118,7 +118,7 @@ class UsersController extends FOSRestController
      *     },
      *     parameters={
      *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
-     *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
+     *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"},
      *         {"name"="_target_path", "dataType"="string", "required"=false, "description"="Target path to which user will be redirected after login."}
      *     },
      * )
