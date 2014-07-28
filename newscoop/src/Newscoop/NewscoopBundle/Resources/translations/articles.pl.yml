@@ -12,9 +12,9 @@ Playlist: 'Lista odtwarzania'
 'List Name': 'Nazwa listy'
 'List ID': 'Numer listy'
 'Item already exists in the list': 'Element jest już na tej liście'
-'Featured Articles': 'Polecane artykuły'
-'Featured Article Lists': 'Polecane artykuły'
-'Featured Article List': 'Polecane artykuły'
+'Featured Articles': 'Promowane artykuły'
+'Featured Article Lists': 'Listy artykułów'
+'Featured Article List': 'Lista artykułów'
 'Duplicate list': 'Skopiuj listę'
 'Duplicate article entry found': 'Znaleziono duplikowane artykuły.'
 'Drag here to add to list': 'Przeciągnij tutaj aby dodać do listy'
@@ -187,20 +187,20 @@ Characters: Znaków
 articles:
     images:
         edit:
-            edit_image_metadata: 'Edit image metadata'
-            save: Save
+            edit_image_metadata: null
+            save: null
             form:
-                use: Use
-                number: Number
-                caption: Caption
-                status_approved: Approved
-                status_unapproved: Unapproved
-                status: Status
-                description: Description
-                photographer: Photographer
-                photographer_url: 'Photographer URL'
-                place: Place
-                date: Date
-                article_specific: 'Article specific'
-                global: Global
-                other_captions: 'Other Captions'
+                use: null
+                number: null
+                caption: null
+                status_approved: null
+                status_unapproved: null
+                status: null
+                description: null
+                photographer: null
+                photographer_url: null
+                place: null
+                date: null
+                article_specific: null
+                global: null
+                other_captions: null
