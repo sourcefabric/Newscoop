@@ -104,10 +104,10 @@ newscoop:
             yesoption: Tak
             nooption: Nie
             geosearch: 'Użyj wyszukiwania lokalnego GeoNames:'
-            usergarbage: null
-            usergarbagedaysinfo: null
+            usergarbage: 'Usuwać nieaktualne dane oczekujących na potwierdzenie użytkowników?'
+            usergarbagedaysinfo: 'Zdefiniuj liczbę dni, po których oczekujący użytkownicy zostaną automatycznie usunięci. '
             usergarbagedays: 'Liczba dni'
-            smartyUseProtocol: null
+            smartyUseProtocol: 'Używać protokołu dla linków absolutnych generowanych przez Smarty?'
         popover:
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
             cacheenginehost: null
@@ -130,5 +130,5 @@ newscoop:
                 privatekey: 'Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu.'
                 secure: 'Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak.'
             garbage: null
-            lifetime: null
+            lifetime: 'Czas ważności sesji w sekundach. Maksymalnie 86400 (24 godziny). Minimalnie 0 (aż do zamknięcia okna przeglądarki).'
             smartyuseprotocol: null
