@@ -40,8 +40,8 @@ Title: Tytuł
 'Access denied.': 'Dostęp zabroniony.'
 'Publish with issue': 'Opublikuj z wydaniem'
 unknown: nieznane
-Switch: Zamień
-Numeric: Numeryczne
+Switch: Przełącznik
+Numeric: Liczbowy
 'The uploaded file format is unsupported.': 'Format wgranego pliku nie jest obsługiwany.'
 'The following fields are mandatory:': 'Poniższe pola są obowiązkowe:'
 'Missing value for $1': 'Brakująca wartość dla $1'

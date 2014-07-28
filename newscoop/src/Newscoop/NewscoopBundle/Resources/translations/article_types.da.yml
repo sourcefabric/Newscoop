@@ -61,7 +61,7 @@ Merge!: Flet!
 'Comments enabled?': 'Slå kommentarer til?'
 'Back to Step 2': 'Tilbage til trin 2'
 'Back to Step 1': 'Tilbage til trin 1'
-'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': "Vil du slette artikeltypen $1?\nADVARSEL: Hvis du sletter artikeltypen bliver alle artikler af denne type slettet."
+'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Vil du slette artikeltypen $1? ADVARSEL: Hvis du sletter artikeltypen bliver alle artikler af denne type slettet.'
 'Are you sure you want to $1 the article type $2?': 'Er du sikker på du vil $1 artikeltypen $2?'
 'Are you sure you want to $1 comments for article type $2?': 'Vil du $1 kommentarer for artikel type $2?'
 'Allow users without subscriptions to view the article': 'Tillad brugere uden abonnement at se artiklen'
