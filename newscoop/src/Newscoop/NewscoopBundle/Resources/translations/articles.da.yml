@@ -187,20 +187,20 @@ Characters: Tegn
 articles:
     images:
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Rediger billedets metadata'
+            save: Gem
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
-                article_specific: null
-                global: null
+                use: Brug
+                number: Nummer
+                caption: Billedtekst
+                status_approved: Godkendt
+                status_unapproved: 'Ikke godkent'
+                status: Status
+                description: Beskrivelse
+                photographer: Fotograf
+                photographer_url: 'Fotograf URL'
+                place: Sted
+                date: Dato
+                article_specific: 'Artikel specifik'
+                global: Global
                 other_captions: null
