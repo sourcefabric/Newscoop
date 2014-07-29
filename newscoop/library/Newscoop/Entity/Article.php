@@ -1253,7 +1253,7 @@ class Article implements DocumentInterface
                 'published' => $this->published,
                 'indexed' => $this->indexed,
                 'type' => $this->type,
-                'webcode' => $this->webcode ? (string) $this->webcode : null,
+                'webcode' => $this->getWebcode(),
                 'publication_number' => $this->publication ? $this->publication->getId() : null,
                 'issue_number' => $this->issue ? $this->issue->getNumber() : null,
                 'section_number' => $this->section ? $this->section->getNumber() : null,
