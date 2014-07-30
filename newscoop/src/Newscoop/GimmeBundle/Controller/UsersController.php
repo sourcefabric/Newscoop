@@ -180,7 +180,7 @@ class UsersController extends FOSRestController
         $zendAuth->authenticate($authAdapter);
         setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
-        $response->setStatusCode(200);
+        $response->setStatusCode($targetPath ? 302 : 200);
         $response->headers->set(
             'X-Location',
             $targetPath ? $request->getUriForPath($targetPath) : $this->generateUrl('newscoop_gimme_users_getuser', array(

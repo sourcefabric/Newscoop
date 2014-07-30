@@ -128,24 +128,25 @@ class InstallNewscoopCommand extends Console\Command\Command
             $databaseService->fillNewscoopDatabase($connection);
             $databaseService->loadGeoData($connection);
             $databaseService->saveDatabaseConfiguration($connection);
-            $command = $this->getApplication()->find('cache:clear');
-            $arguments = array(
-                'command' => 'cache:clear',
-                '--no-warmup' => true
-            );
-
-            $inputCache = new ArrayInput($arguments);
-            $command->run($inputCache, $output);
         } else {
             throw new \Exception('There is already a database named ' . $connection->getDatabase() . '. If you are sure to overwrite it, use option --database_override. If not, just change the Database Name and continue.', 1);
         }
+
+        $command = $this->getApplication()->find('cache:clear');
+        $arguments = array(
+            'command' => 'cache:clear',
+            '--no-warmup' => true
+        );
+
+        $inputCache = new ArrayInput($arguments);
+        $command->run($inputCache, $output);
 
         $databaseService->installDatabaseSchema($connection, $input->getArgument('alias'), $input->getArgument('site_title'));
         $output->writeln('<info>Database schema has been processed successfully.<info>');
         $demositeService->installEmptyTheme();
         $output->writeln('<info>Empty theme has been installed successfully.<info>');
-
-        $finishService->saveCronjobs();
+        $clearEm = \Doctrine\ORM\EntityManager::create($connection, $container->get('em')->getConfiguration(), $connection->getEventManager());
+        $finishService->saveCronjobs(new \Newscoop\Services\SchedulerService($clearEm));
         $output->writeln('<info>Cronjobs have been saved successfully<info>');
         $finishService->generateProxies();
         $output->writeln('<info>Proxies have been generated successfully<info>');
@@ -157,7 +158,6 @@ class InstallNewscoopCommand extends Console\Command\Command
             'recheck_user_password' => $input->getArgument('user_password')
         ), $connection);
         $output->writeln('<info>Config have been saved successfully.<info>');
-
         $output->writeln('<info>Newscoop is installed.<info>');
     }
 }
