@@ -96,7 +96,12 @@
     {%- set attributes = item.linkAttributes %}
     {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
     {%- set attributes = attributes|merge({'data-toggle': 'rightdrop'}) %}
-    <a href="#"{{ macros.attributes(attributes) }}>{{ block('label') }} <b class="caret-right"></b></a>
+    {% if item.uri is not empty %}
+    <a href="{{ item.uri }}"
+    {% else %}
+    <a href="#"
+    {% endif %}
+    {{ macros.attributes(attributes) }}>{{ block('label') }} <b class="caret-right"></b></a>
 {% endblock %}
 
 {% block label %}{{ item.label|trans }}{% endblock %}
