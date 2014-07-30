@@ -211,7 +211,7 @@ th a, th a:hover{
                               <td>{{ loop.index }}</td>
                               <td>{{ job.name }}</td>
                               <td>{{ job.prevRun }}</td>
-                              <td>{{ job.nextRun }}</td>
+                              <td><span title="{{ job.schedule }}">{{ job.nextRun }}</span></td>
                               <td>{% if job.enabled %}<span class="font-fix label job-status{{ job.id }} label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>{% else %}<span class="font-fix label job-status{{ job.id }} label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>{% endif %}</td>
                               <td>
                                 {% if job.enabled %}<button type="button" job-id="{{ job.id }}" class="disable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>{% else %}<button type="button" job-id="{{ job.id }}" class="enable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>{% endif %}</td>
@@ -576,6 +576,7 @@ $( document ).ready(function() {
     $('.cron-jobs').dynatable({
         features: {
             paginate: false,
+            pushState: true
         },
         inputs: {
             paginationClass: 'pagination',
@@ -594,6 +595,11 @@ $( document ).ready(function() {
             recordCountTextTemplate: '{{ 'users.table.table_messages.recordCountTextTemplate'|trans({}, "users") }}',
             recordCountTemplate: '{{ 'users.table.table_messages.recordCountTemplate'|trans({}, "users") }}',
             processingText: '{{ 'users.table.table_messages.processingText'|trans({}, "users") }}'
+        },
+        readers: {
+            'nextRunDate': function(el, record) {
+                return el.html();
+            },
         },
     });
 });
