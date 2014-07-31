@@ -101,7 +101,7 @@ function fnPreviewArticle(data)
     $("#preview-article-title").html(data.title);
     var bodyHtml = '';
     bodyHtml += '<h4>'+data.authorsLabel+'</h4>';
-    if (!data['authors'].length == 0) {
+    if (data['authors'].length != 0) {
         for (author in data['authors']) {
             bodyHtml += '<p> - '+data['authors'][author]+'</p>';
         }
