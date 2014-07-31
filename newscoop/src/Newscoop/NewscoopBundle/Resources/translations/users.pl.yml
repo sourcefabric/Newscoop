@@ -217,6 +217,6 @@ users:
             recordCountText: 'Wyświetla '
             recordCountTextTemplate: '{text} {pageTemplate} {totalTemplate} {filteredTemplate}'
             recordCountTemplate: '<span id=''dynatable-record-count-{elementId}'' class=''dynatable-record-count''>{textTemplate}</span>'
-            processingText: Przetwarzanie...
+            processingText: Przetważanie...
     chart:
         title: 'Źródła logowania'

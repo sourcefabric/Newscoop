@@ -11,9 +11,12 @@ newscoop:
             latitude: null
             longitude: null
             cacheNotCleared: null
+            joberror: 'Could not change status of selected job.'
         success:
             saved: null
             cacheCleared: null
+            jobenabled: 'Successfully enabled job.'
+            jobdisabled: 'Successfully disabled job.'
         menu:
             general: null
             email: null
@@ -24,8 +27,11 @@ newscoop:
             cache: null
             other: null
             recaptcha: null
+            cronjob: 'Background Jobs Settings'
         btn:
             cleardatabasecache: null
+            disable: Disable
+            enable: Enable
         label:
             title: null
             header: null
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: 'Cron job name'
+            enabled: Status
+            options: Options
+            info: 'Info:'
+            infodesc: 'These settings will help you to manage background jobs easly by enabling/disabling selected job(s).'
+            prevRun: 'Previous run date'
+            nextRun: 'Next run date'
+            norecords: 'No records found.'
         popover:
             cacheengine: null
             cacheenginehost: null
