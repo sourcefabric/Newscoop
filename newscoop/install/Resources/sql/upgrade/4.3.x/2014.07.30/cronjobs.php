@@ -35,9 +35,9 @@ foreach ($crontab->getJobs() as $key => $job) {
     foreach ($newscoopJobs as $key => $value) {
         if (strpos($job->getCommand(), $value) !== false) {
             $schedule = $job->getMinute(). ' ' .$job->getHour(). ' ' .$job->getDayOfMonth(). ' ' .$job->getMonth(). ' ' .$job->getDayOfWeek();
-            $result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".strip_tags($job->getCommand())."'");
+            $result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".strip_tags(str_replace('php ', '', $job->getCommand()))."'");
             if (is_null(mysqli_fetch_array($result))) {
-                mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('".strip_tags(substr($job->getCommand(), strrpos($job->getCommand(), '/' )+1))."','".strip_tags($job->getCommand())."','". strip_tags($schedule)."', 1, NOW(), 0)");
+                mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('".strip_tags(substr($job->getCommand(), strrpos($job->getCommand(), '/' )+1))."','".strip_tags(strip_tags(str_replace('php ', '', $job->getCommand())))."','". strip_tags($schedule)."', 1, NOW(), 0)");
             }
 
             $crontab->removeJob($job);
