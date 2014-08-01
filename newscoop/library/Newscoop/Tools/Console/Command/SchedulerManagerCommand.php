@@ -57,8 +57,30 @@ class SchedulerManagerCommand extends ContainerAwareCommand
 
         try {
             foreach ($jobs as $job) {
+                ladybug_dump($jobs);
                 unset($job['id']);
                 unset($job['createdAt']);
+                if ($job['sendMail']) {
+                    if (!$systemPreferences->CronJobsNotificationEmail) {
+                        $systemPreferences->CronJobsNotificationEmail = $systemPreferences->EmailFromAddress;
+                    }
+
+                    $job['recipients'] = $systemPreferences->CronJobsNotificationEmail;
+
+                    if ($systemPreferences->CronJobsSenderEmail) {
+                        $job['smtpSender'] = $systemPreferences->CronJobsSenderEmail;
+                    }
+
+                    if ($systemPreferences->CronJobsSenderName) {
+                        $job['smtpSenderName'] = $systemPreferences->CronJobsSenderName;
+                    }
+
+                    if (is_null($job['output'])) {
+                        $job['output'] = realpath(__DIR__ . '/../../../../../log') . '/cron_job_' . $this->cleanString($job['name']). '.log';
+                    }
+                }
+
+                unset($job['sendMail']);
                 $schedulerService->addSchedulerJob($job['name'], array_filter($job));
             }
 
@@ -66,5 +88,19 @@ class SchedulerManagerCommand extends ContainerAwareCommand
         } catch (\Exception $e) {
             $output->writeln("<error>" . $e->getMessage() . "</error>");
         }
+    }
+
+    /**
+     * Remove special chars from string
+     *
+     * @param  string $string String from which special chars will be removed
+     *
+     * @return string         Clean string
+     */
+    private function cleanString($string)
+    {
+        $string = str_replace(' ', '-', $string);
+
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 }

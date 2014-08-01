@@ -87,6 +87,12 @@ class CronJob
     protected $enabled;
 
     /**
+     * @ORM\Column(type="boolean", name="sendMail")
+     * @var boolean
+     */
+    protected $sendMail;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at")
      * @var datetime
      */
@@ -97,6 +103,7 @@ class CronJob
         $this->createdAt = new \DateTime('now');
         $this->enabled = true;
         $this->debug = false;
+        $this->sendMail = false;
     }
 
     /**
@@ -383,6 +390,30 @@ class CronJob
     public function setDebug($debug)
     {
         $this->debug = $debug;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of sendMail.
+     *
+     * @return boolean
+     */
+    public function getSendMail()
+    {
+        return $this->sendMail;
+    }
+
+    /**
+     * Sets the value of sendMail.
+     *
+     * @param boolean $sendMail the send mail
+     *
+     * @return self
+     */
+    public function setSendMail($sendMail)
+    {
+        $this->sendMail = $sendMail;
 
         return $this;
     }
