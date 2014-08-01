@@ -55,15 +55,15 @@ class SchedulerManagerCommand extends ContainerAwareCommand
             $cacheService->save($cacheKey, $jobs);
         }
 
+        if (!$systemPreferences->CronJobsNotificationEmail) {
+            $systemPreferences->CronJobsNotificationEmail = $systemPreferences->EmailFromAddress;
+        }
+
         try {
             foreach ($jobs as $job) {
                 unset($job['id']);
                 unset($job['createdAt']);
                 if ($job['sendMail']) {
-                    if (!$systemPreferences->CronJobsNotificationEmail) {
-                        $systemPreferences->CronJobsNotificationEmail = $systemPreferences->EmailFromAddress;
-                    }
-
                     $job['recipients'] = $systemPreferences->CronJobsNotificationEmail;
 
                     if ($systemPreferences->CronJobsSenderEmail) {
