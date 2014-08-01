@@ -192,6 +192,12 @@ th a, th a:hover{
             {% if hasManagePermission %}
             <div class="tab-pane" id="cronjob_settings">
                 <h3>{{ 'newscoop.preferences.menu.cronjob'|trans }}</h3>
+                <ul id="tabsPanel" class="nav nav-tabs nav-justified">
+                  <li class="active last"><a href="#jobs-table" data-toggle="tab" class="font-fix">{{ 'newscoop.preferences.label.cronslist'|trans }}</a></li>
+                  <li><a href="#jobs-settings" data-toggle="tab" class="font-fix">{{ 'newscoop.preferences.label.cronsadvanced'|trans }}</a></li>
+              </ul>
+              <div class="tab-content" style="margin-top: -300px;">
+                <div class="tab-pane fade in active" id="jobs-table" style="margin: 0">
                 <span class="font-fix label label-info">{{ 'newscoop.preferences.label.info'|trans }}</span> <span class="font-fix">{{ 'newscoop.preferences.label.infodesc'|trans }}</span><br><br>
                 <table class="table table-striped cron-jobs">
                 {% if jobs %}
@@ -200,8 +206,9 @@ th a, th a:hover{
                       <th data-dynatable-no-sort="true" class="font-fix">#</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.cronjob'|trans }}</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.prevRun'|trans }}</th>
-                      <th class="font-fix">{{ 'newscoop.preferences.label.nextRun'|trans }}</th>
+                      <th data-dynatable-column="nextRunDate" class="font-fix">{{ 'newscoop.preferences.label.nextRun'|trans }}</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.enabled'|trans }}</th>
+                      <th class="font-fix">{{ 'newscoop.preferences.label.cronJobNotify'|trans }}</th>
                       <th data-dynatable-no-sort="true" class="font-fix">{{ 'newscoop.preferences.label.options'|trans }}</th>
                     </tr>
                   </thead>
@@ -213,6 +220,7 @@ th a, th a:hover{
                               <td>{{ job.prevRun }}</td>
                               <td><span title="{{ job.schedule }}">{{ job.nextRun }}</span></td>
                               <td>{% if job.enabled %}<span class="font-fix label job-status{{ job.id }} label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>{% else %}<span class="font-fix label job-status{{ job.id }} label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>{% endif %}</td>
+                              <td><input type="checkbox" class="cron-jobs-notify" value="{{ job.id }}" {% if job.sendMail %} checked {% endif %}/></td>
                               <td>
                                 {% if job.enabled %}<button type="button" job-id="{{ job.id }}" class="disable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>{% else %}<button type="button" job-id="{{ job.id }}" class="enable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>{% endif %}</td>
                             </tr>
@@ -222,6 +230,30 @@ th a, th a:hover{
                     <span class="font-fix">{{ 'newscoop.preferences.label.norecords'|trans }}</span>
                 {% endif %}
                 </table>
+                </div>
+                <div class="tab-pane fade" id="jobs-settings"><br>
+                        <dl style="margin-left: -200px;">
+                            <dt>
+                                <label>{{ 'newscoop.preferences.label.cronJobEmail'|trans }} <small id="cronjobemails">(?)</small></label>
+                            </dt>
+                            <dd>
+                                {{ form_widget(form.cronJobNotificationEmail, {'attr' : {'class' : 'input_text'}}) }}
+                            </dd>
+                            <dt>
+                                <label>{{ 'newscoop.preferences.label.cronJobSenderEmail'|trans }} <small id="cronjobsender">(?)</small></label>
+                            </dt>
+                            <dd>
+                                {{ form_widget(form.cronJobSmtpSender, {'attr' : {'class' : 'input_text'}}) }} 
+                            </dd>
+                            <dt>
+                                <label>{{ 'newscoop.preferences.label.cronJobSenderName'|trans }}</label>
+                            </dt>
+                            <dd>
+                                {{ form_widget(form.cronJobSmtpSenderName, {'attr' : {'class' : 'input_text'}}) }} 
+                            </dd>
+                        </dl>
+                </div>
+                </div>
             </div>
             <div class="tab-pane" id="email_settings">
                 <h3>{{ 'newscoop.preferences.menu.email'|trans }}</h3>
@@ -596,11 +628,6 @@ $( document ).ready(function() {
             recordCountTemplate: '{{ 'users.table.table_messages.recordCountTemplate'|trans({}, "users") }}',
             processingText: '{{ 'users.table.table_messages.processingText'|trans({}, "users") }}'
         },
-        readers: {
-            'nextRunDate': function(el, record) {
-                return el.html();
-            },
-        },
     });
 });
 
@@ -612,6 +639,7 @@ $( document ).ready(function() {
     };
 
     $(function() {
+        $('#tabsPanel a:first').tab('show');
         $("input:radio[name=preferencesform\\[use_replication\\]]").change(function() {
             var replication_div = $('#replication_server');
             if ($(this).val() == 'Y') {
@@ -705,6 +733,22 @@ $( document ).ready(function() {
         });
     });
 
+    $('.cron-jobs-notify').live('click', function(e){
+        var jobId = $(this).val();
+        callServer('ping', [], function(json) {
+            $.ajax({
+                type: 'POST',
+                url: Routing.generate('newscoop_newscoop_systempref_jobnotify', {id: jobId }),
+                success: function (data) {
+                    flashMessage('{{ 'newscoop.preferences.success.jobnotifyswitched'|trans}}');
+                },
+                error: function (rq, status, error) {
+                    flashMessage('{{ 'newscoop.preferences.error.jobnotifyerror'|trans}}', "error");
+                }
+            });
+        });
+    });
+
     popover($('#cacheengine'), '{{ 'newscoop.preferences.popover.cacheengine'|trans }}');
     popover($('#cacheenginehost'), '{{ 'newscoop.preferences.popover.cacheenginehost'|trans }}');
     popover($('#cacheengineport'), '{{ 'newscoop.preferences.popover.cacheengineport'|trans }}');
@@ -727,5 +771,7 @@ $( document ).ready(function() {
     popover($('#garbage'), '{{ 'newscoop.preferences.popover.garbage'|trans }}');
     popover($('#lifetime'), '{{ 'newscoop.preferences.popover.lifetime'|trans }}');
     popover($('#smartyuseprotocol-popover'), '{{ 'newscoop.preferences.popover.smartyuseprotocol'|trans }}');
+    popover($('#cronjobemails'), '{{ 'newscoop.preferences.popover.cronJobEmail'|trans }}');
+    popover($('#cronjobsender'), '{{ 'newscoop.preferences.popover.cronJobSenderEmail'|trans }}');
 //--></script>
 {% endblock %}

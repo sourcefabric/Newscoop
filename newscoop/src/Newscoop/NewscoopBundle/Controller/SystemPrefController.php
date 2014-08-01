@@ -42,7 +42,7 @@ class SystemPrefController extends Controller
 
         $jobs = $em->getRepository('Newscoop\Entity\CronJob')
             ->createQueryBuilder('j')
-            ->select('j.id', 'j.name', 'j.enabled', 'j.schedule')
+            ->select('j.id', 'j.name', 'j.enabled', 'j.schedule', 'j.sendMail')
             ->getQuery()
             ->getArrayResult();
 
@@ -170,6 +170,9 @@ class SystemPrefController extends Controller
             'userGarbageActive' => $preferencesService->userGarbageActive ?: 'N',
             'userGarbageDays' => $preferencesService->userGarbageDays ?: 90,
             'smartyUseProtocol' => $preferencesService->SmartyUseProtocol,
+            'cronJobNotificationEmail' => $preferencesService->CronJobsNotificationEmail,
+            'cronJobSmtpSender' => $preferencesService->CronJobsSenderEmail,
+            'cronJobSmtpSenderName' => $preferencesService->CronJobsSenderName,
         )
         , array(
             'cacheService' => $this->container->get('newscoop.cache')
@@ -257,6 +260,10 @@ class SystemPrefController extends Controller
                     $preferencesService->set('userGarbageDays', $data['userGarbageDays']);
                     // smarty use protocol settings
                     $preferencesService->set('SmartyUseProtocol', $data['smartyUseProtocol']);
+                    // cron jobs settings
+                    $preferencesService->set('CronJobsNotificationEmail', $data['cronJobNotificationEmail']);
+                    $preferencesService->set('CronJobsSenderEmail', $data['cronJobSmtpSender']);
+                    $preferencesService->set('CronJobsSenderName', $data['cronJobSmtpSenderName']);
                 }
                 // General Settings
                 $this->generalSettings($data['siteonline'], $data['title'], $data['meta_keywords'], $data['meta_description'], $data['timezone'], $data['cache_image'], $data['allow_recovery'], $data['email_from'],
@@ -338,6 +345,31 @@ class SystemPrefController extends Controller
                 $em->flush();
                 $cacheService->clearNamespace('cronjobs');
             }
+        } catch (Exception $e) {
+            return new JsonResponse(array($e->getMessage()), 404);
+        }
+
+        return new JsonResponse(array('status' => 'success'), 200);
+    }
+
+    /**
+     * @Route("/admin/preferences/job/notify/{id}", options={"expose"=true})
+     */
+    public function jobNotifyAction(Request $request, $id)
+    {
+        $em = $this->get('em');
+        $cacheService = $this->get('newscoop.cache');
+        $job = $em->getRepository('Newscoop\Entity\CronJob')->findOneById($id);
+
+        try {
+            if ($job->getSendMail()) {
+                $job->setSendMail(false);
+            } else {
+                $job->setSendMail(true);
+            }
+
+            $em->flush();
+            $cacheService->clearNamespace('cronjobs');
         } catch (Exception $e) {
             return new JsonResponse(array($e->getMessage()), 404);
         }
