@@ -54,4 +54,9 @@ foreach ($crontab->getJobs() as $key => $job) {
     }
 }
 
+$result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".$newscoopRealPath ."/application/console log:maintenance' OR command = '".$newscoopRealPath ."/scripts/newscoop.php log:maintenance'");
+if (is_null(mysqli_fetch_array($result))) {
+    mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`, `detailsUrl`) VALUES ('Display the last 7 days logged actions when going to Configure -> Logs. All the rest are stored in newscoop-audit.log.','".$newscoopRealPath . "/application/console log:maintenance','30 1 * * *', 0, NOW(), 0, 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/')");
+}
+
 $crontab->write();

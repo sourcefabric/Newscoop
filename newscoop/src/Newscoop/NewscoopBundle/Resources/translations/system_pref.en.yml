@@ -130,6 +130,7 @@ newscoop:
       cronJobNotify: "Notify?"
       cronslist: "Background jobs list"
       cronsadvanced: "Advanced Settings"
+      moredetails: "More details."
     popover:
       cronJobEmail: "E-mail addresses separated by comma that will receive error notifications."
       cronJobSenderEmail: "E-mail address from which notifications will be sent."

@@ -15,6 +15,9 @@ th a, th a:hover{
 .cron-jobs tbody tr td, #dynatable-search-, #dynatable-record-count- {
     font-size: 12px;
 }
+table.cron-jobs td:nth-child(2) {
+    width: 40%;
+}
 </style>
 {% endblock %}
 {% block admin_scripts %}
@@ -216,7 +219,7 @@ th a, th a:hover{
                         {% for job in jobs %}
                             <tr>
                               <td>{{ loop.index }}</td>
-                              <td>{{ job.name }}</td>
+                              <td>{{ job.name }} {% if job.detailsUrl %}<a href="{{ job.detailsUrl }}" target="_blank">{{ 'newscoop.preferences.label.moredetails'|trans }}</a>{% endif %}</td>
                               <td>{{ job.prevRun }}</td>
                               <td><span title="{{ job.schedule }}">{{ job.nextRun }}</span></td>
                               <td>{% if job.enabled %}<div id="enabled"><span class="font-fix label job-status{{ job.id }} label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span></div>{% else %}<div id="disabled"><span class="font-fix label job-status{{ job.id }} label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span></div>{% endif %}</td>

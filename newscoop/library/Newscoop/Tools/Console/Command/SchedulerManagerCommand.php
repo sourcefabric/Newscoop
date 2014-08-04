@@ -63,6 +63,7 @@ class SchedulerManagerCommand extends ContainerAwareCommand
             foreach ($jobs as $job) {
                 unset($job['id']);
                 unset($job['createdAt']);
+                unset($job['detailsUrl']);
                 if ($job['sendMail']) {
                     $job['recipients'] = $systemPreferences->CronJobsNotificationEmail;
 

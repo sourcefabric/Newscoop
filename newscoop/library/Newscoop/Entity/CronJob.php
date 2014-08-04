@@ -93,6 +93,12 @@ class CronJob
     protected $sendMail;
 
     /**
+     * @ORM\Column(type="text", name="detailsUrl", nullable=true)
+     * @var text
+     */
+    protected $detailsUrl;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at")
      * @var datetime
      */
@@ -414,6 +420,30 @@ class CronJob
     public function setSendMail($sendMail)
     {
         $this->sendMail = $sendMail;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of detailsUrl.
+     *
+     * @return text
+     */
+    public function getDetailsUrl()
+    {
+        return $this->detailsUrl;
+    }
+
+    /**
+     * Sets the value of detailsUrl.
+     *
+     * @param text $detailsUrl the details url
+     *
+     * @return self
+     */
+    public function setDetailsUrl($detailsUrl)
+    {
+        $this->detailsUrl = $detailsUrl;
 
         return $this;
     }

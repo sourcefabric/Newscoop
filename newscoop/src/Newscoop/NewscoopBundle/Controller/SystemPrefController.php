@@ -42,7 +42,6 @@ class SystemPrefController extends Controller
 
         $jobs = $em->getRepository('Newscoop\Entity\CronJob')
             ->createQueryBuilder('j')
-            ->select('j.id', 'j.name', 'j.enabled', 'j.schedule', 'j.sendMail')
             ->getQuery()
             ->getArrayResult();
 

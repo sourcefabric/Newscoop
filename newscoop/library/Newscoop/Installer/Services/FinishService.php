@@ -148,6 +148,7 @@ class FinishService
             'command' => $appDirectory.' log:maintenance',
             'schedule' => '30 1 * * *',
             'enabled' => false,
+            'detailsUrl' => 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/'
         ));
 
         $crontab = new Crontab();
