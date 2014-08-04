@@ -144,6 +144,12 @@ class FinishService
             'schedule' => '30 0 * * *',
         ));
 
+        $scheduler->registerJob("Display the last 7 days logged actions when going to Configure -> Logs. All the rest are stored in newscoop-audit.log.", array(
+            'command' => $appDirectory.' log:maintenance',
+            'schedule' => '30 1 * * *',
+            'enabled' => false,
+        ));
+
         $crontab = new Crontab();
 
         $job = new Job();

@@ -24,6 +24,8 @@ $newscoopJobs = array(
     $newscoopRealPath . '/bin/events-notifier',
     $newscoopRealPath . '/bin/newscoop-statistics',
     $newscoopRealPath . '/bin/newscoop-stats',
+    $newscoopRealPath . '/scripts/newscoop.php',
+    $newscoopRealPath . '/application/console log:maintenance',
 );
 
 $connection = mysqli_connect($Campsite['db']['host'], $Campsite['db']['user'], $Campsite['db']['pass'], $Campsite['db']['name']);
