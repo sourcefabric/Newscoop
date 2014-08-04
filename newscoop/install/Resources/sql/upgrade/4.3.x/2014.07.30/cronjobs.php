@@ -15,14 +15,15 @@ use Crontab\Job;
 
 $crontab = new Crontab();
 
+$newscoopRealPath = realpath($newscoopDir);
 $newscoopJobs = array(
-    'user:garbage',
-    'newscoop-autopublish',
-    'newscoop-indexer',
-    'subscription-notifier',
-    'events-notifier',
-    'newscoop-statistics',
-    'newscoop-stats',
+    $newscoopRealPath . '/application/console user:garbage',
+    $newscoopRealPath . '/bin/newscoop-autopublish',
+    $newscoopRealPath . '/bin/newscoop-indexer',
+    $newscoopRealPath . '/bin/subscription-notifier',
+    $newscoopRealPath . '/bin/events-notifier',
+    $newscoopRealPath . '/bin/newscoop-statistics',
+    $newscoopRealPath . '/bin/newscoop-stats',
 );
 
 $connection = mysqli_connect($Campsite['db']['host'], $Campsite['db']['user'], $Campsite['db']['pass'], $Campsite['db']['name']);
@@ -36,17 +37,17 @@ foreach ($crontab->getJobs() as $key => $job) {
             $schedule = $job->getMinute(). ' ' .$job->getHour(). ' ' .$job->getDayOfMonth(). ' ' .$job->getMonth(). ' ' .$job->getDayOfWeek();
             $result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".strip_tags($job->getCommand())."'");
             if (is_null(mysqli_fetch_array($result))) {
-                mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`) VALUES ('".strip_tags(substr($job->getCommand(), strrpos($job->getCommand(), '/' )+1))."','".strip_tags($job->getCommand())."','". strip_tags($schedule)."', 1, NOW())");
+                mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('".strip_tags(substr($job->getCommand(), strrpos($job->getCommand(), '/' )+1))."','".strip_tags($job->getCommand())."','". strip_tags($schedule)."', 1, NOW(), 0)");
             }
 
             $crontab->removeJob($job);
         }
     }
 
-    if (strpos($job->getCommand(), 'scheduler:run') === false) {
+    if (strpos($job->getCommand(), $newscoopRealPath . '/application/console scheduler:run') === false) {
         $job = new Job();
         $job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand('php '.realpath(__DIR__ . '/../../../../../../application') . '/console scheduler:run');
+            ->setCommand('php '.$newscoopRealPath . '/application/console scheduler:run');
         $crontab->addJob($job);
     }
 }

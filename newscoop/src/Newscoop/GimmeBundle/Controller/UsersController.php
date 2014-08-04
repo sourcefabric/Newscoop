@@ -115,6 +115,7 @@ class UsersController extends FOSRestController
      *         403="Returned when wrong password given",
      *         404="Returned when the user is not found",
      *         400="Returned when invalid arguments",
+     *         302="Returned when '_target_path' parameter given",
      *     },
      *     parameters={
      *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},

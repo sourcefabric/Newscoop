@@ -452,6 +452,21 @@ class PreferencesType extends AbstractType
             'multiple' => false,
             'expanded' => true,
             'required' => true,
+        ))
+        ->add('cronJobNotificationEmail', 'email', array(
+            'attr' => array('maxlength' => 255, 'size' => 64),
+            'error_bubbling' => true,
+            'required' => true
+        ))
+        ->add('cronJobSmtpSender', 'email', array(
+            'attr' => array('maxlength' => 100, 'size' => 64),
+            'error_bubbling' => true,
+            'required' => false
+        ))
+        ->add('cronJobSmtpSenderName', null, array(
+            'attr' => array('maxlength'=>'100', 'size' => '64'),
+            'error_bubbling' => true,
+            'required' => false
         ));
     }
 
