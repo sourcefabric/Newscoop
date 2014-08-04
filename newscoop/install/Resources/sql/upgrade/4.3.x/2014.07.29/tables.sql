@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `cron_jobs` (
   `runAs` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL,
   `sendMail` tinyint(1) NOT NULL,
+  `detailsUrl` TEXT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
