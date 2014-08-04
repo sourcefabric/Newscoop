@@ -11,9 +11,12 @@ newscoop:
             latitude: 'Políčko rozpětí není platné. '
             longitude: 'Hodnota pole zeměpisné délky není platné'
             cacheNotCleared: 'Chyba v čištění cache'
+            joberror: null
         success:
             saved: 'Systémové preference aktualizovány.'
             cacheCleared: 'Cache byla vymazána'
+            jobenabled: null
+            jobdisabled: null
         menu:
             general: 'Obecné Nastavení'
             email: 'Nastavení e-mailu'
@@ -24,8 +27,11 @@ newscoop:
             cache: 'Nastavení Cache'
             other: 'Další nastavení'
             recaptcha: 'Nastavení reCAPTCHA'
+            cronjob: null
         btn:
             cleardatabasecache: 'Smazat paměť disku'
+            disable: null
+            enable: null
         label:
             title: 'Systémové preference'
             header: Preference
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: 'Definujte přesný počet dnů po kterých úživatelé čekající na vyřízení budou smazáni.'
             usergarbagedays: 'Počet dní'
             smartyUseProtocol: null
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
         popover:
             cacheengine: 'Povoluje nebo zakazuje systém cache cache, který může zlepšit výkon Newscoop.'
             cacheenginehost: 'Poskytněnte cache host (pro Memcache, Memcached nebo Redis)'

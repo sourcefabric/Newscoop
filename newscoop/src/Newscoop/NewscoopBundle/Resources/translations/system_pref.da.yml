@@ -11,9 +11,12 @@ newscoop:
             latitude: 'Ugyldig breddegrad'
             longitude: 'Ugyldig længdegrad'
             cacheNotCleared: 'Fejl ved rensning af cache'
+            joberror: null
         success:
             saved: 'Systemindstillinger opdateret.'
             cacheCleared: 'Cache slettet'
+            jobenabled: null
+            jobdisabled: null
         menu:
             general: 'Generelle indstillinger'
             email: 'Email indstillinger'
@@ -24,8 +27,11 @@ newscoop:
             cache: 'Cache indstillinger'
             other: 'Andre indstillinger'
             recaptcha: 'reCAPTCHA indstillinger'
+            cronjob: null
         btn:
             cleardatabasecache: null
+            disable: null
+            enable: null
         label:
             title: 'System indstillinger'
             header: Indstillinger
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
         popover:
             cacheengine: null
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'

@@ -11,9 +11,12 @@ newscoop:
             latitude: 'Pole szerokości geograficznej jest niepoprawne.'
             longitude: 'Pole długości geograficznej jest niepoprawne.'
             cacheNotCleared: 'Podczas czyszczenia pamięci podręcznej wystąpił błąd'
+            joberror: null
         success:
             saved: 'Preferencje systemowe zaktualizowane.'
             cacheCleared: 'Pamięć podręczna została wyczyszczona'
+            jobenabled: null
+            jobdisabled: null
         menu:
             general: 'Ustawienia główne'
             email: 'Ustawienia e-mail'
@@ -24,8 +27,11 @@ newscoop:
             cache: 'Ustawienia cache'
             other: 'Inne ustawienia'
             recaptcha: 'Ustawienia reCAPTCHA'
+            cronjob: null
         btn:
             cleardatabasecache: 'Wyczyść aktualnie używaną pamięć podręczną'
+            disable: null
+            enable: null
         label:
             title: 'Preferencje systemowe'
             header: Ustawienia
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: 'Zdefiniuj liczbę dni, po których oczekujący użytkownicy zostaną automatycznie usunięci. '
             usergarbagedays: 'Liczba dni'
             smartyUseProtocol: 'Używać protokołu dla linków absolutnych generowanych przez Smarty?'
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
         popover:
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
             cacheenginehost: 'Podaj adres dla silnika pamięci podręcznej (wymagane dla Memcache, Memcached lub Redis)'

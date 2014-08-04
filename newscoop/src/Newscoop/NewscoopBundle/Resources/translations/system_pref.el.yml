@@ -11,9 +11,12 @@ newscoop:
             latitude: null
             longitude: null
             cacheNotCleared: null
+            joberror: null
         success:
             saved: null
             cacheCleared: null
+            jobenabled: null
+            jobdisabled: null
         menu:
             general: null
             email: null
@@ -24,8 +27,11 @@ newscoop:
             cache: null
             other: null
             recaptcha: null
+            cronjob: null
         btn:
             cleardatabasecache: null
+            disable: null
+            enable: null
         label:
             title: 'Προτιμήσεις Συστήματος'
             header: null
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
         popover:
             cacheengine: null
             cacheenginehost: null

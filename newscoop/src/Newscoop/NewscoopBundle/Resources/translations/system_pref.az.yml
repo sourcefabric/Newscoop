@@ -11,9 +11,12 @@ newscoop:
             latitude: 'En sahə dəyəri düzgün deyil.'
             longitude: 'Hündürlük sahə dəyəri düzgün deyil.'
             cacheNotCleared: 'Keşin təmizlənməsində xəta var idi'
+            joberror: null
         success:
             saved: 'Sistem seçimləri yeniləndi.'
             cacheCleared: 'Keş təmizləndi'
+            jobenabled: null
+            jobdisabled: null
         menu:
             general: 'Ümumi Parametrlər'
             email: 'Email Parametləri'
@@ -24,8 +27,11 @@ newscoop:
             cache: 'Keş Seçimləri'
             other: 'Digər Seçimlər'
             recaptcha: 'reCAPTCHA seçimləri'
+            cronjob: null
         btn:
             cleardatabasecache: 'drayverin keş yaddaşını təmizlə'
+            disable: null
+            enable: null
         label:
             title: 'Sistem Seçimləri'
             header: Seçimlər
@@ -108,6 +114,14 @@ newscoop:
             usergarbagedaysinfo: 'Gözləmədə olan istifadəçilərin neçə gündən sonra silinməsini silinəcəyini təyin edin.'
             usergarbagedays: 'Günlərin sayı'
             smartyUseProtocol: 'Smarty tərəfindən hazırlanmış mütləq URL-lər üçün protokol istifadə edirsən?'
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
         popover:
             cacheengine: 'Newscoop-un performansını inkişaf etdirə biləcək sistem keş keşini aktiv və ya deaktiv edir.'
             cacheenginehost: 'Keş evini təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
