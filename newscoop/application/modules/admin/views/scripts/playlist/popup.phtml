@@ -116,12 +116,20 @@ function fnPreviewArticle(data)
 	$("#preview-article-date").val(data.date);
 	$("#preview-article-title").html(data.title);
 	var bodyHtml = '';
-	for (i in data)
-	{
-		if ($.inArray(i, ['title', 'date']) != -1) continue;
-		bodyHtml += '<h4>'+i+'</h4>';
-		bodyHtml += '<p>'+data[i]+'</p>';
-	};
+    bodyHtml += '<h4>'+data.authorsLabel+'</h4>';
+    if (!data['authors'].length == 0) {
+        for (author in data['authors']) {
+            bodyHtml += '<p> - '+data['authors'][author]+'</p>';
+        }
+    } else {
+        bodyHtml += '<p>null</p>';
+    }
+
+    for (i in data) {
+        if ($.inArray(i, ['title', 'date', 'authors', 'authorsLabel']) != -1) continue;
+        bodyHtml += '<h4>'+i+'</h4>';
+        bodyHtml += '<p>'+data[i]+'</p>';
+    };
 
 	$("#preview-article-body").html(bodyHtml);
 	$(".context-block.context-list").css("display","none");
