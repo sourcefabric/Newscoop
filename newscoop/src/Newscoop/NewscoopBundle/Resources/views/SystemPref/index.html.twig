@@ -15,6 +15,9 @@ th a, th a:hover{
 .cron-jobs tbody tr td, #dynatable-search-, #dynatable-record-count- {
     font-size: 12px;
 }
+table.cron-jobs td:nth-child(2) {
+    width: 40%;
+}
 </style>
 {% endblock %}
 {% block admin_scripts %}
@@ -207,8 +210,8 @@ th a, th a:hover{
                       <th class="font-fix">{{ 'newscoop.preferences.label.cronjob'|trans }}</th>
                       <th class="font-fix">{{ 'newscoop.preferences.label.prevRun'|trans }}</th>
                       <th data-dynatable-column="nextRunDate" class="font-fix">{{ 'newscoop.preferences.label.nextRun'|trans }}</th>
-                      <th class="font-fix">{{ 'newscoop.preferences.label.enabled'|trans }}</th>
-                      <th class="font-fix">{{ 'newscoop.preferences.label.cronJobNotify'|trans }}</th>
+                      <th data-dynatable-column="enabled" data-dynatable-sorts="status" class="font-fix">{{ 'newscoop.preferences.label.enabled'|trans }}</th>
+                      <th data-dynatable-column="sendMail" data-dynatable-sorts="notify" class="font-fix">{{ 'newscoop.preferences.label.cronJobNotify'|trans }}</th>
                       <th data-dynatable-no-sort="true" class="font-fix">{{ 'newscoop.preferences.label.options'|trans }}</th>
                     </tr>
                   </thead>
@@ -216,11 +219,11 @@ th a, th a:hover{
                         {% for job in jobs %}
                             <tr>
                               <td>{{ loop.index }}</td>
-                              <td>{{ job.name }}</td>
+                              <td>{{ job.name }} {% if job.detailsUrl %}<a href="{{ job.detailsUrl }}" target="_blank">{{ 'newscoop.preferences.label.moredetails'|trans }}</a>{% endif %}</td>
                               <td>{{ job.prevRun }}</td>
                               <td><span title="{{ job.schedule }}">{{ job.nextRun }}</span></td>
-                              <td>{% if job.enabled %}<span class="font-fix label job-status{{ job.id }} label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>{% else %}<span class="font-fix label job-status{{ job.id }} label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span>{% endif %}</td>
-                              <td><input type="checkbox" class="cron-jobs-notify" value="{{ job.id }}" {% if job.sendMail %} checked {% endif %}/></td>
+                              <td>{% if job.enabled %}<div id="enabled"><span class="font-fix label job-status{{ job.id }} label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span></div>{% else %}<div id="disabled"><span class="font-fix label job-status{{ job.id }} label-danger"><span class="glyphicon glyphicon-thumbs-down"></span></span></div>{% endif %}</td>
+                              <td><div class="notify-job" {% if job.sendMail %}id="checked"{% else %}id="unchecked"{% endif %}><input type="checkbox" class="cron-jobs-notify" value="{{ job.id }}" {% if job.sendMail %} checked {% endif %}/></div></td>
                               <td>
                                 {% if job.enabled %}<button type="button" job-id="{{ job.id }}" class="disable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> {{ 'newscoop.preferences.btn.disable'|trans}}</button>{% else %}<button type="button" job-id="{{ job.id }}" class="enable-cron job-options{{ job.id }} btn btn-default btn-xs"><span class="glyphicon glyphicon-ok-circle"></span> {{ 'newscoop.preferences.btn.enable'|trans}}</button>{% endif %}</td>
                             </tr>
@@ -628,6 +631,22 @@ $( document ).ready(function() {
             recordCountTemplate: '{{ 'users.table.table_messages.recordCountTemplate'|trans({}, "users") }}',
             processingText: '{{ 'users.table.table_messages.processingText'|trans({}, "users") }}'
         },
+        readers: {
+            enabled: function(cell, record) {
+                var $cell = $(cell);
+                var status = $cell.find('div').get(0);
+                record['status'] = status.id;
+
+                return $cell.html();
+            },
+            sendMail: function(cell, record) {
+                var $cell = $(cell);
+                var notify = $cell.find("div.notify-job").get(0);
+                record['notify'] = notify.id
+
+                return $cell.html();
+            }
+        }
     });
 });
 
