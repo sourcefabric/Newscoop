@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../../../../../../conf/database_conf.php';
 
+global $Campsite;
+
 $newscoopDir = dirname(__FILE__).'/../../../../../../';
 require_once $newscoopDir . 'vendor/yzalis/crontab/src/Crontab/Crontab.php';
 require_once $newscoopDir . 'vendor/yzalis/crontab/src/Crontab/BaseJob.php';

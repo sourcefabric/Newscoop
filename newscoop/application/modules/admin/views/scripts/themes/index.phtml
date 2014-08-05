@@ -1,10 +1,19 @@
 <?php
 $translator = \Zend_Registry::get('container')->getService('translator');
 ?>
+<style type="text/css" media="screen">
+.themes-container {
+    padding: 10px 10px 30px 10px;
+    border: 1px solid #ccc;
+    background-color: #FFF;
+    font-size: 12px;
+}
+</style>
+<div class="themes-container">
 <div class="actions">
     <ul class="navigation">
         <!-- li><a class="add" href="#" id="create">Create theme</a></li -->
-        <li><a class="upload" href="#" id="upload">Import theme</a></li>
+        <li><a class="upload" href="#" id="upload"><?php echo $translator->trans('Import theme', array(), 'themes') ?></a></li>
         <!-- li><a class="download" href="#" id="download">Download theme</a></li -->
         <!-- li><a class="duplicate" href="#" id="duplicate">Duplicate theme</a></li -->
     </ul>
@@ -14,7 +23,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 	<div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
     	<ul class="themesListTabsBtns ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
         	<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
-        		<a href="javascript:void(0)">Available themes</a>
+        		<a href="javascript:void(0)"><?php echo $translator->trans('Available themes', array(), 'themes') ?></a>
         	</li>
         	<?php foreach( $this->publications as $pub ) : ?>
         		<li class="ui-state-default ui-corner-top">
@@ -28,6 +37,7 @@ $translator = \Zend_Registry::get('container')->getService('translator');
 
 		</div>
 	</div>
+</div>
 </div>
 <script type="text/javascript">
 $(function() {
@@ -89,7 +99,7 @@ $(function() {
 			</li>
             <li class="ui-state-default ui-corner-top">
                 <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php echo $translator->trans('Section page', array(), 'themes'); ?>">
-					<?php echo $translator->trans( 'Section page' , array(), 'themes'); ?>
+					<?php echo $translator->trans('Section page'); ?>
 					<span><?php echo $translator->trans( 'Click to enlarge' , array(), 'themes') ?></span>
 				</a>
 			</li>
