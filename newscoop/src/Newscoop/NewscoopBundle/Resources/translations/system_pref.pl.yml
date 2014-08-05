@@ -29,7 +29,7 @@ newscoop:
             cache: 'Ustawienia cache'
             other: 'Inne ustawienia'
             recaptcha: 'Ustawienia reCAPTCHA'
-            cronjob: 'Ustawienia zadań w tle.'
+            cronjob: 'Ustawienia zadań w tle'
         btn:
             cleardatabasecache: 'Wyczyść aktualnie używaną pamięć podręczną'
             disable: Wyłącz
