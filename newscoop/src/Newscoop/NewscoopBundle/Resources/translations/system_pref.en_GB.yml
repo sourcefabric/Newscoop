@@ -12,11 +12,13 @@ newscoop:
             longitude: 'Longitude field value is not valid.'
             cacheNotCleared: 'There was error with cache clearing'
             joberror: null
+            jobnotifyerror: null
         success:
             saved: 'System preferences updated.'
             cacheCleared: 'Cache was cleared'
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'General Settings'
             email: 'Email Settings'
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'Enables or disables system cache cache, which can improve Newscoop performance.'
             cacheenginehost: 'Provide cache host (for Memcache, Memcached or Redis)'
             cacheengineport: 'Provide cache host port (for Memcache, Memcached or Redis)'

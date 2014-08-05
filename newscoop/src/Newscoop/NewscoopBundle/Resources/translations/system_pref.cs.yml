@@ -12,11 +12,13 @@ newscoop:
             longitude: 'Hodnota pole zeměpisné délky není platné'
             cacheNotCleared: 'Chyba v čištění cache'
             joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Systémové preference aktualizovány.'
             cacheCleared: 'Cache byla vymazána'
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Obecné Nastavení'
             email: 'Nastavení e-mailu'
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'Povoluje nebo zakazuje systém cache cache, který může zlepšit výkon Newscoop.'
             cacheenginehost: 'Poskytněnte cache host (pro Memcache, Memcached nebo Redis)'
             cacheengineport: 'Poskytněte cache host port (pro Memcache, Memcached nebo Redis)'

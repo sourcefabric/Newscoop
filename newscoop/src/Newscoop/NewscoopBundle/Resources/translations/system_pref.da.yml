@@ -12,11 +12,13 @@ newscoop:
             longitude: 'Ugyldig længdegrad'
             cacheNotCleared: 'Fejl ved rensning af cache'
             joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Systemindstillinger opdateret.'
             cacheCleared: 'Cache slettet'
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Generelle indstillinger'
             email: 'Email indstillinger'
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: null
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
             cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'

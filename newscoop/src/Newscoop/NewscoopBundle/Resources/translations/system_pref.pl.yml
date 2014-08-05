@@ -12,11 +12,13 @@ newscoop:
             longitude: 'Pole długości geograficznej jest niepoprawne.'
             cacheNotCleared: 'Podczas czyszczenia pamięci podręcznej wystąpił błąd'
             joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Preferencje systemowe zaktualizowane.'
             cacheCleared: 'Pamięć podręczna została wyczyszczona'
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Ustawienia główne'
             email: 'Ustawienia e-mail'
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
             cacheenginehost: 'Podaj adres dla silnika pamięci podręcznej (wymagane dla Memcache, Memcached lub Redis)'
             cacheengineport: 'Podaj port adresu dla silnika pamięci podręcznej (wymagane dla Memcache, Memcached lub Redis)'

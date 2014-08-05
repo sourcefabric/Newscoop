@@ -12,11 +12,13 @@ newscoop:
             longitude: 'Hündürlük sahə dəyəri düzgün deyil.'
             cacheNotCleared: 'Keşin təmizlənməsində xəta var idi'
             joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Sistem seçimləri yeniləndi.'
             cacheCleared: 'Keş təmizləndi'
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Ümumi Parametrlər'
             email: 'Email Parametləri'
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'Newscoop-un performansını inkişaf etdirə biləcək sistem keş keşini aktiv və ya deaktiv edir.'
             cacheenginehost: 'Keş evini təqdim et (Memkeş, Memcakeş və ya Redis üçün)'
             cacheengineport: 'Keş ev portunu təqdim et (Memkeş, Memcakeş və ya Redis üçün)'

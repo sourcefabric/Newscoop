@@ -12,11 +12,13 @@ newscoop:
             longitude: null
             cacheNotCleared: null
             joberror: null
+            jobnotifyerror: null
         success:
             saved: null
             cacheCleared: null
             jobenabled: null
             jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: null
             email: null
@@ -122,7 +124,16 @@ newscoop:
             prevRun: null
             nextRun: null
             norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'تمكين أو تعطيل ذاكرة التخزين المؤقت للنظام، والتي من شأنها تحديث أداء نيوسكوب.'
             cacheenginehost: null
             cacheengineport: null
