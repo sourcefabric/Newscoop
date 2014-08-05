@@ -61,7 +61,6 @@ class SchedulerManagerCommand extends ContainerAwareCommand
 
         try {
             foreach ($jobs as $job) {
-                ladybug_dump($jobs);
                 unset($job['id']);
                 unset($job['createdAt']);
                 unset($job['detailsUrl']);
