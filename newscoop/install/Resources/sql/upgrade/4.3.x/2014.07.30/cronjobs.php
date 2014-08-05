@@ -36,27 +36,23 @@ if (mysqli_connect_errno()) {
 foreach ($crontab->getJobs() as $key => $job) {
     foreach ($newscoopJobs as $key => $value) {
         if (strpos($job->getCommand(), $value) !== false) {
-            $schedule = $job->getMinute(). ' ' .$job->getHour(). ' ' .$job->getDayOfMonth(). ' ' .$job->getMonth(). ' ' .$job->getDayOfWeek();
-            $result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".strip_tags(str_replace('php ', '', $job->getCommand()))."'");
-            if (is_null(mysqli_fetch_array($result))) {
-                mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('".strip_tags(substr($job->getCommand(), strrpos($job->getCommand(), '/' )+1))."','".strip_tags(strip_tags(str_replace('php ', '', $job->getCommand())))."','". strip_tags($schedule)."', 1, NOW(), 0)");
-            }
-
             $crontab->removeJob($job);
         }
     }
-
-    if (strpos($job->getCommand(), $newscoopRealPath . '/application/console scheduler:run') === false) {
-        $job = new Job();
-        $job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand('php '.$newscoopRealPath . '/application/console scheduler:run');
-        $crontab->addJob($job);
-    }
 }
 
-$result = mysqli_query($connection, "SELECT * FROM `cron_jobs` WHERE command = '".$newscoopRealPath ."/application/console log:maintenance' OR command = '".$newscoopRealPath ."/scripts/newscoop.php log:maintenance'");
-if (is_null(mysqli_fetch_array($result))) {
-    mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`, `detailsUrl`) VALUES ('Display the last 7 days logged actions when going to Configure -> Logs. All the rest are stored in newscoop-audit.log.','".$newscoopRealPath . "/application/console log:maintenance','30 1 * * *', 0, NOW(), 0, 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/')");
-}
+$job = new Job();
+$job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
+    ->setCommand('php '.$newscoopRealPath . '/application/console scheduler:run');
+$crontab->addJob($job);
+
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Remove obsolete pending users data','" . $newscoopRealPath . "/application/console user:garbage','30 0 * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Autopublish pending issues and articles','" . $newscoopRealPath . "/bin/newscoop-autopublish','* * * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Runs Newscoop Indexer - articles indexing','" . $newscoopRealPath . "/bin/newscoop-indexer','0 */4 * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Send Newscoop subscriptions notifications','" . $newscoopRealPath . "/bin/subscription-notifier','0 */8 * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Send Newscoop events notifications','" . $newscoopRealPath . "/bin/events-notifier','*/2 * * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Remove old statistics from Newscoop database','" . $newscoopRealPath . "/bin/newscoop-statistics','0 */4 * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`) VALUES ('Send Newscoop stats to Sourcefabric','" . $newscoopRealPath . "/bin/newscoop-stats','0 5 * * *', 1, NOW(), 0)");
+mysqli_query($connection, "INSERT INTO `cron_jobs`(`name`, `command`, `schedule`, `is_active`, `created_at`, `sendMail`, `detailsUrl`) VALUES ('Display the last 7 days logged actions when going to Configure -> Logs. All the rest are stored in newscoop-audit.log.','".$newscoopRealPath . "/application/console log:maintenance','30 1 * * *', 0, NOW(), 0, 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/')");
 
 $crontab->write();
