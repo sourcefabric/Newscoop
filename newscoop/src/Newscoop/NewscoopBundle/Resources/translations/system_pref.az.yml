@@ -156,4 +156,4 @@ newscoop:
                 secure: 'reCAPTCHA üçün təhlükəsiz url istifadə etmək istəsən, Bəli seçimini et.'
             garbage: 'Aktivləşdirildikdə bu gözləmədə olan istifadəçilərin neçə gündən sonra silinəcəyini təyin edəcəkdir. İlkin olaraq 90 gün quraşdırılmışdır.'
             lifetime: 'Sessiyanın saniyələrlə yaşama müddəti. Maksimum: 86400 (24 saat). Minimum: 0 (brauzer bağlanana qədər.'
-            smartyuseprotocol: 'Aktivləşdirilsə, Smarty funksiyası  protokol əsaslı URL yaradacaq. Standart olaraq protokola bağlı URL yaratma funksiyası söndürülüb. Bunu dəyişdirmək mümkündür, bunun üçün istifadəçi protokolunu Smarty funksiyası üçün dəyişdirib lazım olan formaya salmaq olar. '
+            smartyuseprotocol: null

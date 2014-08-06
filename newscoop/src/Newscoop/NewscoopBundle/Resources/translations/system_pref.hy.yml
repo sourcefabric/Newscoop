@@ -120,7 +120,7 @@ newscoop:
             enabled: Status
             options: Options
             info: 'Info:'
-            infodesc: 'These settings will help you to manage background jobs easly by enabling/disabling selected job(s).'
+            infodesc: 'These settings will help you manage background jobs by enabling/disabling the selected job(s).'
             prevRun: 'Previous run date'
             nextRun: 'Next run date'
             norecords: 'No records found.'

@@ -85,3 +85,4 @@ Compatibility: Kompatybilność
 '$1 is not writable': 'Brak praw zapisu dla $1'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 pliki $2'
+'Available themes': null
