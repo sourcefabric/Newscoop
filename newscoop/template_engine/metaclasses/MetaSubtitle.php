@@ -282,7 +282,7 @@ final class MetaSubtitle
 
             return $templatesService->fetchTemplate("editor_image.tpl");
         } catch (\Exception $e) {
-            ladybug_dump($e->getMessage());die;
+            return $e->getMessage();
         }
     }
 
