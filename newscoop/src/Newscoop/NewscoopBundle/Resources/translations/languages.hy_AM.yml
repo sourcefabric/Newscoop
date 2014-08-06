@@ -12,30 +12,30 @@
 'Edit short day names': null
 'Edit month names': null
 'Edit language: $1': null
-'Edit day names': null
+'Edit day names': 'Խմբագրել շաբաթվա օրերը'
 'Code Page': null
 'Add new Language': 'Ավելացնել նոր լեզու'
 'Add Language': 'Ավելացնել լեզու'
-We: null
-Tu: null
-Th: null
-Su: null
+We: Չոր
+Tu: Երք
+Th: Հնգ
+Su: Կիր
 Sep: null
-Sa: null
+Sa: Շաբ
 'Please enter the translation for week day short names.': null
 'Please enter the translation for month short names.': null
-Oct: null
-Nov: null
-Mo: null
-Mar: null
-Jun: null
-Jul: null
-Jan: null
-Fr: null
-Feb: null
-Dec: null
-Aug: null
-Apr: null
+Oct: Հոկ
+Nov: Նոյ
+Mo: Երկ
+Mar: Մար
+Jun: Հուն
+Jul: Հուլ
+Jan: Հնվ
+Fr: Ուրբ
+Feb: Փետ
+Dec: Դեկ
+Aug: Օգս
+Apr: Ապր
 'No language.': null
 'Delete language $1': null
 'You do not have the right to add languages.': null

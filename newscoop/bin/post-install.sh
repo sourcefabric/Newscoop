@@ -3,7 +3,6 @@ echo 'Setting directory modes'
 chmod -R 777 cache/
 chmod 777 public/videos/
 chmod 777 .
-chmod 777 install/cron_jobs/
 chmod 777 conf/
 chmod -R 777 themes/
 chmod 777 plugins/

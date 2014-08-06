@@ -1,34 +1,34 @@
-'Password confirmation does not match your password.': null
-'Password Confirmation': null
+'Password confirmation does not match your password.': 'Powtórzone hasło jest inne niż podane wcześniej'
+'Password Confirmation': 'Powtórz hasło'
 Website: 'Strona internetowa'
-Twitter: null
-'Save profile': null
-'Profile image': null
-Organisation: null
-'Last Name Public': null
-Google+: null
+Twitter: Twitter
+'Save profile': 'Zapisz profil'
+'Profile image': 'Zdjęcie profilowe'
+Organisation: Organizacja
+'Last Name Public': 'Pokazuj nazwisko'
+Google+: Google+
 Geolocation: Geololalizacja
-Gender: null
-'First Name Public': null
-Facebook: null
-'Date of birth': null
-'Allow sending emails': null
-'About me': null
-'User with email %s is registered already.': null
-'Username is used. Please use another one.': null
-Continue: null
-'Accepting terms of use': null
-'send confirmation email': null
-'edit user': null
-'delete user': null
-'Verified profile': null
+Gender: Płeć
+'First Name Public': 'Pokazuj imię'
+Facebook: Facebook
+'Date of birth': 'Data urodzenia'
+'Allow sending emails': 'Zezwala na wysyłanie wiadomości'
+'About me': 'O sobie'
+'User with email %s is registered already.': 'Użytkownik z adresem email %s już istnieje.'
+'Username is used. Please use another one.': 'Ta nazwa użytkownika jest już zajęta, wybierz inną.'
+Continue: Dalej
+'Accepting terms of use': 'Akceptuję regulamin'
+'send confirmation email': 'Wyślij email potwierdzający'
+'edit user': 'Edytuj użytkownika'
+'delete user': 'Usuń użytkownika'
+'Verified profile': 'Profil zweryfikowany'
 'Showing _START_ to _END_ of _TOTAL_ entries': 'Pokaz _START_ do _END_ ze _TOTAL_ wpisow'
-'Send email to user:': null
-'No users found.': null
+'Send email to user:': 'Wyślij email do użytkownika: '
+'No users found.': 'Nie znaleziono użytkowników.'
 'No records found.': 'Nie znaleziono rekordów.'
 'No entries to show': 'Brak wpisów do pokazania'
 'Display _MENU_ records': 'Pokaż _MENU_ rekordy'
-'Are you sure you want to {action}?': null
+'Are you sure you want to {action}?': 'Jesteś pewien że chcesz {action}?'
 'Active Logins': 'Źródła logowania'
 ' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
 'User renamed.': 'Nazwa użytkownika zmieniona.'
@@ -184,7 +184,7 @@ Miscellaneous: Różne
 'User will be notified on several events': 'Używkotnik będzie informowany przy kilku zdarzeniach.'
 'Editor Miscellaneous Settings': 'Dodatkowe ustawienia edytora'
 'No such user account.': 'Brak użytkownika.'
-'User image (full-size)': null
+'User image (full-size)': 'Obraz użytkownika (pełen rozmiar)'
 users:
     label:
         title: 'Wyszukiwarka uzytkowników'

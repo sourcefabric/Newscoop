@@ -155,8 +155,9 @@ Backup/Restore: Backup/Gendan
 'Step 2': 'Trin 2'
 'Step 3': 'Trin 3'
 'Add new user': 'Tilføj bruger'
-'Bad credentials': null
+'Bad credentials': 'Ugyldige brugeroplysninger'
 'Active users': 'Aktive brugere'
 'New comments': 'Nye kommentarer'
-'Published articles': null
+'Published articles': 'Publicerede artikler'
 'Last 7 days statistics': 'Statistik for de seneste 7 dage'
+'Change password': null

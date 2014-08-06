@@ -1,15 +1,15 @@
 comments:
     label:
-        comments: null
+        comments: 'Zarządzanie komentarzami'
         menu: Komentarze
-        banned: null
-        anonymous: null
+        banned: Zablokowany
+        anonymous: Anonim
         at: w
-        noentries: null
-        showing: null
-        of: null
-        to: null
-        entries: null
+        noentries: 'Nie znaleziono wyników.'
+        showing: Pokazuje
+        of: z
+        to: do
+        entries: wyników
         fullarticle: 'Pełny artykuł'
         hidden: Ukryte
         approved: Zaakceptowane
@@ -21,18 +21,18 @@ comments:
         subject: Temat
         ban: 'Zablokuj/Odblokuj użytkownika'
         author: Autor
-        date: null
+        date: 'Data / Komentarz'
         article: Artykuł
         search: Szukaj
         show: Pokaż
         recommended: Polecany
         unrecommended: Niepolecany
-        editcomment: null
+        editcomment: 'Szybka edycja'
         actions: Akcje
         selectstatus: 'Wybierz status'
         deleted: Usunięty
-        alert: null
-        searchholder: null
+        alert: Uwaga
+        searchholder: 'Szukaj... (np. imię, email, temat, treść komentarza, tytuł artykułu)'
     btn:
         cancel: Anuluj
         submit: Wyślij
@@ -42,25 +42,25 @@ comments:
         reply: Odpowiedz
         edit: 'Szybka edycja'
         close: Zamknij
-        okay: null
+        okay: Ok
         filter: Filtrowanie
     msg:
         deleted: 'Komentarz został usunięty'
         commentinarticle: 'Komentarz $4 przez $1 w artykule $2 ($3)'
         status:
-            new: null
-            approved: null
-            hidden: null
-            single: null
-            all: null
+            new: nowy
+            approved: zatwierdzony
+            hidden: ukryty
+            single: 'Status komentarza został zmieniony na'
+            all: 'Status komentarzy został zmieniony na'
         error:
             reach: 'Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.'
             deletefromarticle: 'Komentarz został usunięty z artykułu $2 przez $1 ($3)'
-            statuschange: null
-            delete: null
-            update: null
+            statuschange: 'Wystąpił błąd podczas zmieniania statusu dla kometarza'
+            delete: 'Nie można usunąć tego komentarza'
+            update: 'Pola nie mogą być puste'
         sure: 'Chcesz bezpowrotnie usunąć wiadomość'
-        suremultiple: null
-        first: null
+        suremultiple: 'Zamierzasz bezpowrotnie usunąć wybrane komentarze.'
+        first: 'Musisz najpierw wybrać komentarz/komentarze!'
         surequestion: 'Jesteś pewien że chcesz to zrobić?'
         updated: 'Komentarz zaktualizowany.'

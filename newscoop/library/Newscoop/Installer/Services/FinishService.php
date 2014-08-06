@@ -2,6 +2,7 @@
 /**
  * @package Newscoop
  * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @author Rafał Muszyński <rafal.muszynski@sourcefabric.org>
  * @copyright 2013 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -12,6 +13,7 @@ use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Filesystem\Filesystem;
 use Newscoop\Entity\User;
+use Newscoop\SchedulerServiceInterface;
 use Crontab\Crontab;
 use Crontab\Job;
 
@@ -99,48 +101,61 @@ class FinishService
     /**
      * Save newscoop cronjobs in user cronjob file
      *
+     * @param SchedulerService $scheduler Cron job scheduler service
      * @return bolean
      */
-    public function saveCronjobs()
+    public function saveCronjobs(SchedulerServiceInterface $scheduler)
     {
         $binDirectory = realpath($this->newscoopDir.'/bin');
         $appDirectory = realpath($this->newscoopDir.'/application/console');
+
+        $scheduler->registerJob("Autopublish pending issues and articles", array(
+            'command' => $binDirectory.'/newscoop-autopublish',
+            'schedule' => '* * * * *',
+        ));
+
+        $scheduler->registerJob("Runs Newscoop Indexer - articles indexing", array(
+            'command' => $binDirectory.'/newscoop-indexer --silent',
+            'schedule' => '0 */4 * * *',
+        ));
+
+        $scheduler->registerJob("Send Newscoop subscriptions notifications", array(
+            'command' => $binDirectory.'/subscription-notifier',
+            'schedule' => '0 */8 * * *',
+        ));
+
+        $scheduler->registerJob("Send Newscoop events notifications", array(
+            'command' => $binDirectory.'/events-notifier',
+            'schedule' => '*/2 * * * *',
+        ));
+
+        $scheduler->registerJob("Remove old statistics from Newscoop database", array(
+            'command' => $binDirectory.'/newscoop-statistics',
+            'schedule' => '0 */4 * * *',
+        ));
+
+        $scheduler->registerJob("Send Newscoop stats to Sourcefabric", array(
+            'command' => $binDirectory.'/newscoop-stats',
+            'schedule' => '0 5 * * *',
+        ));
+
+        $scheduler->registerJob("Remove obsolete pending users data", array(
+            'command' => $appDirectory.' user:garbage',
+            'schedule' => '30 0 * * *',
+        ));
+
+        $scheduler->registerJob("Display the last 7 days logged actions when going to Configure -> Logs. All the rest are stored in newscoop-audit.log.", array(
+            'command' => $appDirectory.' log:maintenance',
+            'schedule' => '30 1 * * *',
+            'enabled' => false,
+            'detailsUrl' => 'http://sourcefabric.booktype.pro/newscoop-42-for-journalists-and-editors/log-file-maintenance/'
+        ));
 
         $crontab = new Crontab();
 
         $job = new Job();
         $job->setMinute('*')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/newscoop-autopublish');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('0')->setHour('*/4')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/newscoop-indexer --silent');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('0')->setHour('*/8')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/subscription-notifier');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('*/2')->setHour('*')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/events-notifier');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('0')->setHour('*/4')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/newscoop-statistics');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('0')->setHour('5')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($binDirectory.'/newscoop-autopublish');
-        $crontab->addJob($job);
-
-        $job = new Job();
-        $job->setMinute('30')->setHour('0')->setDayOfMonth('*')->setMonth('*')->setDayOfWeek('*')
-            ->setCommand($appDirectory.' user:garbage');
+            ->setCommand('php '.$appDirectory.' scheduler:run');
         $crontab->addJob($job);
         $crontab->write();
 

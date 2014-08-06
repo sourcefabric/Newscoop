@@ -1,5 +1,4 @@
 .themesListHolder {
-	width:920px;
 	background:none !important;
 	border:none !important;
 	}
@@ -100,11 +99,11 @@
 								}
 							.themesListTabs .imageCtrls ul, .themesListTabs .imageCtrls li
 							{
-								width: 300px !important;
+								width: 100% !important;
 							}
 							.themesListTabs ul
 							{
-								width: 210px !important;
+								width: 100% !important;
 								border: none !important;	
 							}
 							.themesListTabs h3 {
@@ -133,10 +132,12 @@
 									}
 									.themesListTabs ul li a {
 										display:block; position:relative;
-										width:216px; height:26px; 
+										width:95%; height:26px; 
 										padding:0px 0 0 20px !important;
 										line-height:26px;
+										background: #ff2200;
 										background:url(images/themes-list-tabs-btn.png) left top no-repeat;
+										background-size: 100% 53px;
 										}
 									.themesListTabs ul li.ui-tabs-selected a {
 										background-position:0 -26px;
@@ -155,7 +156,7 @@
 							color:#000000;
 							}
 						.actionDropDown {
-							float:right;
+							float:left;
 							margin:0px !important;
 							padding:10px 0 0 0px !important;
 							}
@@ -164,16 +165,16 @@
 								}
 								.actionDropDown li a {
 									display:block;
-									width:62px; height:18px; 
+									width:105%; height:18px; 
 									padding-left:8px;
 									line-height:18px; color:#007fb3;
-									background:url(images/actions-btn-bgr.png) 55px 0px no-repeat;
+									background:url(images/actions-btn-bgr.png) 100% 0px no-repeat;
 									-moz-border-radius: 3px;
 									-webkit-border-radius: 3px;
 									}
 									.actionDropDown li a:hover, .actionDropDown li a.active {
 										color:#ffffff; 
-										background-position:55px -18px;
+										background-position:100% -18px;
 										background-color:#9d9d9d;
 										}
 								.actionDropDown li ul {

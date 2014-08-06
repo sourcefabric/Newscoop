@@ -184,3 +184,23 @@ Comments: Σχόλια
 'No such article.': 'Δεν υπάρχει τέτοιο άρθρο.'
 'No such section.': 'Δεν υπάρχει τέτοια ενότητα.'
 Characters: null
+articles:
+    images:
+        edit:
+            edit_image_metadata: null
+            save: null
+            form:
+                use: null
+                number: null
+                caption: null
+                status_approved: null
+                status_unapproved: null
+                status: null
+                description: null
+                photographer: null
+                photographer_url: null
+                place: null
+                date: null
+                article_specific: null
+                global: null
+                other_captions: null

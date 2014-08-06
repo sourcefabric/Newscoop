@@ -3,6 +3,54 @@ VERSION 4  FIRST NEWSCOOP 4.3 ALPHA, INSTALLABLE, WITH ALMOST ALL FEATURES, ALMO
 =========================================================================================================
 
    Version 4.3 - First Newscoop 4.3 alpha, released with liip/rmt, close to code freeze, first weekly release, enjoy
+      28/07/2014 13:41  4.3.0-alpha3  fix broken alpha2 release (missing comma in last commit).
+         99aae92 fix missing comma in login api
+      28/07/2014 12:56  4.3.0-alpha2  Newscoop 4.3-alpha2 weekly release, performance fixes, support for _target_path in api login, fix for serbian language, ui for article image captions, updated translations
+         9390282 update rmt release script
+         557b6f5 update lock before release
+         0e508c5 Merge pull request #773 from takeit/redirect
+         377a907 WOBS-3380 I am not redirected to the form to enter a classified, but to /dashboard
+         4d0ada7 updated translation resources
+         88d6589 updated translation resources
+         5b844ca Update rmt to latest version
+         2929573 Merge branch 'danielhjames-master'
+         4db0b3b improve menu translations
+         a449e15 Merge branch 'master' of https://github.com/danielhjames/Newscoop into danielhjames-master
+         5d19590 updated translation resources
+         bf0c52a Merge pull request #772 from ahilles107/CS-5086_article_image_captions
+         48a59d7 updated translation resources
+         c07bb04 CS-5086: introduce article specific captions and keeping image description
+         286fb3c Merge pull request #770 from ahilles107/master
+         f8e22f1 fix creating object_id in article
+         5d91f0a clear article image cache, fix namespace
+         67763e4 clear article image cache
+         4ee2e07 Merge branch 'master' of git://github.com/sourcefabric/Newscoop
+         43f7338 clear comments cache after chnaging status
+         89e51dc updated translation resources
+         3552fae updated translation resources
+         3572587 Merge pull request #768 from takeit/master
+         5d1e67c update symofny2 to @dev
+         7dcca36 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         36d0b2b Merge pull request #766 from sourcefabric/revert-765-articleTypeExtension
+         98b66da Revert "WIP: Extends the ArticleType adding a showInEditor option"
+         33eb1c8 Merge pull request #765 from terwey/articleTypeExtension
+         721afa5 Extends the ArticleType adding a showInEditor option
+         1281680 Merge branch 'master' of git://github.com/sourcefabric/Newscoop
+         dc21dad Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         37a73c1 Merge branch 'master' of https://github.com/sourcefabric/Newscoop
+         440ea5c Merge branch 'master' of git://github.com/sourcefabric/Newscoop
+         01ef46d Merge branch 'master' of git://github.com/sourcefabric/Newscoop
+         38239c4 Revert demo data file, it is corrupted (CS-5403)
+         6da4b0f CS-5415 Eastern Armenian corrections and short month/day names, thanks Mikayel!
+         3b519bb CS-5415 - corrections for Eastern Armenian
+         e303e76 CS-5415 Add Armenian support to Languages table on install and upgrade
+         f611d55 Apply CS-5418 fix
+         b967ec2 Apply CS-5404 fix and correct Azerbaijani weekday names
+         6afa590 Corrections to Azerbaijani days of the week
+         7e89527 CS-5398 Add Danish to Language table when upgrading
+         1222c8d Merge missing month and day names from 4.2.x branch
+         e236c41 CS-5398 Add Hungarian, Danish and Azerbaijani to core SQL
+         f1b3f58 CS-4603 Correct code for Serbian Latin is sr@latin
       17/07/2014 22:28  4.3.0-alpha  initial release
          c8e45e9 move RMT to newscoop dir
          4bcc122 Merge pull request #764 from sourcefabric/pre_alpha_fixes

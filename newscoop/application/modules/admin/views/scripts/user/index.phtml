@@ -210,7 +210,7 @@ $(function() {
                             }
                             newUser.push(string);
                             if (key == 've') {
-                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'"><?php echo $translator->trans('Delete'); ?></a>, <a href="user/rename/user/'+user['id']+'"><?php echo $translator->trans('Rename', array(), 'templates'); ?></a>';
+                                var optionsUrl = '<a class="jsonDelete" href="user/delete/user/'+user['id']+'"><?php echo $translator->trans('Delete'); ?></a>, <a href="user/rename/user/'+user['id']+'"><?php echo $translator->trans('users.table.actions.rename', array(), 'users'); ?></a>';
                                 if (user['ve'] == 'No') {
                                     optionsUrl += ', <a class="jsonConfirm" href="user/send-confirm-email/user/'+user['id']+'"><?php echo $translator->trans('Confirm'); ?></a>';
                                 }

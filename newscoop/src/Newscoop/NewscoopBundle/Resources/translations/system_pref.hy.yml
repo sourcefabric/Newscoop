@@ -11,9 +11,14 @@ newscoop:
             latitude: null
             longitude: null
             cacheNotCleared: null
+            joberror: 'Could not change status of selected job.'
+            jobnotifyerror: 'Could not enable/disable notifications.'
         success:
             saved: null
             cacheCleared: null
+            jobenabled: 'Successfully enabled job.'
+            jobdisabled: 'Successfully disabled job.'
+            jobnotifyswitched: 'Background job notification setting switched successfully.'
         menu:
             general: null
             email: null
@@ -24,8 +29,11 @@ newscoop:
             cache: null
             other: null
             recaptcha: null
+            cronjob: 'Background Jobs Settings'
         btn:
             cleardatabasecache: null
+            disable: Disable
+            enable: Enable
         label:
             title: null
             header: null
@@ -108,7 +116,24 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: 'Cron job name'
+            enabled: Status
+            options: Options
+            info: 'Info:'
+            infodesc: 'These settings will help you manage background jobs by enabling/disabling the selected job(s).'
+            prevRun: 'Previous run date'
+            nextRun: 'Next run date'
+            norecords: 'No records found.'
+            cronJobEmail: 'E-mail addresses for notifications'
+            cronJobSenderEmail: 'E-mail address of sender'
+            cronJobSenderName: 'Name of sender (e.g.: Newscoop Scheduler)'
+            cronJobNotify: 'Notify?'
+            cronslist: 'Background jobs list'
+            cronsadvanced: 'Advanced Settings'
+            moredetails: 'More details.'
         popover:
+            cronJobEmail: 'E-mail addresses separated by comma that will receive error notifications.'
+            cronJobSenderEmail: 'E-mail address from which notifications will be sent.'
             cacheengine: null
             cacheenginehost: null
             cacheengineport: null

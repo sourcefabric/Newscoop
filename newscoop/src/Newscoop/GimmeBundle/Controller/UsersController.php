@@ -115,10 +115,12 @@ class UsersController extends FOSRestController
      *         403="Returned when wrong password given",
      *         404="Returned when the user is not found",
      *         400="Returned when invalid arguments",
+     *         302="Returned when '_target_path' parameter given",
      *     },
      *     parameters={
      *         {"name"="username", "dataType"="string", "required"=true, "description"="Username or email"},
-     *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"}
+     *         {"name"="password", "dataType"="string", "required"=true, "description"="User password"},
+     *         {"name"="_target_path", "dataType"="string", "required"=false, "description"="Target path to which user will be redirected after login."}
      *     },
      * )
      *
@@ -135,6 +137,7 @@ class UsersController extends FOSRestController
         $em = $this->container->get('em');
         $username = $request->get('username');
         $password = $request->get('password');
+        $targetPath = $request->get('_target_path');
         $response = new Response();
         if (!$username || !$password) {
             $response->setStatusCode(400);
@@ -178,10 +181,10 @@ class UsersController extends FOSRestController
         $zendAuth->authenticate($authAdapter);
         setcookie('NO_CACHE', '1', NULL, '/', '.'.$this->extractDomain($_SERVER['HTTP_HOST']));
 
-        $response->setStatusCode(200);
+        $response->setStatusCode($targetPath ? 302 : 200);
         $response->headers->set(
             'X-Location',
-            $this->generateUrl('newscoop_gimme_users_getuser', array(
+            $targetPath ? $request->getUriForPath($targetPath) : $this->generateUrl('newscoop_gimme_users_getuser', array(
                 'id' => $user->getId()
             ), true)
         );

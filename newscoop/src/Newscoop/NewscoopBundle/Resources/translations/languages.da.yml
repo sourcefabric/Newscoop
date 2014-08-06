@@ -22,8 +22,8 @@ Th: To
 Su: Sø
 Sep: Sep
 Sa: Lø
-'Please enter the translation for week day short names.': null
-'Please enter the translation for month short names.': null
+'Please enter the translation for week day short names.': 'Oversæt korte navne for ugedage.'
+'Please enter the translation for month short names.': 'Oversæt korte navne for måneder.'
 Oct: Okt
 Nov: Nov
 Mo: Ma
@@ -39,15 +39,15 @@ Apr: Apr
 'No language.': 'Intet sprog.'
 'Delete language $1': 'Slet sprog $1'
 'You do not have the right to add languages.': 'Du har ikke rettigheder til at tilføje sprog.'
-'Please enter the translation for time units.': null
+'Please enter the translation for time units.': 'Oversæt tidsenheder.'
 'You do not have the right to delete languages.': 'Du har ikke rettigheder til at slette sprog.'
 'Are you sure you want to delete the language $1?': 'Vil du slette sproget $1?'
 'Deleting language': 'Sletter sprog'
 'The language $1 could not be deleted.': 'Sproget $1 kunne ikke slettes.'
 'Edit language': 'Rediger sprog'
 'You do not have the right to edit languages.': 'Du har ikke rettigheder til at redigere sprog.'
-'Please enter the translation for month names.': null
-'Please enter the translation for week day names.': null
+'Please enter the translation for month names.': 'Oversæt måneder.'
+'Please enter the translation for week day names.': 'Oversæt ugedage.'
 January: Januar
 February: Februar
 March: Marts

@@ -28,14 +28,14 @@ class UpdateApplicationVersionCurrentVersion extends \Liip\RMT\Action\BaseAction
         $newVersion = Context::getParam('new-version');
 
         // newscoop/library/Newscoop/Version.php
-        $appFile = realpath(__DIR__.'/../newscoop/library/Newscoop/Version.php');
+        $appFile = realpath(__DIR__.'/../library/Newscoop/Version.php');
         Context::get('output')->writeln("New version [<yellow>$newVersion</yellow>] udpated into $appFile: ");
         $fileContent = file_get_contents($appFile);
         $fileContent = preg_replace('/(.*const VERSION = .*;)/', "    const VERSION = '$newVersion';", $fileContent);
         file_put_contents($appFile, $fileContent);
 
         // newscoop/template_engine/classes/CampVersion.php
-        $appFile = realpath(__DIR__.'/../newscoop/template_engine/classes/CampVersion.php');
+        $appFile = realpath(__DIR__.'/../template_engine/classes/CampVersion.php');
         Context::get('output')->writeln("New version [<yellow>$newVersion</yellow>] udpated into $appFile: ");
         $fileContent = file_get_contents($appFile);
         $fileContent = preg_replace('/(.*private \$m_release = .*;)/', '    private $m_release = \''.$newVersion.'\';', $fileContent);
