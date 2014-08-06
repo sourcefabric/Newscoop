@@ -8,16 +8,16 @@ newscoop:
             maxupload: null
             geolocation: null
             noaccess: null
-            latitude: null
-            longitude: null
-            cacheNotCleared: null
-            joberror: null
-            jobnotifyerror: null
+            latitude: 'A földrajzi szélesség mező értéke nem érvényes.'
+            longitude: 'A földrajzi hosszúság mező értéke nem érvényes.'
+            cacheNotCleared: 'Hiba volt a gyorsítótár kitisztításával'
+            joberror: 'Nem lehet módosítani a kijelölt feladat állapotát.'
+            jobnotifyerror: 'Nem lehet engedélyezni/letiltani az értesítéseket.'
         success:
             saved: null
-            cacheCleared: null
-            jobenabled: null
-            jobdisabled: null
+            cacheCleared: 'A gyorsítótár kitisztítása megtörtént'
+            jobenabled: 'A feladat engedélyezése sikerült.'
+            jobdisabled: 'A feladat letiltása sikerült.'
             jobnotifyswitched: null
         menu:
             general: null
@@ -25,9 +25,9 @@ newscoop:
             editor: null
             geolocation: null
             fb: null
-            media: null
+            media: Videobeállítások
             cache: null
-            other: null
+            other: 'Egyéb beállítások'
             recaptcha: null
             cronjob: null
         btn:
@@ -36,7 +36,7 @@ newscoop:
             enable: null
         label:
             title: null
-            header: null
+            header: Beállítások
             siteonline: null
             sitetitle: null
             metakeywords: null
@@ -105,8 +105,8 @@ newscoop:
             apikey: null
             appid: null
             fbsecret: null
-            recaptchapublickey: null
-            recaptchaprivatekey: null
+            recaptchapublickey: 'Nyilvános kulcs'
+            recaptchaprivatekey: 'Titkos kulcs'
             recaptchasecure: null
             disabled: null
             yesoption: null
@@ -121,15 +121,15 @@ newscoop:
             options: null
             info: null
             infodesc: null
-            prevRun: null
-            nextRun: null
+            prevRun: 'Előző futás dátuma'
+            nextRun: 'Következő futás dátuma'
             norecords: null
-            cronJobEmail: null
+            cronJobEmail: 'E-mail címek az értesítésekhez'
             cronJobSenderEmail: null
-            cronJobSenderName: null
+            cronJobSenderName: 'A feladó neve (pl.: Newscoop feladatütemező)'
             cronJobNotify: null
             cronslist: null
-            cronsadvanced: null
+            cronsadvanced: 'Speciális beállítások'
             moredetails: null
         popover:
             cronJobEmail: null

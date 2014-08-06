@@ -1,7 +1,7 @@
 'Files attached.': null
 'File $1 unattached.': null
-'Attach new file': null
-'Attach existing file': null
+'Attach new file': 'Új fájl csatolása'
+'Attach existing file': 'Létező fájl csatolása'
 '$1 file/s attached to article': null
 'File attached.': null
 'The maximum file upload size was not configured in Newscoop.': null
