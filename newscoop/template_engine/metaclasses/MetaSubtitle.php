@@ -271,6 +271,11 @@ final class MetaSubtitle
         }
         $imageOptions = trim($imageOptions);
 
+        $imgZoomLink = '';
+        if ($preferencesService->EditorImageZoom == 'Y' && strlen($imageOptions) > 0) {
+            $imgZoomLink = '/' . $image->filerpath;
+        }
+
         try {
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
             $imageService = \Zend_Registry::get('container')->getService('image');
@@ -278,7 +283,7 @@ final class MetaSubtitle
             $uri->uri_parameter = "image $imageOptions";
             $smarty->assign('imageDetails', $detailsArray);
             $smarty->assign('uri', $uri);
-            $smarty->assign('imgZoomLink', '/' . $image->filerpath);
+            $smarty->assign('imgZoomLink', $imgZoomLink);
 
             return $templatesService->fetchTemplate("editor_image.tpl");
         } catch (\Exception $e) {
