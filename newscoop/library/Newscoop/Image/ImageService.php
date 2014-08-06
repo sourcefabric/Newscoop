@@ -290,7 +290,7 @@ class ImageService
      *
      * @return LocalImage
      */
-    private function fillImage($image, $attributes)
+    public function fillImage($image, $attributes)
     {
         $attributes = array_merge(array(
             'description' => '',
@@ -324,6 +324,21 @@ class ImageService
         }
 
         return $image;
+    }
+
+    /**
+     * Save article image
+     *
+     * @param Newscoop\Image\ArticleImage $articleImage
+     * @param array $values
+     * @return void
+     */
+    public function saveArticleImage(ArticleImage $articleImage, array $values)
+    {
+        $language = $this->orm->getReference('Newscoop\Entity\Language', $values['language']);
+        $articleImage->setNumber($values['number']);
+        $articleImage->setCaption($values['caption'], $language);
+        $this->orm->flush();
     }
 
     /**
@@ -466,6 +481,25 @@ class ImageService
         }
 
         return $image;
+    }
+
+    /**
+     * Get thumbnail for given image
+     *
+     * @param string $image
+     * @param int    $width
+     * @param int    $height
+     * @param string $specs
+     *
+     * @return mixed
+     */
+    public function thumbnail($image, $width, $height, $specs)
+    {
+        if (is_string($image)) {
+            $image = new \Newscoop\Image\LocalImage($image);
+        }
+
+        return $this->getThumbnail(new \Newscoop\Image\Rendition($width, $height, $specs), $image);
     }
 
     /**
@@ -690,7 +724,7 @@ class ImageService
     *
     * @return string
     */
-    private function getArticleImageCaption($imageId, $articleNumber, $languageId)
+    public function getArticleImageCaption($imageId, $articleNumber, $languageId)
     {
         $query = $this->orm->getRepository('Newscoop\Image\ArticleImageCaption')->createQueryBuilder('c')
             ->select('c.caption')

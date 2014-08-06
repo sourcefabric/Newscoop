@@ -10,10 +10,15 @@ newscoop:
             noaccess: 'Nie masz praw aby zmieniać preferencje systemowe.'
             latitude: 'Pole szerokości geograficznej jest niepoprawne.'
             longitude: 'Pole długości geograficznej jest niepoprawne.'
-            cacheNotCleared: null
+            cacheNotCleared: 'Podczas czyszczenia pamięci podręcznej wystąpił błąd'
+            joberror: 'Nie można zmienić statusu dla wybranego zadania'
+            jobnotifyerror: 'Nie można włączyć/wyłączyć powiadomień.'
         success:
             saved: 'Preferencje systemowe zaktualizowane.'
-            cacheCleared: null
+            cacheCleared: 'Pamięć podręczna została wyczyszczona'
+            jobenabled: 'Zadanie zostało włączone pomyślnie.'
+            jobdisabled: 'Zadanie zostało wyłączone pomyślnie.'
+            jobnotifyswitched: 'Ustawienia powiadomień dla zadania zostały zmienione.'
         menu:
             general: 'Ustawienia główne'
             email: 'Ustawienia e-mail'
@@ -24,8 +29,11 @@ newscoop:
             cache: 'Ustawienia cache'
             other: 'Inne ustawienia'
             recaptcha: 'Ustawienia reCAPTCHA'
+            cronjob: 'Ustawienia zadań w tle'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'Wyczyść aktualnie używaną pamięć podręczną'
+            disable: Wyłącz
+            enable: Włącz
         label:
             title: 'Preferencje systemowe'
             header: Ustawienia
@@ -35,8 +43,8 @@ newscoop:
             metadescription: 'Opis Meta Strony:'
             timezone: 'Strefa czasowa:'
             cacheengine: 'Silnik cache bazy danych:'
-            cacheenginehost: null
-            cacheengineport: null
+            cacheenginehost: 'Adres silnika pamięci podręcznej '
+            cacheengineport: 'Port  adresu silnika pamięci podręcznej'
             cachetemplate: 'Template Cache Handler:'
             cacheimage: 'Ważność cache zdjęć:'
             allowrecovery: 'Zezwól na odzyskiwanie hasła:'
@@ -104,14 +112,31 @@ newscoop:
             yesoption: Tak
             nooption: Nie
             geosearch: 'Użyj wyszukiwania lokalnego GeoNames:'
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            usergarbage: 'Usuwać nieaktualne dane oczekujących na potwierdzenie użytkowników?'
+            usergarbagedaysinfo: 'Zdefiniuj liczbę dni, po których oczekujący użytkownicy zostaną automatycznie usunięci. '
+            usergarbagedays: 'Liczba dni'
+            smartyUseProtocol: 'Używać protokołu dla linków absolutnych generowanych przez Smarty?'
+            cronjob: 'Nazwa zadania'
+            enabled: Status
+            options: Opcje
+            info: 'Informacje:'
+            infodesc: 'Dzięki tym ustawieniom możesz wyłączać i włączać wybrane zadania w tle.'
+            prevRun: 'Data ostatniego uruchomienia (według harmonogramu).'
+            nextRun: 'Data następnego uruchomienia (według harmonogramu).'
+            norecords: 'Nie znaleziono żadnych rekordów.'
+            cronJobEmail: 'Adres email do powiadomień'
+            cronJobSenderEmail: 'Adres email używany do wysyłania powiadomień.'
+            cronJobSenderName: 'Nazwa nadawcy powiadomień (np. Harmonogram zadań Newscoopa)'
+            cronJobNotify: 'Powiadamiać?'
+            cronslist: 'Lista zadań w tle'
+            cronsadvanced: 'Ustawienia zaawansowane'
+            moredetails: 'Więcej informacji.'
         popover:
+            cronJobEmail: 'Podane adresy email (rozdzielone przecinkami) będą otrzymywać powiadomienia. '
+            cronJobSenderEmail: 'Adresy email z których będą wysyłane powiadomienia.'
             cacheengine: 'Włącza lub wyłącza cache APC, który może poprawić wydajność Newscoop.'
-            cacheenginehost: null
-            cacheengineport: null
+            cacheenginehost: 'Podaj adres dla silnika pamięci podręcznej (wymagane dla Memcache, Memcached lub Redis)'
+            cacheengineport: 'Podaj port adresu dla silnika pamięci podręcznej (wymagane dla Memcache, Memcached lub Redis)'
             cacheimage: 'Czas w jakim obrazki będą cache-owane, od 30 sekund do nieskończoności.'
             cachetemplate: 'Wybierz DB aby włączyć cache dla szablonów.'
             recovery: 'Użytkownicy mogą poprosić o przypomnienie hasła przez e-mail. Zauważ, że jeśli ta funkcja jest włączona, a konto e-mail jest zagrożone, publikacja Newscoop może być łatwo naruszona.'
@@ -129,6 +154,6 @@ newscoop:
                 publickey: 'Klucz używany w kodzie JavaScript aby uruchomic reCAPTCHA.'
                 privatekey: 'Klucz używany do komunikacji twojego serwera z serwerem reCAPTCHA. Nie udostępniaj go nikomu.'
                 secure: 'Jeśli używasz zabezpieczonych url-i, wybierz opcję Tak.'
-            garbage: null
-            lifetime: null
-            smartyuseprotocol: null
+            garbage: 'Jeśli opcja ta jest włączona, to możesz ustalić liczbę dni po których nieaktualne dane oczekujących użytkowników zostaną usunięte. Domyślnie jest to 90 dni.'
+            lifetime: 'Czas ważności sesji w sekundach. Maksymalnie 86400 (24 godziny). Minimalnie 0 (aż do zamknięcia okna przeglądarki).'
+            smartyuseprotocol: 'Jeśli opcja ta jest włączona, to Smarty będzie generował linki z dołączonym do adresu protokołem. Domyślnie jest to wyłączone tak aby generować względne adresy URL. Możliwe jest nadpisanie tej opcji z parametrem "useprotocol" w szablonach Smarty. '

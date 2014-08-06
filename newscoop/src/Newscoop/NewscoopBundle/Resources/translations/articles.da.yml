@@ -184,3 +184,23 @@ Comments: Kommentarer
 'No such article.': 'Artiklen findes ikke.'
 'No such section.': 'Sektionen findes ikke.'
 Characters: Tegn
+articles:
+    images:
+        edit:
+            edit_image_metadata: 'Rediger billedets metadata'
+            save: Gem
+            form:
+                use: Brug
+                number: Nummer
+                caption: Billedtekst
+                status_approved: Godkendt
+                status_unapproved: 'Ikke godkent'
+                status: Status
+                description: Beskrivelse
+                photographer: Fotograf
+                photographer_url: 'Fotograf URL'
+                place: Sted
+                date: Dato
+                article_specific: 'Artikel specifik'
+                global: Global
+                other_captions: null

@@ -11,9 +11,14 @@ newscoop:
             latitude: 'El valor para el campo de la latitud no es válido.'
             longitude: 'El valor en el campo de Longitud no es válido.'
             cacheNotCleared: 'Hubo un error borrando el cache'
+            joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Se actualizaron las preferencias del sistema.'
             cacheCleared: 'El cache ha sido borrado'
+            jobenabled: null
+            jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Ajustes Generales'
             email: 'Ajustes del Correo'
@@ -24,8 +29,11 @@ newscoop:
             cache: 'Ajustes del cache'
             other: 'Otros ajustes'
             recaptcha: 'Ajustes de reCAPTCHA'
+            cronjob: null
         btn:
             cleardatabasecache: 'Borra el cache actual de controladores'
+            disable: null
+            enable: null
         label:
             title: 'Preferencias de sistema'
             header: Preferencias
@@ -108,7 +116,24 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: null
             cacheenginehost: null
             cacheengineport: null

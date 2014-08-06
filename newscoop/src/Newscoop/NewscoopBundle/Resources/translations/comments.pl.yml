@@ -1,4 +1,4 @@
-'No attachment': null
+'No attachment': 'Brak załączników'
 at: w
 'With no attachment': 'Brak załączników.'
 'With image attachment': 'Zdjęcie dostępne w załącznikach'
@@ -29,7 +29,7 @@ Deleted: Usunięty
 Attachment: Zalącznik
 Approved.: Zaakceptowany
 Approve: Zaakceptuj
-Anonymous: null
+Anonymous: Anonim
 ' - filtering from _MAX_ records': '- filtrowanie z _MAX_ rekordów'
 'You are about to permanently delete multiple messages.': 'Chcesz bezpowrotnie usunąć wiele wiadomości.'
 'You are about to permanently delete a message.': 'Chcesz bezpowrotnie usunąć tą wiadomość.'

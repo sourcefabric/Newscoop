@@ -12,9 +12,9 @@ Playlist: 'Lista odtwarzania'
 'List Name': 'Nazwa listy'
 'List ID': 'Numer listy'
 'Item already exists in the list': 'Element jest już na tej liście'
-'Featured Articles': 'Polecane artykuły'
-'Featured Article Lists': 'Polecane artykuły'
-'Featured Article List': 'Polecane artykuły'
+'Featured Articles': 'Promowane artykuły'
+'Featured Article Lists': 'Listy artykułów'
+'Featured Article List': 'Lista artykułów'
 'Duplicate list': 'Skopiuj listę'
 'Duplicate article entry found': 'Znaleziono duplikowane artykuły.'
 'Drag here to add to list': 'Przeciągnij tutaj aby dodać do listy'
@@ -183,4 +183,24 @@ Comments: Komentarze
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Ten artykuł nie może być podejrzany. Upewnij się, że szablon artykułu jest wybrany.'
 'No such article.': 'Brak artykułu.'
 'No such section.': 'Brak sekcji.'
-Characters: null
+Characters: Znaków
+articles:
+    images:
+        edit:
+            edit_image_metadata: 'Edytuj metadane zdjęcia'
+            save: Zapisz
+            form:
+                use: Użyj
+                number: Numer
+                caption: Podpis
+                status_approved: Zatwierdzony
+                status_unapproved: Odrzucony
+                status: Status
+                description: Opis
+                photographer: Fotograf
+                photographer_url: 'Adres URL fotografa'
+                place: Miejsce
+                date: Data
+                article_specific: 'Specyficzne dla artykułu'
+                global: Ogólne
+                other_captions: 'Inne podpisy'

@@ -79,7 +79,7 @@ services:
         arguments:  ["%ingest%", "@em", "@ingest.publisher"]
     blog:
         class:      Newscoop\Services\BlogService
-        arguments:  ["%blog%"]
+        arguments:  ["%blog%", "@em"]
     user.search:
         class:      Newscoop\Services\UserSearchService
         arguments:  ["@em"]
@@ -205,6 +205,9 @@ services:
         arguments: ["@em"]
     newscoop.filesystem:
         class: Newscoop\Services\FilesystemService
+        arguments: ["@em"]
+    newscoop.scheduler:
+        class: Newscoop\Services\SchedulerService
         arguments: ["@em"]
 
     # Add this event listener registering to newscoop/application/configs/parameters/custom_parameters.yml

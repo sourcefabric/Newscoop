@@ -22,7 +22,7 @@ Continue: 'Davam et'
 'edit user': 'istifadəçini dəyiş'
 'delete user': 'istifadəçini sil'
 'Verified profile': 'Yoxlanmış profil'
-'Showing _START_ to _END_ of _TOTAL_ entries': TOTAL_girişin_START_başlayaraq_END_kimi_nümayişi
+'Showing _START_ to _END_ of _TOTAL_ entries': 'Ümumilikdə _TOTAL_ girişin _START_-dan/dən _END_-a/ə qaydasında nümayişi'
 'Send email to user:': 'Bu istifadəçiyə email göndər:'
 'No users found.': 'İstifadəçi tapılmadı.'
 'No records found.': 'Yazı tapılmadı.'

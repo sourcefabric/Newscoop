@@ -11,9 +11,14 @@ newscoop:
             latitude: 'Wert im Feld Breitengrad ist ungültig.'
             longitude: 'Wert im Feld Längengrad ist ungültig. '
             cacheNotCleared: 'Fehler bei der Cache-Bereinigung'
+            joberror: null
+            jobnotifyerror: null
         success:
             saved: 'Systemeinstellungen aktualisiert.'
             cacheCleared: 'Cache wurde gelöscht'
+            jobenabled: null
+            jobdisabled: null
+            jobnotifyswitched: null
         menu:
             general: 'Allgemeine Einstellungen'
             email: 'E-Mail Einstellungen'
@@ -24,8 +29,11 @@ newscoop:
             cache: Cache-Einstelllungen
             other: 'Andere Einstellungen'
             recaptcha: 'reCAPTCHA Einstellungen'
+            cronjob: null
         btn:
             cleardatabasecache: 'Lösche aktuellen Treiber-Cache'
+            disable: null
+            enable: null
         label:
             title: Systemeinstellungen
             header: Einstellungen
@@ -108,7 +116,24 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
+            cronjob: null
+            enabled: null
+            options: null
+            info: null
+            infodesc: null
+            prevRun: null
+            nextRun: null
+            norecords: null
+            cronJobEmail: null
+            cronJobSenderEmail: null
+            cronJobSenderName: null
+            cronJobNotify: null
+            cronslist: null
+            cronsadvanced: null
+            moredetails: null
         popover:
+            cronJobEmail: null
+            cronJobSenderEmail: null
             cacheengine: 'Ermöglicht oder verhindert das APC Caching, welches die Leistung von Newscoop verbessern kann.'
             cacheenginehost: 'Cache-Host eingeben (für Memcache, Memcached oder Redis)'
             cacheengineport: 'Cache-Host-Ports eingeben (für Memcache, Memcached oder Redis)'

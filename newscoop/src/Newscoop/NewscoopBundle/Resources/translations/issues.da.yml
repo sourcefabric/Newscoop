@@ -54,8 +54,8 @@ Schedule: Planlæg
 'Invalid Input: $1': 'Ugyldigt input: $1'
 'Issue Number': 'Udgivelsens nummer'
 'Go To Sections': 'Gå til sektioner'
-'There was an error reading the language parameter.': null
-'There was an error reading the publication parameter.': null
-'There was an error reading the issue parameter.': null
-'There was an error scheduling the $1 action on $2': null
-'The action scheduled on $1 could not be deleted.': null
+'There was an error reading the language parameter.': 'Sprogparameteret kunne ikke læses.'
+'There was an error reading the publication parameter.': 'Publikationsparameteret kunne ikke læses.'
+'There was an error reading the issue parameter.': 'Udgivelsesparameteret kunne ikke læses.'
+'There was an error scheduling the $1 action on $2': 'Handlingen $1 kunne ikke planlægges på $2'
+'The action scheduled on $1 could not be deleted.': 'Handlingen planlagt på $1 kunne ikke slettes.'

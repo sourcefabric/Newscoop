@@ -1,5 +1,5 @@
-'No thumbnails were fixed.': null
-'Missing thumbnails fixed.': null
+'No thumbnails were fixed.': 'Nie znaleziono żadnych miniatur do poprawy.'
+'Missing thumbnails fixed.': 'Pominięte miniatury zostały naprawione.'
 Slideshows: Galerie
 'You cant update used files.': 'Nie możesz aktualizować użytych plików.'
 Source: Źródło
@@ -58,5 +58,5 @@ Size: Rozmiar
 'Used in articles': 'Używane w artykułach'
 'View image': 'Zobacz zdjęcie'
 'Change image information': 'Zmień informacje o zdjęciu'
-'Photographer URL': null
-'Add website url starting with http://': null
+'Photographer URL': 'Adres www fotografa'
+'Add website url starting with http://': 'Podaj adres www zaczynając od http://'

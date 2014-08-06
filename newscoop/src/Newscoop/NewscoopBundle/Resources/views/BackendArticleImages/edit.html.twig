@@ -1,0 +1,117 @@
+{% extends 'NewscoopNewscoopBundle::admin_layout.html.twig' %}
+{% trans_default_domain "articles" %}
+
+{% block admin_page_menu_bar %}{% endblock %}
+
+{% block admin_page_title_box %}
+<div class="toolbar row">
+<span class="article-title">{{ 'articles.images.edit.edit_image_metadata'|trans }}</span>
+
+<div class="pull-right">
+    <div class="actions">
+        <ul class="navigation" style="height: auto;">
+            <li>
+                <input id="save-button" type="button" value="{{ 'articles.images.edit.save'|trans }}" class="save-button">
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block admin_stylesheets %}
+{% endblock %}
+
+{% block admin_scripts %}
+
+{% endblock %}
+
+{% block admin_content %}
+<div class="row">
+
+    <div id="article-image-edit-thumbnail">
+        {% set thumbnail = imageService.thumbnail(image, 400, 400, 'fit' ) %}
+        <img src="{{ generateZendUrl('image', 'cache', 'default', {'src': thumbnail.src}, 'image', false) }}" width="{{thumbnail.width}}" height="{{thumbnail.height}}" />
+    </div>
+
+    <div id="article-image-edit-form" style="margin: 13px 10px;background-color: #fff;padding: 10px; width: 450px;">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal', 'role': 'form'}}) }}
+            {{ form_errors(form) }}
+
+            <fieldset id="fieldset-article" style="border: 1px solid #ccc; padding: 5px;">
+                <legend>{{ 'articles.images.edit.form.article_specific'|trans }}</legend>
+                <div class="form-group">
+                    {{ form_label(form.number, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-5">{{ form_widget(form.number, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group" id="current-article-caption">
+                    {{ form_label(form.caption, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.caption, {'attr': {'class': 'form-control current-article-caption-value'}}) }}</div>
+                </div>
+            </fieldset>
+
+            <fieldset id="fieldset-article" style="border: 1px solid #ccc; padding: 5px; margin-top: 10px;">
+                <legend>{{ 'articles.images.edit.form.global'|trans }}</legend>
+                <div class="form-group">
+                    {{ form_label(form.status, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.description, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.photographer, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.photographer, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.photographer_url, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.photographer_url, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.place, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.place, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.date, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-7">{{ form_widget(form.date, {'attr': {'class': 'form-control'}}) }}</div>
+                </div>
+            </fieldset>
+        {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+    $(function() {
+        var currentCaption = {{ caption|json_encode()|raw }};
+        var captions = {{ captions|json_encode()|raw }}.filter(function(caption) {
+            return caption.length && caption !== currentCaption;
+        });
+
+        if (captions.length) {
+            var fieldset = $('#current-article-caption').parent('fieldset');
+            $('<div class="form-group" id="other-article-caption" style="text-align:right;"><label class="col-sm-4 control-label" >{{ 'articles.images.edit.form.other_captions'|trans }}</label></div>').appendTo(fieldset);
+
+            for (var i = 0; i < captions.length; i++) {
+                var other = $('<div class="col-sm-11" style="margin-bottom: 7px;"></div>').appendTo('#other-article-caption');
+                $('<button style="margin-right: 15px;" />').appendTo(other).text('{{ 'articles.images.edit.form.use'|trans }}').click(function(e) {
+                    $('.current-article-caption-value').val($(e.target).parent().find('input').val());
+                    return false;
+                });
+                $('<input class="js-caption" type="text"  style="float:right;width:180px;" />').appendTo(other).val(captions[i]).attr('disabled', 'disabled');
+            }
+        }
+
+        $('#save-button').click(function(e) {
+            $('#article-image-edit-form form').submit();
+        });
+
+        if (parent) { // updates parent view
+            parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
+        }
+    });
+    </script>
+
+</div>
+{% endblock %}
+
+{% block admin_page_footer_box %}{% endblock %}

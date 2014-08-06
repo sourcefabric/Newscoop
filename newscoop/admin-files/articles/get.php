@@ -25,7 +25,7 @@ $f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
 // Whether to show comments at the bottom of the article
 // (you may not want to show them to speed up your loading time)
 // Selected language of the article
-$f_language_selected = (int)camp_session_get('f_language_selected', 0);
+$f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
 // Fetch article
 $articleObj = new Article($f_language_selected, $f_article_number);
@@ -34,6 +34,7 @@ if (!$articleObj->exists()) {
     exit;
 }
 
+//getArticleAuthors()
 $articleInfo = array();
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
@@ -50,5 +51,13 @@ $articleInfo[$translator->trans('Title', array(), 'articles')] = $articleObj->ge
 $articleInfo[$translator->trans('Date')] = $articleObj->getCreationDate();   // But I don't know what possibly depends on this so we leave it for now
 $articleInfo['title'] = $articleObj->getTitle();
 $articleInfo['date'] = $articleObj->getCreationDate();
+$authors = ArticleAuthor::GetAuthorsByArticle($articleObj->getArticleNumber(), $articleObj->getLanguageId());
+$authorsNames = array();
+foreach ($authors as $author) {
+    $authorsNames[] = $author->getName();
+}
+
+$articleInfo['authors'] = $authorsNames;
+$articleInfo['authorsLabel'] = $translator->trans('Authors', array(), 'articles');
 
 echo $this->view->json($articleInfo);

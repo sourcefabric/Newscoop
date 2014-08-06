@@ -15,7 +15,7 @@
 'Edit and translate human-readable field names': 'Przetłumacz ludzkie nazwy pól'
 Custom: Własny
 'Characters limit': 'Limit znaków'
-'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może tylko zawierać litery oraz podkreślnik (_)'
+'The template name may only contain letters and the underscore (_) character.': 'Nazwa szablonu może zawierać wyłącznie litery oraz podkreślenie (_)'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': "Nazwa pola była już\_w użyciu jako wartość podstawowa artykułu. Pole nie będzie wyświetlane w szablonach."
 'The property $1 is already in use.': 'Wartość $1 jest już w użyciu.'
 Precision: Precision
@@ -33,7 +33,7 @@ hide: schowaj
 'The translation could not be added.': 'Tłumaczenie nie zostało dodane.'
 'The field $1 does not exist.': 'Pole $1 nie istnieje.'
 'The $1 field may only contain letters and underscore (_) character.': 'Pole $1 może jedynie zawierać litery oraz podkreślnik (_)'
-'Template Field Name': 'Nazwa pola tłumaczeń'
+'Template Field Name': 'Nazwa pola używana w szablonach'
 Show/Hide: Pokaż/Schowaj
 'Renaming article type field': 'Zmiana nazw typów artykułów'
 'Rename field': 'Zmień nazwę pola'
