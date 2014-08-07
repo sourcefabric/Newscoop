@@ -106,10 +106,10 @@ Size: null
 'Restore file': null
 Restore: null
 Mb: null
-'Free disk space': null
-'Download file': null
+'Free disk space': 'Szabad lemezterület'
+'Download file': 'Fájl letöltése'
 Download: null
-'Delete file': null
+'Delete file': 'Fájl törlése'
 'Backup list is empty.': null
 'Are you sure you want to restore the file $1?': null
 'Are you sure you want to delete the file $1?': null
