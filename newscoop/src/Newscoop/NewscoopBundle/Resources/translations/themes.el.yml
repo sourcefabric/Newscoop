@@ -85,4 +85,4 @@ Compatibility: Συμβατότητα
 '$1 is not writable': '$1 δεν είναι εγγράψιμο'
 '$1 $2': ' $1 $2'
 '$1 files $2': '$1 αρχεία $2'
-'Available themes': 'Available themes'
+'Available themes': null

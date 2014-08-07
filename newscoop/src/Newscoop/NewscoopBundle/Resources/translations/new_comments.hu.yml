@@ -5,7 +5,7 @@ comments:
         banned: null
         anonymous: null
         at: null
-        noentries: null
+        noentries: 'Nem találhatók bejegyzések.'
         showing: null
         of: null
         to: null
@@ -39,18 +39,18 @@ comments:
         unrecommend: null
         recommend: null
         delete: null
-        reply: null
+        reply: Válasz
         edit: null
         close: null
-        okay: null
+        okay: OK
         filter: null
     msg:
         deleted: null
         commentinarticle: null
         status:
-            new: null
+            new: új
             approved: null
-            hidden: null
+            hidden: rejtett
             single: null
             all: null
         error:
@@ -58,7 +58,7 @@ comments:
             deletefromarticle: null
             statuschange: null
             delete: null
-            update: null
+            update: 'A mezők nem lehetnek üresek'
         sure: null
         suremultiple: null
         first: null

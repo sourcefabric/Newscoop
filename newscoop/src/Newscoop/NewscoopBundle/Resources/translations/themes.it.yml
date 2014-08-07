@@ -85,4 +85,4 @@ Compatibility: Compatibilità
 '$1 is not writable': 'Non è possibile scrivere in $1'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 file $2'
-'Available themes': 'Available themes'
+'Available themes': null
