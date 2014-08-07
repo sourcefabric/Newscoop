@@ -7,8 +7,6 @@
 
 namespace Newscoop\Tools\Console\Command;
 
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
 /**
@@ -39,7 +37,9 @@ class AutopublishCommand extends Console\Command\Command
             fopen(realpath(APPLICATION_PATH . '/../') .'/reset_cache', 'w');
         }
 
-        $output->writeln('Published issues: <info>'.$issueActions.'</info>.');
-        $output->writeln('Published articles: <info>'.$articleActions.'</info>.');
+        if ($input->getOption('verbose')) {
+            $output->writeln('Published issues: <info>'.$issueActions.'</info>.');
+            $output->writeln('Published articles: <info>'.$articleActions.'</info>.');
+        }
     }
 }
