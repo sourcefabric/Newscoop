@@ -5,7 +5,7 @@ newscoop.plugins_manager.private_plugins: null
 newscoop.plugins_manager.install.public: null
 newscoop.plugins_manager.installed_table.name: null
 newscoop.plugins_manager.installed_table.description: null
-newscoop.plugins_manager.installed_table.enabled: null
+newscoop.plugins_manager.installed_table.enabled: Engedélyezve
 newscoop.plugins_manager.installed_table.version: null
 newscoop.plugins_manager.installed_table.license: null
 newscoop.plugins_manager.installed_table.installed_at: null
@@ -17,8 +17,8 @@ newscoop.plugins_manager.installed_table.install_plugin: null
 newscoop.plugins_manager.installed_table.plugin_installed: null
 newscoop.plugins_manager.upload.private: null
 newscoop.plugins_manager.search_for_plugins: null
-newscoop.plugins_manager.form.package: null
-newscoop.plugins_manager.form.submit: null
+newscoop.plugins_manager.form.package: 'A csomagnak zip-fájlnak kell lennie.'
+newscoop.plugins_manager.form.submit: Feltöltés
 newscoop:
     datatable:
         table:

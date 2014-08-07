@@ -1,5 +1,5 @@
 Plugins: null
-'Manage Plugins': null
+'Manage Plugins': 'Bővítmények kezelése'
 Account: null
 'Items per page': null
 'Add new': null
@@ -252,13 +252,13 @@ Send: null
 'Thank you.': null
 'Please take a minute to send us an email.': null
 (optional): null
-'The URL you entered is invalid: $1': null
+'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
 Reads: null
-'Publish with issue': null
+'Publish with issue': 'Közzététel folyóiratszámmal'
 'Universal List': null
 'Invalid security token!': null
 Authors: null
-Title: null
+Title: Cím
 'Edit country': null
 'Entry $1 prepared for publishing': null
 'Entry deleted': null
@@ -273,7 +273,7 @@ Title: null
 'Changing user type would prevent you to manage users. Aborted.': null
 'Staff member saved.': null
 'Permissions: $1': null
-'Change user account information': null
+'Change user account information': 'Felhasználói fiók adatainak módosítása'
 'Staff management': null
 Updated: null
 Options: null
@@ -282,4 +282,4 @@ Confirm: null
 at: null
 published: null
 unpublished: null
-nopermissions: null
+nopermissions: 'A hozzáférés ehhez az erőforrásoz az Ön számára nem engedélyezett.'

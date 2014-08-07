@@ -85,4 +85,4 @@ Compatibility: Компатибилност
 '$1 is not writable': '$1нема могућност уписа'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 фајлова $2'
-'Available themes': 'Available themes'
+'Available themes': null
