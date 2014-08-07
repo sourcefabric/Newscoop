@@ -19,9 +19,9 @@ Processed: null
 'Message status change to $1.': null
 'Message deleted.': null
 Message: null
-Last: null
+Last: Utolsó
 'Full article': null
-First: null
+First: Első
 'Feedback Messages': null
 'Display _MENU_ records': null
 Deleted: null
@@ -60,7 +60,7 @@ Unrecommend: null
 'Select status': null
 'Search Type': null
 'Reply to comment': null
-Recommended: null
+Recommended: Ajánlott
 Recommend: null
 'Quick edit': null
 Parent: null

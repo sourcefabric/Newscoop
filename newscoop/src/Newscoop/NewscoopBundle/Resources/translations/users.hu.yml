@@ -35,7 +35,7 @@ Continue: null
 'User attributes': null
 'Rename user $1': null
 'Username is used already': null
-'User with id $1 not found': null
+'User with id $1 not found': 'A/z $1 azonosítójú felhasználó nem található.'
 'User was deleted.': null
 'User saved': null
 'User id not specified': null

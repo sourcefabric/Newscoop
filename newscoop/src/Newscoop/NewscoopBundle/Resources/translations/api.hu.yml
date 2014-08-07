@@ -1,106 +1,106 @@
-'No such article type': null
-'Multi-line Text': null
-'Filter saved': null
-'Filter not saved': null
-'Not a color': null
-'No such field': null
-'Color saved': null
-'Color not saved': null
-'Topic created': null
-'The topic name is already in use by another topic.': null
-'Complex Date': null
-vertices: null
-'There was a problem trying to execute the XML RPC function.': null
-'The Campcaster server configuration is invalid.': null
-'Pan Map': null
-'Open large map': null
-'No news available.': null
-'Edit Polygon': null
-'Create Polygon': null
-'Communication error: ': null
-'Cant fetch news from $1': null
-Loading...: null
-Version: null
-License: null
-Homepage: null
-'Show original map': null
-'The uploaded archive does not contain an valid newscoop plugin.': null
-Map: null
-Center: null
-Title: null
-'Invalid security token.': null
-'Callback $1 is not callable.': null
+'No such article type': 'Nincs ilyen cikktípus'
+'Multi-line Text': 'Többsoros szöveg'
+'Filter saved': 'A szűrő mentése megtörtént'
+'Filter not saved': 'Nem történt meg a szűrő mentése'
+'Not a color': 'Nem szín'
+'No such field': 'Nincs ilyen mező'
+'Color saved': 'A szín mentése megtörtént'
+'Color not saved': 'Nem történt meg a szín mentése'
+'Topic created': 'A téma létrehozása megtörtént'
+'The topic name is already in use by another topic.': 'Egy másik téma már használja a téma nevét.'
+'Complex Date': 'Összetett dátum'
+vertices: csúcsok
+'There was a problem trying to execute the XML RPC function.': 'Hiba történt az XML RPC funkció végrehajtásának megkísérlésekor.'
+'The Campcaster server configuration is invalid.': 'A Campcaster-kiszolgáló konfigurációja érvénytelen.'
+'Pan Map': 'Térkép pásztázása'
+'Open large map': 'Nagy térkép megnyitása'
+'No news available.': 'Nincsenek hírek.'
+'Edit Polygon': 'Sokszög szerkesztése'
+'Create Polygon': 'Sokszög létrehozása'
+'Communication error: ': 'Kommunikációs hiba:'
+'Cant fetch news from $1': 'Nem lehet híreket lehívni a következő helyről: $1'
+Loading...: Betöltés...
+Version: Verzió
+License: Licenc
+Homepage: Kezdőlap
+'Show original map': 'Eredeti térkép megjelenítése'
+'The uploaded archive does not contain an valid newscoop plugin.': 'A feltöltött archívum nem tartalmaz érvényes Newscoop-bővítményt.'
+Map: Térkép
+Center: Központ
+Title: Cím
+'Invalid security token.': 'Érvénytelen biztonsági jogkivonat.'
+'Callback $1 is not callable.': 'A/z $1 visszahívás nem hívható.'
 'Article translated to $4 ($5)': null
-'Article status changed from $1 to $2.': null
-'Article deleted.': null
-'Article created.': null
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
-'Article URL': null
+'Article status changed from $1 to $2.': 'A cikk állapota megváltozott erről: $1 erre: $2.'
+'Article deleted.': 'A cikk törlése megtörtént.'
+'Article created.': 'A cikk létrehozása megtörtént.'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'A cikk másolása a/z $4 cikkbe megtörtént (kiadvány: $5, szám: $6, rész: $7).'
+'Article URL': 'Cikk URL-címe'
 'Article Number': null
-'Access denied.': null
-'Publish with issue': null
-unknown: null
-Switch: null
-Numeric: null
-'The uploaded file format is unsupported.': null
-'The following fields are mandatory:': null
-'Missing value for $1': null
-'Manage Plugins': null
-'* Marked fields are mandatory.': null
-'$1 is of type $2': null
-'Invalid resize width/height.': null
-'Image type $1 is not supported.': null
-'The file uploaded is not an image.': null
-'Could not delete record from the database.': null
-'template path': null
-'short names': null
-'Unable to fetch image from remote server.': null
-Last: null
-First: null
-'Single-line Text': null
-'Multi-line Text with WYSIWYG': null
-'URL $1 is invalid or is not an image.': null
-'URL $1 is not an image.': null
+'Access denied.': 'Hozzáférés megtagadva.'
+'Publish with issue': 'Közzététel folyóiratszámmal'
+unknown: ismeretlen
+Switch: Váltás
+Numeric: Numerikus
+'The uploaded file format is unsupported.': 'A feltöltött fájl formátuma nem támogatott.'
+'The following fields are mandatory:': 'A következő mezők kitöltése kötelező:'
+'Missing value for $1': 'A/z $1 értéke hiányzik'
+'Manage Plugins': 'Bővítmények kezelése'
+'* Marked fields are mandatory.': 'A *-gal jelölt mezők kitöltése kötelező.'
+'$1 is of type $2': 'A/z $1 $2 típusú'
+'Invalid resize width/height.': 'Érvénytelen átméretezési szélesség/magasság.'
+'Image type $1 is not supported.': 'A/z $1 képtípus nem támogatott.'
+'The file uploaded is not an image.': 'A feltöltött fájl nem kép.'
+'Could not delete record from the database.': 'Nem lehet törölni a rekordot az adatbázisból.'
+'template path': 'sablon elérési útja'
+'short names': 'rövid nevek'
+'Unable to fetch image from remote server.': 'Nem lehet képet lehívni a távoli kiszolgálóról.'
+Last: Utolsó
+First: Első
+'Single-line Text': 'Egysoros szöveg'
+'Multi-line Text with WYSIWYG': 'Többsoros szöveg alakhű szerkesztővel'
+'URL $1 is invalid or is not an image.': 'A/z $1 URL-cím érvénytelen vagy nem kép.'
+'URL $1 is not an image.': 'A/z $1 URL-cím nem kép.'
 client:
-    added: null
-    notfound: null
-    removed: null
+    added: 'Az ügyfél hozzáadása megtörtént'
+    notfound: 'Az ügyfél nem található'
+    removed: 'Az ügyfél eltávolítása megtörtént'
 publicresources:
-    updated: null
+    updated: 'A nyilvános erőforrások frissítésre kerütek'
 api:
     configure:
-        title: null
-        title_content: null
+        title: 'API konfigurálása - nyilvános erőforrások'
+        title_content: 'API konfigurálása - nyilvános erőforrások'
         tabs:
-            resources: null
-            clients: null
+            resources: 'Nyilvános erőforrások'
+            clients: Ügyfelek
         resources:
-            info: null
-            add_button: null
+            info: 'Alapértelmezésként az összes erőforrást tűzfal védi, viszont kiválaszthatja azokat az erőforrásokat, melyeket mindenki számára nyilvánossá akar tenni.'
+            add_button: 'Ügyfél hozzáadása'
         clients:
             table:
-                name: null
+                name: 'Ügyfél neve'
                 id: null
-                secret: null
-                trusted: null
-                redirect: null
+                secret: Titkos
+                trusted: 'Megbízható?'
+                redirect: 'URL-címek átirányítása'
                 publication: null
-                actions: null
+                actions: Műveletek
                 actions_buttons:
-                    remove: null
+                    remove: Eltávolítás
             actions:
                 remove:
-                    confirm: null
-        menu: null
+                    confirm: 'Biztosan törölni szeretné ezt az ügyfelet?'
+        menu: API
     form:
         client:
             label:
-                name: null
+                name: 'Válasszon egy nevet az ügyfelének:'
                 publication: null
-                redirectUris: null
-                trusted: null
-                save: null
+                redirectUris: 'Válassza ki az ügyfele átirányító URL-címeit.'
+                trusted: 'Megbízható?'
+                save: Mentés
         PublicResources:
             label:
                 routes: null
-                save: null
+                save: Mentés
