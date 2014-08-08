@@ -33,11 +33,11 @@ class Author extends DatabaseObject
     public $m_aliases = NULL;
     private $m_type = NULL;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param int|string $p_idOrName
-	 */
+    /**
+     * Constructor.
+     *
+     * @param int|string $p_idOrName
+     */
     public function __construct($p_idOrName = null, $p_type = null)
     {
         parent::__construct($this->m_columnNames);
@@ -58,7 +58,7 @@ class Author extends DatabaseObject
             }
             $this->loadAliases();
         } else {
-        	$this->m_type = new AuthorType();
+            $this->m_type = new AuthorType();
         }
     }
 
@@ -84,6 +84,7 @@ class Author extends DatabaseObject
         $tmpData = $this->m_data;
         // Delete row from Authors table.
         $result = parent::delete();
+
         return $result;
     }
 
@@ -98,6 +99,7 @@ class Author extends DatabaseObject
             $this->resetCache();
             $this->m_keyColumnNames = array('id');
         }
+
         return parent::setProperty($p_dbColumnName, $p_value);
     }
 
@@ -116,6 +118,7 @@ class Author extends DatabaseObject
     {
         $name = preg_replace(array('/%_FIRST_NAME/', '/%_LAST_NAME/'),
             array($this->getFirstName(), $this->getLastName()), $p_format);
+
         return trim($name);
     }
 
@@ -143,6 +146,7 @@ class Author extends DatabaseObject
         if (empty($this->m_aliases)) {
             $this->loadAliases();
         }
+
         return $this->m_aliases;
     }
 
@@ -161,7 +165,6 @@ class Author extends DatabaseObject
     {
         return (string) $this->m_data['skype'];
     }
-
 
     /**
      * @return string
@@ -204,6 +207,7 @@ class Author extends DatabaseObject
         $sql = 'SELECT fk_type_id
             FROM ' . AuthorAssignedType::TABLE . '
             WHERE fk_author_id = ' . $this->getId();
+
         return $g_ado_db->GetAll($sql);
     }
 
@@ -220,22 +224,24 @@ class Author extends DatabaseObject
             FROM ' . AuthorAssignedType::TABLE . '
             JOIN AuthorTypes ON AuthorTypes.id = fk_type_id
             WHERE fk_author_id = ' . $this->getId();
+
         return $g_ado_db->GetAll($sql);
     }
 
     /**
-     * @param string $p_name
+     * @param  string $p_name
      * @return bool
      */
     public function setName($p_name)
     {
         $name = Author::ReadName($p_name);
+
         return $this->setLastName($name['last_name'])
             && $this->setFirstName($name['first_name']);
     }
 
     /**
-     * @param string $p_name
+     * @param  string $p_name
      * @return bool
      */
     public function setFirstName($p_name)
@@ -243,9 +249,8 @@ class Author extends DatabaseObject
         return $this->setProperty('first_name', $p_name);
     }
 
-
     /**
-     * @param string $p_name
+     * @param  string $p_name
      * @return bool
      */
     public function setLastName($p_name)
@@ -254,7 +259,7 @@ class Author extends DatabaseObject
     }
 
     /**
-     * @param string $p_value
+     * @param  string $p_value
      * @return bool
      */
     public function setEmail($p_value)
@@ -263,7 +268,7 @@ class Author extends DatabaseObject
     }
 
     /**
-     * @param int $p_typeId
+     * @param  int  $p_typeId
      * @return void
      */
     public function setType($p_typeId = NULL)
@@ -275,22 +280,24 @@ class Author extends DatabaseObject
         if (!$assignedType->exists()) {
             $assignedType->create();
         }
+
         return (int) $assignedType->getAuthorTypeId();
     }
 
     private function __getDefaultType()
     {
         $types = AuthorType::GetAuthorTypes();
-        foreach((array) $types as $type) {
+        foreach ((array) $types as $type) {
             if (strtoupper($type->getName()) === self::DEFAULT_TYPE) {
                 return $type->getId();
             }
         }
+
         return (int) $types[0]->getId();
     }
 
     /**
-     * @param string $p_value
+     * @param  string $p_value
      * @return bool
      */
     public function setSkype($p_value)
@@ -299,7 +306,7 @@ class Author extends DatabaseObject
     }
 
     /**
-     * @param string $p_value
+     * @param  string $p_value
      * @return bool
      */
     public function setJabber($p_value)
@@ -308,7 +315,7 @@ class Author extends DatabaseObject
     }
 
     /**
-     * @param string $p_value
+     * @param  string $p_value
      * @return bool
      */
     public function setAim($p_value)
@@ -318,7 +325,7 @@ class Author extends DatabaseObject
 
     /**
      * @param int $p_value
-     * $return bool
+     *                     $return bool
      */
     public function setImage($p_value)
     {
@@ -326,7 +333,7 @@ class Author extends DatabaseObject
     }
 
     /**
-     * @param array $p_authorBiography
+     * @param  array $p_authorBiography
      * @return void
      */
     public function setBiography(array $p_biography)
@@ -336,7 +343,7 @@ class Author extends DatabaseObject
         }
 
         $biographyObj = new AuthorBiography($this->getId(), $p_biography['language']);
-        if (isset($p_biography['biography']) && !empty($p_biography['biography'])) {
+        if (isset($p_biography['biography'])) {
             $biographyObj->setProperty('biography', $p_biography['biography'], false);
         }
         if (isset($p_biography['first_name']) && !empty($p_biography['first_name'])) {
@@ -398,6 +405,7 @@ class Author extends DatabaseObject
         $convertArray = create_function('&$value, $key',
                                         '$value = $value["Name"];');
         array_walk($authors, $convertArray);
+
         return $authors;
     }
 
@@ -412,11 +420,12 @@ class Author extends DatabaseObject
             FROM " . self::TABLE . '
             ORDER BY first_name';
         $authors = DbObjectArray::Create('Author', $queryStr);
+
         return $authors;
     }
 
     /**
-     * @param string $p_name
+     * @param  string $p_name
      * @return array
      */
     public static function ReadName($p_name)
@@ -441,6 +450,7 @@ class Author extends DatabaseObject
                 $firstName = $matches[0];
             }
         }
+
         return array('first_name' => $firstName, 'last_name' => $lastName);
     }
 }
