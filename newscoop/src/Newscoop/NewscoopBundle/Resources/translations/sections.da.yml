@@ -29,7 +29,7 @@ default: standard
 'Configure section': 'Rediger sektion'
 'The section could not be changed.': 'Sektionen kunne ikke ændres.'
 'Duplicate section': 'Kopier sektion'
-'The destination issue is the same as the source issue.': null
+'The destination issue is the same as the source issue.': 'Kilde udgivelse og destinations udgivelse er identiske.'
 'Error updating subscriptions.': null
 'Duplicating section': 'Kopierer sektion'
 'The section $1 could not be duplicated': 'Sektionen $1 kunne ikke kopieres'
@@ -39,10 +39,10 @@ default: standard
 'Duplicate Section:': 'Kopier sektion:'
 'Existing Section': 'Eksisterende sektion'
 'Go to new section': 'Gå til ny sektion'
-'Go to source section': null
+'Go to source section': 'Gå til kilde sektionen'
 'New Section': 'Ny sektion'
 'Please select either $1 or $2.': 'Vælg enten $1 eller $2.'
-'Select destination section:': null
+'Select destination section:': 'Vælg destinations sektionen:'
 OR: ELLER
 'URL Name': 'URL navn'
 'The section number specified already exists, please specify a different value or use the dropdown to find an existing section.': null

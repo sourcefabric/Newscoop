@@ -9,8 +9,8 @@ filter: filter
 'Rename article type $1': 'Omdøb artikel type $1'
 'Invalid article type $1.': 'Ugyldig artikel type $1.'
 'You cannot merge the same type into itself.': 'Du kan ikke flette den samme type med sig selv.'
-'View the source ($1) version of $2': null
-'View of original ($1) $2': null
+'View the source ($1) version of $2': 'Se originalversionen ($1) til $2'
+'View of original ($1) $2': 'Viser original ($1) $2'
 'To return to the preview click here': 'Klik her for at vende tilbage til forhåndsvisning'
 'This is the first translation of $1': 'Dette er oversættelsen af $1'
 'There is no article associated with the preview.': 'Ingen artikel til forhåndsvisning'
@@ -56,7 +56,7 @@ Merge!: Flet!
 'Link to public page': 'Link til offentlig side'
 'Go to Step 3': 'Gå til trin 3'
 'Go to Step 2': 'Gå til trin 2'
-'Display Name': null
+'Display Name': 'Vist navn'
 'Delete article type $1.': 'Slet artikel type $1.'
 'Comments enabled?': 'Slå kommentarer til?'
 'Back to Step 2': 'Tilbage til trin 2'

@@ -77,12 +77,12 @@ Created: null
 'Content edited': null
 'You must select an article language.': null
 'You must select a publication.': null
-'You must select a file to upload.': null
+'You must select a file to upload.': 'Ki kell választanod egy feltöltendő fájlt.'
 'You must select a XML input file.': null
 'You do not have the right to import XML archives.': null
-'There was a problem uploading the file.': null
-'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': null
-'The file exceeds the allowed max file size.': null
+'There was a problem uploading the file.': 'Probléma merült fel a fájl feltöltése során.'
+'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'A feltöltött fájl csak részben került feltöltésre. Ez gyakran előfordul, ha rövid a maximális fájlfeltöltési idő a bevinni próbált fájl méretével szemben. A maximális feltöltési időt a php.ini fájlban adják meg.'
+'The file exceeds the allowed max file size.': 'A fájl mérete meghaladja a megengedett maximális fájlméretet.'
 Optional: null
 'Input File': null
 'Import XML': null
@@ -95,11 +95,11 @@ Optional: null
 'Article could not be created.': null
 '---Select article type---': null
 '$1 articles successfully imported.': null
-Saved: null
+Saved: 'A mentés megtörtént'
 'Save All': null
 'Online Server: On': null
 'Online Server: Off': null
-Download: null
+Download: Letöltés
 'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
 'Visible to non-subscribers': null
 'The article could not be published.': null

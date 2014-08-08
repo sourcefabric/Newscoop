@@ -260,17 +260,17 @@ Reads: Læst
 Authors: Forfattere
 Title: Titel
 'Edit country': 'Rediger land'
-'Entry $1 prepared for publishing': null
-'Entry deleted': null
+'Entry $1 prepared for publishing': 'Post $1 klar til udgivelse'
+'Entry deleted': 'Post slettet'
 'Feed saved': 'Feed gemt'
 'Item published': 'Post udgivet'
 'Settings saved': 'Indstillinger gemt'
 'Self-delete is not permitted.': 'Man kan ikke slette sig selv.'
 'Edit staff member $1': 'Rediger redaktionsmedlem $1'
 'Delete staff member $1': 'Slet redaktionsmedlem $1'
-'Could not save user $1. Please make sure it does not already exist': null
-'Could not save user with e-mail address $1. Please make sure it does not already exist': null
-'Changing user type would prevent you to manage users. Aborted.': null
+'Could not save user $1. Please make sure it does not already exist': 'Brugeren $1 kunne ikke gemmes. Kontroller at den ikke allerede findes.'
+'Could not save user with e-mail address $1. Please make sure it does not already exist': 'Kunne ikke gemme bruger med email adressen $1. Kontroller at den ikke allerede findes.'
+'Changing user type would prevent you to manage users. Aborted.': 'Ændringen i brugertyper ville forhindre dig i at administrere brugertyper. Annulleret.'
 'Staff member saved.': 'Redaktionsmedlem gemt.'
 'Permissions: $1': 'Tilladelser: $1'
 'Change user account information': 'Rediger information om brugerkonto'
@@ -282,4 +282,4 @@ Confirm: Bekræft
 at: på
 published: udgivet
 unpublished: 'træk tilbage'
-nopermissions: null
+nopermissions: 'Du har ikke tilladelser til at tilgå denne ressource.'

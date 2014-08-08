@@ -9,7 +9,7 @@ Campsite: null
 'Security token expired. Please resubmit the form.': null
 Templates: null
 'Create slideshow': null
-Create: null
+Create: Létrehozás
 Attach/Detach: null
 'Are you sure you want to delete slideshow?': null
 Support: null
@@ -80,7 +80,7 @@ Dashboard: null
 'Your changes will be saved after login.': null
 'Upload backup file': null
 'The file $1 has been uploaded successfully.': null
-'Media Archive': null
+'Media Archive': Médiaarchívum
 Widgets: null
 'Widget info': null
 'Widget added to dashboard.': null
@@ -108,7 +108,7 @@ Restore: null
 Mb: null
 'Free disk space': 'Szabad lemezterület'
 'Download file': 'Fájl letöltése'
-Download: null
+Download: Letöltés
 'Delete file': 'Fájl törlése'
 'Backup list is empty.': null
 'Are you sure you want to restore the file $1?': null

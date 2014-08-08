@@ -7,7 +7,7 @@ Twitter: Twitter
 Organisation: Organisation
 'Last Name Public': 'Offentligt efternavn'
 Google+: Google+
-Geolocation: 'Geo placering'
+Geolocation: Geolocation
 Gender: Køn
 'First Name Public': 'Offentligt fornavn'
 Facebook: Facebook
@@ -88,11 +88,11 @@ Filters: Filtre
 'Author saved.': 'Forfatter gemt.'
 'Author deleted.': 'Forfatter slettet.'
 'Enable Firefox spell checking by default': null
-'User may use the editor status bar': null
-'User may clear up the system cache': null
+'User may use the editor status bar': 'Bruger må bruge editor statusbaren'
+'User may clear up the system cache': 'Bruger må rydde system cachen'
 'Another user is registered with that e-mail address, please choose a different one.': null
 'There was an error when trying to update the user info.': null
-'User may moderate comments': null
+'User may moderate comments': 'Bruger må moderere kommentarer'
 'User may enable comments': 'Bruger må slå kommentarer til'
 'User may translate articles': 'Bruger må oversætte artikler'
 'User may move articles': 'Bruger må flytte artikler'

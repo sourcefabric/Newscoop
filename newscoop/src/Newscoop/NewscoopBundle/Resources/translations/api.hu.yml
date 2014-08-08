@@ -30,13 +30,13 @@ Center: Központ
 Title: Cím
 'Invalid security token.': 'Érvénytelen biztonsági jogkivonat.'
 'Callback $1 is not callable.': 'A/z $1 visszahívás nem hívható.'
-'Article translated to $4 ($5)': null
+'Article translated to $4 ($5)': 'A cikk lefordítása a/z $4 ($5) nyelvre megtörtént'
 'Article status changed from $1 to $2.': 'A cikk állapota megváltozott erről: $1 erre: $2.'
 'Article deleted.': 'A cikk törlése megtörtént.'
 'Article created.': 'A cikk létrehozása megtörtént.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': 'A cikk másolása a/z $4 cikkbe megtörtént (kiadvány: $5, szám: $6, rész: $7).'
+'Article copied to Article $4 (publication $5, issue $6, section $7).': null
 'Article URL': 'Cikk URL-címe'
-'Article Number': null
+'Article Number': 'Cikk száma'
 'Access denied.': 'Hozzáférés megtagadva.'
 'Publish with issue': 'Közzététel folyóiratszámmal'
 unknown: ismeretlen
@@ -75,32 +75,32 @@ api:
             resources: 'Nyilvános erőforrások'
             clients: Ügyfelek
         resources:
-            info: 'Alapértelmezésként az összes erőforrást tűzfal védi, viszont kiválaszthatja azokat az erőforrásokat, melyeket mindenki számára nyilvánossá akar tenni.'
+            info: 'Alapértelmezésként az összes erőforrást tűzfal védi, viszont kiválaszthatod azokat az erőforrásokat, melyeket mindenki számára nyilvánossá akarsz tenni.'
             add_button: 'Ügyfél hozzáadása'
         clients:
             table:
                 name: 'Ügyfél neve'
-                id: null
+                id: Ügyfél-azonosító
                 secret: Titkos
                 trusted: 'Megbízható?'
                 redirect: 'URL-címek átirányítása'
-                publication: null
+                publication: Kiadvány
                 actions: Műveletek
                 actions_buttons:
                     remove: Eltávolítás
             actions:
                 remove:
-                    confirm: 'Biztosan törölni szeretné ezt az ügyfelet?'
+                    confirm: 'Biztosan el akarod távolítani ezt az ügyfelet?'
         menu: API
     form:
         client:
             label:
-                name: 'Válasszon egy nevet az ügyfelének:'
-                publication: null
+                name: 'Válassz nevet az ügyfelednek:'
+                publication: 'Válassz kiadványt az ügyfeled számára:'
                 redirectUris: 'Válassza ki az ügyfele átirányító URL-címeit.'
                 trusted: 'Megbízható?'
                 save: Mentés
         PublicResources:
             label:
-                routes: null
+                routes: 'Válaszd ki a nyilvánossá teendő erőforrásokat:'
                 save: Mentés

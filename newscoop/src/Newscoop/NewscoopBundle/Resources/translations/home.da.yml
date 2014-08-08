@@ -118,11 +118,11 @@ Download: Download
 'Select the field from which to generate the author': 'Vælg feltet der skal bruges til forfatter'
 'Invalid or empty field $1. You must select a valid dynamic field.': 'Ugyldigt eller tomt felt $1. Du skal vælge et gyldigt dynamisk felt.'
 'Unable to create author $1 for article no. $2 ($3) of type $4.': 'Kunne ikke oprette forfatter $1 for artikel nr. $2 ($3) af type $4.'
-'There were errors setting the author for articles of type $1 from the field $2.': null
-'The author was set successfuly for articles of type $1 from the field $2.': null
+'There were errors setting the author for articles of type $1 from the field $2.': 'Kunne ikke sætte forfatteren for artikler af type $1 fra feltet $2.'
+'The author was set successfuly for articles of type $1 from the field $2.': 'Forfatteren for artikler af type $1 blev sat fra feltet $2.'
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 minutter siden.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'Artiklen blev låst af $1 ($2) for $3 timer og $4 minutter siden.'
-'Error setting the author $1 for article no. $2 ($3) of type $4.': null
+'Error setting the author $1 for article no. $2 ($3) of type $4.': 'Forfatteren $1 kunne ikke sættes for artikel nr. $2 ($3) af type $4.'
 'Clear system cache': 'Tøm systemets cache'
 'The system was unable to upload the file $1. ': 'Systemet kunne ikke uploade filen $1.'
 'Please check the file you are trying to upload, it might be corrupted.': 'Kontrollér filen du prøver at sende, den kan være beskadiget.'
@@ -160,4 +160,4 @@ Backup/Restore: Backup/Gendan
 'New comments': 'Nye kommentarer'
 'Published articles': 'Publicerede artikler'
 'Last 7 days statistics': 'Statistik for de seneste 7 dage'
-'Change password': null
+'Change password': 'Skift adgangskode'

@@ -48,7 +48,7 @@ Username: null
 'User ban settings': null
 'Update comment': null
 Unrecommended: null
-Unrecommend: null
+Unrecommend: 'Ajánlat visszavonása'
 'Subject is not $1 characters long': null
 'Sort by Thread order': null
 'Show parent comment': null
@@ -59,9 +59,9 @@ Unrecommend: null
 'Show comment details': null
 'Select status': null
 'Search Type': null
-'Reply to comment': null
+'Reply to comment': 'Válasz a hozzászólásra'
 Recommended: Ajánlott
-Recommend: null
+Recommend: Ajánlás
 'Quick edit': null
 Parent: null
 ID: null
@@ -79,7 +79,7 @@ E-mail: null
 'Commenter $1 saved.': null
 'Commenter $1 deleted.': null
 Commenter: null
-'Comment updated.': null
+'Comment updated.': 'A hozzászólás javítása megtörtént.'
 'Comment status change to $1.': null
 'Comment id': null
 'Comment deleted.': null

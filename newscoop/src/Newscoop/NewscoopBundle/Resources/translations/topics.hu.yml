@@ -9,7 +9,7 @@
 'Add root topic': null
 'Topic was deleted.': null
 'The topic name is already in use by another topic.': 'Egy másik téma már használja a téma nevét.'
-'You must enter a name for the topic.': null
+'You must enter a name for the topic.': 'Meg kell adnia a téma nevét.'
 'You must choose a language for the topic.': null
 'This topic has subtopics, therefore it cannot be deleted.': null
 'Add translation:': null
