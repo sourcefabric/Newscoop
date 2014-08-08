@@ -5,13 +5,13 @@ Campsite: Campsite
 'You have tried to upload an invalid backup file.': 'Du prøvede at uploade en ugyldig backup fil.'
 'You do not have the right to manage backups.': 'Du har ikke rettigheder til at håndtere backups.'
 'Make a new backup': 'Lav en ny backup'
-'Are you sure you want to make a new backup?': 'Er du sikker på du vil lave en ny backup?'
+'Are you sure you want to make a new backup?': 'Vil du lave en ny backup?'
 'Security token expired. Please resubmit the form.': 'Sikkerhedstoken er udløbet. Indsend formularen igen.'
 Templates: Skabeloner
 'Create slideshow': 'Opret galleri'
 Create: Opret
 Attach/Detach: Vedhæft/Fjern
-'Are you sure you want to delete slideshow?': 'Er du sikker på du vil slette galleriet?'
+'Are you sure you want to delete slideshow?': 'Vil du slette galleriet?'
 Support: Support
 'Pending articles': 'Ventende artikler'
 'Manage Users': Brugere
@@ -74,7 +74,7 @@ Processing...: Arbejder...
 Please: Tak
 'Go to dashboard': 'Gå til overblik'
 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'Din browser understøtter ikke javascript eller (mere sandsynligt) du har slået javascript fra. Du skal slå javascript til for at bruge Newscoop.'
-'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop har opgraderet sikkerheden. For at opgradere din kontos skal du skrive din adgangskode igen.'
+'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'Newscoop har opgraderet sikkerheden. For at opgradere din konto skal du skrive din adgangskode igen.'
 'Newscoop cache was cleaned up': 'Newscoop cachen blev renset'
 Dashboard: Overblik
 'Your changes will be saved after login.': 'Dine ændringer bliver gemt efter du logger ind.'
@@ -111,8 +111,8 @@ Mb: Mb
 Download: Download
 'Delete file': 'Slet fil'
 'Backup list is empty.': 'Backup listen er tom.'
-'Are you sure you want to restore the file $1?': 'Er du sikker på du vil gendanne filen $1?'
-'Are you sure you want to delete the file $1?': 'Er du sikker på du vil slette filen $1?'
+'Are you sure you want to restore the file $1?': 'Vil du gendanne filen $1?'
+'Are you sure you want to delete the file $1?': 'Vil du slette filen $1?'
 'Import XML': 'Importer XML'
 'You must have the permissions to add/change issues and articles in order to set the author for all articles.': 'Du skal have rettigheder til at tilføje/ændre udgivelser og artikler for at indstille forfatter for alle artikler.'
 'Select the field from which to generate the author': 'Vælg feltet der skal bruges til forfatter'

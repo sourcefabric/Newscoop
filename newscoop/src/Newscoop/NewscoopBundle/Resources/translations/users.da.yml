@@ -205,7 +205,7 @@ users:
             resend_email: 'Gensend aktiverings email'
             rename: Omdøb
             remove: Fjern
-        confirm_remove: 'Er du sikker på du vil slette brugeren?'
+        confirm_remove: 'Vil du slette brugeren?'
         table_messages:
             page: Side
             perPageText: 'Vis:'

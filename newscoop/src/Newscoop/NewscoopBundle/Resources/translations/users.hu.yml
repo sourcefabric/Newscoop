@@ -210,8 +210,8 @@ users:
             page: null
             perPageText: null
             pageText: null
-            recordCountPageBoundTemplate: null
-            recordCountPageUnboundedTemplate: null
+            recordCountPageBoundTemplate: '{pageLowerBound} - {pageUpperBound} /'
+            recordCountPageUnboundedTemplate: '{recordsShown} /'
             recordCountTotalTemplate: null
             recordCountFilteredTemplate: null
             recordCountText: null

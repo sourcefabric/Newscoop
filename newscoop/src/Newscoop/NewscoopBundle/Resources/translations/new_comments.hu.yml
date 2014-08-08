@@ -7,8 +7,8 @@ comments:
         at: null
         noentries: 'Nem találhatók bejegyzések.'
         showing: null
-        of: null
-        to: null
+        of: /
+        to: '-'
         entries: null
         fullarticle: 'Teljes cikk'
         hidden: null

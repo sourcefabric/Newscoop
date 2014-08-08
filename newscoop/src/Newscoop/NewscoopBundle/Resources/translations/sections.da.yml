@@ -23,7 +23,7 @@ default: standard
 'Please check if another section with the same number or URL name does not exist already.': 'Kontroller om en anden sektion bruger samme nummer eller URL.'
 'Delete section': 'Slet sektion'
 'You do not have the right to delete sections.': 'Du har ikke rettigheder til at slette sektioner.'
-'Are you sure you want to delete the section $1?': 'Er du sikker på du vil slette sektionen $1?'
+'Are you sure you want to delete the section $1?': 'Vil du slette sektionen $1?'
 'Deleting section': 'Sletter sektion'
 'The section $1 has been deleted.': 'Sektionen $1 blev slettet.'
 'Configure section': 'Rediger sektion'
