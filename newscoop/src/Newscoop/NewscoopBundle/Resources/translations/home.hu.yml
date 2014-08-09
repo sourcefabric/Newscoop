@@ -1,7 +1,7 @@
 'Rename user': null
 Campsite: null
 'Image Rendering': null
-'Featured Article Lists': null
+'Featured Article Lists': 'Kiemelt cikkek listái'
 'You have tried to upload an invalid backup file.': null
 'You do not have the right to manage backups.': null
 'Make a new backup': null
@@ -13,7 +13,7 @@ Create: Létrehozás
 Attach/Detach: null
 'Are you sure you want to delete slideshow?': null
 Support: null
-'Pending articles': null
+'Pending articles': 'Függőben lévő cikkek'
 'Manage Users': null
 'Manage User Types': null
 'Manage User Points System': null

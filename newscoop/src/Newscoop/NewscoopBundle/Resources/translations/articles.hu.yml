@@ -1,40 +1,40 @@
-'Edit metadata': null
-Rating: null
-'Enable Rating': null
-'Blog management': null
-'View article': null
-'Select a list': null
-'Remove list': null
-'Please select a list': null
-Playlist: null
-'List updated.': null
-'List saved': null
-'List Name': null
+'Edit metadata': 'Metaadatok szerkesztése'
+Rating: Értékelés
+'Enable Rating': 'Értékelés engedélyezése'
+'Blog management': 'Blog kezelése'
+'View article': 'Cikk megtekintése'
+'Select a list': 'Válasszon egy listát'
+'Remove list': 'Lista eltávolítása'
+'Please select a list': 'Válasszon egy listát'
+Playlist: 'Lejátszási lista'
+'List updated.': 'A lista frissítése megtörtánt.'
+'List saved': 'A lista mentése megtörtént.'
+'List Name': 'Lista neve'
 'List ID': null
-'Item already exists in the list': null
-'Featured Articles': null
-'Featured Article Lists': null
-'Featured Article List': null
+'Item already exists in the list': 'Az elem már szerepel a listán'
+'Featured Articles': 'Kiemelt cikkek'
+'Featured Article Lists': 'Kiemelt cikkek listái'
+'Featured Article List': 'Kiemelt cikkek listája'
 'Duplicate list': null
-'Duplicate article entry found': null
-'Drag here to add to list': null
-'Could not save the list': null
+'Duplicate article entry found': 'Ismétlődő cikkbejegyzésl található'
+'Drag here to add to list': 'Húzd ide a listához adáshoz'
+'Could not save the list': 'Nem sikerült menteni a listát'
 'Available Articles': null
-'Are you sure you want to delete this list?': null
-'Add to list': null
-'Add list': null
+'Are you sure you want to delete this list?': 'Biztosan törölni akarod ezt a listát?'
+'Add to list': 'Felvétel a listára'
+'Add list': 'Lista hozzáadása'
 'Multi date events': null
-Slideshows: null
+Slideshows: Diavetítések
 'Place images': null
-'Youre not allowed to edit article.': null
-Webcode: null
-Unapproved: null
-'This issue cannot be previewed. Please make sure the publication has a theme assigned.': null
-'The article could not be submitted.': null
-'Submit articles': null
-'Submit article': null
-'Related Articles': null
-'Pending articles': null
+'Youre not allowed to edit article.': 'A cikkszerkesztés nem engedélyezett a számodra.'
+Webcode: Webkód
+Unapproved: 'Nem jóváhagyott'
+'This issue cannot be previewed. Please make sure the publication has a theme assigned.': 'Ez a szám nem tekinthető meg. Ellenőrizd, hogy hozzárendeltek-e egy témát a kiadványhoz.'
+'The article could not be submitted.': 'Nem lehet beküldeni a cikket.'
+'Submit articles': 'Cikkek beküldése'
+'Submit article': 'Cikk beküldése'
+'Related Articles': 'Kapcsolódó cikkek'
+'Pending articles': 'Függőben lévő cikkek'
 'Pending Articles': null
 'Context Box updated': null
 On: null
@@ -165,7 +165,7 @@ Comments: null
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': null
 'A section must be created for the selected language.  Please enter the section name and URL name.': null
 'Article Type': null
-'Show article on front page': null
+'Show article on front page': 'A cikk megjelenítése a címlapon'
 'Show article on section page': null
 'Translate article': null
 'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': null

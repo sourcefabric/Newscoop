@@ -1,7 +1,7 @@
 'Display articles of filtered types': null
 'Display Articles of Filtered Types': null
-Webcode: null
-'View article': null
+Webcode: Webkód
+'View article': 'Cikk megtekintése'
 Source: null
 'Select type': null
 On: null
@@ -38,7 +38,7 @@ Size: null
 'Reset all filters': null
 'Published before': null
 'Published after': null
-'Publish date': null
+'Publish date': 'Közzététel dátuma'
 'Publish Schedule': null
 'Publish Date': null
 'Order updated.': null
