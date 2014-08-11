@@ -276,7 +276,7 @@ class LinkService
      *
      * @return string composed path
      */
-    public function getBaseUrl($path = null)
+    public function getBaseUrl($path = '')
     {
         $context = $this->symfonyRouter->getContext();
         $baseUrl = $context->getScheme().'://'.$context->getHost().$path;
