@@ -11,6 +11,7 @@ namespace Newscoop\Article;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Router\RouterFactory;
 use Newscoop\Entity\Article;
+use Symfony\Component\Routing\Router;
 
 /**
  * Link Service
@@ -76,19 +77,27 @@ class LinkService
     protected $router;
 
     /**
-     * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Router\RouterFactory $router
+     * @var Router
      */
-    public function __construct(EntityManager $em, \Zend_Controller_Router_Rewrite $router)
+    protected $symfonyRouter;
+
+    /**
+     * @param EntityManager                  $em
+     * @param Zend_Controller_Router_Rewrite $router
+     * @param Router                         $symfonyRouter
+     */
+    public function __construct(EntityManager $em, \Zend_Controller_Router_Rewrite $router, Router $symfonyRouter)
     {
         $this->em = $em;
         $this->router = $router;
+        $this->symfonyRouter = $symfonyRouter;
     }
 
     /**
      * Get link
      *
      * @param Newscoop\Entity\Article $article
+     *
      * @return string
      */
     public function getLink(Article $article)
@@ -258,5 +267,20 @@ class LinkService
     {
         $topics = $article->getTopicNames();
         return empty($topics) ? null : array_shift($topics);
+    }
+
+    /**
+     * Get curent request base url path.
+     *
+     * @param string $path path to be appended to base url
+     *
+     * @return string composed path
+     */
+    public function getBaseUrl($path = null)
+    {
+        $context = $this->symfonyRouter->getContext();
+        $baseUrl = $context->getScheme().'://'.$context->getHost().$path;
+
+        return $baseUrl;
     }
 }
