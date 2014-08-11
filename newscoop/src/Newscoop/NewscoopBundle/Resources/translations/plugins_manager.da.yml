@@ -1,5 +1,5 @@
 newscoop.plugins_manager.manager: 'Plugin administration'
-newscoop.plugins_manager.legacy_manager: null
+newscoop.plugins_manager.legacy_manager: 'Administration af gamle plugins'
 newscoop.plugins_manager.public_plugins: 'Offentlige plugins'
 newscoop.plugins_manager.private_plugins: 'Private plugins'
 newscoop.plugins_manager.install.public: 'Installer ny plugin'

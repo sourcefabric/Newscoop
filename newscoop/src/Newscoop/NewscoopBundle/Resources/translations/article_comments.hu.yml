@@ -1,13 +1,13 @@
 Recommended: Ajánlott
-'There are no more comments': null
-'Show more comments': null
-Unrecommend: null
-'Save comment': null
-Recommend: null
-'Comment updated.': null
-'Comment saved.': null
+'There are no more comments': 'Nincs több hozzászólás'
+'Show more comments': 'További hozzászólások'
+Unrecommend: 'Ajánlat visszavonása'
+'Save comment': 'Hozzászólás mentése'
+Recommend: Ajánlás
+'Comment updated.': 'A hozzászólás javítása megtörtént.'
+'Comment saved.': 'A hozzászólás mentése megtörtént.'
 'Comments updated.': null
-'Post a Comment': null
+'Post a Comment': 'Hozzászólás küldése'
 From: null
-'Reply to comment': null
+'Reply to comment': 'Válasz a hozzászólásra'
 'No comments posted.': null

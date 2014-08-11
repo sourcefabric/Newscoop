@@ -32,8 +32,8 @@ newscoop:
             cronjob: null
         btn:
             cleardatabasecache: null
-            disable: null
-            enable: null
+            disable: 'Slå fra'
+            enable: 'Slå til'
         label:
             title: 'System indstillinger'
             header: Indstillinger
@@ -69,7 +69,7 @@ newscoop:
             serverdb: 'Newscoop online server database'
             replicationhost: null
             replicationuser: null
-            replicationpw: null
+            replicationpw: 'Adgangskode til databasereplikation:'
             replicationport: null
             filter: null
             cron: 'Kør planlagte opgaver eksternt?'
@@ -116,21 +116,21 @@ newscoop:
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
-            cronjob: null
-            enabled: null
-            options: null
-            info: null
+            cronjob: 'Navn på cron job'
+            enabled: Status
+            options: Indstillinger
+            info: 'Info:'
             infodesc: null
-            prevRun: null
-            nextRun: null
-            norecords: null
+            prevRun: 'Sidste kørselsdato'
+            nextRun: 'Næste kørselsdato'
+            norecords: 'Ingen opslag.'
             cronJobEmail: null
             cronJobSenderEmail: null
             cronJobSenderName: null
             cronJobNotify: null
             cronslist: null
-            cronsadvanced: null
-            moredetails: null
+            cronsadvanced: 'Avancerede indtillinger'
+            moredetails: 'Flere detaljer.'
         popover:
             cronJobEmail: null
             cronJobSenderEmail: null

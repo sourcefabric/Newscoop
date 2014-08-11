@@ -137,8 +137,10 @@ function camp_implode_keys_and_values($p_array,
     if (is_array($p_array)) {
         $elements = array();
         foreach ($p_array as $key => $value) {
-            $elements[] = $p_keyPrefixString . $key . $p_keyPostfixString .
-                $p_keyValueSeparator . $p_valuePrefixString . $value . $p_valuePostfixString;
+            if (is_string($key) && is_string($value)) {
+                $elements[] = $p_keyPrefixString . $key . $p_keyPostfixString .
+                    $p_keyValueSeparator . $p_valuePrefixString . $value . $p_valuePostfixString;
+            }
         }
         $returnString = implode($p_elementSeparator, $elements);
     }

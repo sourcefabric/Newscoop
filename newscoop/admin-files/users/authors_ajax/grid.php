@@ -4,8 +4,6 @@
  */
 $translator = \Zend_Registry::get('container')->getService('translator');
 
-ini_set("display_errors","2");
-error_reporting(E_ALL);
 function l_getType($types)
 {
     if (!is_array($types)) return;

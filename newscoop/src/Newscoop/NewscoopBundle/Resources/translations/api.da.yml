@@ -90,7 +90,7 @@ api:
                     remove: Fjern
             actions:
                 remove:
-                    confirm: 'Er du sikker på du vil fjerne klienten?'
+                    confirm: 'Vil du fjerne klienten?'
         menu: API
     form:
         client:
