@@ -8,8 +8,8 @@ On: Til
 Off: Fra
 Title: Titel
 'No video playback capabilities, please download the video below': 'Videoen kan ikke afspilles. Gem videoen nedenfor.'
-'Article status set to $1 for $2 articles': null
-'Article status not set to $1 for $2 articles': null
+'Article status set to $1 for $2 articles': 'Artikelstatus blev sat til $1 for $2 artikler'
+'Article status not set to $1 for $2 articles': 'Artikelstatus blev ikke sat til $1 for $2 artikler'
 '$1 toggled for $2 articles.': '$1 ændret for $2 artikler.'
 '$1 not toggled for $2 articles.': '$1 er ikke ændet for $2 artikler.'
 '$1 not toggled for $2  articles.': '$1 er ikke ændet for $2 artikler.'
@@ -62,7 +62,7 @@ Filename: Filnavn
 Creator: Forfatter
 'Create Date': Oprettelsesdato
 'Article status set to $1': 'Artikel status sat til $1'
-'Are you sure you want to delete selected articles?': 'Er du sikker på du vil slette de valgte artikler?'
+'Are you sure you want to delete selected articles?': 'Vil du slette de valgte artikler?'
 'All Sections': 'Alle sektioner'
 'All Publications': 'Alle publikationer'
 'All Issues': 'Alle udgivelser'
@@ -72,6 +72,6 @@ Added: Tilføjet
 '$1 articles have been removed': '$1 artikler blev slettet'
 ' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
 'Search for creators': null
-'No matches.': null
+'No matches.': 'Ingen resultater.'
 Searching...: Søger...
 'Minimum input of characters: $1': 'Mindste antal tegn: $1'

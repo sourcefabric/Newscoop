@@ -75,7 +75,7 @@ services:
             - { name: jms_serializer.handler, type: author, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.image_image_uri_handler:
         class: Newscoop\GimmeBundle\Serializer\Image\ImageUriHandler
-        arguments:  ["@image", "@zend_router", "@newscoop_newscoop.publication_service"]
+        arguments:  ["@image", "@zend_router", "@article.link"]
         tags:
             - { name: jms_serializer.handler, type: image_uri, direction: serialization, format:json, method:serializeToJson }
     newscoop.gimme.serializer.package_items_link_handler:

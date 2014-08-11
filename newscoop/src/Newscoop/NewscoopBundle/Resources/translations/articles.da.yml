@@ -20,7 +20,7 @@ Playlist: Playliste
 'Drag here to add to list': 'Træk hertil for at tilføje til listen'
 'Could not save the list': 'Listen kunne ikke gemmes'
 'Available Articles': 'Tilgængelige artikler'
-'Are you sure you want to delete this list?': 'Er du sikker på du vil slette listen?'
+'Are you sure you want to delete this list?': 'Vil du slette listen?'
 'Add to list': 'Tilføj til listen'
 'Add list': 'Tilføj liste'
 'Multi date events': 'Begivenhed over flere dage'
@@ -45,9 +45,9 @@ Off: Fra
 Title: Titel
 'There already is an article with the same name. Please change the name and try again.': 'Der findes allerede en artikel med det navn. Ret navnet og prøv igen.'
 'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
-Geolocation: 'Geo placering'
+Geolocation: Geolocation
 Newscoop: Newscoop
-'Overwrite articles with matching names': null
+'Overwrite articles with matching names': 'Overskriv artikler med identiske navne'
 'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Artiklen <i>$1</i> eksisterer allerede og blev ikke overskrevet.<br />'
 Files: Filer
 'Select section:': 'Vælg sektion:'
@@ -70,7 +70,7 @@ Media: Medier
 'Last modified': 'Sidst ændret'
 'Keywords &amp; Topics': 'Nøgleord & Emner'
 Info: Info
-'Go to live article': null
+'Go to live article': 'Gå til live artiklen'
 Created: Oprettet
 'Are you sure you want to remove the map from the article?': 'Vil du fjerne kortet fra artiklen?'
 'Scheduled action added': 'Planlagt handling tilføjet'
@@ -158,10 +158,10 @@ Comments: Kommentarer
 'Duplicate articles': 'Kopier artikler'
 'Article name ($1)': 'Artikel navn ($1)'
 'Article List': 'Artikel liste'
-'Are you sure you want to remove the topic $1 from the article?': 'Er du sikker på du vil fjerne emnet $1 fra artiklen?'
-'Are you sure you want to remove the file $1 from the article?': 'Er du sikker på du vil fjerne filen $1 fra artiklen?'
-'Are you sure you want to remove the event scheduled on $1?': 'Er du sikker på du vil fjerne begivenheden planlagt til $1?'
-'Are you sure you want to delete this article?': 'Er du sikker på du vil slette artiklen?'
+'Are you sure you want to remove the topic $1 from the article?': 'Vil du fjerne emnet $1 fra artiklen?'
+'Are you sure you want to remove the file $1 from the article?': 'Vil du fjerne filen $1 fra artiklen?'
+'Are you sure you want to remove the event scheduled on $1?': 'Vil du fjerne begivenheden planlagt til $1?'
+'Are you sure you want to delete this article?': 'Vil du slette artiklen?'
 'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Der skal oprettes en udgivelse for det valgte sprog. Indtast navn og URL navn for udgivelsen.'
 'A section must be created for the selected language.  Please enter the section name and URL name.': 'Der skal oprettes en sektion for det valgte sprog. Indtast navn og URL navn for sektionen.'
 'Article Type': 'Artikel type'
@@ -178,7 +178,7 @@ Comments: Kommentarer
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Du har ikke tilladelse til at ændre artiklens status. Når en artikel er indsendt kan den kun ændres af autoriserede brugere.'
 'You do not have the right to delete articles.': 'Du har ikke tilladelse til at slette artikler'
 'You must select an article type.': 'Vælg en artikel type'
-'Are you sure you want to remove the image $1 from the article?': 'Er du sikker på du vil fjerne billedet $1 fra artiklen?'
+'Are you sure you want to remove the image $1 from the article?': 'Vil du fjerne billedet $1 fra artiklen?'
 'There was an error reading request parameters.': null
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Forhåndsvisning af artiklen er ikke mulig. Kontroller at artikel skabelonen er valgt.'
 'No such article.': 'Artiklen findes ikke.'

@@ -51,15 +51,19 @@
                 $imageSize = @getimagesize($image->getImageStorageLocation()) ? : array(0, 0);
             ?>
             <li>
+            <?php
+                $imageService = \Zend_Registry::get('container')->get('image');
+                $localImage = $imageService->find($image->getImageId());
+            ?>
                 <div class="image-thumbnail-container">
                     <?php if ($inEditMode) { ?>
                     <a href="<?php echo $imageEditUrl; ?>" class="image-edit"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
                     <?php } else { ?>
-                    <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($this->_helper->service('image')->getArticleImageCaption($image->getImageid(), $f_article_number, $f_language_selected)); ?></span><br />
+                    <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected)); ?></span><br />
                     <?php } ?>
                 </div>
                 <strong><?php echo $articleImage->getTemplateId(); ?></strong> <small><?php echo $image->getStatus() == 'approved' ? $translator->trans('Approved', array(), 'articles') : $translator->trans('Unapproved', array(), 'articles'); ?></small><br />
-                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($this->_helper->service('image')->getArticleImageCaption($image->getImageid(), $f_article_number, $f_language_selected)); ?></span><br />
+                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected)); ?></span><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>

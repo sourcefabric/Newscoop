@@ -40,7 +40,7 @@ class SystemPreferencesService
      *
      * @return void
      */
-    public function __set($property, $value) 
+    public function __set($property, $value)
     {
         if (empty($property) || !is_string($property)) {
             return;
@@ -123,6 +123,26 @@ class SystemPreferencesService
         }
 
         return $property;
+    }
+
+    /**
+     * Delete system preference by varname
+     *
+     * @param string $varname System preference varname
+     *
+     * @return void
+     */
+    public function delete($varname)
+    {
+        $property = $this->em->getRepository('Newscoop\NewscoopBundle\Entity\SystemPreferences')
+            ->findOneBy(array(
+                'option' => $varname
+        ));
+
+        if ($property) {
+            $this->em->remove($property);
+            $this->em->flush();
+        }
     }
 
     /**

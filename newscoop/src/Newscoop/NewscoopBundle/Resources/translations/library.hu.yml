@@ -1,7 +1,7 @@
 'Display articles of filtered types': null
 'Display Articles of Filtered Types': null
-Webcode: null
-'View article': null
+Webcode: Webkód
+'View article': 'Cikk megtekintése'
 Source: null
 'Select type': null
 On: null
@@ -17,7 +17,7 @@ Title: Cím
 '$1 Article(s) unlocked': null
 '$1 Article(s) not unlocked': null
 '$1 Article(s) duplicated': null
-'Download file': null
+'Download file': 'Fájl letöltése'
 'You do not have the right to delete articles.': null
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
 'Use Map': null
@@ -38,7 +38,7 @@ Size: null
 'Reset all filters': null
 'Published before': null
 'Published after': null
-'Publish date': null
+'Publish date': 'Közzététel dátuma'
 'Publish Schedule': null
 'Publish Date': null
 'Order updated.': null
