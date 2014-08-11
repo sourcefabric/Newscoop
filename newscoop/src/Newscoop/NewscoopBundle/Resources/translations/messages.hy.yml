@@ -1,5 +1,5 @@
 Plugins: null
-'Manage Plugins': 'Bővítmények kezelése'
+'Manage Plugins': null
 Account: null
 'Items per page': null
 'Add new': null
@@ -9,7 +9,7 @@ More...: null
 Content: null
 Languages: null
 Countries: null
-Themes: Témák
+Themes: null
 Topics: null
 Configure: null
 'Image Archive': null
@@ -52,7 +52,7 @@ Staff: null
 Language: null
 Country: null
 'Account name': null
-Publication: null
+Publication: Հրապարակում
 'Default language': null
 Subscriptions: null
 Issue: null
@@ -86,7 +86,7 @@ Date/Time: null
 Actions: null
 Publishing: null
 Show: null
-Remove: null
+Remove: Հեռացնել
 'Article Types': null
 'Staff User Types': null
 Publications: null
@@ -185,7 +185,7 @@ Days: null
 Cancel: null
 Done: null
 OK: null
-Save: null
+Save: Պահպանել
 Search: null
 'Make a selection': null
 'You must input a number greater than 0 into the $1 field.': null
@@ -225,7 +225,7 @@ Move: null
 'From:': null
 'Date:': null
 Hidden: null
-Comments: Hozzászólások
+Comments: null
 Comment: null
 Approved: null
 Subject: null
@@ -252,13 +252,13 @@ Send: null
 'Thank you.': null
 'Please take a minute to send us an email.': null
 (optional): null
-'The URL you entered is invalid: $1': 'Az Ön által megadott URL-cím érvénytelen: $1'
+'The URL you entered is invalid: $1': null
 Reads: null
-'Publish with issue': 'Közzététel folyóiratszámmal'
+'Publish with issue': null
 'Universal List': null
 'Invalid security token!': null
-Authors: Szerzők
-Title: Cím
+Authors: null
+Title: Վերնագիր
 'Edit country': null
 'Entry $1 prepared for publishing': null
 'Entry deleted': null
@@ -273,13 +273,13 @@ Title: Cím
 'Changing user type would prevent you to manage users. Aborted.': null
 'Staff member saved.': null
 'Permissions: $1': null
-'Change user account information': 'Felhasználói fiók adatainak módosítása'
+'Change user account information': null
 'Staff management': null
 Updated: null
 Options: null
 Verified: null
-Confirm: Megerősítés
+Confirm: null
 at: null
 published: null
 unpublished: null
-nopermissions: 'A hozzáférés ehhez az erőforrásoz az Ön számára nem engedélyezett.'
+nopermissions: null

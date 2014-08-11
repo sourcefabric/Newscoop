@@ -1,12 +1,12 @@
 'Display articles of filtered types': null
 'Display Articles of Filtered Types': null
-Webcode: Webkód
-'View article': 'Cikk megtekintése'
+Webcode: null
+'View article': null
 Source: null
 'Select type': null
 On: null
 Off: null
-Title: Cím
+Title: Վերնագիր
 'No video playback capabilities, please download the video below': null
 'Article status set to $1 for $2 articles': null
 'Article status not set to $1 for $2 articles': null
@@ -17,19 +17,19 @@ Title: Cím
 '$1 Article(s) unlocked': null
 '$1 Article(s) not unlocked': null
 '$1 Article(s) duplicated': null
-'Download file': 'Fájl letöltése'
-'You do not have the right to delete articles.': 'Nincs jogod a cikkek törléséhez.'
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek ennek a cikknek az állapotát módosítani. Cikk beküldése után csak a jogosult felhasználók módosíthatják.'
+'Download file': null
+'You do not have the right to delete articles.': null
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
 'Use Map': null
 'Toggle: On Section Page': null
 'Toggle: On Front Page': null
 'Toggle: Comments': null
-'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
+'The article has been locked by $1 ($2) $3 minute(s) ago.': null
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
 'Status: Submit': null
 'Status: Set New': null
 'Status: Publish': null
-Size: Méret
+Size: null
 'Showing _START_ to _END_ of _TOTAL_ entries': null
 'Show / hide columns': null
 'Select some article first.': null
@@ -38,39 +38,39 @@ Size: Méret
 'Reset all filters': null
 'Published before': null
 'Published after': null
-'Publish date': 'Közzététel dátuma'
-'Publish Schedule': 'Közzététel beütemezése'
+'Publish date': null
+'Publish Schedule': null
 'Publish Date': null
 'Order updated.': null
 'Open in browser': null
 'No sections found': null
-'No records found.': 'Nem találhatók rekordok.'
+'No records found.': null
 'No publications found': null
 'No issues found': null
-'No entries to show': 'Nincsenek megjelenítendő bejegyzések'
+'No entries to show': null
 Locations: null
 'Loading data': null
-'Last modified': 'Utolsó módosítás'
+'Last modified': null
 'Last Modified': null
-Last: Utolsó
-First: Első
+Last: Վերջին
+First: Առաջին
 'Filter by...': null
 Filter: null
-Filename: Fájlnév
+Filename: null
 'Duplicate to another section': null
 'Display _MENU_ records': null
 Creator: null
 'Create Date': null
-'Article status set to $1': 'A cikk állapotának beállítása megtörtént erre: $1'
+'Article status set to $1': null
 'Are you sure you want to delete selected articles?': null
 'All Sections': null
 'All Publications': null
 'All Issues': null
 Added: null
-'Access denied.': 'Hozzáférés megtagadva.'
-'$1 toggled.': 'A/z $1 átváltása megtörtént.'
+'Access denied.': null
+'$1 toggled.': null
 '$1 articles have been removed': null
-' - filtering from _MAX_ records': '- szűrés a _MAX_ rekordokból'
+' - filtering from _MAX_ records': null
 'Search for creators': null
 'No matches.': null
 Searching...: null
