@@ -20,7 +20,7 @@ statusbar: statusbar
 'source view': 'se kilde'
 publish: udgiv
 notify: underret
-moderate: null
+moderate: moderer
 manage: administrer
 'list number': null
 'list bullet': null

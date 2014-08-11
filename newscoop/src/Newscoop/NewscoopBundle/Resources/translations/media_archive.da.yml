@@ -16,7 +16,7 @@ Feedback: Feedback
 'Should this file only be available for this translation of the article, or for all translations?': 'Skal filen kun bruges til denne oversættelse af artiklen eller til alle oversættelser?'
 'Please enter a description for the file: $1.': 'Giv en beskrivelse af filen: $1.'
 'Only this translation': 'Kun denne oversættelse'
-'No files for multi editing.': null
+'No files for multi editing.': 'Ingen filer til multiredigering.'
 'Edit files': 'Rediger filer'
 'Change file information': 'Rediger fil information'
 'All translations': 'Alle oversættelser'
@@ -34,7 +34,7 @@ Files: Filer
 'Do you want this file to open in the users browser, or to automatically download?': 'Skal filen åbne i brugerens browser eller downloades automatisk?'
 'Delete selected': 'Slet valgte'
 Created: Oprettet
-Charset: null
+Charset: Karaktersæt
 'Change attachment information': 'Rediger information om vedhæftning'
 'Automatically download': 'Download automatisk'
 'Attachment updated.': 'Vedhæftning opdateret.'
@@ -44,7 +44,7 @@ Charset: null
 'Use for all': 'Brug til alle'
 'Specify image url if you want to load it.': 'Angiv billede url hvis du vil hente det.'
 Size: Størrelse
-'No images for multi editing.': null
+'No images for multi editing.': 'Ingen billeder til multiredigering.'
 'Images updated.': 'Billeder opdateret.'
 'Edit images': 'Rediger billeder'
 '$1 files uploaded.': '$1 filer uploaded.'

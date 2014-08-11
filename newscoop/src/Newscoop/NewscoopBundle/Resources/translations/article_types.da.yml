@@ -9,8 +9,8 @@ filter: filter
 'Rename article type $1': 'Omdøb artikel type $1'
 'Invalid article type $1.': 'Ugyldig artikel type $1.'
 'You cannot merge the same type into itself.': 'Du kan ikke flette den samme type med sig selv.'
-'View the source ($1) version of $2': null
-'View of original ($1) $2': null
+'View the source ($1) version of $2': 'Se originalversionen ($1) til $2'
+'View of original ($1) $2': 'Viser original ($1) $2'
 'To return to the preview click here': 'Klik her for at vende tilbage til forhåndsvisning'
 'This is the first translation of $1': 'Dette er oversættelsen af $1'
 'There is no article associated with the preview.': 'Ingen artikel til forhåndsvisning'
@@ -56,13 +56,13 @@ Merge!: Flet!
 'Link to public page': 'Link til offentlig side'
 'Go to Step 3': 'Gå til trin 3'
 'Go to Step 2': 'Gå til trin 2'
-'Display Name': null
+'Display Name': 'Vist navn'
 'Delete article type $1.': 'Slet artikel type $1.'
 'Comments enabled?': 'Slå kommentarer til?'
 'Back to Step 2': 'Tilbage til trin 2'
 'Back to Step 1': 'Tilbage til trin 1'
 'Are you sure you want to delete the article type $1?  WARNING: Deleting this article type will delete all the articles associated with this article type.': 'Vil du slette artikeltypen $1? ADVARSEL: Hvis du sletter artikeltypen bliver alle artikler af denne type slettet.'
-'Are you sure you want to $1 the article type $2?': 'Er du sikker på du vil $1 artikeltypen $2?'
+'Are you sure you want to $1 the article type $2?': 'Vil du $1 artikeltypen $2?'
 'Are you sure you want to $1 comments for article type $2?': 'Vil du $1 kommentarer for artikel type $2?'
 'Allow users without subscriptions to view the article': 'Tillad brugere uden abonnement at se artiklen'
 'Add translation:': 'Tilføj oversættelse:'

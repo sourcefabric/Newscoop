@@ -6,28 +6,28 @@
 /**
  * @package Campsite
  */
-final class MetaSubtitle {
-
+final class MetaSubtitle
+{
     /**
      * The pattern used to detect the subtitles.
      *
      * @var string
      */
-    static private $m_SubtitlePattern = '<!\*\*[\s]*Title[\s]*>([^<]*)<!\*\*[\s]*EndTitle[\s]*>';
+    private static $m_SubtitlePattern = '<!\*\*[\s]*Title[\s]*>([^<]*)<!\*\*[\s]*EndTitle[\s]*>';
 
     /**
      * The pattern used to detect the subtitle formatting start.
      *
      * @var string
      */
-    static private $m_HeaderStartPattern = '(<[\s]*[hH][\d][\s]*>[\s]*)*';
+    private static $m_HeaderStartPattern = '(<[\s]*[hH][\d][\s]*>[\s]*)*';
 
     /**
      * The pattern used to detect the subtitle formatting end.
      *
      * @var string
      */
-    static private $m_HeaderEndPattern = '([\s]*<[\s]*\/[\s]*[hH][\d][\s]*>)*';
+    private static $m_HeaderEndPattern = '([\s]*<[\s]*\/[\s]*[hH][\d][\s]*>)*';
 
     /**
      * The subtitle order number
@@ -78,7 +78,6 @@ final class MetaSubtitle {
      */
     private $m_nameFormattingEnd;
 
-
     /**
      * Constructor
      *
@@ -101,11 +100,10 @@ final class MetaSubtitle {
         $this->m_nameFormattingEnd = $p_formattingEnd;
     }
 
-
     /**
      * Returns true if the current object is the same type as the given
      * object then has the same value.
-     * @param mix $p_otherObject
+     * @param  mix     $p_otherObject
      * @return boolean
      */
     public function same_as($p_otherObject)
@@ -116,7 +114,6 @@ final class MetaSubtitle {
         && $this->m_name == $p_otherObject->m_name;
     }
 
-
     public function __get($p_property)
     {
         switch (strtolower($p_property)) {
@@ -126,35 +123,36 @@ final class MetaSubtitle {
             case 'name': return $this->m_name;
             case 'formatted_name': return $this->getFormattedName();
             case 'content': return $this->m_content;
-            case 'has_previous_subtitles': return (int)($this->m_number > 0);
-            case 'has_next_subtitles': return (int)($this->m_number < ($this->m_count - 1));
+            case 'has_previous_subtitles': return (int) ($this->m_number > 0);
+            case 'has_next_subtitles': return (int) ($this->m_number < ($this->m_count - 1));
             default:
                 $this->trigger_invalid_property_error($p_property);
+
                 return null;
         }
     }
 
-
     /**
      * Returns the formatted subtitle name
      *
-     * @param string $p_formattingStart
-     * @param string $p_formattingEnd
+     * @param  string $p_formattingStart
+     * @param  string $p_formattingEnd
      * @return string
      */
-    protected function getFormattedName($p_formattingStart = '<p>', $p_formattingEnd = '</p>') {
+    protected function getFormattedName($p_formattingStart = '<p>', $p_formattingEnd = '</p>')
+    {
         $formattingStart = empty($this->m_nameFormattingStart) ? $p_formattingStart : $this->m_nameFormattingStart;
         $formattingEnd = empty($this->m_nameFormattingEnd) ? $p_formattingEnd : $this->m_nameFormattingEnd;
+
         return $formattingStart.$this->m_name.$formattingEnd;
     }
-
 
     /**
      * Reads the subtitles from the given content
      *
-     * @param string $p_content
-     * @param string $p_firstSubtitle
-     * @return array of MetaSubtitle
+     * @param  string $p_content
+     * @param  string $p_firstSubtitle
+     * @return array  of MetaSubtitle
      */
     public static function ReadSubtitles($p_content, $p_fieldName, $p_firstSubtitle = '',
     $p_headerFormatStart = null, $p_headerFormatEnd = null) {
@@ -177,23 +175,24 @@ final class MetaSubtitle {
             $subtitles[] = new MetaSubtitle($index, $p_fieldName, count($contentParts),
             $name, $contentPart, $formatStart, $formatEnd);
         }
+
         return $subtitles;
     }
-
 
     /**
      * Process the body field content (except subtitles):
      *  - internal links
      *  - image links
      *
-     * @param string $p_content
+     * @param  string $p_content
      * @return string
      */
-    private static function ProcessContent($p_content) {
-    	$content = trim($p_content);
-    	if (empty($content)) {
-    		return $p_content;
-    	}
+    private static function ProcessContent($p_content)
+    {
+        $content = trim($p_content);
+        if (empty($content)) {
+            return $p_content;
+        }
         // process internal links
         $linkPattern = '<!\*\*[\s]*Link[\s]+Internal[\s]+(([\d\w]+[=][\d\w]+&?)*)([\s]+TARGET[\s]+([^>\s]*))*[\s]*>';
         $content = preg_replace_callback("|$linkPattern|i",
@@ -204,22 +203,23 @@ final class MetaSubtitle {
 
         // image tag format: <!** Image 1 align="left" alt="FSF" sub="FSF" attr="value">
         $imagePattern = '<!\*\*[\s]*Image[\s]+([\d]+)(([\s]+(align|alt|sub|width|height|ratio|\w+)\s*=\s*("[^"]*"|[^\s]*))*)[\s]*>';
+
         return preg_replace_callback("/$imagePattern/i",
                                      array('MetaSubtitle', 'ProcessImageLink'),
                                      $content);
     }
 
-
     /**
      * Process the image statement given in Campsite internal formatting.
      * Returns a standard image URL.
      *
-     * @param array $p_matches
+     * @param  array  $p_matches
      * @return string
      */
-    public static function ProcessImageLink(array $p_matches) {
-    	$context = CampTemplate::singleton()->context();
-    	$oldImage = $context->image;
+    public static function ProcessImageLink(array $p_matches)
+    {
+        $context = CampTemplate::singleton()->context();
+        $oldImage = $context->image;
         $uri = $context->url;
         if ($uri->article->number == 0) {
             return '';
@@ -229,22 +229,22 @@ final class MetaSubtitle {
         $detailsString = $p_matches[2];
         $detailsArray = array();
         if (trim($detailsString) != '') {
-        	$imageAttributes = 'align|alt|sub|width|height|ratio|\w+';
-        	preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
-        	$detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
-        	if (count($detailsArray1[1]) > 0) {
-        		$detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
-        	} else {
-        		$detailsArray1 = array();
-        	}
-        	preg_match_all("/[\s]+($imageAttributes)=([^\"\s]+)/i", $detailsString, $detailsArray2);
-        	$detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
-        	if (count($detailsArray2[1]) > 0) {
-        		$detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
-        	} else {
-        		$detailsArray2 = array();
-        	}
-        	$detailsArray = array_merge($detailsArray1, $detailsArray2);
+            $imageAttributes = 'align|alt|sub|width|height|ratio|\w+';
+            preg_match_all("/[\s]+($imageAttributes)=\"([^\"]+)\"/i", $detailsString, $detailsArray1);
+            $detailsArray1[1] = array_map('strtolower', $detailsArray1[1]);
+            if (count($detailsArray1[1]) > 0) {
+                $detailsArray1 = array_combine($detailsArray1[1], $detailsArray1[2]);
+            } else {
+                $detailsArray1 = array();
+            }
+            preg_match_all("/[\s]+($imageAttributes)=([^\"\s]+)/i", $detailsString, $detailsArray2);
+            $detailsArray2[1] = array_map('strtolower', $detailsArray2[1]);
+            if (count($detailsArray2[1]) > 0) {
+                $detailsArray2 = array_combine($detailsArray2[1], $detailsArray2[2]);
+            } else {
+                $detailsArray2 = array();
+            }
+            $detailsArray = array_merge($detailsArray1, $detailsArray2);
         }
 
         $articleImage = new ArticleImage($uri->article->number, null, $imageNumber);
@@ -253,7 +253,6 @@ final class MetaSubtitle {
         $context->image = $image;
         $imageSize = @getimagesize($imageObj->getImageStorageLocation());
 
-
         unset($imageObj);
 
         $imageOptions = '';
@@ -261,78 +260,46 @@ final class MetaSubtitle {
         $defaultOptions = array('ratio'=>'EditorImageRatio', 'width'=>'EditorImageResizeWidth',
         'height'=>'EditorImageResizeHeight');
         foreach (array('ratio', 'width', 'height') as $imageOption) {
-        	$defaultOption = (int)$preferencesService->get($defaultOptions[$imageOption]);
-        	if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
-        		$imageOptions .= " $imageOption " . (int)$detailsArray[$imageOption];
-        	} elseif ($imageOption != 'ratio' && $defaultOption > 0) {
-        		$imageOptions .= " $imageOption $defaultOption";
-        	} elseif ($imageOption == 'ratio' && $defaultOption != 100) {
-        		$imageOptions .= " $imageOption $defaultOption";
-        	}
+            $defaultOption = (int) $preferencesService->get($defaultOptions[$imageOption]);
+            if (isset($detailsArray[$imageOption]) && $detailsArray[$imageOption] > 0) {
+                $imageOptions .= " $imageOption " . (int) $detailsArray[$imageOption];
+            } elseif ($imageOption != 'ratio' && $defaultOption > 0) {
+                $imageOptions .= " $imageOption $defaultOption";
+            } elseif ($imageOption == 'ratio' && $defaultOption != 100) {
+                $imageOptions .= " $imageOption $defaultOption";
+            }
         }
         $imageOptions = trim($imageOptions);
 
         $imgZoomLink = '';
         if ($preferencesService->EditorImageZoom == 'Y' && strlen($imageOptions) > 0) {
-        	$uri->uri_parameter = "image";
-            $imgZoomLink = '<a href="' . $uri->uri . '" class="photoViewer" ';
-            if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-                $imgZoomLink .= 'title="' . $detailsArray['sub'] . '">';
-            } else {
-                $imgZoomLink .= 'title="">';
-            }
+            $imgZoomLink = '/' . $image->filerpath;
         }
 
-        $isCentered = false;
-        $imgString = '</p><div class="cs_img';
-        if (isset($detailsArray['align']) && !empty($detailsArray['align'])) {
-            if ($detailsArray['align'] == 'middle') {
-                $imgString = '</p><div align="center"><div class="cs_img';
-                $isCentered = true;
-            }
-            $imgString .= ' cs_fl_' . $detailsArray['align'] . '"';
-        } else {
-            $imgString .= '"';
-        }
-        if (isset($detailsArray['width'])) {
-            $imgString .= 'style="width:' . $detailsArray['width'] . 'px;"';
-        }
-        $imgString .= '>';
-        $imgString .= (strlen($imgZoomLink) > 0) ? '<p>'.$imgZoomLink : '<p>';
-        $uri->uri_parameter = "image $imageOptions";
+        try {
+            $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
+            $imageService = \Zend_Registry::get('container')->getService('image');
+            $smarty = $templatesService->getSmarty();
+            $uri->uri_parameter = "image $imageOptions";
+            $smarty->assign('imageDetails', $detailsArray);
+            $smarty->assign('uri', $uri);
+            $smarty->assign('imgZoomLink', $imgZoomLink);
 
-        $imgString .= '<img src="' . $uri->uri . '"';
-        if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
-            $imgString .= ' alt="' . $detailsArray['alt'] . '"';
+            return $templatesService->fetchTemplate("editor_image.tpl");
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
-        if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-            $imgString .= ' title="' . $detailsArray['sub'] . '"';
-        }
-        $imgString .= ' border="0"/>';
-        $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
-        if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-    		$imgString .= '<p class="cs_img_caption">';
-            $imgString .= $detailsArray['sub'] . '</p>';
-        }
-        if ($isCentered) {
-            $imgString .= '</div></div><p>';
-        } else {
-            $imgString .= '</div><p>';
-        }
-        $context->image = $oldImage;
-
-        return $imgString;
     }
-
 
     /**
      * Process the internal link statement given in Campsite internal formatting.
      * Returns a standard URL.
      *
-     * @param array $p_matches
+     * @param  array  $p_matches
      * @return string
      */
-    public static function ProcessInternalLink(array $p_matches) {
+    public static function ProcessInternalLink(array $p_matches)
+    {
         $parametersString = $p_matches[1];
         $targetName = isset($p_matches[4]) ? $p_matches[4] : null;
         preg_match_all('/([\d\w]+)=([\d\w]+)&?/i', $parametersString, $parametersArray);
@@ -352,29 +319,29 @@ final class MetaSubtitle {
         $uri->article = new MetaArticle($parametersArray[CampRequest::LANGUAGE_ID],
         $parametersArray[CampRequest::ARTICLE_NR]);
         $urlString = '<a href="'.$uri->url.'" target="'.$targetName.'">';
+
         return $urlString;
     }
-
 
     /**
      * Returns the pattern used to split the content in subtitles
      *
      * @return string
      */
-    private static function GetSplitPattern() {
+    private static function GetSplitPattern()
+    {
         return MetaSubtitle::$m_HeaderStartPattern.MetaSubtitle::$m_SubtitlePattern.MetaSubtitle::$m_HeaderEndPattern;
     }
-
 
     /**
      * Returns the pattern used to find a subtitle in the article content field
      *
      * @return string
      */
-    private static function GetFindPattern() {
+    private static function GetFindPattern()
+    {
         return MetaSubtitle::$m_HeaderStartPattern.MetaSubtitle::$m_SubtitlePattern.MetaSubtitle::$m_HeaderEndPattern;
     }
-
 
     protected function trigger_invalid_property_error($p_property, $p_smarty = null)
     {
@@ -383,5 +350,3 @@ final class MetaSubtitle {
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 }
-
-?>
