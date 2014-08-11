@@ -42,7 +42,7 @@ table.cron-jobs td:nth-child(2) {
 {% endfor %}
 <form action="{{ path('newscoop_newscoop_systempref_index') }}" method="post" {{ form_enctype(form) }} >
 <div class="system_pref">
-    <div class="tabbable tabs-left"> 
+    <div class="tabbable tabs-left">
         <ul class="nav nav-tabs">
             <li class="active"><a href="#general_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.general'|trans }}</a></li>
             <li><a href="#cache_settings" data-toggle="tab">{{ 'newscoop.preferences.menu.cache'|trans }}</a></li>
@@ -67,49 +67,49 @@ table.cron-jobs td:nth-child(2) {
                             <label>{{ 'newscoop.preferences.label.siteonline'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.siteonline) }} 
+                            {{ form_widget(form.siteonline) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.sitetitle'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.title, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.title, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.metakeywords'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.meta_keywords, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.meta_keywords, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.metadescription'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.meta_description, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.meta_description, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.timezone'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.timezone, {'attr' : {'class' : 'input_select wide'}}) }} 
+                            {{ form_widget(form.timezone, {'attr' : {'class' : 'input_select wide'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.allowrecovery'|trans }} <small id="allowrecovery">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.allow_recovery) }} 
+                            {{ form_widget(form.allow_recovery) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.emailfrom'|trans }} <small id="emailfrom">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }} 
+                            {{ form_widget(form.email_from, {'attr' : {'class' : 'input_text'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.secretkey'|trans }} <small id="secret">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text', 'disabled': 'disabled'}}) }} 
+                            {{ form_widget(form.secret_key, {'attr' : {'class' : 'input_text', 'disabled': 'disabled'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.sessionlifetime'|trans }} <small id="lifetime">(?)</small></label>
@@ -125,13 +125,13 @@ table.cron-jobs td:nth-child(2) {
                             <label>{{ 'newscoop.preferences.label.separator'|trans }} <small id="separator">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.separator, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
+                            {{ form_widget(form.separator, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.captcha'|trans }}</label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.captcha, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }} 
+                            {{ form_widget(form.captcha, {'attr' : {'class' : 'input_text', 'style' : 'width: 50px'}}) }}
                         </dd>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.maxupload'|trans }}</label>
@@ -145,10 +145,10 @@ table.cron-jobs td:nth-child(2) {
                             <label>{{ 'newscoop.preferences.label.stats'|trans }} <small id="stats">(?)</small></label>
                         </dt>
                         <dd>
-                            {{ form_widget(form.automatic_collection) }} 
+                            {{ form_widget(form.automatic_collection) }}
                         </dd>
                         {% endif %}
-                    <dl> 
+                    <dl>
             </div>
             <div class="tab-pane" id="cache_settings">
                 <h3>{{ 'newscoop.preferences.menu.cache'|trans }}</h3>
@@ -158,19 +158,19 @@ table.cron-jobs td:nth-child(2) {
                         <label>{{ 'newscoop.preferences.label.cacheengine'|trans }} <small id="cacheengine">(?)</small></label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }} 
+                        {{ form_widget(form.cache_engine, {'attr' : {'class' : 'input_select wide'}}) }}
                     </dd>
                     <dt>
                         <label>{{ 'newscoop.preferences.label.cacheenginehost'|trans }} <small id="cacheenginehost">(?)</small></label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.cache_engine_host, {'attr' : {'class' : 'input_text wide'}}) }} 
+                        {{ form_widget(form.cache_engine_host, {'attr' : {'class' : 'input_text wide'}}) }}
                     </dd>
                     <dt>
                         <label>{{ 'newscoop.preferences.label.cacheengineport'|trans }} <small id="cacheengineport">(?)</small></label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.cache_engine_port, {'attr' : {'class' : 'input_text','style' : 'width: 81px;'}}) }} 
+                        {{ form_widget(form.cache_engine_port, {'attr' : {'class' : 'input_text','style' : 'width: 81px;'}}) }}
                     </dd>
 
                     <div class="clear-database-cache">
@@ -181,14 +181,14 @@ table.cron-jobs td:nth-child(2) {
                         <label>{{ 'newscoop.preferences.label.cachetemplate'|trans }} <small id="cachetemplate">(?)</small></label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }} 
+                        {{ form_widget(form.cache_template, {'attr' : {'class' : 'input_select wide'}}) }}
                     </dd>
                 {% endif %}
                     <dt>
                          <label>{{ 'newscoop.preferences.label.cacheimage'|trans }} <small id="cacheimage">(?)</small></label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }} 
+                        {{ form_widget(form.cache_image, {'attr' : {'class' : 'input_select wide'}}) }}
                     </dd>
                 </dl>
             </div>
@@ -246,13 +246,13 @@ table.cron-jobs td:nth-child(2) {
                                 <label>{{ 'newscoop.preferences.label.cronJobSenderEmail'|trans }} <small id="cronjobsender">(?)</small></label>
                             </dt>
                             <dd>
-                                {{ form_widget(form.cronJobSmtpSender, {'attr' : {'class' : 'input_text'}}) }} 
+                                {{ form_widget(form.cronJobSmtpSender, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
                             <dt>
                                 <label>{{ 'newscoop.preferences.label.cronJobSenderName'|trans }}</label>
                             </dt>
                             <dd>
-                                {{ form_widget(form.cronJobSmtpSenderName, {'attr' : {'class' : 'input_text'}}) }} 
+                                {{ form_widget(form.cronJobSmtpSenderName, {'attr' : {'class' : 'input_text'}}) }}
                             </dd>
                         </dl>
                 </div>
@@ -265,13 +265,13 @@ table.cron-jobs td:nth-child(2) {
                         <label>{{ 'newscoop.preferences.label.smtphost'|trans }}</label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.smtp_host, {'attr' : {'class' : 'input_text'}}) }} 
+                        {{ form_widget(form.smtp_host, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                     <dt>
                         <label>{{ 'newscoop.preferences.label.smtpport'|trans }}</label>
                     </dt>
                     <dd>
-                        {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }} 
+                        {{ form_widget(form.smtp_port, {'attr' : {'class' : 'input_text'}}) }}
                     </dd>
                 </dl>
             </div>
@@ -279,8 +279,8 @@ table.cron-jobs td:nth-child(2) {
                 <h3>{{ 'newscoop.preferences.menu.editor'|trans }}</h3>
                 <dl>
                     <dt>
-                        <label>{{ 'newscoop.preferences.label.imageratio'|trans }} <small id="ratio">(?)</small></label>
-                    </dt>
+-                       <label>{{ 'newscoop.preferences.label.imageratio'|trans }} <small id="ratio">(?)</small></label>
+-                   </dt>
                     <dd>
                         {{ form_widget(form.image_ratio, {'attr' : {'class' : 'input_text', 'style' : 'width: 67px'}}) }} %
                     </dd>
@@ -301,6 +301,22 @@ table.cron-jobs td:nth-child(2) {
                     </dt>
                     <dd>
                         {{ form_widget(form.zoom) }}
+                    </dd>
+                    <dt>
+                        <label>{{ 'newscoop.preferences.label.mediaRichTextCaptions'|trans }} <small id="richtext_status">(?)</small></label>
+                    </dt>
+                    <dd>
+                        {{ form_widget(form.mediaRichTextCaptions) }}
+                        <div id="richtext_captions">
+                            <dl>
+                                <dt>
+                                    <label>{{ 'newscoop.preferences.label.mediaCaptionLength'|trans }} <small id="richtext_length">(?)</small></label>
+                                </dt>
+                                <dd>
+                                    {{ form_widget(form.mediaCaptionLength) }} {{ 'newscoop.preferences.label.mediaCaptionLength_after'|trans }}
+                                </dd>
+                            </dl>
+                        </div>
                     </dd>
                 </dl>
             </div>
@@ -452,7 +468,7 @@ table.cron-jobs td:nth-child(2) {
             </div>
             {% if hasManagePermission %}
                 <div class="tab-pane" id="media_settings">
-                    <h3>{{ 'newscoop.preferences.menu.media'|trans }} <label><small id="video">(?)</small></label></h3> 
+                    <h3>{{ 'newscoop.preferences.menu.media'|trans }} <label><small id="video">(?)</small></label></h3>
                     <dl>
                         <dt>
                             <label>{{ 'newscoop.preferences.label.youtubewidth'|trans }}</label>
@@ -658,6 +674,19 @@ $( document ).ready(function() {
     };
 
     $(function() {
+        $("input:radio[name=preferencesform\\[mediaRichTextCaptions\\]]").change(function() {
+            var replication_div = $('#richtext_captions');
+            if ($(this).val() == 'Y') {
+                replication_div.show();
+            } else {
+                replication_div.hide();
+            }
+        });
+
+        $("input:radio[name=preferencesform\\[mediaRichTextCaptions\\]]:checked").change();
+    });
+
+    $(function() {
         $('#tabsPanel a:first').tab('show');
         $("input:radio[name=preferencesform\\[use_replication\\]]").change(function() {
             var replication_div = $('#replication_server');
@@ -778,6 +807,8 @@ $( document ).ready(function() {
     popover($('#separator'), '{{ 'newscoop.preferences.popover.separator'|trans }}');
     popover($('#stats'), '{{ 'newscoop.preferences.popover.stats'|trans }}');
     popover($('#zoom'), '{{ 'newscoop.preferences.popover.zoom'|trans }}');
+    popover($('#richtext_status'), '{{ 'newscoop.preferences.popover.richtext_status'|trans }}');
+    popover($('#richtext_length'), '{{ 'newscoop.preferences.popover.richtext_length'|trans }}');
     popover($('#ratio'), '{{ 'newscoop.preferences.popover.ratio'|trans }}');
     popover($('#replication'), '{{ 'newscoop.preferences.popover.replication'|trans }}');
     popover($('#filter'), '{{ 'newscoop.preferences.popover.filter'|trans }}');
