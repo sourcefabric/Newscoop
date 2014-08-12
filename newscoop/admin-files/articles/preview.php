@@ -105,7 +105,7 @@ if (!$templateId) {
 if (!isset($_SERVER['SERVER_PORT'])) {
 	$_SERVER['SERVER_PORT'] = 80;
 }
-$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+$scheme = '//';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 
@@ -121,6 +121,7 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		$errorStr = $url->getMessage();
 	}
 	$url .= '?' . $accessParams;
+    $url = preg_replace('@^https?://@i', $scheme, $url);
 }
 
 $selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
