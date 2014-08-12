@@ -1,19 +1,19 @@
-'Translate from': null
-'Total articles': null
-Skype: null
-'Save All': null
+'Translate from': 'Fordítás erről:'
+'Total articles': 'Összes cikk'
+Skype: Skype
+'Save All': 'Az összes mentése'
 Reset: null
-'Please enter the last name': null
-'Please enter the first name': null
-'No records found': null
-'Last name': null
-Jabber: null
-General: null
-'First name': null
-Email: null
-'Delete author': null
+'Please enter the last name': 'Adja meg vezetéknevét'
+'Please enter the first name': 'Adja meg keresztnevét'
+'No records found': 'Nem találhatók rekordok.'
+'Last name': Vezetéknév
+Jabber: Jabber
+General: Általános
+'First name': Keresztnév
+Email: E-mail
+'Delete author': 'Szerző törlése'
 Contacts: null
-Biography: null
+Biography: Életrajz
 Aliases: null
-AIM: null
-'Search for authors': null
+AIM: AIM
+'Search for authors': 'Szerzők keresése'

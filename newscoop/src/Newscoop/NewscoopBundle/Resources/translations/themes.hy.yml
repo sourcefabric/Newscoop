@@ -1,5 +1,5 @@
 'Duplicate assignment': null
-Templates: Sablonok
+Templates: null
 'Import theme': null
 'Import succeded!': null
 'Import failed!': null
@@ -21,7 +21,7 @@ moved: null
 installed: null
 deleted: null
 'You must select at least one template to perform an action.': null
-Upload: Feltöltés
+Upload: null
 'Unassign theme': null
 'Unassign successful': null
 Unassign: null
@@ -40,13 +40,13 @@ Unassign: null
 'Section page template': null
 Saving..: null
 'Saving settings failed.': null
-'Save All': 'Az összes mentése'
+'Save All': null
 'Required Newscoop version': null
 Replace: null
 'New template $1 created.': null
 'New name': null
 'Name cant be empty': null
-'Last modified': 'Utolsó módosítás'
+'Last modified': null
 'Issue page': null
 'Go to parent': null
 'Go to $1': null
@@ -58,7 +58,7 @@ Replace: null
 'Failed unassigning theme': null
 Export: null
 'Error page template': null
-'Edit $1': 'A/z $1 szerkesztése'
+'Edit $1': null
 'Done uploading': null
 'Do you want to override $1?': null
 'Directory is empty': null
@@ -85,4 +85,4 @@ Compatibility: null
 '$1 is not writable': null
 '$1 $2': null
 '$1 files $2': null
-'Available themes': null
+'Available themes': 'Available themes'
