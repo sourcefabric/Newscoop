@@ -121,6 +121,7 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		$errorStr = $url->getMessage();
 	}
 	$url .= '?' . $accessParams;
+    $url = preg_replace('@^https?://@i', $scheme, $url);
 }
 
 $selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
