@@ -107,7 +107,7 @@ if (!$templateId) {
 if (!isset($_SERVER['SERVER_PORT'])) {
 	$_SERVER['SERVER_PORT'] = 80;
 }
-$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
+$scheme = '//';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 
