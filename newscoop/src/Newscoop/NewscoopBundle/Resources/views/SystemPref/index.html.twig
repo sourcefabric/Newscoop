@@ -675,11 +675,11 @@ $( document ).ready(function() {
 
     $(function() {
         $("input:radio[name=preferencesform\\[mediaRichTextCaptions\\]]").change(function() {
-            var replication_div = $('#richtext_captions');
+            var richtext_div = $('#richtext_captions');
             if ($(this).val() == 'Y') {
-                replication_div.show();
+                richtext_div.show();
             } else {
-                replication_div.hide();
+                richtext_div.hide();
             }
         });
 
