@@ -1,59 +1,59 @@
-'No attachment': null
+'No attachment': 'Nincs melléklet'
 at: null
-'With no attachment': null
-'With image attachment': null
-'With document attachment': null
-'Unable to reach Newscoop. Please check your internet connection.': null
+'With no attachment': 'Melléklet nélkül'
+'With image attachment': Képmelléklettel
+'With document attachment': Dokumentummelléklettel
+'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
 Starred: null
-Star: null
+Star: Csillagozás
 'Showing _START_ to _END_ of _TOTAL_ entries': null
-'Reply to message': null
-Reply: null
-Processed: null
-'No records found.': null
-'No entries to show': null
-'Messages updated.': null
-'Messages status change to $1.': null
-'Messages deleted.': null
-'Message updated.': null
-'Message status change to $1.': null
-'Message deleted.': null
-Message: null
+'Reply to message': 'Válasz az üzenetre'
+Reply: Válasz
+Processed: Feldolgozva
+'No records found.': 'Nem találhatók rekordok.'
+'No entries to show': 'Nincsenek megjelenítendő bejegyzések'
+'Messages updated.': 'Az üzenetek frissítése megtörtént.'
+'Messages status change to $1.': 'Az üzenetek állapotának módosítása erre: $1.'
+'Messages deleted.': 'Az üzenetek törlése megtörtént.'
+'Message updated.': 'Az üzenet frissítése megtörtént.'
+'Message status change to $1.': 'Az üzenet állapotának módosítása erre: $1.'
+'Message deleted.': 'Az üzenet törlése megtörtént.'
+Message: Üzenet
 Last: Utolsó
-'Full article': null
+'Full article': 'Teljes cikk'
 First: Első
-'Feedback Messages': null
+'Feedback Messages': 'Visszajelzés üzenetek'
 'Display _MENU_ records': null
-Deleted: null
-'Change selected messages status': null
-Attachment: null
-Approved.: null
-Approve: null
-Anonymous: null
-' - filtering from _MAX_ records': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-User: null
+Deleted: Törölve
+'Change selected messages status': 'A kijelölt üzenetek állapotának módosítása'
+Attachment: Csatolmány
+Approved.: Jóváhagyva.
+Approve: Jóváhagyás
+Anonymous: Névtelen
+' - filtering from _MAX_ records': '- szűrés a _MAX_ rekordokból'
+'You are about to permanently delete multiple messages.': 'Több üzenet végleges törlésére készülsz.'
+'You are about to permanently delete a message.': 'Egy üzenet végleges törlésére készülsz.'
+User: Felhasználó
 None: null
 'Coming from': null
-'Ban/Unban user': null
-Ip: null
-'Bans can be applied to a users name, email address or IP address.': null
-'You are about to permanently delete multiple comments.': null
-'You are about to permanently delete a comment.': null
-Website: null
-'Value is not $1 characters long': null
-Username: null
-'User id': null
-'User ban settings': null
-'Update comment': null
-Unrecommended: null
+'Ban/Unban user': 'Felhasználó kitiltása/kitiltásának megszüntetése'
+Ip: IP-cím
+'Bans can be applied to a users name, email address or IP address.': 'A kitiltás egy felhasználó nevére, e-mail címére vagy IP-címére vonatkozhat.'
+'You are about to permanently delete multiple comments.': 'Több hozzászólás végleges törlésére készülsz.'
+'You are about to permanently delete a comment.': 'Egy hozzászólás végleges törlésére készülsz.'
+Website: Weblap
+'Value is not $1 characters long': 'Az érték nem $1 karakter hosszú'
+Username: Felhasználónév
+'User id': 'Felhasználó azonosítója'
+'User ban settings': 'Felhasználó kitiltásának beállításai'
+'Update comment': 'Hozzászólás frissítése'
+Unrecommended: 'Nem ajánlott'
 Unrecommend: 'Ajánlat visszavonása'
-'Subject is not $1 characters long': null
-'Sort by Thread order': null
+'Subject is not $1 characters long': 'A tárgy nem $1 karakter hosszú'
+'Sort by Thread order': 'Rendezés témakörsorrend szerint'
 'Show parent comment': null
-'Show commenter details': null
-'Show commenter': null
+'Show commenter details': 'A hozzászóló adatainak megjelenítése'
+'Show commenter': 'A hozzászóló megjelenítése'
 'Show comment user details': null
 'Show comment user': null
 'Show comment details': null
@@ -62,39 +62,39 @@ Unrecommend: 'Ajánlat visszavonása'
 'Reply to comment': 'Válasz a hozzászólásra'
 Recommended: Ajánlott
 Recommend: Ajánlás
-'Quick edit': null
-Parent: null
+'Quick edit': Gyorsszerkesztés
+Parent: Szülő
 ID: null
 'Go to edit article': null
-Forum: null
+Forum: Fórum
 'For Column': null
-Email: null
-'Edit acceptance criteria': null
-E-mail: null
-'Delete all comments?': null
-'Date Created': null
+Email: E-mail
+'Edit acceptance criteria': 'Átvételi feltételek szerkesztése'
+E-mail: E-mail
+'Delete all comments?': 'Törlöd az összes hozzászólást?'
+'Date Created': 'Létrehozás dátuma'
 'Comments updated.': null
-'Comments status change to $1.': null
-'Comments deleted.': null
-'Commenter $1 saved.': null
-'Commenter $1 deleted.': null
-Commenter: null
+'Comments status change to $1.': 'Hozzászólások állapotának változása erre: $1.'
+'Comments deleted.': 'A hozzászólások törlése megtörtént.'
+'Commenter $1 saved.': 'A/z $1 nevű hozzászóló mentése megtörtént.'
+'Commenter $1 deleted.': 'A/z $1 nevű hozzászóló törlése megtörtént.'
+Commenter: Hozzászóló
 'Comment updated.': 'A hozzászólás javítása megtörtént.'
-'Comment status change to $1.': null
-'Comment id': null
-'Comment deleted.': null
-'Comment delete by $1 from the article $2 ($3)': null
-'Comment Acceptance': null
-'Comment $4 by $1 in the article $2 ($3)': null
-'Comment $1 saved.': null
+'Comment status change to $1.': 'A hozzászólás állapotának módosítása erre: $1.'
+'Comment id': 'Hozzászólás azonosítója'
+'Comment deleted.': 'A hozzászólás törlése megtörtént.'
+'Comment delete by $1 from the article $2 ($3)': 'A hozzászólás $1 általi törlése a/z $2 ($3) cikkből'
+'Comment Acceptance': 'Hozzászólás elfogadása'
+'Comment $4 by $1 in the article $2 ($3)': ' A/z $4 hozzászólás $1 által a/z $2 ($3) cikkben'
+'Comment $1 saved.': 'A/z $1 hozzászólás mentése megtörtént.'
 Column: null
-'Change subscriber information': null
-'Ban for commenter $1 saved.': null
-Ban: null
-'Are you sure you want to do it?': null
-'Add rating': null
+'Change subscriber information': 'Előfizetői adatok módosítása'
+'Ban for commenter $1 saved.': 'A/z $1 nevű hozzászóló kitiltásának mentése megtörtént.'
+Ban: Kitiltás
+'Are you sure you want to do it?': 'Biztosan ezt akarod tenni?'
+'Add rating': 'Értékelés hozzáadása'
 'Add new comment commenter': null
 'Add new comment': null
-'Add new acceptance criteria': null
-'Acceptance $1 saved.': null
-'Acceptance $1 deleted.': null
+'Add new acceptance criteria': 'Új átvételi feltételek hozzáadása'
+'Acceptance $1 saved.': 'A/z $1 átvételi feltétel mentése megtörtént.'
+'Acceptance $1 deleted.': 'A/z $1 átvételi feltétel törlése megtörtént.'

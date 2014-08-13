@@ -1,6 +1,6 @@
 'Password confirmation does not match your password.': null
 'Password Confirmation': null
-Website: Weblap
+Website: null
 Twitter: null
 'Save profile': null
 'Profile image': null
@@ -10,7 +10,7 @@ Google+: null
 Geolocation: null
 Gender: null
 'First Name Public': null
-Facebook: Facebook
+Facebook: null
 'Date of birth': null
 'Allow sending emails': null
 'About me': null
@@ -25,17 +25,17 @@ Continue: null
 'Showing _START_ to _END_ of _TOTAL_ entries': null
 'Send email to user:': null
 'No users found.': null
-'No records found.': 'Nem találhatók rekordok.'
-'No entries to show': 'Nincsenek megjelenítendő bejegyzések'
+'No records found.': null
+'No entries to show': null
 'Display _MENU_ records': null
 'Are you sure you want to {action}?': null
 'Active Logins': null
-' - filtering from _MAX_ records': '- szűrés a _MAX_ rekordokból'
+' - filtering from _MAX_ records': null
 'User renamed.': null
 'User attributes': null
 'Rename user $1': null
 'Username is used already': null
-'User with id $1 not found': 'A/z $1 azonosítójú felhasználó nem található.'
+'User with id $1 not found': null
 'User was deleted.': null
 'User saved': null
 'User id not specified': null
@@ -47,24 +47,24 @@ Picture: null
 None: null
 'New confirmation email was sent to user.': null
 'Email is used already': null
-'Edit your password': 'Jelszavad szerkesztése'
+'Edit your password': null
 'Edit user $1': null
 'Edit subscriptions': null
 'Edit profile': null
-'Edit permissions': 'Engedélyek szerkesztése'
-'Create new account': 'Új fiók létrehozása'
+'Edit permissions': null
+'Create new account': null
 'Comment ban settings': null
 'Ban for user $1 saved.': null
 'User account is active': null
 'Allow users profile to be publicly displayed': null
 'Allow user access to login to site backend': null
-Templates: Sablonok
-Username: Felhasználónév
+Templates: null
+Username: null
 'Last Name': null
 'First Name': null
-Email: E-mail
+Email: null
 'You were logged out.': null
-'Newscoop Subhead': 'Newscoop alcím'
+'Newscoop Subhead': null
 Filters: null
 'Add new Author': null
 'Loading Data': null
@@ -210,8 +210,8 @@ users:
             page: null
             perPageText: null
             pageText: null
-            recordCountPageBoundTemplate: '{pageLowerBound} - {pageUpperBound} /'
-            recordCountPageUnboundedTemplate: '{recordsShown} /'
+            recordCountPageBoundTemplate: null
+            recordCountPageUnboundedTemplate: null
             recordCountTotalTemplate: null
             recordCountFilteredTemplate: null
             recordCountText: null

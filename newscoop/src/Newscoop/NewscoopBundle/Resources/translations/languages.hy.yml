@@ -44,7 +44,7 @@ Apr: null
 'Are you sure you want to delete the language $1?': null
 'Deleting language': null
 'The language $1 could not be deleted.': null
-'Edit language': 'Nyelv szerkesztése'
+'Edit language': null
 'You do not have the right to edit languages.': null
 'Please enter the translation for month names.': null
 'Please enter the translation for week day names.': null

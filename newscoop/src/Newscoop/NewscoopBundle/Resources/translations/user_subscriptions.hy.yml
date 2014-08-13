@@ -29,7 +29,7 @@ removed: null
 deleted: null
 deactivated: null
 activated: null
-'Value is required and cant be empty': 'Az érték kötelező és nem lehet üres'
+'Value is required and cant be empty': null
 'That user name already exists, please choose a different login name.': null
 'That $1 already exists, please choose a different $2.': null
 'Subscriptions exist for all available publications.': null
@@ -52,7 +52,7 @@ activated: null
 E-Mail: null
 'Delete subscriber $1': null
 'Creation Date': null
-'Change subscriber information': 'Előfizetői adatok módosítása'
+'Change subscriber information': null
 'Add new IP address': null
 'Add new IP Address': null
 'Accout Name': null

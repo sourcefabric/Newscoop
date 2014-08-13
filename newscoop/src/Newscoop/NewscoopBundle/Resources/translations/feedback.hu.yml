@@ -1,29 +1,29 @@
-'No attachment': null
-'You are about to permanently delete multiple messages.': null
-'You are about to permanently delete a message.': null
-'Are you sure you want to do it?': null
-Approve: null
-Approved.: null
+'No attachment': 'Nincs melléklet'
+'You are about to permanently delete multiple messages.': 'Több üzenet végleges törlésére készülsz.'
+'You are about to permanently delete a message.': 'Egy üzenet végleges törlésére készülsz.'
+'Are you sure you want to do it?': 'Biztosan ezt akarod tenni?'
+Approve: Jóváhagyás
+Approved.: Jóváhagyva.
 at: null
-Attachment: null
-'Ban/Unban user': null
-'Change selected messages status': null
-Deleted: null
-'Full article': null
-Message: null
-'Message deleted.': null
-'Messages deleted.': null
-'Messages status change to $1.': null
-'Message status change to $1.': null
-'Messages updated.': null
-'Message updated.': null
-Processed: null
-Reply: null
-'Reply to message': null
-Star: null
+Attachment: Csatolmány
+'Ban/Unban user': 'Felhasználó kitiltása/kitiltásának megszüntetése'
+'Change selected messages status': 'A kijelölt üzenetek állapotának módosítása'
+Deleted: Törölve
+'Full article': 'Teljes cikk'
+Message: Üzenet
+'Message deleted.': 'Az üzenet törlése megtörtént.'
+'Messages deleted.': 'Az üzenetek törlése megtörtént.'
+'Messages status change to $1.': 'Az üzenetek állapotának módosítása erre: $1.'
+'Message status change to $1.': 'Az üzenet állapotának módosítása erre: $1.'
+'Messages updated.': 'Az üzenetek frissítése megtörtént.'
+'Message updated.': 'Az üzenet frissítése megtörtént.'
+Processed: Feldolgozva
+Reply: Válasz
+'Reply to message': 'Válasz az üzenetre'
+Star: Csillagozás
 Starred: null
-'Unable to reach Newscoop. Please check your internet connection.': null
-'With document attachment': null
-'With image attachment': null
-'With no attachment': null
-'Feedback Messages': null
+'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
+'With document attachment': Dokumentummelléklettel
+'With image attachment': Képmelléklettel
+'With no attachment': 'Melléklet nélkül'
+'Feedback Messages': 'Visszajelzés üzenetek'
