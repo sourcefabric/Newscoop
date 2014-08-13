@@ -142,7 +142,7 @@ $color_list = array(
             echo '
                 <TD><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" ><IMG SRC="'.$Campsite["ADMIN_IMAGE_BASE_URL"].'/add.png" BORDER="0"></A></TD>
                 <TD><B><A HREF="/'.$ADMIN.'/article_types/fields/add.php?f_article_type='.urlencode($articleTypeName).'" >';
-                putGS("Add new field");
+                echo $translator->trans("Add new field");
                 echo '</A></B></TD>
             ';
         }
