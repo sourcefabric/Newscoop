@@ -53,6 +53,7 @@
             <li>
             <?php
                 $imageService = \Zend_Registry::get('container')->get('image');
+                $preferenceService = \Zend_Registry::get('container')->get('preferences');
                 $localImage = $imageService->find($image->getImageId());
             ?>
                 <div class="image-thumbnail-container">
@@ -62,8 +63,16 @@
                     <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected)); ?></span><br />
                     <?php } ?>
                 </div>
+
                 <strong><?php echo $articleImage->getTemplateId(); ?></strong> <small><?php echo $image->getStatus() == 'approved' ? $translator->trans('Approved', array(), 'articles') : $translator->trans('Unapproved', array(), 'articles'); ?></small><br />
-                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected)); ?></span><br />
+                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php
+                    if ($preferenceService->MediaRichTextCaptions == 'Y') {
+                        echo $imageService->getCaption($localImage, $f_article_number, $f_language_selected);
+                    } else {
+                        echo $this->view->escape($imageService->getCaption($localImage, $f_article_number, $f_language_selected));
+                    }
+                ?></span><br />
+
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>

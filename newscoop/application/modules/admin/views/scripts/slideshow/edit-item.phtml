@@ -1,10 +1,18 @@
-<?php 
-$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); 
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css'));
 $translator = \Zend_Registry::get('container')->getService('translator');
+$preferencesService = \Zend_Registry::get('container')->getService('preferences');
+// Load tinymce for richtext editor
+require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
 ?>
+
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
 <h1><?php echo $translator->trans('Slideshow', array(), 'article_images'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
-<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
+<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>" onSubmit="<?php
+    if ($preferencesService->MediaRichTextCaptions == 'Y') {
+        return validateTinyMCEEditors();
+    }
+?>">
 
 <div class="editarea">
     <div>
@@ -15,7 +23,26 @@ $translator = \Zend_Registry::get('container')->getService('translator');
         <?php if ($this->item->isVideo()) { ?>
         <input type="text" name="url" value="<?php echo $this->escape($this->form->url->getValue()); ?>" />
         <?php } ?>
-        <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php echo $translator->trans('Add caption', array(), 'article_images'); ?>" /><br />
+        <?php
+            if ($preferencesService->MediaRichTextCaptions == 'Y') {
+
+                $languageSelectedObj = new Language((int) camp_session_get('LoginLanguageId', 0));
+                $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+                $editorOptions  = array(
+                    'max_chars' => $preferencesService->MediaCaptionLength,
+                    'toolbar_length' => 45,
+                );
+
+                editor_load_tinymce('caption', $this->currentUser, $editorLanguage, $editorOptions);
+                ?>
+                    <textarea name="caption" rows="5" class="image-description"><?php echo $this->form->caption->getValue(); ?></textarea>
+                <?php
+            } else {
+                ?>
+                    <input type="text" name="caption" value="<?php echo $this->escape($this->form->caption->getValue()); ?>" placeholder="<?php echo $translator->trans('Add caption', array(), 'article_images'); ?>" maxlength="<?php $preferencesService->MediaCaptionLength; ?>" /><br />
+                <?php
+            }
+        ?>
         <button class="save-button"><?php echo $translator->trans('Save'); ?></button>
     </div>
 

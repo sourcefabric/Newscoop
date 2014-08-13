@@ -106,10 +106,16 @@
         });
 
         if (parent) { // updates parent view
-            parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
+            {% if rich_text_caption == 'Y' %}
+                parent.$('{{'#image-%d-caption'|format(image.id)}}').html(currentCaption);
+            {% else %}
+                parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
+            {% endif %}
         }
     });
     </script>
+
+    {{ editor|raw }}
 
 </div>
 {% endblock %}

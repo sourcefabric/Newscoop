@@ -131,7 +131,7 @@ select {
 .breadcrumbs li a.category {
 	font-weight:bold;
 	padding-right: 4px;
-} 
+}
 
 .link, .ui-widget-content a.link {
 	color:#007fb3;
@@ -169,13 +169,13 @@ select {
 	float: right;
 	padding-right:16px;
 	font-size:1.2em;
-	
+
 }
 .info-bar .link {
 	padding-right:20px;
 	font-size:1.3em;
 	float:left;
-	
+
 }
 /* Toolbar */
 
@@ -194,7 +194,7 @@ select {
 }
 .activeSection {
 	min-height:30px;
-	
+
 }
 #geolocation .toolbar {
 	min-height:35px;
@@ -241,7 +241,7 @@ select {
 .top-button-bar input.default-button {
 	float:left;
 	margin: 0 0 0 10px;
-	
+
 }
 .save-button, .save-button-small {
     border: 1px solid #007fb3;
@@ -381,7 +381,7 @@ fieldset.plain label, label.block-label {
 .no-text {
 	padding: 4px 0 4px 0;
 }
-	
+
 .icon-button span.ui-icon {
 	float: left;
 	margin: -1px 4px 0 3px;
@@ -462,7 +462,7 @@ input.next-to-field {
     margin-top: 0;
     position: relative;
 	border:none;
-	
+
 	background-image:none;
     background: -moz-linear-gradient(center top , #fbfbfb 0pt, #f8f8f8 100%) repeat scroll 0 0 transparent;
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fbfbfb), color-stop(100%, #f8f8f8));
@@ -497,7 +497,7 @@ input.next-to-field {
 }
 .collapsible .ui-state-active .ui-icon {
 	background-position:-64px -16px;
-}	
+}
 .collapsible .ui-state-active {
 	background-image:none;
     background: -moz-linear-gradient(center top , #fbfbfb 0pt, #f8f8f8 100%) repeat scroll 0 0 transparent;
@@ -664,7 +664,7 @@ dl.inline-list {
 	padding: 0;
 }
 
-dl.inline-list dt { 
+dl.inline-list dt {
 	clear: left;
 	float: left;
 	margin: 0;
@@ -674,7 +674,7 @@ dl.inline-list dt {
 	font-size:1.2em;
 	text-align:left;
 }
-dl.inline-list dd { 
+dl.inline-list dd {
 	float: left;
 	margin: 0;
 	padding: 4px 0 4px 15px;
@@ -971,7 +971,7 @@ a.clear-margin:hover, .icon-button:hover  {
     padding: 0 0 8px;
 }
 .map_sidepan  .round-delete {
-	margin: 7px 0 0 6px; 
+	margin: 7px 0 0 6px;
 }
 .resize-label {
 	float:right;
@@ -1030,7 +1030,7 @@ a.clear-margin:hover, .icon-button:hover  {
 }
 .ui-widget-content .poi_actions a.link {
 	padding-right: 10px;
-	
+
 }.ui-widget-content .poi_actions a.icon-link {
 	padding-right: 0;
 }
@@ -1981,7 +1981,7 @@ dl.right-floated {
 }
 .editor-toggle td {
 	padding:8px 0 0 0;
-}	
+}
 /*--//////////////////////////////////////// 12.05.2011 ////////////////////////////////////////--*/
 
 
@@ -2179,7 +2179,7 @@ dl.right-floated {
 				}
 				.actionDropDown li a {
 					display:block;
-					width:62px; height:18px; 
+					width:62px; height:18px;
 					padding-left:8px;
 					line-height:18px; color:#007fb3; text-align:left;
 					background:url(images/actions-btn-bgr.png) 55px 0px no-repeat;
@@ -2345,4 +2345,9 @@ abbr {
 
 #message.comment {
     position: static;
+}
+
+/* Set zindex for external toolbar, conflicts with jCrop */
+.mceExternalToolbar {
+    z-index: 500;
 }

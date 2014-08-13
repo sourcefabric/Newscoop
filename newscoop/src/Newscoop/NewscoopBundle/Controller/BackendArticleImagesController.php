@@ -28,6 +28,7 @@ class BackendArticleImagesController extends Controller
         $em = $this->get('em');
         $imageService = $this->container->get('image');
         $articleImage = $imageService->getArticleImage($articleNumber, $imageId);
+        $preferencesService = $this->container->get('preferences');
 
         $form = $this->container->get('form.factory')->create(new ArticleImageType(), array(
             'number' => $articleImage->getNumber(),
@@ -46,6 +47,7 @@ class BackendArticleImagesController extends Controller
                 'imageId' => $imageId
             )),
             'method' => 'POST',
+            'rich_text_caption' => $preferencesService->MediaRichTextCaptions,
         ));
 
         if ($request->isMethod('POST')) {
@@ -63,13 +65,34 @@ class BackendArticleImagesController extends Controller
             }
         }
 
+        $editor = '';
+        if ($preferencesService->MediaRichTextCaptions == 'Y') {
+
+            $languageSelectedObj = new \Language((int) camp_session_get('LoginLanguageId', 0));
+            $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+            $editorOptions  = array(
+                'max_chars' => $preferencesService->MediaCaptionLength,
+                'toolbar_length' => 10,
+            );
+
+            $userService = $this->container->get('user');
+
+            ob_start();
+            require_once($GLOBALS['g_campsiteDir']."/admin-files/media-archive/editor_load_tinymce.php");
+            editor_load_tinymce('article_image_caption, article_image_description', $userService->getCurrentUser(), $editorLanguage, $editorOptions);
+            $editor = ob_get_contents();
+            ob_end_clean();
+        }
+
         return array(
             'form' => $form->createView(),
             'imageService' => $imageService,
             'articleImage' => $articleImage,
             'image' => $articleImage->getImage(),
             'caption' => $articleImage->getCaption($language),
-            'captions' => $articleImage->getImage()->getCaptions()
+            'captions' => $articleImage->getImage()->getCaptions(),
+            'editor' => $editor,
+            'rich_text_caption' => $preferencesService->MediaRichTextCaptions,
         );
     }
 }
