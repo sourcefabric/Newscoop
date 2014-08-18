@@ -1,81 +1,81 @@
-Plugins: null
+Plugins: Bővítmények
 'Manage Plugins': 'Bővítmények kezelése'
-Account: null
-'Items per page': null
-'Add new': null
+Account: Fiók
+'Items per page': 'Elemek oldalanként'
+'Add new': 'Új hozzáadása'
 Home: null
-Logout: null
+Logout: Kijelentkezés
 More...: null
-Content: null
-Languages: null
-Countries: null
+Content: Tartalom
+Languages: Nyelvek
+Countries: Országok
 Themes: Témák
-Topics: null
-Configure: null
-'Image Archive': null
-'Add Article': null
-Fields: null
-Delete: null
-Type: null
-Name: null
-Code: null
-Edit: null
+Topics: Témák
+Configure: Beállítás
+'Image Archive': Képarchívum
+'Add Article': 'Cikk hozzáadása'
+Fields: Mezők
+Delete: Törlés
+Type: Típus
+Name: Név
+Code: Kód
+Edit: Szerkesztés
 Login: null
-Password: null
+Password: Jelszó
 Site: null
-Path: null
+Path: 'Elérési út'
 'Go up': null
 URL: null
 Order: null
 Hide: null
 Duplicate: null
-Subscription: null
+Subscription: Előfizetés
 expires: null
 starts: null
 before: null
 after: null
 on: null
-status: null
-active: null
-inactive: null
-Subscribers: null
-Staff: null
+status: állapot
+active: aktív
+inactive: inaktív
+Subscribers: Előfizetők
+Staff: Szerkesztőség
 'Select destination': null
-'No languages': null
-'---Select language---': null
-'No publications': null
-'---Select publication---': null
-'No issues': null
-'---Select issue---': null
-'No sections': null
-'---Select section---': null
-Language: null
-Country: null
-'Account name': null
-Publication: null
-'Default language': null
-Subscriptions: null
-Issue: null
-Number: null
-Section: null
-Keywords: null
-Topic: null
+'No languages': 'Nincsenek nyelvek'
+'---Select language---': '---Válassz nyelvet---'
+'No publications': 'Nincsenek kiadványok'
+'---Select publication---': '---Válassz kiadványt---'
+'No issues': 'Nincsenek számok'
+'---Select issue---': '---Válassz számot---'
+'No sections': 'Nincsenek rovatok '
+'---Select section---': '---Válassz rovatot---'
+Language: Nyelv
+Country: Ország
+'Account name': Fióknév
+Publication: Kiadvány
+'Default language': 'Alapértelmezett nyelv'
+Subscriptions: Előfizetések
+Issue: Szám
+Number: Sorszám
+Section: Rovat
+Keywords: Kulcsszavak
+Topic: Téma
 'URL Name': null
 'Left to pay': null
-Active: null
+Active: Aktív
 Trial: null
-Next: null
-Previous: null
-Translate: null
-View: null
-'Scheduled Publishing': null
-Time: null
-Action: null
-'Schedule a new action': null
+Next: Következő
+Previous: Előző
+Translate: Fordítás
+View: Megtekintés
+'Scheduled Publishing': 'Beütemezett közzététel'
+Time: Idő
+Action: Művelet
+'Schedule a new action': 'Új művelet beütemezése'
 'Scheduling a new publish action': null
 'Delete scheduled publish action': null
-Date/Time: null
-'You must select an action.': null
+Date/Time: Dátum/Idő
+'You must select an action.': 'Ki kell választanod egy műveletet.'
 'You do not have the right to schedule issues or articles for automatic publishing.': null
 'Front page': null
 'Section page': null
@@ -83,30 +83,30 @@ Date/Time: null
 'Remove from front page': null
 'Show on section page': null
 'Remove from section page': null
-Actions: null
+Actions: Műveletek
 Publishing: null
 Show: null
-Remove: null
-'Article Types': null
-'Staff User Types': null
-Publications: null
-Issues: null
-Sections: null
-Articles: null
-Images: null
+Remove: Eltávolítás
+'Article Types': Cikktípusok
+'Staff User Types': 'Szerkesztőség felhasználótípusai'
+Publications: Kiadványok
+Issues: Számok
+Sections: Rovatok
+Articles: Cikkek
+Images: Képek
 Change: null
-'Add new issue': null
-'Section Template': null
-'Article Template': null
-'Default Language': null
+'Add new issue': 'Új szám hozzáadása'
+'Section Template': Rovatsablon
+'Article Template': Cikksablon
+'Default Language': 'Alapértelmezett nyelv'
 'Paid Period': null
-Preview: null
-'You must fill in the $1 field.': null
-Error: null
+Preview: Előnézet
+'You must fill in the $1 field.': 'Ki kell töltened a/z $1 mezőt.'
+Error: Hiba
 'Invalid input: $1': null
-'Language does not exist.': null
-'Publication does not exist.': null
-'Issue does not exist.': null
+'Language does not exist.': 'A nyelv nem létezik.'
+'Publication does not exist.': 'A kiadvány nem létezik.'
+'Issue does not exist.': 'A szám nem létezik.'
 'You must select a language.': null
 'Section does not exist.': null
 'No articles.': null

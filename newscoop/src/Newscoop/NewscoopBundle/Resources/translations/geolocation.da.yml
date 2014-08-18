@@ -43,7 +43,7 @@ Center: Centrér
 'Last Saved Map View': 'Sidst gemte kort visning'
 'List of locations updated': 'Liste med opdaterede steder'
 width: bredde
-'show initial map view': null
+'show initial map view': 'vis indledende kortvisning'
 'problem at point processing, please send error report': 'problem ved behandling af punkt, send venligst en fejl rapport'
 'plain text': 'Ren tekst'
 'html content': 'html indhold'

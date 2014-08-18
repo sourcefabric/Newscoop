@@ -40,7 +40,7 @@ Unapproved: 'Ikke godkent'
 On: Til
 Off: Fra
 'You do not have the right to moderate comments.': 'Du har ikke rettigheder til at moderere kommentarer'
-'You can not schedule opposing events at the same time': null
+'You can not schedule opposing events at the same time': 'Du kan ikke planlægge modsatrettede begivenheder på samme tid'
 'Unable to reach Newscoop. Please check your internet connection.': 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
 Title: Titel
 'There already is an article with the same name. Please change the name and try again.': 'Der findes allerede en artikel med det navn. Ret navnet og prøv igen.'
@@ -179,7 +179,7 @@ Comments: Kommentarer
 'You do not have the right to delete articles.': 'Du har ikke tilladelse til at slette artikler'
 'You must select an article type.': 'Vælg en artikel type'
 'Are you sure you want to remove the image $1 from the article?': 'Vil du fjerne billedet $1 fra artiklen?'
-'There was an error reading request parameters.': null
+'There was an error reading request parameters.': 'Efterspørgslens parametre kunne ikke læses.'
 'This article cannot be previewed. Please make sure it has the article template selected.': 'Forhåndsvisning af artiklen er ikke mulig. Kontroller at artikel skabelonen er valgt.'
 'No such article.': 'Artiklen findes ikke.'
 'No such section.': 'Sektionen findes ikke.'
@@ -203,4 +203,4 @@ articles:
                 date: Dato
                 article_specific: 'Artikel specifik'
                 global: Global
-                other_captions: null
+                other_captions: 'Andre billedtekster'

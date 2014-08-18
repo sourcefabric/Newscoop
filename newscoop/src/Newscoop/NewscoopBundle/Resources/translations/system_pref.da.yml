@@ -4,7 +4,7 @@ newscoop:
     preferences:
         error:
             cache: 'Ugyldigt: PHP %cache% skal slås til for at bruge skabelons caching.'
-            replication: null
+            replication: 'Databasereplikeringsdata ufuldstændige'
             maxupload: 'Ugyldig værdi for maksimal størrelse på uploadede filer'
             geolocation: 'Ugyldige Geolocation felter. Felterne skal indeholde tal. Breddegrad kan ikke være > 90 eller < -90. Længdegrad kan ikke være > 180 eller < -180.'
             noaccess: 'Du har ikke rettigheder til at ændre systemindstillinger.'
@@ -18,7 +18,7 @@ newscoop:
             cacheCleared: 'Cache slettet'
             jobenabled: 'Jobbet blev slået til.'
             jobdisabled: 'Jobbet blev slået fra.'
-            jobnotifyswitched: null
+            jobnotifyswitched: 'Indstillinger for baggrundsjobs blev opdateret.'
         menu:
             general: 'Generelle indstillinger'
             email: 'Email indstillinger'
@@ -65,9 +65,9 @@ newscoop:
             imageheight: 'Højde ved billedskalering:'
             zoom: 'Brug zoom til billeder i artikler?'
             external: 'Håndter abonnementer eksternt?'
-            usereplication: null
+            usereplication: 'Opsæt en Newscoop replikationsserver?'
             serverdb: 'Newscoop online server database'
-            replicationhost: null
+            replicationhost: 'Vært til databasereplikation:'
             replicationuser: 'Bruger til databasereplikation:'
             replicationpw: 'Adgangskode til databasereplikation:'
             replicationport: 'Port til databasereplikation:'
@@ -104,7 +104,7 @@ newscoop:
             flashdir: 'Lokal Flash mappe:'
             apikey: 'API nøgle:'
             appid: 'App ID:'
-            fbsecret: null
+            fbsecret: 'App hemmelighed:'
             recaptchapublickey: 'Offentlig nøgle'
             recaptchaprivatekey: 'Privat nøgle'
             recaptchasecure: 'Hemmelig URL for reCAPTCHA?'
@@ -112,7 +112,7 @@ newscoop:
             yesoption: Ja
             nooption: Nej
             geosearch: 'Brug lokal GeoNames søgning:'
-            usergarbage: null
+            usergarbage: 'Fjern forældede data om afventende brugere?'
             usergarbagedaysinfo: null
             usergarbagedays: null
             smartyUseProtocol: null
@@ -124,8 +124,8 @@ newscoop:
             prevRun: 'Sidste kørselsdato'
             nextRun: 'Næste kørselsdato'
             norecords: 'Ingen opslag.'
-            cronJobEmail: null
-            cronJobSenderEmail: null
+            cronJobEmail: 'Email adresse til beskeder'
+            cronJobSenderEmail: 'Email adresse for afsender'
             cronJobSenderName: 'Navn på afsender (f.eks. Newscoop jobkørsel)'
             cronJobNotify: 'Giv besked?'
             cronslist: 'Liste over baggrundsjobs'
@@ -134,7 +134,7 @@ newscoop:
         popover:
             cronJobEmail: 'E-mail adresser der skal modtage fejlmeddelelser (kommasepareret).'
             cronJobSenderEmail: 'E-mail adresser der skal sende beskeder.'
-            cacheengine: null
+            cacheengine: 'Slår system cache til eller fra, hvilket kan forbedre Newscoops hastighed.'
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
             cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'
             cacheimage: 'Perioden billeder er i cachen, fra 30 sekunder til uendeligt.'
