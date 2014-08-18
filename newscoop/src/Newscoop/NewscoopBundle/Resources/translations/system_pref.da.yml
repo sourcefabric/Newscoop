@@ -140,16 +140,16 @@ newscoop:
             cacheimage: 'Perioden billeder er i cachen, fra 30 sekunder til uendeligt.'
             cachetemplate: 'Vælg DB for at bruge cache for skabeloner.'
             recovery: null
-            secret: null
-            separator: null
+            secret: 'Sikkerhedsnøglen Newscoop kan bruge til integration med web services og andre avancerede funktioner.'
+            separator: 'Angiv separator for nøgleord ved artikelredigering (komma eller tankestreg).'
             stats: null
-            zoom: null
+            zoom: 'Sæt til Ja for at lade læsere forstørre artikelbilleder ved at klikke på dem. Denne zoom funktion virker for alle billeder indsat i artikel teksten.'
             ratio: null
-            replication: null
+            replication: 'Bruges til at køre Newscoop på to servere samtidigt, en sikkerhed i tilfælde af hardware eller netværksproblemer.'
             filter: null
             cron: null
             video: null
-            emailfrom: null
+            emailfrom: 'Email adressen der bruges til beskeder fra systemet:'
             recaptcha:
                 publickey: null
                 privatekey: null

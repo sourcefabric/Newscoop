@@ -31,7 +31,7 @@ deactivated: deaktiveret
 activated: aktiveret
 'Value is required and cant be empty': 'Værdien er påkrævet og kan ikke være tom'
 'That user name already exists, please choose a different login name.': 'Brugernavnet eksisterer allerede. Vælg et andet login navn.'
-'That $1 already exists, please choose a different $2.': null
+'That $1 already exists, please choose a different $2.': 'Den $1 eksisterer allerede, vælg en anden $2.'
 'Subscriptions exist for all available publications.': null
 'Subscription IP Addresses': null
 'Subscription $1': 'Abonnement $1'

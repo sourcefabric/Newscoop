@@ -4,58 +4,58 @@
 'This issue cannot be previewed. Please make sure it has the front template selected.': 'Ez a szám nem tekinthető meg. Ellenőrizd, hogy kiválasztották-e a felhasználói oldal sablonját.'
 'Publish all articles:': 'Minden cikk közzététele:'
 'Publish all articles': 'Minden cikk közzététele'
-'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': null
-default: null
-'The publishing/unpublishing can not be set the same time': null
-'The publishing schedule can not be set in the past': null
-'Please assign at least one theme to the publication': null
-'Issue Theme': null
-'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': null
+'Force publishing of all articles. If set to No, only articles with Publish with Issue status will be published.': 'Az összes cikk közzétételének kényszerítése. A Nem lehetőség választásakor csak a Közzététel a szám állapotával rendelkező cikkek kerülnek közzétételre.'
+default: alapértelmezett
+'The publishing/unpublishing can not be set the same time': 'A kiözzététel/visszavonás nem állítható be ugyanarra az időpontra'
+'The publishing schedule can not be set in the past': 'A közzététel beütemezése nem állítható be múltbeli időpontra'
+'Please assign at least one theme to the publication': 'Rendelj hozzá legalább egy témát a kiadványhoz'
+'Issue Theme': 'Szám témája'
+'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 'Az általad beállítani próbált értékek ütköznek a/z $1$2 $3 ($4)$5 számmal.'
 'The number must be unique for each issue in this publication of the same language.': null
-'The language and URL name must be unique for each issue in this publication.': null
-'Issue created.': null
-'Issue updated': null
-'Could not save the changes to the issue.': null
-'Unpublish on: $1': null
-'There are $1 articles in this issue.': null
-'The issue $1 has been deleted.': null
-Schedule: null
-'Publish on: $1': null
-'Publish Date $1': null
-'Deleted issue': null
-'Delete issue': null
-'Click here to publish this issue': null
-'A total of $1 articles were deleted.': null
-'Name<BR><SMALL>(click to see sections)</SMALL>': null
-'Delete issue $1': null
-'You do not have the right to change issues.': null
-'Are you sure you want to change the issue $1 status from $2 to $3?': null
-'Add new translation': null
-'You do not have the right to add issues.': null
-'The issue $1 has been successfuly added.': null
-'The issue could not be added.': null
-'Change issue details': null
-'You do not have the right to change issue details.': null
-'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': null
-'Front Page Template': null
-'You do not have the right to delete issues.': null
-'Are you sure you want to delete the issue $1?': null
-'Use the structure of the previous issue': null
-'Copy the entire structure in all languages from the previous issue except for content.': null
-'You may modify it later if you wish.': null
-'Create a new structure': null
-'Create a complete new structure.': null
-'You must define an issue type for each language and then sections for them.': null
-'Copy previous issue': null
-'No previous issue.': null
-'Copy structure from issue number $1': null
-'Delete entry': null
-'Issue Publishing Schedule': null
-'Invalid Input: $1': null
-'Issue Number': null
-'Go To Sections': null
-'There was an error reading the language parameter.': null
-'There was an error reading the publication parameter.': null
-'There was an error reading the issue parameter.': null
-'There was an error scheduling the $1 action on $2': null
-'The action scheduled on $1 could not be deleted.': null
+'The language and URL name must be unique for each issue in this publication.': 'Ezen kiadvány minden száma nyelvének és URL-nevének egyedinek kell lennie..'
+'Issue created.': 'A szám létrehozása megtörtént.'
+'Issue updated': 'A szám frissítése megtörtánt'
+'Could not save the changes to the issue.': 'Nem lehet menteni a szám módosításait.'
+'Unpublish on: $1': 'Visszavonás időpontja: $1'
+'There are $1 articles in this issue.': 'Ebben a számban $1 cikk van.'
+'The issue $1 has been deleted.': 'A/z $1 szám törlése megtörtént.'
+Schedule: Ütemezés
+'Publish on: $1': 'Közzététel időpontja: $1'
+'Publish Date $1': 'Közzététel dátuma: $1'
+'Deleted issue': 'Törölt szám'
+'Delete issue': 'Szám törlése'
+'Click here to publish this issue': 'Kattints ide a szám közzétevéséhez'
+'A total of $1 articles were deleted.': 'Összesen $1 cikk került törlésre.'
+'Name<BR><SMALL>(click to see sections)</SMALL>': 'Név<BR><SMALL>(kattints ide a rovatok megtekintéséhez)</SMALL>'
+'Delete issue $1': 'A/z $1 szám törlése'
+'You do not have the right to change issues.': 'Nincs jogod a számok módosításaihoz.'
+'Are you sure you want to change the issue $1 status from $2 to $3?': 'Biztosan meg akarod változtatni a/z $1 szám állapotát erről: $2 erre: $3?'
+'Add new translation': 'Új fordítás hozzáadása'
+'You do not have the right to add issues.': 'Nincs jogod az új számok hozzáadásához.'
+'The issue $1 has been successfuly added.': 'A/z $1 szám hozzáadása sikerült.'
+'The issue could not be added.': 'Nem lehet hozzáadni a számot.'
+'Change issue details': 'A szám részleteinek módosítása'
+'You do not have the right to change issue details.': 'Nincs jogod a szám részleteinek módosításához.'
+'Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>': 'Közzététel dátuma<BR><SMALL>(éééé-hh-nn)</SMALL>'
+'Front Page Template': Címlapsablon
+'You do not have the right to delete issues.': 'Nincs jogod a számok törléséhez.'
+'Are you sure you want to delete the issue $1?': 'Biztosan törölni akarod a/z $1 számot?'
+'Use the structure of the previous issue': 'Az előző szám szerkezetének használata'
+'Copy the entire structure in all languages from the previous issue except for content.': 'A tartalom kivételével a teljes szerkezet másolása az összes nyelven az előző számból.'
+'You may modify it later if you wish.': 'Később is módosíthatod, ha szeretnéd.'
+'Create a new structure': 'Új szerkezet létrehozása'
+'Create a complete new structure.': 'Teljesen új szerkezet létrehozása.'
+'You must define an issue type for each language and then sections for them.': 'Meg kell határoznod minden nyelvhez egy számtípust, majd azok rovatait.'
+'Copy previous issue': 'Előző szám másolása'
+'No previous issue.': 'Nincs előző szám.'
+'Copy structure from issue number $1': 'A/z $1. sorszámú szám szerkezetének másolása'
+'Delete entry': 'Bejegyzés törlése'
+'Issue Publishing Schedule': 'Szám közzétételi ütemterve'
+'Invalid Input: $1': 'Érvénytelen bevitel: $1'
+'Issue Number': 'Szám sorszáma'
+'Go To Sections': 'Ugrás a rovatokhoz'
+'There was an error reading the language parameter.': 'Hiba történt a nyelvi paraméter olvasásakorl.'
+'There was an error reading the publication parameter.': 'Hiba történt a kiadvány paraméter olvasásakor.'
+'There was an error reading the issue parameter.': 'Hiba történt a szám paraméter olvasásakor.'
+'There was an error scheduling the $1 action on $2': 'Hiba történt a/z $1 művelet beütemezésekor a következő időpontban: $2'
+'The action scheduled on $1 could not be deleted.': 'Nem lehet törölni a/z $1 időpontra beütemezett műveletet.'

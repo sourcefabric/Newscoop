@@ -1,4 +1,4 @@
-default: null
+default: alapértelmezett
 'before you can configure the section templates.': null
 'You have to assign a theme to the issue': null
 'The section number $1 was already in use.': null
@@ -35,7 +35,7 @@ default: null
 'The section $1 could not be duplicated': null
 'Section $1 has been duplicated to $2. $3 of $4': null
 'You do not have the right to modify sections.': null
-'A total of $1 articles were deleted.': null
+'A total of $1 articles were deleted.': 'Összesen $1 cikk került törlésre.'
 'Duplicate Section:': null
 'Existing Section': null
 'Go to new section': null
