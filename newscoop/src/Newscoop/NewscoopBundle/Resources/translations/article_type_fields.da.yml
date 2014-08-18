@@ -37,7 +37,7 @@ hide: skjul
 Show/Hide: Vis/Skjul
 'Renaming article type field': 'Omdøber artikel type felt'
 'Rename field': 'Omdøb felt'
-'Reassign a field type': null
+'Reassign a field type': 'Tildel en ny felttype'
 'Display Name': 'Vist navn'
 'Are you sure you want to $1 the article type field $2?': 'Vil du $1 artikel type feltet $2?'
 'Adding new article type': 'Tilføjer ny artikel type'

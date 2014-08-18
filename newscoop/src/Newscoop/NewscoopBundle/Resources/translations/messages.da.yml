@@ -254,7 +254,7 @@ Send: Send
 (optional): (valgfri)
 'The URL you entered is invalid: $1': 'Ugyldig URL: $1'
 Reads: Læst
-'Publish with issue': 'Publicer med udgivelsen'
+'Publish with issue': 'Udgiv med udgivelsen'
 'Universal List': 'Universel liste'
 'Invalid security token!': 'Ugyldig sikkerheds token!'
 Authors: Forfattere

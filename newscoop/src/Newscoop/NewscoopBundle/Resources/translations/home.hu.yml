@@ -132,8 +132,8 @@ Download: Letöltés
 'The system was unable to read the file $1.': 'A rendszer nem tudta olvasni a/z $1 fájlt.'
 'The system was unable to delete the directory $1.': 'A rendszer nem tudta törölni a/z $1 könyvtárt.'
 'Please check if the user $1 has permission to read this file.': 'Ellenőrizd, hogy a/z $1 nevű felhasználó számára engedélyezett-e ennek a fájlnak az olvasása.'
-'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': null
-'The system was unable to write to the file $1.': null
+'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárrhoz'
+'The system was unable to write to the file $1.': 'A rendszer nem tudott írni a/z $1 fájlba.'
 'The system was unable to delete the file $1.': null
 'The system was unable to create the file $1.': null
 'The system was unable to create the directory $1.': null

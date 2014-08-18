@@ -36,7 +36,7 @@ Unapproved: 'Ikke godkent'
 'Related Articles': 'Relaterede artikler'
 'Pending articles': 'Ventende artikler'
 'Pending Articles': 'Ventende artikler'
-'Context Box updated': null
+'Context Box updated': 'Infoboks opdateret'
 On: Til
 Off: Fra
 'You do not have the right to moderate comments.': 'Du har ikke rettigheder til at moderere kommentarer'
@@ -44,7 +44,7 @@ Off: Fra
 'Unable to reach Newscoop. Please check your internet connection.': 'Ingen kontakt til Newscoop. Tjek at du har forbindelse til internettet.'
 Title: Titel
 'There already is an article with the same name. Please change the name and try again.': 'Der findes allerede en artikel med det navn. Ret navnet og prøv igen.'
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Alle planlagte udgivelser af denne artikel bliver slettet hvis du sætter artiklens status til Ny.'
 Geolocation: Geolocation
 Newscoop: Newscoop
 'Overwrite articles with matching names': 'Overskriv artikler med identiske navne'

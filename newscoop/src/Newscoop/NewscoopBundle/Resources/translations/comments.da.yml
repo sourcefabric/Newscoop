@@ -96,5 +96,5 @@ Ban: Bloker
 'Add new comment commenter': 'Tilføj debattør'
 'Add new comment': 'Tilføj kommentar'
 'Add new acceptance criteria': null
-'Acceptance $1 saved.': null
-'Acceptance $1 deleted.': null
+'Acceptance $1 saved.': 'Godkendelse $1 gemt.'
+'Acceptance $1 deleted.': 'Godkendelse $1 slettet.'

@@ -11,13 +11,13 @@ newscoop:
             latitude: 'Ugyldig breddegrad'
             longitude: 'Ugyldig længdegrad'
             cacheNotCleared: 'Fejl ved rensning af cache'
-            joberror: null
-            jobnotifyerror: null
+            joberror: 'Kunne ikke ændre status på valgte job.'
+            jobnotifyerror: 'Kunne ikke slå beskeder til/fra.'
         success:
             saved: 'Systemindstillinger opdateret.'
             cacheCleared: 'Cache slettet'
-            jobenabled: null
-            jobdisabled: null
+            jobenabled: 'Jobbet blev slået til.'
+            jobdisabled: 'Jobbet blev slået fra.'
             jobnotifyswitched: null
         menu:
             general: 'Generelle indstillinger'
@@ -29,9 +29,9 @@ newscoop:
             cache: 'Cache indstillinger'
             other: 'Andre indstillinger'
             recaptcha: 'reCAPTCHA indstillinger'
-            cronjob: null
+            cronjob: 'Indstillinger for baggrundsjob.'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'Slet nuværende driver cache'
             disable: 'Slå fra'
             enable: 'Slå til'
         label:
@@ -54,7 +54,7 @@ newscoop:
             separator: 'Separator for nøgleord:'
             captcha: 'Antal mislykkede login forsøg før CAPTCHA:'
             maxupload: 'Maksimal størrelse på uploadede filer:'
-            maxuploadmsg: null
+            maxuploadmsg: 'Indtast en værdi mellem 0 og %max% (den maksimale størrelse angivet i ''php.ini''). Brug ''K'' for kilobytes, ''M'' for megabytes og ''G'' for gigabytes, uden mellemrum mellem tallet og bogstavet. F.eks. ''3M'' for 3 megabyte.'
             stats: 'Automatisk indsamling af statistik:'
             smtphost: 'SMTP vært:'
             smtpport: 'SMTP port:'
@@ -68,10 +68,10 @@ newscoop:
             usereplication: null
             serverdb: 'Newscoop online server database'
             replicationhost: null
-            replicationuser: null
+            replicationuser: 'Bruger til databasereplikation:'
             replicationpw: 'Adgangskode til databasereplikation:'
-            replicationport: null
-            filter: null
+            replicationport: 'Port til databasereplikation:'
+            filter: 'Skabelon filter maske (kommasepareret)'
             cron: 'Kør planlagte opgaver eksternt?'
             mysqlpath: 'MySQL klient kommando sti'
             mysqlpathmsg: 'for at hente geo-names data'
@@ -80,7 +80,7 @@ newscoop:
             zoomlevel: 'Zoom niveau for kort:'
             defaultwidth: 'Standard bredde for kort:'
             defaultheight: 'Standard højde for kort:'
-            css: null
+            css: 'Inkluder CSS fil til kortvisning'
             autofocus: 'Brug auto-fokus som standard for kort:'
             zoomautofocus: 'Maksimal zoom for autofokus:'
             borderautofocus: null
@@ -126,14 +126,14 @@ newscoop:
             norecords: 'Ingen opslag.'
             cronJobEmail: null
             cronJobSenderEmail: null
-            cronJobSenderName: null
-            cronJobNotify: null
-            cronslist: null
+            cronJobSenderName: 'Navn på afsender (f.eks. Newscoop jobkørsel)'
+            cronJobNotify: 'Giv besked?'
+            cronslist: 'Liste over baggrundsjobs'
             cronsadvanced: 'Avancerede indtillinger'
             moredetails: 'Flere detaljer.'
         popover:
-            cronJobEmail: null
-            cronJobSenderEmail: null
+            cronJobEmail: 'E-mail adresser der skal modtage fejlmeddelelser (kommasepareret).'
+            cronJobSenderEmail: 'E-mail adresser der skal sende beskeder.'
             cacheengine: null
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
             cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'
@@ -153,7 +153,7 @@ newscoop:
             recaptcha:
                 publickey: null
                 privatekey: null
-                secure: null
+                secure: 'Vælg Ja hvis du bruger sikker url til reCAPTCHA.'
             garbage: null
             lifetime: 'Sessions livstid i sekunder. Max 86400 (24 timer). Min: 0 (indtil browseren lukkes).'
             smartyuseprotocol: null
