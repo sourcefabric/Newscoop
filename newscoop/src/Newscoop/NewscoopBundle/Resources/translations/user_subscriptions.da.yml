@@ -2,11 +2,11 @@ third: tredje
 second: anden
 forth: fjerde
 first: første
-'You must input a number greater than 0 into the Number of addresses field.': null
-'You must input a number between 0 and 255 into the Start IP address $1 field.': null
+'You must input a number greater than 0 into the Number of addresses field.': 'Angiv et tal større end 0 i feltet Antal adresser.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Angiv et tal fra 0 til 255 i IP adresse start feltet $1.'
 'User IP access list management': null
-'The IP address group conflicts with another existing group.': null
-'Subscription sections': null
+'The IP address group conflicts with another existing group.': 'IP adresse gruppen er i konflikt med en eksisterende gruppe.'
+'Subscription sections': Abonnementssektioner
 'No records.': 'Ingen poster.'
 'You have subscription for all available publications': 'Du abonnerer på alle tilgængelige publikationer'
 'Subscription type:': 'Abonnementstype:'
@@ -32,7 +32,7 @@ activated: aktiveret
 'Value is required and cant be empty': 'Værdien er påkrævet og kan ikke være tom'
 'That user name already exists, please choose a different login name.': 'Brugernavnet eksisterer allerede. Vælg et andet login navn.'
 'That $1 already exists, please choose a different $2.': 'Den $1 eksisterer allerede, vælg en anden $2.'
-'Subscriptions exist for all available publications.': null
+'Subscriptions exist for all available publications.': 'Der er abonnementer for alle tilgængelige publikationer.'
 'Subscription IP Addresses': 'Abonnements IP adresser'
 'Subscription $1': 'Abonnement $1'
 'Subscriber saved.': 'Abonnent gemt.'
