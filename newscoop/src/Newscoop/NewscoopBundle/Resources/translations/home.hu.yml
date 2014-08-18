@@ -134,30 +134,30 @@ Download: Letöltés
 'Please check if the user $1 has permission to read this file.': 'Ellenőrizd, hogy a/z $1 nevű felhasználó számára engedélyezett-e ennek a fájlnak az olvasása.'
 'Please check if the directory is empty and the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy üres-e a könyvtár, és a/z $1 nevű felhasználónak van--e írási engedélye a/z $2 könyvtárrhoz'
 'The system was unable to write to the file $1.': 'A rendszer nem tudott írni a/z $1 fájlba.'
-'The system was unable to delete the file $1.': null
-'The system was unable to create the file $1.': null
-'The system was unable to create the directory $1.': null
-'Please check if the user $1 has permission to write to this file.': null
-'Please check if the user $1 has permission to write to the directory $2.': null
-'Type the code shown above:': null
-'Please enter your user name.': null
-'Please enter your password.': null
-'Please enter the code shown in the image.': null
-'CAPTCHA code is not valid.  Please try again.': null
-'Signed in: $1': null
+'The system was unable to delete the file $1.': 'A rendszer nem tudta törölni a/z $1 fájlt.'
+'The system was unable to create the file $1.': 'A rendszer nem tudta létrehozni a/z $1 fájlt.'
+'The system was unable to create the directory $1.': 'A rendszer nem tudta létrehozni a/z $1 könyvtárat.'
+'Please check if the user $1 has permission to write to this file.': 'Ellenőrizd, hogy a/z $1 nevű felhasználónak van-e írási engedélye ehhez a fájlhoz.'
+'Please check if the user $1 has permission to write to the directory $2.': 'Ellenőrizd, hogy a/z $1 nevű felhasználónak van-e írási engedélye a/z $2 könyvtárhoz.'
+'Type the code shown above:': 'Írd be a fent látható kódot:'
+'Please enter your user name.': 'Add meg a felhasználónevedet.'
+'Please enter your password.': 'Add meg a jelszavadat.'
+'Please enter the code shown in the image.': 'Írd be a képen látható kódot.'
+'CAPTCHA code is not valid.  Please try again.': 'A CAPTCHA-kód nem érvényes. Kérjük, próbáld újra.'
+'Signed in: $1': 'Bejelentkezve: $1'
 Help: Súgó
-'Please enter your user name and password': null
-'You do not have the right to access this page.': null
-'Login failed': null
-'Please make sure that you typed the correct user name and password.': null
-'If your problem persists please contact the site administrator $1': null
-Backup/Restore: null
-'Step 2': null
-'Step 3': null
-'Add new user': null
-'Bad credentials': null
-'Active users': null
-'New comments': null
-'Published articles': null
-'Last 7 days statistics': null
-'Change password': null
+'Please enter your user name and password': 'Add meg a felhasználónevedet és a jelszavadat'
+'You do not have the right to access this page.': 'Nincs jogod az oldal eléréséhez.'
+'Login failed': 'A bejelentkezés sikertelen'
+'Please make sure that you typed the correct user name and password.': 'Ellenőrizd, hogy helyesen adtad-e meg a felhasználónevedet és a jelszavadat.'
+'If your problem persists please contact the site administrator $1': 'Ha a probléma továbbra is fennáll, kérjük, fordulj a webhely $1 rendszergazdájához'
+Backup/Restore: 'Biztonsági mentés/Visszaállítás'
+'Step 2': '2. lépés'
+'Step 3': '3. lépés'
+'Add new user': 'Új felhasználó hozzáadása'
+'Bad credentials': 'Rossz hitelesítő adatok'
+'Active users': 'Aktív felhasználók'
+'New comments': 'Új hozzászólások'
+'Published articles': 'Közzétett cikkek'
+'Last 7 days statistics': 'Utolsó 7 nap statisztikája'
+'Change password': 'Jelszó megváltoztatása'
