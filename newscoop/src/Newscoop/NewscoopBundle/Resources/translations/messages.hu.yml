@@ -107,74 +107,74 @@ Error: Hiba
 'Language does not exist.': 'A nyelv nem létezik.'
 'Publication does not exist.': 'A kiadvány nem létezik.'
 'Issue does not exist.': 'A szám nem létezik.'
-'You must select a language.': null
-'Section does not exist.': null
-'No articles.': null
-'Article does not exist.': null
-'Image does not exist.': null
+'You must select a language.': 'Ki kell választanod egy nyelvet.'
+'Section does not exist.': 'A rovat nem létezik.'
+'No articles.': 'Nincsenek cikkek.'
+'Article does not exist.': 'A cikk nem létezik.'
+'Image does not exist.': 'A kép nem létezik.'
 'Access denied': null
 'Invalid parameters received': null
-'Add new article': null
-Status: null
-Published: null
-'Not published': null
+'Add new article': 'Új cikk hozzáadása'
+Status: Állapot
+Published: Közzétéve
+'Not published': 'Nincs közzétéve'
 Submitted: null
-New: null
-Article: null
+New: Új
+Article: Cikk
 Publish: null
 Unpublish: null
 Unlock: null
 Uploaded: null
-YYYY-MM-DD: null
+YYYY-MM-DD: ÉÉÉÉ-HH-NN
 Submit: null
-Image: null
-Description: null
-Photographer: null
-Place: null
-Date: null
+Image: Kép
+Description: Leírás
+Photographer: Fényképész
+Place: Hely
+Date: Dátum
 Thumbnail: null
-'In use': null
-'Additional searches': null
+'In use': Használatban
+'Additional searches': 'További keresések'
 'Most Recently Added': null
 'Most Recently Modified': null
-'$1 images found': null
+'$1 images found': '$1 kép található'
 'Reset search conditions': null
 'Image number': null
-Users: null
-Localizer: null
-'Adding new translation': null
-'No more languages.': null
+Users: Felhasználók
+Localizer: Fordító
+'Adding new translation': 'Új fordítás hozzáadása'
+'No more languages.': 'Nincs több nyelv.'
 'The $1 field may only contain letters, digits and underscore (_) character.': null
-'Add new publication': null
-'Upload new template': null
+'Add new publication': 'Új kiadvány hozzáadása'
+'Upload new template': 'Új sablon feltöltése'
 'Add new staff member': null
 'Staff member deleted.': null
-'Add new subscriber': null
-'Add new user type': null
-'Add new article type': null
-'Add new country': null
-'Add new language': null
-'View logs': null
+'Add new subscriber': 'Új előfizető hozzáadása'
+'Add new user type': 'Új felhasználótípus hozzáadása'
+'Add new article type': 'Új cikktípus hozzáadása'
+'Add new country': 'Új ország hozzáadása'
+'Add new language': 'Új nyelv hozzáadása'
+'View logs': 'Naplók megtekintése'
 'Change your password': null
 'Your Articles': null
 'Submitted Articles': null
-Logs: null
+Logs: Naplók
 'There are $1 article(s) left.': null
 'There are $1 issues(s) left.': null
 'There are $1 section(s) left.': null
 'There are $1 publication(s) left.': null
 'There are $1 countries left.': null
-'Name <SMALL>(click to edit)</SMALL>': null
-'Add new subscription': null
-'You do not have the right to add subscriptions.': null
-'Adding subscription': null
-'Delete subscription': null
-'You do not have the right to delete subscriptions.': null
-'No such subscription.': null
-Yes: null
-No: null
-Close: null
-'No issues.': null
+'Name <SMALL>(click to edit)</SMALL>': 'Név <SMALL>(kattints a szerkesztéshez)</SMALL>'
+'Add new subscription': 'Új előfizetés hozzáadása'
+'You do not have the right to add subscriptions.': 'Nincs jogod az előfizetések hozzáadásához.'
+'Adding subscription': 'Előfizetés hozzáadása'
+'Delete subscription': 'Előfizetés törlése'
+'You do not have the right to delete subscriptions.': 'Nincs jogod az előfizetések törléséhez.'
+'No such subscription.': 'Nincs ilyen előfizetés.'
+Yes: Igen
+No: Nem
+Close: Bezárás
+'No issues.': 'Nincsenek számok.'
 'Back to Edit Article': null
 'No topics': null
 'You do not have the right to add articles.': null

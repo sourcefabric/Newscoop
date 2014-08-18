@@ -120,7 +120,7 @@ Filters: Filtre
 'The IP address group $1 has been deleted.': 'IP-adresse gruppen $1 blev slettet.'
 'User $1 information was changed successfully.': 'Brugerinfo for $1 blev opdateret.'
 'User Type': Brugertype
-'The IP address group $1:$2 conflicts with another existing group.': null
+'The IP address group $1:$2 conflicts with another existing group.': 'IP adresse gruppen $1:$2 er i konflikt med en eksisterende gruppe.'
 'User may add/change publications': 'Bruger må tilføje/redigere publikationer'
 'Invalid value of user type parameter': 'Ugyldig værdi for brugertype parameter'
 'User may delete publications': 'Bruger må slette publikationer'
@@ -146,7 +146,7 @@ Filters: Filtre
 'User may add/change country entries': 'Bruger må tilføje og administrere lande'
 'User may add languages and manage language information': 'Bruger må tilføje og administrere sprog'
 'User may delete languages': 'Bruger må slette sprog'
-'User may view audit logs': null
+'User may view audit logs': 'Bruger må se overvågningslogfiler'
 'User may delete country entries': 'Bruger må slette lande'
 'User may manage localizer': 'Bruger må administrere oversætteren'
 'User may publish articles': 'Bruger må udgive artikler'

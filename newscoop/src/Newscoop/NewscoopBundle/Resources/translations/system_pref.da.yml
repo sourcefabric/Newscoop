@@ -83,14 +83,14 @@ newscoop:
             css: 'Inkluder CSS fil til kortvisning'
             autofocus: 'Brug auto-fokus som standard for kort:'
             zoomautofocus: 'Maksimal zoom for autofokus:'
-            borderautofocus: null
+            borderautofocus: 'Grænse for auto-fokusering på kort:'
             mapprovider: 'Tillad Google Streets kort udbyder:'
             mapquest: 'Tillad MapQuest kort udbyder:'
             openstreet: 'Tillad OpenStreet kort udbyder:'
             defaultmapprovider: 'Standard kort udbyder:'
             nominatimsearch: 'Brug MapQuest Nominatim søgning:'
             preflanguage: 'Foretrukket adresse sprog:'
-            markerdir: null
+            markerdir: 'Mappe til kortmarkører:'
             defaultmarker: 'Standard kort markør:'
             popupwidth: 'Mindste bredde for kort popup:'
             popupheight: 'Mindste højde for kort popup:'
@@ -113,14 +113,14 @@ newscoop:
             nooption: Nej
             geosearch: 'Brug lokal GeoNames søgning:'
             usergarbage: 'Fjern forældede data om afventende brugere?'
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            usergarbagedaysinfo: 'Angiv et antal dage efter hvilke ikke-godkendte brugere slettes.'
+            usergarbagedays: 'Antal dage'
+            smartyUseProtocol: 'Brug protokol for absolutte URL''er genereret af Smarty?'
             cronjob: 'Navn på cron job'
             enabled: Status
             options: Indstillinger
             info: 'Info:'
-            infodesc: null
+            infodesc: 'Disse indstillinger vil hjælpe dig med at administrere baggrundsjobs ved at aktivere/deaktivere valgte jobs.'
             prevRun: 'Sidste kørselsdato'
             nextRun: 'Næste kørselsdato'
             norecords: 'Ingen opslag.'
@@ -139,21 +139,21 @@ newscoop:
             cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'
             cacheimage: 'Perioden billeder er i cachen, fra 30 sekunder til uendeligt.'
             cachetemplate: 'Vælg DB for at bruge cache for skabeloner.'
-            recovery: null
+            recovery: 'Hvorvidt brugerne kan få en adgangskode påmindelse via e-mail. Bemærk, at hvis denne funktion er aktiveret, og andre får adgang til din e-mail-konto, kan de nemt skaffe sig adgang til din Newscoop publikation.'
             secret: 'Sikkerhedsnøglen Newscoop kan bruge til integration med web services og andre avancerede funktioner.'
             separator: 'Angiv separator for nøgleord ved artikelredigering (komma eller tankestreg).'
-            stats: null
+            stats: 'Denne indstilling gør det muligt at indsamle statistik om læsernes brug af publikationer på serveren. Du ønsker måske at klikke på Nej, hvis du bruger en tredjeparts statistiktjeneste, da deaktivering af statistikindsamling kan reducere belastningen på din Newscoop serveren.'
             zoom: 'Sæt til Ja for at lade læsere forstørre artikelbilleder ved at klikke på dem. Denne zoom funktion virker for alle billeder indsat i artikel teksten.'
-            ratio: null
+            ratio: 'Størrelses ratio har forrang for bredde eller højde værdier som indstilles her. Hvis ratio ikke er indstillet, men både bredde og højde er indstillet, så Newscoop vil bruge værdien der giver den mindste billedstørrelse. Standardindstillingerne her kan tilsidesættes af ratio, højde eller bredde indstillingerne for de enkelte billeder ved artikelredigering.'
             replication: 'Bruges til at køre Newscoop på to servere samtidigt, en sikkerhed i tilfælde af hardware eller netværksproblemer.'
-            filter: null
-            cron: null
-            video: null
+            filter: 'Indtast nøgleord til skabeloner, som du ønsker at skjule fra skabelonsredigeringen tilgængelig via tema administrationssiden. For eksempel skabeloner der er ikke længere i brug, men som du ikke ønsker at slette fra serveren.'
+            cron: 'Brug serverens egen cron planlægning til automatiske opgaver i stedet for Newscoops indbyggede.'
+            video: 'Standard bredde og højde af både eksterne og lokale videofiler kan indstilles her, for at sikre, at videoer vises korrekt i dine publikationers sideskabeloner.'
             emailfrom: 'Email adressen der bruges til beskeder fra systemet:'
             recaptcha:
-                publickey: null
-                privatekey: null
+                publickey: 'Brug dette i JavaScript-kode til dine brugere.'
+                privatekey: 'Brug dette ved kommunikation mellem din server og reCAPTCHA serveren. Sørg for at holde det hemmeligt.'
                 secure: 'Vælg Ja hvis du bruger sikker url til reCAPTCHA.'
-            garbage: null
+            garbage: 'Hvis aktiveret kan redaktører definere et antal dage hvorefter ikke-godkendte brugere slettes. Standarden er 90 dage.'
             lifetime: 'Sessions livstid i sekunder. Max 86400 (24 timer). Min: 0 (indtil browseren lukkes).'
-            smartyuseprotocol: null
+            smartyuseprotocol: 'Slå til for at Smartyfunktionen url lave URL''er med en protokol. Som standard er dette slået fra for at lave protokol-agnostiske URL''er. Denne indstilling kan tilsidesættes ved at bruge useprotocol parameteret for Smarty funktionen  og angive en boolean for den ønskede håndtering.'
