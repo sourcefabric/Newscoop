@@ -22,14 +22,14 @@ publish: udgiv
 notify: underret
 moderate: moderer
 manage: administrer
-'list number': null
-'list bullet': null
+'list number': 'liste med tal'
+'list bullet': 'liste med punkter'
 link: link
 italic: kursiv
 indent: indryk
 image: billede
 'horizontal rule': 'vandret linje'
-handle: null
+handle: håndtag
 guest: gæst
 'font size': skriftstørrelse
 'font face': skrifttype

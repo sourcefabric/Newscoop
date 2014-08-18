@@ -4,7 +4,7 @@ forth: fjerde
 first: første
 'You must input a number greater than 0 into the Number of addresses field.': 'Angiv et tal større end 0 i feltet Antal adresser.'
 'You must input a number between 0 and 255 into the Start IP address $1 field.': 'Angiv et tal fra 0 til 255 i IP adresse start feltet $1.'
-'User IP access list management': null
+'User IP access list management': 'Administration af brugeradgang via IP adresser'
 'The IP address group conflicts with another existing group.': 'IP adresse gruppen er i konflikt med en eksisterende gruppe.'
 'Subscription sections': Abonnementssektioner
 'No records.': 'Ingen poster.'
