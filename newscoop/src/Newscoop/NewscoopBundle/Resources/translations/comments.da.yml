@@ -67,9 +67,9 @@ Parent: Forælder
 ID: ID
 'Go to edit article': 'Rediger artikel'
 Forum: Forum
-'For Column': null
+'For Column': 'Til kolonne'
 Email: Email
-'Edit acceptance criteria': null
+'Edit acceptance criteria': 'Rediger godkendelseskriterier'
 E-mail: E-mail
 'Delete all comments?': 'Slet alle kommentarer?'
 'Date Created': Oprettelsesdato
@@ -84,10 +84,10 @@ Commenter: Debattør
 'Comment id': 'Kommentar id'
 'Comment deleted.': 'Kommentar slettet.'
 'Comment delete by $1 from the article $2 ($3)': '$1 har slettet kommentar fra artiklen $2 ($3)'
-'Comment Acceptance': null
+'Comment Acceptance': Kommentargodkendelse
 'Comment $4 by $1 in the article $2 ($3)': 'Kommentar $4 af $1 i artiklen $2 ($3)'
 'Comment $1 saved.': 'Kommentar $1 gemt.'
-Column: null
+Column: Kolonne
 'Change subscriber information': 'Ret abonnent information'
 'Ban for commenter $1 saved.': 'Blokering af debattør $1 blev gemt.'
 Ban: Bloker
@@ -95,6 +95,6 @@ Ban: Bloker
 'Add rating': 'Tilføj bedømmelse'
 'Add new comment commenter': 'Tilføj debattør'
 'Add new comment': 'Tilføj kommentar'
-'Add new acceptance criteria': null
+'Add new acceptance criteria': 'Tilføj godkendelseskriterie'
 'Acceptance $1 saved.': 'Godkendelse $1 gemt.'
 'Acceptance $1 deleted.': 'Godkendelse $1 slettet.'

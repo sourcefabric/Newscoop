@@ -32,7 +32,7 @@ NOTHING: INGENTING
 '--None--': '--Ingen--'
 '(Null merge warning.)': '(Advarsel: Tom fletning).'
 '(No merge warning.)': '(Advarsel: Ingen fletning).'
-'(Duplicate warning.)': null
+'(Duplicate warning.)': '(Advarsel: Gentagelse.)'
 '(!) Do NOT merge $1': '(!) Flet IKKE $1'
 '$1 of $2': '$1 af $2'
 show: vis
