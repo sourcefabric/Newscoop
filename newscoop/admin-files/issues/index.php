@@ -12,7 +12,7 @@ if ($IssOffs < 0) {
 $ItemsPerPage = 15;
 
 if (!Input::IsValid()) {
-    camp_html_display_error($translator->trans('Invalid input: $1', Input::GetErrorString(), array(), 'issues'), $_SERVER['REQUEST_URI']);
+    camp_html_display_error($translator->trans('Invalid input: $1', array('$1' => Input::GetErrorString()), 'issues'), $_SERVER['REQUEST_URI']);
     exit;
 }
 $publicationObj = new Publication($Pub);
