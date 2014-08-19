@@ -1,37 +1,37 @@
-newscoop.plugins_manager.manager: null
-newscoop.plugins_manager.legacy_manager: null
-newscoop.plugins_manager.public_plugins: null
+newscoop.plugins_manager.manager: Bővítménykezelő
+newscoop.plugins_manager.legacy_manager: Örököltbővítmény-kezelő
+newscoop.plugins_manager.public_plugins: 'Nyilvános bővítmények'
 newscoop.plugins_manager.private_plugins: null
-newscoop.plugins_manager.install.public: null
-newscoop.plugins_manager.installed_table.name: null
-newscoop.plugins_manager.installed_table.description: null
+newscoop.plugins_manager.install.public: 'Új bővítmények telepítése'
+newscoop.plugins_manager.installed_table.name: Név
+newscoop.plugins_manager.installed_table.description: Leírás
 newscoop.plugins_manager.installed_table.enabled: Engedélyezve
-newscoop.plugins_manager.installed_table.version: null
-newscoop.plugins_manager.installed_table.license: null
+newscoop.plugins_manager.installed_table.version: Verzió
+newscoop.plugins_manager.installed_table.license: Licenc
 newscoop.plugins_manager.installed_table.installed_at: null
 newscoop.plugins_manager.installed_table.updated_at: null
-newscoop.plugins_manager.installed_table.actions: null
+newscoop.plugins_manager.installed_table.actions: Műveletek
 newscoop.plugins_manager.installed_table.update_plugin: null
 newscoop.plugins_manager.installed_table.remove_plugin: null
 newscoop.plugins_manager.installed_table.install_plugin: null
 newscoop.plugins_manager.installed_table.plugin_installed: null
 newscoop.plugins_manager.upload.private: null
-newscoop.plugins_manager.search_for_plugins: null
+newscoop.plugins_manager.search_for_plugins: 'Bővítmények keresése'
 newscoop.plugins_manager.form.package: 'A csomagnak zip-fájlnak kell lennie.'
 newscoop.plugins_manager.form.submit: Feltöltés
 newscoop:
     datatable:
         table:
             info: null
-            noentries: null
-            filtering: null
-            menu: null
+            noentries: 'Nincs megjelenítendő bejegyzés'
+            filtering: '- szűrés a _MAX_ rekordokból'
+            menu: 'A _MENU_ rekordok megjelenítése'
         label:
-            search: null
-            filter: null
-            processing: null
-            last: null
-            next: null
-            first: null
-            previous: null
-            norecords: null
+            search: Keresés
+            filter: Szűrő
+            processing: Feldolgozás...
+            last: Utolsó
+            next: Következő
+            first: Első
+            previous: Előző
+            norecords: 'Nem találhatók rekordok.'

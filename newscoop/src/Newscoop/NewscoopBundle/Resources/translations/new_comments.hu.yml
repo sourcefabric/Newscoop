@@ -54,13 +54,13 @@ comments:
             single: null
             all: null
         error:
-            reach: null
+            reach: 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
             deletefromarticle: null
-            statuschange: null
-            delete: null
+            statuschange: 'Hiba történt a hozzászólás állapotának módosításakor'
+            delete: 'Ezt a hozzászólást nem lehet törölni.'
             update: 'A mezők nem lehetnek üresek'
-        sure: null
-        suremultiple: null
-        first: null
-        surequestion: null
-        updated: null
+        sure: 'Egy hozzászólás végleges törlésére készülsz.'
+        suremultiple: 'Hozzászólások végleges törlésére készülsz.'
+        first: 'Előbb válassz hozzászólást/hozzászólásokat!'
+        surequestion: 'Biztosan végre akarod ezt hajtani?'
+        updated: 'A hozzászólás frissítése megtörtént.'
