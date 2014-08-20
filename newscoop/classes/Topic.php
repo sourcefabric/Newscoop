@@ -9,17 +9,17 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 /**
  * @package Campsite
  */
-class Topic extends DatabaseObject {
-    var $m_keyColumnNames = array('id');
+class Topic extends DatabaseObject
+{
+    public $m_keyColumnNames = array('id');
 
-    var $m_keyIsAutoIncrement = true;
+    public $m_keyIsAutoIncrement = true;
 
-    var $m_dbTableName = 'Topics';
+    public $m_dbTableName = 'Topics';
 
-    var $m_columnNames = array('id', 'node_left', 'node_right');
+    public $m_columnNames = array('id', 'node_left', 'node_right');
 
-    var $m_names = array();
-
+    public $m_names = array();
 
     /**
      * A topic is like a category for a piece of data.
@@ -40,7 +40,6 @@ class Topic extends DatabaseObject {
             }
         }
     } // constructor
-
 
     /**
      * Fetch the topic and all its translations.
@@ -89,7 +88,6 @@ class Topic extends DatabaseObject {
         return $this->m_exists;
     } // fn fetch
 
-    
 /**
      * Create a new topic staticaly .
      *
@@ -99,12 +97,12 @@ class Topic extends DatabaseObject {
      * - node_right
      * - names - array of topic translations of the form: language_id => name
      *
-     * @param array $p_values
-     * @return json object
+     * @param  array $p_values
+     * @return json  object
      */
-    
+
     public static function add($p_values = null)
-    {   
+    {
         $translator = \Zend_Registry::get('container')->getService('translator');
         $return = array();
         $created = false;
@@ -128,13 +126,13 @@ class Topic extends DatabaseObject {
             $f_topic_parent_id = array_key_exists('f_topic_parent_id', $p_values) ? $p_values['f_topic_parent_id'] : 0;
             $f_topic_language_id = array_key_exists('f_language_selected', $p_values) ? $p_values['f_language_selected'] : 1;
             $f_topic_name = trim($p_values['f_topic_name']);
-            
+
             $topicParent = new Topic($f_topic_parent_id);
-            
+
             $topic = new Topic();
-            
+
             $created = $topic->create(array('parent_id' => $f_topic_parent_id, 'names'=>array($f_topic_language_id=>$f_topic_name)));
-            
+
             if ($created) {
                 $return['status'] = 1;
                 $return['messageClass'] = 'highlight';
@@ -145,9 +143,9 @@ class Topic extends DatabaseObject {
                 $return['message'] = $translator->trans('The topic name is already in use by another topic.', array(), 'api');
             }
         }
+
         return json_encode($return);
     }
-    
 
     /**
      * Create a new topic.
@@ -159,7 +157,7 @@ class Topic extends DatabaseObject {
      * - node_right
      * - names - array of topic translations of the form: language_id => name
      *
-     * @param array $p_values
+     * @param  array   $p_values
      * @return boolean
      */
     public function create($p_values = null, $p_allNamesRequired = false)
@@ -176,8 +174,7 @@ class Topic extends DatabaseObject {
             $check_name_obj = new \TopicName($check_topic_name, $check_lang_id);
             if ($check_name_obj->exists()) {
                 $names_occupied[$check_lang_id] = $check_topic_name;
-            }
-            else {
+            } else {
                 $names_available[$check_lang_id] = $check_topic_name;
             }
             unset($check_name_obj);
@@ -199,9 +196,10 @@ class Topic extends DatabaseObject {
             $parent = new Topic($p_values['parent_id']);
             if (!$parent->exists()) {
                 $g_ado_db->Execute("UNLOCK TABLES");
+
                 return false;
             }
-            $parentLeft = (int)$parent->getLeft();
+            $parentLeft = (int) $parent->getLeft();
         } else {
             $parentLeft = 0;
         }
@@ -223,8 +221,7 @@ class Topic extends DatabaseObject {
                 if ($res) {
                     $some_name_set = true;
                     $this->m_names[$languageId] = $topicName;
-                }
-                else {
+                } else {
                     $some_name_not_set = true;
                 }
             }
@@ -255,42 +252,39 @@ class Topic extends DatabaseObject {
             $this->m_exists = true;
         }
         CampCache::singleton()->clear('user');
+
         return $success;
     } // fn create
 
-
     /**
      * Returns the node left order
-     * @param bool $p_forceFetchFromDatabase
+     * @param  bool    $p_forceFetchFromDatabase
      * @return integer
      */
     public function getLeft($p_forceFetchFromDatabase = false)
     {
-        return (int)$this->getProperty('node_left', $p_forceFetchFromDatabase);
+        return (int) $this->getProperty('node_left', $p_forceFetchFromDatabase);
     } // fn getLeft
-
 
     /**
      * Returns the node right order
-     * @param bool $p_forceFetchFromDatabase
+     * @param  bool    $p_forceFetchFromDatabase
      * @return integer
      */
     public function getRight($p_forceFetchFromDatabase = false)
     {
-        return (int)$this->getProperty('node_right', $p_forceFetchFromDatabase);
+        return (int) $this->getProperty('node_right', $p_forceFetchFromDatabase);
     } // fn getRight
-
 
     /**
      * Returns the node right width: right order - left order
-     * @param bool $p_forceFetchFromDatabase
+     * @param  bool    $p_forceFetchFromDatabase
      * @return integer
      */
     public function getWidth($p_forceFetchFromDatabase = false)
     {
         return $this->getRight() - $this->getLeft();
     } // fn getWidth
-
 
     /**
      * Set the given column name to the given value.
@@ -304,33 +298,33 @@ class Topic extends DatabaseObject {
      * at the same time.
      *
      * @param string $p_dbColumnName
-     *      The name of the column that is to be updated.
+     *                               The name of the column that is to be updated.
      *
      * @param string $p_value
-     *      The value to set.
+     *                        The value to set.
      *
      * @param boolean $p_commit
-     *      If set to true, the value will be written to the database immediately.
-     *      If set to false, the value will not be written to the database.
-     *      Default is true.
+     *                          If set to true, the value will be written to the database immediately.
+     *                          If set to false, the value will not be written to the database.
+     *                          Default is true.
      *
      * @param boolean $p_isSql
-     *      Set this to TRUE if p_value consists of SQL commands.
-     *      There is no way to know what the result of the command is,
-     *      so we will need to refetch the value from the database in
-     *      order to update the internal variable's value.
+     *                         Set this to TRUE if p_value consists of SQL commands.
+     *                         There is no way to know what the result of the command is,
+     *                         so we will need to refetch the value from the database in
+     *                         order to update the internal variable's value.
      *
      * @return boolean
-     *      TRUE on success, FALSE on error.
+     *                 TRUE on success, FALSE on error.
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
         if ($p_dbColumnName == 'node_left' || $p_dbColumnName == 'node_right') {
             return false;
         }
+
         return parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
     } // fn setProperty
-
 
     /**
      * Delete the topic.
@@ -371,14 +365,6 @@ class Topic extends DatabaseObject {
             . ' AND node_right <= '.$this->m_data['node_right'];
             $deleted = $g_ado_db->Execute($sql);
 
-            if ($deleted) {
-                $myWidth = $this->m_data['node_right'] - $this->m_data['node_left'] + 1;
-                $sql = "UPDATE Topics SET node_left = node_left - $myWidth WHERE node_left > " . $this->m_data['node_left'];
-                $g_ado_db->Execute($sql);
-                $sql = "UPDATE Topics SET node_right = node_right - $myWidth WHERE node_right > " . $this->m_data['node_right'];
-                $g_ado_db->Execute($sql);
-            }
-
             $this->m_data = array();
             $this->m_exists = false;
         }
@@ -386,9 +372,9 @@ class Topic extends DatabaseObject {
         $g_ado_db->Execute("UNLOCK TABLES");
 
         CampCache::singleton()->clear('user');
+
         return $deleted;
     } // fn delete
-
 
     /**
      * @return string
@@ -402,12 +388,11 @@ class Topic extends DatabaseObject {
         }
     } // fn getName
 
-
     /**
      * Set the topic name for the given language.  A new entry in
      * the database will be created if the language does not exist.
      *
-     * @param int $p_languageId
+     * @param int    $p_languageId
      * @param string $p_value
      *
      * @return boolean
@@ -424,7 +409,7 @@ class Topic extends DatabaseObject {
 
             if (is_array($topics) && count($topics) != 0) {
                 return false;
-            }            
+            }
             // Update the name.
             $oldName = $this->m_names[$p_languageId]->getName();
             $changed = $this->m_names[$p_languageId]->setName($p_value);
@@ -433,9 +418,9 @@ class Topic extends DatabaseObject {
             $changed = $topicName->create(array('name'=>$p_value));
             $this->m_names[$p_languageId] = $topicName;
         }
+
         return $changed;
     } // fn setName
-
 
     /**
      * @return int
@@ -444,7 +429,6 @@ class Topic extends DatabaseObject {
     {
         return $this->m_data['id'];
     } // fn getTopicId
-
 
     /**
      * Get all translations of the topic in an array indexed by
@@ -457,7 +441,6 @@ class Topic extends DatabaseObject {
         return $this->m_names;
     } // fn getTranslations
 
-
     /**
      * Return the number of translations of this topic.
      *
@@ -467,7 +450,6 @@ class Topic extends DatabaseObject {
     {
         return count($this->m_names);
     } // fn getNumTranslations
-
 
     /**
      * @return int
@@ -483,9 +465,9 @@ class Topic extends DatabaseObject {
         $sql = 'SELECT id FROM Topics WHERE node_left < ' . $this->getLeft()
         . ' AND node_right > ' . $this->getRight() . ' ORDER BY Id DESC';
         $parentId = $g_ado_db->GetOne($sql);
+
         return $parentId;
     } // fn getParentId
-
 
     /**
      * Return an array of Topics starting from the root down
@@ -508,9 +490,9 @@ class Topic extends DatabaseObject {
         foreach ($rows as $row) {
             $stack[$row['id']] = $p_returnIds ? $row['id'] : new Topic($row['id']);
         }
+
         return $stack;
     } // fn getPath
-
 
     /**
      * Returns true if it was a root topic
@@ -527,9 +509,9 @@ class Topic extends DatabaseObject {
         $sql = 'SELECT COUNT(*) FROM Topics WHERE node_left < ' . $this->getLeft()
         . ' AND node_right > ' . $this->getRight();
         $parentsCount = $g_ado_db->GetOne($sql);
+
         return $parentsCount == 0;
     } // fn isRoot
-
 
     /**
      * Return true if this topic has subtopics.
@@ -541,19 +523,19 @@ class Topic extends DatabaseObject {
         return ($this->getRight() - $this->getLeft()) > 1;
     } // fn hasSubtopics
 
-
     /**
      * Returns a topic object identified by the full name in the
      * format topic_name:language_code
      *
-     * @param string $p_fullName
-     * @return Topic object
+     * @param  string $p_fullName
+     * @return Topic  object
      */
     public static function GetByFullName($p_fullName)
     {
         $p_fullName = trim($p_fullName);
         $last_colon_pos = strrpos($p_fullName, ':');
         if (!$last_colon_pos) { // both none colon and a single colon as a string start are wrong
+
             return null;
         }
         $name = substr($p_fullName, 0, $last_colon_pos);
@@ -573,15 +555,14 @@ class Topic extends DatabaseObject {
         return $topics[0];
     } // fn GetByFullName
 
-
     /**
      * Search the Topics table.
      *
-     * @param int $p_id
-     * @param int $p_languageId
-     * @param string $p_name
-     * @param int $p_parentId
-     * @param array $p_sqlOptions
+     * @param  int    $p_id
+     * @param  int    $p_languageId
+     * @param  string $p_name
+     * @param  int    $p_parentId
+     * @param  array  $p_sqlOptions
      * @return array
      */
     public static function GetTopics($p_id = null, $p_languageId = null, $p_name = null,
@@ -597,7 +578,7 @@ class Topic extends DatabaseObject {
             $paramsArray['depth'] = (is_null($p_depth)) ? '' : $p_depth;
             $paramsArray['sql_options'] = $p_sqlOptions;
             $paramsArray['order'] = $p_order;
-            $paramsArray['count_only'] = (int)$p_countOnly;
+            $paramsArray['count_only'] = (int) $p_countOnly;
             $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
             $topics = $cacheListObj->fetchFromCache();
             if ($topics !== false && is_array($topics)) {
@@ -671,11 +652,10 @@ class Topic extends DatabaseObject {
         return $topics;
     } // fn GetTopics
 
-
     /**
      * Returns the subtopics from the next level (not all levels below) in an array
      * of topic identifiers.
-     * @param array $p_returnIds
+     * @param array   $p_returnIds
      * @param integer $p_depth
      */
     public function getSubtopics($p_returnIds = false, $p_depth = 1)
@@ -688,16 +668,16 @@ class Topic extends DatabaseObject {
         foreach ($rows as $row) {
             $topics[] = $p_returnIds ? $row['id'] : new Topic($row['id']);
         }
+
         return $topics;
     } // getSubtopics
-
 
     /**
      * Returns an SQLSelectClause object that builds a query for retrieving the
      * depth of the given topic.
      *
-     * @param integer $p_topicId - topic identifier
-     * @param integer $p_indent - query formatting: indent the query $p_indent times
+     * @param  integer         $p_topicId - topic identifier
+     * @param  integer         $p_indent  - query formatting: indent the query $p_indent times
      * @return SQLSelectClause
      */
     public static function BuildDepthQuery($p_topicId, $p_indent = 0)
@@ -710,20 +690,20 @@ class Topic extends DatabaseObject {
         $depthQuery->addColumn('node.id');
         $depthQuery->addColumn('(COUNT(parent.id) - 1) AS depth');
         $depthQuery->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        $depthQuery->addWhere('node.id = ' . (int)$p_topicId);
+        $depthQuery->addWhere('node.id = ' . (int) $p_topicId);
         $depthQuery->addGroupField('node.id');
         $depthQuery->addOrderBy('node.node_left');
+
         return $depthQuery;
     }
-
 
     /**
      * Returns an SQLSelectClause object that builds a query for retrieving the
      * subtopics of the given parent.
      *
-     * @param integer $p_parentId - parent topic identifier
-     * @param integer $p_depth - depth of the subtopic tree; default 1; 0 for unlimitted
-     * @param integer $p_indent - query formatting: indent the query $p_indent times
+     * @param  integer         $p_parentId - parent topic identifier
+     * @param  integer         $p_depth    - depth of the subtopic tree; default 1; 0 for unlimitted
+     * @param  integer         $p_indent   - query formatting: indent the query $p_indent times
      * @return SQLSelectClause
      */
     public static function BuildSubtopicsQuery($p_parentId = 0, $p_depth = 1, $p_indent = 0)
@@ -731,7 +711,7 @@ class Topic extends DatabaseObject {
         $topicObj = new Topic();
 
         $depthGreater = $p_parentId > 0 ? 'depth > 0' : 'depth >= 0';
-        $depthMax = $p_parentId > 0 ? (int)$p_depth : $p_depth - 1;
+        $depthMax = $p_parentId > 0 ? (int) $p_depth : $p_depth - 1;
 
         $query = new SQLSelectClause($p_indent);
         $query->addColumn('node.id');
@@ -756,6 +736,7 @@ class Topic extends DatabaseObject {
             $query->addHaving('depth <= ' . $depthMax);
         }
         $query->addOrderBy('node.node_left');
+
         return $query;
     }
 
@@ -776,7 +757,7 @@ class Topic extends DatabaseObject {
      * Returns an SQLSelectClause object that builds a query for retrieving the
      * subtopics of the given parent.
      *
-     * @param integer $p_parentId - parent topic identifier
+     * @param  integer         $p_parentId - parent topic identifier
      * @return SQLSelectClause
      */
     public static function BuildSubtopicsQueryWithoutDepth($p_parentIds = 0)
@@ -788,13 +769,13 @@ class Topic extends DatabaseObject {
         $query->setTable($topicObj->m_dbTableName . ' AS node');
         $query->addTableFrom($topicObj->m_dbTableName . ' AS parent');
         $query->addWhere('node.node_left BETWEEN parent.node_left AND parent.node_right');
-        foreach($p_parentIds as $p_parentId) {
-            $query->addConditionalWhere('parent.id = ' . (int)$p_parentId);
+        foreach ($p_parentIds as $p_parentId) {
+            $query->addConditionalWhere('parent.id = ' . (int) $p_parentId);
         }
         $query->addOrderBy('node.node_left');
+
         return $query;
     }
-
 
     /**
      * Get all the topics in an array, where each element contains the entire
@@ -822,7 +803,7 @@ class Topic extends DatabaseObject {
      *        array(6 => "politics", 8 => "local")
      *  );
      *
-     * @param int $p_startingTopicId
+     * @param  int   $p_startingTopicId
      * @return array
      */
     public static function GetTree($p_startingTopicId = 0)
@@ -840,12 +821,13 @@ class Topic extends DatabaseObject {
             $query->addTableFrom($topicObj->m_dbTableName . ' AS sub_parent');
             $query->addWhere('node.node_left > sub_parent.node_left');
             $query->addWhere('node.node_left < sub_parent.node_right');
-            $query->addWhere('sub_parent.id = ' . (int)$p_startingTopicId);
+            $query->addWhere('sub_parent.id = ' . (int) $p_startingTopicId);
         }
         $query->addGroupField('node.id');
         $query->addOrderBy('node.node_left');
         $rows = $g_ado_db->GetAll($query->buildQuery());
         if (empty($rows)) { // empty tree
+
             return array();
         }
 
@@ -854,7 +836,7 @@ class Topic extends DatabaseObject {
         $currentPath = array();
         foreach ($rows as $row) {
             $topicId = $row['id'];
-            $depth = $row['depth'] - (int)$startDepth;
+            $depth = $row['depth'] - (int) $startDepth;
             $topic = new Topic($topicId);
             if (is_null($startDepth)) {
                 $startDepth = $depth;
@@ -865,6 +847,7 @@ class Topic extends DatabaseObject {
             } elseif ($depth == 0) {
                 $currentPath = array($topicId=>$topic);
             } else {
+                //ladybug_dump($depth);die;
                 while ($depth < count($currentPath)) {
                     array_pop($currentPath);
                 }
@@ -872,18 +855,18 @@ class Topic extends DatabaseObject {
             }
             $p_tree[] = $currentPath;
         }
+
         return $p_tree;
     } // fn GetTree
-
 
     /**
      * Update order for all items in tree.
      *
-     * @param array $order
-     *      $parent =>  array(
-     *          $order => $topicId
-     *      );
-     *  @return bool
+     * @param  array $order
+     *                      $parent =>  array(
+     *                      $order => $topicId
+     *                      );
+     * @return bool
      */
     public static function UpdateOrder(array $p_order)
     {
@@ -893,7 +876,7 @@ class Topic extends DatabaseObject {
         foreach ($p_order as $parentId => $order) {
             list(, $parentId) = explode('_', $parentId);
 
-            $parentTopic = new Topic((int)$parentId);
+            $parentTopic = new Topic((int) $parentId);
             $subtopics = $parentTopic->getSubtopics(true);
             if (count($subtopics) != count($order)) {
                 return false;
@@ -921,7 +904,6 @@ class Topic extends DatabaseObject {
         return TRUE;
     } // fn UpdateOrder
 
-
     /**
      *
      * @param integer $p_topicId
@@ -936,7 +918,7 @@ class Topic extends DatabaseObject {
 
         $g_ado_db->Execute("LOCK TABLES `$topicTable` WRITE;");
 
-        $maxRight = (int)$g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
+        $maxRight = (int) $g_ado_db->GetOne('SELECT MAX(node_right) FROM Topics');
 
         $g_ado_db->Execute("UNLOCK TABLES;");
 
@@ -1013,5 +995,3 @@ class Topic extends DatabaseObject {
     } // fn MoveTopic
 
 } // class Topics
-
-?>
