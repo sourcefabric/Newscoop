@@ -106,7 +106,11 @@
         });
 
         if (parent) { // updates parent view
-            parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
+            if (currentCaption.length > 0) {
+                parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
+            } else {
+                 parent.$('{{'#image-%d-caption'|format(image.id)}}').text("{{ form.vars.value.description }}");
+            }
         }
     });
     </script>
