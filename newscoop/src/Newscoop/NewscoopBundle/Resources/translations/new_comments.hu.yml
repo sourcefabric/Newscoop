@@ -1,61 +1,61 @@
 comments:
     label:
-        comments: null
-        menu: null
+        comments: 'Hozzászólások kezelése'
+        menu: Hozzászólások
         banned: Kitiltva
         anonymous: Névtelen
         at: null
         noentries: 'Nem találhatók bejegyzések.'
-        showing: null
+        showing: Megjelenítve
         of: /
         to: '-'
-        entries: null
+        entries: bejegyzés
         fullarticle: 'Teljes cikk'
-        hidden: null
+        hidden: Rejtett
         approved: Jóváhagyva
         new: Új
-        editarticle: null
-        section: null
-        comment: null
-        replyto: null
+        editarticle: 'Ugrás a cikk szerkesztésére'
+        section: Rovat
+        comment: Hozzászólás
+        replyto: 'Válasz a hozzászólásra'
         subject: Tárgy
         ban: 'Felhasználó kitiltása/kitiltásának megszüntetése'
         author: Szerző
-        date: null
+        date: 'Dátum / Hozzászólás'
         article: Cikk
         search: Keresés
-        show: null
-        recommended: null
+        show: Megjelenítés
+        recommended: Ajánlott
         unrecommended: null
-        editcomment: null
-        actions: null
-        selectstatus: null
-        deleted: null
-        alert: null
-        searchholder: null
+        editcomment: 'Hozzászólás gyors szerkesztése'
+        actions: Műveletek
+        selectstatus: 'Állapot kiválasztása'
+        deleted: Törölve
+        alert: Figyelmeztetás
+        searchholder: 'Keresés... ( pl. név, e-mail cím, tárgy, hozzászólás, cikk címe)'
     btn:
-        cancel: null
-        submit: null
+        cancel: Mégse
+        submit: Küldés
         unrecommend: null
-        recommend: null
-        delete: null
+        recommend: Ajánlás
+        delete: Törlés
         reply: Válasz
-        edit: null
-        close: null
+        edit: 'Gyors szerkesztés'
+        close: Bezárás
         okay: OK
-        filter: null
+        filter: Szűrő
     msg:
-        deleted: null
-        commentinarticle: null
+        deleted: 'A hozzászólás törlése megtörtént.'
+        commentinarticle: '$4 hozzászólás $1 által a/z $2 ($3) cikkben'
         status:
             new: új
-            approved: null
+            approved: jóváhagyott
             hidden: rejtett
-            single: null
-            all: null
+            single: 'Hozzászólás állapotának módosítása erre:'
+            all: 'Hozzászólások állapotának módosítása erre:'
         error:
             reach: 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
-            deletefromarticle: null
+            deletefromarticle: 'Hozzászólás $1 általi törlése a/z $2 ($3) cikkből'
             statuschange: 'Hiba történt a hozzászólás állapotának módosításakor'
             delete: 'Ezt a hozzászólást nem lehet törölni.'
             update: 'A mezők nem lehetnek üresek'

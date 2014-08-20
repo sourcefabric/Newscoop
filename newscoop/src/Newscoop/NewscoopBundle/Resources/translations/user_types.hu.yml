@@ -1,81 +1,81 @@
-get: null
-Soundcloud: null
+get: kap
+Soundcloud: SoundCloud
 Templates: Sablonok
 'Feedback Messages': 'Visszajelzés üzenetek'
-'Article Playlists': null
+'Article Playlists': 'Cikk lejátszási listák'
 'Check all': null
-view: null
-undo/redo: null
-underline: null
-translate: null
-'text direction': null
-'text alignment': null
-table: null
-superscript: null
-subscript: null
-subhead: null
-strikethrough: null
-statusbar: null
-'spell checker enabled': null
-'source view': null
-publish: null
-notify: null
-moderate: null
-manage: null
-'list number': null
-'list bullet': null
-link: null
-italic: null
-indent: null
+view: megtekintés
+undo/redo: visszavonás/ismét
+underline: aláhúzás
+translate: fordítás
+'text direction': szövegirány
+'text alignment': 'szöveg igazítása'
+table: táblázat
+superscript: 'felső index'
+subscript: 'alsó index'
+subhead: alcím
+strikethrough: áthúzás
+statusbar: állapotsor
+'spell checker enabled': 'helyesírás-ellenőrző engedélyezve'
+'source view': 'forrás megtekintése'
+publish: közzétesz
+notify: értesít
+moderate: moderál
+manage: kezel
+'list number': listaszám
+'list bullet': 'lista felsorolásjel'
+link: hivatkozás
+italic: dőlt
+indent: behúzás
 image: kép
-'horizontal rule': null
+'horizontal rule': 'vízszintes vonal'
 handle: null
-guest: null
-'font size': null
-'font face': null
-'font color': null
-find/replace: null
-enlarge: null
-enable: null
-edit: null
-delete: null
-copy/cut/paste: null
-clear: null
-'character map': null
-bold: null
-attach: null
-'any resource': null
-admin: null
-add: null
-'You cant deny yourself to manage $1': null
-'You are not allowed to $1 $2.': null
-'User type saved.': null
-'User type deleted.': null
-'User type added.': null
-'User Groups': null
+guest: vendég
+'font size': betűméret
+'font face': betűtípus
+'font color': betűszín
+find/replace: keresés/csere
+enlarge: nagyít
+enable: engedélyez
+edit: szerkeszt
+delete: töröl
+copy/cut/paste: másolás/kivágás/beillesztés
+clear: tisztít
+'character map': karaktertábla
+bold: félkövér
+attach: csatol
+'any resource': 'bármely erőforrás'
+admin: adminisztrátor
+add: hozzáad
+'You cant deny yourself to manage $1': 'Nem tagadhatod meg magadnak a/z $1 kezelését'
+'You are not allowed to $1 $2.': 'A/z $1 $2 nem engedélyezett a számodra.'
+'User type saved.': 'A felhasználótípus mentése megtörtént.'
+'User type deleted.': 'A felhasználótípus törlése megtörtént.'
+'User type added.': 'A felhasználótípus hozzáadása megtörtént.'
+'User Groups': Felhasználócsoportok
 Themes: Témák
-'That type name already exists, please choose a different name.': null
-System: null
-Structure: null
-'Search Indexer': null
-'Rich-Text Editor Preferences': null
-ReCaptcha: null
-Polls: null
-'Permissions:': null
-'Permissions updated': null
-Notification: null
-Log: null
-Layout: null
-Global: null
+'That type name already exists, please choose a different name.': 'Ez a típusnév már létezik, válassz másik nevet.'
+System: Rendszer
+Structure: Szerkezet
+'Search Indexer': 'Keresési indexelés'
+'Rich-Text Editor Preferences': 'Rich Text szerkesztő beállításai'
+ReCaptcha: reCAPTCHA
+Polls: Szavazások
+'Permissions:': 'Engedélyek:'
+'Permissions updated': 'Az engedélyek frissítése megtörtént'
+Notification: Értesítés
+Log: Napló
+Layout: Elrendezés
+Global: Globális
 Files: Fájlok
-'Error: ': null
-'Edit user type $1': null
-Deny: null
-'Delete user type $1': null
-'Can not delete a user type with assigned users.': null
-Cache: null
-Backup: null
-Authoring: null
-Allow: null
-'User types': null
-'No user types.': null
+'Error: ': 'Hiba:'
+'Edit user type $1': 'A/z $1 felhasználótípus szerkesztése'
+Deny: Megtagadás
+'Delete user type $1': 'A/z $1 felhasználótípus törlése'
+'Can not delete a user type with assigned users.': 'Nem lehet törölni hozzárendelt felhasználókat tartalmazó felhasználótípust.'
+Cache: Gyorsítótár
+Backup: 'Biztonsági mentés'
+Authoring: Szerkesztés
+Allow: Engedélyezés
+'User types': Felhasználótípusok
+'No user types.': 'Nincsenek felhasználótípusok.'

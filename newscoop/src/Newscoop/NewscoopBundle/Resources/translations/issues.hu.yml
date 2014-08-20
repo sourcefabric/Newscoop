@@ -11,7 +11,7 @@ default: alapértelmezett
 'Please assign at least one theme to the publication': 'Rendelj hozzá legalább egy témát a kiadványhoz'
 'Issue Theme': 'Szám témája'
 'The values you are trying to set conflict with issue $1$2. $3 ($4)$5.': 'Az általad beállítani próbált értékek ütköznek a/z $1$2 $3 ($4)$5 számmal.'
-'The number must be unique for each issue in this publication of the same language.': null
+'The number must be unique for each issue in this publication of the same language.': 'A sorszámnak egyedinek kell lennie minden számhoz ebben az azonos nyelvű kiadványban.'
 'The language and URL name must be unique for each issue in this publication.': 'Ezen kiadvány minden száma nyelvének és URL-nevének egyedinek kell lennie..'
 'Issue created.': 'A szám létrehozása megtörtént.'
 'Issue updated': 'A szám frissítése megtörtánt'

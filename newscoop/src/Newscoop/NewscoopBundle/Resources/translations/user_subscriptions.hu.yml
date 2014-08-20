@@ -1,67 +1,67 @@
-third: null
-second: null
-forth: null
-first: null
-'You must input a number greater than 0 into the Number of addresses field.': null
-'You must input a number between 0 and 255 into the Start IP address $1 field.': null
-'User IP access list management': null
-'The IP address group conflicts with another existing group.': null
-'Subscription sections': null
-'No records.': null
-'You have subscription for all available publications': null
-'Subscription type:': null
-'Start:': null
-'Start Date': null
-'Sections:': null
-'Publication:': null
-'Paid days': null
-'Paid Days:': null
-Paid: null
-'No subscriptions': null
-'Languages:': null
-'Edit all sections': null
-'Days:': null
-'Days must be number': null
-Any: null
-'Add section': null
-saved: null
-removed: null
-deleted: null
-deactivated: null
-activated: null
+third: harmadik
+second: második
+forth: tovább
+first: első
+'You must input a number greater than 0 into the Number of addresses field.': 'A Címek száma mezőben nullánál nagyobb számot kell megadnod.'
+'You must input a number between 0 and 255 into the Start IP address $1 field.': 'A Kezdő IP-cím $1 mezőben meg kell adnod egy 0 és 255 közti számot.'
+'User IP access list management': 'Felhasználó IP hozzáférési lista kezelése'
+'The IP address group conflicts with another existing group.': 'Az IP-címcsoport ütközik egy másik meglévő csoporttal.'
+'Subscription sections': 'Előfizetéses rovatok'
+'No records.': 'Nincsenek rekordok.'
+'You have subscription for all available publications': 'Neked az összes létező kiadványra van előfizetésed'
+'Subscription type:': 'Előfizetés típusa:'
+'Start:': 'Kezdet:'
+'Start Date': 'Kezdő dátum'
+'Sections:': 'Rovatok:'
+'Publication:': 'Kiadvány:'
+'Paid days': 'Fizetett napok'
+'Paid Days:': 'Fizetett napok:'
+Paid: Fizetett
+'No subscriptions': 'Nincsenek előfizetések'
+'Languages:': 'Nyelvek:'
+'Edit all sections': 'Az összes rovat szerkesztése'
+'Days:': 'Napok:'
+'Days must be number': 'A napoknak számnak kell lennie'
+Any: Bármi
+'Add section': 'Rovat hozzáadása'
+saved: mentve
+removed: eltávolítva
+deleted: törölve
+deactivated: inaktiválva
+activated: aktiválva
 'Value is required and cant be empty': 'Az érték kötelező és nem lehet üres'
-'That user name already exists, please choose a different login name.': null
-'That $1 already exists, please choose a different $2.': null
-'Subscriptions exist for all available publications.': null
-'Subscription IP Addresses': null
-'Subscription $1': null
-'Subscriber saved.': null
-'Subscriber management': null
-'Subscriber deleted.': null
-'Start IP': null
-'Select country': null
-'Number of addresses': null
-'Number of Addressses': null
-'No IP Addresses': null
-'IP Address added allready': null
-'IP Address $1': null
-'IP Access': null
-'Full Name': null
-'Edit subscriptions': null
-'Edit subscriber $1': null
-E-Mail: null
-'Delete subscriber $1': null
-'Creation Date': null
+'That user name already exists, please choose a different login name.': 'Ez a felhasználónév már létezik, válassz másik bejelentkezési nevet.'
+'That $1 already exists, please choose a different $2.': 'Ez a/z $1 már létezik, válassz másik $2 -t.'
+'Subscriptions exist for all available publications.': 'Léteznek előfizetések az összes elérhető kiadványra.'
+'Subscription IP Addresses': 'Előfizetés IP-címei'
+'Subscription $1': '$1 előfizetés'
+'Subscriber saved.': 'Az előfizető mentése megtörtént.'
+'Subscriber management': Előfizetőkezelés
+'Subscriber deleted.': 'Az előfizető törlése megtörtént.'
+'Start IP': 'Kezdő IP'
+'Select country': 'Ország kiválasztása'
+'Number of addresses': 'Címek száma'
+'Number of Addressses': 'Címek száma'
+'No IP Addresses': 'Nincsenek IP-címek'
+'IP Address added allready': 'Az IP-cím már hozzáadásra került'
+'IP Address $1': '$1 IP-cím'
+'IP Access': IP-hozzáférés
+'Full Name': 'Teljes név'
+'Edit subscriptions': 'Előfizetések szerkesztése'
+'Edit subscriber $1': 'A/z $1 nevű előfizető szerkesztése'
+E-Mail: E-mail
+'Delete subscriber $1': 'A/z $1 nevű előfizető törlése'
+'Creation Date': 'Létrehozás dátuma'
 'Change subscriber information': 'Előfizetői adatok módosítása'
-'Add new IP address': null
-'Add new IP Address': null
-'Accout Name': null
-'%value% must be greater than %min%': null
-'%value% is not a valid IP Address': null
-'Regardless of the language': null
+'Add new IP address': 'Új IP-cím hozzáadása'
+'Add new IP Address': 'Új IP-cím hozzáadása'
+'Accout Name': Fióknév
+'%value% must be greater than %min%': 'A/z %value% értéknek nagyobbnak kell lennie, mint %min%'
+'%value% is not a valid IP Address': 'A/z %value% nem érvényes IP-cím'
+'Regardless of the language': 'A nyelvtől függetlenül'
 'Individual languages': null
-'Add sections now': null
-'Add sections later': null
-'Subscription Type': null
-'Paid (payment will be confirmed later)': null
-'Paid (confirm payment now)': null
+'Add sections now': 'Rovatok hozzáadása most'
+'Add sections later': 'Rovatok hozzáadása később'
+'Subscription Type': 'Előfizetés típusa'
+'Paid (payment will be confirmed later)': 'Fizetett (a fizetés később kerül megerősítésre)'
+'Paid (confirm payment now)': 'Fizetett (a fizetés megerősítése most)'

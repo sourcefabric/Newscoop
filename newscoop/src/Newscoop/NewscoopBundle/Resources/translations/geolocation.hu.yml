@@ -11,15 +11,15 @@
 'Really delete this point?': 'Valóban törlöd ezt a pontot?'
 'Name and describe this location': 'Nevezze el és ismertesse ezt a helyet'
 'Map size': 'Térkép mérete'
-'Location label': null
-'Location description:': null
-'Label url': null
+'Location label': 'Hely címkéje'
+'Location description:': 'Hely leírása:'
+'Label url': 'Címke URL-címe'
 'Hide search results': 'Keresési eredmények elrejtése'
 Geo-filtering: 'Földrajzi szűrés'
 'Fill in youtube ID or link, e.g.': 'Töltse ki a YouTube-azonosítót vagy hivatkozást, pl.:'
 'Fill in vimeo ID or link, e.g': 'Töltse ki a Vimeo-azonosítót vagy hivatkozást, pl.:'
 'Fill in video ID, link or file name, for YouTube, Vimeo, or flash video.': 'Töltse ki a YouTube-, a Vimeo- vagy a Flash-videó azonosítószámát, hivatkozását vagy fájlnevét.'
-'Fill in location label': null
+'Fill in location label': 'Töltsd ki a hely címkét'
 'Fill in local swf flash file name or link, e.g.': 'Töltse ki a helyi SWF Flash-fájl nevét vagy hivatkozását, pl.:'
 'Fill in local flv flash file name or link, e.g.': 'Töltse ki a helyi FLV Flash-fájl nevét vagy hivatkozását, pl.:'
 'Fill in image link, like': 'Töltse ki a kép hivatkozását, például:'
@@ -29,14 +29,14 @@ Coordinates: Koordináták
 'Change video display size': 'A videó képméretének módosítása'
 'Change image display size': 'A kép megjelenítési méretének módosítása'
 'Change icon of this location': 'A hely ikonjának módosítása'
-'Center map on location': null
+'Center map on location': 'A hely a térkép közepén'
 'Advanced editing': null
 'Add an image to this location': 'Kép hozzáadása a helyhez'
 'Add a video to this location': 'Videó hozzáadása a helyhez'
 'Are you sure you want to quit without saving your changes?': 'Biztosan ki akarsz lépni a módosítások mentése nélkül?'
 'Map preview': 'Térkép előnézete'
 'Locations updated.': 'A helyek frissítése megtörtént.'
-'Setting the map name helps with map search': null
+'Setting the map name helps with map search': 'A térkép nevének megadása a térképkeresésben segít'
 Longitude: Hosszúság
 Latitude: Szélesség
 Center: Központ
@@ -53,7 +53,7 @@ height: magasság
 'Video file': Videofájl
 'Video ID': Videoazonosító
 'The map has been removed from the article.': 'A térkép eltávolítása a cikkből megtörtént.'
-'Point no.': null
+'Point no.': 'Pont s.sz.'
 'Point markers': Pontjelölők
 None: null
 'Map Search Example': 'Térképkeresési példa'

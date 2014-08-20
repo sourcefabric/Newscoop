@@ -34,7 +34,7 @@ Title: Cím
 'Article status changed from $1 to $2.': 'A cikk állapota megváltozott erről: $1 erre: $2.'
 'Article deleted.': 'A cikk törlése megtörtént.'
 'Article created.': 'A cikk létrehozása megtörtént.'
-'Article copied to Article $4 (publication $5, issue $6, section $7).': null
+'Article copied to Article $4 (publication $5, issue $6, section $7).': 'A cikk másolása a/z $4 cikkbe megtörtént (kiadvány: $5, szám: $6, rovat: $7).'
 'Article URL': 'Cikk URL-címe'
 'Article Number': 'Cikk száma'
 'Access denied.': 'Hozzáférés megtagadva.'

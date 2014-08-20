@@ -7,16 +7,16 @@ Source: Forrás
 On: null
 Off: null
 Title: Cím
-'No video playback capabilities, please download the video below': null
-'Article status set to $1 for $2 articles': null
-'Article status not set to $1 for $2 articles': null
+'No video playback capabilities, please download the video below': 'Nincsenek videolejátszási képességek, töltsd le az alábbi videót'
+'Article status set to $1 for $2 articles': 'A cikk állapotának beállítása $1 állapotra megtörtént a/z $2 cikkhez'
+'Article status not set to $1 for $2 articles': 'Nem történt meg a cikk állapotának beállítása $1 állapotra a/z $2 cikkhez'
 '$1 toggled for $2 articles.': null
 '$1 not toggled for $2 articles.': null
 '$1 not toggled for $2  articles.': null
-'$1 articles have not been removed': null
-'$1 Article(s) unlocked': null
-'$1 Article(s) not unlocked': null
-'$1 Article(s) duplicated': null
+'$1 articles have not been removed': 'A/z $1 cikk eltávolítása nem történt meg'
+'$1 Article(s) unlocked': 'A/z $1 cikk zárolásának feloldása megtörtént'
+'$1 Article(s) not unlocked': 'A(z) $1 cikk zárolása nincs feloldva'
+'$1 Article(s) duplicated': 'A(z) $1 cikk megkettőzése megtörtént'
 'Download file': 'Fájl letöltése'
 'You do not have the right to delete articles.': 'Nincs jogod a cikkek törléséhez.'
 'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek ennek a cikknek az állapotát módosítani. Cikk beküldése után csak a jogosult felhasználók módosíthatják.'
@@ -26,18 +26,18 @@ Title: Cím
 'Toggle: Comments': null
 'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
 'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
-'Status: Submit': null
-'Status: Set New': null
-'Status: Publish': null
+'Status: Submit': 'Állapot: Küldés'
+'Status: Set New': 'Állapot: Új beállítása'
+'Status: Publish': 'Állapot: Közzététel'
 Size: Méret
-'Showing _START_ to _END_ of _TOTAL_ entries': null
+'Showing _START_ to _END_ of _TOTAL_ entries': '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
 'Show / hide columns': 'Oszlopok megjelenítése/elrejtése'
 'Select some article first.': 'Előbb válassz ki néhány cikket.'
 'Select action': 'Művelet kiválasztása'
-'Save order': null
-'Reset all filters': null
-'Published before': null
-'Published after': null
+'Save order': 'Sorrend mentése'
+'Reset all filters': 'Minden szűrő alaphelyzetbe állítása'
+'Published before': 'Közzétéve előtte'
+'Published after': 'Közzétéve utána'
 'Publish date': 'Közzététel dátuma'
 'Publish Schedule': 'Közzététel beütemezése'
 'Publish Date': 'Közzététel dátuma'
@@ -48,7 +48,7 @@ Size: Méret
 'No publications found': 'Nem találhatók kiadványok'
 'No issues found': 'Nem találhatók számok'
 'No entries to show': 'Nincsenek megjelenítendő bejegyzések'
-Locations: null
+Locations: Helyek
 'Loading data': 'Adatok betöltése'
 'Last modified': 'Utolsó módosítás'
 'Last Modified': 'Utolsó módosítás'
@@ -57,8 +57,8 @@ First: Első
 'Filter by...': Szűrés...
 Filter: Szűrő
 Filename: Fájlnév
-'Duplicate to another section': null
-'Display _MENU_ records': null
+'Duplicate to another section': 'Megkettőzés másik rovatba'
+'Display _MENU_ records': '_MENU_ rekordok megjelenítése'
 Creator: Létrehozó
 'Create Date': 'Létrehozás dátuma'
 'Article status set to $1': 'A cikk állapotának beállítása megtörtént erre: $1'
@@ -74,4 +74,4 @@ Added: Hozzáadva
 'Search for creators': null
 'No matches.': 'Nincs találat.'
 Searching...: Keresés...
-'Minimum input of characters: $1': null
+'Minimum input of characters: $1': 'Minimális karakterszám: $1'

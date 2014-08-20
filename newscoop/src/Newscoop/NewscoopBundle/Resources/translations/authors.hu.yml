@@ -2,7 +2,7 @@
 'Total articles': 'Összes cikk'
 Skype: Skype
 'Save All': 'Az összes mentése'
-Reset: null
+Reset: Alaphelyzet
 'Please enter the last name': 'Adja meg vezetéknevét'
 'Please enter the first name': 'Adja meg keresztnevét'
 'No records found': 'Nem találhatók rekordok.'
@@ -14,6 +14,6 @@ Email: E-mail
 'Delete author': 'Szerző törlése'
 Contacts: null
 Biography: Életrajz
-Aliases: null
+Aliases: Aliasok
 AIM: AIM
 'Search for authors': 'Szerzők keresése'

@@ -23,7 +23,7 @@ Feedback: Visszajelzés
 'Edit your password': 'Jelszavad szerkesztése'
 'Edit user': 'Felhasználó szerkesztése'
 'Edit permissions': 'Engedélyek szerkesztése'
-Detail: null
+Detail: Adat
 'Create new user': 'Új felhasználó létrehozása'
 'Create new account': 'Új fiók létrehozása'
 'Add feed': 'Hírcsatorna hozzáadása'
@@ -71,7 +71,7 @@ Newscoop: Newscoop
 'An email with instructions on how to recover you password has been sent to your inbox.': 'A jelszó visszaállításával kapcsolatos utasításokat tartalmazó e-mail elküldése a postaládádba megtörtént.'
 'Session expired.': 'A munkamenet lejárt.'
 Processing...: Feldolgozás...
-Please: null
+Please: Kérjük
 'Go to dashboard': 'Ugrás az irányítópulthoz'
 'Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.': 'A böngésződ nem támogatja a JavaScriptet, vagy (valószínűbb) letiltottad a beállításokban. Javítsd ezt a Newscoop további használata céljából.'
 'Newscoop has upgraded its security measures.  In order to upgrade your account to use this increased security, you must enter your password again.': 'A Newscoop frissítette biztonsági intézkedéseit. Fiókod frissítése, a fokozott biztonság használata érdekében ismét meg kell adnod a jelszavadat.'

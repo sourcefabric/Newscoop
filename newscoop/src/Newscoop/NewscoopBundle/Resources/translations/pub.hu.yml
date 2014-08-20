@@ -1,77 +1,77 @@
-'Make sure to enter the Moderator Address below': null
-'click to see issues': null
-'Moderator Address': null
-'From Address': null
-'Use CAPTCHA to prevent spam?': null
-'Public allowed to comment?': null
-'Enable spam blocking?': null
-'The subscription settings for $1 could not be added.': null
-'The publication name you specified conflicts with publication $1.': null
-'The publication alias you specified conflicts with publication $1.': null
-'Subscription defaults': null
-'Subscription Settings by Country': null
-'Set subscription settings for a country': null
-'Set subscription settings by country': null
-'Default time periods:': null
-'Country subscription settings updated.': null
-'Country subscription settings deleted.': null
-'Change country subscription settings': null
-'Are you sure you want to delete the subscription settings for $1?': null
-'Publication updated': null
-'Subscriber comments moderated?': null
-'Public comments moderated?': null
+'Make sure to enter the Moderator Address below': 'Győződj meg róla, hogy megadtad-e alább a Moderátor címet'
+'click to see issues': 'kattins ide a számok megtekintéséhez'
+'Moderator Address': 'Moderátor címe'
+'From Address': 'Feladó címe'
+'Use CAPTCHA to prevent spam?': 'CAPTCHA használata a szemét megakadályozásához?'
+'Public allowed to comment?': 'Mindenki számára engedélyezett a hozzászólás?'
+'Enable spam blocking?': 'A szemét letiltásának engedélyezése?'
+'The subscription settings for $1 could not be added.': 'Nem lehet hozzáadni az előfizetési beállításokat a/z $1 számára.'
+'The publication name you specified conflicts with publication $1.': 'Az általad megadott kiadványnév ütközik a/z $1 kiadvánnyal.'
+'The publication alias you specified conflicts with publication $1.': 'A kiadvány Ön által megadott aliasa ütközik a/z $1 kiadvánnyal.'
+'Subscription defaults': 'Előfizetés alapértelmezései'
+'Subscription Settings by Country': 'Előfizetés ország szerinti beállításai'
+'Set subscription settings for a country': 'Egy ország előfizetési beállításainak megadása'
+'Set subscription settings by country': 'Előfizetési beállítások ország szerinti megadása'
+'Default time periods:': 'Alapértelmezett időszakok:'
+'Country subscription settings updated.': 'Az ország előfizetési beállításainak frissítése megtörtént.'
+'Country subscription settings deleted.': 'Az ország előfizetési beállításainak törlése megtörtént.'
+'Change country subscription settings': 'Az ország előfizetési beállításainak módosítása'
+'Are you sure you want to delete the subscription settings for $1?': 'Biztosan törölni akarod $1 előfizetési beállításait?'
+'Publication updated': 'A kiadvány frissítése megtörtént'
+'Subscriber comments moderated?': 'Az előfizetői hozzászólások moderáltak?'
+'Public comments moderated?': 'A nyilvános hozzászólások moderáltak?'
 'Comments enabled?': 'Engedélyezett a hozzászólás?'
-'Comments enabled': null
-'Article comments default to enabled?': null
-'trial subscription': null
-'paid subscription': null
-'time units': null
-'one language': null
-'all languages': null
-'Trial subscriptions': null
-'Time unit cost per one section': null
-'Paid subscriptions': null
-'Default time period': null
-'Go To Issues': null
-'Delete publication $1': null
-'No publications.': null
-'Default Site Alias': null
-'URL Type': null
-'Country<BR><SMALL>(click to edit)</SMALL>': null
-'Delete alias $1': null
-'Configure publication': null
-'You do not have the right to edit publication information.': null
-'General attributes': null
-'You do not have the right to change publication information.': null
-'The publication information could not be updated.': null
-'You do not have the right to delete publications.': null
-'Are you sure you want to delete the publication $1?': null
-'Deleting publication': null
-'There are $1 subscription(s) left.': null
-'The publication $1 could not be deleted.': null
-'The publication could not be added.': null
-'You do not have the right to manage publications.': null
-'You must select a country.': null
-'Add new alias': null
-'Alias (click to edit)': null
-'Edit aliases': null
-'Publication Aliases': null
-'Adding new alias': null
-'The site alias $1 could not be added.': null
-'Another alias with the same name exists already.': null
-'Edit alias': null
-'Editing alias': null
-'The site alias $1 could not be modified.': null
-'Are you sure you want to delete the alias $1?': null
-'Deleting alias': null
-'The alias $1 could not be deleted.': null
-'$1 is the default publication alias, it can not be deleted.': null
-'You do not have the right to add publications.': null
+'Comments enabled': 'A hozzászólások engedélyezése megtörtént'
+'Article comments default to enabled?': 'A hozzászólások a cikkhez alapértelmezetten engedélyezettek?'
+'trial subscription': próbaelőfizetés
+'paid subscription': 'fizetett előfizetés'
+'time units': időegységek
+'one language': 'egy nyelv'
+'all languages': 'minden nyelv'
+'Trial subscriptions': Próbaelőfizetések
+'Time unit cost per one section': 'Időegység költsége egy rovatra'
+'Paid subscriptions': 'Fizetett előfizetések'
+'Default time period': 'Alapértelmezett időszak'
+'Go To Issues': 'Ugrás a számokhoz'
+'Delete publication $1': 'A/z $1 kiadvány törlése'
+'No publications.': 'Nincsenek kiadványok.'
+'Default Site Alias': 'Alapértelmezett webhely alias'
+'URL Type': 'URL-cím típusa'
+'Country<BR><SMALL>(click to edit)</SMALL>': 'Ország<BR><SMALL>(kattints a szerkesztéshez)</SMALL>'
+'Delete alias $1': 'A/z $1 alias törlése'
+'Configure publication': 'Kiadvány konfigurálása'
+'You do not have the right to edit publication information.': 'Nincs jogod a kiadvány adatainak szerkesztéséhez.'
+'General attributes': 'Általános attribútumok'
+'You do not have the right to change publication information.': 'Nincs jogod a kiadvány adatainak módosításához.'
+'The publication information could not be updated.': 'Nem lehet frissíteni a kiadvány adatait.'
+'You do not have the right to delete publications.': 'Nincs jogod a kiadványok törléséhez.'
+'Are you sure you want to delete the publication $1?': 'Biztosan törölni akarod a/z $1 kiadványt?'
+'Deleting publication': 'Kiadvány törlése'
+'There are $1 subscription(s) left.': '$1 előfizetés maradt.'
+'The publication $1 could not be deleted.': 'Nem lehet törölni a/z $1 kiadványt.'
+'The publication could not be added.': 'Nem lehet hozzáadni a kiadványt.'
+'You do not have the right to manage publications.': 'Nincs jogod a kiadványok kezeléséhez.'
+'You must select a country.': 'Ki kell választanod egy országot.'
+'Add new alias': 'Új alias hozzáadása'
+'Alias (click to edit)': 'Alias (kattints ide a szerkesztéshez)'
+'Edit aliases': 'Aliasok szerkesztése'
+'Publication Aliases': 'Kiadvány aliasok'
+'Adding new alias': 'Új alias hozzáadása'
+'The site alias $1 could not be added.': 'Nem lehet hozzáadni a/z $1 webhely aliast.'
+'Another alias with the same name exists already.': 'Már létezik ugyanilyen alias.'
+'Edit alias': 'Alias szerkesztése'
+'Editing alias': 'Alias szerkesztése'
+'The site alias $1 could not be modified.': 'Nem lehet módosítani a/z $1 webhely aliast.'
+'Are you sure you want to delete the alias $1?': 'Biztosan törölni akarod a/z $1 aliast?'
+'Deleting alias': 'Alias törlése'
+'The alias $1 could not be deleted.': 'Nem lehet törölni a/z $1 aliast.'
+'$1 is the default publication alias, it can not be deleted.': 'A/z $1 az alapértelmezett kiadvány alias, nem törölhető.'
+'You do not have the right to add publications.': 'Nincs jogod a kiadványok hozzáadásához.'
 'There are $1 issue(s) left.': '$1 szám maradt.'
-'Time Unit': null
-Currency: null
-'Edit languages': null
-'Search engine optimization': null
-'Article title': null
-'Article keywords': null
+'Time Unit': Időegység
+Currency: Pénznem
+'Edit languages': 'Nyelvek szerkesztése'
+'Search engine optimization': Keresőoptimalizálás
+'Article title': 'Cikk címe'
+'Article keywords': 'Cikk kulcsszavai'
 'Article topics': null

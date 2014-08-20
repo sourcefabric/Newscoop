@@ -8,13 +8,13 @@ newscoop.plugins_manager.installed_table.description: Leírás
 newscoop.plugins_manager.installed_table.enabled: Engedélyezve
 newscoop.plugins_manager.installed_table.version: Verzió
 newscoop.plugins_manager.installed_table.license: Licenc
-newscoop.plugins_manager.installed_table.installed_at: null
-newscoop.plugins_manager.installed_table.updated_at: null
+newscoop.plugins_manager.installed_table.installed_at: 'Telepítés időpontja'
+newscoop.plugins_manager.installed_table.updated_at: 'Frissítés időpontja:'
 newscoop.plugins_manager.installed_table.actions: Műveletek
-newscoop.plugins_manager.installed_table.update_plugin: null
-newscoop.plugins_manager.installed_table.remove_plugin: null
-newscoop.plugins_manager.installed_table.install_plugin: null
-newscoop.plugins_manager.installed_table.plugin_installed: null
+newscoop.plugins_manager.installed_table.update_plugin: Frissítés
+newscoop.plugins_manager.installed_table.remove_plugin: Eltávolítás
+newscoop.plugins_manager.installed_table.install_plugin: Telepítés
+newscoop.plugins_manager.installed_table.plugin_installed: Telepítve
 newscoop.plugins_manager.upload.private: null
 newscoop.plugins_manager.search_for_plugins: 'Bővítmények keresése'
 newscoop.plugins_manager.form.package: 'A csomagnak zip-fájlnak kell lennie.'
@@ -22,7 +22,7 @@ newscoop.plugins_manager.form.submit: Feltöltés
 newscoop:
     datatable:
         table:
-            info: null
+            info: '_START_ a _END_ a _TOTAL_ bejegyzés megjelenítése'
             noentries: 'Nincs megjelenítendő bejegyzés'
             filtering: '- szűrés a _MAX_ rekordokból'
             menu: 'A _MENU_ rekordok megjelenítése'
