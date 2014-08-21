@@ -55,6 +55,7 @@ class ArticleCommentsList extends ListObject
 
 	    $p_count = $repository->getCount($params, $cols);
         $articleCommentsList = $repository->getData($params, $cols);
+        $metaCommentsList = array();
         if ($this->_nested) {
             $root = new \Node(0,0,''); // create a new Node, we remove this one later, but we need a Root Node.
 

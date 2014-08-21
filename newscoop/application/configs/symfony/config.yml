@@ -17,6 +17,13 @@ framework:
     fragments: ~
     translator: { fallback: en }
 
+monolog:
+    handlers:
+        sentry:
+            type:  raven
+            dsn:   'http://6948f4720ffe4956b25df0fe720da09e:085cd9f5324c4e65abdd55482ca7c5cc@sentry.sourcefabric.org/5'
+            level: notice
+
 doctrine:
     dbal:
         charset: UTF8

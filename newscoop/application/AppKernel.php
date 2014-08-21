@@ -55,6 +55,13 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
+    public function boot()
+    {
+      parent::boot();
+      $logger = $this->container->get('logger');
+      \Monolog\ErrorHandler::register($logger);
+    }
+
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/configs/symfony/config_'.$this->getEnvironment().'.yml');
