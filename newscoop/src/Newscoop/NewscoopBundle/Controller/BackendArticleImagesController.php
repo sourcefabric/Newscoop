@@ -68,7 +68,6 @@ class BackendArticleImagesController extends Controller
         $editor = '';
         if ($preferencesService->MediaRichTextCaptions == 'Y') {
 
-            $languageSelectedObj = new \Language((int) camp_session_get('LoginLanguageId', 0));
             $editorLanguage = $request->getLocale();
             $editorOptions  = array(
                 'max_chars' => $preferencesService->MediaCaptionLength,
