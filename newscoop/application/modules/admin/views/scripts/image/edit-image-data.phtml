@@ -98,8 +98,6 @@ $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_managemen
             'toolbar_length' => 20,
         );
 
-        // ladybug_dump($loadAsRichtext); exit;
-
         editor_load_tinymce(implode(',', $loadAsRichtext), $this->currentUser, $editorLanguage, $editorOptions);
     }
 ?>
