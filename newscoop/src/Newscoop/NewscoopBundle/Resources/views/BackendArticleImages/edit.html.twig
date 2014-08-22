@@ -114,7 +114,11 @@
                     parent.$('{{'#image-%d-caption'|format(image.id)}}').text(currentCaption);
                 {% endif %}
             } else {
-                 parent.$('{{'#image-%d-caption'|format(image.id)}}').text("{{ form.vars.value.description }}");
+                {% if rich_text_caption == 'Y' %}
+                    parent.$('{{'#image-%d-caption'|format(image.id)}}').html("{{ form.vars.value.description }}");
+                {% else %}
+                    parent.$('{{'#image-%d-caption'|format(image.id)}}').text("{{ form.vars.value.description }}");
+                {% endif %}
             }
         }
     });
