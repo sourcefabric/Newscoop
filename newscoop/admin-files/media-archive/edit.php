@@ -142,6 +142,7 @@ echo $breadcrumbs;
 
     $captionStatus = $preferencesService->MediaRichTextCaptions;
     $captionLimit = $preferencesService->MediaCaptionLength;
+
     if ($captionStatus == 'Y') {
 
         // CHeck if language is this is valid

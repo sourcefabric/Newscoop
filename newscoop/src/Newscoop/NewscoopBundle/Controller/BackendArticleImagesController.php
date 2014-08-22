@@ -69,7 +69,7 @@ class BackendArticleImagesController extends Controller
         if ($preferencesService->MediaRichTextCaptions == 'Y') {
 
             $languageSelectedObj = new \Language((int) camp_session_get('LoginLanguageId', 0));
-            $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageSelectedObj->getCode();
+            $editorLanguage = $request->getLocale();
             $editorOptions  = array(
                 'max_chars' => $preferencesService->MediaCaptionLength,
                 'toolbar_length' => 10,
