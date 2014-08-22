@@ -10,22 +10,22 @@ Playlist: 'Lejátszási lista'
 'List updated.': 'A lista frissítése megtörtánt.'
 'List saved': 'A lista mentése megtörtént.'
 'List Name': 'Lista neve'
-'List ID': null
+'List ID': Listaazonosító
 'Item already exists in the list': 'Az elem már szerepel a listán'
 'Featured Articles': 'Kiemelt cikkek'
 'Featured Article Lists': 'Kiemelt cikkek listái'
 'Featured Article List': 'Kiemelt cikkek listája'
-'Duplicate list': null
+'Duplicate list': 'Lista megkettőzése'
 'Duplicate article entry found': 'Ismétlődő cikkbejegyzésl található'
 'Drag here to add to list': 'Húzd ide a listához adáshoz'
 'Could not save the list': 'Nem sikerült menteni a listát'
-'Available Articles': null
+'Available Articles': 'Elérhető cikkek'
 'Are you sure you want to delete this list?': 'Biztosan törölni akarod ezt a listát?'
 'Add to list': 'Felvétel a listára'
 'Add list': 'Lista hozzáadása'
-'Multi date events': null
+'Multi date events': 'Többdátumos események'
 Slideshows: Diavetítések
-'Place images': null
+'Place images': 'Képek elhelyezése'
 'Youre not allowed to edit article.': 'A cikkszerkesztés nem engedélyezett a számodra.'
 Webcode: Webkód
 Unapproved: 'Nem jóváhagyott'
@@ -35,172 +35,172 @@ Unapproved: 'Nem jóváhagyott'
 'Submit article': 'Cikk beküldése'
 'Related Articles': 'Kapcsolódó cikkek'
 'Pending articles': 'Függőben lévő cikkek'
-'Pending Articles': null
+'Pending Articles': 'Függőben lévő cikkek'
 'Context Box updated': null
 On: null
 Off: null
-'You do not have the right to moderate comments.': null
-'You can not schedule opposing events at the same time': null
-'Unable to reach Newscoop. Please check your internet connection.': null
+'You do not have the right to moderate comments.': 'Nincs jogod a hozzászólások moderálásához.'
+'You can not schedule opposing events at the same time': 'Nem ütemezhetsz be egy időben ütköző eseményeket'
+'Unable to reach Newscoop. Please check your internet connection.': 'Nem érhető el a Newscoop. Ellenőrizd az internetkapcsolatodat.'
 Title: Cím
-'There already is an article with the same name. Please change the name and try again.': null
-'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': null
-Geolocation: null
-Newscoop: null
-'Overwrite articles with matching names': null
-'Article <i>$1</i> already exists, and was not overwritten.<br />': null
-Files: null
-'Select section:': null
+'There already is an article with the same name. Please change the name and try again.': 'Már van ugyanilyen nevű cikk. Változtasd meg a nevét, és próbálkozz újra.'
+'Please be aware that all scheduled publishing events for this article will be deleted when you set this article to New state. Please confirm the state change.': 'Vedd figyelembe, hogy ennek a cikknek az összes beütemezett közzéteendő eseménye törlésre fog kerülni, ha ennek a cikknek az állapotát Újra állítod. Erősítsd meg az állapot módosítását.'
+Geolocation: 'Földrajzi hely'
+Newscoop: Newscoop
+'Overwrite articles with matching names': 'Az egyező nevű cikkek felülírása'
+'Article <i>$1</i> already exists, and was not overwritten.<br />': 'Már létezik <i>$1</i> nevű cikk, és nem került felülírásra.<br />'
+Files: Fájlok
+'Select section:': 'Válassz számot:'
 'Add another author': null
-'The article has been locked by $1 ($2) $3 minute(s) ago.': null
-'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': null
-'Switches saved.': null
-'Keywords saved.': null
-'Comment settings': null
-Authors: null
-'Attach Topic To Article': null
-'Article saved.': null
-'Article is locked': null
-'Actions updated.': null
-'Your work has not been saved. Do you want to continue and lose your changes?': null
-Switches: null
-'No subtopics available': null
-'Newscoop Subhead': null
-Media: null
-'Last modified': null
-'Keywords &amp; Topics': null
+'The article has been locked by $1 ($2) $3 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 perce.'
+'The article has been locked by $1 ($2) $3 hour(s) and $4 minute(s) ago.': 'A cikket $1 ($2) zárolta $3 órája és $4 perce.'
+'Switches saved.': 'A kapcsolók mentése megtörtént.'
+'Keywords saved.': 'A kulcsszavak mentése megtörtént.'
+'Comment settings': 'Hozzászóás beállításai'
+Authors: Szerzők
+'Attach Topic To Article': 'Téma csatolása cikkhez'
+'Article saved.': 'A cikk mentése megtörtént.'
+'Article is locked': 'A cikk zárolása megtörtént'
+'Actions updated.': 'A műveletek frissítése megtörtént.'
+'Your work has not been saved. Do you want to continue and lose your changes?': 'Nem történt meg a munkád mentése. Szeretnéd folytatni és elveszíteni a változtatásaidat?'
+Switches: Kapcsolók
+'No subtopics available': 'Nincs elérhető altéma'
+'Newscoop Subhead': 'Newscoop alcím'
+Media: Média
+'Last modified': 'Utolsó módosítás'
+'Keywords &amp; Topics': 'Kulcsszavak és témák'
 Info: null
-'Go to live article': null
-Created: null
-'Are you sure you want to remove the map from the article?': null
-'Scheduled action added': null
-'Content edited': null
-'You must select an article language.': null
-'You must select a publication.': null
+'Go to live article': 'Ugrás az élő cikkre'
+Created: Létrehozva
+'Are you sure you want to remove the map from the article?': 'Biztosan el akarod távolítani a térképet a cikkből?'
+'Scheduled action added': 'A beütemezett művelet hozzáadása megtörtént'
+'Content edited': 'A tartalom szerkesztése megtörtént'
+'You must select an article language.': 'Ki kell választanod a cikk -nyelvét.'
+'You must select a publication.': 'Ki kell választanod egy kiadványt.'
 'You must select a file to upload.': 'Ki kell választanod egy feltöltendő fájlt.'
-'You must select a XML input file.': null
-'You do not have the right to import XML archives.': null
+'You must select a XML input file.': 'Ki kell választanod egy bemeneti XML-fájlt.'
+'You do not have the right to import XML archives.': 'Nincs jogod az XML-archívumok importálásához.'
 'There was a problem uploading the file.': 'Probléma merült fel a fájl feltöltése során.'
 'The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in php.ini': 'A feltöltött fájl csak részben került feltöltésre. Ez gyakran előfordul, ha rövid a maximális fájlfeltöltési idő a bevinni próbált fájl méretével szemben. A maximális feltöltési időt a php.ini fájlban adják meg.'
 'The file exceeds the allowed max file size.': 'A fájl mérete meghaladja a megengedett maximális fájlméretet.'
-Optional: null
-'Input File': null
-'Import XML': null
-'File is not a valid XML file.': null
-'File does not exist.': null
-'File could not be uploaded.': null
-'File could not be read.': null
-'Error List': null
-'Bad format in XML file.': null
-'Article could not be created.': null
-'---Select article type---': null
-'$1 articles successfully imported.': null
+Optional: Választható
+'Input File': 'Bemeneti fájl'
+'Import XML': 'XML importálása'
+'File is not a valid XML file.': 'A fájl nem érvényes XML-fájl.'
+'File does not exist.': 'A fájl nem létezik.'
+'File could not be uploaded.': 'A fájl nem tölthető fel.'
+'File could not be read.': 'A fájl nem olvasható.'
+'Error List': Hibalista
+'Bad format in XML file.': 'Rossz formátum az XML-fájlban.'
+'Article could not be created.': 'A cikk nem hozható létre.'
+'---Select article type---': '---Válassz cikktípust---'
+'$1 articles successfully imported.': '$1 cikk importálása sikerült.'
 Saved: 'A mentés megtörtént'
-'Save All': null
-'Online Server: On': null
-'Online Server: Off': null
+'Save All': 'Az összes mentése'
+'Online Server: On': 'Online kiszolgáló: be'
+'Online Server: Off': 'Online kiszolgáló: ki'
 Download: Letöltés
-'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': null
-'Visible to non-subscribers': null
-'The article could not be published.': null
-'Scheduled action deleted.': null
-'Scheduled action added.': null
-'Article(s) unlocked.': null
-'Article(s) duplicated.': null
-'Article(s) deleted.': null
-'Article status set to $1': null
-'Article unlocked.': null
-'Article translation created.': null
-'Article order changed.': null
-'Article moved.': null
+'You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article $1.': 'Nem lehet két azonos nevű cikk ugyanabban a rovatban. A/z  $1 cikk már használja az általad megadott cikknevet.'
+'Visible to non-subscribers': 'Látható a nem-előfizetők számára'
+'The article could not be published.': 'Nem lehet közzétenni a cikket.'
+'Scheduled action deleted.': 'A beütemezett művelet törlése megtörtént.'
+'Scheduled action added.': 'A beütemezett művelet hozzáadása megtörtént.'
+'Article(s) unlocked.': 'A cikk(ek) zárolásának feloldása megtörtént.'
+'Article(s) duplicated.': 'A cikk(ek) megkettőzése megtörtént.'
+'Article(s) deleted.': 'A cikk(ek) törlése megtörtént.'
+'Article status set to $1': 'A cikk állapotának beállítása megtörtént erre: $1'
+'Article unlocked.': 'A cikk zárolásának feloldása megtörtént.'
+'Article translation created.': 'A cikk fordítása elkészült.'
+'Article order changed.': 'A cikksorrend módosítása megtörtént.'
+'Article moved.': 'A cikk áthelyezése megtörtént.'
 'Article deleted.': 'A cikk törlése megtörtént.'
 'Article created.': 'A cikk létrehozása megtörtént.'
-'$1 toggled.': null
-'Total:': null
-'Show Comments': null
-Locked: null
-'Invalid type: $1': null
-'Hide Comments': null
-Enabled: null
-Disabled: null
-Comments: null
-'The article has already been translated into $1.': null
-'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': null
-'You do not have the right to translate articles.': null
-'You do not have the right to publish articles.': null
-'You do not have the right to move articles.': null
-'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': null
-'Publish?': null
-'Publish articles': null
-'Publish article': null
-'Move?': null
-'Move articles': null
-'Move article': null
-'An issue must be created for the selected language but you do not have the right to create an issue.': null
-'A section must be created for the selected language but you do not have the right to create a section.': null
-'to section': null
-'You must choose a language': null
-'Unable to create the section for translation $1.': null
-'Unable to create the issue for translation $1.': null
-'The following articles are new; it is not possible to schedule them for automatic publishing': null
-'Section URL Name': null
-'Section Name': null
-'Publish Schedule': null
-'No action specified': null
-'New section name': null
-'New section URL name': null
-'New issue name': null
-'New issue URL name': null
-'New article name': null
-'Issue URL Name': null
-'Issue Name': null
-'Duplicate?': null
-'Duplicate articles': null
-'Article name ($1)': null
-'Article List': null
-'Are you sure you want to remove the topic $1 from the article?': null
-'Are you sure you want to remove the file $1 from the article?': null
-'Are you sure you want to remove the event scheduled on $1?': null
-'Are you sure you want to delete this article?': null
-'An issue must be created for the selected language.  Please enter the issue name and URL name.': null
-'A section must be created for the selected language.  Please enter the section name and URL name.': null
-'Article Type': null
+'$1 toggled.': 'A/z $1 átváltása megtörtént.'
+'Total:': 'Összes:'
+'Show Comments': 'A hozzászólások megjelenítése'
+Locked: Zárolva
+'Invalid type: $1': 'Érvénytelen típus: $1'
+'Hide Comments': 'A hozzászólások elrejtése'
+Enabled: Engedélyezve
+Disabled: Letiltva
+Comments: Hozzászólások
+'The article has already been translated into $1.': 'A cikket lefordították már $1 nyelvre.'
+'You must set the publication, issue, and section for this article before you can schedule it for publishing.  Go to the $1 menu and select $2 to do this.': 'Meg kell adnod ennek a cikknek a kiadványát, számát és rovatát a közzététele beütemezése előtt.  Lépj a/z $1 menüre, és végrehajtásához válaszd a/z $2 elemet.'
+'You do not have the right to translate articles.': 'Nincs jogod a cikkek fordításaihoz.'
+'You do not have the right to publish articles.': 'Nincs jogod a cikkek közzétételeihez.'
+'You do not have the right to move articles.': 'Nincs jogod a cikkek áthelyezéséhez.'
+'You cannot $1 the articles marked in red because the destination issue has not been translated into the appropriate language.': 'A pirossal jelölt cikkeket nem lehet $1, mert nem történt meg a célszám lefordítása a megfelelő nyelvre.'
+'Publish?': 'Közzéteszed?'
+'Publish articles': 'Cikkek közzététele'
+'Publish article': 'Cikk közzététele'
+'Move?': 'Áthelyezed?'
+'Move articles': 'Cikkek áthelyezése'
+'Move article': 'Cikk áthelyezése'
+'An issue must be created for the selected language but you do not have the right to create an issue.': 'Létre kell hoznod egy számot a választott nyelvhez, viszont szám létrehozásához nincs jogod.'
+'A section must be created for the selected language but you do not have the right to create a section.': 'Létre kell hoznod egy rovatot a választott nyelvhez, viszont rovat létrehozásához nincs jogod.'
+'to section': rovathoz
+'You must choose a language': 'Ki kell választanod egy nyelvet'
+'Unable to create the section for translation $1.': 'Nem lehet létrehozni a rovatot a/z $1 fordításhoz.'
+'Unable to create the issue for translation $1.': 'Nem lehet létrehozni a számot a/z $1 fordításhoz.'
+'The following articles are new; it is not possible to schedule them for automatic publishing': 'Az alábbi cikkek újak; nem lehet őket automatikus közzétételre beütemezni'
+'Section URL Name': 'A rovat URL-neve'
+'Section Name': 'Rovat neve'
+'Publish Schedule': 'Közzététel beütemezése'
+'No action specified': 'Nincs művelet megadva'
+'New section name': 'Új rovat neve'
+'New section URL name': 'Az új rovat URL-neve'
+'New issue name': 'Új szám neve'
+'New issue URL name': 'Az új szám URL-neve'
+'New article name': 'Új cikk neve'
+'Issue URL Name': 'Szám URL neve'
+'Issue Name': 'Szám neve'
+'Duplicate?': 'Megkettőzés?'
+'Duplicate articles': 'Cikkek duplikálása'
+'Article name ($1)': 'Cikk neve ($1)'
+'Article List': Cikklista
+'Are you sure you want to remove the topic $1 from the article?': 'Biztosan el akarod távolítani a/z $1 témát a cikkből?'
+'Are you sure you want to remove the file $1 from the article?': 'Biztosan el akarod távolítani a/z $1 fájlt a cikkből?'
+'Are you sure you want to remove the event scheduled on $1?': 'Biztosan el akarod távolítani a/z $1 időpontra beütemezett eseményt?'
+'Are you sure you want to delete this article?': 'Biztosan törölni akarod ezt a cikket?'
+'An issue must be created for the selected language.  Please enter the issue name and URL name.': 'Létre kell hozni egy számot a választott nyelvhez. Add meg a szám nevét és URL-nevét.'
+'A section must be created for the selected language.  Please enter the section name and URL name.': 'Létre kell hozni egy rovatot a választott nyelvhez. Add meg a rovat nevét és URL-nevét.'
+'Article Type': 'Cikk típusa'
 'Show article on front page': 'A cikk megjelenítése a címlapon'
-'Show article on section page': null
-'Translate article': null
-'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': null
-'Duplicate article': null
-'The destination section is the same as the source section.': null
-'The article is new; it is not possible to schedule it for automatic publishing.': null
-'No article types were defined. You must create an article type first.': null
-'Edit article types': null
-'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': null
-'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': null
-'You do not have the right to delete articles.': null
-'You must select an article type.': null
-'Are you sure you want to remove the image $1 from the article?': null
-'There was an error reading request parameters.': null
-'This article cannot be previewed. Please make sure it has the article template selected.': null
-'No such article.': null
-'No such section.': null
-Characters: null
+'Show article on section page': 'A cikk megjelenítése a rovat oldalán'
+'Translate article': 'Cikk fordítása'
+'You do not have the right to change this article.  You may only edit your own articles and once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek a cikknek a módosításához. Csak a saját cikkeidet szerkesztheted, beküldés után csak a jogosult felhasználók módosíthatják.'
+'Duplicate article': 'Cikk megkettőzése'
+'The destination section is the same as the source section.': 'A célrovat azonos a forrásrovattal.'
+'The article is new; it is not possible to schedule it for automatic publishing.': 'A cikk új; nem lehet automatikus közzétételre beütemezni.'
+'No article types were defined. You must create an article type first.': 'Nem, voltak cikktípusok meghatározva. Először létre kell hoznod egy cikktípust.'
+'Edit article types': 'Cikktípusok szerkesztése'
+'Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.': 'Nem menthetői a cikk. $1 zárolta $2 órája és $3 perce.'
+'You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.': 'Nincs jogod ennek ennek a cikknek az állapotát módosítani. Cikk beküldése után csak a jogosult felhasználók módosíthatják.'
+'You do not have the right to delete articles.': 'Nincs jogod a cikkek törléséhez.'
+'You must select an article type.': 'Ki kell választania egy cikktípust.'
+'Are you sure you want to remove the image $1 from the article?': 'Biztosan el akarod távolítani a/z $1 képet a cikkből?'
+'There was an error reading request parameters.': 'Hiba történt a kérésparaméterek olvasásakor.'
+'This article cannot be previewed. Please make sure it has the article template selected.': 'Ez a cikk nem tekinthető meg. Győződj meg róla, hogy van-e kiválasztva cikksablonja.'
+'No such article.': 'Nincs ilyen cikk.'
+'No such section.': 'Nincs ilyen rovat.'
+Characters: Karakterek
 articles:
     images:
         edit:
-            edit_image_metadata: null
-            save: null
+            edit_image_metadata: 'Kép metaadatainak szerkesztése'
+            save: Mentés
             form:
-                use: null
-                number: null
-                caption: null
-                status_approved: null
-                status_unapproved: null
-                status: null
-                description: null
-                photographer: null
-                photographer_url: null
-                place: null
-                date: null
-                article_specific: null
-                global: null
-                other_captions: null
+                use: Használat
+                number: Sorszám
+                caption: Képaláírás
+                status_approved: Jóváhagyott
+                status_unapproved: 'Nem jóváhagyott'
+                status: Állapot
+                description: Leírás
+                photographer: Fényképész
+                photographer_url: 'Fényképész URL-címe'
+                place: Hely
+                date: Dátum
+                article_specific: Cikkspecifikus
+                global: Globális
+                other_captions: 'Egyéb feliratok'

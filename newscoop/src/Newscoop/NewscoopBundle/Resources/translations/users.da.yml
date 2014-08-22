@@ -1,4 +1,4 @@
-'Password confirmation does not match your password.': null
+'Password confirmation does not match your password.': 'Bekræftelseskodeordet er ikke det samme som dit kodeord.'
 'Password Confirmation': 'Bekræftelse af adgangskode'
 Website: Website
 Twitter: Twitter
@@ -17,7 +17,7 @@ Facebook: Facebook
 'User with email %s is registered already.': 'Der er allerede registreret en bruger med emailen %s.'
 'Username is used. Please use another one.': 'Brugernavnet er i brug. Vælg et andet.'
 Continue: Fortsæt
-'Accepting terms of use': null
+'Accepting terms of use': 'Accepterer betingelserne'
 'send confirmation email': 'send bekræftelses email'
 'edit user': 'rediger bruger'
 'delete user': 'Slet bruger'
@@ -57,7 +57,7 @@ None: Ingen
 'Ban for user $1 saved.': 'Blokering for bruger $1 blev gemt.'
 'User account is active': 'Brugerkonto er aktiv'
 'Allow users profile to be publicly displayed': 'Tillad offentlige bruger profiler'
-'Allow user access to login to site backend': null
+'Allow user access to login to site backend': 'Tillad brugere at logge ind på redaktørsiderne'
 Templates: Skabeloner
 Username: Brugernavn
 'Last Name': Efternavn
@@ -84,14 +84,14 @@ Filters: Filtre
 'Author type added.': 'Forfatter type tilføjet.'
 'Are you sure you want to delete this author type?': 'Vil du slette denne forfatter type?'
 'User may change authors': 'Bruger må ændre forffatere'
-'Unable to add new image, target directory is not writable.': null
+'Unable to add new image, target directory is not writable.': 'Kunne ikke tilføje nyt billede, den valgte mappe er skrivebeskyttet.'
 'Author saved.': 'Forfatter gemt.'
 'Author deleted.': 'Forfatter slettet.'
-'Enable Firefox spell checking by default': null
+'Enable Firefox spell checking by default': 'Slå Firefox stavekontrol til som standard'
 'User may use the editor status bar': 'Bruger må bruge editor statusbaren'
 'User may clear up the system cache': 'Bruger må rydde system cachen'
-'Another user is registered with that e-mail address, please choose a different one.': null
-'There was an error when trying to update the user info.': null
+'Another user is registered with that e-mail address, please choose a different one.': 'Der er allerede registreret en bruger med den email adresse, vælg en anden.'
+'There was an error when trying to update the user info.': 'Brugerinfo kunne ikke opdateres.'
 'User may moderate comments': 'Bruger må moderere kommentarer'
 'User may enable comments': 'Bruger må slå kommentarer til'
 'User may translate articles': 'Bruger må oversætte artikler'
@@ -118,9 +118,9 @@ Filters: Filtre
 'The IP Group $1 has been created.': 'IP gruppen $1 blev oprettet.'
 'There was an error creating the IP address group.': 'IP-adresse gruppen kunne ikke oprettes.'
 'The IP address group $1 has been deleted.': 'IP-adresse gruppen $1 blev slettet.'
-'User $1 information was changed successfully.': null
+'User $1 information was changed successfully.': 'Brugerinfo for $1 blev opdateret.'
 'User Type': Brugertype
-'The IP address group $1:$2 conflicts with another existing group.': null
+'The IP address group $1:$2 conflicts with another existing group.': 'IP adresse gruppen $1:$2 er i konflikt med en eksisterende gruppe.'
 'User may add/change publications': 'Bruger må tilføje/redigere publikationer'
 'Invalid value of user type parameter': 'Ugyldig værdi for brugertype parameter'
 'User may delete publications': 'Bruger må slette publikationer'
@@ -135,8 +135,8 @@ Filters: Filtre
 'User may change images': 'Bruger må redigere billeder'
 'User may delete images': 'Bruger må slette billeder'
 'User may delete templates': 'Bruger må slette skabeloner'
-'User may add/change staff accounts and passwords': null
-'User may add/change subscribers accounts and passwords': null
+'User may add/change staff accounts and passwords': 'Bruger må tilføje/ændre redaktør konti og adgangskoder'
+'User may add/change subscribers accounts and passwords': 'Bruger må tilføje/ændre abonnent konti og adgangskoder'
 'User may delete staff accounts': 'Bruger må slette redaktions konti'
 'User may manage user subscriptions': 'Bruger må administrere bruger abonnementer'
 'User may manage account types': 'Bruger må administrere kontotyper'
@@ -146,7 +146,7 @@ Filters: Filtre
 'User may add/change country entries': 'Bruger må tilføje og administrere lande'
 'User may add languages and manage language information': 'Bruger må tilføje og administrere sprog'
 'User may delete languages': 'Bruger må slette sprog'
-'User may view audit logs': null
+'User may view audit logs': 'Bruger må se overvågningslogfiler'
 'User may delete country entries': 'Bruger må slette lande'
 'User may manage localizer': 'Bruger må administrere oversætteren'
 'User may publish articles': 'Bruger må udgive artikler'
@@ -176,12 +176,12 @@ Filters: Filtre
 'User may use subscripts': 'Bruger må bruge sænket skrift'
 'User may backup and restore the site data': 'Bruger må lave og gendanne backup af hjemmesiden'
 Miscellaneous: Diverse
-'Staff/Subscribers Management': null
+'Staff/Subscribers Management': 'Redaktør/Abonnent administration'
 'Editor Basic Settings': 'Grundlæggende editor indstillinger'
 'Editor Advanced Font Settings': 'Avancerede skrifttype indstillinger'
 'Editor Table Settings': 'Tabel indstillinger'
 'Administrative tasks': 'Administrative opgaver'
-'User will be notified on several events': null
+'User will be notified on several events': 'Bruger vil få besked ved flere begivenheder'
 'Editor Miscellaneous Settings': 'Diverse editor indstillinger'
 'No such user account.': 'Bruger konto findes ikke.'
 'User image (full-size)': 'Brugerfoto (fuld størrelse)'

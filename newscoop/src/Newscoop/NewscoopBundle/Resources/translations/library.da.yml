@@ -59,7 +59,7 @@ Filter: Filtrér
 Filename: Filnavn
 'Duplicate to another section': 'Kopier til en anden sektion'
 'Display _MENU_ records': 'Vis _MENU_ opslag'
-Creator: Forfatter
+Creator: 'Oprettet af'
 'Create Date': Oprettelsesdato
 'Article status set to $1': 'Artikel status sat til $1'
 'Are you sure you want to delete selected articles?': 'Vil du slette de valgte artikler?'
@@ -71,7 +71,7 @@ Added: Tilføjet
 '$1 toggled.': '$1 skiftet.'
 '$1 articles have been removed': '$1 artikler blev slettet'
 ' - filtering from _MAX_ records': '- filtreret fra _MAX_ opslag'
-'Search for creators': null
+'Search for creators': 'Søg efter hvem der har oprettet'
 'No matches.': 'Ingen resultater.'
 Searching...: Søger...
 'Minimum input of characters: $1': 'Mindste antal tegn: $1'

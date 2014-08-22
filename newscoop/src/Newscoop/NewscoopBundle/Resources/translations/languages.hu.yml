@@ -1,72 +1,72 @@
-'Language id not specified': null
-'No languages.': null
-'Native Name': null
+'Language id not specified': 'A nyelvazonosító nincs megadva'
+'No languages.': 'Nincsenek nyelvek.'
+'Native Name': 'Eredeti név'
 'Name taken.': null
-'Language saved.': null
-'Language removed.': null
-'Language not found.': null
-'Language is in use and cannot be removed.': null
-'Language added.': null
-'English language cannot be removed.': null
-'Edit short month names': null
-'Edit short day names': null
-'Edit month names': null
-'Edit language: $1': null
-'Edit day names': null
-'Code Page': null
-'Add new Language': null
-'Add Language': null
-We: null
-Tu: null
-Th: null
-Su: null
-Sep: null
-Sa: null
-'Please enter the translation for week day short names.': null
-'Please enter the translation for month short names.': null
-Oct: null
-Nov: null
-Mo: null
-Mar: null
-Jun: null
-Jul: null
-Jan: null
-Fr: null
-Feb: null
-Dec: null
-Aug: null
-Apr: null
-'No language.': null
-'Delete language $1': null
-'You do not have the right to add languages.': null
-'Please enter the translation for time units.': null
-'You do not have the right to delete languages.': null
-'Are you sure you want to delete the language $1?': null
-'Deleting language': null
-'The language $1 could not be deleted.': null
-'Edit language': null
-'You do not have the right to edit languages.': null
-'Please enter the translation for month names.': null
-'Please enter the translation for week day names.': null
-January: null
-February: null
-March: null
-April: null
-May: null
-June: null
-July: null
-August: null
-September: null
-October: null
-November: null
-December: null
-Monday: null
-Tuesday: null
-Wednesday: null
-Thursday: null
-Friday: null
-Saturday: null
-Sunday: null
-'You do not have the right to add new languages.': null
-'There are $1 issue(s) left.': null
-'Native name': null
+'Language saved.': 'A nyelv mentése megtörtént.'
+'Language removed.': 'A nyelv eltávolítása megtörtént.'
+'Language not found.': 'A nyelv nem található.'
+'Language is in use and cannot be removed.': 'A nyelv használatban van, és nem lehet eltávolítani.'
+'Language added.': 'A nyelv hozzáadása megtörtént.'
+'English language cannot be removed.': 'Az angol nyelvet nem lehet eltávolítani.'
+'Edit short month names': 'Rövid hónapnevek szerkesztése'
+'Edit short day names': 'Rövid napnevek szerkesztése'
+'Edit month names': 'Hónapnevek szerkesztése'
+'Edit language: $1': 'Nyelv szerkesztése: $1'
+'Edit day names': 'Napnevek szerkesztése'
+'Code Page': Kódlap
+'Add new Language': 'Új nyelv hozzáadása'
+'Add Language': 'Nyelv hozzáadása'
+We: Sze
+Tu: K
+Th: Cs
+Su: V
+Sep: Szept.
+Sa: Szo
+'Please enter the translation for week day short names.': 'Add meg a hét rövid napneveinek fordításait.'
+'Please enter the translation for month short names.': 'Add meg a rövid hónapnevek fordításait.'
+Oct: Okt.
+Nov: Nov.
+Mo: H
+Mar: Márc.
+Jun: Jún.
+Jul: Júl.
+Jan: Jan.
+Fr: P
+Feb: Febr.
+Dec: Dec.
+Aug: Aug.
+Apr: Ápr.
+'No language.': 'Nincs nyelv.'
+'Delete language $1': 'A/z $1 nyelv törlése'
+'You do not have the right to add languages.': 'Nincs jogod a nyelvek hozzáadásához.'
+'Please enter the translation for time units.': 'Add meg az időegységek fordítását.'
+'You do not have the right to delete languages.': 'Nincs jogod a nyelvek törléséhez.'
+'Are you sure you want to delete the language $1?': 'Biztosan törölni akarod a/z $1 nyelvet?'
+'Deleting language': 'Nyelv törlése'
+'The language $1 could not be deleted.': 'Nem lehet törölni a/z $1 nyelvet.'
+'Edit language': 'Nyelv szerkesztése'
+'You do not have the right to edit languages.': 'Nincs jogod a nyelvek szerkesztéséhez.'
+'Please enter the translation for month names.': 'Add meg a hónapnevek fordítását.'
+'Please enter the translation for week day names.': 'Add meg a hét napneveik fordítását.'
+January: Január
+February: Február
+March: Március
+April: Április
+May: Május
+June: Június
+July: Július
+August: Augusztus
+September: Szeptember
+October: Október
+November: November
+December: December
+Monday: Hétfő
+Tuesday: Kedd
+Wednesday: Szerda
+Thursday: Csütörtök
+Friday: Péntek
+Saturday: Szombat
+Sunday: Vasárnap
+'You do not have the right to add new languages.': 'Nincs jogod új nyelvek hozzáadásához.'
+'There are $1 issue(s) left.': '$1 szám maradt.'
+'Native name': 'Eredeti név'

@@ -1,4 +1,4 @@
-'Duplicate assignment': null
+'Duplicate assignment': Dobbelttildeling
 Templates: Skabeloner
 'Import theme': 'Importer tema'
 'Import succeded!': 'Importen lykkedes!'
@@ -60,7 +60,7 @@ Export: Eksporter
 'Error page template': 'Skabelon for fejlside'
 'Edit $1': 'Rediger $1'
 'Done uploading': 'Upload færdigt'
-'Do you want to override $1?': null
+'Do you want to override $1?': 'Vil du tilsidesætte $1?'
 'Directory is empty': 'Mappen er tom'
 'Directory $1 created.': 'Mappen $1 oprettet.'
 Design: Design
@@ -73,7 +73,7 @@ Design: Design
 Compatibility: Kompatibilitet
 'Click to enlarge': 'Klik for at forstørre'
 'Choose destination': 'Vælg destination'
-'Cant override directory $1.': null
+'Cant override directory $1.': 'Mappen $1 kan ikke tilsidesættes.'
 'Cache Lifetime': 'Levetid for cachen'
 'Browse for the theme': 'Vælg tema'
 'Assigned successfully': Tildelt
@@ -85,4 +85,4 @@ Compatibility: Kompatibilitet
 '$1 is not writable': '$1 er ikke skrivbar'
 '$1 $2': '$1 $2'
 '$1 files $2': '$1 filer $2'
-'Available themes': null
+'Available themes': 'Tilgængelige temaer'

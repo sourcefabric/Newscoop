@@ -1,159 +1,159 @@
 newscoop:
     btn:
-        save: null
+        save: Mentés
     preferences:
         error:
-            cache: null
-            replication: null
-            maxupload: null
-            geolocation: null
-            noaccess: null
+            cache: 'Érvénytelen: Engedélyezned kell a PHP %cache%-t a sablon gyorsítótárazási rendszerének használatához.'
+            replication: 'Hiányosak az adatbázis-replikációs adatok'
+            maxupload: 'Érvénytelen a feltölthető fájlok maximális méretének elküldött értéke'
+            geolocation: 'Érvénytelen földrajzi hely mezők. Számokat kell tartalmaznia. A szélesség nem lehet > 90 és < -90. A hosszúság nem lehet > 180 és < -180.'
+            noaccess: 'Nincs jogod a rendszerbeállítások módosításához.'
             latitude: 'A földrajzi szélesség mező értéke nem érvényes.'
             longitude: 'A földrajzi hosszúság mező értéke nem érvényes.'
             cacheNotCleared: 'Hiba volt a gyorsítótár kitisztításával'
             joberror: 'Nem lehet módosítani a kijelölt feladat állapotát.'
             jobnotifyerror: 'Nem lehet engedélyezni/letiltani az értesítéseket.'
         success:
-            saved: null
-            cacheCleared: 'A gyorsítótár kitisztítása megtörtént'
+            saved: 'A rendszerbeállítások frissítése megtörtént.'
+            cacheCleared: 'A gyorsítótár kiürítése megtörtént.'
             jobenabled: 'A feladat engedélyezése sikerült.'
             jobdisabled: 'A feladat letiltása sikerült.'
-            jobnotifyswitched: null
+            jobnotifyswitched: 'A háttérfeladat értesítés beállítás bekapcsolása sikerült.'
         menu:
-            general: null
-            email: null
-            editor: null
-            geolocation: null
-            fb: null
+            general: 'Általános beállítások'
+            email: 'E-mail beállítások'
+            editor: 'Szerkesztő beállításai'
+            geolocation: 'Földrajzi hely beállításai'
+            fb: 'Facebook beállításai'
             media: Videobeállítások
-            cache: null
+            cache: 'Gyorsítótárazási beállítások'
             other: 'Egyéb beállítások'
-            recaptcha: null
-            cronjob: null
+            recaptcha: 'reCAPTCHA beállítások'
+            cronjob: 'Háttérfeladatok beállításai'
         btn:
-            cleardatabasecache: null
-            disable: null
-            enable: null
+            cleardatabasecache: 'A jelenlegi illesztőprogram gyorsítótár kiürítése'
+            disable: Letiltás
+            enable: Engedélyezés
         label:
-            title: null
+            title: Rendszerbeállítások
             header: Beállítások
-            siteonline: null
-            sitetitle: null
-            metakeywords: null
-            metadescription: null
-            timezone: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cachetemplate: null
-            cacheimage: null
-            allowrecovery: null
-            secretkey: null
-            sessionlifetime: null
-            sessionlifetimemsg: null
-            separator: null
-            captcha: null
-            maxupload: null
-            maxuploadmsg: null
-            stats: null
-            smtphost: null
-            smtpport: null
-            email: null
-            emailfrom: null
-            imageratio: null
-            imagewidth: null
-            imageheight: null
-            zoom: null
-            external: null
-            usereplication: null
-            serverdb: null
-            replicationhost: null
-            replicationuser: null
-            replicationpw: null
-            replicationport: null
-            filter: null
-            cron: null
-            mysqlpath: null
-            mysqlpathmsg: null
-            latitude: null
-            longitude: null
-            zoomlevel: null
-            defaultwidth: null
-            defaultheight: null
-            css: null
-            autofocus: null
-            zoomautofocus: null
-            borderautofocus: null
-            mapprovider: null
-            mapquest: null
-            openstreet: null
-            defaultmapprovider: null
-            nominatimsearch: null
-            preflanguage: null
-            markerdir: null
-            defaultmarker: null
-            popupwidth: null
-            popupheight: null
-            youtubewidth: null
-            youtubeheight: null
-            vimeowidth: null
-            vimeoheight: null
-            flashwidth: null
-            flashheight: null
-            flashserver: null
-            flashdir: null
-            apikey: null
-            appid: null
-            fbsecret: null
+            siteonline: 'A webhely online:'
+            sitetitle: 'A webhely címe:'
+            metakeywords: 'A webhely meta kulcsszavai:'
+            metadescription: 'A webhely meta leírása:'
+            timezone: 'Időzóna:'
+            cacheengine: 'Adatbázis-gyorsítótár motor:'
+            cacheenginehost: 'Adatbázis-gyorsítótár motor állomás:'
+            cacheengineport: 'Adatbázis-gyorsítótár motor port:'
+            cachetemplate: 'Sablongyorsítótár kezelő:'
+            cacheimage: 'Képgyorsítótári élettartama:'
+            allowrecovery: 'Jelszó-helyreállítás engedélyezése:'
+            secretkey: 'Titkos kulcs:'
+            sessionlifetime: 'Munkamenet-élettartam:'
+            sessionlifetimemsg: 'a php.ini beállításainak megfelelően.'
+            separator: 'Kulcsszó elválasztó:'
+            captcha: 'A sikertelen belépési kísérletek száma a CAPTCHA megjelenítése előtt:'
+            maxupload: 'Feltölthető fájlok maximális mérete:'
+            maxuploadmsg: 'Adj meg egy 0 és %max% közti értéket (a maximális méret a ''php.ini'' fájlban van meghatározva). Kilobájtokhoz használd a ''K'', megabájtokhoz az ''M'' és gigabájtokhoz a ''G'' jelet az érték és a megfelelő betű között szóköz nélkül, pl. ''3M''.'
+            stats: 'Automatikus statisztikai adatgyűjtés:'
+            smtphost: 'SMTP-állomás:'
+            smtpport: 'SMTP-port:'
+            email: 'SMTP e-mail feladó címe:'
+            emailfrom: 'A rendszerből küldött értesítések e-mail címe:'
+            imageratio: 'Képek átméretezési aránya:'
+            imagewidth: 'Képátméretezés szélessége:'
+            imageheight: 'Képátméretezés magassága:'
+            zoom: 'Engedélyezett a cikktartalomban lévő képek nagyítása?'
+            external: 'Az olvasói előfizetések kezelése kívülről?'
+            usereplication: 'Newscoop replikációs kiszolgáló beállítása?'
+            serverdb: 'Newscoop online kiszolgáló adatbázis'
+            replicationhost: 'Adatbázis-replikációs állomás:'
+            replicationuser: 'Adatbázis-replikációs felhasználó:'
+            replicationpw: 'Adatbázis-replikációs jelszó:'
+            replicationport: 'Adatbázis-replikációs port:'
+            filter: 'Sablonszűrő maszk (vesszővel elválasztva)'
+            cron: 'Beütemezett feladatok külső futtatása?'
+            mysqlpath: 'A MySQL-ügyfél parancselérési útja'
+            mysqlpathmsg: 'a földrajzi nevek adatainak betöltéséhez'
+            latitude: 'Térkép középpontjának szélességi foka:'
+            longitude: 'Térkép középpontjának hosszúsági foka:'
+            zoomlevel: 'Térkép nagyítási szintje:'
+            defaultwidth: 'Térkép alapértelmezett szélessége:'
+            defaultheight: 'Térkép alapértelmezett magassága:'
+            css: 'A CSS-fájl belefoglalása a térkép megtekintéséhez'
+            autofocus: 'A térkép automatikus fókuszálása az alapértelmezett viselkedésként:'
+            zoomautofocus: 'Az automatikus fókuszálás maximális nagyítása:'
+            borderautofocus: 'Térképszegély az automatikus fókuszáláshoz:'
+            mapprovider: 'A Google Utcakép térképszolgáltató engedélyezése:'
+            mapquest: 'A MapQuest térképszolgáltató engedélyezése:'
+            openstreet: 'Az OpenStreet térképszolgáltató engedélyezése:'
+            defaultmapprovider: 'Alapértelmezett térképszolgáltató:'
+            nominatimsearch: 'MapQuest Nominatim keresés használata:'
+            preflanguage: 'Cím előnyben részesített nyelve:'
+            markerdir: 'Térképjelölő könyvtár:'
+            defaultmarker: 'Térképjelölő alapértelmezése:'
+            popupwidth: 'Előugró térkép minimális szélessége:'
+            popupheight: 'Előugró térkép minimális magassága:'
+            youtubewidth: 'YouTube alapértelmezett szélessége:'
+            youtubeheight: 'YouTube alapértelmezett magassága:'
+            vimeowidth: 'Vimeo alapértelmezett szélessége:'
+            vimeoheight: 'Vimeo alapértelmezett magassága:'
+            flashwidth: 'Flash alapértelmezett szélessége:'
+            flashheight: 'Flash alapértelmezett magassága:'
+            flashserver: 'Helyi Flash-kiszolgáló:'
+            flashdir: 'Helyi Flash-könyvtár:'
+            apikey: 'API-kulcs:'
+            appid: 'Alkalmazásazonosító:'
+            fbsecret: 'Alkalmazáskulcs:'
             recaptchapublickey: 'Nyilvános kulcs'
             recaptchaprivatekey: 'Titkos kulcs'
-            recaptchasecure: null
-            disabled: null
-            yesoption: null
-            nooption: null
-            geosearch: null
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
-            cronjob: null
-            enabled: null
-            options: null
+            recaptchasecure: 'Biztonságos URL-cím a reCAPTCHA szolgáltatáshoz?'
+            disabled: letiltva
+            yesoption: Igen
+            nooption: Nem
+            geosearch: 'Helyi földrajzi név kereső használata:'
+            usergarbage: 'Az elavult, függőben lévő felhasználói adatok eltávolítása?'
+            usergarbagedaysinfo: 'Add meg a napok számát, melynek letelte után a függőben lévő felhasználók törlésre fognak kerülni.'
+            usergarbagedays: 'Napok száma'
+            smartyUseProtocol: 'Protokoll használata a Smarty által generált abszolút URL-címekhez?'
+            cronjob: 'Cron feladat neve'
+            enabled: Állapot
+            options: Beállítások
             info: null
-            infodesc: null
+            infodesc: 'Ezek a beállítások a kijelölt feladat(ok) engedélyezésével/letiltásával a háttérfeladatok kezelésében segítenek.'
             prevRun: 'Előző futás dátuma'
             nextRun: 'Következő futás dátuma'
-            norecords: null
+            norecords: 'Nem találhatók rekordok.'
             cronJobEmail: 'E-mail címek az értesítésekhez'
-            cronJobSenderEmail: null
+            cronJobSenderEmail: 'A feladó e-mail címe'
             cronJobSenderName: 'A feladó neve (pl.: Newscoop feladatütemező)'
-            cronJobNotify: null
-            cronslist: null
+            cronJobNotify: 'Értesítés?'
+            cronslist: 'Háttérfeladatok listája'
             cronsadvanced: 'Speciális beállítások'
-            moredetails: null
+            moredetails: 'További részletek.'
         popover:
-            cronJobEmail: null
-            cronJobSenderEmail: null
-            cacheengine: null
-            cacheenginehost: null
-            cacheengineport: null
-            cacheimage: null
-            cachetemplate: null
-            recovery: null
-            secret: null
-            separator: null
-            stats: null
-            zoom: null
-            ratio: null
-            replication: null
-            filter: null
-            cron: null
-            video: null
-            emailfrom: null
+            cronJobEmail: 'Azok a vesszővel elválasztott e-mail címek, melyek hibaértesítéseket fognak kapni.'
+            cronJobSenderEmail: 'Az e-mail cím, melyről az értesítések küldésre fognak kerülni.'
+            cacheengine: 'Engedélyezi vagy letiltja a rendszergyorsítótárat, mellyel növelhető a Newscoop teljesítménye.'
+            cacheenginehost: 'Gyorsítótár-állomás megadása (a Memcache, a Memcached vagy a Redis számára)'
+            cacheengineport: 'Gyorsítótár-állomás portjának megadása (a Memcache, a Memcached vagy a Redis számára)'
+            cacheimage: 'A képek gyorsítótárazásának időtartama, 30 másodperctől a végtelenig.'
+            cachetemplate: 'Válassz adatbázist a sablonok gyorsítótárazásának engedélyezéséhez.'
+            recovery: 'Kaphatnak-e a felhasználók e-mailben jelszó-emlékeztetőt. Ha ez a funkció engedélyezett, és illetéktelenül hozzáfértek az e-mail fiókodhoz, akkor a Newscoop kiadványod is könnyen sérült lehet.'
+            secret: 'A Newscoop által használható biztonsági kulcs a webszolgáltatások és más speciális funkciók integrálásához.'
+            separator: 'Add meg a Kulcsszavak elválasztóját (vessző vagy kötőjel) a Cikkszerkesztés oldalon.'
+            stats: 'Ez a beállítás teszi lehetővé statisztika gyűjtését a kiszolgálón a kiadványok olvasói eléréséről. Ha külső statisztikai szolgáltatást használ, kattinthat a Nem gombra, ugyanis a statisztikagyűjtés letiltása csökkentheti a Newscoop-kiszolgáló leterheltségét.'
+            zoom: 'Igenre állításakor az olvasók rákattintással felnagyíthatják a cikkek képeit a kiadványok oldalain. Ez a nagyítás funkció a cikk szövegébe beszúrt bármilyen képhez használható.'
+            ratio: 'Az átméretezési arány elsőbbséget élvez bármely, itt megadott átméretezendő szélesség vagy átméretezendő magasság értékéhez képest. Ha az arány nincs megadva, csak a szélesség és a magasság, akkor a Newscoop azt az értéket fogja használni, mely kisebb képméretet eredményez. Az itt megadott alapértelmezett beállításokat az arány felülbírálhatja, egy konkrét sorközi kép szélessége vagy magassága a Cikkszerkesztés lapon van beállítva.'
+            replication: 'A Newscoop egyszerre két kiszolgálón való működésének beállítását teszi lehetővé, ami hardver- vagy hálózati problémák esetén biztonsági funkció.'
+            filter: 'Írd be azoknak a sablonoknak a kulcsszavait, melyeket el akarsz rejteni a Témakezelés lapról elérhető sablonszerkesztőből. Olyan sablonokét például, melyek már nincsenek használatban, viszont nem kívánod őket törölni a kiszolgálóról.'
+            cron: 'A kiszolgáló saját cron feladatütemezőjének használatát jelenti az automatizált feladatokhoz a Newscoop saját feladatütemezője helyett.'
+            video: 'Ebben a részben a távol és helyben egyaránt tárolt videofájlok alapértelmezett szélessége és magassága adható meg, a videóknak a kiadványlapok sablonjaiban megfelelő megjelenésének biztosítása végett.'
+            emailfrom: 'A rendszerből küldött értesítésekhez használt e-mail cím.'
             recaptcha:
-                publickey: null
-                privatekey: null
-                secure: null
-            garbage: null
-            lifetime: null
-            smartyuseprotocol: null
+                publickey: 'Ezt a felhasználóknak kiszolgált JavaScript-kódban használd.'
+                privatekey: 'Ezt a saját kiszolgáló és a reCAPTCHA kiszolgáló közti kommunikációhoz használd. Ügyelj a titoktartásra.'
+                secure: 'Ha biztonságos URL-t használsz a reCAPTCHA szolgáltatáshoz, akkor válaszd az Igen lehetőséget.'
+            garbage: 'Ha engedélyezett, akkor ez lehetővé teszi a kiadó számára a napok számának meghatározását, melynek letelte után a függőben lévő felhasználók törlésre kerülnek. Alapértelmezésként 90 nap van beállítva.'
+            lifetime: 'A munkamenet-élettartam másodpercben. Max: 86400 (24 óra). Min: 0 (a böngésző bezárásáig).'
+            smartyuseprotocol: 'Ha engedélyezett, akkor a Smarty url függvénye protokollal fog URL-címeket létrehozni. Alapértelmezésként ez a beállítás a protokoll-relatív URL-címek létrehozásához letiltott. Ez a viselkedés a useprotocol paraméterrel felülbírálható a Smarty-függvény számára, és megadható egy logikai változó a kívánt viselkedés érdekében.'

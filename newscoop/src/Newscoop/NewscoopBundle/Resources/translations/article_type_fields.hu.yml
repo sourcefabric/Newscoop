@@ -1,4 +1,4 @@
-'Usage at automatic statistics': null
+'Usage at automatic statistics': 'Használat az automatikus statisztikánál'
 'Event Color': 'Esemény színe'
 'You must input a number greater than $1 and less than $2 into the $3 field.': 'Meg kell adnod egy számot, amely nagyobb, mint $1 és kisebb, mint $2 a/z $3 mezőben.'
 'You do not have the right to translate article types.': 'Nincs jogod lefordítani a cikktípusokat.'
@@ -18,32 +18,32 @@ Custom: Egyéni
 'The template name may only contain letters and the underscore (_) character.': 'A sablonnév csak betűket és aláhúzás (_) karaktert tartalmazhat.'
 'The field name was already in use as a base property of the article. The field content will not be displayed in the templates.': 'A mezőnév a cikk alaptulajdonságaként már használatban volt. A mező tartalma nem fog megjelenni a sablonokban.'
 'The property $1 is already in use.': 'A/z $1 tulajdonság már használatban van.'
-Precision: null
-'Can not convert the field $1 from $2 to type $3.': null
-'Are you sure you want to make $1 a $2 field?': null
-'Is Content': null
+Precision: Pontosság
+'Can not convert the field $1 from $2 to type $3.': 'A/z $1 mező nem alakítható át $2 típusról $3 típusra.'
+'Are you sure you want to make $1 a $2 field?': 'Biztosan $1 mezővé akarsz tenni egy $2 mezőt?'
+'Is Content': 'A tartalom'
 'Back to Article Types List': 'Vissza a Cikktípusok listájához'
 show: megjelenítés
 hide: elrejtés
 'You must enter a name for the field.': 'Meg kell adnod a mező nevét.'
 'You must choose a language for the field.': 'Ki kell választanod a mező nyelvét.'
 'You do not have the right to rename article type fields.': 'Nincs jogod a cikktípusmezők átnevezéséhez.'
-'You do not have the right to reassign a field type.': null
+'You do not have the right to reassign a field type.': 'Nincs jogod egy mezőtípus ismételt hozzárendeléséhez.'
 'Translating field': null
 'The translation could not be added.': 'Nem lehet hozzáadni a fordítást.'
 'The field $1 does not exist.': 'A/z $1 mező nem létezik.'
 'The $1 field may only contain letters and underscore (_) character.': 'A/z $1 mező csak betűket és aláhúzás (_) karaktert tartalmazhat.'
-'Template Field Name': null
+'Template Field Name': 'Sablonmező neve'
 Show/Hide: Megjelenítés/Elrejtés
 'Renaming article type field': 'Cikktípusmező átnevezése'
 'Rename field': 'Mező átnevezése'
-'Reassign a field type': null
+'Reassign a field type': 'Mezőtípus ismételt hozzárendelése'
 'Display Name': 'Megjelenítemdő név'
 'Are you sure you want to $1 the article type field $2?': 'Biztosan $1 akarja a/z $2 cikktípusmezőt?'
 'Adding new article type': 'Új cikktípus hozzáadása'
 'Add translation:': 'Fordítás hozzáadása:'
-'$1 article type field $2': null
-'$1 article type $2': null
+'$1 article type field $2': '$1 cikktípus $2 mező'
+'$1 article type $2': '$1 cikk $2 típus'
 'Top element': 'Felső elem'
 'Article type fields': Cikktípusmezők
 'Delete field $1': 'A/z $1 mező törlése'
@@ -54,4 +54,4 @@ Show/Hide: Megjelenítés/Elrejtés
 'Invalid field type.': 'Érvénytelen mezőtípus.'
 'You do not have the right to delete article type fields.': 'Nincs jogod a cikktípusmezők törléséhez.'
 'Are you sure you want to delete the field $1?': 'Biztosan törölni akarod a/z $1 mezőt?'
-'You will also delete all fields with this name from all articles of this type from all publications.': null
+'You will also delete all fields with this name from all articles of this type from all publications.': 'Az összes ilyen nevű mezőt törölni is fogod az összes kiadvány összes ilyen típusú cikkeiből.'
