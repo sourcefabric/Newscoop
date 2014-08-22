@@ -4,21 +4,21 @@ newscoop:
     preferences:
         error:
             cache: 'Ugyldigt: PHP %cache% skal slås til for at bruge skabelons caching.'
-            replication: null
+            replication: 'Databasereplikeringsdata ufuldstændige'
             maxupload: 'Ugyldig værdi for maksimal størrelse på uploadede filer'
             geolocation: 'Ugyldige Geolocation felter. Felterne skal indeholde tal. Breddegrad kan ikke være > 90 eller < -90. Længdegrad kan ikke være > 180 eller < -180.'
             noaccess: 'Du har ikke rettigheder til at ændre systemindstillinger.'
             latitude: 'Ugyldig breddegrad'
             longitude: 'Ugyldig længdegrad'
             cacheNotCleared: 'Fejl ved rensning af cache'
-            joberror: null
-            jobnotifyerror: null
+            joberror: 'Kunne ikke ændre status på valgte job.'
+            jobnotifyerror: 'Kunne ikke slå beskeder til/fra.'
         success:
             saved: 'Systemindstillinger opdateret.'
             cacheCleared: 'Cache slettet'
-            jobenabled: null
-            jobdisabled: null
-            jobnotifyswitched: null
+            jobenabled: 'Jobbet blev slået til.'
+            jobdisabled: 'Jobbet blev slået fra.'
+            jobnotifyswitched: 'Indstillinger for baggrundsjobs blev opdateret.'
         menu:
             general: 'Generelle indstillinger'
             email: 'Email indstillinger'
@@ -29,9 +29,9 @@ newscoop:
             cache: 'Cache indstillinger'
             other: 'Andre indstillinger'
             recaptcha: 'reCAPTCHA indstillinger'
-            cronjob: null
+            cronjob: 'Indstillinger for baggrundsjob.'
         btn:
-            cleardatabasecache: null
+            cleardatabasecache: 'Slet nuværende driver cache'
             disable: 'Slå fra'
             enable: 'Slå til'
         label:
@@ -54,7 +54,7 @@ newscoop:
             separator: 'Separator for nøgleord:'
             captcha: 'Antal mislykkede login forsøg før CAPTCHA:'
             maxupload: 'Maksimal størrelse på uploadede filer:'
-            maxuploadmsg: null
+            maxuploadmsg: 'Indtast en værdi mellem 0 og %max% (den maksimale størrelse angivet i ''php.ini''). Brug ''K'' for kilobytes, ''M'' for megabytes og ''G'' for gigabytes, uden mellemrum mellem tallet og bogstavet. F.eks. ''3M'' for 3 megabyte.'
             stats: 'Automatisk indsamling af statistik:'
             smtphost: 'SMTP vært:'
             smtpport: 'SMTP port:'
@@ -65,13 +65,13 @@ newscoop:
             imageheight: 'Højde ved billedskalering:'
             zoom: 'Brug zoom til billeder i artikler?'
             external: 'Håndter abonnementer eksternt?'
-            usereplication: null
+            usereplication: 'Opsæt en Newscoop replikationsserver?'
             serverdb: 'Newscoop online server database'
-            replicationhost: null
-            replicationuser: null
+            replicationhost: 'Vært til databasereplikation:'
+            replicationuser: 'Bruger til databasereplikation:'
             replicationpw: 'Adgangskode til databasereplikation:'
-            replicationport: null
-            filter: null
+            replicationport: 'Port til databasereplikation:'
+            filter: 'Skabelon filter maske (kommasepareret)'
             cron: 'Kør planlagte opgaver eksternt?'
             mysqlpath: 'MySQL klient kommando sti'
             mysqlpathmsg: 'for at hente geo-names data'
@@ -80,17 +80,17 @@ newscoop:
             zoomlevel: 'Zoom niveau for kort:'
             defaultwidth: 'Standard bredde for kort:'
             defaultheight: 'Standard højde for kort:'
-            css: null
+            css: 'Inkluder CSS fil til kortvisning'
             autofocus: 'Brug auto-fokus som standard for kort:'
             zoomautofocus: 'Maksimal zoom for autofokus:'
-            borderautofocus: null
+            borderautofocus: 'Grænse for auto-fokusering på kort:'
             mapprovider: 'Tillad Google Streets kort udbyder:'
             mapquest: 'Tillad MapQuest kort udbyder:'
             openstreet: 'Tillad OpenStreet kort udbyder:'
             defaultmapprovider: 'Standard kort udbyder:'
             nominatimsearch: 'Brug MapQuest Nominatim søgning:'
             preflanguage: 'Foretrukket adresse sprog:'
-            markerdir: null
+            markerdir: 'Mappe til kortmarkører:'
             defaultmarker: 'Standard kort markør:'
             popupwidth: 'Mindste bredde for kort popup:'
             popupheight: 'Mindste højde for kort popup:'
@@ -104,7 +104,7 @@ newscoop:
             flashdir: 'Lokal Flash mappe:'
             apikey: 'API nøgle:'
             appid: 'App ID:'
-            fbsecret: null
+            fbsecret: 'App hemmelighed:'
             recaptchapublickey: 'Offentlig nøgle'
             recaptchaprivatekey: 'Privat nøgle'
             recaptchasecure: 'Hemmelig URL for reCAPTCHA?'
@@ -112,48 +112,48 @@ newscoop:
             yesoption: Ja
             nooption: Nej
             geosearch: 'Brug lokal GeoNames søgning:'
-            usergarbage: null
-            usergarbagedaysinfo: null
-            usergarbagedays: null
-            smartyUseProtocol: null
+            usergarbage: 'Fjern forældede data om afventende brugere?'
+            usergarbagedaysinfo: 'Angiv et antal dage efter hvilke ikke-godkendte brugere slettes.'
+            usergarbagedays: 'Antal dage'
+            smartyUseProtocol: 'Brug protokol for absolutte URL''er genereret af Smarty?'
             cronjob: 'Navn på cron job'
             enabled: Status
             options: Indstillinger
             info: 'Info:'
-            infodesc: null
+            infodesc: 'Disse indstillinger vil hjælpe dig med at administrere baggrundsjobs ved at aktivere/deaktivere valgte jobs.'
             prevRun: 'Sidste kørselsdato'
             nextRun: 'Næste kørselsdato'
             norecords: 'Ingen opslag.'
-            cronJobEmail: null
-            cronJobSenderEmail: null
-            cronJobSenderName: null
-            cronJobNotify: null
-            cronslist: null
+            cronJobEmail: 'Email adresse til beskeder'
+            cronJobSenderEmail: 'Email adresse for afsender'
+            cronJobSenderName: 'Navn på afsender (f.eks. Newscoop jobkørsel)'
+            cronJobNotify: 'Giv besked?'
+            cronslist: 'Liste over baggrundsjobs'
             cronsadvanced: 'Avancerede indtillinger'
             moredetails: 'Flere detaljer.'
         popover:
-            cronJobEmail: null
-            cronJobSenderEmail: null
-            cacheengine: null
+            cronJobEmail: 'E-mail adresser der skal modtage fejlmeddelelser (kommasepareret).'
+            cronJobSenderEmail: 'E-mail adresser der skal sende beskeder.'
+            cacheengine: 'Slår system cache til eller fra, hvilket kan forbedre Newscoops hastighed.'
             cacheenginehost: 'Angiv cache vært (for Memcache, Memcached eller Redis)'
             cacheengineport: 'Angiv cache vært port (for Memcache, Memcached eller Redis)'
             cacheimage: 'Perioden billeder er i cachen, fra 30 sekunder til uendeligt.'
             cachetemplate: 'Vælg DB for at bruge cache for skabeloner.'
-            recovery: null
-            secret: null
-            separator: null
-            stats: null
-            zoom: null
-            ratio: null
-            replication: null
-            filter: null
-            cron: null
-            video: null
-            emailfrom: null
+            recovery: 'Hvorvidt brugerne kan få en adgangskode påmindelse via e-mail. Bemærk, at hvis denne funktion er aktiveret, og andre får adgang til din e-mail-konto, kan de nemt skaffe sig adgang til din Newscoop publikation.'
+            secret: 'Sikkerhedsnøglen Newscoop kan bruge til integration med web services og andre avancerede funktioner.'
+            separator: 'Angiv separator for nøgleord ved artikelredigering (komma eller tankestreg).'
+            stats: 'Denne indstilling gør det muligt at indsamle statistik om læsernes brug af publikationer på serveren. Du ønsker måske at klikke på Nej, hvis du bruger en tredjeparts statistiktjeneste, da deaktivering af statistikindsamling kan reducere belastningen på din Newscoop serveren.'
+            zoom: 'Sæt til Ja for at lade læsere forstørre artikelbilleder ved at klikke på dem. Denne zoom funktion virker for alle billeder indsat i artikel teksten.'
+            ratio: 'Størrelses ratio har forrang for bredde eller højde værdier som indstilles her. Hvis ratio ikke er indstillet, men både bredde og højde er indstillet, så Newscoop vil bruge værdien der giver den mindste billedstørrelse. Standardindstillingerne her kan tilsidesættes af ratio, højde eller bredde indstillingerne for de enkelte billeder ved artikelredigering.'
+            replication: 'Bruges til at køre Newscoop på to servere samtidigt, en sikkerhed i tilfælde af hardware eller netværksproblemer.'
+            filter: 'Indtast nøgleord til skabeloner, som du ønsker at skjule fra skabelonsredigeringen tilgængelig via tema administrationssiden. For eksempel skabeloner der er ikke længere i brug, men som du ikke ønsker at slette fra serveren.'
+            cron: 'Brug serverens egen cron planlægning til automatiske opgaver i stedet for Newscoops indbyggede.'
+            video: 'Standard bredde og højde af både eksterne og lokale videofiler kan indstilles her, for at sikre, at videoer vises korrekt i dine publikationers sideskabeloner.'
+            emailfrom: 'Email adressen der bruges til beskeder fra systemet:'
             recaptcha:
-                publickey: null
-                privatekey: null
-                secure: null
-            garbage: null
+                publickey: 'Brug dette i JavaScript-kode til dine brugere.'
+                privatekey: 'Brug dette ved kommunikation mellem din server og reCAPTCHA serveren. Sørg for at holde det hemmeligt.'
+                secure: 'Vælg Ja hvis du bruger sikker url til reCAPTCHA.'
+            garbage: 'Hvis aktiveret kan redaktører definere et antal dage hvorefter ikke-godkendte brugere slettes. Standarden er 90 dage.'
             lifetime: 'Sessions livstid i sekunder. Max 86400 (24 timer). Min: 0 (indtil browseren lukkes).'
-            smartyuseprotocol: null
+            smartyuseprotocol: 'Slå til for at Smartyfunktionen url lave URL''er med en protokol. Som standard er dette slået fra for at lave protokol-agnostiske URL''er. Denne indstilling kan tilsidesættes ved at bruge useprotocol parameteret for Smarty funktionen  og angive en boolean for den ønskede håndtering.'

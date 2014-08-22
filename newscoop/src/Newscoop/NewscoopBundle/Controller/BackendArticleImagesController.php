@@ -54,6 +54,7 @@ class BackendArticleImagesController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 $data = $form->getData();
+                $data['user'] = $this->container->get('user')->getCurrentUser();
                 $imageService->fillImage($articleImage->getImage(), $data);
                 $imageService->saveArticleImage($articleImage, $data);
 

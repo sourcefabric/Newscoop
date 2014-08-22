@@ -1,7 +1,7 @@
-'Display newsfeed images': null
+'Display newsfeed images': 'Hírcsatornaképek kijelzése'
 'Mark image': 'Kép megjelölése'
 'Add selected images to slideshow': 'A kiválasztott képek hozzáadása a diavetítéshez'
-'Sorry that image is too small. Image needs to be at least %dx%d.': null
+'Sorry that image is too small. Image needs to be at least %dx%d.': 'Sajnos túl kicsi a kép. A képnek legalább %dx%d méretűnek kell lennie.'
 'Slideshow rendition': 'Diavetítés leképezése'
 'Renditions reloaded': 'A leképezések újratöltése megtörtént'
 'Reload renditions': 'Leképezések újratöltése'
@@ -10,26 +10,26 @@
 'Items: ': 'Elemek:'
 'Attach slideshows': 'Diavetítések csatolása'
 'original size:': 'eredeti méret:'
-'no caption': null
-'Video URL': null
+'no caption': 'nincs képaláírás'
+'Video URL': 'Videó URL-címe'
 'Use for all': null
-'Use default': null
+'Use default': 'Alapértelmezett használata'
 'Slug must be unique': 'Az idehivatkozási címnek egyedinek kell lennie'
 Slug: 'Idehivatkozási lapcím'
 'Slideshow headline': 'Diavetítés főcíme'
 Slideshow: Diavetítés
-'Set selected as default image': null
+'Set selected as default image': 'A kijelölt beállítása alapértelmezett képként'
 'Set as default': 'Beállítás alapértelmezettként'
 Saving...: Mentés...
 Saved: 'A mentés megtörtént'
 'Save headline': 'Főcím mentése'
 'Place Images': 'Képek elhelyezése'
-'No renditions defined.': null
+'No renditions defined.': 'Nincsenek meghatározott leképezések.'
 'No images found.': 'Nem találhatók képek.'
 'No images attached to article.': 'Nincsenek a cikkhez csatolt képek.'
 'No images': 'Nincsenek képek'
 'Next: Upload and Edit Metadata': 'Következő: Feltöltés és a metaadatok szerkesztése'
-'Next: Place Images': null
+'Next: Place Images': 'Következő: Képek elhelyezése'
 'Media Archive': Médiaarchívum
 Location: Hely
 Items: Elemek
@@ -40,7 +40,7 @@ Headline: Főcím
 Finish: Befejezés
 'Edit Image Data': 'Képadatok szerkesztése'
 'Edit $1': 'A/z $1 szerkesztése'
-'Done editing': null
+'Done editing': 'A szerkesztés kész'
 Detach: Leválasztás
 Create: Létrehozás
 Caption: Képaláírás
@@ -48,12 +48,12 @@ Caption: Képaláírás
 'Attach & Place': 'Csatolás és elhelyezés'
 'Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)': 'Videó URL-cím hozzáadása (pl.: Vimeo esetén http://vimeo.com/25083275, YouTube esetén http://youtu.be/1XsPVO61e9w)'
 'Add video': 'Videó hozzáadása'
-'Add caption': null
+'Add caption': 'Képaláírás hozzáadása'
 'Show all': 'Az összes megjelenítése'
-'The image has been removed from the article.': null
+'The image has been removed from the article.': 'A kép eltávolítása a cikkből megtörtént.'
 'Unable to add new image.': 'Nem lehet új képet hozzáadni.'
 'Image number $1 already exists': 'Már létezik $1 számú kép'
-'You do not have the right to change image information.': null
+'You do not have the right to change image information.': 'Nincs jogod a képinformációk módosításaihoz.'
 'The image number specified is already in use.': 'A kép megadott száma már használatban van.'
 'Image $1 updated.': 'A/z $1 kép frissítése már megtörtént.'
 'Image $1 added.': 'A/z $1 kép hozzáadása megtörtént.'
@@ -69,4 +69,4 @@ Date<BR><SMALL>(yyyy-mm-dd)</SMALL>: Dátum<BR><SMALL>(éééé-hh-nn)</SMALL>
 'You must select an image file to upload.': 'Ki kell választanod egy feltöltendő képfájlt.'
 'Change image information': 'Képinformációk módosítása'
 'You do not have the right to add images': 'Nincs jogod képeket hozzáadni'
-'Filter by uploader...': null
+'Filter by uploader...': 'Szűrés feltöltő szerint...'

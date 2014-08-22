@@ -278,7 +278,6 @@ final class MetaSubtitle
 
         try {
             $templatesService = \Zend_Registry::get('container')->getService('newscoop.templates.service');
-            $imageService = \Zend_Registry::get('container')->getService('image');
             $smarty = $templatesService->getSmarty();
             $uri->uri_parameter = "image $imageOptions";
             $smarty->assign('imageDetails', $detailsArray);

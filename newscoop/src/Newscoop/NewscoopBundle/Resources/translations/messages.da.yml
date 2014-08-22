@@ -154,11 +154,11 @@ Localizer: Oversætter
 'Add new article type': 'Tilføj ny artikel type'
 'Add new country': 'Tilføj nyt land'
 'Add new language': 'Tilføj nyt sprog'
-'View logs': 'Se logs'
+'View logs': 'Se logfiler'
 'Change your password': 'Skift din adgangskode'
 'Your Articles': 'Dine artikler'
 'Submitted Articles': 'Indsendte artikler'
-Logs: Logs
+Logs: Logfiler
 'There are $1 article(s) left.': 'Der er $1 artikler tilbage.'
 'There are $1 issues(s) left.': 'Der er $1 udgivelser tilbage.'
 'There are $1 section(s) left.': 'Der er $1 sektioner tilbage.'
@@ -197,7 +197,7 @@ Unlink: 'Fjern link'
 'Are you sure you want to delete the image $1?': 'Vil du slette billedet $1?'
 'No such issue.': 'Udgivelsen findes ikke.'
 'Are you sure you want to delete the subscription to the publication $1?': 'Vil du slette abonnementet på publikationen $1?'
-'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': null
+'Could not save the changes to the issue $1. Please make sure the issue URL name $2 was not used before in the publication $3.': 'Ændringerne kunne ikke gemmes til udgivelsen $1. Kontroller om udgivelses URL navnet $2 er i brug til udgivelsen $3.'
 GB: GB
 MB: MB
 KB: KB
@@ -254,7 +254,7 @@ Send: Send
 (optional): (valgfri)
 'The URL you entered is invalid: $1': 'Ugyldig URL: $1'
 Reads: Læst
-'Publish with issue': 'Publicer med udgivelsen'
+'Publish with issue': 'Udgiv med udgivelsen'
 'Universal List': 'Universel liste'
 'Invalid security token!': 'Ugyldig sikkerheds token!'
 Authors: Forfattere

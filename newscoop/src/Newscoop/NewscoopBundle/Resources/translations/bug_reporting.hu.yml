@@ -1,23 +1,23 @@
-'You have reached the error page': null
-'Stack trace:': null
-'Request Parameters:': null
-'Page not found': null
-'Exception information:': null
-'Application error': null
-'An error occurred': null
-'Newscoop has encountered a problem.': null
-'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': null
-'What were you trying to do when this happened?': null
-'Description:': null
-'We are sorry for the inconvenience.': null
-'Show error details': null
-'Hide error details': null
-'Error Report': null
-'Backtrace:': null
-'Error ID:': null
-'Error Message:': null
-'Error Number:': null
-'Error String:': null
-'Software:': null
-'We are sorry, but there was a problem sending your bug report.': null
-'Simply copy and paste the error report below and send it to:': null
+'You have reached the error page': 'A hibaoldalra érkeztél'
+'Stack trace:': 'Veremkivonat:'
+'Request Parameters:': 'Kérelem paraméterei:'
+'Page not found': 'Az oldal nem található'
+'Exception information:': 'Kivétel adatai:'
+'Application error': Alkalmazáshiba
+'An error occurred': 'Hiba történt'
+'Newscoop has encountered a problem.': 'A Newscoop problémát észlelt.'
+'In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.': 'A Newscoop csapat munkájának a probléma elemzése és megtalálása elősegítése érdekében kérjük szánjon egy percet arra, hogy leírja, mi történt.'
+'What were you trying to do when this happened?': 'Mit akart csinálni, amikor ez történt?'
+'Description:': 'Leírás:'
+'We are sorry for the inconvenience.': 'Elnézést kérünk a kellemetlenségért.'
+'Show error details': 'A hiba részleteinek megtekintése'
+'Hide error details': 'A hiba részleteinek elrejtése'
+'Error Report': 'Hiba bejelentése'
+'Backtrace:': 'Visszakövetés:'
+'Error ID:': 'Hibaazonosító:'
+'Error Message:': 'Hibaüzenet:'
+'Error Number:': 'Hiba száma:'
+'Error String:': 'Hibakarakterlánc:'
+'Software:': 'Szoftver:'
+'We are sorry, but there was a problem sending your bug report.': 'Sajnáljuk, probléma merült fel a hibabejelentés küldésekor.'
+'Simply copy and paste the error report below and send it to:': 'Egyszerűen csak másolja a vágólapra és illessze be alább a hibajelentést, majd küldje el erre a címre:'

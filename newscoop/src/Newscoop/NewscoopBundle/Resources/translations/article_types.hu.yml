@@ -1,16 +1,16 @@
 list: lista
 filter: szűrő
-'In Lists?': null
-'Are you sure you want to $1 articles of article type $2?': null
-'$1 articles of article type $2': null
+'In Lists?': 'Listákon?'
+'Are you sure you want to $1 articles of article type $2?': 'Biztosan $1 akarod a/z $2 cikktípusú cikkeket?'
+'$1 articles of article type $2': '$1 cikkei a/z $2 cikktípusnak'
 'Hide human-readable field names': 'Az ember által olvasható mezőnevek elrejtése'
 'Edit and translate human-readable field names': 'Az ember által olvasható mezőnevek szerkesztése és fordítása'
 'The template name may only contain letters and the underscore (_) character.': 'A sablonnév csak betűket és aláhúzás (_) karaktert tartalmazhat.'
 'Rename article type $1': 'A/z $1 cikktípus átnevezése'
-'Invalid article type $1.': null
+'Invalid article type $1.': 'Érvénytelen $1 cikktípus.'
 'You cannot merge the same type into itself.': 'Az azonos típusok nem egyesíthetők.'
 'View the source ($1) version of $2': null
-'View of original ($1) $2': null
+'View of original ($1) $2': 'Az eredeti ($1) $2 megtekintése'
 'To return to the preview click here': 'Kattints ide az előnézethez való visszatéréshez'
 'This is the first translation of $1': 'Ez a/z $1 első fordítása'
 'There is no article associated with the preview.': 'Nincs az előnézethez társított cikk.'
@@ -18,23 +18,23 @@ filter: szűrő
 'The source article type ($1) does not have any articles.': 'A forrás cikktípusnak ($1) nincs semmilyen cikke.'
 'Source Article Type': 'Forrás cikktípus'
 'Preview of $1': '$1 előnézete'
-'Preview a sample of the merge configuration.': null
+'Preview a sample of the merge configuration.': 'A konfigurációegyesítés mintájának előnézete.'
 NOTHING: SEMMI
-'Merge failed.': null
-'Merge configuration for merging $1 into $2.': null
-'Merge Article Types: Step $1 of $2': null
-'Merge $1 into $2': null
+'Merge failed.': 'Az egyesítés nem sikerült.'
+'Merge configuration for merging $1 into $2.': 'Konfigurációegyesítés a/z $1 egyesítéséhez a következővel: $2.'
+'Merge Article Types: Step $1 of $2': 'Cikktípusok egyesítése: $1. / $2 lépés'
+'Merge $1 into $2': 'A/z $1 egyesítése a következővel: $2'
 'Destination Article Type': 'Cél cikktípus'
 'Delete the source article type ($1) when finished.': 'A forrás cikktípus ($1) törlése befejezéskor.'
-'Cycle through your articles to verify that the merge configuration is correct.': null
-'Clicking Merge will merge ($1) article(s).': null
-'Cannot merge a $1 field ($2) into a $3 field ($4).': null
-'--None--': null
+'Cycle through your articles to verify that the merge configuration is correct.': 'A cikkek közti lépkedéssel ellenőrizd, hogy megfelelő-e a konfigurációegyesítés.'
+'Clicking Merge will merge ($1) article(s).': 'Az Egyesítés gombra kattintás cikk(ek)et ($1) fog egyesíteni.'
+'Cannot merge a $1 field ($2) into a $3 field ($4).': 'Egy $1 mező ($2) nem egyesíthető egy $3 mezővel ($4).'
+'--None--': '--Nincs--'
 '(Null merge warning.)': '(Nulla egyesítési figyelmeztetés.)'
 '(No merge warning.)': '(Nincs egyesítési figyelmeztetés.)'
 '(Duplicate warning.)': null
-'(!) Do NOT merge $1': null
-'$1 of $2': null
+'(!) Do NOT merge $1': '(!) NE egyesítse a következőt: $1'
+'$1 of $2': '$1 / $2'
 show: megjelenítés
 hide: elrejtés
 deactivate: inaktiválás
@@ -45,15 +45,15 @@ activate: aktiválás
 'You do not have the right to merge article types.': 'Nincs jogod a cikktípusok egyesítéséhez.'
 'The translation could not be added.': 'Nem lehet hozzáadni a fordítást.'
 'The article type $1 does not exist.': 'A/z $1 cikktípus nem létezik.'
-'Template Type Name': null
+'Template Type Name': 'Sablontípus neve'
 Show/Hide: Megjelenítés/Elrejtés
-'Show article on section page': null
+'Show article on section page': 'A cikk megjelenítése a rovat oldalán'
 'Show article on front page': 'A cikk megjelenítése a címlapon'
 'Publish date': 'Közzététel dátuma'
 Merge!: Egyesítsd!
 'Merge types': 'Típusok egyesítése'
 'Merge article type': 'Cikktípus egyesítése'
-'Link to public page': null
+'Link to public page': 'Hivatkozás a nyilvános lapra'
 'Go to Step 3': 'Ugrás a 3. lépésre'
 'Go to Step 2': 'Ugrás a 2. lépésre'
 'Display Name': 'Megjelenítemdő név'
@@ -67,8 +67,8 @@ Merge!: Egyesítsd!
 'Allow users without subscriptions to view the article': 'Lehetővé teszi a felhasználók számára a cikk előfizetések nélküli megtekintését'
 'Add translation:': 'Fordítás hozzáadása:'
 '$1 comments for article type $2': '$1 hozzászólás a/z $2 cikktípushoz'
-'$1 comments for article type $1': null
-'$1 article type $2': null
+'$1 comments for article type $1': '$1 hozzászólás a/z $1 cikktípushoz'
+'$1 article type $2': '$1 cikk $2 típus'
 'No article types.': 'Nincsenek cikktípusok.'
 'Delete article type $1': 'A/z $1 cikktípus törlése'
 'You do not have the right to add article types.': 'Nincs jogod a cikktípusok hozzáadásához.'
