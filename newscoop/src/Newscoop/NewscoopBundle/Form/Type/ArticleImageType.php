@@ -22,10 +22,17 @@ class ArticleImageType extends AbstractType
             'error_bubbling' => true,
         ));
 
-        $builder->add('caption', 'text', array(
-            'label' => 'articles.images.edit.form.caption',
-            'error_bubbling' => true,
-        ));
+        if ($options['rich_text_caption'] == 'Y') {
+            $builder->add('caption', 'textarea', array(
+                'label' => 'articles.images.edit.form.caption',
+                'error_bubbling' => true,
+            ));
+        } else {
+            $builder->add('caption', 'text', array(
+                'label' => 'articles.images.edit.form.caption',
+                'error_bubbling' => true,
+            ));
+        }
 
         $builder->add('language', 'hidden', array(
             'error_bubbling' => true
@@ -43,10 +50,17 @@ class ArticleImageType extends AbstractType
             'label' => 'articles.images.edit.form.status',
         ));
 
-        $builder->add('description', 'text', array(
-            'label' => 'articles.images.edit.form.description',
-            'error_bubbling' => true,
-        ));
+        if ($options['rich_text_caption'] == 'Y') {
+            $builder->add('description', 'textarea', array(
+                'label' => 'articles.images.edit.form.description',
+                'error_bubbling' => true,
+            ));
+        } else {
+            $builder->add('description', 'text', array(
+                'label' => 'articles.images.edit.form.description',
+                'error_bubbling' => true,
+            ));
+        }
 
         $builder->add('photographer', 'text', array(
             'label' => 'articles.images.edit.form.photographer',
@@ -76,6 +90,7 @@ class ArticleImageType extends AbstractType
     {
         $resolver->setDefaults(array(
             'translation_domain' => 'articles',
+            'rich_text_caption' => 'N',
         ));
     }
 

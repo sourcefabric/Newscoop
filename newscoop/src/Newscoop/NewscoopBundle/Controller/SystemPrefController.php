@@ -123,6 +123,8 @@ class SystemPrefController extends Controller
             'smtp_host' => $preferencesService->SMTPHost,
             'smtp_port' => $preferencesService->SMTPPort,
             'email_from' => $preferencesService->EmailFromAddress,
+            'mediaRichTextCaptions' => $preferencesService->MediaRichTextCaptions,
+            'mediaCaptionLength' => $preferencesService->MediaCaptionLength,
             'image_ratio' => $preferencesService->EditorImageRatio,
             'image_width' => (int) $preferencesService->EditorImageResizeWidth,
             'image_height' => (int) $preferencesService->EditorImageResizeHeight,
@@ -252,6 +254,14 @@ class SystemPrefController extends Controller
                     $this->smtpConfiguration($data['smtp_host'], $data['smtp_port']);
                     // Image resizing for WYSIWYG editor
                     $this->imageResizing($data['image_ratio'], $data['image_width'], $data['image_height'], $data['zoom']);
+                    // Rich text captions, set default
+                    $preferencesService->set('MediaRichTextCaptions', $data['mediaRichTextCaptions']);
+                    if ($data['mediaRichTextCaptions'] == 'Y') {
+                        $preferencesService->set('MediaCaptionLength', $data['mediaCaptionLength']);
+                    } else {
+                        // Override and set to 255 chars max
+                        $preferencesService->set('MediaCaptionLength', 255);
+                    }
                     // template filter
                     $this->templateFilter($data['template_filter']);
                     // users garbage settings
