@@ -64,6 +64,9 @@ newscoop:
             imagewidth: 'Bredde ved billedskalering:'
             imageheight: 'Højde ved billedskalering:'
             zoom: 'Brug zoom til billeder i artikler?'
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: 'Håndter abonnementer eksternt?'
             usereplication: 'Opsæt en Newscoop replikationsserver?'
             serverdb: 'Newscoop online server database'
@@ -144,6 +147,8 @@ newscoop:
             separator: 'Angiv separator for nøgleord ved artikelredigering (komma eller tankestreg).'
             stats: 'Denne indstilling gør det muligt at indsamle statistik om læsernes brug af publikationer på serveren. Du ønsker måske at klikke på Nej, hvis du bruger en tredjeparts statistiktjeneste, da deaktivering af statistikindsamling kan reducere belastningen på din Newscoop serveren.'
             zoom: 'Sæt til Ja for at lade læsere forstørre artikelbilleder ved at klikke på dem. Denne zoom funktion virker for alle billeder indsat i artikel teksten.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Størrelses ratio har forrang for bredde eller højde værdier som indstilles her. Hvis ratio ikke er indstillet, men både bredde og højde er indstillet, så Newscoop vil bruge værdien der giver den mindste billedstørrelse. Standardindstillingerne her kan tilsidesættes af ratio, højde eller bredde indstillingerne for de enkelte billeder ved artikelredigering.'
             replication: 'Bruges til at køre Newscoop på to servere samtidigt, en sikkerhed i tilfælde af hardware eller netværksproblemer.'
             filter: 'Indtast nøgleord til skabeloner, som du ønsker at skjule fra skabelonsredigeringen tilgængelig via tema administrationssiden. For eksempel skabeloner der er ikke længere i brug, men som du ikke ønsker at slette fra serveren.'

@@ -64,6 +64,9 @@ newscoop:
             imagewidth: 'Bildbreite verändern:'
             imageheight: 'Bildhöhe verändern:'
             zoom: 'Zoom aktiviert für Bilder im Artikelinhalt?'
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: 'Abonnements extern verwalten?'
             usereplication: 'Newscoop Replication Server erstellen?'
             serverdb: 'Newscoop Online Server Datenbank'
@@ -144,6 +147,8 @@ newscoop:
             separator: 'Spezifizieren Sie den Trenner für Keywords im Artikel Editor (Komma oder Bindestrich).'
             stats: 'Mit dieser Option aktivieren Sie die Sammlung von Statistiken über den Zugriff von Lesern Ihrer Publikationen. Klicken Sie Nein falls Sie ein externes Statistiktool nutzen, weil das Sammeln von Statisiken eine Belastung für Ihren Newscoop-Server darstellt.'
             zoom: 'Wenn hier Ja eingestellt ist, können die Leser das Bild durch Klick auf das Bild vergrößern. Dieses Zooming-Element funktioniert bei jedem Inline-Bild innerhalb des Artikeltextes.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Das Beibehalten des Größenverhältnisses hat Vorrang vor Änderungen der Breite oder Höhe. Falls kein Größenverhältnis festgelegt ist, wird Newscoop den Wert benutzen, der zu einer kleineren Bildgröße führt. Die Standardeinstellungen können überschrieben werden durch Einstellungen von Größenverhältnis, Breite oder Höhe eines spezifischen Inline-Bildes im Artikel Editor. '
             replication: 'Ermöglicht es Ihnen, Newscoop so einzustellen, dass es aus Sicherheitsgründen oder wegen Netzwerkproblemen auf zwei Servern gleichzeitig läuft.'
             filter: 'Wenn Sie Keywords für Templates vor dem Template Editor verbergen wollen, geben Sie diese in der Theme Management Seite ein. Zum Beispiel für Templates, die nicht mehr in Gebrauch sind, die sie aber nicht vom Server löschen wollen.'

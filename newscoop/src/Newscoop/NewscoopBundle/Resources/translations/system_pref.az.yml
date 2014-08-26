@@ -64,6 +64,9 @@ newscoop:
             imagewidth: 'Şəklin Ölçüdəyişmə Genişliyi:'
             imageheight: 'Şəklin Ölçüdəyişmə Hündürlüyü:'
             zoom: 'Məqalə tərkibindəki şəkillərin daha böyük görüntüsünə icazə verilir?'
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: 'Oxucu abunəlikləri kənardan idarə edilib?'
             usereplication: 'Newscoop Cavab Serverini Quraşdırırsan?'
             serverdb: 'Onlayn Newscoop Server Məlumat Bazası'
@@ -144,6 +147,8 @@ newscoop:
             separator: 'Məqalənin Dəyişilmə səhifəsindəki Açarsöz üçün ayırıcı təyin et (vergül və ya defis).'
             stats: 'Bu seçim serverdəki nəşrlərə oxucu girişinin statistikasının toplanmasını aktivləşdirir. Əgər tamamilə başqa mənbədən olan statistika xidmətini istifadə edirsənsə, Yox düyməsini klikləyə bilərsən. Nəzərə al ki, statistika toplanmasının deaktivasiya edilməsi Newscoop serverində yüklənməni azaldacaqdır.'
             zoom: 'Bəli seçimini etsən, oxucular məqalə tərkibindəki şəkilləri klikləməklə onların ölçüsünü böyüdə bilərlər. Yaxınlaşdırma xüsusiyyəti məqalə mətni daxilində yerləşdirilən istənilən şəkil üçün keçərlidir.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Ölçülərin uyğunlaşdırılması burada qeyd olunan Dəyişdirilən Uzunluq və Dəyişdirilən En ölçülərinə uyğun aparılır. Əgər nisbət göstərilibsə və eyni zamanda Uzunluq və En də göstərilibsə Newscoop avtomatik olaraq daha kiçik ölçünü seçəcək. Standart ölçüləri yeni yaradılan nisbətlə dəyişməklə mükündür, bunu Yazını Dəyiş səhifəsində etmək olar.'
             replication: 'Avadanlıq və şəbəkə problemləri yarandığı hallarda təhlükəsizlik göstəricisi olaraq Newscoop-un iki serverdə eyni zamanda əməliyyat həyata keçirməyə imkan yaradır.'
             filter: 'Mövzu İdarəçiliyi səhifəsi tərəfindən əldə edilə bilən nümunələrin nümunə dəyişmə səhifəsindən gizləmək üçün açar sözləri daxil et. Məsələn, artıq istifadədə olmayan, amma serverdən silmək istəmədiyin nümunələr.'

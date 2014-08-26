@@ -64,6 +64,9 @@ newscoop:
             imagewidth: null
             imageheight: null
             zoom: null
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: null
             usereplication: null
             serverdb: null
@@ -144,6 +147,8 @@ newscoop:
             separator: null
             stats: null
             zoom: null
+            richtext_status: null
+            richtext_length: null
             ratio: null
             replication: null
             filter: null

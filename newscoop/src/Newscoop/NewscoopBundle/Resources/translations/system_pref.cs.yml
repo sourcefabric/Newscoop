@@ -64,6 +64,9 @@ newscoop:
             imagewidth: 'Změna velikosti (Šířka):'
             imageheight: 'Změna velikosti (Výška):'
             zoom: 'Povolit zoom pro obrázky ve článcích?'
+            mediaRichTextCaptions: null
+            mediaCaptionLength: null
+            mediaCaptionLength_after: null
             external: 'Spravovat čtenářské předplatné externě?'
             usereplication: 'Nastavit Newscoop Replication Server?'
             serverdb: 'Online Server Databáze Newscoopu'
@@ -144,6 +147,8 @@ newscoop:
             separator: 'Specifikujte oddělovač pro klíčová slova na stránce Úprav článku (čárka nebo pomlčka).'
             stats: 'Tato možnost umožňuje shromažďovat statistické údaje o přístupech čtenářů k publikacím na serveru. Klikněte NE pokud používáte jinou statistickou službu. Zablokováním shromažďování statistických údajů můžete snížit zatížení vašeho Newscoop serveru. '
             zoom: 'Pokud nastavena na Ano, čtenáři mohou zvětšovat obrázky u článku na vašich stránkách publikací pomocí klikání na obrázky. Tento zoom efekt funguje pro jakýkoliv obrázek vložený v řádce s textem článku.'
+            richtext_status: null
+            richtext_length: null
             ratio: 'Poměr velikosti má přednost před jakoukoli změnou šírky nebo změny hodnoty výšky, která je zde nastavena. Pokud není poměr nastaven, ale šířka a výška jsou nastaveny, pak Newscoop použije hodnotu, kterou zmenší velikost obrazu. Výchozí nastavení zde může být přepsáno nastavením poměru, šířky nebo výšky pro konkrétní nastavení inline obrázku v  Article Edit page.'
             replication: 'Toto Vám umožní nastavit Newscoop na dvou serverech najednou. Jedná se o bezpečnostní opatření pro případ hardwarových nebo síťových problémů. '
             filter: 'Zadejte klíčová slova pro templaty, které chcete skrýt v template editoru  přístupného prostřednictvím Theme Management page. Například, templaty, které již nejsou používány, ale nechcete je odstranit ze serveru.'
