@@ -2,7 +2,13 @@ imports:
     - { resource: config.yml }
 
 monolog:
+    channels: ["sentry"]
     handlers:
+        sentry:
+            type:  raven
+            dsn:   'http://6948f4720ffe4956b25df0fe720da09e:085cd9f5324c4e65abdd55482ca7c5cc@sentry.sourcefabric.org/5'
+            level: notice
+            channels: ['sentry']
         main:
             type:         fingers_crossed
             action_level: error
