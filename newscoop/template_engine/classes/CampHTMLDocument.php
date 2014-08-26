@@ -327,9 +327,10 @@ final class CampHTMLDocument
         try {
             $tpl->display($template);
         } catch (\Exception $e) {
-            $logger = \Zend_Registry::get('container')->get('logger');
+            // log samrty errors to sentry channel
+            $logger = \Zend_Registry::get('container')->get('monolog.logger.sentry');
             $logger->error($e);
-            
+
             CampTemplate::trigger_error($e->getMessage(), $tpl);
         }
     } // fn render
