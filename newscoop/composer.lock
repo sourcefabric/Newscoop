@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "677eeccd676d5bf25ed0b7f7ec787623",
+    "hash": "25c73500eeb1ca1aa803ca400aaee64e",
     "packages": [
         {
             "name": "behat/behat",
@@ -816,12 +816,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "337e8722b8f1e2666ab24fdbdf659c719f39c3fd"
+                "reference": "26404e0c90565b614ee76b988b9bc8790d77f590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/337e8722b8f1e2666ab24fdbdf659c719f39c3fd",
-                "reference": "337e8722b8f1e2666ab24fdbdf659c719f39c3fd",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/26404e0c90565b614ee76b988b9bc8790d77f590",
+                "reference": "26404e0c90565b614ee76b988b9bc8790d77f590",
                 "shasum": ""
             },
             "require": {
@@ -862,7 +862,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2014-08-18 20:15:24"
+            "time": "2014-08-25 15:09:25"
         },
         {
             "name": "doctrine/lexer",
@@ -4210,33 +4210,35 @@
         },
         {
             "name": "symfony/monolog-bundle",
-            "version": "2.3.x-dev",
+            "version": "v2.4.1",
             "target-dir": "Symfony/Bundle/MonologBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle.git",
-                "reference": "f105e8c4655f01d5db1c0a8b26e888c49809ec76"
+                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/f105e8c4655f01d5db1c0a8b26e888c49809ec76",
-                "reference": "f105e8c4655f01d5db1c0a8b26e888c49809ec76",
+                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/e81c2e9c4dc0a9ff794674017069e036f575f278",
+                "reference": "e81c2e9c4dc0a9ff794674017069e036f575f278",
                 "shasum": ""
             },
             "require": {
-                "monolog/monolog": "~1.3",
+                "monolog/monolog": "~1.6",
                 "php": ">=5.3.2",
-                "symfony/config": "~2.2-beta2",
-                "symfony/dependency-injection": "~2.2-beta2",
-                "symfony/monolog-bridge": "~2.2-beta2"
+                "symfony/config": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/http-kernel": "~2.3",
+                "symfony/monolog-bridge": "~2.3"
             },
             "require-dev": {
-                "symfony/yaml": "~2.2-beta2"
+                "symfony/console": "~2.3",
+                "symfony/yaml": "~2.3"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev"
+                    "dev-master": "2.4.x-dev"
                 }
             },
             "autoload": {
@@ -4266,7 +4268,7 @@
                 "log",
                 "logging"
             ],
-            "time": "2014-01-19 13:22:35"
+            "time": "2013-08-26 10:15:04"
         },
         {
             "name": "symfony/swiftmailer-bundle",
