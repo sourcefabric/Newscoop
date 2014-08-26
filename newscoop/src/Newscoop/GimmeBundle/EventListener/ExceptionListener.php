@@ -10,7 +10,6 @@ namespace Newscoop\GimmeBundle\EventListener;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener as SymfonyExceptionListener;
 
 /**
@@ -38,7 +37,7 @@ class ExceptionListener extends SymfonyExceptionListener
 
         $attributes = array(
             '_controller' => $this->controller,
-            'exception'   => FlattenException::create($exception),
+            'exception'   => $exception,
             'logger'      => $this->logger instanceof DebugLoggerInterface ? $this->logger : null,
             // keep for BC -- as $format can be an argument of the controller callable
             // see src/Symfony/Bundle/TwigBundle/Controller/ExceptionController.php

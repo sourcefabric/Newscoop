@@ -288,8 +288,6 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
         $tpl = CampTemplate::singleton();
         $tpl->template_dir = array_unique($tpl->template_dir);
-
-        array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         if (!$template) {
             $siteinfo['error_message'] = "No template set for display.";
         } elseif (!$this->templateExists($template, $tpl)) {
@@ -328,7 +326,11 @@ final class CampHTMLDocument
 
         try {
             $tpl->display($template);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
+            // log samrty errors to sentry channel
+            $logger = \Zend_Registry::get('container')->get('monolog.logger.sentry');
+            $logger->error($e);
+
             CampTemplate::trigger_error($e->getMessage(), $tpl);
         }
     } // fn render
