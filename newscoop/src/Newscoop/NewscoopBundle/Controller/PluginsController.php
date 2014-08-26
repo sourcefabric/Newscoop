@@ -53,7 +53,6 @@ class PluginsController extends Controller
 
                     return $this->redirect($this->generateUrl('newscoop_newscoop_plugins_index'));
                 }
-
                 $file->move($pluginService->getPluginsDir().'/private_plugins', $file->getClientOriginalName());
 
                 return $this->redirect($this->generateUrl('newscoop_newscoop_plugins_index'));
@@ -62,15 +61,12 @@ class PluginsController extends Controller
 
         // search for private plugins
         $privatePackages = $this->searchForPrivatePlugins($pluginService);
-        foreach ($privatePackages as $resultKey => $package) {
-            $installed = false;
 
+        foreach ($privatePackages as $resultKey => $package) {
+            $package['installed'] = false;
             foreach ($pluginService->getAllAvailablePlugins() as $key => $plugin) {
                 if ($package['name'] == $plugin->getName()) {
                     $package['installed'] = true;
-                    $installed = true;
-                } else if (!$installed) {
-                    $package['installed'] = false;
                 }
             }
 
