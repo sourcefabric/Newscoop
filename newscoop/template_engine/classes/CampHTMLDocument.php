@@ -297,7 +297,6 @@ final class CampHTMLDocument
         if (!is_null($siteinfo['error_message'])) {
             $siteinfo['templates_path'] = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
             $template = '_campsite_error.tpl';
-            array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         }
 
         $tpl->assign('gimme', $context);
