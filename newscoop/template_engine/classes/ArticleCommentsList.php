@@ -167,6 +167,10 @@ class ArticleCommentsList extends ListObject
     				}
     				break;
                 case 'ignore_language':
+                    if (isset($value) && strtolower($value) == 'true') {
+                        $parameters[$parameter] = true;
+                    }
+                    break;
                 case 'ignore_article':
                     if (isset($value) && strtolower($value) == 'true') {
                         $parameters[$parameter] = true;
