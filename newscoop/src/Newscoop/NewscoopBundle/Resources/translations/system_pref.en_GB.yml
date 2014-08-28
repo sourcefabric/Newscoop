@@ -64,9 +64,9 @@ newscoop:
             imagewidth: 'Image Resizing Width:'
             imageheight: 'Image Resizing Height:'
             zoom: 'Zoom enabled for images in article content?'
-            mediaRichTextCaptions: null
-            mediaCaptionLength: null
-            mediaCaptionLength_after: null
+            mediaRichTextCaptions: 'Enable rich text for image captions?'
+            mediaCaptionLength: 'Character limit for image captions: '
+            mediaCaptionLength_after: character(s)
             external: 'Reader subscriptions managed externally?'
             usereplication: 'Setting up a Newscoop Replication Server?'
             serverdb: 'Newscoop Online Server Database'
@@ -147,8 +147,8 @@ newscoop:
             separator: 'Specify the separator for Keywords in the Edit Article page (comma or hyphen).'
             stats: 'This option enables the collection of statistics on reader access to publications on the server. You may wish to click No if you use a third-party statistical service, as disabling the collection of statistics may reduce the load on your Newscoop server.'
             zoom: 'If set to Yes, readers can enlarge article images in your publications pages by clicking on them. This zooming feature works for any images inserted inline with the article text.'
-            richtext_status: null
-            richtext_length: null
+            richtext_status: 'Enable rich text editing for image captions.'
+            richtext_length: 'By default set to 255 (also when rich text captions are disabled). Use 0 for no limit.'
             ratio: 'The resizing ratio takes precedence over any Resizing Width or Resizing Height value which is set here. If Ratio is not set but both Width and Height are set, then Newscoop will use the value which results in a smaller image size. The default settings here can be overridden by the ratio, width or height settings for a specific inline image set on the Article Edit page.'
             replication: 'Enables you to set up Newscoop to operate on two servers at once, which is a safety feature in case of hardware or network problems.'
             filter: 'Enter keywords for templates that you wish to hide from the template editor accessible via the Theme Management page. For example, templates that are no longer in use, but you do not wish to delete from the server.'
