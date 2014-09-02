@@ -169,3 +169,10 @@ Newscoop\Entity\Article:
             type: article_url
             serialized_name: url
             since_version: 1.1
+        getWorkflowStatus:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            serialized_name: status
+            accessor:
+                getter: getWorkflowStatus

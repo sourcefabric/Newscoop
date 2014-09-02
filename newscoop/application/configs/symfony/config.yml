@@ -67,6 +67,7 @@ fos_rest:
             'Symfony\Component\Form\Exception\InvalidArgumentException': 500
             'Symfony\Component\HttpKernel\Exception\FlattenException': 404
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
+            'Newscoop\Exception\ResourceNotModifiedException': 304
         messages:
             'Newscoop\Exception\ResourcesConflictException': true
             'Newscoop\Exception\InvalidParametersException': true
@@ -76,6 +77,7 @@ fos_rest:
             'Symfony\Component\Form\Exception\InvalidArgumentException' : true
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
             'Symfony\Component\HttpKernel\Exception\FlattenException': true
+            'Newscoop\Exception\ResourceNotModifiedException': false
 
 fos_oauth_server:
     service:
