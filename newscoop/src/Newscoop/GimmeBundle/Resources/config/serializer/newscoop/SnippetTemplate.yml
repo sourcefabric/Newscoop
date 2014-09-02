@@ -1,0 +1,71 @@
+Newscoop\Entity\Snippet\SnippetTemplate:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+            serialized_name: id
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: name
+        controller:
+            expose: true
+            ready_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: controller
+        templateCode:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: template
+        fields:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            serialized_name: fields
+            type: ArrayCollection<string, Newscoop\Entity\Snippet\SnippetTemplate\SnippetTemplateField>
+            accessor:
+                getter: getFields
+        favourite:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["details", "list"]
+            serialized_name: favourite
+        enabled:
+            expose: true
+            read_only: true
+            type: boolean
+            groups: ["list", "details"]
+            serialized_name: enabled
+        iconInactive:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: iconInactive
+        iconActive:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details"]
+            serialized_name: iconActive
+        created:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details"]
+            serialized_name: created
+        modified:
+            expose: true
+            read_only: true
+            type: DateTime
+            groups: ["details"]
+            serialized_name: modified

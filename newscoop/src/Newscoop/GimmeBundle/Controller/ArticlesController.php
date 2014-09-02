@@ -194,6 +194,15 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+			if ($object instanceof \Newscoop\Entity\Snippet) {
+				$snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
+				$snippetRepo->addSnippetToArticle($object, $article);
+
+				$matched = true;
+
+				continue;
+			}
         }
 
 
@@ -301,6 +310,15 @@ class ArticlesController extends FOSRestController
 
                 continue;
             }
+
+			if ($object instanceof \Newscoop\Entity\Snippet) {
+				$snippetRepo = $em->getRepository('Newscoop\Entity\Snippet');
+				$snippetRepo->removeSnippetFromArticle($object, $article);
+
+				$matched = true;
+
+				continue;
+			}
         }
 
         if ($matched === false) {
