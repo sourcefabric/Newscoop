@@ -70,7 +70,7 @@ services:
         arguments:  ["\\Newscoop\\Entity\\Comment"]
     email:
         class:      Newscoop\Services\EmailService
-        arguments:  ["@em", "@user.token", "@preferences", "@mailer", "@newscoop.templates.service", "@newscoop.placeholders.service", "@newscoop_newscoop.publication_service"]
+        arguments:  ["@service_container"]
     ingest.publisher:
         class:      Newscoop\Services\Ingest\PublisherService
         arguments:  ["%ingest_publisher%"]
