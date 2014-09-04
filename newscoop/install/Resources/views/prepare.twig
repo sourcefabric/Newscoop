@@ -1,16 +1,17 @@
 {% extends "layout.twig" %}
 
+{% block fixed %}{% endblock %}
+{% block header %}Prepare database{% endblock %}
 {% block content %}
-prepare db
-
-{% for key, message in app.session.getFlashBag() %}
-	<div class="alert alert-{{ key }}">{{ message.0|raw }}</div>
-{% endfor %}
-
 <form role="form" action="#" method="post">
     {{ form_widget(form) }}
-
-    <input type="submit" name="submit" />
+    <div class="bottom {% if hasErrors %}notification fail{% endif %}">
+    	<span>
+    	{% for key, message in app.session.getFlashBag() %}
+    		{{ message.0|raw }}
+		{% endfor %}</span>
+		<input class="btn btn-blue" type="submit" value="Next">
+		<input class="btn btn-white" type="reset" value="Reset">
+	</div>
 </form>
-
 {% endblock %}
