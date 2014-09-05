@@ -681,12 +681,13 @@ Public License instead of this License.  But first, please read
 </pre>
 </div>
 {{ form_start(form) }}
-	<div class="bottom {% if form.accept_terms.vars.errors %}notification fail{% endif %}">
+	{% set messages = app.session.flashbag.get('danger') %}
+	<div class="bottom {% if messages %}notification fail{% endif %}">
 		{{ form_widget(form.accept_terms) }}{{ form_label(form.accept_terms) }}
-		{% for message in app.session.getFlashBag() %}
-			{{ message.0|raw }}
-		{% endfor %}
 		{{ form_widget(form.submit, {'attr': {'class': 'btn btn-blue'}}) }}
+    	{% for key, message in messages %}
+    		<span>{{ message|raw }}</span><br>
+		{% endfor %}
 	</div>
 {{ form_end(form) }}
 {% endblock %}

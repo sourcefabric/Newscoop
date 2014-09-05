@@ -8,9 +8,11 @@
     {{ form_row(form.recheck_user_password) }}
     {{ form_row(form.user_email) }}
     {{ form_widget(form._token) }}
-    <div class="bottom {% if hasErrors %}notification fail{% endif %}">
-    	<span>{{ form_errors(form)|striptags }}
-    	</span>
+    {% set messages = app.session.flashbag.get('danger') %}
+	<div class="bottom {% if messages %}notification fail{% endif %}">
+    	{% for key, message in messages %}
+    		<span>{{ message|raw }}</span>{% if messages|length > 1 %}<br>{% endif %}
+		{% endfor %}
 		<input class="btn btn-blue" type="submit" value="Finish">
 		<input class="btn btn-white" type="reset" value="Reset">
 	</div>

@@ -161,10 +161,11 @@ $app->get('/license', function (Request $request) use ($app) {
         ->add('accept_terms', 'checkbox', array(
             'label'     => 'I accept the license terms',
             'required' => true,
-            'constraints' => array(new Assert\NotBlank())
+            'constraints' => array(new Assert\NotBlank()),
+            'error_bubbling' => true
         ))
         ->add('submit', 'submit', array(
-            'label' => "Submit",
+            'label' => "Next",
         ))
         ->getForm();
 
@@ -172,6 +173,10 @@ $app->get('/license', function (Request $request) use ($app) {
         $form->bind($request);
         if ($form->isValid()) {
             return $app->redirect($app['url_generator']->generate('prepare'));
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $app['session']->getFlashBag()->add('danger', $error->getMessage());
+            }
         }
     }
 
@@ -190,28 +195,32 @@ $app->get('/prepare', function (Request $request) use ($app) {
             'server_port' => '3306'
         ))
         ->add('server_name', null, array(
-            'constraints' => array(new Assert\NotBlank()),
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Server name value should not be blank.'))),
             'required' => true,
-            'label' => "Server name:"
+            'label' => "Server name:",
+            'error_bubbling' => true,
         ))
         ->add('server_port', null, array(
             'required' => false,
             'label' => "Server port:"
         ))
         ->add('user_name', null, array(
-            'constraints' => array(new Assert\NotBlank()),
+            'constraints' => array(new Assert\NotBlank(array('message' => 'User name value should not be blank.'))),
             'required' => true,
-            'label' => "User name:"
+            'label' => "User name:",
+            'error_bubbling' => true,
         ))
         ->add('user_password', 'password', array(
-            'constraints' => array(new Assert\NotBlank()),
+            'constraints' => array(new Assert\NotBlank(array('message' => 'User password value should not be blank.'))),
             'required' => true,
-            'label' => "Password:"
+            'label' => "Password:",
+            'error_bubbling' => true,
         ))
         ->add('database_name', null, array(
-            'constraints' => array(new Assert\NotBlank()),
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Database name value should not be blank.'))),
             'required' => true,
-            'label' => "Database name:"
+            'label' => "Database name:",
+            'error_bubbling' => true,
         ))
         ->add('override_database', 'checkbox', array(
             'label' => 'Overwrite existing database?',
@@ -219,7 +228,6 @@ $app->get('/prepare', function (Request $request) use ($app) {
         ))
         ->getForm();
 
-    $hasErrors = false;
     if ('POST' == $request->getMethod()) {
         $form->bind($request);
 
@@ -234,12 +242,11 @@ $app->get('/prepare', function (Request $request) use ($app) {
                 }
 
                 if ($e->getCode() == '1045') {
-                    $app['session']->getFlashBag()->set('danger', 'Database parameters invalid. Could not connect to database server.');
+                    $app['session']->getFlashBag()->set('danger', 'Invalid database parameters. Could not connect to database server.');
 
                     return $app['twig']->render('prepare.twig', array(
                         'form' => $form->createView(),
                         'NewscoopVersion' => new \CampVersion(),
-                        'hasErrors' => true
                     ));
                 }
             }
@@ -251,13 +258,11 @@ $app->get('/prepare', function (Request $request) use ($app) {
                 $app['database_service']->saveDatabaseConfiguration($app['db']);
 
             } else {
-                $hasErrors = true;
                 $app['session']->getFlashBag()->add('danger', 'There is already a database named <i>' . $app['db']->getDatabase() . '</i>. Change or overwrite it.');
 
                 return $app['twig']->render('prepare.twig', array(
                     'form' => $form->createView(),
                     'NewscoopVersion' => new \CampVersion(),
-                    'hasErrors' => $hasErrors
                 ));
             }
 
@@ -265,13 +270,16 @@ $app->get('/prepare', function (Request $request) use ($app) {
             $app['session']->set('db_data', $data);
 
             return $app->redirect($app['url_generator']->generate('process'));
+        } else {
+            foreach ($form->getErrors() as $error) {
+                $app['session']->getFlashBag()->add('danger', $error->getMessage());
+            }
         }
     }
 
     return $app['twig']->render('prepare.twig', array(
         'form' => $form->createView(),
         'NewscoopVersion' => new \CampVersion(),
-        'hasErrors' => $hasErrors
     ));
 })
 ->assert('_method', 'POST|GET')
@@ -280,8 +288,9 @@ $app->get('/prepare', function (Request $request) use ($app) {
 $app->get('/process', function (Request $request) use ($app) {
     $form = $app['form.factory']->createNamedBuilder('main_config', 'form', array())
         ->add('site_title', null, array(
-            'constraints' => array(new Assert\NotBlank()),
+            'constraints' => array(new Assert\NotBlank(array('message' => 'Site title value should not be blank.'))),
             'required' => true,
+            'error_bubbling' => true
         ))
         ->add(
             'recheck_user_password',
@@ -293,19 +302,20 @@ $app->get('/process', function (Request $request) use ($app) {
                 'required' => true,
                 'first_options'  => array('label' => 'Password'),
                 'second_options' => array('label' => 'Repeat Password'),
-                'constraints' => array(new Assert\NotBlank()),
+                'constraints' => array(new Assert\NotBlank(array('message' => 'Password value should not be blank.'))),
                 'required' => true,
                 'error_bubbling' => true
             )
         )
         ->add('user_email', 'email', array(
-            'constraints' => array(new Assert\Email()),
+            'constraints' => array(
+                new Assert\Email(array('message' => 'Email value is not a valid email address.')),
+                new Assert\NotBlank(array('message' => 'Email value should not be blank.'))),
             'required' => true,
             'error_bubbling' => true
         ))
         ->getForm();
 
-    $hasErrors = false;
     if ('POST' == $request->getMethod()) {
         $form->bind($request);
 
@@ -317,7 +327,6 @@ $app->get('/process', function (Request $request) use ($app) {
 
             return $app->redirect($app['url_generator']->generate('post-process'));
         } else {
-            $hasErrors = true;
             foreach ($form->getErrors() as $error) {
                 $app['session']->getFlashBag()->add('danger', $error->getMessage());
             }
@@ -327,7 +336,6 @@ $app->get('/process', function (Request $request) use ($app) {
     return $app['twig']->render('process.twig', array(
         'form' => $form->createView(),
         'NewscoopVersion' => new \CampVersion(),
-        'hasErrors' => $hasErrors
     ));
 })
 ->assert('_method', 'POST|GET')
@@ -343,9 +351,5 @@ $app->get('/post-process', function (Request $request) use ($app) {
 })
 ->assert('_method', 'POST|GET')
 ->bind('post-process');
-
-$app->get('/finish', function (Silex\Application $app) {
-    return $app['twig']->render('index.twig', array());
-});
 
 $app->run();

@@ -35,7 +35,7 @@
 
 			<div class="bottom notification {% if checkPassed == false %}fail{% else %}{% if warning %}alert{% endif %}{% endif %}">
 			{% if checkPassed %}
-				<span>All is well! {% if warning %}You have some warnings but you can continue.{% endif %}</span>
+				<span>All is well! {% if warning %}There are some warnings but you can continue installation.{% endif %}</span>
 				<a href="{{ url('license') }}" class="btn btn-blue">Next</a>
 			{% else %}<span>Your configuration is not compatible. Please make required changes.</span>{% endif %}
 				<a href="{{ url('index') }}" class="btn btn-white">Refresh</a>
