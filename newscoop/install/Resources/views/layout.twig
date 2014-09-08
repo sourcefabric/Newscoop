@@ -1,49 +1,25 @@
-
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../assets/img/favicon.png">
-
-    <title>Starter Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    
-    <link href="/install/Resources/assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/install/Resources/assets/css/installer.css" rel="stylesheet">
-  </head>
-
-  <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Newscoop 4.3 Installer</a>
-        </div>
+<html lang="en" dir="ltr">
+<head>
+  <title>Newscoop Installer</title>
+  <link rel="shortcut icon" href="/admin-style/images/7773658c3ccbf03954b4dacb029b2229.ico" />
+  <link rel="stylesheet" type="text/css" media="screen" href="/install/Resources/assets/css/main.css" />
+</head>
+<body>
+  <div class="wrapper">
+    <img class="logo" src="/install/Resources/assets/css/logo.png">
+    <div class="main_box {% block fixed %}fixed{% endblock %}">
+      <div class="top">
+        <h2>{% block header %}{% endblock %}</h2>
       </div>
+       {% block content %}{% endblock %}
+      <p class="version_num">
+          <a href="http://newscoop.sourcefabric.org/" target="_blank">{{ NewscoopVersion.getPackage() }}</a>, the open content management system for professional journalists.
+          <br />
+          &copy; {{ NewscoopVersion.getCopyrightYear() }}
+          <a href="{{ NewscoopVersion.getWebURL() }}" target="_blank">{{ NewscoopVersion.getOrganization() }}</a> {{ NewscoopVersion.getPackage() }} is distributed under {{ NewscoopVersion.getLicense() }}
+      </p>
     </div>
-
-    <div class="container">
-
-      <div>
-        {% block content %}{% endblock %}
-      </div>
-
-    </div><!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/install/Resources/assets/js/jquery-1.10.2.min.js"></script>
-    <script src="/install/Resources/assets/js/bootstrap.min.js"></script>
-  </body>
+  </div>
+</body>
 </html>

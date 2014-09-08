@@ -1,0 +1,294 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #575a5c;
+	line-height: 170%;
+	background: #f5f5f5;
+}
+
+.logo {
+	margin: 50px auto 0px auto;
+	display: block;
+}
+
+.main_box {
+	position: relative;
+	margin: 50px auto 0px auto;
+	width: 100%;
+	max-width: 700px;
+	background: #fff;
+	padding: 20px 30px 30px 30px;
+	-webkit-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.main_box.fixed {
+	position: fixed;
+	margin-top: 0px;
+	margin-left: -350px;
+	left: 50%;
+	top: 150px;
+	bottom: 100px;
+}
+
+.top {
+	border-bottom: 1px solid #d9d9d9;
+	margin: 0px -30px 20px -30px;
+	padding-left: 30px;
+}
+
+.middle {
+	position: absolute;
+	overflow: auto;
+	top: 65px;
+	right: 30px;
+	bottom: 80px;
+	left: 30px;
+	padding-right: 40px;
+}
+
+.bottom {
+	position: relative;
+	border-top: 1px solid #d9d9d9;
+	background: #f5f5f5;
+	width: 100%;
+	height: auto;
+	padding: 20px 30px 40px 30px;
+	margin: 30px -30px -30px -30px;
+}
+
+.fixed .bottom {
+	bottom: 0px;
+	left: 0px;
+	position: absolute;
+	border-top: 1px solid #d9d9d9;
+	background: #f5f5f5;
+	width: 100%;
+	height: 69px;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	padding: 20px 30px;
+	margin: 0px;
+}
+
+.main_box ul {
+	padding-left: 0px;
+}
+
+.main_box ul li {
+	background: url('correct.png') no-repeat;
+	background-position: left 5px;
+	padding-left: 25px;
+}
+
+.main_box ul li.fail {
+	background: url('fail.png') no-repeat;
+	background-position: left 5px;
+	color: #972929;
+}
+
+.main_box ul li.alert {
+	background: url('warning.png') no-repeat;
+	background-position: left 5px;
+	color: #c38e0f;
+}
+
+.main_box h2 {
+	font-size: 20px;
+	font-weight: normal;
+	color: #393c3e;
+	margin-top: 0px;
+	margin-bottom: 14px;
+}
+
+.main_box h3 {
+	font-size: 18px;
+	font-weight: normal;
+	color: #393c3e;
+	margin-top: 10px;
+}
+
+.version_num {
+	font-size: 12px;
+	position: absolute;
+	bottom: -70px;
+	left: 0px;
+	line-height: 20px;
+	text-align: center;
+	left: 140px;
+}
+
+.version_num a {
+	color: #015476;
+	text-decoration: none;
+}
+
+.bottom.notification {
+	background: #e8f5e0;
+	border-top: 1px solid #bde889;
+}
+
+.notification span {
+	color: #489729;
+	background: url('correct.png') no-repeat;
+	background-position: 0px center;
+	font-size: 12px;
+	padding: 2px 15px 3px 25px;
+	display: inline-block;
+	float: left;
+	width: 100%;
+	max-width: 380px;
+}
+
+.bottom.notification.fail {
+	background: #f5e0e0; 
+	border-top: 1px solid #FABEBE;
+}
+
+.notification.fail span {
+	color: #cb1d1d;
+	background: url('fail.png') no-repeat;
+	background-position: 0px center;
+}
+
+.bottom.notification.alert {
+	background: #fafaef;
+	border-top: 1px solid #E8DD89;
+}
+
+.notification.alert span {
+	color: #c38e0f;
+	background: url('warning.png') no-repeat;
+	background-position: 0px center;
+}
+
+.btn {
+	padding: 4px 10px;
+	background-image: -webkit-linear-gradient(top, #f6f5f6 0%, #e8e5e8 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f5f6), to(#e8e5e8));
+	background-image: linear-gradient(to bottom, #f6f5f6 0%, #e8e5e8 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff6f5f6', endColorstr='#ffe8e5e8', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat-x;
+	text-shadow: 0 1px 0 #fff;
+	font-size: 13px;
+	box-shadow: 0 1px 0 #ffffff, inset 0 1px 0 #ffffff;
+	border-radius: 2px;
+	line-height: 1.5;
+	color: #333333;
+	background-color: #f6f5f6;
+	display: inline-block;
+	font-weight: normal;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	border: 1px solid #cecece;
+	text-decoration: none;
+	min-width: 60px;
+}
+
+.btn:hover {
+	background-color: #e8e5e8;
+	background-position: 0 -25px;
+}
+
+.bottom .btn {
+	float: right;
+	margin: 0px 0px 0px 20px;
+
+}
+
+.btn.btn-blue {
+	background-image: -webkit-linear-gradient(top, #2591be 0%, #207da4 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#2591be), to(#207da4));
+	background-image: linear-gradient(to bottom, #2591be 0%, #207da4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2591be', endColorstr='#ff207da4', GradientType=0);
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	background-repeat: repeat-x;
+	border-color: #1d7093;
+	color: #ffffff;
+	background-color: #2591be;
+	border-color: #2181a9;
+	text-shadow: 0 1px 0 #000;
+	box-shadow: 0 1px 0 #FFFFFF, inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.btn.btn-blue:hover {
+	color: #ffffff;
+	background-color: #2591be;
+	border-color: #2181a9;
+	color: #ffffff;
+	background-color: #1d7093;
+}
+
+.main_box label {
+	width: 100%;
+	max-width: 230px;
+	display: inline-block;
+}
+
+.text_links .btn {
+	float: none;
+}
+
+.main_box input[type="text"] {
+	width: 100%;
+	max-width: 240px;
+	border: 1px solid #d0d0d0;
+	resize: none;
+	margin: 5px 0;
+	padding: 5px;
+	font-size: 90%;
+}
+
+.main_box input[type="password"] {
+	width: 100%;
+	max-width: 240px;
+	border: 1px solid #d0d0d0;
+	resize: none;
+	margin: 5px 0;
+	padding: 5px;
+	font-size: 90%;
+}
+
+.main_box input[type="email"] {
+	width: 100%;
+	max-width: 240px;
+	border: 1px solid #d0d0d0;
+	resize: none;
+	margin: 5px 0;
+	padding: 5px;
+	font-size: 90%;
+}
+
+.main_box input[type="checkbox"] {
+	margin-right: 10px;
+	vertical-align: middle;
+}
+
+@media screen and (max-width: 720px)  {
+	.main_box.fixed {
+		position: relative;
+		margin-left: auto;
+		top: 60px;
+		left: auto;
+	}
+
+	.middle {
+		position: relative;
+		top: auto;
+		left: auto;
+		right: auto;
+		bottom: auto;
+		padding-bottom: 40px;
+	}
+
+	.notification span {
+		width: auto;
+	}
+}
