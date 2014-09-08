@@ -19,6 +19,7 @@ if (!$g_user->hasPermission('ManageArticleTypes')) {
 
 $articleTypeName = Input::Get('f_article_type');
 $fieldName = trim(Input::Get('f_field_name'));
+$showInEditor = Input::Get('f_show_in_editor', 'int', 0);
 $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 $isContent = Input::Get('f_is_content');
@@ -62,7 +63,9 @@ if ($correct) {
     else $editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
     
     $params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
-	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize, 'event_color' => $eventColor);
+	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize, 'event_color' => $eventColor,
+	'show_in_editor'=>$showInEditor
+	);
 	$field->create($fieldType, $params);
     $cacheService = \Zend_Registry::get('container')->getService('newscoop.cache');
     $cacheService->clearNamespace('article_type');

@@ -87,6 +87,12 @@ class ArticleTypeField
     protected $isContentField;
 
     /**
+     * @ORM\Column(type="integer", name="show_in_editor", nullable=False)
+     * @var int
+     */
+    protected $showInEditor;
+
+    /**
      * Get the article type
      * @return \Newscoop\Entity\ArticleType
      */
@@ -307,5 +313,28 @@ class ArticleTypeField
 
         return $this;
     }
-}
 
+    /**
+     * Getter for showInEditor
+     *
+     * @return int
+     */
+    public function getShowInEditor()
+    {
+        return $this->showInEditor;
+    }
+
+    /**
+     * Setter for showInEditor
+     *
+     * @param int $showInEditor Value to set
+     *
+     * @return self
+     */
+    public function setShowInEditor($showInEditor)
+    {
+        $this->showInEditor = $showInEditor;
+
+        return $this;
+    }
+}

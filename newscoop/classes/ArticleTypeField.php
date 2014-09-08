@@ -44,6 +44,7 @@ class ArticleTypeField extends DatabaseObject {
         'field_type',
         'field_type_param',
         'is_content_field',
+        'show_in_editor',
         'max_size');
     private $m_rootTopicId = null;
     private $m_precision = null;
@@ -285,6 +286,7 @@ class ArticleTypeField extends DatabaseObject {
 				if ($p_type == self::TYPE_TEXT && isset($p_params['maxsize'])) {
                     $data['max_size'] = (int)$p_params['maxsize'];
                 }
+				$data['show_in_editor'] = (int)$p_params['show_in_editor'];
 				$data['field_type'] = $p_type;
 				$data['field_weight'] = $this->getNextOrder();
 			}
@@ -752,6 +754,27 @@ class ArticleTypeField extends DatabaseObject {
 	public function setIsContent($p_isContent)
 	{
 		return $this->setProperty('is_content_field', (int)$p_isContent);
+	}
+
+
+	/**
+	 * Returns int for where to show the field
+	 * @return int
+	 */
+	public function showInEditor() {
+	    return $this->m_data['show_in_editor'];
+	}
+
+
+
+	/**
+	 * Sets the int for where to show the field
+	 * @param $p_showInEditor
+	 * @return int
+	 */
+	public function setShowInEditor($p_showInEditor)
+	{
+	    return $this->setProperty('show_in_editor', (int)$p_showInEditor);
 	}
 
 

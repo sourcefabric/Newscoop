@@ -256,6 +256,17 @@ $color_list = array(
     </td>
 </tr>
 <TR>
+	<TD ALIGN="RIGHT" ><? echo $translator->trans('Show in Editor', array(), 'article_type_fields'); ?></TD>
+	<TD>
+	<select name="f_show_in_editor" class="input_select">
+		<option value="0"><?php echo $translator->trans(ArticleTypeField::SHOW_IN_EDITOR_0, array(), 'article_type_fields'); ?></option>
+		<option value="0"><?php echo $translator->trans(ArticleTypeField::SHOW_IN_EDITOR_1, array(), 'article_type_fields'); ?></option>
+		<option value="0"><?php echo $translator->trans(ArticleTypeField::SHOW_IN_EDITOR_2, array(), 'article_type_fields'); ?></option>
+		<option value="0"><?php echo $translator->trans(ArticleTypeField::SHOW_IN_EDITOR_3, array(), 'article_type_fields'); ?></option>
+	</select>
+	</TD>
+</TR>
+<TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="HIDDEN" NAME="f_article_type" VALUE="<?php  print htmlspecialchars($articleTypeName); ?>">
