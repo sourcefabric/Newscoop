@@ -60,7 +60,7 @@ switch ($f_action) {
 			$creatorId = $articleObj->getCreatorId();
 			$articleObj->delete();
 			\Zend_Registry::get('container')->getService('dispatcher')
-                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent($this, array('user' => $creatorId)));
+                ->dispatch('user.set_points', new \Newscoop\EventDispatcher\Events\GenericEvent(null, array('user' => $creatorId)));
 			if ($f_publication_id > 0) {
 				$url = "/$ADMIN/articles/index.php"
 						."?f_publication_id=$f_publication_id"

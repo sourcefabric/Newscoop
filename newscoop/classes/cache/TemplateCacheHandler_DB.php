@@ -173,7 +173,11 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
                     }
                     unset($cacheParams[$tpl_file]);
-                    $g_ado_db->executeUpdate($queryStr);
+
+                    try {
+                        $g_ado_db->executeUpdate($queryStr);
+                    } catch (\Doctrine\DBAL\DBALException $e) {}
+
                     $return = $g_ado_db->affected_rows() > 0;
                 }
                 break;
