@@ -339,16 +339,12 @@ class Article implements DocumentInterface
     protected $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Snippet", inversedBy="articles")
      * @ORM\JoinTable(name="ArticleSnippets",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="ArticleId", referencedColumnName="Number")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")
-     *      }
+     *      joinColumns={@ORM\JoinColumn(name="ArticleNr", referencedColumnName="Number")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="SnippetId", referencedColumnName="Id")}
      *  )
-     * @var Newscoop\Entity\Snippet
+     * @var Doctrine\Common\Collections\ArrayCollection
      */
     protected $snippets;
 
@@ -370,6 +366,7 @@ class Article implements DocumentInterface
         $this->topics = new ArrayCollection();
         $this->attachments = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->snippets = new ArrayCollection();
     }
 
     /**
@@ -1320,4 +1317,48 @@ class Article implements DocumentInterface
     {
         return clone $this;
     }
+
+    /**
+     * Get Article Snippets
+     *
+     * @var Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getSnippets()
+    {
+        return $this->snippets;
+    }
+
+    /**
+     * Add a Snippet to the Article
+     * 
+     * @param Snippet $snippet the Snippet to attach
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function addSnippet(Snippet $snippet)
+    {
+        if (!$this->snippets->contains($snippet)) {
+            $this->snippets->add($snippet);
+            $snippet->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Remove a Snippet from the Article
+     * 
+     * @param Snippet $snippet the Snippet to remove
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function removeSnippet(Snippet $snippet)
+    {
+        if ($this->snippets->contains($snippet)) {
+            $this->snippets->remove($snippet);
+            $snippet->removeArticle($this);
+        }
+
+        return $this;
+	}
 }
