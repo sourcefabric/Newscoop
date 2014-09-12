@@ -861,10 +861,11 @@ DROP TABLE IF EXISTS `Plugins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Plugins` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   `Version` varchar(255) NOT NULL DEFAULT '',
   `Enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Name`)
+  PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: newscoop-devel
 -- ------------------------------------------------------
--- Server version	5.1.54-1ubuntu4
+-- Server version 5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1296,22 +1296,13 @@ DROP TABLE IF EXISTS `Plugins`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Plugins` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
   `Version` varchar(255) NOT NULL DEFAULT '',
   `Enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`Name`)
+  PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Plugins`
---
-
-LOCK TABLES `Plugins` WRITE;
-/*!40000 ALTER TABLE `Plugins` DISABLE KEYS */;
-INSERT INTO `Plugins` VALUES ('blog','3.4.x-0.2.1',1),('poll','3.4.x-0.2.1',1);
-/*!40000 ALTER TABLE `Plugins` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Publications`
@@ -3223,5 +3214,3 @@ CREATE TABLE IF NOT EXISTS `webcode` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2011-06-13 12:28:31
-
-
