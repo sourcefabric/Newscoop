@@ -414,16 +414,6 @@ INSERT INTO `ObjectTypes` VALUES (1,'article');
 UNLOCK TABLES;
 
 --
--- Dumping data for table `Plugins`
---
-
-LOCK TABLES `Plugins` WRITE;
-/*!40000 ALTER TABLE `Plugins` DISABLE KEYS */;
-INSERT INTO `Plugins` VALUES ('blog','0.3.0',1),('poll','0.3.1',1),('recaptcha','0.1.0',1),('debate','0.0.1',1),('soundcloud','0.1.0',1);
-/*!40000 ALTER TABLE `Plugins` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `Publications`
 --
 
