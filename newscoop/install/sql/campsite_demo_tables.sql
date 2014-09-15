@@ -863,6 +863,7 @@ DROP TABLE IF EXISTS `Plugins`;
 CREATE TABLE `Plugins` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) NOT NULL,
+  `Description` TEXT NOT NULL,
   `Version` varchar(255) NOT NULL DEFAULT '',
   `Enabled` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
