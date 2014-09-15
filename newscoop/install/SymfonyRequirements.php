@@ -459,6 +459,12 @@ class SymfonyRequirements extends RequirementCollection
             "Change the permissions of the \"<strong>$baseDir/images/</strong>\" directory so that the web server can write into it."
         );
 
+        $this->addRecommendation(
+            function_exists('mail'),
+            "sendmail should be installed",
+            "Install 'sendmail' package so that the Newscoop can send mails."
+        );
+
         $this->addPhpIniRequirement(
             'date.timezone', true, false,
             'date.timezone setting must be set',

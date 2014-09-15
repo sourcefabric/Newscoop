@@ -1,5 +1,3 @@
-
--- Update languages, by code since that is already unique and more practical then ID
 UPDATE `Languages` SET `RFC3066bis` = "en-US" WHERE `Code` = "en";
 UPDATE `Languages` SET `RFC3066bis` = "de-DE" WHERE `Code` = "de";
 UPDATE `Languages` SET `RFC3066bis` = "pt-PT" WHERE `Code` = "pt";
