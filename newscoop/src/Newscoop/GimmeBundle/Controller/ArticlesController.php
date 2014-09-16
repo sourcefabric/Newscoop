@@ -295,7 +295,7 @@ class ArticlesController extends FOSRestController
             if ($articleObj->commentsEnabled() != $commentsEnabled) {
                 $articleObj->setCommentsEnabled($commentsEnabled);
                 $repository = $em->getRepository('Newscoop\Entity\Comment');
-                $repository->setArticleStatus($number, $clean['languageId'], $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
+                $repository->setArticleStatus($number, $clean['languageId'], $commentsEnabled ? 'approved':'hidden');
                 $repository->flush();
             }
             $articleObj->setCommentsLocked($commentStatus == "locked");
