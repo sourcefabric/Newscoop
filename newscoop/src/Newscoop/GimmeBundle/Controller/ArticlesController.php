@@ -142,6 +142,7 @@ class ArticlesController extends FOSRestController
 
         $em = $this->container->get('em');
         $inputManipulator = $this->get('newscoop.input_manipulator');
+        $clean = array();
 
         if (array_key_exists('authors', $params)) {
             $authors = array();
