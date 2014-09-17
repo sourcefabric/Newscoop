@@ -2,6 +2,125 @@
 VERSION 4  FIRST NEWSCOOP 4.3 ALPHA, INSTALLABLE, WITH ALMOST ALL FEATURES, ALMOST READY TO FREEZE, ENJOY
 =========================================================================================================
 
+   Version 4.3 - Newscoop 4.3 release candidate
+      17/09/2014 13:53  4.3.0-rc  initial release
+         6d600e6 update rmt version in composer.json
+         baa188e updte rmt config, update vendors before release
+         20550b1 make 'public' folder writable during Newscoop installation
+         ad2461f CS-5488 - Missing text "Back to Article Types List" in Article type fields
+         b23fd52 updated translation resources
+         3e7e54a text/blog can not have default value in older versions of mysql
+         61b8dca CS-5503 - Upgrading Newscoop from 4.2 -> 4.3 issues
+         a59abaa add sendmail to recomendations
+         9895fc2 use insert ignore instead try catch
+         267debb replaced  variable with null in GenericEvent when setting user points
+         09e4433 CS-5497 - Newscoop installer strings
+         8bd4464 CS-4726 New Installer design - improved errors displaying
+         c8a3e9b CS-4726 - New Installer design
+         905bcd1 ignore existing index in cache insert
+         d7a6b5c (CS-5496) Move templates service from classes construct
+         f2fb3a5 updated translation resources
+         1295d81 updated translation resources
+         0430c77 CS-3121: fix ignore_language, fix seting language in campcontext
+         06c39e6 show smarty errors on dev only
+         916c2c4 add sentry channel to dev and prod, log with exceptions
+         382626c updated translation resources
+         b2b49ce revert articles_list caching - better keys (based on context) are needed
+         667d792 remove broken google gadgets widgets
+         35f5dd1 update composer files (new monolog)
+         3fc4312 use custom monolog chanell for sentry logging, setup errors handler on legacy code
+         227324a updated translation resources
+         6a931cb update composer.json and lock files
+         39de14a Revert "Revert "[CS-4762] Fixes missing Georgian file for jQuery datepicker""
+         cd58bc8 CS-4849: Fixes issue with placing description as image text
+         e64d370 CS-4849: Removes debug information
+         906a513 CS-4849: Removes unneeded line of code.
+         7a4523d CS-4849: Adds newline and retrieves language from Request instead of cookie
+         2d9f52f CS-4849: Adds newline and retrieves language from Request instead of cookie
+         afacc89 Setup Newscoop Community Sentry channel, log legacy errors to sentry.
+         7c69d07 Add posibility to check if plugin is installed and enabled from template
+         ab2b24b updated translation resources
+         383acc5 CS-4752 - topics hierarchy overlap on topic deletion
+         31f47ff updated translation resources
+         83d3113 fix article image captions screen
+         aeaa2f4 fixed translator params for listing issues
+         41144d2 fixed translator params for listing issues
+         7e741ac updated translation resources
+         1d4bf22 updated translation resources
+         fda8b4a updated translation resources
+         a83a711 updated translation resources
+         1090e8e updated translation resources
+         178933d updated translation resources
+         784ea2f updated translation resources
+         3c1129d updated translation resources
+         b8b6912 updated translation resources
+         b5433d0 updated translation resources
+         8add851 CS-5446: Replaces putGS with translator
+         c62e52e CS-4849: Renames variable name
+         103e055 Revert "CS-5446: Disabled 'add article_type' button if viewing all fields (with no article_type selected)"
+         4b9f028 Revert "[CS-4762] Fixes missing Georgian file for jQuery datepicker"
+         4b1753d CS-4849: Implements rich text captions
+         8de6a9b WOBS-1105 added dynamic block for editor_image.tpl
+         dbff717 updated translation resources
+         ca570c3 CS-5403 Fixes corruption in the Languages, Countries and LocationContents tables
+         527af29 CS-4849: Adds rich text captions preferences
+         a43ce8c add upgrade message
+         da75c54 added method to remove system preferences from database
+         f6956b2 [CS-4762] Fixes missing Georgian file for jQuery datepicker
+         0e53d67 CS-4690: make dafault path as empty string instead null
+         8505a35 CS-4690: fix api user image link, add getBaseUrl method to linkService
+         f0432d1 WOBS-3390: missing image description in aes media box
+         ba93ae8 updated translation resources
+         f56d914 updated translation resources
+         083203c updated translation resources
+         6ea79a5 fix article move action
+         6fb53e1 updated translation resources
+         a3aa28b updated translation resources
+         c43e1b2 CS-5477 Armenian code has changed from hy to hy_AM
+         e166851 CS-4911 - Delete author biography
+         82926a7 improve lists caching
+         6c77b9a optimize console commands to not output alerts by default when commands are executed
+         8c1064f updated translation resources
+         2b6f035 CS-5408 - Support is not working on newscoop backend
+         583d41b image zoom link improve (WOBS-1105)
+         624e02d returned error message (WOBS-1105)
+         93d8506 WOBS-1105 - make all images with width more than 1000px enlargeable on click
+         99380d8 updated translation resources
+         dbd0050 updated translation resources
+         fd563ab removed dump
+         69f71a1 CS-4887 - Multiple localization bugs on theme management page
+         ee471aa CS-5472 - Resources directory contains obsolete translation strings
+         defe107 CS-5439 - Typo in Newscoop smarty string
+         e0bda6a CS-5479 - Typo in background jobs string
+         0a84eb8 improved crontab.php script
+         c84c9a2 updated translation resources
+         588de12 updated translation resources
+         01a2cf6 updated translation resources
+         d88aac0 added details url for cron jobs
+         4ef803b added sorting to status and notify columns in cron jobs table
+         7b9349d added log:maintenance cron job
+         eae1eba CS-5459 - added displaying author name also to featured article lists
+         efbee96 added 302 status to API documentation
+         9363292 scheduler command fixes
+         48e7595 upgrade cron jobs upgrade script
+         f0c83c6 fixed typos
+         32c7fb1 added email notification for cron jobs in system preferences
+         eb3e3a2 added email notification for cron jobs in system preferences
+         9ab0058 CS-5434 - improve password recovery
+         47f4b5f CS-5459 typo
+         c5d5af2 CS-5459 - display author name in related articles interface
+         a871e29 updated translation resources
+         d9f1ebf WOBS-3382 - comments deactivated by default for some blogposts
+         6058baa added 302 status code in user login API when _target_path param is given
+         d83c7ff [CS-5475] Manage background jobs via backend
+         fa9efb7 Lets the menu correctly show the URL if it's a dropdown element
+         cf2b99c updated translation resources
+         a0693fd WOBS-3381: Replaces manual check if webcode exists with internal getWebcode() method
+         a0e4d0f updated translation resources
+         c72f047 updated translation resources
+         b4516c0 Changes the URL for redirecting to the Plugin vs the old Edit screen when creating a new article
+         ea45f37 CS-5446: Disabled 'add article_type' button if viewing all fields (with no article_type selected)
+
    Version 4.3 - First Newscoop 4.3 alpha, released with liip/rmt, close to code freeze, first weekly release, enjoy
       28/07/2014 13:41  4.3.0-alpha3  fix broken alpha2 release (missing comma in last commit).
          99aae92 fix missing comma in login api
