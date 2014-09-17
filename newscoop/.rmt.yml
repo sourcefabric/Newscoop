@@ -39,4 +39,5 @@ master:
             file: DETAILED-CHANGELOG.txt
             format: semantic
             dump-commits: true
+            exclude-merge-commits: true
         vcs-commit: ~              # Commit the CHANGELOG
