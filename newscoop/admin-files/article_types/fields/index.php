@@ -129,7 +129,7 @@ $color_list = array(
 <TBODY>
 <TR>
     <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/left_arrow.png"></A></TD>
-    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/"></A></B></TD>
+    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/"><?php echo $translator->trans('Back to Article Types List', array(), 'article_type_fields'); ?></A></B></TD>
 </TR>
 </TBODY>
 </TABLE>

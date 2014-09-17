@@ -14,5 +14,5 @@ exec('chmod -R 777 '.$newscoopDir.'/conf/');
 exec('chmod -R 777 '.$newscoopDir.'/library/Proxy/');
 exec('chmod -R 777 '.$newscoopDir.'/themes/');
 exec('chmod -R 777 '.$newscoopDir.'/plugins/');
-exec('chmod -R 777 '.$newscoopDir.'/public/files/');
+exec('chmod -R 777 '.$newscoopDir.'/public/');
 exec('chmod -R 777 '.$newscoopDir.'/images/');

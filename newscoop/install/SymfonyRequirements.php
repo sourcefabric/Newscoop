@@ -448,9 +448,9 @@ class SymfonyRequirements extends RequirementCollection
         );
 
         $this->addRequirement(
-            is_writable(__DIR__.'/../public/files/'),
-            "public/files/ directory must be writable",
-            "Change the permissions of the \"<strong>$baseDir/public/files/</strong>\" directory so that the web server can write into it."
+            is_writable(__DIR__.'/../public/'),
+            "public/ directory must be writable",
+            "Change the permissions of the \"<strong>$baseDir/public/</strong>\" directory so that the web server can write into it."
         );
 
         $this->addRequirement(
